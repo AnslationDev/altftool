@@ -175,21 +175,21 @@ export default function DecisionWheelPage() {
             <p className="text-sm text-(--muted-foreground) mt-1">Spin to decide anything — pick winners, build teams, settle debates.</p>
           </div>
           <div className="flex gap-1.5 flex-wrap">
-            <button onClick={() => setShowStats(!showStats)} className={`p-2 rounded-lg border transition ${
+            <button onClick={() => setShowStats(!showStats)} aria-label="Toggle statistics" aria-pressed={showStats} className={`p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg border transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               showStats ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
             }`} title="Statistics">
               <BarChart3 size="18" />
             </button>
-            <button onClick={handleSave} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Save Wheel">
+            <button onClick={handleSave} aria-label="Save wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Save Wheel">
               <Save size="18" />
             </button>
-            <button onClick={() => setShowShare(true)} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Share">
+            <button onClick={() => setShowShare(true)} aria-label="Share wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Share">
               <Share2 size="18" />
             </button>
-            <button onClick={() => setShowImport(true)} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Import/Export">
+            <button onClick={() => setShowImport(true)} aria-label="Import or export entries" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Import/Export">
               <FileJson size="18" />
             </button>
-            <button onClick={toggleFullscreen} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Fullscreen">
+            <button onClick={toggleFullscreen} aria-label="Toggle fullscreen" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Fullscreen">
               <Maximize2 size="18" />
             </button>
           </div>

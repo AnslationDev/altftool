@@ -1,14 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@altftool/ui";
-import { X, Heart, Share2, Star, Trophy } from "lucide-react";
+import { X, Heart, Share2, Star, Trophy, Copy, Check } from "lucide-react";
 import dynamic from "next/dynamic";
 
 const Confetti = dynamic(() => import("react-confetti"), { ssr: false });
 
 export default function WinnerModal({ winner, onClose, onToggleFavorite, isFavorite }) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setCopied(false);
+  }, [winner]);
+
+  const handleCopy = () => {
+    const name = winner?.name || winner;
+    if (!name) return;
+    navigator.clipboard?.writeText(String(name)).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {});
+  };
+
   useEffect(() => {
     if (!winner) return;
     const timer = setTimeout(() => {}, 100);
@@ -41,7 +56,7 @@ export default function WinnerModal({ winner, onClose, onToggleFavorite, isFavor
           transition={{ type: "spring", damping: 20, stiffness: 300 }}
         >
           <div className="bg-(--card) border border-(--border) rounded-2xl shadow-2xl p-6 text-center">
-            <button onClick={onClose} className="absolute top-3 right-3 p-1 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition">
+            <button onClick={onClose} aria-label="Close winner dialog" className="absolute top-3 right-3 p-1 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
               <X size="18" />
             </button>
 
@@ -73,6 +88,10 @@ export default function WinnerModal({ winner, onClose, onToggleFavorite, isFavor
             </div>
 
             <div className="flex gap-2 justify-center">
+              <Button variant="outline" size="sm" onClick={handleCopy} aria-label="Copy winner name">
+                {copied ? <Check size="14" className="text-(--success)" /> : <Copy size="14" />}
+                {copied ? "Copied!" : "Copy"}
+              </Button>
               <Button variant="outline" size="sm" onClick={onToggleFavorite}>
                 <Heart size="14" className={isFavorite ? "fill-(--danger) text-(--danger)" : ""} />
                 {isFavorite ? "Favorited" : "Favorite"}

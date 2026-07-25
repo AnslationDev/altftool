@@ -50,8 +50,12 @@ export default function HistoryPanel({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2, delay: index * 0.03 }}
-              className="group rounded-xl border border-border bg-card p-4 hover:shadow-sm transition-all cursor-pointer"
+              className="group rounded-xl border border-border bg-card p-4 hover:shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               onClick={() => onSelect(item)}
+              role="button"
+              tabIndex={0}
+              aria-label={`View reading from ${item.date}, score ${item.score}`}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(item); } }}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -73,13 +77,13 @@ export default function HistoryPanel({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onToggleFavorite(item.id);
                     }}
-                    className="p-1.5 rounded-lg hover:bg-muted/50 transition cursor-pointer"
+                    className="p-1.5 rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
                   >
                     <Heart
@@ -92,7 +96,7 @@ export default function HistoryPanel({
                       e.stopPropagation();
                       onDelete(item.id);
                     }}
-                    className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted-foreground hover:text-red-500 transition cursor-pointer"
+                    className="p-1.5 rounded-lg hover:bg-(--danger)/10 text-muted-foreground hover:text-(--danger) transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     aria-label="Delete"
                   >
                     <Trash2 size={14} />

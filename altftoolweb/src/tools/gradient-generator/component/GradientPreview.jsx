@@ -98,7 +98,8 @@ export default function GradientPreview({ gradient, color1, color2, setColor1, s
               draggable
               onDragStart={() => onSwatchDragStart(color)}
               onDragEnd={() => setDragColor(null)}
-              className={`w-8 h-8 rounded-lg border-2 cursor-grab active:cursor-grabbing transition-transform hover:scale-110 active:scale-95 ${
+              aria-label={`Drag color ${color}`}
+              className={`w-8 h-8 rounded-lg border-2 cursor-grab active:cursor-grabbing transition-transform hover:scale-110 active:scale-95 motion-reduce:transform-none ${
                 dragColor === color ? "border-blue-500 scale-110" : "border-(--border)"
               }`}
               style={{ background: color }}
@@ -110,12 +111,12 @@ export default function GradientPreview({ gradient, color1, color2, setColor1, s
 
       {/* Manual change buttons */}
       <div className="flex gap-3 mt-3 mb-4">
-        <label className="flex items-center gap-2 cursor-pointer text-xs border border-(--border) px-3 py-1.5 rounded-lg hover:bg-(--card) transition flex-1 justify-center">
+        <label className="flex min-h-[44px] items-center gap-2 cursor-pointer text-xs border border-(--border) px-3 py-1.5 rounded-lg hover:bg-(--card) transition flex-1 justify-center focus-within:ring-[3px] focus-within:ring-[var(--primary)]/35">
           <div className=" hidden sm:inline-flex w-3.5 h-3.5 rounded-full border border-gray-300" style={{ background: color1 }} />
           Change Color 1
           <input type="color" value={color1} onChange={(e) => setColor1(e.target.value)} className="sr-only" />
         </label>
-        <label className="flex items-center gap-2 cursor-pointer text-xs border border-(--border) px-3 py-1.5 rounded-lg hover:bg-(--card) transition flex-1 justify-center">
+        <label className="flex min-h-[44px] items-center gap-2 cursor-pointer text-xs border border-(--border) px-3 py-1.5 rounded-lg hover:bg-(--card) transition flex-1 justify-center focus-within:ring-[3px] focus-within:ring-[var(--primary)]/35">
           <div className="hidden sm:inline-flex w-3.5 h-3.5 rounded-full border border-gray-300" style={{ background: color2 }} />
           Change Color 2
           <input type="color" value={color2} onChange={(e) => setColor2(e.target.value)} className="sr-only" />

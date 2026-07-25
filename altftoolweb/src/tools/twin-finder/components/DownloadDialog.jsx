@@ -112,7 +112,8 @@ export default function DownloadDialog({ open, onClose, imageA, imageB, result }
               <h2 className="text-lg font-bold text-(--foreground)">Download</h2>
               <button
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground)"
+                aria-label="Close dialog"
+                className="rounded-lg p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <X size={18} />
               </button>
@@ -126,7 +127,7 @@ export default function DownloadDialog({ open, onClose, imageA, imageB, result }
               <button
                 onClick={handleDownloadImage}
                 disabled={busy !== null}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-95 disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-3 text-sm font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-[0.98] motion-reduce:active:scale-100 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 {busy === "image" ? (
                   <Loader2 size={16} className="animate-spin" />
@@ -139,7 +140,7 @@ export default function DownloadDialog({ open, onClose, imageA, imageB, result }
               <button
                 onClick={handleDownloadJson}
                 disabled={busy !== null}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-95 disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 disabled:opacity-60 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 {busy === "json" ? (
                   <Loader2 size={16} className="animate-spin" />

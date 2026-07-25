@@ -54,7 +54,11 @@ export default function HistoryPanel({ history, onSelect, onDelete, favorites, o
             >
               <div
                 onClick={() => onSelect(item)}
-                className="flex flex-1 cursor-pointer items-center gap-3 min-w-0"
+                role="button"
+                tabIndex={0}
+                aria-label={`View comparison from ${date}, ${item.percentage}% match`}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(item); } }}
+                className="flex flex-1 cursor-pointer items-center gap-3 min-w-0 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <div className="flex h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border border-(--border)">
                   <div className="w-1/2 overflow-hidden">
@@ -84,7 +88,7 @@ export default function HistoryPanel({ history, onSelect, onDelete, favorites, o
                     e.stopPropagation();
                     onToggleFavorite(item.id);
                   }}
-                  className="rounded-lg p-1.5 transition hover:bg-(--muted)"
+                  className="rounded-lg p-1.5 transition hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   aria-label={isFav ? "Unfavorite" : "Favorite"}
                 >
                   <Star
@@ -97,7 +101,7 @@ export default function HistoryPanel({ history, onSelect, onDelete, favorites, o
                     e.stopPropagation();
                     onDelete(item.id);
                   }}
-                  className="rounded-lg p-1.5 text-(--muted-foreground) transition hover:bg-red-500/10 hover:text-red-500"
+                  className="rounded-lg p-1.5 text-(--muted-foreground) transition hover:bg-(--danger)/10 hover:text-(--danger) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   aria-label="Delete"
                 >
                   <Trash2 size={14} />

@@ -221,12 +221,17 @@ export default function App() {
               <div className="space-y-4">
                 {/* Pattern Input */}
                 <div>
+                  <label
+                    htmlFor="regex-pattern-input"
+                    className="block text-sm font-semibold mb-2"
+                    style={{ color: "var(--foreground)" }}
+                  >
+                    Pattern
+                  </label>
                   <div
-                    className="flex items-center gap-2 p-4 rounded-lg font-mono text-sm sm:text-base"
+                    className="flex items-center gap-2 p-4 rounded-lg font-mono text-sm sm:text-base border-2 border-[var(--border)] transition focus-within:border-[var(--primary)] focus-within:ring-2 focus-within:ring-[var(--primary)]/25 motion-reduce:transition-none"
                     style={{
                       backgroundColor: "var(--muted)",
-                      borderColor: "var(--border)",
-                      borderWidth: "2px",
                     }}
                   >
                     <span
@@ -236,11 +241,12 @@ export default function App() {
                       /
                     </span>
                     <input
+                      id="regex-pattern-input"
                       type="text"
                       value={pattern}
                       onChange={(e) => setPattern(e.target.value)}
                       placeholder="Enter regex pattern..."
-                      className="flex-1 bg-transparent outline-none"
+                      className="flex-1 bg-transparent outline-none min-h-11"
                       style={{ color: "var(--foreground)" }}
                     />
                     <span
@@ -285,7 +291,9 @@ export default function App() {
                       <button
                         key={flag.key}
                         onClick={() => toggleFlag(flag.key)}
-                        className="px-3 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 active:scale-95"
+                        aria-pressed={flags[flag.key]}
+                        aria-label={`${flag.label} flag (${flag.desc})`}
+                        className="min-h-11 min-w-11 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105 active:scale-95 motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                         style={{
                           backgroundColor: flags[flag.key]
                             ? "var(--primary)"
@@ -307,16 +315,17 @@ export default function App() {
                 {/* Error Display */}
                 {error && (
                   <div
-                    className="p-4 rounded-lg"
+                    role="alert"
+                    className="p-4 rounded-lg border"
                     style={{
-                      backgroundColor: "#fee",
-                      borderColor: "#fcc",
-                      borderWidth: "1px",
+                      backgroundColor: "var(--danger-soft)",
+                      borderColor:
+                        "color-mix(in srgb, var(--danger) 35%, transparent)",
                     }}
                   >
                     <p
                       className="text-sm font-medium"
-                      style={{ color: "#c33" }}
+                      style={{ color: "var(--danger)" }}
                     >
                       ⚠️ {error}
                     </p>
@@ -350,15 +359,17 @@ export default function App() {
                       <button
                         type="button"
                         onClick={copyReport}
-                        className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary)"
+                        aria-label="Copy match report to clipboard"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       >
                         <Clipboard className="h-4 w-4" />
-                        {copied ? "Copied" : "Copy report"}
+                        {copied ? "Copied!" : "Copy report"}
                       </button>
                       <button
                         type="button"
                         onClick={downloadReport}
-                        className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary)"
+                        aria-label="Download match report as JSON"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       >
                         <FileDown className="h-4 w-4" />
                         Download JSON
@@ -391,7 +402,8 @@ export default function App() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setActiveTab("test")}
-                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer"
+                    aria-pressed={activeTab === "test"}
+                    className="min-h-11 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     style={{
                       backgroundColor:
                         activeTab === "test"
@@ -407,7 +419,8 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => setActiveTab("result")}
-                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer"
+                    aria-pressed={activeTab === "result"}
+                    className="min-h-11 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     style={{
                       backgroundColor:
                         activeTab === "result"
@@ -428,15 +441,13 @@ export default function App() {
                 <textarea
                   value={testString}
                   onChange={(e) => setTestString(e.target.value)}
+                  aria-label="Test string"
                   placeholder="Enter text to test against your regex..."
                   rows={10}
-                  className="w-full p-4 rounded-lg font-mono text-sm resize-none focus:ring-2 focus:outline-none"
+                  className="w-full p-4 rounded-lg font-mono text-sm resize-none border-2 border-[var(--border)] transition focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 motion-reduce:transition-none"
                   style={{
                     backgroundColor: "var(--background)",
-                    borderColor: "var(--border)",
-                    borderWidth: "2px",
                     color: "var(--foreground)",
-                    "--tw-ring-color": "var(--primary)",
                   }}
                 />
               ) : (
@@ -557,7 +568,7 @@ export default function App() {
                   <button
                     key={index}
                     onClick={() => loadPattern(preset)}
-                    className="w-full text-left p-3 rounded-lg transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                    className="w-full text-left p-3 rounded-lg transition-all hover:scale-105 active:scale-95 motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 cursor-pointer"
                     style={{
                       backgroundColor: "var(--muted)",
                       borderColor: "var(--border)",

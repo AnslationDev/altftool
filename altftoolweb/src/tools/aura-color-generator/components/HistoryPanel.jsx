@@ -29,8 +29,12 @@ export default function HistoryPanel({ history, favorites, onSelect, onDelete, o
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.05 }}
-            className="group relative cursor-pointer overflow-hidden rounded-xl border border-(--border) bg-(--card) p-3 transition-all hover:border-(--primary) hover:shadow-md"
+            className="group relative cursor-pointer overflow-hidden rounded-xl border border-(--border) bg-(--card) p-3 transition-all hover:border-(--primary) hover:shadow-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             onClick={() => onSelect(item)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View ${item.name} aura reading`}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(item); } }}
           >
             <div className="flex items-center gap-3">
               <div
@@ -48,13 +52,15 @@ export default function HistoryPanel({ history, favorites, onSelect, onDelete, o
             <div className="flex gap-1">
               <button
                 onClick={(e) => { e.stopPropagation(); onToggleFavorite(item); }}
-                className="rounded-lg p-1.5 text-(--muted-foreground) hover:text-red-500 transition-colors"
+                aria-label={isFavorited(item) ? "Remove from favorites" : "Add to favorites"}
+                className="rounded-lg p-1.5 text-(--muted-foreground) hover:text-(--danger) transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Heart className={`h-4 w-4 ${isFavorited(item) ? "fill-red-500 text-red-500" : ""}`} />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); onDelete(item.timestamp); }}
-                className="rounded-lg p-1.5 text-(--muted-foreground) hover:text-(--danger) transition-colors"
+                aria-label="Delete reading"
+                className="rounded-lg p-1.5 text-(--muted-foreground) hover:text-(--danger) transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Trash2 className="h-4 w-4" />
               </button>

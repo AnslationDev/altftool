@@ -19,7 +19,7 @@ export default function LunchPicker({ filters, setFilters, filtered, selected, a
                   <button
                     key={c.id}
                     onClick={() => setFilters((f) => ({ ...f, cuisine: f.cuisine === c.id ? "" : c.id }))}
-                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                       filters.cuisine === c.id
                         ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                         : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -37,7 +37,7 @@ export default function LunchPicker({ filters, setFilters, filtered, selected, a
                   <button
                     key={b.id}
                     onClick={() => setFilters((f) => ({ ...f, budget: f.budget === b.id ? "" : b.id }))}
-                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                       filters.budget === b.id
                         ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                         : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -55,7 +55,7 @@ export default function LunchPicker({ filters, setFilters, filtered, selected, a
                   <button
                     key={t.id}
                     onClick={() => setFilters((f) => ({ ...f, type: f.type === t.id ? "" : t.id }))}
-                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                       filters.type === t.id
                         ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                         : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -92,7 +92,8 @@ export default function LunchPicker({ filters, setFilters, filtered, selected, a
                   </div>
                   <button
                     onClick={() => onToggleFavorite(selected)}
-                    className="text-(--muted-foreground) hover:text-(--danger) transition"
+                    aria-label="Toggle favorite lunch spot"
+                    className="p-2 text-(--muted-foreground) hover:text-(--danger) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded-lg"
                   >
                     <Heart size="16" className={favorites.find((f) => f.name === selected.name) ? "fill-(--danger) text-(--danger)" : ""} />
                   </button>
@@ -107,7 +108,7 @@ export default function LunchPicker({ filters, setFilters, filtered, selected, a
             </AnimatePresence>
           </Card>
 
-          <Button variant="primary" size="lg" className="w-full h-12 text-sm font-bold" onClick={onPick} disabled={filtered.length === 0 || animating}>
+          <Button variant="primary" size="lg" className="w-full h-12 text-sm font-bold active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" onClick={onPick} disabled={filtered.length === 0 || animating}>
             {animating ? "Choosing..." : "Pick Lunch!"}
           </Button>
 

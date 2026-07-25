@@ -34,7 +34,10 @@ const DiffModeToggle = ({ mode, setMode }) => {
       {/* Trigger */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card)"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="Diff mode"
+        className="flex min-h-11 items-center gap-2 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
       >
         {selectedMode?.icon && <selectedMode.icon className="w-4 h-4" />}
         {selectedMode?.label}
@@ -43,7 +46,7 @@ const DiffModeToggle = ({ mode, setMode }) => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute mt-2 w-44 bg-white border border-(--border) rounded-lg shadow-md z-50">
+        <div className="absolute mt-2 w-44 bg-(--card) border border-(--border) rounded-lg shadow-md z-50">
           {MODES.map((m) => {
             const Icon = m.icon;
 
@@ -54,8 +57,9 @@ const DiffModeToggle = ({ mode, setMode }) => {
                   setMode(m.key);
                   setOpen(false);
                 }}
-                className={`flex items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-gray-100 ${
-                  mode === m.key ? "bg-gray-50 font-medium" : ""
+                aria-pressed={mode === m.key}
+                className={`flex min-h-11 items-center gap-2 w-full px-3 py-2 text-sm text-left hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
+                  mode === m.key ? "bg-(--muted) font-medium" : ""
                 }`}
               >
                 <Icon className="w-4 h-4" />

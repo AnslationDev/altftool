@@ -80,8 +80,8 @@ export default function ToolHome() {
   }, [loanAmount, interestRate, tenure, prepayment, prepaymentMonth]);
 
   const pieData = [
-    { name: 'Principal', value: loanAmount, color: '#3b82f6' },
-    { name: 'Interest', value: calculations.totalInterest, color: '#ef4444' }
+    { name: 'Principal', value: loanAmount, color: 'var(--primary)' },
+    { name: 'Interest', value: calculations.totalInterest, color: 'var(--danger)' }
   ];
 
   const yearlyData = useMemo(() => {
@@ -196,16 +196,16 @@ Generated on: ${new Date().toLocaleString()}
            
 
           {/* Tabs */}
-          <div className="border-b border-gray-200">
+          <div className="border-b border-[var(--border)]">
             <div className="flex overflow-x-auto">
               {['calculator', 'breakdown', 'schedule', 'comparison'].map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-3 font-medium capitalize whitespace-nowrap ${
+                  className={`min-h-[44px] px-6 py-3 font-medium capitalize whitespace-nowrap transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                     activeTab === tab
-                      ? 'border-b-2 border-blue-600 text-blue-600'
-                      : 'text-(--foreground) hover:text-gray-700'
+                      ? 'border-b-2 border-[var(--primary)] text-[var(--primary)]'
+                      : 'text-(--foreground) hover:text-[var(--primary)]'
                   }`}
                 >
                   {tab}
@@ -227,7 +227,7 @@ Generated on: ${new Date().toLocaleString()}
                         key={preset.label}
                         type="button"
                         onClick={() => applyPreset(preset)}
-                        className="rounded-md border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                        className="min-h-[44px] rounded-md border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       >
                         {preset.label}
                       </button>
@@ -237,7 +237,7 @@ Generated on: ${new Date().toLocaleString()}
                   <div>
                     <label className="flex items-center justify-between mb-2">
                       <span className="font-medium text-(--foreground)">Loan Amount</span>
-                      <span className="text-blue-600 font-semibold">{formatCurrency(loanAmount)}</span>
+                      <span className="text-[var(--primary)] font-semibold">{formatCurrency(loanAmount)}</span>
                     </label>
                     <input
                       type="range"
@@ -246,7 +246,8 @@ Generated on: ${new Date().toLocaleString()}
                       step="50000"
                       value={loanAmount}
                       onChange={(e) => setLoanAmount(Number(e.target.value))}
-                      className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                      aria-label="Loan amount"
+                      className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     />
                     <div className="flex justify-between text-xs text-(--foreground) mt-1">
                       <span>₹1L</span>
@@ -257,7 +258,7 @@ Generated on: ${new Date().toLocaleString()}
                   <div>
                     <label className="flex items-center justify-between mb-2">
                       <span className="font-medium text-(--foreground)">Interest Rate (% p.a.)</span>
-                      <span className="text-blue-600 font-semibold">{interestRate}%</span>
+                      <span className="text-[var(--primary)] font-semibold">{interestRate}%</span>
                     </label>
                     <input
                       type="range"
@@ -266,7 +267,8 @@ Generated on: ${new Date().toLocaleString()}
                       step="0.1"
                       value={interestRate}
                       onChange={(e) => setInterestRate(Number(e.target.value))}
-                      className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                      aria-label="Interest rate in percent per annum"
+                      className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     />
                     <div className="flex justify-between text-xs text-(--foreground) mt-1">
                       <span>5%</span>
@@ -277,7 +279,7 @@ Generated on: ${new Date().toLocaleString()}
                   <div>
                     <label className="flex items-center justify-between mb-2">
                       <span className="font-medium text-(--foreground)">Loan Tenure (Years)</span>
-                      <span className="text-blue-600 font-semibold">{tenure} years</span>
+                      <span className="text-[var(--primary)] font-semibold">{tenure} years</span>
                     </label>
                     <input
                       type="range"
@@ -286,7 +288,8 @@ Generated on: ${new Date().toLocaleString()}
                       step="1"
                       value={tenure}
                       onChange={(e) => setTenure(Number(e.target.value))}
-                      className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                      aria-label="Loan tenure in years"
+                      className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     />
                     <div className="flex justify-between text-xs text-(--foreground) mt-1">
                       <span>1 year</span>
@@ -300,7 +303,7 @@ Generated on: ${new Date().toLocaleString()}
                     <div>
                       <label className="flex items-center justify-between mb-2">
                         <span className="font-medium text-(--foreground)">Prepayment Amount</span>
-                        <span className="text-blue-500 font-semibold">{formatCurrency(prepayment)}</span>
+                        <span className="text-[var(--primary)] font-semibold">{formatCurrency(prepayment)}</span>
                       </label>
                       <input
                         type="range"
@@ -309,14 +312,15 @@ Generated on: ${new Date().toLocaleString()}
                         step="10000"
                         value={prepayment}
                         onChange={(e) => setPrepayment(Number(e.target.value))}
-                        className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-400"
+                        aria-label="Prepayment amount"
+                        className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       />
                     </div>
 
                     <div className="mt-4">
                       <label className="flex items-center justify-between mb-2">
                         <span className="font-medium text-(--foreground)">Prepayment at Month</span>
-                        <span className="text-blue-500 font-semibold">Month {prepaymentMonth}</span>
+                        <span className="text-[var(--primary)] font-semibold">Month {prepaymentMonth}</span>
                       </label>
                       <input
                         type="range"
@@ -325,7 +329,8 @@ Generated on: ${new Date().toLocaleString()}
                         step="1"
                         value={prepaymentMonth}
                         onChange={(e) => setPrepaymentMonth(Number(e.target.value))}
-                        className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-400"
+                        aria-label="Prepayment month"
+                        className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       />
                     </div>
                   </div>
@@ -336,7 +341,7 @@ Generated on: ${new Date().toLocaleString()}
                     <div>
                       <label className="flex items-center justify-between mb-2">
                         <span className="font-medium text-(--foreground)">Monthly Income</span>
-                        <span className="text-blue-600 font-semibold">{formatCurrency(income)}</span>
+                        <span className="text-[var(--primary)] font-semibold">{formatCurrency(income)}</span>
                       </label>
                       <input
                         type="range"
@@ -345,18 +350,19 @@ Generated on: ${new Date().toLocaleString()}
                         step="5000"
                         value={income}
                         onChange={(e) => setIncome(Number(e.target.value))}
-                        className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                        aria-label="Monthly income"
+                        className="w-full h-2 bg-[var(--surface-soft)] rounded-lg appearance-none cursor-pointer accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                       />
                     </div>
 
-                    <div className={`mt-4 p-4 rounded-lg ${isAffordable ? 'bg-(--background) border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                    <div className={`mt-4 p-4 rounded-lg border ${isAffordable ? 'bg-[var(--success-soft)] border-[var(--success)]/30' : 'bg-[var(--danger-soft)] border-[var(--danger)]/30'}`} role="status">
                       <div className="flex items-center justify-between">
                         <span className="font-medium text-(--foreground)">EMI/Income Ratio</span>
-                        <span className={`font-bold text-lg ${isAffordable ? 'text-blue-600' : 'text-red-600'}`}>
+                        <span className={`font-bold text-lg ${isAffordable ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
                           {affordabilityRatio}%
                         </span>
                       </div>
-                      <p className={`text-sm mt-2 ${isAffordable ? 'text-blue-700' : 'text-red-700'}`}>
+                      <p className={`text-sm mt-2 ${isAffordable ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
                         {isAffordable ? 'Loan is affordable (below 50% of income)' : 'High EMI burden (above 50% of income)'}
                       </p>
                     </div>
@@ -368,7 +374,7 @@ Generated on: ${new Date().toLocaleString()}
                   <h2 className="text-xl font-bold text-(--foreground) mb-4">EMI Breakdown</h2>
                   
                   <div className="grid grid-cols-1 gap-4">
-                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg">
+                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg ring-1 ring-[var(--border)]">
                       <div className="flex items-center gap-2 mb-2">
                         <DollarSign className="w-5 h-5" />
                         <span className="text-sm opacity-90">Monthly EMI</span>
@@ -376,7 +382,7 @@ Generated on: ${new Date().toLocaleString()}
                       <div className="text-3xl font-bold">{formatCurrency(calculations.emi)}</div>
                     </div>
 
-                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg">
+                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg ring-1 ring-[var(--border)]">
                       <div className="flex items-center gap-2 mb-2">
                         <Percent className="w-5 h-5" />
                         <span className="text-sm opacity-90">Total Interest</span>
@@ -384,7 +390,7 @@ Generated on: ${new Date().toLocaleString()}
                       <div className="text-3xl font-bold">{formatCurrency(calculations.totalInterest)}</div>
                     </div>
 
-                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg">
+                    <div className="bg-(--card) p-6 rounded-xl text-(--foreground) shadow-lg ring-1 ring-[var(--border)]">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="w-5 h-5" />
                         <span className="text-sm opacity-90">Total Amount Payable</span>
@@ -394,19 +400,19 @@ Generated on: ${new Date().toLocaleString()}
                   </div>
 
                   {prepayment > 0 && (
-                    <div className="bg-(--background) border-2 border-blue-200 p-6 rounded-xl">
+                    <div className="bg-(--background) border-2 border-[var(--primary)]/30 p-6 rounded-xl">
                       <div className="flex items-center gap-2 mb-4">
-                        <TrendingDown className="w-6 h-6 text-blue-600" />
+                        <TrendingDown className="w-6 h-6 text-[var(--primary)]" />
                         <h3 className="font-bold text-(--foreground)">Prepayment Impact</h3>
                       </div>
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span className="text-(--foreground)">Interest Saved</span>
-                          <span className="font-bold text-blue-600">{formatCurrency(calculations.savedInterest)}</span>
+                          <span className="font-bold text-[var(--primary)]">{formatCurrency(calculations.savedInterest)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-(--foreground)">Tenure Reduced</span>
-                          <span className="font-bold text-blue-600">{calculations.reducedMonths} months</span>
+                          <span className="font-bold text-[var(--primary)]">{calculations.reducedMonths} months</span>
                         </div>
                       </div>
                     </div>
@@ -421,7 +427,7 @@ Generated on: ${new Date().toLocaleString()}
                         labelLine={false}
                         label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
                         outerRadius={80}
-                        fill="#8884d8"
+                        fill="var(--primary)"
                         dataKey="value"
                       >
                         {pieData.map((entry, index) => (
@@ -436,14 +442,16 @@ Generated on: ${new Date().toLocaleString()}
                     <button
                       type="button"
                       onClick={copyReport}
-                      className="w-full border border-(--border) bg-(--card) text-(--foreground) py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                      aria-label="Copy loan report"
+                      className="w-full min-h-[44px] border border-(--border) bg-(--card) text-(--foreground) py-3 rounded-lg font-semibold transition-all motion-reduce:transition-none flex items-center justify-center gap-2 shadow-sm cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     >
                       <Copy className="w-5 h-5" />
                       {copied ? 'Copied' : 'Copy Report'}
                     </button>
                     <button
                       onClick={downloadReport}
-                      className="w-full bg-(--primary) text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                      aria-label="Download loan report"
+                      className="w-full min-h-[44px] bg-(--primary) text-[var(--primary-foreground)] py-3 rounded-lg font-semibold transition-all motion-reduce:transition-none flex items-center justify-center gap-2 shadow-lg cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     >
                       <Download className="w-5 h-5" />
                       Download Report
@@ -463,8 +471,8 @@ Generated on: ${new Date().toLocaleString()}
                     <YAxis tickFormatter={(val) => `₹${(val / 1000).toFixed(0)}K`} />
                     <Tooltip formatter={(value) => formatCurrency(value)} />
                     <Legend />
-                    <Bar dataKey="Principal" fill="#3b82f6" />
-                    <Bar dataKey="Interest" fill="#ef4444" />
+                    <Bar dataKey="Principal" fill="var(--primary)" />
+                    <Bar dataKey="Interest" fill="var(--danger)" />
                   </BarChart>
                 </div>
               </div>
@@ -477,27 +485,27 @@ Generated on: ${new Date().toLocaleString()}
                   <table className="w-full border-collapse">
                     <thead>
                       <tr className="bg-(--background) text-(--foreground)">
-                        <th className="border border-gray-300 p-3 text-left">Month</th>
-                        <th className="border border-gray-300 p-3 text-right">EMI</th>
-                        <th className="border border-gray-300 p-3 text-right">Principal</th>
-                        <th className="border border-gray-300 p-3 text-right">Interest</th>
-                        <th className="border border-gray-300 p-3 text-right">Balance</th>
+                        <th className="border border-[var(--border)] p-3 text-left">Month</th>
+                        <th className="border border-[var(--border)] p-3 text-right">EMI</th>
+                        <th className="border border-[var(--border)] p-3 text-right">Principal</th>
+                        <th className="border border-[var(--border)] p-3 text-right">Interest</th>
+                        <th className="border border-[var(--border)] p-3 text-right">Balance</th>
                       </tr>
                     </thead>
                     <tbody>
                       {calculations.schedule.slice(0, 24).map((row) => (
                         <tr key={row.month} className=" bg-(--background) text-(--foreground) ">
-                          <td className="border border-gray-300 p-3">{row.month}</td>
-                          <td className="border border-gray-300 p-3 text-right">{formatCurrency(row.emi)}</td>
-                          <td className="border border-gray-300 p-3 text-right text-blue-600">{formatCurrency(row.principal)}</td>
-                          <td className="border border-gray-300 p-3 text-right text-red-600">{formatCurrency(row.interest)}</td>
-                          <td className="border border-gray-300 p-3 text-right font-semibold">{formatCurrency(row.balance)}</td>
+                          <td className="border border-[var(--border)] p-3">{row.month}</td>
+                          <td className="border border-[var(--border)] p-3 text-right">{formatCurrency(row.emi)}</td>
+                          <td className="border border-[var(--border)] p-3 text-right text-[var(--primary)]">{formatCurrency(row.principal)}</td>
+                          <td className="border border-[var(--border)] p-3 text-right text-[var(--danger)]">{formatCurrency(row.interest)}</td>
+                          <td className="border border-[var(--border)] p-3 text-right font-semibold">{formatCurrency(row.balance)}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                   {calculations.schedule.length > 24 && (
-                    <p className="text-gray-500 text-sm mt-4">Showing first 24 months of {calculations.schedule.length} total months</p>
+                    <p className="text-[var(--muted-foreground)] text-sm mt-4">Showing first 24 months of {calculations.schedule.length} total months</p>
                   )}
                 </div>
               </div>

@@ -22,7 +22,9 @@ export default function Toast({ message, onClose }) {
         shadow-xl
         text-sm font-medium
         animate-fade-in
+        motion-reduce:animate-none
       "
+      role="status"
     >
       {message}
     </div>

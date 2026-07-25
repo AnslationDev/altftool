@@ -449,7 +449,7 @@ export default function MainComponent() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="btn-secondary inline-flex items-center gap-2"
+              className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <UploadCloud className="h-4 w-4" />
               Upload HTML
@@ -460,7 +460,7 @@ export default function MainComponent() {
                 setHtmlInput(SAMPLE_HTML);
                 setFileName("product-launch-notes");
               }}
-              className="btn-secondary inline-flex items-center gap-2"
+              className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <Sparkles className="h-4 w-4" />
               Load Sample
@@ -468,7 +468,7 @@ export default function MainComponent() {
             <button
               type="button"
               onClick={resetTool}
-              className="btn-secondary inline-flex items-center gap-2"
+              className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <Trash2 className="h-4 w-4" />
               Clear
@@ -479,19 +479,22 @@ export default function MainComponent() {
         <textarea
           value={htmlInput}
           onChange={(event) => setHtmlInput(event.target.value)}
+          aria-label="HTML input"
           spellCheck={false}
           placeholder="<article><h1>Hello</h1><p>Paste HTML here...</p></article>"
-          className="mt-5 min-h-80 w-full resize-y rounded-lg border border-(--border) bg-(--background) px-4 py-3 font-mono text-sm leading-6 text-(--foreground) outline-none transition focus:border-(--primary)"
+          className="mt-5 min-h-80 w-full resize-y rounded-lg border border-(--border) bg-(--background) px-4 py-3 font-mono text-sm leading-6 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 motion-reduce:transition-none"
         />
       </section>
 
       {(error || status) && (
         <div
-          className={`flex items-start gap-3 rounded-lg border p-4 ${
-            error
-              ? "border-red-500/40 bg-red-500/10 text-red-600"
-              : "border-green-500/40 bg-green-500/10 text-green-700"
-          }`}
+          role={error ? "alert" : "status"}
+          className="flex items-start gap-3 rounded-lg border p-4"
+          style={{
+            backgroundColor: error ? "var(--danger-soft)" : "var(--success-soft)",
+            borderColor: `color-mix(in srgb, ${error ? "var(--danger)" : "var(--success)"} 40%, transparent)`,
+            color: error ? "var(--danger)" : "var(--success)",
+          }}
         >
           {error ? (
             <XCircle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -523,7 +526,8 @@ export default function MainComponent() {
                     key={key}
                     type="button"
                     onClick={() => setActiveView(key)}
-                    className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition ${
+                    aria-pressed={activeView === key}
+                    className={`inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                       activeView === key
                         ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                         : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
@@ -539,7 +543,7 @@ export default function MainComponent() {
             <div className="mt-5 min-h-96 overflow-auto rounded-lg border border-(--border) bg-(--background)">
               {isConverting ? (
                 <div className="flex h-96 items-center justify-center text-(--muted-foreground)">
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin motion-reduce:animate-none" />
                   Converting...
                 </div>
               ) : activeView === "preview" ? (
@@ -570,7 +574,7 @@ export default function MainComponent() {
               <button
                 type="button"
                 onClick={() => convertHtml(htmlInput, options)}
-                className="btn-primary inline-flex items-center gap-2"
+                className="btn-primary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Wand2 className="h-4 w-4" />
                 Convert Now
@@ -579,25 +583,28 @@ export default function MainComponent() {
                 type="button"
                 onClick={() => copyValue(markdown, "markdown")}
                 disabled={!markdown}
-                className="btn-secondary inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+                aria-label="Copy Markdown output to clipboard"
+                className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Copy className="h-4 w-4" />
-                {copied === "markdown" ? "Copied" : "Copy Markdown"}
+                {copied === "markdown" ? "Copied!" : "Copy Markdown"}
               </button>
               <button
                 type="button"
                 onClick={() => copyValue(cleanedHtml, "html")}
                 disabled={!cleanedHtml}
-                className="btn-secondary inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+                aria-label="Copy cleaned HTML to clipboard"
+                className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Clipboard className="h-4 w-4" />
-                {copied === "html" ? "Copied" : "Copy Clean HTML"}
+                {copied === "html" ? "Copied!" : "Copy Clean HTML"}
               </button>
               <button
                 type="button"
                 onClick={() => downloadText(markdown, `${fileName || "converted"}.md`)}
                 disabled={!markdown}
-                className="btn-secondary inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
+                aria-label="Download Markdown file"
+                className="btn-secondary inline-flex min-h-11 items-center gap-2 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Download className="h-4 w-4" />
                 Download .md
@@ -630,7 +637,7 @@ export default function MainComponent() {
                 <select
                   value={options.headingStyle}
                   onChange={(event) => updateOption("headingStyle", event.target.value)}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="min-h-11 w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 motion-reduce:transition-none"
                 >
                   <option value="atx">ATX: # Heading</option>
                   <option value="setext">Setext: Heading underline</option>
@@ -644,7 +651,7 @@ export default function MainComponent() {
                 <select
                   value={options.linkStyle}
                   onChange={(event) => updateOption("linkStyle", event.target.value)}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="min-h-11 w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 motion-reduce:transition-none"
                 >
                   <option value="inlined">Inline links</option>
                   <option value="referenced">Reference links</option>
@@ -658,7 +665,7 @@ export default function MainComponent() {
                 <select
                   value={options.bulletListMarker}
                   onChange={(event) => updateOption("bulletListMarker", event.target.value)}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="min-h-11 w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 motion-reduce:transition-none"
                 >
                   <option value="-">Dash: -</option>
                   <option value="*">Asterisk: *</option>
@@ -673,7 +680,7 @@ export default function MainComponent() {
                 <select
                   value={options.fence}
                   onChange={(event) => updateOption("fence", event.target.value)}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="min-h-11 w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 motion-reduce:transition-none"
                 >
                   <option value="```">Backticks: ```</option>
                   <option value="~~~">Tildes: ~~~</option>
@@ -696,7 +703,8 @@ export default function MainComponent() {
                     key={key}
                     type="button"
                     onClick={() => updateOption(key, !options[key])}
-                    className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left text-sm transition ${
+                    aria-pressed={Boolean(options[key])}
+                    className={`flex min-h-11 w-full items-center justify-between rounded-lg border px-3 py-2 text-left text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                       options[key]
                         ? "border-(--primary) bg-(--section-highlight)"
                         : "border-(--border) bg-(--background)"

@@ -118,10 +118,11 @@ const EditableTable = ({ data, setData }) => {
       <div className="p-3 border-b border-(--border) bg-gray-50/50 flex flex-wrap justify-between items-center gap-4">
         <div className="flex items-center gap-2">
            <span className="text-[15px] font-bold text-gray-400 uppercase">Show</span>
-           <select 
-             value={rowsPerPage} 
+           <select
+             value={rowsPerPage}
              onChange={(e) => {setRowsPerPage(Number(e.target.value)); setCurrentPage(1);}}
-             className="text-ml border border-(--border) rounded px-1 py-0.5 outline-none font-bold text-(--secondary)"
+             aria-label="Rows per page"
+             className="text-ml border border-(--border) rounded px-1 py-0.5 outline-none font-bold text-(--secondary) focus:border-(--primary) focus:ring-[3px] focus:ring-(--primary)/25"
            >
              {[10, 20, 30, 50, 100].map(n => <option key={n} value={n}>{n}</option>)}
            </select>
@@ -151,6 +152,7 @@ const EditableTable = ({ data, setData }) => {
                         type="text"
                         value={row[h]}
                         placeholder={isEmpty ? "Missing..." : ""}
+                        aria-label={`${h}, row ${indexOfFirstRow + rowIndex + 1}`}
                         onChange={(e) => handleCellChange(rowIndex, h, e.target.value)}
                         className={`w-full bg-transparent border rounded px-2 py-1 outline-none transition-all duration-200 ${isEmpty ? "border-red-300 bg-red-50 text-red-900 placeholder-red-400 focus:ring-1 focus:ring-red-400" : "border-transparent focus:ring-1 focus:ring-blue-400 text-gray-600"}`}
                       />
@@ -158,7 +160,7 @@ const EditableTable = ({ data, setData }) => {
                   );
                 })}
                 <td className="px-4 py-2 text-center">
-                  <button onClick={() => deleteRow(rowIndex)} className="text-red-300 hover:text-red-500 transition-colors font-bold">✕</button>
+                  <button onClick={() => deleteRow(rowIndex)} aria-label={`Delete row ${indexOfFirstRow + rowIndex + 1}`} className="min-h-11 min-w-11 rounded-md text-red-300 hover:text-red-500 transition-colors font-bold focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-7 sm:min-w-7">✕</button>
                 </td>
               </tr>
             ))}
@@ -286,7 +288,7 @@ export default function ToolHome() {
             {/* Minify Toggle */}
             <div className="flex items-center gap-3">
               <span className={`text-[11px] font-semibold uppercase transition ${!isMinified ? 'text-blue-600' : 'text-gray-400'}`}>Pretty</span>
-              <button onClick={() => setIsMinified(!isMinified)} className={`relative w-12 h-6 rounded-full transition-all duration-300 shadow-inner ${isMinified ? 'bg-blue-600' : 'bg-gray-300'}`}>
+              <button onClick={() => setIsMinified(!isMinified)} role="switch" aria-checked={isMinified} aria-label="Minify JSON output" className={`relative w-12 h-6 rounded-full transition-all duration-300 shadow-inner focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${isMinified ? 'bg-blue-600' : 'bg-gray-300'}`}>
                 <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-md transition-all duration-300 ${isMinified ? 'translate-x-6' : ''}`} />
               </button>
               <span className={`text-[11px] font-semibold uppercase transition ${isMinified ? 'text-blue-600' : 'text-gray-400'}`}>Minify</span>
@@ -295,7 +297,7 @@ export default function ToolHome() {
             {/* Mock API Toggle */}
             <div className="flex items-center gap-3 border-l pl-6 border-(--border)">
               <span className={`text-[11px] font-semibold uppercase transition ${!useMockAPI ? 'text-purple-600' : 'text-gray-400'}`}>Normal</span>
-              <button onClick={() => setUseMockAPI(!useMockAPI)} className={`relative w-12 h-6 rounded-full transition-all duration-300 shadow-inner ${useMockAPI ? 'bg-purple-600' : 'bg-gray-300'}`}>
+              <button onClick={() => setUseMockAPI(!useMockAPI)} role="switch" aria-checked={useMockAPI} aria-label="Add mock API fields to output" className={`relative w-12 h-6 rounded-full transition-all duration-300 shadow-inner focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${useMockAPI ? 'bg-purple-600' : 'bg-gray-300'}`}>
                 <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-md transition-all duration-300 ${useMockAPI ? 'translate-x-6' : ''}`} />
               </button>
               <span className={`text-[11px] font-semibold uppercase transition ${useMockAPI ? 'text-purple-600' : 'text-gray-400'}`}>Mock API</span>

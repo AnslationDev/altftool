@@ -35,7 +35,7 @@ export default function UploadZone({ onFilesAdded, loading }) {
       onDragOver={handleDrag}
       onDrop={handleDrop}
       onClick={() => inputRef.current?.click()}
-      className={`relative p-8 rounded-2xl border-2 border-dashed cursor-pointer transition-all ${
+      className={`relative p-8 rounded-2xl border-2 border-dashed cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
         dragging
           ? "border-(--primary) bg-(--primary-soft)"
           : "border-(--border) hover:border-(--primary) bg-(--card)"
@@ -56,7 +56,7 @@ export default function UploadZone({ onFilesAdded, loading }) {
       <div className="text-center">
         {loading ? (
           <div className="flex items-center justify-center gap-2">
-            <div className="w-5 h-5 rounded-full border-2 border-(--primary) border-t-transparent animate-spin" />
+            <div className="w-5 h-5 rounded-full border-2 border-(--primary) border-t-transparent animate-spin motion-reduce:animate-none" />
             <span className="text-sm text-(--muted-foreground)">Processing...</span>
           </div>
         ) : (

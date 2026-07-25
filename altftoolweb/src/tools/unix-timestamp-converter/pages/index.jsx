@@ -69,7 +69,7 @@ export default function ToolHome() {
               <input
                 value={timestamp}
                 onChange={(event) => setTimestamp(event.target.value)}
-                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono outline-none focus:border-[var(--primary)]"
+                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25"
               />
             </label>
             <label className="mt-5 block">
@@ -78,16 +78,16 @@ export default function ToolHome() {
                 type="datetime-local"
                 value={dateInput}
                 onChange={(event) => updateFromDate(event.target.value)}
-                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 outline-none focus:border-[var(--primary)]"
+                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25"
               />
             </label>
             <div className="mt-5 flex flex-wrap gap-3">
-              <button type="button" onClick={setCurrent} className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white">
+              <button type="button" onClick={setCurrent} className="inline-flex min-h-[44px] items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition-transform hover:opacity-90 active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                 <RefreshCw className="h-4 w-4" />
                 Now
               </button>
               {date && (
-                <button type="button" onClick={() => copyValue(String(Math.floor(date.getTime() / 1000)))} className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]">
+                <button type="button" onClick={() => copyValue(String(Math.floor(date.getTime() / 1000)))} className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <Copy className="h-4 w-4" />
                   {copied ? "Copied" : "Copy seconds"}
                 </button>
@@ -106,7 +106,7 @@ export default function ToolHome() {
                 <Stat label="Timezone offset" value={`${date.getTimezoneOffset() * -1} minutes`} />
               </div>
             ) : (
-              <p className="rounded-lg bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
+              <p role="alert" className="rounded-lg border-l-4 border-[var(--danger)] bg-[var(--danger-soft)] p-4 text-sm font-medium text-[var(--danger)]">
                 Enter a valid timestamp.
               </p>
             )}

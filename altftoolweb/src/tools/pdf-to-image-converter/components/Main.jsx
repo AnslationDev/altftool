@@ -899,7 +899,8 @@ export default function MainComponent() {
                       key={key}
                       type="button"
                       onClick={() => setFormat(key)}
-                      className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
+                      aria-pressed={format === key}
+                      className={`min-h-11 rounded-lg border px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-0 ${
                         format === key
                           ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                           : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
@@ -917,7 +918,7 @@ export default function MainComponent() {
               {qualityEnabled && (
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label htmlFor="pdf-image-quality" className="text-sm font-medium text-(--foreground)">
                       Quality
                     </label>
                     <span className="text-sm font-semibold text-(--foreground)">
@@ -925,6 +926,7 @@ export default function MainComponent() {
                     </span>
                   </div>
                   <input
+                    id="pdf-image-quality"
                     type="range"
                     min="0.5"
                     max="1"
@@ -946,7 +948,8 @@ export default function MainComponent() {
                       key={option.value}
                       type="button"
                       onClick={() => setScale(option.value)}
-                      className={`rounded-lg border p-3 text-left transition ${
+                      aria-pressed={scale === option.value}
+                      className={`rounded-lg border p-3 text-left transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                         scale === option.value
                           ? "border-(--primary) bg-(--section-highlight)"
                           : "border-(--border) bg-(--background) hover:border-(--primary)"
@@ -976,7 +979,8 @@ export default function MainComponent() {
                         type="button"
                         disabled={disabled}
                         onClick={() => setBackground(option.value)}
-                        className={`rounded-lg border px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${
+                        aria-pressed={background === option.value && !disabled}
+                        className={`min-h-11 rounded-lg border px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0 ${
                           background === option.value && !disabled
                             ? "border-(--primary) bg-(--section-highlight) text-(--foreground)"
                             : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
@@ -1009,7 +1013,7 @@ export default function MainComponent() {
                   onChange={(event) => setPageRange(event.target.value)}
                   placeholder={pageCount ? `1-${pageCount}` : "1-3, 5, 8"}
                   disabled={!pageCount}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 disabled:cursor-not-allowed disabled:opacity-60"
                 />
                 <p
                   className={`mt-2 text-xs leading-5 ${

@@ -68,8 +68,8 @@ export default function ToolHome() {
               <label key={label} className="mb-5 block">
                 <span className="text-sm font-semibold">{label}</span>
                 <div className="mt-2 flex gap-3">
-                  <input type="color" value={value} onChange={(event) => setter(event.target.value)} className="h-12 w-14 shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-1 sm:w-16" />
-                  <input value={value} onChange={(event) => setter(event.target.value)} className="min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono outline-none focus:border-[var(--primary)]" />
+                  <input type="color" aria-label={`${label} picker`} value={value} onChange={(event) => setter(event.target.value)} className="h-12 w-14 shrink-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-1 sm:w-16 focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 focus:outline-none" />
+                  <input aria-label={`${label} hex value`} value={value} onChange={(event) => setter(event.target.value)} className="min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
                 </div>
               </label>
             ))}

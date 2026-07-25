@@ -44,7 +44,7 @@ export default function BulkCard({ onBulkFile, bulk, onClearBulk, onDownloadSamp
       >
         {bulk.state === "working" ? (
           <>
-            <Loader2 aria-hidden="true" size={26} className="mb-2 animate-spin text-primary" />
+            <Loader2 aria-hidden="true" size={26} className="mb-2 animate-spin motion-reduce:animate-none text-primary" />
             <p className="text-sm font-semibold text-foreground">Generating barcodes…</p>
           </>
         ) : (

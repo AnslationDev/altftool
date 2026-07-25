@@ -29,26 +29,28 @@ const DiffOptions = ({
   {/* Checkboxes */}
   <div className="flex items-center gap-2">
     <input
+      id="diff-ignore-whitespace"
       type="checkbox"
       checked={ignoreWhitespace}
       onChange={(e) => setIgnoreWhitespace(e.target.checked)}
-      className="w-4 h-4 accent-[var(--primary)] cursor-pointer"
+      className="w-4 h-4 accent-[var(--primary)] cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
     />
-    <span className="text-sm text-[var(--muted-foreground)]">
+    <label htmlFor="diff-ignore-whitespace" className="text-sm text-[var(--muted-foreground)] cursor-pointer">
       Ignore Whitespace
-    </span>
+    </label>
   </div>
 
   <div className="flex items-center gap-2">
     <input
+      id="diff-ignore-case"
       type="checkbox"
       checked={ignoreCase}
       onChange={(e) => setIgnoreCase(e.target.checked)}
-      className="w-4 h-4 accent-[var(--primary)] cursor-pointer"
+      className="w-4 h-4 accent-[var(--primary)] cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
     />
-    <span className="text-sm text-[var(--muted-foreground)]">
+    <label htmlFor="diff-ignore-case" className="text-sm text-[var(--muted-foreground)] cursor-pointer">
       Ignore Case
-    </span>
+    </label>
   </div>
 
   <DiffModeToggle mode={mode} setMode={setMode} />
@@ -64,10 +66,12 @@ const DiffOptions = ({
 
     <button
       onClick={() => setViewMode("split")}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition border ${
+      aria-label="Split view"
+      aria-pressed={viewMode === "split"}
+      className={`flex min-h-11 items-center gap-2 px-3 py-2 rounded-lg text-sm transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
         viewMode === "split"
-          ? "bg-[var(--primary)] text-white border-[var(--primary)]"
-          : "bg-[var(--card)] text-gray-600 border-[var(--border)] hover:bg-gray-100"
+          ? "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]"
+          : "bg-[var(--card)] text-[var(--muted-foreground)] border-[var(--border)] hover:bg-[var(--muted)]"
       }`}
     >
       <SquareSplitHorizontal size={18} />
@@ -76,10 +80,12 @@ const DiffOptions = ({
 
     <button
       onClick={() => setViewMode("unified")}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition border ${
+      aria-label="Unified view"
+      aria-pressed={viewMode === "unified"}
+      className={`flex min-h-11 items-center gap-2 px-3 py-2 rounded-lg text-sm transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
         viewMode === "unified"
-          ? "bg-[var(--primary)] text-white border-[var(--primary)]"
-          : "bg-[var(--card)] text-gray-600 border-[var(--border)] hover:bg-gray-100"
+          ? "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]"
+          : "bg-[var(--card)] text-[var(--muted-foreground)] border-[var(--border)] hover:bg-[var(--muted)]"
       }`}
     >
       <Merge size={18} />
@@ -90,14 +96,16 @@ const DiffOptions = ({
   {/* Action Buttons */}
   <button
     onClick={handleReset}
-    className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-gray-100 transition"
+    aria-label="Reset both text inputs"
+    className="flex min-h-11 items-center gap-2 px-4 py-2 text-sm rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--muted)] transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
   >
     <RotateCcw className="w-4 h-4" /> Reset
   </button>
 
   <button
     onClick={handleDownload}
-    className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--primary)] text-white hover:opacity-90 transition"
+    aria-label="Download diff as text file"
+    className="flex min-h-11 items-center gap-2 px-4 py-2 text-sm rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
   >
     <Download className="w-4 h-4" /> Download Diff
   </button>

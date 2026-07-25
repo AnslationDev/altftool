@@ -141,7 +141,7 @@ export default function BeautyScoreHome() {
                     <Button
                       variant="primary"
                       onClick={() => fileInputRef.current?.click()}
-                      className="flex-1 py-6 flex items-center justify-center gap-3 transition-all hover:-translate-y-1"
+                      className="flex-1 py-6 flex items-center justify-center gap-3 transition-all hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     >
                       <Upload size={20} />
                       <span className="font-semibold text-base">Upload Photo</span>
@@ -149,7 +149,7 @@ export default function BeautyScoreHome() {
                     <Button
                       variant="secondary"
                       onClick={startWebcam}
-                      className="flex-1 py-6 flex items-center justify-center gap-3 transition-all hover:-translate-y-1"
+                      className="flex-1 py-6 flex items-center justify-center gap-3 transition-all hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     >
                       <Camera size={20} />
                       <span className="font-semibold text-base">Use Webcam</span>
@@ -163,6 +163,7 @@ export default function BeautyScoreHome() {
                   ref={fileInputRef}
                   onChange={handleFileUpload}
                   className="hidden"
+                  aria-label="Photo file to analyze"
                 />
               </div>
 
@@ -239,17 +240,17 @@ export default function BeautyScoreHome() {
               {/* Controls below media */}
               <div className="mt-4 flex justify-center gap-4">
                 {isWebcamActive && (
-                  <Button variant="primary" onClick={captureWebcam} className="gap-2 bg-purple-600 hover:bg-purple-700 text-white">
+                  <Button variant="primary" onClick={captureWebcam} className="gap-2 bg-purple-600 hover:bg-purple-700 text-white active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                     <ScanFace size={18} /> Capture & Analyze
                   </Button>
                 )}
-                <Button variant="secondary" onClick={resetAll} className="gap-2">
+                <Button variant="secondary" onClick={resetAll} className="gap-2 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <RefreshCw size={18} /> Start Over
                 </Button>
               </div>
 
               {error && (
-                <div className="mt-4 p-4 rounded-lg bg-red-50 text-red-600 border border-red-200 text-center dark:bg-red-950/30 dark:border-red-900/50">
+                <div role="alert" className="mt-4 p-4 rounded-lg bg-[var(--danger-soft)] text-[var(--danger)] border border-[var(--danger)]/30 text-center">
                   {error}
                 </div>
               )}

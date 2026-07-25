@@ -107,7 +107,8 @@ export default function ShareDialog({ result, open, onClose }) {
               </h3>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg hover:bg-muted/50 transition cursor-pointer"
+                aria-label="Close share dialog"
+                className="p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <X size={18} className="text-muted-foreground" />
               </button>
@@ -122,7 +123,7 @@ export default function ShareDialog({ result, open, onClose }) {
             <div className="grid grid-cols-3 gap-3">
               <button
                 onClick={handleCopyText}
-                className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-95"
+                className="flex flex-col items-center gap-1.5 py-3 px-2 min-h-11 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 {copied ? (
                   <Check size={20} className="text-green-500" />
@@ -136,7 +137,7 @@ export default function ShareDialog({ result, open, onClose }) {
 
               <button
                 onClick={handleShare}
-                className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-95"
+                className="flex flex-col items-center gap-1.5 py-3 px-2 min-h-11 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Share2 size={20} className="text-muted-foreground" />
                 <span className="text-[10px] font-medium text-muted-foreground">Share</span>
@@ -144,7 +145,7 @@ export default function ShareDialog({ result, open, onClose }) {
 
               <button
                 onClick={handleDownloadImage}
-                className="flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-95"
+                className="flex flex-col items-center gap-1.5 py-3 px-2 min-h-11 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Image size={20} className="text-muted-foreground" />
                 <span className="text-[10px] font-medium text-muted-foreground">Image</span>

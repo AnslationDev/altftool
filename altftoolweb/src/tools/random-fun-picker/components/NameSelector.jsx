@@ -47,10 +47,10 @@ export default function NameSelector({
             Names ({names.length})
           </h4>
           <div className="flex gap-1">
-            <button onClick={() => setShowBulk(!showBulk)} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)"><Upload size="14" /></button>
-            <input ref={fileRef} type="file" accept=".csv,.txt" onChange={handleFile} className="hidden" />
-            <button onClick={() => fileRef.current?.click()} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)"><Download size="14" /></button>
-            {names.length > 0 && <button onClick={onClear} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)"><X size="14" /></button>}
+            <button onClick={() => setShowBulk(!showBulk)} aria-label="Bulk add names" title="Bulk add" className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><Upload size="14" /></button>
+            <input ref={fileRef} type="file" accept=".csv,.txt" onChange={handleFile} className="hidden" aria-label="Import names from file" />
+            <button onClick={() => fileRef.current?.click()} aria-label="Import names from CSV or text file" title="Import file" className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><Download size="14" /></button>
+            {names.length > 0 && <button onClick={onClear} aria-label="Clear all names" title="Clear all" className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><X size="14" /></button>}
           </div>
         </div>
 
@@ -67,7 +67,8 @@ export default function NameSelector({
               value={bulkText}
               onChange={(e) => setBulkText(e.target.value)}
               placeholder="Paste names (one per line)..."
-              className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:ring-2 focus:ring-(--primary)"
+              aria-label="Bulk names, one per line"
+              className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
             />
             <div className="flex gap-2">
               <Button variant="primary" size="sm" onClick={handleBulkAdd}>Add All</Button>
@@ -77,6 +78,7 @@ export default function NameSelector({
         ) : (
           <div className="flex gap-2">
             <Input
+              aria-label="New name"
               placeholder="Add name..."
               onKeyDown={(e) => {
                 if (e.key === "Enter" && e.target.value.trim()) {
@@ -86,7 +88,7 @@ export default function NameSelector({
               }}
               className="flex-1"
             />
-            <Button variant="primary" size="sm" onClick={() => {
+            <Button variant="primary" size="sm" aria-label="Add name" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" onClick={() => {
               const input = document.querySelector('[placeholder="Add name..."]');
               if (input && input.value.trim()) {
                 onAdd(input.value);
@@ -104,7 +106,8 @@ export default function NameSelector({
             value={search}
             onChange={(e) => onSearch(e.target.value)}
             placeholder="Search..."
-            className="w-full pl-8 pr-3 py-1.5 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+            aria-label="Search names"
+            className="w-full pl-8 pr-3 py-1.5 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
           />
         </div>
 
@@ -112,7 +115,7 @@ export default function NameSelector({
           {filteredNames.map((name) => (
             <div key={name} className="flex items-center gap-1 px-2 py-1.5 rounded-lg hover:bg-(--muted) group transition text-sm">
               <span className="flex-1 text-(--foreground) truncate">{name}</span>
-              <button onClick={() => onRemove(name)} className="opacity-0 group-hover:opacity-100 p-0.5 text-(--muted-foreground) hover:text-(--danger) transition">
+              <button onClick={() => onRemove(name)} aria-label={`Remove ${name}`} className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 p-0.5 text-(--muted-foreground) hover:text-(--danger) transition">
                 <X size="12" />
               </button>
             </div>
@@ -127,8 +130,9 @@ export default function NameSelector({
               min="1"
               max={filteredNames.length}
               value={multipleCount}
+              aria-label="Number of winners to pick"
               onChange={(e) => onMultipleCount(Math.max(1, Math.min(filteredNames.length, Number(e.target.value) || 1)))}
-              className="w-14 px-2 py-1 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) text-center focus:outline-none focus:ring-2 focus:ring-(--primary)"
+              className="w-14 px-2 py-1 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) text-center focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
             />
             <span className="text-xs text-(--muted-foreground)">winners</span>
           </div>
@@ -160,7 +164,7 @@ export default function NameSelector({
 
       <Card className="p-4 space-y-3">
         <div className="flex gap-2">
-          <Button variant="primary" className="flex-1" size="sm" onClick={onPickOne} disabled={filteredNames.length === 0 || isAnimating}>
+          <Button variant="primary" className="flex-1 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" size="sm" onClick={onPickOne} disabled={filteredNames.length === 0 || isAnimating}>
             Pick One
           </Button>
           <Button variant="secondary" className="flex-1" size="sm" onClick={onPickMultiple} disabled={filteredNames.length < multipleCount}>

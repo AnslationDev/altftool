@@ -28,7 +28,11 @@ export default function UploadPanel({ imagePreview, onUpload, onClear }) {
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
           onClick={() => inputRef.current?.click()}
-          className={`relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all ${
+          role="button"
+          tabIndex={0}
+          aria-label="Upload your photo"
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inputRef.current?.click(); } }}
+          className={`relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
             dragOver
               ? "border-(--primary) bg-(--primary-soft)"
               : "border-(--border) bg-(--card) hover:bg-(--muted)"
@@ -47,6 +51,7 @@ export default function UploadPanel({ imagePreview, onUpload, onClear }) {
             type="file"
             accept="image/*"
             className="hidden"
+            aria-label="Photo file"
             onChange={handleChange}
           />
         </div>
@@ -55,7 +60,8 @@ export default function UploadPanel({ imagePreview, onUpload, onClear }) {
           <img src={imagePreview} alt="Uploaded" className="max-h-96 w-full object-contain" />
           <button
             onClick={onClear}
-            className="absolute right-3 top-3 rounded-full bg-black/60 p-2 text-white hover:bg-black/80 transition-colors"
+            aria-label="Remove uploaded photo"
+            className="absolute right-3 top-3 min-w-11 min-h-11 inline-flex items-center justify-center rounded-full bg-black/60 p-2 text-white hover:bg-black/80 transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <X className="h-4 w-4" />
           </button>

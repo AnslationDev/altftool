@@ -35,7 +35,9 @@ export default function Settings({
           </div>
           <button
             onClick={onToggleDarkMode}
-            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
+            aria-label="Toggle dark mode"
+            aria-pressed={settings.darkMode}
+            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               settings.darkMode ? "bg-primary" : "bg-muted/50"
             }`}
           >
@@ -59,7 +61,9 @@ export default function Settings({
           </div>
           <button
             onClick={onToggleAutoSave}
-            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer ${
+            aria-label="Toggle auto-save"
+            aria-pressed={settings.autoSave}
+            className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               settings.autoSave ? "bg-primary" : "bg-muted/50"
             }`}
           >
@@ -84,7 +88,8 @@ export default function Settings({
           <select
             value={settings.animationSpeed}
             onChange={(e) => onAnimationSpeedChange(e.target.value)}
-            className="text-xs font-medium bg-muted/30 border border-border rounded-lg px-3 py-1.5 text-foreground cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/25"
+            aria-label="Animation speed"
+            className="text-xs font-medium bg-muted/30 border border-border rounded-lg px-3 py-1.5 text-foreground cursor-pointer focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/25"
           >
             <option value="slow">Slow</option>
             <option value="normal">Normal</option>
@@ -95,7 +100,7 @@ export default function Settings({
         <div className="pt-3 border-t border-border">
           <button
             onClick={onClearData}
-            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 font-semibold text-sm cursor-pointer transition active:scale-95 duration-100"
+            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 min-h-11 rounded-xl border border-(--danger)/30 text-(--danger) hover:bg-(--danger)/10 font-semibold text-sm cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Trash2 size={16} />
             Clear All Data

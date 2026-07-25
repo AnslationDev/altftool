@@ -32,10 +32,10 @@ export default function BrowserSessionMain() {
           <div className="flex gap-1.5">
             {analyzer.tabs.length > 0 && (
               <>
-                <button onClick={() => setShowExport(true)} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Export">
+                <button onClick={() => setShowExport(true)} aria-label="Export session" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Export">
                   <Download size="18" />
                 </button>
-                <button onClick={analyzer.clearAll} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition" title="Clear">
+                <button onClick={analyzer.clearAll} aria-label="Clear all tabs" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Clear">
                   <Trash2 size="18" />
                 </button>
               </>
@@ -58,13 +58,15 @@ export default function BrowserSessionMain() {
                   value={analyzer.search}
                   onChange={(e) => analyzer.setSearch(e.target.value)}
                   placeholder="Search URLs, domains, categories..."
-                  className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+                  aria-label="Search tabs"
+                  className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                 />
               </div>
               <select
                 value={analyzer.sortBy}
                 onChange={(e) => analyzer.setSortBy(e.target.value)}
-                className="px-3 py-2 text-sm rounded-xl border border-(--border) bg-(--card) text-(--foreground) focus:outline-none"
+                aria-label="Sort tabs by"
+                className="px-3 py-2 text-sm rounded-xl border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
               >
                 <option value="openOrder">Order</option>
                 <option value="domain">Domain</option>
@@ -119,7 +121,7 @@ export default function BrowserSessionMain() {
                       }`}>
                         {tab.category}
                       </span>
-                      <a href={tab.url} target="_blank" rel="noopener noreferrer" className="p-1 rounded opacity-0 group-hover:opacity-100 text-(--muted-foreground) hover:text-(--primary) transition" title="Open URL">
+                      <a href={tab.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${tab.domain} in new tab`} className="p-1 rounded opacity-0 group-hover:opacity-100 focus-visible:opacity-100 text-(--muted-foreground) hover:text-(--primary) transition" title="Open URL">
                         <ExternalLink size="14" />
                       </a>
                     </div>

@@ -60,7 +60,7 @@ export default function ScoreCard({
         <div className="flex items-center gap-2">
           <button
             onClick={onToggleFavorite}
-            className="p-2 rounded-lg hover:bg-muted/50 transition cursor-pointer"
+            className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
             <Heart
@@ -70,7 +70,7 @@ export default function ScoreCard({
           </button>
           <button
             onClick={handleCopy}
-            className="p-2 rounded-lg hover:bg-muted/50 transition cursor-pointer"
+            className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Copy result"
           >
             {copied ? (

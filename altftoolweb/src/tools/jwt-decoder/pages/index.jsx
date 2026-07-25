@@ -108,7 +108,11 @@ export default function ToolHome() {
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
               <p className="text-sm font-medium text-[var(--muted-foreground)]">Token status</p>
               <div className="mt-3 flex items-center gap-3">
-                <ShieldCheck className={decoded.ok && !isExpired ? "h-8 w-8 text-green-600" : "h-8 w-8 text-red-500"} />
+                <ShieldCheck
+                  aria-hidden="true"
+                  className="h-8 w-8"
+                  style={{ color: decoded.ok && !isExpired ? "var(--success)" : "var(--danger)" }}
+                />
                 <div>
                   <p className="text-xl font-semibold">
                     {decoded.ok ? (isExpired ? "Expired" : "Decoded") : "Invalid token"}
@@ -127,14 +131,16 @@ export default function ToolHome() {
             <textarea
               value={token}
               onChange={(event) => setToken(event.target.value)}
-              className="min-h-56 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm outline-none transition focus:border-[var(--primary)]"
+              aria-label="JWT token input"
+              placeholder="Paste a JSON Web Token (header.payload.signature)..."
+              className="min-h-56 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 motion-reduce:transition-none"
               spellCheck={false}
             />
             <div className="mt-4 flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={() => setToken(SAMPLE_TOKEN)}
-                className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--muted)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
                 <RotateCcw className="h-4 w-4" />
                 Sample
@@ -142,7 +148,7 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={() => setToken("")}
-                className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                className="inline-flex min-h-11 items-center rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--muted)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
                 Clear
               </button>
@@ -151,15 +157,17 @@ export default function ToolHome() {
                   <button
                     type="button"
                     onClick={() => copyValue("Decoded bundle", decodedBundle)}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                    aria-label="Copy decoded header and payload to clipboard"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--muted)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     <Clipboard className="h-4 w-4" />
-                    Copy decoded
+                    {copied === "Decoded bundle" ? "Copied!" : "Copy decoded"}
                   </button>
                   <button
                     type="button"
                     onClick={() => downloadJson("altftool-jwt-decoded.json", decodedBundle)}
-                    className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold hover:bg-[var(--muted)]"
+                    aria-label="Download decoded token as JSON"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold transition hover:bg-[var(--muted)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     <FileDown className="h-4 w-4" />
                     Download JSON
@@ -187,8 +195,20 @@ export default function ToolHome() {
                   </div>
                 ))}
               </div>
+            ) : token.trim() === "" ? (
+              <p className="rounded-lg bg-[var(--muted)] p-4 text-sm text-[var(--muted-foreground)]">
+                Paste a JWT on the left to see its decoded claims here.
+              </p>
             ) : (
-              <p className="rounded-lg bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
+              <p
+                role="alert"
+                className="rounded-lg border p-4 text-sm"
+                style={{
+                  backgroundColor: "var(--danger-soft)",
+                  borderColor: "color-mix(in srgb, var(--danger) 35%, transparent)",
+                  color: "var(--danger)",
+                }}
+              >
                 {decoded.message}
               </p>
             )}
@@ -208,10 +228,11 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={() => copyValue(label, value)}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white"
+                  aria-label={`Copy ${label} JSON to clipboard`}
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                 >
                   <Clipboard className="h-4 w-4" />
-                  {copied === label ? "Copied" : `Copy ${label}`}
+                  {copied === label ? "Copied!" : `Copy ${label}`}
                 </button>
               </Panel>
             ))}

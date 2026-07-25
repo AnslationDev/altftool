@@ -114,11 +114,16 @@ export default function TextDiffViewerPage() {
             <input
               value={diff.searchQuery}
               onChange={(e) => diff.setSearchQuery(e.target.value)}
+              aria-label="Search in diff"
               placeholder="Search in diff..."
-              className="flex-1 bg-transparent text-sm text-(--foreground) focus:outline-none"
+              className="flex-1 min-h-11 bg-transparent text-sm text-(--foreground) focus:outline-none"
               autoFocus
             />
-            <button onClick={() => { diff.setSearchQuery(""); diff.setShowSearch(false); }} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)">
+            <button
+              onClick={() => { diff.setSearchQuery(""); diff.setShowSearch(false); }}
+              aria-label="Close search"
+              className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            >
               <X size="16" />
             </button>
           </motion.div>
@@ -178,7 +183,11 @@ export default function TextDiffViewerPage() {
                 <h3 className="text-xs font-semibold text-(--foreground) uppercase tracking-wider">
                   Timeline ({diff.versions.length})
                 </h3>
-                <button onClick={() => setShowTimeline(false)} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)">
+                <button
+                  onClick={() => setShowTimeline(false)}
+                  aria-label="Hide timeline"
+                  className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                >
                   <X size="14" />
                 </button>
               </div>
@@ -197,7 +206,7 @@ export default function TextDiffViewerPage() {
         {!showTimeline && (
           <button
             onClick={() => setShowTimeline(true)}
-            className="fixed bottom-6 right-6 z-40 px-4 py-2 rounded-full bg-(--primary) text-(--primary-foreground) shadow-lg text-sm font-semibold hover:opacity-90 transition"
+            className="fixed bottom-6 right-6 z-40 min-h-11 px-4 py-2 rounded-full bg-(--primary) text-(--primary-foreground) shadow-lg text-sm font-semibold hover:opacity-90 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             Timeline ({diff.versions.length})
           </button>

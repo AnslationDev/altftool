@@ -63,7 +63,7 @@ export default function TemplateSelector({
             <button
               key={cat.id}
               onClick={() => setCategory(cat.id)}
-              className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors duration-150
+              className={`shrink-0 px-3 py-1.5 min-h-11 rounded-lg text-xs font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100
                 ${category === cat.id
                   ? "bg-(--primary) text-(--primary-foreground) shadow-sm"
                   : "bg-(--card) text-(--muted-foreground) border border-(--border) hover:border-(--primary) hover:text-(--primary)"}`}
@@ -154,7 +154,7 @@ export default function TemplateSelector({
                   <button
                     type="button"
                     onClick={() => onToggleFavorite(template)}
-                    className={`absolute top-2 right-2 p-1 rounded-full transition-colors
+                    className={`absolute top-2 right-2 p-1 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 focus-visible:opacity-100
                       ${isFav ? "text-amber-500" : "text-(--muted-foreground) opacity-0 group-hover:opacity-100 hover:opacity-100"}`}
                     aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
                   >

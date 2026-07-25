@@ -62,16 +62,16 @@ export default function EntryManager({
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-(--foreground)">Entries ({entries.length})</h3>
         <div className="flex gap-1">
-          <button onClick={() => setBulkInput(!bulkInput)} className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition" title="Bulk add">
+          <button onClick={() => setBulkInput(!bulkInput)} aria-label="Bulk add entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Bulk add">
             <Upload size="16" />
           </button>
           {entries.length > 1 && (
-            <button onClick={onShuffle} className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition" title="Shuffle">
+            <button onClick={onShuffle} aria-label="Shuffle entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Shuffle">
               <Shuffle size="16" />
             </button>
           )}
           {entries.length > 0 && (
-            <button onClick={onClear} className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition" title="Clear all">
+            <button onClick={onClear} aria-label="Clear all entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Clear all">
               <Trash2 size="16" />
             </button>
           )}
@@ -84,7 +84,8 @@ export default function EntryManager({
             value={bulkText}
             onChange={(e) => setBulkText(e.target.value)}
             placeholder="Paste entries (one per line)..."
-            className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:ring-2 focus:ring-(--primary)"
+            aria-label="Bulk entries, one per line"
+            className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
           />
           <div className="flex gap-2">
             <Button variant="primary" size="sm" onClick={handleBulkAdd}>Add All</Button>
@@ -98,9 +99,10 @@ export default function EntryManager({
             onChange={(e) => setNewEntry(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
             placeholder="Add entry..."
+            aria-label="New entry name"
             className="flex-1"
           />
-          <Button variant="primary" size="sm" onClick={handleAdd} disabled={!newEntry.trim()}>
+          <Button variant="primary" size="sm" onClick={handleAdd} disabled={!newEntry.trim()} aria-label="Add entry" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
             <Plus size="16" />
           </Button>
         </div>
@@ -128,16 +130,16 @@ export default function EntryManager({
               )}
               <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition">
                 {editingId === entry.id ? (
-                  <button onClick={handleSaveEdit} className="p-1 rounded hover:bg-(--card) text-(--primary)">✓</button>
+                  <button onClick={handleSaveEdit} aria-label="Save entry name" className="p-1 rounded hover:bg-(--card) text-(--primary)">✓</button>
                 ) : (
-                  <button onClick={() => handleStartEdit(entry)} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--foreground)" title="Edit">
+                  <button onClick={() => handleStartEdit(entry)} aria-label={`Edit ${entry.name}`} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--foreground)" title="Edit">
                     <Pencil size="13" />
                   </button>
                 )}
-                <button onClick={() => onDuplicate(entry.id)} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--foreground)" title="Duplicate">
+                <button onClick={() => onDuplicate(entry.id)} aria-label={`Duplicate ${entry.name}`} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--foreground)" title="Duplicate">
                   <Copy size="13" />
                 </button>
-                <button onClick={() => onRemove(entry.id)} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger)" title="Remove">
+                <button onClick={() => onRemove(entry.id)} aria-label={`Remove ${entry.name}`} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger)" title="Remove">
                   <X size="13" />
                 </button>
               </div>

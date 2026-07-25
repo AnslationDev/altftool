@@ -46,10 +46,10 @@ export default function ExportDialog({ open, onClose, textA, textB, options }) {
               <p className="text-xs text-(--muted-foreground)">{fmt.desc}</p>
             </div>
             <div className="flex gap-1">
-              <Button variant="secondary" size="sm" onClick={() => handleCopy(fmt.key)}>
+              <Button variant="secondary" size="sm" aria-label={`Copy ${fmt.label} diff to clipboard`} onClick={() => handleCopy(fmt.key)}>
                 {copied === fmt.key ? <Check size="14" /> : "Copy"}
               </Button>
-              <Button variant="primary" size="sm" onClick={() => handleDownload(fmt.key)}>
+              <Button variant="primary" size="sm" aria-label={`Download diff as ${fmt.label}`} onClick={() => handleDownload(fmt.key)}>
                 Download
               </Button>
             </div>

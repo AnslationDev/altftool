@@ -141,7 +141,7 @@ const DraggableFileItem = ({
           type="button"
           onClick={() => onMoveUp(index)}
           disabled={!canMoveUp}
-          className="rounded p-2 text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Move ${file.file.name} up`}
         >
           <ArrowUp className="h-4 w-4" />
@@ -150,7 +150,7 @@ const DraggableFileItem = ({
           type="button"
           onClick={() => onMoveDown(index)}
           disabled={!canMoveDown}
-          className="rounded p-2 text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Move ${file.file.name} down`}
         >
           <ArrowDown className="h-4 w-4" />
@@ -158,7 +158,7 @@ const DraggableFileItem = ({
         <button
           type="button"
           onClick={() => onRemove(file.id)}
-          className="rounded p-2 text-(--muted-foreground) hover:bg-red-500/10 hover:text-red-600"
+          className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-danger-soft hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Remove ${file.file.name}`}
         >
           <Trash2 className="h-4 w-4" />
@@ -389,7 +389,7 @@ export default function MainComponent() {
 
       {/* Error */}
       {error && (
-        <div className="flex items-start gap-3 rounded-lg border border-red-500 bg-red-500/10 p-4 text-red-600">
+        <div role="alert" className="flex items-start gap-3 rounded-lg border border-danger/40 bg-danger-soft p-4 text-danger">
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
           <p className="text-sm font-medium">{error}</p>
         </div>
@@ -447,7 +447,7 @@ export default function MainComponent() {
                 </h3>
             <button
               onClick={handleClearAll}
-              className="text-sm text-(--muted-foreground) hover:text-red-500 cursor-pointer"
+              className="min-h-11 rounded px-2 text-sm text-(--muted-foreground) hover:text-danger cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
             >
               Clear All
             </button>
@@ -482,7 +482,7 @@ export default function MainComponent() {
       <div className="bg-(--card) p-6 rounded-2xl border border-(--border) flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <pre
           data-testid="tool-output"
-          className="min-h-[96px] flex-1 whitespace-pre-wrap rounded-lg border border-(--border) bg-(--background) p-3 text-sm leading-6 text-(--foreground)"
+          className="min-h-[96px] flex-1 whitespace-pre-wrap rounded-xl ring-1 ring-(--border) bg-(--card) p-3 text-sm leading-6 text-(--foreground)"
         >
           {[
             result ? "Merged PDF ready" : status,
@@ -496,7 +496,7 @@ export default function MainComponent() {
           type="button"
           onClick={handleMerge}
           disabled={files.length < 2 || isMerging || isReading}
-          className="bg-(--primary) text-(--primary-foreground) px-6 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+          className="bg-(--primary) text-(--primary-foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition disabled:opacity-50 cursor-pointer active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           {isMerging ? <Loader2 className="h-4 w-4 animate-spin" /> : <Files className="h-4 w-4" />}
           {isMerging ? "Merging..." : "Merge Files"}
@@ -505,7 +505,7 @@ export default function MainComponent() {
           type="button"
           onClick={copyManifest}
           disabled={!files.length}
-          className="border border-(--border) bg-(--background) text-(--foreground) px-6 py-2 rounded-lg flex items-center gap-2 hover:border-(--primary) disabled:opacity-50"
+          className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) disabled:opacity-50 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           <Clipboard className="h-4 w-4" />
           {copied ? "Copied" : "Copy Manifest"}
@@ -514,7 +514,7 @@ export default function MainComponent() {
           type="button"
           onClick={downloadManifest}
           disabled={!files.length}
-          className="border border-(--border) bg-(--background) text-(--foreground) px-6 py-2 rounded-lg flex items-center gap-2 hover:border-(--primary) disabled:opacity-50"
+          className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) disabled:opacity-50 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           <PackageCheck className="h-4 w-4" />
           Export Manifest
@@ -523,13 +523,13 @@ export default function MainComponent() {
           <button
             type="button"
             onClick={() => downloadBlob(result.blob, result.filename)}
-            className="border border-(--border) bg-(--background) text-(--foreground) px-6 py-2 rounded-lg flex items-center gap-2 hover:border-(--primary)"
+            className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Download className="h-4 w-4" />
             Download
           </button>
         )}
-        <button type="button" onClick={handleClearAll} className="border border-(--border) bg-(--background) text-(--foreground) px-6 py-2 rounded-lg flex items-center gap-2 hover:border-(--primary)">
+        <button type="button" onClick={handleClearAll} className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
           <RotateCcw className="h-4 w-4" />
           Reset
         </button>

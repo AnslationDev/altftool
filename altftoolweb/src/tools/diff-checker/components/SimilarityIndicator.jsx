@@ -3,9 +3,9 @@
 import React from "react";
 
 const getColor = (score) => {
-  if (score > 70) return "bg-green-500";
-  if (score > 40) return "bg-yellow-400";
-  return "bg-red-500";
+  if (score > 70) return "bg-(--success)";
+  if (score > 40) return "bg-(--warning)";
+  return "bg-(--danger)";
 };
 
 const SimilarityIndicator = ({ score }) => {

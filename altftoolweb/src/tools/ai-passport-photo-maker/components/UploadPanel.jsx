@@ -66,7 +66,7 @@ export default function UploadPanel({ onUpload, loading, error, onCameraCapture 
           role="button"
           aria-label="Upload your photo by clicking or dragging a file"
           className={`
-            relative flex min-h-[280px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all duration-150
+            relative flex min-h-[280px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all motion-reduce:transition-none duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35
             ${isDragActive || dragOver
               ? "border-(--primary) bg-(--primary-soft)"
               : "border-(--border) bg-(--card) hover:border-(--border-strong) hover:shadow-md"

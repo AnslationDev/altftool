@@ -59,7 +59,8 @@ export default function ShareDialog({ open, onClose, result }) {
               <h2 className="text-lg font-bold text-(--foreground)">Share Result</h2>
               <button
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground)"
+                aria-label="Close dialog"
+                className="rounded-lg p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <X size={18} />
               </button>
@@ -79,7 +80,7 @@ export default function ShareDialog({ open, onClose, result }) {
             <div className="mt-6 space-y-3">
               <button
                 onClick={handleCopyLink}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-95"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-3 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 {copied ? (
                   <>
@@ -95,7 +96,7 @@ export default function ShareDialog({ open, onClose, result }) {
               {"share" in navigator && (
                 <button
                   onClick={handleWebShare}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-95"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-3 text-sm font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                 >
                   <Share2 size={16} /> Share via...
                 </button>

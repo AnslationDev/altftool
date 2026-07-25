@@ -66,7 +66,9 @@ export default function RandomFunPickerPage() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-sm font-semibold transition-all ${
+              aria-label={tab.label}
+              aria-pressed={activeTab === tab.key}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 min-h-11 rounded-lg text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 activeTab === tab.key
                   ? "bg-(--card) text-(--foreground) shadow-sm border border-(--border)"
                   : "text-(--muted-foreground) hover:text-(--foreground)"

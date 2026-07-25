@@ -48,7 +48,7 @@ function ResultCard({ label, value, onCopy }) {
     <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
       <div className="mb-3 flex items-center justify-between gap-3">
         <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
-        <button type="button" onClick={() => onCopy(value)} className="rounded-md p-2 hover:bg-[var(--muted)]">
+        <button type="button" onClick={() => onCopy(value)} aria-label={`Copy ${label} result`} className="flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 hover:bg-[var(--muted)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-9 sm:min-w-9">
           <Clipboard className="h-4 w-4" />
         </button>
       </div>
@@ -120,18 +120,18 @@ export default function ToolHome() {
         <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Source text</h2>
-            <button type="button" onClick={() => setText(sampleText)} className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold hover:bg-[var(--muted)]">
+            <button type="button" onClick={() => setText(sampleText)} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold hover:bg-[var(--muted)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-10">
               <RotateCcw className="h-4 w-4" />
               Reset
             </button>
           </div>
-          <textarea value={text} onChange={(event) => setText(event.target.value)} className="min-h-36 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-7 outline-none focus:border-[var(--primary)]" />
+          <textarea value={text} onChange={(event) => setText(event.target.value)} aria-label="Source text to convert" className="min-h-36 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-7 outline-none transition focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25" />
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" onClick={copyAll} className="btn-primary min-h-10 px-3 py-2">
+            <button type="button" onClick={copyAll} className="btn-primary min-h-11 px-3 py-2 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-10">
               <Clipboard className="h-4 w-4" />
               Copy all formats
             </button>
-            <button type="button" onClick={downloadAll} className="btn-secondary min-h-10 px-3 py-2">
+            <button type="button" onClick={downloadAll} className="btn-secondary min-h-11 px-3 py-2 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-10">
               <FileDown className="h-4 w-4" />
               Download formats
             </button>

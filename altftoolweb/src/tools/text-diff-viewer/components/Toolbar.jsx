@@ -7,6 +7,9 @@ import {
   Settings, Maximize2, Save, Type,
 } from "lucide-react";
 
+const ICON_BTN =
+  "flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35";
+
 export default function Toolbar({
   viewMode, setViewMode, diffMode, setDiffMode,
   ignoreSpaces, setIgnoreSpaces, ignoreCase, setIgnoreCase,
@@ -19,14 +22,18 @@ export default function Toolbar({
       <div className="flex gap-0.5 bg-(--muted) rounded-lg p-0.5">
         <button
           onClick={() => setViewMode("side-by-side")}
-          className={`p-1.5 rounded-md transition ${viewMode === "side-by-side" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
+          aria-label="Side by side view"
+          aria-pressed={viewMode === "side-by-side"}
+          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${viewMode === "side-by-side" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
           title="Side by side"
         >
           <Columns2 size="16" />
         </button>
         <button
           onClick={() => setViewMode("inline")}
-          className={`p-1.5 rounded-md transition ${viewMode === "inline" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
+          aria-label="Inline view"
+          aria-pressed={viewMode === "inline"}
+          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${viewMode === "inline" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
           title="Inline"
         >
           <AlignLeft size="16" />
@@ -38,7 +45,8 @@ export default function Toolbar({
       <select
         value={diffMode}
         onChange={(e) => setDiffMode(e.target.value)}
-        className="h-8 px-2 text-xs rounded-lg border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+        aria-label="Diff mode"
+        className="h-11 sm:h-8 px-2 text-xs rounded-lg border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
       >
         <option value="word">Word</option>
         <option value="line">Line</option>
@@ -49,7 +57,9 @@ export default function Toolbar({
 
       <button
         onClick={() => setIgnoreSpaces(!ignoreSpaces)}
-        className={`p-1.5 rounded-lg text-xs font-medium transition border ${
+        aria-label="Ignore spaces"
+        aria-pressed={ignoreSpaces}
+        className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
           ignoreSpaces ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border)"
         }`}
         title="Ignore spaces"
@@ -59,7 +69,9 @@ export default function Toolbar({
 
       <button
         onClick={() => setIgnoreCase(!ignoreCase)}
-        className={`px-2 h-8 rounded-lg text-xs font-medium transition border ${
+        aria-label="Ignore case"
+        aria-pressed={ignoreCase}
+        className={`px-2 min-h-11 sm:min-h-8 h-auto rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
           ignoreCase ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border)"
         }`}
         title="Ignore case"
@@ -69,23 +81,23 @@ export default function Toolbar({
 
       <div className="w-px h-6 bg-(--border)" />
 
-      <button onClick={onUndo} disabled={!canUndo} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) disabled:opacity-30 transition"><Undo2 size="16" /></button>
-      <button onClick={onRedo} disabled={!canRedo} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) disabled:opacity-30 transition"><Redo2 size="16" /></button>
-      <button onClick={onSwap} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Swap A/B"><ArrowUpDown size="16" /></button>
-      <button onClick={onClear} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Clear"><Trash2 size="16" /></button>
+      <button onClick={onUndo} disabled={!canUndo} aria-label="Undo" className={`${ICON_BTN} disabled:opacity-30`} title="Undo"><Undo2 size="16" /></button>
+      <button onClick={onRedo} disabled={!canRedo} aria-label="Redo" className={`${ICON_BTN} disabled:opacity-30`} title="Redo"><Redo2 size="16" /></button>
+      <button onClick={onSwap} aria-label="Swap A and B" className={ICON_BTN} title="Swap A/B"><ArrowUpDown size="16" /></button>
+      <button onClick={onClear} aria-label="Clear both texts" className={ICON_BTN} title="Clear"><Trash2 size="16" /></button>
 
       <div className="w-px h-6 bg-(--border)" />
 
-      <button onClick={onSave} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Save"><Save size="16" /></button>
-      <button onClick={onSearch} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Search"><Search size="16" /></button>
-      <button onClick={onAnalytics} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Analytics"><BarChart3 size="16" /></button>
-      <button onClick={onExport} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Export"><FileDown size="16" /></button>
-      <button onClick={onCopy} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Copy diff"><Copy size="16" /></button>
-      <button onClick={onShare} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Share"><Share2 size="16" /></button>
+      <button onClick={onSave} aria-label="Save version" className={ICON_BTN} title="Save"><Save size="16" /></button>
+      <button onClick={onSearch} aria-label="Search in diff" className={ICON_BTN} title="Search"><Search size="16" /></button>
+      <button onClick={onAnalytics} aria-label="Toggle analytics" className={ICON_BTN} title="Analytics"><BarChart3 size="16" /></button>
+      <button onClick={onExport} aria-label="Export diff" className={ICON_BTN} title="Export"><FileDown size="16" /></button>
+      <button onClick={onCopy} aria-label="Copy diff to clipboard" className={ICON_BTN} title="Copy diff"><Copy size="16" /></button>
+      <button onClick={onShare} aria-label="Share diff link" className={ICON_BTN} title="Share"><Share2 size="16" /></button>
 
       <div className="w-px h-6 bg-(--border)" />
 
-      <button onClick={onFullscreen} className="p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition" title="Fullscreen"><Maximize2 size="16" /></button>
+      <button onClick={onFullscreen} aria-label="Toggle fullscreen" className={ICON_BTN} title="Fullscreen"><Maximize2 size="16" /></button>
     </div>
   );
 }

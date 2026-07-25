@@ -697,7 +697,7 @@ export default function MainComponent() {
                           event.stopPropagation();
                           removeItem(item.id);
                         }}
-                        className="rounded-md p-1 text-(--muted-foreground) hover:bg-red-500/10 hover:text-red-600"
+                        className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md p-1 text-(--muted-foreground) hover:bg-[var(--danger-soft)] hover:text-[var(--danger)] focus-visible:ring-2 focus-visible:ring-[var(--primary)]/35 sm:min-h-0 sm:min-w-0"
                         aria-label={`Remove ${item.file.name}`}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -722,7 +722,7 @@ export default function MainComponent() {
               <select
                 value={presetId}
                 onChange={(event) => applyPreset(ALL_PRESETS.find((preset) => preset.id === event.target.value))}
-                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) focus:ring-2 focus:ring-[var(--primary)]/25"
               >
                 {PRESET_GROUPS.map((group) => (
                   <optgroup key={group.group} label={group.group}>
@@ -745,7 +745,7 @@ export default function MainComponent() {
                   value={settings.width}
                   onChange={(event) => updateDimensions("width", event.target.value)}
                   disabled={settings.percentMode}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) disabled:opacity-50"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) focus:ring-2 focus:ring-[var(--primary)]/25 disabled:opacity-50"
                 />
               </label>
               <label>
@@ -756,7 +756,7 @@ export default function MainComponent() {
                   value={settings.height}
                   onChange={(event) => updateDimensions("height", event.target.value)}
                   disabled={settings.percentMode}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) disabled:opacity-50"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) focus:ring-2 focus:ring-[var(--primary)]/25 disabled:opacity-50"
                 />
               </label>
             </div>
@@ -770,7 +770,7 @@ export default function MainComponent() {
                   max="300"
                   value={settings.scalePercent}
                   onChange={(event) => updateSetting("scalePercent", Number(event.target.value))}
-                  className="w-full accent-[var(--primary)]"
+                  className="w-full accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                 />
                 <div className="mt-1 text-sm text-(--muted-foreground)">
                   {settings.scalePercent}% of original dimensions
@@ -804,7 +804,7 @@ export default function MainComponent() {
                 <select
                   value={settings.format}
                   onChange={(event) => updateSetting("format", event.target.value)}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) focus:ring-2 focus:ring-[var(--primary)]/25"
                 >
                   {Object.entries(FORMAT_OPTIONS).map(([value, option]) => (
                     <option key={value} value={value}>{option.label}</option>
@@ -831,7 +831,7 @@ export default function MainComponent() {
                 step="0.01"
                 value={settings.quality}
                 onChange={(event) => updateSetting("quality", Number(event.target.value))}
-                className="w-full accent-[var(--primary)]"
+                className="w-full accent-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               />
               <div className="mt-1 text-sm text-(--muted-foreground)">
                 {Math.round(settings.quality * 100)}% for JPEG/WebP output
@@ -866,7 +866,7 @@ export default function MainComponent() {
                 value={settings.filenameSuffix}
                 onChange={(event) => updateSetting("filenameSuffix", event.target.value)}
                 placeholder={activePreset.id}
-                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary) focus:ring-2 focus:ring-[var(--primary)]/25"
               />
             </label>
 
@@ -877,7 +877,7 @@ export default function MainComponent() {
                 onClick={downloadResized}
                 disabled={!items.length || isProcessing}
               >
-                {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                {isProcessing ? <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" /> : <Download className="h-4 w-4" />}
                 {isProcessing ? "Processing..." : "Download"}
               </button>
               <button
@@ -910,7 +910,7 @@ export default function MainComponent() {
           {status && (
             <div className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
               {isProcessing ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin motion-reduce:animate-none" />
               ) : (
                 <CheckCircle className="h-5 w-5" />
               )}

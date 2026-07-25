@@ -63,7 +63,8 @@ export default function ImportExport({ open, onClose, entries, onImport }) {
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
             placeholder='["Entry 1", "Entry 2"] or one per line'
-            className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:ring-2 focus:ring-(--primary)"
+            aria-label="Entries to import, JSON or one per line"
+            className="w-full h-24 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) resize-none focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
           />
           <div className="flex gap-2 mt-2">
             <Button variant="primary" size="sm" onClick={handleImportText} disabled={!importText.trim()}>

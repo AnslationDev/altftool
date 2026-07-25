@@ -107,28 +107,28 @@ export default function AuraCard({ aura, imagePreview, onSave, isFavorited, onSh
         <div className="flex flex-wrap justify-center gap-2">
           <button
             onClick={onSave}
-            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:bg-(--muted)"
+            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 min-h-11 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Heart className={`h-4 w-4 ${isFavorited ? "fill-red-500 text-red-500" : ""}`} />
             {isFavorited ? "Favorited" : "Save"}
           </button>
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:bg-(--muted)"
+            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 min-h-11 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Download className="h-4 w-4" />
             Download
           </button>
           <button
             onClick={onShare}
-            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:bg-(--muted)"
+            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 min-h-11 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Share2 className="h-4 w-4" />
             Share
           </button>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:bg-(--muted)"
+            className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--background) px-4 py-2 min-h-11 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
             {copied ? "Copied!" : "Copy"}

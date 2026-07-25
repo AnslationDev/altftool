@@ -17,7 +17,8 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, mode,
               <button
                 key={m.key}
                 onClick={() => onModeChange(m.key)}
-                className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition ${
+                aria-pressed={mode === m.key}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   mode === m.key
                     ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                     : "bg-(--card) text-(--muted-foreground) border-(--border)"
@@ -37,7 +38,8 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, mode,
                 <button
                   key={d}
                   onClick={() => onDifficultyChange(d)}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold border capitalize transition ${
+                  aria-pressed={difficulty === d}
+                  className={`flex-1 py-2 rounded-lg text-xs font-semibold border capitalize transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                     difficulty === d
                       ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                       : "bg-(--card) text-(--muted-foreground) border-(--border)"

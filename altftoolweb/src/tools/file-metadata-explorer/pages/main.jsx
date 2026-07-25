@@ -34,17 +34,18 @@ export default function FileMetadataMain() {
           <div className="flex gap-1.5">
             <button
               onClick={() => explorer.setView(explorer.view === "cards" ? "list" : "cards")}
-              className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition"
+              className="flex h-11 w-11 items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-10 sm:w-10"
               title="Toggle view"
+              aria-label={explorer.view === "cards" ? "Switch to list view" : "Switch to card view"}
             >
               {explorer.view === "cards" ? <List size="18" /> : <Grid3X3 size="18" />}
             </button>
             {explorer.files.length > 0 && (
               <>
-                <button onClick={() => setShowExport(true)} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Export">
+                <button onClick={() => setShowExport(true)} aria-label="Export metadata" className="flex h-11 w-11 items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-10 sm:w-10" title="Export">
                   <Download size="18" />
                 </button>
-                <button onClick={explorer.clearAll} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition" title="Clear all">
+                <button onClick={explorer.clearAll} aria-label="Clear all files" className="flex h-11 w-11 items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-10 sm:w-10" title="Clear all">
                   <Trash2 size="18" />
                 </button>
               </>
@@ -100,13 +101,15 @@ export default function FileMetadataMain() {
                       <div className="flex gap-0.5 shrink-0">
                         <button
                           onClick={(e) => { e.stopPropagation(); explorer.toggleFavorite(f); }}
-                          className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) transition"
+                          aria-label={`Toggle favorite for ${f.meta.fileName}`}
+                          className="flex h-9 w-9 items-center justify-center rounded hover:bg-(--card) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
                         >
                           <Heart size="14" className={explorer.favorites.find((fav) => fav.id === f.id) ? "fill-(--danger) text-(--danger)" : ""} />
                         </button>
                         <button
                           onClick={(e) => { e.stopPropagation(); explorer.removeFile(f.id); }}
-                          className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger) transition"
+                          aria-label={`Remove ${f.meta.fileName}`}
+                          className="flex h-9 w-9 items-center justify-center rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger) transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
                         >
                           <X size="14" />
                         </button>
@@ -137,7 +140,7 @@ export default function FileMetadataMain() {
                         <td className="px-3 py-2 text-(--muted-foreground)">{f.meta.type || "—"}</td>
                         <td className="px-3 py-2 text-(--muted-foreground)">{f.meta.sizeFormatted || "—"}</td>
                         <td className="px-3 py-2 text-right">
-                          <button onClick={(e) => { e.stopPropagation(); explorer.removeFile(f.id); }} className="p-1 text-(--muted-foreground) hover:text-(--danger)">
+                          <button onClick={(e) => { e.stopPropagation(); explorer.removeFile(f.id); }} aria-label={`Remove ${f.meta.fileName}`} className="inline-flex h-9 w-9 items-center justify-center rounded text-(--muted-foreground) hover:text-(--danger) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)">
                             <X size="14" />
                           </button>
                         </td>
@@ -155,7 +158,8 @@ export default function FileMetadataMain() {
                 <h3 className="text-sm font-semibold text-(--foreground)">Details</h3>
                 <button
                   onClick={() => explorer.setSelectedFile(null)}
-                  className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground)"
+                  aria-label="Close details panel"
+                  className="flex h-9 w-9 items-center justify-center rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
                 >
                   <X size="16" />
                 </button>

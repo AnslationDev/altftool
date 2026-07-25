@@ -94,14 +94,15 @@ export default function MainSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Version */}
           <div>
-            <label className="text-(--foreground) text-sm mb-2 block">
+            <label htmlFor="uuid-version" className="text-(--foreground) text-sm mb-2 block">
               Version
             </label>
 
             <select
+              id="uuid-version"
               value={version}
               onChange={(e) => setVersion(e.target.value)}
-              className="w-full bg-(--background) border border-(--border) text-(--foreground) rounded-lg px-4 py-3 focus:ring-2 focus:ring-(--primary)"
+              className="w-full bg-(--background) border border-(--border) text-(--foreground) rounded-lg px-4 py-3 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
             >
               <option value="v4">UUID v4 (Random)</option>
               <option value="v1">UUID v1 (Timestamp)</option>
@@ -110,11 +111,12 @@ export default function MainSection() {
 
           {/* Quantity */}
           <div>
-            <label className="text-(--foreground) text-sm mb-2 block">
+            <label htmlFor="uuid-count" className="text-(--foreground) text-sm mb-2 block">
               Quantity
             </label>
 
             <input
+              id="uuid-count"
               type="number"
               min="1"
               max="100"
@@ -124,7 +126,7 @@ export default function MainSection() {
                   Math.min(100, Math.max(1, Number(e.target.value) || 1)),
                 )
               }
-              className="w-full bg-(--background) border border-(--border) text-(--foreground) rounded-lg px-4 py-3 focus:ring-2 focus:ring-(--primary)"
+              className="w-full bg-(--background) border border-(--border) text-(--foreground) rounded-lg px-4 py-3 outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
             />
           </div>
 
@@ -132,7 +134,7 @@ export default function MainSection() {
           <div className="sm:col-span-2 flex items-end">
             <button
               onClick={generateUUIDs}
-              className="w-full bg-(--primary) hover:bg-(--primary)/90 text-(--primary-foreground) px-6 py-3 rounded-lg flex justify-center gap-2"
+              className="w-full min-h-[44px] bg-(--primary) hover:bg-(--primary)/90 text-(--primary-foreground) px-6 py-3 rounded-lg flex justify-center gap-2 transition-transform active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <RefreshCw className="w-5 h-5" />
               Generate UUIDs
@@ -159,7 +161,7 @@ export default function MainSection() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={copyAll}
-                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
+                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 min-h-[44px] rounded-lg flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 {copiedIndex === "all" ? (
                   <Check className="text-green-500" />
@@ -170,7 +172,7 @@ export default function MainSection() {
               </button>
               <button
                 onClick={downloadAll}
-                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer"
+                className="bg-(--muted) hover:bg-(--muted)/80 text-(--foreground) px-3 py-2 min-h-[44px] rounded-lg flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <FileDown />
                 Download
@@ -190,7 +192,8 @@ export default function MainSection() {
 
                 <button
                   onClick={() => copyToClipboard(uuid, i)}
-                  className="bg-(--background) border border-(--border) px-3 py-2 rounded-lg cursor-pointer"
+                  aria-label={copiedIndex === i ? "Copied" : `Copy UUID ${i + 1}`}
+                  className="bg-(--background) border border-(--border) px-3 py-2 min-h-[44px] min-w-[44px] rounded-lg cursor-pointer flex items-center justify-center focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                 >
                   {copiedIndex === i ? (
                     <Check className="text-green-500" />

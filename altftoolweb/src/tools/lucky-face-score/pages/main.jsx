@@ -154,14 +154,15 @@ export default function LuckyFaceScoreMain() {
             >
               <button
                 onClick={revealLuck}
-                className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl cursor-pointer transition active:scale-95 duration-100 shadow-lg shadow-amber-500/20"
+                className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 shadow-lg shadow-amber-500/20 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <Sparkles size={20} />
                 Reveal My Luck
               </button>
               <button
                 onClick={resetAll}
-                className="flex items-center justify-center gap-2 py-3 px-4 border border-border text-foreground font-semibold rounded-xl cursor-pointer transition active:scale-95 duration-100 hover:bg-muted/50"
+                aria-label="Reset and start over"
+                className="flex items-center justify-center gap-2 py-3 px-4 min-w-11 min-h-11 border border-border text-foreground font-semibold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <RefreshCw size={18} />
               </button>
@@ -216,7 +217,7 @@ export default function LuckyFaceScoreMain() {
                 <div className="flex justify-end">
                   <button
                     onClick={() => setShareOpen(true)}
-                    className="flex items-center gap-2 py-2 px-4 rounded-xl border border-border text-sm font-semibold text-foreground hover:bg-muted/50 transition cursor-pointer"
+                    className="flex items-center gap-2 py-2 px-4 min-h-11 rounded-xl border border-border text-sm font-semibold text-foreground hover:bg-muted/50 transition cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   >
                     <Share2 size={16} />
                     Share Result
@@ -254,7 +255,7 @@ export default function LuckyFaceScoreMain() {
             <div className="flex justify-center">
               <button
                 onClick={resetAll}
-                className="flex items-center gap-2 py-2.5 px-6 rounded-xl border border-border text-foreground font-semibold hover:bg-muted/50 transition cursor-pointer text-sm"
+                className="flex items-center gap-2 py-2.5 px-6 min-h-11 rounded-xl border border-border text-foreground font-semibold hover:bg-muted/50 transition cursor-pointer text-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <RefreshCw size={16} />
                 Reset Everything
@@ -266,7 +267,8 @@ export default function LuckyFaceScoreMain() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <button
               onClick={() => setShowStats(!showStats)}
-              className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition cursor-pointer"
+              aria-expanded={showStats}
+              className="w-full flex items-center justify-between p-4 min-h-11 hover:bg-muted/30 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-(--primary)/35"
             >
               <span className="text-xs font-bold text-foreground uppercase tracking-wider">
                 Statistics Dashboard
@@ -296,7 +298,8 @@ export default function LuckyFaceScoreMain() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <button
               onClick={() => setShowHistorySection(!showHistorySection)}
-              className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition cursor-pointer"
+              aria-expanded={showHistorySection}
+              className="w-full flex items-center justify-between p-4 min-h-11 hover:bg-muted/30 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-(--primary)/35"
             >
               <span className="text-xs font-bold text-foreground uppercase tracking-wider">
                 Reading History
@@ -330,7 +333,8 @@ export default function LuckyFaceScoreMain() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition cursor-pointer"
+              aria-expanded={showSettings}
+              className="w-full flex items-center justify-between p-4 min-h-11 hover:bg-muted/30 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-(--primary)/35"
             >
               <span className="text-xs font-bold text-foreground uppercase tracking-wider">
                 Settings
@@ -364,7 +368,8 @@ export default function LuckyFaceScoreMain() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <button
               onClick={() => setShowFaq(!showFaq)}
-              className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition cursor-pointer"
+              aria-expanded={showFaq}
+              className="w-full flex items-center justify-between p-4 min-h-11 hover:bg-muted/30 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-(--primary)/35"
             >
               <span className="text-xs font-bold text-foreground uppercase tracking-wider">
                 Frequently Asked Questions

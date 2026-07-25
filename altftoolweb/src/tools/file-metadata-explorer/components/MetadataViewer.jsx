@@ -90,7 +90,7 @@ export default function MetadataViewer({ fileData }) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-(--foreground) truncate">{meta.fileName}</p>
-          <p className="text-xs text-(--muted-foreground">{meta.type} • {meta.sizeFormatted}</p>
+          <p className="text-xs text-(--muted-foreground)">{meta.type} • {meta.sizeFormatted}</p>
         </div>
       </div>
 

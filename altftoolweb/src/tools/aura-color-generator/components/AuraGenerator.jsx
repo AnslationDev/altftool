@@ -9,7 +9,7 @@ export default function AuraGenerator({ onGenerate, onRandom, loading }) {
       <motion.button
         onClick={onGenerate}
         disabled={loading}
-        className="relative flex items-center gap-3 rounded-2xl px-10 py-4 text-lg font-bold text-white shadow-lg transition-all disabled:opacity-70"
+        className="relative flex items-center gap-3 rounded-2xl px-10 py-4 text-lg font-bold text-white shadow-lg transition-all motion-reduce:transition-none disabled:opacity-70 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         style={{
           background: "linear-gradient(135deg, #8B5CF6, #3B82F6)",
         }}
@@ -35,7 +35,7 @@ export default function AuraGenerator({ onGenerate, onRandom, loading }) {
       <motion.button
         onClick={onRandom}
         disabled={loading}
-        className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--card) px-6 py-3 text-sm font-semibold text-(--foreground) transition-all hover:bg-(--muted) disabled:opacity-50"
+        className="flex items-center gap-2 rounded-xl border border-(--border) bg-(--card) px-6 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) disabled:opacity-50 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >

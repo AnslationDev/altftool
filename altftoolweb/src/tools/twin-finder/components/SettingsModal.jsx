@@ -40,7 +40,8 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, onCle
               <h2 className="text-lg font-bold text-(--foreground)">Settings</h2>
               <button
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground)"
+                aria-label="Close dialog"
+                className="rounded-lg p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <X size={18} />
               </button>
@@ -60,7 +61,8 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, onCle
                 </div>
                 <button
                   onClick={() => onUpdate({ darkMode: !settings.darkMode })}
-                  className={`relative h-6 w-11 rounded-full transition ${
+                  aria-pressed={settings.darkMode}
+                  className={`relative h-6 w-11 rounded-full transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                     settings.darkMode ? "bg-(--primary)" : "bg-(--muted)"
                   }`}
                   aria-label="Toggle dark mode"
@@ -86,7 +88,8 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, onCle
                 </div>
                 <button
                   onClick={() => onUpdate({ autoSave: !settings.autoSave })}
-                  className={`relative h-6 w-11 rounded-full transition ${
+                  aria-pressed={settings.autoSave}
+                  className={`relative h-6 w-11 rounded-full transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                     settings.autoSave ? "bg-(--primary)" : "bg-(--muted)"
                   }`}
                   aria-label="Toggle auto-save"
@@ -115,9 +118,10 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, onCle
                     <button
                       key={opt.value}
                       onClick={() => onUpdate({ animationSpeed: opt.value })}
-                      className={`flex-1 rounded-xl px-3 py-2 text-xs font-semibold transition ${
+                      aria-pressed={settings.animationSpeed === opt.value}
+                      className={`flex-1 rounded-xl px-3 py-2 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                         settings.animationSpeed === opt.value
-                          ? "bg-(--primary) text-white"
+                          ? "bg-(--primary) text-(--primary-foreground)"
                           : "border border-(--border) text-(--muted-foreground) hover:text-(--foreground)"
                       }`}
                     >
@@ -155,7 +159,7 @@ export default function SettingsModal({ open, onClose, settings, onUpdate, onCle
                 ) : (
                   <button
                     onClick={() => setShowConfirm(true)}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/30 px-4 py-3 text-sm font-semibold text-red-500 transition hover:bg-red-500/10 active:scale-95"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/30 px-4 py-3 text-sm font-semibold text-red-500 transition hover:bg-red-500/10 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   >
                     <Trash2 size={16} /> Clear All Data
                   </button>

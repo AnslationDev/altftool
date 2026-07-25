@@ -144,7 +144,8 @@ export default function PassportMakerMain() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={pt.handleReset}
-                  className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition"
+                  aria-label="Back to home"
+                  className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   title="Back to home"
                 >
                   <ArrowLeft size="18" />
@@ -155,7 +156,7 @@ export default function PassportMakerMain() {
                 </div>
               </div>
               <div className="flex gap-1.5">
-                <button onClick={() => setShowSettings(true)} className="p-2 rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition" title="Settings">
+                <button onClick={() => setShowSettings(true)} aria-label="Open settings" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Settings">
                   <Settings size="18" />
                 </button>
               </div>
@@ -256,7 +257,7 @@ export default function PassportMakerMain() {
                 <div className="flex flex-col gap-2">
                   <Button
                     variant="primary"
-                    className="w-full justify-center"
+                    className="w-full justify-center active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     onClick={async () => {
                       if (!pt.processedImage) {
                         await pt.generateResult();
@@ -269,7 +270,7 @@ export default function PassportMakerMain() {
                   </Button>
                   <Button
                     variant="secondary"
-                    className="w-full justify-center"
+                    className="w-full justify-center active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     onClick={() => {
                       if (pt.processedImage) {
                         pt.setViewMode(pt.viewMode === "original" ? "result" : "original");

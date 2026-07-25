@@ -92,7 +92,7 @@ export default function ControlPanel({
         />
         {!disabled && !rolling && (
           <motion.div
-            className="pointer-events-none absolute -inset-2 rounded-3xl"
+            className="pointer-events-none absolute -inset-2 rounded-3xl motion-reduce:hidden"
             animate={{ boxShadow: ["0 0 0px var(--primary)", "0 0 24px var(--primary)", "0 0 0px var(--primary)"] }}
             transition={{ duration: 1.6, repeat: Infinity }}
           />
@@ -122,7 +122,9 @@ export default function ControlPanel({
       <div className="flex items-center gap-2 flex-wrap">
         <button
           onClick={onToggleSound}
-          className="p-2.5 rounded-xl bg-(--card) border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition"
+          aria-label={soundEnabled ? "Mute sounds" : "Enable sounds"}
+          aria-pressed={soundEnabled}
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card) border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           title={soundEnabled ? "Mute sounds" : "Enable sounds"}
         >
           {soundEnabled ? <Volume2 size="18" /> : <VolumeX size="18" />}

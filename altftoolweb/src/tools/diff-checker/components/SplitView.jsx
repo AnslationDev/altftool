@@ -3,8 +3,8 @@
 const SplitView = ({ diff }) => (
   <div className="grid grid-cols-2 gap-4">
     {/* ORIGINAL */}
-    <div className="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
-      <div className="bg-red-600 text-white px-4 py-2 text-sm font-semibold">
+    <div className="bg-(--card) rounded-xl ring-1 ring-(--border) overflow-hidden">
+      <div className="bg-(--danger) text-white px-4 py-2 text-sm font-semibold">
         Original
       </div>
       <div className="max-h-96 overflow-y-auto">
@@ -13,13 +13,13 @@ const SplitView = ({ diff }) => (
           .map((line, idx) => (
             <div
               key={idx}
-              className={`px-4 py-1 font-mono text-sm border-b ${
+              className={`px-4 py-1 font-mono text-sm border-b border-(--border) ${
                 line.type === "deleted"
-                  ? "bg-red-50 text-red-800"
-                  : "bg-white text-gray-700"
+                  ? "bg-(--danger-soft) text-(--danger)"
+                  : "bg-(--card) text-(--foreground)"
               }`}
             >
-              <span className="inline-block w-8 text-gray-400">
+              <span className="inline-block w-8 text-(--muted-foreground)">
                 {line.origLine}
               </span>
               <span className="mr-2">
@@ -32,8 +32,8 @@ const SplitView = ({ diff }) => (
     </div>
 
     {/* MODIFIED */}
-    <div className="bg-(--card) rounded-lg border border-(--border) overflow-hidden">
-      <div className="bg-green-600 text-(--foreground) px-4 py-2 text-sm font-semibold">
+    <div className="bg-(--card) rounded-xl ring-1 ring-(--border) overflow-hidden">
+      <div className="bg-(--success) text-white px-4 py-2 text-sm font-semibold">
         Modified
       </div>
       <div className="max-h-96 overflow-y-auto">
@@ -42,13 +42,13 @@ const SplitView = ({ diff }) => (
           .map((line, idx) => (
             <div
               key={idx}
-              className={`px-4 py-1 font-mono text-sm border-b ${
+              className={`px-4 py-1 font-mono text-sm border-b border-(--border) ${
                 line.type === "added"
-                  ? "bg-green-50 text-green-800"
-                  : "bg-white text-gray-700"
+                  ? "bg-(--success-soft) text-(--success)"
+                  : "bg-(--card) text-(--foreground)"
               }`}
             >
-              <span className="inline-block w-8 text-(--foreground)">
+              <span className="inline-block w-8 text-(--muted-foreground)">
                 {line.modLine}
               </span>
               <span className="mr-2">{line.type === "added" ? "+" : " "}</span>

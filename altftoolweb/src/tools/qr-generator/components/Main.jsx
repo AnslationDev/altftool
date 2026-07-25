@@ -129,9 +129,9 @@ export default function MainComponent() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex-1 whitespace-nowrap ${
-                  activeTab === tab.id 
-                  ? 'bg-blue-600 text-white' 
+                className={`flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl font-bold text-sm transition-all motion-reduce:transition-none flex-1 whitespace-nowrap focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+                  activeTab === tab.id
+                  ? 'bg-(--primary) text-white'
                   : 'text-(--muted-foreground) hover:bg-(--background)'
                 }`}
               >
@@ -146,48 +146,49 @@ export default function MainComponent() {
             </h2>
             <div className="space-y-4">
               {activeTab === 'URL' && (
-                <input 
+                <input
                   value={qrValue}
                   onChange={(e) => setQrValue(e.target.value)}
-                  placeholder="https://google.com" 
-                  className="w-full px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 font-medium transition-all placeholder:text-slate-400" 
+                  aria-label="Website URL"
+                  placeholder="https://google.com"
+                  className="w-full px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 font-medium transition-all placeholder:text-slate-400" 
                 />
               )}
 
               {activeTab === 'WIFI' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input placeholder="WiFi Name (SSID)" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setWifi({...wifi, ssid: e.target.value})} />
-                  <input placeholder="Password" type="password" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setWifi({...wifi, pass: e.target.value})} />
+                  <input placeholder="WiFi Name (SSID)" aria-label="WiFi name (SSID)" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setWifi({...wifi, ssid: e.target.value})} />
+                  <input placeholder="Password" type="password" aria-label="WiFi password" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setWifi({...wifi, pass: e.target.value})} />
                 </div>
               )}
 
               {activeTab === 'vCARD' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input placeholder="First Name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, fn: e.target.value})} />
-                  <input placeholder="Last Name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, ln: e.target.value})} />
-                  <input placeholder="Phone No." className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all sm:col-span-2 placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, tel: e.target.value})} />
+                  <input placeholder="First Name" aria-label="First name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, fn: e.target.value})} />
+                  <input placeholder="Last Name" aria-label="Last name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, ln: e.target.value})} />
+                  <input placeholder="Phone No." aria-label="Phone number" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all sm:col-span-2 placeholder:text-slate-400" onChange={(e) => setVCard({...vCard, tel: e.target.value})} />
                 </div>
               )}
 
               {activeTab === 'UPI' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input placeholder="UPI ID" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setUpi({...upi, vpa: e.target.value})} />
-                  <input placeholder="Merchant Name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-slate-400" onChange={(e) => setUpi({...upi, name: e.target.value})} />
+                  <input placeholder="UPI ID" aria-label="UPI ID" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setUpi({...upi, vpa: e.target.value})} />
+                  <input placeholder="Merchant Name" aria-label="Merchant name" className="px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 transition-all placeholder:text-slate-400" onChange={(e) => setUpi({...upi, name: e.target.value})} />
                 </div>
               )}
 
               {activeTab === 'BULK' && (
                 <div className="space-y-4">
-                  <div className="border-2 border-dashed border-(--border) rounded-2xl p-8 text-center space-y-4 bg-slate-50/30">
-                    <FileSpreadsheet className="mx-auto w-10 h-10 text-blue-500" />
-                    <p className="text-sm font-semibold text-slate-500">Upload CSV (One URL per line)</p>
-                    <input type="file" accept=".csv,.txt" onChange={handleCSVUpload} className="hidden" id="bulk-input" />
-                    <label htmlFor="bulk-input" className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg font-bold cursor-pointer hover:bg-blue-700 transition-colors">Select File</label>
+                  <div className="border-2 border-dashed border-(--border) rounded-2xl p-8 text-center space-y-4 bg-(--background)">
+                    <FileSpreadsheet className="mx-auto w-10 h-10 text-(--primary)" />
+                    <p className="text-sm font-semibold text-(--muted-foreground)">Upload CSV (One URL per line)</p>
+                    <input type="file" accept=".csv,.txt" onChange={handleCSVUpload} className="hidden" id="bulk-input" aria-label="Upload CSV file" />
+                    <label htmlFor="bulk-input" className="inline-flex items-center min-h-[44px] px-6 py-2 bg-(--primary) text-white rounded-lg font-bold cursor-pointer hover:opacity-90 transition-colors motion-reduce:transition-none">Select File</label>
                   </div>
                   {bulkData.length > 0 && (
-                    <div className="flex items-center justify-between bg-blue-50 p-3 rounded-xl border border-blue-100">
-                      <span className="text-sm font-bold text-blue-700">{bulkData.length} QRs Loaded</span>
-                      <button onClick={() => setBulkData([])} className="text-red-500"><X size={16}/></button>
+                    <div className="flex items-center justify-between bg-(--primary)/10 p-3 rounded-xl border border-(--primary)/20">
+                      <span className="text-sm font-bold text-(--primary)">{bulkData.length} QRs Loaded</span>
+                      <button onClick={() => setBulkData([])} aria-label="Clear loaded QR list" className="text-(--danger) p-2 -m-1 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><X size={16}/></button>
                     </div>
                   )}
                 </div>
@@ -196,15 +197,15 @@ export default function MainComponent() {
           </div>
 
           <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-6 shadow-sm">
-            <h2 className="font-semibold text-lg flex items-center gap-2 text-(--primary)"><Palette size={20} className="text-blue-600" /> Customize Style</h2>
+            <h2 className="font-semibold text-lg flex items-center gap-2 text-(--primary)"><Palette size={20} className="text-(--primary)" /> Customize Style</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="space-y-1">
-                <label className="text-ml font-semibold text-slate-400 uppercase">QR Color</label>
-                <input type="color" className="w-full h-10 rounded-lg cursor-pointer bg-transparent border border-(--border)" value={fgColor} onChange={(e) => setFgColor(e.target.value)} />
+                <label htmlFor="qr-fg-color" className="text-ml font-semibold text-(--muted-foreground) uppercase">QR Color</label>
+                <input id="qr-fg-color" type="color" className="w-full h-10 rounded-lg cursor-pointer bg-transparent border border-(--border) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25" value={fgColor} onChange={(e) => setFgColor(e.target.value)} />
               </div>
               <div className="space-y-1">
-                <label className="text-ml font-semibold text-slate-400 uppercase">Size</label>
-                <select className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-ml" value={size} onChange={(e) => setSize(Number(e.target.value))}>
+                <label htmlFor="qr-size" className="text-ml font-semibold text-(--muted-foreground) uppercase">Size</label>
+                <select id="qr-size" className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-ml focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25" value={size} onChange={(e) => setSize(Number(e.target.value))}>
                   <option value={140}>Small</option>
                   <option value={220}>Medium</option>
                   <option value={300}>Large</option>
@@ -212,9 +213,9 @@ export default function MainComponent() {
               </div>
               <div className="space-y-1">
                 <label className="text-ml font-semibold text-slate-400 uppercase">Logo</label>
-                <label className="w-full h-10 rounded-lg border flex items-center justify-center cursor-pointer text-md font-semibold bg-(--background)">
+                <label className="w-full h-10 rounded-lg border border-(--border) flex items-center justify-center cursor-pointer text-md font-semibold bg-(--background)">
                   <ImageIcon size={14} className="mr-1"/> {customLogo ? "Added" : "Upload"}
-                  <input type="file" className="hidden" accept="image/*" onChange={handleLogo} />
+                  <input type="file" className="hidden" accept="image/*" onChange={handleLogo} aria-label="Upload logo image" />
                 </label>
               </div>
             </div>
@@ -226,7 +227,7 @@ export default function MainComponent() {
           <div className="bg-(--card) border border-(--border) rounded-2xl p-8 flex flex-col items-center justify-center shadow-md sticky top-8">
             {isClient ? (
               <>
-                <div className="bg-white border border-(--border) rounded-2xl p-6 shadow-inner transition-transform hover:scale-[1.02]">
+                <div className="bg-white border border-(--border) rounded-2xl p-6 shadow-inner transition-transform hover:scale-[1.02] motion-reduce:transition-none motion-reduce:hover:scale-100">
                   <QRCodeCanvas
                     id="qr-code"
                     value={computedQrValue || " "}
@@ -241,14 +242,14 @@ export default function MainComponent() {
                 <button
                   onClick={activeTab === 'BULK' ? downloadBulk : downloadQR}
                   disabled={isProcessing || (activeTab === 'BULK' && bulkData.length === 0)}
-                  className="mt-8 w-full py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-800 transition-all active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="mt-8 w-full py-4 min-h-[44px] rounded-xl bg-(--primary) text-white font-bold hover:opacity-90 transition-all active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                   {isProcessing ? <Loader2 className="animate-spin" /> : <Download className="w-5 h-5" />}
+                   {isProcessing ? <Loader2 className="animate-spin motion-reduce:animate-none" /> : <Download className="w-5 h-5" />}
                   {activeTab === 'BULK' ? `Download Batch (${bulkData.length})` : 'Download QR'}
                 </button>
               </>
             ) : (
-              <div className="h-40 w-40 bg-(--muted) rounded-lg animate-pulse" />
+              <div className="h-40 w-40 bg-(--muted) rounded-lg animate-pulse motion-reduce:animate-none" />
             )}
           </div>
         </div>
@@ -257,7 +258,7 @@ export default function MainComponent() {
       {/* ANALYTICS SECTION AT BOTTOM */}
       <div className="mt-12 pt-8 border-t border-(--border)">
         <div className="flex items-center gap-3 mb-8">
-          <Activity className="text-blue-600" size={28} />
+          <Activity className="text-(--primary)" size={28} />
           <h2 className="text-2xl font-bold text-(--primary) uppercase tracking-tight">Live QR Analytics</h2>
         </div>
 
@@ -267,7 +268,7 @@ export default function MainComponent() {
               <MapPin size={18}/> <span className="text-xs font-bold uppercase">Live Location</span>
             </div>
             <h4 className="text-xl font-bold">{geoData.city}</h4>
-            <p className="text-xs text-blue-600 font-bold uppercase mt-1">{geoData.country}</p>
+            <p className="text-xs text-(--primary) font-bold uppercase mt-1">{geoData.country}</p>
           </div>
 
           <div className="bg-(--card) p-6 rounded-2xl border border-(--border) shadow-sm">

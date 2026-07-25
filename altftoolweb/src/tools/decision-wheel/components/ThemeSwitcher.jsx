@@ -23,7 +23,8 @@ export default function ThemeSwitcher({ current, onChange }) {
           <button
             key={theme.key}
             onClick={() => onChange(theme.key)}
-            className={`p-1.5 rounded-lg border transition ${
+            aria-pressed={current === theme.key}
+            className={`p-1.5 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               current === theme.key
                 ? "border-(--primary) ring-1 ring-(--primary)"
                 : "border-(--border) hover:border-(--border-strong)"

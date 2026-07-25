@@ -12,7 +12,7 @@ export default function SpinControls({
       <div className="flex gap-2">
         <button
           onClick={() => onModeChange("wheel")}
-          className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition border ${
+          className={`flex-1 py-2 px-3 min-h-11 rounded-lg text-xs font-semibold transition border active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
             mode === "wheel"
               ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
               : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -23,7 +23,7 @@ export default function SpinControls({
         </button>
         <button
           onClick={() => onModeChange("team")}
-          className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition border ${
+          className={`flex-1 py-2 px-3 min-h-11 rounded-lg text-xs font-semibold transition border active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
             mode === "team"
               ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
               : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -41,6 +41,7 @@ export default function SpinControls({
           type="range"
           min="1"
           max="10"
+          aria-label="Spin speed"
           value={spinSpeed}
           onChange={(e) => onSpeedChange(Number(e.target.value))}
           className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
@@ -56,7 +57,7 @@ export default function SpinControls({
         <Button
           variant="primary"
           size="lg"
-          className="w-full h-11 text-sm font-bold"
+          className="w-full h-11 text-sm font-bold active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           onClick={onSpin}
           disabled={entries.length < 2 || isSpinning}
         >
@@ -67,7 +68,7 @@ export default function SpinControls({
           <Button
             variant="primary"
             size="lg"
-            className="w-full h-11 text-sm font-bold"
+            className="w-full h-11 text-sm font-bold active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             onClick={onTeamSelect}
             disabled={entries.length - selectedEntries.length < 1}
           >
@@ -88,7 +89,7 @@ export default function SpinControls({
         <button
           onClick={onUndo}
           disabled={!canUndo}
-          className="flex-1 p-2 rounded-lg text-xs font-medium border border-(--border) bg-(--card) text-(--muted-foreground) disabled:opacity-30 hover:bg-(--muted) transition"
+          className="flex-1 p-2 min-h-11 rounded-lg text-xs font-medium border border-(--border) bg-(--card) text-(--muted-foreground) disabled:opacity-30 hover:bg-(--muted) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           <Undo2 size="14" className="mx-auto mb-0.5" />
           Undo
@@ -96,7 +97,7 @@ export default function SpinControls({
         <button
           onClick={onRedo}
           disabled={!canRedo}
-          className="flex-1 p-2 rounded-lg text-xs font-medium border border-(--border) bg-(--card) text-(--muted-foreground) disabled:opacity-30 hover:bg-(--muted) transition"
+          className="flex-1 p-2 min-h-11 rounded-lg text-xs font-medium border border-(--border) bg-(--card) text-(--muted-foreground) disabled:opacity-30 hover:bg-(--muted) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           <Redo2 size="14" className="mx-auto mb-0.5" />
           Redo

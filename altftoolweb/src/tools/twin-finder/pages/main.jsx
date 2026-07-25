@@ -81,7 +81,8 @@ export default function TwinFinderMain() {
               {toast.message}
               <button
                 onClick={() => {}}
-                className="ml-2 rounded p-0.5 opacity-60 hover:opacity-100"
+                aria-label="Dismiss notification"
+                className="ml-2 rounded p-0.5 opacity-60 hover:opacity-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
               >
                 <X size={14} />
               </button>
@@ -148,7 +149,7 @@ export default function TwinFinderMain() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowSettings(true)}
-            className="rounded-xl border border-(--border) p-2 text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground)"
+            className="rounded-xl border border-(--border) p-2 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Settings"
           >
             <Settings size={18} />
@@ -191,7 +192,7 @@ export default function TwinFinderMain() {
           >
             <button
               onClick={runComparison}
-              className="inline-flex items-center gap-2 rounded-xl bg-(--primary) px-8 py-3 text-sm font-bold text-white shadow-md transition hover:opacity-90 active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl bg-(--primary) px-8 py-3 text-sm font-bold text-(--primary-foreground) shadow-md transition hover:opacity-90 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <Sparkles size={18} /> Compare Photos
             </button>
@@ -324,7 +325,7 @@ export default function TwinFinderMain() {
           >
             <button
               onClick={resetAll}
-              className="inline-flex items-center gap-2 rounded-xl border border-(--border) px-6 py-2.5 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl border border-(--border) px-6 py-2.5 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               <RefreshCw size={16} /> Try Again
             </button>

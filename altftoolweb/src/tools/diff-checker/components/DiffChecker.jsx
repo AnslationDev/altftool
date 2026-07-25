@@ -217,7 +217,7 @@ const DiffChecker = () => {
             const stored = JSON.parse(localStorage.getItem("versions") || "[]");
             setVersions(stored);
             setShowVersions(true);
-          }} className="px-4 py-2 bg-(--primary) text-white rounded-lg flex items-center gap-2 text-sm cursor-pointer">
+          }} className="min-h-11 px-4 py-2 bg-(--primary) text-(--primary-foreground) rounded-lg flex items-center gap-2 text-sm cursor-pointer transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
             See older versions
           </button>
         </div>
@@ -232,14 +232,15 @@ const DiffChecker = () => {
                 className="border border-(--border) p-2 rounded mb-2 flex justify-between items-center"
               >
                 <div>
-                  <p className="text-xs text-gray-500">{v.createdAt}</p>
+                  <p className="text-xs text-(--muted-foreground)">{v.createdAt}</p>
                 </div>
 
                 <div className="flex gap-2">
                   {/* Load Button */}
                   <button
                     onClick={() => loadVersion(v)}
-                    className="text-xs px-2 py-1 bg-(--primary) text-white rounded"
+                    aria-label={`Load version saved at ${v.createdAt}`}
+                    className="min-h-11 min-w-11 text-xs px-2 py-1 bg-(--primary) text-(--primary-foreground) rounded transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     Load
                   </button>
@@ -247,10 +248,12 @@ const DiffChecker = () => {
                   {/* Select Button */}
                   <button
                     onClick={() => toggleSelectVersion(v)}
-                    className={`flex items-center justify-center text-xs px-2 py-1 rounded ${
+                    aria-label={`Select version saved at ${v.createdAt} for comparison`}
+                    aria-pressed={Boolean(selectedVersions.find((sv) => sv.id === v.id))}
+                    className={`flex min-h-11 min-w-11 items-center justify-center text-xs px-2 py-1 rounded transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                       selectedVersions.find((sv) => sv.id === v.id)
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200"
+                        ? "bg-(--success) text-white"
+                        : "bg-(--muted) text-(--foreground)"
                     }`}
                   >
                     Select
@@ -259,8 +262,14 @@ const DiffChecker = () => {
               </div>
             ))}
 
+            {versions.length === 0 && (
+              <p className="text-xs text-(--muted-foreground)">
+                No saved versions yet. Versions are stored automatically as you type.
+              </p>
+            )}
+
             {/* Selected Count */}
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-(--muted-foreground) mt-2">
               Selected: {selectedVersions.length} / 2
             </p>
 
@@ -269,7 +278,7 @@ const DiffChecker = () => {
               <div className="flex items-center justify-center">
                 <button
                 onClick={compareSelectedVersions}
-                className="mt-3 px-3 py-1 bg-(--primary) text-white rounded text-sm"
+                className="mt-3 min-h-11 px-3 py-1 bg-(--primary) text-(--primary-foreground) rounded text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
                 Compare Selected Versions
               </button>

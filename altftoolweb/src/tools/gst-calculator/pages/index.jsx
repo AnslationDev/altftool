@@ -148,7 +148,8 @@ export default function ToolHome() {
                   setMode("exclusive");
                   setTaxType("intra");
                 }}
-                className="btn-secondary min-h-9 px-3 py-1.5"
+                aria-label="Reset inputs to defaults"
+                className="btn-secondary min-h-9 px-3 py-1.5 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
                 <RotateCcw className="h-4 w-4" />
                 Reset
@@ -163,7 +164,7 @@ export default function ToolHome() {
                     key={preset.label}
                     type="button"
                     onClick={() => applyPreset(preset)}
-                    className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                    className="min-h-[44px] rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     {preset.label}
                   </button>
@@ -190,7 +191,8 @@ export default function ToolHome() {
                     key={gstRate}
                     type="button"
                     onClick={() => setRate(gstRate)}
-                    className={`h-10 rounded-md border text-sm font-semibold transition ${
+                    aria-label={`Set GST rate to ${gstRate} percent`}
+                    className={`h-10 rounded-md border text-sm font-semibold transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                       rate === gstRate
                         ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                         : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)]"
@@ -211,7 +213,7 @@ export default function ToolHome() {
                   key={value}
                   type="button"
                   onClick={() => setMode(value)}
-                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold ${
+                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                     mode === value
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                       : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)]"
@@ -231,7 +233,7 @@ export default function ToolHome() {
                   key={value}
                   type="button"
                   onClick={() => setTaxType(value)}
-                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold ${
+                  className={`min-h-11 rounded-md border px-3 py-2 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                     taxType === value
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                       : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)]"
@@ -259,14 +261,20 @@ export default function ToolHome() {
                   Formula
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <button type="button" onClick={copyReport} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                  <button
+                    type="button"
+                    onClick={copyReport}
+                    aria-label="Copy calculation report"
+                    className="btn-secondary min-h-9 px-3 py-1.5 text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+                  >
                     <Copy className="h-4 w-4" />
                     {copied ? "Copied" : "Copy report"}
                   </button>
                   <button
                     type="button"
                     onClick={() => downloadTextFile("gst-calculation-report.txt", report)}
-                    className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                    aria-label="Download calculation report"
+                    className="btn-secondary min-h-9 px-3 py-1.5 text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     <FileDown className="h-4 w-4" />
                     Download

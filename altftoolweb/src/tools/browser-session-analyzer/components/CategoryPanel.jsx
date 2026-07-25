@@ -24,7 +24,8 @@ export default function CategoryPanel({ categories, active, onSelect }) {
     <div className="flex flex-wrap gap-1.5">
       <button
         onClick={() => onSelect("all")}
-        className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+        aria-pressed={active === "all"}
+        className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
           active === "all"
             ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
             : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -38,7 +39,8 @@ export default function CategoryPanel({ categories, active, onSelect }) {
           <button
             key={cat.name}
             onClick={() => onSelect(cat.name)}
-            className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+            aria-pressed={active === cat.name}
+            className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
               active === cat.name
                 ? `${colors.bg} ${colors.text} border-transparent`
                 : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"

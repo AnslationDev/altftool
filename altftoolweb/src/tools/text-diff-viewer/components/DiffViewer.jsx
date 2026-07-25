@@ -62,7 +62,7 @@ function SideBySideView({ diff, stats, searchQuery }) {
               key={i}
               className={`flex ${
                 line.type === "removed"
-                  ? "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
+                  ? "bg-(--danger-soft) text-(--danger)"
                   : ""
               }`}
             >
@@ -84,7 +84,7 @@ function SideBySideView({ diff, stats, searchQuery }) {
               key={i}
               className={`flex ${
                 line.type === "added"
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300"
+                  ? "bg-(--success-soft) text-(--success)"
                   : ""
               }`}
             >
@@ -109,14 +109,14 @@ function InlineView({ diff, searchQuery }) {
       <div className="overflow-auto max-h-[500px] text-sm font-mono leading-relaxed">
         {diff.map((part, i) => {
           const bgColor = part.added
-            ? "bg-green-50 dark:bg-green-900/20"
+            ? "bg-(--success-soft)"
             : part.removed
-            ? "bg-red-50 dark:bg-red-900/20"
+            ? "bg-(--danger-soft)"
             : "";
           const textColor = part.added
-            ? "text-green-700 dark:text-green-300"
+            ? "text-(--success)"
             : part.removed
-            ? "text-red-700 dark:text-red-300"
+            ? "text-(--danger)"
             : "text-(--foreground)";
           const prefix = part.added ? "+ " : part.removed ? "- " : "  ";
           return (

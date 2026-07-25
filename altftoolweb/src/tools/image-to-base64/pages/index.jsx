@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, ImageIcon, UploadCloud } from "lucide-react";
+import { Copy, Download, ImageIcon, UploadCloud } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 function formatBytes(bytes) {
@@ -29,6 +29,17 @@ export default function ToolHome() {
     setTimeout(() => setCopied(false), 1000);
   };
 
+  const downloadData = () => {
+    if (!dataUrl) return;
+    const blob = new Blob([dataUrl], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${(fileInfo?.name || "image").replace(/\.[^.]+$/, "")}-base64.txt`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -45,10 +56,10 @@ export default function ToolHome() {
 
         <section className="grid gap-6 lg:grid-cols-[380px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <label className="flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-center hover:bg-[var(--muted)]">
+            <label className="flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] p-6 text-center transition hover:bg-[var(--muted)] focus-within:border-[var(--primary)] focus-within:ring-[3px] focus-within:ring-[var(--primary)]/25 motion-reduce:transition-none">
               <UploadCloud className="h-10 w-10 text-[var(--primary)]" />
               <span className="mt-3 text-sm font-semibold">Upload image</span>
-              <input data-testid="image-to-base64-file-input" type="file" accept="image/*" className="hidden" onChange={(event) => handleFile(event.target.files?.[0])} />
+              <input data-testid="image-to-base64-file-input" type="file" accept="image/*" aria-label="Upload image file" className="sr-only" onChange={(event) => handleFile(event.target.files?.[0])} />
             </label>
             {fileInfo && (
               <div className="mt-5 space-y-2 text-sm">
@@ -62,10 +73,16 @@ export default function ToolHome() {
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-lg font-semibold">Base64 output</h2>
-              <button type="button" disabled={!dataUrl} onClick={copyData} className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">
-                <Copy className="h-4 w-4" />
-                {copied ? "Copied" : "Copy"}
-              </button>
+              <div className="flex flex-wrap items-center gap-2">
+                <button type="button" disabled={!dataUrl} onClick={copyData} aria-label="Copy Base64 data URL" className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none disabled:opacity-50 sm:min-h-10">
+                  <Copy className="h-4 w-4" />
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+                <button type="button" disabled={!dataUrl} onClick={downloadData} aria-label="Download Base64 as text file" className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transform-none motion-reduce:transition-none disabled:opacity-50 sm:min-h-10">
+                  <Download className="h-4 w-4" />
+                  Download
+                </button>
+              </div>
             </div>
             {dataUrl ? (
               <>
@@ -73,7 +90,7 @@ export default function ToolHome() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={dataUrl} alt="" className="max-h-64 w-full object-contain" />
                 </div>
-                <textarea data-testid="tool-output" readOnly value={dataUrl} className="min-h-64 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs outline-none" />
+                <textarea data-testid="tool-output" readOnly value={dataUrl} aria-label="Base64 data URL output" className="min-h-64 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-xs outline-none transition focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 motion-reduce:transition-none" />
               </>
             ) : (
               <div data-testid="tool-output" className="flex min-h-80 items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--background)] text-sm text-[var(--muted-foreground)]">

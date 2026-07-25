@@ -58,10 +58,10 @@ const CropEditor = ({
         <button
           onClick={handleUndo}
           disabled={!history || history.length === 0}
-          className={` flex-1 sm:flex-none px-3 py-2 rounded-md border border-(--border) text-xs sm:text-sm transition-colors flex items-center  justify-center gap-2 $ {
+          className={`flex-1 sm:flex-none px-3 py-2 min-h-[44px] rounded-md border text-xs sm:text-sm transition-colors flex items-center justify-center gap-2 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
       !history || history.length === 0
-        ? "opacity-50  bg-(--primary)  text-white border-(--primary)"
-        : " bg-(--primary) text-white  border-(--primary) hover:opacity-90"
+        ? "opacity-50 bg-(--primary) text-white border-(--primary)"
+        : "bg-(--primary) text-white border-(--primary) hover:opacity-90"
     }`}
         >
           <Undo2 className="w-4 h-4 " />
@@ -71,7 +71,7 @@ const CropEditor = ({
         {/* Reset Button */}
         <button
           onClick={handleResetAll}
-          className="flex-1 sm:flex-none px-3 py-2 rounded-md text-xs sm:text-sm bg-(--primary) text-white border border-(--primary) hover:opacity-90 transition-colors flex items-center justify-center gap-2"
+          className="flex-1 sm:flex-none px-3 py-2 min-h-[44px] rounded-md text-xs sm:text-sm bg-(--primary) text-white border border-(--primary) hover:opacity-90 transition-colors flex items-center justify-center gap-2 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
         >
           <RotateCcw className="w-4 h-4 " />
           Reset
@@ -80,7 +80,7 @@ const CropEditor = ({
         {/*  New Image button */}
         <button
           onClick={onReset}
-          className="flex-1 sm:flex-none px-3 py-2 bg-(--primary) text-xs sm:text-sm text-white border border-(--border) rounded-md transition-colors cursor-pointer hover:opacity-90 flex items-center justify-center"
+          className="flex-1 sm:flex-none px-3 py-2 min-h-[44px] bg-(--primary) text-xs sm:text-sm text-white border border-(--border) rounded-md transition-colors cursor-pointer hover:opacity-90 flex items-center justify-center active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
         >
           <svg
             className="w-4 h-4 mr-2"
@@ -238,11 +238,20 @@ const CropEditor = ({
       // WRAPPER 
       <div
         key={item.name}
+        role="button"
+        tabIndex={0}
+        aria-label={`Apply ${item.name} aspect ratio`}
         onClick={() => onAspectChange(item.aspect)}
-        className="flex flex-col items-center cursor-pointer group"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onAspectChange(item.aspect);
+          }
+        }}
+        className="flex flex-col items-center cursor-pointer group focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 rounded-xl"
       >
         {/*  CARD */}
-        <div className="w-full h-32 sm:h-36 md:h-40 rounded-xl overflow-hidden border border-(--border) bg-(--card) group-hover:scale-105 transition-all duration-200">
+        <div className="w-full h-32 sm:h-36 md:h-40 rounded-xl overflow-hidden border border-(--border) bg-(--card) group-hover:scale-105 motion-reduce:group-hover:scale-100 transition-all duration-200">
           
           {imageSrc && (
             <ManagedImage
@@ -464,17 +473,18 @@ const CropEditor = ({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex-1">
-          <label className="block text:md  sm:text-sm font-medium text-(--muted-foreground) mb-1">
+          <label htmlFor="cropper-zoom" className="block text:md  sm:text-sm font-medium text-(--muted-foreground) mb-1">
             Zoom
           </label>
           <input
+            id="cropper-zoom"
             type="range"
             min="1"
             max="3"
             step="0.1"
             value={zoom}
             onChange={(e) => onZoomChange(parseFloat(e.target.value))}
-            className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary)"
+            className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           />
         </div>
         <button
@@ -482,7 +492,7 @@ const CropEditor = ({
           data-testid="image-cropper-crop-button"
           onClick={onCropImage}
           disabled={isProcessing}
-          className={`px-6 py-3 text-sm  font-medium rounded-md transition-colors cursor-pointer ${
+          className={`px-6 py-3 min-h-[44px] text-sm font-medium rounded-md transition-colors cursor-pointer active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
             isProcessing
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-(--primary) text-white"
@@ -491,7 +501,7 @@ const CropEditor = ({
           {isProcessing ? (
             <span className="flex  items-center justify-center">
               <svg
-                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                className="animate-spin motion-reduce:animate-none -ml-1 mr-2 h-4 w-4 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -535,14 +545,14 @@ const CropEditor = ({
               min="0.5"
               max="2"
               step="0.1"
-              value={filters.brightness}
+              aria-label="Brightness" value={filters.brightness}
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,
                   brightness: parseFloat(e.target.value),
                 }))
               }
-              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary)"
+              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             />
           </div>
 
@@ -557,14 +567,14 @@ const CropEditor = ({
               min="0.5"
               max="2"
               step="0.1"
-              value={filters.contrast}
+              aria-label="Contrast" value={filters.contrast}
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,
                   contrast: parseFloat(e.target.value),
                 }))
               }
-              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary)"
+              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             />
           </div>
 
@@ -579,14 +589,14 @@ const CropEditor = ({
               min="0"
               max="2"
               step="0.1"
-              value={filters.saturation}
+              aria-label="Saturation" value={filters.saturation}
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,
                   saturation: parseFloat(e.target.value),
                 }))
               }
-              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary)"
+              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             />
           </div>
 
@@ -601,14 +611,14 @@ const CropEditor = ({
               min="0"
               max="1"
               step="0.1"
-              value={filters.grayscale}
+              aria-label="Grayscale" value={filters.grayscale}
               onChange={(e) =>
                 setFilters((prev) => ({
                   ...prev,
                   grayscale: parseFloat(e.target.value),
                 }))
               }
-              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary)"
+              className="w-full h-2 bg-gray-500 rounded-lg appearance-none cursor-pointer accent-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             />
           </div>
         </div>

@@ -116,7 +116,7 @@ export default function ToolHome() {
                   key={item.id}
                   type="button"
                   onClick={() => setMode(item.id)}
-                  className={`rounded-md border px-3 py-3 text-left text-sm font-semibold transition ${
+                  className={`rounded-md border px-3 py-3 text-left text-sm font-semibold transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                     mode === item.id
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                       : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)]"
@@ -162,7 +162,8 @@ export default function ToolHome() {
                     setFirst(18);
                     setSecond(1000);
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]"
+                  className="inline-flex min-h-[44px] items-center gap-1 rounded-md px-2 text-xs font-semibold text-[var(--primary)] transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+                  aria-label="Reset inputs to defaults"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Reset
@@ -174,7 +175,7 @@ export default function ToolHome() {
                     key={preset.label}
                     type="button"
                     onClick={() => applyPreset(preset)}
-                    className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                    className="min-h-[44px] rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                   >
                     {preset.label}
                   </button>
@@ -187,14 +188,20 @@ export default function ToolHome() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{result.label}</p>
               <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={copyReport} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                <button
+                  type="button"
+                  onClick={copyReport}
+                  aria-label="Copy calculation report"
+                  className="btn-secondary min-h-9 px-3 py-1.5 text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+                >
                   <Copy className="h-4 w-4" />
                   {copied ? "Copied" : "Copy report"}
                 </button>
                 <button
                   type="button"
                   onClick={() => downloadTextFile("percentage-calculation-report.txt", report)}
-                  className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                  aria-label="Download calculation report"
+                  className="btn-secondary min-h-9 px-3 py-1.5 text-sm transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                 >
                   <FileDown className="h-4 w-4" />
                   Download

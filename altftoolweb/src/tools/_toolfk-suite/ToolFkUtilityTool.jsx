@@ -493,9 +493,9 @@ const actionLabels = {
 
 const PANEL_CLASS = "rounded-[8px] border border-(--border) bg-(--card) p-4 shadow-[var(--anslation-ds-shadow-sm)]";
 const FIELD_CLASS =
-  "w-full rounded-[8px] border border-(--border) bg-(--background) text-(--foreground) outline-none transition focus:border-(--primary)";
+  "w-full rounded-[8px] border border-(--border) bg-(--background) text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-[3px] focus:ring-(--primary)/25";
 const CHIP_BUTTON_CLASS =
-  "inline-flex min-h-9 items-center justify-center rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)";
+  "inline-flex min-h-11 items-center justify-center rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9";
 
 const morseMap = {
   a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".", f: "..-.", g: "--.", h: "....",
@@ -1241,7 +1241,7 @@ function ActionButton({ active, children, disabled, className = "", ...props }) 
     <button
       type="button"
       disabled={disabled}
-      className={`inline-flex min-h-10 items-center justify-center rounded-[7px] px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`inline-flex min-h-11 items-center justify-center rounded-[7px] px-3 py-2 text-sm font-semibold transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transform-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-10 ${
         active
           ? "bg-(--primary) text-(--primary-foreground)"
           : "border border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
@@ -1269,7 +1269,7 @@ function CopyButton({ value, testId = "copy-tool-output" }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transform-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-10"
     >
       {copied ? <CheckCircle2 className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
       {copied ? "Copied" : "Copy"}
@@ -1289,7 +1289,7 @@ function DownloadTextButton({ value, filename = "altftool-output.txt" }) {
         if (disabled) return;
         downloadBlob(new Blob([String(value || "")], { type: "text/plain;charset=utf-8" }), filename);
       }}
-      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transform-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-10"
     >
       <FileDown className="h-4 w-4" />
       Download
@@ -1312,7 +1312,7 @@ function ShareLinkButton({ slug, state }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="inline-flex min-h-9 items-center gap-1.5 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground)"
+      className="inline-flex min-h-11 items-center gap-1.5 rounded-[7px] border border-(--border) bg-(--background) px-2.5 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9"
     >
       {copied ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />}
       {copied ? "Copied" : "Share"}
@@ -1430,7 +1430,7 @@ function TextTool({ definition, slug }) {
                 type="button"
                 disabled={Boolean(result.error) || !String(result.output || "").length}
                 onClick={() => setInput(result.output)}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transform-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-10"
               >
                 <ArrowDownUp className="h-4 w-4" />
                 Use output
@@ -1439,7 +1439,7 @@ function TextTool({ definition, slug }) {
                 type="button"
                 disabled={Boolean(result.error) || !String(result.output || "").length}
                 onClick={saveRun}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[7px] border border-(--border) bg-(--background) px-3 py-2 text-sm font-semibold text-(--foreground) transition hover:border-(--primary) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transform-none disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-10"
               >
                 <History className="h-4 w-4" />
                 Save run
@@ -1530,6 +1530,7 @@ function CryptoTool({ definition, slug }) {
           onChange={(e) => setSecret(e.target.value)}
           className={`${FIELD_CLASS} mt-3 px-3 py-2 text-sm`}
           placeholder="Passphrase for AES"
+          aria-label="Passphrase for AES encryption and decryption"
         />
         <div className="mt-3 flex flex-wrap gap-2">
           {definition.actions.map((item) => <ActionButton key={item} onClick={() => run(item)}>{actionLabels[item]}</ActionButton>)}
@@ -1648,7 +1649,7 @@ function FileToBase64Tool({ definition }) {
           <Upload className="h-9 w-9 text-(--primary)" />
           <h2 className="mt-4 text-lg font-semibold text-(--foreground)">Choose a local file</h2>
           <p className="mt-2 max-w-sm text-sm text-(--muted-foreground)">The file stays in your browser and is converted to a Base64 data URL.</p>
-          <label className="mt-5 inline-flex min-h-10 cursor-pointer items-center rounded-[7px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground)">
+          <label className="mt-5 inline-flex min-h-11 cursor-pointer items-center rounded-[7px] bg-(--primary) px-4 py-2 text-sm font-semibold text-(--primary-foreground) transition active:scale-[0.98] focus-within:ring-[3px] focus-within:ring-(--primary)/35 motion-reduce:transform-none motion-reduce:transition-none sm:min-h-10">
             Browse file
             <input data-testid="file-to-base64-input" type="file" accept={definition.accept} className="sr-only" onChange={(e) => handleFile(e.target.files?.[0])} />
           </label>
@@ -1711,8 +1712,8 @@ function Base64ToFileTool({ definition, slug }) {
           className={`${FIELD_CLASS} mt-3 min-h-[280px] resize-y p-3 font-mono text-sm leading-6`}
         />
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-          <input value={filename} onChange={(e) => setFilename(e.target.value)} className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
-          <input value={mime} onChange={(e) => setMime(e.target.value)} className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
+          <input value={filename} onChange={(e) => setFilename(e.target.value)} aria-label="Output file name" className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
+          <input value={mime} onChange={(e) => setMime(e.target.value)} aria-label="Output MIME type" className={`${FIELD_CLASS} px-3 py-2 text-sm`} />
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           <ActionButton onClick={buildFile}>Preview</ActionButton>
@@ -1725,7 +1726,11 @@ function Base64ToFileTool({ definition, slug }) {
           {error ? "Preview failed." : objectUrl ? `Decoded ${mime} ready as ${filename}.` : "Paste data and click Preview."}
         </p>
         <div className="mt-3 flex min-h-[330px] items-center justify-center rounded-[8px] border border-(--border) bg-(--background) p-3">
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <p role="alert" className="rounded-[8px] border border-(--danger) bg-(--danger-soft) px-3 py-2 text-sm font-medium text-(--danger)">
+              {error}
+            </p>
+          )}
           {!error && !objectUrl && <p className="text-sm text-(--muted-foreground)">Waiting for Base64 input.</p>}
           {objectUrl && definition.preview === "image" && <img src={objectUrl} alt="Decoded preview" className="max-h-[320px] rounded-[7px] object-contain" />}
           {objectUrl && definition.preview === "audio" && <audio controls src={objectUrl} className="w-full" />}
@@ -1780,8 +1785,8 @@ function BaseConverterTool({ slug }) {
         <ShareLinkButton slug={slug} state={{ value, from }} />
       </div>
       <div className="grid gap-3 sm:grid-cols-[1fr_160px]">
-        <input data-testid="tool-base-input" value={value} onChange={(e) => setValue(e.target.value)} className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
-        <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className={`${FIELD_CLASS} px-3 py-3 text-sm`}>
+        <input data-testid="tool-base-input" value={value} onChange={(e) => setValue(e.target.value)} aria-label="Number to convert" className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
+        <select value={from} onChange={(e) => setFrom(Number(e.target.value))} aria-label="Source number base" className={`${FIELD_CLASS} px-3 py-3 text-sm`}>
           {[2, 8, 10, 16, 36].map((base) => <option key={base} value={base}>Base {base}</option>)}
         </select>
       </div>
@@ -1834,7 +1839,7 @@ function ByteConverterTool({ slug }) {
         </div>
         <ShareLinkButton slug={slug} state={{ bytes }} />
       </div>
-      <input data-testid="tool-bytes-input" value={bytes} onChange={(e) => setBytes(e.target.value)} className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
+      <input data-testid="tool-bytes-input" value={bytes} onChange={(e) => setBytes(e.target.value)} aria-label="Bytes value to convert" className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`} />
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(units).map(([key, item]) => (
           <div key={key} className="rounded-[8px] border border-(--border) bg-(--background) p-4">
@@ -1889,6 +1894,7 @@ function CronEvaluatorTool({ definition, slug }) {
         <input
           value={expression}
           onChange={(e) => setExpression(e.target.value)}
+          aria-label="Crontab expression"
           className={`${FIELD_CLASS} mt-3 px-3 py-3 font-mono text-sm`}
         />
         <div className="mt-4 grid grid-cols-5 gap-2 text-center text-xs text-(--muted-foreground)">
@@ -1946,6 +1952,7 @@ function ScientificNotationTool({ slug }) {
         data-testid="tool-scientific-input"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        aria-label="Number for scientific notation"
         className={`${FIELD_CLASS} px-3 py-3 font-mono text-sm`}
       />
       <div className="mt-4 grid gap-3 md:grid-cols-2">
@@ -2025,6 +2032,7 @@ function TextDiffTool({ slug }) {
             data-testid="tool-diff-left"
             value={left}
             onChange={(e) => setLeft(e.target.value)}
+            aria-label="Original text"
             spellCheck={false}
             autoCapitalize="off"
             autoComplete="off"
@@ -2038,6 +2046,7 @@ function TextDiffTool({ slug }) {
             data-testid="tool-diff-right"
             value={right}
             onChange={(e) => setRight(e.target.value)}
+            aria-label="Changed text"
             spellCheck={false}
             autoCapitalize="off"
             autoComplete="off"
@@ -2117,7 +2126,11 @@ function SvgTool({ definition, slug }) {
           {error ? "SVG render failed." : preview ? "Rendered PNG ready." : "Click Render PNG."}
         </p>
         <div className="mt-3 flex min-h-[340px] items-center justify-center rounded-[8px] border border-(--border) bg-(--background) p-4">
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && (
+            <p role="alert" className="rounded-[8px] border border-(--danger) bg-(--danger-soft) px-3 py-2 text-sm font-medium text-(--danger)">
+              {error}
+            </p>
+          )}
           {!error && preview ? <img src={preview} alt="SVG preview" className="max-h-[320px] rounded-[7px]" /> : <p className="text-sm text-(--muted-foreground)">Click Render PNG.</p>}
         </div>
       </section>

@@ -50,7 +50,8 @@ export default function GameHeader({
             <button
               key={m.key}
               onClick={() => onToggleMode(m.key)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+              aria-pressed={mode === m.key}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 mode === m.key
                   ? "bg-(--primary) text-(--primary-foreground) shadow"
                   : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -68,7 +69,9 @@ export default function GameHeader({
               <button
                 key={n}
                 onClick={() => onPlayerCountChange(n)}
-                className={`w-8 py-1.5 rounded-lg text-xs font-bold transition ${
+                aria-label={`${n} players`}
+                aria-pressed={playerCount === n}
+                className={`w-8 py-1.5 rounded-lg text-xs font-bold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   playerCount === n
                     ? "bg-(--secondary) text-(--foreground) shadow"
                     : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -82,14 +85,16 @@ export default function GameHeader({
 
         <button
           onClick={onOpenSettings}
-          className="p-2.5 rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm"
+          aria-label="Open settings"
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           title="Settings"
         >
           <Settings size="18" />
         </button>
         <button
           onClick={onOpenStats}
-          className="p-2.5 rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm"
+          aria-label="Open statistics"
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           title="Statistics"
         >
           <BarChart3 size="18" />

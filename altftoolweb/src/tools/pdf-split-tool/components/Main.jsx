@@ -602,7 +602,8 @@ export default function MainComponent() {
                   key={value}
                   type="button"
                   onClick={() => setMode(value)}
-                  className={`rounded-lg border p-4 text-left transition ${
+                  aria-pressed={mode === value}
+                  className={`rounded-lg border p-4 text-left transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                     mode === value
                       ? "border-(--primary) bg-(--section-highlight)"
                       : "border-(--border) bg-(--background)"
@@ -627,7 +628,7 @@ export default function MainComponent() {
                   max={Math.max(1, pageCount || 999)}
                   value={batchSize}
                   onChange={(event) => setBatchSize(Math.max(1, Number(event.target.value) || 1))}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                 />
               </label>
             )}
@@ -642,7 +643,7 @@ export default function MainComponent() {
                   value={pageRange}
                   onChange={(event) => setPageRange(event.target.value)}
                   placeholder={pageCount ? `Example: 1-${Math.min(pageCount, 3)}, 7` : "Upload a PDF first"}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                 />
               </label>
             )}
@@ -655,7 +656,7 @@ export default function MainComponent() {
                   onChange={(event) => setCustomGroups(event.target.value)}
                   rows={4}
                   placeholder="1-3; 4,6; 7-10"
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                 />
                 <p className="mt-2 text-xs text-(--muted-foreground)">
                   Separate output PDFs with semicolons or new lines.
@@ -669,7 +670,7 @@ export default function MainComponent() {
                 value={filenamePrefix}
                 onChange={(event) => setFilenamePrefix(event.target.value)}
                 placeholder="split-document"
-                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none focus:border-(--primary)"
+                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
               />
             </label>
 

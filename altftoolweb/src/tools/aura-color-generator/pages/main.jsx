@@ -134,7 +134,8 @@ export default function AuraColorGeneratorMain() {
       <section className="rounded-2xl border border-(--border) bg-(--card) p-6">
         <button
           onClick={() => setShowFaq(!showFaq)}
-          className="flex w-full items-center justify-between"
+          aria-expanded={showFaq}
+          className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
         >
           <div className="flex items-center gap-2">
             <HelpCircle className="h-5 w-5 text-(--primary)" />
@@ -158,7 +159,8 @@ export default function AuraColorGeneratorMain() {
         <section className="rounded-2xl border border-(--border) bg-(--card) p-6">
           <button
             onClick={() => setShowDashboard(!showDashboard)}
-            className="flex w-full items-center justify-between"
+            aria-expanded={showDashboard}
+            className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <div className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5 text-(--primary)" />

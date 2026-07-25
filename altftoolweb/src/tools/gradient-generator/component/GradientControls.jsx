@@ -114,13 +114,14 @@ export default function GradientControls({
       <div className="space-y-6">
         {/* Color 1 */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">First Color</label>
+          <label htmlFor="gg-color-1" className="text-sm font-medium">First Color</label>
           <div className="flex items-center gap-3 mt-1">
             <input
+              id="gg-color-1"
               type="color"
               value={color1}
               onChange={(e) => setColor1(e.target.value)}
-              className="w-12 h-12 cursor-pointer rounded border"
+              className="w-12 h-12 cursor-pointer rounded border border-(--border) focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 focus:outline-none"
             />
             <span className="text-sm font-mono bg-(--card) px-2 py-1 rounded">
               {color1}
@@ -130,13 +131,14 @@ export default function GradientControls({
 
         {/* Color 2 */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Second Color</label>
+          <label htmlFor="gg-color-2" className="text-sm font-medium">Second Color</label>
           <div className="flex items-center gap-3 mt-1">
             <input
+              id="gg-color-2"
               type="color"
               value={color2}
               onChange={(e) => setColor2(e.target.value)}
-              className="w-12 h-12 cursor-pointer rounded border"
+              className="w-12 h-12 cursor-pointer rounded border border-(--border) focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 focus:outline-none"
             />
             <span className="text-sm font-mono bg-(--card) px-2 py-1 rounded">
               {color2}
@@ -256,14 +258,16 @@ export default function GradientControls({
           {/* Copy Button */}
           <button
             onClick={copyCode}
-            className="w-full cursor-pointer bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-sm flex items-center justify-center gap-2"
+            aria-label={`Copy ${activeFormat} code`}
+            className="w-full min-h-[44px] cursor-pointer bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition text-sm flex items-center justify-center gap-2 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           >
             <Copy size={16} />
             <span className="hidden sm:inline-flex">Copy {activeFormat}</span>
           </button>
           <button
             onClick={downloadAsPNG}
-            className="w-full cursor-pointer border border-(--border) py-2 rounded-lg hover:bg-(--card) transition text-sm flex items-center justify-center gap-2"
+            aria-label="Download gradient as PNG"
+            className="w-full min-h-[44px] cursor-pointer border border-(--border) py-2 rounded-lg hover:bg-(--card) transition text-sm flex items-center justify-center gap-2 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           >
             <Download size={16} />
             <span className="hidden sm:inline-flex">Download</span>
@@ -271,7 +275,8 @@ export default function GradientControls({
 
           <button
             onClick={shareGradient}
-            className="w-full cursor-pointer border border-(--border) py-2 rounded-lg hover:bg-(--card) transition text-sm flex items-center justify-center gap-2"
+            aria-label="Copy shareable gradient link"
+            className="w-full min-h-[44px] cursor-pointer border border-(--border) py-2 rounded-lg hover:bg-(--card) transition text-sm flex items-center justify-center gap-2 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           >
             <Share2 size={16} />
             <span className="hidden sm:inline-flex">Share</span>
@@ -286,6 +291,9 @@ export default function GradientControls({
               {history.map((item, i) => (
                 <div
                   key={i}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Restore gradient ${item.color1} to ${item.color2}`}
                   onClick={() => {
                     setColor1(item.color1);
                     setColor2(item.color2);
@@ -293,7 +301,17 @@ export default function GradientControls({
                     setGradientType(item.type);
                     toast.success("Gradient restored!");
                   }}
-                  className="flex items-center gap-3 p-2 bg-(--card) border border-(--border) rounded-lg cursor-pointer hover:border-blue-400 transition"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setColor1(item.color1);
+                      setColor2(item.color2);
+                      setAngle(item.angle);
+                      setGradientType(item.type);
+                      toast.success("Gradient restored!");
+                    }
+                  }}
+                  className="flex items-center gap-3 p-2 bg-(--card) border border-(--border) rounded-lg cursor-pointer hover:border-blue-400 transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                 >
                   {/* Swatch */}
                   <div

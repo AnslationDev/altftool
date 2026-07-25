@@ -278,7 +278,8 @@ console.log(greet('World'));
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setView("split")}
-              className={`bg-(--card) hover:bg-(--primary) border border-(--border) hover:bg-primary/90 text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 cursor-pointer shadow-lg ${
+              aria-pressed={view === "split"}
+              className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border) hover:bg-primary/90 text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 cursor-pointer shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "split"
                   ? "bg-(--primary) text-(--foreground) shadow-lg"
                   : "bg-(--muted) text-(--foreground) hover:bg-accent"
@@ -289,7 +290,8 @@ console.log(greet('World'));
             </button>
             <button
               onClick={() => setView("editor")}
-              className={`bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg ${
+              aria-pressed={view === "editor"}
+              className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "editor"
                   ? "bg-(--primary) text-(--foreground) shadow-lg"
                   : "bg-(--muted) text-(--foreground) hover:bg-accent"
@@ -300,7 +302,8 @@ console.log(greet('World'));
             </button>
             <button
               onClick={() => setView("preview")}
-              className={`bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer  shadow-lg gap-2 ${
+              aria-pressed={view === "preview"}
+              className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer  shadow-lg gap-2 active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "preview"
                   ? "bg-(--primary) text-(--foreground) shadow-lg"
                   : "bg-(--muted) text-(--foreground)hover:bg-accent"
@@ -312,17 +315,18 @@ console.log(greet('World'));
           
             <button
               onClick={loadSample}
-              className="bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg"
+              className="min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             >
               Load Sample
             </button>
             <button
               onClick={copyMarkdown}
-              className="bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg"
+              aria-label="Copy markdown to clipboard"
+              className="min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-green-600" />
+                  <Check className="w-4 h-4" style={{ color: "var(--success)" }} />
                   Copied!
                 </>
               ) : (
@@ -334,7 +338,8 @@ console.log(greet('World'));
             </button>
             <button
               onClick={downloadHTML}
-              className="bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex cursor-pointer items-center gap-2 shadow-lg"
+              aria-label="Download rendered HTML file"
+              className="min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex cursor-pointer items-center gap-2 shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             >
               <Download className="w-4 h-4" />
               Download HTML
@@ -361,8 +366,9 @@ console.log(greet('World'));
               <textarea
                 value={markdown}
                 onChange={(e) => setMarkdown(e.target.value)}
+                aria-label="Markdown editor"
                 placeholder="Enter your markdown here..."
-                className="flex-1 p-6 font-mono text-sm text-(--foreground) bg-(--background) resize-none focus:outline-none"
+                className="flex-1 p-6 font-mono text-sm text-(--foreground) bg-(--background) resize-none transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--primary)]/25 motion-reduce:transition-none"
                 style={{ minHeight: "500px" }}
               />
             </div>
@@ -377,11 +383,20 @@ console.log(greet('World'));
                   Live Preview
                 </h2>
               </div>
-              <div
-                className="flex-1 p-6 prose prose-sm max-w-none overflow-y-auto bg-(--background)"
-                style={{ minHeight: "500px" }}
-                dangerouslySetInnerHTML={{ __html: htmlOutput }}
-              />
+              {markdown.trim() ? (
+                <div
+                  className="flex-1 p-6 prose prose-sm max-w-none overflow-y-auto bg-(--background)"
+                  style={{ minHeight: "500px" }}
+                  dangerouslySetInnerHTML={{ __html: htmlOutput }}
+                />
+              ) : (
+                <div
+                  className="flex-1 p-6 flex items-center justify-center text-sm text-(--muted-foreground) bg-(--background)"
+                  style={{ minHeight: "500px" }}
+                >
+                  Start typing markdown in the editor to see the live preview here.
+                </div>
+              )}
             </div>
           )}
         </div>

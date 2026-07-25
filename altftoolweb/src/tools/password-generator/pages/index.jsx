@@ -125,7 +125,7 @@ export default function ToolHome() {
                 max="50"
                 value={batchCount}
                 onChange={(event) => setBatchCount(Math.min(50, Math.max(1, Number(event.target.value) || 1)))}
-                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 outline-none focus:border-[var(--primary)]"
+                className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25"
               />
             </label>
             <div className="mt-5 grid gap-3">
@@ -144,8 +144,12 @@ export default function ToolHome() {
 
           <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <p className="text-sm font-semibold text-[var(--muted-foreground)]">Generated password</p>
-            <div className="mt-3 rounded-lg bg-slate-950 p-5">
-              <p className="break-all font-mono text-lg font-semibold leading-8 text-white sm:text-2xl sm:leading-10">{password}</p>
+            <div className="mt-3 rounded-xl bg-slate-950 p-5 ring-1 ring-[var(--border)]">
+              {password ? (
+                <p className="break-all font-mono text-lg font-semibold leading-8 text-white sm:text-2xl sm:leading-10">{password}</p>
+              ) : (
+                <p className="text-sm font-medium text-slate-400">Select at least one character set to generate a password.</p>
+              )}
             </div>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <button type="button" onClick={copyPassword} className="btn-primary">

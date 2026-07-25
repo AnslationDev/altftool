@@ -68,7 +68,8 @@ const [showSizeOptions, setShowSizeOptions] = React.useState(false);
 <div className="relative">
   <button
     onClick={() => setShowDownloadOptions(!showDownloadOptions)}
-    className="px-4 py-2 bg-green-500 text-white rounded-md flex items-center gap-2 cursor-pointer hover:opacity-90"
+    className="px-4 py-2 min-h-[44px] bg-green-500 text-white rounded-md flex items-center gap-2 cursor-pointer hover:opacity-90 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+    aria-expanded={showDownloadOptions}
   >
     <svg
       className="w-4 h-4"
@@ -181,7 +182,7 @@ const [showSizeOptions, setShowSizeOptions] = React.useState(false);
           onDownload();
           setShowDownloadOptions(false);
         }}
-        className="w-full px-3 py-2 rounded-md bg-(--primary) text-white text-sm hover:opacity-90"
+        className="w-full px-3 py-2 min-h-[44px] rounded-md bg-(--primary) text-white text-sm hover:opacity-90 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
       >
         Download
       </button>
@@ -219,19 +220,20 @@ const [showSizeOptions, setShowSizeOptions] = React.useState(false);
 
         {/* Quality Label */}
         <div className="flex items-center justify-between text-sm text-(--muted-foreground) ">
-          <span>Quality</span>
+          <label htmlFor="crop-result-quality">Quality</label>
           <span>{quality.toFixed(1)}</span>
         </div>
 
         {/* Slider */}
         <input
+          id="crop-result-quality"
           type="range"
           min="0.1"
           max="1"
           step="0.1"
           value={quality}
           onChange={(e) => handleQualityChange(parseFloat(e.target.value))}
-          className="w-full h-2  rounded-lg appearance-none cursor-pointer accent-(--primary) bg-(--muted)"
+          className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-(--primary) bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
         />
         <div className="flex justify-between text-xs text-(--muted-foreground)">
           <span>Low</span>
@@ -254,7 +256,7 @@ const [showSizeOptions, setShowSizeOptions] = React.useState(false);
         {/* Apply Compression Button */}
         <button
           onClick={compressImage}
-          className="px-4 py-2 bg-(--primary) text-white rounded-lg cursor-pointer hover:opacity-90 transition"
+          className="px-4 py-2 min-h-[44px] bg-(--primary) text-white rounded-lg cursor-pointer hover:opacity-90 transition active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
         >
           Apply Compression
         </button>

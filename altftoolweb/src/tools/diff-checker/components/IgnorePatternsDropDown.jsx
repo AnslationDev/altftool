@@ -38,7 +38,9 @@ const IgnorePatternsDropdown = ({ ignorePatterns, setIgnorePatterns }) => {
       {/* Trigger */}
       <button
         onClick={() => setOpen((p) => !p)}
-        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card)"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className="flex min-h-11 items-center gap-2 px-3 py-2 text-sm rounded-lg border border-(--border) bg-(--card) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
       >
         Ignore Patterns
         <ChevronDown className="w-4 h-4" />
@@ -46,7 +48,7 @@ const IgnorePatternsDropdown = ({ ignorePatterns, setIgnorePatterns }) => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute mt-2 w-48 bg-white border border-(--border) rounded-lg shadow-md z-50">
+        <div className="absolute mt-2 w-48 bg-(--card) border border-(--border) rounded-lg shadow-md z-50">
           {OPTIONS.map((opt) => {
             const Icon = opt.icon;
             const active = ignorePatterns.includes(opt.key);
@@ -55,8 +57,9 @@ const IgnorePatternsDropdown = ({ ignorePatterns, setIgnorePatterns }) => {
               <button
                 key={opt.key}
                 onClick={() => toggleOption(opt.key)}
-                className={`flex items-center justify-between w-full px-3 py-2 text-sm hover:bg-gray-100 ${
-                  active ? "bg-gray-50 font-medium" : ""
+                aria-pressed={active}
+                className={`flex min-h-11 items-center justify-between w-full px-3 py-2 text-sm hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
+                  active ? "bg-(--muted) font-medium" : ""
                 }`}
               >
                 <div className="flex items-center gap-2">

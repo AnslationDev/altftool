@@ -87,7 +87,7 @@ export default function EncoderDecoder() {
                 key={item.id}
                 type="button"
                 onClick={() => setMode(item.id)}
-                className={`rounded-[8px] border px-3 py-2 text-left transition ${
+                className={`min-h-11 rounded-[8px] border px-3 py-2 text-left transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   mode === item.id
                     ? "border-(--primary) bg-(--primary) text-(--primary-foreground)"
                     : "border-(--border) bg-(--background) text-(--foreground) hover:border-(--primary)"
@@ -111,11 +111,11 @@ export default function EncoderDecoder() {
               <p className="mt-1 text-xs text-(--muted-foreground)">{input.length.toLocaleString()} characters</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={() => setInput(sampleUrl)} className="btn-secondary min-h-9 px-3 py-1.5 text-xs">
+              <button type="button" onClick={() => setInput(sampleUrl)} className="btn-secondary min-h-11 px-3 py-1.5 text-xs active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9">
                 <Link2 className="h-3.5 w-3.5" />
                 Sample
               </button>
-              <button type="button" onClick={() => setInput("")} className="btn-secondary min-h-9 px-3 py-1.5 text-xs">
+              <button type="button" onClick={() => setInput("")} className="btn-secondary min-h-11 px-3 py-1.5 text-xs active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9">
                 <RotateCcw className="h-3.5 w-3.5" />
                 Clear
               </button>
@@ -123,7 +123,8 @@ export default function EncoderDecoder() {
           </div>
           <textarea
             data-testid="tool-input"
-            className="min-h-[300px] w-full resize-y rounded-[8px] border border-(--border) bg-(--background) p-4 font-mono text-sm leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary)"
+            aria-label="URL or text input"
+            className="min-h-[300px] w-full resize-y rounded-[8px] border border-(--border) bg-(--background) p-4 font-mono text-sm leading-6 text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:border-(--primary) focus:ring-[3px] focus:ring-(--primary)/25"
             placeholder="Paste URL, encoded text, or query string..."
             value={input}
             onChange={(event) => setInput(event.target.value)}
@@ -135,16 +136,16 @@ export default function EncoderDecoder() {
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-(--muted-foreground)">Output</p>
-              <p className={`mt-1 text-xs ${result.error ? "text-red-500" : "text-(--muted-foreground)"}`}>
+              <p className={`mt-1 text-xs ${result.error ? "inline-block rounded-md bg-(--danger-soft) px-2 py-1 font-semibold text-(--danger)" : "text-(--muted-foreground)"}`}>
                 {result.error || `${result.output.length.toLocaleString()} characters`}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={copyOutput} disabled={!result.output} className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50">
+              <button type="button" onClick={copyOutput} disabled={!result.output} className="btn-secondary min-h-11 px-3 py-1.5 text-xs active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9 disabled:opacity-50">
                 <Clipboard className="h-3.5 w-3.5" />
                 Copy
               </button>
-              <button type="button" onClick={useOutput} disabled={!result.output} className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50">
+              <button type="button" onClick={useOutput} disabled={!result.output} className="btn-secondary min-h-11 px-3 py-1.5 text-xs active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9 disabled:opacity-50">
                 <ArrowDownUp className="h-3.5 w-3.5" />
                 Use output
               </button>
@@ -152,7 +153,7 @@ export default function EncoderDecoder() {
                 type="button"
                 onClick={() => downloadTextFile("altftool-url-output.txt", result.output)}
                 disabled={!result.output}
-                className="btn-secondary min-h-9 px-3 py-1.5 text-xs disabled:opacity-50"
+                className="btn-secondary min-h-11 px-3 py-1.5 text-xs active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9 disabled:opacity-50"
               >
                 <FileDown className="h-3.5 w-3.5" />
                 Download

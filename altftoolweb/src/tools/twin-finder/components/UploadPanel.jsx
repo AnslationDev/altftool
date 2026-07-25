@@ -45,7 +45,7 @@ export default function UploadPanel({ onImagesAdded, loading }) {
   );
 
   const dropZoneClass = (slot) =>
-    `relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-all duration-200 cursor-pointer min-h-[220px] ${
+    `relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-all duration-200 cursor-pointer min-h-[220px] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transition-none ${
       dragOver === slot
         ? "border-(--primary) bg-(--primary-soft) scale-[1.02]"
         : "border-(--border) hover:border-(--primary)/50 bg-(--card)"

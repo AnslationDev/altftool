@@ -11,7 +11,7 @@ function BMIGauge({ bmi, category }) {
     <div className="relative w-64 h-40 mx-auto flex items-center justify-center overflow-hidden">
       <svg viewBox="0 0 200 120" className="w-full h-full">
         <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--muted)" strokeWidth="18" strokeLinecap="round" />
-        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={category.color} strokeWidth="18" strokeLinecap="round" strokeDasharray={`${(angle/180) * 251.3}, 251.3`} className="transition-all duration-1000 ease-out" />
+        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={category.color} strokeWidth="18" strokeLinecap="round" strokeDasharray={`${(angle/180) * 251.3}, 251.3`} className="transition-all duration-1000 ease-out motion-reduce:transition-none" />
         <text x="100" y="55" textAnchor="middle" style={{ fill: 'var(--muted-foreground)', fontSize: '20px', fontWeight: '900' }}>{bmi}</text>
         <text x="100" y="78" textAnchor="middle" className="uppercase tracking-widest" style={{ fill: 'var(--muted-foreground)', fontSize: '10px', fontWeight: '800' }}>{category.name}</text>
         <line x1="100" y1="100" x2={100 + 40 * Math.cos((180 - angle) * Math.PI / 180)} y2={100 - 40 * Math.sin((180 - angle) * Math.PI / 180)} stroke="var(--muted-foreground)" strokeWidth="5" strokeLinecap="round" />
@@ -101,10 +101,10 @@ export default function ToolHome() {
   };
 
   const getBMICategory = (bmi) => {
-    if (bmi < 18.5) return { name: 'Underweight', color: '#3B82F6' };
-    if (bmi < 25) return { name: 'Normal', color: '#10B981' };
-    if (bmi < 30) return { name: 'Overweight', color: '#F59E0B' };
-    return { name: 'Obese', color: '#EF4444' };
+    if (bmi < 18.5) return { name: 'Underweight', color: 'var(--info)' };
+    if (bmi < 25) return { name: 'Normal', color: 'var(--success)' };
+    if (bmi < 30) return { name: 'Overweight', color: 'var(--warning)' };
+    return { name: 'Obese', color: 'var(--danger)' };
   };
 
   const getDietDetails = (catName, weightKg) => {
@@ -282,50 +282,64 @@ Stay Healthy, Stay Fit!
               
               {/* HEIGHT INPUT - UPDATED TOGGLE LOGIC */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-[var(--foreground)]">Height</label>
+                <label htmlFor="bmi-height-cm" className="text-sm font-semibold text-[var(--foreground)]">Height</label>
                 <div className="flex p-1 rounded-xl bg-[var(--muted)]">
-                    <button onClick={() => setHeightUnit('cm')} className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all ${heightUnit === 'cm' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>CM</button>
-                    <button onClick={() => setHeightUnit('ft')} className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all ${heightUnit === 'ft' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>FT/IN</button>
+                    <button type="button" onClick={() => setHeightUnit('cm')} aria-label="Use centimetres for height" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${heightUnit === 'cm' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>CM</button>
+                    <button type="button" onClick={() => setHeightUnit('ft')} aria-label="Use feet and inches for height" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${heightUnit === 'ft' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>FT/IN</button>
                 </div>
-                
+
                 {heightUnit === 'cm' ? (
-                  <input type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} placeholder="175" className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)] ${errors.height ? 'border-red-500' : 'border-[var(--border)]'}`} />
+                  <input id="bmi-height-cm" type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} placeholder="175" className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 ${errors.height ? 'border-[var(--danger)]' : 'border-[var(--border)]'}`} />
                 ) : (
                   <div className="flex gap-2">
-                    <input type="number" value={heightFt} onChange={(e) => setHeightFt(e.target.value)} placeholder="Ft" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)]" />
-                    <input type="number" value={heightIn} onChange={(e) => setHeightIn(e.target.value)} placeholder="In" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+                    <input id="bmi-height-cm" type="number" value={heightFt} onChange={(e) => setHeightFt(e.target.value)} placeholder="Ft" aria-label="Height in feet" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
+                    <input type="number" value={heightIn} onChange={(e) => setHeightIn(e.target.value)} placeholder="In" aria-label="Height in inches" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
                   </div>
                 )}
               </div>
 
               {/* WEIGHT INPUT */}
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-[var(--foreground)]">Weight</label>
+                <label htmlFor="bmi-weight" className="text-sm font-semibold text-[var(--foreground)]">Weight</label>
                 <div className="flex p-1 rounded-xl bg-[var(--muted)]">
-                    <button onClick={() => setWeightUnit('kg')} className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all ${weightUnit === 'kg' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>KG</button>
-                    <button onClick={() => setWeightUnit('lbs')} className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all ${weightUnit === 'lbs' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>LBS</button>
+                    <button type="button" onClick={() => setWeightUnit('kg')} aria-label="Use kilograms for weight" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${weightUnit === 'kg' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>KG</button>
+                    <button type="button" onClick={() => setWeightUnit('lbs')} aria-label="Use pounds for weight" className={`flex-1 min-h-[44px] py-1 text-xs font-bold rounded-lg transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${weightUnit === 'lbs' ? 'bg-[var(--card)] text-[var(--primary)] shadow-sm' : 'text-[var(--muted-foreground)]'}`}>LBS</button>
                 </div>
-                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder={weightUnit === 'kg' ? "70" : "154"} className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)] ${errors.weight ? 'border-red-500' : 'border-[var(--border)]'}`} />
+                <input id="bmi-weight" type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder={weightUnit === 'kg' ? "70" : "154"} className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 ${errors.weight ? 'border-[var(--danger)]' : 'border-[var(--border)]'}`} />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
-              <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)]" />
-              <select value={gender} onChange={(e) => setGender(e.target.value)} className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:ring-2 focus:ring-[var(--primary)]">
+              <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" aria-label="Age in years" className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
+              <select value={gender} onChange={(e) => setGender(e.target.value)} aria-label="Gender" className="w-full px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25">
                 <option value="">Gender</option><option value="male">Male</option><option value="female">Female</option>
               </select>
             </div>
             
+            {(errors.height || errors.weight) && (
+              <div role="alert" className="mb-4 rounded-xl border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-4 py-3 text-sm font-semibold text-[var(--danger)]">
+                {errors.height && errors.weight
+                  ? 'Please enter a valid height (50-300 cm) and weight (10-500 kg).'
+                  : errors.height
+                    ? 'Please enter a valid height between 50 and 300 cm.'
+                    : 'Please enter a valid weight between 10 and 500 kg.'}
+              </div>
+            )}
             <div className="flex gap-3">
-              <button onClick={calculate} className="flex-[2] py-4 rounded-xl font-bold bg-[var(--primary)] text-white shadow-lg active:scale-95 transition-all">Calculate Now</button>
-              <button onClick={() => {setResult(null); setHeightCm(''); setHeightFt(''); setHeightIn(''); setWeight(''); setAge(''); setGender(''); setErrors({});}} className="flex-1 py-4 rounded-xl font-bold flex justify-center items-center gap-2 border bg-[var(--muted)] border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--border)] transition-all"><RotateCcw size={20}/> Reset</button>
+              <button type="button" onClick={calculate} className="flex-[2] min-h-[44px] py-4 rounded-xl font-bold bg-[var(--primary)] text-[var(--primary-foreground)] shadow-lg active:scale-[0.98] transition-all motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">Calculate Now</button>
+              <button type="button" onClick={() => {setResult(null); setHeightCm(''); setHeightFt(''); setHeightIn(''); setWeight(''); setAge(''); setGender(''); setErrors({});}} aria-label="Reset all inputs" className="flex-1 min-h-[44px] py-4 rounded-xl font-bold flex justify-center items-center gap-2 border bg-[var(--muted)] border-[var(--border)] text-[var(--muted-foreground)] hover:bg-[var(--border)] transition-all motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"><RotateCcw size={20}/> Reset</button>
             </div>
+            {!result && (
+              <p className="mt-4 text-center text-sm text-[var(--muted-foreground)]">
+                Enter your measurements and press Calculate to see your BMI report.
+              </p>
+            )}
           </div>
         </div>
 
         {/* RESULTS Section */}
         {result && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 motion-reduce:animate-none space-y-6">
             <div className="rounded-3xl shadow-lg p-8 border bg-[var(--card)] border-[var(--border)] flex flex-col md:flex-row items-center gap-8">
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-2xl font-bold mb-2 text-[var(--foreground)]">BMI Analysis Result</h3>
@@ -338,7 +352,7 @@ Stay Healthy, Stay Fit!
             <div className="rounded-3xl p-8 border bg-[var(--card)] border-[var(--border)]">
                 <div className="flex items-center justify-between mb-8 border-b border-[var(--border)] pb-4">
                   <h4 className="text-xl font-bold text-[var(--foreground)]">Nutrition Plan</h4>
-                  <span className="px-3 py-1 rounded-full text-[10px] font-black bg-[var(--primary)] text-white uppercase">{result.dietPlan.title}</span>
+                  <span className="px-3 py-1 rounded-full text-[10px] font-black bg-[var(--primary)] text-[var(--primary-foreground)] uppercase">{result.dietPlan.title}</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                   <div><p className="text-xs font-black mb-1 uppercase tracking-widest text-[var(--foreground)]">Protein Goal</p><p className="text-2xl font-bold text-[var(--muted-foreground)]">{result.dietPlan.protein}g/day</p></div>
@@ -362,15 +376,15 @@ Stay Healthy, Stay Fit!
               </div>
               
               <div className="flex flex-col gap-4">
-                <button onClick={copyReport} className="flex-1 py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all">
+                <button type="button" onClick={copyReport} aria-label="Copy BMI report" className="flex-1 min-h-[44px] py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <Copy className="w-6 h-6 text-[var(--primary)]" />
                   <span className="text-xs font-bold text-[var(--foreground)] uppercase">{copied ? 'Copied' : 'Copy Report'}</span>
                 </button>
-                <button onClick={downloadReport} className="flex-1 py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all">
+                <button type="button" onClick={downloadReport} aria-label="Download BMI report" className="flex-1 min-h-[44px] py-4 rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--card)] flex flex-col items-center justify-center gap-2 hover:bg-[var(--muted)] transition-all motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <Download className="w-6 h-6 text-[var(--primary)]" />
                   <span className="text-xs font-bold text-[var(--foreground)] uppercase">Download Report</span>
                 </button>
-                <button onClick={shareReport} className="flex-1 py-4 rounded-2xl bg-[var(--primary)] text-white flex flex-col items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+                <button type="button" onClick={shareReport} aria-label="Share BMI result" className="flex-1 min-h-[44px] py-4 rounded-2xl bg-[var(--primary)] text-[var(--primary-foreground)] flex flex-col items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-all motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35">
                   <Share2 className="w-6 h-6" />
                   <span className="text-xs font-bold uppercase">Share Result</span>
                 </button>

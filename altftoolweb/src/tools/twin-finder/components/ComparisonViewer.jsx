@@ -77,6 +77,7 @@ export default function ComparisonViewer({ imageA, imageB, mode, onModeChange })
             max={100}
             value={opacity}
             onChange={(e) => setOpacity(Number(e.target.value))}
+            aria-label="Blend opacity"
             className="flex-1 accent-(--primary)"
           />
           <span className="text-[11px] font-medium text-(--foreground)">{opacity}%</span>
@@ -131,7 +132,8 @@ export default function ComparisonViewer({ imageA, imageB, mode, onModeChange })
             <button
               key={m.key}
               onClick={() => onModeChange(m.key)}
-              className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition ${
+              aria-pressed={active}
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 min-h-11 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                 active
                   ? "bg-(--card) text-(--foreground) shadow-sm"
                   : "text-(--muted-foreground) hover:text-(--foreground)"

@@ -261,7 +261,7 @@ export default function UnitConverter() {
       MODERN NATIVE SELECT STYLE
   ------------------------------------*/
   const selectClass =
-    "w-full bg-(--background) border border-(--border) text-(--foreground) px-4 py-3 rounded-lg appearance-none focus:outline-none focus:ring-2 cursor-pointer focus:ring-(--primary) relative";
+    "w-full bg-(--background) border border-(--border) text-(--foreground) px-4 py-3 rounded-lg appearance-none focus:outline-none focus:border-(--primary) focus:ring-2 cursor-pointer focus:ring-(--primary)/25 relative";
 
   /*-----------------------------------
       COMPONENT UI
@@ -273,7 +273,7 @@ export default function UnitConverter() {
         <header className="mb-12">
           <div className="p-6 flex items-center justify-center gap-4">
             {/* ICON BOX */}
-            <div className="p-3 rounded-xl bg-blue-500 h-16 w-16 sm:h-20 sm:w-20 flex items-center justify-center shrink-0">
+            <div className="p-3 rounded-xl bg-(--primary) h-16 w-16 sm:h-20 sm:w-20 flex items-center justify-center shrink-0">
               <Scale className="w-8 h-8 text-white" />
             </div>
 
@@ -300,8 +300,8 @@ export default function UnitConverter() {
                   <button
                     key={cat}
                     onClick={() => setCategory(cat)}
-                    className={`py-3 px-2 rounded-lg text-xs sm:text-lg sm:font-medium border cursor-pointer ${category === cat
-                        ? "bg-blue-500 text-white"
+                    className={`py-3 px-2 min-h-[44px] rounded-lg text-xs sm:text-lg sm:font-medium border border-(--border) cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${category === cat
+                        ? "bg-(--primary) text-white"
                         : "bg-(--muted) text-(--foreground)"
                       }`}
                   >
@@ -314,7 +314,7 @@ export default function UnitConverter() {
             {/* CONVERSION PANEL */}
             <div className="bg-(--card) border border-(--border) rounded-xl shadow-sm">
               <div className="p-6 border-b border-(--border) flex items-center gap-3">
-                <div className="p-2 bg-blue-500 rounded-lg">
+                <div className="p-2 bg-(--primary) rounded-lg">
                   <CategoryIcon className="w-5 h-5 text-white" />
                 </div>
                 <h2 className="text-xl font-semibold">Conversion Panel</h2>
@@ -325,10 +325,11 @@ export default function UnitConverter() {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
                   {/* FROM VALUE */}
                   <div className="lg:col-span-2">
-                    <label className="text-sm font-medium">From Value</label>
+                    <label htmlFor="uc-from-value" className="text-sm font-medium">From Value</label>
                     <input
+                      id="uc-from-value"
                       type="number"
-                      className="w-full cursor-pointer bg-(--background) border border-(--border) rounded-lg px-4 py-3 text-lg"
+                      className="w-full cursor-pointer bg-(--background) border border-(--border) rounded-lg px-4 py-3 text-lg outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                     />
@@ -336,10 +337,11 @@ export default function UnitConverter() {
 
                   {/* FROM UNIT SELECT */}
                   <div className="w-full">
-                    <label className="text-sm font-medium">Unit</label>
+                    <label htmlFor="uc-from-unit" className="text-sm font-medium">Unit</label>
 
                     <div className="relative">
                       <select
+                        id="uc-from-unit"
                         value={fromUnit}
                         onChange={(e) => setFromUnit(e.target.value)}
                         className={selectClass}
@@ -360,8 +362,9 @@ export default function UnitConverter() {
                   <div className="flex justify-center lg:justify-end ">
                     <button
                     title="Swap Units"
+                      aria-label="Swap units"
                       onClick={handleSwap}
-                      className="h-12 w-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center cursor-pointer"
+                      className="h-12 w-12 bg-(--primary) hover:opacity-90 text-white rounded-full flex items-center justify-center cursor-pointer transition-transform active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     >
                       <ArrowLeftRight className="w-5 h-5" />
                     </button>
@@ -369,19 +372,21 @@ export default function UnitConverter() {
 
                   {/* TO VALUE */}
                   <div className="lg:col-span-2">
-                    <label className="text-sm font-medium">To Value</label>
+                    <label htmlFor="uc-to-value" className="text-sm font-medium">To Value</label>
                     <input
+                      id="uc-to-value"
                       readOnly
                       value={result}
-                      className="w-full bg-(--background) border border-(--border) rounded-lg px-4 py-3 text-lg"
+                      className="w-full bg-(--background) border border-(--border) rounded-lg px-4 py-3 text-lg outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                     />
                   </div>
 
                   {/* TO UNIT SELECT */}
                   <div className="w-full">
-                    <label className="text-sm font-medium ">Unit</label>
+                    <label htmlFor="uc-to-unit" className="text-sm font-medium ">Unit</label>
                     <div className="relative">
                       <select
+                        id="uc-to-unit"
                         value={toUnit}
                         onChange={(e) => setToUnit(e.target.value)}
                         className={selectClass}
@@ -401,11 +406,11 @@ export default function UnitConverter() {
                 </div>
 
                 {/* RESULT PANEL */}
-                <div className="p-4 rounded-lg bg-blue-50 border border-blue-200 dark:bg-[#1e273b]">
+                <div className="p-4 rounded-xl bg-(--primary)/10 ring-1 ring-(--border)">
                   <div className="font-medium text-(--muted-foreground)">
                     Conversion Result
                   </div>
-                  <div className="text-xl font-bold text-black">
+                  <div className="text-xl font-bold text-(--foreground)">
                     {inputValue || "0"} {getUnitSymbol(category, fromUnit)} →{" "}
                     {result || "0"} {getUnitSymbol(category, toUnit)}
                   </div>
@@ -414,7 +419,7 @@ export default function UnitConverter() {
                     <button
                       onClick={handleConvert}
                       disabled={!canUseResult || isConverting}
-                      className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                      className="px-4 py-2 min-h-[44px] rounded-lg bg-(--primary) text-white hover:opacity-90 cursor-pointer transition-transform active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {isConverting ? "Saving..." : "Save to History"}
                     </button>
@@ -445,7 +450,7 @@ export default function UnitConverter() {
                     setInputValue("");
                     setResult("");
                   }}
-                  className="px-4 py-2 rounded-lg border border-(--border) bg-(--background) hover:bg-(--muted) cursor-pointer"
+                  className="px-4 py-2 min-h-[44px] rounded-lg border border-(--border) bg-(--background) hover:bg-(--muted) cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                 >
                   Clear All
                 </button>
@@ -471,7 +476,7 @@ export default function UnitConverter() {
                         {c.fromValue} {getUnitSymbol(c.category, c.fromUnit)}
                       </span>
                       <span className="text-(--muted-foreground)"> → </span>
-                      <span className="font-semibold text-blue-600">
+                      <span className="font-semibold text-(--primary)">
                         {c.result} {getUnitSymbol(c.category, c.toUnit)}
                       </span>
                     </div>
@@ -505,7 +510,7 @@ export default function UnitConverter() {
                         className="p-3 rounded-lg bg-(--muted) border border-(--border) relative group"
                       >
                         <div className="flex justify-between items-start mb-2">
-                          <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 uppercase">
+                          <span className="px-2 py-1 text-xs rounded bg-(--primary)/10 text-(--primary) uppercase">
                             {item.category}
                           </span>
 
@@ -519,7 +524,8 @@ export default function UnitConverter() {
 
                             <button
                               onClick={() => handleDeleteHistoryItem(item.id)}
-                              className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition text-red-600 cursor-pointer"
+                              aria-label="Delete history entry"
+                              className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition motion-reduce:transition-none text-(--danger) cursor-pointer p-2 -m-2 rounded focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 md:focus-visible:opacity-100"
                             >
                               ×
                             </button>
@@ -533,7 +539,7 @@ export default function UnitConverter() {
                           </div>
                           <div className="flex gap-2">
                             <span className="text-(--muted-foreground)">→</span>
-                            <span className="font-semibold text-blue-600">
+                            <span className="font-semibold text-(--primary)">
                               {item.result}{" "}
                               {getUnitSymbol(item.category, item.toUnit)}
                             </span>
@@ -554,7 +560,7 @@ export default function UnitConverter() {
                     </button>
                     <button
                       onClick={handleClearHistory}
-                      className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 w-full cursor-pointer"
+                      className="px-4 py-2 min-h-[44px] rounded-lg bg-(--danger) text-white hover:opacity-90 w-full cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--danger)/35"
                     >
                       Clear All History
                     </button>

@@ -12,7 +12,9 @@ export default function ThemeSelector({ settings, onUpdate }) {
             <button
               key={t.id}
               onClick={() => onUpdate("boardTheme", t.id)}
-              className={`p-2 rounded-lg border transition ${
+              aria-label={`${t.name} board theme`}
+              aria-pressed={settings.boardTheme === t.id}
+              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 settings.boardTheme === t.id
                   ? "border-(--primary) ring-1 ring-(--primary)"
                   : "border-(--border) hover:border-(--border-strong)"
@@ -34,7 +36,9 @@ export default function ThemeSelector({ settings, onUpdate }) {
             <button
               key={t.id}
               onClick={() => onUpdate("diceTheme", t.id)}
-              className={`p-2 rounded-lg border transition ${
+              aria-label={`${t.name} dice theme`}
+              aria-pressed={settings.diceTheme === t.id}
+              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 settings.diceTheme === t.id
                   ? "border-(--primary) ring-1 ring-(--primary)"
                   : "border-(--border) hover:border-(--border-strong)"
@@ -58,7 +62,8 @@ export default function ThemeSelector({ settings, onUpdate }) {
             <button
               key={s}
               onClick={() => onUpdate("animationSpeed", s)}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-medium border capitalize transition ${
+              aria-pressed={settings.animationSpeed === s}
+              className={`flex-1 py-1.5 rounded-lg text-xs font-medium border capitalize transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 settings.animationSpeed === s
                   ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                   : "bg-(--card) text-(--muted-foreground) border-(--border)"
@@ -76,6 +81,7 @@ export default function ThemeSelector({ settings, onUpdate }) {
             type="checkbox"
             checked={settings.soundEnabled}
             onChange={(e) => onUpdate("soundEnabled", e.target.checked)}
+            aria-label="Sound effects"
             className="sr-only peer"
           />
           <div className="w-9 h-5 bg-(--muted) rounded-full peer peer-checked:bg-(--primary) after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full" />

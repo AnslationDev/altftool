@@ -1,8 +1,8 @@
 // src/components/DiffChecker/UnifiedView.jsx
 
 const UnifiedView = ({ diff }) => (
-  <div className="bg-(--card) rounded-lg border border-(--border) overflow-hidden">
-    <div className="bg-gray-800 text-white px-4 py-2 text-sm font-semibold">
+  <div className="bg-(--card) rounded-xl ring-1 ring-(--border) overflow-hidden">
+    <div className="bg-(--muted) text-(--foreground) px-4 py-2 text-sm font-semibold">
       Unified Diff View
     </div>
 
@@ -10,19 +10,19 @@ const UnifiedView = ({ diff }) => (
       {diff.map((line, idx) => (
         <div
           key={idx}
-          className={`px-4 py-1 font-mono text-sm border-b 
+          className={`px-4 py-1 font-mono text-sm border-b border-(--border)
             ${
               line.type === "added"
-                ? "bg-green-50 text-green-800"
+                ? "bg-(--success-soft) text-(--success)"
                 : line.type === "deleted"
-                ? "bg-red-50 text-red-800"
-                : "bg-white text-gray-700"
+                ? "bg-(--danger-soft) text-(--danger)"
+                : "bg-(--card) text-(--foreground)"
             }`}
         >
-          <span className="inline-block w-8 text-gray-400">
+          <span className="inline-block w-8 text-(--muted-foreground)">
             {line.origLine || ""}
           </span>
-          <span className="inline-block w-8 text-gray-400">
+          <span className="inline-block w-8 text-(--muted-foreground)">
             {line.modLine || ""}
           </span>
           <span className="mr-2">

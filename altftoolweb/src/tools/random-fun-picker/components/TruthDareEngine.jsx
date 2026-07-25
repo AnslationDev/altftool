@@ -32,7 +32,7 @@ export default function TruthDareEngine({
         <div className="flex gap-2">
           <button
             onClick={() => setMode("truth")}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition border ${
+            className={`flex-1 py-2 px-3 min-h-11 rounded-lg text-xs font-semibold transition border focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
               mode === "truth"
                 ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                 : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -42,7 +42,7 @@ export default function TruthDareEngine({
           </button>
           <button
             onClick={() => setMode("dare")}
-            className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition border ${
+            className={`flex-1 py-2 px-3 min-h-11 rounded-lg text-xs font-semibold transition border focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
               mode === "dare"
                 ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                 : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -57,7 +57,7 @@ export default function TruthDareEngine({
             <button
               key={d}
               onClick={() => setDifficulty(d)}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-medium capitalize border transition ${
+              className={`flex-1 py-1.5 rounded-lg text-xs font-medium capitalize border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                 difficulty === d
                   ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                   : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -73,7 +73,7 @@ export default function TruthDareEngine({
             <button
               key={key}
               onClick={() => setPack(key)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+              className={`px-2.5 py-1 rounded-full text-xs font-medium border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 active:scale-[0.98] motion-reduce:active:scale-100 ${
                 pack === key
                   ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                   : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
@@ -111,10 +111,10 @@ export default function TruthDareEngine({
                 </div>
                 <p className="text-lg font-semibold text-(--foreground) mb-3">{current.text}</p>
                 <div className="flex gap-2 justify-center">
-                  <button onClick={onToggleFavorite} className="p-2 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition">
+                  <button onClick={onToggleFavorite} aria-label="Toggle favorite question" className="p-2 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
                     <Star size="16" className={favorites.find((f) => f.text === current.text) ? "fill-amber-400 text-amber-400" : ""} />
                   </button>
-                  <button onClick={onSkip} className="p-2 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition">
+                  <button onClick={onSkip} aria-label="Skip question" className="p-2 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
                     <SkipForward size="16" /> Skip
                   </button>
                 </div>
@@ -129,7 +129,7 @@ export default function TruthDareEngine({
           </AnimatePresence>
         </div>
 
-        <Button variant="primary" size="lg" className="w-full h-12 font-bold" onClick={onPick} disabled={isAnimating}>
+        <Button variant="primary" size="lg" className="w-full h-12 font-bold active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" onClick={onPick} disabled={isAnimating}>
           {isAnimating ? "..." : "Pick!"}
         </Button>
       </Card>
@@ -137,24 +137,24 @@ export default function TruthDareEngine({
       <Card className="p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h4 className="text-xs font-semibold uppercase tracking-wider text-(--muted-foreground)">Custom</h4>
-          <button onClick={() => setShowAdd(!showAdd)} className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground) transition">
+          <button onClick={() => setShowAdd(!showAdd)} aria-label="Add custom question" className="p-1 rounded hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
             <Plus size="14" />
           </button>
         </div>
 
         {showAdd && (
           <div className="space-y-2 p-2 rounded-lg bg-(--muted)">
-            <Input value={customText} onChange={(e) => setCustomText(e.target.value)} placeholder="Enter question..." className="text-sm" />
+            <Input value={customText} onChange={(e) => setCustomText(e.target.value)} placeholder="Enter question..." aria-label="Custom question text" className="text-sm" />
             <div className="flex gap-1">
               {["truth", "dare"].map((m) => (
-                <button key={m} onClick={() => setCustomMode(m)} className={`flex-1 py-1 rounded text-xs font-medium border capitalize ${
+                <button key={m} onClick={() => setCustomMode(m)} className={`flex-1 py-1 rounded text-xs font-medium border capitalize focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   customMode === m ? "bg-(--primary) text-(--primary-foreground)" : "bg-(--card) text-(--muted-foreground)"
                 }`}>{m}</button>
               ))}
             </div>
             <div className="flex gap-1">
               {["easy", "medium", "hard"].map((d) => (
-                <button key={d} onClick={() => setCustomDiff(d)} className={`flex-1 py-1 rounded text-xs font-medium border capitalize ${
+                <button key={d} onClick={() => setCustomDiff(d)} className={`flex-1 py-1 rounded text-xs font-medium border capitalize focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                   customDiff === d ? "bg-(--primary) text-(--primary-foreground)" : "bg-(--card) text-(--muted-foreground)"
                 }`}>{d}</button>
               ))}
@@ -171,7 +171,7 @@ export default function TruthDareEngine({
               <div key={q.id} className="flex items-center gap-1 px-2 py-1 rounded-lg bg-(--muted) text-sm">
                 <span className="flex-1 truncate text-(--foreground)">{q.text}</span>
                 <span className="text-[10px] uppercase text-(--muted-foreground)">{q.mode}</span>
-                <button onClick={() => onRemoveCustom(q.id)} className="p-0.5 text-(--muted-foreground) hover:text-(--danger)"><X size="12" /></button>
+                <button onClick={() => onRemoveCustom(q.id)} aria-label="Remove custom question" className="p-0.5 text-(--muted-foreground) hover:text-(--danger)"><X size="12" /></button>
               </div>
             ))
           )}

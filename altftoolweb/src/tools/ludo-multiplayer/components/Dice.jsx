@@ -45,7 +45,7 @@ export default function Dice({ value, rolling, onRoll, disabled, theme = "classi
       whileTap={{ scale: disabled ? 1 : 0.94 }}
       className={`relative w-24 h-24 rounded-3xl border-2 ${t.border} ${t.face} shadow-xl ${
         t.glow
-      } cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center select-none`}
+      } cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center select-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35`}
       aria-label="Roll dice"
     >
       <AnimatePresence mode="wait">

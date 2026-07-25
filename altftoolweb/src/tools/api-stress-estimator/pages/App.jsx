@@ -93,14 +93,15 @@ const inputCls =
   "w-full rounded-xl border border-(--border) bg-(--background) px-3 py-2 text-[13px] text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25";
 const labelCls = "mb-1 block text-[12px] font-medium text-(--muted-foreground)";
 
-function Toggle({ checked, onChange }) {
+function Toggle({ checked, onChange, label }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       onClick={onChange}
-      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${checked ? "bg-(--primary)" : "bg-(--border)"}`}
+      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${checked ? "bg-(--primary)" : "bg-(--border)"}`}
     >
       <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${checked ? "translate-x-6" : "translate-x-1"}`} />
     </button>
@@ -114,7 +115,7 @@ function SliderRow({ label, value, display, min, max, step = 1, onChange, accent
         <span className="font-medium text-(--muted-foreground)">{label}</span>
         <span className="font-bold tabular-nums text-(--foreground)">{display ?? value}</span>
       </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} className={`w-full ${accent}`} />
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} aria-label={label} className={`w-full ${accent}`} />
     </div>
   );
 }
@@ -261,10 +262,10 @@ export const App = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <button onClick={handleCopy} className="inline-flex items-center gap-1.5 rounded-xl border border-(--border) px-3.5 py-2 text-[13px] font-medium hover:bg-(--muted)/60 transition-colors">
+            <button onClick={handleCopy} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-(--border) px-3.5 py-2 text-[13px] font-medium hover:bg-(--muted)/60 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
               {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Clipboard className="h-3.5 w-3.5" />} {copied ? "Copied" : "Copy Report"}
             </button>
-            <button onClick={handleDownload} className="inline-flex items-center gap-1.5 rounded-xl bg-(--primary) px-4 py-2 text-[13px] font-semibold text-white hover:bg-(--primary)/90 transition-colors">
+            <button onClick={handleDownload} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-(--primary) px-4 py-2 text-[13px] font-semibold text-(--primary-foreground) hover:bg-(--primary)/90 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
               <Download className="h-4 w-4" /> Download Report
             </button>
           </div>
@@ -291,10 +292,10 @@ export const App = () => {
 
               <div className="mt-4 space-y-4">
                 <div>
-                  <label className={labelCls}>Endpoint URL</label>
+                  <label htmlFor="ase-endpoint" className={labelCls}>Endpoint URL</label>
                   <div className="relative">
                     <Globe className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-(--muted-foreground)" />
-                    <input value={config.endpoint} onChange={(e) => set({ endpoint: e.target.value })} className={`${inputCls} pl-9 font-mono text-[12px]`} />
+                    <input id="ase-endpoint" value={config.endpoint} onChange={(e) => set({ endpoint: e.target.value })} className={`${inputCls} pl-9 font-mono text-[12px]`} />
                   </div>
                 </div>
 
@@ -302,8 +303,8 @@ export const App = () => {
                   <label className={labelCls}>HTTP Method</label>
                   <div className="grid grid-cols-4 gap-1 rounded-xl border border-(--border) bg-(--muted)/40 p-1">
                     {METHODS.map((m) => (
-                      <button key={m} type="button" data-on={config.method === m} onClick={() => set({ method: m })}
-                        className={`rounded-lg py-1.5 font-mono text-[11px] font-bold text-(--muted-foreground) transition-colors ${METHOD_STYLES[m]}`}>
+                      <button key={m} type="button" data-on={config.method === m} aria-pressed={config.method === m} onClick={() => set({ method: m })}
+                        className={`rounded-lg py-1.5 font-mono text-[11px] font-bold text-(--muted-foreground) transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) ${METHOD_STYLES[m]}`}>
                         {m}
                       </button>
                     ))}
@@ -312,26 +313,26 @@ export const App = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className={labelCls}>Runtime</label>
-                    <select value={config.runtime} onChange={(e) => set({ runtime: e.target.value })} className={inputCls}>
+                    <label htmlFor="ase-runtime" className={labelCls}>Runtime</label>
+                    <select id="ase-runtime" value={config.runtime} onChange={(e) => set({ runtime: e.target.value })} className={inputCls}>
                       {["Node.js", "Python", "Go", "Java"].map((r) => <option key={r}>{r}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className={labelCls}>Database</label>
-                    <select value={config.dbType} onChange={(e) => set({ dbType: e.target.value })} className={inputCls}>
+                    <label htmlFor="ase-db" className={labelCls}>Database</label>
+                    <select id="ase-db" value={config.dbType} onChange={(e) => set({ dbType: e.target.value })} className={inputCls}>
                       {["Postgres", "MySQL", "MongoDB", "Redis"].map((d) => <option key={d}>{d}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className={labelCls}>Hosting</label>
-                    <select value={config.hostingType} onChange={(e) => set({ hostingType: e.target.value })} className={inputCls}>
+                    <label htmlFor="ase-hosting" className={labelCls}>Hosting</label>
+                    <select id="ase-hosting" value={config.hostingType} onChange={(e) => set({ hostingType: e.target.value })} className={inputCls}>
                       {["VPS", "Serverless", "Kubernetes", "Dedicated"].map((h) => <option key={h}>{h}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className={labelCls}>Base response (ms)</label>
-                    <input type="number" min="10" max="5000" value={config.baseResponseTime} onChange={(e) => set({ baseResponseTime: Number(e.target.value) || 10 })} className={inputCls} />
+                    <label htmlFor="ase-brt" className={labelCls}>Base response (ms)</label>
+                    <input id="ase-brt" type="number" min="10" max="5000" value={config.baseResponseTime} onChange={(e) => set({ baseResponseTime: Number(e.target.value) || 10 })} className={inputCls} />
                   </div>
                 </div>
 
@@ -347,7 +348,7 @@ export const App = () => {
                       <p className="text-[11px] text-(--muted-foreground)">Cuts repeated compute & DB load</p>
                     </div>
                   </div>
-                  <Toggle checked={config.cacheEnabled} onChange={() => set({ cacheEnabled: !config.cacheEnabled })} />
+                  <Toggle checked={config.cacheEnabled} onChange={() => set({ cacheEnabled: !config.cacheEnabled })} label="Toggle Redis cache" />
                 </div>
               </div>
             </section>
@@ -364,7 +365,7 @@ export const App = () => {
                   <p className="text-[11px] font-medium uppercase tracking-wide text-(--muted-foreground)">Incoming traffic</p>
                   <p className="mt-0.5 text-3xl font-extrabold tabular-nums text-(--primary)">{formatNumber(traffic)}</p>
                   <p className="text-[11px] text-(--muted-foreground)">requests / second</p>
-                  <input type="range" min={100} max={12000} step={100} value={traffic} onChange={(e) => setTraffic(Number(e.target.value))} className="mt-2 w-full accent-(--primary)" />
+                  <input type="range" min={100} max={12000} step={100} value={traffic} onChange={(e) => setTraffic(Number(e.target.value))} aria-label="Incoming traffic in requests per second" className="mt-2 w-full accent-(--primary)" />
                   <div className="flex justify-between text-[10px] text-(--muted-foreground)"><span>100</span><span>12,000</span></div>
                 </div>
 
@@ -374,8 +375,8 @@ export const App = () => {
                     {MODES.map(({ name, icon: Icon, hint }) => {
                       const on = mode === name;
                       return (
-                        <button key={name} type="button" onClick={() => setMode(name)}
-                          className={`rounded-xl border p-2.5 text-left transition-colors ${on ? "border-(--primary) bg-(--primary)/10" : "border-(--border) hover:bg-(--muted)/40"}`}>
+                        <button key={name} type="button" aria-pressed={on} onClick={() => setMode(name)}
+                          className={`rounded-xl border p-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${on ? "border-(--primary) bg-(--primary)/10" : "border-(--border) hover:bg-(--muted)/40"}`}>
                           <Icon className={`h-4 w-4 ${on ? "text-(--primary)" : "text-(--muted-foreground)"}`} />
                           <p className={`mt-1 text-[12px] font-semibold ${on ? "text-(--primary)" : "text-(--foreground)"}`}>{name}</p>
                           <p className="text-[10px] leading-tight text-(--muted-foreground)">{hint}</p>
@@ -393,7 +394,7 @@ export const App = () => {
                       <p className="text-[11px] text-(--muted-foreground)">+42% peak-sale traffic surge</p>
                     </div>
                   </div>
-                  <Toggle checked={blackFridayMode} onChange={() => setBlackFridayMode((v) => !v)} />
+                  <Toggle checked={blackFridayMode} onChange={() => setBlackFridayMode((v) => !v)} label="Toggle Black Friday mode" />
                 </div>
 
                 <div className="flex items-center justify-between rounded-xl border border-(--border) bg-(--muted)/30 px-3 py-2.5">
@@ -404,7 +405,7 @@ export const App = () => {
                       <p className="text-[11px] text-(--muted-foreground)">+2 cores, +8 GB, cache & better hosting</p>
                     </div>
                   </div>
-                  <Toggle checked={compareEnabled} onChange={() => setCompareEnabled((v) => !v)} />
+                  <Toggle checked={compareEnabled} onChange={() => setCompareEnabled((v) => !v)} label="Toggle upgraded setup comparison" />
                 </div>
               </div>
             </section>

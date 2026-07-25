@@ -86,7 +86,8 @@ const FileUploader = ({ onFileUpload }) => {
               </p>
               <button
                 onClick={handleClearFile}
-                className="mt-1 flex items-center gap-1 text-xs text-(--foreground)"
+                aria-label="Remove uploaded file"
+                className="mt-1 flex min-h-11 items-center gap-1 text-xs text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded-md px-2 sm:min-h-6"
               >
                 <X size={12} /> Remove
               </button>
@@ -123,7 +124,7 @@ const FileUploader = ({ onFileUpload }) => {
       {/* Manual Paste Zone */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-(--foreground) text-xl font-bold">
+          <label htmlFor="csv-manual-input" className="block text-(--foreground) text-xl font-bold">
             Paste CSV Data
           </label>
           {manualCsv && (
@@ -137,12 +138,13 @@ const FileUploader = ({ onFileUpload }) => {
         </div>
 
         <textarea
+          id="csv-manual-input"
           rows={6}
           value={manualCsv}
           onChange={handleManualChange}
           disabled={inputMode === "file"}
           placeholder={`name,age,city\nJohn,25,Delhi\nJane,30,Mumbai`}
-          className={`w-full px-3 py-2 bg-(--card) border border-(--border) rounded-md text-(--foreground) text-sm resize-y min-h-30 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500
+          className={`w-full px-3 py-2 bg-(--card) border border-(--border) rounded-md text-(--foreground) text-sm resize-y min-h-30 transition-all duration-200 focus:outline-none focus:border-(--primary) focus:ring-[3px] focus:ring-(--primary)/25
             ${inputMode === "file"
               ? "opacity-50 cursor-not-allowed"
               : "cursor-text"

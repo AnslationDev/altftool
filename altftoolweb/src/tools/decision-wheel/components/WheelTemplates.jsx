@@ -27,7 +27,7 @@ export default function WheelTemplates({ onSelect }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
             onClick={() => onSelect(template.key)}
-            className="flex items-center gap-2 p-2 rounded-lg border border-(--border) bg-(--card) hover:bg-(--muted) hover:border-(--border-strong) transition text-left"
+            className="flex items-center gap-2 p-2 min-h-11 rounded-lg border border-(--border) bg-(--card) hover:bg-(--muted) hover:border-(--border-strong) transition text-left active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <div className={`w-7 h-7 rounded-lg ${template.bg} flex items-center justify-center`}>
               <template.icon size="14" className={template.color} />

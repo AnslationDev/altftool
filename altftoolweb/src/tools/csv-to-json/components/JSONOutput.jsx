@@ -27,7 +27,8 @@ const JSONOutput = ({ jsonData }) => {
 
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-md border border-(--border) transition text-(--secondary) hover:bg-(--secondary) hover:text-(--background) cursor-pointer"
+          aria-label="Copy JSON output to clipboard"
+          className="flex min-h-11 items-center gap-1.5 text-sm px-3 py-1.5 rounded-md border border-(--border) transition text-(--secondary) hover:bg-(--secondary) hover:text-(--background) cursor-pointer active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 sm:min-h-9"
         >
           {copied ? (
             <>

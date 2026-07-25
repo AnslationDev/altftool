@@ -145,7 +145,8 @@ function ThumbStrip({ images, activeIdx, results, onSelect, onRemove }) {
         >
           <img src={img.preview} alt="" draggable={false} className="w-full h-full object-cover" />
           <button
-            className="absolute top-1 right-1 w-5 h-5 rounded-md bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center transition-all hover:scale-110 shadow-sm border border-rose-400"
+            aria-label={`Remove image ${i + 1}`}
+            className="absolute top-1 right-1 w-5 h-5 rounded-md bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center transition-all hover:scale-110 shadow-sm border border-rose-400 focus-visible:ring-2 focus-visible:ring-[var(--primary)]/35"
             onClick={(e) => { e.stopPropagation(); onRemove(i); }}
           >
             <span className="text-xs font-bold leading-none">×</span>
@@ -257,8 +258,8 @@ export default function ImageCompressorPage() {
           <div className="flex flex-col sm:flex-row justify-between items-start gap-5 pb-7 mb-7 border-b border-slate-100">
             <div className="flex items-center gap-4">
               <div className="relative p-3 bg-gradient-to-br from-teal-50 to-emerald-50 rounded-2xl border border-teal-100/80 shadow-sm">
-                <Compass className="w-7 h-7 text-teal-600 animate-spin-slow" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-white animate-pulse" />
+                <Compass className="w-7 h-7 text-teal-600 animate-spin-slow motion-reduce:animate-none" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-white animate-pulse motion-reduce:animate-none" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
@@ -292,7 +293,7 @@ export default function ImageCompressorPage() {
           </div>
 
           <p
-            className="mb-5 rounded-xl border border-border bg-surface-soft px-3 py-2 text-xs font-medium text-muted-foreground"
+            className={`mb-5 rounded-xl border px-3 py-2 text-xs font-medium ${error ? "border-[var(--danger)] bg-[var(--danger-soft)] text-[var(--danger)]" : "border-border bg-surface-soft text-muted-foreground"}`}
             data-testid="tool-output"
             role="status"
             aria-live="polite"
@@ -333,7 +334,7 @@ export default function ImageCompressorPage() {
               ].map((d, i) => (
                 <div
                   key={i}
-                  className="absolute rounded-full animate-float pointer-events-none"
+                  className="absolute rounded-full animate-float motion-reduce:animate-none pointer-events-none"
                   style={{
                     width: d.size,
                     height: d.size,
@@ -353,11 +354,11 @@ export default function ImageCompressorPage() {
                 {/* Large overlapping blobs */}
                 <div className="relative flex items-center justify-center w-72 h-72 mb-6">
                   <div
-                    className="absolute w-56 h-56 rounded-full opacity-30 animate-float"
+                    className="absolute w-56 h-56 rounded-full opacity-30 animate-float motion-reduce:animate-none"
                     style={{ background: "radial-gradient(circle, #f472b6, #ec4899)", animationDuration: "4s" }}
                   />
                   <div
-                    className="absolute w-64 h-64 rounded-full opacity-25 animate-float"
+                    className="absolute w-64 h-64 rounded-full opacity-25 animate-float motion-reduce:animate-none"
                     style={{
                       background: "radial-gradient(circle, #fb7185, #f43f5e)",
                       animationDuration: "5s",
@@ -559,17 +560,18 @@ export default function ImageCompressorPage() {
                   {settings.format !== "png" && (
                     <div>
                       <div className="flex justify-between items-end mb-2">
-                        <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Quality</label>
+                        <label htmlFor="ic-quality" className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Quality</label>
                         <span className="text-sm font-black text-teal-600">{settings.quality}%</span>
                       </div>
                       <div className="flex items-center gap-4">
                         <input
+                          id="ic-quality"
                           type="range"
                           min="5"
                           max="100"
                           value={settings.quality}
                           onChange={(e) => updateSettings({ quality: parseInt(e.target.value) })}
-                          className="flex-1 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-teal-600"
+                          className="flex-1 h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-teal-600 focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 focus-visible:outline-none"
                         />
                       </div>
                     </div>
@@ -589,20 +591,22 @@ export default function ImageCompressorPage() {
                     {settings.resizeEnabled && (
                       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 bg-white p-3 rounded-2xl border border-slate-200 animate-in fade-in duration-200">
                         <div>
-                          <span className="block text-[9px] font-bold text-slate-400 uppercase mb-1">Max Width</span>
+                          <label htmlFor="ic-max-width" className="block text-[9px] font-bold text-slate-400 uppercase mb-1">Max Width</label>
                           <input
+                            id="ic-max-width"
                             type="number"
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 outline-none"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25"
                             value={settings.maxWidth}
                             onChange={e => updateSettings({ maxWidth: parseInt(e.target.value) || 100 })}
                           />
                         </div>
                         <span className="text-slate-300 font-bold px-1 mt-4">×</span>
                         <div>
-                          <span className="block text-[9px] font-bold text-slate-400 uppercase mb-1">Max Height</span>
+                          <label htmlFor="ic-max-height" className="block text-[9px] font-bold text-slate-400 uppercase mb-1">Max Height</label>
                           <input
+                            id="ic-max-height"
                             type="number"
-                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 outline-none"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-bold text-slate-800 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25"
                             value={settings.maxHeight}
                             onChange={e => updateSettings({ maxHeight: parseInt(e.target.value) || 100 })}
                           />
@@ -618,7 +622,7 @@ export default function ImageCompressorPage() {
                       <button
                         disabled={isCompressing}
                         onClick={() => compressOne(activeIdx)}
-                        className="w-full py-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg shadow-teal-600/10 hover:shadow-teal-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg shadow-teal-600/10 hover:shadow-teal-600/20 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 transition-all flex items-center justify-center gap-2"
                       >
                         <Zap className="w-4 h-4" /> {isCompressing ? "Compressing..." : "Compress Image"}
                       </button>
@@ -626,13 +630,14 @@ export default function ImageCompressorPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => downloadImage(activeIdx)}
-                          className="flex-1 py-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg shadow-teal-600/10 hover:shadow-teal-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                          className="flex-1 py-3.5 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-extrabold text-sm uppercase tracking-wider shadow-md hover:shadow-lg shadow-teal-600/10 hover:shadow-teal-600/20 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 transition-all flex items-center justify-center gap-2"
                         >
                           <Download className="w-4 h-4" /> Download
                         </button>
                         <button
                           onClick={() => compressOne(activeIdx)}
-                          className="p-3.5 rounded-2xl border border-slate-200 hover:border-slate-300 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all"
+                          aria-label="Re-compress with updated settings"
+                          className="p-3.5 min-h-[44px] min-w-[44px] rounded-2xl border border-slate-200 hover:border-slate-300 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                           title="Re-compress with updated settings"
                         >
                           <RefreshCcw className="w-4 h-4" />
@@ -645,7 +650,7 @@ export default function ImageCompressorPage() {
                       <button
                         disabled={isCompressing}
                         onClick={compressAll}
-                        className="w-full py-2.5 rounded-xl border-2 border-indigo-200 hover:border-indigo-300 text-indigo-700 font-bold text-xs uppercase tracking-wider hover:bg-indigo-50/50 transition-all"
+                        className="w-full py-2.5 min-h-[44px] rounded-xl border-2 border-indigo-200 hover:border-indigo-300 text-indigo-700 font-bold text-xs uppercase tracking-wider hover:bg-indigo-50/50 active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 transition-all"
                       >
                         {isCompressing ? "Compressing Batch..." : `Compress All (${images.length})`}
                       </button>
@@ -655,7 +660,7 @@ export default function ImageCompressorPage() {
                     {allDone && (
                       <button
                         onClick={downloadAll}
-                        className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
+                        className="w-full py-2.5 min-h-[44px] rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider active:scale-[0.98] focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 transition-all"
                       >
                         Download Batch (.ZIP)
                       </button>

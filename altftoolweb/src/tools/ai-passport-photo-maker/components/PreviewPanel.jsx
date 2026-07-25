@@ -36,9 +36,9 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={() => onViewModeChange?.("original")}
-            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               viewMode === "original"
-                ? "bg-(--primary) text-white"
+                ? "bg-(--primary) text-(--primary-foreground)"
                 : "text-(--muted-foreground) hover:text-(--foreground)"
             }`}
             aria-pressed={viewMode === "original"}
@@ -48,9 +48,9 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={() => onViewModeChange?.("result")}
-            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
               viewMode === "result"
-                ? "bg-(--primary) text-white"
+                ? "bg-(--primary) text-(--primary-foreground)"
                 : "text-(--muted-foreground) hover:text-(--foreground)"
             }`}
             aria-pressed={viewMode === "result"}
@@ -63,7 +63,7 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={handleZoomOut}
-            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground)"
+            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Zoom out"
           >
             <ZoomOut size={16} />
@@ -74,7 +74,7 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={handleZoomIn}
-            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground)"
+            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Zoom in"
           >
             <ZoomIn size={16} />
@@ -84,7 +84,7 @@ export default function PreviewPanel({
             <button
               type="button"
               onClick={onGridToggle}
-              className={`rounded-lg p-1.5 transition-colors ${
+              className={`rounded-lg p-1.5 transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
                 gridVisible
                   ? "text-(--primary)"
                   : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -98,7 +98,7 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={() => setFullscreen((f) => !f)}
-            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground)"
+            className="rounded-lg p-1.5 text-(--muted-foreground) transition-colors hover:bg-(--muted) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Toggle fullscreen"
           >
             <Maximize2 size={16} />
@@ -144,7 +144,7 @@ export default function PreviewPanel({
           <button
             type="button"
             onClick={() => setFullscreen(false)}
-            className="absolute right-4 top-4 rounded-lg bg-black/60 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+            className="absolute right-4 top-4 rounded-lg bg-black/60 p-2 min-w-11 min-h-11 inline-flex items-center justify-center text-white backdrop-blur-sm transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label="Exit fullscreen"
           >
             <Maximize2 size={18} />

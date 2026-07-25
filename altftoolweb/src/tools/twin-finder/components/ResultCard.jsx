@@ -93,7 +93,7 @@ export default function ResultCard({ result, onShare, onDownload, onToggleFavori
           </div>
           <button
             onClick={() => onToggleFavorite(result.id)}
-            className="rounded-lg p-2 transition hover:bg-(--muted)"
+            className="rounded-lg p-2 min-w-11 min-h-11 inline-flex items-center justify-center transition hover:bg-(--muted) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
             <Star
@@ -123,13 +123,13 @@ export default function ResultCard({ result, onShare, onDownload, onToggleFavori
         <div className="flex gap-3">
           <button
             onClick={onShare}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 active:scale-95"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-(--primary) px-4 py-2.5 min-h-11 text-sm font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Share2 size={16} /> Share
           </button>
           <button
             onClick={onDownload}
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-2.5 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-95"
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-(--border) px-4 py-2.5 min-h-11 text-sm font-semibold text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
           >
             <Download size={16} /> Download
           </button>
