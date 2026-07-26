@@ -4,7 +4,7 @@ frontend:
     preBuild:
       commands:
         - nvm use 24
-        - export ALTFT_RELEASE_COMMIT="${AWS_COMMIT_ID:-}"
+        - export ALTFT_RELEASE_COMMIT="${AWS_COMMIT_ID:-$(git rev-parse HEAD)}"
         - export ALTFT_RELEASE_BRANCH="${AWS_BRANCH:-main}"
         - node scripts/write-amplify-runtime-env.mjs
         - npm ci --no-audit --no-fund
