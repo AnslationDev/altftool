@@ -8,7 +8,7 @@
     "npm": ">=11"
   },
   "scripts": {
-    "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs",
+    "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs",
     "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
     "prebuild": "npm run generate:registry",

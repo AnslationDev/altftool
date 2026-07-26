@@ -72,6 +72,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "80tta-vs-80ttb-calculator": {
+    "name": "80TTA vs 80TTB Interest Deduction",
+    "description": "Compare savings and deposit interest deduction limits under Section 80TTA and 80TTB for regular and senior taxpayers.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "a-b-test-significance-calculator": {
     "name": "A/B Test Significance Calculator",
     "description": "Conversion data se p-value aur confidence calculate kare.",
@@ -124,6 +131,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "absolute-vs-annualised-return-calculator": {
+    "name": "Absolute vs Annualised Return Calculator",
+    "description": "Convert total gain percentage to annualised CAGR and back, for any holding period in years and months.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "ac-tonnage-calculator": {
     "name": "AC Tonnage Calculator",
@@ -252,6 +266,13 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-primary"
   },
+  "advance-tax-interest-234b-234c-calculator": {
+    "name": "Advance Tax Interest 234B 234C Calculator",
+    "description": "Interest payable under Sections 234B and 234C for shortfall and deferment of advance tax instalments.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "afterimage-generator": {
     "name": "Afterimage Generator",
     "description": "Experience retinal adaptation and complementary afterimages through color staring or image processing.",
@@ -276,6 +297,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-red-800"
+  },
+  "age-difference-calculator": {
+    "name": "Age Difference Calculator",
+    "description": "Find the exact age gap between two people in years, months and days, plus total weeks and days.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "age-gender-detector": {
     "name": "Age & Gender Detector",
@@ -876,6 +904,13 @@ export const toolMetaMap = {
     "icon": "crop",
     "iconColor": "text-blue-600"
   },
+  "atal-pension-yojana-calculator": {
+    "name": "Atal Pension Yojana Calculator",
+    "description": "Find the exact APY monthly contribution for a ₹1,000–₹5,000 pension slab based on your joining age, plus total outgo and nominee corpus.",
+    "category": "Finance Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "atrial-fibrillation-risk-calculator": {
     "name": "Atrial Fibrillation Risk Calculator",
     "description": "Assess atrial fibrillation risk using CHARGE-AF and community-based risk factors with clinical guidance and prevention strategies.",
@@ -899,6 +934,16 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-check",
     "iconColor": "text-teal-600"
+  },
+  "attendance-percentage-calculator": {
+    "name": "Attendance Percentage Calculator",
+    "description": "Check your current attendance percent and how many classes you must attend or can skip.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
   },
   "attention-span-test": {
     "name": "Attention Span Test",
@@ -1095,6 +1140,13 @@ export const toolMetaMap = {
     ],
     "icon": "square",
     "iconColor": "text-teal-600"
+  },
+  "balance-transfer-savings-calculator": {
+    "name": "Balance Transfer Savings Calculator",
+    "description": "See the interest you save by transferring a loan to a lower rate, net of processing fees, plus the break-even month.",
+    "category": "Finance Calculators",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
   },
   "band-name-generator": {
     "name": "Band Name Generator",
@@ -1474,6 +1526,13 @@ export const toolMetaMap = {
     "icon": "image-plus",
     "iconColor": "text-teal-500"
   },
+  "belated-return-late-fee-calculator": {
+    "name": "Belated Return Late Fee Calculator",
+    "description": "Late filing fee under Section 234F plus 234A interest for income tax returns filed after the due date.",
+    "category": "Finance Calculators",
+    "icon": "file-clock",
+    "iconColor": "text-(--primary)"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
@@ -1764,6 +1823,13 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-500"
   },
+  "body-fat-percentage-calculator": {
+    "name": "Body Fat Percentage Calculator",
+    "description": "Estimate body fat with the US Navy tape method using height, neck, waist and hip measurements.",
+    "category": "Health Calculators",
+    "icon": "activity",
+    "iconColor": "text-(--primary)"
+  },
   "body-surface-area-calculator": {
     "name": "Body Surface Area Calculator",
     "description": "Estimate body surface area (BSA) using the Mosteller and Du Bois formulas.",
@@ -1807,6 +1873,13 @@ export const toolMetaMap = {
     ],
     "icon": "landmark",
     "iconColor": "text-emerald-600"
+  },
+  "bonus-variable-pay-calculator": {
+    "name": "Bonus and Variable Pay Calculator",
+    "description": "Calculate your bonus payout from target variable pay, performance rating multipliers, company payout factor and proration.",
+    "category": "Finance Calculators",
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
   },
   "bookmark-capsule": {
     "name": "Bookmark Capsule",
@@ -2002,6 +2075,13 @@ export const toolMetaMap = {
     "icon": "receipt-indian-rupee",
     "iconColor": "text-teal-600"
   },
+  "brokerage-charges-calculator": {
+    "name": "Brokerage and Charges Calculator",
+    "description": "Total trade cost including brokerage, STT, GST, stamp duty, SEBI and exchange transaction charges for equity, futures and options.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
   "browser-extension-permission-analyzer": {
     "name": "Browser Extension Permission Analyzer",
     "description": "Highlight risky extension permissions and combinations in a manifest.",
@@ -2084,6 +2164,13 @@ export const toolMetaMap = {
     ],
     "icon": "flask-conical",
     "iconColor": "text-primary"
+  },
+  "bulk-find-replace": {
+    "name": "Bulk Find and Replace",
+    "description": "Run many find and replace rules over text at once with regex, case and whole-word options.",
+    "category": "Text & Writing",
+    "icon": "replace",
+    "iconColor": "text-(--primary)"
   },
   "bulk-text-replacer": {
     "name": "Bulk Text Replacer",
@@ -2212,6 +2299,13 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-lime-600"
+  },
+  "cagr-calculator-detailed": {
+    "name": "CAGR Calculator Detailed",
+    "description": "Work out compound annual growth rate from a start value, end value and duration, with absolute return and a year-wise breakdown.",
+    "category": "Finance Calculators",
+    "icon": "chart-line",
+    "iconColor": "text-(--primary)"
   },
   "calendar-privacy-scrubber": {
     "name": "Calendar Privacy Scrubber",
@@ -2405,6 +2499,13 @@ export const toolMetaMap = {
     "icon": "car",
     "iconColor": "text-blue-600"
   },
+  "car-loan-emi-calculator": {
+    "name": "Car Loan EMI Calculator",
+    "description": "Car loan EMI, total interest and a year-by-year amortisation schedule with down payment, tenure and processing fees.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
   "car-ownership-cost-analyzer": {
     "name": "car-cost-analyzer",
     "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
@@ -2531,12 +2632,29 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cgpa-to-percentage-converter": {
+    "name": "CGPA to Percentage Converter",
+    "description": "Convert CGPA to percentage using CBSE, VTU, Mumbai University and custom multipliers.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "changelog-generator": {
     "name": "Changelog Generator",
     "description": "Turn a list of changes into a clean, categorised Keep-a-Changelog entry.",
     "category": "Developer",
     "icon": "file-text",
     "iconColor": "text-slate-600"
+  },
+  "character-limit-checker": {
+    "name": "Character Limit Checker",
+    "description": "Check text against X, Instagram, LinkedIn, SEO and SMS character limits with a live remaining count.",
+    "category": "Text & Writing",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
   },
   "charger-wattage-calculator": {
     "name": "Charger Wattage Calculator",
@@ -2604,6 +2722,13 @@ export const toolMetaMap = {
       "Game"
     ],
     "icon": "between-vertical-start",
+    "iconColor": "text-(--primary)"
+  },
+  "child-education-cost-planner": {
+    "name": "Child Education Cost Planner",
+    "description": "Project the future cost of your child's education after education inflation and the monthly SIP needed to fund it.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
     "iconColor": "text-(--primary)"
   },
   "child-height-predictor": {
@@ -3058,6 +3183,13 @@ export const toolMetaMap = {
     "icon": "bar-chart-3",
     "iconColor": "text-emerald-500"
   },
+  "compound-interest-calculator-detailed": {
+    "name": "Compound Interest Calculator Detailed",
+    "description": "Compound interest at any frequency, with deposits and a year-by-year growth table.",
+    "category": "Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
   "compound-interest-planner": {
     "name": "Compound Interest Planner",
     "description": "Plan lumpsum compound growth with reinvestment, yearly top-ups, tax, inflation-adjusted value, and year-wise charts.",
@@ -3156,6 +3288,13 @@ export const toolMetaMap = {
     ],
     "icon": "stars",
     "iconColor": "text-primary"
+  },
+  "construction-cost-estimator": {
+    "name": "Construction Cost Estimator",
+    "description": "Approximate house construction cost from built-up area, quality of construction and city, with a work-head and material breakdown.",
+    "category": "Finance Calculators",
+    "icon": "hammer",
+    "iconColor": "text-(--primary)"
   },
   "consumer-complaint-draft-builder": {
     "name": "Consumer Complaint Draft Builder",
@@ -3306,6 +3445,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cost-inflation-index-calculator": {
+    "name": "Cost Inflation Index Calculator",
+    "description": "Indexed cost of acquisition and improvement using the notified Cost Inflation Index for the purchase and sale financial years.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "countdown-days-calculator": {
+    "name": "Countdown Days Calculator",
+    "description": "See how many days are left until any target date, with weeks, months and working-day breakdowns.",
+    "category": "Calculators",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "countdown-timer": {
     "name": "Countdown Timer",
     "description": "Run multiple named countdown timers with progress rings, alarms, and presets — accurate even in background tabs.",
@@ -3398,6 +3551,20 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-teal-600"
   },
+  "credit-card-minimum-due-calculator": {
+    "name": "Credit Card Minimum Due Calculator",
+    "description": "See how many years and how much interest it takes to clear a credit card balance if you only ever pay the minimum due.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
+  "credit-score-impact-simulator": {
+    "name": "Credit Score Impact Simulator",
+    "description": "Estimate how utilisation, hard enquiries and missed payments move your credit score, with a before and after comparison.",
+    "category": "Finance Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "cron-expression-generator": {
     "name": "Cron Expression Generator",
     "description": "Build cron expressions with readable schedule previews.",
@@ -3446,6 +3613,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "crypto-tax-calculator-india": {
+    "name": "Crypto Tax Calculator India",
+    "description": "Flat 30% VDA tax under Section 115BBH plus 1% TDS under 194S, with per-trade gains and losses that cannot be set off.",
+    "category": "Finance Calculators",
+    "icon": "bitcoin",
+    "iconColor": "text-(--primary)"
   },
   "crypto-wallet-checker": {
     "name": "Crypto Wallet Checker",
@@ -3638,6 +3812,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "terminal",
     "iconColor": "text-zinc-700"
+  },
+  "currency-conversion-fee-calculator": {
+    "name": "Currency Conversion Fee Calculator",
+    "description": "True cost of a forex transaction after exchange rate markup, card fees and GST, with the effective rate you actually pay.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
   },
   "currency-converter": {
     "name": "Currency Converter",
@@ -3861,6 +4042,13 @@ export const toolMetaMap = {
     "icon": "network",
     "iconColor": "text-teal-500"
   },
+  "date-add-subtract-calculator": {
+    "name": "Date Add Subtract Calculator",
+    "description": "Add or subtract days, weeks, months or years from any date and get the exact resulting date.",
+    "category": "Calculators",
+    "icon": "calendar-plus",
+    "iconColor": "text-(--primary)"
+  },
   "date-time-conversions": {
     "name": "Date / Time Conversions",
     "description": "Convert between time units, Unix timestamps, and date formats. Calculate date differences and durations with precision.",
@@ -3937,6 +4125,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-check",
     "iconColor": "text-red-500"
+  },
+  "debt-snowball-avalanche-planner": {
+    "name": "Debt Snowball vs Avalanche Planner",
+    "description": "Compare the snowball and avalanche payoff orders across all your loans by months to debt-free and total interest paid.",
+    "category": "Finance Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
   },
   "decimal-converter": {
     "name": "Decimal Converter",
@@ -4712,6 +4907,13 @@ export const toolMetaMap = {
     "icon": "sun-medium",
     "iconColor": "text-teal-500"
   },
+  "education-loan-emi-calculator": {
+    "name": "Education Loan EMI Calculator",
+    "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
   "eisenhower-matrix-tool": {
     "name": "Eisenhower Matrix Tool",
     "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
@@ -4735,6 +4937,13 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-teal-500"
   },
+  "electricity-bill-calculator": {
+    "name": "Electricity Bill Calculator",
+    "description": "Estimate your monthly electricity bill from appliance wattage, daily usage hours and your per-unit tariff.",
+    "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
   "elimination-diet-correlation-log": {
     "name": "Elimination Diet Correlation Log",
     "description": "Foods aur reactions ke possible patterns dikhaye.",
@@ -4747,6 +4956,13 @@ export const toolMetaMap = {
     ],
     "icon": "salad",
     "iconColor": "text-primary"
+  },
+  "elss-lock-in-tracker": {
+    "name": "ELSS Lock-in Tracker",
+    "description": "Track when each ELSS SIP instalment completes its 3-year lock-in, with unlocked, locked and next-to-free amounts.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "email-authentication-checker": {
     "name": "Email Authentication Checker",
@@ -4865,6 +5081,13 @@ export const toolMetaMap = {
     ],
     "icon": "shield",
     "iconColor": "text-teal-600"
+  },
+  "emi-moratorium-impact-calculator": {
+    "name": "EMI Moratorium Impact Calculator",
+    "description": "See the extra interest, higher EMI and added tenure caused by pausing your loan EMIs for a few months.",
+    "category": "Finance Calculators",
+    "icon": "pause-circle",
+    "iconColor": "text-(--primary)"
   },
   "emoji-hub": {
     "name": "Emoji Hub",
@@ -5009,6 +5232,20 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-teal-600"
   },
+  "epf-maturity-calculator": {
+    "name": "EPF Maturity Calculator",
+    "description": "Project EPF corpus at retirement from salary, contribution rate and expected hikes.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
+  "eps-pension-calculator": {
+    "name": "EPS Pension Calculator",
+    "description": "Estimate your monthly EPS-95 pension from pensionable salary and years of service, with early/deferred pension and family pension.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
   "equation-practice": {
     "name": "Equation Practice",
     "description": "Practice solving algebraic equations with randomised problems, instant feedback, hints, and performance tracking.",
@@ -5022,6 +5259,13 @@ export const toolMetaMap = {
     ],
     "icon": "sigma",
     "iconColor": "text-indigo-600"
+  },
+  "equity-capital-gains-tax-calculator": {
+    "name": "Equity Capital Gains Tax Calculator",
+    "description": "Work out STCG and LTCG on listed equity from your holding period, with the annual exemption, cess and grandfathering.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "error-log-pattern-grouper": {
     "name": "Error Log Pattern Grouper",
@@ -5102,6 +5346,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "eway-bill-validity-calculator": {
+    "name": "E-Way Bill Distance Validity Calculator",
+    "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time.",
+    "category": "Finance Calculators",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
+  },
   "exam-score-analyzer": {
     "name": "Exam Score Analyzer",
     "description": "Analyze your exam performance with grades, insights, and interactive charts.",
@@ -5111,6 +5362,16 @@ export const toolMetaMap = {
     ],
     "icon": "bar-chart-2",
     "iconColor": "text-indigo-600"
+  },
+  "exam-score-needed-calculator": {
+    "name": "Exam Score Needed Calculator",
+    "description": "Find the final exam score you need to reach your target overall grade in a course.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "target",
+    "iconColor": "text-(--primary)"
   },
   "excel-formula": {
     "name": "Excel Formula",
@@ -5199,6 +5460,13 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "wallet",
     "iconColor": "text-emerald-600"
+  },
+  "expense-ratio-impact-calculator": {
+    "name": "Expense Ratio Impact Calculator",
+    "description": "See how much a mutual fund expense ratio quietly eats from your long-term corpus, and what a direct plan saves.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "exposure-triangle-guide": {
     "name": "Exposure Triangle Guide",
@@ -5382,6 +5650,20 @@ export const toolMetaMap = {
     "icon": "mouse-pointer-click",
     "iconColor": "text-orange-500"
   },
+  "fd-ladder-planner": {
+    "name": "Fixed Deposit Ladder Planner",
+    "description": "Split a lump sum across staggered FD tenures and see each rung's maturity, date and the blended average yield.",
+    "category": "Finance Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "fd-premature-withdrawal-penalty-calculator": {
+    "name": "FD Premature Withdrawal Penalty Calculator",
+    "description": "Net payout when you break a fixed deposit early — reduced card rate, penalty deduction and the interest you give up.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "fd-rd-maturity-calculator": {
     "name": "FD / RD Maturity Calculator",
     "description": "Estimate fixed deposit and recurring deposit maturity amount, interest earned, tax impact, and growth schedule.",
@@ -5405,6 +5687,13 @@ export const toolMetaMap = {
     ],
     "icon": "messages-square",
     "iconColor": "text-primary"
+  },
+  "fifty-thirty-twenty-budget-calculator": {
+    "name": "50-30-20 Budget Rule Calculator",
+    "description": "Split your take-home pay into 50% needs, 30% wants and 20% savings, then compare it against what you actually spend.",
+    "category": "Finance Calculators",
+    "icon": "pie-chart",
+    "iconColor": "text-(--primary)"
   },
   "file-checksum-comparator": {
     "name": "File Checksum Comparator",
@@ -5598,6 +5887,13 @@ export const toolMetaMap = {
     ],
     "icon": "credit-card",
     "iconColor": "text-blue-600"
+  },
+  "flat-vs-reducing-rate-converter": {
+    "name": "Flat vs Reducing Interest Rate Converter",
+    "description": "Convert a flat interest rate to its true reducing-balance equivalent, or back again, with the EMI and total interest.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "flow-chart-maker": {
     "name": "Flow Chart Maker",
@@ -5834,6 +6130,13 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-teal-600"
   },
+  "freelance-hourly-rate-calculator": {
+    "name": "Freelance Hourly Rate Calculator",
+    "description": "Work out the freelance hourly rate you need from target income, billable hours, expenses and tax.",
+    "category": "Productivity",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
   "freelance-payment-late-fee-tracker": {
     "name": "Freelance Payment & Late-Fee Tracker",
     "description": "Due dates, payments aur agreed late fees track kare.",
@@ -5859,6 +6162,13 @@ export const toolMetaMap = {
     ],
     "icon": "badge-indian-rupee",
     "iconColor": "text-teal-600"
+  },
+  "freelancer-advance-tax-planner": {
+    "name": "Freelancer Advance Tax Planner",
+    "description": "Plan quarterly advance tax instalments and due dates on freelance and professional income.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "friend-elo-ladder": {
     "name": "Friend ELO Ladder",
@@ -5893,6 +6203,20 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "users",
     "iconColor": "text-cyan-500"
+  },
+  "fuel-cost-trip-calculator": {
+    "name": "Fuel Cost Trip Calculator",
+    "description": "Estimate trip fuel cost from distance, mileage and fuel price, then split it per person.",
+    "category": "Calculators",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "full-and-final-settlement-calculator": {
+    "name": "Full and Final Settlement Calculator",
+    "description": "Estimate your F&F settlement from pending salary, leave encashment, gratuity, bonus and notice or loan recoveries.",
+    "category": "Finance Calculators",
+    "icon": "file-check",
+    "iconColor": "text-(--primary)"
   },
   "funny-nickname-generator": {
     "name": "Funny Nickname Generator",
@@ -6160,6 +6484,13 @@ export const toolMetaMap = {
     "icon": "mail",
     "iconColor": "text-teal-500"
   },
+  "goal-based-sip-calculator": {
+    "name": "Goal Based SIP Calculator",
+    "description": "Monthly SIP needed to reach a target corpus by a target date, with lumpsum, annual step-up and inflation adjustment.",
+    "category": "Finance Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
   "gold-jewellery-calculator": {
     "name": "Gold Jewellery Price Calculator",
     "description": "See the real price of gold jewellery: purity rate, making charges, wastage, GST 3% and your resale loss.",
@@ -6172,6 +6503,13 @@ export const toolMetaMap = {
     ],
     "icon": "gem",
     "iconColor": "text-teal-600"
+  },
+  "gold-loan-eligibility-calculator": {
+    "name": "Gold Loan Eligibility Calculator",
+    "description": "Estimate the gold loan you can get from jewellery weight, karat purity and the lender's LTV cap, with per-gram value and repayment preview.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
   },
   "gold-price-checker": {
     "name": "Gold Price Checker",
@@ -6305,6 +6643,13 @@ export const toolMetaMap = {
     "icon": "briefcase-business",
     "iconColor": "text-teal-600"
   },
+  "gratuity-calculator-india": {
+    "name": "Gratuity Calculator India",
+    "description": "Gratuity payable under the Payment of Gratuity Act with 15/26 formula and tax-free cap.",
+    "category": "Finance Calculators",
+    "icon": "hand-coins",
+    "iconColor": "text-(--primary)"
+  },
   "gravity-orbit-simulator": {
     "name": "Gravity Orbit Simulator",
     "description": "Interactive N-body orbital mechanics simulator with velocity vectors, orbital eccentricity, escape velocity, and collision mechanics.",
@@ -6375,6 +6720,20 @@ export const toolMetaMap = {
     ],
     "icon": "file-spreadsheet",
     "iconColor": "text-green-600"
+  },
+  "gst-input-tax-credit-calculator": {
+    "name": "GST Input Tax Credit Calculator",
+    "description": "Net GST payable in cash after setting off input tax credit across IGST, CGST and SGST under the Rule 88A utilisation order.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-reverse-calculator": {
+    "name": "GST Reverse Calculator",
+    "description": "Extract base price and GST from a GST-inclusive amount across every Indian GST slab.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
   },
   "gstin-format-validator": {
     "name": "GSTIN Format Validator",
@@ -6521,6 +6880,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "health-insurance-cover-calculator": {
+    "name": "Health Insurance Cover Calculator",
+    "description": "Suggests the health insurance sum insured your family needs from city tier, family size, age and medical inflation.",
+    "category": "Finance Calculators",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
   },
   "health-pre": {
     "name": "Health Pre",
@@ -6688,6 +7054,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "home-affordability-calculator": {
+    "name": "Home Affordability Calculator",
+    "description": "Find the maximum property price you can afford from your income, EMI capacity, down payment, LTV cap and registration costs.",
+    "category": "Finance Calculators",
+    "icon": "home",
+    "iconColor": "text-(--primary)"
+  },
   "home-battery-tou-simulator": {
     "name": "Home Battery TOU Simulator",
     "description": "Tariffs aur load profile se charging/discharging scenarios compare kare.",
@@ -6724,6 +7097,20 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "home-loan-prepayment-calculator": {
+    "name": "Home Loan Prepayment Calculator",
+    "description": "Find the interest saved and tenure cut when you make a lump-sum prepayment or pay extra with every EMI.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
+  },
+  "home-loan-tax-benefit-calculator": {
+    "name": "Home Loan Tax Benefit Calculator",
+    "description": "Combined Section 80C principal and Section 24(b) interest tax savings on a home loan, year by year.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
   },
   "home-maintenance-scheduler": {
     "name": "Home Maintenance Scheduler",
@@ -6783,6 +7170,13 @@ export const toolMetaMap = {
     "icon": "house",
     "iconColor": "text-teal-600"
   },
+  "hra-exemption-calculator-detailed": {
+    "name": "HRA Exemption Calculator",
+    "description": "Least-of-three HRA exemption with metro and non-metro rules and monthly breakdown.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
+  },
   "hrv-readiness-trend-tracker": {
     "name": "HRV Readiness Trend Tracker",
     "description": "Personal HRV baseline aur deviations track kare.",
@@ -6792,6 +7186,13 @@ export const toolMetaMap = {
     ],
     "icon": "heart-pulse",
     "iconColor": "text-primary"
+  },
+  "hsn-code-gst-rate-finder": {
+    "name": "HSN Code GST Rate Finder",
+    "description": "Search HSN and SAC codes for common goods and services, see the GST slab and split any amount into CGST, SGST or IGST.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
   },
   "htaccess-to-nginx": {
     "name": "HTAccess to NGINX",
@@ -6942,6 +7343,13 @@ export const toolMetaMap = {
     "icon": "heart-pulse",
     "iconColor": "text-teal-500"
   },
+  "human-life-value-calculator": {
+    "name": "Human Life Value Calculator",
+    "description": "Economic value of your future earnings for life insurance planning, with growth, discount rate, loans and existing cover.",
+    "category": "Finance Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "icon-maker": {
     "name": "Icon Maker Tool",
     "description": "Create, preview, copy, and export production-ready app icons, favicons, launcher assets, and PWA icons in the browser.",
@@ -6951,6 +7359,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-blue-500"
+  },
+  "ideal-body-weight-calculator": {
+    "name": "Ideal Body Weight Calculator",
+    "description": "Estimate an ideal weight range from height using the Devine, Robinson, Miller, Hamwi and healthy-BMI methods.",
+    "category": "Health Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
   },
   "ideal-gas-law-calculator": {
     "name": "Ideal Gas Law Calculator",
@@ -7238,6 +7653,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "income-tax-slab-visualizer": {
+    "name": "Income Tax Slab Visualizer",
+    "description": "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess.",
+    "category": "Finance Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
   "indian-holiday-finder": {
     "name": "Indian Holiday Finder",
     "description": "Find Indian public holidays, festivals, bank weekends, long weekends, and state-wise holiday planning windows.",
@@ -7277,6 +7699,13 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "inflation-adjusted-return-calculator": {
+    "name": "Inflation Adjusted Return Calculator",
+    "description": "Convert nominal returns into real, inflation-adjusted returns over any period and see what your money is truly worth.",
+    "category": "Finance Calculators",
+    "icon": "trending-down",
+    "iconColor": "text-(--primary)"
   },
   "inflation-calculator": {
     "name": "Inflation Impact Calculator",
@@ -7480,6 +7909,13 @@ export const toolMetaMap = {
     "icon": "file-spreadsheet",
     "iconColor": "text-sky-600"
   },
+  "invoice-number-generator": {
+    "name": "Invoice Number Generator",
+    "description": "Generate sequential or date-based invoice numbering schemes in bulk, with prefixes, padding and period resets.",
+    "category": "Generators",
+    "icon": "hash",
+    "iconColor": "text-(--primary)"
+  },
   "invoice-to-time-log-reconciler": {
     "name": "Invoice-to-Time-Log Reconciler",
     "description": "Billable hours aur invoice line items ke mismatches dikhaye.",
@@ -7620,6 +8056,34 @@ export const toolMetaMap = {
     ],
     "icon": "calendar",
     "iconColor": "text-blue-600"
+  },
+  "itr-1-eligibility-checker": {
+    "name": "ITR-1 Sahaj Eligibility Checker",
+    "description": "Answer a few questions to see whether ITR-1 Sahaj can be filed for your income sources.",
+    "category": "Finance Calculators",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "itr-2-applicability-checker": {
+    "name": "ITR-2 Applicability Checker",
+    "description": "Check whether capital gains, multiple properties or foreign assets push you to ITR-2.",
+    "category": "Finance Calculators",
+    "icon": "file-search",
+    "iconColor": "text-(--primary)"
+  },
+  "itr-3-applicability-checker": {
+    "name": "ITR-3 Applicability Checker",
+    "description": "Check whether your business or professional income means you must file ITR-3, or whether ITR-1, ITR-2 or ITR-4 fits.",
+    "category": "Finance Calculators",
+    "icon": "file-check-2",
+    "iconColor": "text-(--primary)"
+  },
+  "itr-document-checklist-builder": {
+    "name": "ITR Document Checklist Builder",
+    "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions.",
+    "category": "Finance Calculators",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "javascript-tools": {
     "name": "JavaScript Tools",
@@ -8004,6 +8468,20 @@ export const toolMetaMap = {
     "icon": "divide",
     "iconColor": "text-emerald-600"
   },
+  "lean-body-mass-calculator": {
+    "name": "Lean Body Mass Calculator",
+    "description": "Work out lean and fat mass from your body fat percentage, or estimate it with the Boer, James and Hume formulas.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-(--primary)"
+  },
+  "leave-encashment-tax-calculator": {
+    "name": "Leave Encashment Tax Calculator",
+    "description": "Taxable vs exempt leave encashment on retirement for private employees.",
+    "category": "Finance Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
   "led-pwm-flicker-detector": {
     "name": "LED PWM Flicker Detector",
     "description": "Camera rolling bands se approximate flicker pattern estimate kare.",
@@ -8091,6 +8569,13 @@ export const toolMetaMap = {
     ],
     "icon": "list-ordered",
     "iconColor": "text-indigo-600"
+  },
+  "line-sorter-deduplicator": {
+    "name": "Line Sorter and Deduplicator",
+    "description": "Sort, reverse, shuffle and remove duplicate lines from any list, with case and blank-line options.",
+    "category": "Text & Writing",
+    "icon": "arrow-down-up",
+    "iconColor": "text-(--primary)"
   },
   "link-organizer": {
     "name": "Link Organizer",
@@ -8224,6 +8709,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "loan-against-property-calculator": {
+    "name": "Loan Against Property Calculator",
+    "description": "Check loan against property eligibility from property value and LTV, then test it against income-based EMI affordability and FOIR.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "loan-app-permission-risk-auditor": {
     "name": "Loan App Permission Risk Auditor",
     "description": "Review an Android manifest or permission list locally and understand sensitive access patterns often relevant to abusive loan-app behavior.",
@@ -8241,6 +8733,13 @@ export const toolMetaMap = {
     ],
     "icon": "landmark",
     "iconColor": "text-blue-600"
+  },
+  "loan-eligibility-calculator": {
+    "name": "Loan Eligibility Calculator",
+    "description": "Check the loan amount you qualify for from your income, existing EMIs and the FOIR limit lenders apply, with a tenure comparison.",
+    "category": "Finance Calculators",
+    "icon": "user-check",
+    "iconColor": "text-(--primary)"
   },
   "loan-emi-calculator": {
     "name": "Loan EMI Calculator",
@@ -8261,6 +8760,13 @@ export const toolMetaMap = {
     ],
     "icon": "scan-text",
     "iconColor": "text-primary"
+  },
+  "loan-foreclosure-savings-calculator": {
+    "name": "Loan Foreclosure Savings Calculator",
+    "description": "Compare the cost of closing a loan early with the interest still left on it to see your real net savings.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "loan-prepayment-analyzer": {
     "name": "Loan Prepayment vs Investment Analyzer",
@@ -8549,6 +9055,13 @@ export const toolMetaMap = {
     "icon": "banknote",
     "iconColor": "text-emerald-500"
   },
+  "lumpsum-vs-sip-comparator": {
+    "name": "Lumpsum vs SIP Comparator",
+    "description": "Compare the final corpus of a one-time lumpsum investment against an equivalent monthly SIP at the same return.",
+    "category": "Finance Calculators",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "m2-blocks-game": {
     "name": "Merge Blocks Game",
     "description": "Merge falling blocks of matching numbers to double their value and score high combos.",
@@ -8573,6 +9086,13 @@ export const toolMetaMap = {
     ],
     "icon": "utensils",
     "iconColor": "text-blue-600"
+  },
+  "macro-split-calculator": {
+    "name": "Macro Split Calculator",
+    "description": "Turn a daily calorie target into protein, carb and fat grams using balanced, high-protein, low-carb, keto or custom splits.",
+    "category": "Health Calculators",
+    "icon": "pie-chart",
+    "iconColor": "text-(--primary)"
   },
   "magic-8-ball": {
     "name": "Magic 8 Ball",
@@ -8677,6 +9197,16 @@ export const toolMetaMap = {
     "icon": "package-search",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "marks-percentage-calculator": {
+    "name": "Marks Percentage Calculator",
+    "description": "Calculate your exam percentage from obtained and total marks across multiple subjects.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
   },
   "markup-calculator": {
     "name": "Markup Calculator",
@@ -9380,6 +9910,13 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-purple-500"
   },
+  "mutual-fund-xirr-calculator": {
+    "name": "Mutual Fund XIRR Calculator",
+    "description": "Calculate XIRR from irregular mutual fund investment dates, amounts and redemptions against today's value.",
+    "category": "Finance Calculators",
+    "icon": "chart-no-axes-combined",
+    "iconColor": "text-(--primary)"
+  },
   "mysql-visualization-tools": {
     "name": "MySQL Visualization Tools",
     "description": "Visualize MySQL schemas, ER diagrams, relationships, query references, and export browser-generated diagrams in real time.",
@@ -9464,6 +10001,13 @@ export const toolMetaMap = {
     "icon": "hand",
     "iconColor": "text-pink-600"
   },
+  "no-claim-bonus-calculator": {
+    "name": "No Claim Bonus Calculator",
+    "description": "NCB percentage and premium saved after consecutive claim-free years, with next-year slab, add-ons and GST on your motor renewal.",
+    "category": "Finance Calculators",
+    "icon": "badge-percent",
+    "iconColor": "text-(--primary)"
+  },
   "nonogram": {
     "name": "Nonogram Puzzle",
     "description": "Solve nonogram picture-logic puzzles online free — 5x5, 10x10 and 15x15 grids with fill and mark modes.",
@@ -9474,6 +10018,13 @@ export const toolMetaMap = {
     ],
     "icon": "grid-3x3",
     "iconColor": "text-sky-600"
+  },
+  "notice-period-buyout-calculator": {
+    "name": "Notice Period Buyout Calculator",
+    "description": "Work out the cost of buying out an unserved notice period from your salary components, leave adjustment and per-day basis.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "notice-period-calculator": {
     "name": "Notice Period Calculator",
@@ -9496,6 +10047,13 @@ export const toolMetaMap = {
     ],
     "icon": "shield",
     "iconColor": "text-teal-600"
+  },
+  "nps-tier-1-corpus-calculator": {
+    "name": "NPS Tier 1 Corpus Calculator",
+    "description": "Estimate your NPS Tier 1 corpus at 60, the mandatory annuity share and the expected monthly pension.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "number-guessing-game": {
     "name": "Number Guessing Game",
@@ -10183,6 +10741,20 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-violet-600"
   },
+  "percentage-increase-decrease-calculator": {
+    "name": "Percentage Increase Decrease Calculator",
+    "description": "Find the percentage change between two numbers, see whether it is an increase or decrease, and apply a percentage to any value.",
+    "category": "Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "percentage-of-total-calculator": {
+    "name": "Percentage of Total Calculator",
+    "description": "Find what percent one number is of another, plus reverse lookups for the missing part or the missing total.",
+    "category": "Calculators",
+    "icon": "pie-chart",
+    "iconColor": "text-(--primary)"
+  },
   "percentage-practice": {
     "name": "Percentage Practice",
     "description": "Master percentage calculations with interactive exercises covering discounts, increases, comparisons, and real-world word problems.",
@@ -10334,6 +10906,13 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "personal-loan-emi-calculator": {
+    "name": "Personal Loan EMI Calculator",
+    "description": "Personal loan EMI, total interest and true cost including processing fee, GST and the effective annual rate.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
   },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
@@ -10528,6 +11107,13 @@ export const toolMetaMap = {
     "icon": "bar-chart-2",
     "iconColor": "text-purple-600"
   },
+  "pomodoro-session-planner": {
+    "name": "Pomodoro Session Planner",
+    "description": "Plan focus sessions and breaks that fit an available time window, with a full clock-time schedule.",
+    "category": "Productivity",
+    "icon": "timer-reset",
+    "iconColor": "text-(--primary)"
+  },
   "pomodoro-study-timer": {
     "name": "Pomodoro Study Timer",
     "description": "Boost focus and productivity using customizable study and break intervals.",
@@ -10565,6 +11151,27 @@ export const toolMetaMap = {
     ],
     "icon": "chart-pie",
     "iconColor": "text-teal-600"
+  },
+  "portfolio-rebalancing-calculator": {
+    "name": "Portfolio Rebalancing Calculator",
+    "description": "Exact buy and sell amounts to bring each holding back to its target allocation, with or without selling.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "position-size-calculator": {
+    "name": "Position Size Calculator",
+    "description": "Number of shares to buy based on your capital, risk per trade and stop loss distance, with capital and leverage limits applied.",
+    "category": "Finance Calculators",
+    "icon": "scaling",
+    "iconColor": "text-(--primary)"
+  },
+  "post-office-mis-calculator": {
+    "name": "Post Office MIS Calculator",
+    "description": "Calculate the monthly income from a Post Office Monthly Income Scheme deposit, with single and joint account limits and total interest.",
+    "category": "Finance Calculators",
+    "icon": "mailbox",
+    "iconColor": "text-(--primary)"
   },
   "post-office-scheme-calculator": {
     "name": "Post Office Scheme Calculator",
@@ -10636,6 +11243,13 @@ export const toolMetaMap = {
     ],
     "icon": "piggy-bank",
     "iconColor": "text-teal-600"
+  },
+  "ppf-maturity-calculator": {
+    "name": "PPF Maturity Calculator",
+    "description": "Work out your 15-year PPF maturity with yearly interest compounding, plus 5-year extension scenarios.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
   },
   "prayer-times-qibla": {
     "name": "Prayer Times & Qibla Direction",
@@ -10809,6 +11423,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "professional-tax-calculator": {
+    "name": "Professional Tax Calculator",
+    "description": "Find your state-wise monthly and annual professional tax deduction from current salary slabs across Indian states.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
   "profile-pic-bg-changer": {
     "name": "Profile Picture Background Changer",
     "description": "Change the background of your profile picture with AI-powered background removal and customizable backgrounds.",
@@ -10861,6 +11482,13 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-teal-500"
   },
+  "project-estimate-calculator": {
+    "name": "Project Estimate Calculator",
+    "description": "Estimate project cost and delivery timeline from task hours, hourly rate and a risk buffer.",
+    "category": "Productivity",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
   "projectile-motion-simulator": {
     "name": "Projectile Motion Simulator",
     "description": "Interactive physics simulator for projectile trajectories with real-time vectors, gravity presets, air resistance, and trajectory analytics.",
@@ -10901,6 +11529,27 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-indigo-600"
   },
+  "property-capital-gains-tax-calculator": {
+    "name": "Property Capital Gains Tax Calculator",
+    "description": "Long-term capital gains tax on property with CII indexation, the 12.5% vs 20% comparison and Section 54/54EC exemptions.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "proportion-solver": {
+    "name": "Proportion Solver",
+    "description": "Solve a/b = c/d for any missing value with full cross multiplication steps.",
+    "category": "Calculators",
+    "icon": "divide",
+    "iconColor": "text-(--primary)"
+  },
+  "protein-requirement-calculator": {
+    "name": "Protein Requirement Calculator",
+    "description": "Work out your daily protein target in grams from body weight, activity level and training goal, with a per-meal breakdown.",
+    "category": "Health Calculators",
+    "icon": "beef",
+    "iconColor": "text-(--primary)"
+  },
   "pulse-pressure-calculator": {
     "name": "Pulse Pressure Calculator",
     "description": "Calculate pulse pressure and assess cardiovascular health from blood pressure readings.",
@@ -10910,6 +11559,13 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-red-600"
+  },
+  "purchase-order-generator": {
+    "name": "Purchase Order Generator",
+    "description": "Build a printable purchase order with line items, GST, freight, delivery and payment terms.",
+    "category": "Generators",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "qr-generator": {
     "name": "QR Generator",
@@ -10974,6 +11630,13 @@ export const toolMetaMap = {
     ],
     "icon": "circle-help",
     "iconColor": "text-teal-600"
+  },
+  "quotation-generator": {
+    "name": "Quotation Generator",
+    "description": "Create client quotations with line items, per-item discounts, GST and a validity period.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
   },
   "quote-generator": {
     "name": "Quote Generator",
@@ -11174,6 +11837,16 @@ export const toolMetaMap = {
     "icon": "star",
     "iconColor": "text-purple-600"
   },
+  "ratio-calculator": {
+    "name": "Ratio Calculator",
+    "description": "Simplify ratios, solve for a missing term and split a total in any given ratio.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "divide",
+    "iconColor": "text-(--primary)"
+  },
   "raw-photo-developer": {
     "name": "RAW Photo Developer",
     "description": "RAW exposure, white balance aur JPEG export controls provide kare.",
@@ -11184,6 +11857,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "rd-maturity-calculator": {
+    "name": "Recurring Deposit Maturity Calculator",
+    "description": "Calculate RD maturity value and interest with quarterly compounding for any monthly instalment and tenure.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "reaction-diffusion-simulator": {
     "name": "Reaction Diffusion Simulator",
@@ -11416,6 +12096,13 @@ export const toolMetaMap = {
     ],
     "icon": "receipt-text",
     "iconColor": "text-teal-600"
+  },
+  "rent-receipt-generator-hra": {
+    "name": "Rent Receipt Generator for HRA",
+    "description": "Generate printable monthly rent receipts with landlord and PAN details for HRA claims.",
+    "category": "Generators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
   },
   "rent-vs-buy": {
     "name": "Rent vs Buy Calculator",
@@ -11671,6 +12358,13 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-amber-600"
   },
+  "rolling-returns-calculator": {
+    "name": "Rolling Returns Calculator",
+    "description": "Average, best and worst annualised returns across every overlapping window in a NAV or index series.",
+    "category": "Finance Calculators",
+    "icon": "repeat",
+    "iconColor": "text-(--primary)"
+  },
   "roman-numeral-converter": {
     "name": "Roman Numeral Converter",
     "description": "Convert numbers to Roman numerals and back with strict validation, place-value breakdowns, and symbol references.",
@@ -11865,6 +12559,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "salary-slip-generator": {
+    "name": "Salary Slip Generator",
+    "description": "Create a formatted salary slip with earnings, deductions, net pay and amount in words.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
   "salary-tax-calculator": {
     "name": "Salary Tax Calculator",
     "description": "Estimate your take-home salary after income tax, professional tax, and other deductions with detailed tax breakdown.",
@@ -11910,6 +12611,13 @@ export const toolMetaMap = {
     ],
     "icon": "message-circle",
     "iconColor": "text-indigo-600"
+  },
+  "savings-account-interest-calculator": {
+    "name": "Savings Account Interest Calculator",
+    "description": "Savings account interest on daily closing balance, credited quarterly, with a quarter-by-quarter breakdown.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "savings-challenge-tracker": {
     "name": "Savings Challenge Tracker",
@@ -12178,6 +12886,41 @@ export const toolMetaMap = {
     "icon": "file-pen-line",
     "iconColor": "text-primary"
   },
+  "section-24b-home-loan-interest-deduction": {
+    "name": "Section 24B Home Loan Interest Deduction",
+    "description": "Deductible home loan interest under Section 24(b) for self-occupied and let-out property, with the Rs 2 lakh cap.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
+  },
+  "section-44ada-calculator": {
+    "name": "Section 44ADA Calculator",
+    "description": "Presumptive income and tax for professionals under Section 44ADA, with turnover limit checks.",
+    "category": "Finance Calculators",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "section-80d-deduction-calculator": {
+    "name": "Section 80D Health Insurance Deduction Calculator",
+    "description": "Compute your Section 80D deduction for self, family, parents and senior citizens, including the preventive checkup cap.",
+    "category": "Finance Calculators",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
+  },
+  "section-80e-deduction-calculator": {
+    "name": "Section 80E Education Loan Interest Deduction",
+    "description": "Estimate the education loan interest you can deduct under Section 80E and track the 8-year eligibility window.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "section-87a-rebate-checker": {
+    "name": "Section 87A Rebate Checker",
+    "description": "Check whether your taxable income qualifies for the Section 87A rebate and how much tax it wipes out.",
+    "category": "Finance Calculators",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
+  },
   "security-headers-checker": {
     "name": "Security Headers Checker",
     "description": "Review pasted response headers for missing defensive controls.",
@@ -12188,6 +12931,20 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "senior-citizen-income-tax-calculator": {
+    "name": "Senior Citizen Income Tax Calculator",
+    "description": "Income tax for 60+ and 80+ residents with higher basic exemption limits, compared across old and new regimes.",
+    "category": "Finance Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "senior-citizen-savings-scheme-calculator": {
+    "name": "Senior Citizen Savings Scheme Calculator",
+    "description": "Work out SCSS quarterly interest payout, annual income, total interest and maturity value from your deposit at the current rate.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
   },
   "senior-device-permission-audit": {
     "name": "Senior Device Permission Audit",
@@ -12390,6 +13147,13 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-green-600"
   },
+  "simple-interest-calculator-detailed": {
+    "name": "Simple Interest Calculator Detailed",
+    "description": "Solve simple interest, principal, rate or time from the other three, with a yearly table.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
   "sip-calculator": {
     "name": "SIP Calculator",
     "description": "Estimate SIP maturity value, invested amount, and wealth gain with annual step-up.",
@@ -12475,6 +13239,13 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-indigo-600"
+  },
+  "sleep-cycle-calculator": {
+    "name": "Sleep Cycle Calculator",
+    "description": "Find the best bedtimes or wake-up times based on 90-minute sleep cycles and how long you take to fall asleep.",
+    "category": "Health Calculators",
+    "icon": "moon",
+    "iconColor": "text-(--primary)"
   },
   "sleep-debt-calculator": {
     "name": "Sleep Debt Calculator",
@@ -12652,6 +13423,13 @@ export const toolMetaMap = {
     ],
     "icon": "share-2",
     "iconColor": "text-blue-500"
+  },
+  "society-maintenance-split-calculator": {
+    "name": "Society Maintenance Split Calculator",
+    "description": "Split a housing society's monthly maintenance budget across flats by carpet area, equally, or on a hybrid basis.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
   },
   "society-maintenance-splitter": {
     "name": "Society Maintenance Charge Splitter",
@@ -12895,6 +13673,13 @@ export const toolMetaMap = {
     "icon": "file-signature",
     "iconColor": "text-teal-600"
   },
+  "standard-deduction-impact-calculator": {
+    "name": "Standard Deduction Impact Calculator",
+    "description": "See how the salaried standard deduction lowers your taxable income and final tax in the old and new regimes.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
   "standard-deviation-calculator": {
     "name": "Standard Deviation Calculator",
     "description": "Population or sample standard deviation, variance and mean.",
@@ -12959,6 +13744,20 @@ export const toolMetaMap = {
     ],
     "icon": "candlestick-chart",
     "iconColor": "text-teal-600"
+  },
+  "stock-average-price-calculator": {
+    "name": "Stock Average Price Calculator",
+    "description": "Average buy price across multiple purchases of the same stock, with total quantity, invested amount and averaging-down planner.",
+    "category": "Finance Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "stop-loss-target-calculator": {
+    "name": "Stop Loss and Target Calculator",
+    "description": "Stop loss and target prices from your entry price and risk-reward ratio, for long or short trades, with per-trade risk and reward amounts.",
+    "category": "Finance Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
   },
   "stopwatch": {
     "name": "Online Stopwatch",
@@ -13218,6 +14017,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-emerald-600"
   },
+  "swp-withdrawal-calculator": {
+    "name": "SWP Withdrawal Calculator",
+    "description": "See how long a mutual fund corpus lasts with monthly systematic withdrawals, step-ups, and expected returns.",
+    "category": "Finance Calculators",
+    "icon": "banknote-arrow-down",
+    "iconColor": "text-(--primary)"
+  },
   "symptom-checker": {
     "name": "Symptom Checker",
     "description": "Check your symptoms and get an initial health assessment and recommendation.",
@@ -13263,6 +14069,13 @@ export const toolMetaMap = {
     "icon": "bird",
     "iconColor": "text-cyan-600"
   },
+  "tdee-calculator": {
+    "name": "TDEE Calculator",
+    "description": "Find your total daily energy expenditure from BMR and activity level, plus calorie targets for cutting, maintaining or bulking.",
+    "category": "Health Calculators",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
   "tds-calculator-by-section": {
     "name": "TDS Calculator by Section",
     "description": "Selected section, threshold aur rate se TDS calculate kare.",
@@ -13277,6 +14090,27 @@ export const toolMetaMap = {
     ],
     "icon": "badge-indian-rupee",
     "iconColor": "text-primary"
+  },
+  "tds-on-fd-interest-calculator": {
+    "name": "TDS on FD Interest Calculator",
+    "description": "TDS deducted on fixed deposit interest under Section 194A, with Form 15G and 15H eligibility checks and net payout.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-on-salary-calculator": {
+    "name": "TDS on Salary Calculator",
+    "description": "Work out monthly TDS on salary from annual pay, deductions and your chosen tax regime.",
+    "category": "Finance Calculators",
+    "icon": "banknote",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-rate-finder-by-section": {
+    "name": "TDS Rate Finder by Section",
+    "description": "Find the TDS rate and threshold for every common Income Tax section and calculate tax deducted plus net payout instantly.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "team-generator": {
     "name": "Team Generator",
@@ -13297,6 +14131,13 @@ export const toolMetaMap = {
     ],
     "icon": "thermometer",
     "iconColor": "text-red-600"
+  },
+  "term-insurance-cover-calculator": {
+    "name": "Term Insurance Cover Calculator",
+    "description": "Work out the life cover your family needs from income replacement, loans, dependants' goals and the assets and policies you already hold.",
+    "category": "Finance Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
   },
   "text-behind-image": {
     "name": "Text Behind Image",
@@ -13412,6 +14253,13 @@ export const toolMetaMap = {
     ],
     "icon": "square",
     "iconColor": "text-indigo-500"
+  },
+  "text-statistics-analyzer": {
+    "name": "Text Statistics Analyzer",
+    "description": "Count words, sentences, paragraphs and syllables, then score readability grade for any text.",
+    "category": "Text & Writing",
+    "icon": "bar-chart-3",
+    "iconColor": "text-(--primary)"
   },
   "text-summarizer": {
     "name": "Text Summarizer",
@@ -13586,6 +14434,13 @@ export const toolMetaMap = {
     "icon": "calendar-clock",
     "iconColor": "text-cyan-500"
   },
+  "time-duration-calculator": {
+    "name": "Time Duration Calculator",
+    "description": "Work out the duration between two times in hours, minutes and decimal hours, with break deduction.",
+    "category": "Calculators",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "time-zone-explorer": {
     "name": "Time Zone Explorer",
     "description": "Explore world time zones in real-time — compare times across cities, convert between zones, and see live clocks with DST information.",
@@ -13603,6 +14458,13 @@ export const toolMetaMap = {
     "icon": "milestone",
     "iconColor": "text-emerald-600"
   },
+  "timesheet-hours-calculator": {
+    "name": "Timesheet Hours Calculator",
+    "description": "Add up weekly worked hours from daily clock in and out times, with break deduction and overtime split.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
   "tip-calculator": {
     "name": "Tip Calculator",
     "description": "Work out the tip, total, and per-person share in seconds, with round-up splits and tipping norms for India, the US, and Europe.",
@@ -13616,6 +14478,13 @@ export const toolMetaMap = {
     ],
     "icon": "hand-coins",
     "iconColor": "text-teal-600"
+  },
+  "tip-split-calculator": {
+    "name": "Tip and Bill Split Calculator",
+    "description": "Work out the tip and each person's share of a bill, with flexible rounding options.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "tls-configuration-auditor": {
     "name": "TLS Configuration Auditor",
@@ -13780,6 +14649,13 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-pink-500"
   },
+  "two-wheeler-loan-calculator": {
+    "name": "Two Wheeler Loan Calculator",
+    "description": "Bike and scooter loan EMI from on-road price, down payment and tenure, with loan-to-value and affordability checks.",
+    "category": "Finance Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
   "typing-master": {
     "name": "Typing Master Tool",
     "description": "Improve typing speed and accuracy with interactive practice.",
@@ -13901,6 +14777,13 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-orange-700"
   },
+  "unit-price-comparison-calculator": {
+    "name": "Unit Price Comparison Calculator",
+    "description": "Compare price per unit across different pack sizes and brands to find which option is genuinely cheaper.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "universal-pii-ai-redactor": {
     "name": "Universal PII & AI Input Redactor",
     "description": "Detect and redact personal data, financial identifiers, and secrets locally before sharing text with AI or another person.",
@@ -13950,6 +14833,13 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-primary"
   },
+  "upi-qr-code-generator": {
+    "name": "UPI QR Code Generator",
+    "description": "Create a UPI payment QR code from a VPA, payee name and optional fixed amount, note and reference.",
+    "category": "Generators",
+    "icon": "qr-code",
+    "iconColor": "text-(--primary)"
+  },
   "upside-down-text": {
     "name": "Upside Down Text",
     "description": "Flip your text upside down and backwards using mathematical Unicode character mappings for creative styling.",
@@ -13986,6 +14876,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "link-2",
     "iconColor": "text-blue-600"
+  },
+  "url-slug-generator": {
+    "name": "URL Slug Generator",
+    "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits.",
+    "category": "Text & Writing",
+    "icon": "link-2",
+    "iconColor": "text-(--primary)"
   },
   "user-info-finder": {
     "name": "User Info Finder",
@@ -14112,6 +15009,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-check-2",
     "iconColor": "text-primary"
+  },
+  "vehicle-insurance-idv-calculator": {
+    "name": "Vehicle Insurance IDV Calculator",
+    "description": "Insured Declared Value from ex-showroom price and vehicle age using the IRDAI depreciation grid, plus accessories and an indicative OD premium.",
+    "category": "Finance Calculators",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
   },
   "vendor-data-processing-inventory": {
     "name": "Vendor Data Processing Inventory",
@@ -14407,6 +15311,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },
+  "waist-to-hip-ratio-calculator": {
+    "name": "Waist to Hip Ratio Calculator",
+    "description": "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape.",
+    "category": "Health Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
   "warranty-receipt-vault": {
     "name": "Warranty & Receipt Vault",
     "description": "Track receipts, serial numbers, warranty terms, and expiry dates.",
@@ -14649,6 +15560,16 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "weighted-average-calculator": {
+    "name": "Weighted Average Calculator",
+    "description": "Compute a weighted mean from value and weight pairs with a live running total.",
+    "category": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "whack-a-mole": {
     "name": "Whack-a-Mole",
     "description": "Whack moles as they pop up from their holes. Test your speed and reflexes in this classic arcade game.",
@@ -14875,6 +15796,13 @@ export const toolMetaMap = {
     ],
     "icon": "activity",
     "iconColor": "text-primary"
+  },
+  "working-days-calculator": {
+    "name": "Working Days Calculator",
+    "description": "Count business days between two dates, excluding weekends and any custom holidays you add.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
   },
   "working-memory-trainer": {
     "name": "Working Memory Trainer",

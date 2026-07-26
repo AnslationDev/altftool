@@ -11813,7 +11813,3453 @@ export const toolContentOverrides = {
         "No. Every check runs locally in your browser via fixed JavaScript rules, and your history is stored only in this browser's local storage."
       ]
     ]
+  },
+  "marks-percentage-calculator": {
+    "intro": "Marks Percentage Calculator turns your subject-wise scores into an aggregate percentage in one step: it adds up every subject's obtained marks, adds up every subject's maximum marks, and divides one by the other. It also shows each subject's individual percentage, flags any subject below your pass mark, and maps the aggregate onto CBSE-style A1-to-E grade bands. Built for school and college students checking board results, semester marksheets, or internal assessments.",
+    "useCases": [
+      "Work out your CBSE or state board aggregate the moment the marksheet is out, before the school publishes the percentage.",
+      "Check a five-subject or six-subject total where papers carry different maximum marks (say 100, 80 and 50).",
+      "Spot which subjects fell below the 33% pass mark and need a re-exam or improvement paper."
+    ],
+    "benefits": [
+      [
+        "Handles unequal maximums",
+        "Subjects out of 80, 50 or 100 are combined correctly because totals are summed before dividing."
+      ],
+      [
+        "Subject-wise breakdown",
+        "Every subject gets its own percentage and progress bar, so weak papers are obvious at a glance."
+      ],
+      [
+        "Adjustable pass mark",
+        "Set 33%, 35% or 40% to match your board or university rule and see failing subjects highlighted."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is marks percentage calculated?",
+        "Percentage = (total marks obtained / total maximum marks) x 100. Add every subject's obtained marks first, then every subject's maximum, and divide — do not average the individual subject percentages unless all papers carry the same maximum."
+      ],
+      [
+        "Why is averaging subject percentages sometimes wrong?",
+        "If one paper is out of 50 and another out of 100, averaging their percentages gives them equal weight. Summing marks first weights each paper by its actual maximum, which is how boards compute the aggregate."
+      ],
+      [
+        "What is the pass mark in Indian boards?",
+        "CBSE requires 33% in each subject (theory plus practical combined, with a separate 33% in each component where applicable). Many state boards and universities use 35% or 40%, so set the pass mark field to match your own rulebook."
+      ],
+      [
+        "Does the calculator include additional or optional subjects?",
+        "Only if you add them as rows. Many boards compute the aggregate on the best five subjects and treat the sixth as optional, so add exactly the subjects your board counts."
+      ]
+    ]
+  },
+  "gst-reverse-calculator": {
+    "intro": "GST Reverse Calculator works backwards from a GST-inclusive amount to show the taxable value and the GST hidden inside it. Pick any Indian slab — 0%, 0.25%, 3%, 5%, 12%, 18% or 28% — or type a custom rate, and it splits the tax into CGST plus SGST for intra-state supply or a single IGST line for inter-state supply. Useful for anyone who has an MRP or a paid amount but needs the pre-tax figure for books, invoices or input tax credit.",
+    "useCases": [
+      "Split a GST-inclusive MRP or restaurant bill into base price and tax before recording it in your books.",
+      "Work out the taxable value to enter on a GSTR-1 line when a customer paid you a round inclusive figure.",
+      "Check the CGST/SGST halves on an intra-state purchase invoice against what the supplier charged."
+    ],
+    "benefits": [
+      [
+        "Every slab covered",
+        "All notified GST rates plus a custom-rate box for cess-style or legacy percentages."
+      ],
+      [
+        "Correct CGST/SGST split",
+        "Intra-state tax is halved to the paise with the rounding difference kept in the SGST line so the total always ties back."
+      ],
+      [
+        "Side-by-side slab table",
+        "See what the same inclusive amount would break into at every other rate, so a wrong slab is obvious."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do you calculate GST backwards from an inclusive amount?",
+        "Divide the inclusive amount by (1 + rate/100) to get the taxable value, then subtract that from the total to get the GST. For example, ₹1,180 at 18% gives a base of ₹1,000 and GST of ₹180."
+      ],
+      [
+        "When is it CGST + SGST and when is it IGST?",
+        "Intra-state supplies (supplier and place of supply in the same state) carry CGST and SGST at half the rate each. Inter-state supplies carry IGST at the full rate."
+      ],
+      [
+        "What are the current GST slabs in India?",
+        "The main slabs are 0%, 5%, 12%, 18% and 28%, with special rates of 0.25% on rough diamonds and 3% on gold and precious metals. Some goods also attract compensation cess over and above the slab."
+      ],
+      [
+        "Is the base value the same as the assessable value on an invoice?",
+        "Usually yes for a simple supply, but discounts, freight and packing charges form part of the taxable value under Section 15 of the CGST Act. This tool is informational — check the invoice composition before filing."
+      ]
+    ]
+  },
+  "inflation-adjusted-return-calculator": {
+    "intro": "Inflation Adjusted Return Calculator converts a headline (nominal) return into the real return you actually keep once inflation is stripped out, using the exact Fisher equation rather than the rough 'return minus inflation' shortcut. It also shows what your investment is worth in today's money after any number of years, and optionally accounts for tax on returns. It's for investors comparing FDs, debt funds and equity on a like-for-like basis.",
+    "useCases": [
+      "Check whether a 7% fixed deposit actually beats 6% inflation once 30% tax is applied.",
+      "Compare a 12% equity return against inflation over a 10-year holding period in real terms.",
+      "Show a client or family member how much purchasing power a savings account loses each year."
+    ],
+    "benefits": [
+      [
+        "Exact Fisher maths",
+        "Uses (1 + nominal) ÷ (1 + inflation) − 1 instead of simple subtraction, which overstates real returns."
+      ],
+      [
+        "Today's-money view",
+        "Shows the future corpus restated in current rupees so the number means something."
+      ],
+      [
+        "Optional tax input",
+        "Apply a tax rate on returns to compare taxable and tax-free instruments fairly."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the difference between nominal and real return?",
+        "Nominal return is the headline percentage an investment quotes. Real return is what's left after inflation, and it's the only figure that tells you whether your purchasing power actually grew."
+      ],
+      [
+        "Why not just subtract inflation from the return?",
+        "Subtraction is a quick approximation that overstates the real return, and the gap widens as rates rise. At 12% return and 6% inflation, subtraction gives 6% but the exact real return is about 5.66%."
+      ],
+      [
+        "Can the real return be negative?",
+        "Yes. Any time inflation runs higher than your post-tax return — common with savings accounts and low-yield deposits — the real return is negative and your money buys less over time."
+      ],
+      [
+        "What inflation rate should I use?",
+        "Many Indian investors plan with 6% as a long-run CPI assumption, but personal inflation for education, healthcare or rent is often higher. Run the calculation at a couple of rates to see the range."
+      ]
+    ]
+  },
+  "invoice-number-generator": {
+    "intro": "Invoice Number Generator builds a full invoice numbering series in one pass: you pick a prefix, a date segment, a separator and a zero-padded counter, and it generates every number in the batch. Choose whether the counter runs straight through or resets each month, each calendar year, or each Indian financial year (April to March). It is built for freelancers, small businesses and accountants who need a numbering scheme that stays unique, sequential and audit-friendly.",
+    "useCases": [
+      "Set up next year's invoice series before the financial year starts on 1 April, using an FY2026-27 style prefix.",
+      "Pre-fill an invoice register or accounting spreadsheet with 100 reserved numbers so no two team members issue the same one.",
+      "Switch from a messy ad-hoc numbering habit to a documented scheme like INV-2026-04-0001 and export the CSV as a reference."
+    ],
+    "benefits": [
+      [
+        "Four reset rules",
+        "Run one continuous sequence, or reset the counter monthly, per calendar year, or per Indian financial year."
+      ],
+      [
+        "Duplicate detection",
+        "The tool warns you when a scheme would repeat a number or overflow the padding width mid-series."
+      ],
+      [
+        "Copy or export the batch",
+        "Copy the whole list to the clipboard, or download a CSV with the number, sequence value and period date."
+      ]
+    ],
+    "faqs": [
+      [
+        "Does GST law require invoice numbers to be sequential?",
+        "Under the CGST Rules a tax invoice needs a consecutive serial number, unique for a financial year, up to 16 characters using letters, digits, hyphens and slashes. This tool keeps numbers within those characters, but treat this as general information and confirm with your accountant."
+      ],
+      [
+        "Should I reset invoice numbers every year?",
+        "Many Indian businesses reset the counter at the start of each financial year and put the FY in the number, which keeps each year's series self-contained. A single never-resetting sequence is equally valid as long as numbers stay unique."
+      ],
+      [
+        "Why is zero padding useful?",
+        "Padding to a fixed width (0001 instead of 1) keeps invoice numbers the same length, so they sort correctly in spreadsheets and file names."
+      ],
+      [
+        "Are the generated numbers saved anywhere?",
+        "No. Everything is generated in your browser and nothing is uploaded, so you keep full control of the list you export."
+      ]
+    ]
+  },
+  "electricity-bill-calculator": {
+    "intro": "Electricity Bill Calculator turns your appliance list into a realistic monthly bill: enter each device's wattage, how many hours a day it runs and how many you own, then add your per-unit tariff, fixed charges and electricity duty. It reports total units (kWh), the rupee cost, the per-day average and a ranked view of which appliances are actually driving the bill. Useful for households, PGs, shops and small offices trying to find where the money goes before the next meter reading.",
+    "useCases": [
+      "Work out how much an air conditioner running 6 hours a night actually adds to the monthly bill.",
+      "Compare the running cost of an old 250 W refrigerator against a 5-star model before buying.",
+      "Split a shared flat or PG bill fairly by calculating each room's appliance load.",
+      "Sanity-check an unusually high bill by estimating what your appliances should have consumed."
+    ],
+    "benefits": [
+      [
+        "Per-appliance breakdown",
+        "See units and rupees for every device, plus a ranked share bar showing the biggest power users."
+      ],
+      [
+        "Real bill structure",
+        "Energy charges, fixed charges and tax or electricity duty are calculated separately, the way discoms bill them."
+      ],
+      [
+        "Daily and yearly view",
+        "The same inputs give you cost per day and projected annual spend, so savings decisions are easier to judge."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is an electricity unit calculated?",
+        "One unit is one kilowatt-hour: watts x hours of use / 1000. A 1500 W air conditioner running 6 hours uses 9 units a day, or about 270 units in a 30-day month."
+      ],
+      [
+        "My state uses slab tariffs. Can I still use this?",
+        "Yes, but enter your effective average rate rather than the first-slab rate. Divide the energy-charge amount on your last bill by the units consumed to get it, since slab rates step up as consumption rises."
+      ],
+      [
+        "Does a device use power when it is switched off?",
+        "Many do. Set-top boxes, chargers, TVs and inverters draw standby power of roughly 1-10 W. You can model this by adding a low-wattage entry running close to 24 hours a day."
+      ],
+      [
+        "Why is my real bill different from this estimate?",
+        "Actual bills include slab changes, fuel surcharge adjustments, meter-reading cycles that are not exactly 30 days, and appliances cycling on and off rather than running continuously. Treat the result as a close informational estimate, not a billed amount."
+      ]
+    ]
+  },
+  "sleep-cycle-calculator": {
+    "intro": "The Sleep Cycle Calculator turns a single alarm time into a short list of sensible bedtimes — or turns tonight's bedtime into the wake-up times that land between cycles rather than in the middle of one. It counts sleep in roughly 90-minute cycles and adds the time you personally take to drift off, so the schedule reflects lights-out, not just time in bed. Useful for shift workers, students planning an early start, and anyone who wakes up groggy despite sleeping enough hours.",
+    "useCases": [
+      "You have a 6:30 am flight and want to know the latest bedtime that still gives you five complete cycles.",
+      "You are already in bed at 12:40 am and need the wake-up times that will not leave you groggy.",
+      "You take 30 minutes to fall asleep and want a schedule that accounts for that instead of assuming instant sleep."
+    ],
+    "benefits": [
+      [
+        "Counts lights-out, not bedtime",
+        "A separate sleep-latency field means the plan accounts for the 15-30 minutes most people spend falling asleep."
+      ],
+      [
+        "Both directions in one tool",
+        "Switch between working backwards from an alarm and forwards from a bedtime without re-entering anything."
+      ],
+      [
+        "Adjustable cycle length",
+        "Cycles are not exactly 90 minutes for everyone, so you can set anything from 60 to 120 minutes."
+      ]
+    ],
+    "faqs": [
+      [
+        "How long is one sleep cycle?",
+        "About 90 minutes on average for adults, though real cycles range from roughly 70 to 120 minutes and tend to lengthen later in the night. The calculator uses 90 minutes by default and lets you change it."
+      ],
+      [
+        "Why does waking between cycles feel better?",
+        "Late in a cycle you are usually in lighter sleep, so an alarm is less jarring than one that interrupts deep slow-wave sleep. This is why five full cycles can feel better than an awkward eight hours."
+      ],
+      [
+        "How many cycles should I aim for?",
+        "Five to six cycles, or roughly 7.5 to 9 hours, matches the standard adult sleep recommendation. Four cycles is a short night and three is a fallback, not a habit."
+      ],
+      [
+        "Is this medical advice?",
+        "No. It is a scheduling aid based on average cycle length. If you regularly wake unrefreshed, struggle to fall asleep, or suspect a sleep disorder, speak to a doctor."
+      ]
+    ]
+  },
+  "senior-citizen-income-tax-calculator": {
+    "intro": "Senior Citizen Income Tax Calculator works out income tax for FY 2025-26 (AY 2026-27) using the higher basic exemption limits that resident senior citizens get: Rs 3,00,000 for ages 60-79 and Rs 5,00,000 for ages 80 and above. It calculates the old regime with your 80C, 80D and 80TTB deductions alongside the new regime, applies the Section 87A rebate, surcharge with marginal relief and 4% cess, then shows which regime costs less. Built for pensioners, retirees and the families who file returns on their behalf.",
+    "useCases": [
+      "A 68-year-old pensioner checking whether the Rs 3,00,000 exemption plus 80TTB keeps the old regime cheaper than the new one.",
+      "An 82-year-old super senior citizen confirming that the Rs 5,00,000 basic exemption wipes out tax on modest pension and FD interest.",
+      "A family member estimating advance tax or Form 15H eligibility for a retired parent before the quarterly due date."
+    ],
+    "benefits": [
+      [
+        "Age-aware exemption limits",
+        "Switches between Rs 2.5L, Rs 3L and Rs 5L basic exemption automatically, which generic calculators usually ignore."
+      ],
+      [
+        "Both regimes side by side",
+        "Shows old-regime tax with deductions next to new-regime tax on the Rs 4L/8L/12L slabs, plus the rupee saving."
+      ],
+      [
+        "Full statutory build-up",
+        "Includes the Section 87A rebate with marginal relief, surcharge relief above Rs 50 lakh, and 4% health and education cess."
+      ]
+    ],
+    "faqs": [
+      [
+        "Do senior citizens get a higher exemption under the new tax regime?",
+        "No. The higher limits of Rs 3,00,000 (60-79) and Rs 5,00,000 (80+) apply only under the old regime. Under the new regime everyone gets the same Rs 4,00,000 basic exemption for FY 2025-26."
+      ],
+      [
+        "Is pension income eligible for the standard deduction?",
+        "Yes. Pension received from a former employer is taxed as salary, so the standard deduction of Rs 50,000 (old regime) or Rs 75,000 (new regime) applies. Family pension has a separate, smaller deduction."
+      ],
+      [
+        "Do senior citizens have to pay advance tax?",
+        "Resident senior citizens aged 60 or above with no income from business or profession are exempt from advance tax and can pay the balance as self-assessment tax before filing."
+      ],
+      [
+        "Is this calculator official tax advice?",
+        "No. It is an informational estimate based on published slab rates and limits for FY 2025-26, and it excludes special-rate income such as capital gains. Confirm your final liability with the Income Tax Department or a qualified tax professional."
+      ]
+    ]
+  },
+  "time-duration-calculator": {
+    "intro": "Time Duration Calculator measures the exact gap between two clock times and returns it three ways: hours and minutes, decimal hours, and total minutes. It handles overnight periods automatically, deducts unpaid breaks, and can round to the nearest 5, 6, 15 or 30 minutes — the increments payroll and billing systems actually use. Useful for shift workers, freelancers filling timesheets, and anyone converting 8h 45m into 8.75 hours.",
+    "useCases": [
+      "Convert a 09:15 to 17:40 shift with a 30-minute lunch into decimal hours for a payroll form.",
+      "Work out paid hours for a night shift that starts at 22:00 and finishes at 06:00 the next morning.",
+      "Check how long a client call or study block actually ran before logging it against a project."
+    ],
+    "benefits": [
+      [
+        "Decimal hours instantly",
+        "See 8h 45m as 8.75 hours, the format most payroll and invoicing systems expect."
+      ],
+      [
+        "Overnight aware",
+        "If the end time is earlier than the start time it is treated as the next day, so night shifts add up correctly."
+      ],
+      [
+        "Payroll rounding built in",
+        "Round to the nearest 5, 6, 15 or 30 minutes and still see the exact unrounded duration."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I convert minutes to decimal hours?",
+        "Divide the minutes by 60. So 45 minutes is 45 / 60 = 0.75, making 8h 45m equal to 8.75 decimal hours. The calculator does this for you and shows both formats side by side."
+      ],
+      [
+        "How does the calculator handle a shift that crosses midnight?",
+        "If the end time is the same as or earlier than the start time and no extra days are set, it adds 24 hours. A 22:00 to 06:00 shift is therefore counted as 8 hours, not a negative value."
+      ],
+      [
+        "Should I deduct my lunch break from worked hours?",
+        "That depends on your contract. Unpaid meal breaks are normally deducted from paid time, while short paid rest breaks are not. Enter only the unpaid minutes in the break field."
+      ],
+      [
+        "Why do employers round time to 6 or 15 minutes?",
+        "Six minutes equals 0.1 of an hour and 15 minutes equals 0.25, so both convert to clean decimal values on a payslip or invoice. This tool offers both, plus 5 and 30 minute rounding, and always shows the exact figure too."
+      ]
+    ]
+  },
+  "nps-tier-1-corpus-calculator": {
+    "intro": "NPS Tier 1 Corpus Calculator projects what your National Pension System retirement account could be worth at exit, using your monthly contribution, an optional annual step-up, the years left to retirement and an expected market-linked return. It then splits that corpus the way the scheme actually requires — at least 40% must buy an annuity, up to 60% can be taken as a tax-free lump sum — and converts the annuity portion into an expected monthly pension. It is built for salaried and self-employed subscribers who want a realistic picture of both the lump sum and the income NPS will produce.",
+    "useCases": [
+      "Check whether a Rs 10,000 monthly NPS contribution started at 30 will fund the pension you want at 60.",
+      "Compare a flat contribution against a 10% annual step-up tied to your yearly salary hike.",
+      "See how choosing a 40%, 60% or 100% annuity share changes the lump sum versus the monthly pension you receive."
+    ],
+    "benefits": [
+      [
+        "Follows real NPS exit rules",
+        "Enforces the 40% minimum annuity share and shows the withdrawable balance separately."
+      ],
+      [
+        "Step-up aware",
+        "Grows your contribution every 12 months so the projection matches how salaries actually rise."
+      ],
+      [
+        "Pension, not just corpus",
+        "Converts the annuity portion into an expected monthly and annual pension at your chosen annuity rate."
+      ]
+    ],
+    "faqs": [
+      [
+        "How much of my NPS corpus must go into an annuity?",
+        "On exit at superannuation, at least 40% of the Tier 1 corpus must be used to buy an annuity from an IRDAI-registered provider. If the total corpus is Rs 5 lakh or less, you may withdraw the entire amount instead."
+      ],
+      [
+        "Is the NPS lump sum taxable?",
+        "The lump sum of up to 60% withdrawn at superannuation is exempt under Section 10(12A). The annuity income you receive later is taxed as income in the year of receipt. This is informational — confirm with a tax adviser for your case."
+      ],
+      [
+        "What return should I assume for NPS?",
+        "NPS is market-linked with no guaranteed return. Long-run blended returns have commonly been modelled in the 8% to 11% range depending on your equity (Scheme E) allocation, so try a conservative and an optimistic figure."
+      ],
+      [
+        "What tax deduction do NPS contributions get?",
+        "Under the old regime, employee contributions count towards the Rs 1.5 lakh limit via Section 80CCD(1), with an additional Rs 50,000 available under Section 80CCD(1B). Employer contributions are deductible under 80CCD(2) in both regimes, subject to the prescribed salary limits."
+      ]
+    ]
+  },
+  "proportion-solver": {
+      intro:
+        "Proportion Solver finds the missing term in a / b = c / d. Pick which of the four values is unknown, type the other three, and the tool cross multiplies to isolate it while printing every algebra step. It also reports both ratios as decimals, the simplified whole-number ratio and the scale factor between the two sides — handy for students checking homework and for anyone scaling a recipe, a map distance or a unit price.",
+      useCases: [
+        "Scale a recipe: 2 cups of flour serves 5 people, so how much flour serves 8?",
+        "Convert a map measurement at 1:250 scale into the real distance on the ground.",
+        "Work out unit pricing — if 3 items cost Rs 149, what should 7 items cost at the same rate?"
+      ],
+      benefits: [
+        ["Solves any position", "Leave a, b, c or d unknown and the tool rearranges the equation for that term."],
+        ["Shows the working", "Every cross-multiplication step is listed, so you can copy it into homework or a worksheet."],
+        ["Catches bad inputs", "Divide-by-zero cases are explained in plain language instead of printing NaN or Infinity."]
+      ],
+      faqs: [
+        [
+          "What is cross multiplication?",
+          "For a / b = c / d, multiplying both sides by b and by d gives a x d = b x c. You then divide by whichever known term sits beside the unknown to isolate it."
+        ],
+        [
+          "Why does it say it cannot solve for my term?",
+          "Isolating each term requires dividing by one specific known value. If that value is 0 the division is undefined, so the tool names the term that must be non-zero."
+        ],
+        [
+          "Can I use decimals and negative numbers?",
+          "Yes, any finite decimal or negative value works. The simplified whole-number ratio only appears when both left-hand terms are integers."
+        ],
+        [
+          "Is a proportion the same as a ratio?",
+          "A ratio compares two quantities (a to b). A proportion is the statement that two ratios are equal, which is exactly what this tool solves."
+        ]
+      ]
+    },
+  "tdee-calculator": {
+    "intro": "TDEE Calculator estimates how many calories your body burns in a full day: it first works out your basal metabolic rate with Mifflin-St Jeor, Harris-Benedict or Katch-McArdle, then multiplies it by an activity factor from 1.2 (desk-bound) to 1.9 (physical job or twice-daily training). The result is your maintenance intake, alongside cut, recomposition and lean-bulk targets built from 250, 500 and 1000 kcal daily adjustments. It's for anyone setting a calorie number before they start tracking food.",
+    "useCases": [
+      "Set a starting calorie number before beginning a fat-loss phase, instead of guessing at '1,500 a day'.",
+      "Work out how much more you need to eat on training days versus rest days by switching the activity factor.",
+      "Compare Mifflin-St Jeor against Katch-McArdle once you have a DEXA or calliper body-fat reading."
+    ],
+    "benefits": [
+      [
+        "Three BMR equations",
+        "Mifflin-St Jeor for general use, revised Harris-Benedict for comparison, and Katch-McArdle when you know your body fat."
+      ],
+      [
+        "Every goal side by side",
+        "See aggressive cut through lean bulk at once, so you can pick a deficit you'll actually stick to."
+      ],
+      [
+        "Safety floor built in",
+        "Targets are never shown below 1,500 kcal for men or 1,200 for women, with a clear warning when the floor kicks in."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the difference between BMR and TDEE?",
+        "BMR is what you would burn lying still all day — breathing, circulation, cell repair. TDEE is BMR multiplied by an activity factor, so it also covers walking, work, training and digesting food."
+      ],
+      [
+        "Which activity level should I choose?",
+        "Most people overestimate. If you train 3-4 times a week but sit for work, 'moderately active' (1.55) is usually closer than 'very active'. Pick the lower option if you're unsure and adjust after two weeks of weight data."
+      ],
+      [
+        "How accurate is a TDEE calculation?",
+        "Prediction equations are typically within about 10-15% for most people, but individual metabolism, NEAT and body composition vary. Treat the number as a starting point and correct it against your real weight trend."
+      ],
+      [
+        "How big a calorie deficit is sensible?",
+        "A deficit of roughly 500 kcal a day corresponds to about 0.5 kg of weight loss per week, which most guidance considers a sustainable rate. This tool is informational — talk to a doctor or dietitian before large deficits or if you have a medical condition."
+      ]
+    ]
+  },
+  "swp-withdrawal-calculator": {
+    "intro": "SWP Withdrawal Calculator shows how long a mutual fund corpus can fund a Systematic Withdrawal Plan once you fix the monthly payout and an expected rate of return. It simulates every month — growth first, then the withdrawal — so you see the exact number of payouts, the total cash taken out, and whatever balance survives. It is built for retirees, FIRE planners and anyone converting a lumpsum into a monthly income.",
+    "useCases": [
+      "Check whether a Rs 50 lakh retirement corpus can pay Rs 30,000 a month for 25 years.",
+      "Add a 5-8% annual step-up to keep withdrawals in line with inflation and see how much sooner the corpus empties.",
+      "Find the maximum monthly withdrawal that never touches the principal at your assumed return."
+    ],
+    "benefits": [
+      [
+        "Month-by-month simulation",
+        "Growth and withdrawal are applied every month, not annualised, so the corpus life is realistic."
+      ],
+      [
+        "Inflation step-up built in",
+        "Increase the payout each year and instantly see the cost in corpus longevity."
+      ],
+      [
+        "Year-wise balance table",
+        "Track opening balance, cash withdrawn and closing balance for every year of the plan."
+      ]
+    ],
+    "faqs": [
+      [
+        "How long will my corpus last in an SWP?",
+        "It depends on the gap between your withdrawal and the growth on the remaining balance. If the monthly withdrawal is below corpus x (annual return / 12), the corpus theoretically lasts forever; above that it depletes, and this calculator counts the exact number of months."
+      ],
+      [
+        "How is SWP from an equity mutual fund taxed?",
+        "Each withdrawal is treated as a redemption, so only the gain portion of every unit sold is taxed as capital gains — short-term if held under 12 months for equity funds, long-term after that. This tool shows pre-tax figures, so check current rates or ask a tax adviser."
+      ],
+      [
+        "Is an SWP better than a fixed monthly interest payout?",
+        "An SWP returns your own units plus growth, so the payout is not guaranteed and the corpus can fall in bad markets, but it stays invested and is usually more tax-efficient than fully taxable interest income. It is informational guidance, not investment advice."
+      ],
+      [
+        "What return should I assume for an SWP?",
+        "Conservative planners use 6-8% for hybrid or debt-oriented funds and 9-11% for equity-heavy portfolios. Run the calculator at two or three rates to see how sensitive your plan is to a bad decade."
+      ]
+    ]
+  },
+  "car-loan-emi-calculator": {
+    "intro": "Car Loan EMI Calculator turns an on-road price, down payment, interest rate and tenure into the exact monthly EMI banks would charge, using the standard reducing-balance formula. It also shows total interest, the split between principal and interest, and a year-by-year amortisation schedule, plus one-time costs like the processing fee and upfront insurance so you see the real cash outgo. Useful for anyone comparing dealer finance quotes against a bank or NBFC offer before signing.",
+    "useCases": [
+      "Compare a 5-year loan at 9.5% from your bank with the dealer's in-house finance offer at a different rate and tenure.",
+      "See how raising the down payment from 10% to 25% of the on-road price cuts both the EMI and the lifetime interest.",
+      "Check whether a used-car loan at 13-15% still fits your monthly budget before you commit to the vehicle.",
+      "Work out the outstanding balance at the end of year three if you plan to foreclose or trade the car in early."
+    ],
+    "benefits": [
+      [
+        "Real bank formula",
+        "Uses reducing-balance EMI — the same method used in a sanction letter, not a flat-rate approximation."
+      ],
+      [
+        "Full amortisation view",
+        "Year-wise principal, interest and closing balance show exactly when the loan starts eating into principal."
+      ],
+      [
+        "True cost of ownership",
+        "Down payment, processing fee and upfront insurance are added on top of the repayment total."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is car loan EMI calculated?",
+        "EMI = P x r x (1+r)^n / ((1+r)^n - 1), where P is the loan amount, r is the monthly interest rate (annual rate divided by 12 and by 100) and n is the number of monthly instalments. Interest is charged on the reducing balance, so the interest portion of each EMI falls over time."
+      ],
+      [
+        "How much down payment should I pay on a car loan?",
+        "Most lenders finance 80-90% of the on-road or ex-showroom price, so a 10-20% down payment is typical. A larger down payment reduces the financed amount, the EMI and the total interest, but keep enough cash aside for registration, insurance and an emergency buffer."
+      ],
+      [
+        "Why is my dealer's flat rate cheaper than the bank's reducing rate?",
+        "A flat rate charges interest on the full original principal for the whole tenure, so a 6% flat rate is roughly equivalent to an 11-12% reducing rate. Always convert both quotes to EMI and total interest before comparing."
+      ],
+      [
+        "Does this calculator include GST and other charges?",
+        "It adds the processing fee and any upfront add-ons you enter to the total cash outgo, but it does not compute GST on the fee, documentation charges or hypothecation costs. Treat the output as an informational estimate and confirm the final figures in your sanction letter."
+      ]
+    ]
+  },
+  "cgpa-to-percentage-converter": {
+    "intro": "CGPA to Percentage Converter turns a cumulative grade point average into a percentage using the exact rule your institution follows — CBSE's x 9.5, the generic x 10, VTU's (CGPA - 0.75) x 10, GTU's (CGPA - 0.5) x 10, Mumbai University's piecewise formula, or a custom multiplier. It also runs in reverse, converting a percentage back to CGPA, and shows what the same CGPA would look like under the other common rules. Useful when a job portal, scholarship form or foreign university application demands a percentage and your marksheet only prints grade points.",
+    "useCases": [
+      "Fill in the percentage field on a campus placement or government job form that will not accept a CGPA.",
+      "Check what your engineering CGPA works out to under your own university rule instead of the generic x 10 shortcut.",
+      "Convert a required percentage cut-off back into the CGPA you need to hit this semester."
+    ],
+    "benefits": [
+      [
+        "Real university formulas",
+        "CBSE, VTU, GTU and Mumbai University rules are built in, not just a single multiplier."
+      ],
+      [
+        "Two-way conversion",
+        "Go CGPA to percentage or percentage to CGPA with the same rule and no manual algebra."
+      ],
+      [
+        "Side-by-side comparison",
+        "See how much your number changes across rules, so you know when to insist on an official conversion certificate."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I convert CGPA to percentage?",
+        "Multiply your CGPA by your institution's factor. CBSE uses 9.5, many universities use a flat 10, VTU subtracts 0.75 before multiplying by 10, and GTU subtracts 0.5. Always use the rule your own institution publishes."
+      ],
+      [
+        "Why does CBSE multiply by 9.5?",
+        "CBSE derived 9.5 from the average of the marks ranges behind grades A1 to D1 across several years of results, so multiplying the grade point by 9.5 approximates the underlying marks percentage."
+      ],
+      [
+        "Which formula should I use if my university has not published one?",
+        "Ask your examination section for a conversion certificate. Many employers and foreign universities require that official document, and using the wrong multiplier can overstate or understate your score by several percent."
+      ],
+      [
+        "Can I convert a 4.0 scale GPA to a percentage?",
+        "The tool includes GPA / 4 x 100 as a simple linear option, but US institutions do not officially map GPA to percentages. For credential evaluation, submit your transcript to the evaluating body rather than a converted number."
+      ]
+    ]
+  },
+  "upi-qr-code-generator": {
+    "intro": "UPI QR Code Generator turns your UPI ID into a scannable payment code. It assembles a standard upi://pay link from the payee VPA, payee name, currency (INR) and — if you want — a locked amount, a payment note, a reference ID and a merchant category code, then renders it as a QR you can download as PNG. Useful for shopkeepers, freelancers, tuition teachers, event stalls and anyone collecting payments without a POS machine.",
+    "useCases": [
+      "Print a counter-top QR for a shop or stall so customers can pay by scanning instead of typing your UPI ID.",
+      "Send a client a QR with the invoice amount already locked in, plus the invoice number as the payment note.",
+      "Collect a fixed contribution — society dues, class fees, event tickets — where everyone pays the same amount."
+    ],
+    "benefits": [
+      [
+        "Works with every UPI app",
+        "The QR encodes the standard NPCI upi://pay deep link, so GPay, PhonePe, Paytm, BHIM and bank apps all read it."
+      ],
+      [
+        "Fixed or open amount",
+        "Lock an exact amount for invoices, or leave it blank so the payer types whatever they owe."
+      ],
+      [
+        "Nothing leaves your browser",
+        "The QR is drawn locally from the details you type — no account linking, no signup, no upload."
+      ]
+    ],
+    "faqs": [
+      [
+        "Is a UPI QR generated here safe to use?",
+        "The QR only encodes your public UPI ID and the payment details you enter — it can receive money, never send it. Still, always test-scan it yourself and confirm the payee name your app shows before printing."
+      ],
+      [
+        "What is a VPA and where do I find mine?",
+        "A VPA (virtual payment address) is your UPI ID in the form name@bank, such as priya@okhdfcbank. Any UPI app shows it on the profile or 'My UPI ID' screen."
+      ],
+      [
+        "Is there a limit on the amount I can put in the QR?",
+        "Most banks cap a single UPI transaction at ₹1,00,000, with higher limits for specific categories, so this tool flags amounts above that. Your own bank's per-transaction and daily limits still apply."
+      ],
+      [
+        "Do I need a merchant account or a category code?",
+        "No. The merchant category code is an optional 4-digit field used by registered merchants; personal collections can leave it blank."
+      ]
+    ]
+  },
+  "child-education-cost-planner": {
+    "intro": "Child Education Cost Planner projects what a course costing today's fees will actually cost when your child enrols, inflating every academic year separately at your education inflation rate. It then works out the corpus you need on admission day and the monthly SIP — or one-time lumpsum — that closes the gap after your existing savings grow. Built for parents planning school, undergraduate or overseas education goals.",
+    "useCases": [
+      "Work out the SIP needed today to fund a four-year engineering degree twelve years from now.",
+      "Compare the funding gap for a domestic course versus an overseas masters at different inflation rates.",
+      "Check whether the money already set aside for your child covers the goal or leaves a shortfall."
+    ],
+    "benefits": [
+      [
+        "Year-by-year fee schedule",
+        "Every academic year is inflated to the year it is actually paid, not just the first."
+      ],
+      [
+        "SIP and lumpsum both",
+        "See the monthly investment and the equivalent one-time amount side by side."
+      ],
+      [
+        "Counts existing savings",
+        "Money already earmarked is grown at your expected return and netted off the target."
+      ]
+    ],
+    "faqs": [
+      [
+        "What education inflation rate should I assume?",
+        "Education costs in India have historically risen faster than general CPI, so many planners use 8-10% a year against a 6% general inflation assumption. Run both ends of that range to see the spread."
+      ],
+      [
+        "Why is the corpus needed less than the total fees?",
+        "You do not need every rupee on day one. Money for the second, third and later academic years stays invested and keeps earning, so it is discounted back to admission day at your expected return."
+      ],
+      [
+        "Should I use a 12% return for this goal?",
+        "Equity-oriented returns like 12% suit goals more than seven to ten years away. For a goal within three years, use a conservative debt-like rate, since equity can be down when the fee is due."
+      ],
+      [
+        "Does this include hostel, travel and living costs?",
+        "Only if you include them in the annual fee you enter. For overseas education especially, add living expenses and a buffer for currency movement to the annual figure."
+      ]
+    ]
+  },
+  "unit-price-comparison-calculator": {
+    "intro": "Unit Price Comparison Calculator converts competing pack sizes to a single common unit — price per kg, per litre or per piece — so you can tell instantly which shelf option is actually cheaper. Enter price, pack size and how many packs a combo deal contains, and it ranks every option and shows how much more you pay per unit for the others. Built for grocery runs, online-store combos and bulk-buying decisions where the label maths is deliberately hard to do in your head.",
+    "useCases": [
+      "Decide between a 500 g pack and a 1 kg pack when the larger one is not proportionally cheaper.",
+      "Check whether a '6 x 250 ml multipack offer' beats a single 1.5 litre bottle.",
+      "Compare the same product across two online stores that list different pack sizes.",
+      "Work out the per-piece cost of eggs, capsules or sachets sold in trays of 6, 12 and 30."
+    ],
+    "benefits": [
+      [
+        "Mixed units, one answer",
+        "Grams, kilograms, ounces, pounds, millilitres, litres, fluid ounces and gallons all normalise to the same base before comparison."
+      ],
+      [
+        "Multipack aware",
+        "A separate packs field means combo deals like 3 x 750 g are priced correctly instead of being treated as a single unit."
+      ],
+      [
+        "Ranked with the gap shown",
+        "The cheapest option is highlighted and every other option shows exactly what percentage more it costs per unit."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is unit price calculated?",
+        "Unit price = total price divided by total quantity, where total quantity is pack size multiplied by the number of packs in the deal. The result is then scaled to a familiar unit such as per kilogram or per litre."
+      ],
+      [
+        "Is the bigger pack always cheaper per unit?",
+        "No. Retailers regularly price mid-size or promotional packs below the largest one, and multipacks are often the most expensive per unit. That is exactly the case this calculator is designed to catch."
+      ],
+      [
+        "Can I compare grams with millilitres?",
+        "Not reliably. Weight and volume are different measures and the conversion depends on the product's density, so the calculator keeps weight, volume and count as separate modes."
+      ],
+      [
+        "Should I always buy the lowest unit price?",
+        "Only when you will use the whole pack. For perishables, storage-limited items or products you are trying for the first time, waste from an unfinished large pack can easily cancel out the per-unit saving."
+      ]
+    ]
+  },
+  "itr-1-eligibility-checker": {
+    "intro": "ITR-1 Sahaj Eligibility Checker walks through the conditions the Income Tax Department attaches to the one-page Sahaj return — ordinarily resident status, total income up to Rs 50 lakh, a single house property, agricultural income under Rs 5,000 and no business income — and tells you whether you qualify. If any answer rules Sahaj out, it names the exact reason and points you to ITR-2, ITR-3 or ITR-4 Sugam instead. It is built for salaried filers and pensioners who want to confirm the right form before opening the e-filing portal.",
+    "useCases": [
+      "A salaried filer with one flat and some FD interest confirming Sahaj is still the right form.",
+      "An employee who sold listed shares checking whether the Rs 1.25 lakh section 112A allowance keeps them in ITR-1.",
+      "A freelancer or F&O trader finding out that business income pushes them to ITR-3 or ITR-4 Sugam."
+    ],
+    "benefits": [
+      [
+        "Every disqualifier in one list",
+        "Covers the awkward ones people miss - directorship, unlisted shares, foreign assets, section 194N TDS and carried-forward losses."
+      ],
+      [
+        "Tells you the fallback form",
+        "When ITR-1 is blocked it maps each reason to ITR-2, ITR-3 or ITR-4 Sugam so you know where to go next."
+      ],
+      [
+        "Runs entirely in your browser",
+        "Your income figures are never uploaded - the checks are plain JavaScript on your own device."
+      ]
+    ],
+    "faqs": [
+      [
+        "Who can file ITR-1 Sahaj?",
+        "An ordinarily resident individual with total income up to Rs 50 lakh from salary or pension, one house property, other sources such as interest, and agricultural income up to Rs 5,000. Non-residents and RNOR taxpayers cannot use it."
+      ],
+      [
+        "Can I file ITR-1 if I have capital gains?",
+        "From AY 2025-26 the department allows long-term capital gains under section 112A of up to Rs 1.25 lakh in ITR-1, provided there is no capital loss to set off or carry forward. Any other capital gain moves you to ITR-2."
+      ],
+      [
+        "What disqualifies me from ITR-1 even if my income is small?",
+        "Being a company director, holding unlisted equity shares, owning foreign assets or foreign income, lottery or race-horse winnings, income from more than one house property, TDS under section 194N, and brought-forward losses all rule out Sahaj regardless of income size."
+      ],
+      [
+        "Which form should I use if ITR-1 does not apply?",
+        "Individuals without business income generally file ITR-2. With business or professional income you file ITR-3, or ITR-4 Sugam if you are a resident declaring income presumptively under section 44AD, 44ADA or 44AE with total income up to Rs 50 lakh."
+      ]
+    ]
+  },
+  "ppf-maturity-calculator": {
+    "intro": "PPF Maturity Calculator shows what a Public Provident Fund account is worth at the end of its 15-year term, compounding your yearly deposits at the prevailing rate and crediting interest at the close of each financial year. You can model a lump sum paid before 5 April or deposits spread across 12 months, then extend the account in 5-year blocks either with fresh contributions or with the balance simply earning interest. It suits anyone deciding how much of the Rs 1.5 lakh annual ceiling to use and whether to extend at maturity.",
+    "useCases": [
+      "Check the 15-year maturity value of depositing the full Rs 1,50,000 every April versus Rs 5,000 a month.",
+      "Compare extending your PPF for 5 more years with fresh deposits against extending it without any contribution.",
+      "Plan a child's higher-education corpus by matching the PPF maturity year to their admission year."
+    ],
+    "benefits": [
+      [
+        "Deposit timing matters",
+        "Shows the extra interest earned by funding the account before 5 April instead of monthly."
+      ],
+      [
+        "Extension scenarios built in",
+        "Models 5, 10 and 15-year extensions, with or without further deposits."
+      ],
+      [
+        "Full year-wise table",
+        "Every year's deposit, interest credit and closing balance is listed, not just the final number."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the current PPF interest rate?",
+        "The PPF rate is notified by the Ministry of Finance every quarter and has been 7.1% per annum since April 2020. Change the rate field if a new quarterly notification applies to your period."
+      ],
+      [
+        "Why does depositing before 5 April earn more?",
+        "Interest is computed on the lowest balance between the 5th and the last day of each month. A deposit credited on or before 5 April counts for all 12 months of that financial year, while a monthly deposit earns interest only for the remaining months."
+      ],
+      [
+        "How much can I put into PPF in a year?",
+        "Between Rs 500 and Rs 1,50,000 per financial year across all PPF accounts you hold, including one opened for a minor. Deposits above the ceiling earn no interest and are simply returned."
+      ],
+      [
+        "Is PPF maturity taxable?",
+        "PPF has EEE status: the deposit qualifies under Section 80C, the annual interest is exempt, and the maturity amount is tax-free. This is general information, not tax advice for your specific situation."
+      ]
+    ]
+  },
+  "section-87a-rebate-checker": {
+    "intro": "Section 87A Rebate Checker tells you whether your taxable income qualifies for the rebate that makes income tax zero for smaller incomes. For FY 2025-26 (AY 2026-27) it applies the new-regime rebate of up to Rs 60,000 for taxable income up to Rs 12,00,000, the old-regime rebate of up to Rs 12,500 for income up to Rs 5,00,000, and the marginal relief that softens the cliff just above the new-regime threshold. It also excludes special-rate capital gains, which the rebate does not cover.",
+    "useCases": [
+      "A salaried employee checking whether a Rs 12.75 lakh package still ends in zero tax after the Rs 75,000 standard deduction.",
+      "Someone whose income crept just past Rs 12,00,000 wanting to see how much marginal relief cuts the sudden tax jump.",
+      "An old-regime filer confirming that extra 80C investment brings taxable income under Rs 5,00,000 and triggers the Rs 12,500 rebate."
+    ],
+    "benefits": [
+      [
+        "Both thresholds handled",
+        "Applies Rs 12,00,000 / Rs 60,000 under the new regime and Rs 5,00,000 / Rs 12,500 under the old, so you compare like for like."
+      ],
+      [
+        "Marginal relief built in",
+        "Shows the reduced tax just above Rs 12,00,000 instead of pretending the rebate vanishes into a huge bill."
+      ],
+      [
+        "Capital gains aware",
+        "Lets you separate 111A and 112A gains, which are taxed at special rates and are not eligible for the rebate."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the Section 87A rebate limit for FY 2025-26?",
+        "Under the new regime the rebate is up to Rs 60,000 for resident individuals with taxable income up to Rs 12,00,000. Under the old regime it is up to Rs 12,500 for taxable income up to Rs 5,00,000."
+      ],
+      [
+        "Is the rebate based on gross salary or taxable income?",
+        "Taxable income — after the standard deduction and any other deductions you claim. A salaried person on the new regime can therefore have gross salary around Rs 12.75 lakh and still land at Rs 12,00,000 taxable."
+      ],
+      [
+        "What happens if my income is slightly above the threshold?",
+        "Marginal relief under the new regime limits your tax to roughly the amount by which taxable income exceeds Rs 12,00,000, plus cess, so a small overshoot does not create a disproportionate bill."
+      ],
+      [
+        "Can NRIs or companies claim Section 87A?",
+        "No. The rebate is available only to resident individuals. It is also not allowed against tax on special-rate income such as equity capital gains under sections 111A and 112A."
+      ]
+    ]
+  },
+  "timesheet-hours-calculator": {
+    "intro": "Timesheet Hours Calculator turns a week of clock in and clock out times into a payable total. Each day takes an in time, an out time and unpaid break minutes; the tool handles shifts that run past midnight, then splits the week into regular and overtime hours against a threshold you set. It also estimates gross pay from an hourly rate and an overtime multiplier, so hourly staff, shift workers and small employers can check a payslip before it is submitted.",
+    "useCases": [
+      "Add up a retail or hospitality week where shifts start and finish at different times each day.",
+      "Check a payroll timesheet before submitting it, including a 30-minute unpaid lunch on each weekday.",
+      "Work out how many hours went over a 40-hour week and what they are worth at a 1.5x overtime rate."
+    ],
+    "benefits": [
+      [
+        "Whole week in one view",
+        "Seven editable days with per-day totals and a running weekly figure in hours and decimal hours."
+      ],
+      [
+        "Breaks and night shifts handled",
+        "Unpaid breaks are deducted per day and an out time earlier than the in time is treated as the next morning."
+      ],
+      [
+        "Overtime split and pay estimate",
+        "Set your own overtime threshold and multiplier to see regular pay, overtime pay and the gross total."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I calculate total hours worked in a week?",
+        "Work out each day's elapsed time, subtract unpaid breaks, then add the daily totals together. This tool does all three steps and also converts the result to decimal hours for payroll entry."
+      ],
+      [
+        "Are unpaid lunch breaks deducted from worked hours?",
+        "Normally yes — an unpaid meal break is not working time, so it is subtracted from the shift. Enter only unpaid minutes; paid rest breaks should be left out of the break field."
+      ],
+      [
+        "How is overtime calculated?",
+        "Hours above your weekly threshold count as overtime and are paid at the multiplier you set, commonly 1.5x. Thresholds and premiums vary by country, contract and award, so use your own figures — this is an estimate, not legal advice."
+      ],
+      [
+        "Does this handle shifts that cross midnight?",
+        "Yes. If the clock out time is the same as or earlier than the clock in time, the day is treated as running into the next morning, so a 21:00 to 05:00 shift counts as 8 hours."
+      ]
+    ]
+  },
+  "percentage-increase-decrease-calculator": {
+    "intro": "The Percentage Increase Decrease Calculator compares two numbers and tells you the percentage change between them, clearly labelled as an increase or a decrease, alongside the plain difference and the multiplier. A second mode goes the other way: give it a starting value and a percentage and it applies the rise or cut for you. It is built for the everyday cases — a price change, a salary revision, a month-on-month traffic swing, a marks comparison.",
+    "useCases": [
+      "Work out that a rent rise from Rs 18,000 to Rs 21,500 is a 19.44% increase.",
+      "Check how far a stock, weight, or website metric has fallen from its previous figure in percentage terms.",
+      "Apply a 12% hike or a 25% discount to a price without doing the arithmetic by hand."
+    ],
+    "benefits": [
+      [
+        "Direction stated explicitly",
+        "The result is labelled increase, decrease, or no change, so a negative sign is never misread."
+      ],
+      [
+        "Difference and multiplier too",
+        "You get the raw difference and the multiplier (such as 1.24x) next to the percentage, which is often the number you actually need."
+      ],
+      [
+        "Handles the awkward cases",
+        "Zero starting values, negative numbers, and the non-symmetry of a rise versus a fall are all handled rather than silently producing nonsense."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the percentage increase formula?",
+        "((new value - original value) / original value) x 100. A positive answer is an increase and a negative answer is a decrease; this tool uses the absolute value of the original so negative starting figures still give a sensible sign."
+      ],
+      [
+        "Why does a 50% increase followed by a 50% decrease not return me to the start?",
+        "Because each percentage applies to a different base. 100 up 50% is 150, and 50% of 150 is 75, so you end at 75. To reverse a 50% increase you need a 33.33% decrease, which the reverse-change row shows."
+      ],
+      [
+        "What if the original value is zero?",
+        "Percentage change from zero is mathematically undefined, since any rise from nothing is infinite in percentage terms. The calculator flags this and suggests using the absolute difference instead."
+      ],
+      [
+        "What is the difference between percentage change and percentage points?",
+        "If a rate moves from 4% to 5%, that is a 1 percentage point rise but a 25% increase. Use this calculator for the percentage change; subtract directly for percentage points."
+      ]
+    ]
+  },
+  "macro-split-calculator": {
+    "intro": "Macro Split Calculator converts a daily calorie target into grams of protein, carbohydrate and fat using the standard Atwater values — 4 kcal per gram for protein and carbs, 9 kcal per gram for fat. Choose a preset such as balanced 30/40/30, high protein 40/35/25, low carb, ketogenic 25/5/70 or high-carb endurance, or type your own percentages and the tool checks they add to 100. It also divides each macro across your chosen number of meals so you know what a single plate should look like.",
+    "useCases": [
+      "Translate the calorie number from a TDEE calculation into macros you can actually log in a food-tracking app.",
+      "Compare what switching from a balanced split to keto does to your daily carb allowance in grams.",
+      "Work out per-meal protein when you're meal-prepping four containers for the week."
+    ],
+    "benefits": [
+      [
+        "Six ready-made splits",
+        "Balanced, high protein, low carb, ketogenic and endurance presets, plus a fully custom option."
+      ],
+      [
+        "Custom split validation",
+        "Percentages that don't total 100 are flagged immediately instead of silently producing wrong grams."
+      ],
+      [
+        "Per-meal breakdown",
+        "Divides protein, carbs and fat across 1 to 10 meals so each plate has a concrete target."
+      ]
+    ],
+    "faqs": [
+      [
+        "How are macro grams calculated from calories?",
+        "Each macro's calorie share is the target multiplied by its percentage, then divided by its energy density: 4 kcal per gram for protein and carbohydrate, 9 kcal per gram for fat."
+      ],
+      [
+        "What is a good macro split for fat loss?",
+        "There is no single best split — total calories drive weight change. Higher protein splits (around 30-40% of calories) are commonly used during a deficit because protein helps preserve lean mass and increases fullness."
+      ],
+      [
+        "Why do my rounded grams not add back to my exact calories?",
+        "Grams are rounded to whole numbers for practicality, so the recomposed total can be off by a few kcal. Use the unrounded percentages if you need an exact match."
+      ],
+      [
+        "Do I need to hit my macros exactly every day?",
+        "Most people do fine landing within about 5-10 grams of each target and looking at weekly averages. This tool is informational — speak to a dietitian or doctor before following a restrictive diet such as ketogenic eating."
+      ]
+    ]
+  },
+  "freelancer-advance-tax-planner": {
+    "intro": "Freelancer Advance Tax Planner turns a year of consulting or professional income into the four advance tax instalments the Income Tax Act actually asks for. It computes slab tax under the new or old regime, applies the Section 87A rebate, surcharge with marginal relief and 4% cess, subtracts the TDS your clients deducted under Section 194J, and then spreads the balance across the 15 June, 15 September, 15 December and 15 March due dates. Built for freelancers, consultants, doctors, designers and other professionals with no employer withholding their tax for them.",
+    "useCases": [
+      "Decide how much to set aside each quarter once a few retainer clients are locked in for the year.",
+      "Check whether the 10% TDS your clients already deducted covers your liability or leaves a shortfall.",
+      "See how opting into Section 44ADA changes the schedule to a single 15 March payment."
+    ],
+    "benefits": [
+      [
+        "TDS-aware",
+        "Advance tax is computed on the liability net of TDS, which is what Section 208 actually tests."
+      ],
+      [
+        "Both regimes",
+        "Compare the new regime's wider slabs against the old regime with your Chapter VI-A deductions."
+      ],
+      [
+        "Real due dates",
+        "Each instalment is dated and flagged once its due date has passed, so nothing slips into 234C interest quietly."
+      ]
+    ],
+    "faqs": [
+      [
+        "Who has to pay advance tax?",
+        "Anyone whose tax liability for the year, after subtracting TDS and TCS, is ₹10,000 or more. Resident senior citizens aged 60 or above with no business or professional income are exempt."
+      ],
+      [
+        "What are the advance tax instalment percentages and due dates?",
+        "15% by 15 June, 45% cumulative by 15 September, 75% by 15 December and 100% by 15 March. Taxpayers who opt for presumptive taxation under 44AD or 44ADA pay the whole amount by 15 March."
+      ],
+      [
+        "What happens if I miss an instalment?",
+        "Section 234C charges 1% simple interest per month on the shortfall for three months (one month for the March instalment), and Section 234B adds 1% a month from April if you have paid less than 90% of the assessed tax."
+      ],
+      [
+        "My clients deduct 10% TDS — do I still owe advance tax?",
+        "Often yes. Section 194J withholding is 10% of your gross fees, but your effective tax rate on net profit can be higher once income crosses the upper slabs, so the gap has to be paid as advance tax."
+      ]
+    ]
+  },
+  "attendance-percentage-calculator": {
+    "intro": "Attendance Percentage Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
+    "useCases": [
+      "Find out how many lectures in a row you need to attend to get back above a 75% detention cut-off.",
+      "Check how many classes you can safely skip for a trip, wedding or interview without dropping below the rule.",
+      "See whether the required percentage is still mathematically reachable with the classes left in the semester."
+    ],
+    "benefits": [
+      [
+        "Answers both directions",
+        "Shows classes needed when you are short and classes you can skip when you are safe."
+      ],
+      [
+        "End-of-term projection",
+        "Enter classes remaining to see your best case, worst case and how many you may still miss."
+      ],
+      [
+        "Warns when it is out of reach",
+        "If attending every remaining class still falls short of the target, the tool says so instead of showing a fake number."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is attendance percentage calculated?",
+        "Attendance percentage = (classes attended / classes held) x 100. Only classes actually conducted count in the denominator, so a cancelled lecture affects neither side."
+      ],
+      [
+        "How many classes must I attend to raise my attendance to 75%?",
+        "Solve (attended + n) / (held + n) = 0.75 for n, which gives n = (0.75 x held - attended) / 0.25. The tool rounds this up to a whole class, because you cannot attend a fraction of one."
+      ],
+      [
+        "Why does my attendance rise so slowly after a long absence?",
+        "Each new class adds one to both the numerator and the denominator, so recovery gets harder the more classes have already been held. Missing early in a term is far easier to fix than missing late."
+      ],
+      [
+        "Do medical leave and duty leave count as attended?",
+        "That depends entirely on your institution's rules — some grant condonation or count duty leave as present, others do not. This is an informational estimate; confirm the treatment of your leave with your department before relying on it."
+      ]
+    ]
+  },
+  "meeting-cost-calculator": {
+    "intro": "Meeting Cost Calculator prices a meeting the way payroll does: attendees grouped by role, each with an hourly rate, multiplied by the time they actually give up — the meeting itself plus prep and follow-up. It adds an optional context-switching loss, then scales one meeting into weekly and annual cost across your working year. Handy for managers auditing a recurring standup, ops leads trimming a bloated agenda, or anyone who wants a number to put in the invite.",
+    "useCases": [
+      "Price a weekly hour-long status meeting with eight attendees to see the annual cost of keeping it.",
+      "Compare a 60-minute all-hands against a 30-minute version before deciding what to cut.",
+      "Show leadership the yearly rupee value of prep and follow-up time attached to a recurring review."
+    ],
+    "benefits": [
+      [
+        "Role-based rates",
+        "Group attendees by role — engineering, design, leadership — instead of assuming everyone costs the same."
+      ],
+      [
+        "Counts the hidden time",
+        "Prep, follow-up and context-switching loss are included, not just the minutes on the calendar."
+      ],
+      [
+        "Weekly and annual view",
+        "One meeting is easy to ignore; the recurring cost across your working weeks usually is not."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I turn an annual salary into an hourly rate?",
+        "Divide the annual cost to employ someone by their yearly working hours — roughly 2,080 for a 40-hour week over 52 weeks, or about 1,900 to 2,000 once leave is removed. Add employer overheads for a fully loaded rate."
+      ],
+      [
+        "What is a fair figure for meeting productivity loss?",
+        "Many teams use 10 to 20 percent to reflect the focus lost switching in and out of deep work. It is an estimate, not a measured constant, so adjust it to match how your team actually works."
+      ],
+      [
+        "Should prep and follow-up time count as meeting cost?",
+        "Yes, if the meeting causes it. Pre-reads, slide building and writing up actions are all time that would not be spent otherwise, so including them gives a truer total."
+      ],
+      [
+        "How can we reduce what meetings cost?",
+        "Cut the invite list to people who must decide, shorten the default block from 60 to 30 minutes, and replace status-only meetings with written updates. The tool shows the saving from trimming 15 minutes so you can test each change."
+      ]
+    ]
+  },
+  "compound-interest-calculator-detailed": {
+      intro:
+        "This detailed compound interest calculator applies A = P(1 + r/n)^(nt) at whatever frequency you choose — daily, weekly, fortnightly, monthly, quarterly, half-yearly, annually or continuously — and can add a recurring deposit at the end of every period. Alongside the closing balance it reports total contributions, total interest, the effective annual rate (APY) and a year-by-year table of opening balance, deposits, interest and closing balance.",
+      useCases: [
+        "Compare a bank FD compounded quarterly against one compounded monthly at the same headline rate.",
+        "Project a recurring deposit or SIP-style habit by adding a fixed amount every month for 10 years.",
+        "Show a student or client exactly which year compounding starts to outweigh their own contributions."
+      ],
+      benefits: [
+        ["Any compounding frequency", "Daily through annual plus continuous compounding, so the maths matches your actual product."],
+        ["Year-by-year table", "See opening balance, deposits, interest earned and closing balance for every single year."],
+        ["Effective annual rate", "APY is shown next to the nominal rate, which is the only fair way to compare two offers."]
+      ],
+      faqs: [
+        [
+          "What is the difference between the nominal rate and the effective annual rate?",
+          "The nominal rate is the quoted annual figure; the effective annual rate (APY) is what you actually earn once compounding is applied. At 8% compounded quarterly the effective rate is 8.243%."
+        ],
+        [
+          "Does compounding more often always give more money?",
+          "Yes, but with diminishing returns. Moving from annual to monthly compounding helps noticeably; monthly to daily adds very little, and continuous compounding is the mathematical ceiling."
+        ],
+        [
+          "When are the recurring deposits added?",
+          "At the end of each compounding period, which is the ordinary-annuity convention. That period's interest is credited on the balance before the new deposit lands."
+        ],
+        [
+          "Does this account for tax on the interest?",
+          "No. Results are pre-tax and informational. Interest on Indian bank deposits is taxable at your slab rate and banks deduct TDS above the prescribed threshold, so your in-hand return will be lower."
+        ]
+      ]
+    },
+  "lumpsum-vs-sip-comparator": {
+    "intro": "Lumpsum vs SIP Comparator puts a one-time investment head to head with a monthly SIP over the same period and the same expected return. By default it splits the lumpsum into equal monthly instalments so both routes invest exactly the same money, then shows each final corpus, the gain and the money multiple. It is for investors sitting on a bonus, maturity amount or windfall who are deciding between investing it all at once and staggering it.",
+    "useCases": [
+      "Decide whether to invest a Rs 6 lakh bonus at once or as a Rs 5,000 monthly SIP for 10 years.",
+      "Show a client or family member why money invested earlier compounds for longer.",
+      "Compare a fixed lumpsum against any custom SIP amount, even when the totals differ."
+    ],
+    "benefits": [
+      [
+        "Equal-money comparison",
+        "The SIP instalment auto-matches the lumpsum total, so you compare routes and not amounts."
+      ],
+      [
+        "Correct SIP maths",
+        "Instalments are compounded from the start of each month, the convention Indian fund houses use."
+      ],
+      [
+        "Year-by-year table",
+        "See exactly when the lumpsum pulls ahead and how far behind the SIP is at each stage."
+      ]
+    ],
+    "faqs": [
+      [
+        "Is a lumpsum better than a SIP?",
+        "At a constant assumed return the lumpsum always wins, because the whole amount compounds from day one while SIP instalments arrive late. Real markets are not constant, so a SIP can beat a lumpsum if prices fall after you invest."
+      ],
+      [
+        "What is the equivalent SIP for a lumpsum?",
+        "Divide the lumpsum by the number of months in your horizon — Rs 6,00,000 over 10 years is Rs 5,000 a month. This tool does that automatically when the equal-money option is on."
+      ],
+      [
+        "What is STP and where does it fit?",
+        "A Systematic Transfer Plan parks the lumpsum in a liquid fund and moves a fixed amount into equity every month. It behaves like the SIP column here, but the idle money earns liquid-fund returns instead of nothing."
+      ],
+      [
+        "Which return rate should I assume?",
+        "Long-horizon planning commonly uses 10-12% for diversified equity funds and 6-8% for debt. Since both routes use the same rate, the comparison itself stays valid at any rate you pick. This is informational, not investment advice."
+      ]
+    ]
+  },
+  "gold-loan-eligibility-calculator": {
+    "intro": "Gold Loan Eligibility Calculator works out how much a lender can advance against your jewellery. It converts each item's gross weight and karat purity into pure-gold equivalent, deducts stone and bead weight, values the lot at today's 24K per-gram rate, and applies the loan-to-value cap to give the eligible loan amount, the per-gram loan value and a repayment preview. Useful before you walk into a bank or NBFC branch and want a realistic number rather than a headline per-gram advert.",
+    "useCases": [
+      "Check how much you can raise against 40 grams of 22K bangles before visiting a gold loan branch.",
+      "Compare the per-gram loan value two lenders are offering once purity and stone deductions are accounted for.",
+      "See the gap between a 75% LTV sanction and the amount you actually need, so you know how much extra gold to pledge.",
+      "Decide between a regular EMI and an interest-only scheme where the principal is repaid at maturity."
+    ],
+    "benefits": [
+      [
+        "Purity-accurate valuation",
+        "22K, 18K and 14K items are each converted to 24K-equivalent grams instead of being valued at face weight."
+      ],
+      [
+        "Stone weight deducted",
+        "Beads, kundan and gemstones are subtracted the way a branch valuer does, so the estimate is not inflated."
+      ],
+      [
+        "Two repayment views",
+        "See both the EMI and the interest-only-with-bullet-principal option side by side before choosing a scheme."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the maximum LTV on a gold loan in India?",
+        "Regulated lenders generally cap gold loans at 75% of the value of the pledged gold. RBI's 2025 gold lending directions allow higher caps on smaller consumption loans, so ask your lender what LTV band applies to your ticket size."
+      ],
+      [
+        "How is the value of my gold calculated?",
+        "Only the gold content counts. Net weight equals gross weight minus stones and beads; that is multiplied by purity (karat divided by 24) to get 24K-equivalent grams, then by the per-gram gold rate. Making charges and gemstone value are never funded."
+      ],
+      [
+        "Which gold rate do lenders use?",
+        "Most use their own reference rate, commonly an average of the previous 30 days' closing price of 22K gold rather than the day's spot price. That keeps valuations stable, but it can be lower than the rate you see in the news."
+      ],
+      [
+        "Does my credit score matter for a gold loan?",
+        "Far less than for an unsecured loan, because the gold itself is the security. Lenders still run basic KYC and may check the bureau record, and a poor repayment history can affect the rate or tenure offered."
+      ]
+    ]
+  },
+  "cagr-calculator-detailed": {
+    "intro": "CAGR Calculator Detailed turns a start value, an end value and a holding period into the compound annual growth rate — the single steady yearly rate that would have taken you from one to the other. Alongside the CAGR it shows absolute return, the growth multiple, the doubling time and a year-wise path at that constant rate. Useful for comparing mutual funds, stocks, property or business revenue over unequal periods.",
+    "useCases": [
+      "Compare a stock held for 7 years 6 months against a fund held for 3 years on an annualised basis.",
+      "Convert a headline 'my money grew 2.5x' into a per-year rate you can benchmark against an index.",
+      "Check a business's revenue growth rate between two financial years."
+    ],
+    "benefits": [
+      [
+        "Years and months",
+        "Handles part-years, so a 7-year-6-month holding is annualised correctly rather than rounded."
+      ],
+      [
+        "Absolute vs annualised",
+        "Shows total return and simple average next to CAGR so the difference is obvious."
+      ],
+      [
+        "Doubling time included",
+        "Gives the exact doubling period at that rate plus the Rule of 72 shortcut for comparison."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the CAGR formula?",
+        "CAGR = (end value ÷ start value) raised to the power of 1/number of years, minus 1. Multiply by 100 to express it as a percentage."
+      ],
+      [
+        "How is CAGR different from absolute return?",
+        "Absolute return is the total percentage gain regardless of time. CAGR spreads that gain across the holding period as a compounded yearly rate, which is the only fair way to compare investments held for different lengths of time."
+      ],
+      [
+        "Can CAGR be used when I invested in instalments?",
+        "No. CAGR assumes one lump sum in and one value out. For SIPs or any series of cash flows at different dates, use XIRR instead."
+      ],
+      [
+        "Does a high CAGR mean the investment was safe?",
+        "No. CAGR smooths the path into one steady number and hides the drawdowns along the way. Two investments with the same CAGR can have very different volatility."
+      ]
+    ]
+  },
+  "age-difference-calculator": {
+    "intro": "Age Difference Calculator works out the exact gap between two dates of birth in years, months and days, and backs it up with the total days, weeks and months between them. It counts calendar-style — full years first, then whole months, then the leftover days — so leap years and 28-to-31 day months are handled correctly instead of being averaged away. You can also pick any reference date to see how old each person is on that day.",
+    "useCases": [
+      "Check the exact age gap between siblings, partners or classmates rather than rounding to whole years.",
+      "Fill in a form or application that asks for an age difference in years and months.",
+      "Work out how far apart two children are for school-admission cut-off dates.",
+      "See how old two people will each be on a future date such as a wedding or a milestone birthday."
+    ],
+    "benefits": [
+      [
+        "Calendar-accurate, not averaged",
+        "Months are counted as real calendar months and leap days are included, so the answer matches how people actually count age."
+      ],
+      [
+        "Multiple views of the same gap",
+        "Get years-months-days plus total days, total weeks with leftover days, total months and a decimal-years figure."
+      ],
+      [
+        "Any reference date",
+        "Set the 'as of' date to today or any past or future day to see both ages side by side."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is the age gap in months and days worked out?",
+        "The calculator subtracts the earlier date from the later one field by field. If the day number goes negative it borrows the actual number of days from the preceding calendar month, and if the month goes negative it borrows 12 months from the year."
+      ],
+      [
+        "Does the order of the two dates matter?",
+        "No. The calculator detects which date is earlier and always reports a positive gap, labelling who is older. A swap button is there if you simply want to flip the two entries."
+      ],
+      [
+        "Why does the day count change if I shift both dates by a month?",
+        "Because calendar months differ in length. A gap that spans February will show different leftover days than one spanning July. The total-days figure never changes for the same interval, which is why it is shown alongside."
+      ],
+      [
+        "Are leap years included?",
+        "Yes. February 29 is counted as a real day, and dates in leap years are validated properly, so the total-days figure is exact."
+      ]
+    ]
+  },
+  "rd-maturity-calculator": {
+    "intro": "Recurring Deposit Maturity Calculator works out what a bank RD pays back at the end of its term, applying the quarterly compounding that banks actually use: every monthly instalment earns interest only for the months it stays on deposit. Enter the instalment, tenure in years and months, and the quoted rate, and you get the maturity value, total interest, an effective annual yield, and the balance at each yearly milestone. It is useful for salaried savers, parents building a short-term fund, and senior citizens comparing the extra 0.5% most banks offer.",
+    "useCases": [
+      "Check what Rs 5,000 a month for 5 years at 6.7% will hand back at maturity.",
+      "Compare a 12-month RD against a 24-month RD before locking in a tenure.",
+      "See how the senior citizen rate premium of 0.5% changes the final payout."
+    ],
+    "benefits": [
+      [
+        "True bank formula",
+        "Compounds quarterly and credits each instalment only for its own months on deposit."
+      ],
+      [
+        "Effective yield shown",
+        "Solves for the real annualised return, which is higher than the quoted simple rate."
+      ],
+      [
+        "Milestone table",
+        "Shows deposited amount, interest and balance at every completed year of the term."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is RD maturity calculated?",
+        "Each instalment is compounded quarterly for the time it remains on deposit, so the maturity value is the sum of R x (1 + r/400) raised to (months on deposit / 3) across all instalments. The first instalment earns interest for the full tenure and the last for only one month."
+      ],
+      [
+        "Why is the effective yield higher than the quoted rate?",
+        "The quoted rate is a nominal annual rate compounded quarterly. Compounding four times a year makes the effective annual yield slightly higher, which is what this calculator reports separately."
+      ],
+      [
+        "Is RD interest taxable?",
+        "Yes. Recurring deposit interest is fully taxable at your income slab rate. Banks deduct TDS at 10% once interest across your deposits with them crosses Rs 50,000 in a financial year (Rs 1,00,000 for senior citizens). This is general information, not tax advice."
+      ],
+      [
+        "What happens if I miss an instalment?",
+        "Most banks charge a small penalty per missed instalment and may extend the maturity date or reduce the payout. This calculator assumes every instalment is paid on time."
+      ]
+    ]
+  },
+  "purchase-order-generator": {
+    "intro": "Purchase Order Generator builds a complete, printable PO from your buyer and vendor details, line items and terms. It calculates taxable value per line, applies the GST slab you choose, splits the tax into IGST or CGST + SGST depending on whether the supply is inter-state, adds freight, rounds off the total and spells the amount in words using the Indian crore-lakh system. Made for small businesses, procurement teams and store managers who need a clean PO without accounting software.",
+    "useCases": [
+      "Raise a formal PO to a supplier before goods are dispatched, so the invoice can be matched line by line.",
+      "Lock delivery and payment terms in writing — required-by date, ship-to address, advance percentage — before work starts.",
+      "Give your accounts team a PO number and tax split they can reconcile against the vendor's GST invoice."
+    ],
+    "benefits": [
+      [
+        "Correct GST split",
+        "One toggle switches between IGST for inter-state supply and CGST + SGST at half the rate each for intra-state."
+      ],
+      [
+        "Amount in words",
+        "The grand total is written out in the Indian numbering system, the way finance teams expect on a PO."
+      ],
+      [
+        "Print-ready",
+        "The form controls drop away when you print, leaving a clean one-page order you can sign, scan or PDF."
+      ]
+    ],
+    "faqs": [
+      [
+        "What must a purchase order contain?",
+        "At minimum: a unique PO number and date, buyer and vendor details, an itemised list with quantity and rate, the tax treatment, the delivery address and date, and payment terms. Anything else is a matter of company policy."
+      ],
+      [
+        "When do I charge IGST instead of CGST and SGST?",
+        "IGST applies when the supplier's location and the place of supply are in different states or union territories. Within the same state, the same total rate is split equally into CGST and SGST."
+      ],
+      [
+        "Is a purchase order legally binding?",
+        "A PO is generally treated as an offer that becomes a binding contract once the vendor accepts it. This tool produces a document, not legal advice — have your standard terms reviewed by a professional."
+      ],
+      [
+        "Is freight taxable under GST?",
+        "Freight charged by the supplier on the same invoice usually forms part of the taxable value of the supply. This tool keeps freight as a separate untaxed line so you can decide, so check the composition with your accountant."
+      ]
+    ]
+  },
+  "exam-score-needed-calculator": {
+    "intro": "Exam Score Needed Calculator solves the one question every student asks before finals: what is the minimum I can score and still hit my target? It takes the grade you carry in from assignments and mid-terms, the percentage weight of the final paper, and your target overall grade, then returns the exact score required — in percent and in raw marks. It also lists the score needed for every grade band and shows what your overall grade would be at a range of possible exam scores.",
+    "useCases": [
+      "Work out the minimum final exam score that keeps your course grade at an A before you plan your revision hours.",
+      "Check whether a target is still mathematically reachable after a weak mid-term, so you can prioritise other papers.",
+      "Convert the required percentage into actual marks on a 60-mark or 75-mark paper."
+    ],
+    "benefits": [
+      [
+        "Honest about impossible targets",
+        "If even a perfect paper falls short, the tool says 'not reachable' instead of printing a score above 100%."
+      ],
+      [
+        "All grade bands at once",
+        "See the score needed for A, B, C, D and a bare pass in a single view, not one calculation at a time."
+      ],
+      [
+        "What-if table",
+        "Scan the overall grade you would land on at 40%, 60%, 80% or a perfect paper before you decide how hard to push."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I calculate the score I need on my final exam?",
+        "Use needed = (target - current x (1 - weight)) / weight, where weight is the final's share as a decimal. With a 72% current grade, a 40% weight and an 80% target, you need (80 - 72 x 0.6) / 0.4 = 92%."
+      ],
+      [
+        "What does 'current grade' mean here?",
+        "It is your weighted average across everything graded so far — assignments, quizzes and mid-terms — expressed as a percentage of the marks available in those components, not of the whole course."
+      ],
+      [
+        "What if my result says the score needed is 0 or negative?",
+        "It means your target is already locked in: even a zero on the final leaves you at or above it. The tool displays 0% and flags the target as already secured."
+      ],
+      [
+        "Does this account for a minimum pass mark in the final paper itself?",
+        "No. Many syllabi require a separate minimum in the end-semester paper regardless of internal marks, so check your course handbook before treating a low required score as safe."
+      ]
+    ]
+  },
+  "itr-2-applicability-checker": {
+    "intro": "ITR-2 Applicability Checker tests your year against the things that push an individual or HUF out of the Sahaj form: capital gains, two or more house properties, foreign assets or income, NRI and RNOR status, total income above Rs 50 lakh, unlisted shares, directorships and carried-forward losses. It lists every trigger it finds and confirms whether ITR-2 is your form, or whether business income means ITR-3 or ITR-4 Sugam instead. Useful the moment you have sold property or shares and are unsure which return to open.",
+    "useCases": [
+      "You sold a flat or redeemed debt mutual funds this year and want to know if ITR-2 is now mandatory.",
+      "You moved abroad mid-year and became an NRI or RNOR, changing the form you can file.",
+      "You hold ESOPs in unlisted shares or a foreign brokerage account and need to know which schedules apply."
+    ],
+    "benefits": [
+      [
+        "Trigger-by-trigger reasoning",
+        "Each answer that moves you to ITR-2 is listed with the schedule behind it, so nothing is a black box."
+      ],
+      [
+        "Handles the 112A carve-out",
+        "Small listed long-term gains up to Rs 1.25 lakh can stay in ITR-1 from AY 2025-26, and the checker applies that rule instead of over-flagging."
+      ],
+      [
+        "Covers ITR-3 and ITR-4 too",
+        "Business or professional income takes you out of ITR-2 entirely, and the tool says so rather than giving a wrong answer."
+      ]
+    ],
+    "faqs": [
+      [
+        "When is ITR-2 mandatory?",
+        "ITR-2 is for individuals and HUFs with no income from business or profession who have capital gains, more than one house property, foreign assets or income, total income above Rs 50 lakh, agricultural income above Rs 5,000, or who are non-resident or RNOR."
+      ],
+      [
+        "Do I need ITR-2 just for selling mutual funds?",
+        "Any capital gain other than listed equity long-term gains within the Rs 1.25 lakh section 112A allowance needs Schedule CG, which means ITR-2. Debt fund, gold, property and short-term gains all qualify."
+      ],
+      [
+        "Can I file ITR-2 if I do freelance work?",
+        "No. Freelance, consultancy, F&O and intraday income is business or professional income, so you file ITR-3, or ITR-4 Sugam if you are a resident opting for presumptive taxation under section 44AD, 44ADA or 44AE."
+      ],
+      [
+        "Does salary income go in ITR-2?",
+        "Yes. ITR-2 has a full salary schedule, so a salaried person with capital gains or foreign assets reports both salary and the other income in the same ITR-2 return."
+      ]
+    ]
+  },
+  "protein-requirement-calculator": {
+    "intro": "Protein Requirement Calculator turns your body weight and training goal into a daily protein target in grams. It applies widely cited grams-per-kilogram bands — 0.8 g/kg for the sedentary RDA, 1.2-1.6 g/kg for endurance training, 1.6-2.2 g/kg for building muscle and 1.8-2.4 g/kg for holding on to muscle in a calorie deficit — and can work from lean body mass instead of scale weight if you know your body fat percentage. It also splits the total across your meals and shows the calories that protein contributes.",
+    "useCases": [
+      "Set a protein floor before starting a cut so you don't lose muscle along with fat.",
+      "Check whether the 4 meals you already eat add up to enough protein for a lifting programme.",
+      "Work out a higher target for a parent over 65 who is trying to hold on to muscle mass."
+    ],
+    "benefits": [
+      [
+        "Ranges, not false precision",
+        "Shows the evidence-based low-to-high band per kilogram alongside a suggested midpoint target."
+      ],
+      [
+        "Lean-mass option",
+        "Switch to lean body mass when scale weight would overstate the tissue that actually needs protein."
+      ],
+      [
+        "Per-meal and food guidance",
+        "Splits the target across meals and shows roughly how much chicken, paneer, eggs or dal that means."
+      ]
+    ],
+    "faqs": [
+      [
+        "How much protein do I need per day?",
+        "The adult RDA is 0.8 g per kg of body weight, which is a deficiency-prevention floor rather than an optimum. Active people commonly aim for 1.2-1.6 g/kg, and 1.6-2.2 g/kg is the range most often cited for building muscle."
+      ],
+      [
+        "Should I use total body weight or lean body mass?",
+        "Total body weight is fine for most people. At higher body-fat levels it inflates the target, so basing the calculation on lean mass (with a body-fat estimate) gives a more realistic number."
+      ],
+      [
+        "Does eating more protein damage your kidneys?",
+        "In healthy people, higher protein intakes have not been shown to harm kidney function in the research to date. If you have existing kidney disease or another medical condition, ask your doctor before increasing protein — this tool is informational only."
+      ],
+      [
+        "Does it matter how I spread protein through the day?",
+        "Splitting intake into three to five servings of roughly 25-40 g each generally supports muscle protein synthesis better than one very large serving, though total daily intake matters most."
+      ]
+    ]
+  },
+  "percentage-of-total-calculator": {
+    "intro": "The Percentage of Total Calculator answers the question \"X is what percent of Y?\" and shows the remainder alongside it, so you see both the share and what is left. Two reverse modes cover the other unknowns: what a given percentage of a total comes to, and what total a known part represents a given percentage of. It suits marks out of a maximum, spend against a budget, one line item inside a larger figure, or any share-of-whole check.",
+    "useCases": [
+      "Convert a score of 45 out of 180 into a percentage for a mark sheet or report card.",
+      "See what share of a Rs 60,000 monthly budget a Rs 21,000 rent payment takes up, and how much is left.",
+      "Reverse-engineer a total: if a Rs 4,500 deposit was 15% of the price, work out the full price."
+    ],
+    "benefits": [
+      [
+        "Three lookups in one place",
+        "Solve for the percentage, the part, or the total without switching tools or rearranging the formula yourself."
+      ],
+      [
+        "Remainder shown too",
+        "Every result includes what is left over in both absolute and percentage terms, which is usually the follow-up question."
+      ],
+      [
+        "Safe with edge cases",
+        "A zero total or a zero percentage is flagged with a plain explanation instead of returning Infinity or NaN."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I calculate what percent one number is of another?",
+        "Divide the part by the total and multiply by 100. For example 45 / 180 x 100 = 25%, so 45 is 25% of 180."
+      ],
+      [
+        "How do I find the total when I only know the part and its percentage?",
+        "Divide the part by the percentage and multiply by 100. If 4,500 is 15% of the total, then 4,500 / 15 x 100 = 30,000."
+      ],
+      [
+        "Can the answer be more than 100%?",
+        "Yes. If the part is larger than the total the percentage exceeds 100, which is correct and common when comparing an actual figure against a target. The progress bar simply caps at full."
+      ],
+      [
+        "Why can the total not be zero?",
+        "Because the calculation divides by the total, and division by zero is undefined. If your whole is genuinely zero, there is no meaningful share to express as a percentage."
+      ]
+    ]
+  }
+,
+  "freelance-hourly-rate-calculator": {
+    "intro": "Freelance Hourly Rate Calculator works backwards from the income you want to keep to the rate you must charge. It grosses your target take-home up for tax and contributions, adds annual business expenses and an optional profit buffer, then divides by the hours you can genuinely bill after holidays, sick days and unpaid admin. The output is an hourly rate, a matching day rate and a monthly invoicing target — the numbers freelancers, consultants and contractors need before quoting.",
+    "useCases": [
+      "Set an opening rate when moving from a salaried job to full-time freelancing.",
+      "Check whether an existing rate still covers a year of software, insurance and co-working costs.",
+      "Turn an annual income goal into the monthly invoicing target you need to hit."
+    ],
+    "benefits": [
+      [
+        "Starts from take-home, not guesswork",
+        "Tax and contributions are added on top, so the rate protects the amount you actually keep."
+      ],
+      [
+        "Counts only billable hours",
+        "Holidays, sick weeks and unpaid admin are removed before the division, which is where most low rates come from."
+      ],
+      [
+        "Hourly, daily and monthly",
+        "See the same target as a rate per hour, a day rate and the revenue you need to invoice each month."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I calculate my freelance hourly rate?",
+        "Add your target take-home, tax, business expenses and a profit buffer to get the revenue you need, then divide by your realistic billable hours for the year. Dividing by 2,080 hours instead of billable hours is the classic mistake."
+      ],
+      [
+        "How many hours a year can a freelancer actually bill?",
+        "Far fewer than they work. After four weeks of holiday and a week of sick or admin time, a 40-hour week gives about 1,880 worked hours, and typically only 50 to 70 percent of those are billable once sales, invoicing and learning are removed."
+      ],
+      [
+        "Should my freelance rate be higher than my old salary rate?",
+        "Usually yes. As a freelancer you fund your own leave, pension, equipment, insurance and downtime between clients, none of which an employer salary rate has to cover."
+      ],
+      [
+        "What tax percentage should I enter?",
+        "Use the effective rate you expect on your business profit, including income tax and any social security or self-employment contributions. Rates differ by country and business structure, so this tool is informational — confirm your figure with an accountant."
+      ]
+    ]
+  },
+  "standard-deduction-impact-calculator": {
+    "intro": "Standard Deduction Impact Calculator shows the rupee value of the flat deduction every salaried employee and pensioner gets — Rs 75,000 under the new regime and Rs 50,000 under the old regime for FY 2025-26. It recomputes your slab tax with and without the deduction, applies the Section 87A rebate and 4% cess to both, and reports the real tax saved rather than the headline deduction amount. Family pension, taxed under Section 57(iia) with its own one-third cap, is handled separately.",
+    "useCases": [
+      "A salaried employee seeing whether the extra Rs 25,000 of standard deduction in the new regime is worth more than old-regime deductions.",
+      "A pensioner confirming that pension income also qualifies for the salaried standard deduction.",
+      "Someone near a rebate threshold checking whether the standard deduction alone drops their tax to zero."
+    ],
+    "benefits": [
+      [
+        "Real tax saved, not the deduction",
+        "The result is the difference in final tax including cess and the 87A rebate, so you see money, not just a number on the payslip."
+      ],
+      [
+        "Old and new side by side",
+        "Compares the Rs 50,000 and Rs 75,000 versions on the same income so the regime choice is obvious."
+      ],
+      [
+        "Family pension handled correctly",
+        "Applies the lower of one-third of pension or Rs 15,000 / Rs 25,000, which most calculators miss."
+      ]
+    ],
+    "faqs": [
+      [
+        "How much is the standard deduction for FY 2025-26?",
+        "Rs 75,000 for salary and pension income under the new regime and Rs 50,000 under the old regime. It is a flat deduction and needs no bills or proofs."
+      ],
+      [
+        "Do pensioners get the standard deduction?",
+        "Yes. Pension from a former employer is taxed under the head Salaries, so the same standard deduction applies. Family pension instead gets a deduction of one-third of the pension, capped at Rs 15,000 (old) or Rs 25,000 (new)."
+      ],
+      [
+        "Is the standard deduction available in the new tax regime?",
+        "Yes. Unlike most Chapter VI-A deductions, the standard deduction on salary is allowed under the new regime and is in fact larger there."
+      ],
+      [
+        "Why does the calculator sometimes show zero tax saved?",
+        "If the Section 87A rebate or the basic exemption already brings your tax to nil, the deduction cannot reduce tax any further — it only lowers your reported taxable income."
+      ]
+    ]
+  },
+  "simple-interest-calculator-detailed": {
+      intro:
+        "This simple interest calculator works in every direction: give it any three of principal, rate, time and interest and it rearranges SI = P × R × T ÷ 100 to solve for the fourth. Time can be entered in years, months or days on either a 365-day or 360-day basis, and the result comes with the rearranged formula, the total amount due and a year-by-year accrual table.",
+      useCases: [
+        "Check the interest a friend or a chit-fund style hand loan will cost over 18 months.",
+        "Work backwards from an interest figure you were quoted to find the effective annual rate.",
+        "Find how long a deposit must run at a known rate to earn a target interest amount."
+      ],
+      benefits: [
+        ["Solves in any direction", "Interest, principal, rate or time — pick the unknown and the formula is rearranged for you."],
+        ["Flexible time basis", "Years, months, or days on a 365-day or 360-day convention, which lenders often differ on."],
+        ["Accrual table", "Shows interest per year, the running total, and the amount due at the end of each year."]
+      ],
+      faqs: [
+        [
+          "What is the simple interest formula?",
+          "SI = P × R × T ÷ 100, where P is the principal, R is the annual rate in percent and T is the time in years. The total repayable is P + SI."
+        ],
+        [
+          "How is simple interest different from compound interest?",
+          "Simple interest is charged only on the original principal, so the amount earned each year never changes. Compound interest adds earned interest back to the balance, so later years earn more."
+        ],
+        [
+          "Why does the day-count basis matter?",
+          "A 360-day year makes each day worth slightly more interest than a 365-day year. Money-market and some commercial loans use 360; most retail deposits use 365, so match whichever your agreement states."
+        ],
+        [
+          "Do Indian banks use simple or compound interest?",
+          "Savings accounts and most fixed deposits compound (usually quarterly), while short-tenure deposits under six months and many informal loans are quoted on a simple-interest basis. Check your product's terms — this tool is informational only."
+        ]
+      ]
+    },
+  "water-intake-calculator": {
+    "intro": "Water Intake Calculator estimates how much fluid to drink in a day from three things that actually move the number: your body weight, how many minutes you exercise, and the climate you're in. It uses roughly 35 ml per kilogram of body weight as the baseline, adds about 12 ml for every minute of exercise to cover sweat losses, and tops up for hot or dry conditions — then shows the total in litres, millilitres and 250 ml glasses.",
+    "useCases": [
+      "Set a realistic daily bottle count before a summer week of outdoor work or travel.",
+      "Work out how much extra to drink on a long run or gym day compared with a rest day.",
+      "Give a rough hydration target to someone recovering from a stomach bug or working in a dry, air-conditioned office."
+    ],
+    "benefits": [
+      [
+        "Weight-based, not one-size-fits-all",
+        "Scales with your body mass instead of repeating the generic eight-glasses rule."
+      ],
+      [
+        "Accounts for sweat and climate",
+        "Adds fluid for exercise minutes and for hot or dry conditions where losses are higher."
+      ],
+      [
+        "Practical units",
+        "Shows the target in litres, millilitres and standard 250 ml glasses so it's easy to track."
+      ]
+    ],
+    "faqs": [
+      [
+        "How much water should I drink a day?",
+        "A common planning figure is about 30-35 ml per kilogram of body weight, plus extra for exercise and heat. Food also contributes roughly 20% of total fluid intake, so drink targets are estimates rather than strict rules."
+      ],
+      [
+        "Do tea, coffee and other drinks count?",
+        "Yes. Most beverages, including tea and coffee, contribute to daily fluid intake. The mild diuretic effect of caffeine does not cancel out the fluid in the cup for habitual drinkers."
+      ],
+      [
+        "How do I tell if I'm actually drinking enough?",
+        "Pale straw-coloured urine and infrequent thirst are the usual practical signs. Dark urine, headache and fatigue can point to under-drinking."
+      ],
+      [
+        "Can you drink too much water?",
+        "Yes — drinking very large volumes quickly can dilute blood sodium (hyponatraemia), which is a real risk for endurance athletes. This tool is informational; people with heart, kidney or liver conditions should follow the fluid limits their doctor sets."
+      ]
+    ]
+  },
+  "loan-against-property-calculator": {
+    "intro": "Loan Against Property Calculator estimates how large a LAP you can get by testing the two limits every lender applies: the loan-to-value cap on the mortgaged property and the EMI your income can service inside the lender's FOIR ceiling. It reports both limits, tells you which one is binding, and then shows the EMI, total interest and your resulting FOIR. Built for salaried and self-employed borrowers weighing a mortgage loan for business capital, education or debt consolidation.",
+    "useCases": [
+      "Find out whether a 1 crore residential property can support the 50 lakh you need for business working capital.",
+      "See how much more you qualify for after closing a personal loan that is eating into your FOIR.",
+      "Compare eligibility on a commercial shop at 60% LTV against a residential flat at 70% LTV.",
+      "Check the effect of stretching the tenure from 10 to 15 years on both the EMI and the eligible amount."
+    ],
+    "benefits": [
+      [
+        "Both limits, side by side",
+        "Property LTV and income affordability are calculated separately so you can see which one is holding you back."
+      ],
+      [
+        "Realistic income treatment",
+        "Only 75% of rental income counts and existing EMIs are deducted, mirroring standard lender policy."
+      ],
+      [
+        "Full repayment picture",
+        "EMI, total interest, total repayment and post-loan FOIR are shown for the amount you would actually be sanctioned."
+      ]
+    ],
+    "faqs": [
+      [
+        "How much loan can I get against my property?",
+        "Typically 50-70% of the lender's assessed market value — around 65-70% for residential, 55-60% for commercial and often 50% for vacant land — and never more than what your income can service within the FOIR limit. Any existing mortgage on the same property is deducted."
+      ],
+      [
+        "What is FOIR and why does it cap my loan?",
+        "FOIR (fixed obligation to income ratio) is the share of monthly income a lender lets you spend on all EMIs together, usually 50-60%. If your income supports an EMI of only 62,500 after existing obligations, the loan amount is capped at whatever that EMI can repay over the tenure."
+      ],
+      [
+        "Is a loan against property cheaper than a personal loan?",
+        "Yes, generally. Because the property is security, LAP rates run several percentage points below unsecured personal loan rates and tenures stretch to 15-20 years. The trade-off is that the lender can enforce the mortgage if you default."
+      ],
+      [
+        "Does the lender use my purchase price or current market value?",
+        "The lender's empanelled valuer assesses the current market value, and the LTV is applied to that figure, not to your purchase price or circle rate. The valuation is often conservative, so treat this calculator's output as an estimate."
+      ]
+    ]
+  },
+  "discount-calculator": {
+      intro:
+        "Discount Calculator turns a sticker price and a percentage off into the price you actually pay, and shows the money saved beside it. It handles stacked offers such as \"20% off, then an extra 10% at checkout\" — applying the second cut to the already-reduced price, not to the original — and can add a sales tax or GST rate on top so the figure matches the till receipt.",
+      useCases: [
+        "Check a sale tag: what does 35% off a marked price actually come to?",
+        "Test whether \"20% + extra 10%\" beats a flat 30% off (it does not — it works out to 28%).",
+        "Add GST or sales tax to a discounted price to see the real checkout total before you queue."
+      ],
+      benefits: [
+        ["Stacked discounts done right", "Sequential offers are applied one after another, the way retailers actually compute them."],
+        ["Savings shown clearly", "The amount saved and the share of the original price are broken out, not just the final number."],
+        ["Tax on top", "Apply any sales tax or GST percentage to the discounted price for a true checkout total."]
+      ],
+      faqs: [
+        [
+          "Is 20% off plus 10% off the same as 30% off?",
+          "No. The second discount applies to the already-reduced price, so 20% then 10% leaves you paying 72% of the original — a 28% total saving, not 30%."
+        ],
+        [
+          "How do I calculate a discount by hand?",
+          "Multiply the price by the discount percentage and divide by 100 to get the saving, then subtract it from the price. A 35% discount on 2,000 saves 700 and leaves 1,300."
+        ],
+        [
+          "Should tax be applied before or after the discount?",
+          "After. Tax is charged on the discounted amount you actually pay, which is why the tool applies the discounts first and then the tax rate."
+        ],
+        [
+          "How do I work out the original price from a sale price?",
+          "Divide the sale price by (1 − discount ÷ 100). A price of 1,200 after 25% off means the original was 1,200 ÷ 0.75 = 1,600."
+        ]
+      ]
+    },
+  "section-44ada-calculator": {
+    "intro": "Section 44ADA Calculator works out the presumptive income a resident professional can declare — 50% of gross receipts, or more if you choose — and the income tax on it under the new or old regime. It also checks which turnover ceiling applies to you: ₹75 lakh when cash receipts are 5% of turnover or less, otherwise ₹50 lakh. A side-by-side comparison shows what the same year would cost if you kept regular books and claimed your actual expenses instead.",
+    "useCases": [
+      "Decide whether a freelance doctor, lawyer, architect or IT consultant is better off under 44ADA or regular books.",
+      "Confirm that this year's receipts still sit under the ₹75 lakh ceiling before opting in.",
+      "Estimate the tax bill early in the year so the 15 March advance tax payment is not a surprise."
+    ],
+    "benefits": [
+      [
+        "Correct turnover ceiling",
+        "The ₹75 lakh limit is only offered when your cash receipts are within the 5% condition — otherwise it falls back to ₹50 lakh."
+      ],
+      [
+        "Straight comparison",
+        "See the presumptive tax and the actual-expenses tax next to each other before you commit."
+      ],
+      [
+        "Full tax computation",
+        "Slab tax, Section 87A rebate with marginal relief, surcharge with marginal relief and 4% cess are all applied."
+      ]
+    ],
+    "faqs": [
+      [
+        "Who can use Section 44ADA?",
+        "Resident individuals and partnership firms (not LLPs) carrying on a profession specified in Section 44AA(1) — legal, medical, engineering, architectural, accountancy, technical consultancy, interior decoration, company secretary, information technology and a few notified others."
+      ],
+      [
+        "What is the turnover limit for 44ADA?",
+        "₹50 lakh normally, raised to ₹75 lakh when cash receipts do not exceed 5% of total gross receipts. Receipts through cheque or draft that are not account-payee count as cash for this test."
+      ],
+      [
+        "Can I declare less than 50% of receipts as income?",
+        "Not under 44ADA. To declare a lower profit you must maintain books under Section 44AA and get them audited under Section 44AB, and pay tax on the actual profit."
+      ],
+      [
+        "Does the five-year lock-in of 44AD apply to 44ADA?",
+        "No. The restriction on re-entering the scheme for five years is in Section 44AD(4) and does not apply to professionals under 44ADA, who may choose year by year."
+      ]
+    ]
+  },
+  "weighted-average-calculator": {
+    "intro": "Weighted Average Calculator computes the weighted mean of any set of value and weight pairs: it multiplies each value by its weight, adds those products, and divides by the total weight. Weights do not have to add up to 100 or 1 — they are normalised automatically — and each row shows how much it contributes to the final number. Handy for course grades with different component weights, portfolio returns, survey scores and any average where some items simply matter more than others.",
+    "useCases": [
+      "Combine assignment, mid-term and final exam scores that carry 20%, 30% and 50% of a course grade.",
+      "Work out a blended interest rate or portfolio return where each holding has a different amount invested.",
+      "Average customer ratings where each product has a different number of reviews behind it."
+    ],
+    "benefits": [
+      [
+        "Weights need not total 100",
+        "Enter credit hours, rupee amounts or raw counts as weights and the tool normalises them for you."
+      ],
+      [
+        "Per-item contribution",
+        "Each row shows the points it adds to the result and its share of total weight, so outliers are easy to spot."
+      ],
+      [
+        "Weighted vs plain mean",
+        "The unweighted average is shown alongside, making the effect of weighting immediately visible."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do you calculate a weighted average?",
+        "Multiply each value by its weight, add all those products, then divide by the sum of the weights. For scores of 88, 74 and 81 with weights 20, 30 and 50 the result is (1760 + 2220 + 4050) / 100 = 80.3."
+      ],
+      [
+        "Do the weights have to add up to 100?",
+        "No. Dividing by the sum of the weights normalises them, so 2, 3 and 5 give exactly the same answer as 20, 30 and 50."
+      ],
+      [
+        "When is a weighted average better than a simple average?",
+        "Whenever the items are not equally important or not equally sized — course components with different marks, holdings with different amounts invested, or averages of averages built from different sample sizes."
+      ],
+      [
+        "Can a weight be zero or negative?",
+        "A zero weight simply excludes that item. Negative weights are rejected here because they can produce a mean outside the range of your data, which is almost never what you want."
+      ]
+    ]
+  },
+  "mutual-fund-xirr-calculator": {
+    "intro": "Mutual Fund XIRR Calculator turns a messy list of dated purchases and redemptions into one annualised return figure. You enter every transaction with its exact date, add the current portfolio value and its valuation date, and the tool solves for the rate that discounts all those cash flows back to zero — the same definition Excel's XIRR uses. It is built for investors comparing an actual SIP or lumpsum folio against a benchmark or an FD rate.",
+    "useCases": [
+      "Measure the real return on a SIP where you skipped some months or topped up in a market crash.",
+      "Work out the return on a folio you partly redeemed, since absolute return ignores when the money moved.",
+      "Compare a fund's XIRR with a fixed deposit rate before deciding to switch."
+    ],
+    "benefits": [
+      [
+        "Handles irregular dates",
+        "Any mix of purchase dates, top-ups and partial redemptions is supported, not just neat monthly SIPs."
+      ],
+      [
+        "Excel-accurate solver",
+        "Newton-Raphson with a bisection fallback on a 365-day year, so negative and unusual returns still resolve."
+      ],
+      [
+        "Absolute vs annualised",
+        "Shows total gain and absolute return alongside XIRR so you can see how much timing changed the picture."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is XIRR in mutual funds?",
+        "XIRR is the annualised rate of return that accounts for the exact date and size of every cash flow. For SIPs and any portfolio with multiple transactions it is the correct measure, because CAGR assumes a single investment held for the whole period."
+      ],
+      [
+        "Why is my XIRR different from absolute return?",
+        "Absolute return simply compares total value with total invested and ignores time. If most of your money went in recently, absolute return looks small while XIRR can be high — and the reverse for old investments."
+      ],
+      [
+        "How do I enter a redemption or SWP withdrawal?",
+        "Add it as a row with its date and choose Redemption (money out). Money you took out counts as a positive cash flow, and the current value of whatever is still invested goes in the valuation field."
+      ],
+      [
+        "What is a good XIRR for an equity fund?",
+        "Over long periods, diversified Indian equity funds have historically delivered roughly 10-14% XIRR, while debt funds sit nearer 6-8%. Past returns are not a promise of future ones — treat this as informational, not investment advice."
+      ]
+    ]
+  },
+  "equity-capital-gains-tax-calculator": {
+    "intro": "Equity Capital Gains Tax Calculator works out the tax on a listed equity share or equity mutual fund sale. It reads your buy and sell dates to decide short term or long term, applies the annual LTCG exemption, adds 4% cess, and handles grandfathering for holdings bought before 1 February 2018. Rates and the exemption limit are editable so the tool stays correct as rules change.",
+    "useCases": [
+      "Check the tax on a stock sold after two years, including how much of the annual LTCG exemption it uses up.",
+      "Compare the tax hit of selling now (short term) versus waiting past the 12-month mark.",
+      "Value a pre-2018 holding correctly using the 31 January 2018 fair market value under grandfathering."
+    ],
+    "benefits": [
+      [
+        "Holding period decided for you",
+        "Buy and sell dates set short term or long term automatically — no manual 12-month counting."
+      ],
+      [
+        "Exemption tracking",
+        "Enter the exemption you have already used this financial year so the remaining headroom is accurate."
+      ],
+      [
+        "Grandfathering built in",
+        "For pre-Feb-2018 buys the cost is taken as the higher of actual cost and the lower of 31 Jan 2018 FMV and sale price."
+      ]
+    ],
+    "faqs": [
+      [
+        "What are the current STCG and LTCG rates on listed equity?",
+        "For transfers on or after 23 July 2024, short-term gains under section 111A are taxed at 20% and long-term gains under section 112A at 12.5% on the amount above the annual exemption, plus 4% cess. Both rates are editable in the tool."
+      ],
+      [
+        "How much long-term equity gain is exempt each year?",
+        "Up to ₹1,25,000 of section 112A long-term gains in a financial year is exempt. The exemption is per taxpayer per year across all equity holdings, not per trade — which is why the tool asks how much you have already used."
+      ],
+      [
+        "When does a share become long term?",
+        "Listed equity shares and equity-oriented mutual funds become long term once held for more than 12 months from the date of acquisition. Selling at 12 months or earlier is short term."
+      ],
+      [
+        "What happens if I make a loss?",
+        "No tax is payable. A short-term capital loss can be set off against both short-term and long-term capital gains, a long-term loss only against long-term gains, and unabsorbed losses can be carried forward for up to eight assessment years if you file your return by the due date. This tool is informational — confirm your position with a tax professional."
+      ]
+    ]
+  },
+  "working-days-calculator": {
+    "intro": "Working Days Calculator counts the business days between any two dates, skipping weekends and any holidays you add. You choose which days of the week count as your weekend — Saturday and Sunday, Sunday only, or a Friday-Saturday week — so it works for six-day offices and non-standard rosters too. Alongside the business-day count it reports weekend days, holidays removed, working days per weekday and the total working hours at your chosen hours-per-day.",
+    "useCases": [
+      "Work out the real delivery or SLA date when a contract promises '15 working days'.",
+      "Calculate billable days for a contractor or agency invoice over a project period.",
+      "Plan a project timeline that has to skip public holidays and your company's fixed offs.",
+      "Check how many working days of leave a date range actually consumes before applying."
+    ],
+    "benefits": [
+      [
+        "Custom weekend, not just Sat-Sun",
+        "Toggle any combination of weekdays as non-working, which suits six-day weeks and rotational shifts."
+      ],
+      [
+        "Your own holiday list",
+        "Add dated holidays with names, or insert India's three fixed national holidays for every year in the range in one click."
+      ],
+      [
+        "Hours as well as days",
+        "Set hours per working day and the tool converts the business-day count into total working hours for billing or capacity planning."
+      ]
+    ],
+    "faqs": [
+      [
+        "Does the count include the start and end dates?",
+        "The start date is always included if it is a working day. The end date is included by default, and you can switch it off if your range is meant to be exclusive."
+      ],
+      [
+        "What happens if a holiday falls on a weekend?",
+        "It is counted once, as a weekend day. It does not reduce the working-day total a second time, and it is left out of the 'holidays removed' list."
+      ],
+      [
+        "Which holidays are built in?",
+        "Only India's three fixed-date national holidays — Republic Day on 26 January, Independence Day on 15 August and Gandhi Jayanti on 2 October. Festival dates move each year and state holiday lists differ, so add those manually from your official calendar."
+      ],
+      [
+        "Can I use it for a six-day working week?",
+        "Yes. Deselect Saturday in the weekend picker so only Sunday is treated as non-working, and the count updates immediately."
+      ]
+    ]
+  },
+  "fd-ladder-planner": {
+    "intro": "Fixed Deposit Ladder Planner splits one lump sum across several FDs of staggered tenures so a deposit matures at regular intervals instead of everything being locked until a single date. It compounds each rung quarterly the way cumulative bank FDs do, applies a rising rate to longer rungs, and reports every rung's amount, rate, maturity value and maturity date alongside the blended yield and weighted average tenure. It is aimed at savers parking a bonus, retirement payout or emergency fund who want both liquidity and long-tenure rates.",
+    "useCases": [
+      "Spread a Rs 5 lakh bonus across 1 to 5-year FDs so one deposit matures every year.",
+      "Compare a liquidity-first split that loads the short rungs against a yield-first split weighted to long tenures.",
+      "Plan a retiree's income ladder so a maturity lands each year to cover annual expenses."
+    ],
+    "benefits": [
+      [
+        "Rung-by-rung detail",
+        "Each deposit shows its amount, rate, maturity date and interest, not just a single total."
+      ],
+      [
+        "Blended yield",
+        "Reports the weighted average effective yield and average tenure of the whole ladder."
+      ],
+      [
+        "Three split strategies",
+        "Equal, short-tenure heavy or long-tenure heavy allocation with one dropdown."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is an FD ladder?",
+        "Instead of one deposit for one tenure, you divide the money into several FDs maturing at staggered dates. Something matures regularly for liquidity, while the rest keeps earning higher long-tenure rates, and reinvesting each maturity smooths out interest-rate changes."
+      ],
+      [
+        "How is FD maturity calculated here?",
+        "Each rung uses the cumulative FD formula with quarterly compounding: maturity = principal x (1 + rate/400) raised to (4 x years). This matches how most Indian banks compute cumulative fixed deposits."
+      ],
+      [
+        "Should I break an FD if rates rise?",
+        "Premature withdrawal usually attracts a penalty of around 0.5% to 1% and the rate applicable for the period actually held. A ladder reduces the need to break deposits because a rung matures regularly. This is informational, not personalised advice."
+      ],
+      [
+        "How is FD interest taxed?",
+        "FD interest is taxable at your income slab rate in the year it accrues. Banks deduct TDS at 10% once interest paid to you in a financial year crosses Rs 50,000 (Rs 1,00,000 for senior citizens); Form 15G or 15H can be filed if your income is below the taxable limit."
+      ]
+    ]
+  },
+  "section-80d-deduction-calculator": {
+    "intro": "Section 80D Health Insurance Deduction Calculator adds up the medical insurance deduction you can claim under the old tax regime for FY 2025-26: up to Rs 25,000 for yourself, your spouse and dependent children, rising to Rs 50,000 if you or your spouse is 60 or older, plus a separate Rs 25,000 or Rs 50,000 bucket for parents. It also applies the Rs 5,000 preventive health check-up cap, which sits inside those limits rather than on top of them, and the medical-expenditure route open to uninsured senior citizens.",
+    "useCases": [
+      "A 35-year-old paying Rs 22,000 for a family floater and Rs 38,000 for senior-citizen parents, checking the combined claim.",
+      "Someone who spent Rs 8,000 on health check-ups wanting to see how much of it actually counts against the Rs 5,000 cap.",
+      "A taxpayer with uninsured 75-year-old parents claiming their medical bills under the Rs 50,000 expenditure route."
+    ],
+    "benefits": [
+      [
+        "Two separate buckets",
+        "Self-and-family and parents are calculated independently, so a Rs 50,000 parents claim is never squeezed by your own premium."
+      ],
+      [
+        "Preventive cap done right",
+        "The Rs 5,000 check-up allowance is counted inside the section limits and shared across both buckets, not added twice."
+      ],
+      [
+        "Shows what you cannot claim",
+        "Highlights spend that falls outside the limits and the tax saved at your slab rate plus 4% cess."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the maximum Section 80D deduction?",
+        "Rs 25,000 for self, spouse and children plus Rs 25,000 for parents — a total of Rs 50,000. If both you and your parents are senior citizens the limits rise to Rs 50,000 each, so up to Rs 1,00,000."
+      ],
+      [
+        "Is the Rs 5,000 preventive health check-up extra?",
+        "No. It is included within your Rs 25,000 or Rs 50,000 limit, not added on top, and the Rs 5,000 is an overall cap across self, family and parents."
+      ],
+      [
+        "Can I claim 80D under the new tax regime?",
+        "No. Section 80D is a Chapter VI-A deduction available only if you opt for the old tax regime."
+      ],
+      [
+        "Can medical bills be claimed if there is no insurance policy?",
+        "Yes, but only for senior citizens aged 60 or above who are not covered by any health insurance. Their medical expenditure is deductible within the Rs 50,000 limit. Premiums themselves must be paid by a non-cash mode."
+      ]
+    ]
+  },
+  "quotation-generator": {
+    "intro": "Quotation Generator prices a client proposal end to end. Each line takes a quantity, rate, its own discount percentage and GST slab; an optional overall discount is then spread across the lines in proportion to value so every line keeps its correct tax rate. The tool shows the taxable value, the IGST or CGST + SGST split, the rounded grand total, the advance-versus-balance breakdown and a validity date calculated from the quote date. Built for freelancers, agencies, consultants and small suppliers.",
+    "useCases": [
+      "Send a design or development proposal where each deliverable has its own price and negotiated discount.",
+      "Show a client exactly how much a bundled discount saves them, in rupees and as a percentage of the gross value.",
+      "Set a clear expiry on your pricing — a 15-day validity stops an old quote resurfacing after your costs change."
+    ],
+    "benefits": [
+      [
+        "Two levels of discount",
+        "Discount individual lines, then apply an overall percentage on top, with the tax recalculated correctly."
+      ],
+      [
+        "Advance and balance split",
+        "Enter an advance percentage and see the deposit and the remaining balance as separate amounts."
+      ],
+      [
+        "Validity worked out for you",
+        "Set the number of days and the expiry date is calculated and printed on the quotation."
+      ]
+    ],
+    "faqs": [
+      [
+        "How long should a quotation stay valid?",
+        "Fifteen to thirty days is common for services, and shorter for anything exposed to material or currency prices. State the expiry on the document so there is no ambiguity later."
+      ],
+      [
+        "Is a quotation the same as a proforma invoice?",
+        "No. A quotation is an offer of price and scope before the client agrees; a proforma invoice is issued after agreement as a request for payment. Neither is a tax invoice."
+      ],
+      [
+        "How is the overall discount applied to tax?",
+        "It reduces the already-discounted line values proportionally, and GST is then charged on each line's reduced value at that line's own rate — so mixed 5%, 12% and 18% items stay accurate."
+      ],
+      [
+        "Can I quote without GST?",
+        "Yes — set the GST rate to 0% on every line, which suits businesses below the registration threshold or supplies that are exempt. Confirm your position with your accountant."
+      ]
+    ]
+  },
+  "hra-exemption-calculator-detailed": {
+    "intro": "HRA Exemption Calculator applies the section 10(13A) least-of-three test to your own numbers: actual house rent allowance received, rent paid minus 10% of salary, and 50% of salary for Delhi, Mumbai, Kolkata and Chennai or 40% everywhere else. It shows each limb separately, names the one that binds, and prints a month-by-month table of exempt and taxable HRA. You can add extra periods for a mid-year salary revision, a rent increase or a move between a metro and a non-metro city.",
+    "useCases": [
+      "Check how much of your HRA is actually exempt before submitting rent receipts to payroll.",
+      "Split the year into two periods when you shift from Bengaluru to Mumbai and the 40% rule becomes 50%.",
+      "Compare a proposed rent with your salary structure to see how much extra exemption it would really buy."
+    ],
+    "benefits": [
+      [
+        "All three limbs shown",
+        "You see actual HRA, rent minus 10% of salary and the 50/40% cap side by side, plus which one is limiting your exemption."
+      ],
+      [
+        "Handles mid-year changes",
+        "Add up to four periods with their own months, city type, salary, HRA and rent instead of forcing one average for the year."
+      ],
+      [
+        "Month-wise table",
+        "A per-month breakdown of exempt and taxable HRA that matches how payroll processes the declaration."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is HRA exemption calculated?",
+        "The exemption is the least of three amounts: the HRA actually received, rent paid minus 10% of salary, and 50% of salary if you live in Delhi, Mumbai, Kolkata or Chennai (40% in any other city). Salary means basic pay plus dearness allowance forming part of retirement benefits plus commission fixed as a percentage of turnover."
+      ],
+      [
+        "Which cities count as metro for HRA?",
+        "Only Delhi, Mumbai, Kolkata and Chennai qualify for the 50% limit. Bengaluru, Hyderabad, Pune, Gurugram, Noida and every other city use the 40% limit, however expensive they are."
+      ],
+      [
+        "Can I claim HRA under the new tax regime?",
+        "No. The section 10(13A) exemption is one of the deductions given up under the new regime, so it only reduces tax if you file under the old regime."
+      ],
+      [
+        "Do I need my landlord's PAN?",
+        "If your rent for the year exceeds Rs 1,00,000, your employer must collect the landlord's PAN (or a declaration where the landlord has none) before allowing the exemption in Form 16."
+      ]
+    ]
+  },
+  "project-estimate-calculator": {
+    "intro": "Project Estimate Calculator turns a task list into a quote and a delivery date. Enter the hours you expect each piece of work to take, set your hourly rate and a contingency buffer, and it returns the cost before and after the buffer, the total hours, and a finish date based on the hours you can actually give the project each week. Built for freelancers, agencies and studios who need a defensible number rather than a gut-feel figure.",
+    "useCases": [
+      "Price a website build by breaking it into discovery, design, build and testing hours.",
+      "Show a client what a 20 percent contingency buffer adds in both hours and money.",
+      "Check whether a project can realistically ship by a requested date at 25 billable hours a week."
+    ],
+    "benefits": [
+      [
+        "Task-level transparency",
+        "Every task shows its hours, share of the project and cost, so a quote can be defended line by line."
+      ],
+      [
+        "Buffer priced explicitly",
+        "Contingency is calculated as its own hours and rupee figure instead of being hidden inside padded estimates."
+      ],
+      [
+        "Realistic delivery date",
+        "The timeline uses weekdays and your real weekly capacity, not an imaginary 40-hour week on one project."
+      ]
+    ],
+    "faqs": [
+      [
+        "How big should a project contingency buffer be?",
+        "Common practice is 15 to 25 percent for familiar work and 30 to 50 percent when requirements are vague or the technology is new. The buffer covers rework and unknowns, not scope the client adds later."
+      ],
+      [
+        "Should I quote a fixed price or hourly?",
+        "Estimate in hours either way. A fixed price is simply your buffered hours times your rate, agreed up front, which shifts the risk of overrun to you — so a clear scope and a healthy buffer matter more."
+      ],
+      [
+        "Why is my delivery date later than total hours divided by 40?",
+        "Because almost nobody bills 40 hours a week to one project. Enter the hours you can genuinely dedicate — often 20 to 30 — and the timeline stretches accordingly, which is why deadlines slip."
+      ],
+      [
+        "How do I estimate hours for a task I have not done before?",
+        "Break it into subtasks small enough to picture finishing in a day or less, estimate each, then add them up. Smaller pieces are far more accurate than one large guess, and unfamiliar work deserves a bigger buffer."
+      ]
+    ]
+  },
+  "ideal-body-weight-calculator": {
+    "intro": "Ideal Body Weight Calculator runs your height through the four formulas clinicians actually use — Devine (1974), Robinson (1983), Miller (1983) and Hamwi (1964) — and sets them beside the weight range that corresponds to a healthy BMI of 18.5 to 24.9. Because the formulas disagree by several kilograms, the tool reports a band rather than a single figure, applies an optional small/medium/large frame adjustment, and can compare your current weight and BMI against that band.",
+    "useCases": [
+      "See how far a goal weight sits from the clinical ideal range before setting a target.",
+      "Understand why a doctor's chart, a fitness app and a BMI table all quote different 'ideal' numbers.",
+      "Check a healthy weight band for your height when planning a gradual gain or loss."
+    ],
+    "benefits": [
+      [
+        "Four formulas plus BMI",
+        "Devine, Robinson, Miller and Hamwi shown side by side against the 18.5-24.9 BMI range."
+      ],
+      [
+        "A range, not a single number",
+        "Combines all five methods into one honest band, because no formula is authoritative on its own."
+      ],
+      [
+        "Frame size and current weight",
+        "Optional small/large frame adjustment and a comparison of where your current weight and BMI land."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the Devine formula for ideal body weight?",
+        "For men it is 50 kg plus 2.3 kg for each inch over 5 feet; for women, 45.5 kg plus 2.3 kg per inch over 5 feet. It was created in 1974 to standardise drug dosing, not to define an aesthetic goal."
+      ],
+      [
+        "Why do the four formulas give different answers?",
+        "Each was derived from a different population and era — Hamwi came from diabetes dosing charts, Robinson and Miller re-fitted the Devine approach to newer data. Differences of 3-6 kg between them are normal."
+      ],
+      [
+        "Is ideal body weight the same as a healthy weight?",
+        "No. Ideal body weight formulas use only height and sex; they cannot see muscle mass, bone density or fat distribution. A muscular person can sit above the range and be perfectly healthy."
+      ],
+      [
+        "Should I use this to set a goal weight?",
+        "Treat it as a reference band, not a prescription. This tool is informational — discuss a personal target with a doctor or registered dietitian, especially if you have a medical condition or a history of disordered eating."
+      ]
+    ]
+  },
+  "tip-split-calculator": {
+      intro:
+        "Tip and Bill Split Calculator takes the bill, the tax on it and the tip you want to leave, then divides the total between everyone at the table. You choose whether the tip is calculated on the pre-tax or post-tax amount, and you can round each person's share (or the whole bill) up to the nearest ₹1, ₹5, ₹10, ₹20, ₹50 or ₹100 — the tool then shows the effective tip rate that rounding actually produced.",
+      useCases: [
+        "Split a restaurant bill four ways and round each share up to a clean ₹10 note.",
+        "Check what a 10% tip really costs once GST is on the bill, and compare tipping pre-tax versus post-tax.",
+        "Round the whole table's total up to the nearest ₹100 so one person can pay by card and collect round numbers back."
+      ],
+      benefits: [
+        ["Rounding that adds up", "Round per person or on the total; the difference is folded into the tip so the maths still balances."],
+        ["Pre-tax or post-tax tip", "One toggle switches the tip base, since tipping on the tax inflates what you leave."],
+        ["Honest effective rate", "After rounding you see the tip percentage you are actually leaving, not the one you typed."]
+      ],
+      faqs: [
+        [
+          "Should the tip be calculated before or after tax?",
+          "Convention is to tip on the pre-tax bill, since tax is not part of the service. Tipping on the post-tax total is simply more generous — the toggle lets you see both."
+        ],
+        [
+          "Is tipping expected in India?",
+          "It is customary but not obligatory. Roughly 5-10% of the bill is common in sit-down restaurants, and nothing is expected at counters or dhabas."
+        ],
+        [
+          "What is a service charge and do I still tip?",
+          "A service charge is a percentage the restaurant adds to the bill itself. Indian consumer guidance treats it as voluntary, so if it has already been charged most people skip an extra tip."
+        ],
+        [
+          "How does the rounding option change the total?",
+          "Rounding only ever goes up. The extra amount is added to the tip, so the bill and tax stay exact and the effective tip rate rises slightly — the tool shows both the rounded and unrounded totals."
+        ]
+      ]
+    },
+  "sukanya-samriddhi-calculator": {
+    "intro": "Sukanya Samriddhi Calculator projects the maturity value of an SSY account from your yearly deposit, the girl child's date of birth and the current scheme rate. It follows the real rules: deposits run for the first 15 years, interest keeps compounding annually until the account matures 21 years after opening, and contributions must stay between Rs 250 and Rs 1,50,000 per financial year. It is built for parents and guardians of a girl child under 10 who want the maturity amount and the exact maturity date in one view.",
+    "useCases": [
+      "See what Rs 1.5 lakh a year from your daughter's first birthday is worth when the account matures at 21 years.",
+      "Check the maturity date and whether the corpus lands in time for college admission or the partial withdrawal allowed at 18.",
+      "Compare a Rs 1,000 a month habit against a single yearly deposit at the scheme's current rate."
+    ],
+    "benefits": [
+      [
+        "Real scheme rules",
+        "Enforces the Rs 250 to Rs 1.5 lakh band, 15 deposit years and 21-year maturity."
+      ],
+      [
+        "Eligibility aware",
+        "Uses the girl child's date of birth to check the under-10 account opening window."
+      ],
+      [
+        "Year-wise growth",
+        "Shows how deposits and annual interest build the corpus year after year."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the current Sukanya Samriddhi interest rate?",
+        "The rate is notified quarterly by the Ministry of Finance and has been 8.2% per annum, compounded annually, since the January-March 2024 quarter. Update the rate field if a newer notification applies."
+      ],
+      [
+        "How long do I have to deposit into SSY?",
+        "Deposits are required for 15 years from the date of opening, subject to a minimum of Rs 250 in each financial year. The account then keeps earning interest until it matures 21 years after opening."
+      ],
+      [
+        "Who can open a Sukanya Samriddhi account?",
+        "A parent or legal guardian can open it for a girl child before she turns 10, with a maximum of two accounts per family (three in the case of twins or triplets in the second birth)."
+      ],
+      [
+        "Is SSY money tax-free?",
+        "SSY carries EEE status: deposits qualify under Section 80C, the interest is exempt and the maturity amount is tax-free. This is general information rather than tax advice for your situation."
+      ]
+    ]
+  },
+  "step-up-sip-calculator": {
+    "intro": "Step-Up SIP Calculator shows what a monthly mutual fund SIP grows into when you raise the instalment by a fixed percentage every year, which is how most people actually invest as their salary rises. It compounds each month at your expected return, increases the contribution on every 12-month anniversary, and separates the amount invested from the market gains. Use it to see how a modest 10% annual step-up compares with a flat SIP over the same period.",
+    "useCases": [
+      "Check how a Rs 10,000 SIP with a 10% yearly increase compares with a flat Rs 10,000 SIP over 15 years.",
+      "Size the starting SIP needed to reach a retirement or house-deposit target when you can raise it each year.",
+      "Plan an annual SIP top-up that matches your expected salary hike each April."
+    ],
+    "benefits": [
+      [
+        "Month-level maths",
+        "Compounds monthly and steps the instalment up on each yearly anniversary, not with a rough shortcut."
+      ],
+      [
+        "Flat SIP comparison",
+        "Shows exactly how much extra corpus the annual increase is responsible for."
+      ],
+      [
+        "Year-wise schedule",
+        "Lists the instalment, amount invested and corpus for each year of the plan."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is a step-up SIP?",
+        "A step-up or top-up SIP raises your monthly instalment by a set percentage or amount at a fixed interval, usually once a year. Most fund houses and platforms let you register the top-up when you set up the mandate."
+      ],
+      [
+        "What return should I assume?",
+        "Equity fund returns are not guaranteed. Long-run equity index returns in India have often been modelled around 10% to 12% a year, but you should test a conservative figure too. Past performance does not predict future returns."
+      ],
+      [
+        "Does a step-up SIP beat simply starting with a bigger SIP?",
+        "Starting bigger puts more money to work earlier and usually ends with a larger corpus for the same total invested. A step-up is a practical middle path when your current cash flow cannot support the larger amount yet."
+      ],
+      [
+        "How are SIP gains taxed?",
+        "Each SIP instalment is treated as a separate purchase for capital gains, so the holding period is counted instalment by instalment. Equity fund gains are taxed as long-term after 12 months and short-term before that, at the rates in force. This is informational, not tax advice."
+      ]
+    ]
+  },
+  "ratio-calculator": {
+    "intro": "Ratio Calculator handles the three things people actually need from ratios: reducing one to its simplest whole-number form, solving a proportion like 3 : 4 = 12 : ? for the missing term, and dividing a total in a given ratio such as 2 : 3 : 5. It reduces using the greatest common divisor and scales decimal terms to whole numbers first, so 1.5 : 2 correctly becomes 3 : 4. Every mode shows the working — scale factor, sum of parts, value of one part and each term's percentage share.",
+    "useCases": [
+      "Reduce a screen or image ratio like 1920 : 1080 down to 16 : 9 before setting a canvas size.",
+      "Split profit, rent or a prize pool between people in an agreed ratio and see each share plus its percentage.",
+      "Scale a recipe or a concrete mix by solving 3 : 4 = 12 : ? for the quantity of the second ingredient."
+    ],
+    "benefits": [
+      [
+        "Three modes in one place",
+        "Simplify, solve a proportion, or split a total without switching tools."
+      ],
+      [
+        "Handles decimals",
+        "Decimal terms are scaled to integers before reducing, so 1.5 : 2 gives an exact 3 : 4."
+      ],
+      [
+        "Shows the working",
+        "Scale factor, cross-product check, value of one part and percentage shares are all displayed."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do you simplify a ratio?",
+        "Divide every term by the greatest common divisor of all the terms. For 1920 : 1080 the GCD is 120, which reduces the ratio to 16 : 9."
+      ],
+      [
+        "How do I find a missing term in a proportion?",
+        "In a : b = c : d, cross-multiply so a x d = b x c. Solving for the missing fourth term gives d = (b x c) / a — for example 3 : 4 = 12 : d gives d = (4 x 12) / 3 = 16."
+      ],
+      [
+        "How do I divide an amount in a ratio like 2:3:5?",
+        "Add the parts (2 + 3 + 5 = 10), divide the total by that sum to get the value of one part, then multiply each part by it. A total of 5,000 splits into 1,000, 1,500 and 2,500."
+      ],
+      [
+        "Can a ratio have three or more terms?",
+        "Yes. Simplify mode accepts a third term, and split mode accepts as many parts as you type separated by colons, commas or spaces."
+      ]
+    ]
+  },
+  "expense-ratio-impact-calculator": {
+    "intro": "Expense Ratio Impact Calculator shows the money a mutual fund's annual charge quietly removes from your corpus over a long holding period. Enter a SIP or lumpsum, a gross return, and two expense ratios — typically a regular plan against its direct plan — and it compares the final corpus under each, plus a zero-cost benchmark. Because the fee is charged on the whole portfolio every year, the loss compounds far beyond the headline percentage.",
+    "useCases": [
+      "See what switching a 20-year SIP from a 1.75% regular plan to a 0.6% direct plan is worth.",
+      "Compare an actively managed fund at 1.5% with an index fund at 0.2% before you commit.",
+      "Explain to a first-time investor why a 1% fee is not a 1% loss over 20 years."
+    ],
+    "benefits": [
+      [
+        "Two ratios side by side",
+        "Compare any pair of expense ratios plus a zero-cost benchmark in one view."
+      ],
+      [
+        "SIP or lumpsum",
+        "Switch modes to model a monthly instalment or a one-time investment with the same maths."
+      ],
+      [
+        "Year-wise widening gap",
+        "A table shows how the difference grows each year, which is where the real damage shows up."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is a mutual fund expense ratio?",
+        "It is the fund's annual running cost — management fee, administration and distribution charges — expressed as a percentage of assets. It is deducted from the scheme daily, so the NAV you see is already net of it."
+      ],
+      [
+        "What is the maximum expense ratio SEBI allows?",
+        "SEBI caps total expense ratio on a sliding scale by scheme size: currently up to 2.25% for open-ended equity schemes and 2.00% for other open-ended schemes, with lower caps as assets grow. Index funds and ETFs have much tighter limits."
+      ],
+      [
+        "How much cheaper is a direct plan?",
+        "Direct plans skip the distributor commission, so they typically run 0.5-1.2 percentage points cheaper than the regular plan of the very same scheme with the same portfolio and fund manager."
+      ],
+      [
+        "Should I switch from a regular plan to a direct plan?",
+        "A switch is a redemption and a fresh purchase, so it can trigger capital gains tax and any exit load — weigh those one-time costs against the ongoing saving this calculator shows. This is informational, not investment advice."
+      ]
+    ]
+  },
+  "tds-on-salary-calculator": {
+    "intro": "TDS on Salary Calculator estimates the tax your employer should withhold every month under Section 192. Enter your annual gross salary, the regime you declared, and any exemptions or deductions you have submitted proof for — the tool computes salary income after the standard deduction, applies the slab rates, Section 87A rebate, surcharge and 4% cess, then divides the balance across the months still left in the financial year. Useful for salaried employees checking a payslip and for payroll staff sanity-checking a withholding sheet.",
+    "useCases": [
+      "Check whether the TDS on your payslip matches what your declared investments should produce.",
+      "See how much monthly TDS jumps in the last quarter if you fail to submit proofs on time.",
+      "Compare the new regime's ₹75,000 standard deduction against the old regime with HRA and 80C."
+    ],
+    "benefits": [
+      [
+        "Regime-aware",
+        "The old regime opens HRA, 80C, 80D and home loan interest; the new regime keeps only the standard deduction and employer NPS."
+      ],
+      [
+        "Statutory caps applied",
+        "80C is capped at ₹1,50,000, 80CCD(1B) at ₹50,000, home loan interest at ₹2,00,000 and professional tax at ₹2,500."
+      ],
+      [
+        "Catch-up aware",
+        "Enter the TDS already deducted and the months left, and the tool re-spreads only the remaining balance."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is TDS on salary calculated?",
+        "Under Section 192 the employer estimates your annual salary income, allows the standard deduction and any declared exemptions and Chapter VI-A deductions, computes the annual tax including cess, and deducts one-twelfth of it each month — adjusting later months if declarations change."
+      ],
+      [
+        "What is the standard deduction on salary?",
+        "₹75,000 in the new regime and ₹50,000 in the old regime for FY 2025-26. It is allowed automatically on salary income without any proof or investment."
+      ],
+      [
+        "Why did my TDS suddenly increase in January or February?",
+        "If you did not submit investment proofs, the employer withdraws the provisional deductions and recovers the shortfall over the remaining months of the year, which makes the last few deductions much larger."
+      ],
+      [
+        "Can I claim HRA and 80C in the new regime?",
+        "No. The new regime disallows HRA, LTA, 80C, 80D and most other deductions. Only the standard deduction, the employer's NPS contribution under 80CCD(2) and a few specific items remain."
+      ]
+    ]
+  },
+  "retirement-corpus-calculator": {
+    "intro": "Retirement Corpus Calculator works out how large a corpus you need on the day you retire so your current monthly expenses stay funded for the rest of your life. It inflates today's spending to your retirement date, then discounts the retirement years at a real rate that nets your post-retirement return against inflation, and shows the monthly SIP that closes the gap after existing savings. Built for anyone putting a number on their retirement goal rather than guessing.",
+    "useCases": [
+      "Find the corpus a 32-year-old spending Rs 60,000 a month needs to retire at 60 and live to 85.",
+      "See how much earlier retirement raises the target, by comparing a retirement age of 55 against 60.",
+      "Check whether your current EPF and mutual fund balance is on track, and what monthly SIP fills the shortfall."
+    ],
+    "benefits": [
+      [
+        "Separate pre and post rates",
+        "Use an aggressive return while you accumulate and a conservative one after you retire."
+      ],
+      [
+        "Inflation all the way through",
+        "Expenses are inflated to retirement and keep rising through retirement, not frozen at day one."
+      ],
+      [
+        "Shortfall, not just target",
+        "Existing savings are grown forward and netted off, so you see the real gap and the SIP to close it."
+      ]
+    ],
+    "faqs": [
+      [
+        "How is the retirement corpus calculated?",
+        "Today's monthly expense is inflated to your retirement date, then treated as an inflation-linked income stream for your retirement years and discounted at the real rate - your post-retirement return adjusted for inflation. That present value at retirement is the corpus."
+      ],
+      [
+        "What return should I assume after retirement?",
+        "A conservative figure is usual, since a retirement portfolio tilts towards debt and needs stability. Many planners use 7-8% after retirement against a higher accumulation-phase return."
+      ],
+      [
+        "Why does retiring five years early raise the target so much?",
+        "You lose five years of compounding and add five years of withdrawals, and both work against you at the same time. Early retirement targets are typically far larger than most people expect."
+      ],
+      [
+        "Should I include my EPF and PPF balance?",
+        "Yes - include anything you will actually use for retirement in existing savings. Keep amounts earmarked for other goals, like a child's education, out of the figure."
+      ]
+    ]
+  },
+  "rule-of-72-calculator": {
+    "intro": "Rule of 72 Calculator estimates how many years an investment takes to double at a given annual return, using the classic shortcut of dividing 72 by the rate. It runs the exact logarithmic formula alongside it so you can see how far the shortcut drifts, and works in reverse to find the return needed to double within a target number of years. Handy for quick sanity checks before you reach for a spreadsheet.",
+    "useCases": [
+      "Estimate in your head how long a 12% equity return takes to double your money.",
+      "Find the return you need to double a corpus in exactly 7 years.",
+      "Show someone why a 4% savings account takes roughly 18 years to double while 12% takes about 6."
+    ],
+    "benefits": [
+      [
+        "Shortcut and exact side by side",
+        "See the Rule of 72 answer next to the true logarithmic result and the error between them."
+      ],
+      [
+        "Works in reverse",
+        "Solve for the annual rate needed to double within a target number of years."
+      ],
+      [
+        "Beyond doubling",
+        "Tripling, quadrupling and 8x timelines are shown for the same rate."
+      ]
+    ],
+    "faqs": [
+      [
+        "How does the Rule of 72 work?",
+        "Divide 72 by the annual return percentage to get the approximate years to double. At 8% a year, 72 divided by 8 gives roughly 9 years."
+      ],
+      [
+        "How accurate is the Rule of 72?",
+        "It is closest between about 6% and 10%, where it lands within a few weeks of the exact answer. At very low or very high rates the error widens, which is why this tool shows the exact figure too."
+      ],
+      [
+        "Why 72 and not 69 or 70?",
+        "The mathematically exact constant for continuous compounding is about 69.3, but 72 is used because it divides cleanly by 2, 3, 4, 6, 8, 9 and 12 - making mental arithmetic easy with only a small loss of accuracy."
+      ],
+      [
+        "Does the Rule of 72 account for inflation or tax?",
+        "No. Feed it a real, post-tax return if you want the doubling time in purchasing-power terms - doubling at 12% while inflation runs 6% doubles your money, not what it buys."
+      ]
+    ]
+  },
+  "date-add-subtract-calculator": {
+    "intro": "Date Add Subtract Calculator moves any date forwards or backwards by a mix of years, months, weeks and days and shows the exact resulting date with its weekday, ISO week number and day of year. Month arithmetic is end-of-month safe, so 31 January plus one month correctly lands on the last day of February rather than spilling into March. A business-day mode steps over Saturdays and Sundays for deadline and turnaround calculations.",
+    "useCases": [
+      "Find the exact expiry date when a document, warranty or visa is valid for 90 days or 6 months.",
+      "Work out a project deadline 45 working days from today, skipping weekends.",
+      "Calculate a notice-period end date three months after a resignation date.",
+      "Set a reminder date 21 days before an event by subtracting from the event date."
+    ],
+    "benefits": [
+      [
+        "End-of-month safe",
+        "Adding months to the 29th, 30th or 31st clamps to the last valid day of the target month instead of rolling over, and the tool tells you when it happened."
+      ],
+      [
+        "Mix all four units at once",
+        "Years, months, weeks and days can be combined in a single calculation, applied in a consistent, documented order."
+      ],
+      [
+        "Business-day mode",
+        "Switch on business days and the calculator steps forward or backward over weekends, which is how most SLA and turnaround clauses count."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is 31 January plus one month?",
+        "28 February, or 29 February in a leap year. Since 31 February does not exist, the calculator clamps to the last day of the target month, which is how date libraries and most contracts treat it."
+      ],
+      [
+        "In what order are years, months, weeks and days applied?",
+        "Years and months first, with end-of-month clamping, then weeks and days as plain calendar days. The order matters near month ends, so it is kept fixed and shown on the page."
+      ],
+      [
+        "How does business-day mode differ?",
+        "It ignores the years, months and weeks fields and moves the date one working day at a time, skipping Saturday and Sunday. It does not know about public holidays — add those manually or use a working-days calculator."
+      ],
+      [
+        "Is the ISO week number the same as the calendar week?",
+        "Not always. ISO weeks start on Monday and week 1 is the week containing the first Thursday of the year, so early January dates can fall in week 52 or 53 of the previous year."
+      ]
+    ]
+  },
+  "section-80e-deduction-calculator": {
+    "intro": "Section 80E Education Loan Interest Deduction estimates how much of your education loan interest is actually deductible. It builds a full EMI amortisation from your loan amount, rate and tenure, splits interest year by year, and marks which years fall inside the eight assessment years that Section 80E allows from the year repayment begins. Because the section caps the years and not the rupees, a long tenure can leave interest stranded outside the window — the calculator shows exactly how much.",
+    "useCases": [
+      "A graduate starting repayment on a Rs 15 lakh loan, checking the first-year deduction before submitting an investment declaration.",
+      "A parent who co-signed a child's education loan working out the total tax saving across the eight eligible years.",
+      "Someone deciding between a 10-year and a 15-year tenure and seeing how much interest falls outside the 80E window."
+    ],
+    "benefits": [
+      [
+        "Year-by-year amortisation",
+        "Real reducing-balance EMI maths gives the interest for each financial year rather than a flat average."
+      ],
+      [
+        "8-year window mapped out",
+        "Each year is labelled deductible or expired so the eligibility period is unambiguous."
+      ],
+      [
+        "Tax saving in rupees",
+        "Applies your slab rate plus 4% cess to the deductible interest to show the actual benefit."
+      ]
+    ],
+    "faqs": [
+      [
+        "Is there a maximum limit on the Section 80E deduction?",
+        "No. The entire interest paid in a year is deductible, with no monetary ceiling. The limit is on time — eight assessment years starting from the year you begin repaying interest, or until the interest is fully repaid, whichever comes first."
+      ],
+      [
+        "Can I claim the principal repayment too?",
+        "No. Only the interest component qualifies under Section 80E. Principal repayment on an education loan gets no deduction."
+      ],
+      [
+        "Who can claim the deduction?",
+        "An individual who has taken the loan from a bank, notified financial institution or approved charitable institution for higher education of self, spouse, children, or a student for whom they are legal guardian."
+      ],
+      [
+        "Is Section 80E available in the new tax regime?",
+        "No. Like other Chapter VI-A deductions, 80E can be claimed only if you opt for the old tax regime."
+      ]
+    ]
+  },
+  "gratuity-calculator-india": {
+    "intro": "Gratuity Calculator India applies the Payment of Gratuity Act, 1972 formula - 15 days of last drawn basic plus DA for every completed year, divided by 26 - and shows what you should receive when you resign or retire. It also runs the section 10(10) exemption test against the Rs 20 lakh lifetime cap so you can see how much of the payout is tax free and how much is added to salary income. Employers outside the Act (the 15/30 half-month basis) and government employees, whose gratuity is fully exempt, are handled separately.",
+    "useCases": [
+      "Estimate the gratuity in your full and final settlement before your last working day.",
+      "Check whether staying a few extra months adds a full year to the calculation under the six-month rounding rule.",
+      "See how much gratuity becomes taxable when the payout crosses the Rs 20 lakh lifetime exemption."
+    ],
+    "benefits": [
+      [
+        "Correct 15/26 rounding",
+        "A part-year longer than six months counts as a whole year under the Act, and the tool applies that instead of truncating your service."
+      ],
+      [
+        "Covered and non-covered employers",
+        "Switch between the 15/26 statutory basis and the 15/30 half-month basis used by employers outside the Act."
+      ],
+      [
+        "Lifetime cap tracked",
+        "Enter exemption already used at earlier employers and the Rs 20 lakh limit is reduced accordingly."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the gratuity formula in India?",
+        "For employers covered by the Payment of Gratuity Act it is last drawn monthly basic plus dearness allowance multiplied by 15, multiplied by years of service, divided by 26. Employers not covered by the Act use a half month's average salary for each completed year."
+      ],
+      [
+        "Do I get gratuity before five years?",
+        "Generally no - the Act requires five years of continuous service. The condition is waived if service ends because of death or disablement, in which case gratuity is payable for the service actually rendered."
+      ],
+      [
+        "How much gratuity is tax free?",
+        "For non-government employees the exemption under section 10(10) is the least of the gratuity received, the statutory formula amount, and Rs 20,00,000 - and that Rs 20 lakh is a lifetime limit across all employers. Government gratuity is fully exempt."
+      ],
+      [
+        "Does 4 years and 7 months count as 5 years?",
+        "No. You must first complete five years; only then does a part-year in excess of six months round up. Once eligible, 10 years and 8 months is counted as 11 years in the formula."
+      ]
+    ]
+  },
+  "credit-card-minimum-due-calculator": {
+    "intro": "Credit Card Minimum Due Calculator simulates your card balance month by month when you pay only the minimum amount due. It applies the monthly finance charge, adds 18% GST on that interest, recalculates the shrinking minimum each cycle, and reports how many years the debt lasts and what it costs in total. It also compares that against paying a fixed amount every month, so you can see exactly what the minimum-due trap costs you.",
+    "useCases": [
+      "See how long a 1 lakh revolved balance at 3.5% per month really takes to clear on minimum payments alone.",
+      "Work out the smallest fixed monthly payment that clears the card within 12 or 24 months.",
+      "Decide whether converting the outstanding balance to an EMI plan beats revolving it.",
+      "Show a family member, in rupees, why paying only the minimum keeps the balance alive for decades."
+    ],
+    "benefits": [
+      [
+        "Real month-by-month simulation",
+        "No shortcut formula — the balance, interest, GST and recalculated minimum are stepped through every cycle."
+      ],
+      [
+        "GST handled correctly",
+        "18% GST on the finance charge is tracked separately rather than capitalised, in line with card interest rules."
+      ],
+      [
+        "Side-by-side comparison",
+        "See the months and rupees saved by paying a fixed amount instead of the minimum due."
+      ]
+    ],
+    "faqs": [
+      [
+        "What happens if I only pay the minimum due every month?",
+        "Your account stays current and no late fee applies, but interest keeps accruing on the revolved balance. On a typical Indian card at 3.5% per month with a 5% minimum, a 1 lakh balance takes well over 30 years and costs several times the original amount in interest and GST."
+      ],
+      [
+        "How is the minimum amount due calculated?",
+        "Most Indian issuers set it at around 5% of the total outstanding, subject to a floor of about 100-200 rupees, plus any EMI instalments, over-limit amount and past dues. Check your statement — the exact formula varies by issuer."
+      ],
+      [
+        "Does paying the minimum due hurt my credit score?",
+        "It avoids the severe hit of a missed payment, but the high outstanding balance keeps your credit utilisation elevated, which typically drags the score down. It also means you lose the interest-free grace period on new purchases until the balance is cleared in full."
+      ],
+      [
+        "Is GST charged on credit card interest?",
+        "Yes — 18% GST applies to interest and other card charges in India. This calculator adds it on top of the finance charge so the total cost you see is realistic. This is general information, not tax advice."
+      ]
+    ]
+  },
+  "waist-to-hip-ratio-calculator": {
+    "intro": "Waist to Hip Ratio Calculator divides your waist circumference by your hip circumference and maps the result onto the WHO (2008) risk bands, which differ by sex: below 0.90 is low risk for men and below 0.80 for women, while 1.00 and above for men or 0.85 and above for women marks substantially increased metabolic risk. It also names your fat-distribution pattern (apple or pear), checks your waist against the 94/102 cm WHO thresholds and the 90/80 cm cut-offs used for South Asian populations, and shows the waist measurement that would put you in the low-risk band.",
+    "useCases": [
+      "Track fat distribution during a fat-loss phase when the scale has stalled but your waist is still shrinking.",
+      "Get a risk marker that BMI misses, since BMI cannot tell abdominal fat from muscle.",
+      "Record a baseline waist and hip measurement before a health check-up or lifestyle change."
+    ],
+    "benefits": [
+      [
+        "Sex-specific WHO bands",
+        "Uses the separate 0.90/1.00 thresholds for men and 0.80/0.85 for women rather than one generic cut-off."
+      ],
+      [
+        "South Asian waist cut-offs",
+        "Flags the 90 cm (men) and 80 cm (women) waist thresholds used for South Asian populations, not just the WHO 94/102 cm figures."
+      ],
+      [
+        "A concrete target",
+        "Shows the waist measurement that would move you into the low-risk band at your current hip size."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is a healthy waist-to-hip ratio?",
+        "Using WHO cut-offs, a ratio below 0.90 for men and below 0.80 for women is considered low risk. Ratios of 1.00 or more in men, or 0.85 or more in women, indicate substantially increased metabolic risk."
+      ],
+      [
+        "Where exactly should I measure my waist and hips?",
+        "Measure the waist midway between the lowest rib and the top of the hip bone after breathing out normally, and the hips around the widest part of the buttocks. Keep the tape horizontal and snug but not tight."
+      ],
+      [
+        "Is waist-to-hip ratio better than BMI?",
+        "They measure different things. BMI reflects overall weight relative to height; waist-to-hip ratio reflects where fat sits. Abdominal fat is more closely associated with cardiovascular and metabolic risk, so the two are best read together."
+      ],
+      [
+        "Does the ratio change through the day?",
+        "Slightly — meals, bloating and posture can shift a waist reading by a centimetre or two. Measure at the same time of day, ideally in the morning before eating, for comparable results. This tool is informational and does not replace medical assessment."
+      ]
+    ]
+  },
+  "fuel-cost-trip-calculator": {
+      intro:
+        "Fuel Cost Trip Calculator estimates what a drive will cost in petrol or diesel. Give it the distance, your vehicle's mileage and the pump price and it works out the litres burned, the total spend including tolls, the cost per kilometre and each passenger's share. Distance can be in kilometres or miles, and mileage can be entered as km/l, l/100 km or miles per US or UK gallon.",
+      useCases: [
+        "Budget a road trip before you leave and see whether it beats the train fare.",
+        "Split fuel fairly among carpool colleagues on a shared weekly commute.",
+        "Compare two cars — say 18 km/l against 12 km/l — over the same route to see the yearly difference."
+      ],
+      benefits: [
+        ["Mixed units handled", "km or miles, km/l or l/100 km or mpg, price per litre or per gallon — all converted for you."],
+        ["Round trip in one tap", "A single toggle doubles the distance so you are not budgeting for the outbound leg alone."],
+        ["Fair per-person split", "Tolls and parking are added before the split, so everyone's share reflects the real cost."]
+      ],
+      faqs: [
+        [
+          "How do I calculate fuel cost for a trip?",
+          "Divide the distance by your mileage to get the litres needed, then multiply by the price per litre. A 450 km trip at 18 km/l needs 25 litres, which at ₹102 a litre costs ₹2,550."
+        ],
+        [
+          "What mileage figure should I use?",
+          "Use your own recent tank-to-tank average rather than the manufacturer's claim, which is measured under test conditions. Real-world highway mileage is usually better than city mileage."
+        ],
+        [
+          "How do I convert mpg to km/l?",
+          "Multiply US mpg by 0.4251 to get km/l (a UK gallon is larger, so UK mpg is multiplied by 0.3540). The tool does this conversion automatically and shows your mileage in all three units."
+        ],
+        [
+          "Does this include wear, tyres or servicing?",
+          "No — it covers fuel plus any tolls or parking you enter. The full cost of running a car per kilometre is higher once depreciation, insurance and maintenance are counted."
+        ]
+      ]
+    },
+  "home-loan-prepayment-calculator": {
+    "intro": "Home Loan Prepayment Calculator amortises your loan month by month, once without prepayments and once with them, so you can see exactly how much interest a bonus or a small monthly top-up saves. It works out your EMI from the outstanding amount, rate and remaining tenure, then applies a lump sum in any month plus any extra you add to every EMI. The result: interest avoided, the new payoff date and how many months you cut.",
+    "useCases": [
+      "Test whether putting an annual bonus into the loan beats leaving it in a deposit.",
+      "See what adding just Rs 5,000 to every EMI does to a 20-year home loan.",
+      "Compare prepaying in year 2 against year 8 to understand why early prepayment matters most."
+    ],
+    "benefits": [
+      [
+        "True amortisation",
+        "Every month's interest is computed on the actual falling balance, not a shortcut formula."
+      ],
+      [
+        "Lump sum plus monthly extra",
+        "Model a one-time prepayment, a recurring top-up, or both together in one schedule."
+      ],
+      [
+        "Tenure reduction shown",
+        "Keeps the EMI fixed and reports the months saved, the option that saves the most interest."
+      ]
+    ],
+    "faqs": [
+      [
+        "Should I reduce the EMI or the tenure when I prepay?",
+        "Reducing the tenure while keeping the EMI unchanged saves substantially more interest, because the balance falls faster. Lowering the EMI eases monthly cash flow instead. This calculator models tenure reduction."
+      ],
+      [
+        "Are there prepayment charges on a home loan in India?",
+        "RBI does not allow banks and HFCs to levy foreclosure or prepayment charges on floating-rate loans sanctioned to individual borrowers for non-business purposes. Fixed-rate loans and business loans can still carry a charge, so check your sanction letter."
+      ],
+      [
+        "When is prepaying a home loan most effective?",
+        "In the early years, when almost the whole EMI is interest. The same rupee prepaid in year 2 removes far more future interest than in year 12, which you can verify by changing the lump sum month here."
+      ],
+      [
+        "Does prepaying affect my tax deductions?",
+        "A smaller balance means less interest, so the deduction you can claim on home loan interest under Section 24(b) — up to Rs 2 lakh a year for a self-occupied house under the old regime — falls too. Weigh the post-tax saving; this is informational, not tax advice."
+      ]
+    ]
+  },
+  "body-fat-percentage-calculator": {
+    "intro": "Body Fat Percentage Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
+    "useCases": [
+      "Track body composition month to month when the scale is not moving but your waist is shrinking.",
+      "Check where you sit against the athletic, fitness and average bands before starting a training block.",
+      "Estimate lean mass so you can set a protein target or a realistic rate of fat loss."
+    ],
+    "benefits": [
+      [
+        "No equipment beyond a tape",
+        "The Navy method needs only circumference measurements — no calipers, no scales, no clinic visit."
+      ],
+      [
+        "Metric and imperial",
+        "Enter centimetres and kilograms or inches and pounds; the conversion is handled for you."
+      ],
+      [
+        "Context, not just a number",
+        "The result is mapped to ACE reference ranges and paired with your waist-to-height ratio."
+      ]
+    ],
+    "faqs": [
+      [
+        "How accurate is the US Navy body fat method?",
+        "Studies generally put it within about 3-4 percentage points of a DEXA scan for average builds, with larger errors for very lean or very heavy people. It is best used to track change over time rather than as an exact figure."
+      ],
+      [
+        "Where exactly do I measure?",
+        "Neck just below the larynx with the tape sloping slightly down at the front; waist at the navel for men and at the narrowest point for women; hip at the widest point. Keep the tape snug but not compressing, and measure after breathing out normally."
+      ],
+      [
+        "What is a healthy body fat percentage?",
+        "ACE lists roughly 14-17% (fitness) and 18-24% (average) for men, and 21-24% and 25-31% for women; essential fat is about 2-5% for men and 10-13% for women. These are general references, not a diagnosis."
+      ],
+      [
+        "Why does the formula ask for sex?",
+        "The Navy equation was fitted separately for men and women because fat distribution differs, which is also why the female version includes the hip measurement."
+      ]
+    ]
+  },
+  "pomodoro-session-planner": {
+    "intro": "Pomodoro Session Planner fits focus sessions and breaks into the time you actually have. Give it a start time, a window such as three hours, and your preferred rhythm — 25/5 classic, 50/10 deep work, or your own — and it builds the full schedule with clock times, showing how many focus blocks fit, when each long break lands, and how much time is left over. Useful for study blocks, writing sprints and anyone planning a morning of deep work before the calendar fills up.",
+    "useCases": [
+      "Plan a three-hour revision block so you know exactly how many 25-minute sessions fit before lunch.",
+      "Map a 90-minute gap between meetings into deep work sessions with realistic breaks.",
+      "Compare a 25/5 rhythm against 50/10 to see which gets more focused minutes out of the same window."
+    ],
+    "benefits": [
+      [
+        "Real clock times",
+        "Every focus block and break is shown as an actual start and finish time, not just a count of sessions."
+      ],
+      [
+        "Fits your window",
+        "Sessions are only scheduled if they finish inside the time you have, and a break is trimmed rather than overrunning."
+      ],
+      [
+        "Any rhythm you like",
+        "Set the focus length, short break, long break and how many sessions come before a long break."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the standard Pomodoro technique timing?",
+        "The classic pattern is 25 minutes of focus followed by a 5-minute break, with a longer 15 to 30 minute break after four sessions. Francesco Cirillo developed it in the late 1980s using a tomato-shaped kitchen timer."
+      ],
+      [
+        "How many pomodoros fit in a working day?",
+        "A 25/5 rhythm uses 30 minutes per cycle, so roughly two per hour — about 10 to 12 in a typical day once meetings and long breaks are counted. This planner shows the exact number for your window."
+      ],
+      [
+        "Is a 50-minute focus session better than 25?",
+        "It depends on the work. Longer blocks suit writing, coding and other tasks with a slow warm-up, while 25 minutes suits admin, revision and days when concentration is hard to hold. Try both rhythms on the same window and compare the focus totals."
+      ],
+      [
+        "What should I do during a break?",
+        "Step away from the screen — stand, stretch, get water or look out of a window. Switching to email or social feeds keeps you in the same attention mode, so the break restores much less."
+      ]
+    ]
+  },
+  "countdown-days-calculator": {
+    "intro": "Countdown Days Calculator shows exactly how many days are left until any target date, then expands the same wait into weeks and leftover days, a calendar years-months-days breakdown, and the number of working days remaining. An optional target time drives a live ticker that counts down in days, hours, minutes and seconds. Point it at an exam, a due date, a trip or a launch and it keeps updating while the page is open.",
+    "useCases": [
+      "Track how many days are left until an exam, interview or submission deadline.",
+      "Count down to a wedding, holiday or festival and see how many weekends fall in between.",
+      "Check the working days remaining before a product launch or client delivery date.",
+      "See how long ago a past date was by entering it as the target — the tool counts up instead."
+    ],
+    "benefits": [
+      [
+        "Four views of the same gap",
+        "Total days, weeks plus leftover days, a years-months-days breakdown and working days remaining, all from one date."
+      ],
+      [
+        "Live to the second",
+        "Add a target time and the ticker counts down in real time using your device's local time zone."
+      ],
+      [
+        "Works backwards too",
+        "Pick a date in the past and the tool reports how long ago it was instead of showing a negative number."
+      ]
+    ],
+    "faqs": [
+      [
+        "Does the countdown include today?",
+        "No. Days remaining is the number of whole calendar days from today to the target, so a target of tomorrow shows 1 and a target of today shows 0."
+      ],
+      [
+        "How are working days counted?",
+        "Every day after today up to and including the target date is checked, and Saturdays and Sundays are skipped. Public holidays are not included, so subtract those separately if they matter."
+      ],
+      [
+        "Which time zone does the live ticker use?",
+        "Your device's local time zone. If the event is in another zone, convert the target time to your local time before entering it."
+      ],
+      [
+        "Why does the months-and-days breakdown look different from total days?",
+        "Calendar months vary between 28 and 31 days, so a two-month gap is not a fixed number of days. The total-days figure is the exact one; the months breakdown is how people usually describe the same period."
+      ]
+    ]
+  },
+  "rent-receipt-generator-hra": {
+    "intro": "Rent Receipt Generator for HRA turns one set of details — tenant, landlord, PAN, property address and monthly rent — into a printable receipt for every month you choose, up to twenty-four. Each receipt carries the amount in figures and in words, the rent period, the payment mode and a landlord signature line, and the tool flags the two things that get HRA claims rejected: a missing landlord PAN when annual rent crosses ₹1,00,000, and a missing revenue stamp on cash payments above ₹5,000. Built for salaried employees submitting proofs to payroll.",
+    "useCases": [
+      "Produce twelve months of receipts in one go for your employer's investment proof deadline.",
+      "Recreate receipts for a past financial year before filing your income tax return.",
+      "Hand a landlord a ready-to-sign receipt book instead of asking for one each month."
+    ],
+    "benefits": [
+      [
+        "PAN rule built in",
+        "The tool checks the ₹1,00,000 annual rent threshold and warns when the landlord's PAN is missing or malformed."
+      ],
+      [
+        "Amount in words",
+        "Rent is spelled out in the Indian numbering system automatically, so nothing has to be written by hand."
+      ],
+      [
+        "Print or save as PDF",
+        "One click prints each receipt on its own page; everything is generated locally with no upload."
+      ]
+    ],
+    "faqs": [
+      [
+        "When is the landlord's PAN mandatory for an HRA claim?",
+        "When your rent exceeds ₹1,00,000 in a financial year. If the landlord has no PAN, you can submit a signed declaration from them along with their name and address."
+      ],
+      [
+        "Do rent receipts need a revenue stamp?",
+        "Only for cash payments above ₹5,000, where a ₹1 revenue stamp with the landlord's signature across it is the usual practice. Bank transfer, UPI and cheque payments do not need one."
+      ],
+      [
+        "Can I claim HRA if I pay rent to a parent?",
+        "Yes, provided the arrangement is genuine — the property must be owned by them, rent must actually be paid, and they must report the rent as income in their own return."
+      ],
+      [
+        "Is HRA exemption available in the new tax regime?",
+        "No. HRA exemption under Section 10(13A) is only available in the old regime. Employees on the new regime get the ₹75,000 standard deduction instead."
+      ]
+    ]
+  },
+    "leave-encashment-tax-calculator": {
+      "intro": "Leave Encashment Tax Calculator runs the section 10(10AA)(ii) four-way test that decides how much of a private-sector retirement payout is tax free: the amount actually received, the Rs 25 lakh lifetime ceiling that applies from 1 April 2023, ten months of average salary from the last ten months, and the cash value of unavailed leave counted at a maximum of 30 days per completed year. It shows each limb, the binding one, and the balance that is added to salary income. Government retirees and encashment taken while still in service are handled with their own rules.",
+      "useCases": [
+        "Work out the tax on a leave encashment cheque in your full and final settlement before you retire or resign.",
+        "See how much of a large leave balance is wasted because the exemption counts only 30 days per year of service.",
+        "Check the remaining lifetime exemption when you already encashed leave at an earlier employer."
+      ],
+      "benefits": [
+        [
+          "All four limbs shown",
+          "Received, Rs 25 lakh ceiling, ten months of salary and cash value of leave - each printed so you can see which one caps you."
+        ],
+        [
+          "30-days-per-year cap applied",
+          "Generous company leave policies are trimmed to the statutory 30 days per completed year, the way the assessing officer would."
+        ],
+        [
+          "In-service encashment handled",
+          "Leave encashed while working is fully taxable, and the tool says so instead of silently applying the retirement exemption."
+        ]
+      ],
+      "faqs": [
+        [
+          "How much leave encashment is tax free for private employees?",
+          "The exemption is the least of the amount received, Rs 25,00,000 (the limit notified from 1 April 2023), ten months of average salary of the last ten months, and the cash value of unavailed leave at up to 30 days for each completed year of service."
+        ],
+        [
+          "Is leave encashment taxable if I resign instead of retiring?",
+          "The same section 10(10AA)(ii) exemption applies on resignation as on retirement for non-government employees. What is fully taxable is leave encashed while you are still in service."
+        ],
+        [
+          "Is the Rs 25 lakh limit per employer?",
+          "No, it is a lifetime limit. Any exemption you already claimed on leave encashment from earlier employers reduces what is left, so enter that amount to get an accurate figure."
+        ],
+        [
+          "Do government employees pay tax on leave encashment?",
+          "Leave encashment received by Central or State government employees at retirement is fully exempt under section 10(10AA)(i). Encashment during service is still taxable."
+        ]
+      ]
+    },
+  "loan-foreclosure-savings-calculator": {
+    "intro": "Loan Foreclosure Savings Calculator works out what closing a loan early actually saves you. It derives your EMI from the outstanding principal, rate and remaining months, totals the interest still to be paid, then subtracts the lender's foreclosure charge and the 18% GST on that fee. A second view compares foreclosing with keeping the loan and investing the same money, so borrowers with a maturing FD or bonus can decide with numbers instead of instinct.",
+    "useCases": [
+      "Check whether closing a Rs 8 lakh personal loan with 36 EMIs left is worth a 2% foreclosure fee.",
+      "Decide between prepaying a 11% loan and investing the same amount at 7% in a deposit.",
+      "Estimate the exact cheque amount before asking the lender for a foreclosure letter."
+    ],
+    "benefits": [
+      [
+        "Charges and GST included",
+        "The fee and the 18% GST on it are netted off the interest saved, so the number is the real one."
+      ],
+      [
+        "Invest-instead comparison",
+        "See the wealth you would hold after the same period on each path, starting from the same cash."
+      ],
+      [
+        "Works for any loan",
+        "Personal, car, education, gold or home loan — enter the outstanding principal, rate and months left."
+      ]
+    ],
+    "faqs": [
+      [
+        "What are typical loan foreclosure charges in India?",
+        "Personal and consumer loans commonly carry 2-5% of the outstanding principal plus 18% GST on that fee, often with a lock-in of 6-12 EMIs before foreclosure is allowed. Your sanction letter has the exact terms."
+      ],
+      [
+        "Can a bank charge foreclosure fees on a home loan?",
+        "RBI does not permit foreclosure or prepayment charges on floating-rate loans sanctioned to individual borrowers for non-business purposes, which covers most home loans. Fixed-rate and business loans can still attract a charge."
+      ],
+      [
+        "Is it better to foreclose a loan or invest the money?",
+        "Compare the loan rate with the after-tax return you can realistically earn. Interest saved is certain and tax-free in effect; investment returns are neither, so a loan rate above your expected return usually favours foreclosure. This is informational, not investment advice."
+      ],
+      [
+        "What should I collect after foreclosing a loan?",
+        "Ask for the No Objection Certificate or loan closure letter, the original property or security documents, and confirmation that the lender has updated the closure with the credit bureaus. Check your credit report after 30-45 days."
+      ]
+    ]
+  },
+  "debt-snowball-avalanche-planner": {
+    "intro": "Debt Snowball vs Avalanche Planner runs a month-by-month simulation of every loan and card you owe under two payoff orders: smallest balance first (snowball) and highest interest rate first (avalanche). Minimum payments go out on all debts, the leftover budget attacks one target, and each cleared minimum rolls into the next debt. You get months to debt-free, total interest and the exact payoff sequence for both strategies, so the choice is made on numbers rather than folklore.",
+    "useCases": [
+      "Decide whether to clear a 42% credit card first or the small consumer-durable EMI that would be gone in four months.",
+      "See how many months earlier you finish if you raise your monthly debt budget by 5,000 rupees.",
+      "Plan the order for clearing a personal loan, a card and a two-wheeler loan on one fixed salary.",
+      "Show a partner the rupee cost of choosing the psychologically easier snowball order."
+    ],
+    "benefits": [
+      [
+        "True rollover simulation",
+        "Freed-up minimums are recycled into the next target debt every month, exactly as both methods prescribe."
+      ],
+      [
+        "Numbers, not opinions",
+        "The interest gap and the month gap between the two orders are shown for your actual balances and rates."
+      ],
+      [
+        "Payoff sequence included",
+        "Each strategy lists which debt clears in which month, so you can print it and tick items off."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the difference between the debt snowball and the debt avalanche?",
+        "The snowball throws every spare rupee at the smallest balance, so accounts disappear quickly and momentum builds. The avalanche targets the highest interest rate first, which mathematically minimises total interest. Both pay the minimum on everything else."
+      ],
+      [
+        "Which method actually saves more money?",
+        "The avalanche, always — it can never cost more interest than the snowball because it removes the most expensive debt first. The gap can be small when balances and rates are similar, which is why this planner shows the exact rupee difference for your case."
+      ],
+      [
+        "Should I still pay minimums on the other debts?",
+        "Yes. Skipping a minimum triggers late fees, penal interest and a bureau record that can dent your credit score for years. Only the surplus above all minimums goes to the target debt."
+      ],
+      [
+        "What if my budget barely covers the minimum payments?",
+        "Then neither method makes much headway and the tool will warn you. Look at raising income or reducing expenses, and speak to your lenders about restructuring before the balances compound further. This is general information, not personalised financial advice."
+      ]
+    ]
+  },
+  "text-statistics-analyzer": {
+    "intro": "Text Statistics Analyzer breaks any passage down into words, unique words, characters, sentences, paragraphs and syllables, then runs six standard readability formulas over it — Flesch Reading Ease, Flesch-Kincaid Grade, Gunning Fog, SMOG, Coleman-Liau and the Automated Readability Index. It is built for writers, editors, teachers and content marketers who need to know not just how long a piece is, but how hard it is to read. Everything runs in your browser, so drafts and student work never leave your device.",
+    "useCases": [
+      "Check that a landing page or help article lands near Flesch 60-70 before publishing.",
+      "Grade a school reading passage so it matches the age group you are teaching.",
+      "Spot the sentences bloating your draft by watching words-per-sentence climb as you edit."
+    ],
+    "benefits": [
+      [
+        "Six formulas at once",
+        "Compare Flesch-Kincaid, Gunning Fog, SMOG, Coleman-Liau and ARI side by side instead of trusting a single score."
+      ],
+      [
+        "Live as you type",
+        "Counts and scores recalculate on every keystroke, so you can see an edit improve readability instantly."
+      ],
+      [
+        "Nothing is uploaded",
+        "The whole analysis happens in your browser — unpublished copy and confidential documents stay local."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is a good Flesch Reading Ease score?",
+        "Most general web and business writing aims for 60-70, which reads at roughly an 8th-9th grade level. Scores above 80 feel very easy and conversational, while anything under 30 usually needs a university-level reader."
+      ],
+      [
+        "How are syllables counted without a dictionary?",
+        "The tool uses the standard vowel-group heuristic with silent-e and silent -ed corrections. It matches dictionary counts for the large majority of English words, which is exactly the basis the classic readability formulas were calibrated on."
+      ],
+      [
+        "Why do the grade level scores differ from each other?",
+        "Each formula weighs different signals: Gunning Fog and SMOG count words of three or more syllables, Coleman-Liau and ARI use character length instead, and Flesch-Kincaid blends sentence length with syllables. Reading them together gives a more reliable picture than any single number."
+      ],
+      [
+        "How does it decide where a sentence ends?",
+        "A sentence ends at a full stop, question mark or exclamation mark, or at a line break so that headings and bullet points each count once. Abbreviations such as 'Dr.' can occasionally split a sentence early, which is normal for automated readability scoring."
+      ]
+    ]
+  },
+  "lean-body-mass-calculator": {
+    "intro": "Lean Body Mass Calculator splits your body weight into lean mass and fat mass. Give it a body fat percentage you already know and it does the arithmetic directly; leave that out and it estimates lean mass from height, weight and sex using the Boer, James and Hume equations, showing all three side by side. It also reports fat-free mass index (FFMI), a height-adjusted FFMI and a protein range based on 1.6-2.2 g per kg of lean mass. Handy for lifters, coaches and anyone tracking a cut or a bulk.",
+    "useCases": [
+      "Convert a DEXA, caliper or smart-scale body fat reading into actual kilograms of muscle and fat.",
+      "Set a protein target from lean mass instead of total weight, which is the more useful basis when carrying extra fat.",
+      "Check whether a diet is costing you lean tissue by comparing lean mass across two weigh-ins."
+    ],
+    "benefits": [
+      [
+        "Two ways to calculate",
+        "Use a measured body fat percentage for accuracy, or fall back on the classic Boer, James and Hume formulas."
+      ],
+      [
+        "FFMI included",
+        "Fat-free mass index and its height-adjusted version show how much muscle you carry for your frame."
+      ],
+      [
+        "Metric and imperial",
+        "Enter kilograms and centimetres or pounds and inches — the conversions happen behind the scenes."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the Boer formula for lean body mass?",
+        "For men, LBM = 0.407 × weight in kg + 0.267 × height in cm − 19.2; for women, LBM = 0.252 × weight + 0.473 × height − 48.3. It is a population estimate, widely used for weight-based drug dosing."
+      ],
+      [
+        "Which is more accurate, the formula or my body fat percentage?",
+        "A reliable body fat measurement always wins, because the formulas only see height, weight and sex and cannot tell a muscular person from a heavier one at the same weight."
+      ],
+      [
+        "What is a good FFMI?",
+        "Roughly 18-20 is typical for untrained men and 15-17 for untrained women; well-trained lifters often reach 22-24, and about 25 is the figure usually cited as the drug-free ceiling. Treat these as rough reference points, not targets."
+      ],
+      [
+        "How much protein should I eat?",
+        "Sports-nutrition reviews commonly suggest 1.6-2.2 g per kg of lean mass per day when training and dieting, which is the range this tool shows. It is general information — check with a dietitian or doctor about your own needs."
+      ]
+    ]
+  },
+  "emergency-fund-calculator": {
+    "intro": "Emergency Fund Calculator sizes the cash cushion you should hold before you invest anywhere else. You list your genuinely essential monthly outgo — rent or EMI, groceries, utilities, insurance premiums, school fees and transport — then answer a short risk profile covering job stability, single or dual income, dependants and health cover. The tool converts that into a recommended number of months, a rupee target, the gap versus what you have saved, and how long it will take to fill at your current savings rate.",
+    "useCases": [
+      "Work out the corpus a single-income family with two dependants and no health cover should hold before starting SIPs.",
+      "Check whether your existing savings already cover six months of essentials, or how many months short you are.",
+      "See how many months of saving 15,000 rupees it takes to close the gap to your target.",
+      "Recalculate the target after a job change from a stable salaried role to freelancing."
+    ],
+    "benefits": [
+      [
+        "Essentials, not lifestyle",
+        "The target is built from must-pay expenses you itemise, so it is not inflated by discretionary spending."
+      ],
+      [
+        "Risk-adjusted months",
+        "Job stability, single versus dual income, dependants and health cover shift the recommendation between 3 and 12 months."
+      ],
+      [
+        "Tells you where to park it",
+        "Splits the corpus across instant-access savings, liquid funds and short-term deposits by how fast you would need each layer."
+      ]
+    ],
+    "faqs": [
+      [
+        "How many months of expenses should an emergency fund cover?",
+        "Three to six months of essential expenses is the common baseline. Push towards 9-12 months if your income is variable, you are the only earner, you support several dependants, or you have no independent health insurance."
+      ],
+      [
+        "Should the emergency fund include my EMIs?",
+        "Yes. An emergency fund exists to keep you current on obligations when income stops, so home, car and personal loan EMIs belong in the monthly essentials figure alongside rent, food and utilities."
+      ],
+      [
+        "Where should I keep my emergency fund?",
+        "Somewhere safe and quickly accessible rather than somewhere high-returning — typically a savings account or sweep-in fixed deposit for the first layer, and liquid or overnight funds for the rest. Equity is unsuitable because you may need the money exactly when markets are down. This is general information, not investment advice."
+      ],
+      [
+        "Does an emergency fund replace health insurance?",
+        "No. A hospital bill can wipe out an entire corpus in one admission. Health insurance handles the large, low-probability shocks while the emergency fund covers deductibles, co-pay, income loss and everyday crises."
+      ]
+    ]
+  },
+  "80tta-vs-80ttb-calculator": {
+    "intro": "80TTA vs 80TTB Interest Deduction compares the two competing deductions on interest income under the old tax regime. Section 80TTA allows up to Rs 10,000 of savings-account interest for taxpayers below 60, while Section 80TTB allows resident senior citizens up to Rs 50,000 covering savings, fixed and recurring deposit interest. Enter your interest split and the calculator shows which section applies, the deduction allowed, the interest that stays taxable, and the tax saved at your slab rate.",
+    "useCases": [
+      "A 62-year-old with Rs 60,000 of FD interest checking how much of it Section 80TTB shelters.",
+      "A salaried taxpayer under 60 confirming that only savings-account interest, not FD interest, qualifies for 80TTA.",
+      "A family comparing whose name a joint deposit should sit in, given the Rs 50,000 senior-citizen limit."
+    ],
+    "benefits": [
+      [
+        "Right section, automatically",
+        "Picks 80TTB for seniors and 80TTA for everyone else, and shows what the other section would have allowed."
+      ],
+      [
+        "Deposit interest handled",
+        "Separates savings, FD/RD and other interest, because only 80TTB covers term deposits."
+      ],
+      [
+        "Shows what stays taxable",
+        "Reports the interest above the cap and the tax on it at your slab rate plus 4% cess."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the difference between 80TTA and 80TTB?",
+        "80TTA gives up to Rs 10,000 on savings-account interest to individuals and HUFs below 60. 80TTB gives resident senior citizens up to Rs 50,000 and also covers fixed and recurring deposit interest."
+      ],
+      [
+        "Can I claim both 80TTA and 80TTB?",
+        "No. A senior citizen claiming 80TTB cannot also claim 80TTA; the two are mutually exclusive and only one applies based on your age."
+      ],
+      [
+        "Does FD interest qualify under 80TTA?",
+        "No. Section 80TTA covers only savings-account interest from banks, co-operative societies and the post office. Fixed and recurring deposit interest qualifies only under 80TTB for senior citizens."
+      ],
+      [
+        "Are these deductions available in the new tax regime?",
+        "No. Both 80TTA and 80TTB are Chapter VI-A deductions allowed only under the old regime. Separately, banks deduct TDS on interest above the Section 194A thresholds, which for FY 2025-26 are Rs 1,00,000 for senior citizens and Rs 50,000 for others — TDS is not the same as tax payable, and Form 15G/15H can prevent it where no tax is due."
+      ]
+    ]
+  },
+    "epf-maturity-calculator": {
+      "intro": "EPF Maturity Calculator projects the Employees' Provident Fund corpus you will have at retirement from your current basic plus DA, contribution rate, expected annual hikes and the interest rate EPFO declares. It adds your share and the employer's share month by month, diverts 8.33% of wages up to Rs 15,000 to the Employees' Pension Scheme, and compounds interest on the monthly running balance the way EPFO credits it at year end. A year-by-year table shows contributions, interest and closing balance at every age.",
+      "useCases": [
+        "See what your PF alone will be worth at 58 before deciding how much extra to invest elsewhere.",
+        "Compare a 12% contribution with a higher Voluntary Provident Fund rate to see the difference in corpus.",
+        "Check the effect of your employer capping PF at the Rs 15,000 statutory wage instead of full basic."
+      ],
+      "benefits": [
+        [
+          "Month-by-month compounding",
+          "Interest accrues on the running balance each month and is credited annually, matching how EPFO actually calculates it."
+        ],
+        [
+          "EPS diversion handled",
+          "8.33% of wages up to Rs 15,000 goes to pension, not to your PF balance, and the projection keeps the two separate."
+        ],
+        [
+          "Salary growth built in",
+          "Annual hikes raise contributions every year instead of assuming a flat salary for your whole career."
+        ]
+      ],
+      "faqs": [
+        [
+          "How much do the employee and employer contribute to EPF?",
+          "Both contribute 12% of basic plus dearness allowance. The employee's full 12% goes to EPF, while of the employer's 12%, 8.33% of wages up to Rs 15,000 goes to the Employees' Pension Scheme and the rest goes to EPF."
+        ],
+        [
+          "What is the current EPF interest rate?",
+          "EPFO declared 8.25% for FY 2024-25. The rate is announced each year by the Central Board of Trustees, so a long projection should be treated as an estimate rather than a guarantee."
+        ],
+        [
+          "How is EPF interest calculated?",
+          "Interest is worked out on the monthly running balance at one twelfth of the annual rate and credited to the account at the end of the financial year, which is exactly what this calculator does."
+        ],
+        [
+          "Is the EPF maturity amount tax free?",
+          "Withdrawal is exempt if you have five years of continuous service. Interest on employee contributions above Rs 2.5 lakh a year (Rs 5 lakh where the employer does not contribute) is taxable, so very high VPF contributions have a tax cost."
+        ]
+      ]
+    },
+  "salary-slip-generator": {
+    "intro": "Salary Slip Generator builds a clean monthly payslip from earning and deduction heads you control. Add or rename rows like basic, HRA, conveyance, provident fund, professional tax or TDS, set the paid days so earnings prorate automatically for loss of pay, and the tool totals gross earnings, total deductions and net pay — with the net amount spelled out in words the way Indian payslips show it. Useful for small employers, HR teams without payroll software, and anyone who needs a tidy payslip copy to print or save as PDF.",
+    "useCases": [
+      "Issue payslips for a small team when the accounting software does not produce them.",
+      "Prorate a joining or exit month where the employee was on the payroll for only part of the month.",
+      "Produce a formatted payslip copy to attach to a loan, visa or rental application."
+    ],
+    "benefits": [
+      [
+        "Your own salary structure",
+        "Earning and deduction rows are fully editable — add, rename or delete any head your company uses."
+      ],
+      [
+        "Loss-of-pay proration",
+        "Set paid days against days in the month and every earning head scales automatically."
+      ],
+      [
+        "Net pay in words",
+        "The net amount is converted to words in the Indian numbering system, ready for print or PDF."
+      ]
+    ],
+    "faqs": [
+      [
+        "What must a salary slip contain?",
+        "Typically the employer and employee details, the pay period, paid days, each earning head, each deduction head, gross earnings, total deductions and net pay. Many employers also print PAN, UAN and the bank account the salary was credited to."
+      ],
+      [
+        "How is net pay calculated?",
+        "Net pay = gross earnings minus total deductions. Gross earnings include basic, allowances and any bonus for the month; deductions cover provident fund, professional tax, TDS, insurance and any recoveries."
+      ],
+      [
+        "How does loss of pay affect the payslip?",
+        "Earnings are prorated by paid days divided by days in the month. Statutory deductions like provident fund are then computed on the reduced wages, so enter the deduction amounts that apply to the prorated pay."
+      ],
+      [
+        "Is the data I enter stored anywhere?",
+        "No. The payslip is built entirely in your browser, nothing is uploaded, and the page keeps no copy once you close it."
+      ]
+    ]
+  },
+  "character-limit-checker": {
+    "intro": "Character Limit Checker counts your text against 23 real platform limits — X posts at 280, Instagram captions at 2,200, LinkedIn posts at 3,000, YouTube titles at 100, meta descriptions at 160 and more — and shows exactly how many characters you have left as you type. It also weights links the way X does (every URL counts as 23 characters) and works out SMS segment billing in GSM-7 or UCS-2. Useful for social media managers, SEO writers and anyone drafting copy that has to fit.",
+    "useCases": [
+      "Trim a meta description to 160 characters so Google does not cut it off mid-sentence.",
+      "Check a launch post fits X's 280-character limit after link shortening is applied.",
+      "See whether a marketing SMS is billed as one segment or three before you send it to a list."
+    ],
+    "benefits": [
+      [
+        "Real platform limits",
+        "23 presets covering social, video, SEO, ads and messaging, plus a custom limit field for anything else."
+      ],
+      [
+        "Emoji-safe counting",
+        "Shows both raw characters and visible characters, so a two-code-unit emoji never surprises you at the limit."
+      ],
+      [
+        "Trim in one click",
+        "Over the limit? Cut the text to fit and copy it without leaving the page."
+      ]
+    ],
+    "faqs": [
+      [
+        "What is the character limit for an X (Twitter) post?",
+        "Standard posts are capped at 280 characters. Every link counts as 23 characters regardless of its real length because X rewrites URLs through t.co, and this tool applies that weighting for you."
+      ],
+      [
+        "How long should a meta description be?",
+        "Aim for roughly 150-160 characters. Google truncates on pixel width rather than a hard character count, so keeping the key message in the first 120 characters is the safest approach."
+      ],
+      [
+        "Why do emoji use more than one character?",
+        "Most platforms count UTF-16 code units, and many emoji — especially those with skin tones or joined sequences — take two or more units each. The 'visible characters' figure shows the human count so you can see the difference."
+      ],
+      [
+        "How many characters fit in one SMS?",
+        "A GSM-7 message fits 160 characters in a single segment, then 153 per segment once it splits. Any character outside the GSM alphabet, including most emoji, switches the message to UCS-2 at 70 characters per segment (67 when split)."
+      ]
+    ]
+  },
+  "url-slug-generator": {
+    "intro": "URL Slug Generator turns headlines into clean, lowercase, hyphenated slugs that are safe in any URL. It transliterates accented Latin, German, Cyrillic and Greek letters to ASCII, converts symbols such as & and % into words, optionally strips stop words, enforces a maximum length at a word boundary, and numbers duplicate slugs. Paste one title or a whole list — bloggers, CMS editors and developers can generate hundreds of slugs at once.",
+    "useCases": [
+      "Create a permalink for a new blog post before publishing it in WordPress or a headless CMS.",
+      "Bulk-convert an export of 200 product names into slugs for an ecommerce migration.",
+      "Turn a non-English title with accents or Cyrillic text into an ASCII-only URL that never percent-encodes."
+    ],
+    "benefits": [
+      [
+        "Real transliteration",
+        "Café becomes cafe, Straßenfest becomes strassenfest and Привет becomes privet — not stripped-out gaps."
+      ],
+      [
+        "Bulk with de-duplication",
+        "Paste one title per line; identical slugs are automatically numbered so your URLs stay unique."
+      ],
+      [
+        "Length capped cleanly",
+        "Slugs are trimmed at the last full word, so you never ship a URL ending in half a word."
+      ]
+    ],
+    "faqs": [
+      [
+        "What makes a good URL slug?",
+        "Keep it lowercase, hyphen-separated, ASCII-only and short — roughly three to six meaningful words. Hyphens are preferred over underscores because search engines treat them as word separators."
+      ],
+      [
+        "Should I remove stop words from slugs?",
+        "It is optional. Removing words like 'the' and 'of' shortens the URL, but keep them when dropping them makes the slug read strangely or changes its meaning."
+      ],
+      [
+        "Are hyphens or underscores better in URLs?",
+        "Hyphens. Google has long treated a hyphen as a word separator and an underscore as a word joiner, so best-blog-post is read as three words while best_blog_post can be read as one."
+      ],
+      [
+        "Will changing an existing slug hurt my SEO?",
+        "Changing a live URL breaks the old link unless you add a 301 redirect from the old slug to the new one. Set the redirect at the same time as the change so links and rankings carry over."
+      ]
+    ]
+  },
+  "line-sorter-deduplicator": {
+    "intro": "Line Sorter and Deduplicator cleans up any list you paste into it: sort A-Z or Z-A, use natural order so item 2 comes before item 10, sort by line length, reverse the order or shuffle it, and remove duplicate or blank lines in the same pass. You can ignore case, trim stray spaces, keep only the unique lines or keep only the repeated ones. Handy for marketers cleaning keyword lists, developers tidying config files and anyone deduping an email or SKU export.",
+    "useCases": [
+      "Dedupe a keyword export before uploading it to an ads platform that charges per row.",
+      "Sort a list of filenames naturally so file2 comes before file10 instead of after it.",
+      "Find which entries in two merged mailing lists appear twice by keeping only the repeated lines."
+    ],
+    "benefits": [
+      [
+        "Natural and locale-aware",
+        "Sorting uses your browser's collator, so numbers compare by value and accented words sort like a dictionary."
+      ],
+      [
+        "Five duplicate modes",
+        "Keep first, keep last, keep only unique lines, keep only repeated lines, or leave duplicates untouched."
+      ],
+      [
+        "Repeatable shuffle",
+        "The random order is seeded, so the result stays put while you tweak other options and only changes when you ask."
+      ]
+    ],
+    "faqs": [
+      [
+        "Does removing duplicates keep the first or the last occurrence?",
+        "You choose. 'Keep first' preserves the earliest copy of each line, 'keep last' preserves the final one — useful when later rows in an export hold the newer data."
+      ],
+      [
+        "What is natural sort order?",
+        "Natural order reads embedded digits as numbers, so item 2 sorts before item 10. Plain alphabetical sorting compares character by character and puts item 10 first because 1 comes before 2."
+      ],
+      [
+        "Is my list uploaded anywhere?",
+        "No. Sorting, deduplication and shuffling all run in your browser, so customer lists and internal exports never leave your device."
+      ],
+      [
+        "How does the ignore-case option affect duplicates?",
+        "With it on, Apple and apple are treated as the same line, so only one survives deduplication and the sort ignores capitalisation. Turn it off when case is meaningful, such as with code identifiers."
+      ]
+    ]
+  },
+  "bulk-find-replace": {
+    "intro": "Bulk Find and Replace applies as many search-and-replace rules as you need to a block of text in a single pass, showing the match count for every rule and the total number of replacements. Switch on regular expressions for patterns and $1 capture groups, or keep it literal so characters like . and ? are matched exactly. Case sensitivity and whole-word matching are one click away, and everything runs in your browser.",
+    "useCases": [
+      "Swap an old company name, product name and support address across a whole email template at once.",
+      "Reformat every date in a data dump from DD/MM/YYYY to YYYY-MM-DD with one regex rule.",
+      "Clean a CSV export by stripping stray tags and double spaces before importing it."
+    ],
+    "benefits": [
+      [
+        "Many rules, one pass",
+        "Rules run top to bottom over the same text, so you can chain edits instead of pasting between tools."
+      ],
+      [
+        "Match counts per rule",
+        "See exactly how many times each rule fired, which instantly reveals a typo in a pattern."
+      ],
+      [
+        "Safe regex handling",
+        "Invalid patterns show a clear error instead of breaking the page, and zero-width patterns are skipped."
+      ]
+    ],
+    "faqs": [
+      [
+        "How do I use capture groups in the replacement?",
+        "Turn on regular expressions, wrap the parts you want to reuse in parentheses, then reference them as $1, $2 and so on in the replace field. For example (\\d{2})/(\\d{2})/(\\d{4}) with $3-$2-$1 converts 12/03/2026 into 2026-03-12."
+      ],
+      [
+        "What does whole words only do?",
+        "It wraps your search term in word boundaries, so searching for 'cat' changes the standalone word but leaves 'category' untouched. It works with both literal and regex mode."
+      ],
+      [
+        "Do the rules run at the same time or one after another?",
+        "One after another, from the top down. Each rule sees the output of the rules above it, so ordering matters if one rule's replacement could be matched by a later rule."
+      ],
+      [
+        "Is my text sent to a server?",
+        "No. All matching and replacing happens locally in your browser, so contracts, customer data and unpublished copy stay on your device."
+      ]
+    ]
+  },
+  "reading-time-calculator": {
+    "intro": "Reading Time Calculator estimates how long a piece of text takes to read silently and to read aloud, based on its word count and the pace you choose. Pick slow (150 wpm), average (200 wpm), fast (250 wpm), professional (300 wpm) or type your own speed, and it also reports words, characters, sentences, paragraphs, unique words and a difficulty rating. Bloggers use it for the 'x min read' label, speakers use it to time a script, and students use it to plan study sessions.",
+    "useCases": [
+      "Work out the '5 min read' badge for a blog post before you publish it.",
+      "Check whether a keynote script fits a 15-minute speaking slot at 150 words per minute.",
+      "Estimate how long a chapter or study handout will take a class to get through."
+    ],
+    "benefits": [
+      [
+        "Reading and speaking time",
+        "Silent reading and spoken delivery are timed separately, because speaking is far slower than reading."
+      ],
+      [
+        "Your own pace",
+        "Choose one of four standard speeds or enter any words-per-minute value up to 1,000."
+      ],
+      [
+        "Full text breakdown",
+        "Word, character, sentence and paragraph counts plus vocabulary richness come with every estimate."
+      ]
+    ],
+    "faqs": [
+      [
+        "How many words per minute does the average person read?",
+        "Adults read general prose at roughly 200-250 words per minute silently. Dense technical material is slower, often 150 wpm or less, which is why the tool lets you pick a pace."
+      ],
+      [
+        "How long does it take to read 1,000 words?",
+        "At the 200 wpm average it takes about five minutes to read silently, and closer to seven minutes to read aloud at a comfortable speaking pace of 150 wpm."
+      ],
+      [
+        "What speaking rate should I use for a presentation?",
+        "Most presenters land between 130 and 150 words per minute. Slower than that sounds laboured; much faster and an audience struggles to follow, so scripts are usually timed at 150 wpm."
+      ],
+      [
+        "Why does my blog platform show a different read time?",
+        "Platforms pick their own constant — Medium famously uses about 265 wpm and adds time for images. Set the same speed here and the estimates line up."
+      ]
+    ]
   }
 };
+
 
 export default toolContentOverrides;
