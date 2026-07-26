@@ -16,9 +16,22 @@ function clampScore(score) {
 
 function commitSha() {
   return (
+    process.env.ALTFT_RELEASE_COMMIT ||
+    process.env.NEXT_PUBLIC_ALTFT_RELEASE_COMMIT ||
+    process.env.AWS_COMMIT_ID ||
     process.env.VERCEL_GIT_COMMIT_SHA ||
     process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA ||
     process.env.GITHUB_SHA ||
+    null
+  );
+}
+
+function releaseBranch() {
+  return (
+    process.env.ALTFT_RELEASE_BRANCH ||
+    process.env.NEXT_PUBLIC_ALTFT_RELEASE_BRANCH ||
+    process.env.AWS_BRANCH ||
+    process.env.VERCEL_GIT_COMMIT_REF ||
     null
   );
 }
@@ -208,7 +221,7 @@ export async function GET(request) {
       environment: process.env.VERCEL_ENV || process.env.NODE_ENV || "unknown",
       url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : siteUrl,
       commitSha: commitSha(),
-      branch: process.env.VERCEL_GIT_COMMIT_REF || null,
+      branch: releaseBranch(),
     },
     firebase,
     tools,
