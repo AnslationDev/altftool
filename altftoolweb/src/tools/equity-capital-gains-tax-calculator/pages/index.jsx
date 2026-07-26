@@ -58,9 +58,14 @@ function parseDate(value) {
 
 // Listed equity turns long-term once held for MORE than 12 months
 function isLongTerm(buy, sell) {
-  const anniversary = new Date(
-    Date.UTC(buy.getUTCFullYear() + 1, buy.getUTCMonth(), buy.getUTCDate())
-  );
+  // Date.UTC rolls 29 Feb + 1 year over into 1 March, which would make a
+  // holding bought on a leap day turn long-term a day late. Clamp to the last
+  // valid day of the anniversary month instead.
+  const year = buy.getUTCFullYear() + 1;
+  const month = buy.getUTCMonth();
+  const lastDayOfMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  const day = Math.min(buy.getUTCDate(), lastDayOfMonth);
+  const anniversary = new Date(Date.UTC(year, month, day));
   return sell.getTime() > anniversary.getTime();
 }
 

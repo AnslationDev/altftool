@@ -61,8 +61,10 @@ export default function ToolHome() {
     if (y > 100) return { error: "Keep the period at 100 years or less." };
     if (t < 0 || t >= 100) return { error: "Tax on returns must be between 0% and 99.99%." };
 
-    // Post-tax nominal rate (simple annual accrual tax; 0% tax leaves it untouched)
-    const postTaxNominal = n * (1 - t / 100);
+    // Post-tax nominal rate (simple annual accrual tax; 0% tax leaves it
+    // untouched). Tax only applies to gains — applying it to a negative return
+    // shrinks the loss toward zero, i.e. it reports tax as a benefit.
+    const postTaxNominal = n > 0 ? n * (1 - t / 100) : n;
 
     const nom = postTaxNominal / 100;
     const inf = i / 100;

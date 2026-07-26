@@ -204,7 +204,12 @@ export default function ToolHome() {
       netPay,
       factor,
       lopDays: Math.max(0, total - paid),
-      netWords: numberToWords(Math.abs(netPay)),
+      // Spell out the sign too — a slip showing "-₹4,200" next to a positive
+      // amount in words is a document nobody can act on.
+      netWords:
+        netPay < 0
+          ? `Minus ${numberToWords(Math.abs(netPay))}`
+          : numberToWords(netPay),
       period: monthFmt.format(parsePayMonth(payMonth)),
       annualisedCtc: grossEarnings * 12,
     };

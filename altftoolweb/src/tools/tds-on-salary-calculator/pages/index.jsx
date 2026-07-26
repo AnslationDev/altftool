@@ -113,6 +113,8 @@ function computeIncomeTax(taxableIncome, regime, ageBand) {
 const STD_DEDUCTION = { new: 75000, old: 50000 };
 const CAP_80C = 150000;
 const CAP_80CCD1B = 50000;
+// 25k self + 25k parents, both doubled to 50k when the insured are seniors.
+const CAP_80D = 100000;
 const CAP_HOME_LOAN = 200000;
 const CAP_PROF_TAX = 2500;
 
@@ -229,12 +231,18 @@ export default function ToolHome() {
     const profTax = isOld ? Math.min(num(professionalTax), CAP_PROF_TAX) : 0;
     const salaryIncome = Math.max(0, afterExempt - standardDeduction - profTax);
 
+    // 80D and 80CCD(2) were the only deductions applied uncapped, so a large
+    // entry in either silently wiped out tax that is actually payable.
+    // 80D tops out at ₹1,00,000 (senior self + senior parents); 80CCD(2) at
+    // 14% of salary in the new regime, 10% in the old.
+    const employerNpsCap = gross * (isOld ? 0.1 : 0.14);
+    const employerNpsAllowed = Math.min(num(employerNps), employerNpsCap);
     const chapterVia = isOld
       ? Math.min(num(s80c), CAP_80C) +
-        num(s80d) +
+        Math.min(num(s80d), CAP_80D) +
         Math.min(num(s80ccd1b), CAP_80CCD1B) +
-        num(employerNps)
-      : num(employerNps);
+        employerNpsAllowed
+      : employerNpsAllowed;
     const houseProperty = isOld ? Math.min(num(homeLoanInterest), CAP_HOME_LOAN) : 0;
 
     const grossTotal = salaryIncome + num(otherIncome);
@@ -512,7 +520,8 @@ export default function ToolHome() {
                 </div>
                 <div>
                   <label htmlFor="tds-nps-employer" className="block text-sm font-semibold">
-                    Employer NPS u/s 80CCD(2) (₹)
+                    Employer NPS u/s 80CCD(2) (₹) — capped at 14% of salary
+                    (10% in the old regime)
                   </label>
                   <input
                     id="tds-nps-employer"
