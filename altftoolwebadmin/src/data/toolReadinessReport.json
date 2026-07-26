@@ -1,19 +1,19 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-25T16:42:55.511Z",
+  "generatedAt": "2026-07-26T17:08:08.926Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-    "total": 1321,
+    "total": 1451,
     "score": 94,
     "counts": {
-      "working": 1260,
+      "working": 1390,
       "api-required": 61,
       "partial": 0,
       "broken": 0
     },
     "automatedTests": 158,
-    "automatedCoverage": 12,
+    "automatedCoverage": 11,
     "networkDependent": 61,
     "envDependent": 1,
     "api": {
@@ -1087,6 +1087,45 @@
       ]
     },
     {
+      "slug": "80tta-vs-80ttb-calculator",
+      "name": "80TTA vs 80TTB Interest Deduction",
+      "category": "Finance Calculators",
+      "route": "/tools/all/80tta-vs-80ttb-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16041,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "a-b-test-significance-calculator",
       "name": "A/B Test Significance Calculator",
       "category": "Business, Finance Calculators",
@@ -1218,6 +1257,45 @@
         "sourceBytes": 548,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "absolute-vs-annualised-return-calculator",
+      "name": "Absolute vs Annualised Return Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/absolute-vs-annualised-return-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 19668,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -1629,6 +1707,45 @@
       ]
     },
     {
+      "slug": "advance-tax-interest-234b-234c-calculator",
+      "name": "Advance Tax Interest 234B 234C Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/advance-tax-interest-234b-234c-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 25455,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "afterimage-generator",
       "name": "Afterimage Generator",
       "category": "Education & Science, Fun",
@@ -1680,6 +1797,45 @@
         "config": true,
         "sourceFiles": 29,
         "sourceBytes": 76329,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "age-difference-calculator",
+      "name": "Age Difference Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/age-difference-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15809,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -3947,6 +4103,45 @@
       ]
     },
     {
+      "slug": "atal-pension-yojana-calculator",
+      "name": "Atal Pension Yojana Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/atal-pension-yojana-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 18394,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "atrial-fibrillation-risk-calculator",
       "name": "Atrial Fibrillation Risk Calculator",
       "category": "Health & Fitness",
@@ -3998,6 +4193,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 18979,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "attendance-percentage-calculator",
+      "name": "Attendance Percentage Calculator",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/attendance-percentage-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15975,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -4620,6 +4854,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 24340,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "balance-transfer-savings-calculator",
+      "name": "Balance Transfer Savings Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/balance-transfer-savings-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21786,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -5929,6 +6202,45 @@
       ]
     },
     {
+      "slug": "belated-return-late-fee-calculator",
+      "name": "Belated Return Late Fee Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/belated-return-late-fee-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21680,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "bg-remover",
       "name": "Background Remover",
       "category": "AI Tools",
@@ -6929,6 +7241,45 @@
       ]
     },
     {
+      "slug": "body-fat-percentage-calculator",
+      "name": "Body Fat Percentage Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/body-fat-percentage-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18385,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "body-surface-area-calculator",
       "name": "Body Surface Area Calculator",
       "category": "Health & Fitness",
@@ -7060,6 +7411,45 @@
         "sourceBytes": 2170,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "bonus-variable-pay-calculator",
+      "name": "Bonus and Variable Pay Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/bonus-variable-pay-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 23401,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -7748,6 +8138,45 @@
       ]
     },
     {
+      "slug": "brokerage-charges-calculator",
+      "name": "Brokerage and Charges Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/brokerage-charges-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 23041,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "browser-extension-permission-analyzer",
       "name": "Browser Extension Permission Analyzer",
       "category": "Security & Privacy, Developer",
@@ -8033,6 +8462,45 @@
         "sourceBytes": 2669,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "bulk-find-replace",
+      "name": "Bulk Find and Replace",
+      "category": "Text & Writing",
+      "route": "/tools/all/bulk-find-replace",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17260,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -8460,6 +8928,45 @@
         "sourceBytes": 1963,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "cagr-calculator-detailed",
+      "name": "CAGR Calculator Detailed",
+      "category": "Finance Calculators",
+      "route": "/tools/all/cagr-calculator-detailed",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16789,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -9210,6 +9717,45 @@
       ]
     },
     {
+      "slug": "car-loan-emi-calculator",
+      "name": "Car Loan EMI Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/car-loan-emi-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17562,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "car-ownership-cost-analyzer",
       "name": "car-cost-analyzer",
       "category": "Other",
@@ -9678,6 +10224,45 @@
       ]
     },
     {
+      "slug": "cgpa-to-percentage-converter",
+      "name": "CGPA to Percentage Converter",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/cgpa-to-percentage-converter",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17178,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "changelog-generator",
       "name": "Changelog Generator",
       "category": "Developer",
@@ -9692,6 +10277,45 @@
         "sourceBytes": 2371,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "character-limit-checker",
+      "name": "Character Limit Checker",
+      "category": "Text & Writing",
+      "route": "/tools/all/character-limit-checker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17255,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -9920,6 +10544,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 37309,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "child-education-cost-planner",
+      "name": "Child Education Cost Planner",
+      "category": "Finance Calculators",
+      "route": "/tools/all/child-education-cost-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19193,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -11526,6 +12189,45 @@
       ]
     },
     {
+      "slug": "compound-interest-calculator-detailed",
+      "name": "Compound Interest Calculator Detailed",
+      "category": "Calculators",
+      "route": "/tools/all/compound-interest-calculator-detailed",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19283,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "compound-interest-planner",
       "name": "Compound Interest Planner",
       "category": "Business, Finance Calculators",
@@ -11850,6 +12552,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 107820,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "construction-cost-estimator",
+      "name": "Construction Cost Estimator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/construction-cost-estimator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22904,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -12423,6 +13164,84 @@
       ]
     },
     {
+      "slug": "cost-inflation-index-calculator",
+      "name": "Cost Inflation Index Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/cost-inflation-index-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 23168,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "countdown-days-calculator",
+      "name": "Countdown Days Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/countdown-days-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17196,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "countdown-timer",
       "name": "Countdown Timer",
       "category": "Productivity",
@@ -12762,6 +13581,84 @@
       ]
     },
     {
+      "slug": "credit-card-minimum-due-calculator",
+      "name": "Credit Card Minimum Due Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/credit-card-minimum-due-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 22010,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "credit-score-impact-simulator",
+      "name": "Credit Score Impact Simulator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/credit-score-impact-simulator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 27241,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "cron-expression-generator",
       "name": "Cron Expression Generator",
       "category": "Developer",
@@ -12930,6 +13827,45 @@
         "sourceBytes": 518,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "crypto-tax-calculator-india",
+      "name": "Crypto Tax Calculator India",
+      "category": "Finance Calculators",
+      "route": "/tools/all/crypto-tax-calculator-india",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22328,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -13667,6 +14603,45 @@
         "sourceBytes": 497,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "currency-conversion-fee-calculator",
+      "name": "Currency Conversion Fee Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/currency-conversion-fee-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19601,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -14497,6 +15472,45 @@
       ]
     },
     {
+      "slug": "date-add-subtract-calculator",
+      "name": "Date Add Subtract Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/date-add-subtract-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19939,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "date-time-conversions",
       "name": "Date / Time Conversions",
       "category": "Developer, Calculators",
@@ -14704,6 +15718,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 55589,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "debt-snowball-avalanche-planner",
+      "name": "Debt Snowball vs Avalanche Planner",
+      "category": "Finance Calculators",
+      "route": "/tools/all/debt-snowball-avalanche-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 23202,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -17454,6 +18507,45 @@
       ]
     },
     {
+      "slug": "education-loan-emi-calculator",
+      "name": "Education Loan EMI Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/education-loan-emi-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20058,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "eisenhower-matrix-tool",
       "name": "Eisenhower Matrix Tool",
       "category": "Productivity, Business",
@@ -17532,6 +18624,45 @@
       ]
     },
     {
+      "slug": "electricity-bill-calculator",
+      "name": "Electricity Bill Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/electricity-bill-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 21453,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "elimination-diet-correlation-log",
       "name": "Elimination Diet Correlation Log",
       "category": "Health & Fitness, Productivity",
@@ -17546,6 +18677,45 @@
         "sourceBytes": 3514,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "elss-lock-in-tracker",
+      "name": "ELSS Lock-in Tracker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/elss-lock-in-tracker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22244,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -18027,6 +19197,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 27824,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "emi-moratorium-impact-calculator",
+      "name": "EMI Moratorium Impact Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/emi-moratorium-impact-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21835,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -18588,6 +19797,84 @@
       ]
     },
     {
+      "slug": "epf-maturity-calculator",
+      "name": "EPF Maturity Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/epf-maturity-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18876,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "eps-pension-calculator",
+      "name": "EPS Pension Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/eps-pension-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22670,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "equation-practice",
       "name": "Equation Practice",
       "category": "Calculators, Education & Science",
@@ -18600,6 +19887,45 @@
         "config": true,
         "sourceFiles": 9,
         "sourceBytes": 42015,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "equity-capital-gains-tax-calculator",
+      "name": "Equity Capital Gains Tax Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/equity-capital-gains-tax-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 22753,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -18925,6 +20251,45 @@
       "recommendations": []
     },
     {
+      "slug": "eway-bill-validity-calculator",
+      "name": "E-Way Bill Distance Validity Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/eway-bill-validity-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 19390,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "exam-score-analyzer",
       "name": "Exam Score Analyzer",
       "category": "Education & Science",
@@ -18937,6 +20302,45 @@
         "config": true,
         "sourceFiles": 11,
         "sourceBytes": 36101,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "exam-score-needed-calculator",
+      "name": "Exam Score Needed Calculator",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/exam-score-needed-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15928,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -19249,6 +20653,45 @@
         "config": true,
         "sourceFiles": 15,
         "sourceBytes": 32806,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "expense-ratio-impact-calculator",
+      "name": "Expense Ratio Impact Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/expense-ratio-impact-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18171,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -19898,6 +21341,84 @@
       ]
     },
     {
+      "slug": "fd-ladder-planner",
+      "name": "Fixed Deposit Ladder Planner",
+      "category": "Finance Calculators",
+      "route": "/tools/all/fd-ladder-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19264,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "fd-premature-withdrawal-penalty-calculator",
+      "name": "FD Premature Withdrawal Penalty Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/fd-premature-withdrawal-penalty-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22098,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "fd-rd-maturity-calculator",
       "name": "FD / RD Maturity Calculator",
       "category": "Business, Finance Calculators",
@@ -19949,6 +21470,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 5508,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "fifty-thirty-twenty-budget-calculator",
+      "name": "50-30-20 Budget Rule Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/fifty-thirty-twenty-budget-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20216,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -20638,6 +22198,45 @@
         "config": true,
         "sourceFiles": 12,
         "sourceBytes": 45553,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "flat-vs-reducing-rate-converter",
+      "name": "Flat vs Reducing Interest Rate Converter",
+      "category": "Finance Calculators",
+      "route": "/tools/all/flat-vs-reducing-rate-converter",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16999,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -21441,6 +23040,45 @@
       ]
     },
     {
+      "slug": "freelance-hourly-rate-calculator",
+      "name": "Freelance Hourly Rate Calculator",
+      "category": "Productivity",
+      "route": "/tools/all/freelance-hourly-rate-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 14145,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "freelance-payment-late-fee-tracker",
       "name": "Freelance Payment & Late-Fee Tracker",
       "category": "Finance Calculators, Business",
@@ -21492,6 +23130,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 45780,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "freelancer-advance-tax-planner",
+      "name": "Freelancer Advance Tax Planner",
+      "category": "Finance Calculators",
+      "route": "/tools/all/freelancer-advance-tax-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 28402,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -21648,6 +23325,84 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 20784,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "fuel-cost-trip-calculator",
+      "name": "Fuel Cost Trip Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/fuel-cost-trip-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19233,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "full-and-final-settlement-calculator",
+      "name": "Full and Final Settlement Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/full-and-final-settlement-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22222,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -22650,6 +24405,45 @@
       ]
     },
     {
+      "slug": "goal-based-sip-calculator",
+      "name": "Goal Based SIP Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/goal-based-sip-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21674,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "gold-jewellery-calculator",
       "name": "Gold Jewellery Price Calculator",
       "category": "Finance Calculators, Lifestyle",
@@ -22662,6 +24456,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 36972,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "gold-loan-eligibility-calculator",
+      "name": "Gold Loan Eligibility Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/gold-loan-eligibility-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 21581,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -23209,6 +25042,45 @@
       ]
     },
     {
+      "slug": "gratuity-calculator-india",
+      "name": "Gratuity Calculator India",
+      "category": "Finance Calculators",
+      "route": "/tools/all/gratuity-calculator-india",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18706,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "gravity-orbit-simulator",
       "name": "Gravity Orbit Simulator",
       "category": "Education & Science",
@@ -23439,6 +25311,84 @@
       },
       "issues": [],
       "recommendations": []
+    },
+    {
+      "slug": "gst-input-tax-credit-calculator",
+      "name": "GST Input Tax Credit Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/gst-input-tax-credit-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 19789,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "gst-reverse-calculator",
+      "name": "GST Reverse Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/gst-reverse-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15746,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
     },
     {
       "slug": "gstin-format-validator",
@@ -23882,6 +25832,45 @@
         "sourceBytes": 534,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "health-insurance-cover-calculator",
+      "name": "Health Insurance Cover Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/health-insurance-cover-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 25451,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -24490,6 +26479,45 @@
       ]
     },
     {
+      "slug": "home-affordability-calculator",
+      "name": "Home Affordability Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/home-affordability-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 19355,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "home-battery-tou-simulator",
       "name": "Home Battery TOU Simulator",
       "category": "Lifestyle, Calculators",
@@ -24582,6 +26610,84 @@
         "sourceBytes": 695,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "home-loan-prepayment-calculator",
+      "name": "Home Loan Prepayment Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/home-loan-prepayment-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17380,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "home-loan-tax-benefit-calculator",
+      "name": "Home Loan Tax Benefit Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/home-loan-tax-benefit-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 25577,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -24868,6 +26974,45 @@
       ]
     },
     {
+      "slug": "hra-exemption-calculator-detailed",
+      "name": "HRA Exemption Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/hra-exemption-calculator-detailed",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 23283,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "hrv-readiness-trend-tracker",
       "name": "HRV Readiness Trend Tracker",
       "category": "Health & Fitness, Productivity",
@@ -24882,6 +27027,45 @@
         "sourceBytes": 3406,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "hsn-code-gst-rate-finder",
+      "name": "HSN Code GST Rate Finder",
+      "category": "Finance Calculators",
+      "route": "/tools/all/hsn-code-gst-rate-finder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 34679,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -25451,6 +27635,45 @@
       ]
     },
     {
+      "slug": "human-life-value-calculator",
+      "name": "Human Life Value Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/human-life-value-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 17391,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "icon-maker",
       "name": "Icon Maker Tool",
       "category": "Design & Color",
@@ -25463,6 +27686,45 @@
         "config": true,
         "sourceFiles": 6,
         "sourceBytes": 40281,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "ideal-body-weight-calculator",
+      "name": "Ideal Body Weight Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/ideal-body-weight-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 20145,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -26421,6 +28683,45 @@
       ]
     },
     {
+      "slug": "income-tax-slab-visualizer",
+      "name": "Income Tax Slab Visualizer",
+      "category": "Finance Calculators",
+      "route": "/tools/all/income-tax-slab-visualizer",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20766,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "indian-holiday-finder",
       "name": "Indian Holiday Finder",
       "category": "Lifestyle, Productivity",
@@ -26534,6 +28835,45 @@
       },
       "issues": [],
       "recommendations": []
+    },
+    {
+      "slug": "inflation-adjusted-return-calculator",
+      "name": "Inflation Adjusted Return Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/inflation-adjusted-return-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15709,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
     },
     {
       "slug": "inflation-calculator",
@@ -27270,6 +29610,45 @@
       ]
     },
     {
+      "slug": "invoice-number-generator",
+      "name": "Invoice Number Generator",
+      "category": "Generators",
+      "route": "/tools/all/invoice-number-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 20263,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "invoice-to-time-log-reconciler",
       "name": "Invoice-to-Time-Log Reconciler",
       "category": "Finance Calculators, Business",
@@ -27845,6 +30224,162 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 47527,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "itr-1-eligibility-checker",
+      "name": "ITR-1 Sahaj Eligibility Checker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/itr-1-eligibility-checker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 20949,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "itr-2-applicability-checker",
+      "name": "ITR-2 Applicability Checker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/itr-2-applicability-checker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 22223,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "itr-3-applicability-checker",
+      "name": "ITR-3 Applicability Checker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/itr-3-applicability-checker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21151,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "itr-document-checklist-builder",
+      "name": "ITR Document Checklist Builder",
+      "category": "Finance Calculators",
+      "route": "/tools/all/itr-document-checklist-builder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 26132,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -29310,6 +31845,84 @@
       ]
     },
     {
+      "slug": "lean-body-mass-calculator",
+      "name": "Lean Body Mass Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/lean-body-mass-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19288,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "leave-encashment-tax-calculator",
+      "name": "Leave Encashment Tax Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/leave-encashment-tax-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18806,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "led-pwm-flicker-detector",
       "name": "LED PWM Flicker Detector",
       "category": "Developer, Productivity",
@@ -29636,6 +32249,45 @@
         "sourceBytes": 898,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "line-sorter-deduplicator",
+      "name": "Line Sorter and Deduplicator",
+      "category": "Text & Writing",
+      "route": "/tools/all/line-sorter-deduplicator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16101,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -30204,6 +32856,45 @@
       "recommendations": []
     },
     {
+      "slug": "loan-against-property-calculator",
+      "name": "Loan Against Property Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/loan-against-property-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 20486,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "loan-app-permission-risk-auditor",
       "name": "Loan App Permission Risk Auditor",
       "category": "Security & Privacy",
@@ -30280,6 +32971,45 @@
       ]
     },
     {
+      "slug": "loan-eligibility-calculator",
+      "name": "Loan Eligibility Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/loan-eligibility-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 19214,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "loan-emi-calculator",
       "name": "Loan EMI Calculator",
       "category": "Business",
@@ -30331,6 +33061,45 @@
         "sourceBytes": 3610,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "loan-foreclosure-savings-calculator",
+      "name": "Loan Foreclosure Savings Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/loan-foreclosure-savings-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19755,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -31348,6 +34117,45 @@
       ]
     },
     {
+      "slug": "lumpsum-vs-sip-comparator",
+      "name": "Lumpsum vs SIP Comparator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/lumpsum-vs-sip-comparator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18073,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "m2-blocks-game",
       "name": "Merge Blocks Game",
       "category": "Games, Fun",
@@ -31399,6 +34207,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 19609,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "macro-split-calculator",
+      "name": "Macro Split Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/macro-split-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16285,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -31835,6 +34682,45 @@
       },
       "issues": [],
       "recommendations": []
+    },
+    {
+      "slug": "marks-percentage-calculator",
+      "name": "Marks Percentage Calculator",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/marks-percentage-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16287,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
     },
     {
       "slug": "markup-calculator",
@@ -34197,6 +37083,45 @@
       ]
     },
     {
+      "slug": "mutual-fund-xirr-calculator",
+      "name": "Mutual Fund XIRR Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/mutual-fund-xirr-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19863,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "mysql-visualization-tools",
       "name": "MySQL Visualization Tools",
       "category": "Developer",
@@ -34470,6 +37395,45 @@
       ]
     },
     {
+      "slug": "no-claim-bonus-calculator",
+      "name": "No Claim Bonus Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/no-claim-bonus-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20152,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "nonogram",
       "name": "Nonogram Puzzle",
       "category": "Games",
@@ -34482,6 +37446,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 27868,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "notice-period-buyout-calculator",
+      "name": "Notice Period Buyout Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/notice-period-buyout-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20221,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -34560,6 +37563,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 38595,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "nps-tier-1-corpus-calculator",
+      "name": "NPS Tier 1 Corpus Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/nps-tier-1-corpus-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17284,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -35244,8 +38286,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 15,
-        "sourceBytes": 63170,
+        "sourceFiles": 16,
+        "sourceBytes": 65487,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -36830,6 +39872,84 @@
       ]
     },
     {
+      "slug": "percentage-increase-decrease-calculator",
+      "name": "Percentage Increase Decrease Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/percentage-increase-decrease-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16172,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "percentage-of-total-calculator",
+      "name": "Percentage of Total Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/percentage-of-total-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 14581,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "percentage-practice",
       "name": "Percentage Practice",
       "category": "Calculators, Education & Science",
@@ -37335,6 +40455,45 @@
         "sourceBytes": 679,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "personal-loan-emi-calculator",
+      "name": "Personal Loan EMI Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/personal-loan-emi-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21645,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -38116,6 +41275,45 @@
       ]
     },
     {
+      "slug": "pomodoro-session-planner",
+      "name": "Pomodoro Session Planner",
+      "category": "Productivity",
+      "route": "/tools/all/pomodoro-session-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19801,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "pomodoro-study-timer",
       "name": "Pomodoro Study Timer",
       "category": "Productivity",
@@ -38245,6 +41443,123 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 41932,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "portfolio-rebalancing-calculator",
+      "name": "Portfolio Rebalancing Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/portfolio-rebalancing-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 24919,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "position-size-calculator",
+      "name": "Position Size Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/position-size-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19132,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "post-office-mis-calculator",
+      "name": "Post Office MIS Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/post-office-mis-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 17572,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -38477,6 +41792,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 15790,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "ppf-maturity-calculator",
+      "name": "PPF Maturity Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/ppf-maturity-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15152,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -39044,6 +42398,45 @@
       ]
     },
     {
+      "slug": "professional-tax-calculator",
+      "name": "Professional Tax Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/professional-tax-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 21695,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "profile-pic-bg-changer",
       "name": "Profile Picture Background Changer",
       "category": "Design & Color, AI Tools",
@@ -39227,6 +42620,45 @@
       ]
     },
     {
+      "slug": "project-estimate-calculator",
+      "name": "Project Estimate Calculator",
+      "category": "Productivity",
+      "route": "/tools/all/project-estimate-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18512,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "projectile-motion-simulator",
       "name": "Projectile Motion Simulator",
       "category": "Education & Science",
@@ -39344,6 +42776,123 @@
       ]
     },
     {
+      "slug": "property-capital-gains-tax-calculator",
+      "name": "Property Capital Gains Tax Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/property-capital-gains-tax-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 29950,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "proportion-solver",
+      "name": "Proportion Solver",
+      "category": "Calculators",
+      "route": "/tools/all/proportion-solver",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15714,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "protein-requirement-calculator",
+      "name": "Protein Requirement Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/protein-requirement-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19222,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "pulse-pressure-calculator",
       "name": "Pulse Pressure Calculator",
       "category": "Health & Fitness",
@@ -39356,6 +42905,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 13604,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "purchase-order-generator",
+      "name": "Purchase Order Generator",
+      "category": "Generators",
+      "route": "/tools/all/purchase-order-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 28828,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -39588,6 +43176,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 28858,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "quotation-generator",
+      "name": "Quotation Generator",
+      "category": "Generators",
+      "route": "/tools/all/quotation-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 29531,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -40470,6 +44097,45 @@
       ]
     },
     {
+      "slug": "ratio-calculator",
+      "name": "Ratio Calculator",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/ratio-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18265,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "raw-photo-developer",
       "name": "RAW Photo Developer",
       "category": "Image & Photo, Productivity",
@@ -40484,6 +44150,45 @@
         "sourceBytes": 532,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "rd-maturity-calculator",
+      "name": "Recurring Deposit Maturity Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/rd-maturity-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15106,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -41219,6 +44924,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 18526,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "rent-receipt-generator-hra",
+      "name": "Rent Receipt Generator for HRA",
+      "category": "Generators",
+      "route": "/tools/all/rent-receipt-generator-hra",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 24134,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -42102,6 +45846,45 @@
       ]
     },
     {
+      "slug": "rolling-returns-calculator",
+      "name": "Rolling Returns Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/rolling-returns-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21935,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "roman-numeral-converter",
       "name": "Roman Numeral Converter",
       "category": "Education & Science",
@@ -42724,6 +46507,45 @@
       "recommendations": []
     },
     {
+      "slug": "salary-slip-generator",
+      "name": "Salary Slip Generator",
+      "category": "Generators",
+      "route": "/tools/all/salary-slip-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 32716,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "salary-tax-calculator",
       "name": "Salary Tax Calculator",
       "category": "Finance Calculators, Calculators",
@@ -42853,6 +46675,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 8411,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "savings-account-interest-calculator",
+      "name": "Savings Account Interest Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/savings-account-interest-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 22163,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -43788,6 +47649,201 @@
       ]
     },
     {
+      "slug": "section-24b-home-loan-interest-deduction",
+      "name": "Section 24B Home Loan Interest Deduction",
+      "category": "Finance Calculators",
+      "route": "/tools/all/section-24b-home-loan-interest-deduction",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 23876,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "section-44ada-calculator",
+      "name": "Section 44ADA Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/section-44ada-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 24497,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "section-80d-deduction-calculator",
+      "name": "Section 80D Health Insurance Deduction Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/section-80d-deduction-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19118,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "section-80e-deduction-calculator",
+      "name": "Section 80E Education Loan Interest Deduction",
+      "category": "Finance Calculators",
+      "route": "/tools/all/section-80e-deduction-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15831,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "section-87a-rebate-checker",
+      "name": "Section 87A Rebate Checker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/section-87a-rebate-checker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16609,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "security-headers-checker",
       "name": "Security Headers Checker",
       "category": "Security & Privacy, Developer",
@@ -43802,6 +47858,84 @@
         "sourceBytes": 610,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "senior-citizen-income-tax-calculator",
+      "name": "Senior Citizen Income Tax Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/senior-citizen-income-tax-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 22536,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "senior-citizen-savings-scheme-calculator",
+      "name": "Senior Citizen Savings Scheme Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/senior-citizen-savings-scheme-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21279,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -44566,6 +48700,45 @@
       ]
     },
     {
+      "slug": "simple-interest-calculator-detailed",
+      "name": "Simple Interest Calculator Detailed",
+      "category": "Calculators",
+      "route": "/tools/all/simple-interest-calculator-detailed",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18669,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "sip-calculator",
       "name": "SIP Calculator",
       "category": "Business, Finance Calculators",
@@ -44888,6 +49061,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 4528,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "sleep-cycle-calculator",
+      "name": "Sleep Cycle Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/sleep-cycle-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 19771,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -45514,6 +49726,45 @@
         "sourceBytes": 999,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "society-maintenance-split-calculator",
+      "name": "Society Maintenance Split Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/society-maintenance-split-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 25431,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -46490,6 +50741,45 @@
       ]
     },
     {
+      "slug": "standard-deduction-impact-calculator",
+      "name": "Standard Deduction Impact Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/standard-deduction-impact-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18716,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "standard-deviation-calculator",
       "name": "Standard Deviation Calculator",
       "category": "Calculators",
@@ -46695,6 +50985,84 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 26881,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "stock-average-price-calculator",
+      "name": "Stock Average Price Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/stock-average-price-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 20823,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "stop-loss-target-calculator",
+      "name": "Stop Loss and Target Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/stop-loss-target-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21334,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -47656,6 +52024,45 @@
       ]
     },
     {
+      "slug": "swp-withdrawal-calculator",
+      "name": "SWP Withdrawal Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/swp-withdrawal-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17107,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "symptom-checker",
       "name": "Symptom Checker",
       "category": "Health & Fitness",
@@ -47812,6 +52219,45 @@
       ]
     },
     {
+      "slug": "tdee-calculator",
+      "name": "TDEE Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/tdee-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 23697,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "tds-calculator-by-section",
       "name": "TDS Calculator by Section",
       "category": "Finance Calculators, Lifestyle",
@@ -47826,6 +52272,123 @@
         "sourceBytes": 4769,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "tds-on-fd-interest-calculator",
+      "name": "TDS on FD Interest Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/tds-on-fd-interest-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21652,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "tds-on-salary-calculator",
+      "name": "TDS on Salary Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/tds-on-salary-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 30077,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "tds-rate-finder-by-section",
+      "name": "TDS Rate Finder by Section",
+      "category": "Finance Calculators",
+      "route": "/tools/all/tds-rate-finder-by-section",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 24268,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -47904,6 +52467,45 @@
         "sourceBytes": 2027,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "term-insurance-cover-calculator",
+      "name": "Term Insurance Cover Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/term-insurance-cover-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 24774,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -48290,6 +52892,45 @@
         "sourceBytes": 1700,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "text-statistics-analyzer",
+      "name": "Text Statistics Analyzer",
+      "category": "Text & Writing",
+      "route": "/tools/all/text-statistics-analyzer",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 18109,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -48925,6 +53566,45 @@
       ]
     },
     {
+      "slug": "time-duration-calculator",
+      "name": "Time Duration Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/time-duration-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 15087,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "time-zone-explorer",
       "name": "Time Zone Explorer",
       "category": "Productivity",
@@ -49003,6 +53683,45 @@
       ]
     },
     {
+      "slug": "timesheet-hours-calculator",
+      "name": "Timesheet Hours Calculator",
+      "category": "Productivity",
+      "route": "/tools/all/timesheet-hours-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17946,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "tip-calculator",
       "name": "Tip Calculator",
       "category": "Finance Calculators, Lifestyle",
@@ -49015,6 +53734,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 14654,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "tip-split-calculator",
+      "name": "Tip and Bill Split Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/tip-split-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 17317,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -49580,6 +54338,45 @@
       "recommendations": []
     },
     {
+      "slug": "two-wheeler-loan-calculator",
+      "name": "Two Wheeler Loan Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/two-wheeler-loan-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 21391,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "typing-master",
       "name": "Typing Master Tool",
       "category": "Education & Science",
@@ -50007,6 +54804,45 @@
       "recommendations": []
     },
     {
+      "slug": "unit-price-comparison-calculator",
+      "name": "Unit Price Comparison Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/unit-price-comparison-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 21654,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "universal-pii-ai-redactor",
       "name": "Universal PII & AI Input Redactor",
       "category": "Security & Privacy, AI Tools, Text & Writing",
@@ -50155,6 +54991,45 @@
       "recommendations": []
     },
     {
+      "slug": "upi-qr-code-generator",
+      "name": "UPI QR Code Generator",
+      "category": "Generators",
+      "route": "/tools/all/upi-qr-code-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 14580,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "upside-down-text",
       "name": "Upside Down Text",
       "category": "Text & Writing",
@@ -50284,6 +55159,45 @@
         "sourceBytes": 1220,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "url-slug-generator",
+      "name": "URL Slug Generator",
+      "category": "Text & Writing",
+      "route": "/tools/all/url-slug-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16985,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -50711,6 +55625,45 @@
         "sourceBytes": 3076,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "vehicle-insurance-idv-calculator",
+      "name": "Vehicle Insurance IDV Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/vehicle-insurance-idv-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 18964,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -51763,6 +56716,45 @@
       ]
     },
     {
+      "slug": "waist-to-hip-ratio-calculator",
+      "name": "Waist to Hip Ratio Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/waist-to-hip-ratio-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 16320,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "warranty-receipt-vault",
       "name": "Warranty & Receipt Vault",
       "category": "Security & Privacy, Productivity",
@@ -52628,6 +57620,45 @@
       ]
     },
     {
+      "slug": "weighted-average-calculator",
+      "name": "Weighted Average Calculator",
+      "category": "Calculators, Education & Science",
+      "route": "/tools/all/weighted-average-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 13858,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "whack-a-mole",
       "name": "Whack-a-Mole",
       "category": "Fun, Games",
@@ -53465,6 +58496,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 4702,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "working-days-calculator",
+      "name": "Working Days Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/working-days-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 22800,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,

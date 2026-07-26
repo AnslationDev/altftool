@@ -56,6 +56,14 @@ export const TOOL_CATALOG = [
     "description": "OBJ, STL aur GLB convert karke mesh statistics dikhaye."
   },
   {
+    "slug": "80tta-vs-80ttb-calculator",
+    "name": "80TTA vs 80TTB Interest Deduction",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare savings and deposit interest deduction limits under Section 80TTA and 80TTB for regular and senior taxpayers."
+  },
+  {
     "slug": "a-b-test-significance-calculator",
     "name": "A/B Test Significance Calculator",
     "categories": [
@@ -90,6 +98,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Supported Aadhaar QR locally decode aur signature status dikhaye."
+  },
+  {
+    "slug": "absolute-vs-annualised-return-calculator",
+    "name": "Absolute vs Annualised Return Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Convert total gain percentage to annualised CAGR and back, for any holding period in years and months."
   },
   {
     "slug": "ac-tonnage-calculator",
@@ -179,6 +195,14 @@ export const TOOL_CATALOG = [
     "description": "Estimated tax ko applicable installments me schedule kare."
   },
   {
+    "slug": "advance-tax-interest-234b-234c-calculator",
+    "name": "Advance Tax Interest 234B 234C Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Interest payable under Sections 234B and 234C for shortfall and deferment of advance tax instalments."
+  },
+  {
     "slug": "afterimage-generator",
     "name": "Afterimage Generator",
     "categories": [
@@ -194,6 +218,14 @@ export const TOOL_CATALOG = [
       "AI Tools"
     ],
     "description": "Calculates age based on birthdate"
+  },
+  {
+    "slug": "age-difference-calculator",
+    "name": "Age Difference Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the exact age gap between two people in years, months and days, plus total weeks and days."
   },
   {
     "slug": "age-gender-detector",
@@ -652,6 +684,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate simplified ratios and proportional dimensions for thumbnails, banners, and responsive layouts."
   },
   {
+    "slug": "atal-pension-yojana-calculator",
+    "name": "Atal Pension Yojana Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find the exact APY monthly contribution for a ₹1,000–₹5,000 pension slab based on your joining age, plus total outgo and nominee corpus."
+  },
+  {
     "slug": "atrial-fibrillation-risk-calculator",
     "name": "Atrial Fibrillation Risk Calculator",
     "categories": [
@@ -667,6 +707,15 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Check your attendance percentage and find exactly how many classes you must attend — or can safely skip."
+  },
+  {
+    "slug": "attendance-percentage-calculator",
+    "name": "Attendance Percentage Calculator",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Check your current attendance percent and how many classes you must attend or can skip."
   },
   {
     "slug": "attention-span-test",
@@ -809,6 +858,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Scale any recipe between pan sizes with an exact ingredient multiplier, bake-time advice, and overflow warnings."
+  },
+  {
+    "slug": "balance-transfer-savings-calculator",
+    "name": "Balance Transfer Savings Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See the interest you save by transferring a loan to a lower rate, net of processing fees, plus the break-even month."
   },
   {
     "slug": "band-name-generator",
@@ -1089,6 +1146,14 @@ export const TOOL_CATALOG = [
     "description": "Compare two images interactively with a draggable before/after slider. Perfect for showcasing edits, restorations, and transformations."
   },
   {
+    "slug": "belated-return-late-fee-calculator",
+    "name": "Belated Return Late Fee Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Late filing fee under Section 234F plus 234A interest for income tax returns filed after the due date."
+  },
+  {
     "slug": "bg-remover",
     "name": "Background Remover",
     "categories": [
@@ -1300,6 +1365,14 @@ export const TOOL_CATALOG = [
     "description": "A practical fitness and health tool for managing body fat percentage workflows efficiently."
   },
   {
+    "slug": "body-fat-percentage-calculator",
+    "name": "Body Fat Percentage Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate body fat with the US Navy tape method using height, neck, waist and hip measurements."
+  },
+  {
     "slug": "body-surface-area-calculator",
     "name": "Body Surface Area Calculator",
     "categories": [
@@ -1331,6 +1404,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Current yield and approximate yield-to-maturity for a bond."
+  },
+  {
+    "slug": "bonus-variable-pay-calculator",
+    "name": "Bonus and Variable Pay Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate your bonus payout from target variable pay, performance rating multipliers, company payout factor and proration."
   },
   {
     "slug": "bookmark-capsule",
@@ -1479,6 +1560,14 @@ export const TOOL_CATALOG = [
     "description": "See every rupee a trade costs — brokerage, STT, GST, stamp duty and DP charges — plus your real net profit."
   },
   {
+    "slug": "brokerage-charges-calculator",
+    "name": "Brokerage and Charges Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Total trade cost including brokerage, STT, GST, stamp duty, SEBI and exchange transaction charges for equity, futures and options."
+  },
+  {
     "slug": "browser-extension-permission-analyzer",
     "name": "Browser Extension Permission Analyzer",
     "categories": [
@@ -1545,6 +1634,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Henderson-Hasselbalch equation se buffer pH calculate kare."
+  },
+  {
+    "slug": "bulk-find-replace",
+    "name": "Bulk Find and Replace",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Run many find and replace rules over text at once with regex, case and whole-word options."
   },
   {
     "slug": "bulk-text-replacer",
@@ -1641,6 +1738,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Compound annual growth rate from a starting value, ending value and number of years."
+  },
+  {
+    "slug": "cagr-calculator-detailed",
+    "name": "CAGR Calculator Detailed",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out compound annual growth rate from a start value, end value and duration, with absolute return and a year-wise breakdown."
   },
   {
     "slug": "calendar-privacy-scrubber",
@@ -1795,6 +1900,14 @@ export const TOOL_CATALOG = [
     "description": "Monthly payment, total interest and total cost for a car loan."
   },
   {
+    "slug": "car-loan-emi-calculator",
+    "name": "Car Loan EMI Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Car loan EMI, total interest and a year-by-year amortisation schedule with down payment, tenure and processing fees."
+  },
+  {
     "slug": "car-ownership-cost-analyzer",
     "name": "car-cost-analyzer",
     "categories": [
@@ -1895,12 +2008,29 @@ export const TOOL_CATALOG = [
     "description": "Prepare a domain watchlist and identify suspicious certificate names."
   },
   {
+    "slug": "cgpa-to-percentage-converter",
+    "name": "CGPA to Percentage Converter",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Convert CGPA to percentage using CBSE, VTU, Mumbai University and custom multipliers."
+  },
+  {
     "slug": "changelog-generator",
     "name": "Changelog Generator",
     "categories": [
       "Developer"
     ],
     "description": "Turn a list of changes into a clean, categorised Keep-a-Changelog entry."
+  },
+  {
+    "slug": "character-limit-checker",
+    "name": "Character Limit Checker",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Check text against X, Instagram, LinkedIn, SEO and SMS character limits with a live remaining count."
   },
   {
     "slug": "charger-wattage-calculator",
@@ -1952,6 +2082,14 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Sharpen your tactical skills with curated chess puzzles — forks, pins, skewers, discovered attacks, checkmates and endgames across multiple difficulty levels."
+  },
+  {
+    "slug": "child-education-cost-planner",
+    "name": "Child Education Cost Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project the future cost of your child's education after education inflation and the monthly SIP needed to fund it."
   },
   {
     "slug": "child-height-predictor",
@@ -2299,6 +2437,14 @@ export const TOOL_CATALOG = [
     "description": "See how your money grows with compound interest across daily, monthly, quarterly, half-yearly, and yearly compounding frequencies."
   },
   {
+    "slug": "compound-interest-calculator-detailed",
+    "name": "Compound Interest Calculator Detailed",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compound interest at any frequency, with deposits and a year-by-year growth table."
+  },
+  {
     "slug": "compound-interest-planner",
     "name": "Compound Interest Planner",
     "categories": [
@@ -2376,6 +2522,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Explore 15+ major constellations with an interactive night sky map"
+  },
+  {
+    "slug": "construction-cost-estimator",
+    "name": "Construction Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Approximate house construction cost from built-up area, quality of construction and city, with a work-head and material breakdown."
   },
   {
     "slug": "consumer-complaint-draft-builder",
@@ -2498,6 +2652,22 @@ export const TOOL_CATALOG = [
     "description": "Flag wildcard, credential, and unsafe-origin combinations."
   },
   {
+    "slug": "cost-inflation-index-calculator",
+    "name": "Cost Inflation Index Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Indexed cost of acquisition and improvement using the notified Cost Inflation Index for the purchase and sale financial years."
+  },
+  {
+    "slug": "countdown-days-calculator",
+    "name": "Countdown Days Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "See how many days are left until any target date, with weeks, months and working-day breakdowns."
+  },
+  {
     "slug": "countdown-timer",
     "name": "Countdown Timer",
     "categories": [
@@ -2567,6 +2737,22 @@ export const TOOL_CATALOG = [
     "description": "See the true cost of paying only the minimum due — months to clear, total interest with GST, and faster payoff plans."
   },
   {
+    "slug": "credit-card-minimum-due-calculator",
+    "name": "Credit Card Minimum Due Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See how many years and how much interest it takes to clear a credit card balance if you only ever pay the minimum due."
+  },
+  {
+    "slug": "credit-score-impact-simulator",
+    "name": "Credit Score Impact Simulator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate how utilisation, hard enquiries and missed payments move your credit score, with a before and after comparison."
+  },
+  {
     "slug": "cron-expression-generator",
     "name": "Cron Expression Generator",
     "categories": [
@@ -2607,6 +2793,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Chosen asset target cross kare toh browser notification de."
+  },
+  {
+    "slug": "crypto-tax-calculator-india",
+    "name": "Crypto Tax Calculator India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Flat 30% VDA tax under Section 115BBH plus 1% TDS under 194S, with per-trade gains and losses that cannot be set off."
   },
   {
     "slug": "crypto-wallet-checker",
@@ -2764,6 +2958,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Convert simple cURL commands into fetch, Axios, or Python requests."
+  },
+  {
+    "slug": "currency-conversion-fee-calculator",
+    "name": "Currency Conversion Fee Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "True cost of a forex transaction after exchange rate markup, card fees and GST, with the effective rate you actually pay."
   },
   {
     "slug": "currency-converter",
@@ -2938,6 +3140,14 @@ export const TOOL_CATALOG = [
     "description": "Visualize arrays, linked lists, stacks, queues, binary trees, and graphs with interactive operations and real-time state updates."
   },
   {
+    "slug": "date-add-subtract-calculator",
+    "name": "Date Add Subtract Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add or subtract days, weeks, months or years from any date and get the exact resulting date."
+  },
+  {
     "slug": "date-time-conversions",
     "name": "Date / Time Conversions",
     "categories": [
@@ -2989,6 +3199,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free."
+  },
+  {
+    "slug": "debt-snowball-avalanche-planner",
+    "name": "Debt Snowball vs Avalanche Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the snowball and avalanche payoff orders across all your loans by months to debt-free and total interest paid."
   },
   {
     "slug": "decimal-converter",
@@ -3575,6 +3793,14 @@ export const TOOL_CATALOG = [
     "description": "Interactive celestial optics simulator for Solar and Lunar eclipses with Umbra and Penumbra shadow cone geometry."
   },
   {
+    "slug": "education-loan-emi-calculator",
+    "name": "Education Loan EMI Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying."
+  },
+  {
     "slug": "eisenhower-matrix-tool",
     "name": "Eisenhower Matrix Tool",
     "categories": [
@@ -3592,6 +3818,14 @@ export const TOOL_CATALOG = [
     "description": "Interactive schematic circuit simulator with live electron flow animations, component toggles, and real-time Ohm's Law calculations."
   },
   {
+    "slug": "electricity-bill-calculator",
+    "name": "Electricity Bill Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate your monthly electricity bill from appliance wattage, daily usage hours and your per-unit tariff."
+  },
+  {
     "slug": "elimination-diet-correlation-log",
     "name": "Elimination Diet Correlation Log",
     "categories": [
@@ -3599,6 +3833,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Foods aur reactions ke possible patterns dikhaye."
+  },
+  {
+    "slug": "elss-lock-in-tracker",
+    "name": "ELSS Lock-in Tracker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Track when each ELSS SIP instalment completes its 3-year lock-in, with unlocked, locked and next-to-free amounts."
   },
   {
     "slug": "email-authentication-checker",
@@ -3690,6 +3932,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Size your emergency fund from real monthly essentials, see your savings gap, and get a month-by-month plan to fill it."
+  },
+  {
+    "slug": "emi-moratorium-impact-calculator",
+    "name": "EMI Moratorium Impact Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See the extra interest, higher EMI and added tenure caused by pausing your loan EMIs for a few months."
   },
   {
     "slug": "emoji-hub",
@@ -3802,6 +4052,22 @@ export const TOOL_CATALOG = [
     "description": "Project your EPF corpus at retirement with the real 12% split, EPS cap, yearly interest and EEE tax status."
   },
   {
+    "slug": "epf-maturity-calculator",
+    "name": "EPF Maturity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project EPF corpus at retirement from salary, contribution rate and expected hikes."
+  },
+  {
+    "slug": "eps-pension-calculator",
+    "name": "EPS Pension Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate your monthly EPS-95 pension from pensionable salary and years of service, with early/deferred pension and family pension."
+  },
+  {
     "slug": "equation-practice",
     "name": "Equation Practice",
     "categories": [
@@ -3809,6 +4075,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Practice solving algebraic equations with randomised problems, instant feedback, hints, and performance tracking."
+  },
+  {
+    "slug": "equity-capital-gains-tax-calculator",
+    "name": "Equity Capital Gains Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out STCG and LTCG on listed equity from your holding period, with the annual exemption, cess and grandfathering."
   },
   {
     "slug": "error-log-pattern-grouper",
@@ -3873,12 +4147,29 @@ export const TOOL_CATALOG = [
     "description": "Organize evidence identifiers, recorded digests, and chronological custody events locally, with reference checks, canonical JSON, and an optional SHA-256 event "
   },
   {
+    "slug": "eway-bill-validity-calculator",
+    "name": "E-Way Bill Distance Validity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time."
+  },
+  {
     "slug": "exam-score-analyzer",
     "name": "Exam Score Analyzer",
     "categories": [
       "Education & Science"
     ],
     "description": "Analyze your exam performance with grades, insights, and interactive charts."
+  },
+  {
+    "slug": "exam-score-needed-calculator",
+    "name": "Exam Score Needed Calculator",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Find the final exam score you need to reach your target overall grade in a course."
   },
   {
     "slug": "excel-formula",
@@ -3948,6 +4239,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Provides information about Expanse game"
+  },
+  {
+    "slug": "expense-ratio-impact-calculator",
+    "name": "Expense Ratio Impact Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See how much a mutual fund expense ratio quietly eats from your long-term corpus, and what a direct plan saves."
   },
   {
     "slug": "exposure-triangle-guide",
@@ -4089,6 +4388,22 @@ export const TOOL_CATALOG = [
     "description": "Test your clicking speed in 10 seconds. Click as fast as you can and compare your CPS with friends."
   },
   {
+    "slug": "fd-ladder-planner",
+    "name": "Fixed Deposit Ladder Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a lump sum across staggered FD tenures and see each rung's maturity, date and the blended average yield."
+  },
+  {
+    "slug": "fd-premature-withdrawal-penalty-calculator",
+    "name": "FD Premature Withdrawal Penalty Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Net payout when you break a fixed deposit early — reduced card rate, penalty deduction and the interest you give up."
+  },
+  {
     "slug": "fd-rd-maturity-calculator",
     "name": "FD / RD Maturity Calculator",
     "categories": [
@@ -4105,6 +4420,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Group customer feedback into themes, estimate sentiment, and surface high-priority product signals."
+  },
+  {
+    "slug": "fifty-thirty-twenty-budget-calculator",
+    "name": "50-30-20 Budget Rule Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split your take-home pay into 50% needs, 30% wants and 20% savings, then compare it against what you actually spend."
   },
   {
     "slug": "file-checksum-comparator",
@@ -4245,6 +4568,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Create, organize, and study flashcards with AI-assisted generation."
+  },
+  {
+    "slug": "flat-vs-reducing-rate-converter",
+    "name": "Flat vs Reducing Interest Rate Converter",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Convert a flat interest rate to its true reducing-balance equivalent, or back again, with the EMI and total interest."
   },
   {
     "slug": "flow-chart-maker",
@@ -4421,6 +4752,14 @@ export const TOOL_CATALOG = [
     "description": "Upload a video and convert its frame rate to any target FPS — 23.976, 24, 25, 29.97, 30, 48, 50, 60, 120 fps and more. Runs entirely in your browser via FFmpeg."
   },
   {
+    "slug": "freelance-hourly-rate-calculator",
+    "name": "Freelance Hourly Rate Calculator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out the freelance hourly rate you need from target income, billable hours, expenses and tax."
+  },
+  {
     "slug": "freelance-payment-late-fee-tracker",
     "name": "Freelance Payment & Late-Fee Tracker",
     "categories": [
@@ -4437,6 +4776,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge."
+  },
+  {
+    "slug": "freelancer-advance-tax-planner",
+    "name": "Freelancer Advance Tax Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan quarterly advance tax instalments and due dates on freelance and professional income."
   },
   {
     "slug": "friend-elo-ladder",
@@ -4471,6 +4818,22 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Measure the strength of your friendship using name alignment algorithms and interactive parameter sliders."
+  },
+  {
+    "slug": "fuel-cost-trip-calculator",
+    "name": "Fuel Cost Trip Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate trip fuel cost from distance, mileage and fuel price, then split it per person."
+  },
+  {
+    "slug": "full-and-final-settlement-calculator",
+    "name": "Full and Final Settlement Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate your F&F settlement from pending salary, leave encashment, gratuity, bonus and notice or loan recoveries."
   },
   {
     "slug": "funny-nickname-generator",
@@ -4680,6 +5043,14 @@ export const TOOL_CATALOG = [
     "description": "A drag-and-drop email template builder optimized for Gmail and marketing campaigns."
   },
   {
+    "slug": "goal-based-sip-calculator",
+    "name": "Goal Based SIP Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Monthly SIP needed to reach a target corpus by a target date, with lumpsum, annual step-up and inflation adjustment."
+  },
+  {
     "slug": "gold-jewellery-calculator",
     "name": "Gold Jewellery Price Calculator",
     "categories": [
@@ -4687,6 +5058,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "See the real price of gold jewellery: purity rate, making charges, wastage, GST 3% and your resale loss."
+  },
+  {
+    "slug": "gold-loan-eligibility-calculator",
+    "name": "Gold Loan Eligibility Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the gold loan you can get from jewellery weight, karat purity and the lender's LTV cap, with per-gram value and repayment preview."
   },
   {
     "slug": "gold-price-checker",
@@ -4790,6 +5169,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate your gratuity payout under the Payment of Gratuity Act, with rounding rules, eligibility, and tax-free limits."
   },
   {
+    "slug": "gratuity-calculator-india",
+    "name": "Gratuity Calculator India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Gratuity payable under the Payment of Gratuity Act with 15/26 formula and tax-free cap."
+  },
+  {
     "slug": "gravity-orbit-simulator",
     "name": "Gravity Orbit Simulator",
     "categories": [
@@ -4841,6 +5228,22 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Calculate inclusive or exclusive GST with CGST, SGST, and IGST breakdowns."
+  },
+  {
+    "slug": "gst-input-tax-credit-calculator",
+    "name": "GST Input Tax Credit Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Net GST payable in cash after setting off input tax credit across IGST, CGST and SGST under the Rule 88A utilisation order."
+  },
+  {
+    "slug": "gst-reverse-calculator",
+    "name": "GST Reverse Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Extract base price and GST from a GST-inclusive amount across every Indian GST slab."
   },
   {
     "slug": "gstin-format-validator",
@@ -4945,6 +5348,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Left/right, stereo placement aur polarity test tones play kare."
+  },
+  {
+    "slug": "health-insurance-cover-calculator",
+    "name": "Health Insurance Cover Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Suggests the health insurance sum insured your family needs from city tier, family size, age and medical inflation."
   },
   {
     "slug": "health-pre",
@@ -5075,6 +5486,14 @@ export const TOOL_CATALOG = [
     "description": "Learn coding concepts translated playfully into everyday Hinglish."
   },
   {
+    "slug": "home-affordability-calculator",
+    "name": "Home Affordability Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find the maximum property price you can afford from your income, EMI capacity, down payment, LTV cap and registration costs."
+  },
+  {
     "slug": "home-battery-tou-simulator",
     "name": "Home Battery TOU Simulator",
     "categories": [
@@ -5100,6 +5519,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Record household assets, serial numbers, photos, and replacement values."
+  },
+  {
+    "slug": "home-loan-prepayment-calculator",
+    "name": "Home Loan Prepayment Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find the interest saved and tenure cut when you make a lump-sum prepayment or pay extra with every EMI."
+  },
+  {
+    "slug": "home-loan-tax-benefit-calculator",
+    "name": "Home Loan Tax Benefit Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Combined Section 80C principal and Section 24(b) interest tax savings on a home loan, year by year."
   },
   {
     "slug": "home-maintenance-scheduler",
@@ -5151,6 +5586,14 @@ export const TOOL_CATALOG = [
     "description": "Find your exempt and taxable HRA with the three-rule method, metro limits, and the tax you save at your slab."
   },
   {
+    "slug": "hra-exemption-calculator-detailed",
+    "name": "HRA Exemption Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Least-of-three HRA exemption with metro and non-metro rules and monthly breakdown."
+  },
+  {
     "slug": "hrv-readiness-trend-tracker",
     "name": "HRV Readiness Trend Tracker",
     "categories": [
@@ -5158,6 +5601,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Personal HRV baseline aur deviations track kare."
+  },
+  {
+    "slug": "hsn-code-gst-rate-finder",
+    "name": "HSN Code GST Rate Finder",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Search HSN and SAC codes for common goods and services, see the GST slab and split any amount into CGST, SGST or IGST."
   },
   {
     "slug": "htaccess-to-nginx",
@@ -5273,12 +5724,28 @@ export const TOOL_CATALOG = [
     "description": "Interactive cardiovascular heart pump simulator with cardiac cycle beating animations, 4 chambers, valves, and systemic vs pulmonary blood flow."
   },
   {
+    "slug": "human-life-value-calculator",
+    "name": "Human Life Value Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Economic value of your future earnings for life insurance planning, with growth, discount rate, loans and existing cover."
+  },
+  {
     "slug": "icon-maker",
     "name": "Icon Maker Tool",
     "categories": [
       "Design & Color"
     ],
     "description": "Create, preview, copy, and export production-ready app icons, favicons, launcher assets, and PWA icons in the browser."
+  },
+  {
+    "slug": "ideal-body-weight-calculator",
+    "name": "Ideal Body Weight Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate an ideal weight range from height using the Devine, Robinson, Miller, Hamwi and healthy-BMI methods."
   },
   {
     "slug": "ideal-gas-law-calculator",
@@ -5474,6 +5941,14 @@ export const TOOL_CATALOG = [
     "description": "Compare India old and new tax regimes with deductions, rebate, surcharge, cess, and slab-wise breakup."
   },
   {
+    "slug": "income-tax-slab-visualizer",
+    "name": "Income Tax Slab Visualizer",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess."
+  },
+  {
     "slug": "indian-holiday-finder",
     "name": "Indian Holiday Finder",
     "categories": [
@@ -5500,6 +5975,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Scan pasted HTML, Markdown, CSV, or text locally for hidden instructions, role markers, data-exfiltration requests, and prompt-injection signals."
+  },
+  {
+    "slug": "inflation-adjusted-return-calculator",
+    "name": "Inflation Adjusted Return Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Convert nominal returns into real, inflation-adjusted returns over any period and see what your money is truly worth."
   },
   {
     "slug": "inflation-calculator",
@@ -5649,6 +6132,14 @@ export const TOOL_CATALOG = [
     "description": "Create clean invoices with line items, tax, discount, totals, and print-ready output."
   },
   {
+    "slug": "invoice-number-generator",
+    "name": "Invoice Number Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate sequential or date-based invoice numbering schemes in bulk, with prefixes, padding and period resets."
+  },
+  {
     "slug": "invoice-to-time-log-reconciler",
     "name": "Invoice-to-Time-Log Reconciler",
     "categories": [
@@ -5757,6 +6248,38 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Build a day-wise travel itinerary with time slots, activities, costs, conflicts, pace, and export-ready plans."
+  },
+  {
+    "slug": "itr-1-eligibility-checker",
+    "name": "ITR-1 Sahaj Eligibility Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Answer a few questions to see whether ITR-1 Sahaj can be filed for your income sources."
+  },
+  {
+    "slug": "itr-2-applicability-checker",
+    "name": "ITR-2 Applicability Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check whether capital gains, multiple properties or foreign assets push you to ITR-2."
+  },
+  {
+    "slug": "itr-3-applicability-checker",
+    "name": "ITR-3 Applicability Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check whether your business or professional income means you must file ITR-3, or whether ITR-1, ITR-2 or ITR-4 fits."
+  },
+  {
+    "slug": "itr-document-checklist-builder",
+    "name": "ITR Document Checklist Builder",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions."
   },
   {
     "slug": "javascript-tools",
@@ -6053,6 +6576,22 @@ export const TOOL_CATALOG = [
     "description": "Greatest common divisor and least common multiple of two numbers."
   },
   {
+    "slug": "lean-body-mass-calculator",
+    "name": "Lean Body Mass Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Work out lean and fat mass from your body fat percentage, or estimate it with the Boer, James and Hume formulas."
+  },
+  {
+    "slug": "leave-encashment-tax-calculator",
+    "name": "Leave Encashment Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Taxable vs exempt leave encashment on retirement for private employees."
+  },
+  {
     "slug": "led-pwm-flicker-detector",
     "name": "LED PWM Flicker Detector",
     "categories": [
@@ -6126,6 +6665,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Add sequential line numbers to every line of your text."
+  },
+  {
+    "slug": "line-sorter-deduplicator",
+    "name": "Line Sorter and Deduplicator",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Sort, reverse, shuffle and remove duplicate lines from any list, with case and blank-line options."
   },
   {
     "slug": "link-organizer",
@@ -6230,6 +6777,14 @@ export const TOOL_CATALOG = [
     "description": "Analyze AI usage logs locally with user-supplied token rates, model cost summaries, and counts-only personal-data or secret signals."
   },
   {
+    "slug": "loan-against-property-calculator",
+    "name": "Loan Against Property Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check loan against property eligibility from property value and LTV, then test it against income-based EMI affordability and FOIR."
+  },
+  {
     "slug": "loan-app-permission-risk-auditor",
     "name": "Loan App Permission Risk Auditor",
     "categories": [
@@ -6244,6 +6799,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Monthly payment, total interest and total cost of a loan."
+  },
+  {
+    "slug": "loan-eligibility-calculator",
+    "name": "Loan Eligibility Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check the loan amount you qualify for from your income, existing EMIs and the FOIR limit lenders apply, with a tenure comparison."
   },
   {
     "slug": "loan-emi-calculator",
@@ -6261,6 +6824,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare."
+  },
+  {
+    "slug": "loan-foreclosure-savings-calculator",
+    "name": "Loan Foreclosure Savings Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the cost of closing a loan early with the interest still left on it to see your real net savings."
   },
   {
     "slug": "loan-prepayment-analyzer",
@@ -6483,6 +7054,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate the future value of your one-time lumpsum investment with compound growth projections and detailed year-by-year breakdown."
   },
   {
+    "slug": "lumpsum-vs-sip-comparator",
+    "name": "Lumpsum vs SIP Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the final corpus of a one-time lumpsum investment against an equivalent monthly SIP at the same return."
+  },
+  {
     "slug": "m2-blocks-game",
     "name": "Merge Blocks Game",
     "categories": [
@@ -6498,6 +7077,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Calculate your perfect daily macros for fat loss, muscle gain, or maintenance."
+  },
+  {
+    "slug": "macro-split-calculator",
+    "name": "Macro Split Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Turn a daily calorie target into protein, carb and fat grams using balanced, high-protein, low-carb, keto or custom splits."
   },
   {
     "slug": "magic-8-ball",
@@ -6580,6 +7167,15 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Review marketplace messages locally for off-platform payment, fake escrow, overpayment, OTP, remote-access, shipping, fee, and account-takeover signals."
+  },
+  {
+    "slug": "marks-percentage-calculator",
+    "name": "Marks Percentage Calculator",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Calculate your exam percentage from obtained and total marks across multiple subjects."
   },
   {
     "slug": "markup-calculator",
@@ -7094,6 +7690,14 @@ export const TOOL_CATALOG = [
     "description": "Test your brain's ability to handle multiple tasks simultaneously with this timed cognitive challenge combining math problems and visual tracking."
   },
   {
+    "slug": "mutual-fund-xirr-calculator",
+    "name": "Mutual Fund XIRR Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate XIRR from irregular mutual fund investment dates, amounts and redemptions against today's value."
+  },
+  {
     "slug": "mysql-visualization-tools",
     "name": "MySQL Visualization Tools",
     "categories": [
@@ -7155,12 +7759,28 @@ export const TOOL_CATALOG = [
     "description": "Hundreds of unique prompts with category selection, difficulty filters, and random mode for the ultimate party game."
   },
   {
+    "slug": "no-claim-bonus-calculator",
+    "name": "No Claim Bonus Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "NCB percentage and premium saved after consecutive claim-free years, with next-year slab, add-ons and GST on your motor renewal."
+  },
+  {
     "slug": "nonogram",
     "name": "Nonogram Puzzle",
     "categories": [
       "Games"
     ],
     "description": "Solve nonogram picture-logic puzzles online free — 5x5, 10x10 and 15x15 grids with fill and mark modes."
+  },
+  {
+    "slug": "notice-period-buyout-calculator",
+    "name": "Notice Period Buyout Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the cost of buying out an unserved notice period from your salary components, leave adjustment and per-day basis."
   },
   {
     "slug": "notice-period-calculator",
@@ -7177,6 +7797,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Project your NPS corpus at 60, the pension your mandatory annuity buys, and the real tax you save."
+  },
+  {
+    "slug": "nps-tier-1-corpus-calculator",
+    "name": "NPS Tier 1 Corpus Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate your NPS Tier 1 corpus at 60, the mandatory annuity share and the expected monthly pension."
   },
   {
     "slug": "number-guessing-game",
@@ -7672,6 +8300,22 @@ export const TOOL_CATALOG = [
     "description": "Find the percentage increase or decrease between two numbers."
   },
   {
+    "slug": "percentage-increase-decrease-calculator",
+    "name": "Percentage Increase Decrease Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the percentage change between two numbers, see whether it is an increase or decrease, and apply a percentage to any value."
+  },
+  {
+    "slug": "percentage-of-total-calculator",
+    "name": "Percentage of Total Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find what percent one number is of another, plus reverse lookups for the missing part or the missing total."
+  },
+  {
     "slug": "percentage-practice",
     "name": "Percentage Practice",
     "categories": [
@@ -7784,6 +8428,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Maintain a timestamped private evidence log for incidents."
+  },
+  {
+    "slug": "personal-loan-emi-calculator",
+    "name": "Personal Loan EMI Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Personal loan EMI, total interest and true cost including processing fee, GST and the effective annual rate."
   },
   {
     "slug": "pet-age-converter",
@@ -7939,6 +8591,14 @@ export const TOOL_CATALOG = [
     "description": "Create interactive polls quickly and collect real-time responses."
   },
   {
+    "slug": "pomodoro-session-planner",
+    "name": "Pomodoro Session Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan focus sessions and breaks that fit an available time window, with a full clock-time schedule."
+  },
+  {
     "slug": "pomodoro-study-timer",
     "name": "Pomodoro Study Timer",
     "categories": [
@@ -7969,6 +8629,30 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "See how far your portfolio has drifted and get the exact buys and sells — or rebalance with fresh money and no tax."
+  },
+  {
+    "slug": "portfolio-rebalancing-calculator",
+    "name": "Portfolio Rebalancing Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Exact buy and sell amounts to bring each holding back to its target allocation, with or without selling."
+  },
+  {
+    "slug": "position-size-calculator",
+    "name": "Position Size Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Number of shares to buy based on your capital, risk per trade and stop loss distance, with capital and leverage limits applied."
+  },
+  {
+    "slug": "post-office-mis-calculator",
+    "name": "Post Office MIS Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate the monthly income from a Post Office Monthly Income Scheme deposit, with single and joint account limits and total interest."
   },
   {
     "slug": "post-office-scheme-calculator",
@@ -8021,6 +8705,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Project your Public Provident Fund maturity with year-wise growth, loan and withdrawal limits, and tax-free returns."
+  },
+  {
+    "slug": "ppf-maturity-calculator",
+    "name": "PPF Maturity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out your 15-year PPF maturity with yearly interest compounding, plus 5-year extension scenarios."
   },
   {
     "slug": "prayer-times-qibla",
@@ -8150,6 +8842,14 @@ export const TOOL_CATALOG = [
     "description": "Owned products ke official recall notices monitor kare."
   },
   {
+    "slug": "professional-tax-calculator",
+    "name": "Professional Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find your state-wise monthly and annual professional tax deduction from current salary slabs across Indian states."
+  },
+  {
     "slug": "profile-pic-bg-changer",
     "name": "Profile Picture Background Changer",
     "categories": [
@@ -8186,6 +8886,14 @@ export const TOOL_CATALOG = [
     "description": "Browse and search a comprehensive dictionary of programming terms, concepts, and jargon with clear definitions and examples."
   },
   {
+    "slug": "project-estimate-calculator",
+    "name": "Project Estimate Calculator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Estimate project cost and delivery timeline from task hours, hourly rate and a risk buffer."
+  },
+  {
     "slug": "projectile-motion-simulator",
     "name": "Projectile Motion Simulator",
     "categories": [
@@ -8213,12 +8921,44 @@ export const TOOL_CATALOG = [
     "description": "Master English pronunciation with interactive speech recognition. Practice difficult words, tongue twisters, and common mispronunciations."
   },
   {
+    "slug": "property-capital-gains-tax-calculator",
+    "name": "Property Capital Gains Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Long-term capital gains tax on property with CII indexation, the 12.5% vs 20% comparison and Section 54/54EC exemptions."
+  },
+  {
+    "slug": "proportion-solver",
+    "name": "Proportion Solver",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Solve a/b = c/d for any missing value with full cross multiplication steps."
+  },
+  {
+    "slug": "protein-requirement-calculator",
+    "name": "Protein Requirement Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Work out your daily protein target in grams from body weight, activity level and training goal, with a per-meal breakdown."
+  },
+  {
     "slug": "pulse-pressure-calculator",
     "name": "Pulse Pressure Calculator",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Calculate pulse pressure and assess cardiovascular health from blood pressure readings."
+  },
+  {
+    "slug": "purchase-order-generator",
+    "name": "Purchase Order Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a printable purchase order with line items, GST, freight, delivery and payment terms."
   },
   {
     "slug": "qr-generator",
@@ -8270,6 +9010,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Take a focused multiple-choice quiz with progress tracking, scoring, answer review, and restart controls."
+  },
+  {
+    "slug": "quotation-generator",
+    "name": "Quotation Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create client quotations with line items, per-item discounts, GST and a validity period."
   },
   {
     "slug": "quote-generator",
@@ -8442,6 +9190,15 @@ export const TOOL_CATALOG = [
     "description": "Find your rashi instantly based on date of birth."
   },
   {
+    "slug": "ratio-calculator",
+    "name": "Ratio Calculator",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Simplify ratios, solve for a missing term and split a total in any given ratio."
+  },
+  {
     "slug": "raw-photo-developer",
     "name": "RAW Photo Developer",
     "categories": [
@@ -8449,6 +9206,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "RAW exposure, white balance aur JPEG export controls provide kare."
+  },
+  {
+    "slug": "rd-maturity-calculator",
+    "name": "Recurring Deposit Maturity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate RD maturity value and interest with quarterly compounding for any monthly instalment and tenure."
   },
   {
     "slug": "reaction-diffusion-simulator",
@@ -8615,6 +9380,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Create print-ready monthly or quarterly rent receipts with amount in words, PAN line, and revenue stamp note."
+  },
+  {
+    "slug": "rent-receipt-generator-hra",
+    "name": "Rent Receipt Generator for HRA",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate printable monthly rent receipts with landlord and PAN details for HRA claims."
   },
   {
     "slug": "rent-vs-buy",
@@ -8805,6 +9578,14 @@ export const TOOL_CATALOG = [
     "description": "Return on investment as a percentage from the amount invested and the amount returned."
   },
   {
+    "slug": "rolling-returns-calculator",
+    "name": "Rolling Returns Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Average, best and worst annualised returns across every overlapping window in a NAV or index series."
+  },
+  {
     "slug": "roman-numeral-converter",
     "name": "Roman Numeral Converter",
     "categories": [
@@ -8945,6 +9726,14 @@ export const TOOL_CATALOG = [
     "description": "Manually cover sensitive salary-slip details and create a flattened, rasterized PDF or PNG locally in your browser."
   },
   {
+    "slug": "salary-slip-generator",
+    "name": "Salary Slip Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create a formatted salary slip with earnings, deductions, net pay and amount in words."
+  },
+  {
     "slug": "salary-tax-calculator",
     "name": "Salary Tax Calculator",
     "categories": [
@@ -8977,6 +9766,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Generate perfectly sarcastic responses for any situation. Because nothing says 'I care' like thinly veiled contempt."
+  },
+  {
+    "slug": "savings-account-interest-calculator",
+    "name": "Savings Account Interest Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Savings account interest on daily closing balance, credited quarterly, with a quarter-by-quarter breakdown."
   },
   {
     "slug": "savings-challenge-tracker",
@@ -9180,6 +9977,46 @@ export const TOOL_CATALOG = [
     "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare."
   },
   {
+    "slug": "section-24b-home-loan-interest-deduction",
+    "name": "Section 24B Home Loan Interest Deduction",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Deductible home loan interest under Section 24(b) for self-occupied and let-out property, with the Rs 2 lakh cap."
+  },
+  {
+    "slug": "section-44ada-calculator",
+    "name": "Section 44ADA Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Presumptive income and tax for professionals under Section 44ADA, with turnover limit checks."
+  },
+  {
+    "slug": "section-80d-deduction-calculator",
+    "name": "Section 80D Health Insurance Deduction Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compute your Section 80D deduction for self, family, parents and senior citizens, including the preventive checkup cap."
+  },
+  {
+    "slug": "section-80e-deduction-calculator",
+    "name": "Section 80E Education Loan Interest Deduction",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the education loan interest you can deduct under Section 80E and track the 8-year eligibility window."
+  },
+  {
+    "slug": "section-87a-rebate-checker",
+    "name": "Section 87A Rebate Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check whether your taxable income qualifies for the Section 87A rebate and how much tax it wipes out."
+  },
+  {
     "slug": "security-headers-checker",
     "name": "Security Headers Checker",
     "categories": [
@@ -9187,6 +10024,22 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Review pasted response headers for missing defensive controls."
+  },
+  {
+    "slug": "senior-citizen-income-tax-calculator",
+    "name": "Senior Citizen Income Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Income tax for 60+ and 80+ residents with higher basic exemption limits, compared across old and new regimes."
+  },
+  {
+    "slug": "senior-citizen-savings-scheme-calculator",
+    "name": "Senior Citizen Savings Scheme Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out SCSS quarterly interest payout, annual income, total interest and maturity value from your deposit at the current rate."
   },
   {
     "slug": "senior-device-permission-audit",
@@ -9353,6 +10206,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate simple interest and the maturity amount from principal, rate and time."
   },
   {
+    "slug": "simple-interest-calculator-detailed",
+    "name": "Simple Interest Calculator Detailed",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Solve simple interest, principal, rate or time from the other three, with a yearly table."
+  },
+  {
     "slug": "sip-calculator",
     "name": "SIP Calculator",
     "categories": [
@@ -9412,6 +10273,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Find ideal bedtime or wake-up options using 90-minute sleep cycles."
+  },
+  {
+    "slug": "sleep-cycle-calculator",
+    "name": "Sleep Cycle Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Find the best bedtimes or wake-up times based on 90-minute sleep cycles and how long you take to fall asleep."
   },
   {
     "slug": "sleep-debt-calculator",
@@ -9552,6 +10421,14 @@ export const TOOL_CATALOG = [
       "Marketing & Social"
     ],
     "description": "Simulate social media feeds and posts to preview their visual appearance and layouts in real-time."
+  },
+  {
+    "slug": "society-maintenance-split-calculator",
+    "name": "Society Maintenance Split Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a housing society's monthly maintenance budget across flats by carpet area, equally, or on a hybrid basis."
   },
   {
     "slug": "society-maintenance-splitter",
@@ -9745,6 +10622,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate stamp duty, registration fees, and the full one-time cost of buying property across 23 Indian states and UTs."
   },
   {
+    "slug": "standard-deduction-impact-calculator",
+    "name": "Standard Deduction Impact Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See how the salaried standard deduction lowers your taxable income and final tax in the old and new regimes."
+  },
+  {
     "slug": "standard-deviation-calculator",
     "name": "Standard Deviation Calculator",
     "categories": [
@@ -9792,6 +10677,22 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Find your true average buy price, live P&L, and break-even, plus a planner for averaging down the smart way."
+  },
+  {
+    "slug": "stock-average-price-calculator",
+    "name": "Stock Average Price Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Average buy price across multiple purchases of the same stock, with total quantity, invested amount and averaging-down planner."
+  },
+  {
+    "slug": "stop-loss-target-calculator",
+    "name": "Stop Loss and Target Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Stop loss and target prices from your entry price and risk-reward ratio, for long or short trades, with per-trade risk and reward amounts."
   },
   {
     "slug": "stopwatch",
@@ -9996,6 +10897,14 @@ export const TOOL_CATALOG = [
     "description": "Plan systematic withdrawals with corpus life, step-up withdrawals, return scenarios, and tax estimates."
   },
   {
+    "slug": "swp-withdrawal-calculator",
+    "name": "SWP Withdrawal Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See how long a mutual fund corpus lasts with monthly systematic withdrawals, step-ups, and expected returns."
+  },
+  {
     "slug": "symptom-checker",
     "name": "Symptom Checker",
     "categories": [
@@ -10029,6 +10938,14 @@ export const TOOL_CATALOG = [
     "description": "One-tap arcade glider game — flap through the gaps, earn medals, and beat your best score online free."
   },
   {
+    "slug": "tdee-calculator",
+    "name": "TDEE Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Find your total daily energy expenditure from BMR and activity level, plus calorie targets for cutting, maintaining or bulking."
+  },
+  {
     "slug": "tds-calculator-by-section",
     "name": "TDS Calculator by Section",
     "categories": [
@@ -10036,6 +10953,30 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Selected section, threshold aur rate se TDS calculate kare."
+  },
+  {
+    "slug": "tds-on-fd-interest-calculator",
+    "name": "TDS on FD Interest Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "TDS deducted on fixed deposit interest under Section 194A, with Form 15G and 15H eligibility checks and net payout."
+  },
+  {
+    "slug": "tds-on-salary-calculator",
+    "name": "TDS on Salary Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out monthly TDS on salary from annual pay, deductions and your chosen tax regime."
+  },
+  {
+    "slug": "tds-rate-finder-by-section",
+    "name": "TDS Rate Finder by Section",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find the TDS rate and threshold for every common Income Tax section and calculate tax deducted plus net payout instantly."
   },
   {
     "slug": "team-generator",
@@ -10053,6 +10994,14 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert between Celsius, Fahrenheit and Kelvin instantly."
+  },
+  {
+    "slug": "term-insurance-cover-calculator",
+    "name": "Term Insurance Cover Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the life cover your family needs from income replacement, loans, dependants' goals and the assets and policies you already hold."
   },
   {
     "slug": "text-behind-image",
@@ -10138,6 +11087,14 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "Build a CSS text-shadow."
+  },
+  {
+    "slug": "text-statistics-analyzer",
+    "name": "Text Statistics Analyzer",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Count words, sentences, paragraphs and syllables, then score readability grade for any text."
   },
   {
     "slug": "text-summarizer",
@@ -10267,6 +11224,14 @@ export const TOOL_CATALOG = [
     "description": "Plan daily work with real-time draggable time blocks, reminders, notes, dashboard stats, filters, and local autosave."
   },
   {
+    "slug": "time-duration-calculator",
+    "name": "Time Duration Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the duration between two times in hours, minutes and decimal hours, with break deduction."
+  },
+  {
     "slug": "time-zone-explorer",
     "name": "Time Zone Explorer",
     "categories": [
@@ -10283,6 +11248,14 @@ export const TOOL_CATALOG = [
     "description": "Create visual timelines with milestones, dates, and descriptions for projects and events."
   },
   {
+    "slug": "timesheet-hours-calculator",
+    "name": "Timesheet Hours Calculator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Add up weekly worked hours from daily clock in and out times, with break deduction and overtime split."
+  },
+  {
     "slug": "tip-calculator",
     "name": "Tip Calculator",
     "categories": [
@@ -10290,6 +11263,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Work out the tip, total, and per-person share in seconds, with round-up splits and tipping norms for India, the US, and Europe."
+  },
+  {
+    "slug": "tip-split-calculator",
+    "name": "Tip and Bill Split Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the tip and each person's share of a bill, with flexible rounding options."
   },
   {
     "slug": "tls-configuration-auditor",
@@ -10415,6 +11396,14 @@ export const TOOL_CATALOG = [
     "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!"
   },
   {
+    "slug": "two-wheeler-loan-calculator",
+    "name": "Two Wheeler Loan Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Bike and scooter loan EMI from on-road price, down payment and tenure, with loan-to-value and affordability checks."
+  },
+  {
     "slug": "typing-master",
     "name": "Typing Master Tool",
     "categories": [
@@ -10508,6 +11497,14 @@ export const TOOL_CATALOG = [
     "description": "Convert units instantly across multiple categories with accuracy."
   },
   {
+    "slug": "unit-price-comparison-calculator",
+    "name": "Unit Price Comparison Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare price per unit across different pack sizes and brands to find which option is genuinely cheaper."
+  },
+  {
     "slug": "universal-pii-ai-redactor",
     "name": "Universal PII & AI Input Redactor",
     "categories": [
@@ -10545,6 +11542,14 @@ export const TOOL_CATALOG = [
     "description": "Decode pasted UPI payment and collect-request payloads locally to inspect the payee, amount, reference fields, and debit warnings without opening a payment app."
   },
   {
+    "slug": "upi-qr-code-generator",
+    "name": "UPI QR Code Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create a UPI payment QR code from a VPA, payee name and optional fixed amount, note and reference."
+  },
+  {
     "slug": "upside-down-text",
     "name": "Upside Down Text",
     "categories": [
@@ -10575,6 +11580,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Break a URL into its protocol, host, path, query and hash parts."
+  },
+  {
+    "slug": "url-slug-generator",
+    "name": "URL Slug Generator",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits."
   },
   {
     "slug": "user-info-finder",
@@ -10670,6 +11683,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "RC, insurance, PUC aur licence expiry track kare."
+  },
+  {
+    "slug": "vehicle-insurance-idv-calculator",
+    "name": "Vehicle Insurance IDV Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Insured Declared Value from ex-showroom price and vehicle age using the IRDAI depreciation grid, plus accessories and an indicative OD premium."
   },
   {
     "slug": "vendor-data-processing-inventory",
@@ -10886,6 +11907,14 @@ export const TOOL_CATALOG = [
     "description": "A quick health screen: your waist size divided by your height, with a category."
   },
   {
+    "slug": "waist-to-hip-ratio-calculator",
+    "name": "Waist to Hip Ratio Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape."
+  },
+  {
     "slug": "warranty-receipt-vault",
     "name": "Warranty & Receipt Vault",
     "categories": [
@@ -11067,6 +12096,15 @@ export const TOOL_CATALOG = [
     "description": "Track your weight loss progress with simple daily updates."
   },
   {
+    "slug": "weighted-average-calculator",
+    "name": "Weighted Average Calculator",
+    "categories": [
+      "Calculators",
+      "Education & Science"
+    ],
+    "description": "Compute a weighted mean from value and weight pairs with a live running total."
+  },
+  {
     "slug": "whack-a-mole",
     "name": "Whack-a-Mole",
     "categories": [
@@ -11239,6 +12277,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Find slow workflow steps by comparing active time, wait time, rework, and throughput pressure."
+  },
+  {
+    "slug": "working-days-calculator",
+    "name": "Working Days Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Count business days between two dates, excluding weekends and any custom holidays you add."
   },
   {
     "slug": "working-memory-trainer",
