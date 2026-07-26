@@ -49,13 +49,20 @@ export default async function ToolPage({ params }) {
         id={`tool-schema-${category}-${slug}`}
         data={[
           createToolJsonLd({ slug, tool, category }),
-          createHowToJsonLd({
-            path: toolPath,
-            name: `${tool.name} workflow`,
-            description: seoContent.summary,
-            steps: seoContent.steps,
-          }),
-          createFaqJsonLd({ path: toolPath, questions: seoContent.faqs }),
+          // Only tools with real per-tool steps/FAQs emit HowTo/FAQPage.
+          // Templated fallback copy is shared across ~1,900 URLs, and Google
+          // requires this markup to be unique to the page.
+          seoContent.hasCuratedSteps
+            ? createHowToJsonLd({
+              path: toolPath,
+              name: `${tool.name} workflow`,
+              description: seoContent.summary,
+              steps: seoContent.steps,
+            })
+            : null,
+          seoContent.hasCuratedFaqs
+            ? createFaqJsonLd({ path: toolPath, questions: seoContent.faqs })
+            : null,
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },

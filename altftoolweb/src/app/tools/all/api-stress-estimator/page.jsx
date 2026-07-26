@@ -25,13 +25,20 @@ export default function Page() {
         id="tool-schema-api-stress-estimator-all"
         data={[
           createToolJsonLd({ slug, tool, category: "all" }),
-          createHowToJsonLd({
-            path: toolPath,
-            name: `${tool?.name || "API Stress Estimator"} workflow`,
-            description: seoContent.summary,
-            steps: seoContent.steps,
-          }),
-          createFaqJsonLd({ path: toolPath, questions: seoContent.faqs }),
+          // Only tools with real per-tool steps/FAQs emit HowTo/FAQPage.
+          // Templated fallback copy is shared across ~1,900 URLs, and Google
+          // requires this markup to be unique to the page.
+          seoContent.hasCuratedSteps
+            ? createHowToJsonLd({
+              path: toolPath,
+              name: `${tool?.name || "API Stress Estimator"} workflow`,
+              description: seoContent.summary,
+              steps: seoContent.steps,
+            })
+            : null,
+          seoContent.hasCuratedFaqs
+            ? createFaqJsonLd({ path: toolPath, questions: seoContent.faqs })
+            : null,
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },
@@ -39,6 +46,7 @@ export default function Page() {
           ]),
         ]}
       />
+      <h1 className="sr-only">API Stress Estimator</h1>
       <ApiStressToolClient category="all" />
     </>
   );
