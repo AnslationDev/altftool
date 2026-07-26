@@ -63,7 +63,7 @@ export default async function GamePage({ params }) {
   ];
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <main id="main-content" className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
       <JsonLd id={`altf-game-${slug}-schema`} data={jsonLd} />
       {/* Main column */}
       <div className="min-w-0">
@@ -106,6 +106,6 @@ export default async function GamePage({ params }) {
           </div>
         </div>
       </aside>
-    </div>
+    </main>
   );
 }

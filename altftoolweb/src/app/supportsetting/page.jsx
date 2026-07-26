@@ -12,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <SupportClient />;
+  return (
+    <>
+      <h1 className="sr-only">AltFTool Settings and Support</h1>
+      <SupportClient />
+    </>
+  );
 }

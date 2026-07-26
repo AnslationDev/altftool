@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T16:32:15.653Z",
-  "buildId": "DSJABiB9Ix1hyP3k_w_bJ",
-  "ok": false,
-  "indexControlOk": false,
-  "qualityOk": false,
-  "score": 99,
+  "generatedAt": "2026-07-26T07:55:56.718Z",
+  "buildId": "ot20Vsx6FLFs2PTB6tzw0",
+  "ok": true,
+  "indexControlOk": true,
+  "qualityOk": true,
+  "score": 100,
   "totals": {
     "routes": 957,
-    "indexable": 839,
-    "noindex": 118,
-    "sitemapUrls": 2569,
-    "sitemapCovered": 838,
+    "indexable": 844,
+    "noindex": 113,
+    "sitemapUrls": 3182,
+    "sitemapCovered": 844,
     "sitemapCoverage": 100,
-    "indexConflicts": 5,
-    "missingCanonicalTargets": 1,
-    "routesWithIssues": 6,
-    "routesWithAdvisories": 2,
+    "indexConflicts": 0,
+    "missingCanonicalTargets": 0,
+    "routesWithIssues": 0,
+    "routesWithAdvisories": 0,
     "medianRouteScore": 100,
     "p95RouteScore": 100
   },
@@ -28,8 +28,8 @@
       "noindex": 73,
       "sitemapCovered": 138,
       "issues": 0,
-      "advisories": 1,
-      "score": 99,
+      "advisories": 0,
+      "score": 100,
       "sitemapCoverage": 100
     },
     {
@@ -59,11 +59,11 @@
       "routes": 82,
       "indexable": 47,
       "noindex": 35,
-      "sitemapCovered": 46,
-      "issues": 1,
+      "sitemapCovered": 47,
+      "issues": 0,
       "advisories": 0,
-      "score": 99,
-      "sitemapCoverage": 98
+      "score": 100,
+      "sitemapCoverage": 100
     },
     {
       "group": "Tradeon",
@@ -211,12 +211,12 @@
     {
       "group": "Landers",
       "routes": 5,
-      "indexable": 0,
-      "noindex": 5,
-      "sitemapCovered": 0,
-      "issues": 5,
+      "indexable": 5,
+      "noindex": 0,
+      "sitemapCovered": 5,
+      "issues": 0,
       "advisories": 0,
-      "score": 75,
+      "score": 100,
       "sitemapCoverage": 100
     },
     {
@@ -589,8 +589,8 @@
       "noindex": 0,
       "sitemapCovered": 1,
       "issues": 0,
-      "advisories": 1,
-      "score": 96,
+      "advisories": 0,
+      "score": 100,
       "sitemapCoverage": 100
     },
     {
@@ -605,186 +605,7 @@
       "sitemapCoverage": 100
     }
   ],
-  "watchlist": [
-    {
-      "route": "/blogs/topics/travel-guides",
-      "group": "Blogs",
-      "indexState": "index",
-      "title": "Travel Guides Guides - AltFTool Blog",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com/blogs/topics/travel-guides",
-      "canonicalPath": "/blogs/topics/travel-guides",
-      "ownsCanonical": true,
-      "sitemapIncluded": false,
-      "canonicalInSitemap": false,
-      "h1Count": 1,
-      "schemaCount": 2,
-      "issues": [
-        "Canonical target is missing from sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/lander/morrisons-grocery",
-      "group": "Landers",
-      "indexState": "noindex",
-      "title": "Landing page not found | AltFTool",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com",
-      "canonicalPath": "/",
-      "ownsCanonical": false,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [
-        "Noindex route is present in sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/lander/printify",
-      "group": "Landers",
-      "indexState": "noindex",
-      "title": "Landing page not found | AltFTool",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com",
-      "canonicalPath": "/",
-      "ownsCanonical": false,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [
-        "Noindex route is present in sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/lander/saatva",
-      "group": "Landers",
-      "indexState": "noindex",
-      "title": "Landing page not found | AltFTool",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com",
-      "canonicalPath": "/",
-      "ownsCanonical": false,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [
-        "Noindex route is present in sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/lander/shein",
-      "group": "Landers",
-      "indexState": "noindex",
-      "title": "Landing page not found | AltFTool",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com",
-      "canonicalPath": "/",
-      "ownsCanonical": false,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [
-        "Noindex route is present in sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/lander/zara",
-      "group": "Landers",
-      "indexState": "noindex",
-      "title": "Landing page not found | AltFTool",
-      "descriptionLength": 150,
-      "canonical": "https://www.altftool.com",
-      "canonicalPath": "/",
-      "ownsCanonical": false,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [
-        "Noindex route is present in sitemap"
-      ],
-      "advisories": [],
-      "score": 75
-    },
-    {
-      "route": "/bops/housingneeds",
-      "group": "Business Ops",
-      "indexState": "index",
-      "title": "Housing Needs — Free Home Improvement Quotes & Expert Guides | AltFTool",
-      "descriptionLength": 160,
-      "canonical": "https://www.altftool.com/bops/housingneeds",
-      "canonicalPath": "/bops/housingneeds",
-      "ownsCanonical": true,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 1,
-      "schemaCount": 2,
-      "issues": [],
-      "advisories": [
-        "Long title (71)"
-      ],
-      "score": 96
-    },
-    {
-      "route": "/supportsetting",
-      "group": "Supportsetting",
-      "indexState": "index",
-      "title": "Settings & Support – Manage Preferences and Get Help | AltFTool",
-      "descriptionLength": 155,
-      "canonical": "https://www.altftool.com/supportsetting",
-      "canonicalPath": "/supportsetting",
-      "ownsCanonical": true,
-      "sitemapIncluded": true,
-      "canonicalInSitemap": true,
-      "h1Count": 0,
-      "schemaCount": 1,
-      "issues": [],
-      "advisories": [
-        "No rendered H1"
-      ],
-      "score": 96
-    }
-  ],
-  "conflicts": [
-    {
-      "route": "/lander/morrisons-grocery",
-      "issue": "Noindex route is present in sitemap"
-    },
-    {
-      "route": "/lander/printify",
-      "issue": "Noindex route is present in sitemap"
-    },
-    {
-      "route": "/lander/saatva",
-      "issue": "Noindex route is present in sitemap"
-    },
-    {
-      "route": "/lander/shein",
-      "issue": "Noindex route is present in sitemap"
-    },
-    {
-      "route": "/lander/zara",
-      "issue": "Noindex route is present in sitemap"
-    }
-  ],
-  "missingCanonicalTargets": [
-    {
-      "route": "/blogs/topics/travel-guides",
-      "canonicalPath": "/blogs/topics/travel-guides"
-    }
-  ]
+  "watchlist": [],
+  "conflicts": [],
+  "missingCanonicalTargets": []
 }

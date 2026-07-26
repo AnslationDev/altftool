@@ -2,8 +2,10 @@ import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
+import { gunzipSync } from "node:zlib";
 
 const require = createRequire(import.meta.url);
+const semver = require("semver");
 const workspace = process.argv[2];
 const workspaceConfig = {
   altftoolweb: "altftoolweb/scripts/use-patched-next-dependencies.mjs",
@@ -37,6 +39,190 @@ function run(command, args) {
     encoding: "utf8",
     env: process.env,
   });
+}
+
+function packageNameFromNodePath(nodePath) {
+  const parts = nodePath.split("/");
+  const nodeModulesIndex = parts.lastIndexOf("node_modules");
+  if (nodeModulesIndex === -1 || nodeModulesIndex + 1 >= parts.length) {
+    return null;
+  }
+
+  const name = parts[nodeModulesIndex + 1];
+  if (name?.startsWith("@")) {
+    const scopedName = parts[nodeModulesIndex + 2];
+    return scopedName ? `${name}/${scopedName}` : null;
+  }
+
+  return name || null;
+}
+
+function resolveDependencyNode(lockfile, fromPath, dependencyName) {
+  const parts = fromPath ? fromPath.split("/") : [];
+  for (let depth = parts.length; depth >= 0; depth -= 1) {
+    const prefix = parts.slice(0, depth).join("/");
+    const candidate = [prefix, "node_modules", dependencyName]
+      .filter(Boolean)
+      .join("/");
+    if (lockfile.packages?.[candidate]) return candidate;
+  }
+  return null;
+}
+
+function linkedPackageSource(lockfile, nodePath) {
+  const packageInfo = lockfile.packages?.[nodePath];
+  if (packageInfo?.link && packageInfo.resolved) {
+    return lockfile.packages?.[packageInfo.resolved] || packageInfo;
+  }
+  return packageInfo;
+}
+
+function collectWorkspaceAuditNodes(lockfile, workspaceName) {
+  const workspaceInfo = lockfile.packages?.[workspaceName];
+  if (!workspaceInfo) return [];
+
+  const seen = new Set();
+  const queue = [];
+  const enqueueDeps = (fromPath, dependencies = {}) => {
+    for (const dependencyName of Object.keys(dependencies)) {
+      const dependencyPath = resolveDependencyNode(lockfile, fromPath, dependencyName);
+      if (dependencyPath && !seen.has(dependencyPath)) queue.push(dependencyPath);
+    }
+  };
+
+  enqueueDeps(workspaceName, workspaceInfo.dependencies);
+  enqueueDeps(workspaceName, workspaceInfo.devDependencies);
+
+  while (queue.length) {
+    const nodePath = queue.shift();
+    if (seen.has(nodePath)) continue;
+
+    const packageInfo = lockfile.packages?.[nodePath];
+    if (!packageInfo || packageInfo.optional) continue;
+
+    seen.add(nodePath);
+    const source = linkedPackageSource(lockfile, nodePath);
+    enqueueDeps(nodePath, source?.dependencies);
+  }
+
+  return [...seen]
+    .map((nodePath) => {
+      const packageInfo = lockfile.packages?.[nodePath];
+      const name = packageInfo?.name || packageNameFromNodePath(nodePath);
+      return name && packageInfo?.version
+        ? { nodePath, name, version: packageInfo.version }
+        : null;
+    })
+    .filter(Boolean);
+}
+
+function versionMatchesRange(version, range) {
+  try {
+    return semver.satisfies(version, range, { includePrerelease: true });
+  } catch {
+    return false;
+  }
+}
+
+const advisorySeverityRank = { info: 0, low: 1, moderate: 2, high: 3, critical: 4 };
+
+function highestSeverity(advisories) {
+  return advisories
+    .map((advisory) => advisory.severity || "low")
+    .sort(
+      (a, b) =>
+        (advisorySeverityRank[b] || 0) - (advisorySeverityRank[a] || 0),
+    )[0] || "low";
+}
+
+async function fetchBulkAuditReport(lockfile, workspaceName) {
+  const auditNodes = collectWorkspaceAuditNodes(lockfile, workspaceName);
+  const versionsByName = {};
+  const nodesByName = {};
+
+  for (const node of auditNodes) {
+    (versionsByName[node.name] ||= new Set()).add(node.version);
+    (nodesByName[node.name] ||= []).push(node);
+  }
+
+  const payload = Object.fromEntries(
+    Object.entries(versionsByName).map(([name, versions]) => [name, [...versions]]),
+  );
+
+  const response = await fetch(
+    "https://registry.npmjs.org/-/npm/v1/security/advisories/bulk",
+    {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "accept-encoding": "identity",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+  const responseBytes = Buffer.from(await response.arrayBuffer());
+  const responseText =
+    responseBytes[0] === 0x1f && responseBytes[1] === 0x8b
+      ? gunzipSync(responseBytes).toString("utf8")
+      : responseBytes.toString("utf8");
+
+  if (!response.ok) {
+    throw new Error(
+      `Bulk audit fallback failed (${response.status}): ${responseText.slice(0, 240)}`,
+    );
+  }
+
+  const advisoriesByPackage = JSON.parse(responseText);
+  const vulnerabilities = {};
+
+  for (const [name, advisories] of Object.entries(advisoriesByPackage)) {
+    const matchingNodes = (nodesByName[name] || [])
+      .filter((node) =>
+        advisories.some((advisory) =>
+          versionMatchesRange(node.version, advisory.vulnerable_versions),
+        ),
+      )
+      .map((node) => node.nodePath);
+
+    if (!matchingNodes.length) continue;
+
+    vulnerabilities[name] = {
+      name,
+      severity: highestSeverity(advisories),
+      via: advisories.map((advisory) => ({
+        source: advisory.id,
+        name: advisory.module_name || name,
+        dependency: advisory.module_name || name,
+        title: advisory.title,
+        url: advisory.url,
+        severity: advisory.severity,
+        range: advisory.vulnerable_versions,
+      })),
+      effects: [],
+      range: advisories
+        .map((advisory) => advisory.vulnerable_versions)
+        .filter(Boolean)
+        .join(" || "),
+      nodes: matchingNodes,
+      fixAvailable: false,
+    };
+  }
+
+  return {
+    auditReportVersion: 2,
+    vulnerabilities,
+    metadata: {
+      vulnerabilities: Object.values(vulnerabilities).reduce(
+        (counts, finding) => {
+          counts.total += 1;
+          counts[finding.severity] = (counts[finding.severity] || 0) + 1;
+          return counts;
+        },
+        { info: 0, low: 0, moderate: 0, high: 0, critical: 0, total: 0 },
+      ),
+    },
+  };
 }
 
 function collectSourceFiles(directory) {
@@ -105,6 +291,18 @@ try {
   process.exit(auditResult.status || 1);
 }
 
+if (
+  report?.error &&
+  /invalid json response body .*security\/advisories\/bulk/iu.test(
+    report.message || "",
+  )
+) {
+  console.warn(
+    "npm audit returned an invalid compressed registry response; retrying with direct bulk advisory fallback.",
+  );
+  report = await fetchBulkAuditReport(lockfile, workspace);
+}
+
 const vulnerabilities = { ...(report.vulnerabilities || {}) };
 const postcssFinding = vulnerabilities.postcss;
 const nextFinding = vulnerabilities.next;
@@ -159,9 +357,12 @@ const knownClientOnlyReactRouterFinding =
   reactRouterAdvisories.length === 1 &&
   reactRouterAdvisories[0] === "https://github.com/advisories/GHSA-qwww-vcr4-c8h2" &&
   (reactRouterFinding?.nodes || []).every((node) => node === "node_modules/react-router") &&
-  (reactRouterDomFinding?.via || []).length === 1 &&
-  reactRouterDomFinding.via[0] === "react-router" &&
-  (reactRouterDomFinding?.nodes || []).every((node) => node === "node_modules/react-router-dom") &&
+  (!reactRouterDomFinding ||
+    ((reactRouterDomFinding?.via || []).length === 1 &&
+      reactRouterDomFinding.via[0] === "react-router" &&
+      (reactRouterDomFinding?.nodes || []).every(
+        (node) => node === "node_modules/react-router-dom",
+      ))) &&
   !usesReactRouterRscApis(path.join(workspace, "src"));
 
 if (knownClientOnlyReactRouterFinding) {

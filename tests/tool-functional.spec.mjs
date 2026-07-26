@@ -963,7 +963,9 @@ test.describe("microtool functional flows", () => {
     await expect(page.getByTestId("tool-output")).toContainText("PDF text extracted", {
       timeout: 30_000,
     });
-    await expect(page.locator("pre")).toContainText("AltFTool fixture 1");
+    await expect(
+      page.locator("pre").filter({ hasText: "AltFTool fixture 1" }).first(),
+    ).toBeVisible();
     await expectDocxDownload(
       page,
       testInfo,

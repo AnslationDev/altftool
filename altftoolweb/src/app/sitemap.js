@@ -602,11 +602,9 @@ async function buildSitemapEntries({
     }
   }
 
-  for (const cluster of getBlogTopicClusters(sitemapBlogs).filter(
-    (item) => item.postCount > 0,
-  )) {
+  for (const cluster of getBlogTopicClusters(sitemapBlogs)) {
     pushUnique(entries, seen, `/blogs/topics/${cluster.slug}`, {
-      priority: 0.62,
+      priority: cluster.postCount > 0 ? 0.62 : 0.54,
       changeFrequency: "weekly",
     });
   }
