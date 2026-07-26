@@ -28,6 +28,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { getAllGeoSlugs } from "@/platform/seo/geoLocations";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
@@ -961,5 +962,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
 );
 
 export default async function sitemap() {
-  return getSitemapEntries();
+  // Escape only here, at the XML boundary. getSitemapEntries() must keep
+  // returning raw URLs — /site-map and the search index render them as links.
+  return toXmlSafeSitemap(await getSitemapEntries());
 }
