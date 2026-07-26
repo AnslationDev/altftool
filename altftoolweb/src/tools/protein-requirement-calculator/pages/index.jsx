@@ -94,6 +94,20 @@ export default function ToolHome() {
   const [meals, setMeals] = useState(DEFAULTS.meals);
   const [copied, setCopied] = useState(false);
 
+  // kg and lb are separate state — switching units without converting silently
+  // swaps in the other field's stale value and changes the protein target.
+  const switchUnit = (next) => {
+    if (next === unit) return;
+    if (next === "imperial") {
+      const kg = toNumber(weightKg);
+      if (Number.isFinite(kg) && kg > 0) setWeightLb((kg / 0.45359237).toFixed(1));
+    } else {
+      const lb = toNumber(weightLb);
+      if (Number.isFinite(lb) && lb > 0) setWeightKg((lb * 0.45359237).toFixed(1));
+    }
+    setUnit(next);
+  };
+
   const calc = useMemo(() => {
     const kg = unit === "metric" ? toNumber(weightKg) : toNumber(weightLb) * 0.45359237;
     if (!Number.isFinite(kg) || kg < 25 || kg > 300) {
@@ -213,7 +227,7 @@ export default function ToolHome() {
                       key={option.id}
                       type="button"
                       aria-pressed={unit === option.id}
-                      onClick={() => setUnit(option.id)}
+                      onClick={() => switchUnit(option.id)}
                       className={`min-h-11 rounded-md border px-3 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                         unit === option.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"

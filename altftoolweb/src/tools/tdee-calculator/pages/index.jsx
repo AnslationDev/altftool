@@ -73,6 +73,32 @@ export default function ToolHome() {
   const [goal, setGoal] = useState(DEFAULTS.goal);
   const [copied, setCopied] = useState(false);
 
+  // The metric and imperial fields are separate state, so switching units
+  // without converting silently swaps in the *other* system's stale value —
+  // the result changes even though the user changed nothing but the label.
+  const switchUnit = (next) => {
+    if (next === unit) return;
+    if (next === "imperial") {
+      const kg = toNumber(weightKg);
+      if (Number.isFinite(kg) && kg > 0) setWeightLb((kg / 0.45359237).toFixed(1));
+      const cm = toNumber(heightCm);
+      if (Number.isFinite(cm) && cm > 0) {
+        const totalIn = cm / 2.54;
+        setHeightFt(String(Math.floor(totalIn / 12)));
+        setHeightIn((totalIn % 12).toFixed(1));
+      }
+    } else {
+      const lb = toNumber(weightLb);
+      if (Number.isFinite(lb) && lb > 0) setWeightKg((lb * 0.45359237).toFixed(1));
+      const ft = toNumber(heightFt);
+      const inch = String(heightIn).trim() === "" ? 0 : toNumber(heightIn);
+      if (Number.isFinite(ft) && Number.isFinite(inch) && ft * 12 + inch > 0) {
+        setHeightCm(((ft * 12 + inch) * 2.54).toFixed(1));
+      }
+    }
+    setUnit(next);
+  };
+
   const calc = useMemo(() => {
     const ageYears = toNumber(age);
     const kg = unit === "metric" ? toNumber(weightKg) : toNumber(weightLb) * 0.45359237;
@@ -215,7 +241,7 @@ export default function ToolHome() {
                       key={option.id}
                       type="button"
                       aria-pressed={unit === option.id}
-                      onClick={() => setUnit(option.id)}
+                      onClick={() => switchUnit(option.id)}
                       className={`min-h-11 rounded-md border px-3 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                         unit === option.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"

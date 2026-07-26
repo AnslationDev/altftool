@@ -75,12 +75,20 @@ export default function ToolHome() {
 
   const switchUnits = (units) => {
     if (units === form.units) return;
+    // Convert the typed weight and height rather than loading the other
+    // system's defaults — a unit toggle must not change whose body it is.
+    const convert = (value, mult) => {
+      const parsed = Number.parseFloat(String(value).trim());
+      return Number.isFinite(parsed) && parsed > 0
+        ? String(Number((parsed * mult).toFixed(1)))
+        : value;
+    };
+    const toMetric = units === "metric";
     setForm((prev) => ({
-      ...(units === "metric" ? DEFAULTS : IMPERIAL_DEFAULTS),
-      sex: prev.sex,
-      mode: prev.mode,
-      formula: prev.formula,
-      bodyFat: prev.bodyFat,
+      ...prev,
+      units,
+      weight: convert(prev.weight, toMetric ? 0.45359237 : 1 / 0.45359237),
+      height: convert(prev.height, toMetric ? 2.54 : 1 / 2.54),
     }));
     setCopied(false);
   };

@@ -453,7 +453,14 @@ export default function ToolHome() {
                     {[
                       ["Weekend days", num.format(result.weekendDays)],
                       ["Holidays excluded", num.format(result.holidayDays)],
-                      ["Full weeks", num.format(Math.floor(result.workingDays / 5))],
+                      // The weekend is user-configurable, so a week is however
+                      // many days are NOT marked as weekend — not always 5.
+                      [
+                        "Full weeks",
+                        num.format(
+                          Math.floor(result.workingDays / Math.max(1, 7 - weekend.length)),
+                        ),
+                      ],
                       [
                         "Working hours",
                         `${num1.format(result.workingDays * hoursValue)} h`,

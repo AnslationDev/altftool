@@ -321,7 +321,11 @@ export default function ToolHome() {
             ) : (
               <>
                 <p className="text-sm font-semibold text-[var(--muted-foreground)]">
-                  {mode === "wake" ? "Best bedtime for a full 7h 30m" : "Best wake-up time for a full 7h 30m"}
+                  {/* The headline is the 5-cycle row, whose length follows the
+                      user's cycle setting — hardcoding 7h 30m went wrong the
+                      moment anyone changed it from 90 minutes. */}
+                  {mode === "wake" ? "Best bedtime for a full " : "Best wake-up time for a full "}
+                  {formatDuration(calculation.headline.sleepMinutes)}
                 </p>
                 <p className="mt-1 text-4xl font-semibold tracking-tight text-[var(--primary)] sm:text-5xl">
                   {calculation.headline.time}

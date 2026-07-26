@@ -108,7 +108,10 @@ export default function ToolHome() {
     const total = principal + interest;
     const perYear = (principal * rate) / 100;
     const perMonth = perYear / 12;
-    const perDay = perYear / 365;
+    // Honour the day-count basis the user picked — a 360-day year makes each
+    // day's interest larger, which is the whole point of choosing it.
+    const daysInYear = form.unit === "days360" ? 360 : 365;
+    const perDay = perYear / daysInYear;
 
     const rows = [];
     const wholeYears = Math.min(Math.ceil(timeYears), 60);

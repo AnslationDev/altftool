@@ -92,7 +92,26 @@ export default function ToolHome() {
 
   const switchUnits = (units) => {
     if (units === form.units) return;
-    setForm((prev) => ({ ...(units === "metric" ? DEFAULTS : IMPERIAL_DEFAULTS), sex: prev.sex }));
+    // Convert what the user typed instead of loading the other system's
+    // defaults — dropping their measurements on a unit toggle silently
+    // replaces their body fat result with one for a stranger.
+    const factor = units === "metric" ? 2.54 : 1 / 2.54;
+    const weightFactor = units === "metric" ? 0.45359237 : 1 / 0.45359237;
+    const convert = (value, mult) => {
+      const parsed = Number.parseFloat(String(value).trim());
+      return Number.isFinite(parsed) && parsed > 0
+        ? String(Number((parsed * mult).toFixed(1)))
+        : value;
+    };
+    setForm((prev) => ({
+      ...prev,
+      units,
+      height: convert(prev.height, factor),
+      neck: convert(prev.neck, factor),
+      waist: convert(prev.waist, factor),
+      hip: convert(prev.hip, factor),
+      weight: convert(prev.weight, weightFactor),
+    }));
     setCopied(false);
   };
 
