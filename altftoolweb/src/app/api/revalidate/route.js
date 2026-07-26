@@ -6,7 +6,11 @@
 
 import { NextResponse } from "next/server";
 import { revalidateTag, revalidatePath } from "next/cache";
-import { SEO_CONFIG_REVALIDATE_TAG, __resetSeoConfigCache } from "@/platform/seo/seoConfigSource";
+import {
+  SEO_CONFIG_REVALIDATE_TAG,
+  __expireSeoConfigCache,
+} from "@/platform/seo/seoConfigSource";
+import { submitToIndexNow } from "@/platform/seo/indexNow";
 
 export const dynamic = "force-dynamic";
 
@@ -29,10 +33,11 @@ export async function POST(request) {
 
   try {
     revalidateTag(tag);
-    // Clear the in-memory config snapshot so this instance serves fresh config
-    // immediately (the fetch cache above is invalidated globally by the tag).
+    // Retain the last known-good snapshot while this instance refreshes it.
+    // That keeps the first request after an admin edit fast and avoids a
+    // metadata/custom-code gap when Firestore is briefly slow.
     if (tag === SEO_CONFIG_REVALIDATE_TAG) {
-      try { __resetSeoConfigCache(); } catch { /* best effort */ }
+      try { __expireSeoConfigCache(); } catch { /* best effort */ }
     }
     // Revalidate specific page path(s) so SSG/ISR pages regenerate now.
     const paths = [];
@@ -40,8 +45,25 @@ export async function POST(request) {
     if (Array.isArray(body?.paths)) {
       for (const p of body.paths) if (typeof p === "string" && p.startsWith("/")) paths.push(p);
     }
-    for (const p of [...new Set(paths)]) revalidatePath(p);
-    return NextResponse.json({ ok: true, revalidated: tag, paths: [...new Set(paths)] });
+    const uniquePaths = [...new Set(paths)];
+    for (const p of uniquePaths) revalidatePath(p);
+
+    // Push the same paths to IndexNow so Bing (and therefore ChatGPT search and
+    // Copilot) sees the change now instead of at the next recrawl. Best effort:
+    // submitToIndexNow never throws, and a failure must not fail a publish.
+    const indexNow = uniquePaths.length
+      ? await submitToIndexNow(uniquePaths)
+      : { skipped: "no-paths" };
+    if (indexNow?.ok === false) {
+      console.warn("[api/revalidate] IndexNow submission failed", indexNow);
+    }
+
+    return NextResponse.json({
+      ok: true,
+      revalidated: tag,
+      paths: uniquePaths,
+      indexNow,
+    });
   } catch (error) {
     console.error("[api/revalidate]", error);
     return NextResponse.json({ error: "Revalidation failed" }, { status: 500 });
