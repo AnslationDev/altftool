@@ -29,6 +29,7 @@ import {
 import { getAllGeoSlugs } from "@/platform/seo/geoLocations";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
+import { brandSlug } from "@/app/exclusivedeals/lib/brandSlug";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
 import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
@@ -719,11 +720,16 @@ async function buildSitemapEntries({
     });
 
     for (const brand of category.brands || []) {
-      if (!brand?.id) continue;
+      // Key by slugified brand NAME, not brand.id. Every internal link builds
+      // these URLs that way and BrandDetail resolves the last path segment by
+      // matching slugified names — an id URL renders a permanent loading
+      // skeleton at HTTP 200, i.e. a soft 404. This emitted 60 of them.
+      const slug = brandSlug(brand?.brandName || brand?.name);
+      if (!slug) continue;
       pushUnique(
         entries,
         seen,
-        `/exclusivedeals/${category.slug}/${brand.id}`,
+        `/exclusivedeals/${category.slug}/${slug}`,
         {
           priority: 0.64,
           changeFrequency: "weekly",
@@ -732,7 +738,7 @@ async function buildSitemapEntries({
       pushUnique(
         entries,
         seen,
-        `/exclusivedeals/store/${category.slug}/${brand.id}`,
+        `/exclusivedeals/store/${category.slug}/${slug}`,
         {
           priority: 0.58,
           changeFrequency: "weekly",
