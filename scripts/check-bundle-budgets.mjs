@@ -46,10 +46,10 @@ const appBudgets = [
     baseMaxTotalGzipKb: 2700,
     routeLoaderBaseline: 245,
     // Admin modules are independently loaded. The current route mix includes
-    // richer editor and design-system surfaces, so use the measured 6.25 KiB
+    // richer editor, health, SEO, and API surfaces, so use the measured 6.5 KiB
     // aggregate allowance per post-baseline loader while retaining the strict
     // 250 KiB per-chunk ceiling that protects real navigation payloads.
-    routeGrowthGzipKb: 6.25,
+    routeGrowthGzipKb: 6.5,
     routeLoaderFile: "altftoolwebadmin/src/lib/adminModuleLoaders.js",
   },
 ];

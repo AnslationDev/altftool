@@ -164,37 +164,43 @@ export async function POST(request) {
       createdAt: now,
     });
 
-    // Fetch superadmins (RBAC store + legacy collection)
-    const superAdminIds = await resolveSuperAdminIds();
+    // The ticket + initial message above have already committed — a failure
+    // notifying superadmins must not turn a successful ticket creation into a
+    // client-visible 500 (and a retry that creates a duplicate ticket).
+    try {
+      const superAdminIds = await resolveSuperAdminIds();
 
-    if (!superAdminIds.length) {
-      console.warn(
-        `SUPPORT_CREATE_NO_RECIPIENTS: ticket ${ticketRef.id} created but no active superadmin was found to notify.`,
-      );
-    } else {
-      // Write in-app notifications
-      const notifBatch = adminDb.batch();
-      superAdminIds.forEach((uid) => {
-        const notifRef = adminDb.collection("notifications").doc();
-        notifBatch.set(notifRef, {
-          userId: uid,
-          type: "notice",
+      if (!superAdminIds.length) {
+        console.warn(
+          `SUPPORT_CREATE_NO_RECIPIENTS: ticket ${ticketRef.id} created but no active superadmin was found to notify.`,
+        );
+      } else {
+        // Write in-app notifications
+        const notifBatch = adminDb.batch();
+        superAdminIds.forEach((uid) => {
+          const notifRef = adminDb.collection("notifications").doc();
+          notifBatch.set(notifRef, {
+            userId: uid,
+            type: "notice",
+            title: "New Support Ticket",
+            body: `A new ticket was raised: "${safeTitle}"`,
+            actionUrl: `/tickets/${ticketRef.id}`,
+            read: false,
+            createdAt: now,
+          });
+        });
+        await notifBatch.commit();
+
+        // Send push notifications (best-effort, non-blocking)
+        sendPushToUsers({
+          userIds: superAdminIds,
           title: "New Support Ticket",
           body: `A new ticket was raised: "${safeTitle}"`,
-          actionUrl: `/tickets/${ticketRef.id}`,
-          read: false,
-          createdAt: now,
+          data: { actionUrl: `/tickets/${ticketRef.id}`, ticketId: ticketRef.id },
         });
-      });
-      await notifBatch.commit();
-
-      // Send push notifications (best-effort, non-blocking)
-      sendPushToUsers({
-        userIds: superAdminIds,
-        title: "New Support Ticket",
-        body: `A new ticket was raised: "${safeTitle}"`,
-        data: { actionUrl: `/tickets/${ticketRef.id}`, ticketId: ticketRef.id },
-      });
+      }
+    } catch (notifyErr) {
+      console.error("SUPPORT_CREATE_NOTIFY_ERROR:", notifyErr);
     }
 
     return NextResponse.json({ ticketId: ticketRef.id }, { status: 201 });

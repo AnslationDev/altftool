@@ -101,6 +101,7 @@ export default function PermissionMatrix({ modules = {}, permissions = {}, setPe
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
+                    aria-label={`Toggle all permissions for ${label}`}
                     checked={allEnabled}
                     ref={(el) => { if (el) el.indeterminate = someEnabled && !allEnabled; }}
                     onChange={() => setAll(key, !allEnabled)}

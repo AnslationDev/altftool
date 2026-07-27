@@ -35,7 +35,24 @@ export default function AccountInactivePage() {
   const [checking, setChecking] = useState(false);
   const [retrying, setRetrying] = useState(false);
   const [retryNotice, setRetryNotice] = useState("");
+  // Latched view of `syncFailed`. AuthContext clears syncFailed at the START of
+  // every attempt and the poll re-arms the retry budget every 10s, so binding
+  // the error copy + retry button straight to syncFailed made them mount and
+  // unmount every 1.5-3s while the server was down (the same flicker bug
+  // access-requested/page.jsx hit and fixed with this same latch). Only a
+  // definitive answer from /api/admin/me clears this.
+  const [statusUnavailable, setStatusUnavailable] = useState(false);
   const hasRedirectedRef = useRef(false);
+
+  useEffect(() => {
+    if (syncFailed) {
+      setStatusUnavailable(true);
+      return;
+    }
+    // adminData / isDenied / isPendingUser are only ever set by a completed
+    // response; the transient-failure path in AuthContext clears all three.
+    if (adminData || isDenied || isPendingUser) setStatusUnavailable(false);
+  }, [syncFailed, adminData, isDenied, isPendingUser]);
 
   /* ── Context-driven redirect (single source of truth) ── */
   useEffect(() => {
@@ -148,10 +165,10 @@ export default function AccountInactivePage() {
             </p>
             <p
               className="text-xs mt-2"
-              style={{ color: syncFailed ? "var(--danger-text)" : "var(--muted-soft)" }}
-              role={syncFailed ? "alert" : undefined}
+              style={{ color: statusUnavailable ? "var(--danger-text)" : "var(--muted-soft)" }}
+              role={statusUnavailable ? "alert" : undefined}
             >
-              {syncFailed
+              {statusUnavailable
                 ? "We couldn't reach the server to check your status."
                 : checking || retrying
                   ? "Checking for reactivation…"
@@ -198,7 +215,7 @@ export default function AccountInactivePage() {
           <div className="h-px mb-5" style={{ background: "var(--border)" }} />
 
           {/* ── Retry (only when the status check itself is failing) ── */}
-          {syncFailed && (
+          {statusUnavailable && (
             <>
               <button
                 onClick={handleRetry}

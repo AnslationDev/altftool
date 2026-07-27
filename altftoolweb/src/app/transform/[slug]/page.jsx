@@ -5,6 +5,8 @@ import { getToolBySlug, getToolSlugs } from "../_lib/manifest";
 import TransformShell from "../_components/TransformShell";
 import TransformSidebar from "../_components/TransformSidebar";
 
+const TRANSFORM_OG_IMAGE = "/assets/og-default.png";
+
 // The manifest is the complete, closed list of converters.
 export const dynamicParams = false;
 
@@ -35,11 +37,20 @@ export async function generateMetadata({ params }) {
       description,
       url,
       type: "website",
+      images: [
+        {
+          url: TRANSFORM_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: `${tool.title} converter on AltFTool`,
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${title} | AltFTool`,
       description,
+      images: [TRANSFORM_OG_IMAGE],
     },
   };
 }

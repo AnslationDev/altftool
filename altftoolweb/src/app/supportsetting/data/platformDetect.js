@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isValidPlatform } from "./settingData";
+import { isValidPlatform } from "./clientData";
 
 const OVERRIDE_STORAGE_KEY = "altftool.supportsetting.platformOverride";
 

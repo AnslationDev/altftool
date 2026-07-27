@@ -465,26 +465,37 @@ export function AuthProvider({ children }) {
     };
   }, [applyLocalAdminSession, syncUser]);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        adminData,
-        loading,
-        isPendingUser,
-        isDenied,
-        isInactive,
-        syncFailed,
-        isSuperAdmin: adminData?.roleType === "superadmin" || adminData?.isSuperAdmin === true,
-        localAdminLoginEnabled,
-        signInLocalAdmin,
-        logout,
-        refreshAuth,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      user,
+      adminData,
+      loading,
+      isPendingUser,
+      isDenied,
+      isInactive,
+      syncFailed,
+      isSuperAdmin: adminData?.roleType === "superadmin" || adminData?.isSuperAdmin === true,
+      localAdminLoginEnabled,
+      signInLocalAdmin,
+      logout,
+      refreshAuth,
+    }),
+    [
+      user,
+      adminData,
+      loading,
+      isPendingUser,
+      isDenied,
+      isInactive,
+      syncFailed,
+      localAdminLoginEnabled,
+      signInLocalAdmin,
+      logout,
+      refreshAuth,
+    ],
   );
+
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

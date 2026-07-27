@@ -38,7 +38,20 @@ export async function verifyActiveAdmin(request) {
     };
   }
 
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
+  let snap = await adminDb.collection("admins").doc(decoded.uid).get();
+
+  if (!snap.exists && decoded.email) {
+    // Legacy admin docs are not always keyed by the caller's current Firebase
+    // Auth uid (the password→Google UID mismatch case) — /api/admin/me and
+    // getRbacAdminDoc() both fall back to an email match, so this gate must
+    // too, or a legitimate admin gets "Forbidden" on every route it guards.
+    const byEmail = await adminDb
+      .collection("admins")
+      .where("email", "==", decoded.email)
+      .limit(1)
+      .get();
+    if (!byEmail.empty) snap = byEmail.docs[0];
+  }
 
   if (!snap.exists) {
     throw new Error("Forbidden");
@@ -58,14 +71,4 @@ export async function verifyActiveAdmin(request) {
       ...data,
     },
   };
-}
-
-export async function verifySuperAdmin(request) {
-  const { decoded, admin } = await verifyActiveAdmin(request);
-
-  if (admin.roleType !== "superadmin" && admin.isSuperAdmin !== true) {
-    throw new Error("Forbidden");
-  }
-
-  return { decoded, admin };
 }

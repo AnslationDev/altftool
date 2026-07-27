@@ -4,13 +4,74 @@
 // server-side reachability checks (HEAD with GET fallback) and reports status,
 // redirects and errors. Follows the admin API convention: rate-limit -> auth.
 
+import dns from "node:dns/promises";
+import net from "node:net";
 import { NextResponse } from "next/server";
 import { authorizeSeoRequest, seoAccessErrorResponse } from "@/lib/seoAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 
+export const runtime = "nodejs";
+
 const MAX_URLS = 60;
 const TIMEOUT_MS = 8000;
 const DEFAULT_BASE = (process.env.ALTFT_WEB_BASE_URL || "https://altftool.com").replace(/\/+$/, "");
+
+// SSRF guard: any admin with SEO read access can otherwise make this server
+// issue outbound requests to arbitrary hosts, including internal services or
+// the cloud metadata endpoint. Mirrors src/app/api/blogs/link-check/route.js's
+// assertPublicDestination()/isPrivateIp().
+const BLOCKED_HOSTS = new Set([
+  "0.0.0.0",
+  "127.0.0.1",
+  "localhost",
+  "metadata.google.internal",
+  "::",
+  "::1",
+]);
+
+function isPrivateIp(address = "") {
+  const normalized = address.toLowerCase();
+  const version = net.isIP(normalized);
+  if (!version) return false;
+
+  if (version === 6) {
+    if (normalized === "::1" || normalized === "::") return true;
+    if (normalized.startsWith("fc") || normalized.startsWith("fd") || normalized.startsWith("fe80:")) return true;
+    if (normalized.startsWith("::ffff:")) return isPrivateIp(normalized.replace("::ffff:", ""));
+    return false;
+  }
+
+  const parts = normalized.split(".").map((item) => Number(item));
+  const [first, second] = parts;
+
+  return (
+    first === 0 ||
+    first === 10 ||
+    first === 127 ||
+    (first === 169 && second === 254) ||
+    (first === 172 && second >= 16 && second <= 31) ||
+    (first === 192 && second === 168) ||
+    (first === 100 && second >= 64 && second <= 127)
+  );
+}
+
+async function assertPublicDestination(url) {
+  const host = url.hostname.toLowerCase();
+
+  if (
+    BLOCKED_HOSTS.has(host) ||
+    host.endsWith(".local") ||
+    host.endsWith(".internal") ||
+    (net.isIP(host) && isPrivateIp(host))
+  ) {
+    throw new Error("Private or local destinations are blocked.");
+  }
+
+  const addresses = await dns.lookup(host, { all: true, verbatim: true });
+  if (addresses.some((item) => isPrivateIp(item.address))) {
+    throw new Error("Private network destinations are blocked.");
+  }
+}
 
 function toAbsolute(input) {
   const s = String(input || "").trim();
@@ -24,6 +85,12 @@ async function probe(url) {
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   const result = { url, ok: false, status: 0, redirected: false, finalUrl: url, error: null };
   try {
+    const parsed = new URL(url);
+    if (!["http:", "https:"].includes(parsed.protocol)) {
+      throw new Error("Only http(s) links can be checked.");
+    }
+    await assertPublicDestination(parsed);
+
     let res;
     try {
       res = await fetch(url, { method: "HEAD", redirect: "follow", signal: controller.signal });

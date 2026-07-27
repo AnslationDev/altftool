@@ -12,7 +12,7 @@ import CompatibilityBanner from "./CompatibilityBanner";
 import { getCategoryById } from "../data/categories";
 import { getDeviceById } from "../data/deviceTaxonomy";
 import { getSettingsForDevice, ALL_DEVICE_SETTINGS } from "../data/devices";
-import { parseCategoryActiveId, getSettingsForCategory } from "../data/settingData";
+import { getSettingsForCategoryFromSettings, parseCategoryActiveId } from "../data/clientData";
 
 const PLATFORM_LABEL = { windows: "Windows", macos: "macOS", android: "Android", ios: "iOS" };
 
@@ -41,6 +41,7 @@ const SettingsContent = ({
   recommended,
   recentlyUsedSettings,
   aiTools,
+  wideSearchResults,
   searchQuery,
   onSearchChange,
   prefs,
@@ -72,7 +73,7 @@ const SettingsContent = ({
   const categoryRef = parseCategoryActiveId(activeId);
   const isCategoryHub = categoryRef !== null;
   const activeCategory = categoryRef ? getCategoryById(categoryRef.categoryId) : null;
-  const categorySettings = categoryRef ? getSettingsForCategory(categoryRef.platform, categoryRef.categoryId) : [];
+  const categorySettings = categoryRef ? getSettingsForCategoryFromSettings(allSettings, categoryRef.categoryId) : [];
 
   const activeOsSetting =
     !isUtility && !isAiTool && !isDeviceLanding && !isCategoryHub && activeId
@@ -141,6 +142,7 @@ const SettingsContent = ({
             onSelectSetting={onSelectSetting}
             platform={platform}
             onSwitchPlatform={platformState?.setOverride}
+            wideSearchResults={wideSearchResults}
           />
         </div>
 
@@ -243,8 +245,9 @@ const SettingsContent = ({
             recommended={recommended}
             recentlyUsedSettings={recentlyUsedSettings}
             bookmarkedSettings={bookmarkedSettings}
-            aiTools={aiTools}
-            searchQuery={searchQuery}
+                aiTools={aiTools}
+                wideSearchResults={wideSearchResults}
+                searchQuery={searchQuery}
             onSearchChange={onSearchChange}
             onSelectSetting={onSelectSetting}
             onSelectUtility={onSelectUtility}

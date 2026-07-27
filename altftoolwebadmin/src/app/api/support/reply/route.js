@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
+import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
 import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(request) {
@@ -37,8 +38,17 @@ export async function POST(request) {
 
     const ticket = ticketSnap.data();
 
-    const adminSnap = await adminDb.collection("admins").doc(decoded.uid).get();
-    const isAdmin = adminSnap.exists;
+    // RBAC-aware, isActive-checked admin resolution — a bare `admins/{uid}`
+    // existence check ignored RBAC-only admins entirely (blocking replies from
+    // anyone created via the current Admins UI) and let a deactivated admin
+    // keep replying, since existence alone was never re-checked against status.
+    let admin = null;
+    try {
+      ({ admin } = await verifyActiveAdmin(request));
+    } catch {
+      admin = null;
+    }
+    const isAdmin = Boolean(admin);
     const isCreator = ticket.createdBy === decoded.uid;
 
     if (!isAdmin && !isCreator) {
@@ -56,7 +66,7 @@ export async function POST(request) {
     await ticketRef.update({ updatedAt: now });
 
     // Determine who to notify
-    const isSuperAdmin = isAdmin && adminSnap.data()?.roleType === "superadmin";
+    const isSuperAdmin = isAdmin && (admin.roleType === "superadmin" || admin.isSuperAdmin === true);
     let notifyUserId = null;
 
     if (isSuperAdmin) {
@@ -80,16 +90,20 @@ export async function POST(request) {
         createdAt: now,
       };
 
-      // Write in-app notification
-      await adminDb.collection("notifications").add(notifPayload);
-
-      // Send push notification (best-effort, non-blocking)
-      sendPushToUsers({
-        userIds: [notifyUserId],
-        title: notifPayload.title,
-        body: notifPayload.body,
-        data: { actionUrl: notifActionUrl, ticketId },
-      });
+      // The reply message and ticket update above have already committed —
+      // a failure notifying the other party must not turn a successful reply
+      // into a client-visible 500 (and a retry that double-posts the reply).
+      try {
+        await adminDb.collection("notifications").add(notifPayload);
+        sendPushToUsers({
+          userIds: [notifyUserId],
+          title: notifPayload.title,
+          body: notifPayload.body,
+          data: { actionUrl: notifActionUrl, ticketId },
+        });
+      } catch (notifyErr) {
+        console.error("REPLY_NOTIFY_ERROR:", notifyErr);
+      }
     }
 
     return NextResponse.json({ success: true });

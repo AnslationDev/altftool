@@ -58,7 +58,7 @@ const resolvedPostcss = require.resolve("postcss/package.json", { paths: [nextRo
 const resolvedPostcssVersion = JSON.parse(readFileSync(resolvedPostcss, "utf8")).version;
 const runtimePatchReady =
   !existsSync(nestedPostcss) &&
-  isAtLeast(resolvedPostcssVersion, [8, 5, 12]) &&
+  isAtLeast(resolvedPostcssVersion, [8, 5, 18]) &&
   !resolvedPostcss.startsWith(nestedPostcss);
 
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
@@ -85,6 +85,7 @@ const nextFinding = vulnerabilities.next;
 const knownPostcssAdvisories = new Set([
   "https://github.com/advisories/GHSA-qx2v-qp2m-jg93",
   "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+  "https://github.com/advisories/GHSA-r28c-9q8g-f849",
 ]);
 const postcssAdvisories = (postcssFinding?.via || [])
   .filter((finding) => finding && typeof finding === "object")

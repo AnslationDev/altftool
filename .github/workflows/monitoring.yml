@@ -37,7 +37,7 @@ jobs:
 
       - name: Run production monitor
         env:
-          ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
           ALTFT_MONITOR_WEB_URLS: ${{ vars.ALTFT_MONITOR_WEB_URLS }}
           ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
           ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
 
       - name: Run production link and image monitor
         env:
-          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://altftool.com' }}
+          ALTFT_LINK_CHECK_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
         run: npm run monitor:links:strict -- --limit 24 --output production-links-report.json --output-md production-links-report.md
 
       - name: Upload monitoring reports

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { SectionHeader } from "@altftool/ui";
 import PlatformSwitcher from "./PlatformSwitcher";
-import { categoryActiveId } from "../data/settingData";
+import { categoryActiveId } from "../data/clientData";
 import { getCategoryById } from "../data/categories";
 
 // Every quick action below routes to a REAL setting/tool already authored

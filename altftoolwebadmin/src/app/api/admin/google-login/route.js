@@ -43,15 +43,6 @@ export async function POST(req) {
       return NextResponse.json({ error: "No email on Google account" }, { status: 400 });
     }
 
-    const ALLOWED_DOMAIN = "anslation.com";
-
-    if (!email.endsWith(`@${ALLOWED_DOMAIN}`)) {
-  return NextResponse.json(
-    { error: "Only Anslation accounts are allowed" },
-    { status: 403 }
-  );
-}
-
     /* ── 1. Enterprise RBAC store (source of truth for UI-created admins).
            getRbacAdminDoc() already falls back from uid → email, so this
            covers the password→Google UID mismatch case too.
@@ -107,7 +98,19 @@ export async function POST(req) {
       return NextResponse.json({ status: "admin" });
     }
 
-    /* ── 4. Not an admin — check for any existing request for this user ── */
+    /* ── 4. Not an admin. New self-serve access requests are restricted to the
+           allowed domain — but that gate must never block someone who is
+           ALREADY a provisioned, active admin (checked above) with an email on
+           a different domain (e.g. an admin created directly by a super admin
+           via /api/admin/create), or every sign-in for that account 403s. ── */
+    const ALLOWED_DOMAIN = "anslation.com";
+    if (!email.endsWith(`@${ALLOWED_DOMAIN}`)) {
+      return NextResponse.json(
+        { error: "Only Anslation accounts are allowed" },
+        { status: 403 },
+      );
+    }
+
     const existingRequests = await adminDb
       .collection("accessRequests")
       .where("uid", "==", uid)

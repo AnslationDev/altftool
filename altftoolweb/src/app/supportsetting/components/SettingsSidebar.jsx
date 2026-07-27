@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { X, LifeBuoy, HelpCircle, Cpu, MessageCircle, Layers, Home } from "lucide-react";
-import { searchEverything } from "../data/search";
-import { getCategoriesForPlatform, categoryActiveId } from "../data/settingData";
+import { categoryActiveId, getCategoriesForSettings } from "../data/clientData";
 
 export const UTILITY_ITEMS = [
   { id: "util-faq", title: "FAQ & Help", icon: HelpCircle },
@@ -51,6 +50,7 @@ const SettingsSidebar = ({
   searchQuery,
   platformState,
   aiTools,
+  wideSearchResults,
   deviceContext,
   onGoHome,
 }) => {
@@ -66,8 +66,8 @@ const SettingsSidebar = ({
   // branch, but cheap (12 categories max, filtered from data already in
   // memory).
   const categories = useMemo(
-    () => getCategoriesForPlatform(platformState.platform),
-    [platformState.platform],
+    () => getCategoriesForSettings(settings),
+    [settings],
   );
 
   // A real Settings app keeps a category's row highlighted for as long as
@@ -101,10 +101,7 @@ const SettingsSidebar = ({
   // from every other platform and from the expanded device catalog —
   // grouped below the current platform's own results rather than mixed in
   // above them, so the platform you're actually on always comes first.
-  const wideResults = useMemo(
-    () => (query ? searchEverything(query, { platform: platformState.platform }) : null),
-    [query, platformState.platform],
-  );
+  const wideResults = query ? wideSearchResults : null;
   const otherPlatformResults = wideResults?.otherPlatforms || [];
   const deviceResults = wideResults?.devices || [];
 

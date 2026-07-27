@@ -369,9 +369,18 @@ export default function AdminManagement() {
   });
   const visibleAdmins = controls.rows;
 
-  const totalActive = admins.filter((a) => a.isActive).length;
-  const totalInactive = admins.length - totalActive;
-  const totalSuper = admins.filter((a) => a.roleType === "superadmin").length;
+  // Three passes over `admins` were previously re-run on every render — including
+  // every keystroke in the search box, since that only changes `controls`, not
+  // `admins`. Memoized on the one input that actually changes these counts.
+  const { totalActive, totalInactive, totalSuper } = useMemo(() => {
+    let active = 0;
+    let superCount = 0;
+    for (const admin of admins) {
+      if (admin.isActive) active += 1;
+      if (admin.roleType === "superadmin") superCount += 1;
+    }
+    return { totalActive: active, totalInactive: admins.length - active, totalSuper: superCount };
+  }, [admins]);
 
   const columns = useMemo(
     () => [

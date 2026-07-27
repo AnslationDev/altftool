@@ -262,6 +262,12 @@ export default function AdminLayout({ children }) {
       hasAccess = SUPERADMIN_ONLY_GLOBAL_MODULES.has(moduleKey)
         ? false
         : adminData.permissions?.[moduleKey]?.read === true;
+    } else {
+      // Neither a recognized project route (e.g. a project's bare root with no
+      // module segment) nor a recognized global route — `hasAccess` must not
+      // fall through on its unrestricted default here, or a non-superadmin
+      // reaches an unrecognized route with zero RBAC check.
+      hasAccess = false;
     }
   }
 

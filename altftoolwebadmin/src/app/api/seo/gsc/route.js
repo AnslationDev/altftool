@@ -16,6 +16,7 @@ import {
   gscListSitemaps,
   gscSubmitSitemap,
 } from "@/lib/gscClient";
+import { propertyOrigin, isFeedpathInProperty } from "@/app/api/seo/gsc/sitemaps/route";
 
 // GSC is altftool's single Google connection — every call is authorized against
 // the altftool SEO module so no other project's admin can reach altftool's
@@ -125,7 +126,21 @@ export async function POST(request) {
     }
 
     if (body.action === "submit-sitemap") {
-      const feedpath = body.feedpath || `${(gscSiteUrl().replace(/^sc-domain:/, "https://").replace(/\/$/, ""))}/sitemap.xml`;
+      // Submitting a sitemap mutates the production property, so — unlike
+      // inspect above — it needs `write`, not the blanket `read` check the
+      // top of this handler applies to every action. A client-supplied
+      // feedpath must also be validated against the verified property,
+      // otherwise the request body decides which host we hand to Google.
+      try {
+        await authorizeSeoRequest(request, "write", GSC_PROJECT);
+      } catch (error) {
+        return seoAccessErrorResponse(error);
+      }
+      const property = gscSiteUrl();
+      const feedpath = String(body.feedpath || `${propertyOrigin(property)}/sitemap.xml`);
+      if (!isFeedpathInProperty(feedpath, property)) {
+        return NextResponse.json({ error: "feedpath must be an http(s) URL inside the verified property" }, { status: 400 });
+      }
       await gscSubmitSitemap(feedpath);
       return NextResponse.json({ ok: true, feedpath });
     }

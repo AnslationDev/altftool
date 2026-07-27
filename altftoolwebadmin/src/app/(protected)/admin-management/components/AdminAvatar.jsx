@@ -32,14 +32,14 @@ export default function AdminAvatar({ admin, size = "md" }) {
         src={admin.photoURL}
         alt={initials}
         onError={() => setImgError(true)}
-        className={`${sizeClasses[size]} ${radiusClasses[size]} object-cover border border-gray-200 shrink-0`}
+        className={`${sizeClasses[size]} ${radiusClasses[size]} object-cover border border-[var(--border)] shrink-0`}
       />
     );
   }
 
   return (
     <div
-      className={`${sizeClasses[size]} ${radiusClasses[size]} bg-gray-100 flex items-center justify-center font-bold text-gray-600 shrink-0`}
+      className={`${sizeClasses[size]} ${radiusClasses[size]} bg-[var(--surface-soft)] flex items-center justify-center font-bold text-[var(--muted)] shrink-0`}
     >
       {initials}
     </div>

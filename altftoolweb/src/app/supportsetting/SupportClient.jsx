@@ -10,16 +10,25 @@ import SettingsSidebar from "./components/SettingsSidebar";
 import { UTILITY_TITLES } from "./components/UtilityPage";
 import { ToastProvider } from "./components/ToastProvider";
 import { usePlatform } from "./data/platformDetect";
-import { getSettingsForPlatform, getFrequentlyUsed, getRecommended, parseCategoryActiveId } from "./data/settingData";
+import {
+  activeIdToPathFromCatalog,
+  getFrequentlyUsedFromSettings,
+  getRecommendedFromSettings,
+  loadAllPlatformSettings,
+  loadSettingsForPlatform,
+  parseCategoryActiveId,
+  PLATFORM_LABEL,
+} from "./data/clientData";
 import { usePagePreferences, useRecentlyUsed, useBookmarks } from "./data/preferences";
 import { aiTools } from "./data/aiTools";
 import { ALL_DEVICE_SETTINGS, getSettingsForDevice } from "./data/devices";
 import { getDeviceById } from "./data/deviceTaxonomy";
 import { getCategoryById } from "./data/categories";
-import { activeIdToPath } from "./data/routes";
 import { useAds } from "@/ads/AdsProvider";
 import AdCard from "@/ads/layouts/settingsupport/AdCardSupport";
 import "./supportsetting.css";
+
+const EMPTY_SETTINGS = [];
 
 /**
  * `initialActiveId` / `initialPlatformOverride` are only ever passed by the
@@ -34,6 +43,8 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
   const [activeId, setActiveId] = useState(initialActiveId);
   const [searchQuery, setSearchQuery] = useState("");
   const [adsSettled, setAdsSettled] = useState(false);
+  const [settingsByPlatform, setSettingsByPlatform] = useState({});
+  const [wideSearchResults, setWideSearchResults] = useState(null);
   const searchInputRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -48,7 +59,12 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
   // have both loaded from the client. Before that, the initial render is
   // just a "windows" + default-prefs guess — showing a skeleton instead of
   // that guess avoids a flash of possibly-wrong content on mount.
-  const pageReady = platformState.ready && prefsReady && bookmarksReady;
+  const allSettings = useMemo(
+    () => settingsByPlatform[platformState.platform] || EMPTY_SETTINGS,
+    [settingsByPlatform, platformState.platform],
+  );
+  const platformSettingsLoaded = Object.prototype.hasOwnProperty.call(settingsByPlatform, platformState.platform);
+  const pageReady = platformState.ready && prefsReady && bookmarksReady && platformSettingsLoaded;
 
   const focusMode = prefs.focusMode;
   const sponsoredCollapsed = prefs.sponsoredCollapsed;
@@ -68,17 +84,74 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
     return () => clearTimeout(timer);
   }, [hasAds]);
 
-  const allSettings = useMemo(
-    () => getSettingsForPlatform(platformState.platform),
-    [platformState.platform],
-  );
+  useEffect(() => {
+    let cancelled = false;
+    loadSettingsForPlatform(platformState.platform)
+      .then((settings) => {
+        if (cancelled) return;
+        setSettingsByPlatform((previous) => ({ ...previous, [platformState.platform]: settings }));
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setSettingsByPlatform((previous) => ({ ...previous, [platformState.platform]: [] }));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [platformState.platform]);
+
+  useEffect(() => {
+    const query = searchQuery.trim().toLowerCase();
+    let cancelled = false;
+    if (!query) {
+      queueMicrotask(() => {
+        if (!cancelled) setWideSearchResults(null);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    queueMicrotask(() => {
+      if (!cancelled) setWideSearchResults(null);
+    });
+    loadAllPlatformSettings()
+      .then((platformSettings) => {
+        if (cancelled) return;
+        const matchesSetting = (setting) => {
+          const haystack = [setting.title, setting.heading, setting.description, ...(setting.details || [])]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(query);
+        };
+        const otherPlatforms = Object.entries(platformSettings)
+          .filter(([platform]) => platform !== platformState.platform)
+          .map(([platform, settings]) => ({
+            platform,
+            label: PLATFORM_LABEL[platform],
+            results: settings.filter(matchesSetting),
+          }))
+          .filter((group) => group.results.length > 0);
+        const devices = ALL_DEVICE_SETTINGS.filter(matchesSetting);
+        setWideSearchResults({ otherPlatforms, devices });
+      })
+      .catch(() => {
+        if (!cancelled) setWideSearchResults(null);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [searchQuery, platformState.platform]);
+
   const frequentlyUsed = useMemo(
-    () => getFrequentlyUsed(platformState.platform),
-    [platformState.platform],
+    () => getFrequentlyUsedFromSettings(allSettings),
+    [allSettings],
   );
   const recommended = useMemo(
-    () => getRecommended(platformState.platform),
-    [platformState.platform],
+    () => getRecommendedFromSettings(allSettings),
+    [allSettings],
   );
 
   const recentlyUsedSettings = useMemo(() => {
@@ -146,6 +219,8 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
   // before the platform-override effect below ever gets a chance to apply.
   useEffect(() => {
     if (!platformState.ready) return;
+    if (initialPlatformOverride && initialPlatformOverride !== platformState.platform) return;
+    if (!platformSettingsLoaded) return;
     if (
       !activeId ||
       activeId.startsWith("util-") ||
@@ -157,7 +232,7 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
     if (allSettings.some((setting) => setting.id === activeId)) return;
     if (ALL_DEVICE_SETTINGS.some((setting) => setting.id === activeId)) return;
     setActiveId(null);
-  }, [allSettings, activeId, platformState.ready]);
+  }, [allSettings, activeId, initialPlatformOverride, platformSettingsLoaded, platformState.platform, platformState.ready]);
 
   // Applies the platform a deep link (e.g. /supportsetting/macos/macos-
   // software-update) asked to preview, exactly once, as soon as real
@@ -198,7 +273,10 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
   }, [initialActiveId]);
 
   useEffect(() => {
-    const target = activeIdToPath(activeId);
+    const target = activeIdToPathFromCatalog(activeId, {
+      settings: allSettings,
+      deviceSettings: ALL_DEVICE_SETTINGS,
+    });
     if (target !== pathname) {
       router.push(target, { scroll: false });
     }
@@ -297,6 +375,7 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
     onSearchChange: setSearchQuery,
     platformState,
     aiTools,
+    wideSearchResults,
     deviceContext: deviceSidebarContext,
     onGoHome: handleGoHome,
   };
@@ -401,6 +480,7 @@ export default function SettingSupportPage({ initialActiveId = null, initialPlat
                 recommended={recommended}
                 recentlyUsedSettings={recentlyUsedSettings}
                 aiTools={aiTools}
+                wideSearchResults={wideSearchResults}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
                 searchInputRef={searchInputRef}

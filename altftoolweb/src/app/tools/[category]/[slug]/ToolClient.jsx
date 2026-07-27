@@ -318,7 +318,7 @@ export default function ToolClient({ slug, category = "all", children }) {
   return (
     <ToolDetailChrome slug={slug} category={category} seoContent={children}>
       <ToolRuntimeBoundary slug={slug} category={category}>
-        {createElement(Tool)}
+        {createElement(Tool, { category, slug })}
       </ToolRuntimeBoundary>
     </ToolDetailChrome>
   );

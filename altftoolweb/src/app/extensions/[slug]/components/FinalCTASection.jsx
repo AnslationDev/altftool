@@ -37,7 +37,7 @@ export default function FinalCTASection({ extension }) {
 
       <div className="relative z-10 max-w-2xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 text-[var(--primary)] text-xs font-bold uppercase tracking-wider">
-
+          <Sparkles className="w-3.5 h-3.5" />
           <span>Ready to Transform Your Workflow?</span>
         </div>
 

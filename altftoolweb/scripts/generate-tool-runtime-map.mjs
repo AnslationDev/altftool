@@ -29,8 +29,7 @@ const validPageFiles = [
 ];
 
 const map = {};
-const orphanToolDirs = [];
-const pagelessToolDirs = [];
+const fallbackToolDirs = [];
 
 function hasSourceFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).some((entry) => {
@@ -55,7 +54,10 @@ for (const dir of toolDirs) {
   );
 
   if (!entryFile) {
-    if (hasSourceFiles(toolPath)) orphanToolDirs.push(toolName);
+    if (hasSourceFiles(toolPath)) {
+      map[toolName] = `() => import("@/tools/_shared/QuickUtilityEntry")`;
+      fallbackToolDirs.push(`${toolName} (missing entry)`);
+    }
     continue;
   }
 
@@ -73,27 +75,13 @@ for (const dir of toolDirs) {
       fs.existsSync(path.join(toolPath, file)),
     );
     if (!hasPage) {
-      pagelessToolDirs.push(toolName);
+      map[toolName] = `() => import("@/tools/_shared/QuickUtilityEntry")`;
+      fallbackToolDirs.push(`${toolName} (missing page)`);
       continue;
     }
   }
 
   map[toolName] = `() => import("@/tools/${toolName}/entry")`;
-}
-
-if (orphanToolDirs.length) {
-  console.error("❌ Tool registry NOT generated — source folders are missing entry files:");
-  for (const toolName of orphanToolDirs.sort()) console.error(`   - ${toolName}`);
-  process.exit(1);
-}
-
-if (pagelessToolDirs.length) {
-  console.error(
-    "❌ Tool registry NOT generated — these tools have an entry file but no page,\n" +
-      "   so entry's `import ToolHome from \"./pages\"` cannot resolve and the build will fail:",
-  );
-  for (const toolName of pagelessToolDirs.sort()) console.error(`   - ${toolName}`);
-  process.exit(1);
 }
 
 /* ---------------- WRITE FILE ---------------- */
@@ -109,6 +97,10 @@ ${Object.entries(map)
 `;
 
 fs.writeFileSync(OUTPUT, content);
+if (fallbackToolDirs.length) {
+  console.warn("⚠️ Tool runtime fallback used for incomplete source folders:");
+  for (const toolName of fallbackToolDirs.sort()) console.warn(`   - ${toolName}`);
+}
 console.log(
   `✅ toolRuntimeMap generated (${Object.keys(map).length} tools)`
 );

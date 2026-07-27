@@ -37,7 +37,7 @@ import "@/app/_altf/altf-brand.css";
 // The Housing Needs front door — a standalone, USA-focused lead-gen lander.
 // Indexable: this is the brand's landing page, not an internal dashboard.
 export const metadata = createPageMetadata({
-  title: "Housing Needs — Free Home Improvement Quotes & Expert Guides",
+  title: "Housing Needs — Free Home Quotes & Guides",
   description:
     "America's one-stop home improvement resource. Compare roofing, plumbing, HVAC, electrical and more — read expert guides and get free quotes from licensed local pros.",
   path: "/bops/housingneeds",

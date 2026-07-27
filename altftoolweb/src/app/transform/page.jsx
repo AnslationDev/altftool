@@ -3,6 +3,8 @@ import { ArrowRight, Wand2 } from "lucide-react";
 import { SECTION, getToolsByCategory, getToolCount } from "./_lib/manifest";
 import ToolCard from "./_components/ToolCard";
 
+const TRANSFORM_OG_IMAGE = "/assets/og-default.png";
+
 export const metadata = {
   title: SECTION.title,
   description: SECTION.description,
@@ -12,11 +14,20 @@ export const metadata = {
     description: SECTION.description,
     url: "/transform",
     type: "website",
+    images: [
+      {
+        url: TRANSFORM_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "AltFTool transform converters",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: SECTION.title,
     description: SECTION.description,
+    images: [TRANSFORM_OG_IMAGE],
   },
 };
 

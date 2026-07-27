@@ -15,6 +15,7 @@ import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
+import { INCUMBENTS as alternativeIncumbents } from "@/app/alternatives/data/incumbents";
 import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
@@ -48,6 +49,7 @@ import {
   CATEGORIES as altfNativeGameCategories,
   GAMES as altfNativeGames,
 } from "@/app/altfgame/_data/games";
+import { TOOLS as transformTools } from "@/app/transform/_lib/manifest";
 import { ALL_NAV_ITEMS as promptStudioItems } from "@/app/imgprompt/data/navigation";
 import { getPromptCards } from "@/app/prompts/data/service";
 import {
@@ -71,6 +73,8 @@ export const revalidate = 3600;
 const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/tools", priority: 0.95 },
+  { path: "/alternatives", priority: 0.7 },
+  { path: "/transform", priority: 0.7 },
   { path: "/signals", priority: 0.88 },
   { path: "/products", priority: 0.9 },
   { path: "/blogs", priority: 0.9 },
@@ -454,6 +458,24 @@ async function buildSitemapEntries({
       priority: experience.priority,
       changeFrequency: "monthly",
     });
+  }
+
+  for (const entry of Object.values(alternativeIncumbents)) {
+    if (entry?.slug) {
+      pushUnique(entries, seen, `/alternatives/${entry.slug}`, {
+        priority: 0.62,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const tool of transformTools) {
+    if (tool?.slug) {
+      pushUnique(entries, seen, `/transform/${tool.slug}`, {
+        priority: 0.58,
+        changeFrequency: "monthly",
+      });
+    }
   }
 
   for (const category of altfNativeGameCategories) {

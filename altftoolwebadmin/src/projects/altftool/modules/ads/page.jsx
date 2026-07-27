@@ -106,11 +106,34 @@ export default function AdsAdmin() {
       return;
     }
 
-    // Static list (e.g. tool slugs baked into placements.js)
+    // Static list.
     if (targetCfg.type === "static") {
       setPlacementTargets(targetCfg.values);
       setTargetsLoading(false);
       return;
+    }
+
+    if (targetCfg.type === "api") {
+      setPlacementTargets(null);
+      setTargetsLoading(true);
+
+      let cancelled = false;
+      fetch(targetCfg.endpoint, { cache: "no-store" })
+        .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`Target API failed: ${res.status}`))))
+        .then((data) => {
+          if (cancelled) return;
+          const values = Array.isArray(data?.items) ? data.items : [];
+          setPlacementTargets(values);
+        })
+        .catch((err) => {
+          console.error("[AdsAdmin] Failed to fetch target options:", err);
+          if (!cancelled) setPlacementTargets([]);
+        })
+        .finally(() => {
+          if (!cancelled) setTargetsLoading(false);
+        });
+
+      return () => { cancelled = true; };
     }
 
     if (targetCfg.type === "dynamic") {

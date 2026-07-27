@@ -2,9 +2,18 @@
 
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function PATCH(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      scope: "support:reopen",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const authHeader = request.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -28,9 +37,16 @@ export async function PATCH(request) {
 
     const ticket = ticketSnap.data();
 
-    // Only the creator or an admin can reopen
-    const adminSnap = await adminDb.collection("admins").doc(decoded.uid).get();
-    const isAdmin = adminSnap.exists;
+    // Only the creator or an admin can reopen. RBAC-aware, isActive-checked —
+    // see support/reply/route.js for why a bare `admins/{uid}` existence check
+    // is wrong here (misses RBAC-only admins, ignores deactivation).
+    let admin = null;
+    try {
+      ({ admin } = await verifyActiveAdmin(request));
+    } catch {
+      admin = null;
+    }
+    const isAdmin = Boolean(admin);
     const isCreator = ticket.createdBy === decoded.uid;
 
     if (!isAdmin && !isCreator) {

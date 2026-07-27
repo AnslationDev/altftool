@@ -354,23 +354,42 @@ export async function PATCH(request) {
     // Firestore blip left the send permanently dead with no way back.
     if (action === "resend") {
       const ref = adminDb.collection("notification_broadcasts").doc(id);
-      const snap = await ref.get();
-      if (!snap.exists) {
-        return NextResponse.json({ error: "Broadcast not found" }, { status: 404 });
-      }
 
-      const data = snap.data() || {};
-      if (data.status === "sent") {
-        return NextResponse.json(
-          { error: "This broadcast has already been sent." },
-          { status: 400 },
-        );
-      }
-      if (data.status === "scheduled") {
-        return NextResponse.json(
-          { error: "Cancel the schedule before sending this broadcast manually." },
-          { status: 400 },
-        );
+      // The check (status !== "sent"/"scheduled") and the act (deliverBroadcast)
+      // were two separate steps, so two concurrent resend calls (or an
+      // overlapping scheduler run) could both read a resendable status and both
+      // fan out the full delivery — a transaction makes the claim atomic.
+      let data;
+      try {
+        data = await adminDb.runTransaction(async (tx) => {
+          const snap = await tx.get(ref);
+          if (!snap.exists) {
+            throw Object.assign(new Error("Broadcast not found"), { code: "not-found" });
+          }
+          const current = snap.data() || {};
+          if (current.status === "sent") {
+            throw Object.assign(new Error("This broadcast has already been sent."), { code: "already-sent" });
+          }
+          if (current.status === "scheduled") {
+            throw Object.assign(
+              new Error("Cancel the schedule before sending this broadcast manually."),
+              { code: "scheduled" },
+            );
+          }
+          if (current.status === "sending") {
+            throw Object.assign(new Error("This broadcast is already being sent."), { code: "in-flight" });
+          }
+          tx.update(ref, { status: "sending" });
+          return current;
+        });
+      } catch (claimErr) {
+        if (claimErr?.code === "not-found") {
+          return NextResponse.json({ error: "Broadcast not found" }, { status: 404 });
+        }
+        if (["already-sent", "scheduled", "in-flight"].includes(claimErr?.code)) {
+          return NextResponse.json({ error: claimErr.message }, { status: 400 });
+        }
+        throw claimErr;
       }
 
       try {

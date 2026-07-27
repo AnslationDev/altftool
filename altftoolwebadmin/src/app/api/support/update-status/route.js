@@ -115,26 +115,33 @@ export async function PATCH(request) {
     await ticketRef.update(updates);
 
     // ── Notifications ────────────────────────────────────────────────────────
+    // The status/assignment update above has already committed — a failure in
+    // any one of these must not turn a successful update into a client-visible
+    // 500, and must not stop the other two from being attempted.
 
     // 1. Resolved → notify ticket creator
     if (status === "resolved") {
-      const notifPayload = {
-        userId: ticket.createdBy,
-        type: "notice",
-        title: "Ticket Resolved",
-        body: `Your ticket "${ticket.title}" has been marked as resolved.`,
-        actionUrl: `/support/${safeTicketId}`,
-        read: false,
-        createdAt: now,
-      };
-      await adminDb.collection("notifications").add(notifPayload);
+      try {
+        const notifPayload = {
+          userId: ticket.createdBy,
+          type: "notice",
+          title: "Ticket Resolved",
+          body: `Your ticket "${ticket.title}" has been marked as resolved.`,
+          actionUrl: `/support/${safeTicketId}`,
+          read: false,
+          createdAt: now,
+        };
+        await adminDb.collection("notifications").add(notifPayload);
 
-      sendPushToUsers({
-        userIds: [ticket.createdBy],
-        title: notifPayload.title,
-        body: notifPayload.body,
-        data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
-      });
+        sendPushToUsers({
+          userIds: [ticket.createdBy],
+          title: notifPayload.title,
+          body: notifPayload.body,
+          data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
+        });
+      } catch (notifyErr) {
+        console.error("UPDATE_STATUS_NOTIFY_RESOLVED_ERROR:", notifyErr);
+      }
     }
 
     // 2. New assignment → notify the newly assigned admin
@@ -144,23 +151,27 @@ export async function PATCH(request) {
       assignedTo !== decoded.uid;
 
     if (isNewAssignment) {
-      const notifPayload = {
-        userId: assignedTo,
-        type: "notice",
-        title: "New Ticket Assigned",
-        body: `You have been assigned a ticket: "${ticket.title}"`,
-        actionUrl: `/tickets/${safeTicketId}`,
-        read: false,
-        createdAt: now,
-      };
-      await adminDb.collection("notifications").add(notifPayload);
+      try {
+        const notifPayload = {
+          userId: assignedTo,
+          type: "notice",
+          title: "New Ticket Assigned",
+          body: `You have been assigned a ticket: "${ticket.title}"`,
+          actionUrl: `/tickets/${safeTicketId}`,
+          read: false,
+          createdAt: now,
+        };
+        await adminDb.collection("notifications").add(notifPayload);
 
-      sendPushToUsers({
-        userIds: [assignedTo],
-        title: notifPayload.title,
-        body: notifPayload.body,
-        data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
-      });
+        sendPushToUsers({
+          userIds: [assignedTo],
+          title: notifPayload.title,
+          body: notifPayload.body,
+          data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
+        });
+      } catch (notifyErr) {
+        console.error("UPDATE_STATUS_NOTIFY_ASSIGN_ERROR:", notifyErr);
+      }
     }
 
     // 3. Reassignment → notify the previously assigned admin (if different)
@@ -171,23 +182,27 @@ export async function PATCH(request) {
       previousAssignedTo !== decoded.uid;
 
     if (isReassignment) {
-      const notifPayload = {
-        userId: previousAssignedTo,
-        type: "notice",
-        title: "Ticket Reassigned",
-        body: `Ticket "${ticket.title}" has been reassigned to someone else.`,
-        actionUrl: `/tickets/${safeTicketId}`,
-        read: false,
-        createdAt: now,
-      };
-      await adminDb.collection("notifications").add(notifPayload);
+      try {
+        const notifPayload = {
+          userId: previousAssignedTo,
+          type: "notice",
+          title: "Ticket Reassigned",
+          body: `Ticket "${ticket.title}" has been reassigned to someone else.`,
+          actionUrl: `/tickets/${safeTicketId}`,
+          read: false,
+          createdAt: now,
+        };
+        await adminDb.collection("notifications").add(notifPayload);
 
-      sendPushToUsers({
-        userIds: [previousAssignedTo],
-        title: notifPayload.title,
-        body: notifPayload.body,
-        data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
-      });
+        sendPushToUsers({
+          userIds: [previousAssignedTo],
+          title: notifPayload.title,
+          body: notifPayload.body,
+          data: { actionUrl: notifPayload.actionUrl, ticketId: safeTicketId },
+        });
+      } catch (notifyErr) {
+        console.error("UPDATE_STATUS_NOTIFY_REASSIGN_ERROR:", notifyErr);
+      }
     }
 
     return NextResponse.json({ success: true });

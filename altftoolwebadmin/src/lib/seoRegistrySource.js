@@ -7,7 +7,7 @@
 // keep working even when the cross-app inventory env vars are not configured.
 
 import { buildPageIndexEntry } from "@altftool/core/seo";
-import { TOOL_SLUGS } from "@/config/placements";
+import { TOOL_SLUGS } from "@/config/toolSlugs.generated";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { DEFAULT_SEO_PROJECT, resolveSeoProjectId } from "@/lib/seoProject";
 

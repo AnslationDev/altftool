@@ -27,6 +27,9 @@ export default function Page() {
 
   return (
     <main>
+      <h1 className="sr-only">
+        Top9 ranked guides for entertainment, sports, tools, lifestyle, and trending topics
+      </h1>
       <JsonLd
         id="top9-collection-schema"
         data={[

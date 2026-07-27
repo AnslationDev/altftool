@@ -368,7 +368,7 @@
       "engine": "browser",
       "lib": "@iarna/toml",
       "status": "done",
-      "description": "Convert a JSON object into equivalent TOML configuration syntax.",
+      "description": "Convert JSON objects into TOML configuration syntax with nested tables and readable key values.",
       "keywords": [
         "json to toml",
         "toml config",
@@ -400,7 +400,7 @@
       "engine": "browser",
       "lib": "js-yaml",
       "status": "done",
-      "description": "Convert JSON into clean, human-readable YAML.",
+      "description": "Convert JSON objects into clean, human-readable YAML for configs, docs, and data files.",
       "keywords": [
         "json to yaml",
         "yaml converter",
@@ -561,7 +561,7 @@
       "engine": "server",
       "lib": "quicktype-core",
       "status": "done",
-      "description": "Infer a TypeScript interface from a JavaScript object literal.",
+      "description": "Infer a TypeScript interface from a JavaScript object literal for quick model typing.",
       "keywords": [
         "js object to typescript",
         "infer interface",
@@ -593,7 +593,7 @@
       "engine": "server",
       "lib": "@graphql-codegen/flow",
       "status": "done",
-      "description": "Generate Flow types from a GraphQL schema.",
+      "description": "Generate Flow type definitions from a GraphQL schema for safer typed client code.",
       "keywords": [
         "graphql to flow",
         "flow types graphql",
@@ -641,7 +641,7 @@
       "engine": "server",
       "lib": "@graphql-codegen/java",
       "status": "done",
-      "description": "Generate Java types from a GraphQL schema.",
+      "description": "Generate Java classes from a GraphQL schema to speed up API model scaffolding.",
       "keywords": [
         "graphql to java",
         "java graphql types",
@@ -785,7 +785,7 @@
       "engine": "server",
       "lib": "jsonld",
       "status": "done",
-      "description": "Serialize a JSON-LD document to RDF N-Quads.",
+      "description": "Serialize JSON-LD documents into RDF N-Quads for linked-data debugging and audits.",
       "keywords": [
         "jsonld to nquads",
         "rdf nquads",
@@ -817,7 +817,7 @@
       "engine": "server",
       "lib": "flowgen",
       "status": "done",
-      "description": "Convert TypeScript type declarations into equivalent Flow types.",
+      "description": "Convert TypeScript type declarations into equivalent Flow types for migration and comparison.",
       "keywords": [
         "typescript to flow",
         "flowgen",
@@ -833,7 +833,7 @@
       "engine": "server",
       "lib": "ts-json-schema-generator",
       "status": "done",
-      "description": "Generate a JSON Schema from a TypeScript type or interface.",
+      "description": "Generate JSON Schema from TypeScript types and interfaces for validation workflows.",
       "keywords": [
         "typescript to json schema",
         "ts json schema",
@@ -881,7 +881,7 @@
       "engine": "server",
       "lib": "ts-to-zod",
       "status": "done",
-      "description": "Generate Zod schemas from TypeScript interfaces and types.",
+      "description": "Generate Zod schemas from TypeScript interfaces and types for runtime validation.",
       "keywords": [
         "typescript to zod",
         "ts-to-zod",
@@ -913,7 +913,7 @@
       "engine": "server",
       "lib": "flow-to-ts",
       "status": "done",
-      "description": "Convert Flow-annotated code into TypeScript.",
+      "description": "Convert Flow-annotated code into TypeScript to support typed migration cleanup.",
       "keywords": [
         "flow to typescript",
         "flow-to-ts",
@@ -961,7 +961,7 @@
       "engine": "browser",
       "lib": "marked",
       "status": "done",
-      "description": "Render Markdown (with GitHub-flavored extensions) into clean HTML.",
+      "description": "Render Markdown with GitHub-flavored extensions into clean HTML for previews and publishing.",
       "keywords": [
         "markdown to html",
         "md to html",
@@ -977,7 +977,7 @@
       "engine": "browser",
       "lib": "@iarna/toml",
       "status": "done",
-      "description": "Parse TOML configuration into JSON.",
+      "description": "Parse TOML configuration into clean, portable JSON for app settings and data exchange.",
       "keywords": [
         "toml to json",
         "parse toml",
@@ -993,7 +993,7 @@
       "engine": "browser",
       "lib": "@iarna/toml",
       "status": "complete",
-      "description": "Convert TOML configuration into YAML.",
+      "description": "Convert TOML configuration into readable YAML for infrastructure and app config workflows.",
       "keywords": [
         "toml to yaml",
         "toml2yaml",
@@ -1009,7 +1009,7 @@
       "engine": "browser",
       "lib": "xml-js",
       "status": "complete",
-      "description": "Convert XML into a compact JSON representation.",
+      "description": "Convert XML documents into compact JSON for inspection, debugging, and data pipelines.",
       "keywords": [
         "xml to json",
         "parse xml",
@@ -1025,7 +1025,7 @@
       "engine": "browser",
       "lib": "js-yaml",
       "status": "complete",
-      "description": "Parse YAML into JSON.",
+      "description": "Parse YAML documents into clean, portable JSON for config checks and data exchange.",
       "keywords": [
         "yaml to json",
         "parse yaml",
@@ -1041,7 +1041,7 @@
       "engine": "browser",
       "lib": "@iarna/toml",
       "status": "complete",
-      "description": "Convert YAML configuration into TOML.",
+      "description": "Convert YAML configuration into readable TOML for app settings and infrastructure workflows.",
       "keywords": [
         "yaml to toml",
         "yaml2toml",

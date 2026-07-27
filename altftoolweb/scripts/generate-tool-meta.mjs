@@ -8,6 +8,8 @@ const require = createRequire(import.meta.url);
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolMetaMap.js";
 const LEGACY_REDIRECT_TOOL_DIRS = new Set([
+  "_shared",
+  "_toolfk-suite",
   "candy-crush",
 ]);
 const ICON_ALIASES = {
@@ -24,11 +26,50 @@ const ICON_ALIASES = {
 const toolMeta = {};
 const categoryErrors = [];
 const cleanText = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
+const titleizeSlug = (slug) =>
+  String(slug)
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 const normalizeIcon = (icon) => {
   const value = typeof icon === "string" ? icon.trim() : "";
   if (!value) return "wrench";
   if (ICON_ALIASES[value]) return ICON_ALIASES[value];
   return /^[a-z0-9-]+$/.test(value) ? value : "wrench";
+};
+const hasSourceFiles = (directory) =>
+  fs.readdirSync(directory, { withFileTypes: true }).some((entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) return hasSourceFiles(entryPath);
+    return /\.[cm]?[jt]sx?$/.test(entry.name);
+  });
+const inferFallbackCategory = (slug) => {
+  if (/(heart|sleep|medicine|hydration|vegan|lacto|caffeine|ibuprofen|gestational|sauna|bmi|macro|fluid)/.test(slug)) {
+    return "Health Calculators";
+  }
+  if (/(palette|poster|banner|graphic|image|photo|font|logo|design|color)/.test(slug)) {
+    return "Design & Color";
+  }
+  if (/(video|audio|narration|audiobook|subtitle|voiceover|frame-rate|watch-time)/.test(slug)) {
+    return "Video & Audio";
+  }
+  if (/(social|caption|hashtag|newsletter|marketing|cta)/.test(slug)) {
+    return "Marketing & Social";
+  }
+  if (/(calculator|estimator|planner|tracker)/.test(slug)) {
+    return "Calculators";
+  }
+  return "Other";
+};
+const inferFallbackIcon = (slug) => {
+  if (/(heart|health|medicine|hydration|sleep|macro|vegan|lacto|caffeine)/.test(slug)) return "heart-pulse";
+  if (/(palette|color)/.test(slug)) return "palette";
+  if (/(poster|banner|graphic|image|photo)/.test(slug)) return "image";
+  if (/(video|frame|watch-time)/.test(slug)) return "video";
+  if (/(audio|narration|audiobook)/.test(slug)) return "headphones";
+  if (/(calculator|estimator)/.test(slug)) return "calculator";
+  return "wrench";
 };
 
 const toolDirs = fs.readdirSync(TOOLS_DIR);
@@ -42,28 +83,39 @@ for (const dir of toolDirs) {
     "tool.config.js"
   );
 
-  if (!fs.existsSync(configPath)) continue;
-
   let config = {};
-  try {
-    const configModule = await import(pathToFileURL(path.resolve(configPath)).href);
-    config = configModule.default ?? configModule.toolConfig ?? {};
-  } catch {
-    // Fallback for CommonJS-style configs (module.exports) under "type": "module".
+  if (!fs.existsSync(configPath)) {
+    const toolPath = path.join(TOOLS_DIR, dir);
+    if (!fs.statSync(toolPath).isDirectory() || !hasSourceFiles(toolPath)) continue;
+    const name = titleizeSlug(dir);
+    config = {
+      name,
+      description: `Create a quick, copy-ready output for ${name}.`,
+      category: inferFallbackCategory(dir),
+      icon: inferFallbackIcon(dir),
+      iconColor: "text-(--primary)",
+    };
+  } else {
     try {
-      const code = fs.readFileSync(configPath, "utf8");
-      const moduleShim = { exports: {} };
-      // eslint-disable-next-line no-new-func
-      new Function("module", "exports", "require", "console", code)(
-        moduleShim,
-        moduleShim.exports,
-        require,
-        console,
-      );
-      config = moduleShim.exports ?? {};
-    } catch (fallbackError) {
-      console.warn(`⚠️ Skipping "${dir}" (config could not be loaded): ${fallbackError.message}`);
-      continue;
+      const configModule = await import(pathToFileURL(path.resolve(configPath)).href);
+      config = configModule.default ?? configModule.toolConfig ?? {};
+    } catch {
+      // Fallback for CommonJS-style configs (module.exports) under "type": "module".
+      try {
+        const code = fs.readFileSync(configPath, "utf8");
+        const moduleShim = { exports: {} };
+        // eslint-disable-next-line no-new-func
+        new Function("module", "exports", "require", "console", code)(
+          moduleShim,
+          moduleShim.exports,
+          require,
+          console,
+        );
+        config = moduleShim.exports ?? {};
+      } catch (fallbackError) {
+        console.warn(`⚠️ Skipping "${dir}" (config could not be loaded): ${fallbackError.message}`);
+        continue;
+      }
     }
   }
   const slug = dir.toLowerCase();

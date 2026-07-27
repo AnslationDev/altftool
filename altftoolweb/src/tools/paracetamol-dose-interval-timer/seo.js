@@ -1,0 +1,35 @@
+const seo = {
+  intro:
+    "Paracetamol dosing is governed by two separate limits — a minimum gap between doses, usually 4 to 6 hours, and a 24-hour total of 4000 mg for adults (many labels use 3000 mg). This timer takes the time of your last dose, how many doses have been taken in the past 24 hours and the strength of each, then returns the earliest time for the next dose, how many doses remain and which limit you will reach first. Weight-based paediatric dosing at 15 mg/kg per dose is supported. It is informational arithmetic on the label limits, not medical advice.",
+  useCases: [
+    "You lost track of dosing overnight during a fever and need to know whether the next dose is due yet.",
+    "Two people are looking after a sick child and want one shared count of doses given and time of the last one.",
+    "You are alternating paracetamol with another medicine and want the paracetamol windows written out.",
+    "You want to check that four 1000 mg doses is the whole day's allowance before reaching for a fifth.",
+  ],
+  benefits: [
+    ["Both limits, not one", "Tracks the spacing rule and the 24-hour milligram total, and names whichever binds first."],
+    ["Weight-based child mode", "Applies 15 mg/kg per dose and the 60 mg/kg daily ceiling, capped at the adult maximum."],
+    ["Flags the hidden risk", "Reminds you that cold and flu remedies commonly contain paracetamol, which is how accidental overdoses happen."],
+  ],
+  faqs: [
+    [
+      "How many hours apart should paracetamol doses be?",
+      "At least 4 hours, and 4 to 6 hours is the usual instruction on adult and children's labels. With a 4-hour gap no more than 6 doses fit in a day, and the 24-hour milligram total usually runs out before that.",
+    ],
+    [
+      "What is the maximum paracetamol dose in 24 hours?",
+      "4000 mg for most adults — for example four doses of 1000 mg, or eight 500 mg tablets. Many over-the-counter labels set a 3000 mg ceiling instead as an added safety margin, and lower limits apply with liver disease, low body weight, malnutrition or regular alcohol use.",
+    ],
+    [
+      "How much paracetamol can a child have?",
+      "The standard paediatric dose is 15 mg per kilogram of body weight, every 4 to 6 hours, with no more than 4 doses in 24 hours — about 60 mg/kg a day. A 20 kg child would therefore take roughly 300 mg per dose and no more than 1200 mg in a day. Always check the concentration on the bottle, and get dosing for infants from a doctor or pharmacist.",
+    ],
+    [
+      "What should I do if I have taken too much paracetamol?",
+      "Contact a doctor, emergency department or poisons service immediately, even if you feel completely well. Liver injury from paracetamol develops with few early symptoms, and the antidote works best when it is started within the first several hours.",
+    ],
+  ],
+};
+
+export default seo;

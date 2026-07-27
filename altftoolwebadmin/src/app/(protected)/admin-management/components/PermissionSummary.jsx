@@ -5,7 +5,7 @@ import { PROJECTS } from "@/projects";
 export default function PermissionSummary({ admin }) {
   if (admin.roleType === "superadmin") {
     return (
-      <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+      <span className="text-xs font-bold text-[var(--success)] bg-[var(--success-soft)] px-2 py-0.5 rounded-full">
         Full Access
       </span>
     );
@@ -41,7 +41,7 @@ export default function PermissionSummary({ admin }) {
   }
 
   if (!pills.length) {
-    return <span className="text-xs text-gray-400">No access</span>;
+    return <span className="text-xs text-[var(--muted)]">No access</span>;
   }
 
   return (
@@ -49,14 +49,14 @@ export default function PermissionSummary({ admin }) {
       {pills.slice(0, 3).map(({ key, label, projectName, acts }) => (
         <span
           key={key}
-          className="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded capitalize"
+          className="text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded capitalize"
         >
           {projectName ? `${projectName} · ${label}` : label}{" "}
-          <span className="text-indigo-400">{acts.join("/")}</span>
+          <span className="text-[var(--primary)]/70">{acts.join("/")}</span>
         </span>
       ))}
       {pills.length > 3 && (
-        <span className="text-[10px] text-gray-400">+{pills.length - 3} more</span>
+        <span className="text-[10px] text-[var(--muted)]">+{pills.length - 3} more</span>
       )}
     </div>
   );

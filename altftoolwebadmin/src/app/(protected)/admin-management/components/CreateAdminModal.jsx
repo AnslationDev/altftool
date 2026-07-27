@@ -13,10 +13,10 @@ import {
 
 const PROJECT_LIST = Object.values(PROJECTS);
 
-function Field({ label, hint, error, icon, required, children }) {
+function Field({ label, hint, error, icon, htmlFor, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+      <label htmlFor={htmlFor} className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
         {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
         {required && <span className="text-[var(--danger)]">*</span>}
@@ -137,15 +137,15 @@ export default function CreateAdminModal({ onClose, refresh }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+      <div role="dialog" aria-modal="true" aria-labelledby="create-admin-modal-title" className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* Header */}
         <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-[var(--foreground)]">Create Admin Account</h2>
+            <h2 id="create-admin-modal-title" className="text-base font-bold text-[var(--foreground)]">Create Admin Account</h2>
             <p className="text-xs text-[var(--muted)] mt-0.5">Add a new administrator and configure their access level.</p>
           </div>
-          <button onClick={onClose} disabled={loading} className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40">
+          <button onClick={onClose} disabled={loading} aria-label="Close" className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -154,22 +154,23 @@ export default function CreateAdminModal({ onClose, refresh }) {
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-7">
 
           <Section title="Account Details">
-            <Field label="Email Address" icon={<Mail className="w-3.5 h-3.5" />} required error={errors.email}
+            <Field label="Email Address" htmlFor="create-admin-email" icon={<Mail className="w-3.5 h-3.5" />} required error={errors.email}
               hint="Used to log into the admin panel.">
-              <TextInput type="email" placeholder="admin@example.com" value={email}
+              <TextInput id="create-admin-email" type="email" placeholder="admin@example.com" value={email}
                 onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
                 error={errors.email} disabled={loading} autoComplete="off" />
             </Field>
 
-            <Field label="Password" icon={<Lock className="w-3.5 h-3.5" />} required error={errors.password}
+            <Field label="Password" htmlFor="create-admin-password" icon={<Lock className="w-3.5 h-3.5" />} required error={errors.password}
               hint="Minimum 6 characters. Admin can change this later.">
               <div className="relative">
-                <TextInput type={showPassword ? "text" : "password"} name="create-admin-password"
+                <TextInput id="create-admin-password" type={showPassword ? "text" : "password"} name="create-admin-password"
                   autoComplete="new-password" placeholder="Minimum 6 characters"
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })); }}
                   error={errors.password} disabled={loading} />
                 <button type="button" onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition">
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -177,12 +178,14 @@ export default function CreateAdminModal({ onClose, refresh }) {
             </Field>
             <Field
               label="Full Name"
+              htmlFor="create-admin-full-name"
               icon={<Users className="w-3.5 h-3.5" />}
               required
               error={errors.fullName}
               hint="Enter the full name of the admin."
             >
               <TextInput
+                id="create-admin-full-name"
                 type="text"
                 placeholder="Enter full name"
                 value={fullName}
@@ -197,10 +200,12 @@ export default function CreateAdminModal({ onClose, refresh }) {
 
             <Field
               label="Team"
+              htmlFor="create-admin-team"
               icon={<Users className="w-3.5 h-3.5" />}
               hint="Optional team, department, or function for this administrator."
             >
               <TextInput
+                id="create-admin-team"
                 type="text"
                 placeholder="e.g. Operations"
                 value={team}

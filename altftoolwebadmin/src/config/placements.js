@@ -2,14 +2,10 @@
    Placement Configuration
 ================================== */
 
-// All tool slugs — the single source of truth is the web app's auto-generated
-// tool registry (altftoolweb/src/platform/registry/toolRuntimeMap.js). The old
-// hand-maintained list had drifted badly (~95 of 315 tools), so newly-added
-// tools never appeared as ad targets. Regenerate after adding/removing tools:
-//   node scripts/generate-tool-slugs.mjs
-import { TOOL_SLUGS } from "./toolSlugs.generated";
-
-export { TOOL_SLUGS };
+// Tool-detail placements resolve tool slugs from /api/tools/slugs at runtime.
+// Keeping the generated slug array server-side prevents 3k+ slugs from being
+// bundled into the Ads admin client chunk.
+const TOOL_TARGET = { type: "api", endpoint: "/api/tools/slugs" };
 
 // Static category list reused across tool/game/extension placements
 const TECH_CATEGORIES = [
@@ -40,7 +36,7 @@ export const PLACEMENTS = {
     description: "Left sidebar banner.",
     layout: "sidebar",
     categories: { type: "static", values: TECH_CATEGORIES },
-    target: { type: "static", values: TOOL_SLUGS },
+    target: TOOL_TARGET,
     minSpec: { width: 320, height: 1200, ratio: 320 / 1200 },
   },
 
@@ -49,7 +45,7 @@ export const PLACEMENTS = {
     description: "Right sidebar banner.",
     layout: "sidebar",
     categories: { type: "static", values: TECH_CATEGORIES },
-    target: { type: "static", values: TOOL_SLUGS },
+    target: TOOL_TARGET,
     minSpec: { width: 320, height: 1200, ratio: 320 / 1200 },
   },
 
@@ -58,7 +54,7 @@ export const PLACEMENTS = {
     description: "Bottom banner.",
     layout: "banner",
     categories: { type: "static", values: TECH_CATEGORIES },
-    target: { type: "static", values: TOOL_SLUGS },
+    target: TOOL_TARGET,
     minSpec: { width: 1200, height: 400, ratio: 1200 / 400 },
   },
 

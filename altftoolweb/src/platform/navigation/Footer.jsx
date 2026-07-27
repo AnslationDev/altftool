@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "@altftool/ui";
 import SocialLinks from "../SocialLinks";
 import { FOOTER_ROUTE_GROUPS, isPublicShellHidden, LEGAL_ROUTE_LINKS, POPULAR_TOOL_LINKS } from "./siteRoutes";
 import {
@@ -163,14 +163,7 @@ const Footer = () => {
             <div className="grid gap-10 lg:grid-cols-[1.15fr_3fr] lg:gap-10">
               <div className="min-w-0 lg:pr-6">
                 <Link href="/" className="inline-flex transition duration-200 hover:-translate-y-0.5">
-                  <Image
-                    src="/assets/altf-header-logo-dark.png"
-                    alt="AltFTool"
-                    width={210}
-                    height={62}
-                    loading="eager"
-                    className="h-8 w-auto object-contain sm:h-9"
-                  />
+                  <BrandLogo size="sm" className="text-[var(--anslation-ds-footer-text)]" />
                 </Link>
 
                 <p className="mt-6 max-w-[18rem] text-sm font-medium leading-8 text-[#D7E5F5]">
@@ -234,15 +227,7 @@ const Footer = () => {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_2fr] lg:gap-12">
           <div className="max-w-md">
             <Link href="/" className="mb-4 inline-flex transition duration-200 hover:-translate-y-0.5">
-              <Image
-                src="/assets/altf-header-logo-dark.png"
-                alt="AltFTool"
-                width={132}
-                height={40}
-                loading="eager"
-                className="object-contain"
-                style={{ width: "auto", height: "auto" }}
-              />
+              <BrandLogo size="sm" className="text-[var(--anslation-ds-footer-text)]" />
             </Link>
 
             <p className="max-w-sm text-sm leading-6 text-[var(--anslation-ds-footer-muted)]">

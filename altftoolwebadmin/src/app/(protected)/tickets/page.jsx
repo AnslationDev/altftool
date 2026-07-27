@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
@@ -180,12 +180,13 @@ export default function SupportManagementPage() {
   const priorityFilter = filterValues.priority ?? "";
   const hasFilters = Boolean(search || statusFilter || priorityFilter);
 
-  const counts = {
-    open: tickets.filter((t) => t.status === "open").length,
-    in_progress: tickets.filter((t) => t.status === "in_progress").length,
-    resolved: tickets.filter((t) => t.status === "resolved").length,
-    closed: tickets.filter((t) => t.status === "closed").length,
-  };
+  const counts = useMemo(() => {
+    const result = { open: 0, in_progress: 0, resolved: 0, closed: 0 };
+    for (const t of tickets) {
+      if (t.status in result) result[t.status] += 1;
+    }
+    return result;
+  }, [tickets]);
 
   // While the list is loading or the listener has failed, `tickets` is empty for
   // reasons unrelated to the real counts — never assert a factual zero then.

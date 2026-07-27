@@ -329,7 +329,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                 <button type="button" onClick={() => setIsActive((v) => !v)}
                   role="switch" aria-checked={isActive} aria-label="Account active"
                   className={`relative w-11 h-6 rounded-full transition-colors ${isActive ? "bg-[var(--success)]" : "bg-[var(--border-strong)]"}`}>
-                  <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${isActive ? "translate-x-6" : "translate-x-1"}`} />
+                  <span className={`absolute top-1 w-4 h-4 bg-[var(--surface)] rounded-full shadow transition-transform ${isActive ? "translate-x-6" : "translate-x-1"}`} />
                 </button>
               </div>
             )}

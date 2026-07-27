@@ -2,7 +2,6 @@
 
 import { forwardRef, useMemo, useState } from "react";
 import { Search, ArrowRight, Layers } from "lucide-react";
-import { searchEverything } from "../data/search";
 
 /**
  * THE persistent "Find a setting" search bar — rendered exactly once, at
@@ -18,7 +17,7 @@ import { searchEverything } from "../data/search";
  * `<input>` so the app's "/" keyboard shortcut can focus it regardless of
  * which page is open.
  */
-const HomeSearchBar = forwardRef(({ settings, searchQuery, onSearchChange, onSelectSetting, platform, onSwitchPlatform }, ref) => {
+const HomeSearchBar = forwardRef(({ settings, searchQuery, onSearchChange, onSelectSetting, platform, onSwitchPlatform, wideSearchResults }, ref) => {
   const [focused, setFocused] = useState(false);
   const query = searchQuery.trim().toLowerCase();
 
@@ -36,8 +35,8 @@ const HomeSearchBar = forwardRef(({ settings, searchQuery, onSearchChange, onSel
 
   const otherPlatforms = useMemo(() => {
     if (!query || !platform) return [];
-    return searchEverything(query, { platform }).otherPlatforms;
-  }, [query, platform]);
+    return wideSearchResults?.otherPlatforms || [];
+  }, [query, platform, wideSearchResults]);
 
   const showDropdown = focused && query.length > 0;
 

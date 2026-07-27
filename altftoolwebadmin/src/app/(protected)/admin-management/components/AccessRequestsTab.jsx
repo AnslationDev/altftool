@@ -140,6 +140,7 @@ export default function AccessRequestsTab() {
       <SectionCard flush bodyClassName="px-4 py-3">
         <div className="flex flex-wrap items-center gap-3">
           <select
+            aria-label="Filter by request status"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="text-sm border border-[var(--border)] rounded-lg px-3 py-1.5 bg-[var(--surface)] text-[var(--foreground)] focus:outline-none focus-visible:[box-shadow:var(--focus-ring)] cursor-pointer transition min-w-[140px]"

@@ -31,9 +31,17 @@ const explicitWarningBudget = String(process.env.ALTFT_WEB_LINT_WARNING_BUDGET |
 const warningBudget = explicitWarningBudget
   ? Number(explicitWarningBudget)
   : calculatedWarningBudget;
+const explicitJsonMaxBuffer = String(process.env.ALTFT_WEB_LINT_JSON_MAX_BUFFER || "").trim();
+const eslintJsonMaxBuffer = explicitJsonMaxBuffer
+  ? Number(explicitJsonMaxBuffer)
+  : 1024 * 1024 * 256;
 
 if (!Number.isFinite(warningBudget) || warningBudget < 0) {
   throw new Error("ALTFT_WEB_LINT_WARNING_BUDGET must be a non-negative number");
+}
+
+if (!Number.isFinite(eslintJsonMaxBuffer) || eslintJsonMaxBuffer < 1024 * 1024) {
+  throw new Error("ALTFT_WEB_LINT_JSON_MAX_BUFFER must be at least 1048576 bytes");
 }
 
 const result = spawnSync(
@@ -42,7 +50,7 @@ const result = spawnSync(
   {
     cwd: webRoot,
     encoding: "utf8",
-    maxBuffer: 1024 * 1024 * 20,
+    maxBuffer: eslintJsonMaxBuffer,
   },
 );
 
