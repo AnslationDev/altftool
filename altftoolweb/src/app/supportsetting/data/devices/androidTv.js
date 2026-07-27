@@ -1,4 +1,4 @@
-import { Tv, RefreshCw, Bluetooth } from "lucide-react";
+import { Tv, RefreshCw, Bluetooth, Palette, Volume2, LayoutGrid, Cast, HardDrive, Lock } from "lucide-react";
 
 // Example authored guides for Android TV, proving out the Smart TVs
 // category. Deliberately platform-generic phrasing (menu layout varies a
@@ -22,7 +22,7 @@ export const androidTvSettings = [
       "Exact menu wording varies slightly by TV brand, but is always under System or Device Preferences.",
       "Requires a stable internet connection and enough free storage to download.",
     ],
-    redirectUrl: "https://support.google.com/androidtv",
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
     actionLabel: "Open Android TV Support",
     whyItMatters:
       "Streaming apps regularly require a current Android TV OS version to keep working — an outdated TV can start losing access to apps like a phone would with an old OS version.",
@@ -64,7 +64,7 @@ export const androidTvSettings = [
       "Found under Settings → Network & Internet.",
       "Signal strength is shown as a bar indicator next to the connected network name.",
     ],
-    redirectUrl: "https://support.google.com/androidtv",
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
     actionLabel: "Open Network Guidance",
     whyItMatters:
       "4K streaming needs a meaningfully faster, more stable connection than SD or HD content — a connection that felt fine for browsing can still buffer constantly at higher resolutions.",
@@ -97,7 +97,7 @@ export const androidTvSettings = [
       "The TV can typically stay paired with several Bluetooth accessories at once.",
       "Bluetooth audio output can be routed exclusively to headphones for private listening.",
     ],
-    redirectUrl: "https://support.google.com/androidtv",
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
     actionLabel: "Open Accessory Support",
     commonIssues: [
       { issue: "Remote stopped responding", fix: "Replace or recharge the batteries, then hold the Home and Back buttons together for about 10 seconds to force a re-pair." },
@@ -106,5 +106,236 @@ export const androidTvSettings = [
     tipsAndTricks: ["Under Settings → Remotes & Accessories → Add accessory, you can pair a Bluetooth game controller for supported Android TV games."],
     faqs: [{ q: "Can I use regular Bluetooth headphones with my Android TV?", a: "Yes, most Android TVs support standard Bluetooth audio headphones and speakers directly from the Remotes & Accessories menu." }],
     relatedSettingIds: ["android-tv-network", "android-tv-system-update"],
+  },
+  {
+    id: "android-tv-display-picture",
+    title: "Display & Picture Settings",
+    icon: Palette,
+    platform: "android-tv",
+    category: "display-sound-notifications",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Adjust picture mode, resolution, and HDR settings",
+    description:
+      "Picture quality settings — found under Settings → Display & Sound → Picture (or your TV brand's dedicated picture menu) — control color calibration, motion smoothing, and HDR format handling. Getting output resolution and HDR settings right prevents washed-out colors, judder, or a TV failing to display HDR content at all.",
+    details: [
+      "Output resolution and refresh rate are separate from per-app picture modes on many TV brands — check both if content looks wrong.",
+      "HDR formats (HDR10, HDR10+, Dolby Vision) must be supported by both the TV panel and the connected source or app to activate.",
+      "Motion smoothing (sometimes called \"Auto Motion Plus\" or similar) can introduce the \"soap opera effect\" on film content.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Display Support",
+    whyItMatters:
+      "The wrong picture mode — like a demo or vivid mode left on from the store — can make everything look oversaturated and unnatural, while an HDR mismatch can cause dropped frames or a blank screen on HDR content.",
+    afterImageContent: {
+      heading: "How to adjust picture settings",
+      steps: [
+        "Open Settings → Display & Sound (menu name varies by brand).",
+        "Select Picture (or Picture mode) and choose a preset like Movie, Standard, or Cinema.",
+        "Open Advanced display settings to set output resolution and enable HDR if your TV and content support it.",
+        "Turn off motion smoothing/interpolation for a more natural, film-like look if content appears too smooth.",
+      ],
+    },
+    bestPractices: [
+      "Use \"Movie\" or \"Cinema\" picture mode for the most accurate color reproduction — \"Vivid\" or \"Dynamic\" modes are tuned for bright showroom lighting, not home viewing.",
+      "Set output resolution to match your TV's native resolution (commonly 4K/2160p) rather than leaving it on a lower default.",
+    ],
+    commonIssues: [
+      { issue: "HDR content looks dim or doesn't trigger HDR mode", fix: "Confirm the HDMI port in use supports HDR passthrough (check Settings → Display & Sound → HDMI or the TV's port labeling) and that the source app has HDR enabled." },
+      { issue: "Picture looks unnaturally smooth or \"soap opera\"-like on movies", fix: "Turn off motion interpolation/smoothing in the picture settings menu — it's usually listed as a separate toggle from the picture mode preset." },
+    ],
+    tipsAndTricks: ["Many streaming apps let you enable Dolby Vision or HDR10+ per-app in their own playback settings, separate from the TV's display settings — check both if 4K HDR content isn't triggering."],
+    faqs: [{ q: "Why does my TV show a lower resolution than 4K sometimes?", a: "Some apps or content stream at a lower resolution due to bandwidth, source material limits, or a cable/adapter that doesn't support full 4K bandwidth." }],
+    relatedSettingIds: ["android-tv-sound-audio", "android-tv-casting"],
+  },
+  {
+    id: "android-tv-sound-audio",
+    title: "Sound & Audio Output",
+    icon: Volume2,
+    platform: "android-tv",
+    category: "display-sound-notifications",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Route audio to a soundbar, receiver, or TV speakers",
+    description:
+      "Audio output settings, under Settings → Display & Sound → Audio output (or similar), control whether sound plays through the TV's built-in speakers, a soundbar over HDMI-ARC/eARC, or an optical/digital connection, and which surround format is sent out.",
+    details: [
+      "HDMI-ARC and eARC carry audio back from the TV's HDMI port to an AV receiver or soundbar without a separate audio cable, though eARC is needed for uncompressed formats like Dolby Atmos.",
+      "Digital audio format options typically include Auto, PCM, and pass-through formats like Dolby Digital — Auto works for most setups.",
+      "If external speakers are selected but nothing plays, the connected device's input source may not be pointed at the TV.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Audio Support",
+    whyItMatters:
+      "Choosing the wrong audio output format can leave a soundbar silent even though the TV's own speakers still work, since the TV defaults to whatever output source is selected regardless of what's plugged in.",
+    bestPractices: [
+      "Use the HDMI port labeled ARC or eARC on the TV when connecting a soundbar, and enable HDMI-CEC/ARC in Settings if audio doesn't work by default.",
+      "Set digital audio output to Auto unless a specific receiver requires a fixed format like PCM.",
+    ],
+    commonIssues: [
+      { issue: "Soundbar is connected but no sound comes out", fix: "Confirm the TV's HDMI cable is plugged into the ARC/eARC-labeled port, then check Settings → Display & Sound → Audio output is set to the soundbar rather than TV speakers." },
+      { issue: "TV and soundbar both play audio at once, out of sync", fix: "In Settings → Display & Sound, switch audio output fully to External speakers rather than leaving both TV speakers and ARC active." },
+    ],
+    tipsAndTricks: ["If dialogue sounds too quiet relative to background audio, check for a \"Dialogue enhancer\" or similar clarity toggle in the audio settings menu on supported TVs."],
+    faqs: [{ q: "What's the difference between ARC and eARC?", a: "eARC supports higher-bandwidth audio, including uncompressed Dolby Atmos and DTS:X, while standard ARC is limited to compressed surround formats like Dolby Digital." }],
+    relatedSettingIds: ["android-tv-display-picture", "android-tv-bluetooth-remote"],
+  },
+  {
+    id: "android-tv-apps-management",
+    title: "Apps Management",
+    icon: LayoutGrid,
+    platform: "android-tv",
+    category: "apps-features",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Install, update, uninstall, and manage installed apps",
+    description:
+      "Settings → Apps lists every installed app along with options to force stop, clear cache, clear data, uninstall, or move an app to the home screen. The Google Play Store handles installs and updates, and can be set to auto-update apps in the background.",
+    details: [
+      "System apps that came pre-installed generally can't be fully uninstalled, only disabled, on most Android TV devices.",
+      "Clearing an app's cache frees storage without losing sign-in status, while clearing data resets the app entirely, including logins.",
+      "Auto-update settings for apps are controlled from within the Google Play Store app, not the system Apps settings menu.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Apps Support",
+    whyItMatters:
+      "A crashing or frozen streaming app is often fixed faster by clearing its cache or force-stopping it from Settings → Apps than by restarting the whole TV.",
+    bestPractices: [
+      "Force stop and clear the cache of an app before uninstalling and reinstalling it — that alone resolves most freezing or crashing issues.",
+      "Periodically uninstall apps you no longer use to free up storage for updates to the ones you do.",
+    ],
+    commonIssues: [
+      { issue: "An app won't open or crashes immediately", fix: "Go to Settings → Apps → [app name] → Clear cache first; if it still fails, try Clear data, which will require signing back in." },
+      { issue: "Play Store shows an app as installed but it's not on the home screen", fix: "Open the app list under Settings → Apps, select the app, and choose \"Add to Home screen\" or a similar pin option." },
+    ],
+    tipsAndTricks: ["Settings → Apps → See all apps often has a hidden filter to show system apps as well as user-installed ones, useful for tracking down what's using storage."],
+    faqs: [{ q: "Does uninstalling an app delete my account or watch history?", a: "No — your account and history are tied to your login with that service, not stored only on the TV, so reinstalling and signing back in restores them." }],
+    relatedSettingIds: ["android-tv-storage", "android-tv-casting"],
+  },
+  {
+    id: "android-tv-casting",
+    title: "Casting & Google Cast",
+    icon: Cast,
+    platform: "android-tv",
+    category: "connectivity-network",
+    frequentlyUsed: false,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "2 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Cast video, audio, or your phone screen to the TV",
+    description:
+      "Android TV has Chromecast built in, letting compatible apps on a phone, tablet, or computer send (cast) content directly to the TV over the same Wi-Fi network. Cast settings live under Settings → Apps → Google Cast (or Chromecast built-in).",
+    details: [
+      "The casting device and the TV must be on the same Wi-Fi network for casting to work — casting does not work across different networks or most guest networks.",
+      "Casting can send a single app's media stream (like a video) or mirror an entire phone screen, depending on the app and device.",
+      "The TV's device name shown to casting apps can be changed under Settings → Device Preferences → About → Device name.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Cast Support",
+    whyItMatters:
+      "Casting fails silently more often from a network mismatch than from a broken app — confirming both devices are on the identical Wi-Fi network resolves the majority of \"can't find my TV\" cases.",
+    afterImageContent: {
+      heading: "How to cast to your TV",
+      steps: [
+        "Connect your phone or tablet to the same Wi-Fi network as the TV.",
+        "Open a Cast-enabled app (like YouTube or a music app) and tap the Cast icon.",
+        "Select your TV's name from the list of available devices.",
+        "Playback should start on the TV within a few seconds; control it from the app as usual.",
+      ],
+    },
+    bestPractices: [
+      "Keep the TV's Android TV OS and Google Play services up to date, since casting reliability depends heavily on both.",
+      "Rename the TV to something recognizable under Device Preferences → About if multiple TVs or Chromecasts show up with generic names.",
+    ],
+    commonIssues: [
+      { issue: "TV doesn't show up as a cast target", fix: "Verify both devices are on the same Wi-Fi network (not one on a 2.4GHz guest network and one on 5GHz main, for example) and that the TV is powered on and connected." },
+      { issue: "Casting starts but video stutters or lags", fix: "Move closer to the router or reduce other network traffic — casting quality depends on both devices having a stable, sufficiently fast connection." },
+    ],
+    tipsAndTricks: ["Screen mirroring (casting your entire phone display) uses more bandwidth than app-level casting and can be less smooth — use a dedicated cast-enabled app when available instead."],
+    faqs: [{ q: "Can I cast from an iPhone to an Android TV?", a: "Yes — apps like YouTube, Netflix, and Spotify support casting from iOS the same way they do from Android, as long as both devices share a network." }],
+    relatedSettingIds: ["android-tv-network", "android-tv-apps-management"],
+  },
+  {
+    id: "android-tv-storage",
+    title: "Storage Management",
+    icon: HardDrive,
+    platform: "android-tv",
+    category: "storage-backup-data",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Free up space used by apps, downloads, and cache",
+    description:
+      "Settings → Storage shows how much internal storage is used by apps, the system, and cached data, and lets you clear space without a factory reset. Many Android TV devices ship with limited internal storage, so app updates can fail once it fills up.",
+    details: [
+      "Storage is typically split between apps, system files, and cached data — cached data can usually be cleared safely to recover space.",
+      "Some Android TV devices support expandable storage via USB, which can be set as the default install location for some apps.",
+      "A device running low on storage may fail silently to install app updates until space is freed.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Storage Support",
+    whyItMatters:
+      "Running low on storage doesn't just block new installs — it commonly causes background app updates to fail quietly, so apps slowly fall out of date until someone notices.",
+    bestPractices: [
+      "Check Settings → Storage periodically and clear cache from large or rarely used apps rather than waiting until installs start failing.",
+      "Uninstall apps you no longer use instead of just clearing their data, since an unused app's files still count against total storage.",
+    ],
+    commonIssues: [
+      { issue: "\"Insufficient storage\" error when installing an app", fix: "Go to Settings → Storage, identify the largest apps, and clear their cache or uninstall unused ones to free space before retrying." },
+      { issue: "TV feels slow and storage is nearly full", fix: "A nearly full storage drive can slow down the whole system, not just app installs — clearing cache across several apps often noticeably improves responsiveness." },
+    ],
+    tipsAndTricks: ["If your TV supports USB storage expansion, use a fast USB 3.0 drive — slow USB 2.0 drives can cause laggy app performance if apps are moved onto them."],
+    faqs: [{ q: "Does clearing cache delete my saved logins or preferences?", a: "No — clearing cache only removes temporary files; clearing data (a separate, more aggressive option) is what removes logins and saved preferences." }],
+    relatedSettingIds: ["android-tv-apps-management", "android-tv-system-update"],
+  },
+  {
+    id: "android-tv-parental-controls",
+    title: "Parental Controls",
+    icon: Lock,
+    platform: "android-tv",
+    category: "accounts-sync-family",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions: "Android TV OS 11 and later",
+    heading: "Restrict content and screen time with Family Link or a content PIN",
+    description:
+      "Android TV supports parental controls two ways: a content PIN set under Settings → Parental controls that restricts purchases and mature-rated content on that profile, and Google Family Link, which manages screen time and app access for a supervised child account signed into the TV.",
+    details: [
+      "A content PIN blocks purchases and content above a chosen maturity rating in apps that respect Google's content rating system, like Google Play Movies & TV.",
+      "Family Link supervision requires the child to have their own Google Account signed in as a separate user profile on the TV.",
+      "Individual streaming apps (Netflix, YouTube, etc.) often have their own separate parental controls that work independently of the TV's system-level settings.",
+    ],
+    redirectUrl: "https://support.google.com/androidtv/?hl=en",
+    actionLabel: "Open Parental Controls Support",
+    whyItMatters:
+      "Because each streaming app can maintain its own separate content restrictions, relying only on the TV's system-level PIN can leave gaps — app-specific settings should be checked too for full coverage.",
+    afterImageContent: {
+      heading: "How to set up a content PIN",
+      steps: [
+        "Open Settings → Parental controls (menu location varies by brand).",
+        "Turn on parental controls and set a 4-digit PIN.",
+        "Choose the maximum content rating allowed without entering the PIN.",
+        "Repeat within individual apps like YouTube or Netflix for app-specific restrictions.",
+      ],
+    },
+    bestPractices: [
+      "Set up a separate restricted or child profile with Family Link rather than relying solely on a shared content PIN, especially for younger children.",
+      "Check parental control settings inside major streaming apps individually — system-level restrictions don't always cascade into every app.",
+    ],
+    commonIssues: [
+      { issue: "Forgot the parental control PIN", fix: "Most Android TV devices require signing in with the Google Account owner's credentials to reset a forgotten content PIN from the parental controls menu." },
+      { issue: "Child profile can still access restricted apps", fix: "Confirm the app itself supports Android TV's content rating system and that the child is signed into their supervised profile, not the main account." },
+    ],
+    tipsAndTricks: ["Family Link lets a parent set daily screen time limits and a remote bedtime lock for a child's TV profile from the Family Link app on a phone."],
+    faqs: [{ q: "Can I set different restrictions for different family members?", a: "Yes, if each person signs in with their own Google Account profile on the TV — restrictions set via Family Link or per-profile PINs apply individually, not TV-wide." }],
+    relatedSettingIds: ["android-tv-apps-management", "android-tv-network"],
   },
 ];

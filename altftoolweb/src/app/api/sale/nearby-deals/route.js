@@ -74,7 +74,7 @@ export async function GET(request) {
         city,
         query,
         message:
-          "No deals found. All data APIs are currently unavailable. Please try again later.",
+          "No deals found.  Please try again later.",
       });
     }
 

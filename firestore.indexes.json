@@ -118,6 +118,16 @@
       "collectionGroup": "activity_events",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "pathAncestors", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "createdAtMs", "order": "ASCENDING" },
+        { "fieldPath": "__name__", "order": "ASCENDING" }
+      ],
+      "density": "SPARSE_ALL"
+    },
+    {
+      "collectionGroup": "activity_events",
+      "queryScope": "COLLECTION",
+      "fields": [
         { "fieldPath": "actorUid", "order": "ASCENDING" },
         { "fieldPath": "createdAtMs", "order": "DESCENDING" },
         { "fieldPath": "__name__", "order": "DESCENDING" }

@@ -22,7 +22,7 @@ export const keyboardSettings = [
       "macOS: System Settings → Bluetooth, wait for the keyboard to appear under \"Nearby Devices,\" then click Connect.",
       "If pairing fails, remove any old pairing record for that keyboard first (Windows: \"Remove device\"; macOS: click the ⓘ next to the device and \"Forget This Device\"), then restart the pairing sequence from the keyboard.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/connect-a-bluetooth-device-in-windows-8b3c8e6f-a4c6-4f1e-9e6b-e5f5f9db1c3a",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Connect a Bluetooth Keyboard",
     whyItMatters:
       "A keyboard that won't pair is one of the most common first-setup frustrations, and the fix almost always depends on knowing which connection type is in play — a USB receiver needs a working port and nothing else, while Bluetooth requires the keyboard to be actively broadcasting and the old pairing cleared before it will reconnect cleanly.",
@@ -59,7 +59,7 @@ export const keyboardSettings = [
       "If symbols like @, \", #, or the key next to Enter print incorrectly, this is almost always a layout mismatch rather than a hardware fault — check the physical layout (ANSI vs ISO) against the OS setting before assuming the keyboard is defective.",
     ],
     important: "Changing the OS input language changes which characters keys produce but does not relabel the physical keycaps, so a mismatched layout can look confusing even after it's fixed correctly.",
-    redirectUrl: "https://support.microsoft.com/windows/change-your-keyboard-layout-dd830e04-45c3-2712-969b-b1b6b26b220a",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Change Your Keyboard Layout",
     whyItMatters:
       "A mismatched keyboard layout is frequently misdiagnosed as a broken keyboard, because the symptom — wrong or swapped characters — looks like a hardware defect, when it's actually a software setting that takes under a minute to correct once identified correctly.",
@@ -95,7 +95,7 @@ export const keyboardSettings = [
       "On laptops with built-in backlighting, check System Settings → Keyboard (macOS) or Settings → Devices → Typing (Windows, on supported laptops) for an ambient-light-based auto-brightness toggle.",
     ],
     important: "RGB backlighting is one of the fastest-draining features on a wireless keyboard — expect meaningfully shorter battery life with lighting on versus off.",
-    redirectUrl: "https://support.apple.com/guide/mac-help/change-keyboard-brightness-settings-mchlp2679/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Change Keyboard Brightness Settings",
     whyItMatters:
       "Backlighting affects both usability in low light and battery life on wireless models, so knowing where the brightness, color, and timeout controls live lets you tune the keyboard for the room you're in without needlessly burning through a charge overnight.",
@@ -131,7 +131,7 @@ export const keyboardSettings = [
       "macOS: System Settings → Keyboard → toggle \"Use F1, F2, etc. keys as standard function keys\" to flip the same default at the OS level for Apple and Apple-compatible keyboards.",
       "Windows: on most third-party keyboards this behavior lives entirely in keyboard firmware or the companion app rather than a Windows setting, since Windows doesn't have a native equivalent toggle.",
     ],
-    redirectUrl: "https://support.apple.com/guide/mac-help/change-keyboard-function-key-behavior-mchlp3053/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Change Keyboard Function Key Behavior",
     whyItMatters:
       "Software that relies on F-key shortcuts (like F5 to refresh, or F-keys in creative and development tools) breaks unexpectedly if the top row is defaulting to media controls instead, and this is one of the most common \"my function keys stopped working\" support questions — it's almost always the Fn Lock state, not a hardware fault.",
@@ -167,7 +167,7 @@ export const keyboardSettings = [
       "For keyboards with a companion app, the app usually shows a more precise battery percentage and can send a low-battery notification before the OS-level indicator would.",
       "If no percentage is available, most keyboards include a small LED that blinks or changes color when battery is critically low — check the manufacturer's manual for what the pattern means.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/check-battery-life-for-bluetooth-accessories-in-windows",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Check Battery Life for Bluetooth Accessories",
     whyItMatters:
       "Low battery is the single most common cause of a wireless keyboard behaving erratically — dropped keystrokes, slow wake-from-sleep, or intermittent disconnects — and checking the reported percentage before troubleshooting connection settings saves significant time diagnosing a problem that a fresh charge or battery would fix outright.",
@@ -203,7 +203,7 @@ export const keyboardSettings = [
       "After the update completes, the keyboard may restart on its own; re-pair it if the connection doesn't resume automatically within a few seconds.",
     ],
     important: "Never interrupt a firmware update mid-flash — losing power or connection partway through can require a manufacturer-specific recovery procedure or, in rare cases, permanently disable the keyboard.",
-    redirectUrl: "https://support.logi.com/hc/en-us/articles/360023985653",
+    redirectUrl: "https://support.logi.com/",
     actionLabel: "Open Logitech Support: Update Device Firmware",
     whyItMatters:
       "Firmware updates fix real, user-visible problems — dropped Bluetooth connections, inaccurate battery percentages, laggy key response — that no OS-level setting can address, since those behaviors are governed entirely by code running on the keyboard's own controller rather than the connected computer.",
@@ -238,7 +238,7 @@ export const keyboardSettings = [
       "Some ecosystems support software-based seamless switching (moving the cursor or keyboard focus off the edge of one screen onto another connected computer) instead of or in addition to the physical switch keys — check the manufacturer's companion app for this feature.",
       "If a slot stops responding, re-pair just that slot by holding its switch key again rather than repeating setup for all devices.",
     ],
-    redirectUrl: "https://support.logi.com/hc/en-us/articles/360023982512",
+    redirectUrl: "https://support.logi.com/",
     actionLabel: "Open Logitech Support: Connect to Multiple Devices",
     whyItMatters:
       "Multi-device switching removes the friction of owning separate keyboards (or repeatedly re-pairing one) for each computer, which matters most for people regularly moving between a work laptop, personal desktop, and a tablet — a workflow that's become common enough that most mid-range and higher wireless keyboards now support it out of the box.",
@@ -274,7 +274,7 @@ export const keyboardSettings = [
       "Set up per-application profiles if supported, so the same physical key can perform different actions depending on which program is currently focused.",
     ],
     important: "Remapping core keys like Ctrl, Alt, or Escape can make a keyboard difficult to use for troubleshooting elsewhere (such as in a BIOS/UEFI screen or during OS installation) since those environments don't read the companion app's software-level remapping.",
-    redirectUrl: "https://support.logi.com/hc/en-us/articles/360023988193",
+    redirectUrl: "https://support.logi.com/",
     actionLabel: "Open Logitech Support: Customize Keyboard Buttons",
     whyItMatters:
       "Key remapping turns underused keys into shortcuts for frequent actions — launching an app, pasting a common snippet, or triggering a multi-step macro — and for people who spend most of the day typing, moving even a few common actions onto dedicated keys measurably cuts down on repetitive mouse trips and menu navigation.",

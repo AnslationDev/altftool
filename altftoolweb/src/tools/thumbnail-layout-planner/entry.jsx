@@ -1,7 +1,7 @@
 "use client";
 
-import ThumbnailLayoutPlanner from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <ThumbnailLayoutPlanner />;
+  return <ToolHome />;
 }

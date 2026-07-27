@@ -5,7 +5,7 @@
  * under --imgprompt-* / .imgprompt-scope so nothing here can collide with or
  * override the site-wide design tokens defined in src/app/globals.css.
  */
-@import "tailwindcss";
+@import "tailwindcss" source("./");
 @source "./";
 
 @theme inline {

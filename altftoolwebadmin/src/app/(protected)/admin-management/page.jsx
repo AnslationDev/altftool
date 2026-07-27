@@ -1,41 +1,44 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { getAuth } from "firebase/auth";
+import { Button, Tabs } from "@altftool/ui";
+import {
+  Pencil,
+  Plus,
+  RefreshCw,
+  Shield,
+  ShieldCheck,
+  UserCheck,
+  UserX,
+  Users,
+} from "lucide-react";
+
 import EditAdminModal from "@/app/(protected)/admin-management/components/EditAdminModal";
 import CreateAdminModal from "@/app/(protected)/admin-management/components/CreateAdminModal";
 import AccessRequestsTab from "@/app/(protected)/admin-management/components/AccessRequestsTab";
+import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import { readApiJson } from "@/lib/apiClient";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import {
   refreshAdminUsers,
   subscribeToAdminUsers,
 } from "@/services/adminUsersService";
 import { PROJECTS } from "@/projects";
+import {
+  DataState,
+  DataTable,
+  EmptyState,
+  FilterBar,
+  LoadingState,
+  PageHeader,
+  SectionCard,
+  StatGrid,
+  useTableControls,
+} from "@/ansets";
 import AdminCard from "./components/AdminCard";
-import {
-  Search,
-  X,
-  RefreshCw,
-  Plus,
-  Shield,
-  ShieldCheck,
-  UserCheck,
-  UserX,
-  Pencil,
-  ChevronUp,
-  ChevronDown,
-  ChevronsUpDown,
-} from "lucide-react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getSortedRowModel,
-  flexRender,
-} from "@tanstack/react-table";
-import AdminAuditLogPage from "./audit/page";
 
 /* ── Portal Tooltip ── */
 function Tooltip({ label, children, direction = "top" }) {
@@ -93,14 +96,6 @@ function Tooltip({ label, children, direction = "top" }) {
       {tip}
     </>
   );
-}
-
-function SortIcon({ sorted }) {
-  if (sorted === "asc")
-    return <ChevronUp className="w-3.5 h-3.5 text-[var(--primary)]" />;
-  if (sorted === "desc")
-    return <ChevronDown className="w-3.5 h-3.5 text-[var(--primary)]" />;
-  return <ChevronsUpDown className="w-3.5 h-3.5 text-[var(--border-strong)]" />;
 }
 
 /* ── Avatar — photo if available, else initials ── */
@@ -196,10 +191,49 @@ function PermissionSummary({ admin }) {
   );
 }
 
-// const TABS = ["Admins", "All Admins", "Access Requests"];
-const TABS = ["Admins", "All Admins"];
+const TABS = [
+  { key: "Admins", label: "Admins" },
+  { key: "All Admins", label: "All Admins" },
+  { key: "Access Requests", label: "Access Requests" },
+];
+
+/** Fields the admin search box matches against. Module-level so the memo inside
+ *  useTableControls keeps a stable identity across renders. */
+const SEARCH_FIELDS = ["email", "fullName", "firstName", "lastName"];
+
+/** Filter predicates. "all"/unset is treated as "filter off" by useTableControls. */
+const ADMIN_FILTERS = {
+  role: (admin, value) => admin.roleType === value,
+  status: (admin, value) =>
+    value === "active" ? Boolean(admin.isActive) : !admin.isActive,
+};
+
+const ROLE_OPTIONS = [
+  { value: "all", label: "All Roles" },
+  { value: "admin", label: "Admin" },
+  { value: "superadmin", label: "Super Admin" },
+];
+
+const STATUS_OPTIONS = [
+  { value: "all", label: "All Status" },
+  { value: "active", label: "Active" },
+  { value: "inactive", label: "Inactive" },
+];
+
+/** Operator-facing copy for a failed admin-directory read (never echo raw SDK strings). */
+function describeAdminsError(error) {
+  const code = String(error?.code || "").toLowerCase();
+  if (code.includes("permission-denied"))
+    return "You do not have permission to read the admin directory. Ask a super admin to grant access.";
+  if (code.includes("unauthenticated"))
+    return "Your session has expired. Sign in again to load the admin directory.";
+  if (code.includes("unavailable") || code.includes("deadline-exceeded"))
+    return "Couldn't reach the admin directory. Check your connection and try again.";
+  return "Couldn't load the admin directory. Please try again.";
+}
 
 export default function AdminManagement() {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("Admins");
   const [pendingCount, setPendingCount] = useState(0);
 
@@ -209,15 +243,19 @@ export default function AdminManagement() {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [togglingId, setTogglingId] = useState(null);
-  const [search, setSearch] = useState("");
-  const [roleFilter, setRoleFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [sorting, setSorting] = useState([]);
-  const currentUid = getAuth().currentUser?.uid;
+  // Persistent subscription failure + a key used to re-subscribe on retry
+  // (onSnapshot tears the listener down after an error).
+  const [loadError, setLoadError] = useState(null);
+  const [subscriptionKey, setSubscriptionKey] = useState(0);
+  // From context, not getAuth().currentUser directly: the local-admin dev
+  // session has no Firebase user at all, so reading Firebase raw left both the
+  // token calls below AND this self-identity check permanently broken in that
+  // mode (a raw Firebase read is always null there).
+  const currentUid = user?.uid;
 
   const fetchPendingCount = useCallback(async () => {
     try {
-      const token = await getAuth().currentUser?.getIdToken();
+      const token = await getAdminIdToken();
       if (!token) return;
       const res = await fetch("/api/admin/access-requests?status=pending", {
         headers: { Authorization: `Bearer ${token}` },
@@ -236,15 +274,29 @@ export default function AdminManagement() {
     else setRefreshing(true);
     try {
       setAdmins(await refreshAdminUsers());
+      // A successful refetch must clear the error state, otherwise the page
+      // stays stuck on the error panel even though the data behind it is fine —
+      // `loadError` was only ever cleared by the snapshot callback and retry.
+      setLoadError(null);
     } catch (error) {
-      emitAlert({
-        type: "error",
-        message: error?.message || "Network error while loading admins",
-      });
+      const message = describeAdminsError(error);
+      // `loadError` drives the DataTable's error state and hides the KPI strip,
+      // so setting it on a SILENT background refresh would blank a perfectly
+      // good list the operator is reading — a toast is the right channel for a
+      // refresh that failed while stale-but-valid rows are still on screen.
+      // Only a foreground load (nothing rendered yet) escalates to the panel.
+      if (!silent) setLoadError(message);
+      emitAlert({ type: "error", message });
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
+  }, []);
+
+  const retryAdmins = useCallback(() => {
+    setLoadError(null);
+    setLoading(true);
+    setSubscriptionKey((key) => key + 1);
   }, []);
 
   useEffect(() => {
@@ -252,21 +304,21 @@ export default function AdminManagement() {
     const unsubscribe = subscribeToAdminUsers(
       (adminUsers) => {
         setAdmins(adminUsers);
+        setLoadError(null);
         setLoading(false);
         setRefreshing(false);
       },
       (error) => {
         setLoading(false);
         setRefreshing(false);
-        emitAlert({
-          type: "error",
-          message: error?.message || "Failed to load admins",
-        });
+        const message = describeAdminsError(error);
+        setLoadError(message);
+        emitAlert({ type: "error", message });
       },
     );
 
     return unsubscribe;
-  }, [fetchPendingCount]);
+  }, [fetchPendingCount, subscriptionKey]);
 
   const toggleStatus = async (admin) => {
     if (admin.id === currentUid) {
@@ -278,15 +330,14 @@ export default function AdminManagement() {
     }
     setTogglingId(admin.id);
     try {
-      const user = getAuth().currentUser;
-      if (!user) {
+      const token = await getAdminIdToken(true);
+      if (!token) {
         emitAlert({
           type: "error",
           message: "Session expired. Please log in again.",
         });
         return;
       }
-      const token = await user.getIdToken(true);
       const res = await fetch("/api/admin/toggle-status", {
         method: "POST",
         headers: {
@@ -311,38 +362,25 @@ export default function AdminManagement() {
     }
   };
 
-  // Search also matches full name
-  const filtered = useMemo(
-    () =>
-      admins.filter((a) => {
-        const q = search.toLowerCase();
-        const matchSearch =
-          !q ||
-          a.email.toLowerCase().includes(q) ||
-          (a.fullName ?? "").toLowerCase().includes(q) ||
-          (a.firstName ?? "").toLowerCase().includes(q) ||
-          (a.lastName ?? "").toLowerCase().includes(q);
-        const matchRole = roleFilter === "all" || a.roleType === roleFilter;
-        const matchStatus =
-          statusFilter === "all" ||
-          (statusFilter === "active" ? a.isActive : !a.isActive);
-        return matchSearch && matchRole && matchStatus;
-      }),
-    [admins, search, roleFilter, statusFilter],
-  );
+  // Search (name + email), role/status filters and sorting for both tabs.
+  const controls = useTableControls(admins, {
+    searchFields: SEARCH_FIELDS,
+    filters: ADMIN_FILTERS,
+  });
+  const visibleAdmins = controls.rows;
 
   const totalActive = admins.filter((a) => a.isActive).length;
+  const totalInactive = admins.length - totalActive;
   const totalSuper = admins.filter((a) => a.roleType === "superadmin").length;
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: "email",
+        key: "email",
         header: "Admin",
-        size: 260,
-        minSize: 180,
-        cell: ({ row }) => {
-          const admin = row.original;
+        sortable: true,
+        width: 260,
+        render: (admin) => {
           const isSelf = admin.id === currentUid;
           const displayName =
             admin.fullName ||
@@ -354,15 +392,9 @@ export default function AdminManagement() {
               <AdminAvatar admin={admin} />
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  {displayName ? (
-                    <span className="text-sm font-semibold text-[var(--foreground)] truncate">
-                      {displayName}
-                    </span>
-                  ) : (
-                    <span className="text-sm font-semibold text-[var(--foreground)] truncate">
-                      {admin.email}
-                    </span>
-                  )}
+                  <span className="text-sm font-semibold text-[var(--foreground)] truncate">
+                    {displayName || admin.email}
+                  </span>
                   {isSelf && (
                     <span className="text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded-full shrink-0">
                       You
@@ -378,12 +410,12 @@ export default function AdminManagement() {
         },
       },
       {
-        accessorKey: "roleType",
+        key: "roleType",
         header: "Role",
-        size: 140,
-        minSize: 100,
-        cell: ({ getValue }) => {
-          const role = getValue();
+        sortable: true,
+        width: 140,
+        render: (admin) => {
+          const role = admin.roleType;
           return (
             <span
               className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${role === "superadmin" ? "bg-[var(--primary)] text-[var(--primary-foreground)]" : "bg-[var(--surface-soft)] text-[var(--foreground)]"}`}
@@ -399,361 +431,215 @@ export default function AdminManagement() {
         },
       },
       {
-        id: "permissions",
+        key: "permissions",
         header: "Permissions",
-        size: 280,
-        minSize: 160,
-        enableSorting: false,
-        cell: ({ row }) => <PermissionSummary admin={row.original} />,
+        width: 280,
+        render: (admin) => <PermissionSummary admin={admin} />,
       },
       {
-        accessorKey: "isActive",
+        key: "isActive",
         header: "Status",
-        size: 110,
-        minSize: 90,
-        cell: ({ getValue }) => {
-          const active = getValue();
-          return (
+        sortable: true,
+        width: 110,
+        render: (admin) => (
+          <span
+            className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full ${admin.isActive ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--danger-soft)] text-[var(--danger-text)]"}`}
+          >
             <span
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full ${active ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--danger-soft)] text-[var(--danger)]"}`}
-            >
-              <span
-                className={`w-1.5 h-1.5 rounded-full ${active ? "bg-[var(--success)]" : "bg-[var(--danger)]"}`}
-              />
-              {active ? "Active" : "Inactive"}
-            </span>
-          );
-        },
-      },
-      {
-        id: "actions",
-        header: "Actions",
-        size: 110,
-        minSize: 110,
-        maxSize: 110,
-        enableSorting: false,
-        cell: ({ row }) => {
-          const admin = row.original;
-          const isSelf = admin.id === currentUid;
-          const busy = togglingId === admin.id;
-          return (
-            <div
-              className="flex items-center gap-0.5"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Tooltip label="Edit admin">
-                <button
-                  onClick={() => setSelectedAdmin(admin)}
-                  aria-label="Edit admin"
-                  className="p-1.5 rounded-md text-[var(--primary)] hover:bg-[var(--primary-soft)] transition"
-                >
-                  <Pencil className="w-3.5 h-3.5" />
-                </button>
-              </Tooltip>
-              <Tooltip label={admin.isActive ? "Deactivate" : "Activate"}>
-                <button
-                  onClick={() => toggleStatus(admin)}
-                  disabled={isSelf || busy}
-                  aria-label={admin.isActive ? "Deactivate admin" : "Activate admin"}
-                  className={`p-1.5 rounded-md transition disabled:opacity-30 ${admin.isActive ? "text-[var(--danger)] hover:bg-[var(--danger-soft)]" : "text-[var(--success)] hover:bg-[var(--success-soft)]"}`}
-                >
-                  {admin.isActive ? (
-                    <UserX className="w-3.5 h-3.5" />
-                  ) : (
-                    <UserCheck className="w-3.5 h-3.5" />
-                  )}
-                </button>
-              </Tooltip>
-            </div>
-          );
-        },
+              className={`w-1.5 h-1.5 rounded-full ${admin.isActive ? "bg-[var(--success)]" : "bg-[var(--danger)]"}`}
+            />
+            {admin.isActive ? "Active" : "Inactive"}
+          </span>
+        ),
       },
     ],
-    [togglingId, currentUid],
-  ); // eslint-disable-line
+    [currentUid],
+  );
 
-  const table = useReactTable({
-    data: filtered,
-    columns,
-    state: { sorting },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getRowId: (row) => row.id,
-  });
+  // The row itself opens the edit modal, so every control inside the actions
+  // cell has to stop the click from bubbling up to it.
+  const renderRowActions = (admin) => {
+    const isSelf = admin.id === currentUid;
+    const busy = togglingId === admin.id;
+    return (
+      <>
+        <Tooltip label="Edit admin">
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setSelectedAdmin(admin);
+            }}
+            aria-label="Edit admin"
+            className="p-1.5 rounded-md text-[var(--primary)] transition hover:bg-[var(--primary-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+          >
+            <Pencil className="w-3.5 h-3.5" />
+          </button>
+        </Tooltip>
+        <Tooltip label={admin.isActive ? "Deactivate" : "Activate"}>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              toggleStatus(admin);
+            }}
+            disabled={isSelf || busy}
+            aria-label={admin.isActive ? "Deactivate admin" : "Activate admin"}
+            className={`p-1.5 rounded-md transition disabled:opacity-30 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${admin.isActive ? "text-[var(--danger-text)] hover:bg-[var(--danger-soft)]" : "text-[var(--success)] hover:bg-[var(--success-soft)]"}`}
+          >
+            {admin.isActive ? (
+              <UserX className="w-3.5 h-3.5" />
+            ) : (
+              <UserCheck className="w-3.5 h-3.5" />
+            )}
+          </button>
+        </Tooltip>
+      </>
+    );
+  };
+
+  const tabItems = TABS.map((tab) =>
+    tab.key === "Access Requests" && pendingCount > 0
+      ? { ...tab, count: pendingCount }
+      : tab,
+  );
+
+  const emptyAdmins = (
+    <SectionCard>
+      <EmptyState
+        icon={Users}
+        title={controls.total ? "No admins match your filters" : "No admins yet"}
+        description={
+          controls.total
+            ? "Clear the search box or reset the role and status filters."
+            : "Create the first administrator to give someone access to this console."
+        }
+      />
+    </SectionCard>
+  );
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <div className="w-full max-w-7xl mx-auto px-6 py-7 space-y-5">
-        {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="text-xl font-bold text-[var(--foreground)]">
-              Admin Management
-            </h1>
-            <p className="text-sm text-[var(--muted)] mt-0.5">
-              Manage administrator access and permissions.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin-management/audit"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--foreground)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition"
-            >
-              Audit Log
-            </Link>
-            {activeTab === "Admins" && (
-              <>
-                <button
-                  onClick={() => fetchAdmins(true)}
-                  disabled={refreshing}
-                  className="flex items-center gap-1.5 px-3 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] bg-[var(--surface)] hover:bg-[var(--surface-soft)] transition disabled:opacity-50"
-                >
-                  <RefreshCw
-                    className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`}
-                  />
-                  Refresh
-                </button>
-                <button
-                  onClick={() => setShowCreateModal(true)}
-                  className="flex items-center gap-1.5 px-4 py-2 text-sm bg-[var(--primary)] hover:opacity-90 text-[var(--primary-foreground)] font-semibold rounded-xl transition shadow-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  Create Admin
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex gap-0 border-b border-[var(--border)]">
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab;
-            return (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`flex items-center gap-2 px-5 py-2.5 text-sm font-semibold border-b-2 -mb-px transition ${
-                  isActive
-                    ? "border-[var(--primary)] text-[var(--foreground)]"
-                    : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
-                }`}
+      <div className="mx-auto w-full max-w-7xl px-6 py-7">
+        <PageHeader
+          icon={Shield}
+          title="Admin Management"
+          description="Manage administrator access and permissions."
+          actions={
+            <>
+              <Link
+                href="/admin-management/audit"
+                className="alt-ui-button alt-ui-button--secondary alt-ui-button--md"
               >
-                {tab}
-                {tab === "Access Requests" && pendingCount > 0 && (
-                  <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[var(--warning)] text-white text-[10px] font-bold flex items-center justify-center">
-                    {pendingCount}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ── Admins Tab ── */}
-        {activeTab === "Admins" && (
-          <>
-            {/* KPIs */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                {
-                  label: "Total Admins",
-                  value: admins.length,
-                  color: "text-[var(--foreground)]",
-                },
-                {
-                  label: "Active",
-                  value: totalActive,
-                  color: "text-[var(--success)]",
-                },
-                {
-                  label: "Inactive",
-                  value: admins.length - totalActive,
-                  color:
-                    admins.length - totalActive > 0
-                      ? "text-[var(--danger)]"
-                      : "text-[var(--foreground)]",
-                },
-                {
-                  label: "Super Admins",
-                  value: totalSuper,
-                  color: "text-[var(--foreground)]",
-                },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm px-4 py-3.5"
-                >
-                  <p className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
-                    {stat.label}
-                  </p>
-                  <p
-                    className={`text-2xl font-bold tabular-nums mt-1 ${stat.color}`}
+                Audit Log
+              </Link>
+              {activeTab === "Admins" && (
+                <>
+                  <Button
+                    variant="secondary"
+                    onClick={() => fetchAdmins(true)}
+                    disabled={refreshing}
                   >
-                    {stat.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Filters */}
-            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
-              <div className="relative w-full sm:w-72">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--muted)] pointer-events-none" />
-                <input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by name or email…"
-                  autoComplete="off"
-                  className="w-full pl-8 pr-8 py-1.5 text-sm bg-[var(--surface)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] placeholder:text-[var(--muted)] transition"
-                />
-                {search && (
-                  <button
-                    onClick={() => setSearch("")}
-                    aria-label="Clear search"
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)]"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-              {[
-                {
-                  value: roleFilter,
-                  setter: setRoleFilter,
-                  options: [
-                    ["all", "All Roles"],
-                    ["admin", "Admin"],
-                    ["superadmin", "Super Admin"],
-                  ],
-                },
-                {
-                  value: statusFilter,
-                  setter: setStatusFilter,
-                  options: [
-                    ["all", "All Status"],
-                    ["active", "Active"],
-                    ["inactive", "Inactive"],
-                  ],
-                },
-              ].map((sel, i) => (
-                <select
-                  key={i}
-                  value={sel.value}
-                  onChange={(e) => sel.setter(e.target.value)}
-                  className="text-sm border border-[var(--border)] rounded-lg px-3 py-1.5 bg-[var(--surface)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] cursor-pointer transition min-w-[140px]"
-                >
-                  {sel.options.map(([v, l]) => (
-                    <option key={v} value={v}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
-              ))}
-              <span className="ml-auto text-xs text-[var(--muted)] whitespace-nowrap">
-                {filtered.length} of {admins.length} admins
-              </span>
-            </div>
-
-            {/* Table */}
-            <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
-              {loading ? (
-                <div className="flex items-center justify-center py-16 gap-3 text-[var(--muted)]">
-                  <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[var(--primary)] rounded-full animate-spin" />
-                  <span className="text-sm">Loading admins…</span>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="text-sm w-full">
-                    <thead>
-                      {table.getHeaderGroups().map((hg) => (
-                        <tr
-                          key={hg.id}
-                          className="bg-[var(--surface-soft)] border-b border-[var(--border)]"
-                        >
-                          {hg.headers.map((header) => (
-                            <th
-                              key={header.id}
-                              style={{ width: header.getSize() }}
-                              className="px-4 py-3 text-left text-xs font-bold text-[var(--muted)] uppercase tracking-wider select-none"
-                            >
-                              <div
-                                className={`flex items-center gap-1 ${header.column.getCanSort() ? "cursor-pointer hover:text-[var(--foreground)]" : ""}`}
-                                onClick={header.column.getToggleSortingHandler()}
-                              >
-                                {flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext(),
-                                )}
-                                {header.column.getCanSort() && (
-                                  <SortIcon
-                                    sorted={header.column.getIsSorted()}
-                                  />
-                                )}
-                              </div>
-                            </th>
-                          ))}
-                        </tr>
-                      ))}
-                    </thead>
-                    <tbody className="divide-y divide-[var(--border)]">
-                      {table.getRowModel().rows.length === 0 ? (
-                        <tr>
-                          <td
-                            colSpan={columns.length}
-                            className="py-16 text-center text-[var(--muted)] text-sm"
-                          >
-                            No admins match your filters.
-                          </td>
-                        </tr>
-                      ) : (
-                        table.getRowModel().rows.map((row) => (
-                          <tr
-                            key={row.id}
-                            onClick={() => setSelectedAdmin(row.original)}
-                            className="hover:bg-[var(--surface-soft)] cursor-pointer transition-colors"
-                          >
-                            {row.getVisibleCells().map((cell) => (
-                              <td
-                                key={cell.id}
-                                className="px-4 py-3 align-middle"
-                              >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </td>
-                            ))}
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                    <RefreshCw
+                      className={`h-3.5 w-3.5 ${refreshing ? "animate-spin motion-reduce:animate-none" : ""}`}
+                      aria-hidden="true"
+                    />
+                    Refresh
+                  </Button>
+                  <Button onClick={() => setShowCreateModal(true)}>
+                    <Plus className="h-4 w-4" aria-hidden="true" />
+                    Create Admin
+                  </Button>
+                </>
               )}
-            </div>
-          </>
-        )}
-        {/* ── All Admins Tab ── */}
-        {activeTab === "All Admins" && (
-          <>
-            {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm h-52 animate-pulse"
-                  />
-                ))}
-              </div>
-            ) : filtered.length === 0 ? (
-              <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm py-16 text-center text-[var(--muted)] text-sm">
-                No admins match your filters.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filtered.map((admin) => (
+            </>
+          }
+        >
+          <Tabs
+            items={tabItems}
+            value={activeTab}
+            onChange={setActiveTab}
+            ariaLabel="Admin management views"
+          />
+        </PageHeader>
+
+        <div role="tabpanel" aria-label={activeTab} className="space-y-5">
+          {/* ── Admins Tab ── */}
+          {activeTab === "Admins" && (
+            <>
+              {/* KPIs — suppressed while the directory failed to load, so a broken
+                  read is never presented as a healthy "0 admins" platform. */}
+              {loading ? (
+                <LoadingState variant="stats" />
+              ) : loadError ? null : (
+                <StatGrid
+                  columns={4}
+                  items={[
+                    { label: "Total Admins", value: admins.length },
+                    { label: "Active", value: totalActive, tone: "success" },
+                    {
+                      label: "Inactive",
+                      value: totalInactive,
+                      tone: totalInactive > 0 ? "danger" : "default",
+                    },
+                    { label: "Super Admins", value: totalSuper },
+                  ]}
+                />
+              )}
+
+              <FilterBar
+                search={controls.search}
+                onSearchChange={controls.onSearchChange}
+                searchPlaceholder="Search by name or email…"
+                filters={[
+                  {
+                    key: "role",
+                    label: "Filter by role",
+                    value: controls.filterValues.role ?? "all",
+                    onChange: (value) => controls.setFilter("role", value),
+                    options: ROLE_OPTIONS,
+                  },
+                  {
+                    key: "status",
+                    label: "Filter by status",
+                    value: controls.filterValues.status ?? "all",
+                    onChange: (value) => controls.setFilter("status", value),
+                    options: STATUS_OPTIONS,
+                  },
+                ]}
+                count={`${controls.matched} of ${controls.total} admins`}
+              />
+
+              <DataTable
+                caption="Administrators"
+                columns={columns}
+                rows={visibleAdmins}
+                getRowKey={(admin) => admin.id}
+                sort={controls.sort}
+                onSortChange={controls.setSort}
+                loading={loading}
+                error={loadError}
+                onRetry={retryAdmins}
+                onRowClick={(admin) => setSelectedAdmin(admin)}
+                rowActions={renderRowActions}
+                empty={emptyAdmins}
+              />
+            </>
+          )}
+
+          {/* ── All Admins Tab ── */}
+          {activeTab === "All Admins" && (
+            <DataState
+              loading={loading}
+              error={loadError}
+              isEmpty={!visibleAdmins.length}
+              onRetry={retryAdmins}
+              loadingVariant="cards"
+              rows={8}
+              empty={emptyAdmins}
+            >
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {visibleAdmins.map((admin) => (
                   <AdminCard
                     key={admin.id}
                     admin={admin}
@@ -764,11 +650,12 @@ export default function AdminManagement() {
                   />
                 ))}
               </div>
-            )}
-          </>
-        )}
-        {/* ── Access Requests Tab ── */}
-        {activeTab === "Access Requests" && <AccessRequestsTab />}
+            </DataState>
+          )}
+
+          {/* ── Access Requests Tab ── */}
+          {activeTab === "Access Requests" && <AccessRequestsTab />}
+        </div>
       </div>
 
       {selectedAdmin && (

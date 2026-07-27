@@ -4,6 +4,7 @@ import {
   FLAT_ADMIN_ROUTE_KEYS,
   formatAdminSegment,
   getProjectModuleRoute,
+  GLOBAL_ADMIN_MODULES,
   resolveProjectModule,
 } from "@/config/adminRoutes";
 
@@ -72,6 +73,17 @@ export function buildAdminBreadcrumbs(routeInfo) {
     crumbs.push({
       label: sectionConfig.label,
       href: projectId ? getProjectModuleRoute(projectId, section) : `/${section}`,
+    });
+  } else if (section && !projectId && GLOBAL_ADMIN_MODULES[section]) {
+    // Flat global routes (rbac, tickets, …) always resolve with sectionConfig
+    // null, so this fell through to formatAdminSegment()'s generic
+    // Title-Case-the-URL-segment logic — which turned "/rbac" into "Rbac"
+    // instead of "RBAC Foundation", and diverged from the sidebar's label for
+    // several others (Support Center → "Support", My Profile → "Profile").
+    // The registry already has the right label for every one of these.
+    crumbs.push({
+      label: GLOBAL_ADMIN_MODULES[section].label,
+      href: `/${section}`,
     });
   } else if (section) {
     crumbs.push({

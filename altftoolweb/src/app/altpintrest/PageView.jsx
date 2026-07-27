@@ -3,12 +3,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Inter, Manrope } from 'next/font/google';
-import { Search, X, Bell, Heart, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon, Download, Share2 } from 'lucide-react';
+import { Search, X, Compass, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon, Download, Share2, Heart } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const manrope = Manrope({ subsets: ['latin'], weight: ['700'] });
 
 import FilterBar from './components/FilterBar';
+import ExploreLanding from './components/landing/ExploreLanding';
 import { filters as mockFilters, MOCK_DATA } from './data/mockData';
 import { firebasePinterestCategoriesSource } from './service/firebasePinterestCategories';
 import { firebasePinterestPinsSource } from './service/firebasePinterestPins';
@@ -47,8 +48,84 @@ const getImageUrl = (value) => {
   ].find((candidate) => typeof candidate === "string" && candidate.trim())?.trim() || "";
 };
 
-export default function AltPinterest() {
-  const [activeTab, setActiveTab] = useState("discover"); // "discover" or "saved"
+const normalizeCategory = (str) => {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+};
+
+const CATEGORY_KEYWORDS = {
+  "animals": ["animal", "pet", "dog", "cat", "fauna", "wildlife", "nature", "puppy", "kitten"],
+  "art": ["art", "artist", "artwork", "drawing", "illustration", "painting", "generative", "creative"],
+  "beauty": ["beauty", "makeup", "skincare", "cushion", "cosmetics", "foundation", "skin", "hair"],
+  "design": ["design", "ui", "ux", "interface", "graphic", "logo", "web", "dashboard", "mobile"],
+  "diy and crafts": ["diy", "craft", "handmade", "gift", "towel", "mug", "creative", "crafts"],
+  "food and drink": ["food", "drink", "recipe", "cooking", "coffee", "tea", "baking", "meal", "comfort"],
+  "home decor": ["home", "decor", "interior", "living room", "furniture", "room", "architecture", "house"],
+  "mens fashion": ["men", "mens", "fashion", "outfit", "style", "clothing", "wear", "suit"],
+  "quotes": ["quote", "quotes", "text", "inspiration", "typography", "motto", "life"],
+  "tattoos": ["tattoo", "tattoos", "ink", "body art", "tattoo design"],
+  "zodiac spotlight": ["zodiac", "astrology", "leo", "horoscope", "vibe"],
+  "thoughtful diys": ["diy", "craft", "handmade", "gift"],
+  "make your own": ["diy", "make", "handmade", "inspo"],
+};
+
+const getPrioritizedItems = (allItems, filter, query) => {
+  let list = allItems;
+
+  if (query) {
+    const q = query.toLowerCase();
+    list = list.filter(item =>
+      (item.title && item.title.toLowerCase().includes(q)) ||
+      (item.category && item.category.toLowerCase().includes(q)) ||
+      (item.originalData && JSON.stringify(item.originalData).toLowerCase().includes(q))
+    );
+  }
+
+  if (!filter || filter === "All") {
+    return list;
+  }
+
+  const normFilter = normalizeCategory(filter);
+  const synonyms = CATEGORY_KEYWORDS[normFilter] || [normFilter];
+
+  const exactMatches = [];
+  const relatedMatches = [];
+  const remainingPins = [];
+
+  list.forEach(item => {
+    const catNorm = normalizeCategory(item.category);
+    const titleNorm = normalizeCategory(item.title);
+
+    if (catNorm === normFilter || catNorm.includes(normFilter) || normFilter.includes(catNorm)) {
+      exactMatches.push(item);
+    }
+    else if (synonyms.some(kw => catNorm.includes(kw) || titleNorm.includes(kw))) {
+      relatedMatches.push(item);
+    }
+    else {
+      remainingPins.push(item);
+    }
+  });
+
+  const matched = [...exactMatches, ...relatedMatches];
+
+  if (matched.length < 15) {
+    const needed = 15 - matched.length;
+    const fallbacks = remainingPins.slice(0, needed);
+    return [...matched, ...fallbacks];
+  }
+
+  return matched;
+};
+
+export default function AltPinterest({ defaultView }) {
+  const [showLanding, setShowLanding] = useState(defaultView !== "explore");
+  const [activeTab, setActiveTab] = useState("discover");
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [savedItems, setSavedItems] = useState(new Set([1, 3, 5, 7, 9, 10, 12, 14]));
@@ -71,10 +148,6 @@ export default function AltPinterest() {
       unsubPins && unsubPins();
     };
   }, []);
-
-  const dynamicFilters = firebaseCategories.length > 0
-    ? ["All", ...firebaseCategories.map(cat => cat.name)]
-    : mockFilters;
 
   const dynamicData = firebasePins.length > 0
     ? firebasePins.map(pin => {
@@ -99,22 +172,204 @@ export default function AltPinterest() {
     })
     : MOCK_DATA;
 
+  // Save scroll helper
+  const saveCurrentScroll = () => {
+    if (typeof window !== "undefined") {
+      const key = showLanding ? "alt_home_scroll" : "alt_explore_scroll";
+      sessionStorage.setItem(key, window.scrollY.toString());
+      return window.scrollY;
+    }
+    return 0;
+  };
+
+  // Popstate event handler for browser Back/Forward navigation
+  useEffect(() => {
+    const handlePopState = (event) => {
+      const state = event.state;
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get("view");
+      const categoryParam = params.get("category");
+      const searchParam = params.get("search");
+      const pinParam = params.get("pin");
+
+      if (state) {
+        setShowLanding(state.showLanding);
+        setActiveFilter(state.activeFilter || "All");
+        setSearchQuery(state.searchQuery || "");
+        setActiveTab(state.activeTab || "discover");
+
+        if (state.selectedItemId) {
+          const targetPin = dynamicData.find(d => d.id.toString() === state.selectedItemId.toString());
+          setSelectedItem(targetPin || null);
+        } else {
+          setSelectedItem(null);
+        }
+
+        const scrollYToRestore = state.prevScrollY ?? state.fromHomeScrollY ?? state.scrollY ?? 0;
+        setTimeout(() => {
+          window.scrollTo({ top: scrollYToRestore, behavior: 'instant' });
+        }, 40);
+
+      } else {
+        const isExploreView = viewParam === "explore" || defaultView === "explore" || !!categoryParam;
+        setShowLanding(!isExploreView);
+        setActiveFilter(categoryParam || "All");
+        setSearchQuery(searchParam || "");
+
+        if (pinParam) {
+          const targetPin = dynamicData.find(d => d.id.toString() === pinParam.toString());
+          setSelectedItem(targetPin || null);
+        } else {
+          setSelectedItem(null);
+        }
+
+        const storageKey = !isExploreView ? "alt_home_scroll" : "alt_explore_scroll";
+        const savedScroll = parseInt(sessionStorage.getItem(storageKey) || "0", 10);
+        setTimeout(() => {
+          window.scrollTo({ top: savedScroll, behavior: 'instant' });
+        }, 40);
+      }
+    };
+
+    // Replace initial history state if empty
+    if (typeof window !== "undefined" && !window.history.state) {
+      const params = new URLSearchParams(window.location.search);
+      const isExploreView = params.get("view") === "explore" || defaultView === "explore" || !!params.get("category");
+      window.history.replaceState({
+        showLanding: !isExploreView,
+        activeFilter: params.get("category") || "All",
+        searchQuery: params.get("search") || "",
+        selectedItemId: params.get("pin") || null,
+        activeTab: "discover",
+        scrollY: window.scrollY
+      }, "", window.location.href);
+    }
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [defaultView, dynamicData]);
+
+  const dynamicFilters = firebaseCategories.length > 0
+    ? ["All", ...firebaseCategories.map(cat => cat.name)]
+    : mockFilters;
+
   let displayedItems = dynamicData;
 
   if (activeTab === "discover") {
-    if (activeFilter !== "All") {
-      displayedItems = displayedItems.filter(item => item.category === activeFilter);
-    }
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      displayedItems = displayedItems.filter(item =>
-        (item.title && item.title.toLowerCase().includes(q)) ||
-        (item.category && item.category.toLowerCase().includes(q))
-      );
-    }
+    displayedItems = getPrioritizedItems(dynamicData, activeFilter, searchQuery);
   } else if (activeTab === "saved") {
     displayedItems = dynamicData.filter(item => savedItems.has(item.id));
   }
+
+  const navigateToExplore = (categoryOrTerm = "") => {
+    const currentScroll = saveCurrentScroll();
+    let catToSet = "All";
+
+    if (categoryOrTerm) {
+      if (categoryOrTerm === "All Categories" || categoryOrTerm === "Featured Editorial") {
+        catToSet = "All";
+      } else {
+        catToSet = categoryOrTerm;
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("view", "explore");
+    if (catToSet !== "All") {
+      params.set("category", catToSet);
+    } else {
+      params.delete("category");
+    }
+    params.delete("pin");
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    const stateObj = {
+      showLanding: false,
+      activeFilter: catToSet,
+      searchQuery: searchQuery,
+      selectedItemId: null,
+      activeTab: "discover",
+      fromHomeScrollY: currentScroll,
+      scrollY: 0
+    };
+
+    if (typeof window !== "undefined") {
+      window.history.pushState(stateObj, "", newUrl);
+    }
+
+    setActiveFilter(catToSet);
+    setShowLanding(false);
+    setSelectedItem(null);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const navigateToHome = () => {
+    saveCurrentScroll();
+    const targetScroll = parseInt(sessionStorage.getItem("alt_home_scroll") || "0", 10);
+
+    const params = new URLSearchParams(window.location.search);
+    params.delete("view");
+    params.delete("category");
+    params.delete("search");
+    params.delete("pin");
+    const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+
+    const stateObj = {
+      showLanding: true,
+      activeFilter: "All",
+      searchQuery: "",
+      selectedItemId: null,
+      activeTab: "discover",
+      scrollY: targetScroll
+    };
+
+    if (typeof window !== "undefined") {
+      window.history.pushState(stateObj, "", newUrl);
+    }
+
+    setShowLanding(true);
+    setSelectedItem(null);
+    setTimeout(() => {
+      window.scrollTo({ top: targetScroll, behavior: 'instant' });
+    }, 30);
+  };
+
+  const handleCardClick = (item) => {
+    const currentScroll = saveCurrentScroll();
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("pin", item.id.toString());
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    const stateObj = {
+      showLanding: showLanding,
+      activeFilter: activeFilter,
+      searchQuery: searchQuery,
+      selectedItemId: item.id,
+      activeTab: activeTab,
+      prevScrollY: currentScroll
+    };
+
+    if (typeof window !== "undefined") {
+      window.history.pushState(stateObj, "", newUrl);
+    }
+
+    setSelectedItem(item);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleBackFromDetail = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      window.history.back();
+    } else {
+      setSelectedItem(null);
+      const key = showLanding ? "alt_home_scroll" : "alt_explore_scroll";
+      const savedScroll = parseInt(sessionStorage.getItem(key) || "0", 10);
+      setTimeout(() => {
+        window.scrollTo({ top: savedScroll, behavior: 'instant' });
+      }, 30);
+    }
+  };
 
   const toggleSave = (e, id) => {
     e.stopPropagation();
@@ -126,14 +381,9 @@ export default function AltPinterest() {
     });
   };
 
-  const handleCardClick = (item) => {
-    setSelectedItem(item);
-  };
-
   const handleDownload = async (e, imageUrl, title) => {
     e.stopPropagation();
 
-    // Check if it's a relative/local path (these don't have CORS issues)
     if (imageUrl.startsWith('/')) {
       const link = document.createElement('a');
       link.href = imageUrl;
@@ -143,7 +393,6 @@ export default function AltPinterest() {
     }
 
     try {
-      // Try fetching with blob (works if CORS is configured in Firebase Console)
       const response = await fetch(imageUrl, { mode: 'cors' });
       if (!response.ok) throw new Error('Network response was not ok');
       const blob = await response.blob();
@@ -157,8 +406,6 @@ export default function AltPinterest() {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.warn("CORS/Download failed, falling back to new tab:", error);
-      // Fallback for cross-origin images without CORS config:
-      // We open in a new tab which allows the user to right-click > Save Image
       const newWindow = window.open(imageUrl, '_blank');
       if (!newWindow) {
         alert("Please allow popups to download this image.");
@@ -179,10 +426,20 @@ export default function AltPinterest() {
 
   const handleShare = (e, item) => {
     e.stopPropagation();
-    const shareUrl = window.location.href; // Or a specific pin URL if available
+    const shareUrl = window.location.href;
     navigator.clipboard.writeText(shareUrl);
     alert("Link copied to clipboard!");
   };
+
+  if (showLanding) {
+    return (
+      <ExploreLanding
+        onStartExploring={(term) => navigateToExplore(term)}
+        onNavigateHome={navigateToHome}
+        onNavigateExplore={() => navigateToExplore("")}
+      />
+    );
+  }
 
   return (
     <div className={`min-h-screen bg-[var(--background)] text-[var(--foreground)] ${inter.className}`}>
@@ -190,19 +447,87 @@ export default function AltPinterest() {
       {/* Main Content Container */}
       <div className="max-w-[1280px] mx-auto w-full flex flex-col pt-10 pb-20 px-6 md:px-8">
 
+        {/* Header navigation bar inside Explore feed */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200/80 dark:border-zinc-800">
+          <div className="flex items-center gap-6">
+            <div
+              onClick={navigateToHome}
+              className="flex items-center gap-2 cursor-pointer group"
+            >
+              <div className="w-8 h-8 rounded-full bg-[#E60023] flex items-center justify-center text-white font-extrabold text-lg shadow-md group-hover:scale-105 transition-transform">
+                P
+              </div>
+              <span className="font-extrabold text-lg tracking-tight text-gray-900 dark:text-white hidden sm:inline">
+                AltPinterest
+              </span>
+            </div>
+
+            <nav className="flex items-center gap-2 font-semibold text-sm">
+              <button
+                onClick={navigateToHome}
+                className="px-4 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 transition-colors cursor-pointer"
+              >
+                Home
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("discover");
+                  setSelectedItem(null);
+                  setActiveFilter("All");
+                }}
+                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${
+                  activeTab === "discover"
+                    ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
+                    : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                Explore
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("saved");
+                  setSelectedItem(null);
+                }}
+                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${
+                  activeTab === "saved"
+                    ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
+                    : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                Saved Ideas ({savedItems.size})
+              </button>
+            </nav>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={navigateToHome}
+              className="px-4 py-2 flex items-center gap-2 border border-[#E5E7EB] dark:border-[var(--border)] rounded-full hover:bg-gray-100 dark:hover:bg-[var(--muted)] transition-colors text-xs sm:text-sm font-semibold text-[#4A5565] dark:text-[var(--foreground)] cursor-pointer"
+              title="Return to Home Landing"
+            >
+              <Compass size={18} className="text-[#E60023]" />
+              <span className="hidden sm:inline">Home Landing</span>
+            </button>
+          </div>
+        </div>
+
         {/* ======================================= */}
-        {/* 1. DISCOVER TOP: SEARCH BAR & ICONS       */}
+        {/* 1. DISCOVER TOP: SEARCH BAR             */}
         {/* ======================================= */}
         {activeTab === "discover" && (
           <div className="flex items-center gap-4 w-full mb-6">
-            <div className="flex-1 bg-[#F1F5F9] dark:bg-[var(--muted)] rounded-[9999px] h-[60px] flex items-center px-6 focus-within:ring-2 focus-within:ring-[#2563EB]/50 transition-shadow">
+            <div
+              className="flex-1 bg-[#F1F5F9] dark:bg-[var(--muted)] rounded-[9999px] h-[56px] flex items-center px-6 border border-transparent focus-within:border-[#2563EB] focus-within:ring-0 focus-within:outline-none transition-colors"
+              style={{ outline: 'none' }}
+            >
               <Search size={20} className="text-[#64748B] mr-3 shrink-0" />
               <input
                 type="text"
-                placeholder="Search AI tools, websites, prompts..."
+                placeholder="Search pins, categories, ideas..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-[#64748B] dark:text-[var(--foreground)] placeholder-[#64748B] text-[14px] w-full"
+                className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:border-none focus-visible:outline-none focus-visible:ring-0 shadow-none text-[#64748B] dark:text-[var(--foreground)] placeholder-[#64748B] text-[14px] w-full"
+                style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
               />
               {searchQuery && (
                 <X
@@ -211,22 +536,6 @@ export default function AltPinterest() {
                   onClick={() => setSearchQuery("")}
                 />
               )}
-            </div>
-
-            <div className="flex items-center gap-4 shrink-0">
-              <button className="w-[40px] h-[40px] flex items-center justify-center border border-[#E5E7EB] dark:border-[var(--border)] rounded-[9999px] hover:bg-gray-100 dark:hover:bg-[var(--muted)] transition-colors text-[#4A5565] dark:text-[var(--foreground)]">
-                <Bell size={20} />
-              </button>
-              <button
-                onClick={() => {
-                  setActiveTab("saved");
-                  setSelectedItem(null); // Clear selection when leaving discover
-                }}
-                className="w-[40px] h-[40px] flex items-center justify-center border border-[#E5E7EB] dark:border-[var(--border)] rounded-[9999px] hover:bg-gray-100 dark:hover:bg-[var(--muted)] transition-colors text-[#4A5565] dark:text-[var(--foreground)]"
-                title="Go to Saved Ideas"
-              >
-                <Heart size={20} />
-              </button>
             </div>
           </div>
         )}
@@ -240,8 +549,55 @@ export default function AltPinterest() {
             <FilterBar
               filters={dynamicFilters}
               activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
+              setActiveFilter={(filter) => {
+                setActiveFilter(filter);
+                if (typeof window !== "undefined") {
+                  const params = new URLSearchParams(window.location.search);
+                  params.set("view", "explore");
+                  if (filter !== "All") params.set("category", filter);
+                  else params.delete("category");
+                  const newUrl = `${window.location.pathname}?${params.toString()}`;
+                  window.history.pushState({
+                    showLanding: false,
+                    activeFilter: filter,
+                    searchQuery: searchQuery,
+                    selectedItemId: null,
+                    activeTab: "discover",
+                    scrollY: window.scrollY
+                  }, "", newUrl);
+                }
+              }}
             />
+
+            {/* Active Filter Indicator */}
+            {activeFilter !== "All" && (
+              <div className="mb-6 flex items-center justify-between bg-gray-50 dark:bg-zinc-900 px-4 py-2.5 rounded-2xl border border-gray-200/80 dark:border-zinc-800">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Showing pins for: <span className="font-bold text-gray-900 dark:text-white capitalize">{activeFilter}</span>
+                </p>
+                <button
+                  onClick={() => {
+                    setActiveFilter("All");
+                    if (typeof window !== "undefined") {
+                      const params = new URLSearchParams(window.location.search);
+                      params.delete("category");
+                      const newUrl = `${window.location.pathname}?${params.toString()}`;
+                      window.history.pushState({
+                        showLanding: false,
+                        activeFilter: "All",
+                        searchQuery: searchQuery,
+                        selectedItemId: null,
+                        activeTab: "discover",
+                        scrollY: window.scrollY
+                      }, "", newUrl);
+                    }
+                  }}
+                  className="text-xs font-semibold text-[#E60023] hover:underline cursor-pointer"
+                >
+                  Clear filter
+                </button>
+              </div>
+            )}
 
             {/* Masonry Grid */}
             <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6">
@@ -291,8 +647,8 @@ export default function AltPinterest() {
             {/* Left Column: Detail Card & Back Button */}
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 w-full lg:w-auto">
               <button
-                onClick={() => setSelectedItem(null)}
-                className="self-start lg:mt-3 p-3 hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)]"
+                onClick={handleBackFromDetail}
+                className="self-start lg:mt-3 p-3 hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)] cursor-pointer"
                 title="Back"
               >
                 <ArrowLeft size={24} className="text-[var(--foreground)]" />
@@ -326,7 +682,7 @@ export default function AltPinterest() {
                     </span>
                     <button
                       onClick={(e) => toggleSave(e, selectedItem.id)}
-                      className={`px-6 py-3 rounded-full font-bold text-[15.5px] transition-colors ${savedItems.has(selectedItem.id)
+                      className={`px-6 py-3 rounded-full font-bold text-[15.5px] transition-colors cursor-pointer ${savedItems.has(selectedItem.id)
                         ? 'bg-black text-white dark:bg-white dark:text-black'
                         : 'bg-[#2563EB] text-white hover:bg-[#1d4ed8]'
                         }`}
@@ -353,7 +709,6 @@ export default function AltPinterest() {
                       Pin Gallery ({selectedItem.gallery.length + 1} images)
                     </p>
                     <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-200">
-                      {/* Thumbnail for main cover image */}
                       <button
                         onClick={() => setSelectedItem(prev => ({
                           ...prev,
@@ -372,7 +727,6 @@ export default function AltPinterest() {
                         />
                       </button>
 
-                      {/* Thumbnails for gallery images */}
                       {selectedItem.gallery.map((imgUrl, idx) => (
                         <button
                           key={idx}
@@ -395,7 +749,7 @@ export default function AltPinterest() {
                 )}
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
-                  <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-['Segoe_UI',_sans-serif]">
+                  <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
                     {selectedItem.title || "AI Generated Inspiration"}
                   </h1>
 
@@ -407,7 +761,7 @@ export default function AltPinterest() {
                   </div>
 
                   <div className="border-t border-[#E9E9E9] dark:border-[var(--border)] pt-8 mt-4">
-                    <h2 className="text-[16px] font-bold mb-4 text-[var(--foreground)] font-['Segoe_UI',_sans-serif]">No comments yet</h2>
+                    <h2 className="text-[16px] font-bold mb-4 text-[var(--foreground)] font-[#Segoe_UI]">No comments yet</h2>
                     <div className="bg-[#F3F4F6] dark:bg-[var(--muted)] border border-[#E5E5E0] dark:border-[var(--border)] rounded-full px-5 py-3.5 flex items-center justify-between cursor-pointer">
                       <span className="text-[15.5px] text-[#9197A3]">Add a comment to start the conversation</span>
                       <div className="flex gap-4 text-gray-500">
@@ -476,12 +830,9 @@ export default function AltPinterest() {
           <>
             <div className="flex items-center gap-4 mb-10 w-full mt-4">
               <button
-                onClick={() => {
-                  setActiveTab("discover");
-                  setSelectedItem(null);
-                }}
-                className="w-[40px] h-[40px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)]"
-                title="Back to Discover"
+                onClick={handleBackFromDetail}
+                className="w-[40px] h-[40px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-[var(--muted)] rounded-full transition-colors shrink-0 border border-transparent dark:border-[var(--border)] cursor-pointer"
+                title="Back"
               >
                 <ArrowLeft size={24} className="text-black dark:text-[var(--foreground)]" />
               </button>
@@ -501,7 +852,6 @@ export default function AltPinterest() {
                   key={item.id}
                   className="break-inside-avoid flex flex-col gap-[6px] mb-8 group cursor-pointer relative"
                   onClick={() => {
-                    // Click on saved item opens it in discover mode details
                     setActiveTab("discover");
                     handleCardClick(item);
                   }}
@@ -532,7 +882,7 @@ export default function AltPinterest() {
                   </div>
 
                   <div className="px-1 mt-1">
-                    <p className="text-[12.5px] leading-[15px] font-normal text-[#000000] dark:text-[var(--foreground)] truncate font-['Segoe_UI',_sans-serif]">
+                    <p className="text-[12.5px] leading-[15px] font-normal text-[#000000] dark:text-[var(--foreground)] truncate font-[#Segoe_UI]">
                       {item.title}
                     </p>
                   </div>

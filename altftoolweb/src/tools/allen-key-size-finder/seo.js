@@ -1,0 +1,34 @@
+const seo = {
+  intro:
+    "Matches hex key sizes across the metric and imperial systems and grades every swap by clearance, the number that decides whether a substitution works or destroys the fastener. A key that leaves under 1% slack in the socket is the same tool with a different name; 1 to 3% turns a lightly torqued screw; over 3% loads the corners of the socket instead of the flats and rounds it out. Fastener sizes come from the published standards — ISO 4762, 7380, 10642 and 4026, and ASME B18.3 for the imperial series.",
+  useCases: [
+    "Assembling flat-pack or bicycle parts with a mixed set of keys and needing to know if 5/16 inch will do for 8 mm",
+    "Working on imperial machinery with a metric set and wanting to know which sizes are genuinely safe",
+    "Identifying an unlabelled key by laying it against a printed true-scale gauge",
+  ],
+  benefits: [
+    ["Graded by clearance", "Every pair is rated as interchangeable, usable with care, or a socket-rounder."],
+    ["Both directions", "A key safe in a metric socket is usually too wide for the nearest imperial one, and the tool says so."],
+    ["Head style included", "Cap, button, countersunk and grub screws of the same thread take different keys."],
+  ],
+  faqs: [
+    [
+      "Is a 5/16 inch Allen key the same as 8 mm?",
+      "Effectively yes. 5/16 inch is 7.9375 mm, so it sits 0.0625 mm inside an 8 mm socket — under 1% clearance, which is within the tolerance the two parts are made to anyway. It is one of only three pairs that genuinely interchange, the others being 5/32 inch with 4 mm and 5/64 inch with 2 mm.",
+    ],
+    [
+      "Can I use a 1/4 inch Allen key on a 6 mm socket?",
+      "No, in that direction it will not even enter: 1/4 inch is 6.35 mm and the socket is 6. Going the other way is worse — a 6 mm key in a 1/4 inch socket leaves 5.5% clearance, which puts the load on the corners of the socket and rounds it. This is the single commonest way people wreck a socket screw.",
+    ],
+    [
+      "What size Allen key does an M6 bolt need?",
+      "It depends on the head. An M6 socket head cap screw to ISO 4762 takes a 5 mm key, an M6 button head to ISO 7380 takes 4 mm, and an M6 socket set screw to ISO 4026 takes 3 mm. Head style changes the socket, so the thread size alone does not tell you the key.",
+    ],
+    [
+      "How do I identify an Allen key size without markings?",
+      "Measure across the flats, not corner to corner, with a vernier caliper — that width is the size. Failing that, print a true-scale gauge and lay the short leg across each bar, or try keys in a known socket screw. Guessing by eye between 5 mm and 3/16 inch is exactly the mistake that rounds sockets.",
+    ],
+  ],
+};
+
+export default seo;

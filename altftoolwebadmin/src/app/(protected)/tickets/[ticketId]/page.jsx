@@ -12,8 +12,9 @@ import {
 import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
+import { Badge, Button, IconButton, Textarea } from "@altftool/ui";
+import { DataState, EmptyState, PageHeader, SectionCard } from "@/ansets";
 import {
-  ArrowLeft,
   Send,
   Loader2,
   Clock,
@@ -21,6 +22,7 @@ import {
   ChevronDown,
   RefreshCw,
   AlertTriangle,
+  MessageCircle,
   User,
 } from "lucide-react";
 
@@ -36,38 +38,56 @@ function Avatar({ name, photoURL }) {
     return (
       <img
         src={photoURL}
-        alt={name}
-        className="w-7 h-7 rounded-full object-cover border border-[var(--border)] shrink-0"
+        alt=""
+        className="h-7 w-7 shrink-0 rounded-full border border-[var(--border)] object-cover"
       />
     );
   }
   return (
-    <div className="w-7 h-7 rounded-full bg-[var(--surface-soft)] text-[var(--muted)] font-bold text-[10px] flex items-center justify-center shrink-0">
+    <div
+      aria-hidden="true"
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--surface-soft)] text-[10px] font-bold text-[var(--muted)]"
+    >
       {getInitials(name)}
     </div>
   );
 }
 
-const STATUS_BADGE = {
-  open: "bg-[var(--info-soft)] text-[var(--info)] border-[var(--border)]",
-  in_progress: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
-  resolved: "bg-[var(--success-soft)] text-[var(--success)] border-[var(--border)]",
-  closed: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
-};
+// ── Status + priority vocabulary ──────────────────────────────────────────────
+//
+// `tone` drives the Badge primitive. `button` is the tinted transition control in
+// the actions panel — it stays local because the target status IS the colour, and
+// the Button primitive has no per-status variant.
 
-const STATUS_LABEL = {
-  open: "Open",
-  in_progress: "In Progress",
-  resolved: "Resolved",
-  closed: "Closed",
+const STATUS_CONFIG = {
+  open: {
+    tone: "info",
+    label: "Open",
+    button: "border-[var(--border)] bg-[var(--info-soft)] text-[var(--info)]",
+  },
+  in_progress: {
+    tone: "warning",
+    label: "In Progress",
+    button: "border-[var(--border)] bg-[var(--warning-soft)] text-[var(--warning)]",
+  },
+  resolved: {
+    tone: "success",
+    label: "Resolved",
+    button: "border-[var(--border)] bg-[var(--success-soft)] text-[var(--success)]",
+  },
+  closed: {
+    tone: "neutral",
+    label: "Closed",
+    button: "border-[var(--border)] bg-[var(--surface-soft)] text-[var(--muted)]",
+  },
 };
 
 const STATUS_FLOW = ["open", "in_progress", "resolved", "closed"];
 
-const PRIORITY_BADGE = {
-  low: "bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)]",
-  medium: "bg-[var(--warning-soft)] text-[var(--warning)] border-[var(--border)]",
-  high: "bg-[var(--danger-soft)] text-[var(--danger)] border-[var(--border)]",
+const PRIORITY_CONFIG = {
+  low: { tone: "neutral", label: "Low" },
+  medium: { tone: "warning", label: "Medium" },
+  high: { tone: "danger", label: "High" },
 };
 
 const TYPE_LABEL = { bug: "Bug", feature: "Feature Request", query: "Query" };
@@ -107,70 +127,139 @@ export default function AdminTicketDetailPage() {
   const [assigning, setAssigning] = useState(false);
   const [reopening, setReopening] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [messagesLoading, setMessagesLoading] = useState(true);
+  const [messagesError, setMessagesError] = useState("");
+  const [adminsLoading, setAdminsLoading] = useState(true);
+  const [adminsError, setAdminsError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+  const [messagesKey, setMessagesKey] = useState(0);
+  const [adminsKey, setAdminsKey] = useState(0);
   const [showAssign, setShowAssign] = useState(false);
 
   const bottomRef = useRef(null);
 
-  useEffect(() => {
-    if (!ticketId) return;
-    const unsub = onSnapshot(doc(db, "support_tickets", ticketId), (snap) => {
-      if (snap.exists()) setTicket({ id: snap.id, ...snap.data() });
-      setLoading(false);
-    });
-    return () => unsub();
-  }, [ticketId]);
+  // Retrying the conversation must not tear down the already-rendered ticket,
+  // so the messages listener has its own reload key.
+  const retryMessages = () => setMessagesKey((k) => k + 1);
+  const retryLoad = () => {
+    setReloadKey((k) => k + 1);
+    setMessagesKey((k) => k + 1);
+  };
 
   useEffect(() => {
     if (!ticketId) return;
+    setLoading(true);
+    setLoadError("");
+    const unsub = onSnapshot(
+      doc(db, "support_tickets", ticketId),
+      (snap) => {
+        if (snap.exists()) setTicket({ id: snap.id, ...snap.data() });
+        setLoadError("");
+        setLoading(false);
+      },
+      (err) => {
+        setLoadError(
+          err?.code === "permission-denied"
+            ? "Your admin account does not have permission to view this ticket."
+            : "This ticket is temporarily unavailable. Please try again."
+        );
+        setLoading(false);
+      }
+    );
+    return () => unsub();
+  }, [ticketId, reloadKey]);
+
+  useEffect(() => {
+    if (!ticketId) return;
+    setMessagesLoading(true);
+    setMessagesError("");
     const q = query(
       collection(db, "support_tickets", ticketId, "messages"),
       orderBy("createdAt", "asc")
     );
-    const unsub = onSnapshot(q, (snap) => {
-      setMessages(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-    });
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        setMessages(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+        setMessagesError("");
+        setMessagesLoading(false);
+      },
+      (err) => {
+        setMessages([]);
+        setMessagesError(
+          err?.code === "permission-denied"
+            ? "You do not have permission to read this conversation."
+            : "The conversation could not be loaded."
+        );
+        setMessagesLoading(false);
+      }
+    );
     return () => unsub();
-  }, [ticketId]);
+  }, [ticketId, messagesKey]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Load admins for assignment + build sender profiles
+  // Load admins for assignment + build sender profiles.
   useEffect(() => {
-  if (!user) return;
+    if (!user) return;
+    let cancelled = false;
+    setAdminsLoading(true);
+    setAdminsError("");
 
-  user.getIdToken().then((token) =>
-    fetch("/api/admin/list", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((r) => r.json())
-      .then(({ admins: list }) => {
-        const superAdmins = (list ?? []).filter(
-          (a) => a.isActive !== false && a.roleType === "superadmin"
-        );
+    const fail = () => {
+      if (cancelled) return;
+      setAdmins([]);
+      setSenderProfiles({});
+      setAdminsError("The admin directory could not be loaded.");
+      setAdminsLoading(false);
+    };
 
-        setAdmins(superAdmins);
+    user
+      .getIdToken()
+      .then((token) =>
+        fetch("/api/admin/list", { headers: { Authorization: `Bearer ${token}` } })
+          .then((r) => {
+            // A 401/403 used to fall through as `{}` → zero admins, which made an
+            // assigned ticket read as "Unassigned". Treat it as the error it is.
+            if (!r.ok) throw new Error("admin list unavailable");
+            return r.json();
+          })
+          .then(({ admins: list }) => {
+            if (cancelled) return;
+            const superAdmins = (list ?? []).filter(
+              (a) => a.isActive !== false && a.roleType === "superadmin"
+            );
 
-        // Build profile map for chat
-        const map = {};
-        superAdmins.forEach((a) => {
-          map[a.id] = {
-            name:
-              a.fullName ||
-              `${a.firstName ?? ""} ${a.lastName ?? ""}`.trim() ||
-              a.email ||
-              "Admin",
-            photoURL: a.photoURL || null,
-            isAdmin: true,
-          };
-        });
+            setAdmins(superAdmins);
 
-        setSenderProfiles(map);
-      })
-      .catch(() => {})
-  );
-}, [user]);
+            // Build profile map for chat
+            const map = {};
+            superAdmins.forEach((a) => {
+              map[a.id] = {
+                name:
+                  a.fullName ||
+                  `${a.firstName ?? ""} ${a.lastName ?? ""}`.trim() ||
+                  a.email ||
+                  "Admin",
+                photoURL: a.photoURL || null,
+                isAdmin: true,
+              };
+            });
+
+            setSenderProfiles(map);
+            setAdminsLoading(false);
+          })
+          .catch(fail)
+      )
+      .catch(fail);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, adminsKey]);
 
   const authPatch = async (url, body) => {
     const token = await user.getIdToken();
@@ -205,7 +294,10 @@ export default function AdminTicketDetailPage() {
     try {
       const res = await authPatch("/api/support/update-status", { ticketId, status });
       if (!res.ok) throw new Error("Failed");
-      emitAlert({ type: "success", message: `Status updated to ${STATUS_LABEL[status]}.` });
+      emitAlert({
+        type: "success",
+        message: `Status updated to ${STATUS_CONFIG[status]?.label ?? status}.`,
+      });
     } catch {
       emitAlert({ type: "error", message: "Failed to update status." });
     } finally {
@@ -243,276 +335,414 @@ export default function AdminTicketDetailPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-5 h-5 animate-spin text-[var(--muted)]" />
-      </div>
-    );
-  }
+  const isClosed = ticket?.status === "closed";
+  const assignedAdmin = admins.find((a) => a.id === ticket?.assignedTo);
+  const statusCfg = ticket ? STATUS_CONFIG[ticket.status] ?? STATUS_CONFIG.open : null;
+  const priorityCfg = ticket
+    ? PRIORITY_CONFIG[ticket.priority] ?? PRIORITY_CONFIG.low
+    : null;
 
-  if (!ticket) {
-    return (
-      <div className="max-w-3xl mx-auto px-4 py-12 text-center">
-        <p className="text-[var(--muted)]">Ticket not found.</p>
-        <button onClick={() => router.push("/tickets")} className="mt-4 text-sm text-[var(--primary)] hover:underline">
-          Back to Support Management
-        </button>
-      </div>
-    );
-  }
-
-  const isClosed = ticket.status === "closed";
-  const assignedAdmin = admins.find((a) => a.id === ticket.assignedTo);
-  const currentStatusIdx = STATUS_FLOW.indexOf(ticket.status);
+  const messageCount = messagesError
+    ? "Unavailable"
+    : messagesLoading
+    ? "Loading…"
+    : `${messages.length} ${messages.length === 1 ? "message" : "messages"}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Back */}
-      <button
-        onClick={() => router.push("/tickets")}
-        className="flex items-center gap-1.5 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition mb-6"
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <PageHeader
+        breadcrumbs={[
+          { label: "Tickets", href: "/tickets" },
+          { label: ticket?.title || "Ticket" },
+        ]}
+        title={ticket?.title || "Ticket"}
+        actions={statusCfg ? <Badge tone={statusCfg.tone}>{statusCfg.label}</Badge> : null}
+      />
+
+      <DataState
+        loading={loading}
+        error={loadError}
+        isEmpty={!ticket}
+        onRetry={retryLoad}
+        errorAction={
+          <Button variant="secondary" onClick={() => router.push("/tickets")}>
+            Back to Support Management
+          </Button>
+        }
+        loadingVariant="detail"
+        empty={
+          <EmptyState
+            icon={MessageCircle}
+            title="Ticket not found"
+            description="This ticket may have been deleted."
+            action={
+              <Button onClick={() => router.push("/tickets")}>
+                Back to Support Management
+              </Button>
+            }
+          />
+        }
       >
-        <ArrowLeft className="w-4 h-4" /> Back to Support Management
-      </button>
-{/* Ticket info */}
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-5 mb-5">
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <h1 className="text-base font-bold text-[var(--foreground)] leading-snug">{ticket.title}</h1>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${STATUS_BADGE[ticket.status]}`}>
-                {STATUS_LABEL[ticket.status]}
-              </span>
+        <div className="space-y-4">
+          {/* Ticket meta */}
+          <SectionCard>
+            <div className="flex flex-wrap gap-2">
+              <Badge tone={priorityCfg?.tone ?? "neutral"}>
+                {priorityCfg?.label} priority
+              </Badge>
+              <Badge tone="primary">{TYPE_LABEL[ticket?.type] ?? ticket?.type}</Badge>
+              <Badge tone="neutral" className="gap-1">
+                <Clock className="h-3 w-3" aria-hidden="true" />
+                {fmtDateTime(ticket?.createdAt)}
+              </Badge>
             </div>
 
-            <div className="flex flex-wrap gap-2 text-[10px] font-bold">
-              <span className={`px-2 py-0.5 rounded-full border ${PRIORITY_BADGE[ticket.priority]}`}>
-                {ticket.priority} priority
-              </span>
-              <span className="px-2 py-0.5 rounded-full border bg-[var(--accent-soft)] text-[var(--accent)] border-[var(--border)]">
-                {TYPE_LABEL[ticket.type] ?? ticket.type}
-              </span>
-              <span className="px-2 py-0.5 rounded-full border bg-[var(--surface-soft)] text-[var(--muted)] border-[var(--border)] flex items-center gap-1">
-                <Clock className="w-2.5 h-2.5" />
-                {fmtDateTime(ticket.createdAt)}
-              </span>
-            </div>
-
-            {isClosed && ticket.autoDeleteAt && (
-              <div className="mt-4 flex items-start gap-2.5 bg-[var(--warning-soft)] border border-[var(--border)] rounded-xl p-3">
-                <AlertTriangle className="w-4 h-4 text-[var(--warning)] shrink-0 mt-0.5" />
+            {/* Inline callout — no anset covers these, so it stays local. */}
+            {isClosed && ticket?.autoDeleteAt ? (
+              <div className="mt-4 flex items-start gap-2.5 rounded-lg border border-[var(--border)] bg-[var(--warning-soft)] p-3">
+                <AlertTriangle
+                  className="mt-0.5 h-4 w-4 shrink-0 text-[var(--warning)]"
+                  aria-hidden="true"
+                />
                 <p className="text-xs font-semibold text-[var(--warning)]">
                   Auto-deletes in {timeUntilDelete(ticket.autoDeleteAt)}
                 </p>
               </div>
-            )}
-          </div>
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_500px] gap-4">
-        {/* Left: conversation */}
-        <div className="space-y-4">
+            ) : null}
+          </SectionCard>
 
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_500px]">
+            {/* Left: conversation */}
+            <SectionCard
+              title="Conversation"
+              actions={<Badge tone="neutral">{messageCount}</Badge>}
+              flush
+              footer={
+                !isClosed ? (
+                  <div className="flex items-end gap-2">
+                    <Textarea
+                      rows={2}
+                      value={reply}
+                      onChange={(e) => setReply(e.target.value)}
+                      aria-label="Write a reply"
+                      placeholder="Type your reply… (Enter to send, Shift+Enter for newline)"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          sendReply();
+                        }
+                      }}
+                      className="flex-1"
+                    />
+                    <IconButton
+                      variant="primary"
+                      onClick={sendReply}
+                      disabled={!reply.trim()}
+                      loading={sending}
+                      loadingLabel="Sending reply"
+                      aria-label="Send reply"
+                    >
+                      {sending ? null : <Send className="h-4 w-4" aria-hidden="true" />}
+                    </IconButton>
+                  </div>
+                ) : undefined
+              }
+            >
+              <div
+                role="region"
+                aria-label="Ticket conversation"
+                tabIndex={0}
+                className="max-h-[420px] min-h-[220px] space-y-4 overflow-y-auto p-5 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+              >
+                <DataState
+                  loading={messagesLoading}
+                  error={messagesError}
+                  isEmpty={!messages.length}
+                  onRetry={retryMessages}
+                  loadingVariant="detail"
+                  empty={
+                    <EmptyState
+                      icon={MessageCircle}
+                      title="No messages yet"
+                      description="Start the conversation below."
+                    />
+                  }
+                >
+                  <>
+                    {messages.map((m, i) => {
+                      const isMe = m.senderId === user?.uid;
+                      const profile = senderProfiles[m.senderId];
+                      // For non-admin senders (ticket creator), fall back to a generic label
+                      const name = profile?.name ?? (isMe ? "You" : "User");
+                      const photoURL = profile?.photoURL ?? null;
+                      const isAdminSender = profile?.isAdmin ?? false;
 
-          {/* Messages */}
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] flex flex-col overflow-hidden">
-            <div className="px-5 py-3 border-b border-[var(--border)]">
-              <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Conversation</p>
-            </div>
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 max-h-[420px]">
-              {messages.length === 0 ? (
-                <p className="text-sm text-[var(--muted)] text-center py-8">No messages yet.</p>
-              ) : (
-                messages.map((m, i) => {
-                  const isMe = m.senderId === user?.uid;
-                  const profile = senderProfiles[m.senderId];
-                  // For non-admin senders (ticket creator), fall back to a generic label
-                  const name = profile?.name ?? (isMe ? "You" : "User");
-                  const photoURL = profile?.photoURL ?? null;
-                  const isAdminSender = profile?.isAdmin ?? false;
+                      const nextMsg = messages[i + 1];
+                      const isLastInGroup = !nextMsg || nextMsg.senderId !== m.senderId;
+                      const isFirstInGroup =
+                        i === 0 || messages[i - 1].senderId !== m.senderId;
 
-                  const nextMsg = messages[i + 1];
-                  const isLastInGroup = !nextMsg || nextMsg.senderId !== m.senderId;
-                  const isFirstInGroup = i === 0 || messages[i - 1].senderId !== m.senderId;
-
-                  return (
-                    <div key={m.id} className={`flex items-end gap-2 ${isMe ? "flex-row-reverse" : "flex-row"}`}>
-                      {/* Avatar placeholder to keep alignment consistent */}
-                      <div className="w-7 shrink-0">
-                        {isLastInGroup ? <Avatar name={name} photoURL={photoURL} /> : null}
-                      </div>
-
-                      <div className={`flex flex-col gap-0.5 max-w-[72%] ${isMe ? "items-end" : "items-start"}`}>
-                        {/* Name + role badge on first bubble in group */}
-                        {isFirstInGroup && (
-                          <div className={`flex items-center gap-1.5 px-1 ${isMe ? "flex-row-reverse" : ""}`}>
-                            <span className="text-[11px] font-semibold text-[var(--muted)]">
-                              {isMe ? "You" : name}
-                            </span>
-                            {!isMe && !isAdminSender && (
-                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-[var(--info-soft)] text-[var(--info)] border border-[var(--border)] rounded-full">
-                                <User className="w-2.5 h-2.5" />
-                                Reporter
-                              </span>
-                            )}
-                            {!isMe && isAdminSender && (
-                              <span className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 bg-[var(--surface-soft)] text-[var(--muted)] rounded-full">
-                                Admin
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Bubble */}
+                      return (
                         <div
-                          className={`px-4 py-2.5 text-sm leading-relaxed ${
-                            isMe
-                              ? "bg-[var(--primary)] text-[var(--primary-foreground)] rounded-2xl rounded-br-sm"
-                              : "bg-[var(--surface-soft)] text-[var(--foreground)] rounded-2xl rounded-bl-sm"
+                          key={m.id}
+                          className={`flex items-end gap-2 ${
+                            isMe ? "flex-row-reverse" : "flex-row"
                           }`}
                         >
-                          <p>{m.message}</p>
+                          {/* Avatar placeholder to keep alignment consistent */}
+                          <div className="w-7 shrink-0">
+                            {isLastInGroup ? (
+                              <Avatar name={name} photoURL={photoURL} />
+                            ) : null}
+                          </div>
+
+                          <div
+                            className={`flex max-w-[72%] flex-col gap-0.5 ${
+                              isMe ? "items-end" : "items-start"
+                            }`}
+                          >
+                            {/* Name + role badge on first bubble in group */}
+                            {isFirstInGroup && (
+                              <div
+                                className={`flex items-center gap-1.5 px-1 ${
+                                  isMe ? "flex-row-reverse" : ""
+                                }`}
+                              >
+                                <span className="text-[11px] font-semibold text-[var(--muted)]">
+                                  {isMe ? "You" : name}
+                                </span>
+                                {!isMe && !isAdminSender && (
+                                  <Badge tone="info" className="gap-0.5">
+                                    <User className="h-2.5 w-2.5" aria-hidden="true" />
+                                    Reporter
+                                  </Badge>
+                                )}
+                                {!isMe && isAdminSender && (
+                                  <Badge tone="neutral">Admin</Badge>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Bubble */}
+                            <div
+                              className={`px-4 py-2.5 text-sm leading-relaxed ${
+                                isMe
+                                  ? "rounded-2xl rounded-br-sm bg-[var(--primary)] text-[var(--primary-foreground)]"
+                                  : "rounded-2xl rounded-bl-sm bg-[var(--surface-soft)] text-[var(--foreground)]"
+                              }`}
+                            >
+                              <p>{m.message}</p>
+                            </div>
+
+                            {/* Timestamp on last bubble in group */}
+                            {isLastInGroup && (
+                              <p className="px-1 text-[10px] text-[var(--muted)]">
+                                {fmtDateTime(m.createdAt)}
+                              </p>
+                            )}
+                          </div>
                         </div>
+                      );
+                    })}
+                    <div ref={bottomRef} />
+                  </>
+                </DataState>
+              </div>
+            </SectionCard>
 
-                        {/* Timestamp on last bubble in group */}
-                        {isLastInGroup && (
-                          <p className="text-[10px] text-[var(--muted)] px-1">{fmtDateTime(m.createdAt)}</p>
+            {/* Right: actions panel */}
+            <div className="space-y-4">
+              <SectionCard title="Update Status">
+                {isClosed ? (
+                  <button
+                    type="button"
+                    onClick={reopen}
+                    disabled={reopening}
+                    aria-busy={reopening || undefined}
+                    className={`flex w-full items-center justify-center gap-2 rounded-lg border py-2 text-sm font-semibold transition hover:opacity-80 disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${STATUS_CONFIG.in_progress.button}`}
+                  >
+                    {reopening ? (
+                      <Loader2
+                        className="h-3.5 w-3.5 animate-spin motion-reduce:animate-none"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                    )}
+                    Reopen Ticket
+                  </button>
+                ) : (
+                  <div className="space-y-2">
+                    {STATUS_FLOW.filter((s) => s !== ticket?.status).map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => updateStatus(s)}
+                        disabled={Boolean(updatingStatus)}
+                        aria-busy={updatingStatus === s || undefined}
+                        className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-sm font-semibold transition hover:opacity-80 disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${STATUS_CONFIG[s].button}`}
+                      >
+                        {STATUS_CONFIG[s].label}
+                        {updatingStatus === s && (
+                          <Loader2
+                            className="h-3.5 w-3.5 animate-spin motion-reduce:animate-none"
+                            aria-hidden="true"
+                          />
                         )}
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-              <div ref={bottomRef} />
-            </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </SectionCard>
 
-            {!isClosed && (
-              <div className="border-t border-[var(--border)] p-3 flex items-end gap-2">
-                <textarea
-                  rows={2}
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                  placeholder="Type your reply…"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); }
-                  }}
-                  className="flex-1 resize-none text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] placeholder:text-[var(--muted)] transition"
-                />
-                <button
-                  onClick={sendReply}
-                  disabled={!reply.trim() || sending}
-                  aria-label="Send reply"
-                  className="p-2.5 bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-40 text-[var(--primary-foreground)] rounded-xl transition shrink-0"
-                >
-                  {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Right: actions panel */}
-        <div className="space-y-3">
-          {/* Status */}
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4">
-            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-3">Update Status</p>
-            {isClosed ? (
-              <button
-                onClick={reopen}
-                disabled={reopening}
-                className="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold bg-[var(--warning-soft)] text-[var(--warning)] border border-[var(--border)] rounded-xl hover:opacity-80 transition disabled:opacity-50"
-              >
-                {reopening ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
-                Reopen Ticket
-              </button>
-            ) : (
-              <div className="space-y-2">
-                {STATUS_FLOW.filter((s) => s !== ticket.status).map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => updateStatus(s)}
-                    disabled={Boolean(updatingStatus)}
-                    className={`w-full flex items-center justify-between px-3 py-2 text-sm font-semibold rounded-xl border transition disabled:opacity-50 ${STATUS_BADGE[s]} hover:opacity-80`}
-                  >
-                    {STATUS_LABEL[s]}
-                    {updatingStatus === s && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Assign */}
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4">
-            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-3">Assign To</p>
-            {assignedAdmin ? (
-              <div className="flex items-center gap-2 mb-3 p-2.5 bg-[var(--surface-soft)] rounded-xl border border-[var(--border)]">
-                <div className="w-7 h-7 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] flex items-center justify-center text-[10px] font-bold shrink-0">
-                  {(assignedAdmin.fullName || assignedAdmin.email || "A")[0].toUpperCase()}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-semibold text-[var(--foreground)] truncate">
-                    {assignedAdmin.fullName || assignedAdmin.email}
-                  </p>
-                  <p className="text-[10px] text-[var(--muted)]">Assigned</p>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-[var(--muted)] mb-2">Unassigned</p>
-            )}
-            <div className="relative">
-              <button
-                onClick={() => setShowAssign((v) => !v)}
-                className="w-full flex items-center justify-between px-3 py-2 text-sm border border-[var(--border)] rounded-xl hover:bg-[var(--surface-soft)] transition text-[var(--foreground)]"
-              >
-                <span className="flex items-center gap-1.5">
-                  <UserCheck className="w-3.5 h-3.5 text-[var(--muted)]" />
-                  {showAssign ? "Close" : "Change Assignment"}
-                </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-[var(--muted)] transition-transform ${showAssign ? "rotate-180" : ""}`} />
-              </button>
-              {showAssign && (
-                <div className="absolute top-10 left-0 right-0 bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-lg z-20 overflow-hidden max-h-48 overflow-y-auto">
-                  <button
-                    onClick={() => assignTicket("")}
-                    disabled={assigning}
-                    className="w-full text-left px-3 py-2 text-sm text-[var(--muted)] hover:bg-[var(--surface-soft)] transition"
-                  >
-                    Unassign
-                  </button>
-                  {admins.map((a) => (
-                    <button
-                      key={a.id}
-                      onClick={() => assignTicket(a.id)}
-                      disabled={assigning}
-                      className={`w-full text-left px-3 py-2 text-sm hover:bg-[var(--surface-soft)] transition ${a.id === ticket.assignedTo ? "font-semibold text-[var(--foreground)]" : "text-[var(--foreground)]"}`}
+              <SectionCard title="Assign To">
+                {assignedAdmin ? (
+                  <div className="mb-3 flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-2.5">
+                    <div
+                      aria-hidden="true"
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[var(--primary)] text-[10px] font-bold text-[var(--primary-foreground)]"
                     >
-                      {a.fullName || a.email}
-                      {a.id === ticket.assignedTo && " ✓"}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+                      {(assignedAdmin.fullName || assignedAdmin.email || "A")[0].toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-xs font-semibold text-[var(--foreground)]">
+                        {assignedAdmin.fullName || assignedAdmin.email}
+                      </p>
+                      <p className="text-[10px] text-[var(--muted)]">Assigned</p>
+                    </div>
+                  </div>
+                ) : ticket?.assignedTo ? (
+                  // The ticket IS assigned — never render that as "Unassigned"
+                  // just because the directory lookup did not resolve.
+                  <div className="mb-3 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-2.5">
+                    <p className="text-xs font-semibold text-[var(--foreground)]">Assigned</p>
+                    <p className="mt-0.5 text-[10px] text-[var(--muted)]">
+                      {adminsError
+                        ? "The admin directory is unavailable, so the assignee's name can't be shown."
+                        : adminsLoading
+                        ? "Loading assignee…"
+                        : "This admin is no longer an active super admin."}
+                    </p>
+                    {adminsError ? (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() => setAdminsKey((k) => k + 1)}
+                      >
+                        <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                        Try again
+                      </Button>
+                    ) : null}
+                  </div>
+                ) : (
+                  <p className="mb-2 text-xs text-[var(--muted)]">Unassigned</p>
+                )}
 
-          {/* Meta */}
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-4 space-y-2">
-            <p className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider mb-1">Details</p>
-            <div className="flex justify-between text-xs">
-              <span className="text-[var(--muted)]">Created</span>
-              <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.createdAt)}</span>
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowAssign((v) => !v)}
+                    aria-expanded={showAssign}
+                    aria-haspopup="menu"
+                    className="flex w-full items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <UserCheck className="h-3.5 w-3.5 text-[var(--muted)]" aria-hidden="true" />
+                      {showAssign ? "Close" : "Change Assignment"}
+                    </span>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 text-[var(--muted)] transition-transform ${
+                        showAssign ? "rotate-180" : ""
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Deliberately NOT role="menu": that role commits to the full
+                      menu keyboard model (arrow keys, Escape, roving tabindex,
+                      focus return). Without it a screen reader announces a menu
+                      whose keys do not behave like one — strictly worse than the
+                      plain, Tab-navigable buttons this replaced. */}
+                  {showAssign && (
+                    <div
+                      className="absolute left-0 right-0 top-10 z-20 max-h-48 overflow-hidden overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-lg"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => assignTicket("")}
+                        disabled={assigning}
+                        className="w-full px-3 py-2 text-left text-sm text-[var(--muted)] transition hover:bg-[var(--surface-soft)] disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+                      >
+                        Unassign
+                      </button>
+
+                      {adminsError ? (
+                        <div className="px-3 py-2">
+                          <p className="text-xs text-[var(--danger-text)]">{adminsError}</p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="mt-1.5"
+                            onClick={() => setAdminsKey((k) => k + 1)}
+                          >
+                            <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                            Try again
+                          </Button>
+                        </div>
+                      ) : adminsLoading ? (
+                        <p className="px-3 py-2 text-xs text-[var(--muted)]">
+                          Loading admins…
+                        </p>
+                      ) : (
+                        admins.map((a) => (
+                          <button
+                            key={a.id}
+                            type="button"
+                                onClick={() => assignTicket(a.id)}
+                            disabled={assigning}
+                            className={`w-full px-3 py-2 text-left text-sm text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
+                              a.id === ticket?.assignedTo ? "font-semibold" : ""
+                            }`}
+                          >
+                            {a.fullName || a.email}
+                            {a.id === ticket?.assignedTo && " ✓"}
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+              </SectionCard>
+
+              <SectionCard title="Details">
+                <dl className="space-y-2">
+                  <div className="flex justify-between gap-3 text-xs">
+                    <dt className="text-[var(--muted)]">Created</dt>
+                    <dd className="font-medium text-[var(--foreground)]">
+                      {fmtDateTime(ticket?.createdAt)}
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-3 text-xs">
+                    <dt className="text-[var(--muted)]">Updated</dt>
+                    <dd className="font-medium text-[var(--foreground)]">
+                      {fmtDateTime(ticket?.updatedAt)}
+                    </dd>
+                  </div>
+                  {ticket?.closedAt ? (
+                    <div className="flex justify-between gap-3 text-xs">
+                      <dt className="text-[var(--muted)]">Closed</dt>
+                      <dd className="font-medium text-[var(--foreground)]">
+                        {fmtDateTime(ticket.closedAt)}
+                      </dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </SectionCard>
             </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-[var(--muted)]">Updated</span>
-              <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.updatedAt)}</span>
-            </div>
-            {ticket.closedAt && (
-              <div className="flex justify-between text-xs">
-                <span className="text-[var(--muted)]">Closed</span>
-                <span className="text-[var(--foreground)] font-medium">{fmtDateTime(ticket.closedAt)}</span>
-              </div>
-            )}
           </div>
         </div>
-      </div>
+      </DataState>
     </div>
   );
 }

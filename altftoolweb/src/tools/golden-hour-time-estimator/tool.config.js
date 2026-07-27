@@ -1,8 +1,8 @@
 const config = {
   slug: "golden-hour-time-estimator",
   name: "Golden Hour Time Estimator",
-  description: "Calculate precise golden hour, sunrise, sunset, and blue hour windows with real-time countdowns, sun path animation, and camera planning alerts.",
-  category: "Creators",
+  description: "Calculate precise golden hour, blue hour, sunrise, sunset and twilight windows for any date and place, with the sun's path across the day.",
+  category: "Image & Photo",
   icon: "sun",
   iconColor: "text-amber-500",
 };

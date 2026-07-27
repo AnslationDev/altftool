@@ -1,4 +1,7 @@
-import FileMetadataMain from "./pages/main";
-export default function Entry() {
-  return <FileMetadataMain />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

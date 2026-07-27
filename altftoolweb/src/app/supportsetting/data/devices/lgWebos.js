@@ -26,7 +26,7 @@ export const lgWebosSettings = [
       "A stable internet connection is required; updates over a weak Wi-Fi signal can time out and need to be restarted.",
     ],
     important: "Do not unplug the TV or remove power during an update — interrupting an install can corrupt the firmware and require a factory reset or service visit.",
-    redirectUrl: "https://www.lg.com/us/support/software-firmware",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Software Update",
     whyItMatters:
       "Streaming apps and LG Channels frequently require a minimum webOS version to launch at all, so falling behind on updates can silently break apps you use every day until you update anyway.",
@@ -62,7 +62,7 @@ export const lgWebosSettings = [
       "Follow the on-screen sample images and adjust each slider — brightness, contrast, color, and tint — until the reference scene looks correct.",
       "Fine-tune further under Picture > Advanced Settings for backlight, sharpness, and motion smoothing (TruMotion) once the wizard is complete.",
     ],
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000012-1447899301578-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Picture Settings",
     whyItMatters:
       "Out-of-the-box Vivid or Standard modes are tuned for bright showroom lighting, which often looks oversaturated and overly sharp at home — a few minutes with the Picture Wizard makes a noticeably more accurate, comfortable image for movies and everyday viewing.",
@@ -98,7 +98,7 @@ export const lgWebosSettings = [
       "Adjust pointer speed and size under Settings (gear icon) > All Settings > General > Devices > Magic Remote.",
       "If the pointer feels intrusive, press the Wheel (OK) button once during normal use to hide it and switch to directional navigation.",
     ],
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20098015-1447991252618-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Magic Remote",
     whyItMatters:
       "The Magic Remote is the primary way to navigate webOS, launch voice search, and use the pointer for scrubbing video — a remote that's lost its pairing can make the TV feel unusable until it's fixed, which takes under a minute.",
@@ -134,7 +134,7 @@ export const lgWebosSettings = [
       "Enable SIMPLINK under Settings > General > Devices so the TV remote can control volume and power on a connected LG soundbar automatically.",
     ],
     important: "Bluetooth audio can add a noticeable delay (audio/video sync lag), which is more apparent on live sports or fast-paced games than on movies.",
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000024-1447893573412-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Sound Settings",
     whyItMatters:
       "Getting Sound Out wrong is one of the most common reasons a connected soundbar appears to \"not work\" — the TV is often still routing audio to its own speakers instead of the external device.",
@@ -170,7 +170,7 @@ export const lgWebosSettings = [
       "Select the Apps card (grid icon) to browse and add more apps from the LG Content Store.",
       "Quick Cards for game consoles and set-top boxes appear automatically when connected via HDMI and can be pinned near the top of the dashboard for faster access.",
     ],
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000013-1447892808923-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: webOS Home",
     whyItMatters:
       "The Home Dashboard is the first screen most people see every time they turn on the TV, so keeping the most-used apps and inputs near the front saves real time compared to scrolling past unused default apps.",
@@ -205,7 +205,7 @@ export const lgWebosSettings = [
       "On OLED models, go to Settings > Support > Additional Settings > Panel Care to run Pixel Cleaning and check Panel Care status, which helps prevent image retention.",
       "Set Auto Power Off (or Sleep Timer) under Settings > General > Power Saving so the TV powers down automatically after a period of inactivity.",
     ],
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000021-1447893211298-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Energy Saving",
     whyItMatters:
       "Leaving a static image like a paused game or news channel logo on screen for hours is the main cause of temporary or permanent image retention on OLED panels, and Energy Saving settings directly reduce that risk while also lowering electricity use.",
@@ -241,7 +241,7 @@ export const lgWebosSettings = [
       "Use Channel Locking to block specific channels by number, and App Locking to require the PIN before opening selected apps.",
     ],
     important: "Write down or securely store a custom PIN — if it's forgotten, resetting locks typically requires a factory reset of the TV.",
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000015-1447893855369-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: Parental Controls",
     whyItMatters:
       "Streaming apps have their own separate content ratings and profile controls, so relying only on an app's built-in kids mode leaves live TV and other apps unrestricted — the TV-level Parental Guidance lock covers all inputs and channels in one place.",
@@ -276,7 +276,7 @@ export const lgWebosSettings = [
       "Open LG Channels from the Home Dashboard or by pressing the dedicated Channels button (if present) on the Magic Remote.",
       "Reorder or hide individual LG Channels stations from within the LG Channels app's channel guide settings.",
     ],
-    redirectUrl: "https://www.lg.com/us/support/product-help/CT20000017-1447894028752-others",
+    redirectUrl: "https://www.lg.com/us/support",
     actionLabel: "Open LG Support: LG Account & Channels",
     whyItMatters:
       "Signing into an LG Account is required to download most paid apps from the Content Store and to use certain LG-connected services, so accounts that skipped sign-in during initial setup often hit a wall the first time they try to install an app.",

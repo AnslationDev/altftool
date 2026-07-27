@@ -1,9 +1,11 @@
 const toolConfig = {
   slug: "text-diff-viewer",
   name: "Text Diff Viewer",
-  category: ["Developer", "Productivity"],
-  description: "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export.",
+  category: "Developer",
+  description:
+    "Compare text versions side-by-side with word-level highlighting, version history, churn analytics and markdown export.",
   icon: "file-diff",
-  iconColor: "text-blue-600"
+  iconColor: "text-blue-600",
 };
+
 export default toolConfig;

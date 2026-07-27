@@ -1,10 +1,10 @@
 export const READING_ORDER_LIMITS = Object.freeze({
-  maxFileBytes: 12 * 1024 * 1024,
-  maxPages: 40,
-  maxItemsPerPage: 2_500,
-  maxCharactersPerPage: 50_000,
-  maxTotalItems: 20_000,
-  maxTotalCharacters: 300_000,
+  maxFileBytes: 100 * 1024 * 1024,
+  maxPages: 100,
+  maxItemsPerPage: 3_500,
+  maxCharactersPerPage: 75_000,
+  maxTotalItems: 50_000,
+  maxTotalCharacters: 750_000,
 });
 
 const SOURCE_REFERENCES = Object.freeze([
@@ -79,10 +79,6 @@ function boundedSafeText(value, maximumCharacters) {
   };
 }
 
-function warning(code, message, tone = "warning") {
-  return { code, message, tone };
-}
-
 export function normalizePageMetadata(metadata = {}) {
   const rawWidth = finiteNumber(metadata.width);
   const rawHeight = finiteNumber(metadata.height);
@@ -147,7 +143,9 @@ export function normalizeTextItem(item, sourceIndex = 0) {
     width,
     height,
     endX: x === null ? null : x + (width || 0),
+    endY: y === null ? null : y + (height || 0),
     rotation,
+    type: item?.type || "text",
     direction: item?.dir === "rtl" || item?.dir === "ttb" ? item.dir : "ltr",
     hasCoordinates,
   };
@@ -241,29 +239,262 @@ function findRecurringColumnGap(lines, pageWidth) {
     }
   }
 
-  const starts = lines
-    .map((line) => line.items[0]?.x)
-    .filter((value) => value !== undefined)
-    .sort((left, right) => left - right);
-  if (starts.length < 4) return null;
+  return null;
+}
 
-  let largest = null;
-  for (let index = 1; index < starts.length; index += 1) {
-    const gap = starts[index] - starts[index - 1];
+function classifyItemType(item, allItems, medianHeight, pageHeight) {
+  if (item.type && item.type !== "text") {
+    return item.type;
+  }
+  const text = item.text || "";
+  const h = item.height || 12;
+
+  if (pageHeight && (item.y > pageHeight * 0.92 || item.y < pageHeight * 0.08)) {
+    if (text.length < 80) return "artifact";
+  }
+
+  if (medianHeight && h >= medianHeight * 1.6 && text.length < 120) {
+    return h >= medianHeight * 2.2 ? "h1" : h >= medianHeight * 1.8 ? "h2" : "h3";
+  }
+
+  const isShort = text.length < 90;
+  const lower = text.toLowerCase();
+  if (
+    isShort &&
+    (lower.startsWith("figure ") ||
+      lower.startsWith("fig.") ||
+      lower.startsWith("table ") ||
+      lower.startsWith("photo "))
+  ) {
+    return "caption";
+  }
+
+  if (/^(\d+[\.\)]|•|\-|\*)\s+/.test(text)) {
+    return "list";
+  }
+
+  if (text.endsWith(":") && text.length < 40) {
+    return "form";
+  }
+
+  return "paragraph";
+}
+
+function detectAccessibilityIssues(estimatedItems, pageHeight, pageWidth, columnGap) {
+  const issues = [];
+  let lastHeadingLevel = 0;
+  const textHashes = new Set();
+
+  for (let i = 0; i < estimatedItems.length; i++) {
+    const item = estimatedItems[i];
+    const prev = i > 0 ? estimatedItems[i - 1] : null;
+    const next = i < estimatedItems.length - 1 ? estimatedItems[i + 1] : null;
+
+    // 1. Wrong Column Order
     if (
-      gap >= pageWidth * 0.2 &&
-      index >= 2 &&
-      starts.length - index >= 2 &&
-      (!largest || gap > largest.gap)
+      columnGap &&
+      prev &&
+      item.x < columnGap.center &&
+      prev.x > columnGap.center &&
+      Math.abs(item.y - prev.y) < (pageHeight || 800) * 0.3
     ) {
-      largest = {
-        gap,
-        center: (starts[index] + starts[index - 1]) / 2,
-        repeatedLines: Math.min(index, starts.length - index),
-      };
+      issues.push({
+        id: `issue-col-${i}`,
+        code: "wrong-column-order",
+        severity: "high",
+        title: "Wrong Column Order",
+        message: `Block #${i + 1} switches back to left column after right column content.`,
+        suggestion: "Read left column completely before moving to right column.",
+        blockId: item.id,
+        blockIndex: i + 1,
+      });
+    }
+
+    // 2. Caption Precedes Image
+    if (
+      item.tagType === "caption" &&
+      next &&
+      (next.tagType === "image" || next.tagType === "figure")
+    ) {
+      issues.push({
+        id: `issue-cap-${i}`,
+        code: "caption-before-image",
+        severity: "medium",
+        title: "Caption Precedes Image",
+        message: `Caption block #${i + 1} ("${item.text.slice(0, 30)}...") is read before the image it describes.`,
+        suggestion: "Place the image block before its caption in reading sequence.",
+        blockId: item.id,
+        blockIndex: i + 1,
+      });
+    }
+
+    // 3. Broken Heading Hierarchy
+    if (item.tagType === "h1" || item.tagType === "h2" || item.tagType === "h3") {
+      const level = parseInt(item.tagType.replace("h", ""), 10);
+      if (lastHeadingLevel > 0 && level > lastHeadingLevel + 1) {
+        issues.push({
+          id: `issue-head-${i}`,
+          code: "broken-heading-hierarchy",
+          severity: "medium",
+          title: "Broken Heading Hierarchy",
+          message: `Heading block #${i + 1} jumps from H${lastHeadingLevel} directly to H${level}.`,
+          suggestion: "Use sequential heading levels (e.g., H1 -> H2 -> H3) without skipping.",
+          blockId: item.id,
+          blockIndex: i + 1,
+        });
+      }
+      lastHeadingLevel = level;
+    }
+
+    // 4. Image Interrupts Paragraph
+    if (
+      (item.tagType === "image" || item.tagType === "figure") &&
+      prev &&
+      next &&
+      prev.tagType === "paragraph" &&
+      next.tagType === "paragraph"
+    ) {
+      issues.push({
+        id: `issue-img-split-${i}`,
+        code: "image-interrupting-paragraph",
+        severity: "high",
+        title: "Image Interrupts Paragraph Flow",
+        message: `Image block #${i + 1} is inserted directly inside paragraph text flow.`,
+        suggestion: "Anchor image before or after complete paragraphs.",
+        blockId: item.id,
+        blockIndex: i + 1,
+      });
+    }
+
+    // 5. Overlapping Content Blocks
+    if (prev && item.x !== null && prev.x !== null && item.endX !== null && prev.endX !== null) {
+      const horizontalOverlap = Math.max(
+        0,
+        Math.min(item.endX, prev.endX) - Math.max(item.x, prev.x),
+      );
+      const verticalOverlap = Math.max(
+        0,
+        Math.min(item.endY || item.y, prev.endY || prev.y) -
+          Math.max(item.y, prev.y),
+      );
+      if (horizontalOverlap * verticalOverlap > 120) {
+        issues.push({
+          id: `issue-overlap-${i}`,
+          code: "text-overlap",
+          severity: "high",
+          title: "Overlapping Content Blocks",
+          message: `Block #${i + 1} overlaps spatially with Block #${i}.`,
+          suggestion: "Adjust layout containers so text boxes do not clip or overlap.",
+          blockId: item.id,
+          blockIndex: i + 1,
+        });
+      }
+    }
+
+    // 6. Header / Footer Repetition without Artifact Tag
+    if (
+      pageHeight &&
+      (item.y > pageHeight * 0.93 || item.y < pageHeight * 0.07) &&
+      item.tagType !== "artifact" &&
+      item.text.length < 60
+    ) {
+      issues.push({
+        id: `issue-header-footer-${i}`,
+        code: "header-footer-repetition",
+        severity: "low",
+        title: "Unmarked Header / Footer",
+        message: `Block #${i + 1} ("${item.text.slice(0, 25)}...") is in margin region but not tagged as artifact.`,
+        suggestion: "Mark repeated headers and footers as background artifacts.",
+        blockId: item.id,
+        blockIndex: i + 1,
+      });
+    }
+
+    // 7. Duplicate Region / Duplicate Reading
+    const cleanText = item.text.trim().toLowerCase();
+    if (cleanText.length > 20) {
+      if (textHashes.has(cleanText)) {
+        issues.push({
+          id: `issue-dup-${i}`,
+          code: "duplicate-region",
+          severity: "medium",
+          title: "Duplicate Reading Block",
+          message: `Block #${i + 1} contains identical text to another block on this page.`,
+          suggestion: "Remove duplicated text streams or mark non-visual copy as artifact.",
+          blockId: item.id,
+          blockIndex: i + 1,
+        });
+      } else {
+        textHashes.add(cleanText);
+      }
+    }
+
+    // 8. Artifact Inside Reading Path
+    if (item.tagType === "artifact" && prev && next) {
+      issues.push({
+        id: `issue-artifact-path-${i}`,
+        code: "artifact-in-path",
+        severity: "low",
+        title: "Artifact Inside Active Reading Path",
+        message: `Decorative artifact block #${i + 1} is positioned between active content blocks.`,
+        suggestion: "Exclude decorative elements from the primary screen reader tag sequence.",
+        blockId: item.id,
+        blockIndex: i + 1,
+      });
     }
   }
-  return largest;
+
+  return issues;
+}
+
+export function calculateAccessibilityScore(issues = [], totalBlocks = 0, pageCount = 1) {
+  let score = 100;
+  const highCount = issues.filter((i) => i.severity === "high").length;
+  const medCount = issues.filter((i) => i.severity === "medium").length;
+  const lowCount = issues.filter((i) => i.severity === "low").length;
+
+  score -= highCount * 12;
+  score -= medCount * 6;
+  score -= lowCount * 2;
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+
+  let rating = "Excellent";
+  let badgeColor = "bg-emerald-500 text-white";
+  if (score < 50) {
+    rating = "Needs Work";
+    badgeColor = "bg-rose-500 text-white";
+  } else if (score < 75) {
+    rating = "Good";
+    badgeColor = "bg-amber-500 text-white";
+  } else if (score < 90) {
+    rating = "Very Good";
+    badgeColor = "bg-blue-500 text-white";
+  }
+
+  const columnIssues = issues.filter((i) => i.code === "wrong-column-order").length;
+  const headingIssues = issues.filter((i) => i.code === "broken-heading-hierarchy").length;
+  const imageIssues = issues.filter((i) => i.code === "caption-before-image" || i.code === "image-interrupting-paragraph").length;
+  const overlapIssues = issues.filter((i) => i.code === "text-overlap").length;
+  const artifactIssues = issues.filter((i) => i.code === "header-footer-repetition" || i.code === "artifact-in-path").length;
+
+  return {
+    score,
+    rating,
+    badgeColor,
+    highCount,
+    medCount,
+    lowCount,
+    totalIssues: issues.length,
+    breakdown: {
+      readingOrder: Math.max(0, 100 - columnIssues * 25 - highCount * 10),
+      structure: Math.max(0, 100 - artifactIssues * 15 - overlapIssues * 20),
+      headings: Math.max(0, 100 - headingIssues * 25),
+      tables: Math.max(0, 100 - issues.filter((i) => i.code === "table-reading-issue").length * 20),
+      images: Math.max(0, 100 - imageIssues * 20),
+      logicalFlow: Math.max(0, 100 - (highCount + medCount) * 12),
+    },
+  };
 }
 
 export function estimatePageReadingOrder(rawItems = [], metadata = {}) {
@@ -278,12 +509,17 @@ export function estimatePageReadingOrder(rawItems = [], metadata = {}) {
   const estimatedItems = [
     ...lines.flatMap((line) => line.items),
     ...unpositioned.map((item) => ({ ...item, lineIndex: null })),
-  ].map((item, estimatedIndex) => ({ ...item, estimatedIndex }));
+  ].map((item, estimatedIndex) => {
+    const tagType = classifyItemType(item, [], 12, page.height);
+    return { ...item, estimatedIndex, tagType };
+  });
+
   const changedPositions = estimatedItems.reduce(
     (count, item, estimatedIndex) =>
       count + (item.sourceIndex === estimatedIndex ? 0 : 1),
     0,
   );
+
   const rotations = positioned.filter(
     (item) => item.rotation !== null && Math.abs(item.rotation) > 8,
   );
@@ -292,64 +528,70 @@ export function estimatePageReadingOrder(rawItems = [], metadata = {}) {
   );
   const pageWidth = page.width || inferPageWidth(positioned);
   const columnGap = findRecurringColumnGap(lines, pageWidth);
-  const warnings = [];
 
+  const accessibilityIssues = detectAccessibilityIssues(
+    estimatedItems,
+    page.height,
+    pageWidth,
+    columnGap,
+  );
+  const scoreData = calculateAccessibilityScore(
+    accessibilityIssues,
+    estimatedItems.length,
+    1,
+  );
+
+  const warnings = [];
   if (page.malformed) {
-    warnings.push(
-      warning(
-        "page-metadata",
+    warnings.push({
+      code: "page-metadata",
+      message:
         "Page size or rotation metadata is incomplete or unusual; coordinate comparisons may be less reliable.",
-      ),
-    );
+      tone: "warning",
+    });
   }
   if (unpositioned.length) {
-    warnings.push(
-      warning(
-        "missing-coordinates",
-        `${unpositioned.length.toLocaleString("en-US")} visible text item${unpositioned.length === 1 ? "" : "s"} had malformed or missing coordinates and were kept at the end of the estimate.`,
-      ),
-    );
+    warnings.push({
+      code: "missing-coordinates",
+      message: `${unpositioned.length.toLocaleString("en-US")} visible text item${unpositioned.length === 1 ? "" : "s"} had malformed or missing coordinates and were kept at the end of the estimate.`,
+      tone: "warning",
+    });
   }
   if (rotations.length) {
-    warnings.push(
-      warning(
-        "rotated-text",
-        `${rotations.length.toLocaleString("en-US")} text item${rotations.length === 1 ? "" : "s"} appear rotated; a simple Y-then-X estimate may not reflect their intended sequence.`,
-      ),
-    );
+    warnings.push({
+      code: "rotated-text",
+      message: `${rotations.length.toLocaleString("en-US")} text item${rotations.length === 1 ? "" : "s"} appear rotated; a simple Y-then-X estimate may not reflect their intended sequence.`,
+      tone: "warning",
+    });
   }
   if (directionalItems.length) {
-    warnings.push(
-      warning(
-        "directional-text",
-        `${directionalItems.length.toLocaleString("en-US")} text item${directionalItems.length === 1 ? "" : "s"} report right-to-left or vertical direction. The left-to-right estimate may not match the intended sequence.`,
-      ),
-    );
+    warnings.push({
+      code: "directional-text",
+      message: `${directionalItems.length.toLocaleString("en-US")} text item${directionalItems.length === 1 ? "" : "s"} report right-to-left or vertical direction. The left-to-right estimate may not match the intended sequence.`,
+      tone: "warning",
+    });
   }
   if (page.rotation && Math.abs(page.rotation) > 0.01) {
-    warnings.push(
-      warning(
-        "rotated-page",
-        `The page reports ${page.rotation}° rotation. Review both sequences manually.`,
-      ),
-    );
+    warnings.push({
+      code: "rotated-page",
+      message: `The page reports ${page.rotation}° rotation. Review both sequences manually.`,
+      tone: "warning",
+    });
   }
   if (columnGap) {
-    warnings.push(
-      warning(
-        "possible-columns",
+    warnings.push({
+      code: "possible-columns",
+      message:
         "Repeated horizontal gaps suggest multiple columns or side-by-side regions. The Y-then-X estimate can interleave those regions, so it is intentionally marked ambiguous.",
-      ),
-    );
+      tone: "warning",
+    });
   }
   if (changedPositions) {
-    warnings.push(
-      warning(
-        "order-difference",
-        `${changedPositions.toLocaleString("en-US")} item position${changedPositions === 1 ? "" : "s"} differ between extracted source sequence and the visual estimate.`,
-        "info",
-      ),
-    );
+    warnings.push({
+      code: "order-difference",
+      message: `${changedPositions.toLocaleString("en-US")} item position${changedPositions === 1 ? "" : "s"} differ between extracted source sequence and the visual estimate.`,
+      tone: "info",
+    });
   }
 
   return {
@@ -365,8 +607,10 @@ export function estimatePageReadingOrder(rawItems = [], metadata = {}) {
       Boolean(rotations.length) ||
       Boolean(directionalItems.length) ||
       page.malformed,
-    warnings,
     possibleColumns: Boolean(columnGap),
+    accessibilityIssues,
+    scoreData,
+    warnings,
   };
 }
 
@@ -398,6 +642,7 @@ export async function collectBoundedTextItems(
     totalBudget && Number.isFinite(totalBudget.charactersRemaining)
       ? Math.max(0, Math.floor(totalBudget.charactersRemaining))
       : localCharacterLimit;
+
   const itemLimit = Math.min(localItemLimit, totalItems);
   const characterLimit = Math.min(localCharacterLimit, totalCharacters);
   const items = [];
@@ -468,7 +713,7 @@ export async function collectBoundedTextItems(
         await reader.cancel();
         cancelled = true;
       } catch {
-        // Page cleanup still runs in the caller if the stream is already closed.
+        // Page cleanup fallback
       }
     }
   }
@@ -498,6 +743,13 @@ export function summarizeReadingOrderPages(
   pages = [],
   pageCount = pages.length,
 ) {
+  const allIssues = pages.flatMap((p) => p.estimate.accessibilityIssues || []);
+  const overallScoreData = calculateAccessibilityScore(
+    allIssues,
+    pages.reduce((acc, p) => acc + p.itemCount, 0),
+    pageCount,
+  );
+
   const totals = pages.reduce(
     (summary, page) => ({
       itemCount: summary.itemCount + page.itemCount,
@@ -522,6 +774,8 @@ export function summarizeReadingOrderPages(
     pageCount,
     processedPages: pages.length,
     imageOnly: totals.itemCount === 0,
+    allIssues,
+    scoreData: overallScoreData,
   };
 }
 

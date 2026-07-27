@@ -1,4 +1,4 @@
-import { getDomain, getDomainCategory, isHttp, normalizeUrl, isLikelyBroken, generateId, estimateMemory } from "./helpers";
+import { getDomain, getDomainCategory, isHttp, normalizeUrl, isLikelyBroken, estimateMemory } from "./helpers";
 
 export function parseSessionData(input, format = "auto") {
   let rawUrls = [];
@@ -33,7 +33,9 @@ export function parseSessionData(input, format = "auto") {
   const tabs = rawUrls.map((url, i) => {
     const domain = getDomain(url);
     return {
-      id: generateId(),
+      // Index-derived so the same pasted session always parses to the same
+      // tab ids — the analysis is reproducible and diffable.
+      id: `tab-${i}`,
       url,
       domain,
       title: extractTitle(url, i),

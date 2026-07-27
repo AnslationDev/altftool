@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 import { evaluateBlogContent } from "@altftool/core/blogContentHealth";
 import { enforceRateLimit } from "@altftool/core/http";
 import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 import { adminDb } from "@/lib/firebaseAdmin";
 import { slugify } from "@/projects/altftool/modules/blogs/lib/slug";
 import { isAutomationEnabled, CATEGORIES_COLLECTION, fsPath } from "@/lib/automation/constants";
@@ -37,6 +38,13 @@ export async function POST(request) {
     ({ admin: adminUser } = await verifyActiveAdmin(request));
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  // Preview runs the same generator against the same altftool blog settings
+  // and spends the same LLM budget as POST /api/blogs/generate, so it takes
+  // the identical gate rather than "is some active admin" (superadmin
+  // bypasses inside hasModuleAccess).
+  if (!hasModuleAccess({ adminData: adminUser, projectId: "altftool", moduleKey: "blogs", action: "write" })) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   let body = {};

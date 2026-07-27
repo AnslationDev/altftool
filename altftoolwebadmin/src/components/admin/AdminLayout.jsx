@@ -13,7 +13,13 @@ import { emitAlert } from "@/lib/alertBus";
 import { usePushNotifications } from "@/lib/usePushNotifications";
 import { LockKeyhole, RefreshCw, ShieldAlert } from "lucide-react";
 
-const DEV_BYPASS_AUTH = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true";
+// Local-development escape hatch only. The NODE_ENV guard matches the other
+// bypasses in this app (localAdminSession.js, adminAccess.js) and is evaluated
+// at build time, so a production bundle can never ship with the gates disabled
+// even if NEXT_PUBLIC_DEV_BYPASS_AUTH is set in the deploy environment.
+const DEV_BYPASS_AUTH =
+  process.env.NODE_ENV !== "production" &&
+  process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true";
 
 function AdminGuardState({ title, detail }) {
   return (
@@ -33,8 +39,72 @@ function AdminGuardState({ title, detail }) {
   );
 }
 
+/**
+ * Terminal state for "signed in, but we could not resolve an admin profile".
+ * Deliberately self-contained: the sidebar and header both require `adminData`,
+ * so this screen has to carry its own escape hatches.
+ */
+function AdminProfileUnavailable({ onRetry, onSignOut, stalled }) {
+  const [retrying, setRetrying] = useState(false);
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    try {
+      await onRetry?.();
+    } finally {
+      setRetrying(false);
+    }
+  };
+
+  return (
+    <main className="flex h-screen items-center justify-center bg-[var(--background)] px-4">
+      <div className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-sm">
+        <ShieldAlert className="mx-auto mb-4 h-9 w-9 text-[var(--warning)]" />
+        <h1 className="text-lg font-semibold text-[var(--foreground)]">
+          We couldn’t load your permissions
+        </h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+          {stalled
+            ? "You’re still signed in, but your admin profile couldn’t be fetched. Until it loads, this console stays locked."
+            : "Your admin profile isn’t available yet. Retry, or sign out and sign back in."}
+        </p>
+        <div className="mt-6 flex flex-col gap-2.5">
+          <button
+            type="button"
+            onClick={handleRetry}
+            disabled={retrying}
+            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-60"
+          >
+            <RefreshCw className={`h-4 w-4 ${retrying ? "animate-spin motion-reduce:animate-none" : ""}`} />
+            {retrying ? "Retrying…" : "Try again"}
+          </button>
+          <button
+            type="button"
+            onClick={onSignOut}
+            disabled={retrying}
+            className="inline-flex h-10 w-full items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-60"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 export default function AdminLayout({ children }) {
-  const { user, adminData, loading, isSuperAdmin, isPendingUser, isDenied } = useAuth();
+  const {
+    user,
+    adminData,
+    loading,
+    isSuperAdmin,
+    isPendingUser,
+    isDenied,
+    isInactive,
+    syncFailed,
+    refreshAuth,
+    logout,
+  } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [requestingAccess, setRequestingAccess] = useState(false);
@@ -89,7 +159,12 @@ export default function AdminLayout({ children }) {
       router.replace("/access-requested");
       return;
     }
-  }, [user, adminData, loading, isPendingUser, isDenied, router]);
+
+    if (isInactive) {
+      router.replace("/account-inactive");
+      return;
+    }
+  }, [user, adminData, loading, isPendingUser, isInactive, isDenied, router]);
 
   useEffect(() => {
     setMobileSidebarOpen(false);
@@ -142,6 +217,30 @@ export default function AdminLayout({ children }) {
       <AdminGuardState
         title="Opening access notice"
         detail="This account does not currently have admin access."
+      />
+    );
+  }
+  if (!DEV_BYPASS_AUTH && isInactive) {
+    return (
+      <AdminGuardState
+        title="Opening account status"
+        detail="Your account access has been paused."
+      />
+    );
+  }
+
+  // A signed-in session with no resolved profile must NOT fall through to the
+  // permission guard below: `hasAccess` starts as `true` and is only narrowed
+  // inside `if (adminData && ...)`, so a failed profile fetch previously
+  // rendered every protected route with no RBAC check at all — and, because the
+  // sidebar and header are both gated on `adminData`, with no navigation and no
+  // way to sign out. Default-deny and give the operator a way forward instead.
+  if (!DEV_BYPASS_AUTH && !adminData) {
+    return (
+      <AdminProfileUnavailable
+        onRetry={refreshAuth}
+        onSignOut={logout}
+        stalled={syncFailed}
       />
     );
   }

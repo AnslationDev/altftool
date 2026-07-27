@@ -1,4 +1,4 @@
-import { RefreshCw, Gamepad2 } from "lucide-react";
+import { RefreshCw, Gamepad2, Users, HardDrive, Volume2, Wifi, Smartphone, ShieldCheck } from "lucide-react";
 
 export const xboxSettings = [
   {
@@ -20,7 +20,7 @@ export const xboxSettings = [
       "Select \"Update console\" if an update is available.",
       "To let updates install automatically overnight, leave the console in standby (not fully powered off) and confirm \"Instant-on\" is your chosen power mode under Settings → General → Power mode & startup.",
     ],
-    redirectUrl: "https://support.xbox.com/en-US/help/hardware-network/system-updates",
+    redirectUrl: "https://support.xbox.com/en-US",
     actionLabel: "Open Xbox Support: System Updates",
     whyItMatters:
       "Some games and features (cross-platform play, certain accessories, new controller firmware) require a minimum console system version — an out-of-date console can fail to launch a game entirely until it updates.",
@@ -56,7 +56,7 @@ export const xboxSettings = [
       "On the controller, press and release its own pairing button — the Xbox button will flash, then stay solid once paired.",
       "To update controller firmware, go to Profile & system → Settings → Devices & connections → Accessories, select the controller, and choose \"Firmware update\" if one is available.",
     ],
-    redirectUrl: "https://support.xbox.com/en-US/help/hardware-network/controller/xbox-wireless-controller-connect",
+    redirectUrl: "https://support.xbox.com/en-US",
     actionLabel: "Open Xbox Support: Controller Pairing",
     whyItMatters:
       "Controller firmware updates fix input latency, connection drops, and stick-drift-adjacent calibration issues — a controller stuck on old firmware is a common, easily overlooked cause of intermittent disconnects that get blamed on the console instead.",
@@ -72,5 +72,247 @@ export const xboxSettings = [
     tipsAndTricks: ["A controller can be paired to more than one console/PC, but it only stays actively connected to whichever it was most recently paired or manually switched to."],
     faqs: [{ q: "Can I use a PlayStation or third-party controller on Xbox?", a: "Only officially licensed Xbox-compatible controllers work with Xbox consoles — most third-party or other-platform controllers are not supported without specific licensing for Xbox." }],
     relatedSettingIds: ["xbox-system-update"],
+  },
+  {
+    id: "xbox-account-sign-in",
+    title: "Account Sign-In & Xbox Live",
+    icon: Users,
+    platform: "xbox",
+    category: "accounts-sync-family",
+    frequentlyUsed: true,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "4 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Sign in with your Microsoft account and manage Xbox Live connectivity",
+    description:
+      "Every Xbox profile is tied to a Microsoft account, and staying signed in to that account is what unlocks Xbox Live features — multiplayer, cloud saves, achievements, and access to purchased games and Game Pass. Multiple people can add their own accounts to the same console without losing their individual saves, settings, or friends lists.",
+    details: [
+      "Press the Xbox button, go to Profile & system → Add or switch, then choose \"Add new\" and sign in with a Microsoft account email and password.",
+      "Enable \"Sign me in automatically\" so this profile signs in whenever the console powers on, without re-entering a password.",
+      "To switch between already-added profiles, press the Xbox button, select your gamerpic, then choose the other profile — no re-entry needed if auto sign-in isn't blocking it.",
+      "Manage password, security info, and two-step verification for the account at account.microsoft.com/security, not on the console itself.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Sign-In & Account Help",
+    whyItMatters:
+      "Without a signed-in Microsoft account, the console can't verify game licenses, sync cloud saves, or connect to Xbox Live — meaning no multiplayer, no achievements tracking, and in many cases no access to digitally purchased games at all.",
+    bestPractices: [
+      "Turn on two-step verification through the Microsoft Authenticator app — it stops most unauthorized sign-in attempts without adding real friction to daily use.",
+      "Set your primary profile to auto sign-in on your main console, but leave guest or shared-household profiles on manual sign-in.",
+      "Sign out fully (Profile & system → your gamerpic → Sign out) before letting someone borrow the console, especially if payment methods are saved.",
+    ],
+    afterImageContent: {
+      heading: "Switching the primary (auto sign-in) account",
+      steps: [
+        "Go to Profile & system → Settings → Account → Sign-in, security & passkey.",
+        "Choose the profile that should sign in automatically on startup.",
+        "Toggle \"Sign me in automatically\" on for that profile and off for others sharing the console.",
+      ],
+    },
+    commonIssues: [
+      { issue: "Console is stuck on \"Signing in…\"", fix: "Check status.xbox.com for a live Xbox Live outage first, then verify your network connection under Settings → General → Network settings — most sign-in stalls are network or service related, not account corruption." },
+      { issue: "Two-step verification code never arrives", fix: "Use the Microsoft Authenticator app instead of SMS if texts are delayed, and double-check the phone number or recovery email on file at account.microsoft.com hasn't expired or changed." },
+    ],
+    tipsAndTricks: ["You can add several local profiles to one console, but only Xbox Game Pass and purchased-game licenses tied to the console's designated \"home Xbox\" are shareable across those profiles when offline."],
+    faqs: [{ q: "Do I still need Xbox Live Gold to play online?", a: "Xbox Live Gold was replaced by Xbox Game Pass Core and Ultimate — you need one of those (or a Game Pass tier that includes online multiplayer) to play most paid multiplayer games; free-to-play titles don't require it." }],
+    relatedSettingIds: ["xbox-privacy-family-settings", "xbox-game-library"],
+  },
+  {
+    id: "xbox-game-library",
+    title: "Game Library & Installs",
+    icon: HardDrive,
+    platform: "xbox",
+    category: "storage-backup-data",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "4 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Install, uninstall, and move games across storage devices",
+    description:
+      "Your full digital library — everything you own, including games you haven't installed — lives under My games & apps, while Settings → System → Storage shows what's actually taking up space and lets you move titles between the internal drive, an external USB drive, or a Seagate Storage Expansion Card.",
+    details: [
+      "Press the Xbox button → My games & apps → See all → Full library to browse everything tied to your account, installed or not.",
+      "Go to Settings → System → Storage to see space used per device and per game.",
+      "Highlight a game, press the Menu button, and choose \"Uninstall\" to free space, or \"Move\" / \"Copy\" to transfer it to another connected storage device.",
+      "Enable Settings → General → Updates → \"Keep games & apps up to date\" so installed titles patch automatically in the background.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Manage Installed Games & Apps",
+    whyItMatters:
+      "Modern game installs regularly run 50–150GB, so unmanaged libraries fill an internal drive fast — leading to failed updates, blocked new installs, and console slowdowns from a nearly-full drive.",
+    bestPractices: [
+      "Add a USB 3.0 external drive (256GB minimum) or a Storage Expansion Card for Xbox Series X|S if you regularly rotate between more games than fit internally.",
+      "Uninstall finished single-player games instead of leaving them installed indefinitely — save data and achievements stay tied to your profile, not the install.",
+      "Periodically check Settings → System → Storage for large, rarely-played titles before assuming you need more storage hardware.",
+    ],
+    commonIssues: [
+      { issue: "Game is grayed out and won't install", fix: "Confirm you're signed in on your \"home Xbox\" and the account actually owns a license for that title — shared/family licenses only work fully offline on the designated home console." },
+      { issue: "External drive isn't recognized or is too slow", fix: "Use a USB 3.0-rated drive of at least 256GB; on Xbox Series X|S, only games installed on the internal drive or an official Storage Expansion Card get full next-gen load-time performance — external USB drives run older-gen games only." },
+    ],
+    tipsAndTricks: ["Sort your library by \"Size\" in the Storage menu to quickly spot the biggest space hogs instead of guessing which games to uninstall."],
+    faqs: [{ q: "Will uninstalling a game delete my save data?", a: "No — saves sync to the cloud (or can be backed up) independently of the install, so reinstalling the game restores your progress as long as you're signed in to the same account." }],
+    relatedSettingIds: ["xbox-system-update", "xbox-account-sign-in"],
+  },
+  {
+    id: "xbox-audio-output",
+    title: "Audio Output Settings",
+    icon: Volume2,
+    platform: "xbox",
+    category: "display-sound-notifications",
+    frequentlyUsed: false,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "3 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Set up HDMI, optical, or headset audio output correctly",
+    description:
+      "Xbox routes audio differently depending on whether it's going to a TV's built-in speakers, a soundbar or AV receiver over HDMI/optical, or a headset plugged into the controller — and picking the wrong format is the single most common cause of \"no sound\" or distorted audio after setting up a new console or display.",
+    details: [
+      "Go to Settings → General → Volume & audio output to choose the HDMI audio format: Stereo Uncompressed for TV speakers, or Dolby Digital 5.1 / Bitstream out for a receiver or soundbar that decodes surround sound itself.",
+      "For an optical (TOSLINK) connection, set the output to a compressed format like Dolby Digital, since optical cannot carry uncompressed PCM surround sound.",
+      "Under Headset audio, adjust the Game/Chat volume balance slider and mic monitoring level independently from TV volume.",
+      "Use \"Test audio output\" in the same menu to confirm sound is reaching the correct device before assuming a hardware fault.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Audio Setup",
+    whyItMatters:
+      "A mismatched audio format is a leading cause of silent or crackling audio after connecting a new TV, soundbar, or receiver, and an unbalanced game/chat mix is one of the most common headset complaints — both are fixed in software, not by replacing hardware.",
+    bestPractices: [
+      "Start with \"Stereo Uncompressed\" when troubleshooting a no-sound issue, then step up to Dolby formats only once basic audio is confirmed working.",
+      "Re-run the audio test after connecting any new display or sound device — formats don't always carry over correctly through HDMI switches or older receivers.",
+      "Keep chat volume slightly below game volume as a baseline, then adjust per-game since default mixes vary by title.",
+    ],
+    commonIssues: [
+      { issue: "No sound after connecting a new TV or soundbar", fix: "Reset the HDMI audio format back to Stereo Uncompressed, confirm the correct HDMI input is selected on the TV/receiver, then re-select the surround format if supported." },
+      { issue: "Chat is too quiet or too loud compared to game audio", fix: "Open Settings → General → Volume & audio output and adjust the dedicated Game/Chat balance slider — this is separate from the console's overall volume." },
+    ],
+    tipsAndTricks: ["Dolby Atmos for headphones is a one-time purchase (with a free trial) from the Microsoft Store — it's separate from Dolby Atmos for home theater, which works with a compatible AV receiver instead."],
+    faqs: [{ q: "Why is there no sound over my optical cable?", a: "Optical (TOSLINK) can't carry uncompressed PCM surround sound — set the output format to a compressed option like \"Bitstream out (Dolby)\" or \"Dolby Digital 5.1\" instead of PCM." }],
+    relatedSettingIds: ["xbox-network-settings"],
+  },
+  {
+    id: "xbox-network-settings",
+    title: "Network Settings",
+    icon: Wifi,
+    platform: "xbox",
+    category: "connectivity-network",
+    frequentlyUsed: true,
+    recommended: true,
+    difficulty: "Intermediate",
+    estimatedTime: "5 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Check connection type, run a network test, and fix NAT type",
+    description:
+      "Settings → General → Network settings is where you switch between wired and wireless, run a full connection test (download/upload speed and packet loss), and check your NAT type — the setting most responsible for matchmaking failures, party chat drops, and \"can't join session\" errors.",
+    details: [
+      "Go to Settings → General → Network settings → Test network connection to check speed, packet loss, and NAT type in one pass.",
+      "Prefer a wired Ethernet connection over Wi-Fi when possible — it's both faster and far less prone to interference-related packet loss.",
+      "If NAT type shows Moderate or Strict, open Advanced settings to view your console's IP address, then enable UPnP on your router, or manually forward the required Xbox Live ports to that IP.",
+      "Set a DNS manually (e.g., a public DNS provider) under Advanced settings if your ISP's default DNS is causing slow store or sign-in loading.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Network Settings",
+    whyItMatters:
+      "A Strict NAT type blocks or degrades connections to other Strict/Moderate NAT players, which shows up as failed matchmaking, being unable to join a friend's party, or voice chat dropping mid-game — problems that look like a game bug but are actually a router configuration issue.",
+    bestPractices: [
+      "Use wired Ethernet for competitive or latency-sensitive games whenever it's an option.",
+      "Enable UPnP on the router first before attempting manual port forwarding — it resolves most NAT issues without touching router configuration pages.",
+      "Reserve a static/DHCP-reserved IP for the console in the router's settings so any manual port forwards don't break after the console gets reassigned a new local IP.",
+    ],
+    afterImageContent: {
+      heading: "Manually forwarding Xbox Live ports",
+      steps: [
+        "Find the console's local IP under Settings → Network settings → Advanced settings → IP settings.",
+        "In your router's admin page, create port-forward rules to that IP for: 88 (UDP), 3074 (UDP/TCP), 53 (UDP/TCP), 80 (TCP), 500 (UDP), 3544 (UDP), and 4500 (UDP).",
+        "Save the router settings, restart the console, and re-run the network test to confirm NAT type improved to Open or Moderate.",
+      ],
+    },
+    commonIssues: [
+      { issue: "NAT type shows Strict", fix: "Enable UPnP on the router, or manually forward the required Xbox Live ports to the console's local IP; double NAT from a modem-plus-router setup is a common hidden cause." },
+      { issue: "Frequent disconnects or lag spikes mid-match", fix: "Switch from Wi-Fi to a wired connection, or if wireless is the only option, move closer to the router and reduce competing 2.4GHz device traffic." },
+    ],
+    tipsAndTricks: ["Running the network test right after a router reboot can show temporarily inaccurate results — wait a minute or two for the router to fully stabilize before troubleshooting further."],
+    faqs: [{ q: "What's the practical difference between Open, Moderate, and Strict NAT?", a: "Open lets you connect and host with almost anyone; Moderate can host but with some restrictions on who can join; Strict frequently fails to connect to other Strict or Moderate players, causing party and matchmaking errors." }],
+    relatedSettingIds: ["xbox-remote-play", "xbox-system-update"],
+  },
+  {
+    id: "xbox-remote-play",
+    title: "Remote Play",
+    icon: Smartphone,
+    platform: "xbox",
+    category: "apps-features",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "4 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Stream your own console's games to a PC, phone, or tablet",
+    description:
+      "Xbox Remote Play streams gameplay from games already installed on your console to the Xbox app on Windows, iOS, or Android over the internet — distinct from cloud gaming (xCloud), which streams from Microsoft's servers and requires a Game Pass Ultimate subscription. Remote Play just needs your console powered on (or in standby) and reachable over the network.",
+    details: [
+      "On the console, go to Settings → Devices & connections → Remote features and turn on \"Enable remote features.\"",
+      "Make sure the console's power mode allows it to stay reachable in standby — check Settings → General → Power mode & startup.",
+      "On your phone, tablet, or PC, install the Xbox app, sign in with the same Microsoft account, select your console under Devices → Remote Play, and tap Play.",
+      "Pair a compatible Bluetooth controller directly to the streaming device for the lowest input latency, rather than relying on on-screen touch controls.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Remote Play",
+    whyItMatters:
+      "Remote Play lets you keep playing your own installed games and save progress away from the TV — on a laptop, phone, or tablet — using games you already own, without paying for a cloud-gaming subscription.",
+    afterImageContent: {
+      heading: "Improving remote play stream quality",
+      steps: [
+        "Connect the console to the router via Ethernet or 5GHz Wi-Fi rather than 2.4GHz.",
+        "Pause any large downloads or updates on the console before starting a session.",
+        "In the Xbox app's stream settings, lower the resolution/bitrate manually if the stream is stuttering rather than letting it auto-negotiate on a weak connection.",
+      ],
+    },
+    bestPractices: [
+      "Use a 5GHz Wi-Fi band or wired Ethernet on the console side — 2.4GHz Wi-Fi is the most common cause of a laggy Remote Play stream.",
+      "Close other bandwidth-heavy activity on the same network (downloads, 4K streaming) while remote playing.",
+      "Keep the console on \"Instant-on\" power mode so it stays reachable for Remote Play without needing someone at home to turn it on manually.",
+    ],
+    commonIssues: [
+      { issue: "Console shows offline and Remote Play won't connect", fix: "Confirm \"Enable remote features\" is still on and the console is in standby (Instant-on), not fully powered off or on Energy-saving shutdown." },
+      { issue: "Stream is laggy or keeps dropping resolution", fix: "Lower the streaming quality manually in the Xbox app, move the streaming device closer to Wi-Fi, or avoid public/hotel networks that throttle or block the required ports." },
+    ],
+    tipsAndTricks: ["Remote Play works over cellular data as well as Wi-Fi — just watch your data usage, since sustained high-quality streaming can use several GB per hour."],
+    faqs: [{ q: "Is Remote Play the same as cloud gaming?", a: "No — Remote Play streams from your own console using games already installed there, while cloud gaming (xCloud) streams from Microsoft's servers and requires a Game Pass Ultimate subscription." }],
+    relatedSettingIds: ["xbox-network-settings", "xbox-account-sign-in"],
+  },
+  {
+    id: "xbox-privacy-family-settings",
+    title: "Privacy & Family Settings",
+    icon: ShieldCheck,
+    platform: "xbox",
+    category: "privacy-permissions",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "5 min read",
+    supportedVersions: "Xbox Series X|S, Xbox One",
+    heading: "Set content restrictions, screen time, and communication privacy for your household",
+    description:
+      "Xbox family controls are managed through a Microsoft family group (at account.microsoft.com/family or the Xbox Family Settings mobile app), covering age-based content filters, daily screen time limits, spending permissions, and who a child account can communicate with — with a quick-access subset also available directly on the console.",
+    details: [
+      "Create or join a family group at account.microsoft.com/family, then add a child account (or invite one) so it's linked under your organizer account.",
+      "In the Xbox Family Settings app or on the family website, set content restrictions by ESRB age rating for games, apps, and movies/TV.",
+      "Configure a screen time schedule with daily limits and allowed hours, which applies across Xbox, Windows, and the mobile app for that child's account.",
+      "Set communication & multiplayer privacy (who can chat, see profile, or send friend requests) per child, and require approval for purchases.",
+      "On the console itself, Settings → Account → Family gives quick access to view and adjust these settings without leaving the dashboard.",
+    ],
+    redirectUrl: "https://support.xbox.com/en-US",
+    actionLabel: "Open Xbox Support: Family Settings",
+    whyItMatters:
+      "Without a configured family group, a child's account defaults to broader content access and communication permissions than most parents expect — proper setup prevents exposure to mature content, unmoderated chat with strangers, and unauthorized purchases on a linked payment method.",
+    bestPractices: [
+      "Set up the family group and content restrictions before a child ever signs in on the console for the first time, rather than after issues come up.",
+      "Review the activity report emailed periodically to the family organizer's account to see actual playtime and app usage, not just the configured limits.",
+      "Revisit content restrictions every year or so — default ESRB filters can lag behind a child's actual age and maturity if never updated.",
+    ],
+    commonIssues: [
+      { issue: "Child account can't message friends or join a party", fix: "Check communication & multiplayer privacy settings in the Xbox Family Settings app — younger child accounts often default to \"Friends only\" or fully blocked, which needs to be manually loosened per contact or setting." },
+      { issue: "Screen time limit isn't being enforced", fix: "Confirm the child is signed into their own dedicated child account (not a shared/adult profile), and that the console's date, time, and time zone are set correctly, since scheduling relies on accurate system time." },
+    ],
+    tipsAndTricks: ["Content restrictions and privacy settings are tied to the child's Microsoft account, not the console, so they automatically follow that child to any other Xbox console, Windows PC, or the mobile Xbox app."],
+    faqs: [{ q: "Can a child change their own age group or restrictions?", a: "No — only the family organizer (parent/guardian account) can change a child's age group, content restrictions, screen time, or remove them from the family group." }],
+    relatedSettingIds: ["xbox-account-sign-in"],
   },
 ];

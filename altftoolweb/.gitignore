@@ -45,3 +45,6 @@ yarn-error.log*
 next-env.d.ts
 
 tmp/
+
+# workspace package installs (a local npm install here must never be committed)
+packages/*/node_modules/

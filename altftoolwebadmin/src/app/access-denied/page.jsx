@@ -1,18 +1,70 @@
 "use client";
 
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebaseAuth";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { emitAlert } from "@/lib/alertBus";
+import { getFirstAllowedRoute } from "@/lib/permissionUtils";
 import { LogOut } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function AccessDeniedPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const {
+    user,
+    adminData,
+    isPendingUser,
+    isInactive,
+    loading: authLoading,
+    logout,
+    refreshAuth,
+  } = useAuth();
   const [loading, setLoading] = useState(false);
+  const hasRedirectedRef = useRef(false);
+
+  /* ── Recovery: this page must not be a dead end ── */
+  useEffect(() => {
+    if (authLoading) return;
+    if (hasRedirectedRef.current) return;
+
+    // Access was granted after all → go straight into the console.
+    if (adminData) {
+      hasRedirectedRef.current = true;
+      router.replace(getFirstAllowedRoute(adminData) ?? "/profile");
+      return;
+    }
+
+    // A fresh request is now pending → the waiting screen owns that state.
+    if (isPendingUser) {
+      hasRedirectedRef.current = true;
+      router.replace("/access-requested");
+      return;
+    }
+
+    // Deactivated (not rejected) → the account-inactive screen owns that state.
+    if (isInactive) {
+      hasRedirectedRef.current = true;
+      router.replace("/account-inactive");
+      return;
+    }
+
+    // This route sits outside (protected), so it also renders for a signed-out
+    // visitor or a tab whose session dropped. Send them to /login instead of
+    // leaving a screen whose only button throws on a null user.
+    if (!user) {
+      hasRedirectedRef.current = true;
+      router.replace("/login");
+    }
+  }, [authLoading, adminData, isPendingUser, isInactive, user, router]);
 
   const handleReRequest = async () => {
+    if (!user) {
+      emitAlert({
+        type: "error",
+        message: "Your session has expired. Please sign in again.",
+      });
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -27,23 +79,58 @@ export default function AccessDeniedPage() {
         body: JSON.stringify({ type: "new" }),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
-        alert(data.error || "Failed to submit request");
+        // Operator-facing copy only — never surface the raw server message.
+        if (res.status === 409) {
+          emitAlert({
+            type: "info",
+            message: "You already have a request awaiting review.",
+          });
+          // Re-sync instead of navigating blind: the context still says
+          // `isDenied`, and /access-requested redirects straight back here on
+          // that flag. Once the refresh resolves the real state, the recovery
+          // effect above sends us to the right screen.
+          await refreshAuth().catch(() => {});
+          return;
+        }
+        emitAlert({
+          type: "error",
+          message:
+            res.status === 401 || res.status === 403
+              ? "Your session has expired. Please sign in again."
+              : res.status === 429
+                ? "Too many requests. Please wait a moment and try again."
+                : "We couldn’t submit your access request. Please try again.",
+        });
         return;
       }
 
-      router.replace("/access-requested");
+      emitAlert({
+        type: "success",
+        message: "Access request submitted. A super admin will review it shortly.",
+      });
+      // Same reason as the 409 branch: replacing to /access-requested while the
+      // context still holds `isDenied` bounces the admin straight back to this
+      // screen with no confirmation. Refresh first — /api/admin/me now reports
+      // the new pending request, which flips `isPendingUser` and lets the
+      // recovery effect do the navigating. Swallow refresh errors — the request
+      // did succeed, so they must not fall through to the "couldn't submit"
+      // toast below.
+      await refreshAuth().catch(() => {});
     } catch {
-      alert("Something went wrong. Try again.");
+      emitAlert({
+        type: "error",
+        message: "We couldn’t submit your access request. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleSignOut = async () => {
-    await signOut(auth);
+    // Use the context logout so the server-side security session is revoked and
+    // any local-admin session is cleared — a bare signOut(auth) leaves both.
+    await logout();
     router.replace("/login");
   };
 
@@ -54,7 +141,7 @@ export default function AccessDeniedPage() {
     >
       <div className="w-full max-w-sm">
         <div className="card p-8" style={{ boxShadow: "var(--shadow-md)" }}>
-          
+
           {/* ── Status Indicator ── */}
           <div className="flex justify-center mb-6">
             <div
@@ -128,7 +215,7 @@ export default function AccessDeniedPage() {
           <div className="space-y-3">
             <button
               onClick={handleReRequest}
-              disabled={loading}
+              disabled={loading || !user}
               className="w-full btn btn-primary py-2.5 disabled:opacity-50"
             >
               {loading ? "Submitting..." : "Request Access Again"}

@@ -1,5 +1,7 @@
-import CartBillSplitter from "./App";
+"use client";
 
-export default function Entry() {
-  return <CartBillSplitter />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

@@ -1,7 +1,5 @@
 "use client";
-
-import SeatingChartMaker from "./App";
-
+import ToolHome from "./pages";
 export default function ToolEntry() {
-  return <SeatingChartMaker />;
+  return <ToolHome />;
 }

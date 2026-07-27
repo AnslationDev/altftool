@@ -24,7 +24,7 @@ export default function ThemeSwitcher({ current, onChange }) {
             key={theme.key}
             onClick={() => onChange(theme.key)}
             aria-pressed={current === theme.key}
-            className={`p-1.5 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+            className={`p-1.5 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
               current === theme.key
                 ? "border-(--primary) ring-1 ring-(--primary)"
                 : "border-(--border) hover:border-(--border-strong)"

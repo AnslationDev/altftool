@@ -66,7 +66,10 @@ async function handler({ request, audit }) {
 export const POST = withAdminApi(handler, {
   rateLimit: { limit: 20, windowMs: 60_000, scope: "seo-gsc-index-request" },
   // GSC is altftool's single Google connection — lock to altftool SEO access.
-  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
+  // This resubmits the sitemap and calls the Indexing API, so it mutates the
+  // production property exactly like POST /api/seo/gsc/sitemaps and needs
+  // `write`: a read-only SEO admin must not be able to push to Google.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "write" },
   audit: { module: "seo" },
   mutating: true,
 });

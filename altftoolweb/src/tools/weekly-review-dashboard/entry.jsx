@@ -1,3 +1,7 @@
-import WeeklyReviewDashboardApp from "./App";
+"use client";
 
-export default WeeklyReviewDashboardApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

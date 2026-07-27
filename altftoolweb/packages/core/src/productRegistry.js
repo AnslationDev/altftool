@@ -1,0 +1,266 @@
+const phases = Object.freeze({
+  foundation: { id: "foundation", label: "Foundation", order: 0 },
+  discover: { id: "discover", label: "Discover", order: 1 },
+  expand: { id: "expand", label: "Expand", order: 2 },
+  platform: { id: "platform", label: "Platform", order: 3 },
+  audited: { id: "audited", label: "Security gated", order: 4 },
+});
+
+export const PRODUCT_PHASES = Object.freeze(Object.values(phases));
+
+export const PRODUCT_STATUSES = Object.freeze({
+  live: "Live",
+  active: "Active build",
+  partial: "Partial",
+  planned: "Planned",
+  gated: "Security gated",
+});
+
+export const PRODUCT_REGISTRY = Object.freeze([
+  {
+    id: "platform-core",
+    name: "AltF Platform Core",
+    phase: phases.foundation.id,
+    priority: "P0",
+    status: "live",
+    publicPath: "/",
+    adminPath: "/health",
+    summary: "Shared design system, routing, accounts, API health, performance, and release quality.",
+  },
+  {
+    id: "growth-engine",
+    name: "AltF Growth Engine",
+    phase: phases.foundation.id,
+    priority: "P0",
+    status: "partial",
+    publicPath: "/blogs",
+    adminPath: "/altftool/seo",
+    summary: "SEO, indexing, analytics, localization, content quality, and sustainable acquisition.",
+  },
+  {
+    id: "tools",
+    name: "AltF Tools",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/tools/all",
+    summary: "Searchable worldwide directory of focused browser-based utilities.",
+  },
+  {
+    id: "signals",
+    name: "AltF Signals",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/signals",
+    adminPath: "/altftool/products",
+    summary: "Trend, demand, competition, and opportunity discovery connected to useful actions.",
+  },
+  {
+    id: "idea-lab",
+    name: "AltF IdeaLab",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/products/idea-lab",
+    summary: "Idea validation, market research, MVP scoping, positioning, and launch planning.",
+  },
+  {
+    id: "domain-ops",
+    name: "AltF DomainOps",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "active",
+    publicPath: "/products/domainops",
+    summary: "DNS, email authentication, SSL, WHOIS, uptime, and domain health intelligence.",
+  },
+  {
+    id: "minutes",
+    name: "AltF Minutes",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/products/minutes",
+    summary: "Meeting transcripts, summaries, decisions, action items, and exports.",
+  },
+  {
+    id: "verdict",
+    name: "AltF Verdict",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/brandrating",
+    adminPath: "/altftool/consumer-rating",
+    summary: "Transparent product comparisons, ratings, decision tools, and buying guides.",
+  },
+  {
+    id: "learn",
+    name: "AltF Learn",
+    phase: phases.discover.id,
+    priority: "P1",
+    status: "live",
+    publicPath: "/blogs",
+    adminPath: "/altftool/blogs",
+    summary: "Original guides, tutorials, methodology, and research linked to working products.",
+  },
+  {
+    id: "security",
+    name: "AltF Security",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/products/security",
+    summary: "Password, breach, SSL, security-header, and passkey-readiness checks.",
+  },
+  {
+    id: "authenticator",
+    name: "AltF Authenticator",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/products/authenticator",
+    summary: "Private, local-first TOTP and two-factor authentication utilities.",
+  },
+  {
+    id: "net-check",
+    name: "AltF NetCheck",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/products/netcheck",
+    summary: "Download, upload, latency, jitter, packet-loss, and connection history.",
+  },
+  {
+    id: "pdf-studio",
+    name: "AltF PDF Studio",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/altflovepdf",
+    summary: "Private browser-based PDF editing, conversion, signing, and optimization.",
+  },
+  {
+    id: "image-studio",
+    name: "AltF Image Studio",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/altfloveimg",
+    summary: "Image editing, conversion, compression, generation, and enhancement.",
+  },
+  {
+    id: "career",
+    name: "AltF Career",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/products/career",
+    summary: "Resume, ATS, cover-letter, salary, skills, and career-planning tools.",
+  },
+  {
+    id: "creator",
+    name: "AltF Creator",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/products/creator",
+    summary: "Transcripts, captions, thumbnails, publishing, and creator workflow utilities.",
+  },
+  {
+    id: "developer",
+    name: "AltF Developer",
+    phase: phases.expand.id,
+    priority: "P2",
+    status: "live",
+    publicPath: "/tools/developer",
+    summary: "JSON, regex, API, webhook, code, metadata, and web-debugging tools.",
+  },
+  {
+    id: "flow",
+    name: "AltF Flow",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "active",
+    publicPath: "/products/flow",
+    summary: "Trigger-action workflow automation with connectors, logs, retries, and templates.",
+  },
+  {
+    id: "business-ops",
+    name: "AltF Business Ops",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "live",
+    publicPath: "/business-ops",
+    summary: "Travel, home-service, loan, and insurance destinations organized as focused business workflows.",
+  },
+  {
+    id: "tradeon",
+    name: "AltF Tradeon",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "partial",
+    publicPath: "/tradeon",
+    summary: "Educational market dashboards, interactive charts, public crypto pricing, and clearly labelled illustrative multi-asset analysis.",
+  },
+  {
+    id: "impact",
+    name: "AltF Impact",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "active",
+    publicPath: "/products/impact",
+    summary: "Worldwide benefits, education, skills, sustainability, and public-service tools.",
+    editions: ["AltF Bharat", "AltF USA", "AltF UK", "AltF Canada", "AltF Australia"],
+  },
+  {
+    id: "campus",
+    name: "AltF Campus",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "live",
+    publicPath: "/products/campus",
+    summary: "Student productivity, discovery, collaboration, and marketplace experiences.",
+  },
+  {
+    id: "api-widgets",
+    name: "AltF API & Widgets",
+    phase: phases.platform.id,
+    priority: "P3",
+    status: "live",
+    publicPath: "/products/developers",
+    summary: "Embeddable reports, badges, calculators, and documented developer APIs.",
+  },
+  {
+    id: "vault",
+    name: "AltF Vault",
+    phase: phases.audited.id,
+    priority: "P4",
+    status: "gated",
+    publicPath: "/products/vault",
+    summary: "Zero-knowledge password management released only after independent security review.",
+  },
+]);
+
+export function getProductById(id) {
+  return PRODUCT_REGISTRY.find((product) => product.id === id) || null;
+}
+
+export function getProductsByPhase(phase) {
+  return PRODUCT_REGISTRY.filter((product) => product.phase === phase);
+}
+
+export function getProductProgress() {
+  const total = PRODUCT_REGISTRY.length;
+  const live = PRODUCT_REGISTRY.filter((product) => product.status === "live").length;
+  const active = PRODUCT_REGISTRY.filter((product) => product.status === "active").length;
+  const partial = PRODUCT_REGISTRY.filter((product) => product.status === "partial").length;
+  const gated = PRODUCT_REGISTRY.filter((product) => product.status === "gated").length;
+  return {
+    total,
+    live,
+    active,
+    partial,
+    gated,
+    planned: total - live - active - partial - gated,
+  };
+}

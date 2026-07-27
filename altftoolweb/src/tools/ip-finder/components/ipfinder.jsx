@@ -164,7 +164,7 @@ function IpFinder() {
                     <button
                         onClick={handleLookup}
                         disabled={lookupLoading || !inputIp.trim()}
-                        className="py-2.5 px-6 rounded-lg font-medium bg-(--primary) text-white hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="py-2.5 px-6 rounded-lg font-medium bg-(--primary) text-(--primary-foreground) hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {lookupLoading ? (
                             <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

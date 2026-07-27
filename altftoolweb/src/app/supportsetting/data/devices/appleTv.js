@@ -24,7 +24,7 @@ export const appleTvSettings = [
       "You can check the currently installed version under Settings > General > About.",
     ],
     important: "Don't unplug Apple TV or lose power during an update — an interrupted install can require a full restore using the Apple Configurator or a factory reset.",
-    redirectUrl: "https://support.apple.com/en-us/109042",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Update tvOS",
     whyItMatters:
       "Falling behind on tvOS updates can silently break AirPlay from newer iPhones, cause HomeKit accessories to disconnect, and leave known security issues unpatched. Many app crashes reported to developers turn out to be fixed simply by updating.",
@@ -60,7 +60,7 @@ export const appleTvSettings = [
       "Use Settings > Network > Wi-Fi > [network name] > Forget Network, then rejoin to clear a corrupted saved connection.",
       "Apple TV 4K (3rd generation and later) supports Wi-Fi 6; older models max out at Wi-Fi 5, which can bottleneck 4K HDR streams on busy networks.",
     ],
-    redirectUrl: "https://support.apple.com/en-us/108046",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Apple TV Network Setup",
     whyItMatters:
       "Buffering, dropped AirPlay sessions, and HomeKit accessories showing as unreachable are almost always network issues rather than Apple TV hardware problems, and most are fixable from this one settings screen.",
@@ -96,7 +96,7 @@ export const appleTvSettings = [
       "Sign in with the same Apple ID used in the Home app under Settings > Users and Accounts to enable Apple TV as a HomeKit hub.",
       "Settings > AirPlay and HomeKit > Home App shows hub status and lets you enable or disable it as the home hub.",
     ],
-    redirectUrl: "https://support.apple.com/en-us/109212",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: AirPlay on Apple TV",
     whyItMatters:
       "AirPlay is the fastest way to get content from an iPhone or Mac onto the big screen without opening a streaming app, and having Apple TV serve as a HomeKit hub is what makes remote access and automations for smart home accessories work at all when you're away from home.",
@@ -133,7 +133,7 @@ export const appleTvSettings = [
       "Settings > Remotes and Devices also lets you adjust remote button behavior, such as swapping Menu/Home button actions.",
     ],
     important: "Only one Siri Remote can be actively controlling a given Apple TV's on-screen focus at a time, though multiple remotes can stay paired for convenience.",
-    redirectUrl: "https://support.apple.com/en-us/111850",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Pair Siri Remote",
     whyItMatters:
       "A remote that won't respond is the single most common Apple TV support issue, and it's usually a Bluetooth pairing hiccup rather than a hardware fault — re-pairing takes under a minute and resolves the vast majority of cases.",
@@ -169,7 +169,7 @@ export const appleTvSettings = [
       "Turn on Match Content > Match Frame Rate and Match Dynamic Range under Settings > Video and Audio so Apple TV switches HDR/SDR and frame rate to suit each video automatically.",
       "Settings > Video and Audio > Chroma also has a 4:4:4 mode useful when using Apple TV as a computer monitor for sharper text.",
     ],
-    redirectUrl: "https://support.apple.com/en-us/111852",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Apple TV Display Settings",
     whyItMatters:
       "Incorrect resolution, HDR, or frame-rate settings are the most common cause of a dim, flickering, or black-screen picture — and Match Content settings prevent the brief blank screen that happens every time content switches between HDR and SDR.",
@@ -206,7 +206,7 @@ export const appleTvSettings = [
       "Use Settings > Users and Accounts > Add New User to give each family member their own watchlist, recommendations, and app data on a shared Apple TV.",
     ],
     important: "Signing out of Apple TV removes downloaded app data tied to that account, though purchases and subscriptions remain tied to your Apple ID and redownload after signing back in.",
-    redirectUrl: "https://support.apple.com/en-us/109505",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Apple TV Accounts",
     whyItMatters:
       "The Apple ID signed in on Apple TV determines which purchases, subscriptions, and Family Sharing content are available — sign-in issues are one of the most common reasons the App Store or Apple TV+ shows the wrong or missing content.",
@@ -243,7 +243,7 @@ export const appleTvSettings = [
       "Downtime and App Limits set in Screen Time on a family member's iPhone can sync to their Apple TV profile through Family Sharing.",
     ],
     important: "Set a Screen Time passcode that's different from the device passcode used on family members' iPhones, or a child can simply disable the restriction themselves.",
-    redirectUrl: "https://support.apple.com/en-us/111892",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Screen Time on Apple TV",
     whyItMatters:
       "Content restrictions are the main safeguard against kids streaming mature-rated movies or making unapproved purchases on a shared living-room Apple TV, and getting the passcode and profile set up correctly avoids awkward surprises later.",
@@ -279,7 +279,7 @@ export const appleTvSettings = [
       "Enable Automatically Install Apps under Settings > General to have apps you've downloaded on other Apple devices appear on Apple TV automatically.",
       "Rearrange or remove apps from the Home Screen by holding the Touch surface on the remote, then choosing Delete App or Move.",
     ],
-    redirectUrl: "https://support.apple.com/en-us/109511",
+    redirectUrl: "https://support.apple.com/tv",
     actionLabel: "Open Apple Support: Apple TV Storage",
     whyItMatters:
       "Apple TV models can't be expanded with external storage, so running low on space can block tvOS updates and new app installs — clearing out unused apps is usually the fastest fix.",

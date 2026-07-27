@@ -1,13 +1,7 @@
 "use client";
 
-import Dashboard from "./components/dashboard/Dashboard";
+import ToolHome from "./pages";
 
-
-
-export default function FingerPrintEntry() {
-  return <Dashboard />
-
-  
+export default function ToolEntry() {
+  return <ToolHome />;
 }
-
-

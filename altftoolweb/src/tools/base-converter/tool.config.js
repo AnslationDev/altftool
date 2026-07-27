@@ -1,14 +1,10 @@
 const toolConfig = {
   slug: "base-converter",
-  "slug": "base-converter",
-  "name": "Base Converter",
-  "category": [
-    "Calculator",
-    "Developer"
-  ],
-  "description": "Convert numbers between binary, octal, decimal, hex, and base36.",
-  "icon": "binary",
-  "iconColor": "text-blue-700"
+  name: "Base Converter",
+  category: "Developer",
+  description: "Convert numbers between binary, octal, decimal, hex, and base36.",
+  icon: "binary",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

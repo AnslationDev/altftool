@@ -1,60 +1,48 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { FilterBar } from "@/ansets";
 import { ACTION_KIND_META } from "./helpers";
 
 const KIND_ORDER = ["create", "update", "delete", "publish", "status", "export", "review", "run", "auth"];
 
-export default function ActivityFilters({ filters, onChange, availableKinds }) {
+/**
+ * Search + action-kind filter for the activity feed.
+ *
+ * This used to be a bare input (no label of any kind) plus a row of chips. It is
+ * now the shared FilterBar, which supplies the accessible names, the clear-search
+ * control, and the result count slot.
+ */
+export default function ActivityFilters({ filters, onChange, availableKinds, count, className }) {
   const set = (patch) => onChange({ ...filters, ...patch });
+
   const kinds = KIND_ORDER.filter((k) => availableKinds?.has(k));
+  // Keep the active kind selectable even after the feed changes and no longer
+  // contains it — otherwise the <select> would render with no matching option.
+  const options = [
+    { value: "all", label: "All actions" },
+    ...(filters.kind !== "all" && !kinds.includes(filters.kind) ? [filters.kind] : []).map((k) => ({
+      value: k,
+      label: ACTION_KIND_META[k]?.label ?? k,
+    })),
+    ...kinds.map((k) => ({ value: k, label: ACTION_KIND_META[k]?.label ?? k })),
+  ];
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="relative min-w-[180px] flex-1">
-        <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
-        <input
-          value={filters.search}
-          onChange={(e) => set({ search: e.target.value })}
-          placeholder="Search summary, actor, entity…"
-          className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-8 pr-8 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--primary)_18%,transparent)]"
-        />
-        {filters.search ? (
-          <button
-            type="button"
-            onClick={() => set({ search: "" })}
-            className="absolute right-2 top-1/2 grid h-5 w-5 -translate-y-1/2 place-items-center rounded text-[var(--muted)] hover:text-[var(--foreground)]"
-            aria-label="Clear search"
-          >
-            <X className="h-3.5 w-3.5" />
-          </button>
-        ) : null}
-      </div>
-
-      <div className="flex flex-wrap items-center gap-1.5">
-        <FilterChip active={filters.kind === "all"} onClick={() => set({ kind: "all" })}>All</FilterChip>
-        {kinds.map((k) => (
-          <FilterChip key={k} active={filters.kind === k} onClick={() => set({ kind: k })}>
-            {ACTION_KIND_META[k].label}
-          </FilterChip>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function FilterChip({ active, onClick, children }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition ${
-        active
-          ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
-          : "border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)]"
-      }`}
-    >
-      {children}
-    </button>
+    <FilterBar
+      className={className}
+      search={filters.search}
+      onSearchChange={(value) => set({ search: value })}
+      searchPlaceholder="Search summary, actor, entity…"
+      filters={[
+        {
+          key: "kind",
+          label: "Filter by action type",
+          value: filters.kind,
+          onChange: (value) => set({ kind: value }),
+          options,
+        },
+      ]}
+      count={count}
+    />
   );
 }

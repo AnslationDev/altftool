@@ -1,3 +1,7 @@
-import TimeBlockingPlannerApp from "./App";
+"use client";
 
-export default TimeBlockingPlannerApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

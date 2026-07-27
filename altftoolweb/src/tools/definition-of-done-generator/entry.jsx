@@ -1,3 +1,7 @@
-import DefinitionOfDoneGeneratorApp from "./App";
+"use client";
 
-export default DefinitionOfDoneGeneratorApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

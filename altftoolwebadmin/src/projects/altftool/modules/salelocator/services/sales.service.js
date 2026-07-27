@@ -1,109 +1,232 @@
 import {
+
   collection,
-  deleteDoc,
+
   doc,
+
   getDocs,
-  serverTimestamp,
+
   setDoc,
   updateDoc,
+  deleteDoc,
+  serverTimestamp,
+
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db } from "@/lib/firebaseFirestore";
-import { storage } from "@/lib/firebaseStorage";
+
+
+
+import { db } from "@/lib/firebase";
+
+
 
 const PROJECT_ID = "altftool";
+
 const salesRef = collection(db, "projects", PROJECT_ID, "sales");
 
-export function parseSalePrice(value) {
-  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
-  if (!value) return 0;
-  return Number(String(value).replace(/[^0-9.]/g, "")) || 0;
-}
 
-export function normalizeSalePayload(data = {}) {
+
+/* =========================
+
+   HELPERS
+
+========================= */
+
+
+
+// convert ₹1,20,000 → 120000
+
+const parsePrice = (val) => {
+
+  if (!val) return 0;
+
+  if (typeof val === "number") return val;
+
+  return Number(String(val).replace(/[^0-9]/g, "")) || 0;
+
+};
+
+
+
+// normalize payload based on modal structure
+
+const normalizeSale = (data) => {
+
   const base = {
+
     type: data.type,
-    status: data.status || "active",
+
+    updatedAt: serverTimestamp(),
+
   };
 
+
+
   switch (data.type) {
+
     case "flashSale":
+
     case "trendingSale":
+
       return {
+
         ...base,
-        title: data.title?.trim() || "",
-        subtitle: data.subtitle?.trim() || "",
-        productTitle: data.productTitle?.trim() || "",
+
+        title: data.title || "",
+
+        subtitle: data.subtitle || "",
+
+        productTitle: data.productTitle || "",
+
         image: data.image || "",
-        price: parseSalePrice(data.price),
-        oldPrice: parseSalePrice(data.oldPrice),
-        discount: data.discount?.trim() || "",
-        ctaLink: data.ctaLink?.trim() || "",
+
+        price: parsePrice(data.price),
+
+        oldPrice: parsePrice(data.oldPrice),
+
+        discount: data.discount || "",
+
+        ctaLink: data.ctaLink || "",
+
       };
+
+
 
     case "dealOfTheDay":
+
       return {
+
         ...base,
-        title: data.title?.trim() || "",
-        subtitle: data.subtitle?.trim() || "",
+
+        title: data.title || "",
+
+        subtitle: data.subtitle || "",
+
         image: data.image || "",
-        link: (data.link || data.ctaLink || "").trim(),
+
+        link: data.link || "",
+
       };
+
+
 
     case "hero":
+
       return {
+
         ...base,
-        headline: (data.headline || data.title || "").trim(),
-        subtext: (data.subtext || data.subtitle || "").trim(),
+
+        headline: data.headline || "",
+
+        subtext: data.subtext || "",
+
         heroImage: data.heroImage || "",
-        ctaLink: data.ctaLink?.trim() || "",
+
+        ctaLink: data.ctaLink || "",
+
       };
 
+
+
     default:
-      throw new Error("Unsupported sale type");
+
+      throw new Error("Invalid sale type");
+
   }
-}
+
+};
+
+
+
+/* =========================
+
+   READ
+
+========================= */
+
+
 
 export async function fetchSales() {
-  const snapshot = await getDocs(salesRef);
-  return snapshot.docs.map((saleDoc) => ({
-    id: saleDoc.id,
-    ...saleDoc.data(),
+
+  const snap = await getDocs(salesRef);
+
+  return snap.docs.map((d) => ({
+
+    id: d.id,
+
+    ...d.data(),
+
   }));
+
 }
 
-export async function createSale(data) {
-  const saleDoc = doc(salesRef);
-  await setDoc(saleDoc, {
-    ...normalizeSalePayload(data),
-    id: saleDoc.id,
+
+
+/* =========================
+
+   CREATE
+
+========================= */
+
+
+
+export async function createSale(id, data) {
+
+  const ref = doc(salesRef, id);
+
+
+
+  const normalized = normalizeSale(data);
+
+
+
+  await setDoc(ref, {
+
+    ...normalized,
+    id,
     createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
   });
-  return saleDoc.id;
+  return id;
+
 }
 
-export async function updateSale(id, data) {
-  if (!id) throw new Error("A sale id is required");
-  await updateDoc(doc(salesRef, String(id)), {
-    ...normalizeSalePayload(data),
-    updatedAt: serverTimestamp(),
-  });
-  return String(id);
+
+
+/* =========================
+
+   UPDATE
+
+========================= */
+
+
+
+export async function updateSale(id, updates) {
+
+  const ref = doc(salesRef, id);
+
+
+
+  const normalized = normalizeSale(updates);
+
+
+
+  return updateDoc(ref, normalized);
+
 }
+
+
+
+/* =========================
+
+   DELETE
+
+========================= */
+
+
 
 export async function deleteSale(id) {
-  if (!id) throw new Error("A sale id is required");
-  await deleteDoc(doc(salesRef, String(id)));
-}
 
-export async function uploadSaleImage(file, imageKind = "media") {
-  if (!file) return "";
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
-  const objectRef = ref(
-    storage,
-    `projects/${PROJECT_ID}/sales/${imageKind}/${Date.now()}-${safeName}`,
-  );
-  await uploadBytes(objectRef, file, { contentType: file.type });
-  return getDownloadURL(objectRef);
+  const ref = doc(salesRef, id);
+
+  return deleteDoc(ref);
+
 }

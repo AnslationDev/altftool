@@ -9,7 +9,7 @@ import { TOOL_CATEGORIES } from "../data/tools";
  */
 export default function CategorySidebar({ activeId, onSelect, muted = false }) {
   return (
-    <nav aria-label="AI tool categories" className="fat-glass flex h-full flex-col rounded-3xl p-3 shadow-sm">
+    <nav aria-label="AI tool categories" className="fat-glass flex h-200 flex-col rounded-3xl p-3 shadow-sm">
       <p className="shrink-0 px-3 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
         Categories
       </p>

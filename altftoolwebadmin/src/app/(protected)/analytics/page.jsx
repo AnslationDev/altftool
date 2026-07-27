@@ -2,19 +2,41 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { RefreshCw } from "lucide-react";
-import AnalyticsHero from "./components/AnalyticsHero";
+import {
+  ActivitySquare,
+  AlertTriangle,
+  BarChart3,
+  Clock3,
+  Database,
+  Layers3,
+  RefreshCw,
+} from "lucide-react";
+import {
+  Bone,
+  DataState,
+  EmptyState,
+  FilterBar,
+  PageHeader,
+  SectionCard,
+  StatGrid,
+} from "@/ansets";
 import AnalyticsAlerts from "./components/AnalyticsAlerts";
 import ProjectHealthGrid from "./components/ProjectHealthGrid";
 import ModuleUsageChart from "./components/ModuleUsageChart";
 import RecentUpdatesFeed from "./components/RecentUpdatesFeed";
-import AnalyticsEmptyState from "./components/AnalyticsEmptyState";
-import ProjectSelector from "./components/ProjectSelector";
-import { sortByTimestampDesc } from "@/lib/analytics/analytics.utils";
+import {
+  formatDateTime,
+  formatNumber,
+  sortByTimestampDesc,
+} from "@/lib/analytics/analytics.utils";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 const CACHE_KEY = "analytics-dashboard-cache-v1";
 const SELECTED_PROJECT_KEY = "analytics-dashboard-selected-project-v1";
+
+const DEFAULT_TITLE = "Cross-project admin health at a glance";
+const DEFAULT_DESCRIPTION =
+  "A dynamic overview of tracked projects and modules, built from the current project directory structure and live admin data sources.";
 
 const AnalyticsChartsPanel = dynamic(() => import("./components/AnalyticsCharts"), {
   ssr: false,
@@ -46,69 +68,34 @@ function readCachedProjectSelection() {
   return readSessionStorage(SELECTED_PROJECT_KEY) || "all";
 }
 
-function LoadingCard({ message = "Loading analytics snapshot..." }) {
-  return (
-    <div className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
-      <div className="flex items-start justify-between gap-6">
-        <div>
-          <p className="text-sm font-semibold text-[var(--foreground)]">{message}</p>
-          <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
-            Analytics combines project records across modules, so the first fetch can take a little longer.
-          </p>
-        </div>
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]" />
-      </div>
-      <div className="mt-6 h-4 w-32 rounded bg-[var(--surface-soft)]" />
-      <div className="mt-4 h-8 w-64 rounded bg-[var(--surface-soft)]" />
-      <div className="mt-6 grid gap-4 md:grid-cols-4 xl:grid-cols-5">
-        {[...Array(4)].map((_, index) => (
-          <div key={index} className="border border-[var(--border)] bg-[var(--surface-soft)] p-4">
-            <div className="h-3 w-20 rounded bg-[var(--border)]" />
-            <div className="mt-4 h-8 w-16 rounded bg-[var(--border)]" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
+/**
+ * The chart panel is code-split, so it needs a placeholder shaped like the panel
+ * it replaces. Bone (the anset shimmer) keeps it consistent with every other
+ * skeleton in the console instead of re-deriving pulse markup here.
+ */
 function AnalyticsChartsFallback() {
   return (
-    <section className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 animate-pulse rounded bg-[var(--surface-soft)]" />
-          <div>
-            <div className="h-4 w-32 animate-pulse rounded bg-[var(--surface-soft)]" />
-            <div className="mt-2 h-3 w-64 max-w-full animate-pulse rounded bg-[var(--surface-soft)]" />
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <div className="h-9 w-20 animate-pulse rounded bg-[var(--surface-soft)]" />
-          <div className="h-9 w-20 animate-pulse rounded bg-[var(--surface-soft)]" />
-        </div>
+    <SectionCard
+      icon={BarChart3}
+      title="Analytics view"
+      description="Compare activity by project or by module with switchable metrics."
+    >
+      <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]" aria-hidden="true">
+        <Bone className="h-[320px]" />
+        <Bone className="h-[320px]" />
       </div>
-      <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
-        <div className="h-[320px] rounded-md border border-[var(--border)] bg-[var(--surface-soft)] p-4">
-          <div className="h-full animate-pulse rounded bg-[var(--surface)]" />
-        </div>
-        <div className="h-[320px] rounded-md border border-[var(--border)] bg-[var(--surface-soft)] p-4">
-          <div className="mx-auto h-48 w-48 animate-pulse rounded-full bg-[var(--surface)]" />
-          <div className="mt-6 space-y-2">
-            <div className="h-3 animate-pulse rounded bg-[var(--surface)]" />
-            <div className="h-3 w-4/5 animate-pulse rounded bg-[var(--surface)]" />
-          </div>
-        </div>
-      </div>
-    </section>
+    </SectionCard>
   );
 }
 
 function RefreshProgress({ progress }) {
   return (
-    <div className="mt-3 h-1.5 w-full overflow-hidden bg-[var(--primary-soft)]">
+    <div
+      className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--primary-soft)]"
+      aria-hidden="true"
+    >
       <div
-        className="h-full bg-[var(--primary)] transition-[width] duration-300 ease-out"
+        className="h-full bg-[var(--primary)] transition-[width] duration-300 ease-out motion-reduce:transition-none"
         style={{ width: `${progress}%` }}
       />
     </div>
@@ -121,6 +108,10 @@ export default function AnalyticsPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshProgress, setRefreshProgress] = useState(0);
   const [error, setError] = useState("");
+  // Bumped by the error card's Retry button so the load effect re-runs. Without
+  // it a failed first load was terminal — the effect only fires on `dashboard`
+  // changing, which never happens once loading has failed.
+  const [reloadKey, setReloadKey] = useState(0);
   const [selectedProjectId, setSelectedProjectId] = useState(() => readCachedProjectSelection());
 
   useEffect(() => {
@@ -162,7 +153,7 @@ export default function AnalyticsPage() {
       try {
         setLoading(true);
         setError("");
-        const token = await getAuth().currentUser?.getIdToken();
+        const token = await getAdminIdToken();
 
         if (!token) {
           throw new Error("Your session is not ready. Please refresh and try again.");
@@ -221,13 +212,13 @@ export default function AnalyticsPage() {
     return () => {
       cancelled = true;
     };
-  }, [dashboard]);
+  }, [dashboard, reloadKey]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
     setRefreshProgress(0);
     try {
-      const token = await getAuth().currentUser?.getIdToken();
+      const token = await getAdminIdToken();
 
       if (!token) {
         throw new Error("Your session is not ready. Please refresh and try again.");
@@ -259,6 +250,12 @@ export default function AnalyticsPage() {
         setRefreshing(false);
       }, 180);
     }
+  };
+
+  const retryInitialLoad = () => {
+    setError("");
+    setLoading(true);
+    setReloadKey((k) => k + 1);
   };
 
   const filteredData = useMemo(() => {
@@ -417,88 +414,221 @@ export default function AnalyticsPage() {
       moduleChartData,
       title: activeProject
         ? `${activeProject.projectName} analytics`
-        : "Cross-project admin health at a glance",
+        : DEFAULT_TITLE,
       description: activeProject
         ? `A focused view of module freshness, recent additions, and content movement inside ${activeProject.projectName}.`
-        : "A dynamic overview of tracked projects and modules, built from the current project directory structure and live admin data sources.",
+        : DEFAULT_DESCRIPTION,
     };
   }, [dashboard, selectedProjectId]);
 
+  const projectScopeOptions = useMemo(() => {
+    const projects = dashboard?.projects ?? [];
+    return [
+      { value: "all", label: "All Projects" },
+      ...projects.map((project) => ({
+        value: project.projectId,
+        label: project.projectName,
+      })),
+    ];
+  }, [dashboard]);
+
+  const staleDaysThreshold = dashboard?.staleDaysThreshold ?? 5;
+  const summary = filteredData?.summary;
+
+  const summaryTiles = summary
+    ? [
+        {
+          key: "totalRecords",
+          label: "Tracked records",
+          icon: Database,
+          value: formatNumber(summary.totalRecords),
+          hint: "Total analyzable records across modules",
+        },
+        {
+          key: "recentAdditions7d",
+          label: "Added in 7 days",
+          icon: Clock3,
+          value: formatNumber(summary.recentAdditions7d),
+          hint: "Fresh records added this week",
+        },
+        {
+          key: "totalModules",
+          label: "Modules in view",
+          icon: Layers3,
+          value: formatNumber(summary.totalModules),
+          hint: "Tracked modules inside the selected scope",
+        },
+        {
+          key: "staleModules",
+          label: "Needs attention",
+          icon: AlertTriangle,
+          value: formatNumber(summary.staleModules),
+          // Tone, not a hardcoded colour: the tile turns danger only when there
+          // is actually something stale to act on.
+          tone: summary.staleModules > 0 ? "danger" : "default",
+          hint: `Modules with no update in the last ${staleDaysThreshold} days`,
+        },
+        {
+          key: "activeModules24h",
+          label: "Active in 24h",
+          icon: ActivitySquare,
+          value: formatNumber(summary.activeModules24h),
+          hint: "Modules with activity in the last 24 hours",
+        },
+      ]
+    : [];
+
+  const refreshAction = dashboard ? (
+    <>
+      <span className="text-xs text-[var(--muted)]">
+        Last refreshed {formatDateTime(dashboard.generatedAt)}
+      </span>
+      <button
+        type="button"
+        onClick={handleRefresh}
+        disabled={refreshing}
+        className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        <RefreshCw
+          className={`h-4 w-4 ${refreshing ? "animate-spin motion-reduce:animate-none" : ""}`}
+          aria-hidden="true"
+        />
+        {refreshing ? "Refreshing..." : "Refresh Analytics"}
+      </button>
+    </>
+  ) : null;
+
   return (
     <div className="min-h-full bg-[var(--background)] text-[var(--foreground)]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8">
-        {loading ? (
-          <>
-            <LoadingCard message="Preparing analytics overview..." />
-            <LoadingCard message="Collecting module activity and recent updates..." />
-          </>
-        ) : error && !dashboard ? (
-          <div className="border border-[var(--danger)]/30 bg-[var(--surface)] p-8 shadow-sm">
-            <h1 className="text-2xl font-semibold text-[var(--foreground)]">Analytics unavailable</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)]">{error}</p>
-          </div>
-        ) : !dashboard ? (
-          <AnalyticsEmptyState />
-        ) : (
-          <>
-            <ProjectSelector
-              projects={dashboard.projects}
-              selectedProjectId={selectedProjectId}
-              onSelect={setSelectedProjectId}
-              actions={(
-                <button
-                  onClick={handleRefresh}
-                  disabled={refreshing}
-                  className="inline-flex items-center gap-2 border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-60"
+      {/* PageHeader owns its own bottom margin, so the page body is a plain
+          block here rather than a gap-6 flex column that would double it. */}
+      <div className="mx-auto max-w-7xl px-6 py-8">
+        <PageHeader
+          eyebrow="Global analytics"
+          icon={BarChart3}
+          title={filteredData?.title ?? DEFAULT_TITLE}
+          description={filteredData?.description ?? DEFAULT_DESCRIPTION}
+          actions={refreshAction}
+        >
+          {dashboard ? (
+            <FilterBar
+              filters={[
+                {
+                  id: "project-scope",
+                  key: "project-scope",
+                  label: "Project scope",
+                  value: selectedProjectId,
+                  onChange: setSelectedProjectId,
+                  options: projectScopeOptions,
+                },
+              ]}
+              count={
+                filteredData
+                  ? `${filteredData.projects.length} of ${dashboard.projects.length} projects in scope`
+                  : null
+              }
+              actions={
+                // The quick-switch pills are the wide-screen shortcut the select
+                // covers everywhere else; both existed before this migration.
+                <div className="hidden flex-wrap gap-2 xl:flex">
+                  {projectScopeOptions.map((option) => {
+                    const active = option.value === selectedProjectId;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => setSelectedProjectId(option.value)}
+                        className={`rounded-lg px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
+                          active
+                            ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm hover:bg-[var(--primary-hover)]"
+                            : "bg-[var(--surface-soft)] text-[var(--foreground)] hover:bg-[var(--primary-soft)]"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              }
+            />
+          ) : null}
+        </PageHeader>
+
+        <DataState
+          loading={loading && !dashboard}
+          // `error` beats `isEmpty`: a failed fetch must never read as "you have
+          // no analytics yet", which is exactly how this screen used to fail.
+          error={dashboard ? null : error}
+          onRetry={retryInitialLoad}
+          isEmpty={!dashboard}
+          loadingVariant="detail"
+          empty={
+            <EmptyState
+              icon={BarChart3}
+              title="Analytics data is not ready yet"
+              description="The analytics route is connected, but there are no analyzable records or audit events available yet. Once modules start writing timestamps and activity, this dashboard will populate automatically."
+            />
+          }
+        >
+          {dashboard && filteredData ? (
+            <div className="flex flex-col gap-6">
+              {refreshing ? (
+                <div
+                  role="status"
+                  className="rounded-xl border border-[var(--info)]/40 bg-[var(--info-soft)] px-4 py-3 text-sm text-[var(--foreground)] shadow-sm"
                 >
-                  <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
-                  {refreshing ? "Refreshing..." : "Refresh Analytics"}
-                </button>
-              )}
-            />
-            {refreshing && (
-              <div className="border border-[var(--info)]/40 bg-[var(--info-soft)] px-4 py-3 text-sm text-[var(--info)] shadow-sm">
-                <p>
-                  Refreshing analytics. Existing data stays visible until the new snapshot is ready.
-                </p>
-                <RefreshProgress progress={refreshProgress} />
-              </div>
-            )}
-            {!refreshing && error ? (
-              <div className="border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-4 py-3 text-sm text-[var(--warning)] shadow-sm">
-                {error}
-              </div>
-            ) : null}
-            <AnalyticsHero
-              summary={filteredData.summary}
-              generatedAt={dashboard.generatedAt}
-              title={filteredData.title}
-              description={filteredData.description}
-            />
-            <AnalyticsChartsPanel
-              projectData={filteredData.projectChartData}
-              moduleData={filteredData.moduleChartData}
-            />
-            <ProjectHealthGrid
+                  <p>
+                    Refreshing analytics. Existing data stays visible until the new snapshot is ready.
+                  </p>
+                  <RefreshProgress progress={refreshProgress} />
+                </div>
+              ) : null}
+
+              {!refreshing && error ? (
+                <div
+                  role="alert"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--danger)]/40 bg-[var(--danger-soft)] px-4 py-3 text-sm text-[var(--danger-text)] shadow-sm"
+                >
+                  <span>{error}</span>
+                  <button
+                    type="button"
+                    onClick={handleRefresh}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+                  >
+                    <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                    Try again
+                  </button>
+                </div>
+              ) : null}
+
+              <StatGrid items={summaryTiles} columns={4} className="xl:grid-cols-5" />
+
+              <AnalyticsChartsPanel
+                projectData={filteredData.projectChartData}
+                moduleData={filteredData.moduleChartData}
+              />
+
+              <ProjectHealthGrid
                 projects={filteredData.projects}
-                staleDaysThreshold={dashboard.staleDaysThreshold}
+                staleDaysThreshold={staleDaysThreshold}
               />
-            <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-              
-              <AnalyticsAlerts
-                alerts={filteredData.alerts}
-                staleDaysThreshold={dashboard.staleDaysThreshold}
-              />
-              <ModuleUsageChart modules={filteredData.moduleUsage} />
-            </div>
-            <div className="">
+
+              <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+                <AnalyticsAlerts
+                  alerts={filteredData.alerts}
+                  staleDaysThreshold={staleDaysThreshold}
+                />
+                <ModuleUsageChart modules={filteredData.moduleUsage} />
+              </div>
+
               <RecentUpdatesFeed
                 items={filteredData.recentUpdates}
                 moduleOptions={filteredData.moduleOptions}
               />
             </div>
-          </>
-        )}
+          ) : null}
+        </DataState>
       </div>
     </div>
   );

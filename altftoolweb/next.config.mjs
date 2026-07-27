@@ -25,11 +25,17 @@ const useWebpackBuildWorker =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
   outputFileTracingRoot: workspaceRoot,
   poweredByHeader: false,
   compress: true,
   transpilePackages: ["@altftool/ui"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
+
+
+
+
+
 
   async headers() {
     return [
@@ -322,7 +328,7 @@ const nextConfig = {
   reactStrictMode: true,
   reactCompiler: false,
 
-  webpack(config, { dev, isServer }) {
+  webpack(config, { dev, isServer, webpack }) {
     config.ignoreWarnings = [
       ...(config.ignoreWarnings || []),
       {
@@ -365,6 +371,47 @@ const nextConfig = {
       "@vladmandic/face-api$": "@vladmandic/face-api/dist/face-api.esm-nobundle.js",
       "html2pdf.js$": "html2pdf.js/src/index.js",
     };
+
+    // The ~1,450 lazily-loaded tool runtimes are only ever reached from
+    // "use client" code behind a `next/dynamic(..., { ssr: false })` boundary
+    // (src/app/tools/[category]/[slug]/ToolClient.jsx,
+    // src/app/embed/widget/[slug]/EmbedToolClient.jsx) or a mouseenter
+    // prefetch (src/app/tools/ToolsClient.jsx). All three reach them through
+    // src/app/tools/toolLoaderResolver.js -> the generated
+    // src/platform/registry/toolRuntimeMap.js. The server compilation still
+    // followed those `import()` edges and emitted ~1,300 SSR chunk twins
+    // (~36 MiB of .next/server/chunks) that can never execute, because with
+    // `ssr: false` the server renders only the `loading` fallback.
+    //
+    // Replacing the map with an empty stub in the server compilation only
+    // severs that edge. The client compilation keeps the real module, so the
+    // browser-side tool chunks in .next/static/chunks are untouched.
+    // scripts/assert-no-server-tool-loader.mjs guards the invariant this
+    // relies on: no server component or route handler may import the resolver.
+    if (isServer) {
+      const toolRuntimeMapServerStub = path.join(
+        workspaceRoot,
+        "src",
+        "platform",
+        "registry",
+        "toolRuntimeMap.server-stub.js"
+      );
+
+      // Belt: rewrite the bare specifier before resolution.
+      config.resolve.alias["@/platform/registry/toolRuntimeMap$"] =
+        toolRuntimeMapServerStub;
+
+      // Braces: if the jsconfig paths plugin wins the resolve race, catch the
+      // resolved file instead. Both point at the same stub, so whichever fires
+      // first produces the same module.
+      config.plugins = config.plugins || [];
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /[\\/]platform[\\/]registry[\\/]toolRuntimeMap\.js(\?.*)?$/,
+          toolRuntimeMapServerStub
+        )
+      );
+    }
 
     // Many mid-size vendor modules (react-hot-toast, framer-motion internals,
     // recharts pieces, file-saver, lucide icons, ...) were duplicated into

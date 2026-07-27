@@ -32,7 +32,7 @@ export default function UploadPanel({ imagePreview, onUpload, onClear }) {
           tabIndex={0}
           aria-label="Upload your photo"
           onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); inputRef.current?.click(); } }}
-          className={`relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+          className={`relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-all motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
             dragOver
               ? "border-(--primary) bg-(--primary-soft)"
               : "border-(--border) bg-(--card) hover:bg-(--muted)"
@@ -61,7 +61,7 @@ export default function UploadPanel({ imagePreview, onUpload, onClear }) {
           <button
             onClick={onClear}
             aria-label="Remove uploaded photo"
-            className="absolute right-3 top-3 min-w-11 min-h-11 inline-flex items-center justify-center rounded-full bg-black/60 p-2 text-white hover:bg-black/80 transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            className="absolute right-3 top-3 min-w-11 min-h-11 inline-flex items-center justify-center rounded-full bg-black/60 p-2 text-white hover:bg-black/80 transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           >
             <X className="h-4 w-4" />
           </button>

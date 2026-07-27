@@ -1,0 +1,11 @@
+const toolConfig = {
+  slug: "cumulative-vs-noncumulative-fd",
+  name: "Cumulative vs Non Cumulative FD Comparator",
+  category: ["Finance Calculators"],
+  description:
+    "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate.",
+  icon: "arrow-left-right",
+  iconColor: "text-(--primary)",
+};
+
+export default toolConfig;

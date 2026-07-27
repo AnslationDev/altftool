@@ -318,7 +318,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         <button
           type="button"
           onClick={onOpenSidebar}
-          className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
+          className="inline-flex h-[var(--anslation-ds-target-min)] w-[var(--anslation-ds-target-min)] shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
           aria-label="Open admin navigation"
         >
           <Menu className="h-4 w-4" />
@@ -458,17 +458,25 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           <button
             type="button"
             onClick={() => setNotifOpen((open) => !open)}
-            className="relative grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
+            className="grid h-[var(--anslation-ds-target-min)] w-[var(--anslation-ds-target-min)] place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
             aria-label="Notifications"
             aria-haspopup="menu"
             aria-expanded={notifOpen}
           >
-            <Bell className="h-4 w-4" />
-            {unreadCount > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--danger)] px-1 text-[9px] font-bold leading-none text-[var(--danger-foreground)]">
-                {unreadCount > 99 ? "99+" : unreadCount}
-              </span>
-            ) : null}
+            {/* The 44px tap target comes from the button; the badge stays
+                anchored to this 16px icon box so it keeps hugging the bell. */}
+            <span className="relative grid h-4 w-4 place-items-center">
+              <Bell className="h-4 w-4" />
+              {unreadCount > 0 ? (
+                // The count is 9px bold, so WCAG AA needs 4.5:1 — plain
+                // --danger/--danger-foreground is only 3.76:1 in light. Mixing the
+                // fill toward --foreground darkens it in light and lightens it in
+                // dark, so the badge clears AA in both themes without new tokens.
+                <span className="absolute -right-3 -top-3 flex h-4 min-w-4 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--danger)_82%,var(--foreground))] px-1 text-[9px] font-bold leading-none text-[var(--danger-foreground)]">
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              ) : null}
+            </span>
           </button>
 
           {notifOpen ? (
@@ -534,7 +542,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           <button
             type="button"
             onClick={() => setDropdownOpen((open) => !open)}
-            className="flex items-center gap-2 rounded-lg p-1 transition hover:bg-[var(--surface-soft)]"
+            className="flex min-h-[var(--anslation-ds-target-min)] min-w-[var(--anslation-ds-target-min)] items-center justify-center gap-2 rounded-lg p-1 transition hover:bg-[var(--surface-soft)]"
             aria-label="Open profile menu"
             aria-haspopup="menu"
             aria-expanded={dropdownOpen}

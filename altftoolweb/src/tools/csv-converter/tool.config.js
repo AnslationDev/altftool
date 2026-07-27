@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "csv-converter",
-  "slug": "csv-converter",
-  "name": "CSV Converter",
-  "category": [
-    "Developer",
-    "Data"
-  ],
-  "description": "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries.",
-  "icon": "file-spreadsheet",
-  "iconColor": "text-green-600"
+  name: "CSV Converter",
+  category: "Converters",
+  description:
+    "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries.",
+  icon: "table-2",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

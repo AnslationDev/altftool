@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "../styles/cta-buttons.css";
-@import "../styles/faq.css";  
+@import "../styles/faq.css";
 @import "@altftool/ui/styles.css";
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -35,6 +35,7 @@ html[data-theme="light"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
   --secondary-soft: var(--anslation-ds-secondary-soft);
@@ -42,6 +43,9 @@ html[data-theme="light"] {
   --accent-soft: var(--anslation-ds-accent-soft);
 
   --danger: var(--anslation-ds-danger);
+  --danger-text: var(--anslation-ds-danger-text);
+  --warning-text: var(--anslation-ds-warning-text);
+  --success-text: var(--anslation-ds-success-text);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --success: var(--anslation-ds-success);
   --warning: var(--anslation-ds-warning);
@@ -82,6 +86,7 @@ html[data-theme="dark"] {
   --primary-soft: var(--anslation-ds-primary-soft);
   --primary-hover: var(--anslation-ds-primary-hover);
   --primary-active: var(--anslation-ds-primary-active);
+  --primary-text: var(--anslation-ds-primary-text);
   --secondary: var(--anslation-ds-secondary);
   --secondary-foreground: var(--anslation-ds-secondary-foreground);
   --secondary-soft: var(--anslation-ds-secondary-soft);
@@ -89,6 +94,9 @@ html[data-theme="dark"] {
   --accent-soft: var(--anslation-ds-accent-soft);
 
   --danger: var(--anslation-ds-danger);
+  --danger-text: var(--anslation-ds-danger-text);
+  --warning-text: var(--anslation-ds-warning-text);
+  --success-text: var(--anslation-ds-success-text);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --success: var(--anslation-ds-success);
   --warning: var(--anslation-ds-warning);

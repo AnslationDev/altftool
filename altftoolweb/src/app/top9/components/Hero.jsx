@@ -54,7 +54,7 @@ const Hero = () => {
           <span className="top9-gradient-text">227,193 top nine lists</span> for everything under (& including) the sun.
         </h1>
 
-        {/* Trending Slider (same as before) */}
+        {/* Trending Slider (same as before) */},
         <div className="relative mb-10">
           {canScrollLeft && (
             <button

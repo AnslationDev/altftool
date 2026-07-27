@@ -14,7 +14,7 @@ export default function ThemeSelector({ settings, onUpdate }) {
               onClick={() => onUpdate("boardTheme", t.id)}
               aria-label={`${t.name} board theme`}
               aria-pressed={settings.boardTheme === t.id}
-              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
                 settings.boardTheme === t.id
                   ? "border-(--primary) ring-1 ring-(--primary)"
                   : "border-(--border) hover:border-(--border-strong)"
@@ -38,7 +38,7 @@ export default function ThemeSelector({ settings, onUpdate }) {
               onClick={() => onUpdate("diceTheme", t.id)}
               aria-label={`${t.name} dice theme`}
               aria-pressed={settings.diceTheme === t.id}
-              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+              className={`p-2 rounded-lg border transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
                 settings.diceTheme === t.id
                   ? "border-(--primary) ring-1 ring-(--primary)"
                   : "border-(--border) hover:border-(--border-strong)"
@@ -63,7 +63,7 @@ export default function ThemeSelector({ settings, onUpdate }) {
               key={s}
               onClick={() => onUpdate("animationSpeed", s)}
               aria-pressed={settings.animationSpeed === s}
-              className={`flex-1 py-1.5 rounded-lg text-xs font-medium border capitalize transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+              className={`flex-1 py-1.5 rounded-lg text-xs font-medium border capitalize transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
                 settings.animationSpeed === s
                   ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                   : "bg-(--card) text-(--muted-foreground) border-(--border)"

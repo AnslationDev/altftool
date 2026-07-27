@@ -35,7 +35,7 @@ export const humaneAiPinSettings = [
       "Give the Pin a name in your account settings so it's easy to identify if you ever manage more than one device.",
     ],
     important: "Keep your Cosmos account credentials secure — this account controls your Pin's data plan, purchases, and access to your captured Moments.",
-    redirectUrl: "https://humane.com/support/getting-started",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Getting Started",
     whyItMatters:
       "The Cosmos account is the backbone of the whole product — it's what activates the Pin's data plan, syncs settings, and stores your interaction history, so setting it up correctly the first time avoids re-pairing headaches later.",
@@ -71,7 +71,7 @@ export const humaneAiPinSettings = [
       "Check your current connection type and data plan status from your Cosmos web account.",
       "Switch between Wi-Fi and the data plan automatically — the Pin uses whichever connection is available.",
     ],
-    redirectUrl: "https://humane.com/support/connectivity",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Connectivity",
     whyItMatters:
       "Because the Pin is designed to work standalone, its connection method directly determines whether features like queries and communication work away from home — understanding Wi-Fi versus the data plan helps avoid unexpected gaps in coverage.",
@@ -107,7 +107,7 @@ export const humaneAiPinSettings = [
       "Review what the Pin has heard or captured later through your Cosmos account's Moments history.",
     ],
     important: "The Trust Light is there so people around you can see when the Pin is capturing — being mindful of it in shared or public spaces is good etiquette.",
-    redirectUrl: "https://humane.com/support/voice-and-trust-light",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Voice & Trust Light",
     whyItMatters:
       "Since the Pin has no screen by default, voice and the Trust Light are the primary ways you and people around you understand what the device is doing at any moment, making them central to both usability and privacy.",
@@ -142,7 +142,7 @@ export const humaneAiPinSettings = [
       "Hold your open palm in front of the Pin to view the Laser Ink Display projected onto your hand.",
       "Tilt or move your hand while the Laser Ink Display is active to interact with certain projected content.",
     ],
-    redirectUrl: "https://humane.com/support/laser-ink-display",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Laser Ink Display",
     whyItMatters:
       "The Laser Ink Display and gesture controls give you a way to interact with the Pin visually and silently, which matters in situations where speaking aloud isn't practical or when you need to glance at information quickly.",
@@ -178,7 +178,7 @@ export const humaneAiPinSettings = [
       "Check battery status on the Pin or in your Cosmos account before heading out for an extended period.",
     ],
     important: "Always align the Battery Booster carefully with the Pin's magnetic contacts — a loose or misaligned attachment can cause it to disconnect or fall.",
-    redirectUrl: "https://humane.com/support/battery-and-battery-booster",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Battery & Battery Booster",
     whyItMatters:
       "Because the Pin is worn throughout the day, understanding the swappable Battery Booster is what makes all-day use realistic — it lets you extend battery life on the go instead of being tied to a charging cable.",
@@ -214,7 +214,7 @@ export const humaneAiPinSettings = [
       "Restart the Pin using its power gesture if an update doesn't seem to finish applying.",
     ],
     important: "Avoid removing the Battery Booster or letting the Pin fully power off while an update is actively installing.",
-    redirectUrl: "https://humane.com/support/software-updates",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Software Updates",
     whyItMatters:
       "Cosmos updates are how Humane ships new features and fixes to the Pin after purchase, so staying current keeps the device working as intended and gives you access to the latest capabilities.",
@@ -250,7 +250,7 @@ export const humaneAiPinSettings = [
       "Watch the Trust Light on the Pin itself as the clearest real-time signal of active capturing.",
     ],
     important: "Anyone reviewing Moments should be mindful that captured interactions may include audio or video involving people nearby — check your account's privacy settings regularly.",
-    redirectUrl: "https://humane.com/support/privacy-and-moments",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Privacy & Moments",
     whyItMatters:
       "Because the Pin captures real interactions as Moments, knowing how to review and delete them through your Cosmos account is essential for staying in control of your personal data.",
@@ -287,7 +287,7 @@ export const humaneAiPinSettings = [
       "Restart the Pin using its power gesture if it becomes unresponsive to voice or touch.",
     ],
     important: "If the Pin remains hot to the touch or won't respond after restarting, stop using it and contact Humane Support rather than continuing to troubleshoot on your own.",
-    redirectUrl: "https://humane.com/support/troubleshooting",
+    redirectUrl: "https://humane.com",
     actionLabel: "Open Humane Support: Troubleshooting",
     whyItMatters:
       "Connectivity drops and device warmth are the most common real-world annoyances with a wearable, always-on device, and knowing the basic checks — connection status, battery, and a restart — resolves most cases quickly.",

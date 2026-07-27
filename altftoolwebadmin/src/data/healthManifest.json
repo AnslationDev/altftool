@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-26T17:08:08.926Z",
+  "generatedAt": "2026-07-27T14:54:00.043Z",
   "tools": {
-    "total": 1451,
-    "healthy": 1451,
+    "total": 2857,
+    "healthy": 2857,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 22,
-    "directories": 1452,
+    "directories": 2858,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -19,37 +19,42 @@
     "readiness": {
       "methodology": "static-readiness-v2",
       "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-      "total": 1451,
+      "total": 2857,
       "score": 94,
       "counts": {
-        "working": 1390,
-        "api-required": 61,
-        "partial": 0,
+        "working": 2779,
+        "api-required": 64,
+        "partial": 14,
         "broken": 0
       },
       "automatedTests": 158,
-      "automatedCoverage": 11,
-      "networkDependent": 61,
-      "envDependent": 1,
+      "automatedCoverage": 6,
+      "networkDependent": 64,
+      "envDependent": 4,
       "api": {
-        "tools": 61,
+        "tools": 65,
         "counts": {
-          "configured": 0,
-          "missing-config": 1,
-          "runtime-check": 60
+          "configured": 1,
+          "missing-config": 2,
+          "runtime-check": 62
         },
-        "providerCount": 17,
+        "providerCount": 19,
         "requiredEnvKeys": [
+          "DATABASE_URL",
+          "NEXT_PUBLIC_API_KEY",
           "NEXT_PUBLIC_WHEREGOES_API_URL"
         ],
-        "configuredEnvKeys": [],
-        "missingEnvKeys": [
+        "configuredEnvKeys": [
           "NEXT_PUBLIC_WHEREGOES_API_URL"
+        ],
+        "missingEnvKeys": [
+          "DATABASE_URL",
+          "NEXT_PUBLIC_API_KEY"
         ],
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 46,
+            "tools": 50,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -72,6 +77,19 @@
             "missingEnvKeys": [],
             "statuses": [
               "runtime-check"
+            ]
+          },
+          {
+            "name": "Api",
+            "tools": 1,
+            "requiredEnvKeys": [
+              "NEXT_PUBLIC_API_KEY"
+            ],
+            "missingEnvKeys": [
+              "NEXT_PUBLIC_API_KEY"
+            ],
+            "statuses": [
+              "missing-config"
             ]
           },
           {
@@ -138,6 +156,19 @@
             ]
           },
           {
+            "name": "Database",
+            "tools": 1,
+            "requiredEnvKeys": [
+              "DATABASE_URL"
+            ],
+            "missingEnvKeys": [
+              "DATABASE_URL"
+            ],
+            "statuses": [
+              "missing-config"
+            ]
+          },
+          {
             "name": "Google",
             "tools": 1,
             "requiredEnvKeys": [],
@@ -188,11 +219,9 @@
             "requiredEnvKeys": [
               "NEXT_PUBLIC_WHEREGOES_API_URL"
             ],
-            "missingEnvKeys": [
-              "NEXT_PUBLIC_WHEREGOES_API_URL"
-            ],
+            "missingEnvKeys": [],
             "statuses": [
-              "missing-config"
+              "configured"
             ]
           },
           {
@@ -206,7 +235,7 @@
           }
         ]
       },
-      "placeholderSignals": 0,
+      "placeholderSignals": 14,
       "unresolvedImports": 0,
       "priority": {
         "total": 51,
@@ -215,9 +244,390 @@
       },
       "topRisks": [
         {
+          "slug": "api-doc-prompt-builder",
+          "name": "API Doc Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/api-doc-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "changelog-prompt-builder",
+          "name": "Changelog Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/changelog-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "code-comment-prompt-builder",
+          "name": "Code Comment Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/code-comment-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "developer-prompt-pack",
+          "name": "Developer Prompt Pack",
+          "category": "Developer",
+          "route": "/tools/all/developer-prompt-pack",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "engineering-style-guide-generator",
+          "name": "Engineering Style Guide Generator",
+          "category": "Generators",
+          "route": "/tools/all/engineering-style-guide-generator",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "faq-generator-prompt-builder",
+          "name": "FAQ Generator Prompt Builder",
+          "category": "Business",
+          "route": "/tools/all/faq-generator-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "glossary-prompt-builder",
+          "name": "Glossary Prompt Builder",
+          "category": "Business",
+          "route": "/tools/all/glossary-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "knowledge-base-article-prompt-builder",
+          "name": "Knowledge Base Article Prompt Builder",
+          "category": "Business",
+          "route": "/tools/all/knowledge-base-article-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "onboarding-doc-prompt-builder",
+          "name": "Onboarding Doc Prompt Builder",
+          "category": "Business",
+          "route": "/tools/all/onboarding-doc-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "release-notes-prompt-builder",
+          "name": "Release Notes Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/release-notes-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "sop-document-prompt-builder",
+          "name": "SOP Document Prompt Builder",
+          "category": "Business",
+          "route": "/tools/all/sop-document-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "sql-explain-prompt-builder",
+          "name": "SQL Explain Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/sql-explain-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "technical-doc-prompt-builder",
+          "name": "Technical Doc Prompt Builder",
+          "category": "Developer",
+          "route": "/tools/all/technical-doc-prompt-builder",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "test-case-naming-generator",
+          "name": "Test Case Naming Generator",
+          "category": "Generators",
+          "route": "/tools/all/test-case-naming-generator",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: not-implemented"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
           "slug": "ai-passport-photo-maker",
           "name": "AI Passport Photo Maker",
-          "category": "Image & Photo, Productivity",
+          "category": "Image & Photo",
           "route": "/tools/all/ai-passport-photo-maker",
           "status": "api-required",
           "score": 86,
@@ -482,387 +892,6 @@
             ],
             "missingEnvKeys": []
           }
-        },
-        {
-          "slug": "bg-remover",
-          "name": "Background Remover",
-          "category": "AI Tools",
-          "route": "/tools/all/bg-remover",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "calender-panchang",
-          "name": "Calender Panchang",
-          "category": "Lifestyle",
-          "route": "/tools/all/calender-panchang",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "company-info-tool",
-          "name": "Company Info Explorer",
-          "category": "Business",
-          "route": "/tools/all/company-info-tool",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "country-quiz",
-          "name": "Country Quiz",
-          "category": "Education & Science, Fun",
-          "route": "/tools/all/country-quiz",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "currency-converter",
-          "name": "Currency Converter",
-          "category": "Business",
-          "route": "/tools/all/currency-converter",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "dictionary-app",
-          "name": "Dictionary App",
-          "category": "Education & Science",
-          "route": "/tools/all/dictionary-app",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "api.datamuse.com",
-              "api.dictionaryapi.dev",
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "domain-checker",
-          "name": "Domain Checker",
-          "category": "Business",
-          "route": "/tools/all/domain-checker",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "email-authentication-checker",
-          "name": "Email Authentication Checker",
-          "category": "Marketing & Social",
-          "route": "/tools/all/email-authentication-checker",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "email-validator",
-          "name": "Email Validator",
-          "category": "Developer, Business",
-          "route": "/tools/all/email-validator",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "emoji-hub",
-          "name": "Emoji Hub",
-          "category": "Design & Color",
-          "route": "/tools/all/emoji-hub",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "event-tool",
-          "name": "Event Planner",
-          "category": "Productivity",
-          "route": "/tools/all/event-tool",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "financial-update",
-          "name": "Financial Update",
-          "category": "Business",
-          "route": "/tools/all/financial-update",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "AltFTool API",
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "flag-quiz",
-          "name": "Flag Quiz",
-          "category": "Education & Science, Fun",
-          "route": "/tools/all/flag-quiz",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "github-profile-finder",
-          "name": "GitHub Profile Finder",
-          "category": "Developer",
-          "route": "/tools/all/github-profile-finder",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "api.github.com"
-            ],
-            "missingEnvKeys": []
-          }
         }
       ]
     }
@@ -915,7 +944,7 @@
       {
         "rank": 1,
         "slug": "api-stress-estimator",
-        "name": "API STRESS ESTIMATOR",
+        "name": "API Stress Estimator",
         "category": "Developer",
         "route": "/tools/all/api-stress-estimator",
         "registered": true,
@@ -936,7 +965,7 @@
         "rank": 3,
         "slug": "csv-converter",
         "name": "CSV Converter",
-        "category": "Developer",
+        "category": "Converters",
         "route": "/tools/all/csv-converter",
         "registered": true,
         "routeCovered": true,
@@ -996,7 +1025,7 @@
         "rank": 9,
         "slug": "text-to-base64",
         "name": "Text to Base64",
-        "category": "Developer, Converters",
+        "category": "Converters",
         "route": "/tools/all/text-to-base64",
         "registered": true,
         "routeCovered": true,
@@ -1026,7 +1055,7 @@
         "rank": 12,
         "slug": "file-to-base64",
         "name": "File to Base64",
-        "category": "Converters, Developer",
+        "category": "Converters",
         "route": "/tools/all/file-to-base64",
         "registered": true,
         "routeCovered": true,
@@ -1116,7 +1145,7 @@
         "rank": 21,
         "slug": "svg-to-image",
         "name": "SVG to Image",
-        "category": "Design & Color, Converters",
+        "category": "Converters",
         "route": "/tools/all/svg-to-image",
         "registered": true,
         "routeCovered": true,
@@ -1186,7 +1215,7 @@
         "rank": 28,
         "slug": "markdown-html-converter",
         "name": "Markdown / HTML Converter",
-        "category": "Developer",
+        "category": "Developer, Text & Writing",
         "route": "/tools/all/markdown-html-converter",
         "registered": true,
         "routeCovered": true,
@@ -1316,7 +1345,7 @@
         "rank": 41,
         "slug": "decision-wheel",
         "name": "Decision Wheel",
-        "category": "Fun, Productivity",
+        "category": "Fun",
         "route": "/tools/all/decision-wheel",
         "registered": true,
         "routeCovered": true,
@@ -1336,7 +1365,7 @@
         "rank": 43,
         "slug": "text-diff-viewer",
         "name": "Text Diff Viewer",
-        "category": "Developer, Productivity",
+        "category": "Developer",
         "route": "/tools/all/text-diff-viewer",
         "registered": true,
         "routeCovered": true,
@@ -1356,7 +1385,7 @@
         "rank": 45,
         "slug": "file-metadata-explorer",
         "name": "File Metadata Explorer",
-        "category": "Developer, Productivity",
+        "category": "Developer",
         "route": "/tools/all/file-metadata-explorer",
         "registered": true,
         "routeCovered": true,
@@ -1416,7 +1445,7 @@
         "rank": 51,
         "slug": "ai-passport-photo-maker",
         "name": "AI Passport Photo Maker",
-        "category": "Image & Photo, Productivity",
+        "category": "Image & Photo",
         "route": "/tools/all/ai-passport-photo-maker",
         "registered": true,
         "routeCovered": true,

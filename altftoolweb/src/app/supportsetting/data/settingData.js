@@ -68,6 +68,30 @@ export function getSettingsForCategory(platform, categoryId) {
   );
 }
 
+// activeId scheme for a category hub page — "cat-{platform}-{categoryId}",
+// e.g. "cat-windows-connectivity-network". The platform is embedded in the
+// id itself (same convention device settings already use via `.platform`)
+// rather than always trusting whatever platform happens to be active when
+// the id is read, so a category hub page renders correctly even mid-
+// platform-switch or on a fresh deep link, before platformState settles.
+// A platform id never itself contains a "-" (windows/macos/android/ios),
+// so splitting on the first "-" cleanly separates it from the category id,
+// which does contain dashes (e.g. "accounts-sync-family").
+export function parseCategoryActiveId(activeId) {
+  if (typeof activeId !== "string" || !activeId.startsWith("cat-")) return null;
+  const rest = activeId.slice("cat-".length);
+  const dashIndex = rest.indexOf("-");
+  if (dashIndex === -1) return null;
+  const platform = rest.slice(0, dashIndex);
+  const categoryId = rest.slice(dashIndex + 1);
+  if (!isValidPlatform(platform) || !categoryId) return null;
+  return { platform, categoryId };
+}
+
+export function categoryActiveId(platform, categoryId) {
+  return `cat-${platform}-${categoryId}`;
+}
+
 export function searchSettings(platform, query) {
   const trimmed = (query || "").trim().toLowerCase();
   if (!trimmed) return [];

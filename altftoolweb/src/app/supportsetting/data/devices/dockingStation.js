@@ -20,7 +20,7 @@ export const dockingStationSettings = [
       "macOS: Apple menu → About This Mac → More Info → System Report, then check the USB, Thunderbolt/USB4, and Network sections — a Thunderbolt dock appears as a hub in the Thunderbolt/USB4 tree with each downstream device listed under it.",
       "If a peripheral plugged into the dock doesn't appear anywhere in these lists, the dock itself likely isn't enumerating correctly — try a different USB-C/Thunderbolt port on the laptop before troubleshooting the peripheral.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/device-manager",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Device Manager",
     whyItMatters:
       "Docks route several unrelated subsystems (video, network, USB, power) through one physical connection, so when only one function fails — say, the second monitor but not Ethernet — checking what the OS actually enumerates quickly tells you whether the problem is the dock, the cable, or the specific peripheral.",
@@ -59,7 +59,7 @@ export const dockingStationSettings = [
       "Set the correct resolution and refresh rate per display in Display settings — docks sometimes default a 4K panel to 30Hz instead of 60Hz when bandwidth is tight, which shows up as noticeably choppier mouse movement.",
     ],
     important: "Not every laptop USB-C port carries a video signal — some are data/charging only. Check your laptop's spec sheet for which specific port supports DisplayPort Alt Mode or Thunderbolt before assuming a dock's monitor outputs will work from any port.",
-    redirectUrl: "https://support.microsoft.com/windows/multiple-monitors-in-windows",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Connect Multiple Monitors",
     whyItMatters:
       "Multi-monitor setups are the primary reason most people buy a docking station, and video bandwidth is the single most common limiting factor — understanding whether your dock's extra ports are native GPU output or DisplayLink-converted explains resolution caps, refresh-rate limits, and why some laptops simply can't drive three external 4K screens at once.",
@@ -96,7 +96,7 @@ export const dockingStationSettings = [
       "If both Wi-Fi and the dock's Ethernet are active at once, set a service order preference so the OS prefers the wired connection: Windows Settings → Network & internet → Advanced network settings; macOS System Settings → Network → the ⚙️ menu → Set Service Order.",
       "To confirm actual link speed, run ipconfig /all (Windows) or check the Network pane's connection details (macOS) — a Gigabit-rated dock connected to an older 100 Mbps switch or cable will negotiate down without any warning.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/fix-network-connection-issues-in-windows",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Ethernet Connection Issues",
     whyItMatters:
       "A dock's Ethernet port is a USB-connected network adapter, not a direct extension of your laptop's own network hardware, so it depends on its own driver and can behave differently from built-in Wi-Fi — knowing this explains why a wired connection sometimes needs a driver update or a service-order change to actually take priority.",
@@ -134,7 +134,7 @@ export const dockingStationSettings = [
       "On Windows, check Settings → System → Power & battery for the current charging rate and status; on macOS, hold the Option key and click the battery icon in the menu bar for a similar power-source readout.",
     ],
     important: "A dock without its own power adapter plugged in will not charge your laptop — it can only pass through data and video, or draw a small amount of bus power for low-draw peripherals.",
-    redirectUrl: "https://www.usb.org/usb-charging",
+    redirectUrl: "https://www.usb.org/",
     actionLabel: "Open USB.org: USB Power Delivery Basics",
     whyItMatters:
       "Pass-through charging is what lets a single cable replace both a laptop's charger and every peripheral cable at once, but the wattage math is easy to get wrong — an underpowered dock or an inadequate cable can leave a laptop very slowly losing charge throughout the day even while it appears to be \"plugged in.\"",
@@ -172,7 +172,7 @@ export const dockingStationSettings = [
       "After the update completes, unplug and reconnect the dock (and restart the laptop if the utility recommends it) so all connected peripherals, displays, and network adapters re-enumerate against the new firmware.",
     ],
     important: "Never disconnect a dock or lose power to it mid-update — an interrupted firmware flash can permanently disable the dock, sometimes requiring manufacturer service to recover.",
-    redirectUrl: "https://www.displaylink.com/support",
+    redirectUrl: "https://support.displaylink.com/",
     actionLabel: "Open DisplayLink Support: Firmware Updates",
     whyItMatters:
       "Firmware bugs are a common cause of docks that \"used to work fine\" but develop new problems after a laptop OS update — since the dock's internal chips have to correctly negotiate USB, video, and power protocols with whatever computer is plugged in, a firmware update is often the actual fix rather than reinstalling drivers or replacing cables.",
@@ -209,7 +209,7 @@ export const dockingStationSettings = [
       "Reduce simultaneous load by unplugging non-essential USB devices (especially external drives or anything else drawing significant bus power) to see if the remaining ones stabilize — high-draw devices can starve others on the same hub.",
       "Power-cycle the dock itself (unplug both its power adapter and its connection to the laptop for about ten seconds) before assuming a peripheral or the laptop is at fault — a hung internal hub controller is a common and easy-to-fix cause.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/fix-usb-connection-problems-in-windows",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix USB Connection Problems",
     whyItMatters:
       "A dock's USB hub is a shared, finite resource for both bandwidth and power, so problems that look like a broken keyboard, mouse, or external drive are frequently actually the hub running out of headroom — isolating whether an issue follows the peripheral or stays with the dock saves a lot of wasted troubleshooting and unnecessary replacements.",
@@ -246,7 +246,7 @@ export const dockingStationSettings = [
       "After rebooting, confirm the install by checking Device Manager (Windows) under \"Display adapters\" for a DisplayLink entry, or checking System Settings → Displays (macOS) for the additional monitor appearing as expected.",
       "Reinstall or update the DisplayLink driver after major Windows or macOS updates — these chips depend on OS-level graphics APIs that occasionally change in ways that break an outdated driver version.",
     ],
-    redirectUrl: "https://www.displaylink.com/downloads",
+    redirectUrl: "https://support.displaylink.com/",
     actionLabel: "Open DisplayLink: Download Drivers",
     whyItMatters:
       "Without the correct DisplayLink driver, ports on many affordable and universal docks simply won't output video at all, which is easy to mistake for a defective dock or cable — installing the right driver is frequently the entire fix for a \"third monitor doesn't work\" complaint.",
@@ -284,7 +284,7 @@ export const dockingStationSettings = [
       "Expect a shared bandwidth budget across the whole chain: two daisy-chained 4K monitors may be limited to 30Hz or a reduced resolution compared to connecting each one to its own separate port.",
     ],
     important: "Daisy-chaining works over DisplayPort/MST; HDMI does not support this style of chaining, so both the dock's output and the connecting monitors need DisplayPort connections for a daisy chain to work.",
-    redirectUrl: "https://www.displaylink.com/support",
+    redirectUrl: "https://support.displaylink.com/",
     actionLabel: "Open DisplayLink Support: Multi-Stream Transport",
     whyItMatters:
       "Daisy-chaining lets a dock with a single DisplayPort output still drive two or more monitors without needing a DisplayLink adapter for the extra screen, but the shared bandwidth means it's a trade-off worth understanding before wiring a desk around it, especially at higher resolutions.",

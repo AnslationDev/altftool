@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin,
@@ -17,11 +18,17 @@ import Image from "next/image";
 import DealCard from "./DealCard";
 import MobileSearchBar from "./MobileSearchBar";
 import DesktopSearchBar from "./DesktopSearchBar";
+import { useNearbySearch } from "@/app/sale/hooks/useNearbySearch";
 import {
   CITY_OPTIONS,
   normaliseCity,
   getRefCoords,
 } from "@/app/sale/data/cities";
+
+// Leaflet touches `window` at module scope, so it can't be part of the
+// server-rendered bundle — load it client-only, matching the pattern used
+// by the flightradar dashboard's map component.
+const NearbyMallResults = dynamic(() => import("./NearbyMallResults"), { ssr: false });
 
 const SORT_OPTIONS = ["Nearest", "Highest Discount", "Lowest Price"];
 const CARDS_PER_PAGE = 6;
@@ -104,6 +111,18 @@ export default function SalesNearYou({
     [userCoords, locationName, dynamicCities],
   );
 
+  // ── Nearby Sale Search: ANY non-empty search always searches real nearby
+  // malls & stores (via OpenStreetMap), reusing the same location state as
+  // the rest of this component — no duplicate geolocation logic, and no
+  // keyword-list guessing about what counts as a "mall search".
+  const {
+    results: mallResults,
+    loading: mallLoading,
+    error: mallError,
+    search: searchNearbyMalls,
+    reset: resetMallSearch,
+  } = useNearbySearch();
+
   // ── Step 1: enrich every deal with a computed distance
   const enrichedDeals = useMemo(() => {
     return nearbyDeals.map((deal) => {
@@ -123,6 +142,10 @@ export default function SalesNearYou({
   // ── Step 2: filter by tab + city + search, then sort
   const filtered = useMemo(() => {
     let deals = enrichedDeals.filter((d) => d.type === "nearby");
+
+
+
+    // console.log("deals near me ", deals);
 
     // Filter by city
     const detectedCity = normaliseCity(locationName);
@@ -157,6 +180,27 @@ export default function SalesNearYou({
 
     return deals;
   }, [enrichedDeals, sortBy, locationName, searchQuery]);
+
+  // Any non-empty search query searches real nearby malls/stores via OSM
+  // — lightly debounced (matches the 500ms debounce SaleClient already uses
+  // for the product-deal search) so it doesn't hit the API on every
+  // keystroke. This is driven entirely by real, live-fetched place data —
+  // never a hardcoded list of malls/brands.
+  useEffect(() => {
+    const query = searchQuery.trim();
+    if (!query || !refCoords) {
+      resetMallSearch();
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      searchNearbyMalls({ latitude: refCoords.lat, longitude: refCoords.lng, keyword: query });
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, refCoords?.lat, refCoords?.lng, searchNearbyMalls, resetMallSearch]);
+
+  const showMallView = Boolean(searchQuery.trim());
 
   // ── Step 3: paginate — show 6 cards at a time, reveal more on scroll
   useEffect(() => {
@@ -229,13 +273,13 @@ export default function SalesNearYou({
               setIsActive(true);
             }}
             className={`group flex items-center gap-2 px-4 py-2 font-medium rounded-full border text-sm font-secondary cursor-pointer transition-all duration-200
-  
+
             ${
               isActive
                 ? "bg-(--primary) text-white border-(--primary)"
                 : "border-(--border) text-(--foreground) hover:bg-(--primary)/5 hover:text-(--primary) hover:border-none"
             }
-          `}          
+          `}
           >
             <Navigation
               className={`w-4 h-4 transition-colors duration-200
@@ -256,7 +300,7 @@ export default function SalesNearYou({
         </div>
 
         {/*  Mobile Search UI */}
-            <MobileSearchBar
+            {/* <MobileSearchBar
              searchQuery={searchQuery}
              onSearchChange={onSearchChange}
              handleSearch={handleSearch}
@@ -270,10 +314,10 @@ export default function SalesNearYou({
              CITY_OPTIONS={allCityOptions}
              locationName={locationName}
              mobileCityRef={mobileCityRef}
-           />
+           /> */}
 
         {/*  Desktop Search UI */}
-           <DesktopSearchBar
+           {/* <DesktopSearchBar
              searchQuery={searchQuery}
              onSearchChange={onSearchChange}
              handleSearch={handleSearch}
@@ -287,7 +331,7 @@ export default function SalesNearYou({
              CITY_OPTIONS={allCityOptions}
              locationName={locationName}
              desktopCityRef={desktopCityRef}
-           />
+           /> */}
 
 
         {/* ── Location permission / error banner ── */}
@@ -336,6 +380,18 @@ export default function SalesNearYou({
           )}
         </AnimatePresence> */}
 
+        {/* ── Nearby Sale Search results (real OSM malls/stores) ── */}
+        {showMallView ? (
+          <NearbyMallResults
+            origin={refCoords}
+            results={mallResults}
+            loading={mallLoading}
+            error={mallError}
+            locationStatus={locationStatus}
+            onDetectLocation={onDetectLocation}
+          />
+        ) : (
+          <>
         {/* ── Controls row ── */}
         <div className="flex items-center justify-between mb-5 flex-wrap gap-4">
           {/* LEFT CONTENT */}
@@ -349,7 +405,7 @@ export default function SalesNearYou({
 
           {/* RIGHT SIDE */}
           <div className="relative" ref={sortDropdownRef}>
-            <button
+            {/* <button
               onClick={() => setIsSortOpen((p) => !p)}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-(--foreground) transition cursor-pointer bg-(--background) font-secondary"
             >
@@ -361,7 +417,7 @@ export default function SalesNearYou({
                 <span className="font-medium">{sortBy}</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-(--muted-foreground) transition ${isSortOpen ? "rotate-180" : ""}`} />
               </div>
-            </button>
+            </button> */}
 
             {isSortOpen && (
               <div className="absolute right-0 top-full mt-2 bg-(--background) border border-(--border) rounded-xl shadow-lg z-20 min-w-40 overflow-hidden">
@@ -435,6 +491,8 @@ export default function SalesNearYou({
           <div ref={loadMoreRef} className="flex items-center justify-center py-8">
             <Loader2 className="w-6 h-6 text-(--primary) animate-spin" />
           </div>
+        )}
+          </>
         )}
       </div>
     </section>

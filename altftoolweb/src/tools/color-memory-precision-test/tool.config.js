@@ -1,12 +1,13 @@
-export const config = {
+const toolConfig = {
   slug: "color-memory-precision-test",
   name: "Color Memory Precision Test",
-  description: "Test your visual memory and color precision by recreating shades from memory.",
-  category: "Design Tools",
+  category: "Education & Science",
+  description:
+    "Study a colour, watch it disappear, then rebuild it from memory — and get a blended RGB and HSL accuracy score for how close you got.",
   icon: "brain",
   iconColor: "text-indigo-600",
   status: "New",
-  featured: true
+  featured: true,
 };
 
-export default config;
+export default toolConfig;

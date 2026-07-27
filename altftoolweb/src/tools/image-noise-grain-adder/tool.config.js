@@ -1,10 +1,10 @@
 const toolConfig = {
   slug: "image-noise-grain-adder",
   name: "Image Noise & Grain Adder",
-  category: "Creators",
+  category: ["Image & Photo"],
   description: "Add realistic film grain, vintage noise, and cinematic textures to your photos.",
-  icon: "image",
-  iconColor: "text-blue-500",
+  icon: "image-plus",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

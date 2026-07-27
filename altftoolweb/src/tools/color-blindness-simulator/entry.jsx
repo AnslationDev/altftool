@@ -1,5 +1,7 @@
-import ColorBlindnessSimulator from "./App";
+"use client";
 
-export default function Entry() {
-  return <ColorBlindnessSimulator />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

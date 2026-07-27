@@ -56,7 +56,7 @@ export default function WinnerModal({ winner, onClose, onToggleFavorite, isFavor
           transition={{ type: "spring", damping: 20, stiffness: 300 }}
         >
           <div className="bg-(--card) border border-(--border) rounded-2xl shadow-2xl p-6 text-center">
-            <button onClick={onClose} aria-label="Close winner dialog" className="absolute top-3 right-3 p-1 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+            <button onClick={onClose} aria-label="Close winner dialog" className="absolute top-3 right-3 p-1 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
               <X size="18" />
             </button>
 

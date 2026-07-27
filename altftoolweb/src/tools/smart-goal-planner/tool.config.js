@@ -2,8 +2,8 @@ const smartGoalPlannerConfig = {
   slug: "smart-goal-planner",
   name: "SMART Goal Planner",
   description:
-    "Create SMART goals, manage milestones and tasks, track live progress, reminders, analytics, reports, and local autosave.",
-  category: ["Productivity", "Planning", "Business"],
+    "Score a goal against all five SMART criteria, track milestones, and check whether the pace you are holding will hit the target by the deadline.",
+  category: "Productivity",
   icon: "target",
   iconColor: "text-cyan-500",
 };

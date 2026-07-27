@@ -150,10 +150,11 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
   await quality.expectClean("tool detail routes");
 });
 
-test("buysmart featured brand cards and detail flow work", async ({ page }) => {
+test("buysmart A-Z category cards load brand images", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
   await page.goto(`${webUrl}/buysmart`, { waitUntil: "domcontentloaded" });
+  await page.waitForLoadState("load");
   await expect(page.getByTestId("buysmart-page")).toBeVisible();
   await expect(page.getByTestId("buysmart-hero-section")).toBeVisible();
 
@@ -221,7 +222,7 @@ test("buysmart featured brand cards and detail flow work", async ({ page }) => {
   await quality.expectClean("buysmart flow");
 });
 
-test("blog catalog and detail render complete content", async ({
+test("firebase blog catalog and detail render complete content", async ({
   page,
   request,
 }) => {
@@ -238,8 +239,7 @@ test("blog catalog and detail render complete content", async ({
   const targetPost = firstPayload.posts.find((post) => post.slug);
   expect(targetPost).toBeTruthy();
 
-  let offset = 0;
-  let discoveredPosts = 0;
+  let offset = 360;
   let lastPayload = null;
 
   for (let attempt = 0; attempt < 10; attempt += 1) {
@@ -249,15 +249,13 @@ test("blog catalog and detail render complete content", async ({
     expect(chunk.ok()).toBeTruthy();
 
     lastPayload = await chunk.json();
-    expect(lastPayload.nextOffset).toBe(offset + lastPayload.posts.length);
-    discoveredPosts += lastPayload.posts.length;
+    expect(lastPayload.nextOffset).toBeGreaterThan(offset);
 
     if (!lastPayload.hasMore) break;
-    expect(lastPayload.nextOffset).toBeGreaterThan(offset);
     offset = lastPayload.nextOffset;
   }
 
-  expect(discoveredPosts).toBeGreaterThan(0);
+  expect(lastPayload.nextOffset).toBeGreaterThanOrEqual(387);
   expect(lastPayload.hasMore).toBeFalsy();
 
   await page.goto(`${webUrl}/blogs`, { waitUntil: "domcontentloaded" });

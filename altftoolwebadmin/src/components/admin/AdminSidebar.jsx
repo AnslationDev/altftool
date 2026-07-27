@@ -2,14 +2,15 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { PanelLeftClose, PanelLeftOpen, Search, X } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { ChevronRight, PanelLeftClose, PanelLeftOpen, Search, X } from "lucide-react";
 import { BrandMark } from "@altftool/ui";
 import { hasModuleAccess } from "@/lib/permissionUtils";
 import { getProject } from "@/projects";
 import {
   getProjectModuleRoute,
   GLOBAL_ADMIN_MODULES,
+  groupGlobalModules,
   resolveProjectModule,
 } from "@/config/adminRoutes";
 
@@ -74,6 +75,117 @@ function SidebarNavLink({
   );
 }
 
+/**
+ * A top-level module that owns sub-pages.
+ *
+ * The parent stays a real link (clicking "Health" still opens /health); the
+ * chevron only toggles the child list, so the disclosure never steals the
+ * primary navigation. The list auto-opens whenever the active route is inside
+ * it, which is what makes a deep link land with its section already expanded.
+ */
+function SidebarNavGroup({
+  moduleKey,
+  moduleConfig,
+  isActive,
+  isChildActive,
+  activeHref,
+  compact,
+  expanded,
+  onToggle,
+  onNavigate,
+}) {
+  const Icon = moduleConfig.icon;
+  const listId = `sidebar-children-${moduleKey}`;
+  // Never collapse the branch the operator is currently inside.
+  const open = expanded || isChildActive;
+
+  // Compact rail has no room for a child list; the parent link carries the
+  // whole branch and the active dot still marks it.
+  if (compact) {
+    return (
+      <SidebarNavLink
+        href={moduleConfig.path}
+        label={moduleConfig.label}
+        icon={Icon}
+        isActive={isActive || isChildActive}
+        compact
+        onNavigate={onNavigate}
+      />
+    );
+  }
+
+  return (
+    <div>
+      <div
+        className={`group relative flex items-center rounded-lg pr-1 transition-colors duration-150 ${
+          isActive
+            ? "bg-[var(--primary)] shadow-[var(--shadow-sm)]"
+            : "hover:bg-[var(--surface-soft)]"
+        }`}
+      >
+        <Link
+          href={moduleConfig.path}
+          aria-current={isActive ? "page" : undefined}
+          onClick={onNavigate}
+          className={`flex min-w-0 flex-1 items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] ${
+            isActive
+              ? "text-[var(--primary-foreground)]"
+              : isChildActive
+                ? "text-[var(--foreground)]"
+                : "text-[var(--muted)] group-hover:text-[var(--foreground)]"
+          }`}
+        >
+          <Icon size={16} className="shrink-0" strokeWidth={1.75} />
+          <span className="truncate">{moduleConfig.label}</span>
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => onToggle(moduleKey)}
+          aria-expanded={open}
+          aria-controls={listId}
+          aria-label={`${open ? "Collapse" : "Expand"} ${moduleConfig.label}`}
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] ${
+            isActive
+              ? "text-[var(--primary-foreground)] hover:bg-[color-mix(in_srgb,var(--primary-foreground)_18%,transparent)]"
+              : "text-[var(--muted)] hover:text-[var(--foreground)]"
+          }`}
+        >
+          <ChevronRight
+            size={14}
+            strokeWidth={2}
+            className={`transition-transform duration-150 motion-reduce:transition-none ${open ? "rotate-90" : ""}`}
+          />
+        </button>
+      </div>
+
+      {open ? (
+        <ul id={listId} className="mt-0.5 space-y-0.5 py-0.5 pl-[1.6rem]">
+          {moduleConfig.children.map((child) => {
+            const childActive = activeHref === child.path;
+            return (
+              <li key={child.path}>
+                <Link
+                  href={child.path}
+                  aria-current={childActive ? "page" : undefined}
+                  onClick={onNavigate}
+                  className={`relative flex items-center rounded-md py-1.5 pl-3.5 pr-2.5 text-[12.5px] transition-colors duration-150 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-[var(--border)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] ${
+                    childActive
+                      ? "font-semibold text-[var(--primary)] before:bg-[var(--primary)] before:w-[2px]"
+                      : "text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  <span className="truncate">{child.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 function SidebarSectionLabel({ children }) {
   return (
     <p className="px-2.5 pb-1.5 pt-4 text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">
@@ -88,8 +200,24 @@ export default function AdminSidebar({
   onCloseMobile = () => {},
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isMobile, setIsMobile] = useState(false);
   const [moduleFilter, setModuleFilter] = useState("");
+  // Branches the operator has opened by hand. The branch containing the active
+  // route is always shown regardless, so this only records extra ones.
+  const [expandedModules, setExpandedModules] = useState({});
+
+  // Children can be plain sub-routes (/health/tools) or deep links into a
+  // section of one page (/security?tab=sessions), so the active check has to
+  // compare the query string too — matching on pathname alone would light up
+  // all five Security children at once.
+  const activeHref = useMemo(() => {
+    const query = searchParams?.toString();
+    return query ? `${pathname}?${query}` : pathname;
+  }, [pathname, searchParams]);
+
+  const toggleModule = (key) =>
+    setExpandedModules((prev) => ({ ...prev, [key]: !prev[key] }));
   const closeButtonRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const compact = collapsed && !isMobile;
@@ -193,12 +321,25 @@ export default function AdminSidebar({
     if (!normalizedModuleFilter) return accessibleGlobalModules;
     return accessibleGlobalModules.filter((key) => {
       const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+      // Child labels are searchable too — "sessions" should surface
+      // Security › Sessions & Devices, not come back empty.
+      const childLabels = (moduleConfig?.children ?? [])
+        .map((child) => child.label)
+        .join(" ");
       const haystack = normalizeModuleQuery(
-        `${key} ${moduleConfig?.label || ""} system`,
+        `${key} ${moduleConfig?.label || ""} ${childLabels} system`,
       );
       return haystack.includes(normalizedModuleFilter);
     });
   }, [accessibleGlobalModules, normalizedModuleFilter]);
+
+  // Bucket the accessible modules into the ordered sections declared in
+  // adminRoutes.js. Empty sections are dropped by the helper, so an admin whose
+  // grants cover only Support never sees an empty "Access & Security" header.
+  const visibleGlobalModuleGroups = useMemo(
+    () => groupGlobalModules(visibleGlobalModules),
+    [visibleGlobalModules],
+  );
 
   if (!adminData) return null;
 
@@ -273,7 +414,7 @@ export default function AdminSidebar({
         <button
           ref={closeButtonRef}
           onClick={onCloseMobile}
-          className="inline-flex shrink-0 rounded-lg p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
+          className="inline-flex min-h-[var(--anslation-ds-target-min)] min-w-[var(--anslation-ds-target-min)] shrink-0 items-center justify-center rounded-lg p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] lg:hidden"
           aria-label="Close admin navigation"
         >
           <X className="h-4 w-4" />
@@ -370,19 +511,50 @@ export default function AdminSidebar({
           </>
         )}
 
-        {visibleGlobalModules.length > 0 && (
-          <>
+        {visibleGlobalModuleGroups.map((group, groupIndex) => (
+          <div key={group.key}>
             {!compact ? (
-              <SidebarSectionLabel>System</SidebarSectionLabel>
+              <SidebarSectionLabel>{group.label}</SidebarSectionLabel>
             ) : (
-              <div
-                className="mx-2 my-3 border-t border-[var(--border)]"
-                aria-hidden="true"
-              />
+              // Compact mode has no room for labels, so groups are separated by
+              // a rule instead. The first group needs no leading divider when it
+              // is the top of the global list.
+              (groupIndex > 0 || showProjectModules) && (
+                <div
+                  className="mx-2 my-3 border-t border-[var(--border)]"
+                  aria-hidden="true"
+                />
+              )
             )}
-            <nav className="space-y-0.5" aria-label="System modules">
-              {visibleGlobalModules.map((key) => {
+            <nav className="space-y-0.5" aria-label={`${group.label} modules`}>
+              {group.moduleKeys.map((key) => {
                 const moduleConfig = GLOBAL_ADMIN_MODULES[key];
+                const children = moduleConfig.children;
+
+                if (children?.length) {
+                  // The parent is "active" only on its own exact href; any other
+                  // href inside the branch lights up the child instead, so the
+                  // parent and a child are never both highlighted.
+                  const childMatch = children.find((c) => c.path === activeHref);
+                  const insideBranch =
+                    Boolean(childMatch) || pathname.startsWith(moduleConfig.path);
+
+                  return (
+                    <SidebarNavGroup
+                      key={key}
+                      moduleKey={key}
+                      moduleConfig={moduleConfig}
+                      isActive={insideBranch && !childMatch}
+                      isChildActive={Boolean(childMatch)}
+                      activeHref={activeHref}
+                      compact={compact}
+                      expanded={Boolean(expandedModules[key]) || insideBranch}
+                      onToggle={toggleModule}
+                      onNavigate={onCloseMobile}
+                    />
+                  );
+                }
+
                 return (
                   <SidebarNavLink
                     key={key}
@@ -396,8 +568,8 @@ export default function AdminSidebar({
                 );
               })}
             </nav>
-          </>
-        )}
+          </div>
+        ))}
       </div>
 
       {/* Footer */}

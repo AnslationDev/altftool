@@ -1,3 +1,7 @@
-import SprintGoalGeneratorApp from "./App";
+"use client";
 
-export default SprintGoalGeneratorApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

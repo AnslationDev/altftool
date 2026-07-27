@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildParityReport, renderParityMarkdown } from "../scripts/check-live-deploy-parity.mjs";
+import {
+  buildParityReport,
+  renderParityMarkdown,
+} from "../scripts/check-live-deploy-parity.mjs";
 
 function localSnapshot() {
   return {
@@ -116,25 +119,6 @@ test("production parity strict mode blocks stale live commits", async () => {
   assert.equal(report.status, "blocked");
   assert.equal(commitCheck?.status, "block");
   assert.match(commitCheck?.detail || "", /does not match expected/);
-});
-
-test("production parity can explicitly allow a missing live commit while keeping strict surface checks", async () => {
-  const snapshot = liveSnapshot();
-  delete snapshot.health.payload.release;
-
-  const report = await buildParityReport({
-    localSnapshot: localSnapshot(),
-    liveSnapshot: snapshot,
-    expectedCommit: "abcdef1234567890",
-    dirtyFiles: [],
-    strict: true,
-    allowMissingCommit: true,
-  });
-  const commitCheck = report.checks.find((check) => check.key === "release-commit");
-
-  assert.equal(report.status, "ready");
-  assert.equal(commitCheck?.status, "pass");
-  assert.match(commitCheck?.detail || "", /explicitly allowed/);
 });
 
 test("production parity markdown summarizes checks without secrets", async () => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { ChevronRight, Loader2, Inbox } from "lucide-react";
+import { ChevronRight, Loader2 } from "lucide-react";
+import { Button } from "@altftool/ui";
 import { breadcrumb, dayLabel, formatClock, kindMeta, timeAgo } from "./helpers";
 
 function EventRow({ ev, onSelect }) {
@@ -46,7 +47,12 @@ function EventRow({ ev, onSelect }) {
   );
 }
 
-export default function ActivityTimeline({ events, loading, hasMore, onLoadMore, loadingMore, onSelectEvent }) {
+/**
+ * The grouped event list only. Loading / error / empty are the caller's job and
+ * are rendered by the shared DataState anset, so a failed fetch can no longer
+ * reach this component and be drawn as "no activity here yet".
+ */
+export default function ActivityTimeline({ events, hasMore, onLoadMore, loadingMore, onSelectEvent }) {
   const groups = useMemo(() => {
     const map = new Map();
     for (const ev of events) {
@@ -56,26 +62,6 @@ export default function ActivityTimeline({ events, loading, hasMore, onLoadMore,
     }
     return [...map.entries()];
   }, [events]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center gap-2 py-16 text-sm text-[var(--muted)]">
-        <Loader2 className="h-4 w-4 animate-spin" /> Loading activity…
-      </div>
-    );
-  }
-
-  if (!events.length) {
-    return (
-      <div className="grid place-items-center gap-2 py-16 text-center">
-        <Inbox className="h-7 w-7 text-[var(--muted)]" />
-        <p className="text-sm font-semibold text-[var(--foreground)]">No activity here yet</p>
-        <p className="max-w-sm text-xs text-[var(--muted)]">
-          Actions in this part of the workspace will appear here as they happen.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -92,15 +78,12 @@ export default function ActivityTimeline({ events, loading, hasMore, onLoadMore,
 
       {hasMore && (
         <div className="pt-2 text-center">
-          <button
-            type="button"
-            onClick={onLoadMore}
-            disabled={loadingMore}
-            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-60"
-          >
-            {loadingMore ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+          <Button variant="secondary" size="sm" onClick={onLoadMore} disabled={loadingMore}>
+            {loadingMore ? (
+              <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+            ) : null}
             Load more
-          </button>
+          </Button>
         </div>
       )}
     </div>

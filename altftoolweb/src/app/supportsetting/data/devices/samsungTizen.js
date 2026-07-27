@@ -29,7 +29,7 @@ export const samsungTizenSettings = [
       "For TVs that are offline, updates can be downloaded on a computer from the Samsung support site and installed via a FAT32-formatted USB drive using Settings > Support > Software Update > Update Now.",
     ],
     important: "Do not unplug the TV or remove a USB drive while an update is installing — interrupting it can corrupt the firmware and require a service visit to recover.",
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-update-software-on-a-samsung-smart-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Software Update",
     whyItMatters:
       "An out-of-date Tizen build is one of the most common causes of streaming apps crashing, Smart Hub loading slowly, or new features simply not being available yet. Staying current also closes known security vulnerabilities on a device that's connected to your home network around the clock.",
@@ -65,7 +65,7 @@ export const samsungTizenSettings = [
       "Enable Intelligent Mode under Picture > Expert Settings so the TV can adapt brightness to room lighting and content type.",
       "Set Picture Mode separately per input — a game console or soundbar's HDMI input can use a different mode than the TV's built-in apps.",
     ],
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-change-picture-mode-and-settings-on-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Picture Settings",
     whyItMatters:
       "The out-of-the-box Dynamic mode is calibrated for bright retail showrooms, not most living rooms, which can leave colors oversaturated and shadow detail crushed. Choosing the right mode per source noticeably improves accuracy for movies, sports, and gaming without buying anything extra.",
@@ -102,7 +102,7 @@ export const samsungTizenSettings = [
       "For a soundbar over HDMI-ARC/eARC, make sure Anynet+ (HDMI-CEC) is enabled under Settings > General > External Device Manager so volume can be controlled with the TV remote.",
     ],
     important: "Bluetooth audio has a small amount of lag versus wired connections, which can be noticeable when lip-syncing dialogue during fast-moving scenes or live sports.",
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-connect-bluetooth-speaker-or-headphones-to-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Sound Output",
     whyItMatters:
       "Getting sound routing right is what makes a soundbar or wireless headphones actually work with the TV instead of fighting for the audio output, and it's one of the most common post-setup support questions for new TV owners.",
@@ -138,7 +138,7 @@ export const samsungTizenSettings = [
       "Install the SmartThings app on a phone, then add the TV as a device — it appears automatically when the phone is on the same Wi-Fi network.",
       "Use SmartThings to view TV notifications, use the phone as a remote, and mirror content via Smart View.",
     ],
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-connect-your-samsung-tv-to-wi-fi/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Network Settings",
     whyItMatters:
       "Without a solid network connection, Smart Hub apps buffer or fail to load, firmware can't update, and features like voice assistants and SmartThings integration stop working — troubleshooting this connection resolves the majority of \"my smart features aren't working\" cases.",
@@ -174,7 +174,7 @@ export const samsungTizenSettings = [
       "Once signed in, Smart Hub personalizes app recommendations and syncs purchased or downloaded apps.",
       "Use the same Samsung Account menu to sign out or switch accounts if the TV is shared or being reset for a new owner.",
     ],
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-sign-in-to-a-samsung-account-on-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Samsung Account",
     whyItMatters:
       "Several Smart Hub apps and services, including some game streaming apps and Samsung's own content recommendations, require being signed in to work at all — skipping this step is a common reason a newly set-up TV feels limited.",
@@ -209,7 +209,7 @@ export const samsungTizenSettings = [
       "Add widgets such as Clock, Weather, or Calendar from the Ambient Mode content browser.",
       "Adjust brightness and enable motion/light sensor-based auto-dimming under Ambient Mode > Settings so the display doesn't stay too bright in a dark room.",
     ],
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-use-ambient-mode-on-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Ambient Mode",
     whyItMatters:
       "Ambient Mode is one of the most-asked-about features on newer Samsung TVs because it's not obvious it exists — once discovered, it changes how people think about leaving the TV on, using it as decor rather than leaving a black screen or full video paused.",
@@ -246,7 +246,7 @@ export const samsungTizenSettings = [
       "Restrict individual Smart Hub apps by locking them under Apps management, and consider disabling app installs entirely for a child profile if the TV supports Family/Multi-user profiles.",
     ],
     important: "If the parental PIN is forgotten, restoring access typically requires a full factory reset under Settings > General > Reset, which also erases other TV settings and app data.",
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-set-up-parental-controls-on-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Parental Controls",
     whyItMatters:
       "Streaming apps and live broadcast content are both accessible from the same home screen, so relying on a single streaming app's built-in kid mode isn't enough — TV-level Parental Control is the only setting that covers every input and app consistently.",
@@ -282,7 +282,7 @@ export const samsungTizenSettings = [
       "Go to Smart Hub > Apps to install new apps, and select an app then More to update, move, or uninstall it.",
       "Enable Auto Update for apps under Settings > Support > Software Update > Auto Update (or within the Apps screen settings) so installed apps stay current automatically.",
     ],
-    redirectUrl: "https://www.samsung.com/support/tv-audio-video/how-to-use-universal-guide-and-manage-apps-on-a-samsung-tv/",
+    redirectUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/",
     actionLabel: "Open Samsung Support: Smart Hub & Apps",
     whyItMatters:
       "With content spread across many streaming apps, Universal Guide saves time by answering \"where can I watch this\" in one search instead of checking each app individually, while keeping Smart Hub apps updated avoids the sign-in errors and crashes that come from running an outdated app version.",

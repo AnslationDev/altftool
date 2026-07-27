@@ -1,4 +1,7 @@
-import LudoMain from "./pages/main";
-export default function Entry() {
-  return <LudoMain />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ChevronDown, ChevronRight, Layers, Loader2 } from "lucide-react";
+import { DataState, EmptyState } from "@/ansets";
 
 function CountBadge({ count, active }) {
   if (!count) return null;
@@ -22,6 +23,7 @@ function TreeNode({ node, depth, selectedPath, onSelect, authFetch }) {
   const [expanded, setExpanded] = useState(false);
   const [children, setChildren] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [childError, setChildError] = useState(null);
   const isSelected = selectedPath === node.hierarchyPath;
 
   const toggle = useCallback(
@@ -32,8 +34,18 @@ function TreeNode({ node, depth, selectedPath, onSelect, authFetch }) {
       setExpanded(next);
       if (next && children === null) {
         setLoading(true);
+        setChildError(null);
         const data = await authFetch(`/api/activity/tree?path=${encodeURIComponent(node.hierarchyPath)}`);
-        setChildren(data?.children || []);
+        // Same rule as the root fetch below: authFetch returns null only when
+        // the request threw, so `data?.children || []` would silently expand a
+        // failed node to nothing — indistinguishable from "this branch is
+        // genuinely empty". Keep the two apart and offer a retry.
+        if (data === null) {
+          setChildError("Couldn't load this branch.");
+          setChildren(null);
+        } else {
+          setChildren(data.children || []);
+        }
         setLoading(false);
       }
     },
@@ -72,6 +84,26 @@ function TreeNode({ node, depth, selectedPath, onSelect, authFetch }) {
         <CountBadge count={node.count} active={isSelected} />
       </div>
 
+      {expanded && childError ? (
+        <p
+          role="alert"
+          className="flex flex-wrap items-center gap-2 py-1.5 pl-6 pr-2 text-xs text-[var(--danger-text)]"
+        >
+          {childError}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setChildError(null);
+              setExpanded(false);
+            }}
+            className="rounded-sm font-semibold text-[var(--primary-text)] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+          >
+            Try again
+          </button>
+        </p>
+      ) : null}
+
       {expanded && children?.map((c) => (
         <TreeNode key={c.hierarchyPath} node={c} depth={depth + 1} selectedPath={selectedPath} onSelect={onSelect} authFetch={authFetch} />
       ))}
@@ -81,12 +113,28 @@ function TreeNode({ node, depth, selectedPath, onSelect, authFetch }) {
 
 export default function ExplorerTree({ selectedPath, onSelect, authFetch }) {
   const [roots, setRoots] = useState(null);
+  const [error, setError] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     let alive = true;
-    authFetch("/api/activity/tree").then((d) => { if (alive) setRoots(d?.children || []); });
+    setRoots(null);
+    setError(null);
+    authFetch("/api/activity/tree").then((d) => {
+      if (!alive) return;
+      // authFetch returns null only when the request threw. Treating that as
+      // `d?.children || []` rendered a permission/network failure as the flat
+      // line "No projects registered." — a real answer to a question we never
+      // got to ask. Keep the two apart so the operator can retry.
+      if (d === null) {
+        setError("Couldn't load the workspace tree.");
+        setRoots([]);
+        return;
+      }
+      setRoots(d.children || []);
+    });
     return () => { alive = false; };
-  }, [authFetch]);
+  }, [authFetch, reloadKey]);
 
   return (
     <nav className="space-y-0.5" aria-label="Workspace explorer">
@@ -105,17 +153,25 @@ export default function ExplorerTree({ selectedPath, onSelect, authFetch }) {
         All Activity
       </div>
 
-      {roots === null ? (
-        <div className="flex items-center gap-2 px-2.5 py-3 text-xs text-[var(--muted)]">
-          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading workspace…
-        </div>
-      ) : roots.length === 0 ? (
-        <p className="px-2.5 py-3 text-xs text-[var(--muted)]">No projects registered.</p>
-      ) : (
-        roots.map((n) => (
+      <DataState
+        loading={roots === null}
+        error={error}
+        isEmpty={!roots?.length}
+        onRetry={() => setReloadKey((k) => k + 1)}
+        loadingVariant="table"
+        rows={4}
+        empty={
+          <EmptyState
+            icon={Layers}
+            title="No projects registered"
+            description="Projects appear here once they record their first activity."
+          />
+        }
+      >
+        {roots?.map((n) => (
           <TreeNode key={n.hierarchyPath} node={n} depth={0} selectedPath={selectedPath} onSelect={onSelect} authFetch={authFetch} />
-        ))
-      )}
+        ))}
+      </DataState>
     </nav>
   );
 }

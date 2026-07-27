@@ -299,13 +299,13 @@ test("preflights file bytes, PDF header, and page count", async () => {
       type: "application/pdf",
       size: READING_ORDER_LIMITS.maxFileBytes + 1,
     }),
-    /no larger than 12 MB/,
+    new RegExp(`no larger than ${READING_ORDER_LIMITS.maxFileBytes / (1024 * 1024)} MB`),
   );
 
-  assert.equal(validatePdfPageCount(READING_ORDER_LIMITS.maxPages), 40);
-  assert.throws(() => validatePdfPageCount(0), /1 to 40 pages/);
-  assert.throws(() => validatePdfPageCount(41), /1 to 40 pages/);
-  assert.throws(() => validatePdfPageCount(Number.NaN), /1 to 40 pages/);
+  assert.equal(validatePdfPageCount(READING_ORDER_LIMITS.maxPages), READING_ORDER_LIMITS.maxPages);
+  assert.throws(() => validatePdfPageCount(0), new RegExp(`1 to ${READING_ORDER_LIMITS.maxPages} pages`));
+  assert.throws(() => validatePdfPageCount(READING_ORDER_LIMITS.maxPages + 1), new RegExp(`1 to ${READING_ORDER_LIMITS.maxPages} pages`));
+  assert.throws(() => validatePdfPageCount(Number.NaN), new RegExp(`1 to ${READING_ORDER_LIMITS.maxPages} pages`));
 });
 
 test("counts-only report excludes filename and all extracted strings", () => {

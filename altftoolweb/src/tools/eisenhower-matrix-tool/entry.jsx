@@ -1,3 +1,7 @@
-import EisenhowerMatrixToolApp from "./App";
+"use client";
 
-export default EisenhowerMatrixToolApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

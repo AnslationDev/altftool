@@ -11,7 +11,7 @@ export function calculateRiskScore(signals) {
   let score = 0;
   const breakdown = [];
 
- 
+
 
   // Canvas fingerprint — strongest single signal
   const canvasScore = signals.canvas?.rawValue &&
@@ -53,9 +53,12 @@ export function calculateRiskScore(signals) {
   breakdown.push({ name: "Screen Resolution", score: screenScore, max: 8 });
 
   // CPU cores + memory combo
+  // A value only counts when the collector actually read it. `undefined` means
+  // the probe never ran, which must not score the same as a disclosed value.
+  const isKnown = (value) => value !== undefined && value !== null && value !== "Unknown";
   const hardwareScore =
-    (signals.device?.cpuCores !== "Unknown" ? 4 : 0) +
-    (signals.device?.deviceMemory !== "Unknown" ? 3 : 0);
+    (isKnown(signals.device?.cpuCores) ? 4 : 0) +
+    (isKnown(signals.device?.deviceMemory) ? 3 : 0);
   score += hardwareScore;
   breakdown.push({ name: "CPU + Memory", score: hardwareScore, max: 7 });
 
@@ -67,7 +70,7 @@ export function calculateRiskScore(signals) {
   breakdown.push({ name: "Languages", score: langScore, max: 5 });
 
   // Touch support distinguishes device class
-  const touchScore = signals.device?.touchPoints !== undefined ? 3 : 0;
+  const touchScore = isKnown(signals.device?.touchPoints) ? 3 : 0;
   score += touchScore;
   breakdown.push({ name: "Touch Points", score: touchScore, max: 3 });
 

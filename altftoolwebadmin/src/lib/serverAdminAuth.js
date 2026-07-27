@@ -1,5 +1,6 @@
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
+import { createLocalDevAdminActor, isLocalDevAdminRequest } from "@/lib/adminAccess";
 
 async function getBearerToken(request) {
   const authHeader = request.headers.get("authorization");
@@ -11,6 +12,19 @@ async function getBearerToken(request) {
 }
 
 export async function verifyActiveAdmin(request) {
+  // Honour the same development-only bypass that lib/adminAccess.js implements
+  // (gated on NODE_ENV === "development", never reachable in a production
+  // build). Without it, routes guarded here 401 under a local-admin session
+  // while routes guarded by verifySuperAdminRequest work — an inconsistency
+  // that made whole screens look broken in local development.
+  if (isLocalDevAdminRequest(request)) {
+    const actor = createLocalDevAdminActor();
+    return {
+      decoded: actor,
+      admin: { ...actor, roleType: "superadmin", isSuperAdmin: true, isActive: true },
+    };
+  }
+
   const token = await getBearerToken(request);
   const decoded = await adminAuth.verifyIdToken(token);
   const rbacAdmin = await getRbacAdminDoc(decoded);

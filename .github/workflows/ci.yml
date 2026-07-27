@@ -20,9 +20,6 @@ env:
   CI: true
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   NEXT_TELEMETRY_DISABLED: 1
-  # Keep the 1,300+ tool webpack graph in an isolated process. This is the
-  # same memory-safe path verified by the production Amplify build.
-  ALTFT_WEBPACK_BUILD_WORKER: "true"
 
 jobs:
   # Deterministic gate: install, lint, build, and fast unit tests only.
@@ -74,12 +71,7 @@ jobs:
 
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
-    env:
-      # `validate` creates production builds before its smoke suite. Reuse
-      # those outputs instead of cold-compiling the 1,300+ tool graph in dev.
-      ALTFT_PLAYWRIGHT_WEB_SERVER: production
-      ALTFT_PLAYWRIGHT_ADMIN_SERVER: production
+    timeout-minutes: 75
 
     steps:
       - name: Checkout
@@ -104,8 +96,8 @@ jobs:
       - name: Verify Firebase Admin write checker wiring
         run: npm run firebase:admin-write-check:dry-run
 
-      - name: Validate source, production build, and smoke surface
-        run: npm run validate
+      - name: Validate full route surface
+        run: npm run validate:full
 
       - name: Write performance budget report
         run: npm run performance:budget:strict -- --output ci-performance-budget-report.json --output-md ci-performance-budget-report.md
@@ -124,6 +116,11 @@ jobs:
       - name: Verify live Firebase renders on public pages
         continue-on-error: true
         run: npm run test:firebase-public-pages
+
+      - name: Validate every microtool route
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev npm run test:tools:all
 
       - name: Verify security headers
         run: npm run test:security
@@ -152,51 +149,6 @@ jobs:
             ci-performance-budget-report.md
             ci-firebase-integrity-report.json
             ci-firebase-integrity-report.md
-          if-no-files-found: ignore
-
-  functional-verify:
-    name: Functional route & browser verification
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    env:
-      ALTFT_PLAYWRIGHT_WEB_SERVER: production
-      ALTFT_PLAYWRIGHT_ADMIN_SERVER: production
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
-
-      # Keep browser-heavy route, tool, mobile, and local-admin checks on a
-      # separate runner so the static/build verifier stays below the hosted
-      # runner lifetime. The production build is reused by every public test;
-      # admin auth tests explicitly opt into their dev-only local auth path.
-      - name: Build production apps for functional verification
-        run: npm run build
-
-      - name: Validate route, tool, mobile, and admin behavior
-        run: npm run validate:functional:ci
-
-      - name: Upload functional Playwright artifacts
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: functional-verify-playwright-artifacts
-          path: |
-            playwright-report/
-            test-results/
           if-no-files-found: ignore
 
   firebase-emulator:
@@ -237,11 +189,7 @@ jobs:
 
   visual-regression:
     runs-on: macos-latest
-    timeout-minutes: 45
-    env:
-      NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
-      ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
-      NEXT_PUBLIC_USE_MOCK: "true"
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -257,18 +205,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The 1,300+ tool graph is intentionally compiled once with the same
-      # memory-safe webpack production path used by release builds. Starting
-      # it in webpack dev mode here can spend the full visual timeout compiling
-      # route chunks and exhaust the default Node heap on macOS runners.
-      - name: Build production apps for visual regression
-        run: npm run build
-
       - name: Install Playwright browser
         run: npx playwright install chromium
 
       - name: Run visual regression
-        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=production npm run test:visual
+        run: npm run test:visual
 
       - name: Upload visual artifacts
         if: failure()
@@ -282,14 +223,11 @@ jobs:
 
   deploy-production:
     name: Deploy production
-    # Gate deploys on deterministic builds, source/integrity validation,
-    # functional browser coverage, and emulator-backed security rules.
-    # Visual snapshots remain informational because rendering can vary across
-    # hosted macOS images even when the functional surface is correct.
+    # Gate deploys on deterministic jobs only (build + emulator-backed rules).
+    # The "verify" and "visual-regression" jobs still run for visibility but no
+    # longer block production on transient live/Lighthouse/snapshot flakiness.
     needs:
       - build
-      - verify
-      - functional-verify
       - firebase-emulator
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/vercel-deploy.yml

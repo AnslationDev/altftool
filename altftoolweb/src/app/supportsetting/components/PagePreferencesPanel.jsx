@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Settings2,
   ChevronDown,
@@ -43,9 +43,16 @@ const LINE_SPACINGS = [
  * Accessibility, Preferences. Panel-specific controls (collapsing the
  * Recommended Resources rail) now live on that panel itself, not buried
  * in here — this stays compact, elegant, and entirely optional.
+ *
+ * Collapsed, this is a small "Customize" pill button — the same size and
+ * shape as the Back-to-Home / Focus Mode buttons next to it — rather than
+ * a full-width bar sitting on every page. Opening it drops a floating
+ * dropdown card below the button (closes on outside click or Escape)
+ * instead of pushing the rest of the page's content down.
  */
 const PagePreferencesPanel = ({ prefs, togglePref, updatePref, resetPrefs, bookmarkedCount = 0, onClearBookmarks, onClearHistory }) => {
   const [open, setOpen] = useState(false);
+  const panelRef = useRef(null);
 
   const summary = useMemo(() => {
     const parts = [`${TEXT_SIZE_LABELS[prefs.textSize] || "Medium"} text`];
@@ -59,22 +66,41 @@ const PagePreferencesPanel = ({ prefs, togglePref, updatePref, resetPrefs, bookm
     (key) => prefs[key] !== DEFAULT_PAGE_PREFS[key],
   );
 
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handlePointerDown = (event) => {
+      if (panelRef.current && !panelRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
   return (
-    <section className="support-prefs-panel" aria-label="Page preferences">
+    <section className="support-prefs-panel" aria-label="Page preferences" ref={panelRef}>
       <button
         type="button"
         className="support-prefs-trigger"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
+        title={summary}
       >
         <span>
           <Settings2 className="h-4 w-4" />
-          <span className="support-prefs-trigger-text">
-            Customize This Page
-            <span className="support-prefs-summary">{summary}</span>
-          </span>
+          Customize
+          {isCustomized && <span className="support-prefs-trigger-dot" aria-hidden="true" />}
         </span>
-        <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
 
       <div className={`support-prefs-body ${open ? "support-prefs-body-open" : ""}`} aria-hidden={!open}>

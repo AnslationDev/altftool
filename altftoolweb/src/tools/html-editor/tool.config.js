@@ -1,14 +1,10 @@
 const toolConfig = {
   slug: "html-editor",
-  "slug": "html-editor",
-  "name": "HTML Editor",
-  "category": [
-    "Developer",
-    "Web"
-  ],
-  "description": "Format, minify, escape, and unescape HTML fragments.",
-  "icon": "file-code",
-  "iconColor": "text-red-600"
+  name: "HTML Editor",
+  category: ["Developer"],
+  description: "Format, minify, escape, and unescape HTML fragments.",
+  icon: "file-code",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

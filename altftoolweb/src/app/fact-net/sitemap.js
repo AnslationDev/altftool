@@ -1,5 +1,6 @@
 import { getAllCategories, getLatestArticles } from "./data/factNetData";
 import { getSiteUrl } from "@/platform/seo/generateMetadata";
+import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
 
 export const dynamic = "force-dynamic";
 
@@ -26,5 +27,5 @@ export default function sitemap() {
     priority: 0.5,
   }));
 
-  return [...baseRoutes, ...categoryRoutes, ...articleRoutes];
+  return toXmlSafeSitemap([...baseRoutes, ...categoryRoutes, ...articleRoutes]);
 }

@@ -1,5 +1,5 @@
-import ReturnDeadlineTracker from "./App";
-
-export default function Entry() {
-  return <ReturnDeadlineTracker />;
+"use client";
+import ToolHome from "./pages";
+export default function ToolEntry() {
+  return <ToolHome />;
 }

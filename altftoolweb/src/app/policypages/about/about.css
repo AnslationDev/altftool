@@ -1,8 +1,6 @@
 .altf-about {
   --about-max: 1220px;
   --about-section-space: clamp(4rem, 6vw, 5.8rem);
-  --about-section-space-top: var(--about-section-space);
-  --about-section-space-bottom: var(--about-section-space);
   --about-text: #0f172a;
   --about-muted: #475569;
   --about-soft-border: rgba(20, 184, 166, 0.14);
@@ -120,21 +118,25 @@
 
 .altf-about .about-section {
   position: relative;
-  padding-block: var(--about-section-space-top) var(--about-section-space-bottom);
+  padding-block: var(--about-section-space);
 }
 
-.altf-about .about-intro-grid {
-  display: grid;
-  grid-template-columns: minmax(24rem, 1fr) minmax(0, 0.92fr);
-  align-items: start;
-  gap: clamp(2rem, 5vw, 5.5rem);
-}
-
+.altf-about .about-intro-grid,
 .altf-about .about-why-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(24rem, 1fr);
-  align-items: start;
+  align-items: center;
   gap: clamp(2rem, 5vw, 5.5rem);
+}
+
+.altf-about .about-intro-section .about-visual-card {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.altf-about .about-intro-section .about-copy-block {
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .altf-about .about-copy-block h2,
@@ -275,16 +277,8 @@
 
 .altf-about .about-main-lady {
   left: 50%;
-  bottom: 0.2rem;
+  bottom: 0.4rem;
   width: min(112%, 36rem);
-}
-
-.altf-about .about-platform-visual .about-visual-orb {
-  display: none;
-}
-
-.altf-about .about-platform-visual::before {
-  display: none;
 }
 
 .altf-about .about-floating-chip,
@@ -348,11 +342,10 @@
 
 .altf-about .about-community-badge {
   position: absolute;
-  left: 50%;
-  bottom: 1.8rem;
+  left: 48%;
+  bottom: 2.4rem;
   z-index: 4;
   display: flex;
-  max-width: min(92%, 23rem);
   min-height: 4.35rem;
   align-items: center;
   gap: 0.95rem;
@@ -361,8 +354,7 @@
   color: var(--foreground);
   font-size: 0.9rem;
   font-weight: 760;
-  line-height: 1.25;
-  transform: translateX(-28%);
+  transform: translateX(-50%);
 }
 
 .altf-about .about-avatar-stack {
@@ -370,20 +362,30 @@
   align-items: center;
 }
 
-.altf-about .about-avatar-stack img {
-  display: block;
+.altf-about .about-avatar-stack span {
+  display: grid;
   width: 2rem;
   height: 2rem;
+  place-items: center;
   margin-left: -0.45rem;
   border: 2px solid #ffffff;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  background: var(--surface);
+  background: linear-gradient(135deg, #14b8a6, #38bdf8);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  overflow: hidden;
+  flex: 0 0 2rem;
 }
 
-.altf-about .about-avatar-stack img:first-child {
+.altf-about .about-avatar-stack span:first-child {
   margin-left: 0;
+}
+
+.altf-about .about-avatar-stack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .altf-about .about-mission-section {
@@ -395,7 +397,7 @@
 .altf-about .about-mission-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(26rem, 1fr);
-  align-items: start;
+  align-items: center;
   gap: clamp(2rem, 4.8vw, 5rem);
 }
 
@@ -545,7 +547,7 @@
 .altf-about .about-process-section {
   isolation: isolate;
   overflow: hidden;
-  padding-block: var(--about-section-space-top) var(--about-section-space-bottom);
+  padding-block: var(--about-section-space);
   background:
     radial-gradient(circle at 8% 72%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 20rem),
     radial-gradient(circle at 92% 14%, color-mix(in srgb, var(--secondary) 8%, transparent), transparent 22rem),
@@ -938,14 +940,26 @@
     var(--background);
 }
 
-.altf-about .about-testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.35rem;
+.altf-about .about-testimonial-slider {
   margin-top: 2.4rem;
+  overflow: hidden;
+  padding: 0.2rem 0.1rem 0.8rem;
+}
+
+.altf-about .about-testimonial-track {
+  display: flex;
+  width: max-content;
+  gap: 1.35rem;
+  animation: about-testimonial-auto-slide 34s linear infinite;
+  will-change: transform;
+}
+
+.altf-about .about-testimonial-slider:hover .about-testimonial-track {
+  animation-play-state: paused;
 }
 
 .altf-about .about-testimonial-card {
+  flex: 0 0 min(24.5rem, calc((min(100vw, var(--about-max)) - 5.2rem) / 3));
   border: 1px solid var(--home-border);
   border-radius: 1.25rem;
   background:
@@ -994,6 +1008,65 @@
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+}
+
+.altf-about .about-testimonial-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.15rem;
+}
+
+.altf-about .about-testimonial-pagination span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(20, 184, 166, 0.26);
+  animation: about-testimonial-dot 34s infinite;
+}
+
+.altf-about .about-testimonial-pagination span:nth-child(2) {
+  animation-delay: 5.66s;
+}
+
+.altf-about .about-testimonial-pagination span:nth-child(3) {
+  animation-delay: 11.32s;
+}
+
+.altf-about .about-testimonial-pagination span:nth-child(4) {
+  animation-delay: 16.98s;
+}
+
+.altf-about .about-testimonial-pagination span:nth-child(5) {
+  animation-delay: 22.64s;
+}
+
+.altf-about .about-testimonial-pagination span:nth-child(6) {
+  animation-delay: 28.3s;
+}
+
+@keyframes about-testimonial-auto-slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 0.675rem));
+  }
+}
+
+@keyframes about-testimonial-dot {
+  0%,
+  14% {
+    width: 1.35rem;
+    background: linear-gradient(135deg, #14b8a6, #38bdf8);
+  }
+
+  18%,
+  100% {
+    width: 0.5rem;
+    background: rgba(20, 184, 166, 0.26);
+  }
 }
 
 .altf-about .about-reviewer strong,
@@ -1100,7 +1173,7 @@
 }
 
 [data-theme="dark"] .altf-about .about-reviewer-avatar,
-[data-theme="dark"] .altf-about .about-avatar-stack img {
+[data-theme="dark"] .altf-about .about-avatar-stack span {
   border-color: #0f172a;
 }
 
@@ -1109,6 +1182,12 @@
   .altf-about .about-why-grid,
   .altf-about .about-mission-grid {
     grid-template-columns: 1fr;
+  }
+
+  .altf-about .about-intro-section .about-visual-card,
+  .altf-about .about-intro-section .about-copy-block {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .altf-about .about-copy-block {
@@ -1156,8 +1235,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .altf-about .about-testimonial-grid {
-    grid-template-columns: 1fr;
+  .altf-about .about-testimonial-card {
+    flex-basis: min(22rem, calc((100vw - 5rem) / 2));
   }
 
   .altf-about .about-testimonial-card > p {
@@ -1183,15 +1262,54 @@
     font-size: clamp(1.85rem, 9vw, 2.45rem);
   }
 
-  .altf-about .about-stat-grid,
   .altf-about .about-feature-grid,
   .altf-about .about-mission-card-grid,
   .altf-about .about-offer-grid {
     grid-template-columns: 1fr;
   }
 
+  .altf-about .about-stat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-top: 1.45rem;
+  }
+
+  .altf-about .about-stat-card {
+    min-height: 6.7rem;
+    padding: 0.78rem;
+  }
+
+  .altf-about .about-stat-icon {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 0.78rem;
+  }
+
+  .altf-about .about-stat-card strong {
+    margin-top: 0.72rem;
+    font-size: clamp(1rem, 4.6vw, 1.24rem);
+  }
+
+  .altf-about .about-stat-card span:last-child {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .altf-about .about-testimonial-slider {
+    margin-top: 1.7rem;
+  }
+
+  .altf-about .about-testimonial-track {
+    gap: 0.95rem;
+  }
+
+  .altf-about .about-testimonial-card {
+    flex-basis: min(20.5rem, calc(100vw - 2.5rem));
+  }
+
   .altf-about .about-process-section {
     min-height: auto;
+    padding-block: var(--about-section-space);
   }
 
   .altf-about .about-process-section .home-reference-badge {
@@ -1309,17 +1427,20 @@
   .altf-about .about-community-badge {
     left: 50%;
     bottom: 0.6rem;
-    width: fit-content;
-    max-width: min(92vw, 22rem);
+    width: min(21.5rem, calc(100% - 1rem));
     min-height: 3.65rem;
-    padding: 0.62rem 1rem 0.62rem 0.72rem;
+    justify-content: center;
     gap: 0.78rem;
+    padding: 0.68rem 0.92rem;
+    font-size: 0.84rem;
     transform: translateX(-50%);
   }
 
-  .altf-about .about-avatar-stack img {
-    width: 1.85rem;
-    height: 1.85rem;
+  .altf-about .about-avatar-stack span {
+    width: 1.9rem;
+    height: 1.9rem;
+    flex-basis: 1.9rem;
+    margin-left: -0.38rem;
   }
 
   .altf-about .about-visual-card::before {
@@ -1342,19 +1463,15 @@
   }
 }
 
-@media (max-width: 420px) {
-  .altf-about .about-community-badge {
-    bottom: 0.35rem;
-    max-width: calc(100vw - 2rem);
-    min-height: 3.35rem;
-    padding: 0.55rem 0.82rem 0.55rem 0.62rem;
-    gap: 0.62rem;
-    font-size: 0.78rem;
+@media (max-width: 430px) {
+  .altf-about .about-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .altf-about .about-avatar-stack img {
-    width: 1.62rem;
-    height: 1.62rem;
-    margin-left: -0.36rem;
+@media (prefers-reduced-motion: reduce) {
+  .altf-about .about-testimonial-track,
+  .altf-about .about-testimonial-pagination span {
+    animation: none;
   }
 }

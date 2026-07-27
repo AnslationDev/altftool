@@ -3,7 +3,6 @@ import JsonLd from "@/platform/seo/JsonLd";
 import "../top9.css";
 import {
   absoluteUrl,
-  compactBrandedTitle,
   createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
@@ -13,11 +12,9 @@ import {
   getTop9Image,
   getTop9Item,
   getTop9Items,
-  getTop9PublishedDate,
   getTop9Title,
 } from "../data/getTop9Items";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
-import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const dynamic = "force-static";
 
@@ -38,11 +35,11 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: compactBrandedTitle(`${getTop9Title(item)} | Top9`),
+    title: `${getTop9Title(item)} | Top9`,
     description: `${getTop9Description(item)} Explore all nine ranked picks, key context, and the complete curated list on AltFTool.`,
     path: `/top9/${slug}`,
     image: getTop9Image(item),
-    type: getTop9PublishedDate(item) ? "article" : "website",
+    type: "article",
   });
 }
 
@@ -56,64 +53,24 @@ export default async function Page({ params }) {
   const description = getTop9Description(item);
   const image = getTop9Image(item);
   const category = getTop9Category(item);
-  const publishedDate = getTop9PublishedDate(item);
-  const relatedItems = getRelatedContentForPreset(
-    {
-      href: `/top9/${slug}`,
-      title,
-      description,
-      tags: [category, ...slug.split("-")],
-      section: "top9",
-    },
-    "editorial"
-  );
-  const rankedItems = Array.isArray(item.top)
-    ? item.top.filter(Boolean).map((name, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: String(name),
-      }))
-    : [];
-  const primarySchema = publishedDate
-    ? {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: title,
-        description,
-        image: absoluteUrl(image),
-        mainEntityOfPage: absoluteUrl(`/top9/${slug}`),
-        datePublished: publishedDate,
-        dateModified: publishedDate,
-        author: {
-          "@type": "Organization",
-          name: "AltFTool",
-        },
-      }
-    : {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        name: title,
-        description,
-        image: absoluteUrl(image),
-        url: absoluteUrl(`/top9/${slug}`),
-        ...(rankedItems.length
-          ? {
-              mainEntity: {
-                "@type": "ItemList",
-                name: `${title} ranked picks`,
-                numberOfItems: rankedItems.length,
-                itemListElement: rankedItems,
-              },
-            }
-          : {}),
-      };
 
   return (
     <section className="top9-page px-4 md:px-6 py-10">
       <JsonLd
         id={`top9-schema-${slug}`}
         data={[
-          primarySchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: title,
+            description,
+            image: absoluteUrl(image),
+            mainEntityOfPage: absoluteUrl(`/top9/${slug}`),
+            author: {
+              "@type": "Organization",
+              name: "AltFTool",
+            },
+          },
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Top9", path: "/top9" },
@@ -124,7 +81,11 @@ export default async function Page({ params }) {
 
       <div className="top9-image-frame max-w-5xl mx-auto overflow-hidden rounded-3xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt={title} className="w-full h-[260px] sm:h-[380px] md:h-[520px] object-cover" />
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-[260px] sm:h-[380px] md:h-[520px] object-cover"
+        />
       </div>
 
       <div className="max-w-5xl mx-auto mt-8">
@@ -137,9 +98,7 @@ export default async function Page({ params }) {
         </h1>
 
         {item.date && (
-          <p className="top9-muted-text text-sm mt-4">
-            {item.date}
-          </p>
+          <p className="top9-muted-text text-sm mt-4">{item.date}</p>
         )}
 
         <p className="top9-muted-text text-[17px] leading-8 mt-8">
@@ -165,21 +124,11 @@ export default async function Page({ params }) {
                   <p className="text-lg font-medium text-(--foreground)">
                     {el}
                   </p>
-
                 </div>
               ))}
             </div>
           </div>
         )}
-
-        <RelatedContentSection
-          embedded
-          className="mt-12"
-          title="Keep exploring AltFTool"
-          items={relatedItems}
-          path={`/top9/${slug}`}
-          jsonLdName={`Related to ${title}`}
-        />
       </div>
     </section>
   );

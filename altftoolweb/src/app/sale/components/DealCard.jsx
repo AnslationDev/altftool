@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Star } from "lucide-react";
-import Image from "next/image";
+import { Heart, Star } from "lucide-react";
+import SmartProductImage from "@/lib/sale/SmartProductImage";
 
 /**
  * Google Merchant / Google Shopping promotion-style product card —
@@ -24,28 +24,30 @@ export default function DealCard({ deal, index, isGPS }) {
   const ratingValue = Number(deal.rating);
   const hasRating = Number.isFinite(ratingValue) && ratingValue > 0;
 
+
+  console.log("mee",deal)
+
   return (
     <motion.a
       href={deal.ctaLink}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`View deal: ${deal.title}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 20 }}
+      animate={{ y: 0 }}
       transition={{ delay: index * 0.04 }}
       whileHover={{ y: -4, boxShadow: "0 14px 32px rgba(0,0,0,0.10)" }}
-      className="group/card block bg-(--card) border border-(--border) rounded-xl overflow-hidden transition-all duration-300 w-full"
+      className="group/card block bg-(--card) border border-(--border) rounded-2xl overflow-hidden transition-all duration-300 w-full"
     >
-      {/* Product image — square, contained, light backdrop (Merchant-card style) */}
-      <div className="relative aspect-square w-full bg-(--muted) overflow-hidden">
-        <Image
-          src={deal.image}
-          alt={deal.title}
-          fill
-          unoptimized
-          sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 280px"
-          className="object-contain p-4 transition-transform duration-500 group-hover/card:scale-105"
-        />
+      <div className="relative aspect-[4/5] w-full">
+        <div className="absolute inset-0 rounded-t-2xl overflow-hidden bg-(--muted)">
+          <SmartProductImage
+            src={deal.image}
+            alt={deal.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover/card:scale-105"
+          />
+        </div>
 
         {deal.computedDistance != null && deal.type === "nearby" && (
           <span
@@ -60,74 +62,73 @@ export default function DealCard({ deal, index, isGPS }) {
           </span>
         )}
 
-        {discountPercent != null && (
-          <span className="absolute top-2 right-2 text-[11px] font-bold px-2 py-0.5 rounded bg-red-600 text-white font-secondary">
-            -{discountPercent}%
-          </span>
+        {/* Wishlist heart */}
+        <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/95 shadow-sm flex items-center justify-center z-10">
+          <Heart className="w-3.5 h-3.5 text-rose-500" />
+        </span>
+
+        {/* Rating badge — floats half over the image, half over the content */}
+        {hasRating && (
+          <div className="absolute -bottom-3.5 left-3 z-10 flex items-center gap-1 bg-white rounded-md shadow-md px-2 py-1">
+            {deal.subTitle && (
+              <span className="text-[10px] font-bold text-rose-500 pr-1 border-r border-(--border) font-secondary truncate max-w-[70px]">
+                {deal.subTitle}
+              </span>
+            )}
+            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+            <span className="text-[11px] font-semibold text-(--muted-foreground)  font-secondary">
+              {ratingValue.toFixed(1)}
+            </span>
+          </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="px-3 py-2.5">
-        {/* Seller / store */}
-        <p className="text-[11px] text-(--muted-foreground) font-secondary truncate mb-0.5">
-          {deal.subTitle}
-        </p>
-
-        {/* Title — clamps to 2 lines, ellipsis beyond that */}
-        <h3 className="text-sm text-(--card-foreground) font-medium leading-snug font-secondary line-clamp-2 min-h-9">
+      <div className="px-3.5 pt-5 pb-3">
+        {/* Title */}
+        <h3 className="text-[15px] text-(--card-foreground) font-semibold leading-snug font-secondary line-clamp-1">
           {deal.title}
         </h3>
 
-        {/* Rating — only when the source actually provided one */}
-        {hasRating && (
-          <div className="flex items-center gap-1 mt-1">
-            <div className="flex items-center">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-3 h-3 ${
-                    i < Math.round(ratingValue)
-                      ? "fill-amber-400 text-amber-400"
-                      : "fill-(--border) text-(--border)"
-                  }`}
-                />
-              ))}
-            </div>
-            {deal.reviews ? (
-              <span className="text-[11px] text-(--muted-foreground) font-secondary">
-                ({deal.reviews})
-              </span>
-            ) : null}
-          </div>
+        {/* Area / city */}
+        <p className="text-xs text-(--muted-foreground) font-secondary truncate mt-0.5">
+          {deal.area || deal.city}
+        </p>
+
+        {/* Offer text */}
+        {deal.offerText && (
+          <p className="text-xs text-(--muted-foreground) font-secondary truncate mt-1">
+            {deal.offerText}
+          </p>
         )}
 
-        {/* Price row */}
-        <div className="flex items-baseline gap-1.5 mt-1.5 flex-wrap">
-          {hasPrice ? (
-            <>
-              <span className="text-base font-bold text-(--card-foreground) font-primary">
-                {deal.currency} {deal.salePrice}
-              </span>
-              {discountPercent != null && (
-                <span className="text-xs text-(--muted-foreground) line-through font-secondary">
-                  {deal.currency} {deal.originalPrice}
+        <div className="border-t border-(--border) mt-2.5 pt-2.5 flex items-end justify-between gap-2">
+          {/* Price */}
+          <div className="flex flex-col leading-tight">
+            {hasPrice ? (
+              <>
+                {discountPercent != null && (
+                  <span className="text-xs text-(--muted-foreground) line-through font-secondary">
+                    {deal.currency} {deal.originalPrice}
+                  </span>
+                )}
+                <span className="text-lg font-bold text-emerald-600 font-primary">
+                  {deal.currency} {deal.salePrice}
                 </span>
-              )}
-            </>
-          ) : (
-            <span className="text-sm font-semibold text-(--primary) font-primary">
-              {deal.offer}
+              </>
+            ) : (
+              <span className="text-sm font-semibold text-(--primary) font-primary">
+                {deal.offer}
+              </span>
+            )}
+          </div>
+
+          {/* Discount badge */}
+          {discountPercent != null && (
+            <span className="text-xs font-bold px-2 py-1 rounded-md bg-rose-50 text-rose-500 font-secondary whitespace-nowrap">
+              {discountPercent}% OFF
             </span>
           )}
-        </div>
-
-        {/* Area / city */}
-        <div className="flex items-center gap-1 mt-1.5 text-[11px] text-(--muted-foreground) font-secondary min-w-0">
-          <MapPin className="w-3 h-3 shrink-0 opacity-70" />
-          <span className="truncate">
-            {deal.area} • {deal.city}
-          </span>
         </div>
       </div>
     </motion.a>

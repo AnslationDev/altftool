@@ -1,4 +1,4 @@
-import { RefreshCw, Wifi } from "lucide-react";
+import { RefreshCw, Wifi, Palette, Volume2, LayoutGrid, Cast, HardDrive, ShieldCheck, Mic } from "lucide-react";
 
 export const googleTvSettings = [
   {
@@ -20,7 +20,7 @@ export const googleTvSettings = [
       "For app updates specifically, open the Google Play Store app on the device, go to your profile icon → Manage apps & device, and review or install pending updates.",
       "Leave the device plugged in and connected to Wi-Fi overnight for automatic background updates to complete.",
     ],
-    redirectUrl: "https://support.google.com/googletv/answer/10557486",
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
     actionLabel: "Open Google TV Help: Software Updates",
     whyItMatters:
       "Streaming apps frequently update their required minimum OS or app version — falling behind on either system or app updates is a common cause of an app that suddenly won't open or crashes on launch.",
@@ -55,7 +55,7 @@ export const googleTvSettings = [
       "Select \"Check connection speed\" from the same menu to run a quick speed test if streams are buffering.",
       "Devices with an Ethernet port will show a wired connection automatically when a cable is plugged in — no separate setup step is needed.",
     ],
-    redirectUrl: "https://support.google.com/googletv/answer/10557519",
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
     actionLabel: "Open Google TV Help: Network Settings",
     whyItMatters:
       "Streaming quality is entirely dependent on a stable connection to the device — buffering or resolution drops are a network-layer symptom far more often than an app or account problem, and the built-in speed test is the fastest way to confirm which one it is.",
@@ -71,5 +71,283 @@ export const googleTvSettings = [
     tipsAndTricks: ["A wired Ethernet adapter (for devices without a built-in port) is a cheap, reliable fix for a Chromecast with Google TV placed far from the router."],
     faqs: [{ q: "Does Google TV support 5GHz Wi-Fi?", a: "Yes — all current Google TV devices support both 2.4GHz and 5GHz bands, and 5GHz is generally preferable for 4K streaming when signal strength allows." }],
     relatedSettingIds: ["google-tv-software-update"],
+  },
+  {
+    id: "google-tv-display-picture",
+    title: "Display & Picture Settings",
+    icon: Palette,
+    platform: "google-tv",
+    category: "display-sound-notifications",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "4 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Calibrate picture quality and display resolution",
+    description:
+      "Google TV's display settings control output resolution, HDR format, and picture calibration passed through to your TV — most options live under Settings → Display & Sound → Picture.",
+    details: [
+      "Go to Settings → Display & Sound → Picture (or Display) to adjust resolution, and enable or match the device's HDR output to your TV's supported formats.",
+      "On streaming boxes like Chromecast with Google TV, set the resolution to \"Auto adjust display refresh rate\" so playback matches the source content's frame rate, or manually cap it if your HDMI cable or TV struggles.",
+      "Check Settings → Display & Sound → Advanced display settings for HDR format toggles (HDR10, HDR10+, Dolby Vision) — enable only the formats your TV actually supports to avoid a blank or flickering screen.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Display Settings",
+    whyItMatters:
+      "Mismatched resolution or HDR settings between the Google TV device and the TV are the single most common cause of a black screen, flickering picture, or washed-out colors after setup — the device can technically output a format the TV's HDMI input silently rejects.",
+    afterImageContent: {
+      heading: "Quick picture calibration walkthrough",
+      steps: [
+        "Open Settings → Display & Sound → Picture.",
+        "Set Resolution to match your TV's native resolution, then enable HDR formats one at a time your TV supports.",
+        "Use a test clip (search \"4K HDR demo\" in your streaming app) to visually confirm colors and contrast look correct before leaving the menu.",
+      ],
+    },
+    bestPractices: [
+      "Set resolution to match your TV's native resolution rather than always maxing it out — an unsupported combination can cause dropouts on some TVs and cables.",
+      "Use a certified High Speed or Ultra High Speed HDMI cable when enabling 4K HDR or Dolby Vision, since older cables can cause it to fail silently.",
+      "Test one HDR format change at a time so you can immediately identify which setting caused a picture problem if the screen goes blank.",
+    ],
+    commonIssues: [
+      { issue: "Screen goes black after enabling 4K or HDR", fix: "Wait 15 seconds — Google TV reverts unsupported resolution changes automatically. If it doesn't, unplug the device for 10 seconds to force it back to a safe default resolution." },
+      { issue: "Picture looks washed out or has a yellow/green tint", fix: "This is usually an HDMI signal mismatch — go to Settings → Display & Sound → Advanced display settings and set HDMI to the correct color format (typically \"Auto\" or \"YCbCr\") to match the TV's expected input." },
+    ],
+    tipsAndTricks: ["If your TV supports Dolby Vision but content looks dim, confirm the TV itself (not just the Google TV device) has Dolby Vision enabled for that HDMI input in its own picture menu."],
+    faqs: [{ q: "Should I enable Dolby Vision if my TV supports it?", a: "Yes, if your TV and HDMI cable both support it — Dolby Vision generally produces a better HDR image than HDR10 alone, but only enable formats your specific TV model lists as supported to avoid playback issues." }],
+    relatedSettingIds: ["google-tv-sound-audio", "google-tv-software-update"],
+  },
+  {
+    id: "google-tv-sound-audio",
+    title: "Sound & Audio Output",
+    icon: Volume2,
+    platform: "google-tv",
+    category: "display-sound-notifications",
+    frequentlyUsed: true,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Route audio correctly through ARC, eARC, or optical output",
+    description:
+      "Google TV can output audio directly through the TV speakers, a soundbar or AVR connected via ARC/eARC, or in some setups via HDMI passthrough for surround formats like Dolby Digital or DTS.",
+    details: [
+      "Go to Settings → Display & Sound → Audio (or Sound) to choose the output device and format.",
+      "Under \"Surround sound,\" select \"Auto\" to let the device negotiate the best format the connected receiver or soundbar supports, or manually enable a specific format like Dolby Digital+ if auto-detection guesses wrong.",
+      "If using ARC or eARC, confirm the setting is enabled both on the TV's HDMI port used for the soundbar and in the TV's own audio output menu — Google TV audio, when built into the TV, routes through the TV's ARC settings rather than its own.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Sound Settings",
+    whyItMatters:
+      "Audio dropouts, no sound, or a soundbar showing \"no signal\" are almost always a format or handshake issue between the Google TV device, the TV's HDMI-ARC port, and the receiver rather than a hardware fault, and are fixable from these menus in a couple of minutes.",
+    bestPractices: [
+      "Use eARC over standard ARC when both your TV and soundbar support it — eARC carries uncompressed Dolby Atmos and DTS:X, while ARC often forces lossy compression.",
+      "Set surround sound to Auto unless you have a specific reason to force a format — manual settings are a common source of no-audio issues after a firmware update changes handshake behavior.",
+      "Keep the soundbar or AVR powered on and connected before restarting the Google TV device so the handshake completes correctly.",
+    ],
+    commonIssues: [
+      { issue: "No sound through soundbar after connecting via ARC", fix: "Confirm the TV's HDMI-ARC/eARC port setting is enabled in the TV's own menu (not just Google TV), and that the soundbar is set to the correct ARC/TV input." },
+      { issue: "Audio cuts out briefly during Dolby Atmos content", fix: "Try switching Surround sound from a manually forced format to \"Auto\" — this lets the device renegotiate with the receiver instead of forcing a format the HDMI chain drops intermittently." },
+    ],
+    tipsAndTricks: ["If dialogue sounds too quiet relative to effects, check for a separate \"Dialogue boost\" or clear-voice setting on the app or soundbar rather than the Google TV audio menu, which doesn't include one."],
+    faqs: [{ q: "What's the difference between ARC and eARC for Google TV audio?", a: "eARC supports much higher bandwidth, enabling uncompressed Dolby Atmos and DTS:X, while standard ARC is limited to compressed surround formats — use eARC whenever both TV and soundbar support it." }],
+    relatedSettingIds: ["google-tv-display-picture", "google-tv-google-cast"],
+  },
+  {
+    id: "google-tv-apps-management",
+    title: "Apps Management",
+    icon: LayoutGrid,
+    platform: "google-tv",
+    category: "apps-features",
+    frequentlyUsed: true,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "3 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Install, organize, and manage apps on Google TV",
+    description:
+      "Apps on Google TV are installed and managed through the Play Store, with per-app storage, permissions, and default-app controls available under Settings → Apps.",
+    details: [
+      "Open the Play Store app to browse, install, or uninstall apps — search results are filtered to apps built for Android TV OS.",
+      "Go to Settings → Apps → See all apps to view every installed app, force-stop a misbehaving one, clear its cache or data, or uninstall it.",
+      "Rearrange or hide apps on the home screen by long-pressing an app icon on the remote or home screen and selecting \"Move\" or \"Remove from home screen\".",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Manage Apps",
+    whyItMatters:
+      "A slow or frozen Google TV interface is frequently caused by too many background apps or a single app with a corrupted cache, not the device's underlying hardware — clearing cache or force-stopping the offending app resolves most of these without a factory reset.",
+    afterImageContent: {
+      heading: "Clearing a stuck app step by step",
+      steps: [
+        "Open Settings → Apps → See all apps.",
+        "Select the problem app, then choose Force stop.",
+        "Reopen the app from the home screen; if the issue persists, return to the same menu and select Clear cache.",
+      ],
+    },
+    bestPractices: [
+      "Uninstall apps you don't use rather than just removing them from the home screen — unused installed apps still consume storage and can run background processes.",
+      "Clear an app's cache (not its data) first when troubleshooting, since clearing data signs you out and resets in-app settings.",
+      "Periodically check Settings → Apps → See all apps for anything with unexpectedly high storage or battery usage as an early sign of a misbehaving app.",
+    ],
+    commonIssues: [
+      { issue: "An app is stuck or unresponsive", fix: "Go to Settings → Apps → See all apps → [app] → Force stop, then reopen it. If it recurs, clear its cache from the same menu." },
+      { issue: "Can't find an app that used to be on the home screen", fix: "Check whether it was uninstalled rather than just hidden — open the Play Store and search for it; if it shows \"Install\" rather than \"Open,\" it was removed and needs reinstalling." },
+    ],
+    tipsAndTricks: ["Settings → Apps → See all apps also shows notification permissions per app — useful for silencing a chatty streaming app's promotional notifications."],
+    faqs: [{ q: "Do all Android apps work on Google TV?", a: "No — only apps published for Android TV OS (a distinct build from phone or tablet Android apps) appear in the Google TV Play Store, which is why some phone apps aren't available." }],
+    relatedSettingIds: ["google-tv-storage", "google-tv-google-cast"],
+  },
+  {
+    id: "google-tv-google-cast",
+    title: "Google Cast Setup",
+    icon: Cast,
+    platform: "google-tv",
+    category: "connectivity-network",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Cast content from your phone, tablet, or browser to Google TV",
+    description:
+      "Every Google TV device has a built-in Cast receiver, letting you send video, audio, or a Chrome tab from a phone, tablet, or computer directly to the TV without opening an app on the TV itself first.",
+    details: [
+      "Make sure the casting device (phone or laptop) is on the same Wi-Fi network as the Google TV device — casting doesn't work across separate networks or with guest network isolation enabled on the router.",
+      "In a supported app (YouTube, Netflix, etc.), tap the Cast icon and select your Google TV device's name from the list.",
+      "To cast an entire phone screen or a Chrome browser tab, use the Cast option in Chrome's menu or your phone's Quick Settings \"Screen cast\" tile, which mirrors rather than streams natively.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Casting",
+    whyItMatters:
+      "Casting failures are overwhelmingly a network issue — router client (AP) isolation, band steering that puts devices on different bands, or a VPN active on the phone — rather than a problem with the Google TV device or the app, so checking the network setup first saves a lot of troubleshooting.",
+    bestPractices: [
+      "Disable client or AP isolation on your router's guest network if you cast from a device connected there — isolation blocks the local discovery casting depends on.",
+      "Keep the Google TV device's display name unique and recognizable under Settings → Device Preferences → About → Device name, especially in a home with multiple Cast targets.",
+      "Turn off any active VPN on the phone or laptop before casting, since VPNs frequently route traffic off the local network and break device discovery.",
+    ],
+    commonIssues: [
+      { issue: "Cast icon doesn't appear or device isn't found", fix: "Confirm both devices are on the same Wi-Fi network and band, and that the router doesn't have client isolation enabled; restarting both devices' Wi-Fi also clears most discovery failures." },
+      { issue: "Casting starts but video is choppy or lags", fix: "This is usually Wi-Fi bandwidth on the casting device's network hop, not the TV — move the router closer, switch to 5GHz, or reduce other network traffic during casting." },
+    ],
+    tipsAndTricks: ["Chromecast built-in and the Google TV Cast receiver both let you queue multiple items from a Cast-enabled app before the current one finishes, so you don't have to keep the phone active for playlist casting."],
+    faqs: [{ q: "Do I need the Google Home app to cast?", a: "No — casting is built into the Cast-enabled app itself (YouTube, Spotify, Chrome, etc.); the Google Home app is only needed for device setup and Wi-Fi management, not for everyday casting." }],
+    relatedSettingIds: ["google-tv-wifi-network", "google-tv-sound-audio"],
+  },
+  {
+    id: "google-tv-storage",
+    title: "Storage Management",
+    icon: HardDrive,
+    platform: "google-tv",
+    category: "storage-backup-data",
+    frequentlyUsed: false,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Free up space when app installs or updates fail",
+    description:
+      "Google TV devices, especially compact streaming sticks, ship with limited internal storage that fills up faster than expected once several large streaming apps and their caches accumulate.",
+    details: [
+      "Go to Settings → Device Preferences → Storage to see total, used, and available space, broken down by system and apps.",
+      "Uninstall unused apps and clear cache for large ones (Settings → Apps → See all apps → [app] → Clear cache) to reclaim space quickly without losing sign-in state.",
+      "On devices with a USB port, some models support formatting an external USB drive as adoptable storage to expand app install space — check the specific device's support page, since not all Google TV hardware supports this.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Storage",
+    whyItMatters:
+      "\"Insufficient storage\" errors when installing or updating an app are one of the more confusing failures on compact streaming devices because the error rarely states how much space is actually needed — checking the Storage menu directly is faster than guessing.",
+    afterImageContent: {
+      heading: "Freeing up space before an install",
+      steps: [
+        "Open Settings → Device Preferences → Storage to see what's using space.",
+        "Uninstall unused apps first, since they free the most space.",
+        "Clear cache for large remaining apps, then retry the install or update.",
+      ],
+    },
+    bestPractices: [
+      "Clear app cache regularly on lower-storage devices (8-16GB models) rather than waiting for an install failure to prompt it.",
+      "Uninstall apps you no longer use instead of leaving them installed and unused — cache and offline data build up over time even for idle apps.",
+      "Avoid downloading offline video content for playback (where an app supports it) on devices with very limited internal storage.",
+    ],
+    commonIssues: [
+      { issue: "\"Insufficient storage available\" error installing an app", fix: "Open Settings → Device Preferences → Storage, uninstall one or two unused apps or clear caches for large ones, then retry the install." },
+      { issue: "Device is slow and storage shows nearly full", fix: "A nearly-full internal drive can slow the whole system, not just installs — clear app caches first, and consider uninstalling apps that offer offline downloads if their cached data is large." },
+    ],
+    tipsAndTricks: ["Streaming and social apps with offline download features (e.g., video-on-demand apps) are usually the biggest storage users — check them first when hunting for space."],
+    faqs: [{ q: "Can I add an SD card or USB drive for more storage?", a: "Some Google TV devices with a USB port support formatting an external drive as adoptable storage, but this varies by model — check your specific device's support page, since compact streaming sticks typically don't support it." }],
+    relatedSettingIds: ["google-tv-apps-management", "google-tv-software-update"],
+  },
+  {
+    id: "google-tv-parental-controls",
+    title: "Parental Controls",
+    icon: ShieldCheck,
+    platform: "google-tv",
+    category: "accounts-sync-family",
+    frequentlyUsed: false,
+    recommended: true,
+    difficulty: "Intermediate",
+    estimatedTime: "5 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Set up content restrictions and kid profiles with Family Link",
+    description:
+      "Google TV uses Google Family Link to manage supervised kid accounts, content restrictions by rating, and purchase approval, alongside a separate PIN-based restriction for individual apps and purchases.",
+    details: [
+      "Create a child's Google account and link it under Settings → Accounts & sign-in → Family, or manage it beforehand in the Family Link app on a parent's phone.",
+      "Set content restrictions by app, movie, or TV rating under Settings → Accounts & sign-in → [child profile] → Content restrictions, which limits what appears in search and recommendations for that profile.",
+      "Enable \"Require PIN for purchases\" under Settings → Accounts & sign-in → Parental controls to prevent unapproved Play Store purchases or rentals regardless of which profile is active.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Parental Controls",
+    whyItMatters:
+      "Because Google TV profiles share the same physical device, content restrictions only apply correctly when set on the right profile — a common setup mistake is configuring restrictions on the parent account and expecting them to apply to a child watching under a shared or guest profile.",
+    bestPractices: [
+      "Set up a distinct supervised profile per child rather than relying on a single shared restricted mode, since Family Link controls and watch history are tracked per account.",
+      "Review the Family Link app periodically for screen-time reports and app approval requests rather than only setting restrictions once and forgetting them.",
+      "Combine content rating restrictions with a purchase PIN — rating limits control what's browsable, but don't by themselves block a purchase or rental.",
+    ],
+    commonIssues: [
+      { issue: "Child profile still sees mature content in search", fix: "Confirm content restrictions were set on the child's own profile under Settings → Accounts & sign-in, not the parent or owner account — restrictions don't propagate across profiles." },
+      { issue: "Family Link shows the device as offline or not syncing restrictions", fix: "Restrictions sync over the internet, so confirm the Google TV device has an active connection; open Settings → Accounts & sign-in and re-select the child profile to force a resync." },
+    ],
+    tipsAndTricks: ["The Family Link app on a parent's phone can remotely lock the Google TV device or set a bedtime cutoff without touching the TV directly."],
+    faqs: [{ q: "Can I restrict content without creating a separate Google account for my child?", a: "You can set device-wide content restrictions and a purchase PIN under Parental controls without a child account, but per-child screen time limits and personalized restrictions require a supervised Family Link account." }],
+    relatedSettingIds: ["google-tv-voice-assistant", "google-tv-apps-management"],
+  },
+  {
+    id: "google-tv-voice-assistant",
+    title: "Voice Search & Google Assistant",
+    icon: Mic,
+    platform: "google-tv",
+    category: "personalization",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Google TV / Android TV OS devices",
+    heading: "Search and control your TV with your voice",
+    description:
+      "The Google TV remote's built-in microphone button (or \"Hey Google\" on supported devices) lets you search for titles, launch apps, and control playback and smart home devices using Google Assistant.",
+    details: [
+      "Press and hold the microphone button on the remote and ask to search for a title, actor, or genre — Google TV searches across your installed apps' catalogs simultaneously.",
+      "On devices that support hands-free \"Hey Google,\" enable it under Settings → Device Preferences → Assistant → \"Hey Google\" detection; this requires a device with a far-field microphone, not every Google TV model has one.",
+      "Set up Assistant routines (e.g., \"Movie night\" dimming smart lights and launching an app) in the Google Home app, which then run from the same voice command on the TV.",
+    ],
+    redirectUrl: "https://support.google.com/googletv/?hl=en",
+    actionLabel: "Open Google TV Help: Voice Search & Assistant",
+    whyItMatters:
+      "Voice search is often faster and more accurate than typing with a remote's D-pad, especially for cross-app searches — but confusion about which devices support hands-free \"Hey Google\" versus mic-button-only search is one of the most common Assistant setup questions.",
+    afterImageContent: {
+      heading: "Enabling hands-free \"Hey Google\"",
+      steps: [
+        "Open Settings → Device Preferences → Assistant.",
+        "Check whether \"Hey Google\" detection appears — it's only shown on devices with a far-field microphone.",
+        "If available, toggle it on and complete the brief voice-training prompt.",
+      ],
+    },
+    bestPractices: [
+      "Use the remote's mic button for on-demand search even on devices without hands-free support — no additional setup is required for that mode.",
+      "Review linked smart home and account permissions periodically in the Google Home app if Assistant controls devices beyond the TV, to avoid stale device links.",
+      "Mute the far-field microphone (via the physical switch on supported remotes, if present) when privacy is a concern, rather than disabling Assistant entirely.",
+    ],
+    commonIssues: [
+      { issue: "\"Hey Google\" doesn't respond", fix: "Confirm the specific device model supports far-field hands-free detection — many Chromecast with Google TV models only support the remote's mic button, not hands-free wake words." },
+      { issue: "Voice search returns wrong or unrelated results", fix: "Check Settings → Accounts & sign-in to confirm the correct Google account or profile is active, since search and recommendations are personalized per signed-in account." },
+    ],
+    tipsAndTricks: ["Say \"What can I say\" or ask Assistant directly for a list of supported voice commands specific to your device and installed apps."],
+    faqs: [{ q: "Does every Google TV device support hands-free \"Hey Google\"?", a: "No — hands-free wake-word detection requires a far-field microphone in the device or remote, which isn't present on every model; check Settings → Device Preferences → Assistant to see if the option is available on yours." }],
+    relatedSettingIds: ["google-tv-parental-controls", "google-tv-google-cast"],
   },
 ];

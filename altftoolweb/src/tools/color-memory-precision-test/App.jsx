@@ -28,7 +28,7 @@ import {
   calculateAccuracy,
   getPrecisionRating,
   getContrastColor
-} from "./utils/colorUtils";
+} from "./lib";
 
 // --- Shared Components ---
 
@@ -100,6 +100,7 @@ export default function ColorMemoryPrecisionTest() {
   const [userColor, setUserColor] = useState("#3b82f6");
   const [timer, setTimer] = useState(5);
   const [accuracy, setAccuracy] = useState(null);
+  const [scoreError, setScoreError] = useState("");
   const [history, setHistory] = useState([]);
   const [copied, setCopied] = useState(false);
 
@@ -132,6 +133,12 @@ export default function ColorMemoryPrecisionTest() {
 
   const submitColor = () => {
     const result = calculateAccuracy(originalColor, userColor);
+    // A malformed hex must not be scored — bail before anything is recorded.
+    if (result.error) {
+      setScoreError(result.error);
+      return;
+    }
+    setScoreError("");
     setAccuracy(result);
     setGameState("result");
 
@@ -439,6 +446,9 @@ export default function ColorMemoryPrecisionTest() {
                               Use the sliders for surgical precision. Small adjustments can drastically impact your accuracy score.
                             </p>
                           </div>
+                          {scoreError && (
+                            <p role="alert" className="rounded-md bg-(--danger-soft) px-3 py-2 text-xs font-bold text-(--danger)">{scoreError}</p>
+                          )}
                           <button
                             onClick={submitColor}
                             className="w-full py-4 px-3 rounded-2xl bg-blue-600 text-white font-black text-[10px] sm:text-xs uppercase tracking-normal sm:tracking-wider shadow-xl shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"

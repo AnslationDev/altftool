@@ -57,7 +57,7 @@ export default function ShareDialog({ open, onClose, aura }) {
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-bold text-(--foreground)">Share Your Aura</h3>
-              <button onClick={onClose} aria-label="Close dialog" className="rounded-lg p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) hover:bg-(--muted) transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+              <button onClick={onClose} aria-label="Close dialog" className="rounded-lg p-1.5 min-w-11 min-h-11 inline-flex items-center justify-center text-(--muted-foreground) hover:bg-(--muted) transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -77,21 +77,21 @@ export default function ShareDialog({ open, onClose, aura }) {
               <div className="space-y-3">
                 <button
                   onClick={handleCopy}
-                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                 >
                   {copied ? <Check className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5" />}
                   {copied ? "Copied!" : "Copy to Clipboard"}
                 </button>
                 <button
                   onClick={handleShare}
-                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                 >
                   <Share2 className="h-5 w-5" />
                   Share via...
                 </button>
                 <button
                   onClick={() => downloadAuraCard(aura, null)}
-                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                  className="flex w-full items-center gap-3 rounded-xl border border-(--border) bg-(--background) px-4 py-3 text-sm font-semibold text-(--foreground) transition-all motion-reduce:transition-none hover:bg-(--muted) active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                 >
                   <Download className="h-5 w-5" />
                   Download as PNG

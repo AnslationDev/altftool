@@ -1,6 +1,6 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- previews are local blob/data URLs whose rendered dimensions must match the redaction coordinate system */
+/* eslint-disable @next/next/no-img-element -- previews are local blob/data URLs whose rendered dimensions match the coordinate system */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -34,8 +34,12 @@ import {
 
 import {
   BANK_STATEMENT_PRESETS,
+  REDACTION_MODES,
+  SENSITIVE_PATTERNS,
+  applyCanvasRedactionMask,
   buildExportPlan,
   buildOutputName,
+  calculatePrivacyScore,
   createPresetRectangle,
   getRasterScale,
   moveRectangle,
@@ -44,9 +48,20 @@ import {
   updateRectangleBounds,
 } from "../lib/redactorModel.mjs";
 
+import CompletionScreen from "../components/CompletionScreen";
+import DetectionDashboard from "../components/DetectionDashboard";
+import DocumentViewer from "../components/DocumentViewer";
+import EditingToolbar from "../components/EditingToolbar";
+import ExportSection from "../components/ExportSection";
+import HeaderBar from "../components/HeaderBar";
+import PrivacyAnalytics from "../components/PrivacyAnalytics";
+import SearchPanel from "../components/SearchPanel";
+import SidebarThumbnails from "../components/SidebarThumbnails";
+import UploadDropzone from "../components/UploadDropzone";
+
 const MAX_FILE_BYTES = 40 * 1024 * 1024;
 const MAX_PDF_PAGES = 30;
-const PREVIEW_MAX_EDGE = 1100;
+const PREVIEW_MAX_EDGE = 1200;
 const EXPORT_MAX_EDGE = 6000;
 const KEYBOARD_NUDGE = 0.005;
 const LARGE_KEYBOARD_NUDGE = 0.02;
@@ -57,37 +72,6 @@ const IMAGE_TYPES = new Set([
   "image/bmp",
   "image/avif",
 ]);
-
-const PRESET_ICONS = {
-  name: UserRound,
-  address: MapPin,
-  account: Hash,
-  ifsc: Landmark,
-  iban: Globe2,
-  cards: CreditCard,
-  balances: Banknote,
-  transactions: ReceiptText,
-};
-
-const primaryButton =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-bold text-[var(--primary-foreground)] shadow-sm transition-colors hover:bg-[var(--primary-hover)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--page)] disabled:cursor-not-allowed disabled:opacity-60";
-
-const secondaryButton =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--foreground)] shadow-sm transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--page)] disabled:cursor-not-allowed disabled:opacity-60";
-
-const inputClass =
-  "h-10 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 text-sm text-[var(--foreground)] outline-none transition-colors focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--focus-ring)] disabled:cursor-not-allowed disabled:opacity-60";
-
-function formatBytes(bytes = 0) {
-  if (!bytes) return "0 B";
-  const units = ["B", "KB", "MB", "GB"];
-  const index = Math.min(
-    Math.floor(Math.log(bytes) / Math.log(1024)),
-    units.length - 1,
-  );
-  const value = bytes / 1024 ** index;
-  return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
-}
 
 function createCanvas(width, height) {
   const canvas = document.createElement("canvas");
@@ -105,17 +89,6 @@ function canvasToBlob(canvas, type = "image/png") {
       else reject(new Error("The browser could not create the raster output."));
     }, type);
   });
-}
-
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = filename;
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
 }
 
 async function getPdfJs() {
@@ -142,22 +115,51 @@ async function renderPdfPreviewPage(pdfDocument, pageNumber) {
   try {
     const baseViewport = page.getViewport({ scale: 1 });
     const scale = Math.min(
-      1.5,
+      1.6,
       PREVIEW_MAX_EDGE / Math.max(baseViewport.width, baseViewport.height),
     );
     const viewport = page.getViewport({ scale });
     const { canvas, context } = createCanvas(viewport.width, viewport.height);
     await page.render({ canvasContext: context, viewport }).promise;
+
+    // Extract text content for sensitive data auto-detection & search
+    let pageTextItems = [];
+    try {
+      const textContent = await page.getTextContent();
+      pageTextItems = textContent.items.map((item) => {
+        const tx = pdfjsLibTransformToViewport(item.transform, viewport);
+        return {
+          str: item.str,
+          x: Math.max(0, tx.x / viewport.width),
+          y: Math.max(0, tx.y / viewport.height),
+          width: Math.max(0.02, (item.width * scale) / viewport.width),
+          height: Math.max(0.015, (item.height * scale) / viewport.height),
+        };
+      });
+    } catch {
+      // text extraction is best-effort
+    }
+
     return {
       pageNumber,
-      previewUrl: canvas.toDataURL("image/jpeg", 0.88),
+      previewUrl: canvas.toDataURL("image/jpeg", 0.9),
       previewWidth: canvas.width,
       previewHeight: canvas.height,
+      baseWidth: baseViewport.width,
+      baseHeight: baseViewport.height,
+      textItems: pageTextItems,
       rectangles: [],
     };
   } finally {
     page.cleanup();
   }
+}
+
+function pdfjsLibTransformToViewport(transform, viewport) {
+  const x = transform[4];
+  const y = transform[5];
+  const pt = viewport.convertToViewportPoint(x, y);
+  return { x: pt[0], y: pt[1] };
 }
 
 async function renderImagePreview(file) {
@@ -169,33 +171,21 @@ async function renderImagePreview(file) {
   context.drawImage(image, 0, 0, canvas.width, canvas.height);
   return {
     pageNumber: 1,
-    previewUrl: canvas.toDataURL("image/jpeg", 0.9),
+    previewUrl: canvas.toDataURL("image/jpeg", 0.92),
     previewWidth: canvas.width,
     previewHeight: canvas.height,
     sourceWidth: width,
     sourceHeight: height,
+    textItems: [],
     rectangles: [],
   };
 }
 
 function drawMasks(context, rectangles, width, height) {
-  context.save();
-  context.globalAlpha = 1;
-  context.globalCompositeOperation = "source-over";
-  const semanticFill = getComputedStyle(document.documentElement)
-    .getPropertyValue("--foreground")
-    .trim();
-  if (semanticFill) context.fillStyle = semanticFill;
   rectangles.forEach((rectangle) => {
     const projected = projectRectangle(rectangle, width, height);
-    context.fillRect(
-      projected.x,
-      projected.y,
-      projected.width,
-      projected.height,
-    );
+    applyCanvasRedactionMask(context, projected, rectangle);
   });
-  context.restore();
 }
 
 async function exportPdf(sourceBytes, plan, onProgress) {
@@ -291,29 +281,6 @@ async function exportImage(file, plan, onProgress) {
   return canvasToBlob(canvas);
 }
 
-function PercentInput({ id, label, value, onChange }) {
-  return (
-    <label htmlFor={id} className="block text-xs font-semibold text-[var(--muted-foreground)]">
-      {label}
-      <span className="relative mt-1 block">
-        <input
-          id={id}
-          type="number"
-          min="0"
-          max="100"
-          step="0.5"
-          value={Math.round(value * 1000) / 10}
-          onChange={(event) => onChange(Number(event.target.value) / 100)}
-          className={`${inputClass} pr-8`}
-        />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-xs text-[var(--muted-foreground)]">
-          %
-        </span>
-      </span>
-    </label>
-  );
-}
-
 export default function BankStatementRedactor() {
   const [sourceInfo, setSourceInfo] = useState(null);
   const [pages, setPages] = useState([]);
@@ -321,12 +288,22 @@ export default function BankStatementRedactor() {
   const [selectedRectangleId, setSelectedRectangleId] = useState(null);
   const [draftRectangle, setDraftRectangle] = useState(null);
   const [rasterDpi, setRasterDpi] = useState(144);
+  const [selectedRedactionMode, setSelectedRedactionMode] = useState("black");
   const [exportAcknowledged, setExportAcknowledged] = useState(false);
   const [inspectionConfirmed, setInspectionConfirmed] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [isBusy, setIsBusy] = useState(false);
   const [result, setResult] = useState(null);
+  const [detectedItems, setDetectedItems] = useState([]);
+  const [historyStack, setHistoryStack] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
+  const [showAssistant, setShowAssistant] = useState(false);
+  const [processingTimeMs, setProcessingTimeMs] = useState(0);
+
   const sourceRef = useRef(null);
   const previewRef = useRef(null);
   const interactionRef = useRef(null);
@@ -338,6 +315,7 @@ export default function BankStatementRedactor() {
     activePage?.rectangles.find(
       (rectangle) => rectangle.id === selectedRectangleId,
     ) || null;
+
   const totalRedactions = useMemo(
     () =>
       pages.reduce(
@@ -346,6 +324,7 @@ export default function BankStatementRedactor() {
       ),
     [pages],
   );
+
   const pagesWithoutRedactions = useMemo(
     () =>
       pages
@@ -353,6 +332,62 @@ export default function BankStatementRedactor() {
         .map((page) => page.pageNumber),
     [pages],
   );
+
+  // Calculate Privacy Score & Assistant Advice
+  const privacyScore = useMemo(
+    () => calculatePrivacyScore(detectedItems, pages.flatMap((p) => p.rectangles)),
+    [detectedItems, pages],
+  );
+
+  // Full-Document Search Matches
+  const searchMatches = useMemo(() => {
+    if (!searchQuery.trim() || pages.length === 0) return [];
+    const query = searchQuery.toLowerCase();
+    const matches = [];
+
+    pages.forEach((page) => {
+      if (Array.isArray(page.textItems)) {
+        page.textItems.forEach((item) => {
+          if (item.str && item.str.toLowerCase().includes(query)) {
+            matches.push({
+              pageNumber: page.pageNumber,
+              str: item.str,
+              x: item.x,
+              y: item.y,
+              width: item.width,
+              height: item.height,
+            });
+          }
+        });
+      }
+    });
+
+    return matches;
+  }, [pages, searchQuery]);
+
+  const pushHistory = useCallback((nextPages) => {
+    setHistoryStack((prev) => {
+      const sliced = prev.slice(0, historyIndex + 1);
+      return [...sliced, JSON.stringify(nextPages)];
+    });
+    setHistoryIndex((idx) => idx + 1);
+  }, [historyIndex]);
+
+  const handleUndo = useCallback(() => {
+    if (historyIndex > 0) {
+      const prevPages = JSON.parse(historyStack[historyIndex - 1]);
+      setPages(prevPages);
+      setHistoryIndex((idx) => idx - 1);
+    }
+  }, [historyIndex, historyStack]);
+
+  const handleRedo = useCallback(() => {
+    if (historyIndex < historyStack.length - 1) {
+      const nextPages = JSON.parse(historyStack[historyIndex + 1]);
+      setPages(nextPages);
+      setHistoryIndex((idx) => idx + 1);
+    }
+  }, [historyIndex, historyStack]);
 
   const clearResult = useCallback(() => {
     if (resultUrlRef.current) {
@@ -381,6 +416,11 @@ export default function BankStatementRedactor() {
     setExportAcknowledged(false);
     setStatus("");
     setError("");
+    setDetectedItems([]);
+    setHistoryStack([]);
+    setHistoryIndex(-1);
+    setShowSearch(false);
+    setSearchQuery("");
   }, [clearResult]);
 
   const nextRectangleId = useCallback(() => {
@@ -391,15 +431,17 @@ export default function BankStatementRedactor() {
   const updatePageRectangles = useCallback(
     (pageIndex, updater) => {
       clearResult();
-      setPages((currentPages) =>
-        currentPages.map((page, index) =>
+      setPages((currentPages) => {
+        const next = currentPages.map((page, index) =>
           index === pageIndex
             ? { ...page, rectangles: updater(page.rectangles) }
             : page,
-        ),
-      );
+        );
+        pushHistory(next);
+        return next;
+      });
     },
-    [clearResult],
+    [clearResult, pushHistory],
   );
 
   const selectPage = useCallback((index) => {
@@ -407,6 +449,41 @@ export default function BankStatementRedactor() {
     setSelectedRectangleId(null);
     setDraftRectangle(null);
     interactionRef.current = null;
+  }, []);
+
+  // Sensitive Data Scanner
+  const autoScanDocumentText = useCallback((loadedPages) => {
+    const detected = [];
+    let itemId = 1;
+
+    loadedPages.forEach((page) => {
+      if (Array.isArray(page.textItems) && page.textItems.length > 0) {
+        page.textItems.forEach((item) => {
+          SENSITIVE_PATTERNS.forEach((pattern) => {
+            const regex = new RegExp(pattern.regex.source, pattern.regex.flags);
+            if (regex.test(item.str)) {
+              detected.push({
+                id: `det-${itemId++}`,
+                category: pattern.category,
+                key: pattern.key,
+                label: pattern.label,
+                value: item.str,
+                severity: pattern.severity,
+                confidence: pattern.confidence,
+                pageNumber: page.pageNumber,
+                x: item.x,
+                y: item.y,
+                width: item.width,
+                height: item.height,
+                status: "detected",
+              });
+            }
+          });
+        });
+      }
+    });
+
+    setDetectedItems(detected);
   }, []);
 
   const loadFile = useCallback(
@@ -430,7 +507,7 @@ export default function BankStatementRedactor() {
 
       resetWorkspace();
       setIsBusy(true);
-      setStatus("Reading the statement locally…");
+      setStatus("Reading statement locally and running text extraction…");
 
       try {
         if (isPdf) {
@@ -463,12 +540,15 @@ export default function BankStatementRedactor() {
             }
             sourceRef.current = { type: "pdf", bytes };
             setPages(previewPages);
+            setHistoryStack([JSON.stringify(previewPages)]);
+            setHistoryIndex(0);
             setSourceInfo({
               type: "pdf",
               name: file.name,
               size: file.size,
               pageCount: pdfDocument.numPages,
             });
+            autoScanDocumentText(previewPages);
           } finally {
             await pdfDocument.destroy();
           }
@@ -477,6 +557,8 @@ export default function BankStatementRedactor() {
           const preview = await renderImagePreview(file);
           sourceRef.current = { type: "image", file };
           setPages([preview]);
+          setHistoryStack([JSON.stringify([preview])]);
+          setHistoryIndex(0);
           setSourceInfo({
             type: "image",
             name: file.name,
@@ -484,9 +566,10 @@ export default function BankStatementRedactor() {
             pageCount: 1,
             dimensions: `${preview.sourceWidth} × ${preview.sourceHeight}`,
           });
+          autoScanDocumentText([preview]);
         }
         setStatus(
-          "Ready. Place every mask manually and review every statement page.",
+          "Ready. Sensitive fields identified locally. Review detections or add custom masks.",
         );
       } catch (loadError) {
         sourceRef.current = null;
@@ -502,7 +585,7 @@ export default function BankStatementRedactor() {
         setIsBusy(false);
       }
     },
-    [resetWorkspace],
+    [autoScanDocumentText, resetWorkspace],
   );
 
   const pointFromPointer = useCallback((event) => {
@@ -523,9 +606,9 @@ export default function BankStatementRedactor() {
       const id = nextRectangleId();
       interactionRef.current = { mode: "draw", start, id };
       setSelectedRectangleId(null);
-      setDraftRectangle(rectangleFromPoints(start, start, id));
+      setDraftRectangle(rectangleFromPoints(start, start, id, selectedRedactionMode));
     },
-    [activePage, isBusy, nextRectangleId, pointFromPointer],
+    [activePage, isBusy, nextRectangleId, pointFromPointer, selectedRedactionMode],
   );
 
   const startMoving = useCallback(
@@ -549,7 +632,7 @@ export default function BankStatementRedactor() {
       if (!point) return;
       if (interaction.mode === "draw") {
         setDraftRectangle(
-          rectangleFromPoints(interaction.start, point, interaction.id),
+          rectangleFromPoints(interaction.start, point, interaction.id, selectedRedactionMode),
         );
         return;
       }
@@ -564,7 +647,7 @@ export default function BankStatementRedactor() {
         ),
       );
     },
-    [activePageIndex, pointFromPointer, updatePageRectangles],
+    [activePageIndex, pointFromPointer, selectedRedactionMode, updatePageRectangles],
   );
 
   const finishInteraction = useCallback(
@@ -577,6 +660,7 @@ export default function BankStatementRedactor() {
           interaction.start,
           point,
           interaction.id,
+          selectedRedactionMode,
         );
         if (rectangle.width >= 0.002 && rectangle.height >= 0.002) {
           updatePageRectangles(activePageIndex, (rectangles) => [
@@ -592,19 +676,19 @@ export default function BankStatementRedactor() {
         previewRef.current.releasePointerCapture(event.pointerId);
       }
     },
-    [activePageIndex, pointFromPointer, updatePageRectangles],
+    [activePageIndex, pointFromPointer, selectedRedactionMode, updatePageRectangles],
   );
 
   const addPreset = useCallback(
     (presetKey) => {
-      const rectangle = createPresetRectangle(presetKey, nextRectangleId());
+      const rectangle = createPresetRectangle(presetKey, nextRectangleId(), selectedRedactionMode);
       updatePageRectangles(activePageIndex, (rectangles) => [
         ...rectangles,
         rectangle,
       ]);
       setSelectedRectangleId(rectangle.id);
     },
-    [activePageIndex, nextRectangleId, updatePageRectangles],
+    [activePageIndex, nextRectangleId, selectedRedactionMode, updatePageRectangles],
   );
 
   const addCustomRectangle = useCallback(() => {
@@ -612,6 +696,7 @@ export default function BankStatementRedactor() {
       id: nextRectangleId(),
       label: "Custom redaction",
       presetKey: null,
+      mode: selectedRedactionMode,
       x: 0.34,
       y: 0.44,
       width: 0.32,
@@ -622,7 +707,7 @@ export default function BankStatementRedactor() {
       rectangle,
     ]);
     setSelectedRectangleId(rectangle.id);
-  }, [activePageIndex, nextRectangleId, updatePageRectangles]);
+  }, [activePageIndex, nextRectangleId, selectedRedactionMode, updatePageRectangles]);
 
   const updateSelectedRectangle = useCallback(
     (changes) => {
@@ -658,8 +743,8 @@ export default function BankStatementRedactor() {
   const copySelectedToAllPages = useCallback(() => {
     if (!selectedRectangle || pages.length < 2) return;
     clearResult();
-    setPages((currentPages) =>
-      currentPages.map((page, index) =>
+    setPages((currentPages) => {
+      const next = currentPages.map((page, index) =>
         index === activePageIndex
           ? page
           : {
@@ -669,13 +754,16 @@ export default function BankStatementRedactor() {
                 { ...selectedRectangle, id: nextRectangleId() },
               ],
             },
-      ),
-    );
+      );
+      pushHistory(next);
+      return next;
+    });
   }, [
     activePageIndex,
     clearResult,
     nextRectangleId,
     pages.length,
+    pushHistory,
     selectedRectangle,
   ]);
 
@@ -710,6 +798,69 @@ export default function BankStatementRedactor() {
     [activePageIndex, removeRectangle, updatePageRectangles],
   );
 
+  // Handle Detection Dashboard Actions
+  const handleRedactDetectedItem = useCallback(
+    (item) => {
+      const rectangle = {
+        id: nextRectangleId(),
+        label: item.label,
+        mode: selectedRedactionMode,
+        x: item.x,
+        y: item.y,
+        width: item.width,
+        height: item.height,
+        severity: item.severity,
+        category: item.category,
+      };
+
+      const pageIdx = item.pageNumber - 1;
+      updatePageRectangles(pageIdx, (rects) => [...rects, rectangle]);
+      setDetectedItems((items) =>
+        items.map((i) => (i.id === item.id ? { ...i, status: "redacted" } : i)),
+      );
+    },
+    [nextRectangleId, selectedRedactionMode, updatePageRectangles],
+  );
+
+  const handleIgnoreDetectedItem = useCallback((itemId) => {
+    setDetectedItems((items) =>
+      items.map((i) => (i.id === itemId ? { ...i, status: "ignored" } : i)),
+    );
+  }, []);
+
+  const handleRedactAllHighRisk = useCallback(() => {
+    detectedItems
+      .filter((i) => i.severity === "high" && i.status !== "redacted")
+      .forEach((item) => handleRedactDetectedItem(item));
+  }, [detectedItems, handleRedactDetectedItem]);
+
+  const handleRedactAllSelected = useCallback(
+    (ids) => {
+      const set = new Set(ids);
+      detectedItems
+        .filter((i) => set.has(i.id))
+        .forEach((item) => handleRedactDetectedItem(item));
+    },
+    [detectedItems, handleRedactDetectedItem],
+  );
+
+  // Redact All Search Matches
+  const handleRedactAllMatches = useCallback(() => {
+    if (searchMatches.length === 0) return;
+    searchMatches.forEach((match) => {
+      const rectangle = {
+        id: nextRectangleId(),
+        label: `Search Match: ${searchQuery}`,
+        mode: selectedRedactionMode,
+        x: match.x,
+        y: match.y,
+        width: match.width,
+        height: match.height,
+      };
+      updatePageRectangles(match.pageNumber - 1, (rects) => [...rects, rectangle]);
+    });
+  }, [nextRectangleId, searchMatches, searchQuery, selectedRedactionMode, updatePageRectangles]);
+
   const exportResult = useCallback(async () => {
     if (
       !sourceInfo ||
@@ -722,7 +873,8 @@ export default function BankStatementRedactor() {
     clearResult();
     setError("");
     setIsBusy(true);
-    setStatus("Preparing a new rasterized copy…");
+    setStatus("Preparing flattened raster pages…");
+    const startTime = performance.now();
 
     try {
       const plan = buildExportPlan({
@@ -737,6 +889,7 @@ export default function BankStatementRedactor() {
       const name = buildOutputName(sourceInfo.name, sourceInfo.type);
       const url = URL.createObjectURL(blob);
       resultUrlRef.current = url;
+      setProcessingTimeMs(Math.round(performance.now() - startTime));
       setResult({
         blob,
         name,
@@ -746,7 +899,7 @@ export default function BankStatementRedactor() {
         redactionCount: plan.totalRedactions,
       });
       setStatus(
-        "Flattened copy created. Inspect the preview before enabling download.",
+        "Flattened copy created. Complete final inspection below before downloading.",
       );
     } catch (exportError) {
       setError(
@@ -768,587 +921,165 @@ export default function BankStatementRedactor() {
   ]);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-5 p-4 sm:p-6">
-      <header className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-          <div className="flex items-start gap-4">
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-[var(--primary-soft)] text-[var(--primary)]">
-              <Landmark className="size-6" aria-hidden="true" />
-            </span>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl font-bold text-[var(--foreground)] sm:text-3xl">
-                  Bank Statement Redactor
-                </h1>
-                <span className="inline-flex items-center gap-1 rounded-full border border-[var(--success)] bg-[var(--success-soft)] px-2 py-1 text-xs font-bold text-[var(--success)]">
-                  <LockKeyhole className="size-3.5" aria-hidden="true" />
-                  Local only
-                </span>
-              </div>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted-foreground)]">
-                Place opaque masks yourself, then rebuild a statement as a
-                flattened PDF or PNG. Nothing is uploaded, stored, or sent to
-                an external service.
-              </p>
-            </div>
-          </div>
-          {sourceInfo ? (
-            <button
-              type="button"
-              onClick={resetWorkspace}
-              disabled={isBusy}
-              className={secondaryButton}
-            >
-              <RotateCcw className="size-4" aria-hidden="true" />
-              Start over
-            </button>
-          ) : null}
-        </div>
-      </header>
+    <main className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">
+      {/* Header Bar */}
+      <HeaderBar
+        sourceInfo={sourceInfo}
+        privacyScore={privacyScore}
+        totalRedactions={totalRedactions}
+        canUndo={historyIndex > 0}
+        canRedo={historyIndex < historyStack.length - 1}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
+        onOpenSearch={() => setShowSearch((v) => !v)}
+        onOpenAssistant={() => setShowAssistant((v) => !v)}
+        onResetWorkspace={resetWorkspace}
+      />
 
-      <aside className="rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] p-4">
-        <div className="flex items-start gap-3">
-          <AlertTriangle
-            className="mt-0.5 size-5 shrink-0 text-[var(--warning)]"
-            aria-hidden="true"
-          />
-          <div>
-            <h2 className="font-bold text-[var(--foreground)]">
-              Manual redaction — no OCR or automatic detection
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-[var(--foreground)]">
-              Presets are only movable starting rectangles. They do not find
-              names, accounts, IFSC, IBAN, cards, balances, or transactions.
-              Position every mask and inspect every page yourself.
-            </p>
-          </div>
-        </div>
-      </aside>
+      {/* Full Document Search Overlay */}
+      {showSearch && (
+        <SearchPanel
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchMatches={searchMatches}
+          currentMatchIndex={currentMatchIndex}
+          onNextMatch={() => setCurrentMatchIndex((i) => (i + 1) % Math.max(1, searchMatches.length))}
+          onPrevMatch={() => setCurrentMatchIndex((i) => (i - 1 + searchMatches.length) % Math.max(1, searchMatches.length))}
+          onRedactAllMatches={handleRedactAllMatches}
+          onClose={() => setShowSearch(false)}
+        />
+      )}
 
-      <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-[var(--foreground)]">
-              1. Choose a bank statement
-            </h2>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              PDF, PNG, JPEG, WebP, BMP, or AVIF · maximum 40 MB · PDFs up to
-              30 pages
-            </p>
-          </div>
-          <label className={`${secondaryButton} cursor-pointer`}>
-            <Upload className="size-4" aria-hidden="true" />
-            {sourceInfo ? "Replace file" : "Choose PDF or image"}
-            <input
-              type="file"
-              accept="application/pdf,image/png,image/jpeg,image/webp,image/bmp,image/avif"
-              className="sr-only"
-              disabled={isBusy}
-              onChange={(event) => {
-                const file = event.target.files?.[0];
-                event.target.value = "";
-                void loadFile(file);
-              }}
-            />
-          </label>
-        </div>
+      {/* Upload Dropzone */}
+      <UploadDropzone
+        sourceInfo={sourceInfo}
+        isBusy={isBusy}
+        onFileSelect={loadFile}
+        onReplaceFile={loadFile}
+        error={error}
+      />
 
-        {sourceInfo ? (
-          <div className="mt-4 flex flex-wrap gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-3 text-sm">
-            <span className="inline-flex items-center gap-2 font-semibold text-[var(--foreground)]">
-              {sourceInfo.type === "pdf" ? (
-                <FileText className="size-4 text-[var(--primary)]" aria-hidden="true" />
-              ) : (
-                <FileImage className="size-4 text-[var(--primary)]" aria-hidden="true" />
-              )}
-              {sourceInfo.name}
-            </span>
-            <span className="text-[var(--muted-foreground)]">
-              {formatBytes(sourceInfo.size)}
-            </span>
-            <span className="text-[var(--muted-foreground)]">
-              {sourceInfo.type === "pdf"
-                ? `${sourceInfo.pageCount} page${
-                    sourceInfo.pageCount === 1 ? "" : "s"
-                  }`
-                : sourceInfo.dimensions}
-            </span>
-          </div>
-        ) : null}
-      </section>
-
-      {error ? (
+      {/* Processing Status Message */}
+      {status && (
         <div
-          role="alert"
-          className="rounded-lg border border-[var(--danger)] bg-[var(--danger-soft)] p-4 text-sm font-semibold text-[var(--danger)]"
+          aria-live="polite"
+          className="flex min-h-8 items-center gap-2 text-xs font-semibold text-[var(--muted-foreground)]"
         >
-          {error}
+          {isBusy && (
+            <LoaderCircle className="size-4 animate-spin text-[var(--primary)]" />
+          )}
+          <span>{status}</span>
         </div>
-      ) : null}
+      )}
 
-      <p
-        aria-live="polite"
-        className="min-h-5 text-sm font-medium text-[var(--muted-foreground)]"
-      >
-        {isBusy ? (
-          <span className="inline-flex items-center gap-2">
-            <LoaderCircle
-              className="size-4 animate-spin motion-reduce:animate-none"
-              aria-hidden="true"
-            />
-            {status}
-          </span>
-        ) : (
-          status
-        )}
-      </p>
-
+      {/* Main Document Workspace Grid */}
       {activePage ? (
-        <section className="grid gap-5 xl:grid-cols-12">
-          <aside className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm xl:col-span-2">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h2 className="font-bold text-[var(--foreground)]">Pages</h2>
-                <p className="text-xs text-[var(--muted-foreground)]">
-                  {totalRedactions} redaction
-                  {totalRedactions === 1 ? "" : "s"} total
-                </p>
-              </div>
-              <Images className="size-5 text-[var(--primary)]" aria-hidden="true" />
-            </div>
-            <div
-              className="mt-4 flex gap-3 overflow-x-auto pb-2 xl:max-h-screen xl:flex-col xl:overflow-y-auto xl:overflow-x-hidden"
-              aria-label="Statement pages"
-            >
-              {pages.map((page, index) => (
-                <button
-                  key={page.pageNumber}
-                  type="button"
-                  onClick={() => selectPage(index)}
-                  aria-current={index === activePageIndex ? "page" : undefined}
-                  className={`min-w-32 rounded-lg border p-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--focus-ring)] ${
-                    index === activePageIndex
-                      ? "border-[var(--primary)] bg-[var(--primary-soft)]"
-                      : "border-[var(--border)] bg-[var(--surface-soft)] hover:border-[var(--border-strong)]"
-                  }`}
-                >
-                  <img
-                    src={page.previewUrl}
-                    alt=""
-                    className="aspect-[4/3] w-full rounded-md border border-[var(--border)] bg-[var(--canvas)] object-contain"
-                  />
-                  <span className="mt-2 flex items-center justify-between gap-2 text-xs font-semibold text-[var(--foreground)]">
-                    {sourceInfo.type === "pdf"
-                      ? `Page ${page.pageNumber}`
-                      : "Image"}
-                    <span className="text-[var(--muted-foreground)]">
-                      {page.rectangles.length}
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </aside>
-
-          <div className="space-y-4 xl:col-span-7">
-            <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h2 className="font-bold text-[var(--foreground)]">
-                    2. Position every redaction
-                  </h2>
-                  <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
-                    Drag empty space to draw. Drag a mask to move it. Arrow
-                    keys nudge; Shift + arrow moves farther; Delete removes.
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => selectPage(Math.max(0, activePageIndex - 1))}
-                    disabled={activePageIndex === 0}
-                    className={secondaryButton}
-                    aria-label="Previous page"
-                  >
-                    <ChevronLeft className="size-4" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      selectPage(Math.min(pages.length - 1, activePageIndex + 1))
-                    }
-                    disabled={activePageIndex === pages.length - 1}
-                    className={secondaryButton}
-                    aria-label="Next page"
-                  >
-                    <ChevronRight className="size-4" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="mt-4 overflow-auto rounded-lg border border-[var(--border)] bg-[var(--canvas)] p-3">
-                <div
-                  ref={previewRef}
-                  role="group"
-                  aria-label={`Editable preview for page ${activePage.pageNumber}`}
-                  onPointerDown={startDrawing}
-                  onPointerMove={continueInteraction}
-                  onPointerUp={finishInteraction}
-                  onPointerCancel={finishInteraction}
-                  className="relative mx-auto w-fit max-w-full touch-none select-none overflow-hidden rounded-md bg-[var(--surface)] shadow-sm"
-                >
-                  <img
-                    src={activePage.previewUrl}
-                    alt={`Statement page ${activePage.pageNumber}`}
-                    draggable="false"
-                    className="block max-h-[70vh] w-auto max-w-full"
-                  />
-                  {activePage.rectangles.map((rectangle) => (
-                    <button
-                      key={rectangle.id}
-                      type="button"
-                      aria-label={`${rectangle.label}. Drag or use arrow keys to move; press Delete to remove.`}
-                      aria-pressed={rectangle.id === selectedRectangleId}
-                      onPointerDown={(event) => startMoving(event, rectangle)}
-                      onKeyDown={(event) =>
-                        handleRectangleKeyDown(event, rectangle)
-                      }
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setSelectedRectangleId(rectangle.id);
-                      }}
-                      className={`absolute overflow-hidden rounded-sm border-2 bg-[var(--foreground)]/90 text-[var(--page)] outline-none ${
-                        rectangle.id === selectedRectangleId
-                          ? "border-[var(--primary)] ring-[3px] ring-[var(--focus-ring)]"
-                          : "border-[var(--foreground)] hover:border-[var(--primary)]"
-                      }`}
-                      style={{
-                        left: `${rectangle.x * 100}%`,
-                        top: `${rectangle.y * 100}%`,
-                        width: `${rectangle.width * 100}%`,
-                        height: `${rectangle.height * 100}%`,
-                      }}
-                    >
-                      <span className="pointer-events-none sr-only">
-                        {rectangle.label}
-                      </span>
-                    </button>
-                  ))}
-                  {draftRectangle ? (
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute rounded-sm border-2 border-dashed border-[var(--primary)] bg-[var(--primary-soft)]/80"
-                      style={{
-                        left: `${draftRectangle.x * 100}%`,
-                        top: `${draftRectangle.y * 100}%`,
-                        width: `${draftRectangle.width * 100}%`,
-                        height: `${draftRectangle.height * 100}%`,
-                      }}
-                    />
-                  ) : null}
-                </div>
-              </div>
-            </section>
-
-            {selectedRectangle ? (
-              <section className="rounded-lg border border-[var(--primary)] bg-[var(--primary-soft)] p-4">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <h3 className="font-bold text-[var(--foreground)]">
-                      Selected redaction
-                    </h3>
-                    <p className="text-xs text-[var(--muted-foreground)]">
-                      Resize precisely with percentages.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeRectangle(selectedRectangle.id)}
-                    className={secondaryButton}
-                  >
-                    <Trash2 className="size-4 text-[var(--danger)]" aria-hidden="true" />
-                    Remove
-                  </button>
-                </div>
-                <label className="mt-4 block text-xs font-semibold text-[var(--muted-foreground)]">
-                  Label
-                  <input
-                    type="text"
-                    value={selectedRectangle.label}
-                    onChange={(event) =>
-                      updateSelectedRectangle({ label: event.target.value })
-                    }
-                    className={`${inputClass} mt-1`}
-                  />
-                </label>
-                <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <PercentInput
-                    id="redaction-x"
-                    label="Left"
-                    value={selectedRectangle.x}
-                    onChange={(x) => updateSelectedRectangle({ x })}
-                  />
-                  <PercentInput
-                    id="redaction-y"
-                    label="Top"
-                    value={selectedRectangle.y}
-                    onChange={(y) => updateSelectedRectangle({ y })}
-                  />
-                  <PercentInput
-                    id="redaction-width"
-                    label="Width"
-                    value={selectedRectangle.width}
-                    onChange={(width) => updateSelectedRectangle({ width })}
-                  />
-                  <PercentInput
-                    id="redaction-height"
-                    label="Height"
-                    value={selectedRectangle.height}
-                    onChange={(height) => updateSelectedRectangle({ height })}
-                  />
-                </div>
-                {pages.length > 1 ? (
-                  <button
-                    type="button"
-                    onClick={copySelectedToAllPages}
-                    className={`${secondaryButton} mt-3`}
-                  >
-                    <Images className="size-4" aria-hidden="true" />
-                    Copy this position to all pages
-                  </button>
-                ) : null}
-              </section>
-            ) : null}
+        <div className="grid gap-6 xl:grid-cols-12">
+          {/* Left Column: Thumbnails Sidebar */}
+          <div className="xl:col-span-2">
+            <SidebarThumbnails
+              pages={pages}
+              activePageIndex={activePageIndex}
+              onSelectPage={selectPage}
+              sourceType={sourceInfo?.type}
+            />
           </div>
 
-          <aside className="space-y-4 xl:col-span-3">
-            <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-              <div className="flex items-start gap-3">
-                <MousePointer2 className="mt-0.5 size-5 shrink-0 text-[var(--primary)]" aria-hidden="true" />
-                <div>
-                  <h2 className="font-bold text-[var(--foreground)]">
-                    Manual starting rectangles
-                  </h2>
-                  <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
-                    Add one, then move and resize it over the real content.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
-                {Object.values(BANK_STATEMENT_PRESETS).map((preset) => {
-                  const Icon = PRESET_ICONS[preset.key];
-                  return (
-                    <button
-                      key={preset.key}
-                      type="button"
-                      onClick={() => addPreset(preset.key)}
-                      className={`${secondaryButton} justify-start`}
-                    >
-                      <Icon className="size-4 text-[var(--primary)]" aria-hidden="true" />
-                      {preset.label}
-                    </button>
-                  );
-                })}
-                <button
-                  type="button"
-                  onClick={addCustomRectangle}
-                  className={`${secondaryButton} justify-start`}
-                >
-                  <Plus className="size-4 text-[var(--primary)]" aria-hidden="true" />
-                  Custom redaction
-                </button>
-              </div>
-              <button
-                type="button"
-                onClick={clearPage}
-                disabled={activePage.rectangles.length === 0}
-                className={`${secondaryButton} mt-3 w-full`}
-              >
-                <Trash2 className="size-4 text-[var(--danger)]" aria-hidden="true" />
-                Clear this page
-              </button>
-            </section>
+          {/* Middle Column: Interactive Document Canvas Viewer */}
+          <div className="space-y-6 xl:col-span-7">
+            <DocumentViewer
+              activePage={activePage}
+              activePageIndex={activePageIndex}
+              totalPages={pages.length}
+              onSelectPage={selectPage}
+              selectedRectangleId={selectedRectangleId}
+              onSelectRectangle={setSelectedRectangleId}
+              onStartDrawing={startDrawing}
+              onStartMoving={startMoving}
+              onContinueInteraction={continueInteraction}
+              onFinishInteraction={finishInteraction}
+              draftRectangle={draftRectangle}
+              onRectangleKeyDown={handleRectangleKeyDown}
+              searchMatches={searchMatches}
+            />
 
-            <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-              <div className="flex items-start gap-3">
-                <FileLock2 className="mt-0.5 size-5 shrink-0 text-[var(--primary)]" aria-hidden="true" />
-                <div>
-                  <h2 className="font-bold text-[var(--foreground)]">
-                    3. Flatten and inspect
-                  </h2>
-                  <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
-                    Export creates fresh page pixels instead of keeping the
-                    original selectable PDF text and objects.
-                  </p>
-                </div>
-              </div>
-
-              {sourceInfo.type === "pdf" ? (
-                <label className="mt-4 block text-xs font-semibold text-[var(--muted-foreground)]">
-                  Raster quality
-                  <select
-                    value={rasterDpi}
-                    onChange={(event) => {
-                      clearResult();
-                      setRasterDpi(Number(event.target.value));
-                    }}
-                    className={`${inputClass} mt-1`}
-                  >
-                    <option value="96">Standard · 96 DPI</option>
-                    <option value="144">Balanced · 144 DPI</option>
-                    <option value="216">High · 216 DPI</option>
-                  </select>
-                </label>
-              ) : null}
-
-              {pagesWithoutRedactions.length ? (
-                <div className="mt-4 rounded-md border border-[var(--warning)] bg-[var(--warning-soft)] p-3 text-xs leading-5 text-[var(--foreground)]">
-                  No masks on{" "}
-                  {pagesWithoutRedactions.length === pages.length
-                    ? "any page"
-                    : `page${pagesWithoutRedactions.length === 1 ? "" : "s"} ${pagesWithoutRedactions.join(", ")}`}
-                  . Confirm that is intentional.
-                </div>
-              ) : null}
-
-              <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-md border border-[var(--border)] bg-[var(--surface-soft)] p-3">
-                <input
-                  type="checkbox"
-                  checked={exportAcknowledged}
-                  onChange={(event) => {
-                    clearResult();
-                    setExportAcknowledged(event.target.checked);
-                  }}
-                  className="mt-0.5 size-4 accent-[var(--primary)]"
-                />
-                <span className="text-xs leading-5 text-[var(--foreground)]">
-                  I manually checked every source page and placed all required
-                  masks. I understand presets do not detect content.
-                </span>
-              </label>
-
-              <button
-                type="button"
-                onClick={() => void exportResult()}
-                disabled={
-                  isBusy ||
-                  !exportAcknowledged ||
-                  totalRedactions === 0
-                }
-                className={`${primaryButton} mt-4 w-full`}
-              >
-                {isBusy ? (
-                  <LoaderCircle
-                    className="size-4 animate-spin motion-reduce:animate-none"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <ShieldCheck className="size-4" aria-hidden="true" />
-                )}
-                Create flattened copy
-              </button>
-            </section>
-          </aside>
-        </section>
-      ) : null}
-
-      {result ? (
-        <section className="rounded-lg border border-[var(--success)] bg-[var(--surface)] p-5 shadow-sm sm:p-6">
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="mt-0.5 size-6 shrink-0 text-[var(--success)]" aria-hidden="true" />
-            <div>
-              <h2 className="text-lg font-bold text-[var(--foreground)]">
-                4. Mandatory final inspection
-              </h2>
-              <p className="mt-1 text-sm leading-6 text-[var(--muted-foreground)]">
-                Inspect all {result.pageCount} page
-                {result.pageCount === 1 ? "" : "s"} and every edge of the{" "}
-                {result.redactionCount} redaction
-                {result.redactionCount === 1 ? "" : "s"}. Download stays
-                disabled until you confirm this review.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--canvas)]">
-            {result.type === "pdf" ? (
-              <iframe
-                src={result.url}
-                title="Flattened redacted PDF inspection preview"
-                className="h-96 w-full bg-[var(--surface)]"
+            {/* Privacy Analytics & Recommendations */}
+            {(showAssistant || privacyScore.advice.length > 0) && (
+              <PrivacyAnalytics
+                privacyScore={privacyScore}
+                onApplyAdvice={handleRedactAllHighRisk}
               />
-            ) : (
-              <div className="flex max-h-[70vh] justify-center overflow-auto p-3">
-                <img
-                  src={result.url}
-                  alt="Flattened redacted image inspection preview"
-                  className="max-w-full rounded-md border border-[var(--border)]"
-                />
-              </div>
             )}
           </div>
 
-          <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-md border border-[var(--success)] bg-[var(--success-soft)] p-4">
-            <input
-              type="checkbox"
-              checked={inspectionConfirmed}
-              onChange={(event) => setInspectionConfirmed(event.target.checked)}
-              className="mt-0.5 size-4 accent-[var(--primary)]"
+          {/* Right Column: Editing Tools & Smart Detection Dashboard */}
+          <div className="space-y-6 xl:col-span-3">
+            <EditingToolbar
+              activeToolMode="select"
+              onChangeToolMode={() => {}}
+              selectedRedactionMode={selectedRedactionMode}
+              onChangeRedactionMode={setSelectedRedactionMode}
+              selectedRectangle={selectedRectangle}
+              onUpdateSelected={updateSelectedRectangle}
+              onRemoveSelected={removeRectangle}
+              onAddPreset={addPreset}
+              onAddCustom={addCustomRectangle}
+              onClearPage={clearPage}
+              onCopyToAllPages={copySelectedToAllPages}
+              pageCount={pages.length}
+              activePageRectanglesCount={activePage.rectangles.length}
             />
-            <span className="text-sm leading-6 text-[var(--foreground)]">
-              I opened the output preview, inspected every page, and verified
-              that all sensitive areas are fully covered.
-            </span>
-          </label>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--muted-foreground)]">
-              <Eye className="size-4 text-[var(--primary)]" aria-hidden="true" />
-              {result.name} · {formatBytes(result.blob.size)}
-            </p>
-            <button
-              type="button"
-              disabled={!inspectionConfirmed}
-              onClick={() => downloadBlob(result.blob, result.name)}
-              className={primaryButton}
-            >
-              <Download className="size-4" aria-hidden="true" />
-              Download inspected copy
-            </button>
+            {detectedItems.length > 0 && (
+              <DetectionDashboard
+                detectedItems={detectedItems}
+                onRedactItem={handleRedactDetectedItem}
+                onIgnoreItem={handleIgnoreDetectedItem}
+                onRedactAllHighRisk={handleRedactAllHighRisk}
+                onRedactAllSelected={handleRedactAllSelected}
+                onClearDetected={() => setDetectedItems([])}
+                activePageIndex={activePageIndex}
+                onJumpToPage={selectPage}
+              />
+            )}
           </div>
-        </section>
+        </div>
       ) : null}
 
-      <section className="grid gap-4 sm:grid-cols-3">
-        {[
-          {
-            icon: LockKeyhole,
-            title: "No upload",
-            text: "File bytes remain in this browser tab for the current session.",
-          },
-          {
-            icon: FileLock2,
-            title: "Flattened output",
-            text: "PDF pages are rebuilt from raster pixels after masks are applied.",
-          },
-          {
-            icon: ShieldCheck,
-            title: "Human verification",
-            text: "Source review and final output inspection are both required.",
-          },
-        ].map(({ icon: Icon, title, text }) => (
-          <article
-            key={title}
-            className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm"
-          >
-            <Icon className="size-5 text-[var(--primary)]" aria-hidden="true" />
-            <h2 className="mt-3 font-bold text-[var(--foreground)]">{title}</h2>
-            <p className="mt-1 text-sm leading-6 text-[var(--muted-foreground)]">
-              {text}
-            </p>
-          </article>
-        ))}
-      </section>
+      {/* Export & Inspection Section */}
+      {sourceInfo && (
+        <ExportSection
+          sourceInfo={sourceInfo}
+          totalRedactions={totalRedactions}
+          rasterDpi={rasterDpi}
+          onChangeRasterDpi={(dpi) => {
+            clearResult();
+            setRasterDpi(dpi);
+          }}
+          exportAcknowledged={exportAcknowledged}
+          onChangeExportAcknowledged={(ack) => {
+            clearResult();
+            setExportAcknowledged(ack);
+          }}
+          pagesWithoutRedactions={pagesWithoutRedactions}
+          isBusy={isBusy}
+          onExportResult={exportResult}
+          result={result}
+          inspectionConfirmed={inspectionConfirmed}
+          onChangeInspectionConfirmed={setInspectionConfirmed}
+        />
+      )}
+
+      {/* Completion Summary Screen */}
+      {result && inspectionConfirmed && (
+        <CompletionScreen
+          result={result}
+          sourceInfo={sourceInfo}
+          privacyScore={privacyScore}
+          processingTimeMs={processingTimeMs}
+          onResetWorkspace={resetWorkspace}
+        />
+      )}
     </main>
   );
 }

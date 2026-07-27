@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   ExternalLink,
   ChevronDown,
+  ChevronRight,
   Lightbulb,
   ListChecks,
   Wrench,
@@ -168,11 +169,13 @@ const SettingDetailPage = ({
           <h2 className="support-detail-section-title">
             <ListChecks className="h-4 w-4" /> Quick Facts
           </h2>
-          <ul className="support-detail-list">
+          <div className="support-detail-native-list">
             {setting.details.map((detail, i) => (
-              <li key={i}>{detail}</li>
+              <div key={i} className="support-detail-native-row">
+                {detail}
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       )}
 
@@ -221,11 +224,13 @@ const SettingDetailPage = ({
           <h2 className="support-detail-section-title">
             <Sparkles className="h-4 w-4" /> Best Practices
           </h2>
-          <ul className="support-detail-list support-detail-list-check">
+          <div className="support-detail-native-list">
             {setting.bestPractices.map((tip, i) => (
-              <li key={i}>{tip}</li>
+              <div key={i} className="support-detail-native-row">
+                {tip}
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       )}
 
@@ -250,11 +255,13 @@ const SettingDetailPage = ({
           <h2 className="support-detail-section-title">
             <Lightbulb className="h-4 w-4" /> Tips &amp; Tricks
           </h2>
-          <ul className="support-detail-list support-detail-list-tip">
+          <div className="support-detail-native-list">
             {setting.tipsAndTricks.map((tip, i) => (
-              <li key={i}>{tip}</li>
+              <div key={i} className="support-detail-native-row">
+                {tip}
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       )}
 
@@ -290,18 +297,31 @@ const SettingDetailPage = ({
           <h2 className="support-detail-section-title">
             <Link2 className="h-4 w-4" /> Related Settings
           </h2>
-          <div className="support-detail-related-chips">
+          {/* Reuses the same flat, divided native-list row style as the
+              category hub page (icon / title / short heading / chevron) —
+              matching how a native Settings app lists related sub-pages
+              (e.g. Windows Update's "Update history", "Advanced options")
+              instead of the old horizontal chip-pill row. */}
+          <div className="support-category-hub-list">
             {relatedSettings.map((related) => {
               const RelatedIcon = related.icon;
+              const relatedCategoryColor = getCategoryById(related.category)?.color;
               return (
                 <button
                   key={related.id}
                   type="button"
-                  className="support-detail-related-chip"
+                  className="support-category-hub-row"
+                  style={relatedCategoryColor ? { "--category-accent": relatedCategoryColor } : undefined}
                   onClick={() => onSelectSetting?.(related.id)}
                 >
-                  <RelatedIcon className="h-4 w-4" />
-                  {related.title}
+                  <span className="support-category-hub-row-icon" aria-hidden="true">
+                    <RelatedIcon className="h-5 w-5" />
+                  </span>
+                  <span className="support-category-hub-row-text">
+                    <span className="support-category-hub-row-title">{related.title}</span>
+                    {related.heading && <span className="support-category-hub-row-desc">{related.heading}</span>}
+                  </span>
+                  <ChevronRight className="h-4 w-4 support-category-hub-row-chevron" aria-hidden="true" />
                 </button>
               );
             })}

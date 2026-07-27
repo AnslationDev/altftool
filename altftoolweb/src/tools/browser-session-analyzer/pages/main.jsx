@@ -32,10 +32,10 @@ export default function BrowserSessionMain() {
           <div className="flex gap-1.5">
             {analyzer.tabs.length > 0 && (
               <>
-                <button onClick={() => setShowExport(true)} aria-label="Export session" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Export">
+                <button onClick={() => setShowExport(true)} aria-label="Export session" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Export">
                   <Download size="18" />
                 </button>
-                <button onClick={analyzer.clearAll} aria-label="Clear all tabs" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Clear">
+                <button onClick={analyzer.clearAll} aria-label="Clear all tabs" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) hover:text-(--danger) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Clear">
                   <Trash2 size="18" />
                 </button>
               </>

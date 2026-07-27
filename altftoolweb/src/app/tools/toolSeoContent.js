@@ -154,6 +154,16 @@ export function buildToolSeoContent(slug, tool = {}) {
         },
       ];
 
+  // Whether the FAQs/steps above came from a real per-tool source rather than
+  // the shared category template. Google requires FAQPage markup to be unique
+  // to the page; emitting the four name-swapped fallback Q&As as FAQPage on
+  // every templated tool is a structured-data policy risk across ~1,900 URLs.
+  // The fallback prose still renders for readers — only the schema is gated.
+  const hasCuratedFaqs = Boolean(central.faqs?.length || override?.faqs?.length);
+  const hasCuratedSteps = Boolean(
+    central.steps?.length || override?.steps?.length,
+  );
+
   return {
     name,
     h1: central.h1 || name,
@@ -161,6 +171,8 @@ export function buildToolSeoContent(slug, tool = {}) {
     summary,
     intro,
     metaDescription: summary,
+    hasCuratedFaqs,
+    hasCuratedSteps,
     useCases: central.useCases?.length ? central.useCases : override?.useCases || [],
     examples,
     // Per-tool "How to use" steps when available (admin override > hand/AI

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getAuth } from "firebase/auth";
 import {
   ArrowRight,
   BarChart3,
@@ -22,7 +21,9 @@ import {
   UsersRound,
   Wrench,
 } from "lucide-react";
+import { DataState, EmptyState, PageHeader, SectionCard, StatGrid } from "@/ansets";
 import { useAuth } from "@/context/AuthContext";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import { PROJECTS } from "@/projects";
 import { getProjectModuleRoute } from "@/config/adminRoutes";
 import { hasProjectAccess } from "@/lib/permissionUtils";
@@ -68,6 +69,27 @@ const QUICK_ACTIONS = [
   { label: "Support", href: "/support", icon: Headset },
 ];
 
+const CAPABILITY_CARDS = [
+  {
+    title: "Project Isolation",
+    icon: CheckCircle2,
+    iconClass: "text-[var(--success)]",
+    body: "Opening LeadTree, CareerBook, AltFtool, or another project loads only that project modules and data.",
+  },
+  {
+    title: "RBAC Controlled",
+    icon: ShieldCheck,
+    iconClass: "text-[var(--primary)]",
+    body: "Super admins can manage access centrally while project admins stay inside assigned projects.",
+  },
+  {
+    title: "Operational Flow",
+    icon: Clock3,
+    iconClass: "text-[var(--warning)]",
+    body: "Use Admin Management, Audit Logs, Security, and Support from the same console sidebar.",
+  },
+];
+
 function ProjectLogo({ project, Icon, accent }) {
   const logoSrc = typeof project.logo === "string" ? project.logo : project.logo?.src;
 
@@ -82,12 +104,17 @@ function ProjectLogo({ project, Icon, accent }) {
       {logoSrc ? (
         <img src={logoSrc} alt="" className="h-7 w-7 object-contain" />
       ) : (
-        <Icon className="h-6 w-6" strokeWidth={2} />
+        <Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
       )}
     </span>
   );
 }
 
+/**
+ * Stays local: the whole tile is a single <Link>, which SectionCard (a
+ * <section>) cannot express without nesting interactive content inside a
+ * non-interactive shell. Radius/border/shadow are matched to SectionCard.
+ */
 function ProjectCard({ project, href, accessible, projectSummary }) {
   const meta = PROJECT_META[project.id] || {};
   const Icon = meta.icon || LayoutDashboard;
@@ -96,28 +123,37 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
   const status = projectSummary?.status || "active";
   const moduleCount = projectSummary?.moduleCount || modules.length;
   const description = projectSummary?.description || meta.description || `Manage ${project.name} modules and admin content.`;
+  const live = accessible && status !== "inactive";
 
   return (
     <Link
       href={accessible ? href : "/access-denied"}
-      className="group flex min-h-[220px] flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_45%,var(--border))] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
+      className="group flex min-h-[220px] flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_45%,var(--border))] hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
     >
       <div className="flex items-start justify-between gap-4">
         <ProjectLogo project={project} Icon={Icon} accent={accent} />
+        {/* Label text is --foreground, not the status hue: --success at 12px
+            semibold on --success-soft is 3.1:1 and fails AA. The dot keeps the
+            colour, and a dot only needs 3:1. */}
         <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
-            accessible && status !== "inactive"
-              ? "bg-[var(--success-soft)] text-[var(--success)]"
-              : "bg-[var(--surface-soft)] text-[var(--muted)]"
+          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold text-[var(--foreground)] ${
+            live ? "bg-[var(--success-soft)]" : "bg-[var(--surface-soft)]"
           }`}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-current" />
+          <span
+            className={`h-1.5 w-1.5 rounded-full ${
+              live ? "bg-[var(--success)]" : "bg-[var(--muted)]"
+            }`}
+            aria-hidden="true"
+          />
           {accessible ? status.charAt(0).toUpperCase() + status.slice(1) : "No Access"}
         </span>
       </div>
 
       <div className="mt-5 min-w-0 flex-1">
-        <h2 className="text-lg font-black tracking-tight text-[var(--foreground)]">{project.projectName}</h2>
+        <h3 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
+          {project.projectName}
+        </h3>
         <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted)]">
           {description}
         </p>
@@ -125,16 +161,26 @@ function ProjectCard({ project, href, accessible, projectSummary }) {
 
       <div className="mt-5 grid grid-cols-2 gap-3 border-t border-[var(--border)] pt-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Modules</p>
-          <p className="mt-1 text-xl font-black text-[var(--foreground)]">{project.moduleCount}</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Modules</p>
+          <p className="mt-1 text-xl font-semibold tabular-nums text-[var(--foreground)]">
+            {project.moduleCount ?? moduleCount}
+          </p>
         </div>
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Open</p>
-          <p className="mt-1 inline-flex items-center gap-1 text-sm font-bold" style={{ color: accent }}>
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Open</p>
+          {/* Uses --foreground, not the project `accent`: the raw status/brand
+              hues fail AA (1.81:1 - 4.23:1) as 14px bold text on --surface.
+              The accent stays on the ProjectLogo border/icon, which is
+              non-text and only needs 3:1. */}
+          <p className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-[var(--foreground)]">
             {/* The whole card is already a <Link> to `href`; a nested <Link>
                 here produced invalid <a>-in-<a> markup and made clicks land on
                 the wrong target intermittently. Render as plain text instead. */}
-            Admin Panel <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+            Admin Panel
+            <ArrowRight
+              className="h-4 w-4 transition group-hover:translate-x-0.5 motion-reduce:transition-none"
+              aria-hidden="true"
+            />
           </p>
         </div>
       </div>
@@ -172,7 +218,7 @@ export default function SuperAdminDashboardPage() {
     if (!silent) setLoadingSummary(true);
     setSummaryError("");
     try {
-      const token = await getAuth().currentUser?.getIdToken();
+      const token = await getAdminIdToken();
       if (!token) return;
       const response = await fetch("/api/super-admin/summary", {
         headers: { Authorization: `Bearer ${token}` },
@@ -200,72 +246,89 @@ export default function SuperAdminDashboardPage() {
   const displayName = adminData?.fullName || adminData?.name || user?.displayName || "Super Admin";
   const email = adminData?.email || user?.email || "";
 
+  const summaryProjects = summary?.projects || [];
+  // The registry fallback keeps the console usable when the summary API fails,
+  // so "we have nothing to show" is narrower than "the request failed".
+  const hasProjects = summaryProjects.length > 0 || activeProjects.length > 0;
+
+  const statItems = [
+    { key: "projects", label: "Projects", value: totalProjects },
+    { key: "modules", label: "Modules", value: totalModules },
+    { key: "admins", label: "Admins", value: totalAdmins, tone: "success" },
+    {
+      key: "pending",
+      label: "Pending Requests",
+      value: pendingRequests,
+      tone: pendingRequests > 0 ? "warning" : "default",
+    },
+    { key: "roles", label: "Roles", value: counts.roles || 0 },
+    { key: "auditLogs", label: "Audit Logs", value: counts.auditLogs || 0 },
+    { key: "securityEvents", label: "Security Events", value: counts.securityEvents || 0 },
+  ];
+
   return (
     <div className="min-h-full bg-[var(--background)] px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <section className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
-          <div className="grid gap-6 p-6 lg:grid-cols-[1fr_auto] lg:p-8">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--primary)_30%,var(--border))] bg-[color-mix(in_srgb,var(--primary)_8%,var(--surface))] px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-[var(--primary)]">
-                <ShieldPlus className="h-4 w-4" />
-                Central Super Admin Console
-              </div>
-              <h1 className="mt-4 text-3xl font-black tracking-tight text-[var(--foreground)] sm:text-4xl">
-                Manage every project from one dashboard
-              </h1>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)] sm:text-base">
-                Select a project to open its dedicated admin panel. Each panel keeps its own modules, data,
-                permissions, and CRUD screens separated from the others.
-              </p>
-              <div className="mt-5 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => loadSummary(true)}
-                  disabled={loadingSummary}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] disabled:opacity-60"
-                >
-                  <RefreshCw className={`h-4 w-4 ${loadingSummary ? "animate-spin" : ""}`} />
-                  Refresh Data
-                </button>
-                <span className="text-xs font-semibold text-[var(--muted)]">
-                  Source: {summary?.root || "super_admin_dashboard/main"}
-                </span>
-                {summaryError ? (
-                  <span className="rounded-full bg-[var(--danger-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--danger)]">
-                    {summaryError}
-                  </span>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="grid min-w-[280px] gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
-              <div className="flex items-center gap-3">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)]">
-                  <LayoutDashboard className="h-5 w-5" />
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-black text-[var(--foreground)]">{displayName}</p>
-                  <p className="truncate text-xs text-[var(--muted)]">{email}</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-2 pt-2">
-                <div className="rounded-lg bg-[var(--surface)] p-3">
-                  <p className="text-xl font-black text-[var(--foreground)]">{totalProjects}</p>
-                  <p className="text-[11px] font-semibold text-[var(--muted)]">Projects</p>
-                </div>
-                <div className="rounded-lg bg-[var(--surface)] p-3">
-                  <p className="text-xl font-black text-[var(--foreground)]">{totalModules}</p>
-                  <p className="text-[11px] font-semibold text-[var(--muted)]">Modules</p>
-                </div>
-                <div className="rounded-lg bg-[var(--surface)] p-3">
-                  <p className="text-xl font-black text-[var(--success)]">{totalAdmins}</p>
-                  <p className="text-[11px] font-semibold text-[var(--muted)]">Admins</p>
-                </div>
-              </div>
-            </div>
+      {/* PageHeader owns its own bottom margin; only the body below it is
+          spaced, so the gap under the title stays the console standard. */}
+      <div className="mx-auto max-w-7xl">
+        <PageHeader
+          eyebrow="Central Super Admin Console"
+          icon={ShieldPlus}
+          title="Manage every project from one dashboard"
+          description="Select a project to open its dedicated admin panel. Each panel keeps its own modules, data, permissions, and CRUD screens separated from the others."
+          actions={
+            <button
+              type="button"
+              onClick={() => loadSummary(true)}
+              disabled={loadingSummary}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+            >
+              <RefreshCw
+                className={`h-4 w-4 ${loadingSummary ? "animate-spin motion-reduce:animate-none" : ""}`}
+                aria-hidden="true"
+              />
+              Refresh Data
+            </button>
+          }
+        >
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-[var(--muted)]">
+            <span>
+              Signed in as{" "}
+              <span className="font-semibold text-[var(--foreground)]">{displayName}</span>
+              {email ? ` · ${email}` : ""}
+            </span>
+            <span>Source: {summary?.root || "super_admin_dashboard/main"}</span>
           </div>
+        </PageHeader>
 
-          <div className="border-t border-[var(--border)] bg-[var(--surface-soft)] px-6 py-4 lg:px-8">
+        <div className="space-y-6">
+          {/* A failed summary used to appear as a small pill with no way to retry,
+              and its message doubled as the "no projects" copy. Now it is a real
+              alert whenever there is still fallback content behind it, and a full
+              ErrorState (below) when there is nothing to fall back to. */}
+          {summaryError && hasProjects ? (
+            <div
+              role="alert"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--danger)]/40 bg-[var(--danger-soft)] px-4 py-3 text-sm text-[var(--danger-text)]"
+            >
+              <span>{summaryError} Showing the projects this console already knows about.</span>
+              <button
+                type="button"
+                onClick={() => loadSummary()}
+                className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+              >
+                <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                Try again
+              </button>
+            </div>
+          ) : null}
+
+          <StatGrid items={statItems} columns={4} />
+
+          <SectionCard
+            title="Quick actions"
+            description="Jump straight to the central controls that sit outside a single project."
+          >
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {QUICK_ACTIONS.map((action) => {
                 const Icon = action.icon;
@@ -273,156 +336,111 @@ export default function SuperAdminDashboardPage() {
                   <Link
                     key={action.href}
                     href={action.href}
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" aria-hidden="true" />
                     {action.label}
                   </Link>
                 );
               })}
             </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                { label: "Roles", value: counts.roles || 0 },
-                { label: "Pending Requests", value: pendingRequests },
-                { label: "Audit Logs", value: counts.auditLogs || 0 },
-                { label: "Security Events", value: counts.securityEvents || 0 },
-              ].map((item) => (
-                <div key={item.label} className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-3">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">{item.label}</p>
-                  <p className="mt-1 text-xl font-black text-[var(--foreground)]">{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          </SectionCard>
 
-        <section>
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 className="text-xl font-black tracking-tight text-[var(--foreground)]">Projects</h2>
-              <p className="mt-1 text-sm text-[var(--muted)]">
-                Open the correct admin panel based on the selected project.
-              </p>
-            </div>
-            <Link
-              href="/analytics"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+          <SectionCard
+            title="Projects"
+            description="Open the correct admin panel based on the selected project."
+            actions={
+              <Link
+                href="/analytics"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+              >
+                <Grid2X2 className="h-4 w-4" aria-hidden="true" />
+                All Projects
+              </Link>
+            }
+          >
+            <DataState
+              loading={loadingSummary && !summaryProjects.length}
+              error={hasProjects ? null : summaryError}
+              onRetry={() => loadSummary()}
+              isEmpty={!hasProjects}
+              loadingVariant="cards"
+              rows={activeProjects.length || 3}
+              empty={
+                <EmptyState
+                  icon={LayoutDashboard}
+                  title="No projects available"
+                  description="You do not have access to any project yet."
+                />
+              }
             >
-              <Grid2X2 className="h-4 w-4" />
-              All Projects
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {loadingSummary && !summary?.projects?.length ? (
-              Array.from({ length: activeProjects.length || 3 }).map((_, index) => (
-                <div
-                  key={`project-skeleton-${index}`}
-                  className="min-h-[220px] animate-pulse rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm"
-                  aria-hidden="true"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="h-12 w-12 rounded-xl bg-[var(--surface-soft)]" />
-                    <span className="h-6 w-20 rounded-full bg-[var(--surface-soft)]" />
-                  </div>
-                  <div className="mt-5 space-y-2">
-                    <div className="h-5 w-1/2 rounded bg-[var(--surface-soft)]" />
-                    <div className="h-4 w-full rounded bg-[var(--surface-soft)]" />
-                    <div className="h-4 w-2/3 rounded bg-[var(--surface-soft)]" />
-                  </div>
-                  <div className="mt-8 h-10 rounded bg-[var(--surface-soft)]" />
-                </div>
-              ))
-            ) : summary?.projects?.length ? (
-              summary.projects.map((summaryProject) => {
-                // The summary API returns { projectId, projectName, adminRoute, ... }
-                // (NOT { id, modules }). Merge it with the local project registry so
-                // the card has both the registry meta (id, modules, logo, name) and
-                // the server-computed route. Reading project.id / project.modules
-                // straight off the API object left them undefined, which made the
-                // href fall through to `/undefined`.
-                const projectId = summaryProject.projectId;
-                const registry = PROJECTS[projectId];
-                const firstModuleKey = Object.keys(registry?.modules || {})[0];
-                const href =
-                  summaryProject.adminRoute ||
-                  (registry && firstModuleKey
-                    ? getProjectModuleRoute(projectId, firstModuleKey)
-                    : `/${projectId}`);
-                const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId });
-                return (
-                  <ProjectCard
-                    key={projectId}
-                    project={{ ...registry, ...summaryProject, id: projectId }}
-                    href={href}
-                    accessible={accessible}
-                    projectSummary={summaryProjectsById.get(projectId)}
-                  />
-                );
-              })
-            ) : activeProjects.length ? (
-              // Summary failed or came back empty — fall back to the local
-              // project registry so the console stays usable.
-              activeProjects.map((project) => {
-                const firstModuleKey = Object.keys(project.modules || {})[0];
-                const href = firstModuleKey
-                  ? getProjectModuleRoute(project.id, firstModuleKey)
-                  : `/${project.id}`;
-                return (
-                  <ProjectCard
-                    key={project.id}
-                    project={{
-                      ...project,
-                      projectName: project.projectName || project.name,
-                      moduleCount: Object.keys(project.modules || {}).length,
-                    }}
-                    href={href}
-                    accessible
-                    projectSummary={summaryProjectsById.get(project.id)}
-                  />
-                );
-              })
-            ) : (
-              <div className="col-span-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center">
-                <p className="text-sm font-bold text-[var(--foreground)]">No projects available</p>
-                <p className="mt-1 text-sm text-[var(--muted)]">
-                  {summaryError || "You do not have access to any project yet."}
-                </p>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {summaryProjects.length
+                  ? summaryProjects.map((summaryProject) => {
+                      // The summary API returns { projectId, projectName, adminRoute, ... }
+                      // (NOT { id, modules }). Merge it with the local project registry so
+                      // the card has both the registry meta (id, modules, logo, name) and
+                      // the server-computed route. Reading project.id / project.modules
+                      // straight off the API object left them undefined, which made the
+                      // href fall through to `/undefined`.
+                      const projectId = summaryProject.projectId;
+                      const registry = PROJECTS[projectId];
+                      const firstModuleKey = Object.keys(registry?.modules || {})[0];
+                      const href =
+                        summaryProject.adminRoute ||
+                        (registry && firstModuleKey
+                          ? getProjectModuleRoute(projectId, firstModuleKey)
+                          : `/${projectId}`);
+                      const accessible = isSuperAdmin || hasProjectAccess({ adminData, projectId });
+                      return (
+                        <ProjectCard
+                          key={projectId}
+                          project={{ ...registry, ...summaryProject, id: projectId }}
+                          href={href}
+                          accessible={accessible}
+                          projectSummary={summaryProjectsById.get(projectId)}
+                        />
+                      );
+                    })
+                  : // Summary failed or came back empty — fall back to the local
+                    // project registry so the console stays usable.
+                    activeProjects.map((project) => {
+                      const firstModuleKey = Object.keys(project.modules || {})[0];
+                      const href = firstModuleKey
+                        ? getProjectModuleRoute(project.id, firstModuleKey)
+                        : `/${project.id}`;
+                      return (
+                        <ProjectCard
+                          key={project.id}
+                          project={{
+                            ...project,
+                            projectName: project.projectName || project.name,
+                            moduleCount: Object.keys(project.modules || {}).length,
+                          }}
+                          href={href}
+                          accessible
+                          projectSummary={summaryProjectsById.get(project.id)}
+                        />
+                      );
+                    })}
               </div>
-            )}
-          </div>
-        </section>
+            </DataState>
+          </SectionCard>
 
-        <section className="grid gap-4 lg:grid-cols-3">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <CheckCircle2 className="h-6 w-6 text-[var(--success)]" />
-            <h3 className="mt-3 text-sm font-black uppercase tracking-[0.08em] text-[var(--foreground)]">
-              Project Isolation
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Opening LeadTree, CareerBook, AltFtool, or another project loads only that project modules and data.
-            </p>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {CAPABILITY_CARDS.map((card) => {
+              const Icon = card.icon;
+              return (
+                <SectionCard key={card.title} title={card.title}>
+                  <div className="flex items-start gap-3">
+                    <Icon className={`h-6 w-6 shrink-0 ${card.iconClass}`} aria-hidden="true" />
+                    <p className="text-sm leading-6 text-[var(--muted)]">{card.body}</p>
+                  </div>
+                </SectionCard>
+              );
+            })}
           </div>
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <ShieldCheck className="h-6 w-6 text-[var(--primary)]" />
-            <h3 className="mt-3 text-sm font-black uppercase tracking-[0.08em] text-[var(--foreground)]">
-              RBAC Controlled
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Super admins can manage access centrally while project admins stay inside assigned projects.
-            </p>
-          </div>
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <Clock3 className="h-6 w-6 text-[var(--warning)]" />
-            <h3 className="mt-3 text-sm font-black uppercase tracking-[0.08em] text-[var(--foreground)]">
-              Operational Flow
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              Use Admin Management, Audit Logs, Security, and Support from the same console sidebar.
-            </p>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
   );

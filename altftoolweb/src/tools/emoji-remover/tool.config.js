@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "emoji-remover",
-  "slug": "emoji-remover",
-  "name": "Emoji Remover",
-  "category": [
-    "Text",
-    "Content Creation"
-  ],
-  "description": "Remove emoji and symbol noise from text, comments, and captions.",
-  "icon": "wand2",
-  "iconColor": "text-pink-600"
+  name: "Emoji Remover",
+  category: "Text & Writing",
+  description:
+    "Remove emoji, flags, skin-tone modifiers and symbol noise from text, comments and captions without leaving broken fragments behind.",
+  icon: "wand-2",
+  iconColor: "text-pink-600",
 };
 
 export default toolConfig;

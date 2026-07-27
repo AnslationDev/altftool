@@ -1,0 +1,50 @@
+@theme inline {
+  --font-sans: var(--anslation-ds-font-sans);
+  --font-display: var(--anslation-ds-font-sans);
+  --font-mono: var(--anslation-ds-font-mono);
+
+  --color-background: var(--anslation-ds-page);
+  --color-foreground: var(--anslation-ds-text);
+  --color-canvas: var(--anslation-ds-canvas);
+  --color-surface: var(--anslation-ds-surface);
+  --color-surface-soft: var(--anslation-ds-soft);
+  --color-card: var(--anslation-ds-surface);
+  --color-card-foreground: var(--anslation-ds-text);
+  --color-muted: var(--anslation-ds-soft);
+  --color-muted-foreground: var(--anslation-ds-muted);
+  --color-border: var(--anslation-ds-border);
+  --color-border-strong: var(--anslation-ds-border-strong);
+
+  --color-primary: var(--anslation-ds-primary);
+  --color-primary-foreground: var(--anslation-ds-primary-foreground);
+  --color-primary-soft: var(--anslation-ds-primary-soft);
+  --color-primary-hover: var(--anslation-ds-primary-hover);
+  --color-primary-active: var(--anslation-ds-primary-active);
+  --color-primary-text: var(--anslation-ds-primary-text);
+  --color-secondary: var(--anslation-ds-secondary);
+  --color-secondary-foreground: var(--anslation-ds-secondary-foreground);
+  --color-secondary-soft: var(--anslation-ds-secondary-soft);
+  --color-accent: var(--anslation-ds-accent);
+  --color-accent-soft: var(--anslation-ds-accent-soft);
+
+  --color-destructive: var(--anslation-ds-danger);
+  --color-destructive-foreground: var(--anslation-ds-status-foreground);
+  --color-danger: var(--anslation-ds-danger);
+  --color-danger-soft: var(--anslation-ds-danger-soft);
+  --color-success: var(--anslation-ds-success);
+  --color-success-soft: var(--anslation-ds-success-soft);
+  --color-warning: var(--anslation-ds-warning);
+  --color-warning-soft: var(--anslation-ds-warning-soft);
+  --color-info: var(--anslation-ds-info);
+  --color-info-soft: var(--anslation-ds-info-soft);
+
+  --radius-sm: var(--anslation-ds-radius-sm);
+  --radius-md: var(--anslation-ds-radius);
+  --radius-lg: var(--anslation-ds-radius-lg);
+  --radius-xl: var(--anslation-ds-radius-xl);
+  --radius-pill: var(--anslation-ds-radius-pill);
+
+  --shadow-sm: var(--anslation-ds-shadow-sm);
+  --shadow-md: var(--anslation-ds-shadow-md);
+  --shadow-lg: var(--anslation-ds-shadow-lg);
+}

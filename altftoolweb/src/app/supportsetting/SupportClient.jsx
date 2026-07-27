@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Skeleton, SkeletonText } from "@altftool/ui";
 
@@ -9,20 +10,33 @@ import SettingsSidebar from "./components/SettingsSidebar";
 import { UTILITY_TITLES } from "./components/UtilityPage";
 import { ToastProvider } from "./components/ToastProvider";
 import { usePlatform } from "./data/platformDetect";
-import { getSettingsForPlatform, getFrequentlyUsed, getRecommended } from "./data/settingData";
+import { getSettingsForPlatform, getFrequentlyUsed, getRecommended, parseCategoryActiveId } from "./data/settingData";
 import { usePagePreferences, useRecentlyUsed, useBookmarks } from "./data/preferences";
 import { aiTools } from "./data/aiTools";
-import { ALL_DEVICE_SETTINGS } from "./data/devices";
+import { ALL_DEVICE_SETTINGS, getSettingsForDevice } from "./data/devices";
+import { getDeviceById } from "./data/deviceTaxonomy";
+import { getCategoryById } from "./data/categories";
+import { activeIdToPath } from "./data/routes";
 import { useAds } from "@/ads/AdsProvider";
 import AdCard from "@/ads/layouts/settingsupport/AdCardSupport";
 import "./supportsetting.css";
 
-export default function SettingSupportPage() {
+/**
+ * `initialActiveId` / `initialPlatformOverride` are only ever passed by the
+ * [...slug] route (see data/routes.js for the URL scheme) — the plain
+ * /supportsetting/page.jsx renders this with neither, which is identical to
+ * the pre-routing behavior (start on the home page). Everything below that
+ * syncs `activeId` back out to the URL as the visitor navigates is additive
+ * — no existing prop, handler, or piece of local state changes shape.
+ */
+export default function SettingSupportPage({ initialActiveId = null, initialPlatformOverride = null }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState(initialActiveId);
   const [searchQuery, setSearchQuery] = useState("");
   const [adsSettled, setAdsSettled] = useState(false);
   const searchInputRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const platformState = usePlatform();
   const { prefs, togglePref, updatePref, resetPrefs, ready: prefsReady } = usePagePreferences();
@@ -94,17 +108,102 @@ export default function SettingSupportPage() {
       : null;
   const activeAiTool = isAiTool ? aiTools.find((t) => t.id === activeId) : null;
 
+  // Which device (if any) the visitor is currently browsing — either its
+  // landing page (activeId === "device-{id}") or one of its own guides
+  // (activeDeviceSetting.platform holds the device id, same convention the
+  // OS catalog uses). Drives the sidebar: while this is set, the nav shows
+  // that device's own settings list instead of the current OS platform's,
+  // exactly the way selecting an OS already drives the nav — so opening a
+  // device page is never a dead end with no way to browse its other guides.
+  const activeDeviceId = isDeviceLanding
+    ? activeId.slice("device-".length)
+    : activeDeviceSetting
+      ? activeDeviceSetting.platform
+      : null;
+  const deviceSidebarContext = useMemo(
+    () => (activeDeviceId ? getDeviceById(activeDeviceId) : null),
+    [activeDeviceId],
+  );
+  const deviceSidebarSettings = useMemo(
+    () => (activeDeviceId ? getSettingsForDevice(activeDeviceId) : null),
+    [activeDeviceId],
+  );
+
   // If the platform preview changes and the currently open OS setting
   // doesn't exist on the new platform, fall back to the landing page
   // instead of showing a blank/mismatched detail view. Utility pages, AI
-  // Tools, device landing pages, and device guides aren't tied to the
-  // current OS platform, so they're exempt from this check.
+  // Tools, device landing pages, device guides, and category hub pages
+  // ("cat-{platform}-{categoryId}" — see data/settingData.js) aren't
+  // individual settings that would ever appear in `allSettings` /
+  // `ALL_DEVICE_SETTINGS`, so they're exempt from this check the same way
+  // the other prefixed ids already are; without this, opening a category
+  // hub would immediately get reset back to the home page.
+  //
+  // Gated on platformState.ready: before real platform detection settles,
+  // `allSettings` is a provisional "windows" guess (see usePlatform()), so
+  // an `initialActiveId` deep-linked into macOS/Android/iOS would otherwise
+  // look "not found" on that very first pass and get wiped back to home
+  // before the platform-override effect below ever gets a chance to apply.
   useEffect(() => {
-    if (!activeId || activeId.startsWith("util-") || activeId.startsWith("ai-") || activeId.startsWith("device-")) return;
+    if (!platformState.ready) return;
+    if (
+      !activeId ||
+      activeId.startsWith("util-") ||
+      activeId.startsWith("ai-") ||
+      activeId.startsWith("device-") ||
+      activeId.startsWith("cat-")
+    )
+      return;
     if (allSettings.some((setting) => setting.id === activeId)) return;
     if (ALL_DEVICE_SETTINGS.some((setting) => setting.id === activeId)) return;
     setActiveId(null);
-  }, [allSettings, activeId]);
+  }, [allSettings, activeId, platformState.ready]);
+
+  // Applies the platform a deep link (e.g. /supportsetting/macos/macos-
+  // software-update) asked to preview, exactly once, as soon as real
+  // platform detection is ready. Only runs once per mount — every other
+  // way `activeId` changes to a different-platform OS setting (search's
+  // "other platforms" results, related-setting links) already carries its
+  // own platform switch alongside it, so this isn't needed past the
+  // initial load.
+  const appliedInitialOverride = useRef(false);
+  useEffect(() => {
+    if (appliedInitialOverride.current || !platformState.ready) return;
+    appliedInitialOverride.current = true;
+    if (initialPlatformOverride && initialPlatformOverride !== platformState.platform) {
+      platformState.setOverride(initialPlatformOverride);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [platformState.ready]);
+
+  // Keeps the URL in sync with whatever's open, in both directions:
+  //  - activeId changes (any click inside the app) -> push the matching
+  //    URL, so every setting/device/help/AI-tool page is a real,
+  //    shareable, refresh-safe link (see data/routes.js for the scheme).
+  //  - the URL changes from outside this component's own pushes — browser
+  //    back/forward, or a Link landing directly on a new slug — -> the
+  //    [...slug] route re-renders with a new `initialActiveId`, which this
+  //    syncs back into local state.
+  // Comparing the target path against the current `pathname` before
+  // pushing is what keeps these two directions from fighting each other:
+  // a state change that already matches the current URL (e.g. right after
+  // syncing state *from* a back/forward navigation) is a no-op here rather
+  // than an extra, redundant history entry.
+  const lastSyncedInitialId = useRef(initialActiveId);
+  useEffect(() => {
+    if (initialActiveId !== lastSyncedInitialId.current) {
+      lastSyncedInitialId.current = initialActiveId;
+      setActiveId(initialActiveId);
+    }
+  }, [initialActiveId]);
+
+  useEffect(() => {
+    const target = activeIdToPath(activeId);
+    if (target !== pathname) {
+      router.push(target, { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeId]);
 
   // Jump to the top of the page on every navigation (opening a setting,
   // switching to another one via a "related" link, or heading back home) —
@@ -128,6 +227,10 @@ export default function SettingSupportPage() {
       title = `${activeOsSetting.title} — ${base}`;
     } else if (activeDeviceSetting) {
       title = `${activeDeviceSetting.title} — ${base}`;
+    } else {
+      const categoryRef = parseCategoryActiveId(activeId);
+      const category = categoryRef ? getCategoryById(categoryRef.categoryId) : null;
+      if (category) title = `${category.label} — ${base}`;
     }
     document.title = title;
   }, [activeId, activeAiTool, activeOsSetting, activeDeviceSetting]);
@@ -187,13 +290,15 @@ export default function SettingSupportPage() {
   const handleToggleSponsoredCollapse = () => togglePref("sponsoredCollapsed");
 
   const baseSidebarProps = {
-    settings: allSettings,
+    settings: deviceSidebarSettings || allSettings,
     activeId,
     onSelect: handleSelectSetting,
     searchQuery,
     onSearchChange: setSearchQuery,
     platformState,
     aiTools,
+    deviceContext: deviceSidebarContext,
+    onGoHome: handleGoHome,
   };
 
   // True whenever the sponsored rail isn't actually claiming its w-72 of
@@ -258,7 +363,6 @@ export default function SettingSupportPage() {
               <SettingsSidebar
                 {...baseSidebarProps}
                 onClose={handleCloseSidebar}
-                searchInputRef={searchInputRef}
               />
             </div>
           </div>
@@ -299,6 +403,7 @@ export default function SettingSupportPage() {
                 aiTools={aiTools}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
+                searchInputRef={searchInputRef}
                 prefs={prefs}
                 togglePref={togglePref}
                 updatePref={updatePref}

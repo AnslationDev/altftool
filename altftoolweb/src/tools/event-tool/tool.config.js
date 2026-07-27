@@ -1,9 +1,11 @@
-module.exports = {
-  id: "event-tool",
+const toolConfig = {
+  slug: "event-tool",
   name: "Event Planner",
-  description: "Plan, organize, and manage your events efficiently.",
-  icon: "Calendar",
+  description:
+    "Turn a guest list into floor space, tables, staff, catering quantities and a costed budget with contingency.",
+  icon: "calendar",
+  iconColor: "text-teal-600",
   category: "Productivity",
-  isNew: true,
-  isPremium: false,
 };
+
+export default toolConfig;

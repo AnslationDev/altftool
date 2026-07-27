@@ -1,13 +1,13 @@
-export const config = {
-  id: "color-blindness-simulator",
+const toolConfig = {
   slug: "color-blindness-simulator",
   name: "Color Blindness Simulator",
-  description: "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time.",
-  category: ["Accessibility", "Design", "Image"],
+  category: ["Design & Color", "Image & Photo"],
+  description:
+    "Simulate protanopia, deuteranopia, tritanopia and achromatopsia on your own images in real time, with an adjustable severity slider and side-by-side comparison.",
   icon: "palette",
   iconColor: "text-cyan-600",
   premium: false,
-  status: "active"
+  status: "active",
 };
 
-export default config;
+export default toolConfig;

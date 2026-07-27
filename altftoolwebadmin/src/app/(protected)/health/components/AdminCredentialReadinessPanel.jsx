@@ -36,7 +36,21 @@ export default function AdminCredentialReadinessPanel({ firebaseAdmin }) {
     >
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex items-start gap-3">
-          <div className={`grid h-9 w-9 place-items-center rounded-md ${isReady ? "bg-emerald-700" : "bg-amber-700"} text-white`}>
+          {/*
+            The raw --success/--warning tokens are tuned as accents, not as tile
+            fills behind --anslation-ds-status-foreground: in light theme that
+            foreground is #ffffff, and white on #f59e0b is only ~2.1:1. Mixing
+            the token 65% with black keeps the fill theme-aware while restoring
+            AA in BOTH themes — warning 4.8:1 light / 4.9:1 dark, success 6.7:1
+            light / 4.7:1 dark against the per-theme status foreground.
+          */}
+          <div
+            className={`grid h-9 w-9 place-items-center rounded-md ${
+              isReady
+                ? "bg-[color-mix(in_srgb,var(--success)_65%,black)]"
+                : "bg-[color-mix(in_srgb,var(--warning)_65%,black)]"
+            } text-[var(--anslation-ds-status-foreground)]`}
+          >
             <KeyRound className="h-4 w-4" />
           </div>
           <div>

@@ -10,11 +10,15 @@ import React from 'react';
  * @param {string} [props.suffix] - Suffix text
  * @param {string} [props.className] - Additional CSS classes
  */
-export const Input = React.forwardRef(({ label, error, icon, prefix, suffix, className = '', ...props }, ref) => {
+export const Input = React.forwardRef(({ label, error, icon, prefix, suffix, className = '', id, ...props }, ref) => {
+  // Generated once per input so every label is programmatically tied to its
+  // field, even when the caller does not pass an explicit id.
+  const generatedId = React.useId();
+  const inputId = id || generatedId;
   return (
     <div className="relative w-full">
       {label && (
-        <label className="block text-xs font-black text-slate-700 dark:text-(--secondary) mb-2 uppercase tracking-widest">
+        <label htmlFor={inputId} className="block text-xs font-black text-slate-700 dark:text-(--secondary) mb-2 uppercase tracking-widest">
           {label}
         </label>
       )}
@@ -31,6 +35,7 @@ export const Input = React.forwardRef(({ label, error, icon, prefix, suffix, cla
         )}
         <input
           ref={ref}
+          id={inputId}
           className={`
             w-full border rounded-2xl px-5 py-3.5 focus:ring-4 text-(--foreground) bg-white dark:bg-white/5
             transition-all duration-300

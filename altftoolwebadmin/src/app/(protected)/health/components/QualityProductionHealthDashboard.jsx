@@ -13,19 +13,29 @@ import {
   ListChecks,
   RefreshCw,
   Route,
-  Search,
   SearchCheck,
   ShieldCheck,
-  Wrench,
   XCircle,
 } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import {
+  DataState,
+  DataTable,
+  EmptyState,
+  ErrorState,
+  FilterBar,
+  PageHeader,
+  SectionCard,
+  StatGrid,
+} from "@/ansets";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
-const ROUTE_FILTERS = [
-  { key: "all", label: "All signals" },
-  { key: "issues", label: "Blocking" },
-  { key: "advisories", label: "Advisories" },
+const ROUTE_FILTER_OPTIONS = [
+  { value: "all", label: "All signals" },
+  { value: "issues", label: "Blocking" },
+  { value: "advisories", label: "Advisories" },
 ];
+
+const WATCHLIST_LIMIT = 20;
 
 function formatNumber(value) {
   return new Intl.NumberFormat("en-US").format(Number(value) || 0);
@@ -80,7 +90,9 @@ function statusTone(status) {
   ) {
     return {
       label: "Attention",
-      className: "border-danger bg-danger-soft text-danger",
+      // Badge copy is normal-size text, so it uses the text-safe danger token.
+      className:
+        "border-danger bg-danger-soft text-[var(--danger-text)]",
       icon: XCircle,
     };
   }
@@ -91,6 +103,10 @@ function statusTone(status) {
   };
 }
 
+/**
+ * Health-specific status pill. Kept local: the tone mapping below is derived
+ * from this API's status vocabulary, which no other screen shares.
+ */
 function StatusBadge({ status, label }) {
   const tone = statusTone(status);
   const Icon = tone.icon;
@@ -98,79 +114,14 @@ function StatusBadge({ status, label }) {
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${tone.className}`}
     >
-      <Icon className="h-3.5 w-3.5" />
+      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
       {label || tone.label}
     </span>
   );
 }
 
-function MetricCard({ icon: Icon, label, value, detail, tone = "primary" }) {
-  const iconTone =
-    tone === "danger"
-      ? "bg-danger-soft text-danger"
-      : tone === "warning"
-        ? "bg-warning-soft text-warning"
-        : tone === "success"
-          ? "bg-success-soft text-success"
-          : "bg-primary-soft text-primary";
-
-  return (
-    <article className="rounded-xl border border-border bg-surface p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            {label}
-          </p>
-          <p className="mt-2 text-2xl font-bold text-foreground">{value}</p>
-        </div>
-        <span className={`grid h-9 w-9 place-items-center rounded-lg ${iconTone}`}>
-          <Icon className="h-4 w-4" />
-        </span>
-      </div>
-      <p className="mt-2 text-xs leading-5 text-muted">{detail}</p>
-    </article>
-  );
-}
-
-function SectionHeader({ icon: Icon, eyebrow, title, description, action }) {
-  return (
-    <div className="flex flex-col gap-3 border-b border-border px-4 py-4 sm:flex-row sm:items-start sm:justify-between sm:px-5">
-      <div className="flex items-start gap-3">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-primary-soft text-primary">
-          <Icon className="h-4 w-4" />
-        </span>
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            {eyebrow}
-          </p>
-          <h2 className="mt-1 text-lg font-bold text-foreground">{title}</h2>
-          {description ? (
-            <p className="mt-1 max-w-3xl text-sm leading-6 text-muted">
-              {description}
-            </p>
-          ) : null}
-        </div>
-      </div>
-      {action}
-    </div>
-  );
-}
-
-function LoadingState() {
-  return (
-    <div className="space-y-4" aria-label="Loading health dashboard">
-      <div className="h-40 animate-pulse rounded-xl border border-border bg-surface-soft" />
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }, (_, index) => (
-          <div
-            key={index}
-            className="h-32 animate-pulse rounded-xl border border-border bg-surface-soft"
-          />
-        ))}
-      </div>
-      <div className="h-80 animate-pulse rounded-xl border border-border bg-surface-soft" />
-    </div>
-  );
+function Muted({ children }) {
+  return <span className="text-[var(--muted)]">{children}</span>;
 }
 
 function RouteQualitySection({ routeQuality }) {
@@ -178,6 +129,7 @@ function RouteQualitySection({ routeQuality }) {
   const [filter, setFilter] = useState("all");
   const groups = routeQuality?.groups || [];
   const watchlist = routeQuality?.watchlist || [];
+
   const filteredWatchlist = useMemo(() => {
     const term = query.trim().toLowerCase();
     return watchlist.filter((item) => {
@@ -197,151 +149,166 @@ function RouteQualitySection({ routeQuality }) {
     });
   }, [filter, query, watchlist]);
 
+  const shownWatchlist = filteredWatchlist.slice(0, WATCHLIST_LIMIT);
+
+  const groupColumns = [
+    {
+      key: "group",
+      header: "Surface",
+      render: (group) => (
+        <span className="font-semibold text-[var(--foreground)]">
+          {group.group}
+        </span>
+      ),
+    },
+    {
+      key: "score",
+      header: "Score",
+      render: (group) => (
+        <StatusBadge
+          status={
+            group.issues ? "attention" : group.advisories ? "watch" : "healthy"
+          }
+          label={`${formatNumber(group.score)}/100`}
+        />
+      ),
+    },
+    {
+      key: "routes",
+      header: "Routes",
+      render: (group) => <Muted>{formatNumber(group.routes)}</Muted>,
+    },
+    {
+      key: "indexPolicy",
+      header: "Index policy",
+      render: (group) => (
+        <Muted>
+          {formatNumber(group.indexable)} index ·{" "}
+          {formatNumber(group.noindex)} noindex
+        </Muted>
+      ),
+    },
+    {
+      key: "sitemapCoverage",
+      header: "Sitemap",
+      render: (group) => <Muted>{formatNumber(group.sitemapCoverage)}%</Muted>,
+    },
+    {
+      key: "signals",
+      header: "Signals",
+      render: (group) => (
+        <Muted>
+          {formatNumber(group.issues)} blocking ·{" "}
+          {formatNumber(group.advisories)} advisory
+        </Muted>
+      ),
+    },
+  ];
+
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <SectionHeader
+    <>
+      <SectionCard
         icon={Route}
-        eyebrow="Build-derived inventory"
         title="Route quality"
-        description={`${formatNumber(routeQuality?.totals?.routes)} rendered routes grouped by surface, metadata state, canonical coverage, and index policy.`}
-        action={
+        description={`Build-derived inventory · ${formatNumber(routeQuality?.totals?.routes)} rendered routes grouped by surface, metadata state, canonical coverage, and index policy.`}
+        actions={
           <StatusBadge
             status={routeQuality?.status}
             label={`${formatNumber(routeQuality?.score)}/100`}
           />
         }
-      />
-
-      <div className="grid gap-3 border-b border-border p-4 sm:grid-cols-2 xl:grid-cols-4 sm:p-5">
-        <MetricCard
-          icon={Route}
-          label="Rendered routes"
-          value={formatNumber(routeQuality?.totals?.routes)}
-          detail={`${formatNumber(routeQuality?.totals?.indexable)} indexable and ${formatNumber(routeQuality?.totals?.noindex)} noindex`}
+        bodyClassName="space-y-4"
+      >
+        <StatGrid
+          columns={4}
+          items={[
+            {
+              label: "Rendered routes",
+              value: formatNumber(routeQuality?.totals?.routes),
+              hint: `${formatNumber(routeQuality?.totals?.indexable)} indexable and ${formatNumber(routeQuality?.totals?.noindex)} noindex`,
+              icon: Route,
+            },
+            {
+              label: "Sitemap coverage",
+              value: `${formatNumber(routeQuality?.totals?.sitemapCoverage)}%`,
+              hint: `${formatNumber(routeQuality?.totals?.sitemapCovered)} canonical targets covered`,
+              icon: SearchCheck,
+              tone:
+                routeQuality?.totals?.sitemapCoverage === 100
+                  ? "success"
+                  : "warning",
+            },
+            {
+              label: "Index conflicts",
+              value: formatNumber(routeQuality?.totals?.indexConflicts),
+              hint: "Noindex routes that still appear in the XML sitemap",
+              icon: ShieldCheck,
+              tone: routeQuality?.totals?.indexConflicts ? "danger" : "success",
+            },
+            {
+              label: "Advisory routes",
+              value: formatNumber(routeQuality?.totals?.routesWithAdvisories),
+              hint: "Non-blocking title, description, or rendered H1 opportunities",
+              icon: FileSearch,
+              tone: routeQuality?.totals?.routesWithAdvisories
+                ? "warning"
+                : "success",
+            },
+          ]}
         />
-        <MetricCard
-          icon={SearchCheck}
-          label="Sitemap coverage"
-          value={`${formatNumber(routeQuality?.totals?.sitemapCoverage)}%`}
-          detail={`${formatNumber(routeQuality?.totals?.sitemapCovered)} canonical targets covered`}
-          tone={
-            routeQuality?.totals?.sitemapCoverage === 100
-              ? "success"
-              : "warning"
+
+        <DataTable
+          caption="Route quality by surface"
+          columns={groupColumns}
+          rows={groups}
+          getRowKey={(group) => group.group}
+          empty={
+            <EmptyState
+              icon={Route}
+              title="No route groups in this snapshot"
+              description="Run a live check to rebuild the rendered-route inventory."
+            />
           }
         />
-        <MetricCard
-          icon={ShieldCheck}
-          label="Index conflicts"
-          value={formatNumber(routeQuality?.totals?.indexConflicts)}
-          detail="Noindex routes that still appear in the XML sitemap"
-          tone={routeQuality?.totals?.indexConflicts ? "danger" : "success"}
-        />
-        <MetricCard
-          icon={FileSearch}
-          label="Advisory routes"
-          value={formatNumber(routeQuality?.totals?.routesWithAdvisories)}
-          detail="Non-blocking title, description, or rendered H1 opportunities"
-          tone={
-            routeQuality?.totals?.routesWithAdvisories ? "warning" : "success"
+      </SectionCard>
+
+      <SectionCard
+        title="Route watchlist"
+        description="Blocking index issues first, followed by metadata advisories."
+        bodyClassName="space-y-4"
+      >
+        <FilterBar
+          search={query}
+          onSearchChange={setQuery}
+          searchPlaceholder="Search route or issue"
+          filters={[
+            {
+              key: "signal",
+              label: "Filter route watchlist by signal",
+              value: filter,
+              onChange: setFilter,
+              options: ROUTE_FILTER_OPTIONS,
+            },
+          ]}
+          count={
+            filteredWatchlist.length > WATCHLIST_LIMIT
+              ? `Showing ${WATCHLIST_LIMIT} of ${formatNumber(filteredWatchlist.length)} routes`
+              : `${formatNumber(filteredWatchlist.length)} of ${formatNumber(watchlist.length)} routes`
           }
         />
-      </div>
 
-      <div className="overflow-x-auto border-b border-border">
-        <table className="min-w-full text-left text-sm">
-          <thead className="bg-surface-soft text-xs font-semibold uppercase tracking-wide text-muted">
-            <tr>
-              <th className="px-4 py-3 sm:px-5">Surface</th>
-              <th className="px-4 py-3">Score</th>
-              <th className="px-4 py-3">Routes</th>
-              <th className="px-4 py-3">Index policy</th>
-              <th className="px-4 py-3">Sitemap</th>
-              <th className="px-4 py-3">Signals</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {groups.map((group) => (
-              <tr key={group.group} className="hover:bg-surface-soft">
-                <td className="px-4 py-3 font-semibold text-foreground sm:px-5">
-                  {group.group}
-                </td>
-                <td className="px-4 py-3">
-                  <StatusBadge
-                    status={
-                      group.issues
-                        ? "attention"
-                        : group.advisories
-                          ? "watch"
-                          : "healthy"
-                    }
-                    label={`${formatNumber(group.score)}/100`}
-                  />
-                </td>
-                <td className="px-4 py-3 text-muted">
-                  {formatNumber(group.routes)}
-                </td>
-                <td className="px-4 py-3 text-muted">
-                  {formatNumber(group.indexable)} index ·{" "}
-                  {formatNumber(group.noindex)} noindex
-                </td>
-                <td className="px-4 py-3 text-muted">
-                  {formatNumber(group.sitemapCoverage)}%
-                </td>
-                <td className="px-4 py-3 text-muted">
-                  {formatNumber(group.issues)} blocking ·{" "}
-                  {formatNumber(group.advisories)} advisory
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="p-4 sm:p-5">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <h3 className="text-sm font-bold text-foreground">
-              Route watchlist
-            </h3>
-            <p className="mt-1 text-xs text-muted">
-              Blocking index issues first, followed by metadata advisories.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="flex rounded-lg border border-border bg-surface-soft p-1">
-              {ROUTE_FILTERS.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => setFilter(item.key)}
-                  aria-pressed={filter === item.key}
-                  className={`h-10 rounded-md px-3 text-xs font-semibold transition ${
-                    filter === item.key
-                      ? "bg-surface text-foreground shadow-sm"
-                      : "text-muted hover:text-foreground"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            <label className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                className="input h-10 w-full pl-9 sm:w-72"
-                placeholder="Search route or issue"
-                aria-label="Search route watchlist"
-              />
-            </label>
-          </div>
-        </div>
-
-        {filteredWatchlist.length ? (
-          <div className="mt-4 divide-y divide-border rounded-lg border border-border">
-            {filteredWatchlist.slice(0, 20).map((item) => {
+        <DataState
+          isEmpty={!shownWatchlist.length}
+          empty={
+            <EmptyState
+              icon={CheckCircle2}
+              title="No routes match this watchlist filter"
+              description="Clear the search box or switch back to all signals to see every watched route."
+            />
+          }
+        >
+          <div className="divide-y divide-border rounded-lg border border-border">
+            {shownWatchlist.map((item) => {
               const blocking = item.issues?.length > 0;
               return (
                 <div
@@ -354,14 +321,14 @@ function RouteQualitySection({ routeQuality }) {
                         status={blocking ? "attention" : "watch"}
                         label={blocking ? "Blocking" : "Advisory"}
                       />
-                      <span className="text-xs font-semibold text-muted">
+                      <span className="text-xs font-semibold text-[var(--muted)]">
                         {item.group} · {item.indexState}
                       </span>
                     </div>
-                    <p className="mt-2 break-all font-mono text-xs font-semibold text-foreground">
+                    <p className="mt-2 break-all font-mono text-xs font-semibold text-[var(--foreground)]">
                       {item.route}
                     </p>
-                    <p className="mt-1 text-xs leading-5 text-muted">
+                    <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
                       {[...(item.issues || []), ...(item.advisories || [])]
                         .slice(0, 3)
                         .join(" · ")}
@@ -372,156 +339,165 @@ function RouteQualitySection({ routeQuality }) {
                     className="btn btn-outline h-9 shrink-0 gap-2 px-3 text-xs"
                   >
                     Edit SEO
-                    <ExternalLink className="h-3.5 w-3.5" />
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   </Link>
                 </div>
               );
             })}
           </div>
-        ) : (
-          <div className="mt-4 flex items-center gap-3 rounded-lg border border-success bg-success-soft p-4 text-sm text-success">
-            <CheckCircle2 className="h-5 w-5 shrink-0" />
-            No routes match this watchlist filter.
-          </div>
-        )}
-      </div>
-    </section>
+        </DataState>
+      </SectionCard>
+    </>
   );
 }
 
 function ProductionMonitoringSection({ monitoring, onRefresh, refreshing }) {
   const probes = monitoring?.probes || [];
-  return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <SectionHeader
-        icon={Activity}
-        eyebrow="Synthetic production checks"
-        title="Critical route monitor"
-        description="On-demand, cache-aware probes validate response status, expected content, and latency without continuous polling cost."
-        action={
-          <button
-            type="button"
-            onClick={onRefresh}
-            disabled={refreshing}
-            className="btn btn-outline h-10 gap-2"
-            title="Run live production route probes"
-          >
-            <RefreshCw
-              className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
-            />
-            Run live checks
-          </button>
-        }
-      />
 
-      <div className="grid gap-3 border-b border-border p-4 sm:grid-cols-2 xl:grid-cols-4 sm:p-5">
-        <MetricCard
-          icon={CheckCircle2}
-          label="Passing"
-          value={`${formatNumber(monitoring?.totals?.passing)}/${formatNumber(monitoring?.totals?.probes)}`}
-          detail={`Checked ${formatDate(monitoring?.checkedAt)}`}
-          tone={
-            monitoring?.totals?.failing
+  const probeColumns = [
+    {
+      key: "label",
+      header: "Surface",
+      render: (probe) => (
+        <div>
+          <p className="font-semibold text-[var(--foreground)]">{probe.label}</p>
+          <a
+            href={probe.finalUrl || probe.url}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 inline-flex items-center gap-1 font-mono text-xs text-[var(--muted)] hover:text-[var(--primary)]"
+          >
+            {probe.path}
+            <ExternalLink className="h-3 w-3" aria-hidden="true" />
+          </a>
+        </div>
+      ),
+    },
+    {
+      key: "state",
+      header: "State",
+      render: (probe) => (
+        <StatusBadge
+          status={
+            probe.state === "pass"
+              ? "healthy"
+              : probe.state === "slow"
+                ? "watch"
+                : "attention"
+          }
+          label={probe.state}
+        />
+      ),
+    },
+    {
+      key: "status",
+      header: "HTTP",
+      render: (probe) => (
+        <span className="font-mono text-xs text-[var(--muted)]">
+          {probe.status || "—"}
+        </span>
+      ),
+    },
+    {
+      key: "durationMs",
+      header: "Latency",
+      render: (probe) => (
+        <span className="font-mono text-xs font-semibold text-[var(--foreground)]">
+          {formatDuration(probe.durationMs)}
+        </span>
+      ),
+    },
+    {
+      key: "detail",
+      header: "Contract",
+      render: (probe) => (
+        <span className="text-xs text-[var(--muted)]">{probe.detail}</span>
+      ),
+    },
+  ];
+
+  return (
+    <SectionCard
+      icon={Activity}
+      title="Critical route monitor"
+      description="Synthetic production checks · On-demand, cache-aware probes validate response status, expected content, and latency without continuous polling cost."
+      actions={
+        <button
+          type="button"
+          onClick={onRefresh}
+          disabled={refreshing}
+          className="btn btn-outline h-10 gap-2"
+          title="Run live production route probes"
+        >
+          <RefreshCw
+            className={`h-4 w-4 ${refreshing ? "animate-spin motion-reduce:animate-none" : ""}`}
+            aria-hidden="true"
+          />
+          Run live checks
+        </button>
+      }
+      bodyClassName="space-y-4"
+    >
+      <StatGrid
+        columns={4}
+        items={[
+          {
+            label: "Passing",
+            value: `${formatNumber(monitoring?.totals?.passing)}/${formatNumber(monitoring?.totals?.probes)}`,
+            hint: `Checked ${formatDate(monitoring?.checkedAt)}`,
+            icon: CheckCircle2,
+            tone: monitoring?.totals?.failing
               ? "danger"
               : monitoring?.totals?.slow
                 ? "warning"
-                : "success"
-          }
-        />
-        <MetricCard
-          icon={Clock3}
-          label="P95 response"
-          value={
-            monitoring?.performance
+                : "success",
+          },
+          {
+            label: "P95 response",
+            value: monitoring?.performance
               ? formatDuration(monitoring.performance.p95Ms)
-              : "Saved"
-          }
-          detail={
-            monitoring?.thresholds
+              : "Saved",
+            hint: monitoring?.thresholds
               ? `Slow threshold ${formatDuration(monitoring.thresholds.slowMs)}`
-              : "Run live checks for current latency"
-          }
-          tone={monitoring?.totals?.slow ? "warning" : "primary"}
-        />
-        <MetricCard
-          icon={AlertTriangle}
-          label="Slow routes"
-          value={formatNumber(monitoring?.totals?.slow)}
-          detail="Healthy response with latency above the route budget"
-          tone={monitoring?.totals?.slow ? "warning" : "success"}
-        />
-        <MetricCard
-          icon={XCircle}
-          label="Failing routes"
-          value={formatNumber(monitoring?.totals?.failing)}
-          detail="Bad status, content contract, timeout, or runtime error"
-          tone={monitoring?.totals?.failing ? "danger" : "success"}
-        />
-      </div>
+              : "Run live checks for current latency",
+            icon: Clock3,
+            tone: monitoring?.totals?.slow ? "warning" : "primary",
+          },
+          {
+            label: "Slow routes",
+            value: formatNumber(monitoring?.totals?.slow),
+            hint: "Healthy response with latency above the route budget",
+            icon: AlertTriangle,
+            tone: monitoring?.totals?.slow ? "warning" : "success",
+          },
+          {
+            label: "Failing routes",
+            value: formatNumber(monitoring?.totals?.failing),
+            hint: "Bad status, content contract, timeout, or runtime error",
+            icon: XCircle,
+            tone: monitoring?.totals?.failing ? "danger" : "success",
+          },
+        ]}
+      />
 
-      {probes.length ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm">
-            <thead className="bg-surface-soft text-xs font-semibold uppercase tracking-wide text-muted">
-              <tr>
-                <th className="px-4 py-3 sm:px-5">Surface</th>
-                <th className="px-4 py-3">State</th>
-                <th className="px-4 py-3">HTTP</th>
-                <th className="px-4 py-3">Latency</th>
-                <th className="px-4 py-3">Contract</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {probes.map((probe) => (
-                <tr key={probe.key} className="hover:bg-surface-soft">
-                  <td className="px-4 py-3 sm:px-5">
-                    <p className="font-semibold text-foreground">{probe.label}</p>
-                    <a
-                      href={probe.finalUrl || probe.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-1 inline-flex items-center gap-1 font-mono text-xs text-muted hover:text-primary"
-                    >
-                      {probe.path}
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </td>
-                  <td className="px-4 py-3">
-                    <StatusBadge
-                      status={
-                        probe.state === "pass"
-                          ? "healthy"
-                          : probe.state === "slow"
-                            ? "watch"
-                            : "attention"
-                      }
-                      label={probe.state}
-                    />
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted">
-                    {probe.status || "—"}
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs font-semibold text-foreground">
-                    {formatDuration(probe.durationMs)}
-                  </td>
-                  <td className="px-4 py-3 text-xs text-muted">
-                    {probe.detail}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm leading-6 text-muted">
-            {monitoring?.detail ||
-              "The lite snapshot avoids live network probes. Run live checks for current route status and latency."}
-          </p>
-          <StatusBadge status={monitoring?.status} />
-        </div>
-      )}
-    </section>
+      <DataTable
+        caption="Production route probes"
+        columns={probeColumns}
+        rows={probes}
+        getRowKey={(probe) => probe.key}
+        empty={
+          <EmptyState
+            icon={Activity}
+            title="No live probe results in this snapshot"
+            description={
+              monitoring?.detail ||
+              "The lite snapshot avoids live network probes. Run live checks for current route status and latency."
+            }
+            action={<StatusBadge status={monitoring?.status} />}
+          />
+        }
+      />
+    </SectionCard>
   );
 }
 
@@ -531,56 +507,68 @@ function ToolReadinessSection({ tools }) {
   const risks = readiness?.topRisks || [];
 
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <SectionHeader
-        icon={ListChecks}
-        eyebrow="Microtool evidence"
-        title="Tool readiness"
-        description={readiness?.description}
-        action={
-          <Link href="/health/tools" className="btn btn-primary h-10 gap-2">
-            Open inventory
-            <ExternalLink className="h-4 w-4" />
-          </Link>
-        }
+    <SectionCard
+      icon={ListChecks}
+      title="Tool readiness"
+      description={["Microtool evidence", readiness?.description]
+        .filter(Boolean)
+        .join(" · ")}
+      actions={
+        <Link href="/health/tools" className="btn btn-primary h-10 gap-2">
+          Open inventory
+          <ExternalLink className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      }
+      bodyClassName="space-y-4"
+    >
+      <StatGrid
+        columns={4}
+        items={[
+          {
+            label: "Working",
+            value: formatNumber(counts.working),
+            hint: `${formatNumber(readiness?.total)} registered tools analyzed`,
+            icon: CheckCircle2,
+            tone: "success",
+          },
+          {
+            label: "API required",
+            value: formatNumber(counts["api-required"]),
+            hint: `${formatNumber(readiness?.api?.counts?.configured)} configured · ${formatNumber(readiness?.api?.counts?.["missing-config"])} missing config`,
+            icon: Activity,
+          },
+          {
+            label: "Partial",
+            value: formatNumber(counts.partial),
+            hint: `${formatNumber(readiness?.priority?.needsAttention)} priority tools need stronger evidence`,
+            icon: AlertTriangle,
+            tone: counts.partial ? "warning" : "success",
+          },
+          {
+            label: "Broken",
+            value: formatNumber(counts.broken),
+            hint: `${formatNumber(readiness?.automatedCoverage)}% automated evidence coverage`,
+            icon: XCircle,
+            tone: counts.broken ? "danger" : "success",
+          },
+        ]}
       />
 
-      <div className="grid gap-3 border-b border-border p-4 sm:grid-cols-2 xl:grid-cols-4 sm:p-5">
-        <MetricCard
-          icon={CheckCircle2}
-          label="Working"
-          value={formatNumber(counts.working)}
-          detail={`${formatNumber(readiness?.total)} registered tools analyzed`}
-          tone="success"
-        />
-        <MetricCard
-          icon={Activity}
-          label="API required"
-          value={formatNumber(counts["api-required"])}
-          detail={`${formatNumber(readiness?.api?.counts?.configured)} configured · ${formatNumber(readiness?.api?.counts?.["missing-config"])} missing config`}
-        />
-        <MetricCard
-          icon={AlertTriangle}
-          label="Partial"
-          value={formatNumber(counts.partial)}
-          detail={`${formatNumber(readiness?.priority?.needsAttention)} priority tools need stronger evidence`}
-          tone={counts.partial ? "warning" : "success"}
-        />
-        <MetricCard
-          icon={XCircle}
-          label="Broken"
-          value={formatNumber(counts.broken)}
-          detail={`${formatNumber(readiness?.automatedCoverage)}% automated evidence coverage`}
-          tone={counts.broken ? "danger" : "success"}
-        />
-      </div>
-
-      {risks.length ? (
-        <div className="divide-y divide-border">
+      <DataState
+        isEmpty={!risks.length}
+        empty={
+          <EmptyState
+            icon={CheckCircle2}
+            title="No static readiness risks were detected"
+            description="Every registered tool cleared the build-time evidence checks in this snapshot."
+          />
+        }
+      >
+        <div className="divide-y divide-border rounded-lg border border-border">
           {risks.slice(0, 8).map((item) => (
             <div
               key={item.slug}
-              className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-start sm:justify-between sm:px-5"
+              className="flex flex-col gap-3 p-3 sm:flex-row sm:items-start sm:justify-between"
             >
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
@@ -591,9 +579,13 @@ function ToolReadinessSection({ tools }) {
                     </span>
                   ) : null}
                 </div>
-                <p className="mt-2 font-semibold text-foreground">{item.name}</p>
-                <p className="mt-1 font-mono text-xs text-muted">{item.slug}</p>
-                <p className="mt-1 text-xs leading-5 text-muted">
+                <p className="mt-2 font-semibold text-[var(--foreground)]">
+                  {item.name}
+                </p>
+                <p className="mt-1 font-mono text-xs text-[var(--muted)]">
+                  {item.slug}
+                </p>
+                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
                   {item.issues?.[0] ||
                     item.recommendations?.[0] ||
                     "External API availability needs runtime verification."}
@@ -604,96 +596,107 @@ function ToolReadinessSection({ tools }) {
                 className="btn btn-outline h-9 shrink-0 gap-2 px-3 text-xs"
               >
                 Inspect
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </div>
           ))}
         </div>
-      ) : (
-        <div className="flex items-center gap-3 p-5 text-sm text-success">
-          <CheckCircle2 className="h-5 w-5 shrink-0" />
-          No static readiness risks were detected.
-        </div>
-      )}
-    </section>
+      </DataState>
+    </SectionCard>
   );
 }
 
 function IndexControlSection({ routeQuality }) {
   const checks = routeQuality?.checks || [];
+
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <SectionHeader
-        icon={SearchCheck}
-        eyebrow="Crawler policy"
-        title="SEO index control"
-        description="Rendered robots directives, canonical ownership, and sitemap membership are checked from the same production build."
-        action={
-          <Link
-            href="/altftool/seo/pages"
-            className="btn btn-primary h-10 gap-2"
-          >
-            Manage index rules
-            <ExternalLink className="h-4 w-4" />
-          </Link>
-        }
-      />
-      <div className="divide-y divide-border">
-        {checks.map((check) => (
-          <div
-            key={check.key}
-            className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5"
-          >
-            <div className="flex items-start gap-3">
-              {check.ok ? (
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
-              ) : (
-                <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-danger" />
-              )}
-              <div>
-                <p className="text-sm font-semibold text-foreground">
-                  {check.label}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-muted">
-                  {check.detail}
-                </p>
-              </div>
-            </div>
-            <StatusBadge
-              status={check.ok ? "healthy" : "attention"}
-              label={check.ok ? "Pass" : "Fix"}
-            />
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-2 border-t border-border bg-surface-soft px-4 py-3 sm:px-5">
-        <a
-          href="https://www.altftool.com/sitemap.xml"
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-outline h-9 gap-2 text-xs"
-        >
-          Sitemap
-          <ExternalLink className="h-3.5 w-3.5" />
-        </a>
-        <a
-          href="https://www.altftool.com/robots.txt"
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-outline h-9 gap-2 text-xs"
-        >
-          Robots
-          <ExternalLink className="h-3.5 w-3.5" />
-        </a>
-        <Link
-          href="/altftool/seo/search-console"
-          className="btn btn-outline h-9 gap-2 text-xs"
-        >
-          Search Console
-          <ExternalLink className="h-3.5 w-3.5" />
+    <SectionCard
+      icon={SearchCheck}
+      title="SEO index control"
+      description="Crawler policy · Rendered robots directives, canonical ownership, and sitemap membership are checked from the same production build."
+      actions={
+        <Link href="/altftool/seo/pages" className="btn btn-primary h-10 gap-2">
+          Manage index rules
+          <ExternalLink className="h-4 w-4" aria-hidden="true" />
         </Link>
-      </div>
-    </section>
+      }
+      flush
+      footer={
+        <div className="flex flex-wrap gap-2">
+          <a
+            href="https://www.altftool.com/sitemap.xml"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline h-9 gap-2 text-xs"
+          >
+            Sitemap
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+          <a
+            href="https://www.altftool.com/robots.txt"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline h-9 gap-2 text-xs"
+          >
+            Robots
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+          <Link
+            href="/altftool/seo/search-console"
+            className="btn btn-outline h-9 gap-2 text-xs"
+          >
+            Search Console
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      }
+    >
+      <DataState
+        isEmpty={!checks.length}
+        empty={
+          <EmptyState
+            icon={SearchCheck}
+            title="No crawler-policy checks in this snapshot"
+            description="Run a live check to re-evaluate robots directives, canonicals, and sitemap membership."
+          />
+        }
+      >
+        <div className="divide-y divide-border">
+          {checks.map((check) => (
+            <div
+              key={check.key}
+              className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5"
+            >
+              <div className="flex items-start gap-3">
+                {check.ok ? (
+                  <CheckCircle2
+                    className="mt-0.5 h-5 w-5 shrink-0 text-success"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <XCircle
+                    className="mt-0.5 h-5 w-5 shrink-0 text-danger"
+                    aria-hidden="true"
+                  />
+                )}
+                <div>
+                  <p className="text-sm font-semibold text-[var(--foreground)]">
+                    {check.label}
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
+                    {check.detail}
+                  </p>
+                </div>
+              </div>
+              <StatusBadge
+                status={check.ok ? "healthy" : "attention"}
+                label={check.ok ? "Pass" : "Fix"}
+              />
+            </div>
+          ))}
+        </div>
+      </DataState>
+    </SectionCard>
   );
 }
 
@@ -740,26 +743,26 @@ function SystemSignals({ snapshot }) {
   ];
 
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-      <SectionHeader
-        icon={Gauge}
-        eyebrow="Supporting gates"
-        title="Runtime and release signals"
-        description="The overall score is a normalized weighted average; adding more checks can no longer inflate it above 100."
-      />
+    <SectionCard
+      icon={Gauge}
+      title="Runtime and release signals"
+      description="Supporting gates · The overall score is a normalized weighted average; adding more checks can no longer inflate it above 100."
+      flush
+      className="overflow-hidden"
+    >
       <div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">
         {signals.map((signal) => (
           <article key={signal.label} className="bg-surface p-4 sm:p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-foreground">
+                <p className="text-sm font-semibold text-[var(--foreground)]">
                   {signal.label}
                 </p>
-                <p className="mt-1 text-xs leading-5 text-muted">
+                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
                   {signal.detail}
                 </p>
               </div>
-              <span className="text-lg font-bold text-foreground">
+              <span className="text-lg font-semibold tabular-nums text-[var(--foreground)]">
                 {formatNumber(signal.score)}
               </span>
             </div>
@@ -769,12 +772,11 @@ function SystemSignals({ snapshot }) {
           </article>
         ))}
       </div>
-    </section>
+    </SectionCard>
   );
 }
 
 export default function QualityProductionHealthDashboard() {
-  const { user } = useAuth();
   const [snapshot, setSnapshot] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -782,12 +784,22 @@ export default function QualityProductionHealthDashboard() {
 
   const loadHealth = useCallback(
     async ({ live = false } = {}) => {
-      if (!user?.getIdToken) return;
       live ? setRefreshing(true) : setLoading(true);
       setError("");
 
       try {
-        const token = await user.getIdToken();
+        // Resolve the token at call time via getAdminIdToken(), which works in
+        // BOTH auth modes (Firebase session and the local-dev admin session).
+        // Reading `user.getIdToken` from AuthContext instead would dead-end any
+        // mode that renders this page without a Firebase user: the guard would
+        // latch an error that Retry re-enters forever. Here Retry re-reads the
+        // live session, so it can actually succeed.
+        const token = await getAdminIdToken();
+        if (!token) {
+          throw new Error(
+            "Your admin session is not ready, so the health snapshot could not be requested. Refresh the page, then retry.",
+          );
+        }
         const endpoint = live ? "/api/health?fresh=1" : "/api/health?lite=1";
         const response = await fetch(endpoint, {
           cache: "no-store",
@@ -807,7 +819,7 @@ export default function QualityProductionHealthDashboard() {
         setRefreshing(false);
       }
     },
-    [user],
+    [],
   );
 
   useEffect(() => {
@@ -825,175 +837,166 @@ export default function QualityProductionHealthDashboard() {
     };
   }, [snapshot]);
 
-  if (loading && !snapshot) {
-    return (
-      <div className="min-h-full bg-background px-4 py-5 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1600px]">
-          <LoadingState />
-        </div>
-      </div>
-    );
-  }
+  const retryLive = () => loadHealth({ live: true });
 
   return (
     <div
       className="min-h-full bg-background px-4 py-5 sm:px-6 lg:px-8"
       data-testid="health-dashboard"
     >
-      <div className="mx-auto max-w-[1600px] space-y-5">
-        <header className="rounded-xl border border-border bg-surface p-5 shadow-sm sm:p-6">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-            <div className="flex items-start gap-3">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-                <Activity className="h-5 w-5" />
-              </span>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-                  AltFTool operations
-                </p>
-                <h1 className="mt-1 text-2xl font-bold text-foreground">
-                  Quality and production health
-                </h1>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
-                  Real rendered routes, crawler policy, runtime gates, Firebase,
-                  and on-demand production probes in one release workspace.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 text-xs text-muted">
-                <Clock3 className="h-4 w-4" />
+      <div className="mx-auto max-w-[1600px]">
+        <PageHeader
+          eyebrow="AltFTool operations"
+          icon={Activity}
+          title="Quality and production health"
+          description="Real rendered routes, crawler policy, runtime gates, Firebase, and on-demand production probes in one release workspace."
+          actions={
+            <>
+              <span className="inline-flex items-center gap-2 text-xs text-[var(--muted)]">
+                <Clock3 className="h-4 w-4" aria-hidden="true" />
                 {snapshot?.mode === "live" ? "Live" : "Lite"} snapshot ·{" "}
                 {formatDate(snapshot?.generatedAt)}
               </span>
               <button
                 type="button"
-                onClick={() => loadHealth({ live: true })}
+                onClick={retryLive}
                 disabled={refreshing}
                 className="btn btn-primary h-10 gap-2"
               >
                 <RefreshCw
-                  className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
+                  className={`h-4 w-4 ${refreshing ? "animate-spin motion-reduce:animate-none" : ""}`}
+                  aria-hidden="true"
                 />
                 Refresh live
               </button>
-            </div>
-          </div>
+            </>
+          }
+        />
 
-          <div className="mt-5 flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <span className="text-4xl font-bold text-foreground">
-                {formatNumber(snapshot?.overall?.score)}
-              </span>
-              <div>
-                <StatusBadge
-                  status={snapshot?.overall?.status}
-                  label={snapshot?.overall?.label}
-                />
-                <p className="mt-1 text-xs text-muted">
-                  Normalized release-health score
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <StatusBadge
-                status={releaseGateSummary.block ? "attention" : "healthy"}
-                label={`${releaseGateSummary.pass}/${releaseGateSummary.total} gates pass`}
-              />
-              {releaseGateSummary.warn ? (
-                <StatusBadge
-                  status="watch"
-                  label={`${releaseGateSummary.warn} warnings`}
-                />
-              ) : null}
-              {releaseGateSummary.block ? (
-                <StatusBadge
-                  status="attention"
-                  label={`${releaseGateSummary.block} blockers`}
-                />
-              ) : null}
-            </div>
-          </div>
-        </header>
-
-        {error ? (
-          <div className="flex flex-col gap-3 rounded-xl border border-danger bg-danger-soft p-4 text-sm text-danger sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
-              <p>{error}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => loadHealth({ live: true })}
-              className="btn btn-outline h-9 gap-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Retry
-            </button>
-          </div>
-        ) : null}
-
-        {snapshot ? (
-          <>
-            <RouteQualitySection routeQuality={snapshot.routeQuality} />
-            <ToolReadinessSection tools={snapshot.tools} />
-            <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
-              <ProductionMonitoringSection
-                monitoring={snapshot.productionMonitoring}
-                onRefresh={() => loadHealth({ live: true })}
-                refreshing={refreshing}
-              />
-              <IndexControlSection routeQuality={snapshot.routeQuality} />
-            </div>
-            <SystemSignals snapshot={snapshot} />
-
-            <section className="rounded-xl border border-border bg-surface p-4 shadow-sm sm:p-5">
-              <div className="flex items-start gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-primary-soft text-primary">
-                  <Wrench className="h-4 w-4" />
-                </span>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-                    Recommended actions
-                  </p>
-                  <h2 className="mt-1 text-lg font-bold text-foreground">
-                    Next fixes from current evidence
-                  </h2>
+        <div className="space-y-5">
+          {snapshot ? (
+            <SectionCard>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <span className="text-4xl font-semibold tabular-nums text-[var(--foreground)]">
+                    {formatNumber(snapshot?.overall?.score)}
+                  </span>
+                  <div>
+                    <StatusBadge
+                      status={snapshot?.overall?.status}
+                      label={snapshot?.overall?.label}
+                    />
+                    <p className="mt-1 text-xs text-[var(--muted)]">
+                      Normalized release-health score
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <StatusBadge
+                    status={releaseGateSummary.block ? "attention" : "healthy"}
+                    label={`${releaseGateSummary.pass}/${releaseGateSummary.total} gates pass`}
+                  />
+                  {releaseGateSummary.warn ? (
+                    <StatusBadge
+                      status="watch"
+                      label={`${releaseGateSummary.warn} warnings`}
+                    />
+                  ) : null}
+                  {releaseGateSummary.block ? (
+                    <StatusBadge
+                      status="attention"
+                      label={`${releaseGateSummary.block} blockers`}
+                    />
+                  ) : null}
                 </div>
               </div>
-              <ol className="mt-4 grid gap-3 lg:grid-cols-2">
-                {(snapshot.recommendations || []).map(
-                  (recommendation, index) => (
-                    <li
-                      key={recommendation}
-                      className="flex gap-3 rounded-lg border border-border bg-surface-soft p-3 text-sm leading-6 text-muted"
+            </SectionCard>
+          ) : null}
+
+          {/* A failed refresh keeps the previous snapshot on screen, so the
+              failure is reported next to the stale data instead of replacing
+              it. With no snapshot at all the DataState below owns the error. */}
+          {error && snapshot ? (
+            <ErrorState
+              title="Live refresh failed"
+              message={error}
+              onRetry={retryLive}
+            />
+          ) : null}
+
+          <DataState
+            loading={loading && !snapshot}
+            error={snapshot ? null : error || null}
+            isEmpty={!snapshot}
+            onRetry={retryLive}
+            loadingVariant="detail"
+            empty={
+              <SectionCard>
+                <EmptyState
+                  icon={Activity}
+                  title="No health snapshot is available."
+                  description="Nothing has been generated for this environment yet. Run a live check to build the first snapshot."
+                  action={
+                    <button
+                      type="button"
+                      onClick={retryLive}
+                      className="btn btn-primary h-10 gap-2"
                     >
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                        {index + 1}
-                      </span>
-                      {recommendation}
-                    </li>
-                  ),
-                )}
-              </ol>
-            </section>
-          </>
-        ) : (
-          <div className="rounded-xl border border-border bg-surface p-8 text-center">
-            <AlertTriangle className="mx-auto h-8 w-8 text-warning" />
-            <p className="mt-3 font-semibold text-foreground">
-              No health snapshot is available.
-            </p>
-            <button
-              type="button"
-              onClick={() => loadHealth({ live: true })}
-              className="btn btn-primary mt-4 h-10 gap-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Load live health
-            </button>
-          </div>
-        )}
+                      <RefreshCw className="h-4 w-4" aria-hidden="true" />
+                      Load live health
+                    </button>
+                  }
+                />
+              </SectionCard>
+            }
+          >
+            <div className="space-y-5">
+              <RouteQualitySection routeQuality={snapshot?.routeQuality} />
+              <ToolReadinessSection tools={snapshot?.tools} />
+              <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
+                <ProductionMonitoringSection
+                  monitoring={snapshot?.productionMonitoring}
+                  onRefresh={retryLive}
+                  refreshing={refreshing}
+                />
+                <IndexControlSection routeQuality={snapshot?.routeQuality} />
+              </div>
+              <SystemSignals snapshot={snapshot} />
+
+              <SectionCard
+                title="Next fixes from current evidence"
+                description="Recommended actions · the follow-up work this snapshot's evidence points at."
+              >
+                <DataState
+                  isEmpty={!snapshot?.recommendations?.length}
+                  empty={
+                    <EmptyState
+                      icon={Gauge}
+                      title="No follow-up actions"
+                      description="This snapshot did not produce any recommended fixes."
+                    />
+                  }
+                >
+                  <ol className="grid gap-3 lg:grid-cols-2">
+                    {(snapshot?.recommendations || []).map(
+                      (recommendation, index) => (
+                        <li
+                          key={recommendation}
+                          className="flex gap-3 rounded-lg border border-border bg-surface-soft p-3 text-sm leading-6 text-[var(--muted)]"
+                        >
+                          <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+                            {index + 1}
+                          </span>
+                          {recommendation}
+                        </li>
+                      ),
+                    )}
+                  </ol>
+                </DataState>
+              </SectionCard>
+            </div>
+          </DataState>
+        </div>
       </div>
     </div>
   );

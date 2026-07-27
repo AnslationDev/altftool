@@ -1,3 +1,7 @@
-import ImpossibleObjectBuilder from './index';
+"use client";
 
-export default ImpossibleObjectBuilder;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

@@ -1,11 +1,11 @@
 const toolConfig = {
   slug: "impossible-object-builder",
   name: "Impossible Object Builder",
+  category: ["Design & Color"],
   description:
     "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
-  category: ["Design", "3D", "Optical Illusions"],
-  icon: "layers",
-  iconColor: "text-blue-500",
+  icon: "boxes",
+  iconColor: "text-(--primary)",
   tags: [
     "impossible object",
     "penrose triangle",

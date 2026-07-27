@@ -124,7 +124,7 @@ export default function ControlPanel({
           onClick={onToggleSound}
           aria-label={soundEnabled ? "Mute sounds" : "Enable sounds"}
           aria-pressed={soundEnabled}
-          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card) border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card) border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           title={soundEnabled ? "Mute sounds" : "Enable sounds"}
         >
           {soundEnabled ? <Volume2 size="18" /> : <VolumeX size="18" />}

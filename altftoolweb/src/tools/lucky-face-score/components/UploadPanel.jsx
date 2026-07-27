@@ -83,7 +83,7 @@ export default function UploadPanel({ onUpload }) {
         tabIndex={preview ? undefined : 0}
         aria-label={preview ? undefined : "Upload a photo"}
         onKeyDown={preview ? undefined : (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleClick(); } }}
-        className={`relative rounded-2xl border-2 border-dashed p-8 text-center cursor-pointer transition-all motion-reduce:transition-none duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35
+        className={`relative rounded-2xl border-2 border-dashed p-8 text-center cursor-pointer transition-all motion-reduce:transition-none duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)
           ${dragOver
             ? "border-primary bg-primary/5"
             : preview
@@ -109,7 +109,7 @@ export default function UploadPanel({ onUpload }) {
             />
             <button
               onClick={(e) => { e.stopPropagation(); handleRemove(); }}
-              className="absolute -top-2 -right-2 p-1.5 rounded-full bg-background border border-border text-muted-foreground hover:text-danger hover:border-danger/50 transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+              className="absolute -top-2 -right-2 p-1.5 rounded-full bg-background border border-border text-muted-foreground hover:text-danger hover:border-danger/50 transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
               aria-label="Remove image"
             >
               <X size={16} />
@@ -136,7 +136,7 @@ export default function UploadPanel({ onUpload }) {
         <div className="flex items-center gap-3">
           <button
             onClick={handleClick}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 min-h-11 bg-primary hover:bg-primary/90 text-(--primary-foreground) font-semibold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 shadow-sm text-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 min-h-11 bg-primary hover:bg-primary/90 text-(--primary-foreground) font-semibold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 shadow-sm text-sm focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           >
             <ImageIcon size={16} />
             Change Photo
@@ -144,7 +144,7 @@ export default function UploadPanel({ onUpload }) {
           <button
             onClick={() => setCropping(!cropping)}
             aria-pressed={cropping}
-            className={`flex items-center justify-center gap-2 py-2.5 px-4 min-h-11 font-semibold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 text-sm border focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35
+            className={`flex items-center justify-center gap-2 py-2.5 px-4 min-h-11 font-semibold rounded-xl cursor-pointer transition active:scale-[0.98] motion-reduce:active:scale-100 duration-100 text-sm border focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)
               ${cropping
                 ? "bg-primary text-(--primary-foreground) border-primary"
                 : "border-border text-foreground hover:bg-muted/50"

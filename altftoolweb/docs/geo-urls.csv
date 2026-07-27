@@ -1,0 +1,143 @@
+url,type,name,parent
+https://altftool.com/locations,Hub,Locations Hub,
+https://altftool.com/locations/india,Country,India,
+https://altftool.com/locations/usa,Country,United States,
+https://altftool.com/locations/uk,Country,United Kingdom,
+https://altftool.com/locations/canada,Country,Canada,
+https://altftool.com/locations/australia,Country,Australia,
+https://altftool.com/locations/germany,Country,Germany,
+https://altftool.com/locations/france,Country,France,
+https://altftool.com/locations/uae,Country,United Arab Emirates,
+https://altftool.com/locations/singapore,Country,Singapore,
+https://altftool.com/locations/japan,Country,Japan,
+https://altftool.com/locations/brazil,Country,Brazil,
+https://altftool.com/locations/mexico,Country,Mexico,
+https://altftool.com/locations/italy,Country,Italy,
+https://altftool.com/locations/spain,Country,Spain,
+https://altftool.com/locations/netherlands,Country,Netherlands,
+https://altftool.com/locations/china,Country,China,
+https://altftool.com/locations/russia,Country,Russia,
+https://altftool.com/locations/south-korea,Country,South Korea,
+https://altftool.com/locations/indonesia,Country,Indonesia,
+https://altftool.com/locations/pakistan,Country,Pakistan,
+https://altftool.com/locations/bangladesh,Country,Bangladesh,
+https://altftool.com/locations/sri-lanka,Country,Sri Lanka,
+https://altftool.com/locations/nepal,Country,Nepal,
+https://altftool.com/locations/saudi-arabia,Country,Saudi Arabia,
+https://altftool.com/locations/qatar,Country,Qatar,
+https://altftool.com/locations/kuwait,Country,Kuwait,
+https://altftool.com/locations/oman,Country,Oman,
+https://altftool.com/locations/bahrain,Country,Bahrain,
+https://altftool.com/locations/south-africa,Country,South Africa,
+https://altftool.com/locations/nigeria,Country,Nigeria,
+https://altftool.com/locations/egypt,Country,Egypt,
+https://altftool.com/locations/turkey,Country,Turkey,
+https://altftool.com/locations/philippines,Country,Philippines,
+https://altftool.com/locations/vietnam,Country,Vietnam,
+https://altftool.com/locations/thailand,Country,Thailand,
+https://altftool.com/locations/malaysia,Country,Malaysia,
+https://altftool.com/locations/new-zealand,Country,New Zealand,
+https://altftool.com/locations/ireland,Country,Ireland,
+https://altftool.com/locations/poland,Country,Poland,
+https://altftool.com/locations/sweden,Country,Sweden,
+https://altftool.com/locations/norway,Country,Norway,
+https://altftool.com/locations/denmark,Country,Denmark,
+https://altftool.com/locations/switzerland,Country,Switzerland,
+https://altftool.com/locations/austria,Country,Austria,
+https://altftool.com/locations/belgium,Country,Belgium,
+https://altftool.com/locations/portugal,Country,Portugal,
+https://altftool.com/locations/argentina,Country,Argentina,
+https://altftool.com/locations/israel,Country,Israel,
+https://altftool.com/locations/madhya-pradesh,State,Madhya Pradesh,india
+https://altftool.com/locations/uttar-pradesh,State,Uttar Pradesh,india
+https://altftool.com/locations/bihar,State,Bihar,india
+https://altftool.com/locations/maharashtra,State,Maharashtra,india
+https://altftool.com/locations/karnataka,State,Karnataka,india
+https://altftool.com/locations/telangana,State,Telangana,india
+https://altftool.com/locations/rajasthan,State,Rajasthan,india
+https://altftool.com/locations/gujarat,State,Gujarat,india
+https://altftool.com/locations/tamil-nadu,State,Tamil Nadu,india
+https://altftool.com/locations/west-bengal,State,West Bengal,india
+https://altftool.com/locations/kerala,State,Kerala,india
+https://altftool.com/locations/punjab,State,Punjab,india
+https://altftool.com/locations/haryana,State,Haryana,india
+https://altftool.com/locations/andhra-pradesh,State,Andhra Pradesh,india
+https://altftool.com/locations/odisha,State,Odisha,india
+https://altftool.com/locations/jharkhand,State,Jharkhand,india
+https://altftool.com/locations/chhattisgarh,State,Chhattisgarh,india
+https://altftool.com/locations/assam,State,Assam,india
+https://altftool.com/locations/uttarakhand,State,Uttarakhand,india
+https://altftool.com/locations/himachal-pradesh,State,Himachal Pradesh,india
+https://altftool.com/locations/goa,State,Goa,india
+https://altftool.com/locations/jammu-and-kashmir,State,Jammu and Kashmir,india
+https://altftool.com/locations/sikkim,State,Sikkim,india
+https://altftool.com/locations/tripura,State,Tripura,india
+https://altftool.com/locations/delhi,City,Delhi,india
+https://altftool.com/locations/mumbai,City,Mumbai,maharashtra
+https://altftool.com/locations/bangalore,City,Bengaluru,karnataka
+https://altftool.com/locations/hyderabad,City,Hyderabad,telangana
+https://altftool.com/locations/chennai,City,Chennai,tamil-nadu
+https://altftool.com/locations/kolkata,City,Kolkata,west-bengal
+https://altftool.com/locations/pune,City,Pune,maharashtra
+https://altftool.com/locations/ahmedabad,City,Ahmedabad,gujarat
+https://altftool.com/locations/bhopal,City,Bhopal,madhya-pradesh
+https://altftool.com/locations/indore,City,Indore,madhya-pradesh
+https://altftool.com/locations/lucknow,City,Lucknow,uttar-pradesh
+https://altftool.com/locations/jaipur,City,Jaipur,rajasthan
+https://altftool.com/locations/surat,City,Surat,gujarat
+https://altftool.com/locations/kanpur,City,Kanpur,uttar-pradesh
+https://altftool.com/locations/nagpur,City,Nagpur,maharashtra
+https://altftool.com/locations/patna,City,Patna,bihar
+https://altftool.com/locations/gwalior,City,Gwalior,madhya-pradesh
+https://altftool.com/locations/jabalpur,City,Jabalpur,madhya-pradesh
+https://altftool.com/locations/ujjain,City,Ujjain,madhya-pradesh
+https://altftool.com/locations/varanasi,City,Varanasi,uttar-pradesh
+https://altftool.com/locations/agra,City,Agra,uttar-pradesh
+https://altftool.com/locations/prayagraj,City,Prayagraj,uttar-pradesh
+https://altftool.com/locations/meerut,City,Meerut,uttar-pradesh
+https://altftool.com/locations/noida,City,Noida,uttar-pradesh
+https://altftool.com/locations/ghaziabad,City,Ghaziabad,uttar-pradesh
+https://altftool.com/locations/gurugram,City,Gurugram,haryana
+https://altftool.com/locations/faridabad,City,Faridabad,haryana
+https://altftool.com/locations/chandigarh,City,Chandigarh,india
+https://altftool.com/locations/amritsar,City,Amritsar,punjab
+https://altftool.com/locations/ludhiana,City,Ludhiana,punjab
+https://altftool.com/locations/coimbatore,City,Coimbatore,tamil-nadu
+https://altftool.com/locations/madurai,City,Madurai,tamil-nadu
+https://altftool.com/locations/kochi,City,Kochi,kerala
+https://altftool.com/locations/thiruvananthapuram,City,Thiruvananthapuram,kerala
+https://altftool.com/locations/visakhapatnam,City,Visakhapatnam,andhra-pradesh
+https://altftool.com/locations/vijayawada,City,Vijayawada,andhra-pradesh
+https://altftool.com/locations/ranchi,City,Ranchi,jharkhand
+https://altftool.com/locations/raipur,City,Raipur,chhattisgarh
+https://altftool.com/locations/bhubaneswar,City,Bhubaneswar,odisha
+https://altftool.com/locations/guwahati,City,Guwahati,assam
+https://altftool.com/locations/dehradun,City,Dehradun,uttarakhand
+https://altftool.com/locations/shimla,City,Shimla,himachal-pradesh
+https://altftool.com/locations/nashik,City,Nashik,maharashtra
+https://altftool.com/locations/rajkot,City,Rajkot,gujarat
+https://altftool.com/locations/vadodara,City,Vadodara,gujarat
+https://altftool.com/locations/jodhpur,City,Jodhpur,rajasthan
+https://altftool.com/locations/udaipur,City,Udaipur,rajasthan
+https://altftool.com/locations/kota,City,Kota,rajasthan
+https://altftool.com/locations/mysuru,City,Mysuru,karnataka
+https://altftool.com/locations/mangaluru,City,Mangaluru,karnataka
+https://altftool.com/locations/new-york,City,New York City,usa
+https://altftool.com/locations/los-angeles,City,Los Angeles,usa
+https://altftool.com/locations/chicago,City,Chicago,usa
+https://altftool.com/locations/san-francisco,City,San Francisco,usa
+https://altftool.com/locations/houston,City,Houston,usa
+https://altftool.com/locations/seattle,City,Seattle,usa
+https://altftool.com/locations/boston,City,Boston,usa
+https://altftool.com/locations/london,City,London,uk
+https://altftool.com/locations/manchester,City,Manchester,uk
+https://altftool.com/locations/toronto,City,Toronto,canada
+https://altftool.com/locations/vancouver,City,Vancouver,canada
+https://altftool.com/locations/sydney,City,Sydney,australia
+https://altftool.com/locations/melbourne,City,Melbourne,australia
+https://altftool.com/locations/berlin,City,Berlin,germany
+https://altftool.com/locations/paris,City,Paris,france
+https://altftool.com/locations/dubai,City,Dubai,uae
+https://altftool.com/locations/abu-dhabi,City,Abu Dhabi,uae
+https://altftool.com/locations/tokyo,City,Tokyo,japan
+https://altftool.com/locations/toronto-gta,City,Greater Toronto Area,canada

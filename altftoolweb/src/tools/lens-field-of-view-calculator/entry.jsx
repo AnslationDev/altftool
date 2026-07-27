@@ -1,7 +1,7 @@
 "use client";
 
-import LensFovCalculator from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <LensFovCalculator />;
+  return <ToolHome />;
 }

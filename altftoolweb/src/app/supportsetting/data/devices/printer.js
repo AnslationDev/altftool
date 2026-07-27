@@ -24,7 +24,7 @@ export const printerSettings = [
     ],
     important:
       "Keep the printer within reasonable range of your router — printers with weak Wi-Fi antennas are especially prone to dropping off 5GHz networks, so connecting to a 2.4GHz network or band is often more reliable for printers even if your other devices use 5GHz.",
-    redirectUrl: "https://support.hp.com/us-en/help/wireless-printing",
+    redirectUrl: "https://support.hp.com/us-en",
     actionLabel: "Open HP Support: Wireless Printer Setup",
     whyItMatters:
       "A printer connected over Wi-Fi can be shared by every device on your network without anyone needing to plug in a cable, which is the main reason most households and small offices set printers up this way first. Getting the wireless connection right the first time avoids the most common source of \"printer offline\" errors down the road.",
@@ -60,7 +60,7 @@ export const printerSettings = [
       "macOS: connect the cable, then go to System Settings → Printers & Scanners — the printer usually appears automatically and macOS downloads an appropriate driver via Software Update.",
       "Install the full manufacturer driver package afterward (see Driver Installation) for access to ink levels, print quality settings, and scanning, which the generic OS driver often doesn't expose.",
     ],
-    redirectUrl: "https://support.apple.com/en-us/102030",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Connect a USB Printer",
     whyItMatters:
       "USB connections eliminate an entire category of problems — dropped Wi-Fi, wrong network, router changes — making them the most dependable option when a printer only needs to serve one nearby computer, such as a home office desk setup.",
@@ -99,7 +99,7 @@ export const printerSettings = [
     ],
     important:
       "Only download drivers from the manufacturer's official support site — third-party \"driver update\" utilities frequently bundle unwanted software and are a common source of malware on printer-related searches.",
-    redirectUrl: "https://support.epson.com/",
+    redirectUrl: "https://epson.com/Support/sl/s",
     actionLabel: "Open Epson Support: Drivers & Downloads",
     whyItMatters:
       "An outdated or generic driver is behind many everyday printing complaints — missing settings, poor color accuracy, slow print speed, or scanning simply not working — and reinstalling the correct full driver resolves most of them without any hardware troubleshooting.",
@@ -138,7 +138,7 @@ export const printerSettings = [
     ],
     important:
       "Ink and toner level estimates are approximate — a printer may report \"low\" well before a cartridge is actually empty, and some cartridges include a chip that stops recognizing them once the printer's internal page counter passes a threshold, regardless of remaining ink.",
-    redirectUrl: "https://support.hp.com/us-en/help/ink-toner",
+    redirectUrl: "https://support.hp.com/us-en",
     actionLabel: "Open HP Support: Ink & Toner",
     whyItMatters:
       "Running a printer with a cartridge the printer no longer recognizes, or ignoring a genuinely empty one, is the most common cause of streaky, faded, or missing colors in printed output — checking levels before an important print job avoids running out mid-document.",
@@ -177,7 +177,7 @@ export const printerSettings = [
     ],
     important:
       "Turn the printer off using its own power button (not the wall switch or a power strip) when not in use for extended periods — many inkjet printers use this shutdown to cap the print head and prevent it from drying out.",
-    redirectUrl: "https://support.canon.com/printers",
+    redirectUrl: "https://www.usa.canon.com/support",
     actionLabel: "Open Canon Support: Print Quality Troubleshooting",
     whyItMatters:
       "Print head clogs are the single most common cause of quality complaints on inkjet printers, and running the built-in cleaning utility resolves the large majority of cases without a service visit or new hardware — skipping straight to buying new cartridges often doesn't fix a clog at all.",
@@ -214,7 +214,7 @@ export const printerSettings = [
       "To scan directly from the printer's own control panel to a computer, enable \"Scan to Computer\" in the manufacturer app or utility software first — most printers have this disabled by default until a computer registers itself as a scan target.",
       "For cloud destinations, sign in to the desired cloud account inside the manufacturer app and authorize it once; scanned files then upload automatically instead of saving locally.",
     ],
-    redirectUrl: "https://support.epson.com/scan",
+    redirectUrl: "https://epson.com/Support/sl/s",
     actionLabel: "Open Epson Support: Scanning Setup",
     whyItMatters:
       "Scanning is one of the more commonly misconfigured all-in-one features because it depends on software most people skip during initial printer setup — enabling it once means you can scan documents straight from the printer's panel afterward instead of hunting through settings each time.",
@@ -253,7 +253,7 @@ export const printerSettings = [
     ],
     important:
       "Never power off or unplug the printer while a firmware update is in progress — an interrupted update can leave the printer's internal software corrupted and require a service repair to recover.",
-    redirectUrl: "https://support.hp.com/us-en/drivers/printers",
+    redirectUrl: "https://support.hp.com/us-en",
     actionLabel: "Open HP Support: Firmware Updates",
     whyItMatters:
       "Firmware updates are how manufacturers fix the underlying causes of many recurring Wi-Fi drops, scanning glitches, and cartridge-recognition bugs — a printer that's been misbehaving for months sometimes has a fix already published that simply was never installed.",
@@ -292,7 +292,7 @@ export const printerSettings = [
     ],
     important:
       "Sharing a printer this way also shares it with any other device on the same network by default — on a home network with guests or an office with a general Wi-Fi SSID, consider restricting print access via router-level network segmentation if that's a concern.",
-    redirectUrl: "https://support.microsoft.com/windows/share-a-printer",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Share a Printer on a Network",
     whyItMatters:
       "Not every printer has built-in Wi-Fi, and buying a new one just to let a second computer print is often unnecessary — enabling sharing on the computer it's already connected to gets the same result for free, at the cost of that computer needing to stay on.",

@@ -1,6 +1,7 @@
 "use client";
 
-import IpFinder from "./components/ipfinder";
+import ToolHome from "./pages";
+
 export default function ToolEntry() {
-    return <IpFinder />;
+  return <ToolHome />;
 }

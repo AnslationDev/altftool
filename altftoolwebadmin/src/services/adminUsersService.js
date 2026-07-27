@@ -15,6 +15,9 @@ function normalizeAdminUser(id, data = {}) {
     ...data,
     id,
     uid: data.uid || id,
+    // Always a string: admin docs written before the email field existed would
+    // otherwise break search/sort predicates that call .toLowerCase()/.localeCompare().
+    email: data.email == null ? "" : String(data.email),
     fullName: data.fullName || data.name || "",
     roleType,
     isActive: data.isActive ?? status === "active",

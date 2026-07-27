@@ -37,7 +37,7 @@ export default function GroupManager({ tabs, groups, onGroupCreate, onGroupToggl
             aria-label="New group name"
             className="flex-1 px-2.5 py-1.5 text-sm rounded-lg border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
           />
-          <Button variant="primary" size="sm" aria-label="Create group" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" onClick={handleCreateGroup} disabled={!groupName.trim()}>
+          <Button variant="primary" size="sm" aria-label="Create group" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)" onClick={handleCreateGroup} disabled={!groupName.trim()}>
             <FolderPlus size="14" />
           </Button>
         </div>
@@ -46,7 +46,7 @@ export default function GroupManager({ tabs, groups, onGroupCreate, onGroupToggl
           <div className="space-y-1">
             {groups.map((g) => (
               <div key={g.id} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-(--muted) text-sm">
-                <button onClick={() => onGroupToggle(g.id)} aria-label={g.collapsed ? `Expand group ${g.name}` : `Collapse group ${g.name}`} className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded">
+                <button onClick={() => onGroupToggle(g.id)} aria-label={g.collapsed ? `Expand group ${g.name}` : `Collapse group ${g.name}`} className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded">
                   {g.collapsed ? <ChevronRight size="14" /> : <ChevronDown size="14" />}
                 </button>
                 {editingId === g.id ? (
@@ -59,15 +59,15 @@ export default function GroupManager({ tabs, groups, onGroupCreate, onGroupToggl
                       className="flex-1 px-1.5 py-0.5 text-xs rounded border border-(--border) bg-(--card) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                       autoFocus
                     />
-                    <button onClick={() => { onGroupRename(g.id, editName); setEditingId(null); }} aria-label="Save group name" className="p-0.5 text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><Check size="12" /></button>
-                    <button onClick={() => setEditingId(null)} aria-label="Cancel rename" className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><X size="12" /></button>
+                    <button onClick={() => { onGroupRename(g.id, editName); setEditingId(null); }} aria-label="Save group name" className="p-0.5 text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><Check size="12" /></button>
+                    <button onClick={() => setEditingId(null)} aria-label="Cancel rename" className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><X size="12" /></button>
                   </div>
                 ) : (
                   <>
                     <span className="flex-1 text-(--foreground) truncate">{g.name}</span>
                     <span className="text-xs text-(--muted-foreground)">{g.tabIds.length}</span>
-                    <button onClick={() => { setEditingId(g.id); setEditName(g.name); }} aria-label={`Rename group ${g.name}`} className="p-0.5 text-(--muted-foreground) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><Pencil size="12" /></button>
-                    <button onClick={() => onGroupDelete(g.id)} aria-label={`Delete group ${g.name}`} className="p-0.5 text-(--muted-foreground) hover:text-(--danger) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><Trash2 size="12" /></button>
+                    <button onClick={() => { setEditingId(g.id); setEditName(g.name); }} aria-label={`Rename group ${g.name}`} className="p-0.5 text-(--muted-foreground) hover:text-(--foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><Pencil size="12" /></button>
+                    <button onClick={() => onGroupDelete(g.id)} aria-label={`Delete group ${g.name}`} className="p-0.5 text-(--muted-foreground) hover:text-(--danger) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><Trash2 size="12" /></button>
                   </>
                 )}
               </div>

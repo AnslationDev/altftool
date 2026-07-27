@@ -214,22 +214,42 @@ export async function requestBlogRevalidation(slug) {
     const token = user ? await user.getIdToken() : "local-dev-admin-token";
     const headers = { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
 
-    // 1. Revalidate the public page + sitemap cache.
-    await fetch("/api/blogs/revalidate", {
+    // 1. Revalidate the public page + sitemap cache. A non-OK response (401/403
+    //    for a non-admin session, 400 for a bad slug, 502 when the public
+    //    bridge is down) used to be swallowed entirely, so the author had no
+    //    way to know the live page was still stale.
+    const res = await fetch("/api/blogs/revalidate", {
       method: "POST",
       headers,
       body: JSON.stringify({ slug }),
       keepalive: true,
     });
+    if (!res.ok) {
+      console.warn(
+        `[revalidate] /api/blogs/revalidate responded ${res.status} for "${slug}" — the public page may stay stale until ISR expires.`,
+      );
+    }
 
     // 2. Best-effort: re-submit the sitemap to Search Console so Google
     //    re-crawls the change automatically (no manual re-indexing needed).
+    //    A 403 here is expected for an SEO read-only admin (the route requires
+    //    seo:write), so this is a warning, never an error.
     fetch("/api/seo/gsc/sitemaps", {
       method: "POST",
       headers,
       body: JSON.stringify({}),
       keepalive: true,
-    }).catch(() => {});
+    })
+      .then((sitemapRes) => {
+        if (!sitemapRes.ok) {
+          console.warn(
+            `[revalidate] sitemap re-submit responded ${sitemapRes.status} — Search Console was not pinged for "${slug}".`,
+          );
+        }
+      })
+      .catch((err) => {
+        console.warn("[revalidate] sitemap re-submit failed", err);
+      });
   } catch (err) {
     console.warn("[revalidate] non-blocking request failed", err);
   }

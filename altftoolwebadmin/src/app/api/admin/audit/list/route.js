@@ -1,21 +1,6 @@
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
-
-async function verifySuperAdmin(request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Bearer ")) throw new Error("Unauthorized");
-
-  const token = authHeader.split("Bearer ")[1];
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
-  const data = snap.data();
-  if (!snap.exists || data?.roleType !== "superadmin" || !data?.isActive) {
-    throw new Error("Unauthorized");
-  }
-
-  return decoded;
-}
+import { adminDb } from "@/lib/firebaseAdmin";
+import { verifySuperAdminRequest } from "@/lib/adminAccess";
 
 function toFirestoreTimestamp(isoOrMs) {
   if (!isoOrMs) return null;
@@ -50,7 +35,11 @@ function normalizeLog(doc) {
 
 export async function GET(request) {
   try {
-    await verifySuperAdmin(request);
+    // Was a private, legacy-`admins`-only check with no local-dev bypass — every
+    // RBAC-era superadmin got 401 here regardless of the console session, and
+    // this route could never be exercised under the local-admin dev mode at
+    // all. verifySuperAdminRequest covers RBAC + legacy + the dev bypass.
+    await verifySuperAdminRequest(request);
 
     const url = new URL(request.url);
     const pageSizeParam = Number(url.searchParams.get("pageSize") || 30);

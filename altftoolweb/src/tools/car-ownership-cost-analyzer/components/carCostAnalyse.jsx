@@ -19,6 +19,21 @@ import Button from './ui/Button';
 import Input from './ui/Input';
 import Select from './ui/Select';
 import Features from './Features';
+import { DEFAULT_CAR, analyzeCarCost, COST_HORIZONS } from '../lib';
+
+/** Every figure blanked — rendered instead of stale numbers when input is invalid. */
+const EMPTY_ANALYSIS = {
+    emi: null, totalInterest: null, monthlyFuel: null, monthlyCost: null,
+    dailyCost: null, costPerKM: null, resaleAmount: null, totalDepreciation: null,
+    ownershipYears: null, budgetPercent: 0, yearlyFuelCosts: [],
+    ...Object.fromEntries(COST_HORIZONS.flatMap((y) => [
+        [`totalCost${y}Y`, null], [`ownershipCost${y}Y`, null], [`taxi${y}Y`, null],
+    ])),
+};
+
+/** Indian rupee display; a missing figure prints an em dash, never a zero. */
+const money = (value) =>
+    value == null ? '—' : new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(value);
 
 let html2canvasPromise;
 let jsPdfPromise;
@@ -77,7 +92,7 @@ const StyledSectionCard = ({ children, className = '', title, icon: Icon, collap
 const ResultCard = ({ title, value, subtext, icon: Icon, highlight = false, large = false }) => (
     <motion.div
         whileHover={{ y: -4 }}
-        className={`relative overflow-hidden rounded-[2rem] p-5 transition-all ${highlight ? 'bg-(--primary) text-white' : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10'}`}
+        className={`relative overflow-hidden rounded-[2rem] p-5 transition-all ${highlight ? 'bg-(--primary) text-(--primary-foreground)' : 'bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10'}`}
     >
         <div className="relative z-10 flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
@@ -104,14 +119,7 @@ const ChartCard = ({ title, children, className = '' }) => (
     </Card>
 );
 
-const defaultCar = {
-    name: '', price: '', downPayment: '', loanAmount: '', interestRate: '', loanTenure: 5,
-    fuelType: 'petrol', mileage: '', monthlyKM: '', fuelPrice: '', insurance: '',
-    maintenance: '', parking: '', toll: '', registration: '', accessories: '',
-    serviceFrequency: 6, ownershipYears: 5, resaleValue: '', annualKMGrowth: '', fuelInflation: '',
-    unexpectedRepairs: '', tyreCost: '',
-    monthlyIncome: '', taxiFarePerKM: '', dailyTaxiFare: '', taxiCalcMode: 'km',
-};
+const defaultCar = { ...DEFAULT_CAR };
 
 const CarCostCalculator = () => {
     const [carA, setCarA] = useState({ ...defaultCar });
@@ -147,88 +155,16 @@ const CarCostCalculator = () => {
         });
     }, []);
 
-    const calculateCar = useCallback((car) => {
-        const price = parseFloat(car.price) || 0;
-        const loanAmount = parseFloat(car.loanAmount) || 0;
-        const interestRate = parseFloat(car.interestRate) || 0;
-        const loanTenure = parseFloat(car.loanTenure) || 1;
-        const monthlyKM = parseFloat(car.monthlyKM) || 0;
-        const mileage = parseFloat(car.mileage) || 1;
-        const fuelPrice = parseFloat(car.fuelPrice) || 0;
-        const insurance = parseFloat(car.insurance) || 0;
-        const maintenance = parseFloat(car.maintenance) || 0;
-        const parking = parseFloat(car.parking) || 0;
-        const toll = parseFloat(car.toll) || 0;
-        const registration = parseFloat(car.registration) || 0;
-        const accessories = parseFloat(car.accessories) || 0;
-        const ownershipYears = parseFloat(car.ownershipYears) || 1;
-        const resaleValue = parseFloat(car.resaleValue) || 0;
-        const fuelInflation = parseFloat(car.fuelInflation) || 0;
-        const taxiFare = parseFloat(car.taxiFarePerKM) || 0;
-        const dailyTaxiFare = parseFloat(car.dailyTaxiFare) || 0;
-        const taxiCalcMode = car.taxiCalcMode || 'km';
-        const monthlyIncome = parseFloat(car.monthlyIncome) || 0;
-
-        const monthlyRate = interestRate / 100 / 12;
-        const months = loanTenure * 12;
-        let emi = 0, totalInterest = 0;
-        if (loanAmount > 0 && interestRate > 0) {
-            emi = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
-            totalInterest = emi * months - loanAmount;
-        } else if (loanAmount > 0) emi = loanAmount / months;
-
-        const yearlyFuelCosts = [];
-        for (let year = 1; year <= 10; year++) {
-            const inflatedFuelPrice = fuelPrice * Math.pow(1 + fuelInflation / 100, year - 1);
-            yearlyFuelCosts.push((monthlyKM * 12 / mileage) * inflatedFuelPrice);
-        }
-
-        const monthlyFuel = yearlyFuelCosts[0] / 12;
-        const monthlyCost = emi + monthlyFuel + parking + toll + (maintenance / 12) + (insurance / 12);
-
-        // Year 1, 3, 5, 10 Costs
-        const getCostForYears = (yrs) => {
-            const months = yrs * 12;
-            return (monthlyCost * months) + registration + accessories;
-        };
-
-        const totalCost1Y = getCostForYears(1);
-        const totalCost3Y = getCostForYears(3);
-        const totalCost5Y = getCostForYears(5);
-        const totalCost10Y = getCostForYears(10);
-
-        // Taxi Comparison
-        const getTaxiCost = (yrs) => {
-            if (taxiCalcMode === 'daily') {
-                return dailyTaxiFare * 30 * 12 * yrs;
-            }
-            return monthlyKM * taxiFare * 12 * yrs;
-        };
-        const taxi1Y = getTaxiCost(1);
-        const taxi3Y = getTaxiCost(3);
-        const taxi5Y = getTaxiCost(5);
-        const taxi10Y = getTaxiCost(10);
-
-        // Budget Compatibility
-        const budgetPercent = monthlyIncome > 0 ? (monthlyCost / monthlyIncome) * 100 : 0;
-
-        return {
-            emi: Math.round(emi), totalInterest: Math.round(totalInterest),
-            monthlyFuel: Math.round(monthlyFuel), monthlyCost: Math.round(monthlyCost),
-            dailyCost: Math.round(monthlyCost / 30), costPerKM: Math.round((monthlyCost / monthlyKM) * 100) / 100 || 0,
-            totalCost1Y, totalCost3Y, totalCost5Y, totalCost10Y,
-            taxi1Y, taxi3Y, taxi5Y, taxi10Y,
-            budgetPercent,
-            yearlyFuelCosts,
-        };
-    }, []);
-
-    const calcA = useMemo(() => calculateCar(carA), [carA, calculateCar]);
-    const calcB = useMemo(() => calculateCar(carB), [carB, calculateCar]);
+    const rawA = useMemo(() => analyzeCarCost(carA), [carA]);
+    const rawB = useMemo(() => analyzeCarCost(carB), [carB]);
+    const errorA = rawA.error || '';
+    const errorB = rawB.error || '';
+    const calcA = errorA ? EMPTY_ANALYSIS : rawA;
+    const calcB = errorB ? EMPTY_ANALYSIS : rawB;
 
     const pieData = useMemo(() => [
-        { name: 'EMI', value: calcA.emi, color: '#3b82f6' },
-        { name: 'Fuel', value: calcA.monthlyFuel, color: '#f59e0b' },
+        { name: 'EMI', value: calcA.emi || 0, color: '#3b82f6' },
+        { name: 'Fuel', value: calcA.monthlyFuel || 0, color: '#f59e0b' },
         { name: 'Insurance', value: Math.round(carA.insurance / 12), color: '#10b981' },
         { name: 'Maint.', value: Math.round(carA.maintenance / 12), color: '#8b5cf6' },
         { name: 'Other', value: (parseFloat(carA.parking) || 0) + (parseFloat(carA.toll) || 0), color: '#ef4444' },
@@ -240,24 +176,24 @@ const CarCostCalculator = () => {
         ranges.forEach(yr => {
             data.push({
                 year: `${yr}Y`,
-                'Own Car': Math.round(calcA[`totalCost${yr}Y`]),
-                'Taxi': Math.round(calcA[`taxi${yr}Y`]),
+                'Own Car': Math.round(calcA[`ownershipCost${yr}Y`] || 0),
+                'Taxi': Math.round(calcA[`taxi${yr}Y`] || 0),
             });
         });
         return data;
     }, [calcA, selectedChartRange]);
 
     const barData = useMemo(() => [
-        { year: 'Y1', cost: calcA.totalCost1Y },
-        { year: 'Y3', cost: calcA.totalCost3Y },
-        { year: 'Y5', cost: calcA.totalCost5Y },
+        { year: 'Y1', cost: calcA.totalCost1Y || 0 },
+        { year: 'Y3', cost: calcA.totalCost3Y || 0 },
+        { year: 'Y5', cost: calcA.totalCost5Y || 0 },
     ], [calcA]);
 
     const lineData = useMemo(() => {
         const data = [];
         let cumulative = parseFloat(carA.registration || 0) + parseFloat(carA.accessories || 0);
         for (let i = 1; i <= 10; i++) {
-            cumulative += calcA.monthlyCost * 12;
+            cumulative += (calcA.monthlyCost || 0) * 12;
             data.push({ year: `Y${i}`, cost: cumulative });
         }
         return data;
@@ -268,9 +204,9 @@ const CarCostCalculator = () => {
         const doc = new jsPDF();
         doc.setFontSize(20); doc.text('Car Ownership Cost Report', 20, 30);
         doc.setFontSize(12); doc.text(`Car: ${carA.name || 'My Car'}`, 20, 45);
-        doc.text(`Total 5-Year Cost: ₹${calcA.totalCost5Y.toLocaleString('en-IN')}`, 20, 60);
-        doc.text(`Monthly EMI: ₹${calcA.emi.toLocaleString('en-IN')}`, 20, 75);
-        doc.text(`Cost/KM: ₹${calcA.costPerKM}`, 20, 90);
+        doc.text(`Total 5-Year Cost: ${money(calcA.totalCost5Y)}`, 20, 60);
+        doc.text(`Monthly EMI: ${money(calcA.emi)}`, 20, 75);
+        doc.text(`Cost/KM: ${money(calcA.costPerKM)}`, 20, 90);
         doc.save('car-cost-report.pdf');
     };
 
@@ -384,6 +320,8 @@ const CarCostCalculator = () => {
                 <Input label="Toll/Month" value={formatCurrencyInput(car.toll)} onChange={(e) => handleCurrencyChange(e.target.value, updateCar, 'toll')} suffix="₹" placeholder="e.g., 500" />
                 <Input label="Registration" value={formatCurrencyInput(car.registration)} onChange={(e) => handleCurrencyChange(e.target.value, updateCar, 'registration')} suffix="₹" placeholder="e.g., 100000" />
                 <Input label="Accessories" value={formatCurrencyInput(car.accessories)} onChange={(e) => handleCurrencyChange(e.target.value, updateCar, 'accessories')} suffix="₹" placeholder="e.g., 50000" />
+                <Input label="Ownership Period (years)" type="number" min="1" value={car.ownershipYears} onChange={(e) => updateCar({ ownershipYears: e.target.value })} suffix="yr" placeholder="e.g., 5" />
+                <Input label="Resale Value After Ownership" type="number" min="0" max="100" value={car.resaleValue} onChange={(e) => updateCar({ resaleValue: e.target.value })} suffix="%" placeholder="e.g., 40" />
             </div>
         </div>
     );
@@ -413,7 +351,7 @@ const CarCostCalculator = () => {
         let breakevenYear = 0;
 
         for (let yr of yrs) {
-            if (calcA[`totalCost${yr}Y`] < calcA[`taxi${yr}Y`]) {
+            if (calcA[`ownershipCost${yr}Y`] != null && calcA[`ownershipCost${yr}Y`] < calcA[`taxi${yr}Y`]) {
                 breakevenYear = yr;
                 break;
             }
@@ -645,7 +583,7 @@ const CarCostCalculator = () => {
                             </div>
                         </StyledSectionCard>
 
-                        {calcA.monthlyCost > 0 && (
+                        {!errorA && calcA.monthlyCost > 0 && (
                             <div className="grid md:grid-cols-2 gap-6">
                                 <ChartCard title="Cost Breakdown">
                                     <ResponsiveContainer width="100%" height={220}>
@@ -684,15 +622,23 @@ const CarCostCalculator = () => {
                     {/* RIGHT COLUMN */}
                     <div className="lg:col-span-2">
                         <div ref={resultRef} className="lg:sticky lg:top-10 space-y-6">
+                            {errorA && (
+                                <p role="alert" className="rounded-md bg-(--danger-soft) px-3 py-2 text-sm font-bold text-(--danger)">{errorA}</p>
+                            )}
+                            {errorB && compareMode && (
+                                <p role="alert" className="rounded-md bg-(--danger-soft) px-3 py-2 text-sm font-bold text-(--danger)">Car B: {errorB}</p>
+                            )}
                             <StyledSectionCard title="Cost Summary" icon={Calculator}>
                                 <div className="space-y-4">
-                                    <ResultCard title="Monthly EMI" value={`₹${calcA.emi.toLocaleString()}`} icon={Wallet} />
-                                    <ResultCard title="Monthly Fuel" value={`₹${calcA.monthlyFuel.toLocaleString()}`} icon={Fuel} />
-                                    <ResultCard title="Daily Cost" value={`₹${calcA.dailyCost}`} icon={Zap} subtext="Your average daily ownership cost" />
-                                    <ResultCard title="Total Monthly" value={`₹${calcA.monthlyCost.toLocaleString()}`} icon={TrendingUp} highlight />
-                                    <ResultCard title="Cost/KM" value={`₹${calcA.costPerKM}`} icon={Gauge} />
-                                    <ResultCard title="Daily Drive" value={`${Math.round(carA.monthlyKM / 30)}km`} icon={Car} />
-                                    <ResultCard title="5-Year Total" value={`₹${calcA.totalCost5Y.toLocaleString()}`} icon={Settings} large />
+                                    <ResultCard title="Monthly EMI" value={money(calcA.emi)} icon={Wallet} />
+                                    <ResultCard title="Monthly Fuel" value={money(calcA.monthlyFuel)} icon={Fuel} />
+                                    <ResultCard title="Daily Cost" value={money(calcA.dailyCost)} icon={Zap} subtext="Your average daily ownership cost" />
+                                    <ResultCard title="Total Monthly" value={money(calcA.monthlyCost)} icon={TrendingUp} highlight />
+                                    <ResultCard title="Cost/KM" value={money(calcA.costPerKM)} icon={Gauge} />
+                                    <ResultCard title="Daily Drive" value={`${Math.round((parseFloat(carA.monthlyKM) || 0) / 30)} km`} icon={Car} />
+                                    <ResultCard title="5-Year Total" value={money(calcA.totalCost5Y)} icon={Settings} large subtext="Finance, fuel and running costs" />
+                                    <ResultCard title="Depreciation" value={money(calcA.totalDepreciation)} icon={TrendingDown} subtext={`Price less resale after ${calcA.ownershipYears ?? '—'} years`} />
+                                    <ResultCard title="5-Year Cost of Ownership" value={money(calcA.ownershipCost5Y)} icon={CircleDollarSign} large subtext="Running costs plus depreciation" />
                                 </div>
                             </StyledSectionCard>
 

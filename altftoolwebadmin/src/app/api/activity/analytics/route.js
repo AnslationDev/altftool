@@ -125,6 +125,12 @@ export async function GET(request) {
     });
   } catch (error) {
     const status = error?.message === "Unauthorized" ? 401 : 500;
+    if (status === 500) {
+      // This route was throwing straight to a generic 500 with nothing logged,
+      // so a real failure here (e.g. a missing Firestore composite index for
+      // the path-scoped count() queries) was undebuggable from the server side.
+      console.error("ACTIVITY_ANALYTICS_ERROR:", error);
+    }
     return NextResponse.json(
       { error: status === 401 ? "Unauthorized" : "Failed to load analytics" },
       { status },

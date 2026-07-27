@@ -1,7 +1,7 @@
 "use client";
 
-import GoldenHourEstimator from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <GoldenHourEstimator />;
+  return <ToolHome />;
 }

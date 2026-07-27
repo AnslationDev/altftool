@@ -1,7 +1,7 @@
 "use client";
 
-import GiveawayWinnerPickerApp from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <GiveawayWinnerPickerApp />;
+  return <ToolHome />;
 }

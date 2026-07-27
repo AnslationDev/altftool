@@ -66,7 +66,7 @@ export const getCVDMatrix = (type, severity = 1) => {
   if (type === 'achromatopsia') return null; // Handled separately via luminance
 
   const cvd = CVD_MATRICES[type] || CVD_MATRICES.protanopia;
-  
+
   // Interpolate CVD matrix with identity matrix based on severity
   const interpolatedCvd = cvd.map((val, i) => {
     const identity = [1, 0, 0, 0, 1, 0, 0, 0, 1][i];
@@ -98,6 +98,51 @@ export const getCVDMatrix = (type, severity = 1) => {
   }
 
   return final;
+};
+
+/**
+ * Simulates one sRGB colour, without touching a canvas.
+ *
+ * This is the same pipeline `applyCVDFilter` runs per pixel — sRGB to linear
+ * RGB, linear RGB to LMS, collapse the missing cone response, back to sRGB —
+ * pulled out as a pure function so the maths can be tested on its own.
+ *
+ * @param {[number, number, number]} rgb - 0-255 channels.
+ * @param {string} type - normal | protanopia | deuteranopia | tritanopia | achromatopsia
+ * @param {number} severity - 0 (no deficiency) to 1 (full dichromacy).
+ * @returns {{ error: string } | { rgb: [number, number, number] }}
+ */
+export const simulateRgb = (rgb, type = 'normal', severity = 1) => {
+  if (!Array.isArray(rgb) || rgb.length < 3 || !rgb.slice(0, 3).every(Number.isFinite)) {
+    return { error: 'Pass a colour as three numbers, each 0-255.' };
+  }
+  if (!Number.isFinite(severity) || severity < 0 || severity > 1) {
+    return { error: 'Severity must be between 0 and 1.' };
+  }
+
+  const clamp255 = (v) => Math.max(0, Math.min(255, v));
+  const [r0, g0, b0] = rgb.slice(0, 3).map(clamp255);
+
+  if (type === 'achromatopsia') {
+    // Rec. 709 luminance weights — the same coefficients WCAG uses for
+    // relative luminance, applied here at full severity only.
+    const lum = 0.2126 * r0 + 0.7152 * g0 + 0.0722 * b0;
+    const mixed = [r0, g0, b0].map((c) => c + (lum - c) * severity);
+    return { rgb: mixed.map((c) => Math.round(clamp255(c))) };
+  }
+
+  const matrix = getCVDMatrix(type, severity);
+  if (!matrix) return { rgb: [Math.round(r0), Math.round(g0), Math.round(b0)] };
+
+  const lr = sRGBtoLinear(r0);
+  const lg = sRGBtoLinear(g0);
+  const lb = sRGBtoLinear(b0);
+  const out = [
+    matrix[0] * lr + matrix[1] * lg + matrix[2] * lb,
+    matrix[3] * lr + matrix[4] * lg + matrix[5] * lb,
+    matrix[6] * lr + matrix[7] * lg + matrix[8] * lb,
+  ];
+  return { rgb: out.map((c) => Math.round(linearToSRGB(c))) };
 };
 
 /**

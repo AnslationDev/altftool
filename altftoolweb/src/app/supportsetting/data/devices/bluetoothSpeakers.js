@@ -22,7 +22,7 @@ export const bluetoothSpeakersSettings = [
       "Wait for an audio confirmation tone or a solid (non-flashing) LED, which indicates the pairing succeeded and the speaker is now the active audio output.",
       "If the speaker doesn't appear, move it within 3 feet of the source device and make sure it isn't already connected to another paired device — most speakers can only be actively connected to one device at a time unless multipoint is enabled.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/connect-a-bluetooth-device-in-windows-8b3c8e6f-a4c6-4f1e-9e6b-e5f5f9db1c3a",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Connect a Bluetooth Device",
     whyItMatters:
       "Pairing is the one-time handshake that lets a speaker and a source device recognize each other automatically on future connections; getting it wrong the first time (for example, pairing while the speaker is still connected to another device) is the single most common reason people think a speaker is defective when it's really just stuck on the wrong connection.",
@@ -60,7 +60,7 @@ export const bluetoothSpeakersSettings = [
       "Once both devices are paired, playing audio on either device should cause the speaker to switch to it automatically, usually pausing or muting the other source.",
       "If switching feels unreliable, manually disconnect Bluetooth on the device you're not using — some multipoint implementations only handle one active audio stream cleanly at a time despite maintaining two connections.",
     ],
-    redirectUrl: "https://support.apple.com/guide/mac-help/connect-bluetooth-device-blth1720/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Connect a Bluetooth Device",
     whyItMatters:
       "Multipoint removes the friction of manually reconnecting a speaker every time you switch between, say, a work laptop and a personal phone — without it, connecting to a second device typically drops the first connection entirely, which is a frequent source of \"my speaker randomly disconnected\" complaints.",
@@ -97,7 +97,7 @@ export const bluetoothSpeakersSettings = [
       "Avoid maxing out both the source volume and the speaker volume simultaneously — this is the most common cause of audible crackling or clipping distortion at high volume.",
       "Some speakers report absolute volume over Bluetooth (AVRCP absolute volume), meaning the source device's volume slider and the speaker's physical buttons stay in sync — others don't, so the two can drift out of step.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/fix-sound-or-audio-problems-in-windows-73837184-83f1-9655-e26a-eb45f7a5f887",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Sound Problems",
     whyItMatters:
       "Distortion at high volume is one of the most common speaker complaints, and it's usually a gain-staging problem (both volumes pushed too high) rather than a hardware fault — understanding how the two volume controls interact avoids unnecessary troubleshooting or returns.",
@@ -171,7 +171,7 @@ export const bluetoothSpeakersSettings = [
       "Do not turn off the speaker, close the app, or move out of range while an update is in progress; most updates take anywhere from 1 to 10 minutes and show a progress indicator in-app.",
       "After the update completes, the speaker may reboot on its own and briefly disconnect from Bluetooth — this is expected and it should reconnect automatically within a few seconds.",
     ],
-    redirectUrl: "https://support.google.com/googleplay/answer/113412",
+    redirectUrl: "https://support.google.com/googleplay/?hl=en",
     actionLabel: "Open Google Play Support: Update Apps",
     whyItMatters:
       "Firmware is the layer that governs core Bluetooth behavior — pairing reliability, reconnection speed, multipoint switching, and battery reporting all live in it, so a speaker exhibiting persistent connection quirks is often better served by a firmware check than a repeated pair-and-forget cycle.",
@@ -208,7 +208,7 @@ export const bluetoothSpeakersSettings = [
       "For speakers with a full built-in smart assistant (Wi-Fi based, not just a Bluetooth relay), set them up through the manufacturer's or assistant's own app (e.g., the Google Home app or the Amazon Alexa app), which requires connecting the speaker to your Wi-Fi network, not just Bluetooth.",
       "Grant microphone permission to the companion app if prompted, since voice-trigger features generally can't function without it.",
     ],
-    redirectUrl: "https://support.google.com/assistant/answer/7172657",
+    redirectUrl: "https://support.google.com/assistant/?hl=en",
     actionLabel: "Open Google Assistant Support: Set Up Voice Match",
     whyItMatters:
       "Confusing a Bluetooth-relay assistant button with a full Wi-Fi smart-speaker assistant is a common setup mistake — the former only works while actively connected to a phone over Bluetooth, while the latter works independently over Wi-Fi even with no phone nearby, and they require entirely different setup steps.",
@@ -245,7 +245,7 @@ export const bluetoothSpeakersSettings = [
       "For true stereo separation, check the app or manual for how to assign left/right channels to each unit; without this step, both speakers typically just play the same mono mix.",
       "Expect a modest amount of audio-video sync lag when watching video with speakers linked this way, since the extra speaker-to-speaker hop adds latency on top of the phone-to-speaker Bluetooth delay.",
     ],
-    redirectUrl: "https://support.google.com/chromecast/answer/6296274",
+    redirectUrl: "https://support.google.com/chromecast/?hl=en",
     actionLabel: "Open Google Support: Group Speakers for Multi-Room Audio",
     whyItMatters:
       "Stereo and party pairing effectively double a portable audio setup without buying a dedicated stereo system, but the compatibility requirement (same brand/line) and the primary/secondary pairing model are easy to get wrong, leading people to conclude \"speaker linking doesn't work\" when the real issue is trying to pair mismatched hardware.",
@@ -282,7 +282,7 @@ export const bluetoothSpeakersSettings = [
       "Forget/unpair the speaker on the source device, power-cycle the speaker, and re-pair from scratch — this clears a stale or corrupted pairing entry, which is one of the most common causes of intermittent (not total) connection failure.",
       "As a last resort, check for a factory-reset option (often a long-press of a button combination, detailed in the manual) — this clears all paired devices and any custom settings, so re-pair and reconfigure EQ/multipoint afterward.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/fix-bluetooth-problems-in-windows-732bdb1c-0245-1c0a-6d4d-8dbe61b71dbb",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Bluetooth Problems",
     whyItMatters:
       "Most Bluetooth speaker \"defects\" reported to support lines turn out to be environmental interference or a stale pairing rather than a hardware fault — working through a short, ordered checklist before assuming the speaker is broken saves unnecessary returns and repeat troubleshooting calls.",

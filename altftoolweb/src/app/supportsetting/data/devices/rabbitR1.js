@@ -26,7 +26,7 @@ export const rabbitR1Settings = [
       "Keep the email address used to create your Rabbit Hole account handy, since it's how you sign back in if you ever reset the device.",
     ],
     important: "Use a strong, unique password for your Rabbit Hole account — it controls the third-party services (like music or delivery apps) your R1 is allowed to act on your behalf.",
-    redirectUrl: "https://www.rabbit.tech/support/getting-started",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Getting Started",
     whyItMatters:
       "Rabbit Hole is the account layer behind the R1 — without it the device can't sync your connected apps or let you review its interaction history. Setting it up correctly the first time avoids re-pairing the device later.",
@@ -61,7 +61,7 @@ export const rabbitR1Settings = [
       "The R1 shows a connection status indicator once it's successfully joined the network.",
       "If you switch routers or change your Wi-Fi password, reselect the network and re-enter the new password on the device.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/wifi-connectivity",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Wi-Fi & Connectivity",
     whyItMatters:
       "Most R1 features — from voice requests to Large Action Model tasks — rely on a network connection to reach Rabbit's servers, so a solid Wi-Fi connection is foundational to the device working at all.",
@@ -96,7 +96,7 @@ export const rabbitR1Settings = [
       "For tasks on connected apps, the Large Action Model (LAM) can carry out multi-step actions based on what you say, using the accounts linked in Rabbit Hole.",
       "You can start a new request at any time by pressing PTT again, without waiting for the previous response to finish.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/using-push-to-talk",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Push-to-Talk Basics",
     whyItMatters:
       "PTT is the core interaction model of the R1 — nearly everything the device does starts with a voice request captured through this button, so understanding how to use it well shapes your entire experience with the device.",
@@ -131,7 +131,7 @@ export const rabbitR1Settings = [
       "Combine voice and camera together, for example holding PTT while asking the assistant to describe or identify something in view.",
       "Vision requests are processed online, the same as voice requests, so they need an active network connection.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/rabbit-eye-camera",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Vision Features",
     whyItMatters:
       "The Rabbit Eye is what differentiates the R1 from a purely voice-based assistant — it lets you ask about the physical world around you, not just questions typed or spoken in the abstract.",
@@ -166,7 +166,7 @@ export const rabbitR1Settings = [
       "Avoid letting the device sit fully depleted for long stretches, and give it a full charge before extended use away from a charger.",
       "The device can generally be used while plugged in and charging, if you need it during a longer charging session.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/battery-and-charging",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Battery & Charging",
     whyItMatters:
       "As a small standalone device meant to be carried around and used throughout the day, the R1's battery life directly determines how reliably it's available when you reach for it.",
@@ -202,7 +202,7 @@ export const rabbitR1Settings = [
       "Restart the device after an update completes if it doesn't restart automatically, so the new firmware fully takes effect.",
     ],
     important: "Don't disconnect power or Wi-Fi while an update is installing — interrupting it partway through can leave the device in an unusable state.",
-    redirectUrl: "https://www.rabbit.tech/support/software-updates",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Software Updates",
     whyItMatters:
       "Because the R1's assistant and Large Action Model capabilities are tied closely to its firmware, staying updated is often the fastest way to get bug fixes and new functionality without doing anything more than waiting for the install to finish.",
@@ -237,7 +237,7 @@ export const rabbitR1Settings = [
       "Disconnecting a service in Rabbit Hole prevents the Large Action Model from taking further actions on that account until it's reconnected.",
       "Review connected accounts periodically and remove any you no longer use to limit what the R1 is able to act on.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/privacy-and-data",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Privacy & Data",
     whyItMatters:
       "Because the R1's Large Action Model can take real actions on connected accounts, understanding what's logged and staying on top of which services are connected is central to using the device with confidence.",
@@ -272,7 +272,7 @@ export const rabbitR1Settings = [
       "If your R1 has an embedded data plan configuration, confirm whether it's active as a fallback when Wi-Fi isn't available.",
       "Restart the R1 if requests consistently time out even with a confirmed working network connection.",
     ],
-    redirectUrl: "https://www.rabbit.tech/support/troubleshooting-connectivity",
+    redirectUrl: "https://www.rabbit.tech/support",
     actionLabel: "Open Rabbit Support: Troubleshooting",
     whyItMatters:
       "Since nearly every core R1 feature depends on connectivity, ruling out a network issue first saves time before assuming the device itself is broken.",

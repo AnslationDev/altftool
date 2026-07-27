@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Explore how sound frequency and damping create Chladni-style geometric nodal patterns in a responsive browser simulation.",
   icon: "waves",
-  iconColor: "text-primary",
+  iconColor: "text-(--primary)",
   wideWorkspace: true,
 };
 

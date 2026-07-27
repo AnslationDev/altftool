@@ -1,11 +1,18 @@
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
+import { getRbacAdminDoc } from "@/lib/serverRbac";
 
 /**
  * POST /api/admin/google-login
  *
  * Called after a successful Google sign-in on the client.
+ *
+ * Identity is resolved the same way /api/admin/me resolves it:
+ *  1. Enterprise RBAC store (super_admin_dashboard/main/admin_users/{uid})
+ *  2. Legacy `admins` collection
+ * Admins created through the UI only ever get an RBAC doc, so skipping step 1
+ * told them "pending" and filed a junk access request on every sign-in.
  *
  * Outcomes:
  *  1. Email matches an existing ACTIVE admin doc  → { status: "admin" }
@@ -45,19 +52,44 @@ export async function POST(req) {
   );
 }
 
-    /* ── 1. Check admin doc by UID ── */
-    const byUid = await adminDb.collection("admins").doc(uid).get();
-    if (byUid.exists) {
-      if (!byUid.data()?.isActive) {
+    /* ── 1. Enterprise RBAC store (source of truth for UI-created admins).
+           getRbacAdminDoc() already falls back from uid → email, so this
+           covers the password→Google UID mismatch case too.
+
+           This route only answers "is this account active?", so read that flag
+           straight off the admin doc. buildRbacAdminProfile() would additionally
+           fan out over the projectAccess subcollection plus one modules
+           subcollection per project on every single Google sign-in, and we would
+           discard all of it. (Status derivation below mirrors normalizeStatus()
+           in lib/serverRbac.js.) ── */
+    const rbacAdmin = await getRbacAdminDoc(decoded);
+    if (rbacAdmin) {
+      const rbacData = rbacAdmin.data || {};
+      const rbacStatus =
+        rbacData.status ||
+        (rbacData.isActive === false ? "suspended" : "active");
+      if (rbacStatus !== "active") {
         return NextResponse.json(
-          { error: "Your account has been deactivated. Contact a super admin." },
+          { status: "inactive", error: "Your account has been deactivated. Contact a super admin." },
           { status: 403 }
         );
       }
       return NextResponse.json({ status: "admin" });
     }
 
-    /* ── 2. Check admin doc by email (covers password→Google UID mismatch) ── */
+    /* ── 2. Legacy admin doc by UID ── */
+    const byUid = await adminDb.collection("admins").doc(uid).get();
+    if (byUid.exists) {
+      if (!byUid.data()?.isActive) {
+        return NextResponse.json(
+          { status: "inactive", error: "Your account has been deactivated. Contact a super admin." },
+          { status: 403 }
+        );
+      }
+      return NextResponse.json({ status: "admin" });
+    }
+
+    /* ── 3. Legacy admin doc by email (covers password→Google UID mismatch) ── */
     const byEmail = await adminDb
       .collection("admins")
       .where("email", "==", email)
@@ -68,14 +100,14 @@ export async function POST(req) {
       const data = byEmail.docs[0].data();
       if (!data.isActive) {
         return NextResponse.json(
-          { error: "Your account has been deactivated. Contact a super admin." },
+          { status: "inactive", error: "Your account has been deactivated. Contact a super admin." },
           { status: 403 }
         );
       }
       return NextResponse.json({ status: "admin" });
     }
 
-    /* ── 3. Not an admin — check for any existing request for this user ── */
+    /* ── 4. Not an admin — check for any existing request for this user ── */
     const existingRequests = await adminDb
       .collection("accessRequests")
       .where("uid", "==", uid)
@@ -108,7 +140,7 @@ export async function POST(req) {
       // status === "rejected" → fall through to create a new request below
     }
 
-    /* ── 4. No pending request (or was rejected) → create a fresh one ── */
+    /* ── 5. No pending request (or was rejected) → create a fresh one ── */
     await adminDb.collection("accessRequests").add({
       uid,
       email,

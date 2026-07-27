@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "morse-code-translator",
-  "slug": "morse-code-translator",
-  "name": "Morse Code Translator",
-  "category": [
-    "Text",
-    "Education"
-  ],
-  "description": "Translate plain text to Morse code and decode Morse back.",
-  "icon": "arrow-left-right",
-  "iconColor": "text-amber-600"
+  name: "Morse Code Translator",
+  category: ["Text & Writing", "Education & Science"],
+  description:
+    "Translate plain text to International Morse code, decode Morse back to text, and see the exact transmission time at any words-per-minute speed.",
+  icon: "arrow-left-right",
+  iconColor: "text-amber-600",
 };
 
 export default toolConfig;

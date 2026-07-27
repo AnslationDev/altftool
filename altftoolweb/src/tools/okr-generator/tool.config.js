@@ -1,8 +1,9 @@
 const okrGeneratorConfig = {
   slug: "okr-generator",
   name: "OKR Generator",
-  description: "Generate objectives with measurable key results and suggested initiatives using AI-style prompts.",
-  category: ["Productivity", "Planning", "Business"],
+  description:
+    "Generate objectives with measurable key results and suggested initiatives using AI-style prompts.",
+  category: ["Productivity", "Business"],
   icon: "circle-dot",
   iconColor: "text-violet-500",
 };

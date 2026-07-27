@@ -3,9 +3,13 @@ import test from "node:test";
 
 import {
   BANK_STATEMENT_PRESETS,
+  REDACTION_MODES,
+  SENSITIVE_PATTERNS,
   buildExportPlan,
   buildOutputName,
+  calculatePrivacyScore,
   createPresetRectangle,
+  formatBytes,
   getRasterScale,
   moveRectangle,
   projectRectangle,
@@ -129,4 +133,42 @@ test("output names are sanitized and match the raster type", () => {
     "My-Bank-Statement-July-redacted.pdf",
   );
   assert.equal(buildOutputName("नमस्ते.png", "image"), "bank-statement-redacted.png");
+});
+
+test("sensitive data pattern regexes match IFSC, PAN, UPI, and Card patterns", () => {
+  const ifscPattern = SENSITIVE_PATTERNS.find((p) => p.key === "ifsc");
+  assert.ok(ifscPattern.regex.test("SBIN0001234"));
+
+  const panPattern = SENSITIVE_PATTERNS.find((p) => p.key === "pan_card");
+  assert.ok(panPattern.regex.test("ABCDE1234F"));
+
+  const upiPattern = SENSITIVE_PATTERNS.find((p) => p.key === "upi_id");
+  assert.ok(upiPattern.regex.test("user@okaxis"));
+});
+
+test("privacy score calculation computes score and recommendations accurately", () => {
+  const scoreClean = calculatePrivacyScore([], []);
+  assert.equal(scoreClean.score, 100);
+
+  const detected = [
+    { id: "1", severity: "high", status: "detected" },
+    { id: "2", severity: "medium", status: "detected" },
+  ];
+  const scoreExposed = calculatePrivacyScore(detected, []);
+  assert.ok(scoreExposed.score < 100);
+  assert.equal(scoreExposed.unhandledHighRisk, undefined);
+
+  const redacted = [
+    { id: "1", severity: "high", status: "redacted" },
+    { id: "2", severity: "medium", status: "redacted" },
+  ];
+  const scoreCovered = calculatePrivacyScore(redacted, [{ id: "mask-1" }, { id: "mask-2" }]);
+  assert.equal(scoreCovered.score, 100);
+});
+
+test("formatBytes formats byte numbers into human-readable strings", () => {
+  assert.equal(formatBytes(0), "0 B");
+  assert.equal(formatBytes(512), "512 B");
+  assert.equal(formatBytes(2048), "2.0 KB");
+  assert.equal(formatBytes(5 * 1024 * 1024), "5.0 MB");
 });

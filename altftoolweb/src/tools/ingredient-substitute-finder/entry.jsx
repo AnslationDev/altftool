@@ -1,8 +1,7 @@
-import React from 'react';
-import App from './App';
+"use client";
 
-const IngredientSubstituteFinder = () => {
-  return <App />;
-};
+import ToolHome from "./pages";
 
-export default IngredientSubstituteFinder;
+export default function ToolEntry() {
+  return <ToolHome />;
+}

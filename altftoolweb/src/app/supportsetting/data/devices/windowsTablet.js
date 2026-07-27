@@ -26,7 +26,7 @@ export const windowsTabletSettings = [
       "Review Windows Update > Update history to confirm a recent update installed successfully.",
     ],
     important: "Keep the device plugged in and connected to Wi-Fi (or Ethernet via a dock) while installing large feature updates — battery-only installs on a tablet are more likely to be interrupted.",
-    redirectUrl: "https://support.microsoft.com/windows/update-windows-3c5ae7fc-9fb6-9af1-1984-b5e0412c556a",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Windows Update",
     whyItMatters:
       "On a tablet or 2-in-1, Windows Update is also the delivery mechanism for touchscreen, pen, and Surface firmware drivers, not just OS patches. Falling behind can leave you missing fixes for palm-rejection bugs, battery calibration, and security vulnerabilities at the same time.",
@@ -63,7 +63,7 @@ export const windowsTabletSettings = [
       "For LTE/5G-equipped tablets, check Settings > Network & internet > Cellular for data usage limits and SIM/eSIM settings.",
       "Use Airplane mode from Quick Settings before flights, then re-enable just Wi-Fi if the aircraft offers it.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/wi-fi-problems-and-your-home-network-2718771b-1e73-4270-8d29-a1c8bde940b7",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Wi-Fi Troubleshooting",
     whyItMatters:
       "A tablet with no Ethernet fallback is entirely dependent on a stable Wi-Fi connection for updates, OneDrive sync, and app downloads — a misconfigured metered connection or a stale saved network is one of the most common causes of a device that seems to silently stop syncing.",
@@ -100,7 +100,7 @@ export const windowsTabletSettings = [
       "Adjust Settings > System > Multitasking to configure how Snap layouts behave with touch and pen input.",
       "For touchpad gestures on the keyboard attachment, use Settings > Bluetooth & devices > Touchpad to customize taps, swipes, and multi-finger gestures.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/touch-and-tablet-tips-for-windows-b1d1e97b-4a5c-4e08-a1e1-4b9f2f9b2c50",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Touch and Tablet Tips",
     whyItMatters:
       "The wrong posture setting causes real friction — icons and touch targets that are too small when you detach the keyboard, or a touch keyboard that keeps popping up while a physical keyboard is attached. Getting this configured once removes daily annoyance.",
@@ -137,7 +137,7 @@ export const windowsTabletSettings = [
       "Adjust handwriting and drawing pressure sensitivity in the same Pen & Windows Ink settings page for apps that support it, such as OneNote.",
       "Check Settings > Bluetooth & devices > Pen & Windows Ink > Pen shortcuts to launch a specific app with a single click of the pen's top button.",
     ],
-    redirectUrl: "https://support.microsoft.com/surface/use-your-surface-pen-32d945b0-8299-3fe3-6a26-c95850c2ee9b",
+    redirectUrl: "https://support.microsoft.com/en-us/surface/",
     actionLabel: "Open Microsoft Support: Using Your Pen",
     whyItMatters:
       "Pen settings are easy to overlook because writing works out of the box, but without configuring pen shortcuts and pressure sensitivity you lose most of what makes a stylus faster than touch for note-taking, markup, and sketching.",
@@ -175,7 +175,7 @@ export const windowsTabletSettings = [
       "Review Settings > Accounts > Email & accounts if you also connect a separate Outlook or work/school account for Mail and Calendar.",
     ],
     important: "Files On-Demand placeholders still need an internet connection to open; mark folders you'll need offline as Always keep on this device before a flight or trip.",
-    redirectUrl: "https://support.microsoft.com/office/sync-files-with-onedrive-in-windows-615391c4-2bd3-4aae-a42a-858262e42a49",
+    redirectUrl: "https://support.microsoft.com/en-us/office",
     actionLabel: "Open Microsoft Support: OneDrive Sync",
     whyItMatters:
       "A tablet is more likely than a desktop to have limited local storage and to move between locations without a reliable backup routine — OneDrive sync tied to your Microsoft account is what protects your files if the device is lost, damaged, or needs a reset.",
@@ -213,7 +213,7 @@ export const windowsTabletSettings = [
       "Set the Power mode slider (Best power efficiency / Balanced / Best performance) to Best power efficiency when running on battery for extended periods.",
     ],
     important: "Some features like background app refresh, Focus Assist syncing, and mail push are automatically restricted while Battery Saver is active — expect notifications to arrive in batches rather than instantly.",
-    redirectUrl: "https://support.microsoft.com/windows/save-battery-life-with-windows-1d6a0e39-fe93-6c73-c1e6-1170ea9d4bde",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Battery Saver",
     whyItMatters:
       "A tablet is frequently used untethered for hours, so power settings have a much more direct effect on your day than on a plugged-in desktop. Tuning Battery Saver thresholds and power mode is the fastest way to noticeably extend time away from a charger.",
@@ -250,7 +250,7 @@ export const windowsTabletSettings = [
       "Enable the option to make OneDrive files that haven't been opened for a set number of days online-only, which frees local space without deleting the files.",
       "Use the Storage breakdown on the same page to see which categories (Apps, Temporary files, System) are using the most space before deciding what to clean up manually.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/manage-drive-space-with-storage-sense-654f6ada-7bfc-45e5-966b-e24aded96ad5",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Storage Sense",
     whyItMatters:
       "Running low on storage on a tablet blocks Windows updates, app installs, and even camera use, and it's often caused by silently accumulating temp files and installer leftovers rather than anything the user actively saved. Storage Sense handles that cleanup automatically instead of requiring manual maintenance.",
@@ -288,7 +288,7 @@ export const windowsTabletSettings = [
       "Under Sign-in options > Additional settings, choose whether Windows requires sign-in again after sleep, which matters more on a tablet that's frequently picked up and put down.",
     ],
     important: "Windows Hello face and fingerprint data is stored and matched locally on the device — it's never uploaded to Microsoft or usable to sign in on another device.",
-    redirectUrl: "https://support.microsoft.com/windows/learn-about-windows-hello-and-set-it-up-dae28983-8242-bb2a-d3d1-87c9d265a5f0",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Microsoft Support: Windows Hello Setup",
     whyItMatters:
       "On a tablet, entering a password on a touch keyboard is one of the more friction-heavy interactions in the whole OS. Windows Hello removes that friction on every wake and every app or purchase confirmation that asks you to re-authenticate, while still being backed by a required PIN if biometrics ever fail.",

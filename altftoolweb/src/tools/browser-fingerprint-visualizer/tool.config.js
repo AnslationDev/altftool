@@ -1,9 +1,10 @@
 const toolConfig = {
   slug: "browser-fingerprint-visualizer",
-  name: "Browser FingerPrint",
-  category: "Cybersecurity Tool",
-description: "Track your browser fingerprint",
- icon: "shield-check",
+  name: "Browser Fingerprint Visualizer",
+  category: "Security & Privacy",
+  description:
+    "See the exact canvas, WebGL, audio, font and hardware signals your browser leaks, and score how identifiable that fingerprint makes you.",
+  icon: "shield-check",
   iconColor: "text-red-800",
 };
 

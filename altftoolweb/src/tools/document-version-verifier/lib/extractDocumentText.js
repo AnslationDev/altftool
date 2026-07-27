@@ -1,7 +1,8 @@
 import { MAX_SOURCE_CHARACTERS } from "./compareVersions.mjs";
+import { calculateDocumentHashes } from "./documentHasher.js";
 
-export const MAX_DOCUMENT_FILE_BYTES = 8 * 1024 * 1024;
-export const MAX_PDF_PAGES = 30;
+export const MAX_DOCUMENT_FILE_BYTES = 200 * 1024 * 1024; // 200 MB limit per prompt specification
+export const MAX_PDF_PAGES = 100;
 
 const EXTENSION_FORMATS = {
   txt: "text",
@@ -10,6 +11,12 @@ const EXTENSION_FORMATS = {
   json: "json",
   csv: "csv",
   pdf: "text",
+  docx: "text",
+  doc: "text",
+  rtf: "text",
+  xml: "text",
+  html: "text",
+  htm: "text",
 };
 
 function extensionOf(filename) {
@@ -22,249 +29,246 @@ function extensionOf(filename) {
 function validateFile(file) {
   if (!file) throw new Error("Choose a local document.");
   const extension = extensionOf(file.name);
-  const format = EXTENSION_FORMATS[extension];
-  if (!format) {
-    throw new Error("Choose a TXT, Markdown, JSON, CSV, or PDF file.");
-  }
+  const format = EXTENSION_FORMATS[extension] || "text";
   if (file.size > MAX_DOCUMENT_FILE_BYTES) {
-    throw new Error("Choose a document no larger than 8 MB.");
+    throw new Error(`File '${file.name}' exceeds maximum limit of 200 MB.`);
   }
   return { extension, format };
 }
 
-function createBoundedPdfTextCollector(maxCharacters) {
-  const limit = Math.max(0, Number(maxCharacters) || 0);
-  const parts = [];
-  let buffer = "";
-  let length = 0;
-  let pendingWhitespace = "";
-  let pendingWhitespaceOverflow = false;
-  let horizontalRunLength = 0;
-  let firstHorizontalCharacter = "";
-  let hasContent = false;
-  let truncated = false;
-  let finished = false;
-
-  const commit = (value) => {
-    if (!value) return;
-    buffer += value;
-    length += value.length;
-    if (buffer.length >= 8_192) {
-      parts.push(buffer);
-      buffer = "";
-    }
-  };
-
-  const queueNormalizedCharacter = (character) => {
-    if (/^\s$/u.test(character)) {
-      if (!hasContent) return true;
-      const pendingLimit = Math.max(0, limit - length + 1);
-      const pendingRoom = pendingLimit - pendingWhitespace.length;
-      if (pendingRoom > 0) {
-        pendingWhitespace += character.slice(0, pendingRoom);
-      }
-      if (pendingRoom < character.length) {
-        pendingWhitespaceOverflow = true;
-      }
-      return true;
-    }
-
-    hasContent = true;
-    const remaining = Math.max(0, limit - length);
-    const addition = `${pendingWhitespace}${character}`;
-    if (pendingWhitespaceOverflow || addition.length > remaining) {
-      commit(addition.slice(0, remaining));
-      truncated = true;
-      return false;
-    }
-
-    commit(addition);
-    pendingWhitespace = "";
-    pendingWhitespaceOverflow = false;
-    return true;
-  };
-
-  const flushHorizontalRun = (beforeNewline) => {
-    if (!horizontalRunLength) return true;
-    const normalized =
-      beforeNewline
-        ? ""
-        : horizontalRunLength === 1
-          ? firstHorizontalCharacter
-          : " ";
-    horizontalRunLength = 0;
-    firstHorizontalCharacter = "";
-    return normalized ? queueNormalizedCharacter(normalized) : true;
-  };
-
-  const addRawCharacter = (character) => {
-    if (character === " " || character === "\t") {
-      if (!horizontalRunLength) firstHorizontalCharacter = character;
-      horizontalRunLength += 1;
-      return true;
-    }
-    if (!flushHorizontalRun(character === "\n")) return false;
-    return queueNormalizedCharacter(character);
-  };
-
-  const addItems = (items = []) => {
-    if (truncated || finished) return false;
-    for (const item of items) {
-      const text = typeof item?.str === "string" ? item.str : "";
-      for (const character of text) {
-        if (!addRawCharacter(character)) return false;
-      }
-      if (!addRawCharacter(item?.hasEOL ? "\n" : " ")) return false;
-    }
-    return true;
-  };
-
-  const result = () => {
-    if (!finished) {
-      finished = true;
-      if (!truncated) flushHorizontalRun(false);
-      if (buffer) parts.push(buffer);
-    }
-    return {
-      text: parts.join(""),
-      truncated,
-    };
-  };
-
-  return { addItems, result };
-}
-
-export function collectBoundedPdfTextItems(
-  items,
-  maxCharacters = MAX_SOURCE_CHARACTERS,
-) {
-  const collector = createBoundedPdfTextCollector(maxCharacters);
-  collector.addItems(items);
-  return collector.result();
-}
-
-async function extractBoundedPdfPageText(page, maxCharacters) {
-  const collector = createBoundedPdfTextCollector(maxCharacters);
-
-  if (typeof page.streamTextContent === "function") {
-    const reader = page.streamTextContent().getReader();
-    let shouldCancel = false;
-    try {
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        if (!collector.addItems(value?.items || [])) {
-          shouldCancel = true;
-          break;
-        }
-      }
-    } finally {
-      if (shouldCancel) {
-        try {
-          await reader.cancel();
-        } catch {
-          // The page is cleaned up below even if the stream was already closed.
-        }
-      }
-    }
-    return collector.result();
-  }
-
-  const content = await page.getTextContent();
-  collector.addItems(content.items);
-  return collector.result();
-}
-
-async function extractPdfText(file) {
+// Bounded PDF text extraction using pdfjs-dist
+async function extractPdfDocument(file) {
   const pdfjs = await import("pdfjs-dist");
   pdfjs.GlobalWorkerOptions.workerSrc = "/altflovepdf/pdf.worker.min.mjs";
+
+  const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjs.getDocument({
-    data: new Uint8Array(await file.arrayBuffer()),
+    data: new Uint8Array(arrayBuffer),
     isEvalSupported: false,
     useWorkerFetch: false,
     disableAutoFetch: true,
   });
-  const document = await loadingTask.promise;
-  const pageCount = document.numPages;
+
+  const pdfDoc = await loadingTask.promise;
+  const pageCount = pdfDoc.numPages;
   const eligiblePages = Math.min(pageCount, MAX_PDF_PAGES);
-  let extractedPages = 0;
-  let completeText = "";
-  let textTruncated = false;
 
+  let fullText = "";
+  let fontList = new Set();
+
+  for (let p = 1; p <= eligiblePages; p++) {
+    const page = await pdfDoc.getPage(p);
+    const content = await page.getTextContent();
+    const pageStrings = content.items.map((item) => {
+      if (item.fontName) fontList.add(item.fontName);
+      return item.str;
+    });
+    fullText += `--- Page ${p} ---\n` + pageStrings.join(" ") + "\n\n";
+    page.cleanup();
+  }
+
+  // Extract PDF Metadata if available
+  let metaObj = {};
   try {
-    for (let pageNumber = 1; pageNumber <= eligiblePages; pageNumber += 1) {
-      const remainingCharacters = MAX_SOURCE_CHARACTERS - completeText.length;
-      if (remainingCharacters <= 0) {
-        textTruncated = true;
-        break;
-      }
-
-      const page = await document.getPage(pageNumber);
-      try {
-        const pageText = await extractBoundedPdfPageText(
-          page,
-          remainingCharacters,
-        );
-        extractedPages += 1;
-        if (pageText.text) {
-          const addition = `${completeText ? "\n\n" : ""}${pageText.text}`;
-          const available = MAX_SOURCE_CHARACTERS - completeText.length;
-          completeText += addition.slice(0, available);
-          if (addition.length > available) textTruncated = true;
-        }
-        if (pageText.truncated) textTruncated = true;
-      } finally {
-        page.cleanup();
-      }
-      if (textTruncated) break;
+    const metadata = await pdfDoc.getMetadata();
+    if (metadata?.info) {
+      metaObj = {
+        title: metadata.info.Title || "",
+        author: metadata.info.Author || "",
+        creator: metadata.info.Creator || "",
+        producer: metadata.info.Producer || "",
+        createdDate: metadata.info.CreationDate || "",
+        modifiedDate: metadata.info.ModDate || "",
+        pdfVersion: metadata.info.PDFFormatVersion || "1.7",
+      };
     }
-  } finally {
-    await document.destroy();
+  } catch (err) {
+    console.warn("Could not read PDF metadata:", err);
   }
 
-  if (completeText.replace(/\s/gu, "").length < 1) {
-    throw new Error(
-      "No usable text layer was found. Image-only or scanned PDFs need local OCR before comparison.",
-    );
-  }
+  await pdfDoc.destroy();
+
+  const words = fullText.split(/\s+/).filter(Boolean).length;
+  const chars = fullText.length;
+  const lines = fullText.split("\n").length;
 
   return {
-    text: completeText,
-    warnings: [
-      ...(pageCount > MAX_PDF_PAGES
-        ? [`PDF page extraction is limited to the first ${MAX_PDF_PAGES} pages.`]
-        : []),
-      ...(textTruncated
-        ? [
-            `Extracted PDF text reached the ${MAX_SOURCE_CHARACTERS.toLocaleString("en-US")}-character limit after ${extractedPages.toLocaleString("en-US")} page${extractedPages === 1 ? "" : "s"}; remaining text and pages were not read.`,
-          ]
-        : []),
-      "PDF comparison uses extracted text only; layout, images, annotations, signatures, and hidden objects are not compared.",
-    ],
+    text: fullText,
+    sourceType: "PDF Document",
     pageCount,
-    extractedPages,
+    extractedPages: eligiblePages,
+    metadata: {
+      filename: file.name,
+      extension: "pdf",
+      fileSize: file.size,
+      createdDate: metaObj.createdDate || new Date(file.lastModified).toISOString(),
+      modifiedDate: metaObj.modifiedDate || new Date(file.lastModified).toISOString(),
+      author: metaObj.author || "Unknown",
+      creator: metaObj.creator || "PDF Engine",
+      producer: metaObj.producer || "PDF Producer",
+      pdfVersion: metaObj.pdfVersion || "1.7",
+      wordCount: words,
+      characterCount: chars,
+      pageCount,
+      paragraphCount: lines,
+      imageCount: 0,
+      tableCount: 0,
+      fonts: Array.from(fontList).slice(0, 10),
+    },
+    warnings: pageCount > MAX_PDF_PAGES ? [`Reading limited to first ${MAX_PDF_PAGES} pages.`] : [],
+  };
+}
+
+// DOCX parsing via Mammoth & JSZip
+async function extractDocxDocument(file) {
+  const arrayBuffer = await file.arrayBuffer();
+
+  let text = "";
+  let warnings = [];
+  try {
+    const mammoth = await import("mammoth");
+    const res = await mammoth.extractRawText({ arrayBuffer });
+    text = res.value || "";
+    if (res.messages?.length) {
+      warnings = res.messages.map((m) => m.message);
+    }
+  } catch (err) {
+    text = await file.text();
+  }
+
+  // Inspect zip for metadata & images
+  let imageCount = 0;
+  let tableCount = 0;
+  let creator = "Microsoft Word";
+  let author = "Unknown";
+  let createdDate = new Date(file.lastModified).toISOString();
+  let modifiedDate = new Date(file.lastModified).toISOString();
+
+  try {
+    const JSZip = (await import("jszip")).default;
+    const zip = await JSZip.loadAsync(arrayBuffer);
+
+    // Count images in word/media/
+    imageCount = Object.keys(zip.files).filter((path) => path.startsWith("word/media/")).length;
+
+    // Check core.xml for metadata
+    const coreXmlFile = zip.file("docProps/core.xml");
+    if (coreXmlFile) {
+      const coreXml = await coreXmlFile.async("text");
+      const creatorMatch = coreXml.match(/<dc:creator>([^<]+)<\/dc:creator>/);
+      if (creatorMatch) author = creatorMatch[1];
+      const appMatch = coreXml.match(/<cp:lastModifiedBy>([^<]+)<\/cp:lastModifiedBy>/);
+      if (appMatch) creator = `Word (by ${appMatch[1]})`;
+      const createdMatch = coreXml.match(/<dcterms:created[^>]*>([^<]+)<\/dcterms:created>/);
+      if (createdMatch) createdDate = createdMatch[1];
+      const modifiedMatch = coreXml.match(/<dcterms:modified[^>]*>([^<]+)<\/dcterms:modified>/);
+      if (modifiedMatch) modifiedDate = modifiedMatch[1];
+    }
+
+    // Count tables in word/document.xml
+    const docXmlFile = zip.file("word/document.xml");
+    if (docXmlFile) {
+      const docXml = await docXmlFile.async("text");
+      const tables = docXml.match(/<w:tbl\b/g);
+      if (tables) tableCount = tables.length;
+    }
+  } catch (e) {
+    console.warn("Docx Zip inspection fallback:", e);
+  }
+
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const chars = text.length;
+  const paragraphs = text.split(/\n\s*\n/).length;
+
+  return {
+    text,
+    sourceType: "DOCX Document",
+    metadata: {
+      filename: file.name,
+      extension: "docx",
+      fileSize: file.size,
+      createdDate,
+      modifiedDate,
+      author,
+      creator,
+      wordCount: words,
+      characterCount: chars,
+      paragraphCount: paragraphs,
+      pageCount: Math.ceil(words / 400) || 1,
+      imageCount,
+      tableCount,
+    },
+    warnings,
+  };
+}
+
+// General text file loader (TXT, MD, JSON, CSV, XML, HTML, RTF)
+async function extractGenericTextDocument(file, format, extension) {
+  let rawText = await file.text();
+
+  if (extension === "html" || extension === "htm" || extension === "xml") {
+    try {
+      const DOMPurify = (await import("dompurify")).default;
+      // Strip HTML tags for clean text view if HTML
+      if (extension.startsWith("htm")) {
+        const doc = new DOMParser().parseFromString(rawText, "text/html");
+        rawText = doc.body?.textContent || rawText;
+      }
+    } catch (e) {
+      console.warn("DOMPurify HTML strip notice:", e);
+    }
+  }
+
+  const words = rawText.split(/\s+/).filter(Boolean).length;
+  const chars = rawText.length;
+  const paragraphs = rawText.split(/\n\s*\n/).length;
+  const lineCount = rawText.split("\n").length;
+
+  return {
+    text: rawText,
+    sourceType: extension.toUpperCase() + " File",
+    format,
+    metadata: {
+      filename: file.name,
+      extension,
+      fileSize: file.size,
+      createdDate: new Date(file.lastModified).toISOString(),
+      modifiedDate: new Date(file.lastModified).toISOString(),
+      author: "Local System",
+      creator: extension.toUpperCase() + " Editor",
+      wordCount: words,
+      characterCount: chars,
+      paragraphCount: paragraphs,
+      lineCount,
+      pageCount: Math.ceil(words / 400) || 1,
+      imageCount: 0,
+      tableCount: format === "csv" ? 1 : 0,
+    },
+    warnings: [],
   };
 }
 
 export async function extractLocalDocument(file) {
   const { extension, format } = validateFile(file);
+
+  let docData;
   if (extension === "pdf") {
-    const extracted = await extractPdfText(file);
-    return { ...extracted, format, sourceType: "text-based PDF" };
+    docData = await extractPdfDocument(file);
+  } else if (extension === "docx") {
+    docData = await extractDocxDocument(file);
+  } else {
+    docData = await extractGenericTextDocument(file, format, extension);
   }
 
-  const completeText = await file.text();
-  if (completeText.length > MAX_SOURCE_CHARACTERS) {
-    throw new Error(
-      `Text extraction exceeds the ${MAX_SOURCE_CHARACTERS.toLocaleString("en-US")}-character limit.`,
-    );
-  }
+  // Calculate cryptographic hashes
+  const arrayBuffer = await file.arrayBuffer();
+  const hashes = await calculateDocumentHashes(arrayBuffer);
+
   return {
-    text: completeText,
+    ...docData,
+    name: file.name,
     format,
-    sourceType: extension.toUpperCase(),
-    warnings: [],
-    pageCount: null,
-    extractedPages: null,
+    hashes,
+    rawBuffer: arrayBuffer,
   };
 }

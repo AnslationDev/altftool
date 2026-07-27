@@ -2,6 +2,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
 import {
   BLOG_EXPORT_COLUMNS,
   csvEscape,
@@ -35,6 +36,22 @@ async function verifyAdminRequest(request) {
   }
 
   const decoded = await adminAuth.verifyIdToken(token);
+
+  // RBAC-first: admins created through the current flow live only under
+  // super_admin_dashboard/main/admin_users, so the legacy-only lookup below
+  // 403'd every one of them.
+  const rbacAdmin = await getRbacAdminDoc(decoded);
+  if (rbacAdmin) {
+    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+    if (!profile.isActive) {
+      const error = new Error("Forbidden");
+      error.status = 403;
+      throw error;
+    }
+    return decoded;
+  }
+
+  // Legacy fallback for admins created before the RBAC migration.
   let snap = await adminDb.collection("admins").doc(decoded.uid).get();
 
   if (!snap.exists && decoded.email) {

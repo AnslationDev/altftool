@@ -1,4 +1,4 @@
-import { Bluetooth, Gauge } from "lucide-react";
+import { Bluetooth, Gauge, Cpu, LayoutGrid, Battery, RefreshCw, Wrench } from "lucide-react";
 
 export const mouseSettings = [
   {
@@ -20,7 +20,7 @@ export const mouseSettings = [
       "For Bluetooth: put the mouse into pairing mode (usually a dedicated button or switch, sometimes held for a few seconds), then on your computer open Bluetooth settings and select the mouse from the list of discoverable devices.",
       "Windows: Settings → Bluetooth & devices → Add device. macOS: System Settings → Bluetooth.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/connect-a-bluetooth-device-in-windows-8b3c8e6f-a4c6-4f1e-9e6b-e5f5f9db1c3a",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Connect a Bluetooth Device",
     whyItMatters:
       "A USB receiver generally gives lower latency and more reliable tracking than Bluetooth, which matters for fast-paced work or gaming — knowing which connection type a given mouse uses (and that many support only one) avoids buying the wrong expectation into a purchase.",
@@ -55,7 +55,7 @@ export const mouseSettings = [
       "macOS: System Settings → Mouse → adjust the \"Tracking speed\" slider.",
       "For mice with onboard DPI (dots per inch) buttons, pressing them changes hardware-level sensitivity independent of the OS slider — the two settings multiply together.",
     ],
-    redirectUrl: "https://support.apple.com/guide/mac-help/change-mouse-settings-mh27979/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Change Mouse Settings",
     whyItMatters:
       "Mismatched pointer speed is one of the most common sources of everyday mouse frustration — too slow feels sluggish on a large or multi-monitor setup, too fast makes precise clicking (small UI buttons, design work) error-prone, and the fix is a thirty-second slider adjustment most people never revisit after initial setup.",
@@ -71,5 +71,246 @@ export const mouseSettings = [
     tipsAndTricks: ["Most gaming-oriented mice ship with a companion app that lets you save per-profile DPI stages tied to a physical button — worth installing even for productivity use if the mouse has one."],
     faqs: [{ q: "What's the difference between DPI and pointer speed?", a: "DPI is a hardware property of the mouse sensor (how many tracking steps per inch of physical movement); pointer speed is an OS-level multiplier applied on top of whatever DPI the mouse reports." }],
     relatedSettingIds: ["mouse-bluetooth-pairing"],
+  },
+  {
+    id: "mouse-dpi-sensitivity-profiles",
+    title: "Configure Onboard DPI & Sensitivity Profiles",
+    icon: Cpu,
+    platform: "mouse",
+    category: "devices-peripherals",
+    frequentlyUsed: true,
+    recommended: true,
+    difficulty: "Intermediate",
+    estimatedTime: "5 min read",
+    supportedVersions: "Any mouse, on Windows or macOS",
+    heading: "Set hardware-level DPI stages that travel with the mouse itself",
+    description:
+      "DPI (dots per inch) is a hardware property of the mouse's optical or laser sensor — it defines how many tracking counts the sensor reports per inch of physical movement, independent of the OS pointer-speed slider covered above. Most mice ship with 2-5 preset DPI stages (commonly 800/1600/3200/6400) cycled with a button on top or underneath the mouse, and gaming or productivity mice let you edit those stages, save them to onboard memory, and bind different stages to different profiles in a companion app.",
+    details: [
+      "Onboard DPI is stored on the mouse's own chip, so it carries over even when the mouse is plugged into a computer with no manufacturer software installed — unlike OS pointer speed, which resets to that computer's own setting.",
+      "Manufacturer software exposes the real control surface: Logitech G HUB or Options+, Razer Synapse, Logitech's older mice via the same apps, SteelSeries GG, and Corsair iCUE all let you set exact DPI values per stage (not just cycle presets), assign a DPI indicator LED color per stage, and save multiple full profiles switchable by a dedicated button.",
+      "A higher DPI moves the cursor farther per inch of hand movement — useful on high-resolution or multi-monitor setups — while a lower DPI gives finer control for precision tasks like photo editing or competitive aiming; DPI and OS pointer speed multiply together, so changing one changes the effective feel of the other.",
+      "Some sensors also expose a polling rate setting (125Hz-8000Hz, how often the sensor reports position to the PC) alongside DPI in the same software — higher polling rates reduce input latency but increase CPU usage slightly.",
+    ],
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
+    actionLabel: "Open Windows Support: Mouse Settings",
+    whyItMatters:
+      "Relying only on the OS pointer-speed slider leaves DPI at whatever the mouse's factory-default stage is, which is often mismatched to your screen resolution or task — setting DPI explicitly through manufacturer software gives you a stable, portable baseline that doesn't drift between computers, and per-profile stages let you switch instantly between a high-DPI stage for navigating a 4K desktop and a low-DPI stage for pixel-precise editing.",
+    afterImageContent: {
+      heading: "Setting up DPI stages in manufacturer software",
+      steps: [
+        "Install the manufacturer's configuration app for your exact mouse model (Logitech G HUB/Options+, Razer Synapse, SteelSeries GG, Corsair iCUE, or similar) rather than relying on a generic driver.",
+        "Open the DPI or sensitivity section and either edit the existing preset stages or add new ones with exact numeric values.",
+        "Assign the DPI-cycle button (if the mouse has one) or a profile-switch button to step through your saved stages, and confirm the settings save to onboard memory if you plan to use the mouse on another computer.",
+      ],
+    },
+    bestPractices: [
+      "Start from a moderate DPI (800-1600) with OS pointer speed near the middle of its range, then adjust one variable at a time rather than cranking both — it's easier to dial in a comfortable feel that way.",
+      "Use the DPI indicator LED (if present) to keep track of which stage is active, especially if you've customized non-obvious values.",
+      "For competitive gaming, keep DPI consistent across mice/setups and adjust in-game sensitivity instead — this keeps muscle memory portable between different hardware.",
+    ],
+    commonIssues: [
+      { issue: "DPI stage resets to factory defaults after unplugging the mouse", fix: "Confirm the profile was actually saved to onboard memory (not just \"applied\" for the current session) in the manufacturer app — some mice require a explicit \"save to device\" step separate from applying settings." },
+      { issue: "Cursor movement feels different on a new computer with the same mouse", fix: "OS-level pointer speed is per-computer and doesn't travel with the mouse; only onboard DPI does. Re-check the Windows/macOS pointer-speed slider on the new machine." },
+    ],
+    tipsAndTricks: ["If your mouse supports on-the-fly DPI shifting (a button you hold to temporarily drop to a lower DPI), it's worth binding for any task needing a brief moment of pixel-precise control, like fine selections in image editors."],
+    faqs: [{ q: "Do I need manufacturer software just to use a gaming mouse?", a: "No — the mouse works with default OS drivers at its factory DPI stages, but you'll only get exact custom values, saved profiles, and extra features like RGB or macro binding by installing the manufacturer's app." }],
+    relatedSettingIds: ["mouse-pointer-speed", "mouse-button-customization"],
+  },
+  {
+    id: "mouse-button-customization",
+    title: "Customize & Remap Mouse Buttons",
+    icon: LayoutGrid,
+    platform: "mouse",
+    category: "personalization",
+    frequentlyUsed: true,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions: "Any mouse, on Windows or macOS",
+    heading: "Reassign side buttons, macros, and click behavior to fit your workflow",
+    description:
+      "Beyond the standard left-click, right-click, and scroll-wheel click, most mice with 5 or more buttons let you reassign each extra button to a different action — keyboard shortcuts, application launches, multi-step macros, or system functions like Mission Control or Task View. This is handled entirely through manufacturer software, since Windows and macOS themselves only offer basic left/right button swapping.",
+    details: [
+      "Windows built-in settings (Settings → Bluetooth & devices → Mouse) only let you swap primary/secondary buttons for left-handed use and adjust double-click speed — anything beyond that requires the mouse maker's app.",
+      "macOS System Settings → Mouse is similarly limited; Apple's own Magic Mouse gestures (swipe to switch spaces, etc.) are configured there, but third-party mice need their own driver software for extra buttons.",
+      "Manufacturer apps — Logitech G HUB/Options+, Razer Synapse, SteelSeries GG, Corsair iCUE — expose every extra button as an assignable action: a single keystroke, a text macro, a shortcut combination, DPI-stage switching, or a profile change, and often let you save different button maps per application.",
+      "Per-application profiles are especially useful: the same side button can open a new browser tab in a web browser and trigger \"undo\" in a design app, switching automatically based on which program has focus.",
+    ],
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
+    actionLabel: "Open Windows Support: Mouse Settings",
+    whyItMatters:
+      "Extra mouse buttons sitting at their factory default (often just \"forward\"/\"back\" for browser navigation) waste a genuine productivity opportunity — remapping them to frequently used shortcuts (copy/paste, undo, mission control, volume) removes repetitive keyboard reaches and can meaningfully speed up repetitive workflows in creative and office software alike.",
+    bestPractices: [
+      "Map the most reachable side button to your single most-used action (many people choose \"copy\" or \"back\") before customizing less-used buttons — thumb buttons closer to the resting hand position get used more.",
+      "Avoid remapping the primary click buttons unless you have a specific accessibility need; keep left/right consistent with OS expectations to avoid confusing other people who use the same computer.",
+      "Back up or export your button profile from the manufacturer app before a driver reinstall or OS upgrade — custom macro assignments are usually not preserved automatically.",
+    ],
+    commonIssues: [
+      { issue: "Remapped button stops working after a Windows or app update", fix: "Manufacturer mouse software sometimes loses its hook into the OS after an update; reopen the app to confirm it's still running in the background, or reinstall the latest version of the driver software." },
+      { issue: "Button assignment works in some apps but not others", fix: "Check whether the profile is set to per-application mode — some manufacturer apps only apply custom bindings when the software detects a matching application profile, falling back to defaults elsewhere." },
+    ],
+    tipsAndTricks: ["If your mouse has a button but no manufacturer software exists for it (or you'd rather not install extra background apps), third-party remapping tools like Microsoft PowerToys Mouse Utilities (Windows) or Keyboard Maestro/BetterMouse (macOS) can remap generic mouse buttons at the OS level."],
+    faqs: [{ q: "Will remapped buttons work on a different computer without the software installed?", a: "Only if the mouse supports onboard memory for button profiles — otherwise the remapping lives in the driver software and reverts to default click behavior on any computer without that app installed." }],
+    relatedSettingIds: ["mouse-dpi-sensitivity-profiles", "mouse-firmware-update"],
+  },
+  {
+    id: "mouse-battery-charging",
+    title: "Manage Battery Life & Charging (Wireless Mice)",
+    icon: Battery,
+    platform: "mouse",
+    category: "devices-peripherals",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Wireless mice with rechargeable batteries or removable AA/AAA cells",
+    heading: "Understand charging behavior and get the most runtime from a wireless mouse",
+    description:
+      "Wireless mice power themselves one of two ways: replaceable disposable batteries (typically AA or AAA) or a built-in rechargeable battery topped up over USB-C, micro-USB, or a charging dock/mat. Charging behavior, runtime, and low-battery warnings vary a lot between these two designs.",
+    details: [
+      "Rechargeable mice can usually be used while charging (plugged in over a cable), which is useful if the battery runs out mid-task, though some models charge noticeably slower while actively in use due to the sensor and radio still drawing power.",
+      "Battery percentage is typically visible in the manufacturer's companion app (Logitech G HUB/Options+ shows an exact percentage; Apple's Magic Mouse shows battery level in macOS's Bluetooth menu and Control Center) rather than anywhere in stock Windows settings unless the mouse reports via a standard Bluetooth battery-level profile.",
+      "Disposable-battery mice generally last far longer per charge cycle (months, sometimes over a year on 2 AA cells) than compact rechargeable mice (days to a few weeks), because they trade a larger cell for a slimmer or lighter body.",
+      "Some docking-charged mice (charging mats/stands) top up via magnetic pogo pins or Qi-style wireless charging rather than a cable — check the mouse's charging contacts are clean and properly aligned if it isn't charging.",
+    ],
+    redirectUrl: "https://support.apple.com/mac",
+    actionLabel: "Open Apple Support: Check Bluetooth Accessory Battery Level",
+    whyItMatters:
+      "Wireless mice give the most warning signs of any accessory before failing outright — cursor stutter, dropped clicks, and slower Bluetooth reconnects are frequently misdiagnosed as software or driver problems when the real cause is simply a battery below roughly 10-15%, so knowing where to check the actual percentage saves a lot of unnecessary troubleshooting.",
+    bestPractices: [
+      "Charge rechargeable mice for a few minutes any time you're already at your desk with a spare USB port, rather than waiting for a low-battery warning — frequent short top-ups are fine for the lithium batteries these mice use.",
+      "Keep a spare set of AA/AAA batteries on hand for disposable-battery mice; alkaline batteries lose capacity gradually rather than cutting out suddenly, so tracking mode over the last week or two is a useful early warning sign.",
+      "Turn off Bluetooth mice (or let them auto-sleep) when not in use for extended periods — most have an idle timeout, but a physical power switch saves more battery if the mouse will sit unused for weeks.",
+    ],
+    commonIssues: [
+      { issue: "Mouse won't charge even though it's connected to a cable or dock", fix: "Try a different USB-C/micro-USB cable and port — many charging cables that ship with mice are data-incapable or low-current and can fail without visibly breaking; also clean charging pins on dock-based mice, which corrode or collect dust over time." },
+      { issue: "Battery drains unusually fast on a normally long-lasting mouse", fix: "Check for a stuck-on setting draining extra power — RGB lighting left on, a very high always-on polling rate, or a sensor set to an unusually high always-scanning mode in the manufacturer app." },
+    ],
+    tipsAndTricks: ["If a rechargeable mouse's battery has degraded significantly after a couple of years of daily use (shorter runtime than when new), that's normal lithium battery wear — most manufacturers don't offer battery replacement on integrated designs, so factor mouse lifespan into that trade-off when buying."],
+    faqs: [{ q: "Is it bad to leave a wireless mouse charging overnight?", a: "No — modern rechargeable mice use lithium batteries with charge-management circuitry that stops charging once full, the same as a phone; leaving it on a dock or cable overnight is not harmful." }],
+    relatedSettingIds: ["mouse-bluetooth-pairing", "mouse-firmware-update"],
+  },
+  {
+    id: "mouse-firmware-update",
+    title: "Update Mouse Firmware",
+    icon: RefreshCw,
+    platform: "mouse",
+    category: "system-updates",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions: "Any mouse, on Windows or macOS",
+    heading: "Keep the mouse's internal firmware current for stability and new features",
+    description:
+      "Firmware is the small piece of software running on the mouse's own microcontroller — separate from the drivers or configuration apps installed on your computer. It governs low-level behavior like sensor tracking, button debounce timing, Bluetooth/2.4GHz radio stability, and battery reporting, and manufacturers periodically release updates to fix bugs or add features.",
+    details: [
+      "Firmware updates are delivered and installed through the same manufacturer software used for button and DPI customization — Logitech G HUB/Options+, Razer Synapse, SteelSeries GG, and Corsair iCUE all check for and push firmware updates automatically when the mouse is connected.",
+      "Keep the mouse connected (ideally with a cable, if it has one) and at a healthy battery level throughout a firmware update — interrupting the process partway through (disconnecting, running out of battery) can leave the mouse in an unresponsive state that sometimes requires a manufacturer recovery tool to fix.",
+      "Not every firmware release is mandatory — check the release notes in the manufacturer app; many are minor stability or compatibility fixes rather than something you'll notice day to day, but connectivity or click-latency fixes are usually worth installing promptly.",
+      "Some manufacturers publish standalone firmware updater tools separate from the main configuration app, intended for advanced troubleshooting or for restoring a bricked mouse to factory firmware.",
+    ],
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
+    actionLabel: "Open Windows Support: Device & Driver Updates",
+    whyItMatters:
+      "Because mouse firmware runs beneath the OS driver layer, a firmware bug can cause symptoms — random disconnects, double-click misfires, erratic cursor jumps — that look identical to a hardware fault or a Windows/macOS driver problem, and no amount of OS-level troubleshooting fixes them; checking for a firmware update is one of the few remaining steps once basic connectivity troubleshooting is exhausted.",
+    afterImageContent: {
+      heading: "Updating mouse firmware safely",
+      steps: [
+        "Open the manufacturer's configuration app and connect the mouse via its cable if it has one, or ensure the wireless connection is stable and battery is above roughly 50%.",
+        "Navigate to the device's settings or \"About this device\" page and check for an available firmware update.",
+        "Start the update and leave the mouse connected and untouched until the app confirms completion — do not disconnect, put the computer to sleep, or move the mouse out of range mid-update.",
+      ],
+    },
+    bestPractices: [
+      "Update firmware over a wired connection when the mouse supports one, since a dropped wireless connection mid-update is the single most common cause of a failed update.",
+      "Read the release notes before updating on a mouse you rely on for competitive gaming or precision work — occasionally a firmware change affects sensor behavior or click latency in ways some users prefer to avoid until reviewed.",
+      "Keep the manufacturer app itself updated as well, since older app versions sometimes can't detect or push the newest firmware releases.",
+    ],
+    commonIssues: [
+      { issue: "Firmware update fails partway through or the mouse stops responding afterward", fix: "Don't disconnect power/battery — most manufacturers provide a recovery mode (often holding a specific button combination while reconnecting) or a standalone recovery tool specifically for interrupted updates; check the manufacturer's support site for your exact model." },
+      { issue: "Manufacturer app doesn't detect any available firmware update", fix: "Confirm the app itself is on its latest version, and that the mouse is fully recognized (not just charging) — some apps only check for firmware once the device handshake completes, which can be slower over Bluetooth than a wired or 2.4GHz connection." },
+    ],
+    tipsAndTricks: ["If you manage several of the same mouse model (e.g., in an office), export the firmware/config profile from one after updating and use the manufacturer app's import feature to apply it to the rest quickly."],
+    faqs: [{ q: "Can outdated firmware be a security risk?", a: "It's uncommon but not impossible — Bluetooth firmware bugs have occasionally been the subject of security advisories, so keeping firmware current is good practice even though most updates are about stability rather than security." }],
+    relatedSettingIds: ["mouse-battery-charging", "mouse-button-customization"],
+  },
+  {
+    id: "mouse-scroll-wheel-settings",
+    title: "Configure Scroll Wheel Behavior",
+    icon: Wrench,
+    platform: "mouse",
+    category: "personalization",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "Any mouse, on Windows or macOS",
+    heading: "Adjust line scrolling, free-spin, and horizontal tilt-scroll",
+    description:
+      "The scroll wheel has more configurable behavior than most people realize: how many lines it scrolls per notch, whether it clicks through discrete ratchet steps or spins freely with no resistance, and — on mice that support it — whether tilting the wheel left/right scrolls horizontally.",
+    details: [
+      "Windows: Settings → Bluetooth & devices → Mouse → \"Scroll one screen at a time\" or a numeric \"lines to scroll\" setting (Control Panel → Mouse → Wheel tab on older builds) controls how far the page moves per wheel notch.",
+      "macOS: System Settings → Mouse (or Trackpad, for the Magic Mouse's touch-scroll surface) → scrolling speed, plus a natural/inverted scrolling direction toggle under \"Scroll direction: Natural.\"",
+      "High-end mice with a \"free-spin\" or \"hyper-fast\" scroll wheel (notably Logitech's MagSpeed/free-spin wheels) let you toggle between ratcheted, click-stepped scrolling (precise, one line at a time) and a frictionless free-spin mode that can fly through hundreds of lines with one flick — usually switched either by a button press or automatically based on scroll speed.",
+      "Tilt-scroll (pushing the wheel left or right) is common on productivity-oriented mice for horizontal scrolling in spreadsheets or wide documents, and is configured — including remapping it to something else entirely — through the manufacturer's software alongside the other buttons.",
+    ],
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
+    actionLabel: "Open Windows Support: Mouse Settings",
+    whyItMatters:
+      "Default scroll settings are tuned for general browsing, but they're rarely ideal for every use case — free-spin scrolling saves real time flying through long documents or spreadsheets, while ratcheted mode gives the precise per-line control needed for fine adjustments in code editors or image editors, and knowing both modes exist (and how to switch) turns a wheel most people never think about into a genuine productivity feature.",
+    bestPractices: [
+      "If your mouse has a free-spin wheel, learn its switch mechanism (button, automatic based on flick speed, or app toggle) — automatic switching is convenient but a manual button lets you force ratcheted mode for tasks needing precision.",
+      "Enable \"natural scrolling\" only if you also use a trackpad or touchscreen regularly — mixing scroll direction conventions between input devices is a common source of frustration when it's inconsistent.",
+      "If tilt-scroll isn't useful to you, remap it in manufacturer software to something you'll actually use rather than leaving it as an easily mis-clicked accidental input.",
+    ],
+    commonIssues: [
+      { issue: "Scroll wheel skips lines or scrolls unevenly", fix: "This is usually physical debris or wear inside the wheel's encoder, not a software setting — canned air around the wheel axle and a firmware update (if available) both help; persistent skipping on an older mouse often indicates wheel-encoder wear that isn't user-serviceable." },
+      { issue: "Horizontal tilt-scroll doesn't work in a particular app", fix: "Some applications don't listen for horizontal scroll events at all, or only support them via Shift+scroll; check the manufacturer app for an option to send Shift+scroll instead of a native horizontal-scroll signal." },
+    ],
+    tipsAndTricks: ["A quick way to test whether your mouse actually has a free-spin wheel versus just a light ratchet: spin it hard with one finger — a true free-spin wheel will keep spinning for a couple of seconds with no clicking resistance."],
+    faqs: [{ q: "Why does my scroll wheel feel 'looser' on one mouse than another?", a: "Wheel resistance and step count (notches per rotation) are physical hardware design choices that vary by model — some are tuned for tactile per-line precision, others for fast, low-resistance scrolling, and it isn't adjustable in software beyond toggling free-spin on models that support it." }],
+    relatedSettingIds: ["mouse-pointer-speed", "mouse-button-customization"],
+  },
+  {
+    id: "mouse-multi-device-switching",
+    title: "Set Up Multi-Device Pairing & Switching",
+    icon: Bluetooth,
+    platform: "mouse",
+    category: "connectivity-network",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions: "Multi-device Bluetooth mice, on Windows or macOS",
+    heading: "Pair one mouse to multiple computers and switch between them instantly",
+    description:
+      "Multi-device mice can stay paired to two or three computers at once and switch between them with a physical button, rather than needing to re-pair every time you move between machines. Logitech's Easy-Switch and Flow ecosystem, and similar features from Razer, Microsoft, and others, are the most common implementations.",
+    details: [
+      "Basic multi-device switching uses a numbered button on the underside of the mouse (often labeled 1/2/3) — each number holds a separate Bluetooth or receiver pairing, and pressing it disconnects from the current device and reconnects to whichever computer is paired to that slot.",
+      "Logitech Flow (available on many Logitech mice via G HUB or Options+) goes a step further: it detects when the cursor reaches the edge of one computer's screen and automatically hands control to a second nearby computer running the same software, and can even copy/paste text and drag-and-drop files between the two machines.",
+      "Mice can typically mix connection types across slots — for example, slot 1 paired via the included 2.4GHz USB receiver to a desktop, and slot 2 paired via Bluetooth directly to a laptop, switched with the same physical button.",
+      "Setup for each slot works the same as any other pairing: put the mouse in pairing mode for that specific slot (usually holding the corresponding number button), then complete Bluetooth pairing or plug in a receiver on that computer.",
+    ],
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
+    actionLabel: "Open Windows Support: Connect a Bluetooth Device",
+    whyItMatters:
+      "For anyone working across a laptop and a desktop, or a personal and work machine, multi-device switching removes the friction of unplugging a receiver or re-pairing Bluetooth every time you change computers — a one-button switch (or an automatic edge-of-screen handoff with Flow-style software) turns what used to be a 30-second interruption into an instant transition.",
+    afterImageContent: {
+      heading: "Pairing a multi-device mouse to a second computer",
+      steps: [
+        "On the mouse, press and hold the number button for an unused slot (commonly 2 or 3) until its indicator LED blinks, putting that slot into pairing mode.",
+        "On the second computer, open Bluetooth settings (or plug in a second USB receiver if the mouse ships with more than one) and select the mouse from the discoverable devices list.",
+        "Once paired, tap the same number button any time to switch that mouse's active connection to that computer, and install the manufacturer's cross-computer software (e.g., Logitech Flow) if you want automatic edge-of-screen switching instead of manual button presses.",
+      ],
+    },
+    bestPractices: [
+      "Label or memorize which slot number corresponds to which computer, especially with three or more paired devices — the LED blink patterns that indicate current slot are easy to lose track of otherwise.",
+      "If using an automatic-handoff feature like Logitech Flow, keep both computers on the same network and awake/unlocked, since the handoff relies on local network discovery between the two machines.",
+      "Re-pair a slot if a computer's Bluetooth stack changes significantly (e.g., after a major OS reinstall) — stored pairing keys can go stale and cause a slot to silently stop connecting.",
+    ],
+    commonIssues: [
+      { issue: "Switching slots doesn't reconnect to the intended computer", fix: "Confirm that computer's Bluetooth is on and not already connected to a different device in the same slot; also check the mouse's battery, since low battery can cause switching failures that look like a pairing problem." },
+      { issue: "Automatic edge-of-screen switching (e.g., Logitech Flow) stops working", fix: "Verify both computers are on the same local network and the manufacturer software is running (not just installed) on both — Flow-style features rely on a background service that can get closed by an OS update or manual quit." },
+    ],
+    tipsAndTricks: ["If you only ever switch between two specific computers, it's often faster to memorize the two-tap sequence than to rely on automatic software-based handoff, which occasionally lags a second or two behind a manual button press."],
+    faqs: [{ q: "Does multi-device switching work with a USB receiver as well as Bluetooth?", a: "Yes for mice designed for it — some receivers (like Logitech's Unifying or Bolt receivers) can themselves pair with multiple compatible mice or accept switching signals, but check your specific model's documentation since implementations vary." }],
+    relatedSettingIds: ["mouse-bluetooth-pairing", "mouse-dpi-sensitivity-profiles"],
   },
 ];

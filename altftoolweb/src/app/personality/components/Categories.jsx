@@ -11,13 +11,13 @@ const tests = [
     title: "Career Personality Test",
     desc: "Discover careers aligned with your strengths and working style.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Career.png",
+    imgSrc: "/personality/categories/career.png",
   },
   {
     title: "Emotional Intelligence",
     desc: "Discover careers aligned with your strengths and working style.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Emotion.png",
+    imgSrc: "/personality/categories/emotional.png",
   },
   {
     title: "Leadership Style",
@@ -29,19 +29,19 @@ const tests = [
     title: "Introvert vs Extrovert",
     desc: "Understand your energy style and how you interact with the world.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Intro.png",
+    imgSrc: "/personality/categories/extrovert.png",
   },
   {
     title: "Relationship Personality",
     desc: "Explore your relationship patterns and build stronger connections.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Relation.png",
+    imgSrc: "/personality/categories/relationship.png",
   },
   {
     title: "Communication Style",
     desc: "Explore your relationship patterns and build stronger connections.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/Communicate.png",
+    imgSrc: "/personality/categories/communication.png",
   },
 ];
 
@@ -114,7 +114,10 @@ export default function Categories() {
           flex flex-col
           group
           transition-all
-          personality-card
+          border border-(--border)
+          bg-(--card)
+          shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)]
+          hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)]
           hover:-translate-y-1
           cursor-pointer
           flex-shrink-0
@@ -125,7 +128,7 @@ export default function Categories() {
               >
                 {/* Image */}
                 <div className="p-2 pb-0">
-                  <div className="relative w-full h-[200px] sm:h-[230px] rounded-[20px] overflow-hidden personality-visual-tile">
+                  <div className="relative w-full h-[200px] sm:h-[230px] rounded-[20px] overflow-hidden bg-muted">
                     <div className="absolute inset-0 p-2 lg:p-6 z-10">
                       <div className="relative w-full h-full">
                         <Image
@@ -135,7 +138,6 @@ export default function Categories() {
                           priority={i === 0}
                           sizes="75vw"
                           className="object-contain object-center"
-                          unoptimized
                         />
                       </div>
                     </div>
@@ -161,7 +163,7 @@ export default function Categories() {
                       {test.desc}
                     </p>
 
-                    <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 personality-primary-action hover:scale-105 transition-all">
+                    <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
                       <ArrowRight className="text-white h-5 w-5" />
                     </button>
                   </div>
@@ -178,7 +180,7 @@ export default function Categories() {
                      rounded-full transition-all duration-300
                      ${mobileIndex === i
                     ? "w-6 h-2 bg-(--primary)"
-                    : "w-2 h-2 bg-(--border)"
+                    : "w-2 h-2 bg-gray-300"
                   }
                `}
               />
@@ -194,11 +196,11 @@ export default function Categories() {
         {visible.map((test, i) => (
           <div
             key={i}
-            className="rounded-[28px] overflow-hidden flex flex-col group transition-all personality-card hover:-translate-y-1 cursor-pointer"
+            className="rounded-[28px] overflow-hidden flex flex-col group transition-all border border-(--border) bg-(--card) shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)] hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)] hover:-translate-y-1 cursor-pointer"
           >
             {/* Image */}
             <div className="p-5 pb-0">
-              <div className="relative w-full h-[200px] md:h-[210px] lg:h-[230px] 2xl:h-[280px] rounded-[20px] overflow-hidden personality-visual-tile">
+              <div className="relative w-full h-[200px] md:h-[210px] lg:h-[230px] 2xl:h-[280px] rounded-[20px]  overflow-hidden bg-muted">
                 {/* md: contain */}
                 <div className="absolute inset-0 p-5 md:block lg:hidden z-10">
                   <div className="relative w-full h-full">
@@ -209,7 +211,6 @@ export default function Categories() {
                       priority={i === 0}
                       sizes="(min-width: 768px) 45vw, 0px"
                       className="object-contain object-center"
-                      unoptimized
                     />
                   </div>
                 </div>
@@ -223,7 +224,6 @@ export default function Categories() {
                     priority={i === 0}
                     sizes="(min-width: 1024px) 360px, 300px"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
-                    unoptimized
                   />
                 </div>
               </div>
@@ -244,7 +244,7 @@ export default function Categories() {
                 <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
                   {test.desc}
                 </p>
-                <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 personality-primary-action hover:scale-105 transition-all">
+                <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
                   <ArrowRight className="text-white h-5 w-5" />
                 </button>
               </div>

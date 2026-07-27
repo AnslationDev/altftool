@@ -1,7 +1,7 @@
 "use client";
 
-import CymaticsSimulator from "./cymatics";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <CymaticsSimulator />;
+  return <ToolHome />;
 }

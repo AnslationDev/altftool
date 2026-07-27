@@ -200,9 +200,9 @@ async function openToolShell(page, slug, heading) {
     waitUntil: "domcontentloaded",
     timeout: toolRouteTimeoutMs,
   });
-  await expect(
-    page.getByRole("heading", { name: heading, exact: true }).first(),
-  ).toBeVisible({ timeout: toolRouteTimeoutMs });
+  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible({
+    timeout: toolRouteTimeoutMs,
+  });
   await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
     timeout: toolRouteTimeoutMs,
   });
@@ -665,7 +665,7 @@ test.describe("microtool functional flows", () => {
 
     await openToolShell(page, "ludo-multiplayer", "Ludo Multiplayer");
     await page.getByRole("button", { name: /Local$/ }).click();
-    await page.getByRole("button", { name: "4 players", exact: true }).click();
+    await page.getByRole("button", { name: "4", exact: true }).click();
     await expect(page.getByText("4 in game", { exact: true })).toBeVisible();
     await expect(page.getByText(/Local Multiplayer/)).toBeVisible();
     const rollDice = page.getByRole("button", { name: "Roll dice" });
@@ -963,9 +963,7 @@ test.describe("microtool functional flows", () => {
     await expect(page.getByTestId("tool-output")).toContainText("PDF text extracted", {
       timeout: 30_000,
     });
-    await expect(
-      page.locator("pre").filter({ hasText: "AltFTool fixture 1" }).first(),
-    ).toBeVisible();
+    await expect(page.locator("pre")).toContainText("AltFTool fixture 1");
     await expectDocxDownload(
       page,
       testInfo,

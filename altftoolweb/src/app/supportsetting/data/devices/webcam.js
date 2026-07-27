@@ -23,7 +23,7 @@ export const webcamSettings = [
       "If you're switching brands, uninstall the old companion app first — leftover virtual camera drivers from a previous app can conflict with a new install and cause duplicate or frozen camera entries in conferencing software.",
     ],
     important: "Only download companion software directly from the manufacturer's official support page — third-party download sites for webcam \"drivers\" frequently bundle unwanted software.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/fix-camera-problems-in-windows-8a3f1e4b-6c9d-4e42-9a1a-1a5f8b6d3c2e",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Camera Problems",
     whyItMatters:
       "A webcam that shows a black screen or doesn't appear in a video app's device list is very often not a driver failure at all but an OS-level permission block or an app-selection mismatch — understanding that the base driver is almost always already present saves a lot of wasted troubleshooting time chasing a reinstall that won't fix anything.",
@@ -60,7 +60,7 @@ export const webcamSettings = [
       "A companion app, when installed, may expose finer control over frame rate independent of resolution — useful for prioritizing smooth motion (60fps) over maximum sharpness in fast-moving scenes.",
       "If a call feels laggy or the image is blocky, lowering resolution to 720p often fixes it faster than any other change, since bandwidth is the more common bottleneck than the camera's own capability.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/get-the-most-out-of-your-webcam-in-windows-6d6f7a8b-1c2d-4e3f-9a0b-1c2d3e4f5a6b",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Get the Most Out of Your Webcam",
     whyItMatters:
       "Resolution and frame rate directly trade off against bandwidth, CPU load, and lighting sensitivity — a webcam capable of 4K will often actually look and perform worse on a video call than the same camera capped at 1080p/30fps if the connection or computer can't sustain the higher setting smoothly.",
@@ -96,7 +96,7 @@ export const webcamSettings = [
       "If the image regularly darkens or brightens as you move, that's auto-exposure reacting to the scene's overall light level — locking exposure once lighting is set prevents this \"pumping\" effect.",
       "Backlit setups (a bright window behind you) confuse auto-exposure the most; either add a front-facing light source or manually raise exposure to compensate.",
     ],
-    redirectUrl: "https://support.apple.com/guide/mac-help/camera-preferences-mchlp2452/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Camera Preferences on Mac",
     whyItMatters:
       "Autofocus hunting and exposure pumping are two of the most common reasons a webcam feed looks unprofessional even on expensive hardware — both are software behaviors layered on top of the sensor, not fixed physical limitations, so they're fully correctable without buying a new camera.",
@@ -132,7 +132,7 @@ export const webcamSettings = [
       "If available in a companion app, enable any built-in noise suppression or automatic gain control, since compact webcam microphones tend to pick up more room echo and keyboard noise than a dedicated headset.",
       "If audio sounds distant or tinny, it usually means the mic is positioned farther from your mouth than intended — repositioning the webcam or angling the monitor slightly can noticeably improve pickup.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/manage-app-permissions-for-your-microphone-in-windows-870f8f0a-3d6d-4276-96f7-8027ce0b39c3",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Microphone Privacy Settings",
     whyItMatters:
       "\"My camera works but nobody can hear me\" is almost always a device-selection issue rather than a hardware fault, since a webcam's built-in mic and any other microphone on the system (laptop, headset, external mic) all compete to be the default — knowing where to check and switch it saves troubleshooting time in the first minute of an important call.",
@@ -169,7 +169,7 @@ export const webcamSettings = [
       "If a webcam has no physical shutter, a simple physical cover (even tape) over the lens achieves the same guarantee for camera privacy, though it won't address the microphone.",
     ],
     important: "The indicator LED reflects the camera hardware's own state on almost all webcams and generally can't be disabled by software, but always verify this claim for your specific model before relying on it as an absolute guarantee.",
-    redirectUrl: "https://support.apple.com/guide/mac-help/control-access-to-your-camera-mchlf6d108da/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Control Access to Your Camera",
     whyItMatters:
       "Camera privacy concerns are one of the most common reasons people avoid using a webcam at all — a physical shutter and a genuinely hardware-tied indicator light remove the need to trust software permission prompts entirely, since they can't be silently overridden by a compromised or misconfigured app.",
@@ -205,7 +205,7 @@ export const webcamSettings = [
       "Physical camera placement interacts directly with FOV: a wide-FOV camera placed too close will visibly distort a face (a mild fisheye effect), while the same camera farther back looks natural.",
       "For a webcam mounted on a monitor, recheck framing after any FOV change, since narrowing the FOV can unexpectedly crop out part of the intended shot at your normal sitting distance.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/camera-app-settings-in-windows-8f6e3b0d-9c2e-4b1a-9e6a-2c3d4e5f6a7b",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Camera App Settings",
     whyItMatters:
       "The right field of view depends entirely on context — a wide angle that's great for showing a whiteboard or a small group looks unflattering and distorted for a single close-up face, so knowing this is adjustable (rather than a fixed hardware limitation) lets you match the camera to the actual use case instead of settling for a factory default.",
@@ -242,7 +242,7 @@ export const webcamSettings = [
       "If no companion app exists for your webcam, check the manufacturer's support site directly by model number; some brands ship a small standalone firmware updater tool instead.",
     ],
     important: "Never disconnect a webcam or let your computer sleep or shut down while a firmware update is actively writing — an interrupted firmware write can leave some devices unusable without a manufacturer recovery tool.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/update-drivers-and-firmware-for-usb-devices-b697db9d-8e0e-4a1b-9c3f-3d1e2f3a4b5c",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Update USB Device Firmware",
     whyItMatters:
       "Firmware updates are easy to overlook because a webcam otherwise seems to \"just work,\" but they're often the actual fix for issues that look like hardware defects — persistent autofocus hunting, USB dropouts under certain hub configurations, or color/exposure quirks in specific lighting are commonly resolved by a firmware revision rather than a driver or app update.",
@@ -279,7 +279,7 @@ export const webcamSettings = [
       "A manufacturer's companion app may offer its own background effects as an alternative if the video call app or OS doesn't support them for your specific webcam.",
       "Background replacement is more CPU-intensive than blur alone, especially at higher resolutions — if video starts stuttering after enabling it, try blur instead of a full virtual background, or lower the capture resolution.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/use-windows-studio-effects-in-video-calls-9b7b1e3b-6c9d-4e42-9a1a-1a5f8b6d3c2f",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Video Effects & Background Blur",
     whyItMatters:
       "Background effects are one of the most requested webcam features but also one of the most commonly misdiagnosed performance problems — because the processing runs on the computer's CPU or GPU rather than the camera, a low-end machine can turn a smooth call choppy the moment blur or replacement is enabled, which looks like a camera problem but isn't.",

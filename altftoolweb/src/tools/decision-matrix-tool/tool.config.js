@@ -1,11 +1,11 @@
-const decisionMatrixToolConfig = {
+const toolConfig = {
   slug: "decision-matrix-tool",
   name: "Decision Matrix Tool",
   description:
-    "Compare options with dynamic criteria, live weighted scoring, rankings, analytics, local save, filters, and exportable decision reports.",
-  category: ["Productivity", "Business", "Planning"],
+    "Compare options with weighted criteria, live scoring, rankings, sensitivity analysis, and an exportable decision report.",
+  category: "Productivity",
   icon: "table-properties",
-  iconColor: "text-cyan-500",
+  iconColor: "text-(--primary)",
 };
 
-export default decisionMatrixToolConfig;
+export default toolConfig;

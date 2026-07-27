@@ -1,0 +1,34 @@
+const seo = {
+  intro:
+    "Random Fun Picker is three fair random pickers in one page: a lunch-spot chooser with cuisine, budget, meal-type and rating filters; a Truth or Dare deck at three difficulty levels; and a name drawer that also splits a group into even teams. Every draw runs a Fisher-Yates shuffle on a seeded mulberry32 generator — the only shuffle that gives all n! orderings equal probability — so no name or option is quietly favoured. It is for teams settling lunch, hosts running a party round, and teachers picking who goes next.",
+  useCases: [
+    "Break a four-way deadlock over lunch by filtering to moderate-budget vegetarian places rated 4.0 or better and letting the picker choose.",
+    "Draw three raffle winners from a list of 40 names without anyone accusing the organiser of picking favourites.",
+    "Split 7 people into 3 teams and get an even 3-2-2 split instead of arguing about who goes where.",
+  ],
+  benefits: [
+    ["Genuinely fair draws", "Fisher-Yates on a seeded generator, so every ordering is equally likely and the odds are shown alongside the result."],
+    ["Shows the odds", "Tells you exactly what chance the winner had — 1 in 7 is 14.3%, not a vague feeling."],
+    ["Even teams, no arguing", "Splits n names into t teams so the first (n mod t) teams get one extra member and no team is short by two."],
+  ],
+  faqs: [
+    [
+      "Is this random name picker actually fair?",
+      "Yes. It uses the Fisher-Yates shuffle, which is the only shuffle algorithm that produces all n! orderings with equal probability. With 7 names, each has exactly a 1 in 7 chance — 14.3% — of being drawn first.",
+    ],
+    [
+      "How does it split people into teams evenly?",
+      "It shuffles the list, then gives the first (n mod t) teams one extra member. Seven names across three teams becomes 3, 2 and 2 — never 4, 2, 1.",
+    ],
+    [
+      "What chance do I have of getting a Truth rather than a Dare?",
+      "Exactly 50% when the mode is set to 'either' — the tool draws a single fair coin flip before selecting the card. Each deck holds 8 prompts per difficulty, so any one card has a 12.5% chance.",
+    ],
+    [
+      "Are the restaurants real places I can visit?",
+      "No — the names and ratings are sample data used to demonstrate the filters. Use it to decide the cuisine, budget and meal type, then search for a real place near you that fits.",
+    ],
+  ],
+};
+
+export default seo;

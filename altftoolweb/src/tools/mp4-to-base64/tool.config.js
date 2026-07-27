@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "mp4-to-base64",
-  "slug": "mp4-to-base64",
-  "name": "MP4 to Base64",
-  "category": [
-    "Media",
-    "Converter"
-  ],
-  "description": "Convert local MP4 files into Base64 data URLs.",
-  "icon": "video",
-  "iconColor": "text-blue-700"
+  name: "MP4 to Base64",
+  category: ["Converters", "Video & Audio"],
+  description:
+    "Convert a local MP4, WebM, MOV or OGV file into a Base64 data URL entirely in your browser.",
+  icon: "video",
+  iconColor: "text-blue-700",
 };
 
 export default toolConfig;

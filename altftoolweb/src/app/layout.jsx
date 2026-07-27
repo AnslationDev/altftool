@@ -1,11 +1,13 @@
 import "./theme.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/platform/navigation/Header";
 import Footer from "@/platform/navigation/Footer";
 import Script from "next/script";
+import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSubscribeDialog";
+import ScrollToTopButton from "@/platform/navigation/ScrollToTopButton";
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
 import GoogleAdUnit from "@/ads/GoogleAdUnit";
@@ -15,15 +17,12 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
-import {
-  getSeoConfigSnapshot,
-  primeSeoConfig,
-} from "@/platform/seo/seoConfigSource";
+import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { resolveInjectedCode } from "@altftool/core/seo";
 import InjectedCode from "@/platform/seo/InjectedCode";
 import PerPageCode from "@/platform/seo/PerPageCode";
 import GlobalNavigationLoader from "@/components/ui/GlobalNavigationLoader";
-import DeferredSiteRuntime from "@/components/runtime/DeferredSiteRuntime";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
 import GlobalChromeGate from "@/platform/navigation/GlobalChromeGate";
 import { HeaderLoadingSkeleton } from "@/components/ui/route-loading";
 import {
@@ -45,10 +44,26 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-plex-sans",
+  display: "swap",
+});
+
 const shouldLoadGoogleAds = isAdsenseProductionDeployment();
-const shouldReportWebVitals = ["1", "true", "on"].includes(
-  String(process.env.NEXT_PUBLIC_ALTFT_WEB_VITALS || "").toLowerCase(),
-);
 
 const baseMetadata = {
   metadataBase: new URL(siteConfig.url),
@@ -73,12 +88,6 @@ const baseMetadata = {
   creator: "AltFTool",
   publisher: "AltFTool",
   category: "technology",
-  referrer: "origin-when-cross-origin",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   alternates: {
     canonical: "/",
   },
@@ -124,16 +133,6 @@ const baseMetadata = {
     shortcut: "/favicon.ico",
     apple: "/favicon1.png",
   },
-  other: {
-    "mitgo-verification": "6fa7b4de-9abc-4d8a-9729-8ec2eea1caa7",
-    "google-adsense-account": "ca-pub-5858966346488022",
-  },
-};
-
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  colorScheme: "light dark",
 };
 
 // Warm the central SEO config snapshot for the whole render tree BEFORE any
@@ -151,7 +150,7 @@ export default async function RootLayout({ children }) {
 
   // Admin-authored custom code (raw HTML/scripts). Global is SSR-injected here;
   // per-page code is injected client-side (only when the site has any).
-  const seoConfig = getSeoConfigSnapshot();
+  const seoConfig = await loadSeoConfig().catch(() => null);
   const { global: customCode } = resolveInjectedCode(seoConfig, null);
   const hasPageCode =
     seoConfig?.enabled !== false &&
@@ -161,12 +160,12 @@ export default async function RootLayout({ children }) {
     // raw code block.
     Object.values(seoConfig.pages).some((p) => p && (p.code || p.schema));
   return (
-    <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="//www.clarity.ms" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
         <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />
         <JsonLd
           id="altftool-site-schema"
@@ -251,7 +250,7 @@ export default async function RootLayout({ children }) {
   `}
         </Script>
 
-        <Script id="clarity-init" strategy="lazyOnload">
+        <Script id="clarity-init" strategy="afterInteractive">
           {`
     if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
       (function(c,l,a,r,i,t,y){
@@ -265,6 +264,15 @@ export default async function RootLayout({ children }) {
       </head>
 
       <body className="anslation-ds-public antialiased">
+        {/* Browser extensions (form fillers) stamp fdprocessedid on inputs and
+            buttons before React hydrates, which triggers hydration-mismatch
+            errors on every page. Strip the attribute the instant it appears,
+            then stop watching once hydration is safely done. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var strip=function(n){if(n&&n.removeAttribute)n.removeAttribute("fdprocessedid");};var all=function(){if(!document.querySelectorAll)return;var ns=document.querySelectorAll("[fdprocessedid]");for(var i=0;i<ns.length;i++)strip(ns[i]);};var mo=new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var m=ms[i];if(m.type==="attributes")strip(m.target);}});mo.observe(document.documentElement,{attributes:true,subtree:true,attributeFilter:["fdprocessedid"]});all();setTimeout(function(){mo.disconnect();},15000);}catch(e){}})();`,
+          }}
+        />
   <InjectedCode id="head" html={customCode.head} />
   <InjectedCode id="body-start" html={customCode.bodyStart} />
   <PerPageCode active={hasPageCode} />
@@ -297,9 +305,11 @@ export default async function RootLayout({ children }) {
         </GlobalChromeGate>
 
         <GlobalChromeGate>
-          <DeferredSiteRuntime reportWebVitals={shouldReportWebVitals} />
+          <ScrollToTopButton />
+          <NewsletterSubscribeDialog />
         </GlobalChromeGate>
 
+        <WebVitalsReporter />
         <InjectedCode id="body-end" html={customCode.bodyEnd} />
 
       </AlertProvider>

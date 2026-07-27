@@ -1,11 +1,11 @@
 const toolConfig = {
-    slug: "api-stress-estimator",
-    name: "API STRESS ESTIMATOR",
-    category: "Developer",
-    description:
-      "Estimate the stress on your API under different traffic scenarios and configurations.",
-    icon: "chart-bar",
-    iconColor: "text-green-600",
-  };
+  slug: "api-stress-estimator",
+  name: "API Stress Estimator",
+  category: "Developer",
+  description:
+    "Estimate the stress on your API under different traffic scenarios and configurations, using an M/M/c queueing model.",
+  icon: "activity",
+  iconColor: "text-(--primary)",
+};
 
 export default toolConfig;

@@ -1,4 +1,4 @@
-export default {
+const config = {
   slug: "linux-common-command-query-tool",
   name: "Linux Common Command Query Tool",
   category: "Developer",
@@ -6,3 +6,5 @@ export default {
   icon: "terminal",
   iconColor: "text-cyan-500",
 };
+
+export default config;

@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "byte-converter",
-  "slug": "byte-converter",
-  "name": "Byte Converter",
-  "category": [
-    "Calculator",
-    "Developer"
-  ],
-  "description": "Convert bytes, bits, KB, MB, GB, and binary units.",
-  "icon": "binary",
-  "iconColor": "text-blue-700"
+  name: "Byte Converter",
+  category: "Converters",
+  description:
+    "Convert bytes, bits, kB/MB/GB/TB and KiB/MiB/GiB/TiB in one place, and see why a 1 TB drive shows as 931 GiB.",
+  icon: "binary",
+  iconColor: "text-blue-700",
 };
 
 export default toolConfig;

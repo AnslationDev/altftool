@@ -24,7 +24,7 @@ export const microphoneSettings = [
     ],
     important:
       "If the mic still isn't detected after selecting it, try a different USB port (avoid unpowered hubs) or a different XLR cable/interface input, since a marginal connection is a common cause of a device not showing up at all.",
-    redirectUrl: "https://support.microsoft.com/windows/how-to-fix-microphone-problems-in-windows-4bfa8f24-9e5c-4e5d-9c3f-1a3f1e3d6d3b",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Microphone Problems",
     whyItMatters:
       "Almost every complaint of \"my microphone isn't working\" in a video call or recording turns out to be the correct input device connected but not selected — getting this right first saves time before assuming a hardware fault.",
@@ -66,7 +66,7 @@ export const microphoneSettings = [
     ],
     important:
       "Clipping (audio distortion from too much gain) is baked into the recording and cannot be fixed afterward — always leave headroom rather than pushing levels as high as possible.",
-    redirectUrl: "https://support.apple.com/guide/mac-help/change-sound-input-settings-mchlp2247/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Change Sound Input Settings",
     whyItMatters:
       "Gain is the single setting with the biggest effect on perceived audio quality in calls, streams, and recordings — a well-set gain sounds clean and professional, while a poorly set one sounds either muffled and hard to hear or harsh and distorted, and no amount of noise suppression or EQ fully compensates for getting it wrong at the source.",
@@ -103,7 +103,7 @@ export const microphoneSettings = [
       "Avoid stacking OS-level and app-level suppression at their highest settings simultaneously — combined aggressive suppression can make voices sound processed, robotic, or clipped during pauses and breaths.",
       "Test suppression with the actual background noise present (fan running, typing) rather than in a silent room, since the effect is only obvious once there's something to suppress.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/mute-and-unmute-your-microphone-in-windows-1a1c2a8b-1234-4a5b-9c1d-8e9f0a1b2c3d",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Microphone Sound Settings",
     whyItMatters:
       "Noise suppression can meaningfully improve how you sound on calls and recordings without buying acoustic treatment, but set too aggressively it introduces its own artifacts — understanding where it lives at both the OS and app level avoids double-processing that makes voices sound unnatural.",
@@ -142,7 +142,7 @@ export const microphoneSettings = [
     ],
     important:
       "Two separate mute states — hardware and software — can each independently silence you; if you're unmuted in an app but still not being heard, check the microphone's own LED before assuming the problem is elsewhere.",
-    redirectUrl: "https://support.microsoft.com/windows/mute-and-unmute-your-microphone-in-windows-1a1c2a8b-1234-4a5b-9c1d-8e9f0a1b2c3d",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Mute and Unmute Your Microphone",
     whyItMatters:
       "\"You're on mute\" is one of the most common video-call moments, and a hardware mute button that overrides software state is a frequent hidden cause — knowing to check the mic's own indicator light first saves the awkward troubleshooting loop of toggling app mute repeatedly with no effect.",
@@ -179,7 +179,7 @@ export const microphoneSettings = [
       "Stereo: captures a wider left-right image, useful for music, ambience, or ASMR-style content rather than spoken-word podcasting or calls.",
       "Change the pattern using the microphone's physical selector switch/dial or the manufacturer's companion app, and re-test gain afterward since sensitivity can shift slightly between patterns.",
     ],
-    redirectUrl: "https://support.microsoft.com/windows/how-to-fix-microphone-problems-in-windows-4bfa8f24-9e5c-4e5d-9c3f-1a3f1e3d6d3b",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Microphone Problems",
     whyItMatters:
       "Using the wrong polar pattern is a common invisible cause of poor-sounding recordings — an omnidirectional pattern used for solo streaming will pick up far more room echo and background noise than cardioid would, and the fix is a single switch rather than any purchase or software change.",
@@ -218,7 +218,7 @@ export const microphoneSettings = [
     ],
     important:
       "Never disconnect a microphone or close its update app mid-update — an interrupted firmware flash can leave the device in a non-functional state that may require manufacturer support to recover.",
-    redirectUrl: "https://support.microsoft.com/windows/update-drivers-in-windows-ec62f46d-b60c-15a0-b0e4-cee2ce0d67e0",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Update Device Drivers & Firmware",
     whyItMatters:
       "Firmware updates for microphones commonly fix real issues — inconsistent gain behavior, mute button unresponsiveness, USB dropouts, or companion app compatibility — that no OS-level or app-level setting can work around, making this worth checking when a mic behaves oddly in ways unrelated to normal configuration.",
@@ -255,7 +255,7 @@ export const microphoneSettings = [
       "Keep a consistent distance from the mic while speaking — moving closer and farther causes volume to rise and fall (sometimes called the proximity effect on condenser and cardioid mics, which also boosts bass at close range).",
       "Mount the microphone on a boom arm or stand rather than resting it on the same desk you type on, since desk vibration and impact noise transmit directly into the mic body.",
     ],
-    redirectUrl: "https://support.apple.com/guide/mac-help/change-sound-input-settings-mchlp2247/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Change Sound Input Settings",
     whyItMatters:
       "Positioning is free and instantly effective — a mic placed and angled correctly with a pop filter in front of it often sounds noticeably better than the same mic with maximum noise suppression and processing applied but poor placement, and unlike software fixes, it doesn't introduce artifacts.",
@@ -294,7 +294,7 @@ export const microphoneSettings = [
     ],
     important:
       "Condenser microphones (most studio-style XLR mics) require phantom power (48V) from the audio interface to function at all — if phantom power is off, the mic will appear connected but produce no signal whatsoever.",
-    redirectUrl: "https://support.microsoft.com/windows/how-to-fix-microphone-problems-in-windows-4bfa8f24-9e5c-4e5d-9c3f-1a3f1e3d6d3b",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Fix Microphone Problems",
     whyItMatters:
       "\"No sound at all\" feels like a hardware failure but is very rarely one — working through device selection, mute state, permissions, and connections in order catches the actual cause in a few minutes rather than assuming the microphone itself is broken and needing a replacement.",

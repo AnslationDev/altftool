@@ -1,12 +1,13 @@
-export const config = {
+const toolConfig = {
   slug: "color-psychology-analyzer",
   name: "Color Psychology Analyzer",
-  description: "Analyze emotional impact, branding psychology, and cultural meanings of colors.",
-  category: "Design Tools",
+  description:
+    "Analyze emotional impact, branding psychology, and cultural meanings of colors.",
+  category: "Design & Color",
   icon: "palette",
-  iconColor: "text-fuchsia-600",
+  iconColor: "text-(--primary)",
   status: "New",
-  featured: true
+  featured: true,
 };
 
-export default config;
+export default toolConfig;

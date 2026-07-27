@@ -127,6 +127,7 @@ export const ILLUSIONS = [
     description: "One of the most famous ambiguous figures. Can you see both the duck looking left and the rabbit looking right?",
     image: figureSvg({ id: "duck-rabbit", title: "Duck / Rabbit", subtitle: "Two meanings in one outline", variant: "profiles" }),
     difficulty: "Beginner",
+    category: "Animals",
     perceptionType: "Gestalt Switching",
     interpretations: [
       { id: "duck", label: "Duck", hint: "Look for the beak pointing to the left." },
@@ -139,6 +140,7 @@ export const ILLUSIONS = [
     description: "A classic figure-ground illusion. Do you see a vase in the center or two faces looking at each other?",
     image: figureSvg({ id: "rubin-vase", title: "Rubin Vase", subtitle: "Vase or two faces?", variant: "profiles" }),
     difficulty: "Beginner",
+    category: "Objects",
     perceptionType: "Figure-Ground",
     interpretations: [
       { id: "vase", label: "Vase", hint: "Focus on the light shape in the center." },
@@ -151,6 +153,7 @@ export const ILLUSIONS = [
     description: "A wireframe cube with no depth cues. Your brain will spontaneously switch which face is in the front.",
     image: figureSvg({ id: "necker-cube", title: "Necker Cube", subtitle: "Which face is in front?", variant: "cube" }),
     difficulty: "Intermediate",
+    category: "Perspective",
     perceptionType: "Bistable Perception",
     interpretations: [
       { id: "front-down", label: "Facing Down", hint: "Imagine the lower-left square is the front." },
@@ -163,6 +166,7 @@ export const ILLUSIONS = [
     description: "A kinetic bistable illusion. Is she spinning clockwise or counter-clockwise? It depends on your perspective.",
     image: figureSvg({ id: "spinning-dancer", title: "Spinning Dancer", subtitle: "Clockwise or counter?", variant: "dancer" }),
     difficulty: "Advanced",
+    category: "Motion",
     perceptionType: "Kinetic Depth",
     interpretations: [
       { id: "clockwise", label: "Clockwise", hint: "Imagine you are looking from above." },
@@ -175,6 +179,7 @@ export const ILLUSIONS = [
     description: "Also known as My Wife and My Mother-in-Law. A legendary illusion where a young woman's necklace is an old woman's mouth.",
     image: figureSvg({ id: "old-young", title: "Old / Young", subtitle: "Age changes with focus", variant: "portrait" }),
     difficulty: "Intermediate",
+    category: "People",
     perceptionType: "Gestalt Switching",
     interpretations: [
       { id: "young", label: "Young Girl", hint: "Look for the chin and the ear of a woman looking away." },
@@ -187,6 +192,7 @@ export const ILLUSIONS = [
     description: "A clever profile illusion. Do you see a figure entering a cave or the profile of a Native American head?",
     image: figureSvg({ id: "eskimo-indian", title: "Figure / Profile", subtitle: "Cave scene or face?", variant: "portrait" }),
     difficulty: "Intermediate",
+    category: "People",
     perceptionType: "Figure-Ground",
     interpretations: [
       { id: "eskimo", label: "Figure", hint: "Look for the figure walking into the dark opening." },
@@ -199,6 +205,7 @@ export const ILLUSIONS = [
     description: "An ambiguous drawing of a staircase that can be perceived either as a staircase leading up or down.",
     image: figureSvg({ id: "schroder-stairs", title: "Schroder Stairs", subtitle: "Upstairs or downstairs?", variant: "stairs" }),
     difficulty: "Intermediate",
+    category: "Perspective",
     perceptionType: "Perspective Shift",
     interpretations: [
       { id: "upstairs", label: "Upstairs", hint: "See the top surface as the steps." },
@@ -211,6 +218,7 @@ export const ILLUSIONS = [
     description: "A famous memento mori illusion. A woman at a vanity table forms the shape of a large human skull.",
     image: figureSvg({ id: "all-is-vanity", title: "All is Vanity", subtitle: "Portrait or skull?", variant: "vanity" }),
     difficulty: "Advanced",
+    category: "Hidden Images",
     perceptionType: "Holistic Perception",
     interpretations: [
       { id: "woman", label: "Woman", hint: "Focus on the lady looking into her mirror." },
@@ -223,6 +231,7 @@ export const ILLUSIONS = [
     description: "A variation of the Rubin Vase. Do you see two faces in silhouette or an ornate candlestick in the middle?",
     image: figureSvg({ id: "face-candlestick", title: "Face / Candlestick", subtitle: "Silhouette or object?", variant: "profiles" }),
     difficulty: "Beginner",
+    category: "Objects",
     perceptionType: "Figure-Ground",
     interpretations: [
       { id: "faces", label: "Faces", hint: "Look at the shapes on the left and right." },
@@ -235,6 +244,7 @@ export const ILLUSIONS = [
     description: "A 3D illusion where an object looks circular from one angle but rectangular in a mirror reflection.",
     image: figureSvg({ id: "ambiguous-cylinder", title: "Ambiguous Cylinder", subtitle: "Circle or rectangle?", variant: "cylinder" }),
     difficulty: "Advanced",
+    category: "Impossible Shapes",
     perceptionType: "Geometric Illusion",
     interpretations: [
       { id: "circle", label: "Circular", hint: "Look at the object directly from the front." },
@@ -247,6 +257,7 @@ export const ILLUSIONS = [
     description: "Also known as the Mach Book. An open book that can appear to be facing towards you or away from you.",
     image: figureSvg({ id: "mach-book", title: "Bistable Book", subtitle: "Opening in or out?", variant: "book" }),
     difficulty: "Intermediate",
+    category: "Perspective",
     perceptionType: "Perspective Shift",
     interpretations: [
       { id: "open-towards", label: "Opening Towards", hint: "Imagine the spine is closer to you." },
@@ -259,6 +270,7 @@ export const ILLUSIONS = [
     description: "A classic impossible object. It has three cylindrical prongs at one end which transform into two rectangular prongs at the other.",
     image: figureSvg({ id: "impossible-trident", title: "Impossible Trident", subtitle: "Three ends or two?", variant: "trident" }),
     difficulty: "Advanced",
+    category: "Impossible Shapes",
     perceptionType: "Impossible Object",
     interpretations: [
       { id: "three-prongs", label: "Three Prongs", hint: "Focus on the bottom end of the object." },
@@ -266,3 +278,80 @@ export const ILLUSIONS = [
     ],
   },
 ];
+
+export const ACHIEVEMENTS = [
+  {
+    id: "first_illusion",
+    name: "First Glance",
+    description: "Discover both interpretations in your first optical illusion.",
+    iconKey: "Eye",
+  },
+  {
+    id: "ten_solved",
+    name: "Perception Pioneer",
+    description: "Successfully unlock 10 optical illusions.",
+    iconKey: "Compass",
+  },
+  {
+    id: "twenty_five_solved",
+    name: "Master Observer",
+    description: "Unlock 25 optical illusions in the collection.",
+    iconKey: "Trophy",
+  },
+  {
+    id: "fast_thinker",
+    name: "Quick Switcher",
+    description: "Toggle perception between interpretations in under 3 seconds.",
+    iconKey: "Zap",
+  },
+  {
+    id: "perception_master",
+    name: "Brain Score 300+",
+    description: "Reach a cognitive brain score of 300 points.",
+    iconKey: "Flame",
+  },
+  {
+    id: "hidden_genius",
+    name: "Hidden Genius",
+    description: "Solve at least 3 Advanced level illusions.",
+    iconKey: "Award",
+  },
+];
+
+export const soundFx = {
+  enabled: true,
+  playClick() {
+    if (!this.enabled || typeof window === "undefined") return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(600, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } catch (_) {}
+  },
+  playUnlock() {
+    if (!this.enabled || typeof window === "undefined") return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(400, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch (_) {}
+  },
+};

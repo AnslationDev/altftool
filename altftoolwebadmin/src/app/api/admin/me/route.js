@@ -26,7 +26,19 @@ export async function GET(request) {
     }
 
     const token = authHeader.split("Bearer ")[1];
-    const decoded = await adminAuth.verifyIdToken(token);
+
+    // A malformed, expired or revoked token is a CLIENT error. Letting it fall
+    // through to the generic 500 handler was actively harmful: the client
+    // treats 5xx as a transient server hiccup and retries while preserving the
+    // session, so a permanently invalid token produced a retry storm and then a
+    // signed-in-but-profile-less dead end, instead of a clean sign-out.
+    let decoded;
+    try {
+      decoded = await adminAuth.verifyIdToken(token);
+    } catch (verifyErr) {
+      console.warn("ADMIN_ME_TOKEN_REJECTED:", verifyErr?.code ?? verifyErr?.message);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const rbacAdmin = await getRbacAdminDoc(decoded);
     if (rbacAdmin) {

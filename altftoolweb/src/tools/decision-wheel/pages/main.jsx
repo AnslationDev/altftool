@@ -175,21 +175,21 @@ export default function DecisionWheelPage() {
             <p className="text-sm text-(--muted-foreground) mt-1">Spin to decide anything — pick winners, build teams, settle debates.</p>
           </div>
           <div className="flex gap-1.5 flex-wrap">
-            <button onClick={() => setShowStats(!showStats)} aria-label="Toggle statistics" aria-pressed={showStats} className={`p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg border transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+            <button onClick={() => setShowStats(!showStats)} aria-label="Toggle statistics" aria-pressed={showStats} className={`p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg border transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
               showStats ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--border-strong)"
             }`} title="Statistics">
               <BarChart3 size="18" />
             </button>
-            <button onClick={handleSave} aria-label="Save wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Save Wheel">
+            <button onClick={handleSave} aria-label="Save wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Save Wheel">
               <Save size="18" />
             </button>
-            <button onClick={() => setShowShare(true)} aria-label="Share wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Share">
+            <button onClick={() => setShowShare(true)} aria-label="Share wheel" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Share">
               <Share2 size="18" />
             </button>
-            <button onClick={() => setShowImport(true)} aria-label="Import or export entries" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Import/Export">
+            <button onClick={() => setShowImport(true)} aria-label="Import or export entries" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Import/Export">
               <FileJson size="18" />
             </button>
-            <button onClick={toggleFullscreen} aria-label="Toggle fullscreen" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Fullscreen">
+            <button onClick={toggleFullscreen} aria-label="Toggle fullscreen" className="p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-lg bg-(--card) border border-(--border) text-(--muted-foreground) hover:border-(--border-strong) transition active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Fullscreen">
               <Maximize2 size="18" />
             </button>
           </div>

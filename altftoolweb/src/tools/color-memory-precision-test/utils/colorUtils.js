@@ -1,13 +1,35 @@
 /**
- * Converts HEX to RGB
+ * Strictly parses a hex colour, accepting both the 3-digit shorthand (#abc)
+ * and the 6-digit form (#aabbcc). Returns null for anything else, so callers
+ * can tell a genuine black apart from an unparseable string.
  */
-export const hexToRgb = (hex) => {
-  if (!hex) return { r: 0, g: 0, b: 0 };
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return { r, g, b };
+export const parseHex = (hex) => {
+  const text = String(hex ?? "").trim();
+  const short = /^#?([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(text);
+  const full = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(text);
+  if (short) {
+    // #abc means #aabbcc — each digit is doubled, per the CSS Color spec.
+    return {
+      r: parseInt(short[1] + short[1], 16),
+      g: parseInt(short[2] + short[2], 16),
+      b: parseInt(short[3] + short[3], 16),
+    };
+  }
+  if (full) {
+    return {
+      r: parseInt(full[1], 16),
+      g: parseInt(full[2], 16),
+      b: parseInt(full[3], 16),
+    };
+  }
+  return null;
 };
+
+/**
+ * Converts HEX to RGB. Unparseable input falls back to black rather than
+ * producing NaN channels; use `parseHex` when you need to detect bad input.
+ */
+export const hexToRgb = (hex) => parseHex(hex) ?? { r: 0, g: 0, b: 0 };
 
 /**
  * Converts RGB to HEX
@@ -78,27 +100,30 @@ export const hslToRgb = (h, s, l) => {
 };
 
 /**
- * Generates a random color based on difficulty
+ * Saturation and lightness ranges per difficulty, as [start, span] in HSL
+ * percent. Hue is always the full 0-359 circle.
+ *
+ *  easy   — 70-99% saturation, 40-59% lightness: vivid, well-separated hues.
+ *  medium — 40-99% saturation, 30-69% lightness: everyday UI colours.
+ *  hard   — 10-89% saturation, 15-84% lightness: includes near-greys and
+ *           near-blacks/whites, where memory for hue collapses fastest.
  */
-export const generateRandomColor = (difficulty) => {
-  let h, s, l;
+export const DIFFICULTY_BANDS = {
+  easy: { s: [70, 30], l: [40, 20] },
+  medium: { s: [40, 60], l: [30, 40] },
+  hard: { s: [10, 80], l: [15, 70] },
+};
 
-  if (difficulty === "easy") {
-    // Highly saturated, distinct colors
-    h = Math.floor(Math.random() * 360);
-    s = 70 + Math.floor(Math.random() * 30);
-    l = 40 + Math.floor(Math.random() * 20);
-  } else if (difficulty === "medium") {
-    // Normal range
-    h = Math.floor(Math.random() * 360);
-    s = 40 + Math.floor(Math.random() * 60);
-    l = 30 + Math.floor(Math.random() * 40);
-  } else {
-    // Hard: Subtle, grayish or very dark/light tones
-    h = Math.floor(Math.random() * 360);
-    s = 10 + Math.floor(Math.random() * 80);
-    l = 15 + Math.floor(Math.random() * 70);
-  }
+/**
+ * Generates a random color based on difficulty.
+ * `rng` defaults to Math.random; pass a seeded generator to make the result
+ * reproducible in tests.
+ */
+export const generateRandomColor = (difficulty, rng = Math.random) => {
+  const band = DIFFICULTY_BANDS[difficulty] ?? DIFFICULTY_BANDS.medium;
+  const h = Math.floor(rng() * 360);
+  const s = band.s[0] + Math.floor(rng() * band.s[1]);
+  const l = band.l[0] + Math.floor(rng() * band.l[1]);
 
   const { r, g, b } = hslToRgb(h, s, l);
   return rgbToHex(r, g, b);
@@ -108,8 +133,11 @@ export const generateRandomColor = (difficulty) => {
  * Calculates accuracy percentage between two colors
  */
 export const calculateAccuracy = (hex1, hex2) => {
-  const rgb1 = hexToRgb(hex1);
-  const rgb2 = hexToRgb(hex2);
+  const rgb1 = parseHex(hex1);
+  const rgb2 = parseHex(hex2);
+  if (!rgb1 || !rgb2) {
+    return { error: "Both colours must be hex values such as #14B8A6." };
+  }
 
   // Euclidean distance in RGB space (normalized to 0-1)
   const distance = Math.sqrt(

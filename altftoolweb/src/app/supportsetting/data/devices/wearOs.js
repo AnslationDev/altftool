@@ -24,7 +24,7 @@ export const wearOsSettings = [
       "Wait for the initial sync to finish before disconnecting — this is when your Google account, watch face, and installed apps first transfer to the watch.",
     ],
     important: "Keep the phone's Bluetooth and Wi-Fi both on and the watch within a few feet of the phone for the entire setup — pairing that's interrupted partway through often has to be restarted from scratch.",
-    redirectUrl: "https://support.google.com/wearos/answer/7317589",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Set Up Your Watch",
     whyItMatters:
       "Nearly everything else on a Wear OS watch — notifications, app installs, tile configuration, backups — depends on this initial pairing being healthy, so problems with any of those often trace back to a shaky or incomplete pairing rather than the feature itself.",
@@ -62,7 +62,7 @@ export const wearOsSettings = [
       "The watch restarts automatically once an update finishes installing.",
     ],
     important: "Do not remove the watch from its charger or let Bluetooth/Wi-Fi drop mid-install — an interrupted update can leave the watch stuck on a boot screen requiring a factory reset to recover.",
-    redirectUrl: "https://support.google.com/wearos/answer/7326862",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Software Update",
     whyItMatters:
       "OS updates on Wear OS frequently fix battery-drain regressions, sensor-accuracy bugs, and Bluetooth reconnection issues — a watch running an old build is a common, overlooked cause of problems that look like hardware failures but disappear after updating.",
@@ -98,7 +98,7 @@ export const wearOsSettings = [
       "Swipe left or right from the watch face to reach tiles; long-press the current tile and tap the \"+\" or arrows to add, remove, and reorder them.",
       "Tiles can also be added and reordered from the phone in the Wear OS app under Watch face → Tiles.",
     ],
-    redirectUrl: "https://support.google.com/wearos/answer/7325305",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Change Your Watch Face",
     whyItMatters:
       "Complications and tiles are the fastest way to surface the information you actually check often — weather, next event, steps — without opening a full app, so a well-set-up face and tile set materially cuts down daily taps.",
@@ -135,7 +135,7 @@ export const wearOsSettings = [
       "Dismissing a notification on the watch also clears it from the phone by default; toggle \"Bridge notifications\" off in the Wear OS app if you want them handled independently.",
       "Turn on Theater Mode or Do Not Disturb from the quick-settings tray to silence notifications and dim the display without powering the watch off.",
     ],
-    redirectUrl: "https://support.google.com/wearos/answer/7325997",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Manage Notifications",
     whyItMatters:
       "Unfiltered notification mirroring is the single biggest cause of watch-buzzing fatigue — most people end up disabling far more apps on the watch than they ever would on the phone, and knowing where that control lives prevents constant wrist interruptions.",
@@ -171,7 +171,7 @@ export const wearOsSettings = [
       "Choose which app opens for messaging replies under Settings → Apps → Default apps → Assistant app.",
       "Assistant works over the watch's own Wi-Fi/cellular connection when out of Bluetooth range, so responses keep working away from the phone on connected models.",
     ],
-    redirectUrl: "https://support.google.com/wearos/answer/9192419",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Use Google Assistant",
     whyItMatters:
       "Voice commands are the fastest input method on a screen this small — being able to set a timer, reply to a text, or check the weather without tapping through menus is one of the clearest advantages a watch has over pulling out a phone.",
@@ -207,7 +207,7 @@ export const wearOsSettings = [
       "Some models offer an Extended/Watch Battery Saver toggle that keeps only the time display and step count active for maximum runtime.",
       "Review Settings → Battery → Battery usage per app to spot any single app draining power disproportionately in the background.",
     ],
-    redirectUrl: "https://support.google.com/wearos/answer/9268805",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Improve Battery Life",
     whyItMatters:
       "Battery Saver is the fastest lever for stretching a watch through a long day or an unexpected missed charge, and knowing the difference between the standard and extended modes avoids surprise loss of notifications or health tracking when you didn't intend it.",
@@ -244,7 +244,7 @@ export const wearOsSettings = [
       "Check Settings → Connectivity → Bluetooth to confirm the phone link status, since Wi-Fi/cellular use typically only kicks in once Bluetooth range is lost.",
     ],
     important: "Cellular plans on Wear OS watches are typically billed as a separate line (or a shared/companion line) by your carrier — confirm pricing with your carrier before activating an eSIM, as it's not automatically included with a phone plan.",
-    redirectUrl: "https://support.google.com/wearos/answer/9192687",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Wi-Fi and Cellular Connectivity",
     whyItMatters:
       "Connectivity is what determines whether the watch is truly independent for a run or gym session without the phone, or effectively just a Bluetooth accessory — understanding these settings prevents surprises like missed calls when the phone is left at home.",
@@ -282,7 +282,7 @@ export const wearOsSettings = [
       "Use Health Connect's data-sharing log to see which apps have read a given data type recently if sync results look unexpected.",
     ],
     important: "Revoking a data type's permission in Health Connect stops future syncing for that type but does not retroactively delete data already shared with an app — remove it from within that app separately if needed.",
-    redirectUrl: "https://support.google.com/wearos/answer/12296200",
+    redirectUrl: "https://support.google.com/wearos/?hl=en",
     actionLabel: "Open Wear OS Support: Health Connect and Fitness Data",
     whyItMatters:
       "Health data is some of the most sensitive information a watch collects, and Health Connect's per-app, per-data-type model is what keeps that data from being shared more broadly than intended when you install a new fitness or nutrition app.",

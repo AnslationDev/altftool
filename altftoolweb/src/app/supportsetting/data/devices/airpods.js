@@ -1,4 +1,17 @@
-import { Headphones, RefreshCw, Bluetooth } from "lucide-react";
+import {
+  Headphones,
+  RefreshCw,
+  Bluetooth,
+  Battery,
+  Volume2,
+  Sparkles,
+  Lock,
+  ShieldCheck,
+  Wrench,
+  Users,
+  Cpu,
+  Accessibility,
+} from "lucide-react";
 
 // Example authored guides for AirPods, proving out the Accessories
 // category. Covers the core Bluetooth-accessory flows that generalize
@@ -101,5 +114,348 @@ export const airpodsSettings = [
     tipsAndTricks: ["If a full reset doesn't help, forgetting the AirPods from Bluetooth settings on every paired device and re-pairing from scratch resolves most persistent issues."],
     faqs: [{ q: "Is dropped audio a sign my AirPods are failing?", a: "Usually not — it's most often interference or a stale connection, both fixed by the case-reset steps above." }],
     relatedSettingIds: ["airpods-pairing", "airpods-firmware-update"],
+  },
+  {
+    id: "airpods-battery-charging-case",
+    title: "Battery & Charging Case",
+    icon: Battery,
+    platform: "airpods",
+    category: "devices-peripherals",
+    frequentlyUsed: true,
+    recommended: true,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "3 min read",
+    supportedVersions: "All AirPods generations",
+    heading: "Read AirPods and case battery levels, and charge them correctly",
+    description:
+      "Each AirPod and the charging case track battery separately, so a pair that seems to \"die fast\" is often just a case that isn't holding a charge — not a problem with the earbuds themselves.",
+    details: [
+      "View live battery percentages for the left AirPod, right AirPod, and the case from the Batteries widget on a paired iPhone or iPad, or by opening the case's lid near the device.",
+      "A fully charged case gives non-Pro AirPods roughly 24 total hours of listening across several top-ups; AirPods Pro and AirPods Max have shorter per-charge listening time but similar case-assisted totals.",
+      "The case charges via Lightning or USB-C cable, or wirelessly on a Qi pad or MagSafe charger, depending on the case generation.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Check Battery Guidance",
+    whyItMatters:
+      "AirPods batteries degrade with charge cycles like any lithium-ion battery, and a case that's stuck reporting the wrong percentage or refusing wireless charging is one of the most common reasons people mistakenly assume their AirPods are worn out.",
+    afterImageContent: {
+      heading: "How to check battery levels",
+      steps: [
+        "Open the AirPods case near your iPhone or iPad and look at the notification that appears.",
+        "Or add the Batteries widget to your Home Screen / Today View for an always-available reading.",
+        "On Mac, click the Bluetooth menu bar icon and hover over your AirPods for a percentage breakdown.",
+      ],
+    },
+    bestPractices: [
+      "Avoid letting the case sit fully drained for long periods — recharge it at least occasionally even if you're not using the AirPods.",
+      "Use an original or MFi-certified cable and charger; uncertified accessories are a common cause of case charging failures.",
+    ],
+    commonIssues: [
+      { issue: "Case shows no light and won't charge", fix: "Try a different cable and power source, and clean the Lightning/USB-C port of lint with a dry, soft brush." },
+      { issue: "Battery percentage seems stuck or inaccurate", fix: "Put the AirPods back in the case, close the lid for 15 seconds, then reopen it near your iPhone to force a fresh reading." },
+      { issue: "Wireless charging doesn't work but wired does", fix: "Confirm the case itself supports wireless charging (check for the wireless charging status light) and center it precisely on the charging pad." },
+    ],
+    tipsAndTricks: ["Battery health tends to degrade faster if AirPods are frequently used at very low battery, then immediately fast-charged for a few minutes and pulled out again — letting a charge session run longer when possible is gentler on the cells."],
+    faqs: [{ q: "Does using only one AirPod at a time save battery?", a: "Yes — using a single AirPod (mono listening) roughly doubles the usable time before that pair needs a case top-up." }],
+    relatedSettingIds: ["airpods-ear-detection", "airpods-find-my"],
+  },
+  {
+    id: "airpods-noise-control",
+    title: "Noise Control (ANC & Transparency)",
+    icon: Volume2,
+    platform: "airpods",
+    category: "display-sound-notifications",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "AirPods Pro (all generations) and AirPods Max only — not available on base AirPods (1st, 2nd, 3rd, or 4th generation without ANC)",
+    heading: "Switch between Active Noise Cancellation, Transparency, and Adaptive Audio",
+    description:
+      "AirPods Pro and AirPods Max offer Active Noise Cancellation to block outside sound, Transparency mode to let it in, and — on newer models — Adaptive Audio, which blends the two automatically based on your environment.",
+    details: [
+      "Cycle modes by press-and-holding the stem (AirPods Pro) or the Noise Control button (AirPods Max), or by long-pressing the volume slider in Control Center.",
+      "Adaptive Audio (AirPods Pro 2nd generation and later) continuously adjusts how much outside noise comes through instead of being a fixed on/off mode.",
+      "Available modes and their order can be customized under Settings → Bluetooth → [your AirPods] → Noise Control.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Noise Control Guidance",
+    whyItMatters:
+      "Picking the wrong default mode for your environment is the single biggest reason people think their AirPods Pro \"aren't that great\" at noise cancellation — Transparency mode intentionally lets ambient sound through and is easy to leave on by mistake.",
+    afterImageContent: {
+      heading: "How to customize which modes are available",
+      steps: [
+        "Open Settings and tap Bluetooth.",
+        "Tap the info (i) button next to your AirPods.",
+        "Tap Noise Control and toggle which modes (Off, Transparency, Adaptive, Noise Cancellation) appear in the cycle.",
+      ],
+    },
+    bestPractices: [
+      "Ensure a snug, sealed ear tip fit — loose-fitting tips dramatically reduce how effective Active Noise Cancellation feels.",
+      "Run the in-ear fit test under Settings → Bluetooth → [your AirPods] → Ear Tip Fit Test after switching tip sizes.",
+    ],
+    commonIssues: [
+      { issue: "Noise Cancellation doesn't seem to do much", fix: "Try a different ear tip size and run the Ear Tip Fit Test — an imperfect seal is the most common cause of weak-feeling ANC." },
+      { issue: "Can't find Adaptive Audio as an option", fix: "Confirm you have AirPods Pro (2nd generation) or later and that firmware is up to date; older Pro models don't support Adaptive Audio." },
+    ],
+    tipsAndTricks: ["Setting Transparency as the mode used automatically during phone calls (under Noise Control settings) makes it easier to hear your own voice and surroundings mid-call."],
+    faqs: [{ q: "Do regular AirPods have noise cancellation?", a: "No — Active Noise Cancellation and Transparency mode are exclusive to AirPods Pro and AirPods Max." }],
+    relatedSettingIds: ["airpods-spatial-audio", "airpods-customize-controls"],
+  },
+  {
+    id: "airpods-spatial-audio",
+    title: "Spatial Audio & Head Tracking",
+    icon: Sparkles,
+    platform: "airpods",
+    category: "display-sound-notifications",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "3 min read",
+    supportedVersions:
+      "AirPods Pro (all generations), AirPods Max, and AirPods (3rd generation) and later — not supported on AirPods (1st or 2nd generation)",
+    heading: "Enable Personalized Spatial Audio with dynamic head tracking",
+    description:
+      "Spatial Audio simulates a surround-sound field for supported movies, shows, and music, and dynamic head tracking keeps that sound field anchored to the screen even as you turn your head.",
+    details: [
+      "Turn it on or off under Settings → Bluetooth → [your AirPods] → Spatial Audio, choosing Fixed (sound stays relative to the device) or Head Tracked.",
+      "Personalized Spatial Audio uses a short TrueDepth camera face and ear scan to tailor the sound profile to your specific ear shape.",
+      "Works with content mixed in Dolby Atmos, as well as automatically up-mixed stereo and 5.1/7.1 audio in supported apps.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Spatial Audio Guidance",
+    whyItMatters:
+      "Spatial Audio is easy to dismiss as a gimmick when it's actually off or misconfigured — with head tracking enabled and a personalized profile set up, the difference in movies and Atmos music is substantial, not subtle.",
+    bestPractices: [
+      "Set up a Personalized Spatial Audio profile under Settings → Bluetooth → [your AirPods] → Personalized Spatial Audio for the most accurate effect.",
+      "Use Head Tracked mode for movies and TV so the sound field stays locked to the screen; switch to Fixed for music you want to sound consistent regardless of movement.",
+    ],
+    commonIssues: [
+      { issue: "Spatial Audio option is missing entirely", fix: "Confirm the AirPods model supports it — base AirPods (1st/2nd generation) never show this option regardless of iOS version." },
+      { issue: "Sound field doesn't seem to move with my head", fix: "Check that Head Tracked (not Fixed) is selected, and that the content is actually Spatial Audio–enabled — not all audio supports it." },
+    ],
+    tipsAndTricks: ["Spatial Audio with head tracking briefly \"resets\" the sound field to center whenever you look back at the screen — useful when the effect feels off after moving around a lot."],
+    faqs: [{ q: "Does Spatial Audio work with any song or video?", a: "No — it requires content mixed for Dolby Atmos or a supported multichannel format; regular stereo content is only up-mixed by apps that opt in." }],
+    relatedSettingIds: ["airpods-noise-control", "airpods-ear-detection"],
+  },
+  {
+    id: "airpods-find-my",
+    title: "Find My AirPods",
+    icon: Lock,
+    platform: "airpods",
+    category: "privacy-permissions",
+    frequentlyUsed: true,
+    recommended: true,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions: "All AirPods generations",
+    heading: "Locate, play a sound on, or mark lost AirPods as missing",
+    description:
+      "AirPods appear in the Find My app like any other Apple device, using the Find My network to report an approximate location even when they're out of Bluetooth range of your iPhone.",
+    details: [
+      "Open the Find My app, go to the Devices tab, and select your AirPods to see their last known location and play a sound.",
+      "Separate location dots for the left AirPod, right AirPod, and case appear if they've become separated.",
+      "Mark as Lost sends a notification if the AirPods come back online and can display a message with your contact info to anyone who finds them.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Find My Guidance",
+    whyItMatters:
+      "Find My only works if it was enabled before the AirPods went missing — there's no way to retroactively locate a pair that was never set up in Find My, which makes this a setting worth confirming proactively rather than after the fact.",
+    bestPractices: [
+      "Confirm Find My Network is turned on for your AirPods under the Find My app's device details, not just that Location Services is on generally.",
+      "Keep at least one Apple device signed into the same Apple ID nearby regularly — Find My relies on the broader Find My network of Apple devices to relay locations.",
+    ],
+    commonIssues: [
+      { issue: "AirPods show \"No location found\"", fix: "They're out of range of any device on the Find My network; the location updates automatically once a nearby Apple device detects them." },
+      { issue: "Play Sound doesn't produce audio", fix: "The AirPods must have some charge remaining and be out of the case — a fully dead AirPod can't play a sound." },
+    ],
+    tipsAndTricks: ["If only the case is lost (with AirPods elsewhere), newer cases with a built-in speaker and U1 chip can still be located and made to play a sound independently."],
+    faqs: [{ q: "Can someone track me through my lost AirPods?", a: "No — Find My locations are only visible to you (or people you've explicitly shared them with) via your Apple ID, and Marking as Lost only reveals a contact message you choose to share." }],
+    relatedSettingIds: ["airpods-battery-charging-case", "airpods-pairing"],
+  },
+  {
+    id: "airpods-ear-detection",
+    title: "Automatic Ear Detection",
+    icon: ShieldCheck,
+    platform: "airpods",
+    category: "personalization",
+    frequentlyUsed: false,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "2 min read",
+    supportedVersions: "All AirPods generations",
+    heading: "Automatically pause audio when an AirPod is removed",
+    description:
+      "Built-in sensors detect when an AirPod is in your ear versus set down or in the case, automatically pausing playback the moment you take one out and resuming when you put it back in.",
+    details: [
+      "Toggle this feature under Settings → Bluetooth → [your AirPods] → Automatic Ear Detection.",
+      "With Automatic Ear Detection off, audio keeps playing regardless of whether the AirPods are in your ears.",
+      "AirPods Max uses the same detection behavior when lifted off your ears or placed in the Smart Case, rather than an in-ear optical sensor.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Ear Detection Guidance",
+    whyItMatters:
+      "This is the setting behind two very different complaints — \"my AirPods keep pausing randomly\" (sensor being overly sensitive) and \"my AirPods drain battery in my pocket\" (the fix for both is checking this single toggle).",
+    bestPractices: [
+      "Leave Automatic Ear Detection on for everyday use — it's the main reason AirPods don't keep playing audio to an empty room or an inside pocket.",
+      "If you consistently wear only one AirPod, note that removing the second one entirely (rather than leaving it in the case) still lets audio continue through the one in use.",
+    ],
+    commonIssues: [
+      { issue: "Audio pauses even though AirPods are still in my ears", fix: "Clean the sensor area (the small dark spot on the inside of each AirPod) — earwax or debris commonly causes false \"removed\" detection." },
+      { issue: "Audio doesn't pause when I take an AirPod out", fix: "Confirm Automatic Ear Detection is toggled on under Settings → Bluetooth → [your AirPods]; it can be switched off accidentally." },
+    ],
+    tipsAndTricks: ["Turning this off is useful for a specific case — sharing one AirPod with someone else while both keep playing continuously without pausing when either is removed briefly."],
+    faqs: [{ q: "Does ear detection work with only one AirPod in use?", a: "Yes — audio continues normally through a single worn AirPod; playback only pauses once both are out of your ears (or the one in use is removed)." }],
+    relatedSettingIds: ["airpods-battery-charging-case", "airpods-customize-controls"],
+  },
+  {
+    id: "airpods-customize-controls",
+    title: "Customize Press & Squeeze Controls",
+    icon: Wrench,
+    platform: "airpods",
+    category: "personalization",
+    frequentlyUsed: false,
+    difficulty: "Easy",
+    estimatedTime: "3 min read",
+    supportedVersions:
+      "AirPods (2nd generation) and later — the control gesture itself varies by model (double-tap on AirPods 2nd gen, force-sensor squeeze on AirPods Pro/3rd gen/Max, tap on AirPods 4)",
+    heading: "Reassign what tapping, squeezing, or pressing your AirPods does",
+    description:
+      "Depending on the model, AirPods use a double-tap, a stem squeeze, or a light tap to control playback, calls, Siri, and noise control — and every one of those actions can be reassigned to a different function.",
+    details: [
+      "Configure per-AirPod (left/right independently) actions under Settings → Bluetooth → [your AirPods] → Left/Right AirPod.",
+      "Available actions typically include Play/Pause, Next Track, Previous Track, Siri, and Noise Control mode cycling.",
+      "AirPods Max additionally has a physical Digital Crown for volume and a separate Noise Control button.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Controls Guidance",
+    afterImageContent: {
+      heading: "How to reassign a control",
+      steps: [
+        "Open Settings and tap Bluetooth.",
+        "Tap the info (i) button next to your AirPods.",
+        "Tap the Left or Right AirPod and choose a new action from the list.",
+      ],
+    },
+    whyItMatters:
+      "Accidentally triggering Siri or skipping tracks every time you adjust an AirPod's fit is one of the most common day-to-day annoyances, and it's almost always fixable by reassigning or disabling that specific gesture rather than living with it.",
+    bestPractices: [
+      "Assign different actions to the left and right AirPod (for example, Siri on one, Play/Pause on the other) to avoid accidentally triggering the wrong one.",
+      "If you frequently reposition your AirPods during workouts, consider setting one side's control to \"Off\" to prevent accidental triggers.",
+    ],
+    commonIssues: [
+      { issue: "Siri activates constantly by accident", fix: "Reassign the control currently mapped to Siri to Play/Pause or Off under the AirPod's control settings." },
+      { issue: "Squeeze/tap doesn't register reliably", fix: "Squeeze the flat force-sensor section of the stem itself (not the mesh speaker area), or clean the stem surface if it's damp or dirty." },
+    ],
+    tipsAndTricks: ["On models with a squeeze control, a single squeeze plays/pauses, double controls next track, triple controls previous track, and a press-and-hold cycles noise control — by default, before any customization."],
+    faqs: [{ q: "Can I turn off all gesture controls entirely?", a: "Not globally, but each side's action can individually be set to a function you're unlikely to trigger by accident, effectively neutralizing it." }],
+    relatedSettingIds: ["airpods-noise-control", "airpods-ear-detection"],
+  },
+  {
+    id: "airpods-audio-sharing",
+    title: "Audio Sharing Between Devices",
+    icon: Users,
+    platform: "airpods",
+    category: "connectivity-network",
+    frequentlyUsed: false,
+    difficulty: "Easy",
+    estimatedTime: "2 min read",
+    supportedVersions: "All AirPods generations, paired with a compatible iPhone, iPad, iPod touch, or Apple TV",
+    heading: "Share audio from one device with a second pair of AirPods or Beats",
+    description:
+      "Audio Sharing lets a second pair of AirPods (or select Beats headphones) join the same audio stream from one iPhone, iPad, or Apple TV, so two people can listen to the same song or video together.",
+    details: [
+      "Bring the second pair's case near the playing device with the lid open to trigger the Audio Sharing prompt, or start it manually via Control Center's AirPlay/output menu.",
+      "Each pair of headphones gets independent volume control even though the audio source is shared.",
+      "Only one source device streams to both pairs at a time — this is different from each pair separately connecting to its own device.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Audio Sharing Guidance",
+    whyItMatters:
+      "Audio Sharing is easy to overlook because it's triggered by proximity rather than a settings toggle — knowing it exists saves awkwardly passing a single earbud back and forth on a flight or a shared commute.",
+    bestPractices: [
+      "Start Audio Sharing from Control Center (tap the AirPlay icon while audio is playing, then \"Share Audio\") if the automatic case-proximity prompt doesn't appear.",
+      "Keep both pairs within roughly 30 feet of the source device — Audio Sharing uses direct Bluetooth, not internet streaming, so range is limited.",
+    ],
+    commonIssues: [
+      { issue: "Second pair won't get the Audio Sharing prompt", fix: "Make sure the source device's Bluetooth is on and open Control Center to start sharing manually via the AirPlay/output icon instead of relying on proximity detection." },
+      { issue: "Audio cuts out on one of the two paired pairs", fix: "Move both listeners closer to the source device — sharing to two pairs simultaneously is more sensitive to distance and interference than a single pair." },
+    ],
+    tipsAndTricks: ["Audio Sharing works across brands within Apple's ecosystem — one AirPods pair and one compatible Beats pair can share the same stream together."],
+    faqs: [{ q: "Do both people need the same type of AirPods?", a: "No — any two supported AirPods or Beats models can share audio together; they don't need to match." }],
+    relatedSettingIds: ["airpods-device-switching", "airpods-pairing"],
+  },
+  {
+    id: "airpods-device-switching",
+    title: "Switching Between Devices (Automatic Switching)",
+    icon: Cpu,
+    platform: "airpods",
+    category: "connectivity-network",
+    frequentlyUsed: true,
+    difficulty: "Intermediate",
+    estimatedTime: "3 min read",
+    supportedVersions:
+      "AirPods (2nd generation) and later, AirPods Pro, and AirPods Max — the original AirPods (1st generation) use the W1 chip and don't support automatic switching",
+    heading: "Let AirPods follow audio automatically across your Apple devices",
+    description:
+      "Automatic switching moves AirPods to whichever Apple device signed into the same Apple ID is actively playing audio — going from a Mac call to an iPhone ringtone to an iPad video without any manual reconnecting.",
+    details: [
+      "Requires all devices to be signed into the same Apple ID, with Bluetooth and Wi-Fi turned on, and within range of each other.",
+      "Switching is triggered by new audio starting on another device — it won't interrupt audio already actively playing on the current one.",
+      "You can always override it by manually selecting the AirPods from a specific device's Bluetooth or audio output menu.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Switching Guidance",
+    afterImageContent: {
+      heading: "If switching stalls between two devices",
+      steps: [
+        "Open Bluetooth settings on the device you want the AirPods connected to.",
+        "Tap your AirPods in the device list to connect manually.",
+        "Automatic switching resumes normally after this manual reconnect.",
+      ],
+    },
+    whyItMatters:
+      "Automatic switching is the single feature most responsible for both AirPods' convenience and their most common complaint — when it misbehaves, it feels like a connectivity bug, but it's almost always the switching logic waiting on a specific trigger that didn't occur.",
+    bestPractices: [
+      "Keep Wi-Fi turned on (not just Bluetooth) on all devices — automatic switching relies on Wi-Fi to coordinate handoff, even though audio itself streams over Bluetooth.",
+      "Sign out unused old devices from iCloud if they still appear as switching candidates and are causing AirPods to jump to the wrong place.",
+    ],
+    commonIssues: [
+      { issue: "AirPods stay on one device even when I start audio elsewhere", fix: "Manually select them once from the new device's Bluetooth menu — this typically restores automatic behavior for future switches." },
+      { issue: "AirPods switch to a device I don't want them on", fix: "Pause or stop audio on the unwanted device, or temporarily turn off its Bluetooth if it keeps grabbing the connection." },
+    ],
+    tipsAndTricks: ["Ending a phone call on iPhone but continuing to listen to music there (rather than switching apps) keeps AirPods anchored to the iPhone instead of drifting back to a Mac or iPad."],
+    faqs: [{ q: "Does automatic switching work with non-Apple devices?", a: "No — it requires every device in the chain to be an Apple device signed into the same Apple ID; a Windows PC or Android phone must be selected manually every time." }],
+    relatedSettingIds: ["airpods-audio-sharing", "airpods-connectivity-troubleshooting"],
+  },
+  {
+    id: "airpods-hearing-accessibility",
+    title: "Hearing & Accessibility Features (Conversation Boost, Live Listen)",
+    icon: Accessibility,
+    platform: "airpods",
+    category: "accessibility-language",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "4 min read",
+    supportedVersions:
+      "Live Listen: all AirPods generations. Conversation Boost: AirPods Pro only.",
+    heading: "Use AirPods as a hearing aid–style assistive tool",
+    description:
+      "Live Listen turns AirPods into a directional microphone that streams nearby conversation to your ears from across a room, while Conversation Boost on AirPods Pro amplifies the voice of the person in front of you while reducing background noise.",
+    details: [
+      "Enable Live Listen by adding it to Control Center under Settings → Control Center, then activating it and placing the iPhone near whoever you want to hear.",
+      "Conversation Boost turns on automatically as part of Transparency mode's Conversation Awareness features on AirPods Pro, and can be adjusted under Settings → Accessibility → AirPods.",
+      "Headphone Accommodations can further amplify soft sounds and tune audio for specific hearing needs, layered on top of these features.",
+    ],
+    redirectUrl: "https://support.apple.com/airpods",
+    actionLabel: "Open Hearing Accessibility Guidance",
+    bestPractices: [
+      "Place the iPhone running Live Listen close to the person or source you want to hear, and within reasonable range, since it streams over Bluetooth rather than amplifying acoustically.",
+      "Pair Conversation Boost with a well-fitted ear tip — like Active Noise Cancellation, its effectiveness depends heavily on a sealed fit.",
+    ],
+    commonIssues: [
+      { issue: "Live Listen isn't available in Control Center", fix: "Add it manually via Settings → Control Center → Live Listen, since it isn't included by default." },
+      { issue: "Conversation Boost option is missing", fix: "Confirm you're using AirPods Pro specifically — it isn't available on standard AirPods or AirPods Max." },
+    ],
+    tipsAndTricks: ["Live Listen can run from a second iPhone placed near a speaker at a lecture or meeting while you keep your own iPhone in your pocket, effectively creating a personal remote microphone."],
+    faqs: [{ q: "Are these features a replacement for a medical hearing aid?", a: "No — they're consumer accessibility features intended to help in specific situations, not a substitute for a clinically fitted hearing aid." }],
+    relatedSettingIds: ["airpods-noise-control", "airpods-customize-controls"],
   },
 ];

@@ -59,6 +59,8 @@ export async function fetchWithRetry(url, options = {}) {
       }
 
       const json = await res.json();
+      // console.log(`[SaleAPI${provider ? `:${provider}` : ""}] raw response:`, JSON.stringify(json));
+
       return json;
     } catch (error) {
       clearTimeout(timeout);

@@ -8,6 +8,7 @@
 
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,6 +34,24 @@ async function verifyAdminRequest(request) {
   }
 
   const decoded = await adminAuth.verifyIdToken(token);
+
+  // RBAC-first: admins created through the current flow live only under
+  // super_admin_dashboard/main/admin_users, so the legacy-only lookup below
+  // used to 403 every one of them. The caller never inspects res.ok, so that
+  // failure was silent and the public pages kept serving stale content.
+  const rbacAdmin = await getRbacAdminDoc(decoded);
+  if (rbacAdmin) {
+    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+    if (!profile.isActive) {
+      const error = new Error("Forbidden");
+      error.status = 403;
+      throw error;
+    }
+    return decoded;
+  }
+
+  // Legacy fallback — kept so existing `admins/{uid}` (and email-keyed) docs
+  // keep working during the migration.
   let snap = await adminDb.collection("admins").doc(decoded.uid).get();
   if (!snap.exists && decoded.email) {
     const byEmail = await adminDb.collection("admins").where("email", "==", decoded.email).limit(1).get();
@@ -58,7 +77,13 @@ export async function POST(request) {
   try {
     await verifyAdminRequest(request);
   } catch (error) {
-    return NextResponse.json({ error: error.message || "Unauthorized" }, { status: error.status || 401 });
+    // Only our own 401/403 reach the client — never a raw Firebase message.
+    // Still log it: a misconfigured Firebase Admin / unavailable Firestore also
+    // lands here, and without a server-side trace it is indistinguishable from
+    // a genuinely unauthorized caller.
+    console.error("[blogs/revalidate] auth", error);
+    const status = error.status === 403 ? 403 : 401;
+    return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
   }
 
   // ALTFT_WEB_REVALIDATE_URL (the env deployments already set) also works as

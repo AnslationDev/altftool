@@ -282,8 +282,8 @@ export default function ColorPsychologyAnalyzer() {
               </div>
             </GlassCard>
 
-            <GlassCard 
-              title="Live Preview" 
+            <GlassCard
+              title="Live Preview"
               icon={Layout}
               headerActions={
                 <div className="flex bg-(--background) rounded-lg border border-(--border) p-0.5">
@@ -295,7 +295,7 @@ export default function ColorPsychologyAnalyzer() {
                     <button
                       key={t.id}
                       onClick={() => setMockupType(t.id)}
-                      className={`p-1.5 rounded-md transition-all ${mockupType === t.id ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-primary'}`}
+                      className={`p-1.5 rounded-md transition-all ${mockupType === t.id ? 'bg-primary text-(--primary-foreground) shadow-sm' : 'text-muted-foreground hover:text-primary'}`}
                       title={t.id.charAt(0).toUpperCase() + t.id.slice(1)}
                     >
                       <t.icon size={14} />
@@ -315,7 +315,7 @@ export default function ColorPsychologyAnalyzer() {
                   <div className="absolute inset-0 flex items-center justify-center p-6">
                     <AnimatePresence mode="wait">
                       {mockupType === "dashboard" && (
-                        <motion.div 
+                        <motion.div
                           key="dash"
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -345,7 +345,7 @@ export default function ColorPsychologyAnalyzer() {
                       )}
 
                       {mockupType === "mobile" && (
-                        <motion.div 
+                        <motion.div
                           key="mobile"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -368,7 +368,7 @@ export default function ColorPsychologyAnalyzer() {
                       )}
 
                       {mockupType === "web" && (
-                        <motion.div 
+                        <motion.div
                           key="web"
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -591,7 +591,7 @@ export default function ColorPsychologyAnalyzer() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-primary text-white rounded-full font-black text-xs uppercase tracking-widest shadow-2xl z-50 flex items-center gap-2"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-primary text-(--primary-foreground) rounded-full font-black text-xs uppercase tracking-widest shadow-2xl z-50 flex items-center gap-2"
           >
             <Check size={14} />
             Copied to clipboard

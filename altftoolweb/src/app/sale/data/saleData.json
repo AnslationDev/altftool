@@ -1,9 +1,9 @@
 {
   "hero": {
     "headline": "Discover the Best Sales",
-    "headlineAccent": "Online & Near You",
-    "subtext": "Find trending sales, brand discounts and nearby store offers in seconds.",
-    "searchPlaceholder": "Search deals, brands or stores",
+    "headlineAccent": " Near You",
+    "subtext": "Discover trending sales, exclusive brand offers, nearby shopping deals, mall promotions, price drops, cashback offers, coupon discounts, and upcoming sale events tailored to your location.",
+    "searchPlaceholder": "Search deals..",
     "defaultLocation": "Gurugram",
     "ctaText": "Explore Deals",
     "ctaLink": "/deals",

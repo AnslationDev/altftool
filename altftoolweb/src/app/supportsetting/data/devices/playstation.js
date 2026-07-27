@@ -1,4 +1,15 @@
-import { Gamepad2, RefreshCw, Wifi } from "lucide-react";
+import {
+  Gamepad2,
+  RefreshCw,
+  Wifi,
+  Users,
+  HardDrive,
+  Download,
+  ShieldCheck,
+  Volume2,
+  Monitor,
+  Sparkles,
+} from "lucide-react";
 
 // Example authored guides for PlayStation consoles (PS4/PS5), proving the
 // gaming category out end-to-end the same way appleWatch.js does for
@@ -25,7 +36,7 @@ export const playstationSettings = [
       "Some updates require enough free storage before they'll install.",
     ],
     important: "Never power off the console or unplug it during an update — this can corrupt the system software and require a full re-install.",
-    redirectUrl: "https://www.playstation.com/support/",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
     actionLabel: "Open PlayStation Support",
     whyItMatters:
       "Online multiplayer, the PlayStation Store, and many new game releases outright require the latest system software — falling behind can lock you out of features until you update anyway, at a less convenient time.",
@@ -67,7 +78,7 @@ export const playstationSettings = [
       "Found under Settings → Network → Settings → Set Up Internet Connection.",
       "The built-in Test Internet Connection tool checks connection type, NAT type, and download/upload speed.",
     ],
-    redirectUrl: "https://www.playstation.com/support/",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
     actionLabel: "Open Network Troubleshooting",
     whyItMatters:
       "A poor connection or restrictive NAT type is one of the most common causes of multiplayer lag, failed party invites, and voice chat issues — most of which are fixable from this one settings screen.",
@@ -100,7 +111,7 @@ export const playstationSettings = [
       "A controller can be paired with more than one console, but is only actively connected to one at a time.",
       "Some controllers can also be re-paired via USB cable for a wired, zero-latency connection.",
     ],
-    redirectUrl: "https://www.playstation.com/support/",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
     actionLabel: "Open Controller Support",
     afterImageContent: {
       heading: "How to re-pair",
@@ -119,5 +130,250 @@ export const playstationSettings = [
     tipsAndTricks: ["Holding Create + PS button opens Bluetooth pairing mode directly, useful when pairing a controller to a PC or a different console."],
     faqs: [{ q: "Can I use my controller on more than one console?", a: "Yes — pairing it with a new console doesn't erase the pairing on the old one; it just becomes the active connection." }],
     relatedSettingIds: ["playstation-network-connection", "playstation-system-update"],
+  },
+  {
+    id: "playstation-account-sign-in",
+    title: "Account Sign-In & PSN Management",
+    icon: Users,
+    platform: "playstation",
+    category: "accounts-sync-family",
+    frequentlyUsed: true,
+    difficulty: "Easy",
+    estimatedTime: "4 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Sign in, manage, and secure your PlayStation Network account",
+    description:
+      "Your PSN account holds your purchases, trophies, friends list, and subscriptions. Signing in correctly and setting one console as your \"primary\" console controls who on that console can access your purchased games and add-ons offline.",
+    details: [
+      "Found under Settings → Users and Accounts → Account, or by selecting your profile icon from the Control Center.",
+      "Activating a console as \"Primary\" (Settings → Users and Accounts → Other → Console Sharing and Offline Play on PS5, or Activate as Your Primary PS4 on PS4) lets every local user on that console play your purchased content without needing to be signed in as you.",
+      "Only one console can be your primary console at a time — activating a new one deactivates the previous one.",
+    ],
+    important: "Deactivate your account as the primary console before selling, trading in, or giving away a console — otherwise the new owner could potentially access your purchased library through other local profiles.",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Account & PSN Support",
+    whyItMatters:
+      "Most \"I bought this game but another controller/profile can't play it\" tickets trace back to primary console settings, not a purchase problem — understanding this menu saves a support call.",
+    afterImageContent: {
+      heading: "How to sign in a new user",
+      steps: [
+        "From the power-off screen or Control Center, select \"New User\" or \"Add User.\"",
+        "Choose Sign In (existing account) or Create a New Account.",
+        "Enter your email and password, then complete two-factor verification if enabled.",
+        "Set up a local profile picture and online ID visibility preferences.",
+      ],
+    },
+    bestPractices: [
+      "Turn on two-factor authentication under Account → Security to protect your saved payment methods and purchase history.",
+      "Keep your sign-in email current — PSN password resets and security alerts go there.",
+    ],
+    commonIssues: [
+      { issue: "Second controller/profile can't launch a purchased game", fix: "Activate that console as your primary console, or sign the other profile in with its own PSN account." },
+      { issue: "Forgot PSN password or lost access to sign-in email", fix: "Use the \"Forgot your password?\" or \"Forgot your ID?\" link on the sign-in screen, or recover the account at PlayStation's account recovery site." },
+    ],
+    tipsAndTricks: ["The PlayStation App lets you check sign-in activity, manage linked devices, and reset your password without touching the console at all."],
+    faqs: [{ q: "Can I be signed in to the same account on two consoles at once?", a: "Yes, but only one of them can be your primary console for offline purchase access; both can still be used online simultaneously with some feature limits." }],
+    relatedSettingIds: ["playstation-privacy-parental-controls", "playstation-downloads-updates"],
+  },
+  {
+    id: "playstation-storage-management",
+    title: "Storage Management",
+    icon: HardDrive,
+    platform: "playstation",
+    category: "storage-backup-data",
+    frequentlyUsed: true,
+    recommended: true,
+    difficulty: "Easy",
+    estimatedTime: "5 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Manage internal, expansion, and external storage",
+    description:
+      "PS5 splits storage between the internal SSD and an optional M.2 expansion slot; PS4 relies on its internal drive plus optional USB external storage. Both platforms let you see exactly what's eating space and free it up without losing save data.",
+    details: [
+      "Found under Settings → Storage (PS5: separate tabs for Console Storage and M.2 SSD Storage; PS4: System Storage, Extended Storage, and USB Storage).",
+      "The Games and Apps list shows each title's install size and last-played date, sorted largest first, so the biggest offenders are easy to spot.",
+      "A PS5 M.2 SSD used for expansion must meet Sony's minimum sequential read speed (5,500MB/s) and generally needs a heatsink — the console will warn or block use if it doesn't qualify.",
+    ],
+    important: "Removing a game deletes its installed files but keeps your save data and trophies by default — reinstalling later restores your progress, so it's safe to uninstall things you're not currently playing.",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Storage Support",
+    whyItMatters:
+      "Modern game installs regularly run 50–150GB; without periodically clearing space, updates fail to download and new purchases can't install — this is one of the most common blocking errors on both PS4 and PS5.",
+    afterImageContent: {
+      heading: "How to free up space",
+      steps: [
+        "Go to Settings → Storage → Games and Apps.",
+        "Sort by size to find the largest installs.",
+        "Select a title, choose Delete, and confirm — save data is preserved separately.",
+        "Reinstall from your library later at any time; progress carries over.",
+      ],
+    },
+    bestPractices: [
+      "Keep at least 10–15% of your drive free so system and game updates have room to stage before installing.",
+      "For PS4, move rarely-played titles to external USB storage instead of deleting them outright if you plan to return to them.",
+    ],
+    commonIssues: [
+      { issue: "\"Not enough free space\" when installing or updating", fix: "Delete unused game installs from Settings → Storage → Games and Apps; save data stays intact." },
+      { issue: "PS5 M.2 SSD isn't recognized or can't be used for PS5 games", fix: "Confirm the drive is on Sony's compatibility list, is seated fully in the slot, and has an adequate heatsink — undersized or missing heatsinks are the most common cause." },
+    ],
+    tipsAndTricks: ["On PS4, use \"Archive\" instead of \"Delete\" from the storage list — it frees the install space but keeps save data and trophy progress bundled for a faster restore later."],
+    faqs: [{ q: "Do I lose trophies if I delete a game?", a: "No — trophies are tied to your PSN account, not the local install, so they remain earned even after uninstalling." }],
+    relatedSettingIds: ["playstation-downloads-updates", "playstation-system-update"],
+  },
+  {
+    id: "playstation-downloads-updates",
+    title: "Downloads & Auto-Updates",
+    icon: Download,
+    platform: "playstation",
+    category: "apps-features",
+    frequentlyUsed: true,
+    difficulty: "Beginner-friendly",
+    estimatedTime: "3 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Control automatic downloads and background game updates",
+    description:
+      "PlayStation can automatically fetch game and app updates, previously purchased content, and system files in the background — including while the console is in Rest Mode — so titles are ready to play the moment you sit down.",
+    details: [
+      "Found under Settings → Saved Data and Game/App Settings → Automatic Downloads (PS5) or Settings → System → Automatic Downloads (PS4).",
+      "Separate toggles exist for application updates, content you've purchased or added to your library, and content added to your wish list.",
+      "Rest Mode has its own \"Stay Connected to the Internet\" and \"Supply Power to USB Ports\" settings that must be enabled for background downloads to continue while the console is asleep.",
+    ],
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Downloads Support",
+    whyItMatters:
+      "Without auto-updates enabled, a game can demand a large day-one patch the moment you launch it — auto-downloads move that wait to overnight instead of the moment you want to play.",
+    bestPractices: [
+      "Enable automatic application updates so patches install overnight via Rest Mode rather than blocking play time.",
+      "Disable auto-downloads if you're on a slow or metered connection and prefer to control when large patches happen.",
+    ],
+    commonIssues: [
+      { issue: "A game update is stuck or stalled", fix: "Open the Notifications tab, select the download, and choose Resume, or delete and restart the download if it stays stuck." },
+      { issue: "Downloads don't continue in Rest Mode", fix: "Check Settings → System → Power Saving → Features Available in Rest Mode and confirm \"Stay Connected to the Internet\" is enabled." },
+    ],
+    tipsAndTricks: ["From the Notifications tab you can reorder queued downloads, pausing a large update to let a smaller one finish first."],
+    faqs: [{ q: "Can I download an update over cellular via mobile hotspot?", a: "Yes, but large updates can consume significant mobile data — Wi-Fi or wired is strongly recommended for anything beyond small patches." }],
+    relatedSettingIds: ["playstation-storage-management", "playstation-network-connection"],
+  },
+  {
+    id: "playstation-privacy-parental-controls",
+    title: "Privacy & Parental Controls",
+    icon: ShieldCheck,
+    platform: "playstation",
+    category: "privacy-permissions",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "6 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Set profile privacy and manage family/parental restrictions",
+    description:
+      "PlayStation's Family Management lets an adult account holder create child and teen accounts with age-appropriate restrictions on game ratings, playtime, spending, and communication — separate from each account's individual privacy settings for profile visibility and messaging.",
+    details: [
+      "Family Management is set up at PlayStation's account website or via Settings → Family and Parental Controls on the console, and requires the family manager's own account.",
+      "Per-account privacy settings (who can see your profile, real name, friends list, and who can message you) live under Settings → Users and Accounts → Privacy Settings, and can be adjusted individually for each account.",
+      "Age-based restrictions on playable content use a system-level Restriction Passcode, separate from the account password, found under Settings → Family and Parental Controls → PS5 System Restrictions.",
+    ],
+    important: "The system restriction passcode is independent of your account password — if it's forgotten, resetting it requires contacting PlayStation Support with proof of console/account ownership.",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Family & Parental Controls",
+    whyItMatters:
+      "Default privacy settings on a new child account are more permissive than most parents expect, and content restrictions must be configured per child — skipping this step is the most common cause of a young player accessing mature titles or chat unsupervised.",
+    afterImageContent: {
+      heading: "How to set up family management",
+      steps: [
+        "Go to Settings → Family and Parental Controls → Add Family Member, or set it up at PlayStation's account website.",
+        "Create or link the child's account and set their date of birth.",
+        "Set game/app age-rating limits, playtime limits, and spending limits for that account.",
+        "Review Communication and User-Generated Content restriction levels separately from age ratings.",
+      ],
+    },
+    bestPractices: [
+      "Review each child account's individual privacy defaults after creation — family management sets baseline restrictions, but some communication settings still need manual confirmation.",
+      "Set spending limits even on accounts with no saved payment method, since gift card balances can still be used to purchase content.",
+    ],
+    commonIssues: [
+      { issue: "Child can't join voice chat or party chat with friends", fix: "Raise the Communication and User-Generated Content restriction level for that account under Family Management." },
+      { issue: "Forgot the system restriction passcode", fix: "Contact PlayStation Support directly — passcode resets require identity/account verification and can't be bypassed on-console." },
+    ],
+    tipsAndTricks: ["The family manager receives a periodic activity email summarizing each child account's playtime and spending, useful for reviewing limits without logging into the console."],
+    faqs: [{ q: "Can I change a child account's restrictions from my own console?", a: "Yes, if you're signed in as the family manager, restrictions can be adjusted from Settings → Family and Parental Controls without needing the child's device." }],
+    relatedSettingIds: ["playstation-account-sign-in", "playstation-trophies-social"],
+  },
+  {
+    id: "playstation-audio-display-output",
+    title: "Audio & Display Output",
+    icon: Monitor,
+    platform: "playstation",
+    category: "display-sound-notifications",
+    frequentlyUsed: false,
+    difficulty: "Intermediate",
+    estimatedTime: "5 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Configure video resolution, HDR, and audio output routing",
+    description:
+      "Display settings control resolution, HDR, and refresh rate over HDMI, while audio can be routed independently to the TV/AVR over HDMI or optical, or to a wireless/wired headset — including PS5's Tempest 3D AudioTech for positional sound.",
+    details: [
+      "Video settings are under Settings → Screen and Video, covering resolution, HDR, and (on PS5) 120Hz/VRR output.",
+      "Audio output device and format are under Settings → Sound, with independent controls for TV/AV speakers versus a connected headset.",
+      "PS5's 3D Audio profile can be tuned to your ears using the built-in \"Find Your Profile\" feature for more accurate positional audio in supported headsets.",
+    ],
+    important: "4K at 120Hz or VRR requires an Ultra High Speed (48Gbps) HDMI cable and an HDMI 2.1-capable input on the display — using an older cable or port silently caps output at a lower resolution or refresh rate.",
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Display & Audio Support",
+    whyItMatters:
+      "Mismatched resolution, HDR, or audio output settings are a leading cause of \"no picture\" or \"no sound\" complaints after a TV swap or cable change, and are almost always fixable in this menu without a factory reset.",
+    afterImageContent: {
+      heading: "How to fix a blank or flickering display after a change",
+      steps: [
+        "Hold the power button for about 7 seconds until you hear a second beep — this forces a safe-mode video output.",
+        "The console boots at a conservative resolution the display can handle.",
+        "Go to Settings → Screen and Video and re-run \"Adjust HDR\" or reset resolution manually.",
+        "Re-enable higher resolutions or refresh rates one at a time to confirm the display and cable support them.",
+      ],
+    },
+    bestPractices: [
+      "Run the \"Adjust HDR\" calibration wizard any time you connect a new TV or projector.",
+      "Use Settings → Screen and Video → Video Output Information to confirm the resolution, HDR, and refresh rate actually being sent, not just what's selected.",
+    ],
+    commonIssues: [
+      { issue: "No signal or black screen after a resolution/update change", fix: "Hold the power button for 7 seconds for the safe-mode beep, which forces a compatible output resolution so you can reset it from the menu." },
+      { issue: "No sound through a connected headset", fix: "In Settings → Sound → Audio Output, set the output device to the headset explicitly — it doesn't always switch automatically when paired." },
+    ],
+    tipsAndTricks: ["If dialogue sounds too quiet under music/effects, try the \"Boost Audio for Dialog\" or a Cinema-focused audio mode under Sound settings before adjusting the TV's own audio processing."],
+    faqs: [{ q: "Why does my TV show a lower resolution than expected?", a: "Check the HDMI cable rating and which HDMI port is in use — some TV ports don't support full HDMI 2.1 bandwidth even if others on the same TV do." }],
+    relatedSettingIds: ["playstation-storage-management", "playstation-controller-pairing"],
+  },
+  {
+    id: "playstation-trophies-social",
+    title: "Trophies & Social Features",
+    icon: Sparkles,
+    platform: "playstation",
+    category: "personalization",
+    frequentlyUsed: false,
+    difficulty: "Easy",
+    estimatedTime: "4 min read",
+    supportedVersions: "PS5 & PS4 system software",
+    heading: "Track trophies and manage screenshot/video sharing",
+    description:
+      "Trophies track in-game achievements and roll up into an account-wide level, while the Share/Create button controls screenshot and video capture, broadcasting, and posting to linked social accounts.",
+    details: [
+      "The trophy list for the current game is accessible from the Control Center or Game Base, showing Bronze/Silver/Gold/Platinum progress and rarity percentages.",
+      "Capture settings — screenshot format, video length/quality, and microphone/controller audio inclusion — are under Settings → Captures and Broadcasts.",
+      "Linking social accounts for direct sharing is done under Settings → Users and Accounts → Link Social Accounts.",
+    ],
+    redirectUrl: "https://www.playstation.com/en-us/support/",
+    actionLabel: "Open Trophies & Sharing Support",
+    whyItMatters:
+      "Trophy sync and capture settings are easy to misconfigure without noticing — a missed sync can make a completed Platinum appear absent from your profile, and default capture quality can eat storage faster than expected.",
+    bestPractices: [
+      "Leave trophy sync enabled so progress uploads automatically instead of relying on manual sync before you need to prove completion.",
+      "Lower default video capture resolution or length under Captures and Broadcasts if storage fills up quickly from auto-saved clips.",
+    ],
+    commonIssues: [
+      { issue: "Trophies earned in-game aren't showing on your profile", fix: "Confirm you're signed in to PSN with an active connection, then manually sync from the trophy list's options menu; a persistently broken trophy list may need a PlayStation Support ticket." },
+      { issue: "Can't share captures directly to a social platform", fix: "Re-link that account under Settings → Users and Accounts → Link Social Accounts — link tokens can expire and need refreshing." },
+    ],
+    tipsAndTricks: ["Double-tapping the Create/Share button captures the last 15–60 seconds of gameplay retroactively, so you don't need to start recording before a good moment happens."],
+    faqs: [{ q: "Do trophies sync across PS4 and PS5 for the same game?", a: "Yes, if it's the same PSN account and the title supports cross-generation saves/trophies; otherwise PS4 and PS5 versions of a game can have separate trophy lists." }],
+    relatedSettingIds: ["playstation-account-sign-in", "playstation-privacy-parental-controls"],
   },
 ];

@@ -1,4 +1,7 @@
-import TwinFinderMain from "./pages/main";
-export default function Entry() {
-  return <TwinFinderMain />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

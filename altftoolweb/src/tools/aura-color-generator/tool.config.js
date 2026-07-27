@@ -1,9 +1,10 @@
 const toolConfig = {
   slug: "aura-color-generator",
   name: "Aura Color Generator",
-  category: ["Fun", "Entertainment"],
+  category: "Fun",
   description: "Upload a photo and discover your fictional aura color with playful descriptions!",
-  icon: "circle",
-  iconColor: "text-purple-500"
+  icon: "sparkles",
+  iconColor: "text-(--primary)",
 };
+
 export default toolConfig;

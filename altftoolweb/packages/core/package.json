@@ -1,0 +1,30 @@
+{
+  "name": "@altftool/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./cache": "./src/cache.js",
+    "./buysmart": "./src/buysmart.js",
+    "./blogContentHealth": "./src/blogContentHealth.js",
+    "./deployReadiness": "./src/deployReadiness.js",
+    "./env": "./src/env.js",
+    "./experiences": "./src/experienceCatalog.js",
+    "./firebaseDataIntegrity": "./src/firebaseDataIntegrity.js",
+    "./firebaseLiveData": "./src/firebaseLiveData.js",
+    "./firebaseContent": "./src/firebaseContent.js",
+    "./firebasePaths": "./src/firebasePaths.js",
+    "./http": "./src/http.js",
+    "./next": "./src/next.js",
+    "./products": "./src/productRegistry.js",
+    "./product-suites": "./src/productSuiteCatalog.js",
+    "./product-utilities": "./src/productUtilities.js",
+    "./signals": "./src/signalCatalog.js",
+    "./toolHealth": "./src/toolHealth.js",
+    "./services": "./src/services.js",
+    "./seo": "./src/seo/index.js",
+    "./seo/resolver": "./src/seo/resolver.js",
+    "./seo/schemas": "./src/seo/schemas.js"
+  },
+  "sideEffects": false
+}

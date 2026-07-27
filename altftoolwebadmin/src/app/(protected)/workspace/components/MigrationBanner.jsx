@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getAuth } from "firebase/auth";
 import { Check, DatabaseZap, Loader2, X } from "lucide-react";
+import { Button, IconButton } from "@altftool/ui";
+import { SectionCard } from "@/ansets";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 // One-time backfill: import historical admin_audit_logs into the Workspace
 // activity_events so the explorer shows full history. Loops the resumable
@@ -23,7 +25,7 @@ export default function MigrationBanner() {
     let total = 0;
     let complete = false;
     try {
-      const token = await getAuth().currentUser?.getIdToken();
+      const token = await getAdminIdToken();
       if (!token) throw new Error("no session");
       for (let guard = 0; guard < 2000; guard++) {
         const params = new URLSearchParams({ batch: "200" });
@@ -53,13 +55,16 @@ export default function MigrationBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="mb-5 flex flex-col gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)] sm:flex-row sm:items-center sm:justify-between">
+    <SectionCard
+      className="mb-5"
+      bodyClassName="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+    >
       <div className="flex items-start gap-3">
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[color-mix(in_srgb,var(--primary)_14%,transparent)] text-[var(--primary)]">
-          <DatabaseZap className="h-4 w-4" strokeWidth={1.9} />
+          <DatabaseZap className="h-4 w-4" strokeWidth={1.9} aria-hidden="true" />
         </span>
         <div>
-          <p className="text-sm font-bold text-[var(--foreground)]">Import historical activity</p>
+          <p className="text-sm font-semibold text-[var(--foreground)]">Import historical activity</p>
           <p className="text-xs text-[var(--muted)]">
             {state === "done"
               ? `Imported ${migrated} historical event${migrated === 1 ? "" : "s"} into the explorer.`
@@ -71,28 +76,25 @@ export default function MigrationBanner() {
       </div>
       <div className="flex items-center gap-2">
         {state === "done" ? (
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--success-soft)] px-3 py-2 text-sm font-bold text-[var(--success)]">
-            <Check className="h-4 w-4" /> Done
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--success-soft)] px-3 py-2 text-sm font-semibold text-[var(--success)]">
+            <Check className="h-4 w-4" aria-hidden="true" /> Done
           </span>
         ) : (
-          <button
-            type="button"
-            onClick={run}
-            disabled={state === "running"}
-            className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 text-sm font-bold text-[var(--primary-foreground)] transition hover:brightness-95 disabled:opacity-60"
-          >
-            {state === "running" ? <><Loader2 className="h-4 w-4 animate-spin" /> Importing… {migrated}</> : "Import history"}
-          </button>
+          <Button size="sm" onClick={run} disabled={state === "running"}>
+            {state === "running" ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+                Importing… {migrated}
+              </>
+            ) : (
+              "Import history"
+            )}
+          </Button>
         )}
-        <button
-          type="button"
-          onClick={() => setDismissed(true)}
-          className="grid h-8 w-8 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
-          aria-label="Dismiss"
-        >
-          <X className="h-4 w-4" />
-        </button>
+        <IconButton variant="ghost" onClick={() => setDismissed(true)} aria-label="Dismiss">
+          <X className="h-4 w-4" aria-hidden="true" />
+        </IconButton>
       </div>
-    </div>
+    </SectionCard>
   );
 }

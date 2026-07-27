@@ -1,5 +1,7 @@
-import SizeConverter from "./App";
+"use client";
 
-export default function Entry() {
-  return <SizeConverter />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

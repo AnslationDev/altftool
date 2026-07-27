@@ -1,14 +1,11 @@
 const toolConfig = {
   slug: "base64-to-pdf",
-  "slug": "base64-to-pdf",
-  "name": "Base64 to PDF",
-  "category": [
-    "PDF",
-    "Converter"
-  ],
-  "description": "Preview and download Base64 PDF data.",
-  "icon": "file-down",
-  "iconColor": "text-red-700"
+  name: "Base64 to PDF",
+  category: ["PDF & Documents", "Converters"],
+  description:
+    "Decode a Base64 string or data URL back into a PDF, preview it, and check its version, page objects, encryption and trailer.",
+  icon: "file-down",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

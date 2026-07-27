@@ -28,11 +28,11 @@ export default function HistoryPanel({ history, onClear }) {
         </div>
         <div className="flex gap-1">
           {history.length > 5 && (
-            <button onClick={() => setExpanded(!expanded)} aria-label={expanded ? "Collapse history" : "Expand history"} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+            <button onClick={() => setExpanded(!expanded)} aria-label={expanded ? "Collapse history" : "Expand history"} className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
               {expanded ? <ChevronUp size="14" /> : <ChevronDown size="14" />}
             </button>
           )}
-          <button onClick={onClear} aria-label="Clear history" className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+          <button onClick={onClear} aria-label="Clear history" className="p-1 rounded hover:bg-(--card) text-(--muted-foreground) hover:text-(--danger) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
             <Trash2 size="14" />
           </button>
         </div>

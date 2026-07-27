@@ -62,16 +62,16 @@ export default function EntryManager({
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-(--foreground)">Entries ({entries.length})</h3>
         <div className="flex gap-1">
-          <button onClick={() => setBulkInput(!bulkInput)} aria-label="Bulk add entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Bulk add">
+          <button onClick={() => setBulkInput(!bulkInput)} aria-label="Bulk add entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Bulk add">
             <Upload size="16" />
           </button>
           {entries.length > 1 && (
-            <button onClick={onShuffle} aria-label="Shuffle entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Shuffle">
+            <button onClick={onShuffle} aria-label="Shuffle entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Shuffle">
               <Shuffle size="16" />
             </button>
           )}
           {entries.length > 0 && (
-            <button onClick={onClear} aria-label="Clear all entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Clear all">
+            <button onClick={onClear} aria-label="Clear all entries" className="p-1.5 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Clear all">
               <Trash2 size="16" />
             </button>
           )}
@@ -102,7 +102,7 @@ export default function EntryManager({
             aria-label="New entry name"
             className="flex-1"
           />
-          <Button variant="primary" size="sm" onClick={handleAdd} disabled={!newEntry.trim()} aria-label="Add entry" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+          <Button variant="primary" size="sm" onClick={handleAdd} disabled={!newEntry.trim()} aria-label="Add entry" className="active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:ring-[3px] focus-visible:ring-(--primary)">
             <Plus size="16" />
           </Button>
         </div>

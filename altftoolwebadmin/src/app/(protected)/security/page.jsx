@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
   AlertTriangle,
@@ -16,6 +17,17 @@ import {
   ShieldCheck,
   Smartphone,
 } from "lucide-react";
+import {
+  DataState,
+  DataTable,
+  EmptyState,
+  ErrorState,
+  FilterBar,
+  LoadingState,
+  PageHeader,
+  SectionCard,
+  StatGrid,
+} from "@/ansets";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebaseAuth";
 
@@ -27,13 +39,37 @@ const TABS = [
   { key: "settings", label: "Settings", icon: Clock },
 ];
 
+// One recipe for the small list rows this screen renders (sessions, events,
+// info tiles). Page-level shells are SectionCard; these are items *inside* a
+// card, which no anset covers.
+const ROW_SHELL =
+  "rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2.5";
+const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]";
+
 /* --------------------- perf hooks: cache, debounce, paging --------------------- */
 
 // Module-level cache: data survives tab switches within the SPA session, so
-// re-opening a tab renders instantly instead of refetching.
+// re-opening a tab renders instantly instead of refetching. This is why the
+// screen keeps its own fetch hooks instead of useAdminResource — that hook has
+// no cross-mount cache, no cursor paging, and cannot POST.
 const pageCache = new Map();
 export function clearSecurityCache() {
   pageCache.clear();
+}
+
+// Operator-facing copy for a failed request. Raw transport strings like
+// "Request failed (401)" tell a super admin nothing actionable.
+function describeRequestError(status, serverMessage) {
+  if (status === 401)
+    return "Your session has expired or is no longer authorized. Sign in again, then retry.";
+  if (status === 403)
+    return "You do not have permission to view this security data. Super Admin access is required.";
+  if (status === 404) return "This security endpoint is unavailable. Please try again.";
+  if (status === 429) return "Too many requests. Wait a moment and try again.";
+  if (status >= 500)
+    return "The security service is temporarily unavailable. Please try again.";
+  return serverMessage || "Couldn't complete the request. Please try again.";
 }
 
 function useDebounce(value, delay = 300) {
@@ -111,8 +147,28 @@ function usePaged(key, fetchPage) {
 }
 
 export default function SecurityPage() {
-  const { user, isSuperAdmin, loading } = useAuth();
-  const [tab, setTab] = useState("overview");
+  const { isSuperAdmin, loading } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // The section lives in the URL rather than in component state, so a super
+  // admin can bookmark or share "Sessions & Devices", the back button steps
+  // between sections, and the sidebar can list them as child items. An unknown
+  // or missing ?tab= falls back to the first section.
+  const requestedTab = searchParams.get("tab");
+  const tab = TABS.some((t) => t.key === requestedTab) ? requestedTab : "overview";
+
+  const setTab = useCallback(
+    (nextTab) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("tab", nextTab);
+      // replace, not push: flipping between sections should not bury the page
+      // the operator arrived from under five history entries.
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
   // Stable: reads the token from the firebase auth singleton, so it does NOT
   // change identity on token refresh / context re-render (which previously made
@@ -129,40 +185,53 @@ export default function SecurityPage() {
       },
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
+    if (!res.ok) {
+      const err = new Error(describeRequestError(res.status, data?.error));
+      err.status = res.status;
+      throw err;
+    }
     return data;
   }, []);
 
   if (loading) {
-    return <CenterState icon={Loader2} spin title="Loading security console" />;
+    return (
+      <PageShell>
+        <LoadingState variant="detail" />
+      </PageShell>
+    );
   }
   if (!isSuperAdmin) {
     return (
-      <CenterState
-        icon={AlertTriangle}
-        title="Super Admin only"
-        message="Security, audit logs, and device management are restricted to Super Admins."
-      />
+      <PageShell>
+        <ErrorState
+          title="Super Admin only"
+          message="Security, audit logs, and device management are restricted to Super Admins."
+        />
+      </PageShell>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-page">
-      <div className="mx-auto max-w-7xl space-y-5 px-4 py-5 sm:px-6">
-        <header className="border-b border-border pb-5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted">
-            Platform Security
-          </p>
-          <h1 className="mt-2 flex items-center gap-2 text-2xl font-semibold text-foreground">
-            <ShieldCheck className="h-6 w-6 text-primary" /> Security &amp; Audit
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
-            Track every login, device, session, and admin action. Enforce device
-            limits, idle timeouts, and forced logout across the platform.
-          </p>
-        </header>
+  // The sections are deep-linkable and listed as sidebar children, so every one
+  // except the landing section gets a trail back to it.
+  const current = TABS.find((t) => t.key === tab);
+  const breadcrumbs =
+    tab === "overview"
+      ? undefined
+      : [{ label: "Security", href: "/security" }, { label: current.label }];
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+  return (
+    <PageShell>
+      <PageHeader
+        eyebrow="Platform Security"
+        icon={ShieldCheck}
+        title="Security & Audit"
+        description="Track every login, device, session, and admin action. Enforce device limits, idle timeouts, and forced logout across the platform."
+        breadcrumbs={breadcrumbs}
+      >
+        <nav
+          aria-label="Security sections"
+          className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5"
+        >
           {TABS.map((t) => {
             const Icon = t.icon;
             const active = tab === t.key;
@@ -171,33 +240,44 @@ export default function SecurityPage() {
                 key={t.key}
                 type="button"
                 onClick={() => setTab(t.key)}
-                className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition-colors duration-150 ${
+                aria-current={active ? "page" : undefined}
+                className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition-colors duration-150 ${FOCUS_RING} ${
                   active
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-surface text-foreground hover:bg-surface-soft"
+                    ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm"
+                    : "border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
                 }`}
               >
                 <span
                   className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${
-                    active ? "bg-white/15" : "bg-surface-soft"
+                    active ? "bg-white/15" : "bg-[var(--surface-soft)]"
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="block truncate text-sm font-semibold">{t.label}</span>
               </button>
             );
           })}
-        </div>
+        </nav>
+      </PageHeader>
 
-        <main key={tab} className="animate-slide-in space-y-4">
-          {tab === "overview" && <OverviewTab authFetch={authFetch} />}
-          {tab === "sessions" && <SessionsTab authFetch={authFetch} />}
-          {tab === "audit" && <AuditTab authFetch={authFetch} />}
-          {tab === "events" && <EventsTab authFetch={authFetch} />}
-          {tab === "settings" && <SettingsTab authFetch={authFetch} />}
-        </main>
+      {/* AdminLayout already owns the page's <main>; this is just the section
+          body, remounted per tab so the entry animation replays. */}
+      <div key={tab} className="animate-slide-in space-y-4">
+        {tab === "overview" && <OverviewTab authFetch={authFetch} />}
+        {tab === "sessions" && <SessionsTab authFetch={authFetch} />}
+        {tab === "audit" && <AuditTab authFetch={authFetch} />}
+        {tab === "events" && <EventsTab authFetch={authFetch} />}
+        {tab === "settings" && <SettingsTab authFetch={authFetch} />}
       </div>
+    </PageShell>
+  );
+}
+
+function PageShell({ children }) {
+  return (
+    <div className="min-h-screen bg-[var(--page)]">
+      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6">{children}</div>
     </div>
   );
 }
@@ -221,41 +301,79 @@ function OverviewTab({ authFetch }) {
       settings: cfg,
     };
   }, [authFetch]);
-  const { data, loading, error } = useCached("overview", fetcher);
+  const { data, loading, error, refresh } = useCached("overview", fetcher);
 
-  const cards = data
+  // StatGrid keys each tile off `label`, so no `key` field is passed here — it
+  // would end up spread onto StatTile and React 19 warns about that.
+  const stats = data
     ? [
-        { label: "Active Sessions", value: data.activeSessions, icon: Laptop, tone: "primary" },
-        { label: "Suspicious Logins", value: data.suspicious, icon: AlertTriangle, tone: data.suspicious ? "warning" : "muted" },
-        { label: "Failed / Blocked", value: data.failed, icon: LogOut, tone: data.failed ? "danger" : "muted" },
-        { label: "Device Limit", value: data.settings.deviceLimit, icon: Smartphone, tone: "muted" },
-        { label: "Idle Timeout", value: `${data.settings.idleTimeoutMinutes}m`, icon: Clock, tone: "muted" },
+        {
+          label: "Active Sessions",
+          value: data.activeSessions,
+          icon: Laptop,
+          tone: "primary",
+        },
+        {
+          label: "Suspicious Logins",
+          value: data.suspicious,
+          icon: AlertTriangle,
+          tone: data.suspicious ? "warning" : "default",
+        },
+        {
+          label: "Failed / Blocked",
+          value: data.failed,
+          icon: LogOut,
+          tone: data.failed ? "danger" : "default",
+        },
+        {
+          label: "Device Limit",
+          value: data.settings?.deviceLimit ?? "—",
+          icon: Smartphone,
+        },
+        {
+          label: "Idle Timeout",
+          value:
+            data.settings?.idleTimeoutMinutes != null
+              ? `${data.settings.idleTimeoutMinutes}m`
+              : "—",
+          icon: Clock,
+        },
       ]
     : [];
 
   return (
     <div className="space-y-4">
       <MyLocationCard authFetch={authFetch} />
-      {error ? (
-        <Panel><ErrorRow message={error} /></Panel>
-      ) : !data ? (
-        loading ? <Panel><Loading /></Panel> : null
-      ) : (
-        <>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {cards.map((c) => (
-              <StatCard key={c.label} {...c} />
-            ))}
-          </div>
-          <Panel title="Privacy & Security policy">
-            <p className="text-sm text-muted">
+
+      <DataState
+        loading={loading && !data}
+        error={error}
+        isEmpty={!data}
+        onRetry={refresh}
+        loadingVariant="stats"
+        empty={
+          <EmptyState
+            icon={ShieldCheck}
+            title="No security overview yet"
+            description="Session, login and policy figures appear here once the security service has recorded activity."
+          />
+        }
+      >
+        <div className="space-y-4">
+          <StatGrid items={stats} columns={4} />
+
+          <SectionCard title="Privacy & Security policy">
+            <p className="text-sm leading-6 text-[var(--muted)]">
               Active policy version{" "}
-              <span className="font-semibold text-foreground">{data.settings.policyVersion}</span>. Admins
-              consent to security data collection on first login and re-consent after any policy update.
+              <span className="font-semibold text-[var(--foreground)]">
+                {data?.settings?.policyVersion}
+              </span>
+              . Admins consent to security data collection on first login and re-consent after any
+              policy update.
             </p>
-          </Panel>
-        </>
-      )}
+          </SectionCard>
+        </div>
+      </DataState>
     </div>
   );
 }
@@ -269,10 +387,19 @@ function MyLocationCard({ authFetch }) {
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
 
+  const [sessionError, setSessionError] = useState(null);
+
   const loadSession = useCallback(() => {
+    setSessionError(null);
     authFetch("/api/security/session/current")
       .then((d) => setSession(d.session))
-      .catch(() => setSession(null));
+      .catch(() => {
+        // Swallowing this rendered "This device: —", "Session risk: —" with no
+        // explanation, so a 401/500 looked like "we have no data about you"
+        // rather than "we could not ask".
+        setSession(null);
+        setSessionError("Couldn't load this device's session.");
+      });
   }, [authFetch]);
 
   useEffect(() => loadSession(), [loadSession]);
@@ -383,20 +510,40 @@ function MyLocationCard({ authFetch }) {
   const approx = [session?.city, session?.region, session?.country].filter(Boolean).join(", ");
 
   return (
-    <Panel
+    <SectionCard
       title="My session & live location"
-      action={
+      actions={
         <button
           type="button"
           onClick={detect}
           disabled={status === "locating"}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
+          className={`inline-flex items-center gap-1.5 rounded-lg bg-[var(--primary)] px-3 py-1.5 text-xs font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover)] disabled:opacity-60 ${FOCUS_RING}`}
         >
-          {status === "locating" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Crosshair className="h-3.5 w-3.5" />}
+          {status === "locating" ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+          ) : (
+            <Crosshair className="h-3.5 w-3.5" aria-hidden="true" />
+          )}
           Detect my live location
         </button>
       }
     >
+      {sessionError ? (
+        <p
+          role="alert"
+          className="mb-3 flex flex-wrap items-center gap-2 rounded-lg border border-[var(--danger)]/30 bg-[var(--surface-soft)] px-3 py-2 text-xs text-[var(--danger-text)]"
+        >
+          {sessionError}
+          <button
+            type="button"
+            onClick={loadSession}
+            className="rounded-sm font-semibold text-[var(--primary-text)] underline-offset-2 hover:underline focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+          >
+            Try again
+          </button>
+        </p>
+      ) : null}
+
       <div className="grid gap-3 sm:grid-cols-2">
         <InfoTile icon={Laptop} label="This device" value={session ? session.deviceLabel : "—"} sub={session ? `${session.browser} • ${session.os}` : ""} />
         <InfoTile icon={MapPin} label="Masked IP / approx location" value={session?.ipMasked || "—"} sub={approx || "Approx. location appears when deployed behind a CDN"} />
@@ -428,27 +575,36 @@ function MyLocationCard({ authFetch }) {
           href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=14/${lat}/${lng}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+          className={`mt-3 inline-flex items-center gap-1.5 rounded-sm text-xs font-semibold text-[var(--primary)] hover:underline ${FOCUS_RING}`}
         >
-          <ExternalLink className="h-3.5 w-3.5" /> View on map
+          <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> View on map
         </a>
       )}
-      {note && <p className="mt-2 text-xs text-muted">{note}</p>}
-      {error && <p className="mt-2 text-xs text-danger">{error}</p>}
-    </Panel>
+      {note && <p className="mt-2 text-xs text-[var(--muted)]">{note}</p>}
+      {error && (
+        <p role="alert" className="mt-2 text-xs text-[var(--danger-text)]">
+          {error}
+        </p>
+      )}
+    </SectionCard>
   );
 }
 
 function InfoTile({ icon: Icon, label, value, sub, tone = "muted" }) {
-  const toneClass = tone === "primary" ? "text-primary" : tone === "warning" ? "text-warning" : "text-muted";
+  const toneClass =
+    tone === "primary"
+      ? "text-[var(--primary)]"
+      : tone === "warning"
+        ? "text-[var(--warning)]"
+        : "text-[var(--muted)]";
   return (
-    <div className="rounded-xl border border-border bg-surface-soft p-3">
+    <div className={ROW_SHELL}>
       <div className="flex items-center gap-2">
-        <Icon className={`h-4 w-4 ${toneClass}`} />
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted">{label}</span>
+        <Icon className={`h-4 w-4 ${toneClass}`} aria-hidden="true" />
+        <span className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">{label}</span>
       </div>
-      <p className="mt-1.5 break-words text-sm font-semibold text-foreground">{value}</p>
-      {sub && <p className="text-xs text-muted">{sub}</p>}
+      <p className="mt-1.5 break-words text-sm font-semibold text-[var(--foreground)]">{value}</p>
+      {sub && <p className="text-xs text-[var(--muted)]">{sub}</p>}
     </div>
   );
 }
@@ -463,6 +619,7 @@ function SessionsTab({ authFetch }) {
   const { data: sessions, loading, error, refresh } = useCached("sessions", fetcher);
   const [busy, setBusy] = useState("");
   const [revokeErr, setRevokeErr] = useState("");
+  const [failedRevokeId, setFailedRevokeId] = useState("");
 
   const revoke = async (id) => {
     setBusy(id);
@@ -472,69 +629,94 @@ function SessionsTab({ authFetch }) {
         method: "POST",
         body: JSON.stringify({ sessionId: id, reason: "forced_logout" }),
       });
+      setFailedRevokeId("");
       await refresh();
     } catch (e) {
       setRevokeErr(e.message);
+      setFailedRevokeId(id);
     } finally {
       setBusy("");
     }
   };
 
-  if (error) return <Panel><ErrorRow message={error} /></Panel>;
-  if (!sessions) return <Panel>{loading ? <Loading /> : null}</Panel>;
-
-  const active = sessions.filter((s) => s.status === "active");
-  const rest = sessions.filter((s) => s.status !== "active").slice(0, 30);
+  const list = sessions || [];
+  const active = list.filter((s) => s.status === "active");
+  const rest = list.filter((s) => s.status !== "active").slice(0, 30);
 
   return (
-    <Panel
-      title={`Active sessions (${active.length})`}
-      action={<RefreshButton onClick={refresh} />}
-    >
-      {revokeErr && <ErrorRow message={revokeErr} />}
-      {active.length === 0 ? (
-        <EmptyRow message="No active sessions." />
-      ) : (
-        <div className="space-y-2">
-          {active.map((s) => (
-            <SessionRow key={s.id} s={s} onRevoke={() => revoke(s.id)} busy={busy === s.id} />
-          ))}
-        </div>
-      )}
-      {rest.length > 0 && (
-        <>
-          <p className="mt-5 mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
-            Recent ended sessions
-          </p>
+    <div className="space-y-4">
+      <SectionCard
+        title={sessions && !error ? `Active sessions (${active.length})` : "Active sessions"}
+        actions={<RefreshButton onClick={refresh} />}
+      >
+        {revokeErr ? (
+          <InlineError
+            message={revokeErr}
+            onRetry={failedRevokeId ? () => revoke(failedRevokeId) : undefined}
+            retryLabel="Retry logout"
+            className="mb-3"
+          />
+        ) : null}
+
+        <DataState
+          loading={loading && !sessions}
+          error={error}
+          isEmpty={active.length === 0}
+          onRetry={refresh}
+          rows={3}
+          empty={
+            <EmptyState
+              icon={Laptop}
+              title="No active sessions"
+              description="Nobody is currently signed in to the admin console."
+            />
+          }
+        >
+          <div className="space-y-2">
+            {active.map((s) => (
+              <SessionRow key={s.id} s={s} onRevoke={() => revoke(s.id)} busy={busy === s.id} />
+            ))}
+          </div>
+        </DataState>
+      </SectionCard>
+
+      {/* Hidden while the fetch is failing, so a stale list can never sit next
+          to an error as if it were current — the old screen hid everything. */}
+      {!error && rest.length > 0 && (
+        <SectionCard title="Recent ended sessions">
           <div className="space-y-2">
             {rest.map((s) => (
               <SessionRow key={s.id} s={s} ended />
             ))}
           </div>
-        </>
+        </SectionCard>
       )}
-    </Panel>
+    </div>
   );
 }
 
 function SessionRow({ s, onRevoke, busy, ended }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-soft px-3 py-2.5">
+    <div className={`flex items-center justify-between gap-3 ${ROW_SHELL}`}>
       <div className="flex min-w-0 items-center gap-3">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface text-muted">
-          {s.deviceType === "mobile" ? <Smartphone className="h-4 w-4" /> : <Laptop className="h-4 w-4" />}
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--surface)] text-[var(--muted)]">
+          {s.deviceType === "mobile" ? (
+            <Smartphone className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <Laptop className="h-4 w-4" aria-hidden="true" />
+          )}
         </span>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-foreground">
+          <p className="truncate text-sm font-semibold text-[var(--foreground)]">
             {s.deviceLabel || `${s.browser} on ${s.os}`}
-            {s.email ? <span className="ml-2 text-xs font-normal text-muted">{s.email}</span> : null}
+            {s.email ? <span className="ml-2 text-xs font-normal text-[var(--muted)]">{s.email}</span> : null}
           </p>
-          <p className="truncate text-xs text-muted">
+          <p className="truncate text-xs text-[var(--muted)]">
             {[s.ipMasked, [s.city, s.country].filter(Boolean).join(", ")].filter(Boolean).join(" • ") || "Unknown origin"}
           </p>
           {(s.livePlace || s.liveCity || s.liveLat != null) && (
-            <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-primary">
-              <MapPin className="h-3 w-3 shrink-0" />
+            <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-[var(--primary)]">
+              <MapPin className="h-3 w-3 shrink-0" aria-hidden="true" />
               {s.livePlace ||
                 [s.liveCity, s.liveRegion, s.liveCountry].filter(Boolean).join(", ") ||
                 `${s.liveLat}, ${s.liveLng}`}
@@ -549,19 +731,62 @@ function SessionRow({ s, onRevoke, busy, ended }) {
             type="button"
             onClick={onRevoke}
             disabled={busy}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-danger/30 bg-danger-soft px-2.5 py-1.5 text-xs font-semibold text-danger transition hover:opacity-90 disabled:opacity-50"
+            className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-2.5 py-1.5 text-xs font-semibold text-[var(--danger-text)] transition hover:opacity-90 disabled:opacity-50 ${FOCUS_RING}`}
           >
-            {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <LogOut className="h-3.5 w-3.5" />}
+            {busy ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+            ) : (
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
             Force logout
           </button>
         )}
-        {ended && <span className="text-xs text-muted">{s.revokedReason || s.status}</span>}
+        {ended && <span className="text-xs text-[var(--muted)]">{s.revokedReason || s.status}</span>}
       </div>
     </div>
   );
 }
 
 /* ----------------------------- Audit ----------------------------- */
+
+const AUDIT_COLUMNS = [
+  {
+    key: "action",
+    header: "Action",
+    render: (l) => (
+      <div className="min-w-0">
+        <span className="font-medium text-[var(--foreground)]">{l.action}</span>
+        {l.module ? <span className="ml-2 text-xs text-[var(--muted)]">{l.module}</span> : null}
+        {l.summary ? <p className="text-xs text-[var(--muted)]">{l.summary}</p> : null}
+      </div>
+    ),
+  },
+  {
+    key: "actor",
+    header: "Admin",
+    render: (l) => (
+      <span className="text-[var(--muted)]">{l.actorEmail || l.actorUid || "—"}</span>
+    ),
+  },
+  {
+    key: "origin",
+    header: "Device / Location",
+    render: (l) => (
+      <span className="text-[var(--muted)]">
+        {[l.browser && `${l.browser}/${l.os}`, l.ipMasked, [l.region, l.country].filter(Boolean).join(", ")]
+          .filter(Boolean)
+          .join(" • ") || "—"}
+      </span>
+    ),
+  },
+  {
+    key: "when",
+    header: "When",
+    render: (l) => (
+      <span className="whitespace-nowrap text-[var(--muted)]">{fmtTime(l.createdAtMs)}</span>
+    ),
+  },
+];
 
 function AuditTab({ authFetch }) {
   const fetchPage = useCallback(
@@ -588,77 +813,49 @@ function AuditTab({ authFetch }) {
   const initialLoading = loading && logs.length === 0;
 
   return (
-    <Panel
-      title="Audit logs"
-      action={
-        <div className="flex items-center gap-2">
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search action, admin, location…"
-            className="h-9 w-56 rounded-lg border border-border bg-surface px-3 text-sm text-foreground outline-none focus:border-primary"
-          />
-          <RefreshButton onClick={reload} />
-        </div>
-      }
-    >
-      {error && <ErrorRow message={error} />}
-      {initialLoading ? (
-        <Loading />
-      ) : filtered.length === 0 ? (
-        <EmptyRow message={debouncedQ ? "No matching entries." : "No audit entries."} />
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted">
-                <th className="py-2 pr-4 font-semibold">Action</th>
-                <th className="py-2 pr-4 font-semibold">Admin</th>
-                <th className="py-2 pr-4 font-semibold">Device / Location</th>
-                <th className="py-2 pr-4 font-semibold">When</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((l) => (
-                <tr key={l.id} className="border-b border-border/60">
-                  <td className="py-2 pr-4">
-                    <span className="font-medium text-foreground">{l.action}</span>
-                    <span className="ml-2 text-xs text-muted">{l.module}</span>
-                    {l.summary && <p className="text-xs text-muted">{l.summary}</p>}
-                  </td>
-                  <td className="py-2 pr-4 text-muted">{l.actorEmail || l.actorUid || "—"}</td>
-                  <td className="py-2 pr-4 text-muted">
-                    {[l.browser && `${l.browser}/${l.os}`, l.ipMasked, [l.region, l.country].filter(Boolean).join(", ")]
-                      .filter(Boolean)
-                      .join(" • ") || "—"}
-                  </td>
-                  <td className="py-2 pr-4 text-muted">{fmtTime(l.createdAtMs)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <LoadMoreBar count={filtered.length} hasMore={hasMore && !debouncedQ} loading={loading} onClick={loadMore} />
-    </Panel>
-  );
-}
+    <div className="space-y-4">
+      <FilterBar
+        search={q}
+        onSearchChange={setQ}
+        searchPlaceholder="Search action, admin, location…"
+        count={debouncedQ ? `${filtered.length} of ${logs.length} shown` : `${logs.length} shown`}
+        actions={<RefreshButton onClick={reload} />}
+      />
 
-function LoadMoreBar({ count, hasMore, loading, onClick }) {
-  return (
-    <div className="mt-4 flex items-center justify-between">
-      <span className="text-xs text-muted">{count} shown</span>
-      {hasMore && (
-        <button
-          type="button"
-          onClick={onClick}
-          disabled={loading}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-surface-soft disabled:opacity-50"
-        >
-          {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-          Load more
-        </button>
-      )}
+      {/* A failed "load more" must not wipe the entries already on screen, so
+          the banner sits above the table while the table keeps its rows. With
+          nothing loaded the error goes to the table itself, where DataState
+          renders it as an error — never as "no audit entries". */}
+      {error && logs.length > 0 ? (
+        <InlineError message={error} onRetry={reload} />
+      ) : null}
+
+      <DataTable
+        columns={AUDIT_COLUMNS}
+        rows={filtered}
+        getRowKey={(l) => l.id}
+        loading={initialLoading}
+        error={logs.length === 0 ? error : null}
+        onRetry={reload}
+        caption="Admin audit log entries"
+        empty={
+          <EmptyState
+            icon={ScrollText}
+            title={debouncedQ ? "No matching entries" : "No audit entries"}
+            description={
+              debouncedQ
+                ? "No audit entry matches that search. Clear the search to see everything."
+                : "Admin actions are recorded here as they happen."
+            }
+          />
+        }
+      />
+
+      {hasMore && !debouncedQ ? (
+        <div className="flex justify-center">
+          <LoadMoreButton loading={loading} onClick={loadMore} />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -677,38 +874,57 @@ function EventsTab({ authFetch }) {
   const initialLoading = loading && events.length === 0;
 
   return (
-    <Panel title="Security events" action={<RefreshButton onClick={reload} />}>
-      {error && <ErrorRow message={error} />}
-      {initialLoading ? (
-        <Loading />
-      ) : events.length === 0 ? (
-        <EmptyRow message="No security events yet." />
-      ) : (
+    <SectionCard
+      title="Security events"
+      actions={<RefreshButton onClick={reload} />}
+      footer={
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-xs text-[var(--muted)]">{events.length} shown</span>
+          {hasMore ? <LoadMoreButton loading={loading} onClick={loadMore} /> : null}
+        </div>
+      }
+    >
+      {error && events.length > 0 ? (
+        <InlineError message={error} onRetry={reload} className="mb-3" />
+      ) : null}
+
+      <DataState
+        loading={initialLoading}
+        error={events.length === 0 ? error : null}
+        isEmpty={events.length === 0}
+        onRetry={reload}
+        rows={4}
+        empty={
+          <EmptyState
+            icon={Activity}
+            title="No security events yet"
+            description="Sign-ins, blocked attempts and risky sessions show up here as they are detected."
+          />
+        }
+      >
         <div className="space-y-2">
           {events.map((e) => (
-            <div
-              key={e.id}
-              className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface-soft px-3 py-2.5"
-            >
+            <div key={e.id} className={`flex items-center justify-between gap-3 ${ROW_SHELL}`}>
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-foreground">
+                <p className="truncate text-sm font-semibold text-[var(--foreground)]">
                   {e.type}
-                  {e.actorEmail ? <span className="ml-2 text-xs font-normal text-muted">{e.actorEmail}</span> : null}
+                  {e.actorEmail ? (
+                    <span className="ml-2 text-xs font-normal text-[var(--muted)]">{e.actorEmail}</span>
+                  ) : null}
                 </p>
-                <p className="truncate text-xs text-muted">
+                <p className="truncate text-xs text-[var(--muted)]">
                   {[e.summary, e.ipMasked, e.country].filter(Boolean).join(" • ") || fmtTime(e.createdAtMs)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <SeverityBadge severity={e.severity} />
-                <span className="hidden text-xs text-muted sm:inline">{fmtTime(e.createdAtMs)}</span>
+                <span className="hidden text-xs text-[var(--muted)] sm:inline">{fmtTime(e.createdAtMs)}</span>
               </div>
             </div>
           ))}
         </div>
-      )}
-      <LoadMoreBar count={events.length} hasMore={hasMore} loading={loading} onClick={loadMore} />
-    </Panel>
+      </DataState>
+    </SectionCard>
   );
 }
 
@@ -716,7 +932,7 @@ function EventsTab({ authFetch }) {
 
 function SettingsTab({ authFetch }) {
   const fetcher = useCallback(async () => authFetch("/api/security/settings"), [authFetch]);
-  const { data, loading, error: loadError } = useCached("settings", fetcher);
+  const { data, loading, error: loadError, refresh } = useCached("settings", fetcher);
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -746,14 +962,44 @@ function SettingsTab({ authFetch }) {
     }
   };
 
-  if ((loadError || error) && !form) return <Panel><ErrorRow message={loadError || error} /></Panel>;
-  if (!form) return <Panel>{loading ? <Loading /> : null}</Panel>;
+  // The form is the source of truth once it exists, so these two branches guard
+  // the fields below rather than going through DataState — a DataState child is
+  // still constructed while it is hidden, and `form.deviceLimit` would throw.
+  if ((loadError || error) && !form) {
+    return <ErrorState message={loadError || error} onRetry={refresh} />;
+  }
+  if (!form) return <LoadingState variant="detail" />;
 
   const num = (key, val) => setForm((f) => ({ ...f, [key]: Number(val) }));
   const rl = form.loginRateLimit || {};
 
   return (
-    <Panel title="Security settings">
+    <SectionCard
+      title="Security settings"
+      description="These limits apply to every admin session across the platform."
+      footer={
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={save}
+            disabled={saving}
+            className={`inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover)] disabled:opacity-60 ${FOCUS_RING}`}
+          >
+            {saving ? (
+              <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+            ) : (
+              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            )}
+            Save settings
+          </button>
+          {saved && (
+            <span role="status" className="text-sm text-[var(--success)]">
+              Saved
+            </span>
+          )}
+        </div>
+      }
+    >
       <div className="grid gap-4 sm:grid-cols-2">
         <NumberField label="Max devices per admin" value={form.deviceLimit} onChange={(v) => num("deviceLimit", v)} min={1} max={25} />
         <NumberField label="Idle timeout (minutes)" value={form.idleTimeoutMinutes} onChange={(v) => num("idleTimeoutMinutes", v)} min={1} max={480} />
@@ -772,7 +1018,7 @@ function SettingsTab({ authFetch }) {
           min={1}
           max={120}
         />
-        <NumberField label="" value={form.policyVersion} disabled labelNode="Policy version" textValue />
+        <NumberField label="Policy version" value={form.policyVersion} disabled textValue />
       </div>
 
       <div className="mt-4 space-y-2">
@@ -788,63 +1034,21 @@ function SettingsTab({ authFetch }) {
         />
       </div>
 
-      {error && <p className="mt-3 text-sm text-danger">{error}</p>}
-      <div className="mt-4 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={save}
-          disabled={saving}
-          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
-        >
-          {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
-          Save settings
-        </button>
-        {saved && <span className="text-sm text-success">Saved</span>}
-      </div>
-    </Panel>
+      {error ? (
+        <p role="alert" className="mt-3 text-sm text-[var(--danger-text)]">
+          {error}
+        </p>
+      ) : null}
+    </SectionCard>
   );
 }
 
 /* ----------------------------- shared UI ----------------------------- */
 
-function Panel({ title, action, children }) {
-  return (
-    <section className="rounded-xl border border-border bg-surface p-4 shadow-sm sm:p-5">
-      {(title || action) && (
-        <div className="mb-4 flex items-center justify-between gap-3">
-          {title && <h2 className="text-sm font-bold text-foreground">{title}</h2>}
-          {action}
-        </div>
-      )}
-      {children}
-    </section>
-  );
-}
-
-function StatCard({ label, value, icon: Icon, tone = "muted" }) {
-  const toneClass =
-    tone === "primary"
-      ? "text-primary"
-      : tone === "warning"
-        ? "text-warning"
-        : tone === "danger"
-          ? "text-danger"
-          : "text-muted";
-  return (
-    <div className="rounded-xl border border-border bg-surface p-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-muted">{label}</p>
-        <Icon className={`h-4 w-4 ${toneClass}`} />
-      </div>
-      <p className="mt-2 text-2xl font-semibold tabular-nums text-foreground">{value}</p>
-    </div>
-  );
-}
-
-function NumberField({ label, labelNode, value, onChange, min, max, disabled, textValue }) {
+function NumberField({ label, value, onChange, min, max, disabled, textValue }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-semibold text-muted">{labelNode || label}</span>
+      <span className="mb-1 block text-xs font-semibold text-[var(--muted)]">{label}</span>
       <input
         type={textValue ? "text" : "number"}
         value={value ?? ""}
@@ -852,7 +1056,7 @@ function NumberField({ label, labelNode, value, onChange, min, max, disabled, te
         max={max}
         disabled={disabled}
         onChange={(e) => onChange?.(e.target.value)}
-        className="h-10 w-full rounded-lg border border-border bg-surface px-3 text-sm text-foreground outline-none focus:border-primary disabled:opacity-60"
+        className={`h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm text-[var(--foreground)] transition focus:border-[var(--primary)] focus:outline-none disabled:opacity-60 ${FOCUS_RING}`}
       />
     </label>
   );
@@ -865,14 +1069,20 @@ function ToggleRow({ label, checked, onChange }) {
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className="flex w-full items-center justify-between rounded-lg border border-border bg-surface-soft px-3 py-2.5 text-left"
+      className={`flex w-full items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2.5 text-left ${FOCUS_RING}`}
     >
-      <span className="text-sm font-medium text-foreground">{label}</span>
+      <span className="text-sm font-medium text-[var(--foreground)]">{label}</span>
       <span
-        className={`relative h-5 w-9 rounded-full transition-colors ${checked ? "bg-primary" : "bg-border-strong"}`}
+        className={`relative h-5 w-9 rounded-full transition-colors ${
+          checked ? "bg-[var(--primary)]" : "bg-[var(--border-strong)]"
+        }`}
       >
+        {/* Knob colour is theme-aware: `bg-white` is remapped to --surface by the
+            admin compat layer, which made it invisible on the dark track. */}
         <span
-          className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${checked ? "left-[18px]" : "left-0.5"}`}
+          className={`absolute top-0.5 h-4 w-4 rounded-full transition-all ${
+            checked ? "bg-[var(--surface)] left-[18px]" : "bg-[var(--muted)] left-0.5"
+          }`}
         />
       </span>
     </button>
@@ -881,15 +1091,18 @@ function ToggleRow({ label, checked, onChange }) {
 
 function RiskBadge({ level }) {
   if (!level || level === "low") return null;
-  const cls = level === "high" ? "bg-danger-soft text-danger" : "bg-warning-soft text-warning";
+  const cls =
+    level === "high"
+      ? "bg-[var(--danger-soft)] text-[var(--danger-text)]"
+      : "bg-[var(--warning-soft)] text-[var(--warning)]";
   return <span className={`rounded-full px-2 py-0.5 text-xs font-bold capitalize ${cls}`}>{level} risk</span>;
 }
 
 function SeverityBadge({ severity }) {
   const map = {
-    critical: "bg-danger-soft text-danger",
-    warning: "bg-warning-soft text-warning",
-    info: "bg-surface text-muted",
+    critical: "bg-[var(--danger-soft)] text-[var(--danger-text)]",
+    warning: "bg-[var(--warning-soft)] text-[var(--warning)]",
+    info: "bg-[var(--surface)] text-[var(--muted)]",
   };
   return (
     <span className={`rounded-full px-2 py-0.5 text-xs font-bold capitalize ${map[severity] || map.info}`}>
@@ -903,42 +1116,51 @@ function RefreshButton({ onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-surface-soft"
+      className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] ${FOCUS_RING}`}
     >
-      <RefreshCw className="h-3.5 w-3.5" /> Refresh
+      <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" /> Refresh
     </button>
   );
 }
 
-function Loading() {
+function LoadMoreButton({ loading, onClick }) {
   return (
-    <div className="flex items-center gap-2 py-8 text-sm text-muted">
-      <Loader2 className="h-4 w-4 animate-spin" /> Loading…
-    </div>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={loading}
+      className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:opacity-50 ${FOCUS_RING}`}
+    >
+      {loading ? (
+        <Loader2 className="h-3.5 w-3.5 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+      ) : null}
+      Load more
+    </button>
   );
 }
 
-function EmptyRow({ message }) {
-  return <p className="rounded-lg border border-dashed border-border px-4 py-6 text-center text-sm text-muted">{message}</p>;
-}
-
-function ErrorRow({ message }) {
+/**
+ * Inline failure banner for an action or a partial failure — the cases where a
+ * full-width ErrorState would be wrong because the screen still has content to
+ * show. Whole-view failures go through DataState / DataTable instead.
+ */
+function InlineError({ message, onRetry, retryLabel = "Try again", className = "" }) {
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-danger/20 bg-danger-soft px-4 py-3 text-sm text-danger">
-      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
-      <span>{message}</span>
-    </div>
-  );
-}
-
-function CenterState({ icon: Icon, title, message, spin }) {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center bg-page p-6">
-      <div className="max-w-sm rounded-xl border border-border bg-surface p-8 text-center shadow-sm">
-        <Icon className={`mx-auto h-7 w-7 text-primary ${spin ? "animate-spin" : ""}`} />
-        <p className="mt-3 text-sm font-semibold text-foreground">{title}</p>
-        {message && <p className="mt-1 text-sm text-muted">{message}</p>}
-      </div>
+    <div
+      role="alert"
+      className={`flex flex-wrap items-start gap-3 rounded-lg border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-4 py-3 text-sm text-[var(--danger-text)] ${className}`}
+    >
+      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+      <span className="min-w-0 flex-1">{message}</span>
+      {onRetry ? (
+        <button
+          type="button"
+          onClick={onRetry}
+          className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1.5 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] ${FOCUS_RING}`}
+        >
+          <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" /> {retryLabel}
+        </button>
+      ) : null}
     </div>
   );
 }

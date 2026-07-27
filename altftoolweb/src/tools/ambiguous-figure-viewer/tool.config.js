@@ -3,12 +3,12 @@
 export default {
   name: "Ambiguous Figure Viewer",
   title: "Ambiguous Figure Viewer",
-  description: "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
+  description:
+    "Watch classic bistable figures flip between two interpretations and measure your own dominance durations.",
   slug: "ambiguous-figure-viewer",
-  category: ["Neuroscience", "Visual Experiments", "Psychology"],
+  category: "Education & Science",
   icon: "brain",
-  iconColor: "text-purple-600",
+  iconColor: "text-(--primary)",
   tags: ["Illusion", "Perception", "Psychology", "Interactive"],
-  author: "Antigravity",
-  version: "1.0.0"
+  version: "1.0.0",
 };

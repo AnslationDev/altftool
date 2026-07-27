@@ -43,8 +43,8 @@ export default function TimelineSidebar({ versions, selectedVersionId, onLoad, o
                 className="flex-1 min-w-0 text-xs px-1.5 py-0.5 rounded border border-(--border) bg-(--card) text-(--foreground) focus:outline-none focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
                 autoFocus
               />
-              <button onClick={() => { onRename(v.id, editName); setEditingId(null); }} aria-label="Save version name" className="p-0.5 text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><Check size="12" /></button>
-              <button onClick={() => setEditingId(null)} aria-label="Cancel rename" className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 rounded"><X size="12" /></button>
+              <button onClick={() => { onRename(v.id, editName); setEditingId(null); }} aria-label="Save version name" className="p-0.5 text-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><Check size="12" /></button>
+              <button onClick={() => setEditingId(null)} aria-label="Cancel rename" className="p-0.5 text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) rounded"><X size="12" /></button>
             </div>
           ) : (
             <>
@@ -56,9 +56,9 @@ export default function TimelineSidebar({ versions, selectedVersionId, onLoad, o
                   </p>
                 </div>
                 <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition motion-reduce:transition-none shrink-0">
-                  <button onClick={() => { setEditingId(v.id); setEditName(v.name); }} aria-label={`Rename version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><Pencil size="12" /></button>
-                  <button onClick={() => onCompare(v)} aria-label={`Compare with version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35" title="Compare"><GitCompare size="12" /></button>
-                  <button onClick={() => onDelete(v.id)} aria-label={`Delete version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) hover:text-(--danger) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"><Trash2 size="12" /></button>
+                  <button onClick={() => { setEditingId(v.id); setEditName(v.name); }} aria-label={`Rename version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"><Pencil size="12" /></button>
+                  <button onClick={() => onCompare(v)} aria-label={`Compare with version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)" title="Compare"><GitCompare size="12" /></button>
+                  <button onClick={() => onDelete(v.id)} aria-label={`Delete version ${v.name}`} className="p-0.5 rounded hover:bg-(--muted) text-(--muted-foreground) hover:text-(--danger) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"><Trash2 size="12" /></button>
                 </div>
               </div>
               <div className="flex gap-2 mt-1 text-[10px] text-(--muted-foreground)">

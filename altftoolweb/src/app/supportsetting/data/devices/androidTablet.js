@@ -35,7 +35,7 @@ export const androidTabletSettings = [
       "Larger tablets often lag behind phones by a few weeks for the same OS version, since updates are staged per device model.",
     ],
     important: "Keep the tablet connected to Wi-Fi and plugged in during installation — interrupting a system update partway through can leave the device stuck in a boot loop.",
-    redirectUrl: "https://support.google.com/android/answer/7680439",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Software Update",
     whyItMatters:
       "Security patches close vulnerabilities that can be exploited over Wi-Fi or through malicious apps, and many app updates eventually require a minimum Android version — falling behind can silently break app compatibility.",
@@ -71,7 +71,7 @@ export const androidTabletSettings = [
       "Advanced options include Wi-Fi frequency band selection and \"Switch to mobile data\" behavior (on cellular models) when Wi-Fi is weak.",
       "A built-in Network diagnostics or \"Wi-Fi troubleshooting\" tool under Settings > Connections can identify weak signal or IP conflicts.",
     ],
-    redirectUrl: "https://support.google.com/android/answer/9075847",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Wi-Fi & Network",
     whyItMatters:
       "A dropped or weak Wi-Fi connection interrupts app downloads, cloud backups, and video calls, and can silently prevent scheduled updates or file syncs from ever completing.",
@@ -108,7 +108,7 @@ export const androidTabletSettings = [
       "Dark mode can be scheduled to turn on automatically at sunset under Settings > Display > Dark mode > turn on as scheduled.",
       "Screen resolution and refresh rate (on higher-end tablets) are also adjusted here under Settings > Display > Motion smoothness.",
     ],
-    redirectUrl: "https://support.google.com/android/answer/9079646",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Display Settings",
     whyItMatters:
       "On a large tablet screen, brightness is one of the biggest single drains on battery life, and a short screen timeout paired with dark mode can meaningfully extend time between charges.",
@@ -146,7 +146,7 @@ export const androidTabletSettings = [
       "Some tablets add a persistent Taskbar (Settings > Display > Taskbar) for quickly launching or dragging apps into split screen from any screen.",
     ],
     important: "Not every app supports split screen or pop-up view — apps that lock to full-screen (common in some games and video players) will show \"not supported\" when you try.",
-    redirectUrl: "https://support.google.com/android/answer/9068988",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Multi-Window",
     whyItMatters:
       "Multi-window is the main advantage a tablet has over a phone for productivity — being able to drag a link from a browser into a notes app, or watch a video while messaging, is a core reason people choose a larger-screen device.",
@@ -182,7 +182,7 @@ export const androidTabletSettings = [
       "Multiple Google accounts can be added and each has independent sync toggles, useful for separating personal and work data.",
       "Family Link or a Google Family group (under Settings > Google > Family) can restrict app installs and screen time on a shared or child's tablet.",
     ],
-    redirectUrl: "https://support.google.com/android/answer/2650427",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Accounts & Sync",
     whyItMatters:
       "Sync settings determine whether your contacts, photos, and documents are safely backed up and available if the tablet is lost, reset, or replaced — getting this wrong can mean losing data you assumed was backed up.",
@@ -219,7 +219,7 @@ export const androidTabletSettings = [
       "Location can be set to precise or approximate per app under Settings > Location > App permissions, separate from the global location toggle.",
       "Camera and microphone have quick physical-style toggles in Settings > Privacy on many tablets to cut access to all apps at once.",
     ],
-    redirectUrl: "https://support.google.com/android/answer/9431959",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Privacy Dashboard",
     whyItMatters:
       "Apps request broad permissions by default, and an app with unnecessary microphone or location access is both a privacy risk and, on background apps, a hidden drain on battery.",
@@ -256,7 +256,7 @@ export const androidTabletSettings = [
       "Apps flagged as \"Put unused apps to sleep\" get their background activity restricted automatically after a period of inactivity.",
       "Adaptive battery uses on-device machine learning to limit background power for apps you rarely open, and can be toggled under Battery > More battery settings.",
     ],
-    redirectUrl: "https://support.google.com/android/answer/7664360",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Battery Settings",
     whyItMatters:
       "Understanding which apps drain the battery in the background — not just on-screen — is the fastest way to fix a tablet that dies faster than expected between charges.",
@@ -294,7 +294,7 @@ export const androidTabletSettings = [
       "Google Photos and Files by Google can both be set to auto-delete already-backed-up items once local storage runs low.",
     ],
     important: "Clearing an app's \"Data\" (not just cache) deletes that app's saved logins, game progress, and local files — only cache clearing is fully safe to do routinely.",
-    redirectUrl: "https://support.google.com/android/answer/7431795",
+    redirectUrl: "https://support.google.com/android/?hl=en",
     actionLabel: "Open Android Support: Storage Management",
     whyItMatters:
       "Running low on storage slows the whole system down, can block app and OS updates from installing, and risks photos or downloads failing to save at the worst moment.",

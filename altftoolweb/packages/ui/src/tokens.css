@@ -1,0 +1,183 @@
+/*
+ * AltFTool design tokens
+ *
+ * This file owns primitive values only. Product apps may keep small semantic
+ * adapter layers while legacy surfaces are migrated, but raw visual values
+ * belong here so web and admin cannot drift.
+ */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --anslation-ds-font-sans:
+    "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --anslation-ds-font-mono:
+    "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --anslation-ds-page: #f7f8fb;
+  --anslation-ds-canvas: #ffffff;
+  --anslation-ds-surface: #ffffff;
+  --anslation-ds-soft: #eef3f6;
+  --anslation-ds-hover: #e4f4f3;
+  --anslation-ds-sidebar: #ffffff;
+  --anslation-ds-footer: #0f172a;
+  --anslation-ds-footer-text: #f8fafc;
+  --anslation-ds-footer-muted: #94a3b8;
+  --anslation-ds-footer-border: #1e293b;
+  --anslation-ds-overlay: rgb(2 6 23 / 56%);
+
+  --anslation-ds-border: #e2e8f0;
+  --anslation-ds-border-strong: #cbd5e1;
+  --anslation-ds-text: #111827;
+  --anslation-ds-text-soft: #2f4054;
+  --anslation-ds-muted: #607083;
+  --anslation-ds-muted-strong: #42526a;
+
+  --anslation-ds-brand-50: #f0fdfa;
+  --anslation-ds-brand-100: #ccfbf1;
+  --anslation-ds-brand-200: #99f6e4;
+  --anslation-ds-brand-300: #5eead4;
+  --anslation-ds-brand-400: #2dd4bf;
+  --anslation-ds-brand-500: #14b8a6;
+  --anslation-ds-brand-600: #0d9488;
+  --anslation-ds-brand-700: #0f766e;
+  --anslation-ds-brand-800: #115e59;
+  --anslation-ds-brand-900: #134e4a;
+
+  --anslation-ds-primary: var(--anslation-ds-brand-600);
+  --anslation-ds-primary-hover: var(--anslation-ds-brand-700);
+  --anslation-ds-primary-active: var(--anslation-ds-brand-800);
+  /* Brand-coloured TEXT at small sizes: brand-700 keeps ≥4.5:1 on page/surface. */
+  --anslation-ds-primary-text: var(--anslation-ds-brand-700);
+  --anslation-ds-primary-soft: var(--anslation-ds-brand-100);
+  --anslation-ds-primary-foreground: #ffffff;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #cffafe;
+  --anslation-ds-secondary-foreground: #075985;
+  --anslation-ds-accent: #8b5cf6;
+  --anslation-ds-accent-soft: #ede9fe;
+
+  --anslation-ds-success: #16a34a;
+  --anslation-ds-warning: #f59e0b;
+  --anslation-ds-danger: #ef4444;
+  --anslation-ds-danger-on-inverse: #fda4af;
+  --anslation-ds-info: #0ea5e9;
+  --anslation-ds-status-foreground: #ffffff;
+  --anslation-ds-success-soft: #dcf4e3;
+  --anslation-ds-warning-soft: #fdf1d6;
+  --anslation-ds-danger-soft: #fde2dd;
+  --anslation-ds-info-soft: #e0f2fe;
+
+  --anslation-ds-space-1: 0.25rem;
+  --anslation-ds-space-2: 0.5rem;
+  --anslation-ds-space-3: 0.75rem;
+  --anslation-ds-space-4: 1rem;
+  --anslation-ds-space-5: 1.25rem;
+  --anslation-ds-space-6: 1.5rem;
+  --anslation-ds-space-8: 2rem;
+  --anslation-ds-space-10: 2.5rem;
+  --anslation-ds-space-12: 3rem;
+  --anslation-ds-space-16: 4rem;
+
+  --anslation-ds-control-sm: 2rem;
+  --anslation-ds-control-md: 2.5rem;
+  --anslation-ds-control-lg: 2.75rem;
+  --anslation-ds-target-min: 2.75rem;
+
+  --anslation-ds-radius-xs: 0.375rem;
+  --anslation-ds-radius-sm: 0.375rem;
+  --anslation-ds-radius: 0.5rem;
+  --anslation-ds-radius-md: 0.5rem;
+  --anslation-ds-radius-lg: 0.75rem;
+  --anslation-ds-radius-xl: 1rem;
+  --anslation-ds-radius-pill: 9999px;
+
+  --anslation-ds-shadow-sm: 0 1px 2px rgb(15 23 42 / 6%);
+  --anslation-ds-shadow-md: 0 8px 24px rgb(15 23 42 / 8%);
+  --anslation-ds-shadow-lg: 0 20px 48px rgb(15 23 42 / 12%);
+  --anslation-ds-focus-ring: 0 0 0 3px rgb(20 184 166 / 35%);
+
+  --anslation-ds-motion-fast: 100ms;
+  --anslation-ds-motion-base: 150ms;
+  --anslation-ds-motion-modal: 200ms;
+  --anslation-ds-motion-drawer: 250ms;
+  --anslation-ds-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --anslation-ds-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --anslation-ds-container: 80rem;
+  --anslation-ds-container-wide: 90rem;
+  --anslation-ds-gutter: clamp(1rem, 2.4vw, 2rem);
+
+  --anslation-ds-cta-gradient: linear-gradient(
+    135deg,
+    var(--anslation-ds-primary),
+    var(--anslation-ds-secondary)
+  );
+  --anslation-ds-cta-gradient-hover: linear-gradient(
+    135deg,
+    var(--anslation-ds-primary-hover),
+    var(--anslation-ds-secondary)
+  );
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --anslation-ds-page: #070d18;
+  --anslation-ds-canvas: #0b1220;
+  --anslation-ds-surface: #101827;
+  --anslation-ds-soft: #142033;
+  --anslation-ds-hover: #0f2f2c;
+  --anslation-ds-sidebar: #050b18;
+  --anslation-ds-footer: #020617;
+  --anslation-ds-footer-text: #f8fafc;
+  --anslation-ds-footer-muted: #94a3b8;
+  --anslation-ds-footer-border: #1e293b;
+  --anslation-ds-overlay: rgb(2 6 23 / 70%);
+
+  --anslation-ds-border: #1e293b;
+  --anslation-ds-border-strong: #334155;
+  --anslation-ds-text: #f8fafc;
+  --anslation-ds-text-soft: #dbe5f2;
+  --anslation-ds-muted: #94a3b8;
+  --anslation-ds-muted-strong: #cbd5e1;
+
+  --anslation-ds-primary: var(--anslation-ds-brand-400);
+  --anslation-ds-primary-hover: var(--anslation-ds-brand-300);
+  --anslation-ds-primary-active: var(--anslation-ds-brand-200);
+  --anslation-ds-primary-text: var(--anslation-ds-brand-400);
+  --anslation-ds-primary-soft: #0c2e2b;
+  --anslation-ds-primary-foreground: #07111f;
+  --anslation-ds-secondary: #22d3ee;
+  --anslation-ds-secondary-soft: #0a2f38;
+  --anslation-ds-secondary-foreground: #06222b;
+  --anslation-ds-accent: #a78bfa;
+  --anslation-ds-accent-soft: #2e2451;
+
+  --anslation-ds-success: #4ade80;
+  --anslation-ds-warning: #fbbf24;
+  --anslation-ds-danger: #f87171;
+  --anslation-ds-danger-on-inverse: #b91c1c;
+  --anslation-ds-info: #38bdf8;
+  --anslation-ds-status-foreground: #07111f;
+  --anslation-ds-success-soft: #0f3b21;
+  --anslation-ds-warning-soft: #3b2d0b;
+  --anslation-ds-danger-soft: #3b1410;
+  --anslation-ds-info-soft: #0b2a3d;
+
+  --anslation-ds-shadow-sm: 0 1px 2px rgb(0 0 0 / 36%);
+  --anslation-ds-shadow-md: 0 10px 28px rgb(0 0 0 / 36%);
+  --anslation-ds-shadow-lg: 0 24px 56px rgb(0 0 0 / 46%);
+  --anslation-ds-focus-ring: 0 0 0 3px rgb(45 212 191 / 35%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --anslation-ds-motion-fast: 0ms;
+    --anslation-ds-motion-base: 0ms;
+    --anslation-ds-motion-modal: 0ms;
+    --anslation-ds-motion-drawer: 0ms;
+  }
+}

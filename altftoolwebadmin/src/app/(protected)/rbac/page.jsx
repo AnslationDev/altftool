@@ -7,26 +7,63 @@ import {
   Database,
   FileKey2,
   GitBranch,
-  Loader2,
   LockKeyhole,
   ShieldCheck,
   UserCog,
   UsersRound,
 } from "lucide-react";
-import { getAuth } from "firebase/auth";
+import { Button } from "@altftool/ui";
+import { DataState, ErrorState, PageHeader, SectionCard, StatGrid } from "@/ansets";
 import { db } from "@/lib/firebaseFirestore";
 import { emitAlert } from "@/lib/alertBus";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import { PROJECTS } from "@/projects";
 import { RBAC_PATHS, getRbacRootLabel } from "@/lib/rbacPaths";
 
-function subscribeCollection(path, setter, setReady) {
+const SOURCE_LABELS = {
+  admins: "Admin Users",
+  roles: "Roles",
+  requests: "Access Requests",
+  security: "Security Events",
+};
+
+const FIRESTORE_PATHS = [
+  "super_admin_dashboard/main/admin_users/{uid}",
+  "super_admin_dashboard/main/admin_users/{uid}/project_access/{projectId}",
+  "super_admin_dashboard/main/admin_users/{uid}/project_access/{projectId}/modules/{moduleId}",
+  "super_admin_dashboard/main/admin_roles/{roleId}",
+  "super_admin_dashboard/main/admin_audit_logs/{logId}",
+  "super_admin_dashboard/main/admin_sessions/{sessionId}",
+  "super_admin_dashboard/main/admin_security_events/{eventId}",
+  "super_admin_dashboard/main/admin_access_requests/{requestId}",
+  "super_admin_dashboard/main/admin_settings/main",
+];
+
+const IMPLEMENTATION_STATUS = [
+  ["New RBAC Firestore paths", "Ready"],
+  ["Login profile resolver with legacy fallback", "Ready"],
+  ["Project/module/action permission checks", "Ready"],
+  ["Sidebar project filtering", "Ready"],
+  ["Route protection via AdminLayout", "Ready"],
+  ["Audit/security event helpers", "Ready"],
+  ["Full role editor UI", "Next phase"],
+  ["Firestore rules deployment", "Next phase"],
+];
+
+function subscribeCollection(path, setter, setReady, onError) {
   return onSnapshot(
     collection(db, ...path),
     (snapshot) => {
       setter(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })));
       setReady(true);
     },
-    () => setReady(true),
+    (error) => {
+      // Swallowing this reported a permission failure to the operator as a
+      // legitimate zero count. Surface it instead, then release the loader.
+      console.error(`RBAC subscription failed: ${path.join("/")}`, error);
+      onError?.(error);
+      setReady(true);
+    },
   );
 }
 
@@ -36,19 +73,32 @@ export default function RbacFoundationPage() {
   const [requests, setRequests] = useState([]);
   const [securityEvents, setSecurityEvents] = useState([]);
   const [ready, setReady] = useState({ admins: false, roles: false, requests: false, security: false });
+  const [errors, setErrors] = useState({ admins: null, roles: null, requests: null, security: null });
+  const [reloadKey, setReloadKey] = useState(0);
   const [bootstrapping, setBootstrapping] = useState(false);
 
   useEffect(() => {
+    setReady({ admins: false, roles: false, requests: false, security: false });
+    setErrors({ admins: null, roles: null, requests: null, security: null });
+
+    const markReady = (key) => (value) => setReady((prev) => ({ ...prev, [key]: value }));
+    const markError = (key) => (error) =>
+      setErrors((prev) => ({ ...prev, [key]: error?.code || error?.message || "unknown-error" }));
+
     const unsubs = [
-      subscribeCollection(RBAC_PATHS.adminUsers, setAdmins, (value) => setReady((prev) => ({ ...prev, admins: value }))),
-      subscribeCollection(RBAC_PATHS.adminRoles, setRoles, (value) => setReady((prev) => ({ ...prev, roles: value }))),
-      subscribeCollection(RBAC_PATHS.accessRequests, setRequests, (value) => setReady((prev) => ({ ...prev, requests: value }))),
-      subscribeCollection(RBAC_PATHS.securityEvents, setSecurityEvents, (value) => setReady((prev) => ({ ...prev, security: value }))),
+      subscribeCollection(RBAC_PATHS.adminUsers, setAdmins, markReady("admins"), markError("admins")),
+      subscribeCollection(RBAC_PATHS.adminRoles, setRoles, markReady("roles"), markError("roles")),
+      subscribeCollection(RBAC_PATHS.accessRequests, setRequests, markReady("requests"), markError("requests")),
+      subscribeCollection(RBAC_PATHS.securityEvents, setSecurityEvents, markReady("security"), markError("security")),
     ];
     return () => unsubs.forEach((unsub) => unsub());
-  }, []);
+  }, [reloadKey]);
 
   const loading = !Object.values(ready).every(Boolean);
+  const failedSources = useMemo(
+    () => Object.entries(errors).filter(([, value]) => value).map(([key]) => SOURCE_LABELS[key]),
+    [errors],
+  );
   const stats = useMemo(() => ({
     admins: admins.length,
     activeAdmins: admins.filter((item) => (item.status || "active") === "active").length,
@@ -58,10 +108,28 @@ export default function RbacFoundationPage() {
     projects: Object.keys(PROJECTS).length,
   }), [admins, requests, roles, securityEvents]);
 
+  // A source that failed must never render as a zero — it renders as "—" with an
+  // explicit "Unavailable" hint, and the banner above says which sources fell over.
+  const metric = (label, value, icon, failed = false) => ({
+    label,
+    value: failed ? "—" : value,
+    hint: failed ? "Unavailable" : undefined,
+    icon,
+  });
+
+  const statItems = [
+    metric("Admin Users", stats.admins, UsersRound, !!errors.admins),
+    metric("Active Admins", stats.activeAdmins, ShieldCheck, !!errors.admins),
+    metric("Roles", stats.roles, UserCog, !!errors.roles),
+    metric("Pending Access", stats.pendingRequests, FileKey2, !!errors.requests),
+    metric("Security Events", stats.securityEvents, LockKeyhole, !!errors.security),
+    metric("Projects", stats.projects, GitBranch),
+  ];
+
   async function bootstrapRbac() {
     setBootstrapping(true);
     try {
-      const token = await getAuth().currentUser?.getIdToken(true);
+      const token = await getAdminIdToken(true);
       if (!token) throw new Error("Session expired. Please sign in again.");
       const response = await fetch("/api/rbac/bootstrap", {
         method: "POST",
@@ -78,130 +146,104 @@ export default function RbacFoundationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-6 text-[var(--foreground)]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-5">
-        <section className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
-          <div className="relative bg-[linear-gradient(120deg,var(--primary-active),var(--primary-hover)_48%,var(--primary))] p-6 text-[var(--primary-foreground)]">
-            <div className="pointer-events-none absolute inset-0 opacity-10 [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:68px_68px]" />
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <p className="text-xs font-black uppercase tracking-widest text-[var(--primary-foreground)]/70">Super Admin Console</p>
-                <h1 className="mt-2 text-2xl font-black">RBAC Foundation</h1>
-                <p className="mt-2 max-w-3xl text-sm font-medium leading-6 text-[var(--primary-foreground)]/75">
-                  Central permission layer for project access, module access, route protection, security events, and audit-ready admin control.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-[var(--primary-foreground)]/15 bg-[var(--primary-foreground)]/10 px-5 py-4">
-                <p className="text-xs font-bold uppercase tracking-widest text-[var(--primary-foreground)]/60">Firebase Root</p>
-                <p className="mt-1 font-mono text-sm font-black">{getRbacRootLabel()}</p>
-              </div>
-              <button
-                type="button"
-                onClick={bootstrapRbac}
-                disabled={bootstrapping}
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--surface)] px-4 py-2.5 text-sm font-black text-[var(--foreground)] shadow-sm transition hover:bg-[var(--surface-soft)] disabled:opacity-60"
-              >
-                {bootstrapping ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
-                Initialize RBAC
-              </button>
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <PageHeader
+        eyebrow="Super Admin Console"
+        icon={ShieldCheck}
+        title="RBAC Foundation"
+        description="Central permission layer for project access, module access, route protection, security events, and audit-ready admin control."
+        actions={
+          <>
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+                Firebase Root
+              </p>
+              <p className="mt-0.5 font-mono text-sm text-[var(--foreground)]">
+                {getRbacRootLabel()}
+              </p>
             </div>
-          </div>
-        </section>
+            <Button
+              onClick={bootstrapRbac}
+              loading={bootstrapping}
+              loadingLabel="Initializing RBAC"
+            >
+              {bootstrapping ? null : <ShieldCheck className="h-4 w-4" aria-hidden="true" />}
+              Initialize RBAC
+            </Button>
+          </>
+        }
+      />
 
-        {loading ? (
-          <div className="grid min-h-[180px] place-items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-            <Loader2 className="h-7 w-7 animate-spin text-[var(--primary)]" />
-          </div>
-        ) : null}
+      <div className="flex flex-col gap-5">
+        <DataState loading={loading} loadingVariant="stats">
+          <div className="flex flex-col gap-5">
+            {/* Partial failure: the banner names the broken sources and the tiles
+                below still show whatever did load, so this is not a DataState
+                error branch — both have to render together. */}
+            {failedSources.length ? (
+              <ErrorState
+                title="Some RBAC data could not be loaded"
+                message={`Firestore rejected the live subscription for ${failedSources.join(", ")}. The affected counters show “—” instead of a misleading zero.`}
+                onRetry={() => setReloadKey((key) => key + 1)}
+              />
+            ) : null}
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
-          <Metric label="Admin Users" value={stats.admins} icon={UsersRound} />
-          <Metric label="Active Admins" value={stats.activeAdmins} icon={ShieldCheck} />
-          <Metric label="Roles" value={stats.roles} icon={UserCog} />
-          <Metric label="Pending Access" value={stats.pendingRequests} icon={FileKey2} />
-          <Metric label="Security Events" value={stats.securityEvents} icon={LockKeyhole} />
-          <Metric label="Projects" value={stats.projects} icon={GitBranch} />
-        </div>
+            <StatGrid items={statItems} columns={3} />
+          </div>
+        </DataState>
 
         <div className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
-          <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--surface-soft)] text-[var(--primary)]">
-                <Database className="h-5 w-5" />
+          <SectionCard
+            title={
+              <span className="flex items-center gap-2">
+                <Database className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+                Firestore Structure
               </span>
-              <div>
-                <h2 className="font-black">Firestore Structure</h2>
-                <p className="text-sm text-[var(--muted)]">New paths added without changing project content data.</p>
-              </div>
-            </div>
-            <div className="mt-5 space-y-2">
-              {[
-                "super_admin_dashboard/main/admin_users/{uid}",
-                "super_admin_dashboard/main/admin_users/{uid}/project_access/{projectId}",
-                "super_admin_dashboard/main/admin_users/{uid}/project_access/{projectId}/modules/{moduleId}",
-                "super_admin_dashboard/main/admin_roles/{roleId}",
-                "super_admin_dashboard/main/admin_audit_logs/{logId}",
-                "super_admin_dashboard/main/admin_sessions/{sessionId}",
-                "super_admin_dashboard/main/admin_security_events/{eventId}",
-                "super_admin_dashboard/main/admin_access_requests/{requestId}",
-                "super_admin_dashboard/main/admin_settings/main",
-              ].map((path) => (
-                <div key={path} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-xs text-[var(--foreground)]">
+            }
+            description="New paths added without changing project content data."
+          >
+            <ul className="space-y-2">
+              {FIRESTORE_PATHS.map((path) => (
+                <li
+                  key={path}
+                  className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-xs text-[var(--foreground)]"
+                >
                   {path}
-                </div>
+                </li>
               ))}
-            </div>
-          </section>
+            </ul>
+          </SectionCard>
 
-          <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--surface-soft)] text-[var(--primary)]">
-                <Activity className="h-5 w-5" />
+          <SectionCard
+            title={
+              <span className="flex items-center gap-2">
+                <Activity className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+                Implementation Status
               </span>
-              <div>
-                <h2 className="font-black">Implementation Status</h2>
-                <p className="text-sm text-[var(--muted)]">Stable foundation completed first, advanced features can build on top.</p>
-              </div>
-            </div>
-            <div className="mt-5 grid gap-3">
-              {[
-                ["New RBAC Firestore paths", "Ready"],
-                ["Login profile resolver with legacy fallback", "Ready"],
-                ["Project/module/action permission checks", "Ready"],
-                ["Sidebar project filtering", "Ready"],
-                ["Route protection via AdminLayout", "Ready"],
-                ["Audit/security event helpers", "Ready"],
-                ["Full role editor UI", "Next phase"],
-                ["Firestore rules deployment", "Next phase"],
-              ].map(([label, status]) => (
-                <div key={label} className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border)] px-3 py-3">
-                  <span className="text-sm font-semibold">{label}</span>
-                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wide ${
-                    status === "Ready" ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-[var(--warning-soft)] text-[var(--warning)]"
-                  }`}>
+            }
+            description="Stable foundation completed first, advanced features can build on top."
+          >
+            <ul className="grid gap-3">
+              {IMPLEMENTATION_STATUS.map(([label, status]) => (
+                <li
+                  key={label}
+                  className="flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] px-3 py-3"
+                >
+                  <span className="text-sm font-medium text-[var(--foreground)]">{label}</span>
+                  <span
+                    className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${
+                      status === "Ready"
+                        ? "bg-[var(--success-soft)] text-[var(--success)]"
+                        : "bg-[var(--warning-soft)] text-[var(--warning)]"
+                    }`}
+                  >
                     {status}
                   </span>
-                </div>
+                </li>
               ))}
-            </div>
-          </section>
+            </ul>
+          </SectionCard>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Metric({ label, value, icon: Icon }) {
-  return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-[var(--muted)]">{label}</p>
-          <p className="mt-2 text-2xl font-black">{value}</p>
-        </div>
-        <span className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--surface-soft)] text-[var(--primary)]">
-          <Icon className="h-5 w-5" />
-        </span>
       </div>
     </div>
   );

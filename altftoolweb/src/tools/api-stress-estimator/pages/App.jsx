@@ -101,7 +101,7 @@ function Toggle({ checked, onChange, label }) {
       aria-checked={checked}
       aria-label={label}
       onClick={onChange}
-      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${checked ? "bg-(--primary)" : "bg-(--border)"}`}
+      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${checked ? "bg-(--primary)" : "bg-(--border)"}`}
     >
       <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${checked ? "translate-x-6" : "translate-x-1"}`} />
     </button>
@@ -262,10 +262,10 @@ export const App = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <button onClick={handleCopy} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-(--border) px-3.5 py-2 text-[13px] font-medium hover:bg-(--muted)/60 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+            <button onClick={handleCopy} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-(--border) px-3.5 py-2 text-[13px] font-medium hover:bg-(--muted)/60 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
               {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Clipboard className="h-3.5 w-3.5" />} {copied ? "Copied" : "Copy Report"}
             </button>
-            <button onClick={handleDownload} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-(--primary) px-4 py-2 text-[13px] font-semibold text-(--primary-foreground) hover:bg-(--primary)/90 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+            <button onClick={handleDownload} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-(--primary) px-4 py-2 text-[13px] font-semibold text-(--primary-foreground) hover:bg-(--primary)/90 transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)">
               <Download className="h-4 w-4" /> Download Report
             </button>
           </div>
@@ -376,7 +376,7 @@ export const App = () => {
                       const on = mode === name;
                       return (
                         <button key={name} type="button" aria-pressed={on} onClick={() => setMode(name)}
-                          className={`rounded-xl border p-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${on ? "border-(--primary) bg-(--primary)/10" : "border-(--border) hover:bg-(--muted)/40"}`}>
+                          className={`rounded-xl border p-2.5 text-left transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${on ? "border-(--primary) bg-(--primary)/10" : "border-(--border) hover:bg-(--muted)/40"}`}>
                           <Icon className={`h-4 w-4 ${on ? "text-(--primary)" : "text-(--muted-foreground)"}`} />
                           <p className={`mt-1 text-[12px] font-semibold ${on ? "text-(--primary)" : "text-(--foreground)"}`}>{name}</p>
                           <p className="text-[10px] leading-tight text-(--muted-foreground)">{hint}</p>

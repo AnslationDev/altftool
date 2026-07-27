@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SIZE_DATA, CATEGORIES, GENDERS, FIT_TYPES } from "./utils/sizeData";
-import { convertShoeSize, convertClothingSize, getRecommendation } from "./utils/conversionLogic";
+import { convertShoeSize, convertClothingSize, getRecommendation } from "./lib";
 
 // --- Shared Components ---
 

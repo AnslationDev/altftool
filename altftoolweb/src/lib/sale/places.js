@@ -38,6 +38,18 @@ function defaultRadiusMeters() {
   return Number.isFinite(value) && value > 0 ? value : 10000;
 }
 
+/**
+ * OSM's `website` tag sometimes holds several semicolon-separated URLs
+ * (e.g. "https://site.com/retail;https://site.com/offices") — only the
+ * first is a real fetchable homepage, so use that one consistently
+ * everywhere a website link/crawl target is needed.
+ */
+function firstWebsiteUrl(rawWebsite) {
+  if (!rawWebsite) return null;
+  const first = String(rawWebsite).split(";")[0].trim();
+  return first || null;
+}
+
 function humanizeShopTag(shopTag) {
   return String(shopTag || "store")
     .split("_")
@@ -58,6 +70,19 @@ function parseOpenNow(openingHours) {
 function buildOverpassQuery({ latitude, longitude, radius, shopTag }) {
   const around = `around:${radius},${latitude},${longitude}`;
   return `[out:json][timeout:25];(node["shop"="${shopTag}"](${around});way["shop"="${shopTag}"](${around});relation["shop"="${shopTag}"](${around}););out center 60;`;
+}
+
+/**
+ * Same idea as buildOverpassQuery, but matches several shop= tags in a
+ * single Overpass call (via regex alternation) instead of one call per
+ * category — Overpass's public instance is rate-limited, so fanning out
+ * N parallel requests for N categories burns through that budget fast.
+ */
+function buildMultiTagOverpassQuery({ latitude, longitude, radius, shopTags }) {
+  const around = `around:${radius},${latitude},${longitude}`;
+  const tagRegex = shopTags.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  const shopMatch = `["shop"~"^(${tagRegex})$"]`;
+  return `[out:json][timeout:25];(node${shopMatch}(${around});way${shopMatch}(${around});relation${shopMatch}(${around}););out center 60;`;
 }
 
 /**
@@ -89,8 +114,13 @@ function normalizeOverpassElement(raw, category) {
     businessStatus: tags.disused ? "CLOSED_PERMANENTLY" : "OPERATIONAL",
     openNow: parseOpenNow(tags.opening_hours),
     openingHours: tags.opening_hours ? [tags.opening_hours] : [],
-    photoReference: null,
-    website: tags.website || tags["contact:website"] || null,
+    // OSM occasionally has a real photo tagged directly as a URL — use it
+    // when present; never a fabricated/stock substitute otherwise.
+    photoReference: /^https?:\/\//.test(tags.image || "") ? tags.image : null,
+    // "en:Article Title" — lets the caller fetch a real Wikipedia photo for
+    // notable places that don't have a direct OSM `image` tag.
+    wikipedia: tags.wikipedia || null,
+    website: firstWebsiteUrl(tags.website || tags["contact:website"]),
     phoneNumber: tags.phone || tags["contact:phone"] || null,
     category,
     source: PROVIDER,
@@ -142,6 +172,90 @@ export async function searchNearbyPlacesByType({ latitude, longitude, radius, ty
       .filter((el) => (el.lat ?? el.center?.lat) != null && (el.lon ?? el.center?.lon) != null)
       .map((raw) => normalizeOverpassElement(raw, type));
   });
+}
+
+const CATEGORY_BY_SHOP_TAG = Object.fromEntries(
+  Object.entries(SHOP_TAG_BY_TYPE).map(([category, shopTag]) => [shopTag, category]),
+);
+
+/**
+ * Search nearby businesses across one or more store categories using a
+ * SINGLE Overpass call (multiple shop= tags matched via one regex query),
+ * instead of one call per category. Overpass's public instance is rate
+ * limited, so this is the preferred entry point whenever several categories
+ * are needed at once — searchNearbyPlaces (below) still fans out N parallel
+ * calls and is kept only for existing callers.
+ *
+ * @param {{ latitude: number, longitude: number, radius?: number, types?: string[] }} params
+ * @returns {Promise<import("./types.js").PlaceResult[]>}
+ */
+export async function searchNearbyPlacesByTypes({ latitude, longitude, radius, types = PLACE_TYPES }) {
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    throw new SaleApiError("A valid latitude/longitude is required.", {
+      status: 400,
+      code: "upstream_error",
+      provider: PROVIDER,
+    });
+  }
+
+  const requestedTypes = (Array.isArray(types) && types.length ? types : PLACE_TYPES).filter((type) =>
+    PLACE_TYPES.includes(type),
+  );
+  const shopTags = requestedTypes.map((type) => SHOP_TAG_BY_TYPE[type]).filter(Boolean);
+  if (shopTags.length === 0) return [];
+
+  const searchRadius = Number.isFinite(Number(radius)) && Number(radius) > 0 ? Number(radius) : defaultRadiusMeters();
+  const cacheKey = buildCacheKey("places:nearby-multi", {
+    lat: latitude.toFixed(3),
+    lng: longitude.toFixed(3),
+    radius: searchRadius,
+    types: [...requestedTypes].sort().join(","),
+  });
+
+  // Real shops/malls don't move — cache far longer than the 10-minute
+  // default so a repeat search for the same area/category is instant
+  // instead of re-hitting the (often slow) Overpass API every time.
+  const PLACES_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+
+  return getOrSetSaleCache(cacheKey, async () => {
+    const upstream = new URL(OVERPASS_ENDPOINT);
+    upstream.searchParams.set(
+      "data",
+      buildMultiTagOverpassQuery({ latitude, longitude, radius: searchRadius, shopTags }),
+    );
+
+    let data;
+    try {
+      data = await fetchWithRetry(upstream, {
+        provider: PROVIDER,
+        // Short and no retry here on purpose: the mall-search caller already
+        // retries across multiple radii (see FALLBACK_RADII_METERS in
+        // search.service.js), which acts as the outer retry. Combining that
+        // with an inner 15s-timeout+1-retry here caused searches to hang for
+        // up to ~90s+ when Overpass was slow — this keeps a single worst
+        // case bounded to ~8s.
+        timeoutMs: 8000,
+        retries: 0,
+        headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+      });
+    } catch (error) {
+      throw toSaleApiError(error, { provider: PROVIDER });
+    }
+
+    const elements = Array.isArray(data?.elements) ? data.elements : [];
+    const dedupedByPlaceId = new Map();
+    elements
+      .filter((el) => (el.lat ?? el.center?.lat) != null && (el.lon ?? el.center?.lon) != null)
+      .forEach((raw) => {
+        const category = CATEGORY_BY_SHOP_TAG[raw.tags?.shop] || requestedTypes[0];
+        const placeId = `${raw.type}/${raw.id}`;
+        if (!dedupedByPlaceId.has(placeId)) {
+          dedupedByPlaceId.set(placeId, normalizeOverpassElement(raw, category));
+        }
+      });
+
+    return [...dedupedByPlaceId.values()];
+  }, PLACES_CACHE_TTL_MS);
 }
 
 /**

@@ -3,6 +3,88 @@ import {
   redactText,
 } from "../../universal-pii-ai-redactor/lib/redact.mjs";
 
+export const SAMPLE_RATE_PRESETS = Object.freeze({
+  openai: {
+    key: "openai",
+    label: "OpenAI Models (GPT-4o, GPT-4o-mini, o1)",
+    rates: {
+      "gpt-4o": { inputPerMillion: 2.5, outputPerMillion: 10.0 },
+      "gpt-4o-mini": { inputPerMillion: 0.15, outputPerMillion: 0.6 },
+      "o1-preview": { inputPerMillion: 15.0, outputPerMillion: 60.0 },
+      "o1-mini": { inputPerMillion: 3.0, outputPerMillion: 12.0 },
+      "*": { inputPerMillion: 2.5, outputPerMillion: 10.0 },
+    },
+  },
+  anthropic: {
+    key: "anthropic",
+    label: "Anthropic Models (Claude 3.5 Sonnet, Haiku, Opus)",
+    rates: {
+      "claude-3-5-sonnet": { inputPerMillion: 3.0, outputPerMillion: 15.0 },
+      "claude-3-haiku": { inputPerMillion: 0.25, outputPerMillion: 1.25 },
+      "claude-3-opus": { inputPerMillion: 15.0, outputPerMillion: 75.0 },
+      "*": { inputPerMillion: 3.0, outputPerMillion: 15.0 },
+    },
+  },
+  google: {
+    key: "google",
+    label: "Google Gemini (1.5 Pro, 1.5 Flash)",
+    rates: {
+      "gemini-1.5-pro": { inputPerMillion: 1.25, outputPerMillion: 5.0 },
+      "gemini-1.5-flash": { inputPerMillion: 0.075, outputPerMillion: 0.3 },
+      "*": { inputPerMillion: 1.25, outputPerMillion: 5.0 },
+    },
+  },
+  openSource: {
+    key: "openSource",
+    label: "DeepSeek & Meta Llama 3",
+    rates: {
+      "deepseek-chat": { inputPerMillion: 0.14, outputPerMillion: 0.28 },
+      "deepseek-reasoner": { inputPerMillion: 0.55, outputPerMillion: 2.19 },
+      "llama-3-70b": { inputPerMillion: 0.59, outputPerMillion: 0.79 },
+      "*": { inputPerMillion: 0.2, outputPerMillion: 0.5 },
+    },
+  },
+});
+
+export const SECRET_PATTERNS = Object.freeze([
+  {
+    type: "openai_key",
+    label: "OpenAI API Key",
+    regex: /sk-[a-zA-Z0-9]{32,64}/g,
+    severity: "high",
+  },
+  {
+    type: "anthropic_key",
+    label: "Anthropic API Key",
+    regex: /sk-ant-[a-zA-Z0-9\-_]{32,64}/g,
+    severity: "high",
+  },
+  {
+    type: "gemini_key",
+    label: "Google Gemini API Key",
+    regex: /AIzaSy[a-zA-Z0-9\-_]{33}/g,
+    severity: "high",
+  },
+  {
+    type: "github_token",
+    label: "GitHub Personal Access Token",
+    regex: /ghp_[a-zA-Z0-9]{36}/g,
+    severity: "high",
+  },
+  {
+    type: "aws_key",
+    label: "AWS Access Key",
+    regex: /\bAKIA[0-9A-Z]{16}\b/g,
+    severity: "high",
+  },
+  {
+    type: "jwt_token",
+    label: "JWT Bearer Token",
+    regex: /\beyJ[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\b/g,
+    severity: "high",
+  },
+]);
+
 const MAX_SOURCE_CHARACTERS = 8 * 1024 * 1024;
 const MAX_RECORDS = 5_000;
 const MAX_PRIVACY_CHARACTERS = 500_000;

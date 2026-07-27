@@ -1,9 +1,7 @@
-import ToolHome from "./pages/main";
+"use client";
+
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-    return (
-        <>
-            <ToolHome />
-        </>
-    );
+  return <ToolHome />;
 }

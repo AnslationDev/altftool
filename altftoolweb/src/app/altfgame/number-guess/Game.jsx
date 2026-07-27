@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useGameSounds, playSound } from "@/app/altfgame/_lib/sounds";
+import { useGameSounds, playSound } from "@/lib/sounds";
 
 const DIFFICULTIES = [
   { key: "easy", label: "Easy", range: 50, maxGuesses: 8, tag: "WARM UP", icon: "🌱" },

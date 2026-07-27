@@ -1,9 +1,11 @@
-module.exports = {
-  id: "hinglish-coding-tool",
+const toolConfig = {
+  slug: "hinglish-coding-tool",
   name: "Hinglish Coding Dictionary",
-  description: "Learn coding concepts translated playfully into everyday Hinglish.",
-  icon: "CodeXml",
-  category: "Development",
-  isNew: true,
-  isPremium: false,
+  description:
+    "Learn 40 core coding concepts explained three ways: precise English, everyday Hinglish, and an analogy — with a quiz.",
+  icon: "code-xml",
+  iconColor: "text-emerald-600",
+  category: "Developer",
 };
+
+export default toolConfig;

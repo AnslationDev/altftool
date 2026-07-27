@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PermissionMatrix from "./PermissionMatrix";
-import { getAuth } from "firebase/auth";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import { emitAlert } from "@/lib/alertBus";
 import { readApiJson } from "@/lib/apiClient";
 import { PROJECTS } from "@/projects";
@@ -16,15 +16,15 @@ const PROJECT_LIST = Object.values(PROJECTS);
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+        {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
-        {required && <span className="text-red-400">*</span>}
+        {required && <span className="text-[var(--danger)]">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />{error}
         </p>
       )}
@@ -35,9 +35,9 @@ function Field({ label, hint, error, icon, required, children }) {
 function TextInput({ error, ...props }) {
   return (
     <input {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition
-        ${error ? "border-red-300 focus:ring-red-400/30 focus:border-red-400" : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`} />
+        ${error ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]" : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}`} />
   );
 }
 
@@ -45,8 +45,8 @@ function Section({ title, children }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-[10px] font-black text-[var(--muted)] uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
+        <div className="flex-1 h-px bg-[var(--border)]" />
       </div>
       {children}
     </div>
@@ -90,21 +90,20 @@ export default function CreateAdminModal({ onClose, refresh }) {
      if (!fullName.trim()) {
     e.fullName = "Full name is required";
   }
-    
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  
+
 
   const createAdmin = async () => {
     if (!validate()) return;
     setLoading(true);
     setStep("saving");
     try {
-      const user = getAuth().currentUser;
-      if (!user) { setStep("idle"); emitAlert({ type: "error", message: "Session expired. Please log in again." }); return; }
-      const token = await user.getIdToken(true);
+      const token = await getAdminIdToken(true);
+      if (!token) { setStep("idle"); emitAlert({ type: "error", message: "Session expired. Please log in again." }); return; }
 
       const res = await fetch("/api/admin/create", {
         method: "POST",
@@ -138,15 +137,15 @@ export default function CreateAdminModal({ onClose, refresh }) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+      <div className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* Header */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">Create Admin Account</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Add a new administrator and configure their access level.</p>
+            <h2 className="text-base font-bold text-[var(--foreground)]">Create Admin Account</h2>
+            <p className="text-xs text-[var(--muted)] mt-0.5">Add a new administrator and configure their access level.</p>
           </div>
-          <button onClick={onClose} disabled={loading} className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 transition disabled:opacity-40">
+          <button onClick={onClose} disabled={loading} className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -171,7 +170,7 @@ export default function CreateAdminModal({ onClose, refresh }) {
                   onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })); }}
                   error={errors.password} disabled={loading} />
                 <button type="button" onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition">
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
@@ -212,7 +211,7 @@ export default function CreateAdminModal({ onClose, refresh }) {
 
           </Section>
 
-       
+
 
           <Section title="Role & Access">
             <div className="grid grid-cols-2 gap-3">
@@ -223,33 +222,33 @@ export default function CreateAdminModal({ onClose, refresh }) {
                 <label key={role.value}
                   className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition select-none ${
                     roleType === role.value
-                      ? role.value === "superadmin" ? "border-gray-900 bg-gray-900" : "border-blue-300 bg-blue-50"
-                      : "border-gray-200 hover:bg-gray-50"
+                      ? role.value === "superadmin" ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--primary)]/40 bg-[var(--primary-soft)]"
+                      : "border-[var(--border)] hover:bg-[var(--surface-soft)]"
                   }`}>
                   <input type="radio" name="roleType" value={role.value} checked={roleType === role.value}
-                    onChange={() => setRoleType(role.value)} className="mt-0.5 accent-gray-800" />
+                    onChange={() => setRoleType(role.value)} className="mt-0.5 accent-[var(--primary)]" />
                   <div>
-                    <div className={`flex items-center gap-1.5 text-sm font-bold ${roleType === role.value && role.value === "superadmin" ? "text-white" : "text-gray-800"}`}>
-                      <span className={roleType === role.value && role.value === "superadmin" ? "text-white" : "text-gray-500"}>{role.icon}</span>
+                    <div className="flex items-center gap-1.5 text-sm font-bold text-[var(--foreground)]">
+                      <span className={roleType === role.value ? "text-[var(--primary)]" : "text-[var(--muted)]"}>{role.icon}</span>
                       {role.label}
                     </div>
-                    <p className={`text-xs mt-0.5 ${roleType === role.value && role.value === "superadmin" ? "text-gray-300" : "text-gray-500"}`}>{role.desc}</p>
+                    <p className={`text-xs mt-0.5 ${roleType === role.value ? "text-[var(--foreground)]/80" : "text-[var(--muted)]"}`}>{role.desc}</p>
                   </div>
                 </label>
               ))}
             </div>
 
             {roleType === "superadmin" && (
-              <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-                <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-amber-700">Super Admins have full access to all modules and can manage other admins.</p>
+              <div className="flex items-start gap-2 bg-[var(--warning-soft)] border border-[var(--warning)]/30 rounded-xl px-4 py-3 text-[color-mix(in_srgb,var(--warning)_50%,var(--foreground))]">
+                <Info className="w-4 h-4 shrink-0 mt-0.5" />
+                <p className="text-xs">Super Admins have full access to all modules and can manage other admins.</p>
               </div>
             )}
           </Section>
 
           {roleType === "admin" && (
             <Section title="Module Permissions">
-              <div className="flex gap-0 border-b border-gray-100">
+              <div className="flex gap-0 border-b border-[var(--border)]">
                 {PROJECT_LIST.map((proj) => {
                   const isActive = proj.id === activeProjectId;
                   const hasAny = Object.values(projectAccess[proj.id]?.permissions ?? {})
@@ -257,10 +256,10 @@ export default function CreateAdminModal({ onClose, refresh }) {
                   return (
                     <button key={proj.id} type="button" onClick={() => setActiveProjectId(proj.id)}
                       className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold transition border-b-2 -mb-px ${
-                        isActive ? "border-gray-900 text-gray-900" : "border-transparent text-gray-400 hover:text-gray-600"
+                        isActive ? "border-[var(--primary)] text-[var(--foreground)]" : "border-transparent text-[var(--muted)] hover:text-[var(--foreground)]"
                       }`}>
                       {proj.name}
-                      {hasAny && <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
+                      {hasAny && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
                     </button>
                   );
                 })}
@@ -271,24 +270,24 @@ export default function CreateAdminModal({ onClose, refresh }) {
                 permissions={activePermissions}
                 setPermissions={setActivePermissions}
               />
-              <p className="text-xs text-gray-400">Switch tabs to configure permissions per project.</p>
+              <p className="text-xs text-[var(--muted)]">Switch tabs to configure permissions per project.</p>
             </Section>
           )}
 
           {step === "done" && (
-            <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+            <div className="flex items-center gap-2 text-xs text-[var(--success)] font-medium">
               <CheckCircle2 className="w-4 h-4" />Admin account created successfully!
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">New admin will receive login credentials separately.</p>
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
+          <p className="text-xs text-[var(--muted)]">New admin will receive login credentials separately.</p>
           <div className="flex items-center gap-2">
-            <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40">Cancel</button>
+            <button onClick={onClose} disabled={loading} className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--foreground)] bg-[var(--surface)] hover:bg-[var(--border-strong)] transition disabled:opacity-40">Cancel</button>
             <button onClick={createAdmin} disabled={loading || step === "done"}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
+              className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-60 text-[var(--primary-foreground)] font-semibold rounded-xl transition shadow-sm">
               {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
               {stepLabel}

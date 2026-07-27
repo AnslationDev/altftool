@@ -90,11 +90,14 @@ export default function ToolsExplorer({ activeId, onSelectCategory, query, onCle
       className="relative scroll-mt-24 px-4 pb-24 pt-10 sm:px-6 lg:px-8"
     >
       <div className="mx-auto max-w-7xl">
+        <div className="" >
         <SectionHeading
           eyebrow="AI tool library"
           title="Browse by category"
           subtitle={`${TOOL_CATEGORIES.length} curated categories, every tool free to try. Pick a lane on the left or search from the hero.`}
         />
+        </div>
+
 
         {/* Mobile category trigger */}
         <div className="sticky top-20 z-30 mt-8 lg:hidden">

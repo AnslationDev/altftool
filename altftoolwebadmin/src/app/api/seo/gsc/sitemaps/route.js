@@ -17,6 +17,39 @@ export function propertyOrigin(property = "") {
   return property.replace(/\/$/, "");
 }
 
+/**
+ * A submitted feed must belong to the verified GSC property — otherwise the
+ * request body decides which host we hand to Google. Domain properties
+ * ("sc-domain:") cover their subdomains; URL properties are matched on
+ * origin + path prefix.
+ */
+export function isFeedpathInProperty(feedpath = "", property = "") {
+  let url;
+  try {
+    url = new URL(String(feedpath));
+  } catch {
+    return false;
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") return false;
+
+  if (property.startsWith("sc-domain:")) {
+    const domain = property.replace(/^sc-domain:/, "").replace(/\/$/, "").toLowerCase();
+    const host = url.hostname.toLowerCase();
+    return Boolean(domain) && (host === domain || host.endsWith(`.${domain}`));
+  }
+
+  try {
+    const propUrl = new URL(propertyOrigin(property));
+    if (url.origin !== propUrl.origin) return false;
+    // Match on whole path segments: a property of ".../blog" must not accept
+    // ".../blogsitemap.xml" (a bare startsWith would).
+    const propPath = propUrl.pathname || "/";
+    return url.pathname === propPath || url.pathname.startsWith(`${propPath.replace(/\/$/, "")}/`);
+  } catch {
+    return false;
+  }
+}
+
 async function readHandler() {
   if (!(await isGscReady())) return NextResponse.json({ configured: false });
   const property = await gscActiveSiteUrl();
@@ -47,6 +80,9 @@ async function writeHandler({ request, audit }) {
   }
   const property = await gscActiveSiteUrl();
   const feedpath = String(body?.feedpath || `${propertyOrigin(property)}/sitemap.xml`);
+  if (!isFeedpathInProperty(feedpath, property)) {
+    return NextResponse.json({ error: "feedpath must be an http(s) URL inside the verified property" }, { status: 400 });
+  }
   await gscSubmitSitemap(feedpath, property);
   await audit({ action: "seo.gsc.sitemap.submit", module: "seo", summary: `Submitted sitemap ${feedpath}`, changes: { feedpath } });
   return NextResponse.json({ ok: true, feedpath });
@@ -61,7 +97,9 @@ export const GET = withAdminApi(readHandler, {
 export const POST = withAdminApi(writeHandler, {
   rateLimit: { limit: 20, windowMs: 60_000, scope: "seo-gsc-sitemaps-write" },
   // GSC is altftool's single Google connection — lock to altftool SEO access.
-  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "read" },
+  // Submitting a sitemap mutates the production property, so it needs `write`:
+  // a read-only SEO admin must not be able to push feeds to Google.
+  requireProjectModule: { project: "altftool", moduleKey: "seo", action: "write" },
   audit: { module: "seo" },
   mutating: true,
 });

@@ -1,8 +1,11 @@
-export default {
+const toolConfig = {
   slug: "ad-copy-ab-planner",
   name: "Ad Copy A/B Planner",
-  description: "Futuristic A/B ad copy planner, side-by-side comparison, live mock previews, and campaign testing scheduler.",
-  category: "Marketing",
-  icon: "columns",
-  iconColor: "text-blue-500",
+  description:
+    "Plan an ad copy A/B test: write both variants against real platform character limits, then size the test and its run time with the two-proportion sample formula.",
+  category: ["Marketing & Social", "Business"],
+  icon: "columns-2",
+  iconColor: "text-(--primary)",
 };
+
+export default toolConfig;

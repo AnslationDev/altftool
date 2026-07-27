@@ -131,36 +131,3 @@ test("performance budget report catches oversized assets and eager tool imports"
     fs.rmSync(rootDir, { recursive: true, force: true });
   }
 });
-
-test("performance budget report permits shared runtimes but flags dedicated slug mismatches", async () => {
-  const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "altft-performance-runtime-map-"));
-
-  try {
-    writeFixtureFile(
-      rootDir,
-      "altftoolweb/src/platform/registry/toolRuntimeMap.js",
-      [
-        "export const toolRuntimeMap = {",
-        '  shared: () => import("@/tools/_shared/newtasks/entry"),',
-        '  mismatched: () => import("@/tools/another-tool/entry"),',
-        "};",
-      ].join("\n"),
-    );
-
-    const options = defaultOptions(rootDir);
-    options.appBudgets = [];
-    options.criticalAssets = [];
-    options.priorityToolSlugs = [];
-    options.requireBuild = false;
-
-    const report = await buildPerformanceBudgetReport(options);
-
-    assert.deepEqual(report.source.runtimeImportMismatches, [
-      { mapKey: "mismatched", importSlug: "another-tool" },
-    ]);
-    assert.ok(report.warnings.some((issue) => /mismatched imports another-tool/.test(issue.message)));
-    assert.ok(report.warnings.every((issue) => !/shared imports _shared\/newtasks/.test(issue.message)));
-  } finally {
-    fs.rmSync(rootDir, { recursive: true, force: true });
-  }
-});

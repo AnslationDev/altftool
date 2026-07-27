@@ -1,9 +1,13 @@
-module.exports = {
+const toolConfig = {
+  slug: "random-joke-tool",
   id: "random-joke-tool",
   name: "Random Joke Generator",
   description: "Get a random, funny joke instantly to brighten your day.",
-  icon: "Smile",
-  category: "Entertainment",
+  icon: "smile",
+  iconColor: "text-(--primary)",
+  category: "Fun",
   isNew: true,
   isPremium: false,
 };
+
+module.exports = toolConfig;

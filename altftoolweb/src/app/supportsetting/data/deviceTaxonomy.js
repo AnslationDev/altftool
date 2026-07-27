@@ -53,52 +53,52 @@ export const DEVICE_GROUPS = [
 
 export const DEVICES = [
   // ── Computers ────────────────────────────────────────────────────────
-  { id: "windows", name: "Windows", shortName: "Windows", group: "computers", icon: Monitor, color: "#0078D4", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "macos", name: "macOS", shortName: "macOS", group: "computers", icon: Laptop, color: "#555555", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.apple.com/macos" },
-  { id: "linux", name: "Linux", shortName: "Linux", group: "computers", icon: Terminal, color: "#F0A500", status: "available", hasGuides: true, officialDocsUrl: "https://www.kernel.org/doc/html/latest/" },
+  { id: "windows", name: "Windows", shortName: "Windows", group: "computers", icon: Monitor, color: "#0078D4", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "macos", name: "macOS", shortName: "macOS", group: "computers", icon: Laptop, color: "#555555", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.apple.com/mac" },
+  { id: "linux", name: "Linux", shortName: "Linux", group: "computers", icon: Terminal, color: "#F0A500", status: "available", hasGuides: true, officialDocsUrl: "https://docs.kernel.org/" },
 
   // ── Phones ───────────────────────────────────────────────────────────
-  { id: "android", name: "Android", shortName: "Android", group: "phones", icon: Bot, color: "#3DDC84", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.google.com/android" },
+  { id: "android", name: "Android", shortName: "Android", group: "phones", icon: Bot, color: "#3DDC84", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.google.com/android/?hl=en" },
   { id: "ios", name: "iPhone", shortName: "iPhone", group: "phones", icon: Smartphone, color: "#0A84FF", status: "available", isPrimaryOS: true, officialDocsUrl: "https://support.apple.com/iphone" },
 
   // ── Tablets ──────────────────────────────────────────────────────────
   { id: "ipad", name: "iPad", shortName: "iPad", group: "tablets", icon: Tablet, color: "#0A84FF", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/ipad" },
-  { id: "android-tablet", name: "Android Tablet", shortName: "Android Tablet", group: "tablets", icon: Tablet, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/android" },
-  { id: "windows-tablet", name: "Windows Tablet", shortName: "Win Tablet", group: "tablets", icon: Tablet, color: "#0078D4", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
+  { id: "android-tablet", name: "Android Tablet", shortName: "Android Tablet", group: "tablets", icon: Tablet, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/android/?hl=en" },
+  { id: "windows-tablet", name: "Windows Tablet", shortName: "Win Tablet", group: "tablets", icon: Tablet, color: "#0078D4", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
 
   // ── Smart Watches ────────────────────────────────────────────────────
-  { id: "apple-watch", name: "Apple Watch", shortName: "Apple Watch", group: "watches", icon: Watch, color: "#0A84FF", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/apple-watch" },
-  { id: "galaxy-watch", name: "Galaxy Watch", shortName: "Galaxy Watch", group: "watches", icon: Watch, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/support/mobile-devices/" },
-  { id: "wear-os", name: "Wear OS", shortName: "Wear OS", group: "watches", icon: Watch, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/wearos" },
+  { id: "apple-watch", name: "Apple Watch", shortName: "Apple Watch", group: "watches", icon: Watch, color: "#0A84FF", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/watch" },
+  { id: "galaxy-watch", name: "Galaxy Watch", shortName: "Galaxy Watch", group: "watches", icon: Watch, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/us/support/mobile/wearables/" },
+  { id: "wear-os", name: "Wear OS", shortName: "Wear OS", group: "watches", icon: Watch, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/wearos/?hl=en" },
 
   // ── Smart TVs ────────────────────────────────────────────────────────
-  { id: "android-tv", name: "Android TV", shortName: "Android TV", group: "tvs", icon: Tv, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/androidtv" },
-  { id: "google-tv", name: "Google TV", shortName: "Google TV", group: "tvs", icon: Tv, color: "#4285F4", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/googletv" },
-  { id: "apple-tv", name: "Apple TV", shortName: "Apple TV", group: "tvs", icon: Tv, color: "#555555", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/apple-tv" },
-  { id: "samsung-tizen", name: "Samsung Tizen", shortName: "Tizen", group: "tvs", icon: Tv, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/support/tv-audio-video/" },
-  { id: "lg-webos", name: "LG webOS", shortName: "webOS", group: "tvs", icon: Tv, color: "#A50034", status: "available", hasGuides: true, officialDocsUrl: "https://www.lg.com/support" },
+  { id: "android-tv", name: "Android TV", shortName: "Android TV", group: "tvs", icon: Tv, color: "#3DDC84", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/androidtv/?hl=en" },
+  { id: "google-tv", name: "Google TV", shortName: "Google TV", group: "tvs", icon: Tv, color: "#4285F4", status: "available", hasGuides: true, officialDocsUrl: "https://support.google.com/googletv/?hl=en" },
+  { id: "apple-tv", name: "Apple TV", shortName: "Apple TV", group: "tvs", icon: Tv, color: "#555555", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/tv" },
+  { id: "samsung-tizen", name: "Samsung Tizen", shortName: "Tizen", group: "tvs", icon: Tv, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/us/support/televisions-home-theater/televisions/" },
+  { id: "lg-webos", name: "LG webOS", shortName: "webOS", group: "tvs", icon: Tv, color: "#A50034", status: "available", hasGuides: true, officialDocsUrl: "https://www.lg.com/us/support" },
 
   // ── Gaming ───────────────────────────────────────────────────────────
-  { id: "playstation", name: "PlayStation", shortName: "PlayStation", group: "gaming", icon: Gamepad2, color: "#003791", status: "available", hasGuides: true, officialDocsUrl: "https://www.playstation.com/support/" },
-  { id: "xbox", name: "Xbox", shortName: "Xbox", group: "gaming", icon: Gamepad2, color: "#107C10", status: "available", hasGuides: true, officialDocsUrl: "https://support.xbox.com" },
-  { id: "nintendo-switch", name: "Nintendo Switch", shortName: "Switch", group: "gaming", icon: Gamepad2, color: "#E60012", status: "available", hasGuides: true, officialDocsUrl: "https://www.nintendo.com/en-gb/Support/" },
-  { id: "steam-deck", name: "Steam Deck", shortName: "Steam Deck", group: "gaming", icon: Gamepad2, color: "#1B2838", status: "available", hasGuides: true, officialDocsUrl: "https://help.steampowered.com" },
+  { id: "playstation", name: "PlayStation", shortName: "PlayStation", group: "gaming", icon: Gamepad2, color: "#003791", status: "available", hasGuides: true, officialDocsUrl: "https://www.playstation.com/en-us/support/" },
+  { id: "xbox", name: "Xbox", shortName: "Xbox", group: "gaming", icon: Gamepad2, color: "#107C10", status: "available", hasGuides: true, officialDocsUrl: "https://support.xbox.com/en-US" },
+  { id: "nintendo-switch", name: "Nintendo Switch", shortName: "Switch", group: "gaming", icon: Gamepad2, color: "#E60012", status: "available", hasGuides: true, officialDocsUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897" },
+  { id: "steam-deck", name: "Steam Deck", shortName: "Steam Deck", group: "gaming", icon: Gamepad2, color: "#1B2838", status: "available", hasGuides: true, officialDocsUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck" },
 
   // ── Accessories ──────────────────────────────────────────────────────
   { id: "airpods", name: "AirPods", shortName: "AirPods", group: "accessories", icon: Headphones, color: "#555555", status: "available", hasGuides: true, officialDocsUrl: "https://support.apple.com/airpods" },
-  { id: "galaxy-buds", name: "Galaxy Buds", shortName: "Galaxy Buds", group: "accessories", icon: Headphones, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/support/mobile-devices/" },
-  { id: "bluetooth-speakers", name: "Bluetooth Speakers", shortName: "BT Speakers", group: "accessories", icon: Speaker, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "mouse", name: "Mouse", shortName: "Mouse", group: "accessories", icon: Mouse, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "keyboard", name: "Keyboard", shortName: "Keyboard", group: "accessories", icon: Keyboard, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "webcam", name: "Webcam", shortName: "Webcam", group: "accessories", icon: Webcam, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "printer", name: "Printer", shortName: "Printer", group: "accessories", icon: Printer, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "microphone", name: "Microphone", shortName: "Microphone", group: "accessories", icon: Mic, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "external-monitor", name: "External Monitor", shortName: "Monitor", group: "accessories", icon: Monitor, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
-  { id: "docking-station", name: "Docking Station", shortName: "Dock", group: "accessories", icon: Cable, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/windows" },
+  { id: "galaxy-buds", name: "Galaxy Buds", shortName: "Galaxy Buds", group: "accessories", icon: Headphones, color: "#1428A0", status: "available", hasGuides: true, officialDocsUrl: "https://www.samsung.com/us/support/mobile/wearables/" },
+  { id: "bluetooth-speakers", name: "Bluetooth Speakers", shortName: "BT Speakers", group: "accessories", icon: Speaker, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "mouse", name: "Mouse", shortName: "Mouse", group: "accessories", icon: Mouse, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "keyboard", name: "Keyboard", shortName: "Keyboard", group: "accessories", icon: Keyboard, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "webcam", name: "Webcam", shortName: "Webcam", group: "accessories", icon: Webcam, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "printer", name: "Printer", shortName: "Printer", group: "accessories", icon: Printer, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "microphone", name: "Microphone", shortName: "Microphone", group: "accessories", icon: Mic, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "external-monitor", name: "External Monitor", shortName: "Monitor", group: "accessories", icon: Monitor, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
+  { id: "docking-station", name: "Docking Station", shortName: "Dock", group: "accessories", icon: Cable, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://support.microsoft.com/en-us/windows/" },
 
   // ── AI Devices (future-ready) ───────────────────────────────────────────
   { id: "rabbit-r1", name: "Rabbit R1", shortName: "Rabbit R1", group: "ai-devices", icon: Sparkles, color: "#FF4B26", status: "available", hasGuides: true, officialDocsUrl: "https://www.rabbit.tech/support" },
-  { id: "humane-ai-pin", name: "Humane AI Pin", shortName: "AI Pin", group: "ai-devices", icon: Sparkles, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://humane.com/support" },
+  { id: "humane-ai-pin", name: "Humane AI Pin", shortName: "AI Pin", group: "ai-devices", icon: Sparkles, color: "#6B7280", status: "available", hasGuides: true, officialDocsUrl: "https://humane.com" },
 ];
 
 export const DEVICE_MAP = DEVICES.reduce((map, device) => {

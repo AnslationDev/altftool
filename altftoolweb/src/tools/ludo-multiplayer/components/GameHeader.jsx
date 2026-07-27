@@ -51,7 +51,7 @@ export default function GameHeader({
               key={m.key}
               onClick={() => onToggleMode(m.key)}
               aria-pressed={mode === m.key}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
                 mode === m.key
                   ? "bg-(--primary) text-(--primary-foreground) shadow"
                   : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -71,7 +71,7 @@ export default function GameHeader({
                 onClick={() => onPlayerCountChange(n)}
                 aria-label={`${n} players`}
                 aria-pressed={playerCount === n}
-                className={`w-8 py-1.5 rounded-lg text-xs font-bold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+                className={`w-8 py-1.5 rounded-lg text-xs font-bold transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
                   playerCount === n
                     ? "bg-(--secondary) text-(--foreground) shadow"
                     : "text-(--muted-foreground) hover:text-(--foreground)"
@@ -86,7 +86,7 @@ export default function GameHeader({
         <button
           onClick={onOpenSettings}
           aria-label="Open settings"
-          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           title="Settings"
         >
           <Settings size="18" />
@@ -94,7 +94,7 @@ export default function GameHeader({
         <button
           onClick={onOpenStats}
           aria-label="Open statistics"
-          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+          className="p-2.5 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl bg-(--card)/70 backdrop-blur border border-(--border) text-(--muted-foreground) hover:text-(--foreground) hover:border-(--border-strong) transition shadow-sm active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           title="Statistics"
         >
           <BarChart3 size="18" />

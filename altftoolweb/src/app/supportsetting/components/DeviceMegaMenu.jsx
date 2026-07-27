@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { LayoutGrid, Search, X, Check, Clock, LayoutList } from "lucide-react";
+import { LayoutGrid, Search, X, Check, Clock, LayoutList, ChevronRight } from "lucide-react";
 import { getPickerGroups, getPickerDevicesByGroup, getPickerDevices } from "../data/deviceTaxonomy";
 
 /**
@@ -25,14 +25,15 @@ import { getPickerGroups, getPickerDevicesByGroup, getPickerDevices } from "../d
  * `--support-secondary` theme variables defined there in scope, and so it
  * isn't clipped or repositioned by the sidebar's own scroll/transform.
  */
-const DeviceMegaMenu = ({ activeDeviceId, onSelectDevice }) => {
+const DeviceMegaMenu = ({ activeDeviceId, onSelectDevice, compact = false }) => {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [portalTarget, setPortalTarget] = useState(null);
+  const [portalContainer, setPortalContainer] = useState(null);
   const triggerRef = useRef(null);
   const searchInputRef = useRef(null);
 
   const groups = useMemo(() => getPickerGroups(), []);
+  const deviceCount = useMemo(() => getPickerDevices().length, []);
 
   const trimmedQuery = query.trim().toLowerCase();
   const searchResults = useMemo(() => {
@@ -46,6 +47,7 @@ const DeviceMegaMenu = ({ activeDeviceId, onSelectDevice }) => {
 
   useEffect(() => {
     if (!open) return;
+    setPortalContainer(triggerRef.current?.closest(".support-setting-page") || document.body);
     setQuery("");
     // Autofocus after the open animation's first frame so the panel is
     // already in the DOM (it's only rendered once `open` is true).
@@ -68,13 +70,6 @@ const DeviceMegaMenu = ({ activeDeviceId, onSelectDevice }) => {
 
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setPortalTarget(
-      triggerRef.current?.closest(".support-setting-page") || document.body,
-    );
-    setOpen(true);
   };
 
   const renderCard = (device) => {
@@ -176,16 +171,30 @@ const DeviceMegaMenu = ({ activeDeviceId, onSelectDevice }) => {
       <button
         ref={triggerRef}
         type="button"
-        className="support-devicemenu-trigger"
+        className={`support-devicemenu-trigger ${compact ? "support-devicemenu-trigger-compact" : ""}`}
         aria-haspopup="dialog"
         aria-expanded={open}
-        onClick={handleOpen}
+        aria-label={`Browse more devices — ${deviceCount} available`}
+        onClick={() => setOpen(true)}
       >
-        <LayoutGrid className="h-3.5 w-3.5" />
-        More Devices
+        {compact ? (
+          <>
+            <span className="support-devicemenu-trigger-icon" aria-hidden="true">
+              <LayoutGrid className="h-3.5 w-3.5" />
+            </span>
+            <span className="support-devicemenu-trigger-label">More Devices</span>
+            {deviceCount > 0 && <span className="support-devicemenu-trigger-count">{deviceCount}</span>}
+            <ChevronRight className="h-3 w-3 support-devicemenu-trigger-arrow" aria-hidden="true" />
+          </>
+        ) : (
+          <>
+            <LayoutGrid className="h-3.5 w-3.5" />
+            More Devices
+          </>
+        )}
       </button>
 
-      {panel && portalTarget ? createPortal(panel, portalTarget) : null}
+      {panel && portalContainer ? createPortal(panel, portalContainer) : null}
     </div>
   );
 };

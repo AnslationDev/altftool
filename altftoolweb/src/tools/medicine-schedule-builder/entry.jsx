@@ -1,5 +1,7 @@
-import MedicineScheduleBuilder from "./App";
+"use client";
 
-export default function Entry() {
-  return <MedicineScheduleBuilder />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

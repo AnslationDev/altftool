@@ -1,21 +1,44 @@
 "use client";
 
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebaseAuth";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { LogOut } from "lucide-react";
+import { LogOut, RefreshCw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { getFirstAllowedRoute } from "@/lib/permissionUtils";
+import { auth } from "@/lib/firebaseAuth";
+import { hasLocalAdminSession } from "@/lib/localAdminSession";
 
 const POLL_INTERVAL_MS = 10000;
 
 export default function AccessRequestedPage() {
   const router = useRouter();
-  const { user, adminData, isDenied, isPendingUser, loading, refreshAuth } = useAuth();
+  const { user, adminData, isDenied, isPendingUser, isInactive, loading, syncFailed, refreshAuth, logout } =
+    useAuth();
   const intervalRef = useRef(null);
   const [checking, setChecking] = useState(false);
+  // Manual "Try again" runs on its own flag: sharing `checking` with the 10s
+  // poll let the poll's finally-block re-enable the button and flip its label
+  // back mid-click (and vice versa).
+  const [retrying, setRetrying] = useState(false);
+  const [retryNotice, setRetryNotice] = useState("");
+  // Latched view of `syncFailed`. The context clears syncFailed at the START of
+  // every attempt, and the poll re-arms the retry budget every 10s, so binding
+  // the error copy + retry button straight to syncFailed made them mount and
+  // unmount every 1.5-3s while the server was down — the button vanished from
+  // under the pointer and role="alert" re-announced on each cycle. Only a
+  // definitive answer from /api/admin/me clears this.
+  const [statusUnavailable, setStatusUnavailable] = useState(false);
   const hasRedirectedRef = useRef(false);
+
+  useEffect(() => {
+    if (syncFailed) {
+      setStatusUnavailable(true);
+      return;
+    }
+    // isPendingUser / adminData / isDenied are only ever set by a completed
+    // response; the transient-failure path in AuthContext clears all three.
+    if (isPendingUser || adminData || isDenied) setStatusUnavailable(false);
+  }, [syncFailed, isPendingUser, adminData, isDenied]);
 
   /* ── Context-driven redirect (single source of truth) ── */
 useEffect(() => {
@@ -26,6 +49,13 @@ useEffect(() => {
     hasRedirectedRef.current = true;
     clearInterval(intervalRef.current);
     router.replace("/access-denied");
+    return;
+  }
+
+  if (isInactive) {
+    hasRedirectedRef.current = true;
+    clearInterval(intervalRef.current);
+    router.replace("/account-inactive");
     return;
   }
 
@@ -43,11 +73,16 @@ useEffect(() => {
     router.replace("/login");
     return;
   }
-}, [loading, adminData, isDenied, isPendingUser, user, router]);
+}, [loading, adminData, isDenied, isInactive, isPendingUser, user, router]);
 
   /* ── Polling: only calls refreshAuth, never redirects ── */
   useEffect(() => {
-    if (!user || !isPendingUser) return;
+    // Keep polling for as long as we hold a session that has not resolved into
+    // a usable profile. This used to be gated on `isPendingUser`, which a
+    // transient /api/admin/me failure clears — that tore the interval down
+    // permanently, so an approval granted afterwards was never picked up while
+    // the page still claimed to be "checking automatically".
+    if (!user || adminData || isDenied) return;
 
     const poll = async () => {
       if (hasRedirectedRef.current) return;
@@ -64,11 +99,30 @@ useEffect(() => {
     intervalRef.current = setInterval(poll, POLL_INTERVAL_MS);
 
     return () => clearInterval(intervalRef.current);
-  }, [user, isPendingUser, refreshAuth]);
+  }, [user, adminData, isDenied, refreshAuth]);
+
+  const handleRetry = async () => {
+    if (retrying) return;
+    setRetryNotice("");
+    setRetrying(true);
+    try {
+      // refreshAuth() early-returns silently when the Firebase session has gone
+      // away, so without this the button would spin and report nothing at all.
+      if (!auth.currentUser && !hasLocalAdminSession()) {
+        setRetryNotice("Your session has expired. Sign out and sign in again to continue.");
+        return;
+      }
+      await refreshAuth();
+    } finally {
+      setRetrying(false);
+    }
+  };
 
   const handleSignOut = async () => {
     clearInterval(intervalRef.current);
-    await signOut(auth);
+    // Use the context logout so the server-side security session is revoked and
+    // any local-admin session is cleared — a bare signOut(auth) leaves both.
+    await logout();
     router.replace("/login");
   };
 
@@ -112,8 +166,16 @@ useEffect(() => {
             <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
               Your account is awaiting approval from a super admin before you can sign in.
             </p>
-            <p className="text-xs mt-2" style={{ color: "var(--muted-soft)" }}>
-              {checking ? "Checking for approval…" : "Checking automatically every few seconds"}
+            <p
+              className="text-xs mt-2"
+              style={{ color: statusUnavailable ? "var(--danger-text)" : "var(--muted-soft)" }}
+              role={statusUnavailable ? "alert" : undefined}
+            >
+              {statusUnavailable
+                ? "We couldn’t reach the server to check your status."
+                : checking || retrying
+                  ? "Checking for approval…"
+                  : "Checking automatically every few seconds"}
             </p>
           </div>
 
@@ -207,6 +269,31 @@ useEffect(() => {
           </div>
 
           <div className="h-px mb-5" style={{ background: "var(--border)" }} />
+
+          {/* ── Retry (only when the status check itself is failing) ── */}
+          {statusUnavailable && (
+            <>
+              <button
+                onClick={handleRetry}
+                disabled={retrying}
+                className="w-full btn btn-primary flex items-center justify-center gap-2 py-2.5 text-sm mb-3 disabled:opacity-50"
+              >
+                <RefreshCw
+                  className={`w-3.5 h-3.5 flex-shrink-0 ${retrying ? "animate-spin" : ""}`}
+                />
+                {retrying ? "Checking…" : "Try again"}
+              </button>
+              {retryNotice && (
+                <p
+                  className="text-xs mb-3 text-center"
+                  style={{ color: "var(--muted)" }}
+                  role="status"
+                >
+                  {retryNotice}
+                </p>
+              )}
+            </>
+          )}
 
           {/* ── Sign out ── */}
           <button

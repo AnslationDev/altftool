@@ -1,5 +1,5 @@
-import App from "./App";
-
-export default function Entry() {
-  return <App />;
+"use client";
+import ToolHome from "./pages";
+export default function ToolEntry() {
+  return <ToolHome />;
 }

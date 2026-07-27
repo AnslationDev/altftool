@@ -1,0 +1,1052 @@
+{
+  "version": 1,
+  "section": {
+    "slug": "transform",
+    "title": "Transform — Format & Code Converters",
+    "description": "A fast, private collection of format-conversion tools. Convert JSON, GraphQL, TypeScript, YAML, TOML, SVG and more — right in your browser."
+  },
+  "categoryOrder": [
+    "JSON",
+    "GraphQL",
+    "Others",
+    "JSON-LD",
+    "TypeScript",
+    "JSON Schema",
+    "CSS",
+    "Flow",
+    "SVG",
+    "HTML",
+    "JavaScript"
+  ],
+  "tools": [
+    {
+      "slug": "svg-to-jsx",
+      "title": "SVG to JSX",
+      "category": "SVG",
+      "from": "svg",
+      "to": "jsx",
+      "engine": "server",
+      "lib": "@svgr/core",
+      "status": "done",
+      "description": "Convert raw SVG markup into a clean React JSX component with camelCased attributes and a single root element.",
+      "keywords": [
+        "svg to jsx",
+        "svg to react",
+        "svgr",
+        "react svg component"
+      ]
+    },
+    {
+      "slug": "svg-to-react-native",
+      "title": "SVG to React Native",
+      "category": "SVG",
+      "from": "svg",
+      "to": "jsx",
+      "engine": "server",
+      "lib": "@svgr/core",
+      "status": "done",
+      "description": "Turn SVG markup into a react-native-svg component using Svg, Path and Group primitives ready to drop into a mobile app.",
+      "keywords": [
+        "svg to react native",
+        "react-native-svg",
+        "svgr native",
+        "mobile svg"
+      ]
+    },
+    {
+      "slug": "html-to-jsx",
+      "title": "HTML to JSX",
+      "category": "HTML",
+      "from": "html",
+      "to": "jsx",
+      "engine": "browser",
+      "lib": "node-html-parser",
+      "status": "done",
+      "description": "Convert HTML into JSX: class becomes className, inline styles become objects, attributes are camelCased and void tags are self-closed.",
+      "keywords": [
+        "html to jsx",
+        "html to react",
+        "jsx converter",
+        "className"
+      ]
+    },
+    {
+      "slug": "html-to-pug",
+      "title": "HTML to Pug",
+      "category": "HTML",
+      "from": "html",
+      "to": "pug",
+      "engine": "server",
+      "lib": "html2pug",
+      "status": "done",
+      "description": "Rewrite verbose HTML as terse, indentation-based Pug (Jade) template syntax.",
+      "keywords": [
+        "html to pug",
+        "html to jade",
+        "pug template",
+        "pug converter"
+      ]
+    },
+    {
+      "slug": "json-to-big-query",
+      "title": "JSON to BigQuery Schema",
+      "category": "JSON",
+      "from": "json",
+      "to": "json",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Infer a Google BigQuery table schema (name, type, mode) from a sample JSON object or array of records.",
+      "keywords": [
+        "json to bigquery",
+        "bigquery schema",
+        "bq schema generator"
+      ]
+    },
+    {
+      "slug": "json-to-flow",
+      "title": "JSON to Flow",
+      "category": "JSON",
+      "from": "json",
+      "to": "javascript",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Generate Flow type aliases from a JSON sample so your data shapes are typed end to end.",
+      "keywords": [
+        "json to flow",
+        "flow types",
+        "flowtype from json"
+      ]
+    },
+    {
+      "slug": "json-to-go-bson",
+      "title": "JSON to Go (BSON)",
+      "category": "JSON",
+      "from": "json",
+      "to": "go",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Produce Go structs from JSON with both json and bson struct tags, ready for MongoDB's official driver.",
+      "keywords": [
+        "json to go bson",
+        "golang mongodb struct",
+        "bson tags"
+      ]
+    },
+    {
+      "slug": "json-to-go",
+      "title": "JSON to Go",
+      "category": "JSON",
+      "from": "json",
+      "to": "go",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Convert JSON into idiomatic Go structs with json struct tags inferred from your data.",
+      "keywords": [
+        "json to go",
+        "golang struct from json",
+        "go struct tags"
+      ]
+    },
+    {
+      "slug": "json-to-graphql",
+      "title": "JSON to GraphQL",
+      "category": "JSON",
+      "from": "json",
+      "to": "graphql",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Derive a GraphQL type system (types and fields) from an example JSON payload.",
+      "keywords": [
+        "json to graphql",
+        "graphql schema from json",
+        "graphql types"
+      ]
+    },
+    {
+      "slug": "json-to-io-ts",
+      "title": "JSON to io-ts",
+      "category": "JSON",
+      "from": "json",
+      "to": "typescript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Build io-ts runtime codecs from a JSON sample for decode-time validation of untrusted data.",
+      "keywords": [
+        "json to io-ts",
+        "io-ts codec",
+        "runtime validation typescript"
+      ]
+    },
+    {
+      "slug": "json-to-java",
+      "title": "JSON to Java",
+      "category": "JSON",
+      "from": "json",
+      "to": "java",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Generate Java POJO classes with Jackson-friendly getters and setters from a JSON sample.",
+      "keywords": [
+        "json to java",
+        "java pojo from json",
+        "jackson classes"
+      ]
+    },
+    {
+      "slug": "json-to-jsdoc",
+      "title": "JSON to JSDoc",
+      "category": "JSON",
+      "from": "json",
+      "to": "javascript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Emit JSDoc @typedef blocks describing the shape of a JSON object for typed plain JavaScript.",
+      "keywords": [
+        "json to jsdoc",
+        "jsdoc typedef",
+        "js types from json"
+      ]
+    },
+    {
+      "slug": "json-to-json-schema",
+      "title": "JSON to JSON Schema",
+      "category": "JSON",
+      "from": "json",
+      "to": "json",
+      "engine": "browser",
+      "lib": "to-json-schema",
+      "status": "done",
+      "description": "Infer a JSON Schema (draft-07) describing the types and structure of a JSON document.",
+      "keywords": [
+        "json to json schema",
+        "json schema generator",
+        "draft-07"
+      ]
+    },
+    {
+      "slug": "json-to-kotlin",
+      "title": "JSON to Kotlin",
+      "category": "JSON",
+      "from": "json",
+      "to": "kotlin",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Convert JSON into Kotlin data classes with kotlinx.serialization annotations.",
+      "keywords": [
+        "json to kotlin",
+        "kotlin data class",
+        "kotlinx serialization"
+      ]
+    },
+    {
+      "slug": "json-to-mobx-state-tree",
+      "title": "JSON to MobX-State-Tree",
+      "category": "JSON",
+      "from": "json",
+      "to": "typescript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Generate MobX-State-Tree models with typed props inferred from a JSON sample.",
+      "keywords": [
+        "json to mobx-state-tree",
+        "mst model",
+        "mobx types"
+      ]
+    },
+    {
+      "slug": "json-to-mongoose",
+      "title": "JSON to Mongoose",
+      "category": "JSON",
+      "from": "json",
+      "to": "javascript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Create a Mongoose schema definition from a JSON document, mapping values to Schema types.",
+      "keywords": [
+        "json to mongoose",
+        "mongoose schema",
+        "mongodb model"
+      ]
+    },
+    {
+      "slug": "json-to-mysql",
+      "title": "JSON to MySQL",
+      "category": "JSON",
+      "from": "json",
+      "to": "sql",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Generate a MySQL CREATE TABLE statement with inferred column types from a JSON record.",
+      "keywords": [
+        "json to mysql",
+        "create table from json",
+        "sql schema"
+      ]
+    },
+    {
+      "slug": "json-to-proptypes",
+      "title": "JSON to PropTypes",
+      "category": "JSON",
+      "from": "json",
+      "to": "javascript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Produce React PropTypes definitions from a JSON object, including nested shapes and arrays.",
+      "keywords": [
+        "json to proptypes",
+        "react proptypes",
+        "prop-types generator"
+      ]
+    },
+    {
+      "slug": "json-to-rust-serde",
+      "title": "JSON to Rust Serde",
+      "category": "JSON",
+      "from": "json",
+      "to": "rust",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Convert JSON into Rust structs deriving Serialize and Deserialize with serde.",
+      "keywords": [
+        "json to rust",
+        "serde struct",
+        "rust from json"
+      ]
+    },
+    {
+      "slug": "json-to-sarcastic",
+      "title": "JSON to Sarcastic",
+      "category": "JSON",
+      "from": "json",
+      "to": "javascript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Generate a runtime type assertion function that throws (with attitude) when data does not match the sample shape.",
+      "keywords": [
+        "json to sarcastic",
+        "runtime assert",
+        "type guard generator"
+      ]
+    },
+    {
+      "slug": "json-to-scala-case-class",
+      "title": "JSON to Scala Case Class",
+      "category": "JSON",
+      "from": "json",
+      "to": "scala",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Convert JSON into Scala case classes with fields typed from your sample data.",
+      "keywords": [
+        "json to scala",
+        "scala case class",
+        "scala from json"
+      ]
+    },
+    {
+      "slug": "json-to-toml",
+      "title": "JSON to TOML",
+      "category": "JSON",
+      "from": "json",
+      "to": "toml",
+      "engine": "browser",
+      "lib": "@iarna/toml",
+      "status": "done",
+      "description": "Convert a JSON object into equivalent TOML configuration syntax.",
+      "keywords": [
+        "json to toml",
+        "toml config",
+        "json2toml"
+      ]
+    },
+    {
+      "slug": "json-to-typescript",
+      "title": "JSON to TypeScript",
+      "category": "JSON",
+      "from": "json",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Generate TypeScript interfaces from a JSON sample, with nested and optional fields inferred.",
+      "keywords": [
+        "json to typescript",
+        "ts interface from json",
+        "typescript types"
+      ]
+    },
+    {
+      "slug": "json-to-yaml",
+      "title": "JSON to YAML",
+      "category": "JSON",
+      "from": "json",
+      "to": "yaml",
+      "engine": "browser",
+      "lib": "js-yaml",
+      "status": "done",
+      "description": "Convert JSON into clean, human-readable YAML.",
+      "keywords": [
+        "json to yaml",
+        "yaml converter",
+        "json2yaml"
+      ]
+    },
+    {
+      "slug": "json-to-zod",
+      "title": "JSON to Zod",
+      "category": "JSON",
+      "from": "json",
+      "to": "typescript",
+      "engine": "browser",
+      "lib": "json-to-zod",
+      "status": "done",
+      "description": "Generate a Zod schema from a JSON sample for type-safe parsing and validation.",
+      "keywords": [
+        "json to zod",
+        "zod schema",
+        "zod from json"
+      ]
+    },
+    {
+      "slug": "json-schema-to-openapi-schema",
+      "title": "JSON Schema to OpenAPI Schema",
+      "category": "JSON Schema",
+      "from": "json",
+      "to": "json",
+      "engine": "browser",
+      "lib": "@openapi-contrib/json-schema-to-openapi-schema",
+      "status": "done",
+      "description": "Convert a JSON Schema into an OpenAPI 3.0 Schema Object, adjusting type arrays, nullable and unsupported keywords.",
+      "keywords": [
+        "json schema to openapi",
+        "openapi schema",
+        "swagger schema"
+      ]
+    },
+    {
+      "slug": "json-schema-to-protobuf",
+      "title": "JSON Schema to Protobuf",
+      "category": "JSON Schema",
+      "from": "json",
+      "to": "protobuf",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Generate Protocol Buffers (proto3) message definitions from a JSON Schema.",
+      "keywords": [
+        "json schema to protobuf",
+        "proto3 messages",
+        "protobuf schema"
+      ]
+    },
+    {
+      "slug": "json-schema-to-typescript",
+      "title": "JSON Schema to TypeScript",
+      "category": "JSON Schema",
+      "from": "json",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "json-schema-to-typescript",
+      "status": "done",
+      "description": "Compile a JSON Schema into TypeScript interfaces and types, including enums and unions.",
+      "keywords": [
+        "json schema to typescript",
+        "ts from json schema",
+        "typed schema"
+      ]
+    },
+    {
+      "slug": "json-schema-to-zod",
+      "title": "JSON Schema to Zod",
+      "category": "JSON Schema",
+      "from": "json",
+      "to": "typescript",
+      "engine": "browser",
+      "lib": "json-schema-to-zod",
+      "status": "done",
+      "description": "Convert a JSON Schema into a Zod schema for runtime validation in TypeScript.",
+      "keywords": [
+        "json schema to zod",
+        "zod from schema",
+        "runtime validation"
+      ]
+    },
+    {
+      "slug": "css-to-js",
+      "title": "CSS to JS Object",
+      "category": "CSS",
+      "from": "css",
+      "to": "javascript",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Convert a CSS rule block into a camelCased JavaScript style object for inline styles or CSS-in-JS.",
+      "keywords": [
+        "css to js",
+        "css to object",
+        "style object",
+        "css-in-js"
+      ]
+    },
+    {
+      "slug": "css-to-tailwind",
+      "title": "CSS to Tailwind",
+      "category": "CSS",
+      "from": "css",
+      "to": "html",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Map common CSS declarations to their closest Tailwind CSS utility classes.",
+      "keywords": [
+        "css to tailwind",
+        "tailwind classes",
+        "utility classes"
+      ]
+    },
+    {
+      "slug": "object-styles-to-template-literal",
+      "title": "Object Styles to Template Literal",
+      "category": "CSS",
+      "from": "javascript",
+      "to": "css",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Convert a JavaScript style object into a styled-components template literal with kebab-cased properties.",
+      "keywords": [
+        "style object to css",
+        "styled-components",
+        "template literal css"
+      ]
+    },
+    {
+      "slug": "js-object-to-json",
+      "title": "JS Object to JSON",
+      "category": "JavaScript",
+      "from": "javascript",
+      "to": "json",
+      "engine": "browser",
+      "lib": "json5",
+      "status": "done",
+      "description": "Turn a loose JavaScript object literal (unquoted keys, single quotes, trailing commas) into strict JSON.",
+      "keywords": [
+        "js object to json",
+        "object literal to json",
+        "json5"
+      ]
+    },
+    {
+      "slug": "js-object-to-typescript",
+      "title": "JS Object to TypeScript",
+      "category": "JavaScript",
+      "from": "javascript",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "quicktype-core",
+      "status": "done",
+      "description": "Infer a TypeScript interface from a JavaScript object literal.",
+      "keywords": [
+        "js object to typescript",
+        "infer interface",
+        "object to type"
+      ]
+    },
+    {
+      "slug": "graphql-to-components",
+      "title": "GraphQL to React Apollo Components",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "@graphql-codegen/typescript-react-apollo",
+      "status": "done",
+      "description": "Generate typed React Apollo hooks and components from GraphQL operations.",
+      "keywords": [
+        "graphql to react",
+        "apollo hooks",
+        "graphql codegen components"
+      ]
+    },
+    {
+      "slug": "graphql-to-flow",
+      "title": "GraphQL to Flow",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "javascript",
+      "engine": "server",
+      "lib": "@graphql-codegen/flow",
+      "status": "done",
+      "description": "Generate Flow types from a GraphQL schema.",
+      "keywords": [
+        "graphql to flow",
+        "flow types graphql",
+        "graphql codegen flow"
+      ]
+    },
+    {
+      "slug": "graphql-to-fragment-matcher",
+      "title": "GraphQL to Fragment Matcher",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "json",
+      "engine": "server",
+      "lib": "@graphql-codegen/fragment-matcher",
+      "status": "done",
+      "description": "Produce an Apollo InMemoryCache possibleTypes / fragment matcher map from a GraphQL schema.",
+      "keywords": [
+        "graphql fragment matcher",
+        "apollo possibleTypes",
+        "introspection fragments"
+      ]
+    },
+    {
+      "slug": "graphql-to-introspection-json",
+      "title": "GraphQL to Introspection JSON",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "json",
+      "engine": "browser",
+      "lib": "graphql",
+      "status": "done",
+      "description": "Run introspection over a GraphQL SDL schema and output the full introspection JSON result.",
+      "keywords": [
+        "graphql introspection",
+        "introspection json",
+        "schema introspection"
+      ]
+    },
+    {
+      "slug": "graphql-to-java",
+      "title": "GraphQL to Java",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "java",
+      "engine": "server",
+      "lib": "@graphql-codegen/java",
+      "status": "done",
+      "description": "Generate Java types from a GraphQL schema.",
+      "keywords": [
+        "graphql to java",
+        "java graphql types",
+        "graphql codegen java"
+      ]
+    },
+    {
+      "slug": "graphql-to-resolvers-signature",
+      "title": "GraphQL to Resolvers Signature",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "@graphql-codegen/typescript-resolvers",
+      "status": "done",
+      "description": "Generate strongly typed TypeScript resolver signatures from a GraphQL schema.",
+      "keywords": [
+        "graphql resolvers",
+        "typescript resolvers",
+        "resolver types"
+      ]
+    },
+    {
+      "slug": "graphql-to-schema-ast",
+      "title": "GraphQL to Schema AST",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "json",
+      "engine": "browser",
+      "lib": "graphql",
+      "status": "done",
+      "description": "Parse GraphQL SDL into its Document AST as JSON, useful for tooling and analysis.",
+      "keywords": [
+        "graphql ast",
+        "schema ast",
+        "graphql document json"
+      ]
+    },
+    {
+      "slug": "graphql-to-typescript",
+      "title": "GraphQL to TypeScript",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "@graphql-codegen/typescript",
+      "status": "done",
+      "description": "Generate TypeScript types from a GraphQL schema with @graphql-codegen.",
+      "keywords": [
+        "graphql to typescript",
+        "graphql codegen",
+        "graphql types"
+      ]
+    },
+    {
+      "slug": "graphql-to-typescript-mongodb",
+      "title": "GraphQL to TypeScript MongoDB",
+      "category": "GraphQL",
+      "from": "graphql",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "@graphql-codegen/typescript-mongodb",
+      "status": "done",
+      "description": "Generate MongoDB-flavoured TypeScript models from a GraphQL schema annotated with @entity directives.",
+      "keywords": [
+        "graphql mongodb",
+        "typescript mongodb models",
+        "graphql codegen mongodb"
+      ]
+    },
+    {
+      "slug": "jsonld-to-compacted",
+      "title": "JSON-LD to Compacted",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "json",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Compact a JSON-LD document against its @context to produce a concise linked-data form.",
+      "keywords": [
+        "jsonld compact",
+        "compacted json-ld",
+        "linked data"
+      ]
+    },
+    {
+      "slug": "jsonld-to-expanded",
+      "title": "JSON-LD to Expanded",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "json",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Expand a JSON-LD document to its fully-qualified, context-free representation.",
+      "keywords": [
+        "jsonld expand",
+        "expanded json-ld",
+        "linked data"
+      ]
+    },
+    {
+      "slug": "jsonld-to-flattened",
+      "title": "JSON-LD to Flattened",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "json",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Flatten a JSON-LD document so all nodes live at the top level keyed by identifier.",
+      "keywords": [
+        "jsonld flatten",
+        "flattened json-ld",
+        "linked data"
+      ]
+    },
+    {
+      "slug": "jsonld-to-framed",
+      "title": "JSON-LD to Framed",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "json",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Frame a JSON-LD document against a frame to shape it into a predictable tree.",
+      "keywords": [
+        "jsonld frame",
+        "framed json-ld",
+        "linked data"
+      ]
+    },
+    {
+      "slug": "jsonld-to-nquads",
+      "title": "JSON-LD to N-Quads",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "text",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Serialize a JSON-LD document to RDF N-Quads.",
+      "keywords": [
+        "jsonld to nquads",
+        "rdf nquads",
+        "linked data rdf"
+      ]
+    },
+    {
+      "slug": "jsonld-to-normalized",
+      "title": "JSON-LD to Normalized",
+      "category": "JSON-LD",
+      "from": "json",
+      "to": "text",
+      "engine": "server",
+      "lib": "jsonld",
+      "status": "done",
+      "description": "Canonicalize a JSON-LD document with the URDNA2015 algorithm to normalized N-Quads.",
+      "keywords": [
+        "jsonld normalize",
+        "urdna2015",
+        "rdf canonicalization"
+      ]
+    },
+    {
+      "slug": "typescript-to-flow",
+      "title": "TypeScript to Flow",
+      "category": "TypeScript",
+      "from": "typescript",
+      "to": "javascript",
+      "engine": "server",
+      "lib": "flowgen",
+      "status": "done",
+      "description": "Convert TypeScript type declarations into equivalent Flow types.",
+      "keywords": [
+        "typescript to flow",
+        "flowgen",
+        "ts to flow"
+      ]
+    },
+    {
+      "slug": "typescript-to-json-schema",
+      "title": "TypeScript to JSON Schema",
+      "category": "TypeScript",
+      "from": "typescript",
+      "to": "json",
+      "engine": "server",
+      "lib": "ts-json-schema-generator",
+      "status": "done",
+      "description": "Generate a JSON Schema from a TypeScript type or interface.",
+      "keywords": [
+        "typescript to json schema",
+        "ts json schema",
+        "schema from types"
+      ]
+    },
+    {
+      "slug": "typescript-to-javascript",
+      "title": "TypeScript to JavaScript",
+      "category": "TypeScript",
+      "from": "typescript",
+      "to": "javascript",
+      "engine": "server",
+      "lib": "typescript",
+      "status": "done",
+      "description": "Transpile TypeScript to plain JavaScript by stripping types, using the official compiler.",
+      "keywords": [
+        "typescript to javascript",
+        "transpile ts",
+        "strip types"
+      ]
+    },
+    {
+      "slug": "typescript-to-typescript-declaration",
+      "title": "TypeScript to Declaration",
+      "category": "TypeScript",
+      "from": "typescript",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "typescript",
+      "status": "done",
+      "description": "Emit a .d.ts declaration file from TypeScript source using the official compiler.",
+      "keywords": [
+        "typescript declaration",
+        "d.ts generator",
+        "emit declarations"
+      ]
+    },
+    {
+      "slug": "typescript-to-zod",
+      "title": "TypeScript to Zod",
+      "category": "TypeScript",
+      "from": "typescript",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "ts-to-zod",
+      "status": "done",
+      "description": "Generate Zod schemas from TypeScript interfaces and types.",
+      "keywords": [
+        "typescript to zod",
+        "ts-to-zod",
+        "zod from types"
+      ]
+    },
+    {
+      "slug": "flow-to-javascript",
+      "title": "Flow to JavaScript",
+      "category": "Flow",
+      "from": "javascript",
+      "to": "javascript",
+      "engine": "server",
+      "lib": "@babel/preset-flow",
+      "status": "done",
+      "description": "Strip Flow type annotations to produce runnable JavaScript, using Babel.",
+      "keywords": [
+        "flow to javascript",
+        "strip flow",
+        "babel flow"
+      ]
+    },
+    {
+      "slug": "flow-to-typescript",
+      "title": "Flow to TypeScript",
+      "category": "Flow",
+      "from": "javascript",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "flow-to-ts",
+      "status": "done",
+      "description": "Convert Flow-annotated code into TypeScript.",
+      "keywords": [
+        "flow to typescript",
+        "flow-to-ts",
+        "migrate flow"
+      ]
+    },
+    {
+      "slug": "flow-to-typescript-declaration",
+      "title": "Flow to TypeScript Declaration",
+      "category": "Flow",
+      "from": "javascript",
+      "to": "typescript",
+      "engine": "server",
+      "lib": "flow-to-ts",
+      "status": "done",
+      "description": "Convert Flow types into a TypeScript declaration (.d.ts) style output.",
+      "keywords": [
+        "flow to d.ts",
+        "flow declaration",
+        "flow-to-ts declaration"
+      ]
+    },
+    {
+      "slug": "cadence-to-go",
+      "title": "Cadence to Go",
+      "category": "Others",
+      "from": "text",
+      "to": "go",
+      "engine": "browser",
+      "lib": "custom",
+      "status": "done",
+      "description": "Map Cadence (Flow blockchain) resource and struct definitions to equivalent Go struct scaffolding.",
+      "keywords": [
+        "cadence to go",
+        "flow blockchain",
+        "cadence struct"
+      ]
+    },
+    {
+      "slug": "markdown-to-html",
+      "title": "Markdown to HTML",
+      "category": "Others",
+      "from": "markdown",
+      "to": "html",
+      "engine": "browser",
+      "lib": "marked",
+      "status": "done",
+      "description": "Render Markdown (with GitHub-flavored extensions) into clean HTML.",
+      "keywords": [
+        "markdown to html",
+        "md to html",
+        "gfm renderer"
+      ]
+    },
+    {
+      "slug": "toml-to-json",
+      "title": "TOML to JSON",
+      "category": "Others",
+      "from": "toml",
+      "to": "json",
+      "engine": "browser",
+      "lib": "@iarna/toml",
+      "status": "done",
+      "description": "Parse TOML configuration into JSON.",
+      "keywords": [
+        "toml to json",
+        "parse toml",
+        "toml2json"
+      ]
+    },
+    {
+      "slug": "toml-to-yaml",
+      "title": "TOML to YAML",
+      "category": "Others",
+      "from": "toml",
+      "to": "yaml",
+      "engine": "browser",
+      "lib": "@iarna/toml",
+      "status": "complete",
+      "description": "Convert TOML configuration into YAML.",
+      "keywords": [
+        "toml to yaml",
+        "toml2yaml",
+        "config convert"
+      ]
+    },
+    {
+      "slug": "xml-to-json",
+      "title": "XML to JSON",
+      "category": "Others",
+      "from": "xml",
+      "to": "json",
+      "engine": "browser",
+      "lib": "xml-js",
+      "status": "complete",
+      "description": "Convert XML into a compact JSON representation.",
+      "keywords": [
+        "xml to json",
+        "parse xml",
+        "xml2json"
+      ]
+    },
+    {
+      "slug": "yaml-to-json",
+      "title": "YAML to JSON",
+      "category": "Others",
+      "from": "yaml",
+      "to": "json",
+      "engine": "browser",
+      "lib": "js-yaml",
+      "status": "complete",
+      "description": "Parse YAML into JSON.",
+      "keywords": [
+        "yaml to json",
+        "parse yaml",
+        "yaml2json"
+      ]
+    },
+    {
+      "slug": "yaml-to-toml",
+      "title": "YAML to TOML",
+      "category": "Others",
+      "from": "yaml",
+      "to": "toml",
+      "engine": "browser",
+      "lib": "@iarna/toml",
+      "status": "complete",
+      "description": "Convert YAML configuration into TOML.",
+      "keywords": [
+        "yaml to toml",
+        "yaml2toml",
+        "config convert"
+      ]
+    }
+  ]
+}

@@ -100,6 +100,14 @@ export const TOOL_CATALOG = [
     "description": "Supported Aadhaar QR locally decode aur signature status dikhaye."
   },
   {
+    "slug": "absolute-vs-annualised-return",
+    "name": "Absolute vs Annualised Return Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert a total gain percentage into an annualised (CAGR) rate and back again for any holding period in years, months or days."
+  },
+  {
     "slug": "absolute-vs-annualised-return-calculator",
     "name": "Absolute vs Annualised Return Calculator",
     "categories": [
@@ -108,12 +116,52 @@ export const TOOL_CATALOG = [
     "description": "Convert total gain percentage to annualised CAGR and back, for any holding period in years and months."
   },
   {
+    "slug": "ac-copper-pipe-cost-estimator",
+    "name": "AC Copper Pipe Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate the extra copper, drain, cable, core drilling and refrigerant top-up cost when a split AC outdoor unit sits far from the indoor unit."
+  },
+  {
+    "slug": "ac-running-cost-per-hour",
+    "name": "AC Running Cost Per Hour",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute air conditioner electricity cost per hour, day and month from tonnage, ISEER star rating and your unit tariff."
+  },
+  {
+    "slug": "ac-star-rating-savings-calculator",
+    "name": "AC Star Rating Savings Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "See how many years a 5-star AC takes to pay back its price premium over a 3-star model, with tariff escalation."
+  },
+  {
+    "slug": "ac-temperature-savings-simulator",
+    "name": "AC Temperature Savings Simulator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "See the units and rupees saved for every degree you raise the AC thermostat, with a full setpoint table from 18 to 30 °C."
+  },
+  {
     "slug": "ac-tonnage-calculator",
     "name": "AC Tonnage Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Size your air conditioner correctly from room dimensions, sun exposure, and city climate, then estimate the monthly running cost."
+  },
+  {
+    "slug": "accent-wall-colour-suggester",
+    "name": "Accent Wall Colour Suggester",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Suggest accent wall shades that pair with your existing wall colour, with LRV, contrast and trim advice for each."
   },
   {
     "slug": "accessible-authentication-auditor",
@@ -134,6 +182,22 @@ export const TOOL_CATALOG = [
     "description": "Inspect PDF and modern Office documents locally for observable title, language, structure, table, and image-description accessibility cues."
   },
   {
+    "slug": "accountant-prompt-pack",
+    "name": "Accountant Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for reconciliations, variance analysis, client emails and plain-English report notes."
+  },
+  {
+    "slug": "achromatopsia-palette-simulator",
+    "name": "Achromatopsia Palette Simulator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "See your palette with all colour removed and check every pair against the WCAG 3:1 and 4.5:1 contrast thresholds."
+  },
+  {
     "slug": "acne-severity-analyzer",
     "name": "Acne Severity Analyzer",
     "categories": [
@@ -152,10 +216,19 @@ export const TOOL_CATALOG = [
     "description": "Create custom acronyms and abbreviations from any phrase, or generate phrase ideas from your acronym letters."
   },
   {
+    "slug": "act-composite-score-calculator",
+    "name": "ACT Composite Score Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Average ACT section scores into the official 1-36 Composite with ACT's half-up rounding, for classic and enhanced 2025 formats."
+  },
+  {
     "slug": "ad-banner-size-finder-tool",
     "name": "Ad Banner Size Finder",
     "categories": [
-      "Marketing & Social"
+      "Marketing & Social",
+      "Design & Color"
     ],
     "description": "Find the exact standard dimensions for ad banners across all major platforms."
   },
@@ -163,9 +236,34 @@ export const TOOL_CATALOG = [
     "slug": "ad-copy-ab-planner",
     "name": "Ad Copy A/B Planner",
     "categories": [
+      "Marketing & Social",
+      "Business"
+    ],
+    "description": "Plan an ad copy A/B test: write both variants against real platform character limits, then size the test and its run time with the two-proportion sample formula"
+  },
+  {
+    "slug": "ad-copy-prompt-builder",
+    "name": "Ad Copy Prompt Builder",
+    "categories": [
       "Marketing & Social"
     ],
-    "description": "Futuristic A/B ad copy planner, side-by-side comparison, live mock previews, and campaign testing scheduler."
+    "description": "Build an AI ad copy prompt with real platform character limits, a chosen angle and compliance notes baked in."
+  },
+  {
+    "slug": "address-change-checklist-india",
+    "name": "Address Change Checklist India",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Every record to update after relocating in India — Aadhaar, voter roll, RC, bank KYC, utilities — with the statutory deadlines dated."
+  },
+  {
+    "slug": "adhesive-selector",
+    "name": "Adhesive Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Ranks glues and sealants for the two materials you are joining, checking gap fill, water exposure, movement, load and surface energy."
   },
   {
     "slug": "adjustable-reading-reformatter",
@@ -186,6 +284,14 @@ export const TOOL_CATALOG = [
     "description": "Two-person point allocation se shared assets fairly divide kare."
   },
   {
+    "slug": "adr-generator",
+    "name": "ADR Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write an architecture decision record in the Nygard or MADR format with context, options, decision and consequences."
+  },
+  {
     "slug": "advance-tax-installment-planner",
     "name": "Advance Tax Installment Planner",
     "categories": [
@@ -203,13 +309,21 @@ export const TOOL_CATALOG = [
     "description": "Interest payable under Sections 234B and 234C for shortfall and deferment of advance tax instalments."
   },
   {
+    "slug": "aed-cash-budget-planner",
+    "name": "AED Cash Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan how many UAE dirhams to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in."
+  },
+  {
     "slug": "afterimage-generator",
     "name": "Afterimage Generator",
     "categories": [
       "Education & Science",
-      "Fun"
+      "Design & Color"
     ],
-    "description": "Experience retinal adaptation and complementary afterimages through color staring or image processing."
+    "description": "Experience retinal adaptation and complementary afterimages: pick a stimulus colour, stare at it, then see the complement the tool predicted."
   },
   {
     "slug": "age-calculator",
@@ -244,6 +358,14 @@ export const TOOL_CATALOG = [
     "description": "See exactly how old you are in days, weeks, months and hours from your birth date."
   },
   {
+    "slug": "age-on-exam-cutoff-date-calculator",
+    "name": "Age On Cutoff Date Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your exact age in years, months and days on any exam cutoff date, and test it against minimum and maximum age limits."
+  },
+  {
     "slug": "age-progression-generator",
     "name": "Age Progression Generator",
     "categories": [
@@ -273,6 +395,14 @@ export const TOOL_CATALOG = [
     "description": "Check JSON or JSONL agent audit logs locally for structural continuity and optionally recompute an explicitly configured SHA-256 canonical hash chain."
   },
   {
+    "slug": "agent-guardrail-checklist",
+    "name": "Agent Guardrail Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score your AI agent's guardrails — permissions, spend caps, confirmation gates, injection defences — before you ship it."
+  },
+  {
     "slug": "agent-memory-poisoning-inspector",
     "name": "Agent Memory Poisoning Inspector",
     "categories": [
@@ -281,6 +411,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Compare two AI-memory exports locally and flag newly added instruction overrides, identity changes, permissions, hidden controls, and persistence cues."
+  },
+  {
+    "slug": "agent-observability-checklist",
+    "name": "Agent Observability Checklist",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Decide what to trace, measure, log and redact for a production LLM agent, with a readiness score and sampling plan."
   },
   {
     "slug": "agent-permission-policy-builder",
@@ -303,6 +441,78 @@ export const TOOL_CATALOG = [
     "description": "Review an AI agent action plan locally for irreversible steps, external side effects, and missing backup, approval, checkpoint, or rollback details."
   },
   {
+    "slug": "ahmedabad-airport-transfer-time-planner",
+    "name": "Ahmedabad Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Ahmedabad AMD airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
+    "slug": "ai-academic-integrity-checklist",
+    "name": "AI Academic Integrity Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check whether your AI use on an assignment matches typical institutional permission, disclosure and verification rules."
+  },
+  {
+    "slug": "ai-adoption-readiness-quiz",
+    "name": "AI Adoption Readiness Quiz",
+    "categories": [
+      "Business"
+    ],
+    "description": "Score your organisation's data, skills, process and governance readiness before rolling out AI, with a banded verdict and weakest-area callout."
+  },
+  {
+    "slug": "ai-art-style-reference-sheet",
+    "name": "AI Art Style Reference Sheet",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Build a reusable image-prompt style sheet across eight axes, with a coverage score, de-duplication and a CLIP token estimate."
+  },
+  {
+    "slug": "ai-attribution-statement-builder",
+    "name": "AI Attribution Statement Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a citation-style attribution for AI assistance in APA 7, MLA 9 or Chicago format, plus an acknowledgement statement."
+  },
+  {
+    "slug": "ai-certification-study-planner",
+    "name": "AI Certification Study Planner",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn an AI certification's published domain weights into a week-by-week study plan with hours per topic and a readiness check against your exam date."
+  },
+  {
+    "slug": "ai-consent-conversation-guide",
+    "name": "AI Consent Conversation Guide",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out how much AI disclosure a piece of work needs and get a ready-to-send script for clients or colleagues."
+  },
+  {
+    "slug": "ai-content-disclosure-generator",
+    "name": "AI Content Disclosure Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate a clear disclosure statement for AI-assisted articles, reports and marketing content, with role, review and tool details."
+  },
+  {
+    "slug": "ai-content-disclosure-statement-generator",
+    "name": "AI Content Disclosure Statement Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Generate long, short and metadata disclosure text for AI articles, images, audio and video, with the platform obligations that apply."
+  },
+  {
     "slug": "ai-conversation-privacy-scanner",
     "name": "AI Conversation Privacy Scanner",
     "categories": [
@@ -311,6 +521,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Scan pasted or exported AI conversations locally for personal data and secrets, then create a redacted transcript and counts-only report."
+  },
+  {
+    "slug": "ai-cost-per-1000-requests-calculator",
+    "name": "AI Cost Per 1000 Requests Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn per-million-token pricing into cost per request, per 1,000 and per million, with retries, caching and a tier comparison."
   },
   {
     "slug": "ai-domain-generator",
@@ -347,12 +565,76 @@ export const TOOL_CATALOG = [
     "description": "Analyze images to detect AI-generated content, deepfakes, and manipulation artifacts."
   },
   {
+    "slug": "ai-glossary-explorer",
+    "name": "AI Glossary Explorer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Searchable plain-English glossary of AI and machine learning terms, with examples, related terms and a self-test quiz."
+  },
+  {
+    "slug": "ai-humanizer-checklist",
+    "name": "AI Humanizer Checklist",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Scan an AI draft for tell-tale phrasing and uniform sentences, then work a weighted checklist of edits that restore your own voice."
+  },
+  {
+    "slug": "ai-image-cost-calculator",
+    "name": "AI Image Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate AI image generation spend across resolutions, quality tiers, batch sizes and retry rates."
+  },
+  {
+    "slug": "ai-image-disclosure-label-generator",
+    "name": "AI Disclosure Label Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build platform-ready AI disclosure badges, captions, alt text and IPTC digital source type tags for images and video you publish."
+  },
+  {
+    "slug": "ai-image-licensing-checklist",
+    "name": "AI Image Licensing Checklist",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work through the usage-rights questions that matter before publishing AI-generated images commercially."
+  },
+  {
+    "slug": "ai-incident-response-checklist",
+    "name": "AI Incident Response Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate a NIST-style response checklist for harmful, leaked or manipulated AI output incidents."
+  },
+  {
     "slug": "ai-jd-analyzer-tool",
     "name": "AI JD Analyzer",
     "categories": [
       "Business"
     ],
-    "description": "Analyze Job Descriptions using AI to extract skills, calculate match scores, and get rewrites."
+    "description": "Analyse a job description offline: extract skills, score your match, check readability and gendered wording."
+  },
+  {
+    "slug": "ai-learning-roadmap-builder",
+    "name": "AI Learning Roadmap Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a week-by-week AI study path from prompting basics to fine-tuning, ordered by prerequisites and your hours per week."
+  },
+  {
+    "slug": "ai-media-literacy-quiz",
+    "name": "AI Media Literacy Quiz",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Practise spotting synthetic media and misleading AI claims, with scored questions on provenance, detectors and verification."
   },
   {
     "slug": "ai-medical-report-analyzer",
@@ -386,10 +668,41 @@ export const TOOL_CATALOG = [
     "slug": "ai-passport-photo-maker",
     "name": "AI Passport Photo Maker",
     "categories": [
-      "Image & Photo",
-      "Productivity"
+      "Image & Photo"
     ],
-    "description": "Create professional passport and visa photos with AI-powered face detection, background removal, and multi-format print sheets."
+    "description": "Crop a photo to official passport and visa sizes with published head-height guides, then lay out a print sheet."
+  },
+  {
+    "slug": "ai-pilot-success-criteria-builder",
+    "name": "AI Pilot Success Criteria Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Set measurable go/no-go criteria for an AI pilot and size the sample needed to detect the lift at 95% confidence."
+  },
+  {
+    "slug": "ai-plagiarism-risk-worksheet",
+    "name": "AI Plagiarism Risk Worksheet",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Assess how derivative an AI-assisted draft is and get a 0-100 risk score with the specific rewrites and citations needed."
+  },
+  {
+    "slug": "ai-policy-one-pager-generator",
+    "name": "AI Policy One Pager Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Assemble a single-page do and don't guide for staff AI use from a curated clause library — approved tools, data rules, review duty."
+  },
+  {
+    "slug": "ai-policy-quiz",
+    "name": "AI Policy Quiz",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Test yourself or your team on acceptable AI use at work — 10 scenario questions with instant explanations and a readiness score."
   },
   {
     "slug": "ai-productivity-optimizer",
@@ -399,6 +712,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Build a personalized focus plan from your role, energy patterns, goals, and common distractions."
+  },
+  {
+    "slug": "ai-productivity-time-saved-calculator",
+    "name": "AI Time Saved Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate weekly and annual hours saved by AI per task from measured before and after timings and weekly frequency."
+  },
+  {
+    "slug": "ai-project-scoping-worksheet",
+    "name": "AI Project Scoping Worksheet",
+    "categories": [
+      "Business"
+    ],
+    "description": "Define the problem, users, data, success metric and fallback for an AI project before you build — with a completeness score."
   },
   {
     "slug": "ai-prompt-organizer",
@@ -418,6 +747,30 @@ export const TOOL_CATALOG = [
     "description": "Generate interactive quizzes from any text using NLP — multiple choice, true/false, and fill-in-the-blank questions with instant grading and score tracking."
   },
   {
+    "slug": "ai-resume-prompt-builder",
+    "name": "AI Resume Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a precise resume-rewriting prompt with role, seniority, metrics focus and ATS keywords for any AI assistant."
+  },
+  {
+    "slug": "ai-roi-calculator",
+    "name": "AI ROI Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare AI tool subscription cost against hours saved and hourly rates to get monthly ROI, payback and break-even hours."
+  },
+  {
+    "slug": "ai-scam-message-awareness-quiz",
+    "name": "AI Scam Message Awareness Quiz",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Judge realistic AI-written messages as scam or genuine and get scored on recall, false alarms and balanced accuracy."
+  },
+  {
     "slug": "ai-selfie-enhancer",
     "name": "AI Selfie Enhancer",
     "categories": [
@@ -425,6 +778,86 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "Enhance your selfies with smart AI-driven filters, skin smoothing, lighting correction, and background tuning directly in your browser."
+  },
+  {
+    "slug": "ai-social-caption-detector",
+    "name": "AI Social Caption Detector",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Scan a social caption for AI-style hooks, em dashes, emoji bullet patterns and hashtag padding, with a transparent signal score."
+  },
+  {
+    "slug": "ai-spend-alert-planner",
+    "name": "AI Spend Alert Planner",
+    "categories": [
+      "Business"
+    ],
+    "description": "Project month-end AI spend from your run rate and set threshold alerts, owners and actions before the budget is gone."
+  },
+  {
+    "slug": "ai-subscription-vs-api-calculator",
+    "name": "AI Subscription vs API Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the usage point where paying per token beats a flat monthly AI plan, per seat and across the team."
+  },
+  {
+    "slug": "ai-text-tone-rewriter-prompt",
+    "name": "AI Tone Rewrite Prompt Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Scores your text with Flesch Reading Ease, then builds a rewrite prompt targeting a chosen tone and reading level."
+  },
+  {
+    "slug": "ai-training-plan-builder",
+    "name": "AI Training Plan Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Design a week-by-week internal AI upskilling plan by role and skill level, with module hours packed to your weekly time budget."
+  },
+  {
+    "slug": "ai-usage-journal",
+    "name": "AI Usage Journal",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log every AI task, the model used and whether the answer shipped or had to be redone, then see first-pass rate and time saved."
+  },
+  {
+    "slug": "ai-usage-log-for-assignments",
+    "name": "AI Usage Log for Assignments",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Record which AI tools helped with which parts of an assignment and export a clean usage log for submission."
+  },
+  {
+    "slug": "ai-vendor-comparison-matrix",
+    "name": "AI Vendor Comparison Matrix",
+    "categories": [
+      "Business"
+    ],
+    "description": "Score AI vendors on cost, control, support and compliance with a weighted decision matrix and get a ranked shortlist."
+  },
+  {
+    "slug": "ai-vendor-due-diligence-checklist",
+    "name": "AI Vendor Due Diligence Checklist",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate the questions to ask an AI vendor about data handling, training, subprocessors, security and exit."
+  },
+  {
+    "slug": "ai-writing-tell-scanner",
+    "name": "AI Writing Tell Scanner",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Highlight over-used AI phrases like delve, tapestry and testament in your draft, with a plainer replacement suggested for each."
   },
   {
     "slug": "aim-trainer",
@@ -435,6 +868,22 @@ export const TOOL_CATALOG = [
     "description": "Free aim trainer online — hit shrinking targets, track reaction time and accuracy, and raise your score."
   },
   {
+    "slug": "air-cooler-vs-ac-cost",
+    "name": "Air Cooler vs AC Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare a desert cooler and an air conditioner on electricity, water and the temperature each can actually reach in your climate."
+  },
+  {
+    "slug": "air-filter-change-planner",
+    "name": "Air Filter Change Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Set engine air filter and cabin AC filter change intervals from your dust exposure, driving pattern and kilometres run."
+  },
+  {
     "slug": "air-fryer-converter",
     "name": "Air Fryer Time & Temp Converter",
     "categories": [
@@ -442,6 +891,54 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Convert any oven recipe to air fryer settings instantly, with food presets, flip reminders, and safe doneness temps."
+  },
+  {
+    "slug": "air-fryer-vs-oven-cost",
+    "name": "Air Fryer vs Oven Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare the electricity cost and total time of cooking in an air fryer versus a conventional electric oven, preheat included."
+  },
+  {
+    "slug": "akasa-air-baggage-allowance-checker",
+    "name": "Akasa Air Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin, personal and check-in bag weight and size against Akasa Air's published allowance and estimate the excess."
+  },
+  {
+    "slug": "akasa-air-excess-baggage-cost-estimator",
+    "name": "Akasa Air Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare Akasa Air extra baggage bought at booking, at web check-in and at the airport counter to find the cheapest."
+  },
+  {
+    "slug": "aktu-attendance-calculator",
+    "name": "AKTU Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check AKTU attendance against the 75% rule — shortage in classes, consecutive classes to recover and safe bunks left."
+  },
+  {
+    "slug": "aktu-cgpa-percentage-converter",
+    "name": "AKTU CGPA Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert AKTU CGPA to percentage with the university's (CGPA − 0.75) × 10 rule, work backwards, and combine semester SGPAs."
+  },
+  {
+    "slug": "aktu-sgpa-calculator",
+    "name": "AKTU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate AKTU SGPA from credit-weighted grade points, roll semesters into CGPA and convert to percentage."
   },
   {
     "slug": "alcohol-unit-calculator",
@@ -471,6 +968,22 @@ export const TOOL_CATALOG = [
     "description": "Watch common algorithms execute step by step with animated visualizations of Binary Search, Linear Search, Bubble Sort, and more."
   },
   {
+    "slug": "allen-key-size-finder",
+    "name": "Allen Key Size Finder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Matches metric and imperial hex key sizes, shows which swaps are safe and which round the socket, and prints a true-scale gauge."
+  },
+  {
+    "slug": "alloy-vs-steel-wheel-comparison",
+    "name": "Alloy vs Steel Wheel Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare alloy and steel wheels on unsprung weight, price premium, fuel economy gain and payback period."
+  },
+  {
     "slug": "alphabet-explorer",
     "name": "Alphabet Explorer",
     "categories": [
@@ -488,13 +1001,28 @@ export const TOOL_CATALOG = [
     "description": "Review an image's intended purpose, alt state, nearby text, and longer alternative with calibrated W3C-aligned writing cues."
   },
   {
+    "slug": "amazon-listing-prompt-builder",
+    "name": "Amazon Listing Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Generate title, bullet and description prompts that respect Amazon field limits, plus a 250-byte backend search term string."
+  },
+  {
     "slug": "ambiguous-figure-viewer",
     "name": "Ambiguous Figure Viewer",
     "categories": [
-      "Education & Science",
-      "Fun"
+      "Education & Science"
     ],
-    "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image."
+    "description": "Watch classic bistable figures flip between two interpretations and measure your own dominance durations."
+  },
+  {
+    "slug": "amsterdam-ams-airport-arrival-buffer-calculator",
+    "name": "Amsterdam AMS Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Amsterdam Schiphol using drive time, traffic, check-in cut-off, passport control and gate-closing buffers."
   },
   {
     "slug": "anagram-generator",
@@ -566,6 +1094,78 @@ export const TOOL_CATALOG = [
     "description": "Create advanced CSS animations easily."
   },
   {
+    "slug": "anna-university-attendance-calculator",
+    "name": "Anna University Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check Anna University attendance percentage, the condonation band and how many classes it takes to reach 75%."
+  },
+  {
+    "slug": "anna-university-cgpa-percentage-converter",
+    "name": "Anna University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Anna University CGPA to percentage, build CGPA from semester credits and check the degree classification."
+  },
+  {
+    "slug": "anna-university-gpa-calculator",
+    "name": "Anna University GPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your Anna University semester GPA from letter grades and course credits using the official Σ(Ci×GPi)/ΣCi formula."
+  },
+  {
+    "slug": "annual-financial-checklist",
+    "name": "Annual Financial Checklist Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a personalised year-end money checklist with real statutory deadlines, from tax-saving proofs to nominee updates."
+  },
+  {
+    "slug": "ansible-inventory-file-builder",
+    "name": "Ansible Inventory File Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build Ansible INI and YAML inventories with groups, children and host variables from one simple spec, validated as you type."
+  },
+  {
+    "slug": "ansible-vault-usage-planner",
+    "name": "Ansible Vault Usage Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Classify which Ansible variables belong in Vault and generate the vars/vault split plus the exact ansible-vault command workflow."
+  },
+  {
+    "slug": "apdex-score-calculator",
+    "name": "Apdex Score Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate an Apdex score from satisfied, tolerating and frustrated request counts, with the rating band and the fixes needed to reach a target."
+  },
+  {
+    "slug": "api-changelog-generator",
+    "name": "API Changelog Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write a Keep a Changelog style API release note with Added, Changed, Deprecated, Removed and a SemVer version bump."
+  },
+  {
+    "slug": "api-doc-prompt-builder",
+    "name": "API Doc Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Parses your endpoint list and builds a documentation prompt covering params, auth, error cases and your chosen doc format."
+  },
+  {
     "slug": "api-documentation-maker",
     "name": "API Documentation Maker",
     "categories": [
@@ -582,12 +1182,36 @@ export const TOOL_CATALOG = [
     "description": "Map API endpoint usage from logs, request records, cURL commands, or source code entirely in your browser."
   },
   {
-    "slug": "api-stress-estimator",
-    "name": "API STRESS ESTIMATOR",
+    "slug": "api-key-rotation-planner",
+    "name": "API Key Rotation Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan rotation dates, overlap windows and revocation steps for AI API keys based on their exposure level."
+  },
+  {
+    "slug": "api-key-vs-oauth-decision-helper",
+    "name": "API Key vs OAuth Decision Helper",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score API keys, OAuth 2.1 grants and mutual TLS against your consumer type, delegation, secrecy and rotation needs."
+  },
+  {
+    "slug": "api-rate-limit-header-designer",
+    "name": "API Rate Limit Header Designer",
     "categories": [
       "Developer"
     ],
-    "description": "Estimate the stress on your API under different traffic scenarios and configurations."
+    "description": "Design consistent rate limit headers and a 429 response — IETF RateLimit draft or legacy X-RateLimit style with an RFC 9457 body."
+  },
+  {
+    "slug": "api-stress-estimator",
+    "name": "API Stress Estimator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Estimate the stress on your API under different traffic scenarios and configurations, using an M/M/c queueing model."
   },
   {
     "slug": "api-tester",
@@ -596,6 +1220,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Build, send, and test API requests with ease."
+  },
+  {
+    "slug": "api-versioning-strategy-chooser",
+    "name": "API Versioning Strategy Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare URL path, query parameter, custom header and media type API versioning — weighted scoring plus migration cost for each."
   },
   {
     "slug": "app-finder",
@@ -615,6 +1247,14 @@ export const TOOL_CATALOG = [
     "description": "Health export ko readable local charts me convert kare."
   },
   {
+    "slug": "appliance-electricity-cost-estimator",
+    "name": "Appliance Wise Electricity Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See which appliance is driving your electricity bill, from wattage and hours of use, with duty, fixed charges and carbon output."
+  },
+  {
     "slug": "appliance-load-shift-planner",
     "name": "Appliance Load-Shift Planner",
     "categories": [
@@ -630,6 +1270,30 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Estimate electricity consumption and monthly costs for your home appliances."
+  },
+  {
+    "slug": "appliance-resale-value-estimator",
+    "name": "Appliance Resale Value Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the second-hand value of refrigerators, air conditioners and washing machines by age, condition and star rating."
+  },
+  {
+    "slug": "appliance-upgrade-payback-calculator",
+    "name": "Appliance Upgrade Payback Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out simple payback, discounted payback and lifetime NPV of replacing an old appliance with an energy-efficient model."
+  },
+  {
+    "slug": "appliance-warranty-tracker",
+    "name": "Appliance Warranty Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track every appliance's purchase date, comprehensive and part warranty end, extended cover and AMC renewal — stored only in your browser."
   },
   {
     "slug": "apr-to-apy-converter",
@@ -649,6 +1313,14 @@ export const TOOL_CATALOG = [
     "description": "Current AQI aur pollutant-wise breakdown dikhaye."
   },
   {
+    "slug": "aquarium-power-cost-calculator",
+    "name": "Aquarium Power Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Monthly electricity cost of an aquarium's filter, air pump, light and heater, with the heater load worked out from heat loss."
+  },
+  {
     "slug": "archive-safety-inspector",
     "name": "Archive Safety Inspector",
     "categories": [
@@ -656,6 +1328,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Preflight a local ZIP central directory for risky paths, symlinks, encryption, compression pressure, and suspicious file types without extracting anything."
+  },
+  {
+    "slug": "art-style-prompt-explorer",
+    "name": "Art Style Prompt Explorer",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Browse 16 art movements with their real hallmarks, blend up to three, and build an image prompt that fits the 75-token CLIP window."
   },
   {
     "slug": "ascii-explorer",
@@ -675,6 +1355,14 @@ export const TOOL_CATALOG = [
     "description": "Complete Ashta Koota Guna Milan — evaluates all 8 categories (Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, Nadi) out of 36 gunas. Uses real planetary"
   },
   {
+    "slug": "asian-bmi-cutoff-calculator",
+    "name": "Asian BMI Cutoff Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Classify BMI against the lower WHO Asia-Pacific thresholds (overweight 23, obese 25) and compare with the standard WHO bands."
+  },
+  {
     "slug": "aspect-ratio-calculator",
     "name": "Aspect Ratio Calculator",
     "categories": [
@@ -684,12 +1372,28 @@ export const TOOL_CATALOG = [
     "description": "Calculate simplified ratios and proportional dimensions for thumbnails, banners, and responsive layouts."
   },
   {
+    "slug": "assignment-word-count-planner",
+    "name": "Assignment Word Count Planner",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Split an assignment word budget across sections by weight and track how many words each section still needs."
+  },
+  {
     "slug": "atal-pension-yojana-calculator",
     "name": "Atal Pension Yojana Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Find the exact APY monthly contribution for a ₹1,000–₹5,000 pension slab based on your joining age, plus total outgo and nominee corpus."
+  },
+  {
+    "slug": "atkins-phase-macro-calculator",
+    "name": "Atkins Phase Macro Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Net carb allowance, protein and fat targets for each Atkins phase — Induction, Balancing, Fine-Tuning and Lifetime Maintenance."
   },
   {
     "slug": "atrial-fibrillation-risk-calculator",
@@ -746,6 +1450,14 @@ export const TOOL_CATALOG = [
     "description": "Visualize a local audio waveform and screen for abrupt sample or DC-offset changes that may deserve manual edit-boundary review."
   },
   {
+    "slug": "audio-file-size-calculator",
+    "name": "Audio File Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out uncompressed audio file size and data rate from duration, sample rate, bit depth and channels, with codec comparisons."
+  },
+  {
     "slug": "audio-pitch-tempo-shifter",
     "name": "Audio Pitch & Tempo Shifter",
     "categories": [
@@ -799,6 +1511,30 @@ export const TOOL_CATALOG = [
     "description": "Kp index aur location se possible visibility estimate kare."
   },
   {
+    "slug": "australia-visa-cost-estimator",
+    "name": "Australia Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add up the Australian visa application charge, additional applicant charges, card surcharge and local fees in rupees."
+  },
+  {
+    "slug": "australia-visa-cover-letter-builder",
+    "name": "Australia Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Write a subclass 600 visitor visa statement covering purpose, itinerary, funds, the genuine visitor test and condition 8558."
+  },
+  {
+    "slug": "australia-visa-rejection-reason-explainer",
+    "name": "Australia Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Map the criterion named on an Australian visa refusal to what it tests, any exclusion period, and what to fix."
+  },
+  {
     "slug": "availability-time-zone-finder",
     "name": "Availability & Time-Zone Finder",
     "categories": [
@@ -816,6 +1552,22 @@ export const TOOL_CATALOG = [
     "description": "Generate unique AI-style avatars with custom colors, backgrounds, and facial features. Download as PNG or copy instantly."
   },
   {
+    "slug": "awards-honours-notes-tracker",
+    "name": "Awards And Honours Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log awards, recipients, fields and years in a searchable, sortable exam-ready table you can export as CSV."
+  },
+  {
+    "slug": "aws-ebs-cost-calculator",
+    "name": "AWS EBS Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly AWS EBS cost across gp3, gp2, io1, io2, st1 and sc1 — storage, IOPS, throughput and snapshots."
+  },
+  {
     "slug": "aws-iam-policy-validator",
     "name": "AWS IAM Policy Validator",
     "categories": [
@@ -823,6 +1575,46 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Review pasted AWS IAM policy JSON locally for structural mistakes, broad Allow patterns, PassRole, and privilege-management risk cues."
+  },
+  {
+    "slug": "aws-lambda-cost-calculator",
+    "name": "AWS Lambda Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly AWS Lambda cost from invocations, memory size and duration, with the always-free tier applied."
+  },
+  {
+    "slug": "aws-nat-gateway-cost-calculator",
+    "name": "AWS NAT Gateway Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the true monthly cost of NAT gateways — hourly charges, per-GB data processing and the internet egress on top."
+  },
+  {
+    "slug": "azerbaijan-entry-requirement-checklist",
+    "name": "Azerbaijan Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check the ASAN e-visa route and fee, the 15-day registration deadline, passport validity and the documents Azerbaijan asks for on arrival."
+  },
+  {
+    "slug": "azure-functions-cost-calculator",
+    "name": "Azure Functions Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute Azure Functions Consumption plan cost from executions and GB-seconds, with the free grants and an EP1 Premium comparison."
+  },
+  {
+    "slug": "baby-first-year-cost-calculator",
+    "name": "Baby Cost First Year Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate a baby's first-year cost from delivery to childcare, with diaper counts, the immunisation schedule and a monthly saving plan."
   },
   {
     "slug": "baby-growth-percentile-calculator",
@@ -842,6 +1634,22 @@ export const TOOL_CATALOG = [
     "description": "Discover unique, meaningful baby names with origins, meanings, and popularity trends for boys, girls, and gender-neutral options."
   },
   {
+    "slug": "baby-size-by-week-visualizer",
+    "name": "Baby Size By Week Visualizer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "See average fetal length and weight for any week from 8 to 40, with a familiar fruit or vegetable comparison."
+  },
+  {
+    "slug": "backpacking-packing-list-builder",
+    "name": "Backpacking Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a backpacking list as a weight budget: base weight, food by calorie density and water, checked against 20% of your body weight."
+  },
+  {
     "slug": "backup-restore-verifier",
     "name": "Backup Restore Verifier",
     "categories": [
@@ -849,6 +1657,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain."
+  },
+  {
+    "slug": "bajaj-service-schedule-planner",
+    "name": "Bajaj Service Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan Bajaj bike servicing by kilometres and months with parts, labour estimates and a prepaid package comparison."
   },
   {
     "slug": "baking-pan-converter",
@@ -868,12 +1684,116 @@ export const TOOL_CATALOG = [
     "description": "See the interest you save by transferring a loan to a lower rate, net of processing fees, plus the break-even month."
   },
   {
+    "slug": "balcony-grill-cost-calculator",
+    "name": "Balcony Grill Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate balcony and window grill cost by area or by fabricated steel weight, with bar spacing, clear gap and safety check."
+  },
+  {
+    "slug": "balcony-makeover-planner",
+    "name": "Balcony Makeover Planner",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Plan balcony flooring, planters, seating and lighting by size — with a budget and an added-load check."
+  },
+  {
+    "slug": "balcony-solar-kit-estimator",
+    "name": "Balcony Solar Kit Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate yearly output, bill savings and payback for a plug-in balcony solar kit from tilt, orientation and latitude."
+  },
+  {
     "slug": "band-name-generator",
     "name": "Band Name Generator",
     "categories": [
       "Fun"
     ],
     "description": "Generate band name ideas by genre."
+  },
+  {
+    "slug": "bandwidth-transfer-time-calculator",
+    "name": "Bandwidth Transfer Time Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate how long a file or dataset takes to transfer at a given link speed, with protocol overhead and unit conversions handled."
+  },
+  {
+    "slug": "bangalore-university-cgpa-converter",
+    "name": "Bangalore University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Bangalore University CGPA to percentage with the (CGPA - 0.75) x 10 rule and compare it against the other formulas in circulation."
+  },
+  {
+    "slug": "bangkok-trip-budget-breakdown",
+    "name": "Bangkok Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Bangkok trip into flights, stay, food, transport and activities in baht and rupees, with forex markup and VAT refund."
+  },
+  {
+    "slug": "bank-account-masking-tool",
+    "name": "Bank Account Number Masking Tool",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document."
+  },
+  {
+    "slug": "bank-balance-certificate-request-generator",
+    "name": "Bank Balance Certificate Request Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the funds a visa application needs and draft the letter asking your bank for a balance certificate in the right format."
+  },
+  {
+    "slug": "bank-charges-penalty-estimator",
+    "name": "Bank Charges and Penalty Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate a year of minimum balance penalties, excess ATM fees, return charges and GST on an Indian savings account."
+  },
+  {
+    "slug": "bank-exam-application-checklist",
+    "name": "Bank Exam Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check IBPS and SBI age eligibility on the cut-off date, then work through every form field, upload spec and document the application needs."
+  },
+  {
+    "slug": "bank-exam-countdown",
+    "name": "Bank Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Countdown board for IBPS, SBI and RBI stage dates with prelims-to-mains gap analysis, per-question speed and cutoff attempts."
+  },
+  {
+    "slug": "bank-exam-day-checklist",
+    "name": "Bank Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Bank exam day checklist for the call letter, photo ID with photocopy and photographs, plus a reporting-time plan and negative-marking maths."
+  },
+  {
+    "slug": "bank-locker-cost-estimator",
+    "name": "Locker Rent and Insurance Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out annual bank locker rent with GST, the term deposit blocked as security, and the gap between RBI's liability cap and your contents."
   },
   {
     "slug": "bank-statement-redactor",
@@ -905,10 +1825,17 @@ export const TOOL_CATALOG = [
     "slug": "base-converter",
     "name": "Base Converter",
     "categories": [
-      "Developer",
-      "Calculators"
+      "Developer"
     ],
     "description": "Convert numbers between binary, octal, decimal, hex, and base36."
+  },
+  {
+    "slug": "base-url-path-joiner",
+    "name": "Base URL Path Joiner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Join a base URL with path segments the safe way, and see how it differs from RFC 3986 reference resolution with slashes, dot segments and query strings."
   },
   {
     "slug": "base32-encoder",
@@ -930,6 +1857,7 @@ export const TOOL_CATALOG = [
     "slug": "base64-audio-converter",
     "name": "Base64 Audio Converter",
     "categories": [
+      "Video & Audio",
       "Converters"
     ],
     "description": "Preview and download Base64 audio data URLs."
@@ -968,7 +1896,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Converters"
     ],
-    "description": "Preview and download Base64 image data."
+    "description": "Decode a Base64 string or data URL back into an image, identify its real format from the file signature, and read its pixel dimensions."
   },
   {
     "slug": "base64-to-pdf",
@@ -977,7 +1905,7 @@ export const TOOL_CATALOG = [
       "PDF & Documents",
       "Converters"
     ],
-    "description": "Preview and download Base64 PDF data."
+    "description": "Decode a Base64 string or data URL back into a PDF, preview it, and check its version, page objects, encryption and trailer."
   },
   {
     "slug": "base64-to-text",
@@ -986,23 +1914,25 @@ export const TOOL_CATALOG = [
       "Developer",
       "Converters"
     ],
-    "description": "Decode Base64 strings into readable UTF-8 text."
+    "description": "Decode Base64 strings into readable UTF-8 text, with padding repair, URL-safe alphabet support and a validity check."
   },
   {
     "slug": "base64-to-video",
     "name": "Base64 to Video",
     "categories": [
+      "Video & Audio",
       "Converters"
     ],
-    "description": "Preview and download Base64 video data URLs."
+    "description": "Decode a Base64 string or data URL back into a video file, identify the container from its magic bytes, and read duration, frame size and bitrate."
   },
   {
     "slug": "base64-url-converter",
     "name": "Base64 URL Converter",
     "categories": [
-      "Developer"
+      "Developer",
+      "Converters"
     ],
-    "description": "Convert standard Base64, URL-safe Base64, and text payloads."
+    "description": "Convert between plain text, standard Base64 (RFC 4648 §4) and URL-safe base64url (§5), with padding repair and a URL length comparison."
   },
   {
     "slug": "base64-url-encoder",
@@ -1011,7 +1941,15 @@ export const TOOL_CATALOG = [
       "Developer",
       "Converters"
     ],
-    "description": "Encode text and Base64 payloads into URL-safe Base64."
+    "description": "Encode text, standard Base64 or hex bytes into URL-safe base64url (RFC 4648 §5), with padding control and URL and cookie size checks."
+  },
+  {
+    "slug": "bash-script-scaffold-generator",
+    "name": "Bash Script Scaffold Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a safe bash script skeleton with strict mode, ERR and EXIT traps, usage, logging, root check and a flock guard."
   },
   {
     "slug": "basic-auth-header-generator",
@@ -1028,6 +1966,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history."
+  },
+  {
+    "slug": "batch-api-savings-calculator",
+    "name": "Batch API Savings Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare real-time and batch LLM pricing for bulk jobs and see the saving, blended cost and latency you trade for it."
   },
   {
     "slug": "batch-face-privacy-blur",
@@ -1093,6 +2039,22 @@ export const TOOL_CATALOG = [
     "description": "Prior aur evidence se posterior probability calculate kare."
   },
   {
+    "slug": "beach-day-timing-planner",
+    "name": "Beach Day Tide and Timing Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Find the best hours on the beach by scoring every half-hour against UV, heat lag, crowds and the tide using the rule of twelfths."
+  },
+  {
+    "slug": "beach-holiday-packing-list-builder",
+    "name": "Beach Holiday Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build and tick off a beach packing list sized by trip length, heat, laundry access and sun hours, with the sunscreen volume worked out."
+  },
+  {
     "slug": "beam-deflection-stress-calculator",
     "name": "Beam Deflection & Stress Calculator",
     "categories": [
@@ -1117,7 +2079,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Instantly format, clean up, and beautify messy code snippets."
+    "description": "Instantly format, clean up and beautify messy JavaScript, JSON, CSS, HTML, XML and SQL — or compact it again."
   },
   {
     "slug": "beauty-score",
@@ -1126,6 +2088,30 @@ export const TOOL_CATALOG = [
       "AI Tools"
     ],
     "description": "Calculate your facial beauty score based on symmetry and the Golden Ratio."
+  },
+  {
+    "slug": "bed-admission-merit-calculator",
+    "name": "BEd Admission Merit Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate B.Ed admission merit from graduation percentage and entrance score, with the NCTE 50% eligibility check built in."
+  },
+  {
+    "slug": "bed-size-comparison-chart",
+    "name": "Bed Size Comparison Chart",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare single, double, queen and king bed sizes across Indian, US, UK and EU standards in inches, cm and feet."
+  },
+  {
+    "slug": "bedroom-ac-tonnage-calculator",
+    "name": "Bedroom AC Tonnage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the right AC tonnage for a bedroom from floor area, ceiling height, roof exposure, sunlight and how many people sleep in it."
   },
   {
     "slug": "before-after-comparator",
@@ -1154,12 +2140,60 @@ export const TOOL_CATALOG = [
     "description": "Late filing fee under Section 234F plus 234A interest for income tax returns filed after the due date."
   },
   {
+    "slug": "bengaluru-airport-transfer-time-planner",
+    "name": "Bengaluru Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Bengaluru BLR airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
+    "slug": "bengaluru-blr-airport-arrival-buffer-calculator",
+    "name": "Bengaluru BLR Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Bengaluru BLR using drive time, traffic, check-in cut-off, security and gate-closing buffers."
+  },
+  {
     "slug": "bg-remover",
     "name": "Background Remover",
     "categories": [
       "AI Tools"
     ],
     "description": "Remove your Image background in just a one click"
+  },
+  {
+    "slug": "bhutan-entry-requirement-checklist",
+    "name": "Bhutan Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out Bhutan's Sustainable Development Fee for your party, test the permit or visa route and passport validity, and build the document checklist."
+  },
+  {
+    "slug": "bicycle-chain-wear-checker",
+    "name": "Bicycle Chain Wear Checker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn a ruler measurement into chain elongation percentage and tell you whether the chain, cassette or chainrings need replacing."
+  },
+  {
+    "slug": "bicycle-frame-size-calculator",
+    "name": "Bicycle Frame Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find your road, mountain or hybrid bike frame size from height and inseam using the classic inseam-multiplier fit formulas."
+  },
+  {
+    "slug": "bicycle-maintenance-planner",
+    "name": "Bicycle Maintenance Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Turn your weekly mileage and riding conditions into a dated bike service schedule: cleaning, lubing, and every part replacement interval."
   },
   {
     "slug": "big-button-medical-info-card",
@@ -1169,6 +2203,54 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Large-text medicines, allergies aur emergency-contact card banaye."
+  },
+  {
+    "slug": "bihar-board-percentage-calculator",
+    "name": "Bihar Board Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute BSEB Matric or Inter percentage on the 500-mark aggregate with pass status and First, Second or Third Division."
+  },
+  {
+    "slug": "bike-chain-slack-guide",
+    "name": "Bike Chain Slack Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Set correct chain slack, measure chain stretch across 20 links against the 2% service limit and time your next lube."
+  },
+  {
+    "slug": "bike-fuel-cost-calculator",
+    "name": "Bike Fuel Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Motorcycle and scooter fuel cost per trip, per month and per year, plus tank range, full-tank cost and refills needed."
+  },
+  {
+    "slug": "bike-loan-emi-calculator",
+    "name": "Bike Loan EMI Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out two-wheeler loan EMI, total interest, processing fee and a year-by-year amortisation schedule from the on-road price."
+  },
+  {
+    "slug": "bike-mileage-tracker",
+    "name": "Bike Mileage Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log two-wheeler fill-ups and get true tank-to-tank mileage, cost per kilometre and the trend across every full tank."
+  },
+  {
+    "slug": "bill-of-supply-generator",
+    "name": "Bill of Supply Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a printable Rule 49 bill of supply for exempt, nil-rated and composition-scheme sales, with GSTIN check and amount in words."
   },
   {
     "slug": "binary-hex-decimal-converter",
@@ -1243,6 +2325,14 @@ export const TOOL_CATALOG = [
     "description": "European call/put value aur five Greeks calculate kare."
   },
   {
+    "slug": "blister-pack-refill-tracker",
+    "name": "Blister Pack Refill Tracker",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Count the tablets left in your strips and get the day supply runs out, the day to reorder, and how many packs to buy."
+  },
+  {
     "slug": "block-stacker",
     "name": "Block Stacker",
     "categories": [
@@ -1257,6 +2347,14 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "Generate a structured blog outline (intro, sections, conclusion, FAQ) for any topic."
+  },
+  {
+    "slug": "blog-outline-prompt-builder",
+    "name": "Blog Outline Prompt Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Splits a target word count across intro, H2 sections, FAQs and conclusion, then writes the outline prompt with that budget built in."
   },
   {
     "slug": "blog-post-ideas",
@@ -1315,6 +2413,22 @@ export const TOOL_CATALOG = [
     "description": "Log glucose readings with meal context, see target-range badges, time in range, and an estimated HbA1c."
   },
   {
+    "slug": "bls-international-appointment-day-checklist",
+    "name": "BLS International Appointment Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Carry, wear and leave-behind checklist for a BLS International application centre visit, with a photocopy planner and leave-home time."
+  },
+  {
+    "slug": "blue-green-deployment-checklist",
+    "name": "Blue Green Deployment Checklist",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a blue-green cutover checklist with DNS wait time, canary ramp, session and migration steps, and rollback triggers."
+  },
+  {
     "slug": "blur-comparison",
     "name": "Blur Comparison",
     "categories": [
@@ -1341,12 +2455,44 @@ export const TOOL_CATALOG = [
     "description": "Calculate your Body Mass Index"
   },
   {
+    "slug": "bmi-prime-calculator",
+    "name": "BMI Prime Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "BMI Prime is your BMI divided by the upper healthy limit, so 1.00 is the ceiling and 1.15 means 15 percent over it."
+  },
+  {
     "slug": "bmr-calculator",
     "name": "BMR Calculator",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Basal metabolic rate (calories at rest) via the Mifflin-St Jeor equation, plus daily needs."
+  },
+  {
+    "slug": "board-exam-countdown",
+    "name": "Board Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Class 10 and 12 board exam countdown with a subject-wise datesheet, free study days between papers and marks-needed maths."
+  },
+  {
+    "slug": "board-exam-day-checklist",
+    "name": "Board Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work back from your paper start time to a wake-up and gate-closing clock, then pack the right documents, stationery and permitted items."
+  },
+  {
+    "slug": "board-foot-calculator",
+    "name": "Board Foot Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert timber thickness, width and length into board feet, cubic feet and cubic metres, with waste allowance and total cost."
   },
   {
     "slug": "body-fat-calculator",
@@ -1381,6 +2527,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate body surface area (BSA) using the Mosteller and Du Bois formulas."
   },
   {
+    "slug": "bodybuilder-protein-calculator",
+    "name": "Bodybuilder Protein Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily and per-meal protein targets for hypertrophy blocks using ISSN g/kg ranges and the 0.4 g/kg per-meal dose."
+  },
+  {
     "slug": "bolt-torque-preload-calculator",
     "name": "Bolt Torque & Preload Calculator",
     "categories": [
@@ -1388,6 +2542,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Bolt size aur K-factor se torque/clamp load estimate kare."
+  },
+  {
+    "slug": "bonafide-certificate-request-drafter",
+    "name": "Bonafide Certificate Request Drafter",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a formal bonafide certificate request letter to your school or college with the purpose, roll number and details filled in."
   },
   {
     "slug": "bond-duration-convexity-calculator",
@@ -1414,6 +2576,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate your bonus payout from target variable pay, performance rating multipliers, company payout factor and proration."
   },
   {
+    "slug": "book-page-bookmark-organizer",
+    "name": "Bookmark Page Organizer For Books",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Save page references per topic across multiple books and get one sorted, copyable topic index."
+  },
+  {
     "slug": "bookmark-capsule",
     "name": "Bookmark Capsule",
     "categories": [
@@ -1428,6 +2598,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Organize bookmarks with folders, categories, tags, favorites, drag-and-drop, search, filters, bulk actions, and import/export."
+  },
+  {
+    "slug": "books-of-accounts-requirement-checker",
+    "name": "Books of Accounts Requirement Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Find out whether section 44AA and Rule 6F force you to keep formal books, and which registers you must maintain."
+  },
+  {
+    "slug": "bookshelf-capacity-calculator",
+    "name": "Bookshelf Capacity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Count how many books a shelf holds, the load in kilograms, and the maximum span before the shelf sags."
   },
   {
     "slug": "bootstrap-confidence-workbench",
@@ -1491,6 +2677,14 @@ export const TOOL_CATALOG = [
     "description": "Measure your visual processing speed and cognitive efficiency with a clinical symbol-to-digit substitution task."
   },
   {
+    "slug": "brand-asset-naming-convention-builder",
+    "name": "Brand Asset Naming Convention Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a file naming rule for logos, exports and campaign assets, validated against POSIX, Windows and S3 filename limits."
+  },
+  {
     "slug": "brand-deal-rate-calculator",
     "name": "Brand Deal Rate Calculator",
     "categories": [
@@ -1507,6 +2701,30 @@ export const TOOL_CATALOG = [
       "Marketing & Social"
     ],
     "description": "Create, organize, preview, and export complete brand kits with logos, colors, typography, links, and guidelines."
+  },
+  {
+    "slug": "brand-social-avatar-kit-generator",
+    "name": "Brand Social Avatar Kit Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Crop one square source into circle-safe profile pictures at each platform's recommended upload size, entirely in your browser."
+  },
+  {
+    "slug": "brand-voice-guideline-generator",
+    "name": "Brand Voice Guideline Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Turn four tone dials into a shareable brand voice guide with do and don't rules, word choices and reading-level targets."
+  },
+  {
+    "slug": "brass-to-cft-converter",
+    "name": "Brass to CFT Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert brass to cubic feet, cubic metres, tonnes and truckloads for sand, aggregate and other loose construction material."
   },
   {
     "slug": "breach-notification-timeline-planner",
@@ -1527,6 +2745,14 @@ export const TOOL_CATALOG = [
     "description": "Prepare a privacy-preserving password-prefix lookup without uploading the full password."
   },
   {
+    "slug": "break-even-accuracy-calculator",
+    "name": "Break Even Accuracy Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the accuracy above which attempting a question earns marks under any negative marking scheme, and how many options you must rule out."
+  },
+  {
     "slug": "break-even-calculator",
     "name": "Break-Even Calculator",
     "categories": [
@@ -1534,6 +2760,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Calculate zero-profit break-even units, revenue, margin of safety, profit targets, and cost-volume scenarios."
+  },
+  {
+    "slug": "break-even-point-calculator",
+    "name": "Break Even Point Calculator for Small Business",
+    "categories": [
+      "Business"
+    ],
+    "description": "Find break-even units and revenue from fixed costs, price and variable cost, with margin of safety, target profit and operating leverage."
   },
   {
     "slug": "break-even-units-calculator",
@@ -1544,12 +2778,60 @@ export const TOOL_CATALOG = [
     "description": "How many units you must sell to cover your costs."
   },
   {
+    "slug": "breaking-change-impact-checklist",
+    "name": "Breaking Change Impact Checklist",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a consumer impact checklist and risk score before shipping an API or library breaking change."
+  },
+  {
+    "slug": "breastfeeding-hydration-calculator",
+    "name": "Breastfeeding Hydration Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Daily fluid target while nursing, derived from milk output and feeding frequency rather than a flat one-size figure."
+  },
+  {
+    "slug": "breastfeeding-session-log",
+    "name": "Breastfeeding Session Log",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Log every feed with side and duration, then see daily totals, gaps between feeds, left-right balance and the longest stretch."
+  },
+  {
     "slug": "brick-breaker",
     "name": "Brick Breaker",
     "categories": [
       "Games"
     ],
     "description": "Smash every brick with paddle and ball in this free arcade brick breaker game with levels and power-ups."
+  },
+  {
+    "slug": "brick-quantity-calculator",
+    "name": "Brick Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Bricks, mortar volume, cement bags and sand for a wall of any size, with joint thickness, openings and wastage."
+  },
+  {
+    "slug": "british-airways-baggage-allowance-checker",
+    "name": "British Airways Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check hand and checked bags against British Airways piece allowances, the 90 x 75 x 43 cm size rule and heavy-bag limits."
+  },
+  {
+    "slug": "british-airways-excess-baggage-cost-estimator",
+    "name": "British Airways Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price extra, heavy and oversize bags on a British Airways booking, prepaid against airport rates, and spot repacking savings."
   },
   {
     "slug": "brokerage-calculator",
@@ -1578,11 +2860,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "browser-fingerprint-visualizer",
-    "name": "Browser FingerPrint",
+    "name": "Browser Fingerprint Visualizer",
     "categories": [
       "Security & Privacy"
     ],
-    "description": "Track your browser fingerprint"
+    "description": "See the exact canvas, WebGL, audio, font and hardware signals your browser leaks, and score how identifiable that fingerprint makes you."
   },
   {
     "slug": "browser-session-analyzer",
@@ -1600,6 +2882,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Parse tab logs, bookmark exports, or URL lists and export them as clean Markdown logs, JSON dumps, or HTML links lists."
+  },
+  {
+    "slug": "btu-to-ton-converter",
+    "name": "BTU to Ton Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert cooling capacity between BTU per hour, tons of refrigeration, kilowatts and kcal/h, with the electrical draw at a given COP."
   },
   {
     "slug": "bubble-text-generator",
@@ -1627,6 +2917,14 @@ export const TOOL_CATALOG = [
     "description": "Create a monthly budget with income and expense categories. Track spending, set limits, and visualize your financial health."
   },
   {
+    "slug": "budget-prompt-builder",
+    "name": "Budget Prompt Builder",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Splits take-home pay by the 50/30/20 rule and writes an AI budgeting prompt with your real numbers and goals built in."
+  },
+  {
     "slug": "buffer-ph-calculator",
     "name": "Buffer pH Calculator",
     "categories": [
@@ -1642,6 +2940,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Run many find and replace rules over text at once with regex, case and whole-word options."
+  },
+  {
+    "slug": "bulk-order-discount-calculator",
+    "name": "Bulk Order Discount Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Price a quantity order across volume tiers, flat or graduated, and see the effective per unit cost and the next break worth reaching."
   },
   {
     "slug": "bulk-text-replacer",
@@ -1677,6 +2983,14 @@ export const TOOL_CATALOG = [
     "description": "Create a business card for your project & clients"
   },
   {
+    "slug": "business-card-bleed-template",
+    "name": "Business Card Bleed Template",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Generate a press-ready business card template with bleed, trim, safe zone and crop marks, sized in real millimetres."
+  },
+  {
     "slug": "business-days-calculator",
     "name": "Business Days Calculator",
     "categories": [
@@ -1697,10 +3011,9 @@ export const TOOL_CATALOG = [
     "slug": "byte-converter",
     "name": "Byte Converter",
     "categories": [
-      "Developer",
-      "Calculators"
+      "Converters"
     ],
-    "description": "Convert bytes, bits, KB, MB, GB, and binary units."
+    "description": "Convert bytes, bits, kB/MB/GB/TB and KiB/MiB/GiB/TiB in one place, and see why a 1 TB drive shows as 931 GiB."
   },
   {
     "slug": "c2pa-content-credentials-verifier",
@@ -1713,6 +3026,14 @@ export const TOOL_CATALOG = [
     "description": "Inspect bounded local JPEG, PNG, BMFF, and standalone JUMBF files for observable C2PA container structure without claiming cryptographic verification or authent"
   },
   {
+    "slug": "caa-record-generator",
+    "name": "CAA Record Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate RFC 8659 CAA records that restrict which certificate authorities may issue TLS certificates for your domain."
+  },
+  {
     "slug": "cac-calculator",
     "name": "CAC Calculator",
     "categories": [
@@ -1721,6 +3042,30 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Calculate Customer Acquisition Cost across marketing channels, compare channel efficiency, and track LTV:CAC ratio in real time."
+  },
+  {
+    "slug": "cache-hit-ratio-calculator",
+    "name": "Cache Hit Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute cache hit ratio, backend load reduction and effective latency (AMAT) from hit and miss counts and latencies."
+  },
+  {
+    "slug": "cad-cash-budget-planner",
+    "name": "CAD Cash Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan how many Canadian dollars to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in."
+  },
+  {
+    "slug": "caddyfile-generator",
+    "name": "Caddyfile Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a Caddy v2 Caddyfile with automatic HTTPS, reverse proxy or file server, compression, headers and logging."
   },
   {
     "slug": "caffeine-tracker",
@@ -1746,6 +3091,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Work out compound annual growth rate from a start value, end value and duration, with absolute return and a year-wise breakdown."
+  },
+  {
+    "slug": "cagr-calculator-tool",
+    "name": "CAGR Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time."
   },
   {
     "slug": "calendar-privacy-scrubber",
@@ -1781,6 +3134,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Fit, residuals, confidence bands aur detection limits calculate kare."
+  },
+  {
+    "slug": "calicut-university-cgpa-converter",
+    "name": "Calicut University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Calicut University CBCSS CGPA or SGPA to percentage marks, and turn course letter grades into a grade point average."
   },
   {
     "slug": "call-to-action-generator",
@@ -1824,6 +3185,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate BMR, TDEE, and daily calorie targets from basic body metrics."
   },
   {
+    "slug": "calver-version-generator",
+    "name": "CalVer Version Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate calendar version numbers like YYYY.MM.MICRO from any date and scheme, with a preview timeline of future releases."
+  },
+  {
     "slug": "camel-case-converter",
     "name": "Camel Case Converter",
     "categories": [
@@ -1849,6 +3218,30 @@ export const TOOL_CATALOG = [
     "description": "Plan campaign budget tasks with organized inputs, timelines, and clear next steps."
   },
   {
+    "slug": "canada-visa-cost-estimator",
+    "name": "Canada Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add up the IRCC application fee, biometrics with its family cap, VFS charges and courier into one rupee total."
+  },
+  {
+    "slug": "canada-visa-cover-letter-builder",
+    "name": "Canada Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft an IMM 5257 visitor visa letter of explanation with itinerary, funding, fee totals and a super visa insurance check."
+  },
+  {
+    "slug": "canada-visa-rejection-reason-explainer",
+    "name": "Canada Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Translate the ticked boxes on an IRCC refusal letter into the regulation behind them and a checklist of what to fix."
+  },
+  {
     "slug": "candy-match-3",
     "name": "Candy Match 3",
     "categories": [
@@ -1856,6 +3249,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Play Candy Match 3 free online — a sweet match-3 puzzle game. Swap candies, trigger combos, beat level targets, and chase your high score."
+  },
+  {
+    "slug": "canva-ai-prompt-builder",
+    "name": "Canva AI Prompt Builder",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Build a structured Canva AI design prompt with the exact canvas size, aspect ratio, brand slots and a legibility-checked copy budget."
   },
   {
     "slug": "capital-city-quiz",
@@ -1892,6 +3293,54 @@ export const TOOL_CATALOG = [
     "description": "Audit SRT and WebVTT cue timing, overlaps, reading-speed signals, and line limits locally with configurable editorial thresholds."
   },
   {
+    "slug": "car-ac-fuel-cost-impact",
+    "name": "Car AC Fuel Cost Impact",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate the extra fuel, money and CO2 your car air conditioning costs per hour, month and year from compressor load."
+  },
+  {
+    "slug": "car-ac-gas-refill-cost",
+    "name": "Car AC Gas Refill Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a car AC regas bill from refrigerant type, charge weight, labour, parts and 18% GST, with an R134a versus R1234yf comparison."
+  },
+  {
+    "slug": "car-battery-replacement-planner",
+    "name": "Car Battery Replacement Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Predict when your car battery needs replacing from its age, battery type, climate, usage pattern and warning signs."
+  },
+  {
+    "slug": "car-depreciation-calculator",
+    "name": "Car Depreciation Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Chart a car's year-by-year depreciation curve, remaining value and IRDAI insurance IDV from price, age and kilometres run."
+  },
+  {
+    "slug": "car-detailing-cost-calculator",
+    "name": "Car Detailing Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare wax, sealant, ceramic coating and PPF on true cost per year over your ownership period, not sticker price."
+  },
+  {
+    "slug": "car-exchange-vs-private-sale",
+    "name": "Car Exchange vs Private Sale",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare a dealer exchange offer plus bonus against the true net proceeds of a private sale after costs, waiting time and money's time value."
+  },
+  {
     "slug": "car-loan-calculator",
     "name": "Car Loan Calculator",
     "categories": [
@@ -1909,11 +3358,35 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "car-ownership-cost-analyzer",
-    "name": "car-cost-analyzer",
+    "name": "Car Ownership Cost Analyzer",
     "categories": [
-      "Other"
+      "Finance Calculators"
     ],
-    "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation."
+    "description": "Calculate the true cost of owning a car — EMI, fuel with inflation, insurance, maintenance and depreciation — and compare it against taking taxis."
+  },
+  {
+    "slug": "car-purchase-savings-planner",
+    "name": "Car Purchase Savings Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan the down payment, test the EMI against the 20/4/10 rule and see the full cost of owning the car after resale."
+  },
+  {
+    "slug": "car-rental-cost-comparison",
+    "name": "Car Rental Cost Comparison",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare self-drive rental quotes on daily rate, included km, excess-km charges, fuel policy, GST and deposit for one real trip."
+  },
+  {
+    "slug": "car-storage-checklist",
+    "name": "Car Storage Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Checklist to park a car safely for weeks or months, with battery drain days, storage tyre pressure and a return list."
   },
   {
     "slug": "card-picker",
@@ -1941,12 +3414,36 @@ export const TOOL_CATALOG = [
     "description": "Calculate cardiac output and cardiac index from heart rate and stroke volume with clinical reference ranges."
   },
   {
+    "slug": "caret-tilde-range-visualizer",
+    "name": "Caret Tilde Range Visualizer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "See the allowed version window for ^ and ~ semver ranges on a number line, with allowed and blocked neighbours."
+  },
+  {
     "slug": "carpet-area-calculator",
     "name": "Carpet / Floor Area Calculator",
     "categories": [
       "Productivity"
     ],
     "description": "Calculate floor area and material needed for a room."
+  },
+  {
+    "slug": "carpet-roll-quantity-calculator",
+    "name": "Carpet Roll Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate carpet roll running metres, seams, offcut wastage and cost for a wall-to-wall installation."
+  },
+  {
+    "slug": "carpool-cost-split-calculator",
+    "name": "Carpool Cost Split Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Split carpool fuel, tolls, parking and running cost between riders by the distance each person actually travels."
   },
   {
     "slug": "carpool-rotation-scheduler",
@@ -1958,12 +3455,20 @@ export const TOOL_CATALOG = [
     "description": "Drivers aur passengers ka recurring fair rota banaye."
   },
   {
+    "slug": "carry-on-only-trip-planner",
+    "name": "Carry-On Only Trip Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan a cabin-bag-only trip: the smallest capsule wardrobe that covers your days, plus a 3-1-1 liquids audit and a weight and volume check."
+  },
+  {
     "slug": "cart-bill-splitter",
     "name": "Cart Bill Splitter",
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Split shopping bills, manage shared expenses, and handle tax/delivery charges fairly."
+    "description": "Split a shared cart or restaurant bill line by line — equally, by percentage, by quantity or by exact amount — apportion tax and delivery fairly, and settle up "
   },
   {
     "slug": "cartoon-yourself",
@@ -1975,12 +3480,132 @@ export const TOOL_CATALOG = [
     "description": "Transform your photos into cartoon-style portraits with multiple art styles and customization."
   },
   {
+    "slug": "cascading-discount-calculator",
+    "name": "Discount and Cascading Discount Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Stack successive discounts, a flat coupon and tax to get the true effective discount, final price and total saved."
+  },
+  {
+    "slug": "case-study-prompt-builder",
+    "name": "Case Study Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a structured AI prompt for a business case study with problem, approach and measurable results baked in."
+  },
+  {
+    "slug": "cash-denomination-calculator",
+    "name": "Rounding and Cash Denomination Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Round an amount to a cash-friendly figure and split it into the fewest ₹ notes and coins for payouts and envelopes."
+  },
+  {
+    "slug": "cash-deposit-reporting-checker",
+    "name": "Cash Deposit Reporting Threshold Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check which Rule 114E reporting, PAN-quoting and section 194N thresholds your cash deposits and withdrawals cross in a financial year."
+  },
+  {
+    "slug": "caste-certificate-checklist",
+    "name": "Caste Certificate Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build the SC, ST or OBC caste certificate document list, check the religion and migration bars, and test the creamy layer income limit."
+  },
+  {
+    "slug": "cat-exam-countdown",
+    "name": "CAT Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "CAT countdown with a phased mock schedule, sectional prep pace for VARC, DILR and QA, and attempts needed for a target score."
+  },
+  {
+    "slug": "cat-exam-day-checklist",
+    "name": "CAT Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Map your CAT slot to a reporting, gate-closing and sectional clock, pace each 40-minute section, and pack only what the centre allows."
+  },
+  {
     "slug": "cbc-report-interpreter",
     "name": "CBC Report Interpreter",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Complete Blood Count interpretation with differential analysis, anemia classification, infection pattern recognition, and clinical recommendations."
+  },
+  {
+    "slug": "cbse-best-of-five-calculator",
+    "name": "CBSE Best Of Five Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the CBSE Class 12 best-of-five percentage: the compulsory language plus your four highest scoring subjects."
+  },
+  {
+    "slug": "cbse-class-10-percentage-calculator",
+    "name": "CBSE Class 10 Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate CBSE Class 10 percentage from subject marks — best-of-five average, overall percentage and the 33% pass check."
+  },
+  {
+    "slug": "cbse-class-10-syllabus-tracker",
+    "name": "CBSE Class 10 Syllabus Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Monitor CBSE Class 10 syllabus progress chapter by chapter, with revision status and the weekly pace needed before the boards."
+  },
+  {
+    "slug": "cbse-class-12-syllabus-tracker",
+    "name": "CBSE Class 12 Syllabus Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track CBSE Class 12 chapter completion subject by subject and see the weekly pace needed to finish before the boards."
+  },
+  {
+    "slug": "cbse-lesson-plan-prompt-builder",
+    "name": "CBSE Lesson Plan Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build CBSE-aligned lesson plan prompts by class, subject and period length, with 5E or Herbartian time splits and the real internal-assessment scheme."
+  },
+  {
+    "slug": "ceiling-fan-electricity-cost",
+    "name": "Ceiling Fan Electricity Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out what your ceiling fans cost to run each year and how quickly a BLDC fan upgrade pays for itself."
+  },
+  {
+    "slug": "ceiling-fan-size-selector",
+    "name": "Ceiling Fan Size Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Pick ceiling fan sweep, fan count and downrod length from your room size, ceiling height and required air delivery."
+  },
+  {
+    "slug": "ceiling-paint-coverage-calculator",
+    "name": "Ceiling Paint Coverage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out ceiling paint litres and cost from room length, width, cove depth and the number of coats."
   },
   {
     "slug": "celebrity-look-alike",
@@ -1999,6 +3624,22 @@ export const TOOL_CATALOG = [
     "description": "Interactive animal and plant cell diagram explorer with clickable organelles, metabolic functions, and cellular biology breakdowns."
   },
   {
+    "slug": "cent-to-sqft-converter",
+    "name": "Cent to Sqft Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert cent, ground, are, ankanam, guntha and acre to square feet and square metres, with rate per cent and land value."
+  },
+  {
+    "slug": "certificate-expiry-tracker",
+    "name": "Certificate Expiry Tracker",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Track TLS certificate expiry dates locally, see days remaining and renewal deadlines, and export calendar reminders."
+  },
+  {
     "slug": "certificate-transparency-watchlist",
     "name": "Certificate Transparency Watchlist",
     "categories": [
@@ -2006,6 +3647,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Prepare a domain watchlist and identify suspicious certificate names."
+  },
+  {
+    "slug": "cft-to-cubic-meter-converter",
+    "name": "CFT to Cubic Meter Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert cubic feet, cubic metres, litres and brass, with material weight in tonnes and truck loads for sand and aggregate."
   },
   {
     "slug": "cgpa-to-percentage-converter",
@@ -2017,12 +3666,44 @@ export const TOOL_CATALOG = [
     "description": "Convert CGPA to percentage using CBSE, VTU, Mumbai University and custom multipliers."
   },
   {
+    "slug": "cgst-sgst-igst-split-calculator",
+    "name": "CGST SGST IGST Split Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Enter supplier and place-of-supply state codes to see whether GST splits into CGST and SGST or is charged as IGST, with the amounts."
+  },
+  {
+    "slug": "change-freeze-calendar-planner",
+    "name": "Change Freeze Calendar Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan deployment freeze windows around festivals, sale events and fiscal close dates, with merged windows and frozen-day totals."
+  },
+  {
     "slug": "changelog-generator",
     "name": "Changelog Generator",
     "categories": [
       "Developer"
     ],
     "description": "Turn a list of changes into a clean, categorised Keep-a-Changelog entry."
+  },
+  {
+    "slug": "changelog-prompt-builder",
+    "name": "Changelog Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Parse Conventional Commits into Keep a Changelog sections and a SemVer bump, then build the writing prompt."
+  },
+  {
+    "slug": "changesets-config-generator",
+    "name": "Changesets Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate .changeset/config.json with changelog source, npm access, base branch, fixed/linked package groups and ignore rules."
   },
   {
     "slug": "character-limit-checker",
@@ -2050,6 +3731,30 @@ export const TOOL_CATALOG = [
     "description": "Anonymize participant labels, contact details, links, identifiers, and optional timestamps in TXT, JSON, or CSV chat exports entirely in your browser."
   },
   {
+    "slug": "chatbot-analytics-metric-planner",
+    "name": "Chatbot Analytics Metric Planner",
+    "categories": [
+      "Business"
+    ],
+    "description": "Pick containment, CSAT and deflection metrics before launch and project deflected volume and savings."
+  },
+  {
+    "slug": "chatbot-escalation-rules-planner",
+    "name": "Chatbot Escalation Rules Planner",
+    "categories": [
+      "Business"
+    ],
+    "description": "Define an ordered rule set for when your chatbot must hand a conversation to a human agent."
+  },
+  {
+    "slug": "chatbot-monthly-cost-estimator",
+    "name": "Chatbot Monthly Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a support chatbot's monthly token bill from conversation volume, RAG context and turn length, then compare it to agent cost."
+  },
+  {
     "slug": "chatgpt-chat-export",
     "name": "ChatGPT Chat Export",
     "categories": [
@@ -2068,6 +3773,38 @@ export const TOOL_CATALOG = [
     "description": "Interactive stoichiometric chemical reaction simulator with animated molecular rearrangements, balanced equations, and enthalpy energy diagrams."
   },
   {
+    "slug": "chennai-airport-transfer-time-planner",
+    "name": "Chennai Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Chennai MAA airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
+    "slug": "chennai-auto-cab-fare-estimator",
+    "name": "Chennai Auto and Cab Fare Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a fair Chennai auto or cab fare from distance, waiting time, night charges and surge, using the notified auto meter rate."
+  },
+  {
+    "slug": "chennai-maa-airport-arrival-buffer-calculator",
+    "name": "Chennai MAA Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Chennai MAA using drive time, traffic, check-in cut-off, security and gate-closing buffers."
+  },
+  {
+    "slug": "cheque-amount-to-words-indian",
+    "name": "Cheque Amount to Words Converter Indian",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Turn a rupee amount into cheque-ready words using the Indian lakh and crore system, with paise and digit grouping."
+  },
+  {
     "slug": "chess-multiplayer",
     "name": "Chess Multiplayer",
     "categories": [
@@ -2082,6 +3819,14 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Sharpen your tactical skills with curated chess puzzles — forks, pins, skewers, discovered attacks, checkmates and endgames across multiple difficulty levels."
+  },
+  {
+    "slug": "child-education-corpus-planner",
+    "name": "Child Education Corpus Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project a degree's future cost with fee inflation and get the monthly SIP needed to fund it in time."
   },
   {
     "slug": "child-education-cost-planner",
@@ -2107,6 +3852,22 @@ export const TOOL_CATALOG = [
       "Image & Photo"
     ],
     "description": "Manually review and mask privacy-sensitive details in a photo you own, then export a flattened copy with metadata removed locally."
+  },
+  {
+    "slug": "child-safety-home-checklist",
+    "name": "Child Safety Home Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Room-by-room childproofing checklist matched to your child's age, your home's stairs, balconies and water, with a readiness score."
+  },
+  {
+    "slug": "chimney-cleaning-planner",
+    "name": "Chimney Cleaning Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out how often your kitchen chimney filters need cleaning, when the next service is due and whether its suction suits your kitchen."
   },
   {
     "slug": "chinese-character-generator",
@@ -2135,6 +3896,14 @@ export const TOOL_CATALOG = [
     "description": "Simulate a chit month by month — bids, dividends and foreman commission — to see what your bidding month really costs or earns."
   },
   {
+    "slug": "chmod-permission-calculator",
+    "name": "Chmod Permission Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Unix file permissions between numeric (755) and symbolic (rwxr-xr-x) form with a checkbox grid, setuid, setgid and sticky bits."
+  },
+  {
     "slug": "chore-chart-maker",
     "name": "Chore Chart Maker",
     "categories": [
@@ -2152,12 +3921,44 @@ export const TOOL_CATALOG = [
     "description": "Microphone se note aur cents sharp/flat dikhaye."
   },
   {
+    "slug": "chronotype-finder-quiz",
+    "name": "Chronotype Finder Quiz",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Five-question rMEQ chronotype quiz scoring you as a morning, intermediate or evening type, with your natural sleep window."
+  },
+  {
     "slug": "churn-rate-calculator",
     "name": "Churn Rate Calculator",
     "categories": [
       "Marketing & Social"
     ],
     "description": "Customer churn and retention rate for a period."
+  },
+  {
+    "slug": "ci-build-matrix-explosion-estimator",
+    "name": "CI Build Matrix Explosion Estimator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "See how many jobs and CI minutes your build matrix dimensions really generate — with GitHub's 256-job limit checked — before you commit."
+  },
+  {
+    "slug": "cidr-subnet-calculator",
+    "name": "CIDR Subnet Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate network, broadcast, usable host range, subnet mask and wildcard mask from any IPv4 CIDR block."
+  },
+  {
+    "slug": "cidr-to-ip-range-converter",
+    "name": "CIDR to IP Range Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert between CIDR notation, start-end IP ranges and Cisco wildcard masks in bulk, with minimal CIDR splitting for arbitrary ranges."
   },
   {
     "slug": "circled-text-generator",
@@ -2176,6 +3977,46 @@ export const TOOL_CATALOG = [
     "description": "Generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles instantly."
   },
   {
+    "slug": "class-rank-percentile-calculator",
+    "name": "Class Rank Percentile Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert your class rank and class size into the top-percent figure and percentile that college applications ask for."
+  },
+  {
+    "slug": "class-wise-ncert-coverage-map",
+    "name": "Class Wise NCERT Coverage Map",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Map your UPSC-style NCERT reading across classes 6-12 and subjects, and see coverage percentages and weak spots."
+  },
+  {
+    "slug": "clat-exam-countdown",
+    "name": "CLAT Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "CLAT countdown with mock-test capacity, current affairs coverage pace and section-wise daily targets under the 120-question pattern."
+  },
+  {
+    "slug": "clat-syllabus-tracker",
+    "name": "CLAT Syllabus Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track all five CLAT sections by their official weights, log daily reading practice and project marks under +1 / -0.25 marking."
+  },
+  {
+    "slug": "claude-api-cost-calculator",
+    "name": "Claude API Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Project Claude API costs by model, request count and token size, with prompt-cache read/write pricing and the batch discount."
+  },
+  {
     "slug": "cleaning-schedule-planner",
     "name": "Cleaning Schedule Planner",
     "categories": [
@@ -2183,6 +4024,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Organize recurring chores by room, day, priority, owner, and duration."
+  },
+  {
+    "slug": "clinic-front-desk-prompt-pack",
+    "name": "Clinic Front Desk Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Administrative AI prompts for appointments, reminders and billing, with an SMS segment counter and a clinical-advice screen."
   },
   {
     "slug": "clipboard-capsule",
@@ -2224,7 +4073,39 @@ export const TOOL_CATALOG = [
     "categories": [
       "Lifestyle"
     ],
-    "description": "Convert clothing and shoe sizes across global standards with measurement-based fit guidance and quick comparison."
+    "description": "Convert clothing and shoe sizes between US, UK, EU, IN and cm, and get a size recommendation from your own chest, waist or foot measurement."
+  },
+  {
+    "slug": "clothing-size-converter-abroad",
+    "name": "Clothing Size Converter for Shopping Abroad",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert clothing sizes between US, UK, EU, France, Italy, Japan and India, from a label or from your body measurements."
+  },
+  {
+    "slug": "cloud-budget-alert-planner",
+    "name": "Cloud Budget Alert Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan budget alert thresholds and forecast triggers from your month-to-date cloud spend, with the day each alert would fire."
+  },
+  {
+    "slug": "cloud-certification-path-planner",
+    "name": "Cloud Certification Path Planner",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Plan an AWS, Azure or GCP certification sequence with exam fees, study hours and a week-by-week timeline."
+  },
+  {
+    "slug": "cloud-egress-fee-comparison",
+    "name": "Cloud Egress Fee Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare what your monthly outbound traffic costs on AWS, Azure, GCP, Oracle, CloudFront, Bunny and Cloudflare."
   },
   {
     "slug": "cloud-status-board",
@@ -2236,12 +4117,76 @@ export const TOOL_CATALOG = [
     "description": "Major cloud aur SaaS incidents ek dashboard par dikhaye."
   },
   {
-    "slug": "code-complexity-analyzer",
-    "name": "Code Complexity Analyzer",
+    "slug": "cloud-tagging-policy-generator",
+    "name": "Cloud Tagging Policy Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a mandatory cloud tag schema for cost allocation with allowed values, provider-safe keys, examples and enforcement notes."
+  },
+  {
+    "slug": "cloudflare-workers-cost-calculator",
+    "name": "Cloudflare Workers Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute Cloudflare Workers and KV cost from requests, CPU time, reads, writes, lists and storage on the Paid plan."
+  },
+  {
+    "slug": "coaching-fee-vs-self-study-cost",
+    "name": "Coaching Fee Vs Self Study Cost",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the all-in cost of a coaching programme against a self-study plan with books, test series and online courses."
+  },
+  {
+    "slug": "coaching-institute-prompt-pack",
+    "name": "Coaching Institute Prompt Pack",
     "categories": [
       "Education & Science"
     ],
-    "description": "Analyze the complexity of your code and get suggestions to improve it."
+    "description": "Fill-in-the-blank AI prompts for batch announcements, doubt replies and result posts, with a CCPA coaching-advertising claim check."
+  },
+  {
+    "slug": "code-comment-prompt-builder",
+    "name": "Code Comment Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a docstring prompt in JSDoc, TSDoc, Google or NumPy Python, Javadoc, Doxygen, XML doc, rustdoc or Go doc style with the right tags and line limit."
+  },
+  {
+    "slug": "code-complexity-analyzer",
+    "name": "Code Complexity Analyzer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Measure cyclomatic and cognitive complexity, Halstead volume and the maintainability index of your code, and get specific refactoring suggestions."
+  },
+  {
+    "slug": "code-review-checklist-generator",
+    "name": "Code Review Checklist Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a code review checklist tuned to your language, change type and risk level, ready to paste into a pull request."
+  },
+  {
+    "slug": "code-review-prompt-builder",
+    "name": "Code Review Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Builds an AI code-review prompt focused on correctness, security, performance or style, with severity labels and a review-size check."
+  },
+  {
+    "slug": "codeowners-file-generator",
+    "name": "CODEOWNERS File Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a CODEOWNERS file with path patterns and team handles, validate owners, and preview which rule wins for any file path."
   },
   {
     "slug": "codex-chat-transfer",
@@ -2252,6 +4197,14 @@ export const TOOL_CATALOG = [
     "description": "Convert chatbot chat logs and conversational arrays between OpenAI, Anthropic, and Markdown formats instantly."
   },
   {
+    "slug": "coding-model-picker",
+    "name": "Coding Model Picker",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Score hosted, open-weight and local coding assistants against your language, repo size, privacy rules and budget with a transparent weighted rubric."
+  },
+  {
     "slug": "coffee-brew-ratio",
     "name": "Coffee Brew Ratio Calculator",
     "categories": [
@@ -2259,6 +4212,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Work out the exact coffee and water for pour-over, French press, AeroPress, espresso, moka and cold brew."
+  },
+  {
+    "slug": "coffee-shop-work-spot-rater",
+    "name": "Coffee Shop Work Spot Rater",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Rate a café for remote work on Wi-Fi speed, latency, noise, sockets, table size and seating against real call and concentration thresholds."
   },
   {
     "slug": "cognitive-performance-tracker",
@@ -2288,14 +4249,45 @@ export const TOOL_CATALOG = [
     "description": "Flip 20 coins at once and see the longest run of the same side."
   },
   {
+    "slug": "cold-email-prompt-builder",
+    "name": "Cold Email Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generates outreach prompts with persona, trigger event and one clear ask — sized to the 50-125 word range that gets replies."
+  },
+  {
+    "slug": "college-admission-form-checklist",
+    "name": "College Admission Form Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track every college application's deadline and fee, hold one shared document list, and work out the UGC refund if you withdraw."
+  },
+  {
+    "slug": "college-fee-instalment-planner",
+    "name": "College Fee Instalment Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Turn a semester fee schedule into a monthly savings plan with due dates and reminder dates."
+  },
+  {
+    "slug": "colombo-trip-budget-breakdown",
+    "name": "Colombo Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Colombo trip into flights, stay, food, transport and activities in rupees, with Sri Lanka's service charge, SSCL and VAT."
+  },
+  {
     "slug": "color-blindness-simulator",
     "name": "Color Blindness Simulator",
     "categories": [
-      "Developer",
       "Design & Color",
       "Image & Photo"
     ],
-    "description": "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time."
+    "description": "Simulate protanopia, deuteranopia, tritanopia and achromatopsia on your own images in real time, with an adjustable severity slider and side-by-side comparison."
   },
   {
     "slug": "color-code-conversion-tool",
@@ -2346,9 +4338,9 @@ export const TOOL_CATALOG = [
     "slug": "color-memory-precision-test",
     "name": "Color Memory Precision Test",
     "categories": [
-      "Design & Color"
+      "Education & Science"
     ],
-    "description": "Test your visual memory and color precision by recreating shades from memory."
+    "description": "Study a colour, watch it disappear, then rebuild it from memory — and get a blended RGB and HSL accuracy score for how close you got."
   },
   {
     "slug": "color-palette-compare",
@@ -2384,6 +4376,14 @@ export const TOOL_CATALOG = [
     "description": "Analyze emotional impact, branding psychology, and cultural meanings of colors."
   },
   {
+    "slug": "colorblind-brand-logo-checker",
+    "name": "Colourblind Logo Checker",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Preview a logo under protanopia, deuteranopia, tritanopia and achromatopsia, with CIELAB colour-difference scoring."
+  },
+  {
     "slug": "colorblind-safe-palette-fixer",
     "name": "Colorblind-Safe Palette Fixer",
     "categories": [
@@ -2393,12 +4393,36 @@ export const TOOL_CATALOG = [
     "description": "Screen a local color palette with fixed color-vision simulations, pair-distance cues, role-based text contrast, and bounded alternatives."
   },
   {
+    "slug": "commit-message-prompt-builder",
+    "name": "Commit Message Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Turns a diff summary into a Conventional Commits prompt with type, scope, breaking-change marker and the 50/72 length rules."
+  },
+  {
+    "slug": "commute-study-micro-planner",
+    "name": "Commute Study Micro Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Convert daily commute minutes into a weekly plan of audio lectures and flashcard reviews with real card counts."
+  },
+  {
     "slug": "company-info-tool",
     "name": "Company Info Explorer",
     "categories": [
       "Business"
     ],
     "description": "Quickly look up key information and metrics about tech companies."
+  },
+  {
+    "slug": "company-social-media-policy-generator",
+    "name": "Company Social Media Policy Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build an employee social media policy with disclosure, confidentiality and lawful-speech clauses, plus a coverage score and gap flags."
   },
   {
     "slug": "compatibility-quiz",
@@ -2428,6 +4452,22 @@ export const TOOL_CATALOG = [
     "description": "Audit React component names, file names, duplicate declarations, and naming convention drift."
   },
   {
+    "slug": "composer-json-generator",
+    "name": "Composer JSON Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a valid composer.json with PSR-4 autoload, require and require-dev constraints, scripts, config and platform requirements."
+  },
+  {
+    "slug": "compost-bin-size-calculator",
+    "name": "Compost Bin Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a home compost bin in litres from daily kitchen waste, browns ratio and how often you turn the heap."
+  },
+  {
     "slug": "compound-interest-calculator",
     "name": "Compound Interest Calculator",
     "categories": [
@@ -2454,6 +4494,14 @@ export const TOOL_CATALOG = [
     "description": "Plan lumpsum compound growth with reinvestment, yearly top-ups, tax, inflation-adjusted value, and year-wise charts."
   },
   {
+    "slug": "compound-interest-visualiser",
+    "name": "Compound Interest Visualiser",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Chart how compounding pulls away from simple interest over decades, with yearly balances, contributions and the interest-on-interest gap."
+  },
+  {
     "slug": "computer-parts-quiz",
     "name": "Computer Parts Quiz",
     "categories": [
@@ -2461,6 +4509,30 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Test your knowledge of computer hardware components with interactive multiple-choice questions. Learn about CPUs, GPUs, RAM, storage, and more."
+  },
+  {
+    "slug": "concert-ear-protection-guide",
+    "name": "Concert Ear Protection Guide",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Compare NRR, SNR and flat musician filter ratings and see the protected level and safe exposure time for a gig at any loudness."
+  },
+  {
+    "slug": "concrete-volume-calculator",
+    "name": "Concrete Volume Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Concrete volume for slabs, beams, columns and footings, plus cement bags, sand, aggregate and water by mix ratio."
+  },
+  {
+    "slug": "concurrency-vs-rps-calculator",
+    "name": "Concurrency vs RPS Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert between concurrent users, requests per second and response time using Little's Law, with think-time support."
   },
   {
     "slug": "condorcet-election-judge",
@@ -2532,6 +4604,14 @@ export const TOOL_CATALOG = [
     "description": "Approximate house construction cost from built-up area, quality of construction and city, with a work-head and material breakdown."
   },
   {
+    "slug": "construction-waste-cost-estimator",
+    "name": "Construction Waste Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate debris removal cost from volume, bulking, truck trips, haul distance, tipping fees and loading labour."
+  },
+  {
     "slug": "consumer-complaint-draft-builder",
     "name": "Consumer Complaint Draft Builder",
     "categories": [
@@ -2551,6 +4631,22 @@ export const TOOL_CATALOG = [
     "description": "Privately organize preferences, conversations, and gift ideas."
   },
   {
+    "slug": "container-base-image-chooser",
+    "name": "Container Base Image Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare alpine, slim, distroless, scratch and full base images by size, libc, shell and debug tooling — and get a ranked pick."
+  },
+  {
+    "slug": "container-image-digest-pinning-helper",
+    "name": "Container Image Digest Pinning Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Convert mutable image tags into pinned @sha256 digest references and scan Dockerfiles or manifests for unpinned images."
+  },
+  {
     "slug": "content-calendar-planner",
     "name": "Content Calendar Planner",
     "categories": [
@@ -2559,12 +4655,28 @@ export const TOOL_CATALOG = [
     "description": "Plan content calendar tasks with organized inputs, timelines, and clear next steps."
   },
   {
+    "slug": "content-creator-prompt-pack",
+    "name": "Content Creator Prompt Pack",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Hook, script, title and repurposing prompts with a word budget worked out from your target runtime and speaking pace."
+  },
+  {
     "slug": "continent-challenge",
     "name": "Continent Challenge",
     "categories": [
       "Education & Science"
     ],
     "description": "Test your knowledge of the 7 continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring."
+  },
+  {
+    "slug": "contraction-timer",
+    "name": "Contraction Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Time contraction length and start-to-start gaps, test the 5-1-1 pattern, and copy a summary for your maternity unit."
   },
   {
     "slug": "contribution-margin-calculator",
@@ -2618,6 +4730,14 @@ export const TOOL_CATALOG = [
     "description": "View, manage, add, edit, and delete browser cookies in real-time."
   },
   {
+    "slug": "coolant-mix-ratio-calculator",
+    "name": "Coolant Mix Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out coolant and water litres for your radiator capacity, with the freeze point and cap-pressure boil point of the mix."
+  },
+  {
     "slug": "coronary-artery-disease-risk-calculator",
     "name": "Coronary Artery Disease Risk Calculator",
     "categories": [
@@ -2652,12 +4772,92 @@ export const TOOL_CATALOG = [
     "description": "Flag wildcard, credential, and unsafe-origin combinations."
   },
   {
+    "slug": "cosine-similarity-calculator",
+    "name": "Cosine Similarity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Paste two embedding vectors and get cosine similarity, dot product, Euclidean distance and the angle between them."
+  },
+  {
     "slug": "cost-inflation-index-calculator",
     "name": "Cost Inflation Index Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Indexed cost of acquisition and improvement using the notified Cost Inflation Index for the purchase and sale financial years."
+  },
+  {
+    "slug": "cost-per-blog-post-ai-calculator",
+    "name": "Cost Per Blog Post AI Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post."
+  },
+  {
+    "slug": "cost-per-conversation-calculator",
+    "name": "Cost Per Conversation Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the true AI cost of a support or sales conversation, including resent context, caching and human escalation."
+  },
+  {
+    "slug": "cost-per-document-processed-calculator",
+    "name": "Cost Per Document Processed Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate AI cost per document from pages, words per page, chunk overlap, OCR and embedding rates."
+  },
+  {
+    "slug": "cost-per-image-generated-calculator",
+    "name": "Cost Per Image Generated Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the true cost of one usable AI image after rejected attempts, retouch passes and review time."
+  },
+  {
+    "slug": "cost-per-support-ticket-ai-calculator",
+    "name": "Cost Per Support Ticket AI Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare AI handling cost against agent cost per ticket, with occupancy-adjusted labour and a break-even containment rate."
+  },
+  {
+    "slug": "cost-per-transcription-minute-calculator",
+    "name": "Cost Per Transcription Minute Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate speech-to-text plus AI summarisation cost per audio minute, per hour and per file."
+  },
+  {
+    "slug": "cost-per-unit-calculator",
+    "name": "Cost Per Unit and Batch Cost Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Absorb fixed overheads and variable costs across a production batch to get true cost per unit, contribution and break-even."
+  },
+  {
+    "slug": "counselling-day-document-checklist",
+    "name": "Counselling Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Documents to carry to admission counselling, the money to arrange on reporting day, and how much of it is refundable or adjusted later."
+  },
+  {
+    "slug": "counselling-fee-refund-tracker",
+    "name": "Counselling Fee Refund Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track seat acceptance fees and withdrawal dates to see your expected refund under the UGC 100/90/80/50/0 percent slabs."
   },
   {
     "slug": "countdown-days-calculator",
@@ -2695,12 +4895,44 @@ export const TOOL_CATALOG = [
     "description": "Test your geography knowledge with dynamic quizzes powered by real-time country data — capitals, currencies, areas, languages, and more."
   },
   {
+    "slug": "course-caption-coverage-tracker",
+    "name": "Course Caption Coverage Tracker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Track caption and transcript coverage across your course by lesson and by runtime, with an estimate of the work left."
+  },
+  {
+    "slug": "course-trailer-script-builder",
+    "name": "Course Trailer Script Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a structured online-course promo script with per-beat timing targets and a word budget for your narration pace."
+  },
+  {
     "slug": "cover-letter",
     "name": "Cover Letter",
     "categories": [
       "Business"
     ],
     "description": "Create a cover letter for your next job interview"
+  },
+  {
+    "slug": "cover-letter-prompt-builder",
+    "name": "Cover Letter Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a cover letter prompt with company research slots, tone, letter type and a paragraph-by-paragraph word budget."
+  },
+  {
+    "slug": "cpp-ei-deduction-calculator",
+    "name": "Canada CPP and EI Deduction Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Employee and employer CPP, CPP2 and EI contributions with the YMPE, YAMPE and maximum insurable earnings ceilings applied."
   },
   {
     "slug": "crc32-calculator",
@@ -2753,6 +4985,30 @@ export const TOOL_CATALOG = [
     "description": "Estimate how utilisation, hard enquiries and missed payments move your credit score, with a before and after comparison."
   },
   {
+    "slug": "credit-utilisation-ratio-calculator",
+    "name": "Credit Utilisation Ratio Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Credit utilisation across all your cards, per-card ratios, and the exact spend room to stay under 30 percent."
+  },
+  {
+    "slug": "credit-weighted-sgpa-calculator",
+    "name": "Credit Weighted SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute SGPA from subject grades and credit hours, with grade point tables and per-subject impact on the average."
+  },
+  {
+    "slug": "cron-expression-explainer",
+    "name": "Cron Expression Explainer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Translate any 5-field cron expression into plain English with a field-by-field breakdown and the next scheduled run times."
+  },
+  {
     "slug": "cron-expression-generator",
     "name": "Cron Expression Generator",
     "categories": [
@@ -2769,12 +5025,44 @@ export const TOOL_CATALOG = [
     "description": "Preview upcoming run times for standard five-field cron expressions."
   },
   {
+    "slug": "crontab-line-builder",
+    "name": "Crontab Line Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build and validate a crontab line, read it back in plain English, preview the next run times and wrap it with logging and a flock guard."
+  },
+  {
+    "slug": "crop-to-aspect-ratio-calculator",
+    "name": "Crop to Aspect Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the exact crop width, height and offsets to convert footage or an image to a target aspect ratio, with an ffmpeg crop string."
+  },
+  {
+    "slug": "cruise-holiday-packing-list-builder",
+    "name": "Cruise Holiday Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a cruise packing list from formal nights, port days and sea days, including the cabin items that get confiscated at embarkation."
+  },
+  {
     "slug": "crush-percentage",
     "name": "Crush Percentage",
     "categories": [
       "Lifestyle"
     ],
     "description": "Evaluate your chemistry and odds with your crush by taking a fun interactive compatibility quiz."
+  },
+  {
+    "slug": "crypto-loss-setoff-explainer",
+    "name": "Crypto Loss Set Off Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See why Section 115BBH blocks crypto losses from offsetting any gain, and what the no-set-off rule costs you in tax."
   },
   {
     "slug": "crypto-pnl-calculator",
@@ -2922,7 +5210,7 @@ export const TOOL_CATALOG = [
     "slug": "csv-converter",
     "name": "CSV Converter",
     "categories": [
-      "Developer"
+      "Converters"
     ],
     "description": "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries."
   },
@@ -2943,6 +5231,38 @@ export const TOOL_CATALOG = [
     "description": "Convert CSV file or text into JSON format"
   },
   {
+    "slug": "csv-to-sql-insert-converter",
+    "name": "CSV to SQL Insert Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert CSV rows into INSERT statements with RFC 4180 parsing, type inference, dialect quoting and batched multi-row VALUES."
+  },
+  {
+    "slug": "ctet-answer-key-score-calculator",
+    "name": "CTET Answer Key Score Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Score CTET Paper 1 or Paper 2 section by section from your response sheet — 150 marks, no negative marking."
+  },
+  {
+    "slug": "cuet-exam-countdown",
+    "name": "CUET Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "CUET countdown with per-subject readiness bars from syllabus coverage and forgetting-curve decay, plus revision due alerts."
+  },
+  {
+    "slug": "cumulative-vs-noncumulative-fd",
+    "name": "Cumulative vs Non Cumulative FD Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate."
+  },
+  {
     "slug": "cups-to-grams",
     "name": "Cups to Grams Converter",
     "categories": [
@@ -2952,12 +5272,28 @@ export const TOOL_CATALOG = [
     "description": "Convert cups, tablespoons and millilitres to grams for 40+ baking ingredients using real density data."
   },
   {
+    "slug": "curl-command-builder",
+    "name": "Curl Command Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compose a curl command with method, headers, auth, JSON or form bodies, proxies, timeouts and output options, with each flag explained."
+  },
+  {
     "slug": "curl-to-code-converter",
     "name": "cURL to Code Converter",
     "categories": [
       "Developer"
     ],
     "description": "Convert simple cURL commands into fetch, Axios, or Python requests."
+  },
+  {
+    "slug": "currency-amount-to-words",
+    "name": "Currency Amount to Words Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Spell any money amount in words for cheques, invoices and contracts — Indian or international numbering, eight currencies."
   },
   {
     "slug": "currency-conversion-fee-calculator",
@@ -2974,6 +5310,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Convert global currencies instantly using accurate real-time rates."
+  },
+  {
+    "slug": "currency-markup-calculator",
+    "name": "Currency Conversion Markup Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Reveal the hidden spread between the mid-market rate and the rate you are offered, and the true all-in cost of a transfer."
   },
   {
     "slug": "currency-profit-loss-calculator",
@@ -3001,6 +5345,38 @@ export const TOOL_CATALOG = [
     "description": "Turn your text into stylish Unicode letters for bios, posts and usernames."
   },
   {
+    "slug": "curtain-colour-matcher",
+    "name": "Curtain Colour Matcher",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Find curtain colours that complement wall paint and upholstery, with LRV gaps, hue distance and fade risk for each."
+  },
+  {
+    "slug": "curtain-fabric-calculator",
+    "name": "Curtain Fabric Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Curtain fabric metres from track width, drop, fullness and heading type, including pattern repeat, lining, tape and hooks."
+  },
+  {
+    "slug": "curtain-thermal-savings-estimator",
+    "name": "Curtain Thermal Savings Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Cooling saved by blackout or thermal curtains, from window area, glazing SHGC, U-value and the curtain's attenuation coefficient."
+  },
+  {
+    "slug": "customer-support-prompt-pack",
+    "name": "Customer Support Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build support-reply prompts for macro rewrites, tone softening and escalation summaries, with a Flesch readability check on your draft."
+  },
+  {
     "slug": "cute-text-generator",
     "name": "Cute Text Generator",
     "categories": [
@@ -3016,6 +5392,38 @@ export const TOOL_CATALOG = [
       "PDF & Documents"
     ],
     "description": "Organize an incident timeline and locally hash evidence copies into a structured, user-controlled evidence manifest and counts-only summary."
+  },
+  {
+    "slug": "cycle-commute-savings-calculator",
+    "name": "Cycle Commute Savings Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the fuel, parking, maintenance and CO2 you save by cycling to work, and how long the bicycle takes to pay for itself."
+  },
+  {
+    "slug": "cycling-cadence-calculator",
+    "name": "Cycling Cadence Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn cadence, chainring, cog and wheel size into road speed, gear inches, gain ratio and metres of development."
+  },
+  {
+    "slug": "cycling-calorie-estimator",
+    "name": "Cycling Calorie Estimator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Estimate calories burned cycling from distance, speed, rider weight, terrain, gradient and headwind, using a physics power model."
+  },
+  {
+    "slug": "cyclist-hydration-calculator",
+    "name": "Cyclist Hydration Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Bottles per hour, refill stops, carbs and sodium for a ride, from your weight, duration, heat, humidity and riding intensity."
   },
   {
     "slug": "cymatics",
@@ -3048,6 +5456,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Get a never-ending supply of classic dad jokes with puns, wordplay, and eye-rolling goodness."
+  },
+  {
+    "slug": "daily-commute-fuel-cost-calculator",
+    "name": "Daily Commute Fuel Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn your daily office commute into monthly and yearly fuel, toll and parking spend using your real mileage and fuel price."
   },
   {
     "slug": "daily-panchang-calculator",
@@ -3104,6 +5520,14 @@ export const TOOL_CATALOG = [
     "description": "Manipulative consent, checkout aur cancellation UX flag kare."
   },
   {
+    "slug": "dashboard-panel-layout-planner",
+    "name": "Dashboard Panel Layout Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan a service dashboard with the RED, USE or Four Golden Signals method: ordered panels, grid widths and starter queries."
+  },
+  {
     "slug": "data-deletion-proof-log",
     "name": "Data Deletion Proof Log",
     "categories": [
@@ -3138,6 +5562,30 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Visualize arrays, linked lists, stacks, queues, binary trees, and graphs with interactive operations and real-time state updates."
+  },
+  {
+    "slug": "database-naming-convention-generator",
+    "name": "Database Naming Convention Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Define table, column, index and constraint naming rules with worked examples and per-DBMS identifier length checks."
+  },
+  {
+    "slug": "dataset-class-balance-checker",
+    "name": "Dataset Class Balance Checker",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Check label distribution in a classification dataset: imbalance ratio, entropy, balanced class weights and resampling counts."
+  },
+  {
+    "slug": "dataset-train-test-splitter",
+    "name": "Dataset Train Test Splitter",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Split a JSONL dataset into train, validation and test sets with a fixed seed for a reproducible, shuffled split."
   },
   {
     "slug": "date-add-subtract-calculator",
@@ -3209,6 +5657,22 @@ export const TOOL_CATALOG = [
     "description": "Compare the snowball and avalanche payoff orders across all your loans by months to debt-free and total interest paid."
   },
   {
+    "slug": "debt-to-income-ratio-checker",
+    "name": "Debt to Income Ratio Checker India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check your EMI load against lender FOIR caps and the 28/36 rule, with the zone you fall in and the EMI headroom left."
+  },
+  {
+    "slug": "decibel-change-calculator",
+    "name": "Decibel Change Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn a decibel change into amplitude, power and perceived-loudness ratios, plus the equivalent distance and source count."
+  },
+  {
     "slug": "decimal-converter",
     "name": "Decimal Converter",
     "categories": [
@@ -3229,19 +5693,33 @@ export const TOOL_CATALOG = [
     "slug": "decision-matrix-tool",
     "name": "Decision Matrix Tool",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
-    "description": "Compare options with dynamic criteria, live weighted scoring, rankings, analytics, local save, filters, and exportable decision reports."
+    "description": "Compare options with weighted criteria, live scoring, rankings, sensitivity analysis, and an exportable decision report."
   },
   {
     "slug": "decision-wheel",
     "name": "Decision Wheel",
     "categories": [
-      "Fun",
+      "Fun"
+    ],
+    "description": "Spin to decide! Weighted random picker, team selector and giveaway wheel with live odds, history and no-repeat draws."
+  },
+  {
+    "slug": "declutter-planner",
+    "name": "Declutter Planner",
+    "categories": [
       "Productivity"
     ],
-    "description": "Spin to decide! Random picker, team selector, giveaway wheel with full customization, statistics, and sharing."
+    "description": "Plan a room-by-room decluttering sprint with keep, donate and sell piles, session-by-session timings and a finish date."
+  },
+  {
+    "slug": "decluttering-prompt-builder",
+    "name": "Decluttering Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build room-by-room keep-or-let-go prompts using the four-box, 20/20, 90/90 or KonMari rule, with a session plan."
   },
   {
     "slug": "deep-breathing-guide",
@@ -3252,13 +5730,100 @@ export const TOOL_CATALOG = [
     "description": "Guided deep breathing exercises with multiple techniques — 4-7-8, Box Breathing, and Coherence Breathing — to help you relax, focus, and reduce stress."
   },
   {
+    "slug": "deep-cleaning-time-estimator",
+    "name": "Deep Cleaning Time Estimator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Estimate the person-hours, elapsed time and crew size needed to deep clean a home of your size, soil level and room count."
+  },
+  {
+    "slug": "deep-freezer-size-selector",
+    "name": "Deep Freezer Size Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Choose deep freezer litres from household size or stock weight, with holdover time in a power cut and backup sizing."
+  },
+  {
+    "slug": "deep-work-session-timer-exam",
+    "name": "Deep Work Session Timer Exam",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Long-form focus timer for exam-style study blocks with reading time, pacing checkpoints and a final review phase."
+  },
+  {
+    "slug": "deepfake-awareness-checklist",
+    "name": "Deepfake Awareness Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score a suspicious video, voice note or call against known deepfake red flags and see which verification steps you still need to run."
+  },
+  {
     "slug": "definition-of-done-generator",
     "name": "Definition of Done Generator",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
-    "description": "Generate a practical Definition of Done checklist tailored to project type, tech stack, team size, and compliance needs."
+    "description": "Generate a practical Definition of Done checklist tailored to project type, team size, release cadence, and compliance needs."
+  },
+  {
+    "slug": "degree-equivalence-explainer",
+    "name": "Degree Equivalence Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See how Indian qualifications — Class 12, 3-year BA, BTech, MBBS, master's — map to the US, UK, Canada, Australia and Germany."
+  },
+  {
+    "slug": "dehumidifier-capacity-calculator",
+    "name": "Dehumidifier Capacity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a dehumidifier in litres per day from room volume, damp severity and humidity, with runtime and running cost."
+  },
+  {
+    "slug": "delhi-airport-transfer-time-planner",
+    "name": "Delhi Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Delhi IGI airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
+    "slug": "delhi-auto-cab-fare-estimator",
+    "name": "Delhi Auto and Cab Fare Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a fair Delhi auto or taxi fare from distance, waiting time, luggage and the 25% night charge on the notified meter."
+  },
+  {
+    "slug": "delhi-del-airport-arrival-buffer-calculator",
+    "name": "Delhi DEL Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Delhi DEL using drive time, traffic, check-in cut-off, security and gate-closing buffers."
+  },
+  {
+    "slug": "delhi-university-attendance-calculator",
+    "name": "Delhi University Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Track DU attendance per paper against the two-thirds (66.67%) Ordinance VII rule and see how many lectures you can still miss."
+  },
+  {
+    "slug": "delhi-university-cgpa-converter",
+    "name": "Delhi University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert DU CGPA to percentage with the UGC 9.5 multiplier, build CGPA from semester SGPAs and check eligibility cutoffs."
   },
   {
     "slug": "deliverable-revision-ledger",
@@ -3270,12 +5835,28 @@ export const TOOL_CATALOG = [
     "description": "Versions, feedback, approvals aur included revision count record kare."
   },
   {
+    "slug": "demat-account-cost-comparator",
+    "name": "Demat Account Cost Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the true yearly cost of demat plans across AMC, DP debit charges, brokerage, GST and statutory levies on equity delivery."
+  },
+  {
     "slug": "density-calculator",
     "name": "Density Calculator",
     "categories": [
       "Education & Science"
     ],
     "description": "Density from mass and volume, with common unit conversions."
+  },
+  {
+    "slug": "dependabot-config-generator",
+    "name": "Dependabot Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a valid .github/dependabot.yml with package ecosystems, update schedules, grouped PRs and ignore rules."
   },
   {
     "slug": "dependency-license-scanner",
@@ -3305,12 +5886,44 @@ export const TOOL_CATALOG = [
     "description": "Query exact package versions against the official OSV API through a bounded same-origin endpoint with explicit network and coverage limitations."
   },
   {
+    "slug": "deployment-window-timezone-planner",
+    "name": "Deployment Window Timezone Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Find a release window that dodges business and peak hours in every region you serve, hour by hour across UTC."
+  },
+  {
+    "slug": "deposit-insurance-coverage-checker",
+    "name": "Deposit Insurance Coverage Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check how much of your bank balances DICGC insures, grouped by bank and by the capacity in which each account is held."
+  },
+  {
+    "slug": "deprecation-timeline-planner",
+    "name": "Deprecation Timeline Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan announce, warn, brownout and removal dates for a deprecation, with ready-to-send comms templates."
+  },
+  {
     "slug": "depth-of-field-estimator",
     "name": "Depth of Field Estimator",
     "categories": [
       "Image & Photo"
     ],
     "description": "A practical photography tool for managing depth of field workflows efficiently."
+  },
+  {
+    "slug": "desert-safari-packing-list-builder",
+    "name": "Desert Safari Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a desert safari packing list with the water litres, night-time layers and sleeping bag rating worked out from the day-night temperature swing."
   },
   {
     "slug": "design-compare",
@@ -3322,12 +5935,36 @@ export const TOOL_CATALOG = [
     "description": "Compare two UI designs or images with side-by-side, overlay, slider, zoom, grid, and download controls."
   },
   {
+    "slug": "designer-prompt-pack",
+    "name": "Designer Prompt Pack",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Fill-in-the-blank AI prompts for moodboards, critique, UX copy and design system decisions, ready to copy."
+  },
+  {
     "slug": "desk-stretch-generator",
     "name": "Desk Stretch Routine Generator",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Build a guided desk stretch routine for the time you have, then follow it with timed holds and audio cues."
+  },
+  {
+    "slug": "dev-notice-period-planner",
+    "name": "Dev Notice Period Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out your last working day, notice shortfall, buyout recovery and leave offset for an Indian notice period, plus a handover plan."
+  },
+  {
+    "slug": "dev-onboarding-runbook-generator",
+    "name": "Dev Onboarding Runbook Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a day-one developer setup runbook with real install commands, access requests, repo clones and a first task."
   },
   {
     "slug": "devanagari-transliteration-keyboard",
@@ -3339,13 +5976,28 @@ export const TOOL_CATALOG = [
     "description": "Roman Hindi aur Devanagari ke beech live transliteration kare."
   },
   {
+    "slug": "developer-portfolio-readme-generator",
+    "name": "Developer Portfolio Readme Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a GitHub profile README with skill badges, project cards, stats widgets and contact links."
+  },
+  {
+    "slug": "developer-prompt-pack",
+    "name": "Developer Prompt Pack",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Fill-in-the-blank AI prompts for debugging, code review, tests, documentation and refactors, ready to paste."
+  },
+  {
     "slug": "device-browser-dashboard",
     "name": "Device & Browser Dashboard",
     "categories": [
-      "Developer",
-      "Productivity"
+      "Developer"
     ],
-    "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis."
+    "description": "Client-side dashboard for device, browser, privacy, GPU, storage, and web API capability analysis."
   },
   {
     "slug": "device-sensor-calibration-checker",
@@ -3435,6 +6087,14 @@ export const TOOL_CATALOG = [
     "description": "Supported magnetometer se heading aur bearing dikhaye."
   },
   {
+    "slug": "digital-detox-study-planner",
+    "name": "Digital Detox Study Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan phone-free study blocks that escalate day by day, with a cap, milestone day and total phone-free hours computed."
+  },
+  {
     "slug": "digital-legacy-vault",
     "name": "Digital Legacy Vault",
     "categories": [
@@ -3453,12 +6113,28 @@ export const TOOL_CATALOG = [
     "description": "Supported orientation sensor se tilt aur slope measure kare."
   },
   {
+    "slug": "digital-vs-physical-gold-comparator",
+    "name": "Digital Gold vs Physical Gold Cost Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price making charges, GST, storage and buy-sell spread across jewellery, coins, digital gold and ETFs."
+  },
+  {
     "slug": "digital-wallet-tool",
     "name": "Digital Wallet Manager",
     "categories": [
       "Finance Calculators"
     ],
-    "description": "A digital wallet interface for managing and tracking assets securely."
+    "description": "Total every asset you hold, see each holding's share of the wallet, and score how concentrated the whole portfolio is."
+  },
+  {
+    "slug": "digitalocean-droplet-cost-calculator",
+    "name": "DigitalOcean Droplet Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly DigitalOcean spend across droplets, block storage volumes, snapshots, load balancers and bandwidth overage."
   },
   {
     "slug": "dilution-molarity-calculator",
@@ -3477,6 +6153,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Equation variables ke units compare karke invalid terms detect kare."
+  },
+  {
+    "slug": "dining-table-size-calculator",
+    "name": "Dining Table Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a rectangular, round or square dining table from seat count, then check chair clearance against your room."
   },
   {
     "slug": "dino-run",
@@ -3505,6 +6189,22 @@ export const TOOL_CATALOG = [
     "description": "Explore 20+ dinosaur species with search, filter, timeline view, size comparison, and detailed cards."
   },
   {
+    "slug": "direct-vs-regular-plan-calculator",
+    "name": "Direct vs Regular Plan Cost Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Quantify the commission drag between direct and regular mutual fund plans from the expense ratio gap, for a lumpsum or a monthly SIP."
+  },
+  {
+    "slug": "discord-banner-size-generator",
+    "name": "Discord Banner Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Export server banners, icons, invite splashes, emoji and stickers at exact Discord dimensions and limits."
+  },
+  {
     "slug": "discount-calculator",
     "name": "Discount Calculator",
     "categories": [
@@ -3513,12 +6213,36 @@ export const TOOL_CATALOG = [
     "description": "Calculate sales savings. Tweak discount rates, stacked discounts (e.g. 20% + 10%), tax additions, and view dynamic financial breakdowns."
   },
   {
+    "slug": "discount-final-price-calculator",
+    "name": "Discount and Final Price Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Apply single or stacked percentage and flat discounts, add GST, and see the true saving and equivalent single discount."
+  },
+  {
     "slug": "discount-stacking-calculator",
     "name": "Discount Stacking Calculator",
     "categories": [
       "Finance Calculators"
     ],
-    "description": "Optimize your shopping savings by combining multiple discounts, coupons, card offers, and cashback with real-time stacking analysis."
+    "description": "Stack sale prices, coupons, card offers, shipping, tax and cashback in the order shops apply them and see the real cost of the basket."
+  },
+  {
+    "slug": "dishwasher-running-cost-calculator",
+    "name": "Dishwasher Running Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare the true cost of a dishwasher cycle against hand washing, counting electricity, water, detergent and your time."
+  },
+  {
+    "slug": "dividend-income-tax-calculator-india",
+    "name": "Dividend Income Tax Calculator India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Tax on Indian dividend income at your slab rate, with the 20% interest deduction cap under section 57 and section 194 TDS credit."
   },
   {
     "slug": "dividend-yield-calculator",
@@ -3539,6 +6263,22 @@ export const TOOL_CATALOG = [
     "description": "Master division with adaptive exercises, step-by-step solutions, and progress tracking for students of all levels."
   },
   {
+    "slug": "diy-tool-kit-builder",
+    "name": "DIY Tool Kit Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Turns the jobs you plan to do into a phased tool list and budget, with a buy-or-hire test on every expensive item."
+  },
+  {
+    "slug": "diy-vs-garage-service-cost",
+    "name": "DIY vs Garage Service Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare doing a basic car service yourself against workshop charges, including parts markup, labour, GST and tool payback."
+  },
+  {
     "slug": "dlt-sms-sender-id-explainer",
     "name": "DLT SMS Sender ID Explainer",
     "categories": [
@@ -3546,6 +6286,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Explain documented Indian commercial SMS header, prefix and category-suffix formats locally without claiming sender authenticity or live DLT registration."
+  },
+  {
+    "slug": "dmarc-record-generator",
+    "name": "DMARC Record Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a valid RFC 7489 DMARC TXT record with policy, subdomain policy, alignment modes, percentage and reporting addresses."
   },
   {
     "slug": "dna-double-helix-explorer",
@@ -3565,6 +6313,70 @@ export const TOOL_CATALOG = [
     "description": "Multiple global resolvers par DNS record changes compare kare."
   },
   {
+    "slug": "dns-propagation-timeline-explainer",
+    "name": "DNS Propagation Timeline Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See how record TTL, negative caching and client-side caches determine when a DNS change actually takes effect."
+  },
+  {
+    "slug": "dns-record-generator",
+    "name": "DNS Record Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate correctly formatted A, AAAA, CNAME, TXT, SRV and ALIAS zone-file records with full syntax validation."
+  },
+  {
+    "slug": "dns-ttl-strategy-planner",
+    "name": "DNS TTL Strategy Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Pick steady-state TTLs per record type and get a timed lower-cutover-restore plan for zero-surprise DNS migrations."
+  },
+  {
+    "slug": "docker-healthcheck-generator",
+    "name": "Docker Healthcheck Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate Dockerfile HEALTHCHECK and compose healthcheck blocks with tuned interval, timeout, retries and start period."
+  },
+  {
+    "slug": "docker-network-mode-explainer",
+    "name": "Docker Network Mode Explainer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare Docker bridge, host, none, container and macvlan network modes and see exactly how your container is reached."
+  },
+  {
+    "slug": "docker-tag-naming-convention-builder",
+    "name": "Docker Tag Naming Convention Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Design a Docker image tagging scheme from semver, git sha, branch and date parts, validated against the OCI reference rules."
+  },
+  {
+    "slug": "docker-volume-mount-planner",
+    "name": "Docker Volume Mount Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan bind mounts, named volumes and tmpfs mounts with correct -v, --mount and Compose syntax, read-only flags and propagation."
+  },
+  {
+    "slug": "dockerfile-prompt-builder",
+    "name": "Dockerfile Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Describe your runtime, dependencies and start command to get a precise, copy-ready AI prompt for a production Dockerfile."
+  },
+  {
     "slug": "dockerfile-security-linter",
     "name": "Dockerfile Security Linter",
     "categories": [
@@ -3572,6 +6384,22 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Lint a pasted Dockerfile locally for risky build patterns, root runtime cues, floating bases, embedded secrets, broad copies, and missing health checks."
+  },
+  {
+    "slug": "dockerignore-generator",
+    "name": "Dockerignore Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Create a .dockerignore tailored to your stack to shrink the build context and speed up docker build."
+  },
+  {
+    "slug": "document-attestation-tracker",
+    "name": "Document Attestation Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track which documents are attested, by whom and when — with validity countdowns that flag expiring and expired attestations."
   },
   {
     "slug": "document-checklist-generator",
@@ -3592,6 +6420,22 @@ export const TOOL_CATALOG = [
     "description": "Track passport, visa, certificate, and licence expiry dates."
   },
   {
+    "slug": "document-photocopy-set-planner",
+    "name": "Photocopy Set Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan how many photocopy sets you need across application, verification and admission stages — with pages, spares and cost."
+  },
+  {
+    "slug": "document-verification-stage-tracker",
+    "name": "Document Verification Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track every document your DV stage needs, its status and days left, with critical gaps flagged first."
+  },
+  {
     "slug": "document-version-timeline",
     "name": "Document Version Timeline",
     "categories": [
@@ -3606,9 +6450,18 @@ export const TOOL_CATALOG = [
     "categories": [
       "Text & Writing",
       "Developer",
-      "Productivity"
+      "Productivity",
+      "Security & Privacy"
     ],
-    "description": "Compare two local TXT, Markdown, JSON, CSV, or text-based PDF versions with bounded structural and line-level evidence."
+    "description": "Enterprise-grade, privacy-first document version comparison & verification tool. Compare PDF, DOCX, TXT, JSON, CSV, HTML, XML & Markdown locally with metadata a"
+  },
+  {
+    "slug": "doha-doh-airport-arrival-buffer-calculator",
+    "name": "Doha DOH Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Doha DOH using drive time, traffic, check-in cut-off, passport control and gate-closing buffers."
   },
   {
     "slug": "domain-checker",
@@ -3636,6 +6489,22 @@ export const TOOL_CATALOG = [
     "description": "Generate fresh name ideas from a keyword."
   },
   {
+    "slug": "domicile-proof-checklist",
+    "name": "Domicile and Residence Proof Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build the document checklist for a domicile or residence certificate, test the continuous residence period and track how ready your file is."
+  },
+  {
+    "slug": "door-frame-material-calculator",
+    "name": "Door Frame Material Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Frame timber running length and cft, shutter size and area, hinges and holdfasts for any door opening."
+  },
+  {
     "slug": "double-pendulum-chaos-simulator",
     "name": "Double Pendulum Chaos Simulator",
     "categories": [
@@ -3645,6 +6514,14 @@ export const TOOL_CATALOG = [
     "description": "Real-time chaos theory visualization with interactive double pendulum physics and glowing motion trails."
   },
   {
+    "slug": "doubt-resolution-log",
+    "name": "Doubt Resolution Log",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log every study doubt, who resolved it and whether you retested yourself, with resolution-time and retest-rate stats."
+  },
+  {
     "slug": "dough-hydration-calculator",
     "name": "Dough Hydration Calculator",
     "categories": [
@@ -3652,6 +6529,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Baker's percentage calculator for bread and pizza — hydration, salt, yeast or sourdough starter, with recipe scaling."
+  },
+  {
+    "slug": "down-payment-savings-planner",
+    "name": "House Down Payment Savings Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the monthly saving needed for a house down payment, including stamp duty, price growth and the RBI loan-to-value cap."
   },
   {
     "slug": "dpdp-consent-notice-checker",
@@ -3690,12 +6575,132 @@ export const TOOL_CATALOG = [
     "description": "Answer a few questions and discover your perfect vacation destination — from tropical beaches to mountain escapes, and everything in between."
   },
   {
+    "slug": "drill-bit-size-selector",
+    "name": "Drill Bit Size Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Pilot, clearance, tap and wall-plug drill sizes from the screw or bolt you are using, with the nearest real bit in metric and inches."
+  },
+  {
     "slug": "drinking-game-picker",
     "name": "Drinking Game Picker",
     "categories": [
       "Games"
     ],
     "description": "Pick random drinking games and challenges with categories, penalty mode, and history tracking."
+  },
+  {
+    "slug": "dripping-tap-water-loss-calculator",
+    "name": "Dripping Tap Water Loss Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn drips per minute into litres and rupees lost per day, month and year — including the geyser units a hot tap leak burns."
+  },
+  {
+    "slug": "driver-salary-calculator",
+    "name": "Driver Salary Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out a driver's monthly pay with overtime at twice the ordinary rate, night duty, outstation days, PF and ESI."
+  },
+  {
+    "slug": "driveway-sealer-calculator",
+    "name": "Driveway Sealer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate gallons, litres and 5-gallon pails of driveway sealer for your area, surface condition and number of coats."
+  },
+  {
+    "slug": "driving-break-planner",
+    "name": "Driving Break Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan rest stops, fuel halts and a realistic arrival time for a long drive using the 15-minute break every two hours rule."
+  },
+  {
+    "slug": "driving-in-australia-rules-explainer",
+    "name": "Driving in Australia Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Australian road rules for visitors: which side to drive on, state speed limits in km/h and mph, alcohol limits and licence requirements."
+  },
+  {
+    "slug": "driving-in-germany-rules-explainer",
+    "name": "Driving in Germany Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "German road rules for visitors: which side to drive on, speed limits in km/h and mph, blood-alcohol limits and licence or IDP requirements."
+  },
+  {
+    "slug": "driving-in-italy-rules-explainer",
+    "name": "Driving in Italy Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Italian road rules for visitors: side of the road, autostrada and city speed limits in km/h and mph, alcohol limits, ZTL zones and IDP rules."
+  },
+  {
+    "slug": "driving-in-japan-rules-explainer",
+    "name": "Driving in Japan Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Japanese road rules for visitors: which side to drive on, speed limits, the 0.03% alcohol limit and which International Driving Permit Japan accepts."
+  },
+  {
+    "slug": "driving-in-spain-rules-explainer",
+    "name": "Driving in Spain Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Spanish road rules for visitors: side of the road, 20/30/50 city limits and autovia speeds in km/h and mph, alcohol limits and IDP requirements."
+  },
+  {
+    "slug": "driving-in-switzerland-rules-explainer",
+    "name": "Driving in Switzerland Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Swiss road rules for visitors: speed limits, the motorway vignette, blood-alcohol limits and the Raser threshold that turns speeding into a crime."
+  },
+  {
+    "slug": "driving-in-thailand-rules-explainer",
+    "name": "Driving in Thailand Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Thai road rules for visitors: which side to drive on, speed limits, blood-alcohol limits and the licence a car or motorbike actually needs."
+  },
+  {
+    "slug": "driving-in-uae-rules-explainer",
+    "name": "Driving in UAE Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "UAE road rules for visitors: which side to drive on, speed limits, the zero-alcohol rule, black points and whether your licence is accepted."
+  },
+  {
+    "slug": "driving-in-usa-rules-explainer",
+    "name": "Driving in USA Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "US road rules for visitors: which side to drive on, speed limits in mph and km/h, state blood-alcohol limits and licence or IDP requirements."
+  },
+  {
+    "slug": "driving-in-vietnam-rules-explainer",
+    "name": "Driving in Vietnam Rules Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Vietnam road rules for visitors: side of the road, speed limits by road and vehicle in km/h and mph, the zero-alcohol law and which IDP is valid."
   },
   {
     "slug": "driving-licence-number-decoder",
@@ -3707,6 +6712,14 @@ export const TOOL_CATALOG = [
     "description": "Licence number se state, RTO aur year fields parse kare."
   },
   {
+    "slug": "driving-licence-renewal-checklist",
+    "name": "Driving Licence Renewal Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a document checklist, fee estimate and new validity date for renewing an Indian driving licence under the Motor Vehicles Act."
+  },
+  {
     "slug": "dsar-request-tracker",
     "name": "DSAR Request Tracker",
     "categories": [
@@ -3714,6 +6727,38 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Data-access requests, deadlines, responses aur evidence manage kare."
+  },
+  {
+    "slug": "dsc-requirement-checker",
+    "name": "Digital Signature Requirement Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Find which MCA, income tax, GST, DGFT and e-tender filings need a Class 3 digital signature certificate, and which allow EVC instead."
+  },
+  {
+    "slug": "dubai-dxb-airport-arrival-buffer-calculator",
+    "name": "Dubai DXB Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Dubai DXB using drive time, traffic, check-in cut-off, passport control and gate-closing buffers."
+  },
+  {
+    "slug": "dubai-trip-budget-breakdown",
+    "name": "Dubai Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a Dubai trip into flights, room, municipality fee, service charge, VAT, Tourism Dirham, food and activities."
+  },
+  {
+    "slug": "duolingo-english-test-score-converter",
+    "name": "Duolingo English Test Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Map Duolingo English Test scores (10-160) to IELTS bands, CEFR levels and derived TOEFL iBT ranges using published concordances."
   },
   {
     "slug": "duplicate-image-finder",
@@ -3731,6 +6776,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Identify and remove duplicate lines from lists, code, or logs with custom case-sensitivity and whitespace settings."
+  },
+  {
+    "slug": "duplicate-marksheet-request-helper",
+    "name": "Duplicate Marksheet Request Helper",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a duplicate marksheet application with a reason-specific affidavit and document checklist for lost, stolen or damaged marksheets."
   },
   {
     "slug": "duplicate-photo-finder",
@@ -3759,6 +6812,22 @@ export const TOOL_CATALOG = [
     "description": "Pointer hover duration se clicking aur typing enable kare."
   },
   {
+    "slug": "e-bike-range-estimator",
+    "name": "E Bike Range Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate electric bicycle range from battery watt-hours, assist level, terrain, gradient and temperature using a real power model."
+  },
+  {
+    "slug": "e-invoice-applicability-checker",
+    "name": "E-Invoice Applicability Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether GST e-invoicing under Rule 48(4) applies to you, from which date, and if the 30-day IRP reporting limit binds."
+  },
+  {
     "slug": "e-series-component-finder",
     "name": "E-Series Component Finder",
     "categories": [
@@ -3777,6 +6846,14 @@ export const TOOL_CATALOG = [
     "description": "Distance aur generation time se validity window calculate kare."
   },
   {
+    "slug": "early-morning-shift-sleep-planner",
+    "name": "Early Morning Shift Sleep Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Back-calculate bedtime, wind-down, caffeine cutoff and last meal from a 4am or 5am shift start time."
+  },
+  {
     "slug": "ecg-qtc-calculator",
     "name": "ECG QTc Calculator",
     "categories": [
@@ -3793,6 +6870,38 @@ export const TOOL_CATALOG = [
     "description": "Interactive celestial optics simulator for Solar and Lunar eclipses with Umbra and Penumbra shadow cone geometry."
   },
   {
+    "slug": "ecommerce-listing-prompt-builder",
+    "name": "Ecommerce Listing Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build a structured product listing prompt with attributes, benefits and keyword slots inside real field limits."
+  },
+  {
+    "slug": "ects-credit-load-calculator",
+    "name": "ECTS Credit Load Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Plan how many ECTS credits you need per semester to finish your degree, with workload hours from the ECTS Users' Guide."
+  },
+  {
+    "slug": "edge-vs-origin-decision-helper",
+    "name": "Edge vs Origin Decision Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Model whether an endpoint is faster at the edge or at the origin using round-trip latency, data locality, cache hit ratio and hard blockers."
+  },
+  {
+    "slug": "editorconfig-generator",
+    "name": "EditorConfig Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a .editorconfig with indentation, charset, line-ending and whitespace rules, plus per-file-type sections."
+  },
+  {
     "slug": "education-loan-emi-calculator",
     "name": "Education Loan EMI Calculator",
     "categories": [
@@ -3801,13 +6910,28 @@ export const TOOL_CATALOG = [
     "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying."
   },
   {
+    "slug": "egypt-entry-requirement-checklist",
+    "name": "Egypt Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist."
+  },
+  {
     "slug": "eisenhower-matrix-tool",
     "name": "Eisenhower Matrix Tool",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
-    "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save."
+    "description": "Sort tasks into the four urgent/important quadrants from two 1-10 scores, and see how many hours go to firefighting versus planned work."
+  },
+  {
+    "slug": "elderly-bmi-calculator",
+    "name": "Elderly BMI Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "BMI for adults over 65 with the age-adjusted 24-29 desirable range, knee-height stature estimation and a MUST malnutrition score."
   },
   {
     "slug": "electric-circuit-builder",
@@ -3816,6 +6940,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Interactive schematic circuit simulator with live electron flow animations, component toggles, and real-time Ohm's Law calculations."
+  },
+  {
+    "slug": "electric-scooter-range-calculator",
+    "name": "Electric Scooter Range Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate real e-scooter range from battery Wh, rider weight, speed, gradient and traffic using road-load physics."
   },
   {
     "slug": "electricity-bill-calculator",
@@ -3841,6 +6973,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Track when each ELSS SIP instalment completes its 3-year lock-in, with unlocked, locked and next-to-free amounts."
+  },
+  {
+    "slug": "em-dash-ai-tell-checker",
+    "name": "Em Dash AI Tell Checker",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Count em dashes, smart quotes, triads and other punctuation tells in a draft, with rates per 1,000 words and rewrite suggestions."
   },
   {
     "slug": "email-authentication-checker",
@@ -3874,6 +7014,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Explain sender authentication and suspicious routing signals from pasted headers."
+  },
+  {
+    "slug": "email-header-image-size-guide",
+    "name": "Email Header Image Size Guide",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Get the export size, retina multiplier and img markup for an email header, plus how it renders in Outlook, Gmail and Apple Mail."
   },
   {
     "slug": "email-signature-builder",
@@ -3926,6 +7074,14 @@ export const TOOL_CATALOG = [
     "description": "Generate cringe-worthy and hilarious embarrassing stories that are totally believable (or not)."
   },
   {
+    "slug": "embedding-dimension-calculator",
+    "name": "Embedding Dimension Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate the memory an embedding vector needs from its dimension count and precision, with per-1K and per-1M totals."
+  },
+  {
     "slug": "emergency-fund-calculator",
     "name": "Emergency Fund Calculator",
     "categories": [
@@ -3934,12 +7090,60 @@ export const TOOL_CATALOG = [
     "description": "Size your emergency fund from real monthly essentials, see your savings gap, and get a month-by-month plan to fill it."
   },
   {
+    "slug": "emergency-fund-size-calculator-india",
+    "name": "Emergency Fund Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out how many months of expenses your emergency fund should hold based on job stability, dependants and cover."
+  },
+  {
+    "slug": "emergency-kit-generator",
+    "name": "Emergency Kit Generator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Builds a household emergency kit list with exact water, calorie and supply quantities for your family size, days of cover and local hazards."
+  },
+  {
+    "slug": "emergency-light-backup-calculator",
+    "name": "Emergency Light Backup Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Emergency light runtime from battery voltage, Ah, depth of discharge and LED load, with Peukert derating and recharge time."
+  },
+  {
+    "slug": "emi-affordability-checker",
+    "name": "EMI Affordability Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check a proposed EMI against your FOIR, your monthly surplus and a rate-rise stress test before you sign the loan."
+  },
+  {
     "slug": "emi-moratorium-impact-calculator",
     "name": "EMI Moratorium Impact Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "See the extra interest, higher EMI and added tenure caused by pausing your loan EMIs for a few months."
+  },
+  {
+    "slug": "emirates-baggage-allowance-checker",
+    "name": "Emirates Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bags against Emirates weight-concept and Americas piece-concept allowances, including the 300 cm size cap."
+  },
+  {
+    "slug": "emirates-excess-baggage-cost-estimator",
+    "name": "Emirates Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price Emirates excess baggage on weight-concept and piece-concept routes, comparing prepaid online weight with airport rates."
   },
   {
     "slug": "emoji-hub",
@@ -3972,7 +7176,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Text & Writing"
     ],
-    "description": "Remove emoji and symbol noise from text, comments, and captions."
+    "description": "Remove emoji, flags, skin-tone modifiers and symbol noise from text, comments and captions without leaving broken fragments behind."
   },
   {
     "slug": "emoji-translator",
@@ -4001,6 +7205,14 @@ export const TOOL_CATALOG = [
     "description": "A psychology-driven tool that generates color palettes based on your mood and feelings."
   },
   {
+    "slug": "emulsion-vs-distemper-cost-comparison",
+    "name": "Emulsion vs Distemper Cost Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare emulsion and distemper on upfront cost, repaint cycles, lifetime present value and the break-even year."
+  },
+  {
     "slug": "encoded-decoded",
     "name": "Encoded/Decoded",
     "categories": [
@@ -4027,12 +7239,132 @@ export const TOOL_CATALOG = [
     "description": "Keep a searchable private diary entirely in this browser."
   },
   {
+    "slug": "endurance-athlete-protein-calculator",
+    "name": "Endurance Athlete Protein Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily protein for runners, cyclists and triathletes scaled to weekly training hours, with post-session and per-meal doses."
+  },
+  {
+    "slug": "energy-label-decoder",
+    "name": "Energy Label Decoder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Read a BEE star label properly: turn the kWh per year or ISEER figure into running cost, savings and payback between two models."
+  },
+  {
+    "slug": "engine-displacement-calculator",
+    "name": "Engine Displacement Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out engine cc from bore, stroke and cylinder count, with litres, cubic inches and bore-stroke ratio."
+  },
+  {
+    "slug": "engine-displacement-comparison",
+    "name": "Engine Displacement Comparison",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare two motorcycle engines on specific output, BMEP, power-to-weight, piston speed and everyday tractability."
+  },
+  {
+    "slug": "engineering-style-guide-generator",
+    "name": "Engineering Style Guide Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Turn your team's conventions into a coding standards document plus a matching .editorconfig, per language."
+  },
+  {
+    "slug": "english-test-choice-helper",
+    "name": "English Test Choice Helper",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare IELTS, TOEFL iBT, PTE Academic and the Duolingo English Test on cost, format, speed and acceptance for your destination."
+  },
+  {
+    "slug": "english-test-retake-decision-helper",
+    "name": "Test Retake Decision Helper",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Decide whether to retake IELTS, TOEFL, PTE or Duolingo based on your score gap, deadline and weekly study time."
+  },
+  {
     "slug": "enter-sql",
     "name": "Enter SQL",
     "categories": [
       "Developer"
     ],
     "description": "Format, beautify, and compress SQL statement strings for easy viewing or filling."
+  },
+  {
+    "slug": "enum-constraint-builder",
+    "name": "Enum Constraint Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Define allowed values once and get the matching LLM prompt rule, JSON Schema enum, TypeScript union, Zod, Pydantic and SQL CHECK."
+  },
+  {
+    "slug": "env-file-diff-tool",
+    "name": "Env File Diff Tool",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare two .env files side by side to find missing, extra and changed variables using dotenv parsing rules."
+  },
+  {
+    "slug": "env-file-validator",
+    "name": "Env File Validator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Lint a .env file before deployment — syntax, quoting, duplicates, multiline values and parser-compatibility pitfalls."
+  },
+  {
+    "slug": "env-to-compose-environment-converter",
+    "name": "Env to Compose Environment Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert .env entries into docker-compose environment blocks (list or map form) or env_file references, with $$ escaping."
+  },
+  {
+    "slug": "env-to-example-generator",
+    "name": "Env to Example Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Turn a real .env into a safe .env.example — values stripped, comments and structure kept, secret keys always blanked."
+  },
+  {
+    "slug": "env-to-json-converter",
+    "name": "Env to JSON Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert dotenv files to JSON and back, with optional type coercion and double-underscore nesting."
+  },
+  {
+    "slug": "env-to-kubernetes-secret-converter",
+    "name": "Env to Kubernetes Secret Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert a .env file into a Kubernetes Secret manifest with base64-encoded data or plain stringData, validated against k8s naming rules."
+  },
+  {
+    "slug": "env-var-naming-checker",
+    "name": "Env Var Naming Checker",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Check environment variable names against POSIX rules, UPPER_SNAKE_CASE convention, reserved names and risky prefixes."
   },
   {
     "slug": "envy-free-rent-splitter",
@@ -4093,6 +7425,30 @@ export const TOOL_CATALOG = [
     "description": "Group recurring error-log patterns locally and inspect their frequency, severity, and examples."
   },
   {
+    "slug": "esi-contribution-calculator",
+    "name": "ESI Contribution Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Employee and employer ESI contributions at 0.75% and 3.25% of wages, with the Rs 21,000 coverage ceiling check."
+  },
+  {
+    "slug": "esic-contribution-calculator",
+    "name": "ESIC Contribution Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate employee and employer ESIC contributions from monthly wages with wage-limit and rate guidance."
+  },
+  {
+    "slug": "essay-feedback-prompt-builder",
+    "name": "Essay Feedback Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Create an AI feedback prompt focused on structure, evidence and clarity, with a comment budget scaled to essay length."
+  },
+  {
     "slug": "eth-gas-now",
     "name": "ETH Gas Now",
     "categories": [
@@ -4100,6 +7456,30 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye."
+  },
+  {
+    "slug": "etihad-baggage-allowance-checker",
+    "name": "Etihad Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bags against Etihad weight-concept allowances and the piece rules used on US, Canada and Brazil routes."
+  },
+  {
+    "slug": "etihad-excess-baggage-cost-estimator",
+    "name": "Etihad Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price Etihad excess kilos through every advance weight block against the airport rate and see which option really costs least."
+  },
+  {
+    "slug": "etsy-listing-prompt-builder",
+    "name": "Etsy Listing Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Create handmade-friendly Etsy listing prompts with a validated 13-tag set, 140-character title and a maker story angle."
   },
   {
     "slug": "ev-battery-degradation-analyzer",
@@ -4129,12 +7509,52 @@ export const TOOL_CATALOG = [
     "description": "Battery, range aur route legs se charging stops plan kare."
   },
   {
+    "slug": "ev-vs-diesel-running-cost",
+    "name": "EV vs Diesel Running Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare an EV and a BS6 diesel car per km including AdBlue, higher diesel service costs, CO2 and price-premium payback."
+  },
+  {
+    "slug": "ev-vs-petrol-running-cost",
+    "name": "EV vs Petrol Running Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare an electric car and a petrol car on cost per km, yearly running cost, CO2 and the km at which the EV premium pays back."
+  },
+  {
+    "slug": "event-photographer-prompt-pack",
+    "name": "Event Photographer Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for shot lists, client emails and gallery copy, plus a card, storage and edit-time planner."
+  },
+  {
+    "slug": "event-planning-prompt-builder",
+    "name": "Event Planning Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a timed run of show, floor area, staffing and catering-line figures for any headcount, then copy them as one logistics prompt."
+  },
+  {
     "slug": "event-tool",
     "name": "Event Planner",
     "categories": [
       "Productivity"
     ],
-    "description": "Plan, organize, and manage your events efficiently."
+    "description": "Turn a guest list into floor space, tables, staff, catering quantities and a costed budget with contingency."
+  },
+  {
+    "slug": "event-video-delivery-planner",
+    "name": "Event Video Delivery Planner",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turn an event date into a dated deliverables schedule with edit-hour estimates, start-by dates and a capacity check."
   },
   {
     "slug": "evidence-chain-organizer",
@@ -4155,6 +7575,118 @@ export const TOOL_CATALOG = [
     "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time."
   },
   {
+    "slug": "ews-certificate-eligibility-checker",
+    "name": "EWS Certificate Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Test the ₹8 lakh family income limit and all four asset exclusions for an Economically Weaker Section certificate."
+  },
+  {
+    "slug": "exam-answer-presentation-checker",
+    "name": "Exam Answer Presentation Checker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Self-check the presentation of an exam answer — structure, headings, diagrams and underlining — and get a weighted score."
+  },
+  {
+    "slug": "exam-application-fee-calculator",
+    "name": "Application Fee Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Total your exam application fees across SSC, UPSC, RRB, IBPS, SBI and CTET with category concessions and refundable amounts applied."
+  },
+  {
+    "slug": "exam-attempt-cost-tracker",
+    "name": "Exam Attempt Cost Tracker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Total what each exam attempt really cost — form fees, coaching, test series, books, travel and stay — across all attempts."
+  },
+  {
+    "slug": "exam-burnout-self-check",
+    "name": "Exam Burnout Self Check",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Informational 12-question self-check for study burnout across exhaustion, cynicism and efficacy, with recovery suggestions."
+  },
+  {
+    "slug": "exam-centre-travel-planner",
+    "name": "Exam Centre Travel Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan the journey to your exam centre with a buffer, a backup route and a switch-by time, worked back from the gate-closing time."
+  },
+  {
+    "slug": "exam-concentration-sound-timer",
+    "name": "Exam Concentration Sound Timer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Split an exam paper into timed sound blocks by marks, with checkpoint clock times and audible warning cues."
+  },
+  {
+    "slug": "exam-date-clash-detector",
+    "name": "Exam Clash Detector",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Spot same-day clashes and dangerously tight gaps across all the exams you have applied for."
+  },
+  {
+    "slug": "exam-day-meal-planner",
+    "name": "Exam Day Meal Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work backward from your exam reporting time to a light, steady-energy meal and hydration timeline."
+  },
+  {
+    "slug": "exam-diagram-practice-tracker",
+    "name": "Diagram Practice Tracker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Track which exam diagrams you can draw from memory within your time limit and see which ones to practise next."
+  },
+  {
+    "slug": "exam-hall-rough-work-planner",
+    "name": "Exam Hall Rough Work Planner",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Plan a numbered zone layout for your rough sheets so every calculation is findable and nothing is recomputed."
+  },
+  {
+    "slug": "exam-motivation-milestone-board",
+    "name": "Exam Motivation Milestone Board",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Set prep milestones between today and exam day, see target dates and whether you are ahead, on track or behind."
+  },
+  {
+    "slug": "exam-notification-alert-planner",
+    "name": "Notification Alert Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan reminder dates for the expected notification months of every exam you follow, sorted by urgency."
+  },
+  {
+    "slug": "exam-result-day-support-planner",
+    "name": "Exam Result Day Support Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan result day before it arrives — who to have around, how to check the score, and a first move for every outcome."
+  },
+  {
     "slug": "exam-score-analyzer",
     "name": "Exam Score Analyzer",
     "categories": [
@@ -4170,6 +7702,46 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Find the final exam score you need to reach your target overall grade in a course."
+  },
+  {
+    "slug": "exam-season-sleep-planner",
+    "name": "Exam Season Sleep Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build study blocks and a bedtime plan around exam day, with a safe 30-minutes-per-day body clock shift."
+  },
+  {
+    "slug": "exam-stress-reflection-prompts",
+    "name": "Exam Stress Reflection Prompts",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Guided journalling prompts to name exam pressure, sort what you control and turn worry into one concrete next action."
+  },
+  {
+    "slug": "exam-tie-breaker-rule-explainer",
+    "name": "Tie Breaker Rule Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Apply the published tie-breaking order of NEET, JEE Main, UPSC, SSC and IBPS to two candidates and see which criterion decides the rank."
+  },
+  {
+    "slug": "exam-to-job-mapping-explorer",
+    "name": "Exam To Job Mapping Explorer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See which posts each major Indian recruitment exam leads to, with pay level, entry basic pay and job profile."
+  },
+  {
+    "slug": "excel-copilot-prompt-builder",
+    "name": "Excel Copilot Prompt Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build Excel Copilot prompts that name the exact sheet, A1 range and column headers, with grid limits validated before you paste."
   },
   {
     "slug": "excel-formula",
@@ -4216,6 +7788,14 @@ export const TOOL_CATALOG = [
     "description": "Generate creative and believable excuses for any situation. Choose from categories like work, school, social, or dates."
   },
   {
+    "slug": "exhaust-fan-size-calculator",
+    "name": "Exhaust Fan Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a kitchen or bathroom exhaust fan from room volume and air changes per hour, with duct diameter and fan body size."
+  },
+  {
     "slug": "exif-data-viewer",
     "name": "EXIF Data Viewer",
     "categories": [
@@ -4231,6 +7811,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "User-owned photos ke dates aur coordinates bulk-edit kare."
+  },
+  {
+    "slug": "exit-code-reference-explorer",
+    "name": "Exit Code Reference Explorer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Look up what a shell or process exit code means, including 128+N signal deaths, sysexits.h codes and Docker OOM kills."
   },
   {
     "slug": "expanse-tacker",
@@ -4249,12 +7837,44 @@ export const TOOL_CATALOG = [
     "description": "See how much a mutual fund expense ratio quietly eats from your long-term corpus, and what a direct plan saves."
   },
   {
+    "slug": "expense-report-generator",
+    "name": "Expense Report Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a claimable expense report with category totals, GST input credit, advance settlement and cash-limit checks."
+  },
+  {
     "slug": "exposure-triangle-guide",
     "name": "Exposure Triangle Guide",
     "categories": [
       "Education & Science"
     ],
     "description": "Learn how aperture, shutter speed, and ISO interact with live exposure feedback and scene presets."
+  },
+  {
+    "slug": "express-route-scaffold-generator",
+    "name": "Express Route Scaffold Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate an Express router with validation, an async wrapper, correct status codes and four-argument error middleware."
+  },
+  {
+    "slug": "extension-cord-load-checker",
+    "name": "Extension Cord Load Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check whether the appliances on one extension board exceed its amp rating, the cord ampacity, the 80% continuous rule or safe voltage drop."
+  },
+  {
+    "slug": "exterior-wall-paint-quantity-calculator",
+    "name": "Exterior Wall Paint Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate litres of exterior emulsion from wall area, coats and surface porosity, with pack sizes and material cost."
   },
   {
     "slug": "eye-rest-timer",
@@ -4264,6 +7884,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Every 20 minutes, look 20 feet away for 20 seconds. A looping screen-break timer with guided eye exercises."
+  },
+  {
+    "slug": "eye-strain-study-planner",
+    "name": "Eye Strain Study Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Plan a study session that alternates screen and paper blocks, with 20-20-20 micro-breaks and rest gaps to cut eye strain."
   },
   {
     "slug": "face-recognition-memory-test",
@@ -4311,6 +7939,14 @@ export const TOOL_CATALOG = [
     "description": "Exact factorial (n!) of a whole number using big integers."
   },
   {
+    "slug": "fahrenheit-travel-temperature-converter",
+    "name": "Fahrenheit Travel Temperature Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert forecast highs and lows between Fahrenheit and Celsius, with feels-like figures and a packing hint for each range."
+  },
+  {
     "slug": "fake-chat-maker",
     "name": "Fake Chat Maker",
     "categories": [
@@ -4335,6 +7971,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Generate professional-looking fake excuse letters for missing work, school, or events with customizable details."
+  },
+  {
+    "slug": "family-car-size-selector",
+    "name": "Family Car Size Selector",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Match a car body type to your seat count, child seats, luggage volume and the longest car your parking allows."
   },
   {
     "slug": "family-emergency-contact-tree",
@@ -4379,6 +8023,14 @@ export const TOOL_CATALOG = [
     "description": "Generate fresh fantasy character names from a keyword."
   },
   {
+    "slug": "faq-generator-prompt-builder",
+    "name": "FAQ Generator Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turn a product description into an FAQ prompt with intent coverage, answer length targets and FAQPage schema."
+  },
+  {
     "slug": "fast-click-challenge",
     "name": "Fast Click Challenge",
     "categories": [
@@ -4388,12 +8040,36 @@ export const TOOL_CATALOG = [
     "description": "Test your clicking speed in 10 seconds. Click as fast as you can and compare your CPS with friends."
   },
   {
+    "slug": "fastag-recharge-planner",
+    "name": "Fastag Recharge Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan FASTag top-ups from your toll usage: daily burn, days of balance left, recommended recharge and the return-journey saving."
+  },
+  {
     "slug": "fd-ladder-planner",
     "name": "Fixed Deposit Ladder Planner",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Split a lump sum across staggered FD tenures and see each rung's maturity, date and the blended average yield."
+  },
+  {
+    "slug": "fd-maturity-calculator-with-tds",
+    "name": "Bank FD Maturity Calculator with TDS",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Fixed deposit maturity value with quarterly compounding, year-wise interest accrual, section 194A TDS and your post-tax return."
+  },
+  {
+    "slug": "fd-premature-withdrawal-calculator",
+    "name": "FD Premature Withdrawal Penalty Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "What you actually get for breaking a fixed deposit early, and whether a loan against the FD would leave you better off."
   },
   {
     "slug": "fd-premature-withdrawal-penalty-calculator",
@@ -4413,6 +8089,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate fixed deposit and recurring deposit maturity amount, interest earned, tax impact, and growth schedule."
   },
   {
+    "slug": "feature-flag-naming-generator",
+    "name": "Feature Flag Naming Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate consistent feature flag names with type prefix, owning team, expiry tag and your team's case convention."
+  },
+  {
     "slug": "feedback-categorizer",
     "name": "Feedback Categorizer",
     "categories": [
@@ -4422,12 +8106,60 @@ export const TOOL_CATALOG = [
     "description": "Group customer feedback into themes, estimate sentiment, and surface high-priority product signals."
   },
   {
+    "slug": "feet-metres-altitude-converter",
+    "name": "Feet to Metres Altitude Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert trek and flight altitudes between feet and metres, with air pressure, effective oxygen and the altitude band."
+  },
+  {
+    "slug": "fence-post-spacing-calculator",
+    "name": "Fence Post Spacing Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate post count, even on-centre spacing, hole depth and diameter, and the concrete bags per hole for a fence run."
+  },
+  {
+    "slug": "feng-shui-room-guide",
+    "name": "Feng Shui Room Guide",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Informational feng shui layout and element guide for each room, with bagua area, five-element cycle and colour split."
+  },
+  {
+    "slug": "festival-budget-planner",
+    "name": "Festival and Gifting Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan festival spending across gifts, food, travel, decor and clothing, with a gift-tax check and the monthly saving it needs."
+  },
+  {
+    "slug": "fetal-kick-counter",
+    "name": "Fetal Kick Counter",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Tap to count fetal movements and see how long ten took, using the count-to-ten method with session timing and history."
+  },
+  {
     "slug": "fifty-thirty-twenty-budget-calculator",
     "name": "50-30-20 Budget Rule Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Split your take-home pay into 50% needs, 30% wants and 20% savings, then compare it against what you actually spend."
+  },
+  {
+    "slug": "figma-ai-prompt-builder",
+    "name": "Figma AI Prompt Builder",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Build Figma AI prompts for wireframes, layer naming and design system cleanup, with real column-grid maths for your frame size."
   },
   {
     "slug": "file-checksum-comparator",
@@ -4460,10 +8192,17 @@ export const TOOL_CATALOG = [
     "slug": "file-metadata-explorer",
     "name": "File Metadata Explorer",
     "categories": [
-      "Developer",
-      "Productivity"
+      "Developer"
     ],
     "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser."
+  },
+  {
+    "slug": "file-name-sanitiser-for-portals",
+    "name": "File Name Sanitiser For Portals",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Clean file names of spaces, symbols, accents and reserved words that break government portal and legacy system uploads."
   },
   {
     "slug": "file-signature-verifier",
@@ -4479,10 +8218,9 @@ export const TOOL_CATALOG = [
     "slug": "file-to-base64",
     "name": "File to Base64",
     "categories": [
-      "Converters",
-      "Developer"
+      "Converters"
     ],
-    "description": "Convert local files into Base64 data URLs without uploading."
+    "description": "Convert local files into Base64 strings and data URLs without uploading them."
   },
   {
     "slug": "final-grade-calculator",
@@ -4503,12 +8241,28 @@ export const TOOL_CATALOG = [
     "description": "Plan and track multiple financial goals simultaneously. Set targets for retirement, education, travel, and more."
   },
   {
+    "slug": "financial-literacy-quiz",
+    "name": "Financial Literacy Quiz for Beginners",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "A 16-question quiz on interest, inflation, insurance and tax, scored per topic with worked explanations for every answer."
+  },
+  {
     "slug": "financial-update",
     "name": "Financial Update",
     "categories": [
       "Business"
     ],
     "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news."
+  },
+  {
+    "slug": "financial-year-assessment-year-finder",
+    "name": "Financial Year and Assessment Year Finder",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Map any date to the Indian financial year and assessment year, with the quarter and the statutory filing dates that follow."
   },
   {
     "slug": "find-and-replace-tool",
@@ -4536,12 +8290,44 @@ export const TOOL_CATALOG = [
     "description": "Calculate your Financial Independence / Retire Early number using the 4% rule, SWR, and inflation-adjusted projections."
   },
   {
+    "slug": "fire-extinguisher-selector",
+    "name": "Fire Extinguisher Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Match the right extinguishing agent and size to a kitchen, garage, electrical or workshop risk, with NFPA 10 coverage maths."
+  },
+  {
     "slug": "fire-number-calculator",
     "name": "FIRE Number Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Find the corpus that buys your freedom, the year you reach it, and whether you can already coast to it."
+  },
+  {
+    "slug": "firewood-cord-calculator",
+    "name": "Firewood Cord Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate cords of firewood needed for a heating season by species and stove efficiency, plus stack length and weight."
+  },
+  {
+    "slug": "first-car-budget-advisor",
+    "name": "First Car Budget Advisor",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Set a safe first-car budget from income, savings and running costs using the 20/4/10 rule — down payment, EMI and on-road price."
+  },
+  {
+    "slug": "fiscal-quarter-converter",
+    "name": "Quarter and Fiscal Period Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert any date between calendar and fiscal quarters for any fiscal year start month, with both year-labelling conventions."
   },
   {
     "slug": "flag-quiz",
@@ -4570,6 +8356,14 @@ export const TOOL_CATALOG = [
     "description": "Create, organize, and study flashcards with AI-assisted generation."
   },
   {
+    "slug": "flashcard-prompt-builder",
+    "name": "Flashcard Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build an AI prompt that produces clean, importable question-and-answer flashcard sets in basic, cloze or term-definition format."
+  },
+  {
     "slug": "flat-vs-reducing-rate-converter",
     "name": "Flat vs Reducing Interest Rate Converter",
     "categories": [
@@ -4578,12 +8372,36 @@ export const TOOL_CATALOG = [
     "description": "Convert a flat interest rate to its true reducing-balance equivalent, or back again, with the EMI and total interest."
   },
   {
+    "slug": "flexitarian-macro-calculator",
+    "name": "Flexitarian Macro Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Mostly-plant macro targets with the weekly meat allowance for the Beginner, Advanced and Expert flexitarian levels."
+  },
+  {
+    "slug": "floor-tile-quantity-calculator",
+    "name": "Floor Tile Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate floor tiles, boxes, adhesive and grout for any room area including a wastage allowance."
+  },
+  {
     "slug": "flow-chart-maker",
     "name": "Flow Chart Maker",
     "categories": [
       "Developer"
     ],
     "description": "Create flowcharts with ease and share them with your team."
+  },
+  {
+    "slug": "flu-shot-reminder-planner",
+    "name": "Flu Shot Reminder Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Find your best annual flu vaccination window by hemisphere, with the date protection starts, travel deadlines and child second-dose timing."
   },
   {
     "slug": "focus-reading-mask",
@@ -4648,6 +8466,46 @@ export const TOOL_CATALOG = [
     "description": "Compare the same private text across local system font stacks, size, measure, weight, and spacing settings without declaring a universal winner."
   },
   {
+    "slug": "font-pairing-brutalist-vibe",
+    "name": "Brutalist Font Pairing",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Grotesk and monospace pairings with a character grid, edge-to-edge headline sizing and tracking values."
+  },
+  {
+    "slug": "font-pairing-editorial-vibe",
+    "name": "Editorial Vibe Font Pairing",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Magazine-style Google Font pairings with a modular type scale, measured line length and leading you can copy as CSS."
+  },
+  {
+    "slug": "font-pairing-retro-vibe",
+    "name": "Retro Vibe Font Pairing",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Seventies and eighties font pairs with matching palettes and live WCAG contrast ratios for every text and accent colour."
+  },
+  {
+    "slug": "font-pairing-tech-startup-vibe",
+    "name": "Tech Startup Font Pairing",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Geometric sans pairings with a grid-snapped UI type scale, mono face for numbers and a slide legibility check."
+  },
+  {
+    "slug": "font-pairing-wedding-vibe",
+    "name": "Wedding Font Pairing",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Script and serif pairings for invitations, with x-height in millimetres, line length and 300 dpi print sizes."
+  },
+  {
     "slug": "font-subsetter-woff2-converter",
     "name": "Font Subsetter & WOFF2 Converter",
     "categories": [
@@ -4664,6 +8522,22 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Look up how long any food keeps in the pantry, fridge or freezer, and check whether leftovers are still safe to eat."
+  },
+  {
+    "slug": "footage-storage-per-hour-calculator",
+    "name": "Footage Storage Per Hour Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Plan card and drive space for a shoot: storage per hour by codec, resolution, frame rate and audio track count."
+  },
+  {
+    "slug": "form-15g-15h-eligibility-checker",
+    "name": "Form 15G and 15H Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether you can file a Form 15G or 15H no-TDS declaration with your bank, and see the TDS at stake."
   },
   {
     "slug": "form-abandonment-simulator",
@@ -4683,6 +8557,22 @@ export const TOOL_CATALOG = [
     "description": "Build forms with ease."
   },
   {
+    "slug": "form-correction-window-tracker",
+    "name": "Form Correction Window Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Count down an exam form correction window, see which fields that body actually lets you edit, and what the correction costs."
+  },
+  {
+    "slug": "form-image-format-converter",
+    "name": "Image Format Converter For Forms",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert photos and signatures between JPG, JPEG and PNG in the browser, with the exact extension and size portals demand."
+  },
+  {
     "slug": "form-label-auditor",
     "name": "Form Label Auditor",
     "categories": [
@@ -4698,6 +8588,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Generate fun fortune cookie messages with lucky numbers, colors, and smooth card flip animations. Get your daily fortune and wisdom instantly."
+  },
+  {
+    "slug": "founder-prompt-pack",
+    "name": "Founder Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill in your company details once and generate ready-to-paste founder prompts for strategy, hiring and investor updates."
   },
   {
     "slug": "four-in-a-row",
@@ -4752,6 +8650,30 @@ export const TOOL_CATALOG = [
     "description": "Upload a video and convert its frame rate to any target FPS — 23.976, 24, 25, 29.97, 30, 48, 50, 60, 120 fps and more. Runs entirely in your browser via FFmpeg."
   },
   {
+    "slug": "frames-to-seconds-converter",
+    "name": "Frames to Seconds Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert frame counts to seconds and SMPTE timecode at any frame rate, including 29.97 drop-frame, and back again."
+  },
+  {
+    "slug": "france-dress-code-planner",
+    "name": "France Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan France outfits by month: cathedral cover-up rules, restaurant codes, the public-pool swim brief rule and a weighed packing list."
+  },
+  {
+    "slug": "frankfurt-fra-airport-arrival-buffer-calculator",
+    "name": "Frankfurt FRA Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Frankfurt Airport using drive time, traffic, check-in cut-off, passport control and gate-closing buffers."
+  },
+  {
     "slug": "freelance-hourly-rate-calculator",
     "name": "Freelance Hourly Rate Calculator",
     "categories": [
@@ -4778,12 +8700,36 @@ export const TOOL_CATALOG = [
     "description": "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge."
   },
   {
+    "slug": "freelance-rate-converter",
+    "name": "Freelance Contract Rate Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert a freelance rate between hourly, daily, weekly, monthly, annual and fixed-project figures using your real billable capacity."
+  },
+  {
     "slug": "freelancer-advance-tax-planner",
     "name": "Freelancer Advance Tax Planner",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Plan quarterly advance tax instalments and due dates on freelance and professional income."
+  },
+  {
+    "slug": "freelancer-expense-deduction-checklist",
+    "name": "Freelancer Expense Deduction Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track deductible freelance expenses head by head, flag cash and TDS disallowances, and compare actual expenses against Section 44ADA."
+  },
+  {
+    "slug": "freelancer-prompt-pack",
+    "name": "Freelancer Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for proposals, scope protection, rate rises and polite invoice chasing."
   },
   {
     "slug": "friend-elo-ladder",
@@ -4820,12 +8766,60 @@ export const TOOL_CATALOG = [
     "description": "Measure the strength of your friendship using name alignment algorithms and interactive parameter sliders."
   },
   {
+    "slug": "fssai-licence-selector",
+    "name": "FSSAI Licence Category Selector",
+    "categories": [
+      "Business"
+    ],
+    "description": "Find whether you need FSSAI basic registration, a state licence or a central licence, from turnover, production capacity and activity."
+  },
+  {
+    "slug": "fuel-cost-per-km-calculator",
+    "name": "Fuel Cost Per Kilometre Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the true cost of a kilometre from fuel price and mileage, add running costs, and find the break-even for a CNG kit or EV switch."
+  },
+  {
+    "slug": "fuel-cost-split-calculator",
+    "name": "Fuel Cost Split Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding."
+  },
+  {
     "slug": "fuel-cost-trip-calculator",
     "name": "Fuel Cost Trip Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Estimate trip fuel cost from distance, mileage and fuel price, then split it per person."
+  },
+  {
+    "slug": "fuel-economy-unit-converter",
+    "name": "Fuel Economy Unit Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert fuel economy between km/l, l/100 km, US mpg and imperial mpg, with the fuel a given trip would use."
+  },
+  {
+    "slug": "fuel-price-per-litre-comparator",
+    "name": "Fuel Price Per Litre Comparator",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Normalise fuel prices quoted per litre or per gallon in different currencies to one price per litre and rank them."
+  },
+  {
+    "slug": "fuel-tank-range-estimator",
+    "name": "Fuel Tank Range Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate how far you can still drive from the fuel gauge reading, tank size, mileage and the reserve you want to keep."
   },
   {
     "slug": "full-and-final-settlement-calculator",
@@ -4853,12 +8847,28 @@ export const TOOL_CATALOG = [
     "description": "Generate funny, memorable passwords online with adjectives, nouns, numbers, and symbols. Secure yet hilarious password ideas you won't forget."
   },
   {
+    "slug": "furniture-assembly-time-estimator",
+    "name": "Furniture Assembly Time Estimator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Estimate how long flat-pack furniture takes to build from part and fastener counts, skill, tools and helpers."
+  },
+  {
     "slug": "furniture-layout-planner",
     "name": "Furniture Layout Planner",
     "categories": [
       "Lifestyle"
     ],
     "description": "Plan room dimensions, arrange furniture pieces, check spacing, save layouts, and export printable floor plans."
+  },
+  {
+    "slug": "furniture-resale-value-estimator",
+    "name": "Furniture Resale Value Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the resale value of wooden and modular furniture from material, age, condition and whether it can be moved."
   },
   {
     "slug": "future-baby-generator",
@@ -4913,6 +8923,110 @@ export const TOOL_CATALOG = [
     "description": "Selected currency rate cross hone par alert de."
   },
   {
+    "slug": "gain-staging-calculator",
+    "name": "Gain Staging Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert a level between dBFS, dBu, dBV, volts RMS and percent of full scale using a chosen alignment standard."
+  },
+  {
+    "slug": "gaj-to-sqft-converter",
+    "name": "Gaj to Sqft Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert gaj (square yard) to square feet, square metres, biswa, marla and kanal, with rate per gaj and plot cost."
+  },
+  {
+    "slug": "gaming-pc-electricity-cost",
+    "name": "Gaming PC Electricity Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out gaming rig wall-socket power draw, monthly electricity cost and the PSU wattage your GPU and CPU actually need."
+  },
+  {
+    "slug": "gap-certificate-explainer",
+    "name": "Gap Certificate Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check whether your study gap needs a gap certificate or affidavit, what it must contain, and get a ready draft for the notary."
+  },
+  {
+    "slug": "gap-year-eligibility-explainer",
+    "name": "Gap Year Eligibility Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See which entrance exams accept gap years, how many, and what proof counselling bodies ask for — from your passing and attempt years."
+  },
+  {
+    "slug": "garden-fence-material-calculator",
+    "name": "Garden Fence Material Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate posts, bays, panels, wire strands and post-hole concrete for a garden fence of any length."
+  },
+  {
+    "slug": "garden-soil-volume-calculator",
+    "name": "Garden Soil Volume Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute topsoil volume, weight, bags and bulk bags to fill a raised bed, level a lawn or top-dress a garden area."
+  },
+  {
+    "slug": "gas-leak-safety-checklist",
+    "name": "Gas Leak Safety Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "How long an LPG or PNG leak takes to reach its flammable limit in your room, plus the detection and shut-down steps in the right order."
+  },
+  {
+    "slug": "gas-meter-reading-tracker",
+    "name": "Gas Meter Reading Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track piped gas meter readings in SCM and estimate the next bill on your distributor's telescopic slab tariff."
+  },
+  {
+    "slug": "gate-exam-countdown",
+    "name": "GATE Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "GATE countdown with a halving-cycle subject rotation schedule built from your branch syllabus and today's rotation reminder."
+  },
+  {
+    "slug": "gcp-cloud-run-cost-calculator",
+    "name": "GCP Cloud Run Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute Google Cloud Run cost from requests, CPU, memory, concurrency and min instances — free tier and idle rates included."
+  },
+  {
+    "slug": "gemfile-generator",
+    "name": "Gemfile Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a Bundler Gemfile with source, ruby version, groups, git and path sources, and pessimistic version constraints."
+  },
+  {
+    "slug": "gemini-api-cost-calculator",
+    "name": "Gemini API Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate Gemini API spend across text, cached, long-context, image and audio tokens, per request and per month."
+  },
+  {
     "slug": "generate-random-string",
     "name": "Generate Random String",
     "categories": [
@@ -4928,6 +9042,30 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Explore geometric formulas interactively — calculate area, perimeter, and volume with visual shapes and step-by-step breakdowns."
+  },
+  {
+    "slug": "germany-dress-code-planner",
+    "name": "Germany Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan Germany outfits by month: textile-free sauna rules, cathedral cover-up, Christmas market layering and a weighed packing list."
+  },
+  {
+    "slug": "geyser-capacity-selector",
+    "name": "Geyser Capacity Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a water heater in litres for bucket baths or showers, with the mixing maths, reheat time and energy per heating cycle."
+  },
+  {
+    "slug": "geyser-electricity-cost-calculator",
+    "name": "Geyser Electricity Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Water heater running cost from litres used, temperature rise and BEE star standing loss, per day, month and year."
   },
   {
     "slug": "gif-palette-optimizer",
@@ -4955,6 +9093,14 @@ export const TOOL_CATALOG = [
     "description": "find the best gift for your loved one."
   },
   {
+    "slug": "gift-tax-relative-checker",
+    "name": "Gift Tax Relative Definition Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether a gift giver is a relative under section 56(2)(x) and how much of the gift is taxable in the receiver's hands."
+  },
+  {
     "slug": "gig-earnings-mileage-analyzer",
     "name": "Gig Earnings & Mileage Analyzer",
     "categories": [
@@ -4973,6 +9119,38 @@ export const TOOL_CATALOG = [
     "description": "Fees, travel aur admin time ke baad effective hourly pay compare kare."
   },
   {
+    "slug": "girl-child-scholarship-finder",
+    "name": "Girl Child Scholarship Finder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Filter major Indian girl-child scholarship schemes by study level, family income, community and state to see what you can apply for."
+  },
+  {
+    "slug": "git-branch-naming-generator",
+    "name": "Git Branch Naming Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create a branch naming convention with types, ticket IDs and separators — get the template, validation regex, examples and a CI check."
+  },
+  {
+    "slug": "git-branching-strategy-comparison",
+    "name": "Git Branching Strategy Comparison",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare git flow, GitHub flow, trunk-based development and release branching, scored against your team size and release cadence."
+  },
+  {
+    "slug": "git-commit-message-linter",
+    "name": "Git Commit Message Linter",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Lint a commit message against the Conventional Commits spec — type, scope, subject, body and footers — with a suggested fixed message."
+  },
+  {
     "slug": "git-diff-exposure-checker",
     "name": "Git Diff Exposure Checker",
     "categories": [
@@ -4980,6 +9158,86 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Inspect a pasted unified Git diff locally for added secret-like values, private-key material, contact PII, and sensitive filenames with redacted findings."
+  },
+  {
+    "slug": "git-lfs-storage-estimator",
+    "name": "Git LFS Storage Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate Git LFS storage growth, monthly bandwidth and GitHub data-pack cost from file sizes, update rate and clone frequency."
+  },
+  {
+    "slug": "git-merge-vs-rebase-helper",
+    "name": "Git Merge vs Rebase Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Answer a few questions about your branch and get a merge, rebase or squash recommendation with history previews and the exact commands."
+  },
+  {
+    "slug": "git-submodule-vs-subtree-chooser",
+    "name": "Git Submodule vs Subtree Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare git submodules, git subtree and package dependencies for sharing code across repos, scored for your team and workflow."
+  },
+  {
+    "slug": "git-tag-naming-generator",
+    "name": "Git Tag Naming Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a consistent release tag format — v-prefix, SemVer 2.0.0, prerelease channels, build metadata — with regex and git commands."
+  },
+  {
+    "slug": "gitattributes-generator",
+    "name": "Gitattributes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a .gitattributes file for line-ending normalization, Git LFS tracking, binary marking, export-ignore and diff drivers."
+  },
+  {
+    "slug": "github-actions-cron-schedule-builder",
+    "name": "GitHub Actions Cron Schedule Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build on.schedule cron entries in UTC from your local time and preview when the workflow runs for teammates around the world."
+  },
+  {
+    "slug": "github-actions-minutes-cost-calculator",
+    "name": "GitHub Actions Minutes Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly GitHub Actions cost from job counts and durations, with Linux, Windows 2x and macOS 10x runner multipliers."
+  },
+  {
+    "slug": "github-actions-secrets-scope-planner",
+    "name": "GitHub Actions Secrets Scope Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Decide repository, environment or organization scope for each Actions secret and get the matching gh CLI setup commands."
+  },
+  {
+    "slug": "github-copilot-prompt-builder",
+    "name": "GitHub Copilot Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Turn a coding task into a Copilot-ready comment prompt with context, examples and constraints in your language's comment syntax."
+  },
+  {
+    "slug": "github-issue-template-generator",
+    "name": "GitHub Issue Template Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create GitHub issue form YAML for bug reports, feature requests and support questions with validated fields and labels."
   },
   {
     "slug": "github-profile-finder",
@@ -4990,12 +9248,20 @@ export const TOOL_CATALOG = [
     "description": "Search and discover detailed statistics, repository listings, star counts, fork metrics, and language breakdowns for any GitHub user profile."
   },
   {
+    "slug": "gitignore-generator-by-stack",
+    "name": "Gitignore Generator by Stack",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a .gitignore by combining language, framework, IDE and OS templates with automatic de-duplication."
+  },
+  {
     "slug": "giveaway-winner-picker",
     "name": "Giveaway Winner Picker",
     "categories": [
       "Marketing & Social"
     ],
-    "description": "Create giveaways, manage participant entries, detect duplicates, and reveal fair random winners with animated draw history."
+    "description": "Paste giveaway entries, detect duplicates, and draw fair, reproducible winners with a published seed and draw history."
   },
   {
     "slug": "glasses-tryon",
@@ -5024,6 +9290,14 @@ export const TOOL_CATALOG = [
     "description": "Test whether a glob pattern (with * and ?) matches a string, and see the regex it compiles to."
   },
   {
+    "slug": "global-emergency-fund-calculator",
+    "name": "Global Emergency Fund Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Size an emergency fund in your own currency from essential outgo, income stability, dependants and expected job-search time."
+  },
+  {
     "slug": "global-market-session-clock",
     "name": "Global Market Session Clock",
     "categories": [
@@ -5031,6 +9305,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Major exchanges ka open/closed status aur countdown dikhaye."
+  },
+  {
+    "slug": "glossary-prompt-builder",
+    "name": "Glossary Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Extract candidate terms from your docs and build a glossary prompt using ISO 704 definition rules."
   },
   {
     "slug": "gmail-template-builder",
@@ -5041,6 +9323,22 @@ export const TOOL_CATALOG = [
       "Marketing & Social"
     ],
     "description": "A drag-and-drop email template builder optimized for Gmail and marketing campaigns."
+  },
+  {
+    "slug": "go-mod-generator",
+    "name": "Go Mod Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a valid go.mod with module path, go and toolchain directives, require, replace, exclude and retract blocks."
+  },
+  {
+    "slug": "goa-trip-budget-breakdown",
+    "name": "Goa Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Goa trip into flights, stay, food, scooter transport and activities, per person and per day, with a contingency buffer."
   },
   {
     "slug": "goal-based-sip-calculator",
@@ -5079,9 +9377,9 @@ export const TOOL_CATALOG = [
     "slug": "golden-hour-time-estimator",
     "name": "Golden Hour Time Estimator",
     "categories": [
-      "Design & Color"
+      "Image & Photo"
     ],
-    "description": "Calculate precise golden hour, sunrise, sunset, and blue hour windows with real-time countdowns, sun path animation, and camera planning alerts."
+    "description": "Calculate precise golden hour, blue hour, sunrise, sunset and twilight windows for any date and place, with the sun's path across the day."
   },
   {
     "slug": "golden-ratio-visualizer",
@@ -5102,6 +9400,22 @@ export const TOOL_CATALOG = [
     "description": "Generate highly converting Google Ads descriptions using AI."
   },
   {
+    "slug": "google-sheets-ai-prompt-builder",
+    "name": "Google Sheets AI Prompt Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build Google Sheets AI prompts with correctly quoted A1 ranges, a real column map and the 10 million cell budget checked for you."
+  },
+  {
+    "slug": "government-hra-calculator",
+    "name": "House Rent Allowance for Government Staff",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "7th Pay Commission HRA for central government employees by X, Y or Z city class, with the DA-linked rate and the section 10(13A) exemption."
+  },
+  {
     "slug": "gpa-cgpa-calculator",
     "name": "GPA / CGPA Calculator",
     "categories": [
@@ -5117,6 +9431,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "GPS readings se speed aur private trip log dikhaye."
+  },
+  {
+    "slug": "gpt-api-cost-calculator",
+    "name": "GPT API Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly OpenAI GPT API spend from daily request volume, average token counts, cached-input share and batch discount."
   },
   {
     "slug": "gpx-home-zone-privacy-scrubber",
@@ -5161,6 +9483,14 @@ export const TOOL_CATALOG = [
     "description": "Check your Grammer and spelling mistakes"
   },
   {
+    "slug": "granite-countertop-calculator",
+    "name": "Granite Countertop Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out granite square feet, running feet and cost for a kitchen platform with backsplash, cutouts and edge profiles."
+  },
+  {
     "slug": "gratuity-calculator",
     "name": "Gratuity Calculator",
     "categories": [
@@ -5177,12 +9507,28 @@ export const TOOL_CATALOG = [
     "description": "Gratuity payable under the Payment of Gratuity Act with 15/26 formula and tax-free cap."
   },
   {
+    "slug": "gravel-driveway-calculator",
+    "name": "Gravel Driveway Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute gravel tonnes, cubic yards and truck loads for a driveway or parking pad, layer by layer, with compaction allowed for."
+  },
+  {
     "slug": "gravity-orbit-simulator",
     "name": "Gravity Orbit Simulator",
     "categories": [
       "Education & Science"
     ],
     "description": "Interactive N-body orbital mechanics simulator with velocity vectors, orbital eccentricity, escape velocity, and collision mechanics."
+  },
+  {
+    "slug": "grep-command-builder",
+    "name": "Grep Command Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting."
   },
   {
     "slug": "grocery-list-builder",
@@ -5212,6 +9558,14 @@ export const TOOL_CATALOG = [
     "description": "Track shared expenses for trips and flatmates, see who owes whom, and settle up with the fewest possible payments."
   },
   {
+    "slug": "group-trip-tip-splitter",
+    "name": "Group Trip Tip Splitter",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers."
+  },
+  {
     "slug": "group-veto-picker",
     "name": "Group Veto Picker",
     "categories": [
@@ -5219,6 +9573,22 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Member vetoes se options progressively narrow kare."
+  },
+  {
+    "slug": "group-viva-preparation-planner",
+    "name": "Group Viva Preparation Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan group viva practice with a round-robin rotation so every member asks and answers the same number of questions."
+  },
+  {
+    "slug": "gsm-paper-weight-calculator",
+    "name": "GSM Paper Weight Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn GSM into sheet weight, ream weight and parcel weight, convert US lb basis weights, and get stack height for a print run."
   },
   {
     "slug": "gst-calculator",
@@ -5230,12 +9600,116 @@ export const TOOL_CATALOG = [
     "description": "Calculate inclusive or exclusive GST with CGST, SGST, and IGST breakdowns."
   },
   {
+    "slug": "gst-calculator-australia",
+    "name": "GST Calculator Australia",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add or remove Australia's 10% GST using the divide-by-11 rule, with a BAS summary and the $75,000 registration check."
+  },
+  {
+    "slug": "gst-calculator-education-services",
+    "name": "GST Calculator for Educational Services",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check whether a school, college, coaching or training service is GST exempt under Notification 12/2017 and calculate the 18% tax when it is not."
+  },
+  {
+    "slug": "gst-calculator-new-zealand",
+    "name": "GST Calculator New Zealand",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add or remove New Zealand GST at 15%, using the 3/23 inclusive fraction, with the $60,000 registration threshold check."
+  },
+  {
+    "slug": "gst-calculator-singapore",
+    "name": "GST Calculator Singapore",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add or reverse Singapore GST at the current 9% rate, with historical 8% and 7% rates and the S$1 million registration test."
+  },
+  {
+    "slug": "gst-calculator-small-traders",
+    "name": "GST Calculator for Small Traders",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the GST registration threshold, composition scheme tax and regular scheme net liability for a small trading, manufacturing or restaurant business."
+  },
+  {
+    "slug": "gst-composition-eligibility-checker",
+    "name": "GST Composition Scheme Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Run your turnover, state and business activity against every condition in section 10 of the CGST Act to see if the composition scheme is open to you."
+  },
+  {
+    "slug": "gst-composition-scheme-calculator",
+    "name": "GST Composition Scheme Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate GST composition levy for traders, manufacturers and restaurants from taxable turnover and selected rate."
+  },
+  {
+    "slug": "gst-delivery-challan-generator",
+    "name": "GST Delivery Challan Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a Rule 55 delivery challan for job work, branch transfers and goods moved without a supply, with GSTIN checks, tax split and e-way bill flag."
+  },
+  {
     "slug": "gst-input-tax-credit-calculator",
     "name": "GST Input Tax Credit Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Net GST payable in cash after setting off input tax credit across IGST, CGST and SGST under the Rule 88A utilisation order."
+  },
+  {
+    "slug": "gst-invoice-series-generator",
+    "name": "GST Invoice Series Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a consecutive tax invoice numbering series for a financial year and check it against the 16-character limit in Rule 46(b)."
+  },
+  {
+    "slug": "gst-late-fee-interest-calculator",
+    "name": "GST Late Fee and Interest Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Late fee and section 50 interest on delayed GSTR-1, GSTR-3B and GSTR-9 filing, with the turnover-linked late fee caps applied."
+  },
+  {
+    "slug": "gst-on-advance-checker",
+    "name": "GST on Advance Received Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether an advance attracts GST, split the CGST, SGST or IGST, and see which voucher and return line it belongs in."
+  },
+  {
+    "slug": "gst-query-prompt-builder",
+    "name": "GST Query Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Frame GST questions for AI with citation and non-advisory guardrails, plus a live registration-threshold check and statutory due dates."
+  },
+  {
+    "slug": "gst-return-due-date-calendar",
+    "name": "GST Return Due Date Calendar",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Generate every GSTR-1, GSTR-3B, CMP-08, IFF and annual return due date for a financial year, for monthly, QRMP or composition filers."
   },
   {
     "slug": "gst-reverse-calculator",
@@ -5253,6 +9727,30 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Validate Indian GSTIN format, decode state code, extract PAN, verify checksum, mask output, and check bulk GSTIN lists locally."
+  },
+  {
+    "slug": "gtu-cgpa-percentage-converter",
+    "name": "Gujarat Technological CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert GTU SPI, CPI and CGPA to percentage with selectable regulation, and build the index from AA to FF course grades."
+  },
+  {
+    "slug": "guest-room-checklist",
+    "name": "Guest Room Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Generate a guest-ready room checklist with exact linen, towel, toiletry and water quantities for your guests and nights."
+  },
+  {
+    "slug": "guntha-to-sqft-converter",
+    "name": "Guntha to Sqft Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert guntha, acre, are and hectare to square feet and square metres, including 7/12 extract hectare-are-sqm entries."
   },
   {
     "slug": "gzip-encryption",
@@ -5296,6 +9794,22 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Try on different hairstyles with AI-powered face detection. Preview short, medium, and long hairstyles with various colors and adjustments."
+  },
+  {
+    "slug": "hand-gesture-meaning-guide",
+    "name": "Hand Gesture Meaning Warning Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check which everyday hand gestures change meaning or turn offensive across countries, with a safer alternative for each."
+  },
+  {
+    "slug": "handyman-cost-estimator",
+    "name": "Handyman Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Price common electrical, plumbing, carpentry and painting jobs by billable hours, materials, visit charge, urgency and GST."
   },
   {
     "slug": "hangman",
@@ -5350,6 +9864,14 @@ export const TOOL_CATALOG = [
     "description": "Left/right, stereo placement aur polarity test tones play kare."
   },
   {
+    "slug": "headphone-listening-break-timer",
+    "name": "Headphone Listening Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Alternating listen and rest timer for long headphone sessions, with a break schedule and how much of the daily sound allowance you use."
+  },
+  {
     "slug": "health-insurance-cover-calculator",
     "name": "Health Insurance Cover Calculator",
     "categories": [
@@ -5399,12 +9921,44 @@ export const TOOL_CATALOG = [
     "description": "Climate, efficiency aur tariffs se running cost compare kare."
   },
   {
+    "slug": "hedge-spacing-calculator",
+    "name": "Hedge Spacing Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out how many hedging plants a run needs from its length, the species spacing and single or double staggered rows."
+  },
+  {
     "slug": "heic-to-jpg",
     "name": "HEIC to JPG Converter",
     "categories": [
       "Converters"
     ],
     "description": "Convert Apple HEIC/HEIF images into standard JPG or PNG files locally in your web browser. Supports batch conversions, custom image quality, and ZIP exports."
+  },
+  {
+    "slug": "helmet-size-finder",
+    "name": "Helmet Size Finder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Find your helmet size from head circumference, flag borderline fits and identify your head shape from the cephalic index."
+  },
+  {
+    "slug": "herb-garden-spacing-planner",
+    "name": "Herb Garden Spacing Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan a kitchen herb bed: spacing between plants, how many fit, pot depth, sun hours and which herbs to keep apart."
+  },
+  {
+    "slug": "hero-bike-service-schedule-planner",
+    "name": "Hero Bike Service Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan Hero motorcycle free and paid service intervals by kilometres and months, with parts and labour cost estimates."
   },
   {
     "slug": "hex-to-base64",
@@ -5462,6 +10016,22 @@ export const TOOL_CATALOG = [
     "description": "Scanned documents ko custom accessible palettes me convert kare."
   },
   {
+    "slug": "high-protein-macro-calculator",
+    "name": "High-Protein Macro Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "High-protein macro split for holding on to muscle in a calorie deficit, with a fat floor and per-meal protein spread."
+  },
+  {
+    "slug": "highway-vs-city-mileage-estimator",
+    "name": "Highway vs City Mileage Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Blend city and highway km/l into a true combined mileage using the harmonic fuel-weighted formula, plus monthly litres and cost."
+  },
+  {
     "slug": "hiit-timer",
     "name": "HIIT & Tabata Timer",
     "categories": [
@@ -5483,7 +10053,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Learn coding concepts translated playfully into everyday Hinglish."
+    "description": "Learn 40 core coding concepts explained three ways: precise English, everyday Hinglish, and an analogy — with a quiz."
   },
   {
     "slug": "home-affordability-calculator",
@@ -5494,6 +10064,14 @@ export const TOOL_CATALOG = [
     "description": "Find the maximum property price you can afford from your income, EMI capacity, down payment, LTV cap and registration costs."
   },
   {
+    "slug": "home-air-filter-reminder",
+    "name": "Home Air Filter Reminder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when each air purifier or AC filter is actually due, date the next change, and add up the yearly filter and electricity cost."
+  },
+  {
     "slug": "home-battery-tou-simulator",
     "name": "Home Battery TOU Simulator",
     "categories": [
@@ -5501,6 +10079,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Tariffs aur load profile se charging/discharging scenarios compare kare."
+  },
+  {
+    "slug": "home-fire-safety-checklist",
+    "name": "Home Fire Safety Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Audit your home against fire-safety practice — alarms, escape routes, cooking, heating, electrical and LPG — and size the equipment you need."
   },
   {
     "slug": "home-heat-loss-retrofit-estimator",
@@ -5519,6 +10105,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Record household assets, serial numbers, photos, and replacement values."
+  },
+  {
+    "slug": "home-loan-eligibility-calculator",
+    "name": "Home Loan Eligibility Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate home loan eligibility from income, existing EMIs, tenure and age using FOIR limits and RBI loan-to-value ceilings."
   },
   {
     "slug": "home-loan-prepayment-calculator",
@@ -5546,12 +10140,84 @@ export const TOOL_CATALOG = [
     "description": "Plan home maintenance tasks with due dates, frequency, priorities, and monthly scheduling."
   },
   {
+    "slug": "home-office-desk-setup-calculator",
+    "name": "Home Office Desk Setup Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Get ergonomic seat, desk, standing-desk and monitor heights for your body height, plus footrest and riser needs."
+  },
+  {
+    "slug": "home-recycling-impact-calculator",
+    "name": "Home Recycling Impact Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn what your household recycles each week into energy saved, water saved, CO2 avoided and waste kept out of landfill."
+  },
+  {
+    "slug": "home-renovation-budget-planner",
+    "name": "Home Renovation Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Build a room-by-room renovation budget with a quality tier, professional fees, GST on works contracts and a contingency buffer."
+  },
+  {
+    "slug": "home-state-quota-explainer",
+    "name": "Home State Quota Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "See whether you get Home State, Other State or All India quota at NITs, IITs, NEET UG and state CET counselling."
+  },
+  {
+    "slug": "homework-help-guardrail-prompt",
+    "name": "Homework Help Guardrail Prompt",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Generate an AI helper prompt that coaches a student through homework without writing the submittable answer for them."
+  },
+  {
+    "slug": "honda-bike-service-schedule-planner",
+    "name": "Honda Bike Service Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track Honda two-wheeler free and paid service milestones with the consumable replacements due at each visit."
+  },
+  {
+    "slug": "hook-retention-timing-planner",
+    "name": "Hook Retention Timing Planner",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Turn a short video length into a frame-accurate hook beat sheet built around each platform's view, skip and completion thresholds."
+  },
+  {
     "slug": "horoscope-reader",
     "name": "Horoscope Reader",
     "categories": [
       "Lifestyle"
     ],
     "description": "Read daily horoscope insights tailored to your zodiac sign."
+  },
+  {
+    "slug": "hostel-vs-pg-cost-comparator",
+    "name": "Hostel Vs PG Cost Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare the true monthly cost of a hostel against a PG — rent, food, utilities, travel and one-time charges over your stay."
+  },
+  {
+    "slug": "hot-yoga-hydration-calculator",
+    "name": "Hot Yoga Hydration Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Before, during and after fluid plan for heated yoga, from a measured weigh-in sweat rate or your room temperature and class style."
   },
   {
     "slug": "hourly-to-salary-calculator",
@@ -5562,6 +10228,22 @@ export const TOOL_CATALOG = [
     "description": "Convert an hourly wage into daily, weekly, monthly and yearly pay."
   },
   {
+    "slug": "house-cleaning-cost-estimator",
+    "name": "House Cleaning Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate what a professional house cleaning should cost by carpet area, service type, city tier, add-ons and 18% GST."
+  },
+  {
+    "slug": "household-budget-planner-india",
+    "name": "Household Budget Planner India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan a rupee household budget across rent, EMI, groceries and savings, with 50/30/20 and FOIR ratio checks."
+  },
+  {
     "slug": "household-electricity-bill",
     "name": "Household Electricity Bill",
     "categories": [
@@ -5570,12 +10252,44 @@ export const TOOL_CATALOG = [
     "description": "Calculate your household electricity bill"
   },
   {
+    "slug": "household-money-split-tool",
+    "name": "Two Income Household Money Split Tool",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare equal, income-proportional and equal-leftover ways for a two-income couple to share household expenses fairly."
+  },
+  {
     "slug": "how-lucky-are-you",
     "name": "How Lucky Are You? Fortune Quiz",
     "categories": [
       "Fun"
     ],
     "description": "Take our free luck quiz to find out how lucky you really are. Answer 10 fun questions and discover your luck score with this entertaining online fortune quiz."
+  },
+  {
+    "slug": "hp-to-kw-converter",
+    "name": "HP to kW Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert horsepower, brake horsepower, metric PS, kilowatts and BTU/h, with drivetrain loss and power-to-weight."
+  },
+  {
+    "slug": "hpv-vaccine-schedule-planner",
+    "name": "HPV Vaccine Schedule Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out whether an HPV series needs two or three doses from the age at dose one, with recommended dates and minimum intervals."
+  },
+  {
+    "slug": "hr-prompt-pack",
+    "name": "HR Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for job posts, structured interviews, onboarding plans, policies and performance reviews."
   },
   {
     "slug": "hra-exemption-calculator",
@@ -5601,6 +10315,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Personal HRV baseline aur deviations track kare."
+  },
+  {
+    "slug": "hsa-contribution-calculator",
+    "name": "HSA Contribution and Tax Saving Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "IRS HSA contribution limits with age 55 catch-up, month-by-month proration and the triple tax benefit estimate."
   },
   {
     "slug": "hsn-code-gst-rate-finder",
@@ -5699,6 +10421,14 @@ export const TOOL_CATALOG = [
     "description": "Convert HTML to VB.NET ASP.NET templates and convert VB.NET markup back to clean HTML placeholders."
   },
   {
+    "slug": "http-header-reference-explorer",
+    "name": "HTTP Header Reference Explorer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Search HTTP request and response headers with meaning, direction, category and real example values."
+  },
+  {
     "slug": "http-status-code-explainer",
     "name": "HTTP Status Code Explainer",
     "categories": [
@@ -5732,12 +10462,36 @@ export const TOOL_CATALOG = [
     "description": "Economic value of your future earnings for life insurance planning, with growth, discount rate, loans and existing cover."
   },
   {
+    "slug": "husky-config-generator",
+    "name": "Husky Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a Husky v9 + lint-staged setup: exact install commands, hook files and package.json config for npm, pnpm, yarn or bun."
+  },
+  {
+    "slug": "hyderabad-airport-transfer-time-planner",
+    "name": "Hyderabad Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Hyderabad RGIA, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
     "slug": "icon-maker",
     "name": "Icon Maker Tool",
     "categories": [
       "Design & Color"
     ],
     "description": "Create, preview, copy, and export production-ready app icons, favicons, launcher assets, and PWA icons in the browser."
+  },
+  {
+    "slug": "icse-percentage-calculator",
+    "name": "ICSE Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute ICSE and ISC percentage the CISCE way — English plus best 4 (ICSE) or best 3 (ISC) other subjects, with pass checks."
   },
   {
     "slug": "ideal-body-weight-calculator",
@@ -5783,6 +10537,142 @@ export const TOOL_CATALOG = [
     "description": "Search, explore, and learn English idioms with meanings, examples, origins, and quiz mode."
   },
   {
+    "slug": "idling-fuel-waste-calculator",
+    "name": "Idling Fuel Waste Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the fuel, money and CO2 wasted idling at signals and in traffic, and how much switching off would save."
+  },
+  {
+    "slug": "idp-requirement-checker-australia",
+    "name": "IDP Requirement Checker for Australia",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether Australia expects an international driving permit or English translation with your licence, and how long each state gives a new resident."
+  },
+  {
+    "slug": "idp-requirement-checker-canada",
+    "name": "IDP Requirement Checker for Canada",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether an international driving permit is expected with your licence in Canada, and how many days each province gives before you must switch."
+  },
+  {
+    "slug": "idp-requirement-checker-france",
+    "name": "IDP Requirement Checker for France",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check whether France needs an International Driving Permit with your licence, and when the one-year resident limit starts."
+  },
+  {
+    "slug": "idp-requirement-checker-germany",
+    "name": "IDP Requirement Checker for Germany",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check whether Germany expects an International Driving Permit with your licence, and how long that licence keeps working."
+  },
+  {
+    "slug": "idp-requirement-checker-italy",
+    "name": "IDP Requirement Checker for Italy",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether Italy expects an international driving permit alongside your licence, and how long that licence keeps working once you live there."
+  },
+  {
+    "slug": "idp-requirement-checker-japan",
+    "name": "IDP Requirement Checker for Japan",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether Japan accepts your international driving permit, which permits it refuses, and when the one-year window from your entry date closes."
+  },
+  {
+    "slug": "idp-requirement-checker-new-zealand",
+    "name": "IDP Requirement Checker for New Zealand",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether New Zealand expects an international driving permit or English translation with your licence, and when the 12-month visitor window ends."
+  },
+  {
+    "slug": "idp-requirement-checker-uae",
+    "name": "IDP Requirement Checker for UAE",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether the UAE expects an international driving permit with your licence as a tourist, and why a residence visa ends that arrangement entirely."
+  },
+  {
+    "slug": "idp-requirement-checker-uk",
+    "name": "IDP Requirement Checker for UK",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether the UK expects an international driving permit with your licence, and how the 12-month visitor and resident windows actually work."
+  },
+  {
+    "slug": "idp-requirement-checker-usa",
+    "name": "IDP Requirement Checker for USA",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See whether an international driving permit is expected with your licence in the USA, state by state, and when you must switch to a state licence."
+  },
+  {
+    "slug": "idr-cash-budget-planner",
+    "name": "IDR Cash Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan how much Indonesian rupiah to carry as notes versus card spend, costing the changer markup, GST, TCS and per-withdrawal ATM fees."
+  },
+  {
+    "slug": "iec-requirement-checker",
+    "name": "Import Export Code Requirement Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether your import, export or service activity needs an IEC from DGFT, using the Foreign Trade Policy exemption list."
+  },
+  {
+    "slug": "ielts-band-score-calculator",
+    "name": "IELTS Band Score Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert IELTS Listening and Reading raw scores to bands and compute the Overall Band Score with the official rounding rules."
+  },
+  {
+    "slug": "ielts-speaking-practice-timer",
+    "name": "IELTS Speaking Practice Timer",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Time IELTS Speaking Parts 1-3 to the real format - 1 minute cue card prep, 2 minute long turn - with practice cue cards included."
+  },
+  {
+    "slug": "ielts-writing-task-word-counter",
+    "name": "IELTS Writing Task Word Counter",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Count words against the IELTS Task 1 (150) and Task 2 (250) minimums with paragraph and sentence structure analysis."
+  },
+  {
+    "slug": "ifsc-code-format-validator",
+    "name": "IFSC Code Format Validator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Validate the 11-character IFSC structure offline, with per-character diagnostics, auto-fix suggestions and batch checking."
+  },
+  {
     "slug": "ifsc-decoder-validator",
     "name": "IFSC Decoder & Validator",
     "categories": [
@@ -5790,6 +10680,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "IFSC format validate karke bank, branch aur location lookup kare."
+  },
+  {
+    "slug": "illegal-entry-objection-letter",
+    "name": "Illegal Entry Objection Letter",
+    "categories": [
+      "Business"
+    ],
+    "description": "Log landlord entries, test each against the 24-hour notice and 7 am to 8 pm rules, and draft a dated objection letter."
   },
   {
     "slug": "image-collage-maker",
@@ -5835,12 +10733,28 @@ export const TOOL_CATALOG = [
     "description": "Explore local JPEG re-encoding residuals with a gain-adjusted heatmap, bounded statistics, and regional measurements without uploading the image or producing an"
   },
   {
+    "slug": "image-file-size-budget-calculator",
+    "name": "Image File Size Budget Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Set a page weight budget, subtract code and fonts, and see how many images of a given size and format still fit."
+  },
+  {
     "slug": "image-flip-rotate-tool",
     "name": "Image Flip & Rotate Tool",
     "categories": [
       "Design & Color"
     ],
     "description": "Flip, mirror, rotate, straighten, preview, and export images in browser with batch ZIP downloads."
+  },
+  {
+    "slug": "image-generation-credit-planner",
+    "name": "Image Generation Credit Planner",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Plan how many images a credit pack yields, how long it lasts at your volume, and the real cost per image."
   },
   {
     "slug": "image-metadata-viewer",
@@ -5856,7 +10770,7 @@ export const TOOL_CATALOG = [
     "slug": "image-noise-grain-adder",
     "name": "Image Noise & Grain Adder",
     "categories": [
-      "Design & Color"
+      "Image & Photo"
     ],
     "description": "Add realistic film grain, vintage noise, and cinematic textures to your photos."
   },
@@ -5917,10 +10831,17 @@ export const TOOL_CATALOG = [
     "slug": "impossible-object-builder",
     "name": "Impossible Object Builder",
     "categories": [
-      "Design & Color",
-      "Fun"
+      "Design & Color"
     ],
     "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures."
+  },
+  {
+    "slug": "improvement-needed-calculator",
+    "name": "Improvement Needed Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute exactly how many more marks you need in remaining exams to reach a target overall percentage, and whether it is still possible."
   },
   {
     "slug": "inattentional-blindness",
@@ -5932,6 +10853,30 @@ export const TOOL_CATALOG = [
     "description": "Experience the famous Gorilla Experiment — test your awareness, see if you spot the unexpected, and share your results."
   },
   {
+    "slug": "inches-centimetres-bag-converter",
+    "name": "Inches to Centimetres Bag Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert bag dimensions between inches and centimetres and check them against a cabin or checked baggage allowance."
+  },
+  {
+    "slug": "incident-severity-matrix-builder",
+    "name": "Incident Severity Matrix Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Define SEV levels with impact, response targets and escalation paths, and export a ready-to-publish Markdown severity matrix."
+  },
+  {
+    "slug": "income-certificate-calculator",
+    "name": "Income Certificate Income Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Aggregate family income the way EWS, OBC non-creamy-layer and state income certificate applications actually require, with the asset tests."
+  },
+  {
     "slug": "income-tax-calculator",
     "name": "Income Tax Calculator",
     "categories": [
@@ -5941,12 +10886,36 @@ export const TOOL_CATALOG = [
     "description": "Compare India old and new tax regimes with deductions, rebate, surcharge, cess, and slab-wise breakup."
   },
   {
+    "slug": "income-tax-notice-explainer",
+    "name": "Income Tax Notice Type Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Understand what an income tax notice under section 139(9), 143(1), 143(2), 148 or 245 means, how long you have to reply and what to do next."
+  },
+  {
     "slug": "income-tax-slab-visualizer",
     "name": "Income Tax Slab Visualizer",
     "categories": [
       "Finance Calculators"
     ],
     "description": "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess."
+  },
+  {
+    "slug": "india-hosting-cost-comparison",
+    "name": "India Hosting Cost Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare VPS, cloud and managed hosting for one workload in rupees, with 730-hour billing, egress charges, GST and 3-year TCO."
+  },
+  {
+    "slug": "india-payment-gateway-fee-comparison",
+    "name": "India Payment Gateway Fee Comparison",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare Indian payment gateway charges for your own payment mix, including 18% GST, zero-MDR UPI and RuPay, and net settlement."
   },
   {
     "slug": "indian-holiday-finder",
@@ -5958,6 +10927,14 @@ export const TOOL_CATALOG = [
     "description": "Find Indian public holidays, festivals, bank weekends, long weekends, and state-wise holiday planning windows."
   },
   {
+    "slug": "indian-marks-to-uk-degree-class-converter",
+    "name": "Indian Marks To UK Class",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert an Indian degree percentage into the UK First, 2:1, 2:2 and Third class equivalents UK universities use for admissions."
+  },
+  {
     "slug": "indian-mobile-number-validator",
     "name": "Indian Mobile Number Validator",
     "categories": [
@@ -5965,6 +10942,62 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Country code aur numbering-series sanity checks kare."
+  },
+  {
+    "slug": "indian-number-format-converter",
+    "name": "Indian Number Format Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert between lakh-crore and million-billion notation, with Indian 2-2-3 and international 3-3-3 digit grouping."
+  },
+  {
+    "slug": "indian-percentage-to-us-gpa-converter",
+    "name": "Indian Percentage To US GPA",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert an Indian percentage or 10-point CGPA to the US 4.0 GPA scale using the division-based method and a linear estimate."
+  },
+  {
+    "slug": "indian-print-paper-size-guide",
+    "name": "Indian Print Paper Size Guide",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Look up A-series, legal, foolscap, SRA and Indian trade sheet sizes in mm, inches, points and pixels, with an ups-per-sheet check."
+  },
+  {
+    "slug": "indian-resume-prompt-builder",
+    "name": "Indian Resume Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build AI resume prompts tuned to Indian recruiter and ATS expectations, with page, bullet and keyword-match budgets computed."
+  },
+  {
+    "slug": "indian-startup-pitch-prompt-builder",
+    "name": "Indian Startup Pitch Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft pitch deck and investor update prompts for Indian founders, with runway, post-money valuation and slide-by-slide timing worked out."
+  },
+  {
+    "slug": "indigo-baggage-allowance-checker",
+    "name": "IndiGo Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bag weight and size against IndiGo's published allowance and estimate excess baggage charges."
+  },
+  {
+    "slug": "indigo-excess-baggage-cost-estimator",
+    "name": "IndiGo Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare IndiGo airport excess baggage charges against prepaid baggage slabs and see which option costs less."
   },
   {
     "slug": "indirect-prompt-injection-scanner",
@@ -5975,6 +11008,22 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Scan pasted HTML, Markdown, CSV, or text locally for hidden instructions, role markers, data-exfiltration requests, and prompt-injection signals."
+  },
+  {
+    "slug": "indonesia-dress-code-planner",
+    "name": "Indonesia Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan Indonesia outfits by month: Balinese sarong and sash rules, mosque cover-up, Aceh's dress law, volcano layers and a weighed packing list."
+  },
+  {
+    "slug": "induction-vs-lpg-cost-calculator",
+    "name": "Induction vs LPG Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare cooking cost on an induction hob against an LPG cylinder per month, with the break-even electricity tariff."
   },
   {
     "slug": "inflation-adjusted-return-calculator",
@@ -6002,6 +11051,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate future prices, purchasing power loss, lifestyle cost gap, real investment value, and inflation-adjusted planning needs."
   },
   {
+    "slug": "inflation-time-machine-india",
+    "name": "Inflation Time Machine India",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Convert a rupee amount between any two years using India's official CPI inflation series, with the purchasing power lost in between."
+  },
+  {
     "slug": "influencer-media-kit-builder",
     "name": "Influencer Media Kit Builder",
     "categories": [
@@ -6017,6 +11074,94 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Find instant ingredient replacements with precise ratios and dietary filters."
+  },
+  {
+    "slug": "ini-to-yaml-converter",
+    "name": "INI to YAML Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert INI configuration files to structured YAML with dotted sections nested and value types inferred."
+  },
+  {
+    "slug": "inr-aed-mental-math-cheat-sheet",
+    "name": "INR to AED Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn a dirham price into rupees in your head, plus UAE hotel service, municipality fee and VAT."
+  },
+  {
+    "slug": "inr-cad-mental-math-cheat-sheet",
+    "name": "INR to CAD Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn Canadian dollar prices into rupees in your head, with the error percentage of each rule."
+  },
+  {
+    "slug": "inr-chf-mental-math-cheat-sheet",
+    "name": "INR to CHF Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn Swiss franc prices into rupees in your head, with the error percentage of each rule."
+  },
+  {
+    "slug": "inr-gbp-mental-math-cheat-sheet",
+    "name": "INR to GBP Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn a pound price into rupees in your head, plus VAT and restaurant service charges."
+  },
+  {
+    "slug": "inr-jpy-mental-math-cheat-sheet",
+    "name": "INR to JPY Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn a yen price into rupees in your head, plus Japan's 10% and reduced 8% consumption tax."
+  },
+  {
+    "slug": "inr-myr-mental-math-cheat-sheet",
+    "name": "INR to MYR Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder."
+  },
+  {
+    "slug": "inr-npr-mental-math-cheat-sheet",
+    "name": "INR to NPR Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Mental shortcuts for the fixed NPR–INR peg of 1.60, including the exact five-eighths rule and its easier approximations."
+  },
+  {
+    "slug": "inr-sgd-mental-math-cheat-sheet",
+    "name": "INR to SGD Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn a Singapore dollar price into rupees in your head, plus the 10% service charge and GST."
+  },
+  {
+    "slug": "inr-usd-mental-math-cheat-sheet",
+    "name": "INR to USD Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Rounding shortcuts that turn a dollar price into rupees in your head, plus sales tax and tipping, from today's rate."
+  },
+  {
+    "slug": "inr-vnd-mental-math-cheat-sheet",
+    "name": "INR to VND Mental Math Cheat Sheet",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Zero-dropping shortcuts that turn Vietnamese dong prices into rupees in your head, with the error percentage of each rule."
   },
   {
     "slug": "insect-tracker",
@@ -6037,6 +11182,14 @@ export const TOOL_CATALOG = [
     "description": "Enhance your Instagram display picture with vibrant gradient borders, filters, and effects — download-ready in 1080x1080."
   },
   {
+    "slug": "insurance-claim-document-checklist",
+    "name": "Claim Settlement Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build the exact document list for a health, motor or life insurance claim and see the IRDAI settlement deadline for your case."
+  },
+  {
     "slug": "insurance-policy-comparator",
     "name": "Insurance Policy Comparator",
     "categories": [
@@ -6046,6 +11199,14 @@ export const TOOL_CATALOG = [
     "description": "Coverage, exclusions, waiting periods aur limits compare kare."
   },
   {
+    "slug": "interior-design-prompt-generator",
+    "name": "Interior Design Prompt Generator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Turn a room, style and budget feel into an AI image prompt, with lighting lumens and rug size computed from your room dimensions."
+  },
+  {
     "slug": "intermittent-fasting-timer",
     "name": "Intermittent Fasting Timer",
     "categories": [
@@ -6053,6 +11214,22 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Track your fasting window live, see the metabolic phase you are in, and log every fast with streaks."
+  },
+  {
+    "slug": "internal-marks-calculator",
+    "name": "Internal Marks Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your internal assessment marks from tests, assignments and attendance using your university's component weightings."
+  },
+  {
+    "slug": "international-call-cost-calculator",
+    "name": "International Call Cost Calculator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Compare roaming per-minute, local SIM, VoIP-over-data and calling-pack pricing for calls home during a trip."
   },
   {
     "slug": "internet-speed-test",
@@ -6072,12 +11249,68 @@ export const TOOL_CATALOG = [
     "description": "Practice melodic and harmonic intervals with an interactive browser-based ear training quiz."
   },
   {
+    "slug": "interview-day-document-checklist",
+    "name": "Interview Day Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build the originals-and-photocopies list for an exam interview, then price the sets: pages per set, total copies, signatures and photocopy cost."
+  },
+  {
+    "slug": "interview-prep-prompt-builder",
+    "name": "Interview Prep Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build mock-interview prompts by role, round and level, with a question count worked out from the real length of the slot."
+  },
+  {
     "slug": "interview-question",
     "name": "Interview Question",
     "categories": [
       "Other"
     ],
     "description": "Find interview question for you interview preparation"
+  },
+  {
+    "slug": "interview-weightage-calculator",
+    "name": "Interview Weightage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Combine written and interview marks under the official weightage of UPSC, IBPS or SBI and see exactly how much the interview can move your merit."
+  },
+  {
+    "slug": "intro-music-level-calculator",
+    "name": "Intro Music Level Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out how many decibels to duck an intro music bed under a voiceover, and what the mixed level lands at."
+  },
+  {
+    "slug": "inverter-ac-electricity-cost-calculator",
+    "name": "Inverter AC Electricity Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate monthly and yearly inverter AC electricity cost from tonnage, ISEER, hours of use, thermostat setpoint and your tariff."
+  },
+  {
+    "slug": "inverter-ac-payback-calculator",
+    "name": "Inverter AC Payback Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out how many years an inverter AC takes to repay its price premium over a fixed-speed unit, using ISEER and your tariff."
+  },
+  {
+    "slug": "inverter-backup-time-calculator",
+    "name": "Inverter Backup Time Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate home inverter backup hours from battery Ah, bank voltage, connected load and inverter efficiency, with Peukert correction."
   },
   {
     "slug": "inverter-battery-calculator",
@@ -6132,6 +11365,14 @@ export const TOOL_CATALOG = [
     "description": "Create clean invoices with line items, tax, discount, totals, and print-ready output."
   },
   {
+    "slug": "invoice-late-fee-calculator",
+    "name": "Invoice Late Fee Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out interest and late fees on an overdue invoice using your agreed terms, day-count basis, grace period and statutory compensation."
+  },
+  {
     "slug": "invoice-number-generator",
     "name": "Invoice Number Generator",
     "categories": [
@@ -6168,7 +11409,8 @@ export const TOOL_CATALOG = [
     "slug": "ip-finder",
     "name": "IP Address Finder",
     "categories": [
-      "Developer"
+      "Developer",
+      "Security & Privacy"
     ],
     "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details."
   },
@@ -6181,6 +11423,14 @@ export const TOOL_CATALOG = [
     "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details."
   },
   {
+    "slug": "ip-range-overlap-checker",
+    "name": "IP Range Overlap Checker",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Check whether CIDR blocks or IP ranges overlap before VPC peering, VPN setup or merging networks."
+  },
+  {
     "slug": "ipa-to-text",
     "name": "IPA to Text Helper",
     "categories": [
@@ -6188,6 +11438,30 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Paste IPA notation and get the most likely English word(s), with multiple candidate suggestions and validation for malformed input."
+  },
+  {
+    "slug": "ipu-attendance-calculator",
+    "name": "IPU Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Subject-wise GGSIPU attendance percentage, detention risk against the 75% rule, and how many classes you must still attend."
+  },
+  {
+    "slug": "ipu-cgpa-percentage-converter",
+    "name": "IPU CGPA Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert GGSIPU CGPA to an equivalent percentage with the official (CGPA − 0.75) × 10 formula, in both directions."
+  },
+  {
+    "slug": "ipu-sgpa-calculator",
+    "name": "IPU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute GGSIPU semester GPA from credit-weighted grade points, roll it into CGPA and see each subject's impact."
   },
   {
     "slug": "ipv6-expander",
@@ -6241,6 +11515,22 @@ export const TOOL_CATALOG = [
     "description": "User location ke liye next visible ISS flyover calculate kare."
   },
   {
+    "slug": "istanbul-trip-budget-breakdown",
+    "name": "Istanbul Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break an Istanbul trip into flights, stay, food, Istanbulkart rides and sights in lira and rupees, with lira inflation drift."
+  },
+  {
+    "slug": "italy-travel-etiquette-guide",
+    "name": "Italy Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised Italy etiquette briefing for churches, restaurants, bars, trains and ZTL driving, with the fineable rules flagged."
+  },
+  {
     "slug": "itinerary-builder",
     "name": "Itinerary Builder",
     "categories": [
@@ -6274,6 +11564,14 @@ export const TOOL_CATALOG = [
     "description": "Check whether your business or professional income means you must file ITR-3, or whether ITR-1, ITR-2 or ITR-4 fits."
   },
   {
+    "slug": "itr-deadline-tracker",
+    "name": "Belated and Updated Return Deadline Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track the section 139(1) due date, the belated and revised return window and the 48-month ITR-U timeline for any assessment year."
+  },
+  {
     "slug": "itr-document-checklist-builder",
     "name": "ITR Document Checklist Builder",
     "categories": [
@@ -6282,12 +11580,116 @@ export const TOOL_CATALOG = [
     "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions."
   },
   {
+    "slug": "jaipur-airport-transfer-time-planner",
+    "name": "Jaipur Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Jaipur airport (JAI) using traffic by hour of day, check-in cutoffs and terminal processing time."
+  },
+  {
+    "slug": "jaipur-auto-cab-fare-estimator",
+    "name": "Jaipur Auto and Cab Fare Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a fair Jaipur auto, e-rickshaw or cab fare from distance, waiting time, round trips and night premiums before you negotiate."
+  },
+  {
+    "slug": "jaipur-trip-budget-breakdown",
+    "name": "Jaipur Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Jaipur trip into travel, stay, food, autos, monument tickets and activities, per person and per day."
+  },
+  {
+    "slug": "japan-dress-code-planner",
+    "name": "Japan Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan what to wear and pack for Japan by month and region, covering temples, ryokan, onsen, restaurants and office dress codes."
+  },
+  {
+    "slug": "japan-travel-etiquette-guide",
+    "name": "Japan Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised Japan etiquette briefing for the places you will actually visit, with a readiness score and the phrases that matter."
+  },
+  {
     "slug": "javascript-tools",
     "name": "JavaScript Tools",
     "categories": [
       "Developer"
     ],
     "description": "Format, minify, and inspect JavaScript snippets locally."
+  },
+  {
+    "slug": "jdbc-url-builder",
+    "name": "JDBC URL Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate correct JDBC connection URLs for PostgreSQL, MySQL, Oracle, SQL Server, H2 and SQLite with driver-specific syntax."
+  },
+  {
+    "slug": "jee-application-document-checklist",
+    "name": "JEE Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Checklist of NTA JEE Main form fields, uploads and certificates to prepare in advance, with the fee for your category and gender."
+  },
+  {
+    "slug": "jee-doubt-prompt-builder",
+    "name": "JEE Doubt Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Frame physics, chemistry and maths doubts so AI explains step by step, with JEE Main time and negative-marking maths built in."
+  },
+  {
+    "slug": "jee-exam-countdown",
+    "name": "JEE Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Countdown to JEE Main Session 1, Session 2 and JEE Advanced with a syllabus pace tracker that shows units per study day."
+  },
+  {
+    "slug": "jee-exam-day-checklist",
+    "name": "JEE Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "JEE Main centre-day checklist — admit card, self-declaration, photo ID, dress rules — plus a reporting-time plan built on the gate-closing rule."
+  },
+  {
+    "slug": "jntu-cgpa-percentage-converter",
+    "name": "JNTU CGPA Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert JNTUH, JNTUK or JNTUA CGPA to percentage with the (CGPA − 0.75) × 10 rule and see the class band your figure earns."
+  },
+  {
+    "slug": "jntu-sgpa-calculator",
+    "name": "JNTU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute JNTU SGPA and CGPA from marks or grades, with regulation-specific letters, percentage and class awarded."
+  },
+  {
+    "slug": "job-description-prompt-builder",
+    "name": "Job Description Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build an inclusive job description prompt that separates must-have requirements from nice-to-haves and budgets words per section."
   },
   {
     "slug": "job-offer-comparison-tool",
@@ -6319,6 +11721,14 @@ export const TOOL_CATALOG = [
     "description": "Merge photo and signature into a single image. Perfect for online applications (UPSC, bank, academic exams) requiring specific layout sizes and file KB limits."
   },
   {
+    "slug": "joining-formalities-checklist",
+    "name": "Joining Formalities Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Phase-wise checklist for medical exam, police verification, attestation forms and day-one joining paperwork."
+  },
+  {
     "slug": "joke-generator",
     "name": "Joke Generator",
     "categories": [
@@ -6326,6 +11736,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Generate random jokes from multiple categories with favorites, search, and export options."
+  },
+  {
+    "slug": "journaling-prompt-builder",
+    "name": "Journaling Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Pick a theme, mood and the minutes you have, and get a word-budgeted journaling session with prompts sized to fit."
   },
   {
     "slug": "js-beautifier",
@@ -6350,6 +11768,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Validate, format, minify, and convert JSON snippets."
+  },
+  {
+    "slug": "json-flatten-unflatten-tool",
+    "name": "JSON Flatten Unflatten Tool",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Flatten nested JSON into dot-notation keys and rebuild the nested structure, with bracket or dot array styles."
   },
   {
     "slug": "json-formatter",
@@ -6402,6 +11828,14 @@ export const TOOL_CATALOG = [
     "description": "Generate production-ready Go structs from JSON with nested objects, arrays, nullable fields, JSON tags, copy, download, and local history."
   },
   {
+    "slug": "json-to-toml-converter",
+    "name": "JSON to TOML Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert JSON into readable TOML with proper [table] sections, [[array of table]] syntax and safely quoted keys."
+  },
+  {
     "slug": "json-to-typescript",
     "name": "JSON to TypeScript",
     "categories": [
@@ -6443,12 +11877,52 @@ export const TOOL_CATALOG = [
     "description": "Check if all 7 planets (Sun through Saturn) are positioned between Rahu and Ketu, forming Kaal Sarp Dosha. Identifies the dosha type — Anant, Kulik, Vasuki, Tak"
   },
   {
+    "slug": "kafka-topic-naming-builder",
+    "name": "Kafka Topic Naming Builder",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a consistent Kafka topic naming convention from domain, entity, event type and version, with legality and collision checks."
+  },
+  {
+    "slug": "karnataka-puc-percentage-calculator",
+    "name": "Karnataka PUC Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn your Karnataka II PUC subject marks into an aggregate percentage, division class and a pass check on the 35% rule."
+  },
+  {
     "slug": "kebab-case-converter",
     "name": "Kebab Case Converter",
     "categories": [
       "Developer"
     ],
     "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug."
+  },
+  {
+    "slug": "kenya-entry-requirement-checklist",
+    "name": "Kenya Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out whether you need Kenya's eTA, what it costs for your party, the yellow fever rule and the passenger declaration before arrival."
+  },
+  {
+    "slug": "kerala-plus-two-percentage-calculator",
+    "name": "Kerala Plus Two Percentage Tool",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Kerala DHSE Plus Two percentage, A+ to E letter grades, grade points and GPA on the nine-point higher secondary scale."
+  },
+  {
+    "slug": "kerala-university-cgpa-converter",
+    "name": "Kerala University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Kerala University CGPA or SGPA to percentage on any grading scale, and find the SGPA still needed for a target CGPA."
   },
   {
     "slug": "keyboard-focus-order-replay",
@@ -6475,6 +11949,22 @@ export const TOOL_CATALOG = [
     "description": "Master keyboard shortcuts across platforms and apps with interactive practice and flashcard study modes."
   },
   {
+    "slug": "kids-ai-usage-guide-builder",
+    "name": "Kids AI Usage Guide Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a printable family agreement on when, how and how long children may use AI tools, with age-based rules."
+  },
+  {
+    "slug": "kids-bicycle-size-selector",
+    "name": "Kids Bicycle Size Selector",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Pick a child's wheel size from their inseam, then set saddle height and standover clearance and see how long the bike will fit."
+  },
+  {
     "slug": "kids-milestone-vaccine-vault",
     "name": "Kids Milestone & Vaccine Vault",
     "categories": [
@@ -6482,6 +11972,46 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Securely track child milestones and vaccination records."
+  },
+  {
+    "slug": "kirana-shop-ai-prompt-pack",
+    "name": "Kirana Shop AI Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Ready-made AI prompts for kirana shops: reorder notes, offer broadcasts, WhatsApp replies and udhaar reminders in your language."
+  },
+  {
+    "slug": "kirana-shop-tax-calculator",
+    "name": "Kirana Shop Profit and Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Gross margin, net profit and income tax for a small retail shop, with the 44AD presumptive and GST composition options."
+  },
+  {
+    "slug": "kisan-vikas-patra-calculator",
+    "name": "Kisan Vikas Patra Doubling Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Find the Kisan Vikas Patra doubling period and maturity value at the current 7.5% rate, with a year-by-year growth table."
+  },
+  {
+    "slug": "kitchen-backsplash-tile-calculator",
+    "name": "Kitchen Backsplash Tile Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out backsplash tile quantity, boxes and cost for the band between the counter and the overhead cabinets."
+  },
+  {
+    "slug": "kitchen-chimney-suction-selector",
+    "name": "Kitchen Chimney Suction Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute the chimney suction in cubic metres per hour your kitchen needs from its volume, air changes, burners and duct run."
   },
   {
     "slug": "kitchen-multi-timer",
@@ -6492,6 +12022,14 @@ export const TOOL_CATALOG = [
     "description": "Run named timers for every dish at once, with real cook-time presets and a plan that gets everything ready together."
   },
   {
+    "slug": "kitchen-platform-granite-cost",
+    "name": "Kitchen Platform Granite Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out kitchen platform granite in running feet and square feet, with skirting, wastage, sink and hob cutouts and total cost."
+  },
+  {
     "slug": "kitchen-unit-converter",
     "name": "Kitchen Unit Converter",
     "categories": [
@@ -6500,12 +12038,92 @@ export const TOOL_CATALOG = [
     "description": "Convert kitchen unit values or formats quickly with clear, usable results."
   },
   {
+    "slug": "kitchen-waste-compost-estimator",
+    "name": "Kitchen Waste Compost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate finished compost yield, the browns needed to balance the C:N ratio and the waste you divert from landfill each year."
+  },
+  {
     "slug": "klondike-solitaire",
     "name": "Klondike Solitaire",
     "categories": [
       "Games"
     ],
     "description": "Play Klondike solitaire online free — draw 1 or draw 3, unlimited undo, and smart auto-complete."
+  },
+  {
+    "slug": "kmpl-mileage-calculator",
+    "name": "KMPL Mileage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out true km/l with the tank-to-tank method from odometer and litres filled, with l/100km, mpg and cost per km."
+  },
+  {
+    "slug": "knowledge-base-article-prompt-builder",
+    "name": "Knowledge Base Article Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turn steps, prerequisites and screenshot notes into a help-article prompt structured by DITA information type."
+  },
+  {
+    "slug": "kochi-airport-transfer-time-planner",
+    "name": "Kochi Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Kochi airport (COK) with hour-by-hour traffic, the Aluva metro option and airline check-in cutoffs."
+  },
+  {
+    "slug": "kolkata-ccu-airport-arrival-buffer-calculator",
+    "name": "Kolkata CCU Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Kolkata CCU using drive time, traffic, check-in cut-off, security and gate-closing buffers."
+  },
+  {
+    "slug": "ktu-sgpa-calculator",
+    "name": "KTU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate KTU SGPA and CGPA on the half-point S to P grade scale, with credits earned and grade distribution."
+  },
+  {
+    "slug": "kubectl-command-builder",
+    "name": "Kubectl Command Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Assemble correct kubectl commands with namespaces, label selectors, output formats and dry-run flags — no man page needed."
+  },
+  {
+    "slug": "kubernetes-configmap-secret-generator",
+    "name": "Kubernetes ConfigMap and Secret Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Turn key=value pairs or an .env file into ConfigMap and base64-encoded Secret manifests with validated keys."
+  },
+  {
+    "slug": "kubernetes-label-selector-tester",
+    "name": "Kubernetes Label Selector Tester",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Test matchLabels and matchExpressions (In, NotIn, Exists, DoesNotExist) against sample pod labels instantly."
+  },
+  {
+    "slug": "kubernetes-service-yaml-generator",
+    "name": "Kubernetes Service YAML Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate ClusterIP, NodePort or LoadBalancer Service manifests with validated names, selectors and port mappings."
   },
   {
     "slug": "kundli-birth-chart-generator",
@@ -6524,6 +12142,14 @@ export const TOOL_CATALOG = [
     "description": "Ashta Koota compatibility check — 8 categories, 36 gunas. Calculate Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, Nadi, and Manglik Dosha for two indi"
   },
   {
+    "slug": "lab-attendance-requirement-tracker",
+    "name": "Lab Attendance Requirement Tracker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Track practical and lab attendance separately from theory, weight lab sessions by contact hours and see the experiments still pending."
+  },
+  {
     "slug": "lab-results-history-tracker",
     "name": "Lab Results History Tracker",
     "categories": [
@@ -6533,12 +12159,36 @@ export const TOOL_CATALOG = [
     "description": "Compare private lab measurements over time."
   },
   {
+    "slug": "ladder-safety-calculator",
+    "name": "Ladder Safety Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Safe ladder base distance, set-up angle, highest standing level and reach height using the OSHA 4-to-1 rule."
+  },
+  {
+    "slug": "laminate-flooring-calculator",
+    "name": "Laminate Flooring Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate laminate planks, packs, underlay rolls and beading lengths for a room, with a wastage allowance."
+  },
+  {
     "slug": "land-area-converter",
     "name": "Land Area Converter (Indian Units)",
     "categories": [
       "Calculators"
     ],
     "description": "Convert bigha, katha, kanal, guntha, cent and acre using the exact value your state actually uses."
+  },
+  {
+    "slug": "landlord-pan-requirement-checker",
+    "name": "Landlord PAN Requirement Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check whether your annual rent forces landlord PAN disclosure, rent receipts or section 194-IB rent TDS."
   },
   {
     "slug": "language-detector",
@@ -6568,6 +12218,54 @@ export const TOOL_CATALOG = [
     "description": "Simulated laptop hacking terminal for educational and entertainment purposes."
   },
   {
+    "slug": "laptop-resale-value-estimator",
+    "name": "Laptop Resale Value Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate a laptop's resale price from purchase price, age, condition, battery health and remaining warranty."
+  },
+  {
+    "slug": "last-minute-unit-priority-tool",
+    "name": "Last Minute Unit Priority Tool",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Rank syllabus units by marks recoverable per study hour and get a greedy hour allocation for the time left before the paper."
+  },
+  {
+    "slug": "late-payment-reminder-builder",
+    "name": "Late Payment Reminder Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Build escalating overdue-invoice chase letters, from a polite nudge to a final notice, with the right tone for how late the payment is."
+  },
+  {
+    "slug": "lateral-entry-merit-calculator",
+    "name": "Lateral Entry Merit Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute lateral entry (diploma to B.Tech) merit from diploma percentage and LEET/ECET score with the AICTE 45% check."
+  },
+  {
+    "slug": "lawn-mowing-schedule-planner",
+    "name": "Lawn Mowing Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan mowing frequency, cutting height and season workload by grass type, season, shade and lawn care level."
+  },
+  {
+    "slug": "lawn-seed-quantity-calculator",
+    "name": "Lawn Seed Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out grass seed in kilos for any lawn area from species sowing rate, purity, germination and wastage."
+  },
+  {
     "slug": "lcm-and-gcd-calculator",
     "name": "LCM and GCD Calculator",
     "categories": [
@@ -6592,6 +12290,22 @@ export const TOOL_CATALOG = [
     "description": "Taxable vs exempt leave encashment on retirement for private employees."
   },
   {
+    "slug": "leave-register-format-generator",
+    "name": "Leave Register Format Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a leave with wages register showing earned entitlement, carry forward, leave availed and the running balance."
+  },
+  {
+    "slug": "lecture-recording-checklist",
+    "name": "Lecture Recording Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Weighted pre-flight checklist for audio levels, framing, lighting and screen capture before you record a lecture."
+  },
+  {
     "slug": "led-pwm-flicker-detector",
     "name": "LED PWM Flicker Detector",
     "categories": [
@@ -6599,6 +12313,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Camera rolling bands se approximate flicker pattern estimate kare."
+  },
+  {
+    "slug": "led-vs-cfl-bulb-savings",
+    "name": "LED vs CFL Bulb Savings",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate energy, money and bulb-replacement savings from switching a whole home from CFL, halogen or incandescent to LED."
+  },
+  {
+    "slug": "led-wattage-replacement-chart",
+    "name": "LED Wattage Replacement Chart",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert incandescent, halogen and CFL wattages into the equivalent LED wattage by lumens, with the energy and cost saved per bulb."
   },
   {
     "slug": "leftover-recipe-finder",
@@ -6610,10 +12340,43 @@ export const TOOL_CATALOG = [
     "description": "Tick what is left in your fridge and get real dishes you can cook tonight, plus ones you are one item away from."
   },
   {
+    "slug": "legal-deadline-countdown-board",
+    "name": "Legal Deadline Countdown Board",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track every legal deadline on one board with calendar days, working days remaining and colour-coded reminder bands."
+  },
+  {
+    "slug": "legal-document-version-log-builder",
+    "name": "Legal Document Version Log Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a numbered revision history for a contract or pleading with reviewers, dates, turnaround gaps and a paste-ready log."
+  },
+  {
+    "slug": "legal-heir-certificate-checklist",
+    "name": "Legal Heir Certificate Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out whether you need a legal heir certificate, succession certificate or probate, with Class I heir shares and the document list."
+  },
+  {
+    "slug": "leh-ladakh-trip-budget-breakdown",
+    "name": "Leh Ladakh Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Leh Ladakh trip into travel, stay, food, taxi or bike, permits and activities, per person and per day."
+  },
+  {
     "slug": "lens-field-of-view-calculator",
     "name": "Lens Field of View Calculator",
     "categories": [
-      "Design & Color"
+      "Image & Photo",
+      "Calculators"
     ],
     "description": "Calculate camera field of view, crop factors, scene coverage, and compare lenses in real-time."
   },
@@ -6626,10 +12389,50 @@ export const TOOL_CATALOG = [
     "description": "Interactive geometric optics ray diagram generator for convex/concave lenses and spherical mirrors with real-time magnification and image tracking."
   },
   {
+    "slug": "lerna-config-generator",
+    "name": "Lerna Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate lerna.json with fixed or independent versioning, npm client, publish registry, conventional commits and branch rules."
+  },
+  {
+    "slug": "lesson-plan-prompt-builder",
+    "name": "Lesson Plan Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a lesson plan prompt with Bloom's taxonomy objectives, a time-boxed 5E or Hunter structure and matching assessment."
+  },
+  {
+    "slug": "letterbox-pillarbox-calculator",
+    "name": "Letterbox Pillarbox Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out exact letterbox or pillarbox bar sizes when fitting one aspect ratio inside another frame, in pixels and percent."
+  },
+  {
+    "slug": "license-attribution-page-generator",
+    "name": "License Attribution Page Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Turn a dependency manifest into a ready-to-publish third-party licenses page in Markdown, HTML or plain text."
+  },
+  {
+    "slug": "license-header-generator",
+    "name": "License Header Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate per-language license header comments with year, copyright holder and SPDX identifier for 9 common licenses."
+  },
+  {
     "slug": "life-productivity-score",
     "name": "Life Productivity Score",
     "categories": [
-      "Lifestyle"
+      "Productivity"
     ],
     "description": "Calculate your life productivity score"
   },
@@ -6699,6 +12502,22 @@ export const TOOL_CATALOG = [
     "description": "Sort your long url/links"
   },
   {
+    "slug": "linkedin-headline-prompt-builder",
+    "name": "LinkedIn Headline Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Budget your 220-character LinkedIn headline across positioning segments and generate headline and About-section prompts for any AI model."
+  },
+  {
+    "slug": "linkedin-post-prompt-builder",
+    "name": "LinkedIn Post Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Builds LinkedIn post prompts with hook, story and takeaway structure sized to the 3,000-character limit and the see-more fold."
+  },
+  {
     "slug": "linkedin-profile-photo-generator",
     "name": "LinkedIn Profile Photo Generator",
     "categories": [
@@ -6714,6 +12533,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Live Linux command query studio with searchable syntax, examples, favorites, history, and cheat sheet exports."
+  },
+  {
+    "slug": "linux-signal-reference-explorer",
+    "name": "Linux Signal Reference Explorer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Explore Linux signals with default actions, catchability, matching exit codes and how they behave as PID 1 in containers."
   },
   {
     "slug": "lip-read-practice-mirror",
@@ -6741,6 +12568,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate lipid panel risk assessment, LDL/HDL ratios, and cardiovascular risk from cholesterol levels with NCEP ATP III guidelines."
   },
   {
+    "slug": "liquid-volume-travel-converter",
+    "name": "Liquid Volume Travel Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert millilitres, US and imperial fluid ounces, cups and spoons, and check bottles against the 100 ml cabin limit."
+  },
+  {
     "slug": "lissajous-pattern-generator",
     "name": "Lissajous Pattern Generator",
     "categories": [
@@ -6758,6 +12593,14 @@ export const TOOL_CATALOG = [
     "description": "Sort list items alphabetically, numerically, by text length, or reverse with options for custom list separators."
   },
   {
+    "slug": "litre-to-gallon-converter",
+    "name": "Litre to Gallon Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert fuel and liquid volumes between litres, US gallons, imperial gallons, quarts and millilitres, with price per unit."
+  },
+  {
     "slug": "live-caption-overlay",
     "name": "Live Caption Overlay",
     "categories": [
@@ -6765,6 +12608,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Browser/local speech engine se adjustable live captions dikhaye."
+  },
+  {
+    "slug": "living-room-ac-tonnage-calculator",
+    "name": "Living Room AC Tonnage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size an AC for an open living room using a component heat-gain method: walls, roof, glazing, people, lights and air changes."
+  },
+  {
+    "slug": "llm-cost-per-user-calculator",
+    "name": "LLM Cost Per User Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out AI cost per active user per month from sessions, message length, conversation history growth and token pricing."
   },
   {
     "slug": "llm-cost-privacy-analyzer",
@@ -6775,6 +12634,22 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Analyze AI usage logs locally with user-supplied token rates, model cost summaries, and counts-only personal-data or secret signals."
+  },
+  {
+    "slug": "llm-terms-dictionary",
+    "name": "LLM Terms Dictionary",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "A-Z dictionary of LLM terms — tokens, temperature, top-p, RAG, LoRA — with examples, typical values and a context budget check."
+  },
+  {
+    "slug": "loan-against-fd-calculator",
+    "name": "Loan Against Fixed Deposit Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare breaking a fixed deposit early against borrowing an overdraft on it, using the premature penalty and the FD rate plus spread."
   },
   {
     "slug": "loan-against-property-calculator",
@@ -6807,6 +12682,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Check the loan amount you qualify for from your income, existing EMIs and the FOIR limit lenders apply, with a tenure comparison."
+  },
+  {
+    "slug": "loan-eligibility-from-salary",
+    "name": "Loan Eligibility from Salary Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Maximum loan you can get from take-home salary using common FOIR bands, plus the RBI loan-to-value ceiling on housing loans."
   },
   {
     "slug": "loan-emi-calculator",
@@ -6879,6 +12762,22 @@ export const TOOL_CATALOG = [
     "description": "Compare manually entered computer specifications with transparent local-AI workload thresholds without scanning the device or recommending a specific model."
   },
   {
+    "slug": "local-cuisine-bucket-list-builder",
+    "name": "Local Cuisine Bucket List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a must-eat list for a destination, check it against the eating slots your trip actually has, and tick dishes off as you go."
+  },
+  {
+    "slug": "local-festival-day-trip-planner",
+    "name": "Local Festival Day Trip Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Time a festival day backwards from the gates: queue build-up, arrival buffer, crowd density, exit clear time and the last service home."
+  },
+  {
     "slug": "local-sound-event-logger",
     "name": "Local Sound-Event Logger",
     "categories": [
@@ -6905,6 +12804,14 @@ export const TOOL_CATALOG = [
     "description": "Remove or coarsen sensitive places and timestamps in JSON, CSV and GeoJSON location history entirely in your browser."
   },
   {
+    "slug": "log-level-strategy-planner",
+    "name": "Log Level Strategy Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Decide whether an event belongs at trace, debug, info, warn, error or fatal, plus per-environment minimum levels."
+  },
+  {
     "slug": "logic-gate-simulator",
     "name": "Logic Gate Simulator",
     "categories": [
@@ -6912,6 +12819,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Design and simulate interactive digital logic circuits with AND, OR, NOT, NAND, NOR, XOR, and XNOR gates. Build, test, analyze truth tables, and optimize boolea"
+  },
+  {
+    "slug": "logo-prompt-generator",
+    "name": "Logo Prompt Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Build an AI logo prompt from mark type, shape language and palette, with stroke, clear-space and favicon limits computed for you."
   },
   {
     "slug": "logo-similarity-checker",
@@ -6930,6 +12845,22 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Create memorable slogans and catchy logo concepts for your brand."
+  },
+  {
+    "slug": "logrotate-config-generator",
+    "name": "Logrotate Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a logrotate rule with rotation frequency, retention, compression, create modes and postrotate hooks — with conflict warnings."
+  },
+  {
+    "slug": "long-study-session-stretch-guide",
+    "name": "Long Study Session Stretch Guide",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Desk stretches scheduled across a long study day — rotating neck, shoulder, wrist and back sets with timing cues."
   },
   {
     "slug": "long-weekend-planner",
@@ -6991,6 +12922,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Zoom, invert, contrast aur edge-enhancement modes provide kare."
+  },
+  {
+    "slug": "lpg-cylinder-usage-estimator",
+    "name": "LPG Cylinder Usage Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate how many days an LPG cylinder lasts from your daily burner hours, plus gas cost per day and the date to book the refill."
+  },
+  {
+    "slug": "lpg-subsidy-benefit-checker",
+    "name": "LPG Subsidy and Ujjwala Benefit Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out the cost of an LPG cylinder after the Ujjwala subsidy, the 12-refill annual cap and your yearly cooking gas bill."
   },
   {
     "slug": "lucky-color-picker",
@@ -7103,12 +13050,68 @@ export const TOOL_CATALOG = [
     "description": "Interactive visualization of magnetic vector field lines, dipole forces, electromagnets, and flux density probes."
   },
   {
+    "slug": "maharashtra-hsc-percentage-calculator",
+    "name": "Maharashtra HSC Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your Maharashtra HSC percentage on the 600-mark base with best-of-five additional subject handling and result class."
+  },
+  {
+    "slug": "mahila-samman-certificate-calculator",
+    "name": "Mahila Samman Savings Certificate Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "MSSC maturity value at 7.5% compounded quarterly, the 40% partial withdrawal limit and premature closure at the reduced rate."
+  },
+  {
+    "slug": "maintenance-window-announcement-generator",
+    "name": "Maintenance Window Announcement Generator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Draft a clear scheduled-maintenance notice with UTC and local start times, expected impact and a rollback statement."
+  },
+  {
     "slug": "makeup-shade-finder",
     "name": "Makeup Shade Finder",
     "categories": [
       "Lifestyle"
     ],
     "description": "Find your perfect makeup shades with AI-powered skin analysis. Get personalized foundation, blush, lipstick, eyeshadow, and bronzer recommendations."
+  },
+  {
+    "slug": "malaysia-visa-cost-estimator",
+    "name": "Malaysia Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check whether visa-free entry covers your stay, then total the eVISA fee, agent charges and extras in rupees."
+  },
+  {
+    "slug": "malaysia-visa-cover-letter-builder",
+    "name": "Malaysia Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a Malaysia eVISA cover letter with itinerary, the 30-day social visit pass, eVISA validity and MDAC timing."
+  },
+  {
+    "slug": "malaysia-visa-rejection-reason-explainer",
+    "name": "Malaysia Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Work out why a Malaysia eVISA was rejected - specification, data, travel evidence or a monitoring-list record - and what to fix."
+  },
+  {
+    "slug": "maldives-entry-requirement-checklist",
+    "name": "Maldives Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check the Maldives free 30-day visa on arrival, the IMUGA declaration, passport validity, funds rule and the Green Tax your stay will add."
   },
   {
     "slug": "mandi-bhav",
@@ -7143,10 +13146,19 @@ export const TOOL_CATALOG = [
     "description": "Gross margin, markup and profit from cost and selling price."
   },
   {
+    "slug": "margin-markup-converter",
+    "name": "Profit Margin and Markup Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert between gross margin and markup percentages and see the cost, selling price, profit and multiplier behind them."
+  },
+  {
     "slug": "markdown-html-converter",
     "name": "Markdown / HTML Converter",
     "categories": [
-      "Developer"
+      "Developer",
+      "Text & Writing"
     ],
     "description": "Convert Markdown into HTML and strip HTML back to text."
   },
@@ -7157,6 +13169,22 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Preview Markdown files"
+  },
+  {
+    "slug": "market-bargaining-practice-simulator",
+    "name": "Bargaining Practice Simulator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Practise haggling: mirrored opening counter, target and walk-away price, plus a round-by-round concession ladder."
+  },
+  {
+    "slug": "marketer-prompt-pack",
+    "name": "Marketer Prompt Pack",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Fill-in-the-blank AI prompts for every funnel stage — positioning, ads, email, landing pages and campaign analysis."
   },
   {
     "slug": "marketplace-scam-checker",
@@ -7178,12 +13206,28 @@ export const TOOL_CATALOG = [
     "description": "Calculate your exam percentage from obtained and total marks across multiple subjects."
   },
   {
+    "slug": "marksheet-score-visualizer",
+    "name": "Marksheet Score Visualizer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn subject-wise marks into percentage bars that show your overall score, strongest subject and weakest subject."
+  },
+  {
     "slug": "markup-calculator",
     "name": "Markup Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Add a markup percentage to a cost to get the selling price and profit."
+  },
+  {
+    "slug": "marla-kanal-converter",
+    "name": "Marla Kanal Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert marla, kanal, sarsai, killa and murabba to square feet, square yards and square metres, with plot pricing."
   },
   {
     "slug": "math-speed-challenge",
@@ -7193,6 +13237,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Race against the clock with adaptive mental math challenges — operations scale in difficulty as your streak grows."
+  },
+  {
+    "slug": "mattress-size-selector",
+    "name": "Mattress Size Selector",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Pick mattress size, thickness and firmness from sleeper count, height, body weight and sleeping position."
   },
   {
     "slug": "maze-muncher",
@@ -7218,6 +13270,22 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Generate secure, cryptographic MD5 hash values (checksums) from any input text instantly, with real-time outputs."
+  },
+  {
+    "slug": "meal-card-tax-benefit-calculator",
+    "name": "Food Coupon and Meal Card Tax Benefit",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Yearly income tax saved on meal cards and food coupons using the Rs 50 per meal exemption, with slab, surcharge and cess."
+  },
+  {
+    "slug": "meal-plan-prompt-builder",
+    "name": "Meal Plan Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a meal planning prompt with Mifflin-St Jeor calorie targets, macro grams, per-serving budget, cuisine and allergen exclusions."
   },
   {
     "slug": "mean-arterial-pressure-calculator",
@@ -7273,6 +13341,14 @@ export const TOOL_CATALOG = [
     "description": "Replace common patient, clinician, and facility identifiers in pasted text, TXT, DOCX, or text-based PDF files locally in your browser."
   },
   {
+    "slug": "medication-cost-per-dose-calculator",
+    "name": "Medication Cost Per Dose Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Work out cost per tablet, per dose, per day and for the full course from the pack price, and compare a brand against a generic."
+  },
+  {
     "slug": "medication-reminder",
     "name": "Medication Reminder",
     "categories": [
@@ -7314,6 +13390,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Estimate meeting cost from attendees, duration, hourly rates, recurring frequency, and productivity loss."
+  },
+  {
+    "slug": "meeting-notes-prompt-builder",
+    "name": "Meeting Notes Prompt Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that fills the gaps it found."
   },
   {
     "slug": "meeting-transcript-action-extractor",
@@ -7397,12 +13481,28 @@ export const TOOL_CATALOG = [
     "description": "Generate SEO, Open Graph, and Twitter meta tags."
   },
   {
+    "slug": "metro-nonmetro-hra-impact",
+    "name": "Metro vs Non Metro HRA Impact",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare your Rule 2A house rent allowance exemption at the 50% metro cap against the 40% non-metro cap, and see the tax the difference is worth."
+  },
+  {
     "slug": "metronome",
     "name": "Online Metronome",
     "categories": [
       "Video & Audio"
     ],
     "description": "Keep perfect time with a precise online metronome — tap tempo, time signatures, subdivisions, and accented beats."
+  },
+  {
+    "slug": "metronome-practice-log",
+    "name": "Metronome Practice Log",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log practice minutes and metronome tempos per exercise, then see totals, streaks, tempo gains and a next-session ladder."
   },
   {
     "slug": "mic-waveform-visualizer",
@@ -7422,12 +13522,60 @@ export const TOOL_CATALOG = [
     "description": "MICR city, bank aur branch fields explain kare."
   },
   {
+    "slug": "microwave-running-cost-calculator",
+    "name": "Microwave Running Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Microwave electricity cost per meal, day, month and year for solo, grill and convection modes, including standby drain."
+  },
+  {
+    "slug": "microwave-size-selector",
+    "name": "Microwave Size Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Pick microwave litres and the right type — solo, grill or convection — from family size, cooking needs and your largest dish."
+  },
+  {
+    "slug": "mileage-reimbursement-calculator",
+    "name": "Mileage Reimbursement Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out travel reimbursement from distance and a per-kilometre or per-mile rate, including two-tier rates and tolls."
+  },
+  {
+    "slug": "miles-kilometres-travel-converter",
+    "name": "Miles to Kilometres Travel Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert road distances and speed limits between miles and kilometres, with a driving-time estimate for the trip."
+  },
+  {
+    "slug": "mime-type-lookup-tool",
+    "name": "MIME Type Lookup Tool",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Look up the MIME type for a file extension, or every extension for a MIME type, with charset and compression guidance."
+  },
+  {
     "slug": "minesweeper",
     "name": "Minesweeper",
     "categories": [
       "Games"
     ],
     "description": "Play classic Minesweeper online free — clear the board, flag the mines, beat your best time."
+  },
+  {
+    "slug": "minor-child-investment-tax-checker",
+    "name": "Minor Child Investment Tax Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check how a minor child's investment income is taxed under section 64(1A) clubbing, the Rs 1,500 section 10(32) exemption and the exceptions."
   },
   {
     "slug": "mirr-calculator",
@@ -7444,6 +13592,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Reverse your text so it reads backwards, character by character."
+  },
+  {
+    "slug": "missed-dose-guidance-helper",
+    "name": "Missed Dose Guidance Helper",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out how late a missed dose is, whether the half-interval rule points to taking it or skipping it, and when the next dose is due."
   },
   {
     "slug": "mobile-deep-link-safety-inspector",
@@ -7480,12 +13636,60 @@ export const TOOL_CATALOG = [
     "description": "Interactive 2D chemical structure molecule builder with valence bonding, molecular weight calculators, and VSEPR geometry identification."
   },
   {
+    "slug": "money-habit-score-tool",
+    "name": "Money Habit Score Tool",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Score your saving, spending and planning habits against standard benchmarks like the 20% savings rate and a six-month emergency fund."
+  },
+  {
+    "slug": "mongodb-connection-string-builder",
+    "name": "MongoDB Connection String Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build mongodb:// and mongodb+srv:// URIs with replica set, auth source, read preference, write concern and TLS options."
+  },
+  {
     "slug": "monitor-ppi-calculator",
     "name": "Monitor PPI Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Calculate monitor ppi values quickly with a simple, structured workflow."
+  },
+  {
+    "slug": "monorepo-tool-comparison",
+    "name": "Monorepo Tool Comparison",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare Nx, Turborepo, Bazel, Lerna and pnpm workspaces on caching, orchestration, languages and setup — weighted to your priorities."
+  },
+  {
+    "slug": "monorepo-vs-polyrepo-decision-tool",
+    "name": "Monorepo vs Polyrepo Decision Tool",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Answer eight questions about code sharing, tooling, releases and access control to get a scored monorepo-vs-polyrepo recommendation."
+  },
+  {
+    "slug": "monsoon-driving-readiness-checker",
+    "name": "Monsoon Driving Readiness Checker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check monsoon readiness: wet stopping distance from tread depth, aquaplaning speed from tyre pressure and a weighted pre-rain checklist."
+  },
+  {
+    "slug": "monsoon-trip-packing-list-builder",
+    "name": "Monsoon Trip Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a monsoon packing list from drying time and the IMD rainfall band, so you pack for clothes that will not dry overnight."
   },
   {
     "slug": "monte-carlo-risk-scenario-lab",
@@ -7503,6 +13707,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Plan monthly income, expenses, savings, and category-wise spending with a visual budget breakdown."
+  },
+  {
+    "slug": "monthly-fuel-budget-planner",
+    "name": "Monthly Fuel Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan a household fuel budget across several vehicles — petrol, diesel or CNG — and see the km to trim if you are over the cap."
   },
   {
     "slug": "moon-phase-simulator",
@@ -7546,7 +13758,7 @@ export const TOOL_CATALOG = [
       "Text & Writing",
       "Education & Science"
     ],
-    "description": "Translate plain text to Morse code and decode Morse back."
+    "description": "Translate plain text to International Morse code, decode Morse back to text, and see the exact transmission time at any words-per-minute speed."
   },
   {
     "slug": "mortgage-affordability-calculator",
@@ -7566,11 +13778,19 @@ export const TOOL_CATALOG = [
     "description": "Calculate monthly mortgage payments, total interest, and amortization schedule. Compare different down payments and interest rates."
   },
   {
+    "slug": "mosquito-net-fabric-calculator",
+    "name": "Mosquito Net Fabric Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate mosquito net mesh off the roll, frame section and fixing tape for windows and doors, with a cutting plan and cost."
+  },
+  {
     "slug": "motion-aftereffect-illusion",
     "name": "Motion Aftereffect Illusion",
     "categories": [
-      "Fun",
-      "Education & Science"
+      "Education & Science",
+      "Fun"
     ],
     "description": "Watch moving patterns and experience static objects appearing to move using neuroscience-based visual illusions."
   },
@@ -7594,12 +13814,44 @@ export const TOOL_CATALOG = [
     "description": "Schedule daily motivation reminders to keep you inspired and focused on your goals."
   },
   {
+    "slug": "motor-insurance-idv-calculator",
+    "name": "Motor Insurance IDV Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Insured Declared Value from ex-showroom price and vehicle age using the motor tariff depreciation slabs, plus under-insurance impact."
+  },
+  {
+    "slug": "motorcycle-storage-checklist",
+    "name": "Motorcycle Storage Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Prepare a bike for long storage with fuel, battery and tyre steps generated from your duration, climate and battery type."
+  },
+  {
     "slug": "mountain-quiz",
     "name": "Mountain Quiz",
     "categories": [
       "Education & Science"
     ],
     "description": "Test your knowledge of the world's highest and most famous mountains — identify peaks, ranges, heights, and facts with timed quizzes and scoring."
+  },
+  {
+    "slug": "move-out-cleaning-checklist",
+    "name": "Move Out Cleaning Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Room-by-room end-of-tenancy cleaning list with time estimates and what the remaining work would cost against your deposit."
+  },
+  {
+    "slug": "moving-boxes-calculator",
+    "name": "Moving Boxes Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate how many small, medium, large, dish and wardrobe cartons your home needs, plus tape, paper and bubble wrap."
   },
   {
     "slug": "moving-checklist",
@@ -7620,6 +13872,22 @@ export const TOOL_CATALOG = [
     "description": "Create a personalised moving checklist organised by countdown phase. Track tasks, add custom items, and export your plan."
   },
   {
+    "slug": "moving-checklist-generator",
+    "name": "Moving Checklist Generator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Turn your moving date into a dated countdown checklist from eight weeks out through moving day and the fortnight after."
+  },
+  {
+    "slug": "moving-truck-size-selector",
+    "name": "Moving Truck Size Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up your furniture, appliances and cartons to get the packed volume and the smallest tempo or truck that will hold it."
+  },
+  {
     "slug": "mp3-cutter-audio-trimmer",
     "name": "MP3 Cutter / Audio Trimmer",
     "categories": [
@@ -7632,9 +13900,50 @@ export const TOOL_CATALOG = [
     "slug": "mp4-to-base64",
     "name": "MP4 to Base64",
     "categories": [
+      "Converters",
+      "Video & Audio"
+    ],
+    "description": "Convert a local MP4, WebM, MOV or OGV file into a Base64 data URL entirely in your browser."
+  },
+  {
+    "slug": "mpg-to-kmpl-converter",
+    "name": "MPG to KMPL Converter",
+    "categories": [
       "Converters"
     ],
-    "description": "Convert local MP4 files into Base64 data URLs."
+    "description": "Convert fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions."
+  },
+  {
+    "slug": "msp-realisation-calculator",
+    "name": "MSP Realisation Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare what you actually net at the mandi after fees, commission and transport against the announced MSP."
+  },
+  {
+    "slug": "mttr-mtbf-calculator",
+    "name": "MTTR and MTBF Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute mean time to repair, mean time between failures, failure rate and resulting availability from real incident data."
+  },
+  {
+    "slug": "mudra-loan-category-selector",
+    "name": "Mudra Loan Category Selector",
+    "categories": [
+      "Business"
+    ],
+    "description": "Find whether your PMMY Mudra loan falls under Shishu, Kishore, Tarun or Tarun Plus, with the limits and eligibility checks that apply."
+  },
+  {
+    "slug": "mulch-quantity-calculator",
+    "name": "Mulch Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out mulch volume, bags and bulk loads for garden beds at your chosen depth, in cubic feet, cubic yards or litres."
   },
   {
     "slug": "multi-country-clock",
@@ -7643,6 +13952,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "View current time across multiple countries simultaneously."
+  },
+  {
+    "slug": "multi-currency-invoice-calculator",
+    "name": "Multi Currency Invoice Total Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Total an invoice whose lines are priced in different currencies using exchange rates you enter yourself, then add tax."
   },
   {
     "slug": "multi-currency-payout-reconciler",
@@ -7690,12 +14007,76 @@ export const TOOL_CATALOG = [
     "description": "Test your brain's ability to handle multiple tasks simultaneously with this timed cognitive challenge combining math problems and visual tracking."
   },
   {
+    "slug": "mumbai-airport-transfer-time-planner",
+    "name": "Mumbai Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Mumbai CSMIA, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
+    "slug": "mumbai-bom-airport-arrival-buffer-calculator",
+    "name": "Mumbai BOM Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Mumbai BOM using drive time, traffic, check-in cut-off, security and gate-closing buffers."
+  },
+  {
+    "slug": "mumbai-university-cgpa-converter",
+    "name": "Mumbai University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Mumbai University CGPA to percentage with the CBCGS formula, or work the percentage out from raw semester marks."
+  },
+  {
+    "slug": "museum-visit-time-estimator",
+    "name": "Museum Visit Time Estimator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Estimate how long a museum really takes from its size and your viewing pace, using measured per-object viewing times and museum-fatigue breaks."
+  },
+  {
+    "slug": "music-interval-calculator",
+    "name": "Music Interval Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Name the interval between any two notes, with semitone distance, cents, inversion and the just-intonation ratio."
+  },
+  {
+    "slug": "mutual-fund-exit-load-calculator",
+    "name": "Mutual Fund Exit Load Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Exit load, STT and net proceeds when you redeem mutual fund units inside the scheme holding period, including the 10% free-exit allowance."
+  },
+  {
     "slug": "mutual-fund-xirr-calculator",
     "name": "Mutual Fund XIRR Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Calculate XIRR from irregular mutual fund investment dates, amounts and redemptions against today's value."
+  },
+  {
+    "slug": "mx-record-priority-planner",
+    "name": "MX Record Priority Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan MX record preference values for single-provider, primary-plus-backup and provider-migration setups."
+  },
+  {
+    "slug": "mysql-connection-string-builder",
+    "name": "MySQL Connection String Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build MySQL connection strings in URI, Go DSN and JDBC forms with charset, time zone, TLS mode and connection limits."
   },
   {
     "slug": "mysql-visualization-tools",
@@ -7706,6 +14087,30 @@ export const TOOL_CATALOG = [
     "description": "Visualize MySQL schemas, ER diagrams, relationships, query references, and export browser-generated diagrams in real time."
   },
   {
+    "slug": "nagpur-auto-cab-fare-estimator",
+    "name": "Nagpur Auto and Cab Fare Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a fair Nagpur auto, shared auto or cab fare from distance, waiting time and Maharashtra's 25% midnight-to-5am night charge."
+  },
+  {
+    "slug": "nail-size-selector",
+    "name": "Nail Size Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Picks the penny size, length and gauge for framing, sheathing and trim from the penetration rule, with spacing and nail counts."
+  },
+  {
+    "slug": "name-change-record-update-tracker",
+    "name": "Name Change Record Update Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track which IDs, bank accounts and certificates still carry your old name, in the right dependency order with progress and next actions."
+  },
+  {
     "slug": "name-compatibility",
     "name": "Name Compatibility",
     "categories": [
@@ -7713,6 +14118,134 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Check the compatibility between two names with detailed love, friendship, and soulmate analysis."
+  },
+  {
+    "slug": "ncert-chapter-tracker",
+    "name": "NCERT Chapter Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track reading and revision status of every NCERT chapter, book by book and class by class, with progress percentages."
+  },
+  {
+    "slug": "ncert-reading-speed-planner",
+    "name": "NCERT Reading Speed Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out how many NCERT pages to read per day — with days off and a revision buffer — to finish before your target date."
+  },
+  {
+    "slug": "nda-cds-exam-countdown",
+    "name": "NDA CDS Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Defence exam countdown for NDA and CDS covering the written date, paper-wise marks and the SSB interview window with its 5-day schedule."
+  },
+  {
+    "slug": "ndjson-to-json-converter",
+    "name": "NDJSON to JSON Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert newline-delimited JSON (NDJSON/JSON Lines) to a JSON array and back, with per-line error reporting."
+  },
+  {
+    "slug": "neet-age-eligibility-checker",
+    "name": "NEET Age Eligibility Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check the NEET minimum-age rule — 17 years completed by 31 December of the admission year — with your exact age and day margin."
+  },
+  {
+    "slug": "neet-application-document-checklist",
+    "name": "NEET Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Checklist of every detail, document, photo and upload the NTA NEET (UG) registration asks for, with the fee for your category."
+  },
+  {
+    "slug": "neet-exam-countdown",
+    "name": "NEET Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "NEET UG countdown with a chapter-wise pace indicator per subject and a daily question target split by the 45-45-90 paper pattern."
+  },
+  {
+    "slug": "neet-exam-day-checklist",
+    "name": "NEET Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "NEET dress code, allowed items and document checklist you can tick off, with a reporting plan built on the entry closing time."
+  },
+  {
+    "slug": "neet-omr-practice-sheet",
+    "name": "NEET OMR Practice Sheet",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Print a NEET-style OMR answer sheet with 200 or 180 question bubbles, Section A/B blocks and a roll number grid for timed practice."
+  },
+  {
+    "slug": "neet-study-prompt-builder",
+    "name": "NEET Study Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build NEET (UG) revision, active-recall and MCQ-drill prompts by subject and chapter, with +4/-1 pacing and scoring maths."
+  },
+  {
+    "slug": "negative-marking-calculator-banking",
+    "name": "Negative Marking Calculator Banking",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out your IBPS or SBI net score section by section under the one-fourth penalty for wrong answers."
+  },
+  {
+    "slug": "negative-marking-calculator-jee",
+    "name": "Negative Marking Calculator JEE",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Project a JEE Main raw score from MCQ and numerical-value attempts under the +4 / -1 scheme, including the cost of blind guesses."
+  },
+  {
+    "slug": "negative-marking-calculator-neet",
+    "name": "Negative Marking Calculator NEET",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Model your NEET UG score under the +4 / -1 marking scheme and compare what blind and educated guessing actually add."
+  },
+  {
+    "slug": "negative-marking-calculator-ssc",
+    "name": "Negative Marking Calculator SSC",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "See exactly how many marks wrong answers cost in SSC CGL, CHSL and CPO — 0.5 penalty maths, break-even accuracy and net score."
+  },
+  {
+    "slug": "negative-marking-calculator-upsc",
+    "name": "Negative Marking Calculator UPSC",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Apply the UPSC prelims one-third penalty to your attempt plan and find the attempt count that maximises expected marks."
+  },
+  {
+    "slug": "neighbourhood-walkability-scorer",
+    "name": "Neighbourhood Walkability Scorer",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Score any address 0-100 for walking access to shops, parks, schools and transit using the Walk Score distance-decay model."
   },
   {
     "slug": "net-worth-calculator",
@@ -7731,6 +14264,30 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Track assets minus liabilities with monthly net worth snapshots, projections, and category breakdowns."
+  },
+  {
+    "slug": "net-worth-tracker-tool",
+    "name": "Net Worth Tracker Tool",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "List assets and liabilities to get your net worth, liquidity, debt-to-asset ratio and asset mix."
+  },
+  {
+    "slug": "netlify-cost-estimator",
+    "name": "Netlify Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro."
+  },
+  {
+    "slug": "netlify-toml-generator",
+    "name": "Netlify TOML Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a netlify.toml with build settings, redirects, security headers, functions and edge function routes."
   },
   {
     "slug": "networking-basics-quiz",
@@ -7759,6 +14316,70 @@ export const TOOL_CATALOG = [
     "description": "Hundreds of unique prompts with category selection, difficulty filters, and random mode for the ultimate party game."
   },
   {
+    "slug": "newborn-feeding-volume-calculator",
+    "name": "Newborn Feeding Volume Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate a newborn's daily and per-feed millilitres from weight, day of life and feeds per day using standard mL/kg/day guidance."
+  },
+  {
+    "slug": "newsletter-prompt-builder",
+    "name": "Newsletter Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Drafts a newsletter prompt with segment, cadence and CTA guidance — subject-line limits and a per-item word budget built in."
+  },
+  {
+    "slug": "nginx-cache-header-planner",
+    "name": "Nginx Cache Header Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan Cache-Control and expires directives per asset type and copy a ready nginx location-block snippet."
+  },
+  {
+    "slug": "nginx-compression-config-generator",
+    "name": "Nginx Compression Config Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate nginx gzip and brotli directives with tuned compression levels, MIME type lists and minimum length."
+  },
+  {
+    "slug": "nginx-log-format-builder",
+    "name": "Nginx Log Format Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compose a custom nginx log_format from real variables, preview a sample log line and copy the directive."
+  },
+  {
+    "slug": "night-driving-safety-checklist",
+    "name": "Night Driving Safety Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Pre-drive checklist for lights, glass and fatigue, scored with the hours-awake impairment rule and the 02:00–06:00 risk window."
+  },
+  {
+    "slug": "nitrogen-vs-air-tyre-cost",
+    "name": "Nitrogen vs Air Tyre Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare the cost of nitrogen tyre filling against the fuel and tread savings its slower pressure loss actually delivers."
+  },
+  {
+    "slug": "nm-to-ftlb-converter",
+    "name": "Nm to Ftlb Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert torque between newton metres, foot-pounds, inch-pounds and kgf-m, with a torque wrench extension correction."
+  },
+  {
     "slug": "no-claim-bonus-calculator",
     "name": "No Claim Bonus Calculator",
     "categories": [
@@ -7767,12 +14388,52 @@ export const TOOL_CATALOG = [
     "description": "NCB percentage and premium saved after consecutive claim-free years, with next-year slab, add-ons and GST on your motor renewal."
   },
   {
+    "slug": "no-claim-bonus-tracker",
+    "name": "No Claim Bonus Tracker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Track motor insurance NCB growth across the 20-25-35-45-50 percent slabs and see what one claim really costs you."
+  },
+  {
+    "slug": "noise-reduction-rating-calculator",
+    "name": "Noise Reduction Rating Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn an NRR or SNR label into an estimated protected level using the OSHA, OSHA 50% and NIOSH derating methods, including dual protection."
+  },
+  {
     "slug": "nonogram",
     "name": "Nonogram Puzzle",
     "categories": [
       "Games"
     ],
     "description": "Solve nonogram picture-logic puzzles online free — 5x5, 10x10 and 15x15 grids with fill and mark modes."
+  },
+  {
+    "slug": "normalization-formula-explainer",
+    "name": "Normalization Formula Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Walk through the SSC, Z-score, NTA percentile and min-max normalization formulas step by step with your own numbers."
+  },
+  {
+    "slug": "notes-topic-tag-cloud",
+    "name": "Topic Tag Cloud For Notes",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Paste your notes to see a weighted tag cloud of dominant topics and a list of thin topics that need more coverage."
+  },
+  {
+    "slug": "notice-file-generator",
+    "name": "NOTICE File Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate an Apache-style NOTICE file with copyright line and attribution blocks from your dependency list."
   },
   {
     "slug": "notice-period-buyout-calculator",
@@ -7791,6 +14452,38 @@ export const TOOL_CATALOG = [
     "description": "Calculate notice period values quickly with a simple, structured workflow."
   },
   {
+    "slug": "notice-period-rent-calculator",
+    "name": "Notice Period Rent Liability Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate the rent you still owe when you vacate before the notice period or lock-in ends, and what is left of the deposit."
+  },
+  {
+    "slug": "npm-pnpm-yarn-comparison",
+    "name": "npm pnpm yarn Comparison",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare npm, pnpm and Yarn on install strategy, disk usage, lockfiles, strictness and workspaces — with a weighted recommendation for your project."
+  },
+  {
+    "slug": "npm-scripts-builder",
+    "name": "npm Scripts Builder",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Compose npm scripts with pre/post hooks, sequential and parallel combinations, and cross-platform safety checks for Windows shells."
+  },
+  {
+    "slug": "nps-80ccd1b-calculator",
+    "name": "NPS 80CCD1B Extra Deduction Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the extra Rs 50,000 NPS deduction under section 80CCD(1B), over and above the Rs 1.5 lakh 80CCE limit, and the tax it saves."
+  },
+  {
     "slug": "nps-calculator",
     "name": "NPS Calculator",
     "categories": [
@@ -7805,6 +14498,22 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Estimate your NPS Tier 1 corpus at 60, the mandatory annuity share and the expected monthly pension."
+  },
+  {
+    "slug": "nre-vs-nro-account-comparator",
+    "name": "NRE vs NRO Account Comparator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare NRE and NRO deposits on tax, TDS and repatriation, with post-tax maturity value for the same interest rate."
+  },
+  {
+    "slug": "nuget-package-reference-builder",
+    "name": "NuGet Package Reference Builder",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build PackageReference items with version ranges, asset flags and Central Package Management, and see what each range really allows."
   },
   {
     "slug": "number-guessing-game",
@@ -7822,6 +14531,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Decode any Indian registration number: state, RTO district, series and number, plus the plate colour rules."
+  },
+  {
+    "slug": "number-plate-format-validator",
+    "name": "Number Plate Format Validator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Validate Indian registration numbers against the standard, BH-series, diplomatic and defence formats, with the regex for each."
   },
   {
     "slug": "number-system-conversions",
@@ -7876,6 +14593,14 @@ export const TOOL_CATALOG = [
     "description": "Translate requested OAuth permissions into plain-language risk levels."
   },
   {
+    "slug": "obsidian-ai-prompt-pack",
+    "name": "Obsidian AI Prompt Pack",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "A dozen ready Obsidian prompts for linking, summarising and daily note review, with wikilink, tag and filename rules applied."
+  },
+  {
     "slug": "occasion-reminder",
     "name": "Occasion Reminder",
     "categories": [
@@ -7912,6 +14637,14 @@ export const TOOL_CATALOG = [
     "description": "Enter any two of voltage, current and resistance to find the third — plus power."
   },
   {
+    "slug": "oil-change-interval-planner",
+    "name": "Oil Change Interval Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan your next engine oil change from oil type, driving conditions and kilometres run, with severe-service adjustment."
+  },
+  {
     "slug": "okr-generator",
     "name": "OKR Generator",
     "categories": [
@@ -7919,6 +14652,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Generate objectives with measurable key results and suggested initiatives using AI-style prompts."
+  },
+  {
+    "slug": "old-age-pension-eligibility-checker",
+    "name": "Old Age Pension Scheme Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check IGNOAPS, widow and disability pension criteria under NSAP, with the central share, state top-up and monthly total."
   },
   {
     "slug": "old-photo-restorer",
@@ -7930,6 +14671,14 @@ export const TOOL_CATALOG = [
     "description": "Breathe new life into vintage, grainy, sepia-toned, or scratched photographs with AI restoration logic."
   },
   {
+    "slug": "oman-entry-requirement-checklist",
+    "name": "Oman Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Compare Oman's 14-day visa-free entry with the e-visa options, test passport validity and funds, and build the arrival document checklist."
+  },
+  {
     "slug": "omega3-intake-calculator",
     "name": "Omega-3 Intake Calculator",
     "categories": [
@@ -7937,6 +14686,22 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Calculate your daily EPA+DHA Omega-3 intake from fish, seeds, walnuts, and supplements and see if you're meeting recommended health guidelines."
+  },
+  {
+    "slug": "omr-rough-work-time-planner",
+    "name": "OMR Rough Work Time Planner",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Plan how many exam minutes to reserve for transferring answers to the OMR sheet, with batch strategies and a stop-solving clock mark."
+  },
+  {
+    "slug": "onboarding-doc-prompt-builder",
+    "name": "Onboarding Doc Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turns a role, team and access list into a first-week onboarding document prompt with an hour-by-hour split across the standard sections."
   },
   {
     "slug": "one-handed-keyboard-trainer",
@@ -7982,12 +14747,52 @@ export const TOOL_CATALOG = [
     "description": "A simple, precise online timer and countdown application."
   },
   {
+    "slug": "open-source-license-chooser",
+    "name": "Open Source License Chooser",
+    "categories": [
+      "Business"
+    ],
+    "description": "Answer a few questions to pick between MIT, Apache-2.0, MPL-2.0, LGPL, GPL, AGPL and public-domain licenses."
+  },
+  {
+    "slug": "osmania-university-cgpa-converter",
+    "name": "Osmania University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert Osmania University CGPA to percentage with the (CGPA - 0.5) x 10 rule, reverse it, and build the CGPA from semester SGPAs."
+  },
+  {
     "slug": "oven-temperature-converter",
     "name": "Oven Temperature Converter",
     "categories": [
       "Lifestyle"
     ],
     "description": "Convert oven temperatures between Celsius, Fahrenheit, gas marks and fan settings with a full reference chart."
+  },
+  {
+    "slug": "overhead-water-tank-size-calculator",
+    "name": "Overhead Water Tank Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size an overhead tank and sump in litres from family size, IS 1172 per-capita demand, garden use and days of storage."
+  },
+  {
+    "slug": "overtime-pay-calculator",
+    "name": "Overtime Pay Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate overtime pay from hourly rate, regular hours, overtime hours and multiplier with weekly totals."
+  },
+  {
+    "slug": "overtime-register-format-generator",
+    "name": "Overtime Register Format Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a Form IV style overtime register with hours, ordinary rate, double-rate overtime wages and payment dates."
   },
   {
     "slug": "ovulation-calculator",
@@ -8016,6 +14821,14 @@ export const TOOL_CATALOG = [
     "description": "Inspect package.json lifecycle commands as inert text for network, file, shell, process, environment, and native-build review cues."
   },
   {
+    "slug": "package-json-generator",
+    "name": "Package JSON Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a valid package.json with metadata, scripts, module type, exports, engines and license — validated against npm's naming and semver rules."
+  },
+  {
     "slug": "package-version-checker",
     "name": "Package Version Checker",
     "categories": [
@@ -8041,12 +14854,44 @@ export const TOOL_CATALOG = [
     "description": "Classic paddle-versus-paddle arcade game online — rally against the AI and score 7 points to win."
   },
   {
+    "slug": "paint-cost-per-sqft-india",
+    "name": "Paint Cost Per Square Foot India",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the all-in painting cost per square foot in India across economy, premium and luxury emulsion tiers."
+  },
+  {
+    "slug": "paint-labour-cost-estimator-india",
+    "name": "Paint Labour Cost Estimator India",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate painter labour charges per sqft by city tier, finish quality, putty work and ceiling height."
+  },
+  {
+    "slug": "paint-recoat-time-planner",
+    "name": "Paint Recoat Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Adjust touch-dry, recoat and hard-dry times for temperature and humidity, then schedule every coat by the clock."
+  },
+  {
     "slug": "palindrome-checker",
     "name": "Palindrome Checker",
     "categories": [
       "Text & Writing"
     ],
     "description": "Check if a word, phrase, sentence, or number reads the same backwards as forwards, with character-matching highlights and clean visual gauges."
+  },
+  {
+    "slug": "pan-format-decoder",
+    "name": "PAN Format Validator and Type Decoder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Check PAN structure offline and decode the fourth character to reveal whether the holder is an individual, company, firm, HUF or trust."
   },
   {
     "slug": "pan-format-validator",
@@ -8070,9 +14915,10 @@ export const TOOL_CATALOG = [
     "slug": "pantry-expiry-tracker",
     "name": "Pantry Expiry Tracker",
     "categories": [
-      "Lifestyle"
+      "Lifestyle",
+      "Productivity"
     ],
-    "description": "Futuristic kitchen inventory management with real-time expiry tracking and reminders."
+    "description": "Track what is in your fridge, freezer and cupboard, see what expires first, and put a number on the food value at risk this week."
   },
   {
     "slug": "para-phrasing-tool",
@@ -8083,6 +14929,38 @@ export const TOOL_CATALOG = [
     "description": "Rewrite text instantly with improved clarity and readability."
   },
   {
+    "slug": "parent-progress-summary-builder",
+    "name": "Parent Progress Summary Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn a student's subject marks and attendance into a clear one-page progress summary with grade, strengths and focus areas."
+  },
+  {
+    "slug": "parenting-prompt-builder",
+    "name": "Parenting Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Matches a child's age to a developmental stage and attention span, then writes an AI prompt for age-appropriate activities and conversations."
+  },
+  {
+    "slug": "paris-trip-budget-breakdown",
+    "name": "Paris Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a Paris trip into flights, stay, taxe de séjour, food, transport and activities, per person and per day."
+  },
+  {
+    "slug": "parking-allotment-dispute-letter-generator",
+    "name": "Parking Allotment Dispute Letter Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a housing society parking complaint over a denied slot, encroachment, unfair allotment or illegal parking charges."
+  },
+  {
     "slug": "party-food-planner",
     "name": "Party Food Quantity Planner",
     "categories": [
@@ -8090,6 +14968,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Plan exact party food and drink quantities with real per-person portions, totals, and a ready shopping list."
+  },
+  {
+    "slug": "passing-marks-requirement-tool",
+    "name": "Passing Marks Requirement Tool",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the external exam marks you need to pass a subject, given your internal score and your university's pass percentages."
   },
   {
     "slug": "passkey-readiness-tester",
@@ -8125,6 +15011,30 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Test password strength locally with entropy math, crack-time estimates, and pattern warnings — nothing leaves your browser."
+  },
+  {
+    "slug": "payment-gateway-fee-calculator",
+    "name": "Payment Gateway Fee Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Net settlement after a gateway's percentage, fixed fee, cross-border surcharge and tax — plus the amount to charge to net a target."
+  },
+  {
+    "slug": "payment-receipt-generator",
+    "name": "Payment Receipt Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create numbered payment receipts with payer, payment mode, amount in words and the balance still due on the invoice."
+  },
+  {
+    "slug": "payroll-compliance-calendar-india",
+    "name": "Payroll Compliance Calendar India",
+    "categories": [
+      "Business"
+    ],
+    "description": "Statutory due dates for PF, ESI, salary TDS and state professional tax for any wage month, plus late-deposit interest and Section 14B damages."
   },
   {
     "slug": "pdf-active-content-inspector",
@@ -8255,7 +15165,7 @@ export const TOOL_CATALOG = [
       "PDF & Documents",
       "Converters"
     ],
-    "description": "Convert local PDF files into Base64 data URLs."
+    "description": "Convert a local PDF into a Base64 data URL in your browser, with the exact encoded size and a header check."
   },
   {
     "slug": "pdf-to-image-converter",
@@ -8283,6 +15193,22 @@ export const TOOL_CATALOG = [
     "description": "Add custom watermarks to PDF files quickly and securely."
   },
   {
+    "slug": "peak-traffic-headroom-calculator",
+    "name": "Peak Traffic Headroom Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Project peak request load for sale days and viral spikes, then size instances and headroom against a target utilization."
+  },
+  {
+    "slug": "per-diem-allowance-calculator",
+    "name": "Per Diem Allowance Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Total a business trip's daily allowance by city tier, with part-day rates, lodging nights and provided-meal deductions."
+  },
+  {
     "slug": "percentage-calculator",
     "name": "Percentage Calculator",
     "categories": [
@@ -8298,6 +15224,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Find the percentage increase or decrease between two numbers."
+  },
+  {
+    "slug": "percentage-change-difference-calculator",
+    "name": "Percentage Change and Difference Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out percentage increase, decrease, percentage difference, percentage of a number and percentage points in one place."
   },
   {
     "slug": "percentage-increase-decrease-calculator",
@@ -8331,6 +15265,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Time boiled eggs exactly how you like them, adjusted for egg size, fridge chill, and altitude."
+  },
+  {
+    "slug": "performance-review-prompt-builder",
+    "name": "Performance Review Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turn rough review notes into a structured prompt, scoring each note for measurable evidence, timeframe and a concrete action."
   },
   {
     "slug": "period-cycle-tracker",
@@ -8394,6 +15336,22 @@ export const TOOL_CATALOG = [
     "description": "nPr and nCr for choosing r items from n."
   },
   {
+    "slug": "person-in-news-tracker",
+    "name": "Person In News Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track appointments and personalities in the news with role, organisation and date in a searchable exam-ready table."
+  },
+  {
+    "slug": "personal-accident-cover-calculator",
+    "name": "Personal Accident Cover Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Size accidental death and permanent disability cover from income, dependants, loans and goals, against the usual 10x income underwriting cap."
+  },
+  {
     "slug": "personal-crisis-safety-plan",
     "name": "Personal Crisis Safety Plan",
     "categories": [
@@ -8438,6 +15396,14 @@ export const TOOL_CATALOG = [
     "description": "Personal loan EMI, total interest and true cost including processing fee, GST and the effective annual rate."
   },
   {
+    "slug": "pest-control-planner",
+    "name": "Pest Control Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Pick your pests and home size to get the right treatment method, service interval, 12-month schedule and cost with GST."
+  },
+  {
     "slug": "pet-age-converter",
     "name": "Pet Age Calculator (Dog & Cat Years)",
     "categories": [
@@ -8445,6 +15411,22 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress."
+  },
+  {
+    "slug": "pet-calming-sound-player",
+    "name": "Pet Calming Sound Player",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Play low-stimulation noise loops for anxious pets and size the level so fireworks are masked without unsafe volume."
+  },
+  {
+    "slug": "pet-care-prompt-builder",
+    "name": "Pet Care Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build training, routine and behaviour prompts from your pet's species, age, life stage and daily time budget."
   },
   {
     "slug": "pet-health-records-vault",
@@ -8465,12 +15447,44 @@ export const TOOL_CATALOG = [
     "description": "Generate unique, creative names instantly for your furry, feathery, or fuzzy friends."
   },
   {
+    "slug": "pet-ownership-noc-request-generator",
+    "name": "Pet Ownership NOC Request Generator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Draft a courteous NOC request to your housing society for keeping a pet, with vaccination status, commitments and a readiness score."
+  },
+  {
+    "slug": "petty-cash-book-builder",
+    "name": "Petty Cash Book Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build an analytical imprest petty cash book with running balance, expense-head totals and the reimbursement due."
+  },
+  {
     "slug": "ph-scale-visualizer",
     "name": "pH Scale Visualizer",
     "categories": [
       "Education & Science"
     ],
     "description": "Interactive logarithmic pH scale visualizer with hydronium ion concentration, common household substances, and buffer concepts."
+  },
+  {
+    "slug": "phantom-load-checklist",
+    "name": "Phantom Load Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Tick off the always-on devices in your home and see the standby power they draw, what it costs a year and how much you can switch off."
+  },
+  {
+    "slug": "philippines-entry-requirement-checklist",
+    "name": "Philippines Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check your Philippines visa-free allowance, the eTravel registration window, passport validity beyond the stay and the extension you will need."
   },
   {
     "slug": "phishing-url-x-ray",
@@ -8514,12 +15528,28 @@ export const TOOL_CATALOG = [
     "description": "A real-time, browser-based PHP formatting and beautification utility to clean and standardize your PHP code safely."
   },
   {
+    "slug": "physical-test-day-checklist",
+    "name": "Physical Test Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "PET and PST day planner: lap-by-lap pace for the qualifying run, height and chest checks, plus the kit, documents and warm-up to take to the ground."
+  },
+  {
     "slug": "pickup-line-generator",
     "name": "Pickup Line Generator",
     "categories": [
       "Fun"
     ],
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty."
+  },
+  {
+    "slug": "picture-frame-miter-calculator",
+    "name": "Picture Frame Miter Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Miter saw angle, long and short point lengths and total moulding for rectangular or many-sided picture frames."
   },
   {
     "slug": "pigmentation-analyzer",
@@ -8532,6 +15562,14 @@ export const TOOL_CATALOG = [
     "description": "Analyze skin pigmentation with AI-powered tone analysis. Detect hyperpigmentation, dark spots, and uneven skin tone with detailed variation scoring."
   },
   {
+    "slug": "pillion-load-checker",
+    "name": "Pillion Load Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check rider, pillion and luggage weight against your bike's gross vehicle weight, payload and rear tyre load index."
+  },
+  {
     "slug": "pin-code-region-lookup",
     "name": "PIN Code Region Lookup",
     "categories": [
@@ -8539,6 +15577,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Six-digit PIN se postal circle, state aur district lookup kare."
+  },
+  {
+    "slug": "pinterest-pin-size-generator",
+    "name": "Pinterest Pin Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks."
   },
   {
     "slug": "pirate-name-generator",
@@ -8566,12 +15612,124 @@ export const TOOL_CATALOG = [
     "description": "Upload or take a photo of any plant to instantly identify it using advanced AI."
   },
   {
+    "slug": "plastic-reduction-tracker",
+    "name": "Plastic Reduction Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log the single-use plastic you avoid each week and see the weight, CO2e and money you save over a year."
+  },
+  {
     "slug": "plate-tectonics-simulator",
     "name": "Plate Tectonics Simulator",
     "categories": [
       "Education & Science"
     ],
     "description": "Interactive lithospheric plate boundary simulator with mantle convection currents, subduction zones, continental rifting, and volcanism."
+  },
+  {
+    "slug": "plug-voltage-guide-argentina",
+    "name": "Plug and Voltage Guide for Argentina",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Argentina runs 220 V at 50 Hz on type I and type C sockets — check your plug, the reversed polarity and converter need."
+  },
+  {
+    "slug": "plug-voltage-guide-australia",
+    "name": "Plug and Voltage Guide for Australia",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Australia runs 230 V at 50 Hz on the AS/NZS 3112 type I socket — check your plug, the 10/15/20 A pin ladder and converter need."
+  },
+  {
+    "slug": "plug-voltage-guide-china",
+    "name": "Plug and Voltage Guide for China",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Mainland China runs 220 V at 50 Hz on type A, C and I sockets — check your plug, the 10/16 A limit and how Hong Kong differs."
+  },
+  {
+    "slug": "plug-voltage-guide-italy",
+    "name": "Plug and Voltage Guide for Italy",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Italy runs 230 V at 50 Hz on type L, F and C sockets — check whether your plug fits and if you need a converter."
+  },
+  {
+    "slug": "plug-voltage-guide-japan",
+    "name": "Plug and Voltage Guide for Japan",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Japan's 100 V supply, Type A sockets and the 50/60 Hz east-west grid split, with whether your device needs an adapter or a converter."
+  },
+  {
+    "slug": "plug-voltage-guide-south-africa",
+    "name": "Plug and Voltage Guide for South Africa",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "South Africa runs 230 V at 50 Hz on the old type M and the new SANS 164-2 type N socket — see which outlet takes your plug."
+  },
+  {
+    "slug": "plug-voltage-guide-uae",
+    "name": "Plug and Voltage Guide for UAE",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "The UAE runs 230 V at 50 Hz on British-style type G sockets, with type C and D legacy outlets — check adapter, fuse and converter need."
+  },
+  {
+    "slug": "plug-voltage-guide-uk",
+    "name": "Plug and Voltage Guide for UK",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "The UK runs 230 V at 50 Hz on the fused BS 1363 type G socket — check your plug, the fuse rating and whether you need a converter."
+  },
+  {
+    "slug": "pm-kisan-eligibility-checker",
+    "name": "PM Kisan Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check landholding, exclusion categories and e-KYC readiness for the PM-KISAN farmer income support scheme of Rs 6,000 a year."
+  },
+  {
+    "slug": "pm-vishwakarma-eligibility-checker",
+    "name": "PM Vishwakarma Scheme Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check the 18 covered trades and the age, family and prior-loan conditions for PM Vishwakarma, plus the toolkit, stipend and 5% loan benefits."
+  },
+  {
+    "slug": "png-connection-cost-estimator",
+    "name": "PNG Connection Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a new piped gas connection: registration, refundable deposit, internal piping, extra points and payback against LPG."
+  },
+  {
+    "slug": "png-vs-lpg-cost-comparison",
+    "name": "PNG vs LPG Cost Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare piped natural gas and cylinder LPG on equal energy, with monthly cost, cost per usable kWh and payback on the PNG connection fee."
+  },
+  {
+    "slug": "pnpm-workspace-config-generator",
+    "name": "pnpm Workspace Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate pnpm-workspace.yaml with package globs, exclusions and catalog dependency versions, plus the catalog: usage snippet."
   },
   {
     "slug": "podcast-de-noiser-echo-reducer",
@@ -8583,12 +15741,84 @@ export const TOOL_CATALOG = [
     "description": "Hiss, hum aur room echo locally reduce kare."
   },
   {
+    "slug": "podcast-episode-cost-calculator",
+    "name": "Podcast Episode Cost Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add up editing, hosting, artwork and gear costs per podcast episode, then see cost per minute and the sponsor CPM you need to break even."
+  },
+  {
+    "slug": "podcast-episode-length-planner",
+    "name": "Podcast Episode Length Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Budget fixed and flexible segments against a target runtime, with ad load, start timestamps and a word count for each block."
+  },
+  {
+    "slug": "podcast-episode-title-generator",
+    "name": "Podcast Episode Title Generator",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Generate podcast episode titles from proven patterns and score each one on length, keyword position and truncation risk."
+  },
+  {
+    "slug": "podcast-outline-prompt-builder",
+    "name": "Podcast Outline Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Builds episode outline prompts with timed segments, question counts and cold-open, intro and outro blocks sized to your runtime."
+  },
+  {
+    "slug": "podcast-release-calendar-planner",
+    "name": "Podcast Release Calendar Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan a podcast season: publish dates, edit and recording deadlines, batch sessions and mid-season break on one grid."
+  },
+  {
+    "slug": "podcast-show-notes-formatter",
+    "name": "Podcast Show Notes Formatter",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Turn rough episode notes into formatted show notes with normalised timestamps, a links list and YouTube chapter validation."
+  },
+  {
+    "slug": "poetry-vs-pip-planner",
+    "name": "Poetry vs Pip Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Answer a few questions about your Python project and get a ranked recommendation across poetry, pip-tools, uv and conda."
+  },
+  {
+    "slug": "police-exam-answer-key-scorer",
+    "name": "Police Exam Answer Key Scorer",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Score state police constable written exams from your marked responses, with each exam's marks-per-question and negative marking."
+  },
+  {
     "slug": "poll-maker",
     "name": "Poll Maker",
     "categories": [
       "Business"
     ],
     "description": "Create interactive polls quickly and collect real-time responses."
+  },
+  {
+    "slug": "polytechnic-admission-merit-calculator",
+    "name": "Polytechnic Admission Merit Tool",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your polytechnic diploma admission merit index from Class 10 percentage and entrance score with state-style weights."
   },
   {
     "slug": "pomodoro-session-planner",
@@ -8605,6 +15835,30 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Boost focus and productivity using customizable study and break intervals."
+  },
+  {
+    "slug": "ponderal-index-calculator",
+    "name": "Ponderal Index Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Ponderal index divides weight by height cubed, so it stays fair for very tall or very short adults, plus a newborn mode."
+  },
+  {
+    "slug": "port-number-reference-explorer",
+    "name": "Port Number Reference Explorer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Search well-known and registered TCP/UDP ports by number, service name or protocol, with IANA range classification."
+  },
+  {
+    "slug": "portal-upload-spec-comparer",
+    "name": "Portal Upload Spec Comparer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare photo and signature upload rules across exam portals and find one file size and format that satisfies all of them."
   },
   {
     "slug": "portfolio-allocation-visualizer",
@@ -8655,6 +15909,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate the monthly income from a Post Office Monthly Income Scheme deposit, with single and joint account limits and total interest."
   },
   {
+    "slug": "post-office-rd-calculator",
+    "name": "Post Office Recurring Deposit Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Five-year National Savings Recurring Deposit maturity with quarterly compounding, default fees, advance rebate and premature closure."
+  },
+  {
     "slug": "post-office-scheme-calculator",
     "name": "Post Office Scheme Calculator",
     "categories": [
@@ -8662,6 +15924,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "NSC, KVP aur MIS maturity estimates compare kare."
+  },
+  {
+    "slug": "post-office-time-deposit-calculator",
+    "name": "Post Office Time Deposit Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Maturity value, annual interest payout and tax notes for 1, 2, 3 and 5 year Post Office Time Deposit accounts."
   },
   {
     "slug": "post-quantum-migration-inventory",
@@ -8673,12 +15943,52 @@ export const TOOL_CATALOG = [
     "description": "Inventory observable RSA, elliptic-curve, DSA, Diffie-Hellman, TLS, and post-quantum algorithm references in pasted code, config, or certificate metadata."
   },
   {
+    "slug": "post-surgery-protein-calculator",
+    "name": "Post-Surgery Protein Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Informational recovery protein and energy estimate using ESPEN surgical guideline g/kg bands and adjusted body weight."
+  },
+  {
+    "slug": "postcss-config-generator",
+    "name": "PostCSS Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a postcss.config file with import, nesting, preset-env, autoprefixer and cssnano plugins in the correct order."
+  },
+  {
+    "slug": "poster-print-bleed-calculator",
+    "name": "Poster Print Bleed Calculator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Work out poster document size with bleed, safe margins, export resolution and minimum readable text sizes for a given viewing distance."
+  },
+  {
+    "slug": "postgresql-connection-string-builder",
+    "name": "PostgreSQL Connection String Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build postgres:// URIs and keyword/value DSNs with SSL mode, schema, timeout and pool parameters, correctly percent-encoded."
+  },
+  {
     "slug": "posting-schedule-planner",
     "name": "Posting Schedule Planner",
     "categories": [
       "Marketing & Social"
     ],
     "description": "Plan, schedule, and preview social media posts with caption limits and metrics tracking."
+  },
+  {
+    "slug": "postmortem-template-generator",
+    "name": "Postmortem Template Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate a blameless postmortem document with metadata, timeline, root cause, lessons and tracked action items in Markdown."
   },
   {
     "slug": "posture-reminder",
@@ -8699,6 +16009,30 @@ export const TOOL_CATALOG = [
     "description": "Dietary constraints aur course balance ke saath dishes assign kare."
   },
   {
+    "slug": "potting-mix-ratio-calculator",
+    "name": "Potting Mix Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn pot size into litres of soil, compost, cocopeat and perlite using proven mix ratios for pots, grow bags and troughs."
+  },
+  {
+    "slug": "power-to-weight-ratio-calculator",
+    "name": "Power to Weight Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert power and kerb weight into PS/tonne, kW/tonne and kg per PS, plus a physics-based 0-100 km/h estimate."
+  },
+  {
+    "slug": "power-tool-wattage-comparison",
+    "name": "Power Tool Wattage Comparison",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compares running and starting watts for common power tools and checks whether your generator, inverter or battery bank can actually run them."
+  },
+  {
     "slug": "ppf-calculator",
     "name": "PPF Calculator",
     "categories": [
@@ -8715,12 +16049,36 @@ export const TOOL_CATALOG = [
     "description": "Work out your 15-year PPF maturity with yearly interest compounding, plus 5-year extension scenarios."
   },
   {
+    "slug": "practical-exam-prep-checklist",
+    "name": "Practical Exam Prep Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Tick through records, apparatus, viva and exam-day items for a lab practical exam and see your readiness percentage per section."
+  },
+  {
     "slug": "prayer-times-qibla",
     "name": "Prayer Times & Qibla Direction",
     "categories": [
       "Lifestyle"
     ],
     "description": "Get accurate daily prayer times and the Qibla bearing for any city, computed offline on your own device."
+  },
+  {
+    "slug": "pre-exam-breathing-routine",
+    "name": "Pre Exam Breathing Routine",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Guided box, 4-7-8 or extended-exhale breathing with a paced on-screen timer to steady nerves before entering the exam hall."
+  },
+  {
+    "slug": "pre-matric-scholarship-eligibility-checker",
+    "name": "Pre Matric Scholarship Checker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check eligibility for central pre-matric scholarships — SC, ST, OBC/EBC/DNT, minority and hazardous-occupation schemes."
   },
   {
     "slug": "pregnancy-due-date",
@@ -8732,6 +16090,30 @@ export const TOOL_CATALOG = [
     "description": "Estimate your due date from LMP, conception, or IVF transfer, with trimester dates, milestones, and weekly baby size."
   },
   {
+    "slug": "pregnancy-hydration-calculator",
+    "name": "Pregnancy Hydration Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Trimester-adjusted daily water target from EFSA adequate intakes, split into evenly spaced servings with a bedtime cut-off."
+  },
+  {
+    "slug": "prescription-refill-reminder-builder",
+    "name": "Prescription Refill Reminder Builder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Turn quantity dispensed, daily dose and repeats authorised into every refill date and the reminder date before each one."
+  },
+  {
+    "slug": "press-release-prompt-builder",
+    "name": "Press Release Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Builds press release prompts with an AP-style dateline, inverted-pyramid word budgets, attributed quotes and boilerplate."
+  },
+  {
     "slug": "pressure-cooker-converter",
     "name": "Pressure Cooker Time Converter",
     "categories": [
@@ -8739,6 +16121,22 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Convert cook times to pressure-cooker whistles and Instant-Pot minutes, with dal, rice, rajma and meat charts."
+  },
+  {
+    "slug": "presumptive-44ada-calculator",
+    "name": "Presumptive Tax 44ADA Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out 50% presumptive income under section 44ADA, test the Rs 75 lakh cash-receipts condition and see the tax due."
+  },
+  {
+    "slug": "prettier-config-generator",
+    "name": "Prettier Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a .prettierrc with every core formatting option, a live sample preview and per-file overrides."
   },
   {
     "slug": "price-evidence-locker",
@@ -8764,6 +16162,22 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Check whether a number is prime and see its factors if it isn't."
+  },
+  {
+    "slug": "primer-quantity-calculator",
+    "name": "Primer Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find primer litres required by primer type, substrate absorbency and coat count, with tin sizes and cost."
+  },
+  {
+    "slug": "print-bleed-calculator",
+    "name": "Print Bleed Calculator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Work out bleed, trim, safe margin and slug sizes for any print job in mm, inches, points and pixels at your chosen DPI."
   },
   {
     "slug": "privacy-policy-generator",
@@ -8823,6 +16237,22 @@ export const TOOL_CATALOG = [
     "description": "Dataset ko common distributions ke against compare kare."
   },
   {
+    "slug": "probation-and-bond-explainer",
+    "name": "Probation And Bond Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Understand probation periods and service bonds before accepting a post, and calculate what leaving early would cost."
+  },
+  {
+    "slug": "product-description-prompt-builder",
+    "name": "Product Description Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build listing-copy prompts with feature-to-benefit pairing, a per-section word budget and the real title and bullet limits of each marketplace."
+  },
+  {
     "slug": "product-image-compare",
     "name": "Product Image Compare",
     "categories": [
@@ -8831,6 +16261,22 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Interactively compare two product images (e.g., Before/After or variations) side-by-side with a drag slider."
+  },
+  {
+    "slug": "product-photo-prompt-builder",
+    "name": "Product Photo Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Compose ecommerce product-shot prompts with surface, angle and lighting, sized to Amazon, Etsy, Shopify or Instagram image rules."
+  },
+  {
+    "slug": "product-pricing-calculator",
+    "name": "Product Pricing Calculator with Taxes",
+    "categories": [
+      "Business"
+    ],
+    "description": "Set a selling price from unit cost, target margin, marketplace commission and tax, with charm rounding and a break-even count."
   },
   {
     "slug": "product-recall-watchlist",
@@ -8842,12 +16288,84 @@ export const TOOL_CATALOG = [
     "description": "Owned products ke official recall notices monitor kare."
   },
   {
+    "slug": "professional-tax-andhra-pradesh",
+    "name": "Professional Tax Calculator Andhra Pradesh",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Andhra Pradesh professional tax slabs for salaried staff, plus an employer head-count total and registration rules."
+  },
+  {
     "slug": "professional-tax-calculator",
     "name": "Professional Tax Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Find your state-wise monthly and annual professional tax deduction from current salary slabs across Indian states."
+  },
+  {
+    "slug": "professional-tax-gujarat",
+    "name": "Professional Tax Calculator Gujarat",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Gujarat professional tax by monthly salary band, with the Rs 12,000 exemption limit and the Section 16(iii) tax saving."
+  },
+  {
+    "slug": "professional-tax-karnataka",
+    "name": "Professional Tax Calculator Karnataka",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Karnataka professional tax deduction by monthly salary, using the Rs 25,000 exemption threshold and Rs 200 flat rate."
+  },
+  {
+    "slug": "professional-tax-kerala",
+    "name": "Professional Tax Calculator Kerala",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Half-yearly Kerala professional tax for panchayat, municipality and corporation slabs, with the annual total and payroll split."
+  },
+  {
+    "slug": "professional-tax-madhya-pradesh",
+    "name": "Professional Tax Calculator Madhya Pradesh",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Madhya Pradesh professional tax by annual salary slab, with the monthly deduction split and annual deposit guidance."
+  },
+  {
+    "slug": "professional-tax-maharashtra",
+    "name": "Professional Tax Calculator Maharashtra",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Monthly and annual Maharashtra professional tax by salary slab, including the February top-up and the women's exemption."
+  },
+  {
+    "slug": "professional-tax-tamil-nadu",
+    "name": "Professional Tax Calculator Tamil Nadu",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Half-yearly professional tax for Tamil Nadu employees using the Greater Chennai Corporation income slabs."
+  },
+  {
+    "slug": "professional-tax-telangana",
+    "name": "Professional Tax Calculator Telangana",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Telangana professional tax for salaried employees by monthly slab, plus the enrolment tax for self-employed professionals."
+  },
+  {
+    "slug": "professional-tax-west-bengal",
+    "name": "Professional Tax Calculator West Bengal",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "West Bengal professional tax by monthly salary slab, with the employer's month-by-month deposit schedule."
   },
   {
     "slug": "profile-pic-bg-changer",
@@ -8877,6 +16395,14 @@ export const TOOL_CATALOG = [
     "description": "Upload your profile picture to analyze lighting, composition, expression, and get actionable AI-powered feedback to optimize your social/professional presence."
   },
   {
+    "slug": "proforma-invoice-generator",
+    "name": "Proforma Invoice Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a proforma invoice with HS codes, Incoterms, freight and insurance, validity dates and the total spelled out in words."
+  },
+  {
     "slug": "programming-terms-dictionary",
     "name": "Programming Terms Dictionary",
     "categories": [
@@ -8894,12 +16420,44 @@ export const TOOL_CATALOG = [
     "description": "Estimate project cost and delivery timeline from task hours, hourly rate and a risk buffer."
   },
   {
+    "slug": "project-manager-prompt-pack",
+    "name": "Project Manager Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Status updates, RAID logs, escalations and stakeholder emails as ready-to-paste prompts filled with your project context."
+  },
+  {
     "slug": "projectile-motion-simulator",
     "name": "Projectile Motion Simulator",
     "categories": [
       "Education & Science"
     ],
     "description": "Interactive physics simulator for projectile trajectories with real-time vectors, gravity presets, air resistance, and trajectory analytics."
+  },
+  {
+    "slug": "prompt-escape-helper",
+    "name": "Prompt Escape Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Escape a prompt for JavaScript, JSON, Python, shell, SQL, YAML, CSV, HTML or URL embedding, with braces and backslashes handled."
+  },
+  {
+    "slug": "prompt-markdown-cleaner",
+    "name": "Prompt Markdown Cleaner",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Strip stray markdown, smart quotes and invisible characters from text before pasting it into an AI model."
+  },
+  {
+    "slug": "prompt-markdown-to-plain",
+    "name": "Prompt Markdown to Plain",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Strip Markdown from a prompt — headings, emphasis, links, code fences, tables — when the target expects plain text."
   },
   {
     "slug": "prompt-painter-react",
@@ -8909,6 +16467,14 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "HTML Live Preview with Tailwind CSS and interactive code editing."
+  },
+  {
+    "slug": "prompt-whitespace-normalizer",
+    "name": "Prompt Whitespace Normalizer",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Collapse stray spaces, tabs, blank lines and invisible Unicode characters in pasted prompts, with a before/after character count."
   },
   {
     "slug": "pronunciation-practice",
@@ -8929,6 +16495,22 @@ export const TOOL_CATALOG = [
     "description": "Long-term capital gains tax on property with CII indexation, the 12.5% vs 20% comparison and Section 54/54EC exemptions."
   },
   {
+    "slug": "property-registration-charge-estimator",
+    "name": "Property Registration Charge Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate stamp duty, registration fee, cess, scanning and franking charges on a property transfer, with the section 194-IA TDS check."
+  },
+  {
+    "slug": "property-rental-yield-calculator",
+    "name": "Property Yield and Rental Return Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Gross and net rental yield on a property after vacancy, maintenance, municipal tax and income tax on house property."
+  },
+  {
     "slug": "proportion-solver",
     "name": "Proportion Solver",
     "categories": [
@@ -8945,6 +16527,46 @@ export const TOOL_CATALOG = [
     "description": "Work out your daily protein target in grams from body weight, activity level and training goal, with a per-meal breakdown."
   },
   {
+    "slug": "psi-to-bar-converter",
+    "name": "PSI to Bar Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert tyre and system pressure between psi, bar, kPa, kgf/cm2 and atm, with a cold-to-hot tyre temperature correction."
+  },
+  {
+    "slug": "pubsub-vs-queue-decision-helper",
+    "name": "PubSub vs Queue Decision Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Answer nine questions about your workload and get a scored recommendation across work queues, pub/sub, partitioned logs and event buses."
+  },
+  {
+    "slug": "puc-renewal-planner",
+    "name": "PUC Renewal Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan pollution certificate renewal dates and yearly cost by vehicle category using the 12-month and 6-month PUC validity rule."
+  },
+  {
+    "slug": "puja-room-planner",
+    "name": "Puja Room Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan a puja room: shrine width, platform height for your idols, seating depth, ventilation and traditional direction notes."
+  },
+  {
+    "slug": "pull-request-template-generator",
+    "name": "Pull Request Template Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate a GitHub pull request template with summary, checklist, testing notes and screenshots sections, ready for .github/."
+  },
+  {
     "slug": "pulse-pressure-calculator",
     "name": "Pulse Pressure Calculator",
     "categories": [
@@ -8953,12 +16575,36 @@ export const TOOL_CATALOG = [
     "description": "Calculate pulse pressure and assess cardiovascular health from blood pressure readings."
   },
   {
+    "slug": "pune-airport-transfer-time-planner",
+    "name": "Pune Airport Transfer Time Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave for Pune PNQ airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs."
+  },
+  {
     "slug": "purchase-order-generator",
     "name": "Purchase Order Generator",
     "categories": [
       "Generators"
     ],
     "description": "Build a printable purchase order with line items, GST, freight, delivery and payment terms."
+  },
+  {
+    "slug": "python-venv-setup-builder",
+    "name": "Python Venv Setup Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Exact venv creation, activation and dependency commands for your OS, shell, Python version and package manager."
+  },
+  {
+    "slug": "qatar-entry-requirement-checklist",
+    "name": "Qatar Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Test your Qatar entry route and permitted stay, price the compulsory visitor health insurance, and build the document checklist for arrival."
   },
   {
     "slug": "qr-generator",
@@ -8984,6 +16630,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Recent earthquakes ko distance aur magnitude se filter kare."
+  },
+  {
+    "slug": "quantization-size-calculator",
+    "name": "Quantization Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare LLM file sizes across FP16, 8-bit, 6-bit, 5-bit, 4-bit, 3-bit and 2-bit quantization formats."
+  },
+  {
+    "slug": "query-parameter-encoder-builder",
+    "name": "Query Parameter Encoder Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a correctly percent-encoded query string from JSON, choosing how arrays, nested objects, spaces and unicode are serialised."
   },
   {
     "slug": "query-string-parser",
@@ -9012,6 +16674,22 @@ export const TOOL_CATALOG = [
     "description": "Take a focused multiple-choice quiz with progress tracking, scoring, answer review, and restart controls."
   },
   {
+    "slug": "quiz-prompt-builder",
+    "name": "Quiz Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a ready-to-paste AI quiz generation prompt with an exact difficulty mix, question types and a formatted answer key."
+  },
+  {
+    "slug": "quotation-estimate-generator",
+    "name": "Quotation and Estimate Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a quotation or a ranged estimate with materials and labour lines, contingency, tax, validity and a payment schedule."
+  },
+  {
     "slug": "quotation-generator",
     "name": "Quotation Generator",
     "categories": [
@@ -9026,6 +16704,22 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "Generate, customize, and download beautiful quotes for social media."
+  },
+  {
+    "slug": "r2-vs-s3-cost-comparison",
+    "name": "R2 vs S3 Cost Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare Cloudflare R2 and Amazon S3 monthly cost — storage, requests and the egress fees only one of them charges."
+  },
+  {
+    "slug": "rabbitmq-amqp-uri-builder",
+    "name": "RabbitMQ AMQP URI Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build amqp:// and amqps:// connection URIs with vhost, heartbeat and connection timeout parameters, encoded per the RabbitMQ URI spec."
   },
   {
     "slug": "radioactive-decay-calculator",
@@ -9055,6 +16749,54 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Review text-based RAG files locally for prompt-injection, hidden-content, suspicious-link, and duplicate signals before indexing."
+  },
+  {
+    "slug": "railway-application-document-checklist",
+    "name": "Railway Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build the RRB application file — form fields, photo and signature upload specs, certificates — and work out the fee after the CBT-1 refund."
+  },
+  {
+    "slug": "railway-exam-countdown",
+    "name": "Railway Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "RRB NTPC, Group D, ALP and JE countdown with a preparation phase indicator and a daily study mix that shifts towards mocks."
+  },
+  {
+    "slug": "railway-exam-day-checklist",
+    "name": "Railway Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "RRB exam day checklist covering the e-call letter, matching photo ID and travel plan, with a gate-closing timeline and CBT attempt maths."
+  },
+  {
+    "slug": "rainy-day-backup-plan-builder",
+    "name": "Rainy Day Backup Plan Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Work out the real chance of losing an outdoor day to rain, then assign indoor alternatives and suggest day swaps that cut the risk."
+  },
+  {
+    "slug": "raised-bed-soil-calculator",
+    "name": "Raised Bed Soil Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out soil, compost, cocopeat and perlite volume to fill raised garden beds, with settling allowance and block counts."
+  },
+  {
+    "slug": "rajasthan-board-percentage-calculator",
+    "name": "Rajasthan Board Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "RBSE class 10 and 12 percentage, division and the 33% pass check, plus the marks needed for the next division."
   },
   {
     "slug": "random-business-idea",
@@ -9199,6 +16941,14 @@ export const TOOL_CATALOG = [
     "description": "Simplify ratios, solve for a missing term and split a total in any given ratio."
   },
   {
+    "slug": "ration-card-category-explainer",
+    "name": "Ration Card Category Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare AAY, Priority Household and non-NFSA ration cards — monthly grain entitlement, issue prices and what the ration is worth."
+  },
+  {
     "slug": "raw-photo-developer",
     "name": "RAW Photo Developer",
     "categories": [
@@ -9252,6 +17002,14 @@ export const TOOL_CATALOG = [
     "description": "Analyze text readability with Flesch-Kincaid, Gunning Fog, SMOG, and Coleman-Liau scores. Optimize your writing for any audience."
   },
   {
+    "slug": "reading-level-prompt-adjuster",
+    "name": "Reading Level Prompt Adjuster",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Measure your text's Flesch-Kincaid grade and build a rewrite prompt targeting a specific grade or reading level."
+  },
+  {
     "slug": "reading-speed-calculator",
     "name": "Reading Speed Calculator",
     "categories": [
@@ -9276,6 +17034,14 @@ export const TOOL_CATALOG = [
     "description": "Generate clean, professional README files for projects instantly."
   },
   {
+    "slug": "real-estate-agent-prompt-pack",
+    "name": "Real Estate Agent Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for listing copy, seller outreach, neighbourhood guides and negotiation, with a fair housing language check."
+  },
+  {
     "slug": "recipe-nutrition-estimator",
     "name": "Recipe Nutrition Estimator",
     "categories": [
@@ -9283,6 +17049,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Build any recipe from real ingredient data and see calories, protein, carbs, fat and fibre per serving."
+  },
+  {
+    "slug": "recipe-remix-prompt-builder",
+    "name": "Recipe Remix Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Turn leftover ingredients into a precise recipe prompt with role coverage, missing components and declarable allergens flagged."
   },
   {
     "slug": "recipe-scaler",
@@ -9294,6 +17068,30 @@ export const TOOL_CATALOG = [
     "description": "Scale any recipe up or down by servings or pan size, with fraction-friendly amounts and smart tips for salt, spice, and leavening."
   },
   {
+    "slug": "recommendation-letter-prompt-builder",
+    "name": "Recommendation Letter Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a reference letter prompt with specific examples, an honest percentile claim from rank and cohort size, and a per-section word budget."
+  },
+  {
+    "slug": "recruitment-height-weight-ratio-checker",
+    "name": "Height Weight Ratio For Recruitment",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Check whether your weight sits inside the height band and BMI range used by Army, SSC GD and police physical standards."
+  },
+  {
+    "slug": "recurring-deposit-maturity-calculator",
+    "name": "Recurring Deposit Maturity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Bank RD maturity value with quarterly compounding, year-wise interest accrual, section 194A TDS and a post-tax view."
+  },
+  {
     "slug": "redaction-proof-checker",
     "name": "Redaction Proof Checker",
     "categories": [
@@ -9302,6 +17100,22 @@ export const TOOL_CATALOG = [
       "Image & Photo"
     ],
     "description": "Inspect redacted PDFs and images locally for exposed text, risky annotations, metadata, and visual warning signs before sharing."
+  },
+  {
+    "slug": "redis-connection-url-builder",
+    "name": "Redis Connection URL Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build redis:// and rediss:// URLs with database index, ACL username, password and TLS — plus the matching redis-cli command."
+  },
+  {
+    "slug": "redis-key-naming-builder",
+    "name": "Redis Key Naming Builder",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Design a namespaced Redis key convention with environment, tenant and version segments plus cluster hash tags."
   },
   {
     "slug": "redness-analyzer",
@@ -9322,6 +17136,22 @@ export const TOOL_CATALOG = [
     "description": "Find the perfect trending background music for your Reels and TikToks."
   },
   {
+    "slug": "reel-script-prompt-builder",
+    "name": "Reel Script Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build a short-form video script prompt with a time-coded beat sheet — hook, setup, payoff and CTA mapped to exact seconds."
+  },
+  {
+    "slug": "refactor-prompt-builder",
+    "name": "Refactor Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Builds a refactoring prompt with named goals, hard constraints and a complexity target, so behaviour stays exactly unchanged."
+  },
+  {
     "slug": "refinance-savings-calculator",
     "name": "Refinance Savings Calculator",
     "categories": [
@@ -9329,6 +17159,102 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Compare current loan versus refinance offers with new EMI, interest savings, closing costs, break-even month, and cash-flow impact."
+  },
+  {
+    "slug": "refrigerator-capacity-selector",
+    "name": "Refrigerator Capacity Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the fridge litres your household needs from headcount, cooking style, diet and how often you shop."
+  },
+  {
+    "slug": "refrigerator-electricity-cost-calculator",
+    "name": "Refrigerator Electricity Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate yearly fridge running cost from the BEE label's annual units, or from litres and star rating, adjusted for kitchen temperature."
+  },
+  {
+    "slug": "regex-cheatsheet-builder",
+    "name": "Regex Cheatsheet Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a printable regex cheatsheet filtered to your flavor — JavaScript, PCRE or Python — and only the feature groups you use."
+  },
+  {
+    "slug": "regex-library-card-formats",
+    "name": "Regex Library for Card Formats",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Card number format regex by network — Visa, Mastercard, Amex, RuPay, Discover, JCB, Diners — for formatting and masking, not verification."
+  },
+  {
+    "slug": "regex-library-dates",
+    "name": "Regex Library for Dates",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Date and time regex patterns for ISO 8601, DD/MM/YYYY, US dates, clock times and syslog or Apache log timestamps, with live testing."
+  },
+  {
+    "slug": "regex-library-email",
+    "name": "Regex Library for Email Validation",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Copy-ready email regex patterns from minimal to RFC 5322-flavoured, with live testing and honest notes on what each one misses."
+  },
+  {
+    "slug": "regex-library-indian-documents",
+    "name": "Regex Library for Indian Documents",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Validation regex for PAN, GSTIN, IFSC, UPI ID, PIN code, vehicle numbers and Aadhaar format, with live testing and honest caveats."
+  },
+  {
+    "slug": "regex-library-passwords",
+    "name": "Regex Library for Passwords",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Password policy regex patterns from 8-char minimums to full complexity, with every lookahead explained and NIST-based caveats."
+  },
+  {
+    "slug": "regex-library-phone-numbers",
+    "name": "Regex Library for Phone Numbers",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Phone number regex patterns for E.164, India, US, UK and a loose international format, each with live testing and limitation notes."
+  },
+  {
+    "slug": "regex-library-urls",
+    "name": "Regex Library for URLs",
+    "categories": [
+      "Developer"
+    ],
+    "description": "URL, domain, IP-host and optional-protocol regex patterns with port, query and fragment handling, live testing and limitation notes."
+  },
+  {
+    "slug": "regex-prompt-builder",
+    "name": "Regex Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Turns must-match and must-not-match examples into a regex-generation prompt, with flavour rules and example conflict checking."
+  },
+  {
+    "slug": "regex-replace-preview-tool",
+    "name": "Regex Replace Preview Tool",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Preview regex find-and-replace results with $1, $&, $<name> capture references and per-match breakdown before touching real data."
   },
   {
     "slug": "regex-tester",
@@ -9346,6 +17272,22 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Get practical relationship prompts, communication tips, and supportive advice for common situations."
+  },
+  {
+    "slug": "release-notes-prompt-builder",
+    "name": "Release Notes Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Split a release into features, fixes and breaking changes, set a deprecation date and build the announcement prompt."
+  },
+  {
+    "slug": "release-train-schedule-planner",
+    "name": "Release Train Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan fixed-cadence release dates with code freeze, release candidate and GA milestones, weekend-safe."
   },
   {
     "slug": "release-watchtower",
@@ -9373,6 +17315,54 @@ export const TOOL_CATALOG = [
     "description": "Collapse multiple spaces and trim each line down to single spacing."
   },
   {
+    "slug": "render-vs-railway-cost-comparison",
+    "name": "Render vs Railway Cost Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare what the same app costs on Render's fixed instances versus Railway's usage-based pricing, including egress and disk."
+  },
+  {
+    "slug": "renovation-permission-request-generator",
+    "name": "Renovation Permission Request Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a flat renovation permission request with work scope, working hours, debris disposal plan and contractor details."
+  },
+  {
+    "slug": "rent-agreement-renewal-notice-generator",
+    "name": "Rent Agreement Renewal Notice Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a tenancy renewal intimation with revised rent, deposit, new term dates and a written response deadline."
+  },
+  {
+    "slug": "rent-escalation-calculator",
+    "name": "Rent Increase and Escalation Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project rent across a lease term with periodic escalation, and see the total outgo, final rent and true annual rate."
+  },
+  {
+    "slug": "rent-increase-notice-generator",
+    "name": "Rent Increase Notice Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a landlord rent revision notice with the new rent, effective date, deposit top-up and a three-month notice-period check."
+  },
+  {
+    "slug": "rent-increment-planner",
+    "name": "Rent Increment Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project rent year by year at an agreed escalation, total the outgo, compare a second scenario and see the cost in today's money."
+  },
+  {
     "slug": "rent-receipt-generator",
     "name": "Rent Receipt Generator",
     "categories": [
@@ -9388,6 +17378,14 @@ export const TOOL_CATALOG = [
       "Generators"
     ],
     "description": "Generate printable monthly rent receipts with landlord and PAN details for HRA claims."
+  },
+  {
+    "slug": "rent-receipt-generator-india",
+    "name": "Rent Receipt Generator with Revenue Stamp Guide",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate monthly rent receipts for HRA claims with amount in words, landlord PAN rules and revenue stamp guidance."
   },
   {
     "slug": "rent-vs-buy",
@@ -9407,6 +17405,14 @@ export const TOOL_CATALOG = [
     "description": "Compare renting vs buying a home in India — EMI, appreciation, invested savings, and a clear verdict for your horizon."
   },
   {
+    "slug": "rental-agreement-cost-calculator",
+    "name": "Rental Agreement Cost Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate stamp duty, registration fee, brokerage and GST on a rent agreement, with state formulas and your share of the total."
+  },
+  {
     "slug": "rental-yield-calculator",
     "name": "Rental Yield Calculator",
     "categories": [
@@ -9419,7 +17425,7 @@ export const TOOL_CATALOG = [
     "slug": "renter-security-checklist",
     "name": "Renter Security Checklist",
     "categories": [
-      "Business"
+      "Lifestyle"
     ],
     "description": "Futuristic property verification and safety management tool for renters."
   },
@@ -9433,6 +17439,46 @@ export const TOOL_CATALOG = [
     "description": "Parts, labour, warranty aur exclusions across repair quotes compare kare."
   },
   {
+    "slug": "repair-request-letter-to-landlord",
+    "name": "Repair Request Letter to Landlord",
+    "categories": [
+      "Business"
+    ],
+    "description": "Log pending repairs, split them between landlord and tenant duties, set a deadline and generate a documented request letter."
+  },
+  {
+    "slug": "requirements-txt-generator",
+    "name": "Requirements TXT Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build a pip requirements.txt with pinned versions, extras and environment markers, validated against PEP 508 and PEP 440 rules."
+  },
+  {
+    "slug": "research-summary-prompt-builder",
+    "name": "Research Summary Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build an AI prompt that summarises a research paper into structured sections with word budgets, including method and limitations."
+  },
+  {
+    "slug": "researcher-prompt-pack",
+    "name": "Researcher Prompt Pack",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Fill-in-the-blank AI prompts for literature mapping, methods critique, abstracts and peer-review responses."
+  },
+  {
+    "slug": "reserved-instance-break-even-calculator",
+    "name": "Reserved Instance Break-Even Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find how many months of uptime make a 1 or 3 year cloud reservation cheaper than paying the on-demand rate."
+  },
+  {
     "slug": "restaurant-bill-splitter",
     "name": "Restaurant Bill Splitter",
     "categories": [
@@ -9440,6 +17486,22 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Split a restaurant bill by item, share GST and tip proportionally, and get per-person totals that add up to the exact bill."
+  },
+  {
+    "slug": "restaurant-menu-prompt-builder",
+    "name": "Restaurant Menu Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate menu description prompts with cuisine, pricing tone and an allergen check against EU, US or Codex declaration lists."
+  },
+  {
+    "slug": "result-date-expectation-tracker",
+    "name": "Result Date Expectation Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Project a realistic result window for your exam from how long past cycles took between exam and result."
   },
   {
     "slug": "resume-maker",
@@ -9477,12 +17539,44 @@ export const TOOL_CATALOG = [
     "description": "Plan your retirement corpus with inflation-adjusted goals, monthly savings targets, and year-by-year withdrawal projections."
   },
   {
+    "slug": "retry-after-header-calculator",
+    "name": "Retry-After Header Calculator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a spec-correct Retry-After header in delay-seconds or IMF-fixdate form, with an exponential backoff schedule for 429 and 503 responses."
+  },
+  {
     "slug": "return-deadline-tracker",
     "name": "Return Deadline Tracker",
     "categories": [
-      "Lifestyle"
+      "Productivity"
     ],
     "description": "Track shopping return windows, refund status, and deadlines with futuristic precision."
+  },
+  {
+    "slug": "revaluation-decision-helper",
+    "name": "Revaluation Decision Helper",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Weigh the re-check fee, the chance of a change and the deadline before applying for revaluation of an answer book."
+  },
+  {
+    "slug": "reverse-gst-calculator",
+    "name": "Reverse GST Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Extract the taxable value and the GST hidden inside any tax-inclusive amount, split into CGST and SGST or IGST, with optional cess."
+  },
+  {
+    "slug": "reward-points-value-calculator",
+    "name": "Credit Card Reward Points Value Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Convert reward points to rupees and compare cards on effective return after fee, GST and caps."
   },
   {
     "slug": "reynolds-number-pipe-flow-calculator",
@@ -9492,6 +17586,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Flow regime, Reynolds number aur head loss calculate kare."
+  },
+  {
+    "slug": "rgpv-cgpa-percentage-converter",
+    "name": "RGPV CGPA Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert RGPV CGPA to percentage with the (CGPA - 0.75) x 10 formula, reverse it, and read the grade point scale."
   },
   {
     "slug": "rice-water-ratio",
@@ -9509,6 +17611,22 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "A beautiful, fully-featured WYSIWYG editor. Format text, add media, and export clean HTML instantly."
+  },
+  {
+    "slug": "ride-fare-split-calculator",
+    "name": "Ride Fare Split Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Split a shared cab fare fairly by the distance each passenger actually rode, segment by segment."
+  },
+  {
+    "slug": "riding-gear-budget-planner",
+    "name": "Riding Gear Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Allocate a riding gear budget in protection priority order, see body-coverage achieved, the shortfall and months to a full kit."
   },
   {
     "slug": "river-quiz",
@@ -9534,6 +17652,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Accelerometer aur GPS data se speed-normalized road jolts record kare."
+  },
+  {
+    "slug": "road-trip-fuel-cost-calculator",
+    "name": "Road Trip Fuel Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Total fuel, tolls, refuel stops and cost per head for a road trip, adjusted for highway, city, hills, AC and load."
+  },
+  {
+    "slug": "road-trip-packing-checklist",
+    "name": "Road Trip Packing Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Generate a packing and car-prep checklist with real quantities, tailored to trip length, travellers, season and terrain."
   },
   {
     "slug": "roas-calculator",
@@ -9578,6 +17712,22 @@ export const TOOL_CATALOG = [
     "description": "Return on investment as a percentage from the amount invested and the amount returned."
   },
   {
+    "slug": "roll-number-format-validator",
+    "name": "Roll Number Format Validator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Check a roll or registration number against length, character-set and prefix rules before you submit a form."
+  },
+  {
+    "slug": "roll-number-grid-practice",
+    "name": "Roll Number Grid Practice",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Practise bubbling roll number digit grids like a real OMR sheet — blanks, wrong digits and double marks are graded instantly."
+  },
+  {
     "slug": "rolling-returns-calculator",
     "name": "Rolling Returns Calculator",
     "categories": [
@@ -9592,6 +17742,86 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Convert numbers to Roman numerals and back with strict validation, place-value breakdowns, and symbol references."
+  },
+  {
+    "slug": "rome-trip-budget-breakdown",
+    "name": "Rome Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Break a Rome trip into flights, Schengen visa, stay, food, transport and sights in euro and rupees, with city tax and coperto."
+  },
+  {
+    "slug": "roof-area-calculator",
+    "name": "Roof Area Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "True sloped roof area from footprint, eaves overhang and pitch, plus rafter length, ridge, gutter run and sheet count."
+  },
+  {
+    "slug": "roof-box-capacity-planner",
+    "name": "Roof Box Capacity Planner",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Plan roof box volume and weight against your car's dynamic roof load limit, with packing efficiency and fuel penalty."
+  },
+  {
+    "slug": "roof-pitch-calculator",
+    "name": "Roof Pitch Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert roof pitch between rise-in-12, degrees, percent and ratio, with slope factor, rafter length and material suitability."
+  },
+  {
+    "slug": "roof-rack-load-checker",
+    "name": "Roof Rack Load Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check dynamic roof load limits against rack plus cargo weight, with payload, rollover stability and fuel penalty."
+  },
+  {
+    "slug": "roof-water-collection-estimator",
+    "name": "Roof Water Collection Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Rainwater harvested per storm and per year from roof plan area, rainfall, runoff coefficient and first-flush diversion."
+  },
+  {
+    "slug": "room-color-temperature-selector",
+    "name": "Room Color Temperature Selector",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Pick the right light colour temperature, CRI and lumen output for each room and mood, with a live colour preview."
+  },
+  {
+    "slug": "room-heater-running-cost",
+    "name": "Room Heater Running Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Winter heater electricity cost by wattage, hours and heater type, including how a reverse-cycle AC compares per unit of heat."
+  },
+  {
+    "slug": "room-humidity-comfort-checker",
+    "name": "Room Humidity Comfort Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Dew point, heat index, absolute humidity and comfort band from room temperature and relative humidity, with mould and condensation warnings."
+  },
+  {
+    "slug": "room-mood-colour-selector",
+    "name": "Room Mood Colour Selector",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Build a 60-30-10 room palette from the mood you want and the direction your window faces, with LRV and contrast checks."
   },
   {
     "slug": "room-paint-calculator",
@@ -9630,6 +17860,14 @@ export const TOOL_CATALOG = [
     "description": "Encodes or decodes text using the ROT13 substitution cipher, which shifts each letter by 13 positions in the alphabet."
   },
   {
+    "slug": "royal-enfield-service-schedule-planner",
+    "name": "Royal Enfield Service Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan Royal Enfield service due dates, oil-change intervals and touring prep from your odometer, riding rate and last service."
+  },
+  {
     "slug": "royalty-split-waterfall-calculator",
     "name": "Royalty Split Waterfall Calculator",
     "categories": [
@@ -9664,6 +17902,22 @@ export const TOOL_CATALOG = [
     "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an interactive 3D cube visualization."
   },
   {
+    "slug": "rubric-prompt-builder",
+    "name": "Rubric Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build an AI prompt that generates a weighted grading rubric with named criteria, performance levels and exact point bands."
+  },
+  {
+    "slug": "rug-size-selector",
+    "name": "Rug Size Selector",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Pick the right standard rug size for a living, dining or bedroom layout, with placement rules and the floor border left around it."
+  },
+  {
     "slug": "rule-of-72-calculator",
     "name": "Rule of 72 Calculator",
     "categories": [
@@ -9671,6 +17925,30 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Estimate how many years it takes for an investment to double at a given annual return rate, or find the required rate to double in a target number of years."
+  },
+  {
+    "slug": "rule-of-72-doubling-time-tool",
+    "name": "Rule of 72 and Doubling Time Tool",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate how long money takes to double at any rate of return, and compare the Rule of 72 with the exact logarithmic answer."
+  },
+  {
+    "slug": "runbook-template-generator",
+    "name": "Runbook Template Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate an operational runbook in Markdown with alert symptoms, diagnostic checks, remediation steps and an escalation ladder."
+  },
+  {
+    "slug": "running-feet-to-sqft",
+    "name": "Running Feet to Sqft",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Turn carpentry running feet quotes into square feet, compare per-rft and per-sqft rates, and total a kitchen or wardrobe job."
   },
   {
     "slug": "running-pace-calculator",
@@ -9681,12 +17959,44 @@ export const TOOL_CATALOG = [
     "description": "Work out your pace per kilometre and speed from a distance and finish time."
   },
   {
+    "slug": "runtime-sum-calculator",
+    "name": "Runtime Sum Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up a list of clip durations in mixed formats and see total runtime, average length and how it fits a target slot."
+  },
+  {
+    "slug": "ryanair-baggage-allowance-checker",
+    "name": "Ryanair Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check your small bag, Priority cabin bag and purchased 10 kg or 20 kg hold bag against Ryanair's published size and weight limits."
+  },
+  {
+    "slug": "ryanair-excess-baggage-cost-estimator",
+    "name": "Ryanair Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Cost Ryanair cabin and hold bags per flight, add excess weight and gate fees, and find the cheapest bag combination."
+  },
+  {
     "slug": "sacred-geometry-generator",
     "name": "Sacred Geometry Generator",
     "categories": [
       "Calculators"
     ],
     "description": "Generate sacred mathematical patterns like Flower of Life, Sri Yantra, and Metatron Cube."
+  },
+  {
+    "slug": "saddle-height-calculator",
+    "name": "Saddle Height Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Set bike saddle height and setback from your inseam using the LeMond 0.883 and Hamley 109% fit methods, with crank length guidance."
   },
   {
     "slug": "safe-defrost-calculator",
@@ -9696,6 +18006,30 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Work out how long frozen food needs to thaw safely, and exactly when to move it out of the freezer."
+  },
+  {
+    "slug": "safe-listening-volume-guide",
+    "name": "Safe Listening Volume Guide",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "See how long headphone listening is considered safe at a given decibel level using the WHO-ITU 80 dB for 40 hours weekly sound allowance."
+  },
+  {
+    "slug": "safe-score-target-setter",
+    "name": "Safe Score Target Setter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Set a buffered exam target above the expected cutoff using past cutoff spread and the confidence level you want."
+  },
+  {
+    "slug": "salary-hike-real-value-calculator",
+    "name": "Salary Hike Real Value Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See what an appraisal is really worth after marginal tax, cess, surcharge and inflation."
   },
   {
     "slug": "salary-in-hand-calculator",
@@ -9743,12 +18077,84 @@ export const TOOL_CATALOG = [
     "description": "Estimate your take-home salary after income tax, professional tax, and other deductions with detailed tax breakdown."
   },
   {
+    "slug": "sales-prompt-pack",
+    "name": "Sales Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for prospecting, cold email, discovery calls, follow-up sequences and objection handling."
+  },
+  {
     "slug": "sales-tax-calculator",
     "name": "Sales Tax Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Calculate sales tax and the final total for any purchase amount."
+  },
+  {
+    "slug": "sales-tax-calculator-california",
+    "name": "US Sales Tax Calculator California",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "California sales tax: 7.25% statewide base plus district tax, with exempt groceries, separately stated delivery and reverse mode."
+  },
+  {
+    "slug": "sales-tax-calculator-florida",
+    "name": "US Sales Tax Calculator Florida",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Florida sales tax: 6% state rate plus county discretionary surtax, with the $5,000 per-item surtax cap applied correctly."
+  },
+  {
+    "slug": "sales-tax-calculator-illinois",
+    "name": "US Sales Tax Calculator Illinois",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Illinois sales tax: 6.25% general merchandise rate plus local tax, with the 1% low rate for drugs and medical appliances."
+  },
+  {
+    "slug": "sales-tax-calculator-new-york",
+    "name": "US Sales Tax Calculator New York",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "New York sales tax: 4% state, county or city rate and the 0.375% MCTD surcharge, with the $110 clothing exemption applied."
+  },
+  {
+    "slug": "sales-tax-calculator-texas",
+    "name": "US Sales Tax Calculator Texas",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Texas sales tax: 6.25% state rate plus local tax capped at 2%, with taxable delivery, exempt groceries and reverse mode."
+  },
+  {
+    "slug": "sales-tax-calculator-washington",
+    "name": "US Sales Tax Calculator Washington",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Washington destination-based sales tax: 6.5% state rate plus your local rate, trade-in credit and the 0.3% vehicle tax."
+  },
+  {
+    "slug": "salon-business-tax-calculator",
+    "name": "Salon and Beauty Business Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Chair-level salon revenue, consumables and commission costs, break-even clients, GST thresholds and income tax on the profit."
+  },
+  {
+    "slug": "salon-marketing-prompt-pack",
+    "name": "Salon Marketing Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Ready prompts for salon offers, reminders and before-after captions, with SMS segment and channel character limits."
   },
   {
     "slug": "sample-size-power-calculator",
@@ -9758,6 +18164,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Effect size aur power target se required sample estimate kare."
+  },
+  {
+    "slug": "sandpaper-grit-selector",
+    "name": "Sandpaper Grit Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Builds the grit sequence from stripping to final finish for your material, with FEPA to CAMI conversion, sheet counts and sanding time."
   },
   {
     "slug": "sarcasm-generator",
@@ -9794,6 +18208,22 @@ export const TOOL_CATALOG = [
     "description": "Calculate how much you need to save monthly to reach your financial goals. Adjust for time horizon and expected returns."
   },
   {
+    "slug": "savings-goal-countdown-tracker",
+    "name": "Savings Goal Countdown Tracker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Track progress to any savings target and get the exact date you hit it, with milestone dates and the top-up a deadline needs."
+  },
+  {
+    "slug": "savitribai-phule-pune-cgpa-converter",
+    "name": "Pune University CGPA Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert SPPU CGPA to percentage, turn course marks into grade points and build a credit-weighted CGPA."
+  },
+  {
     "slug": "sbom-generator",
     "name": "SBOM Generator",
     "categories": [
@@ -9803,12 +18233,76 @@ export const TOOL_CATALOG = [
     "description": "Generate a local CycloneDX JSON SBOM from bounded npm manifest or lockfile data with explicit incomplete-inventory and metadata policies."
   },
   {
+    "slug": "sbv-to-srt-converter",
+    "name": "SBV To SRT Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert YouTube SBV caption exports into standard SubRip .srt files, with speaker markers, renumbering and timing offset."
+  },
+  {
     "slug": "scam-message-triage",
     "name": "Scam Message Triage",
     "categories": [
       "Security & Privacy"
     ],
     "description": "Review SMS, WhatsApp, and email text locally for common scam warning patterns and get safer next steps without sending the message anywhere."
+  },
+  {
+    "slug": "schengen-visa-cost-estimator",
+    "name": "Schengen Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add up the Schengen visa fee, VFS service charge, courier, photos and insurance into one editable total in rupees."
+  },
+  {
+    "slug": "schengen-visa-cover-letter-builder",
+    "name": "Schengen Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Write a printable Schengen cover letter with your itinerary, funding and a 90/180-day and passport-validity check."
+  },
+  {
+    "slug": "schengen-visa-rejection-reason-explainer",
+    "name": "Schengen Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Decode the numbered boxes on a Schengen visa refusal form and get a checklist of what to fix before you reapply."
+  },
+  {
+    "slug": "scholarship-application-checklist",
+    "name": "Scholarship Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Test family income against each scheme's ceiling on the National Scholarships Portal, then build the exact document list that scheme needs."
+  },
+  {
+    "slug": "scholarship-deadline-tracker",
+    "name": "Scholarship Deadline Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track scholarship application windows and document deadlines — see days left, what is closing soon and what has already shut."
+  },
+  {
+    "slug": "scholarship-income-certificate-helper",
+    "name": "Scholarship Income Certificate Helper",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Total your family's annual income the way income certificates require and check it against common scholarship income ceilings."
+  },
+  {
+    "slug": "school-attendance-percentage-tracker",
+    "name": "School Attendance Percentage Tracker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Track school attendance across the session against the 75% board exam eligibility rule, with a leave budget and end-of-year projection."
   },
   {
     "slug": "scientific-calculator",
@@ -9822,7 +18316,6 @@ export const TOOL_CATALOG = [
     "slug": "scientific-notation-calculator",
     "name": "Scientific Notation Calculator",
     "categories": [
-      "Converters",
       "Calculators"
     ],
     "description": "Convert large or tiny numbers into scientific and engineering notation."
@@ -9834,6 +18327,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Turn a decimal number into scientific (E) notation and see its order of magnitude."
+  },
+  {
+    "slug": "scooter-vs-bike-cost-comparison",
+    "name": "Scooter vs Bike Cost Comparison",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare a scooter and a motorcycle on total cost of ownership: depreciation, fuel, service, tyres, insurance and the break-even distance."
   },
   {
     "slug": "scope-creep-change-order-builder",
@@ -9924,6 +18425,14 @@ export const TOOL_CATALOG = [
     "description": "Capture beautiful screenshots of any website instantly in PNG, JPG, or GIF format."
   },
   {
+    "slug": "scss-quarterly-payout-calculator",
+    "name": "Senior Citizen Savings Scheme Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "SCSS quarterly interest payout, five-year total interest, TDS threshold check and premature closure deductions."
+  },
+  {
     "slug": "seasonal-color-analysis",
     "name": "Seasonal Color Analysis",
     "categories": [
@@ -9932,12 +18441,28 @@ export const TOOL_CATALOG = [
     "description": "Discover your personal color season — Spring, Summer, Autumn, or Winter — based on your skin tone, hair, and eye color. Get your custom palette."
   },
   {
+    "slug": "seasonal-home-maintenance-checklist",
+    "name": "Seasonal Home Maintenance Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a season-by-season home maintenance checklist tuned to your climate zone, home type and the systems you actually own."
+  },
+  {
     "slug": "seating-chart-maker",
     "name": "Interactive Seating Chart Maker",
     "categories": [
       "Lifestyle"
     ],
     "description": "Design seating arrangements for weddings, classrooms, and banquets with table layouts and attendee dragging."
+  },
+  {
+    "slug": "second-car-affordability-checker",
+    "name": "Second Car Affordability Checker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Test a second vehicle against the 20/4/10 rule, your EMI-to-income ratio, emergency savings and parking."
   },
   {
     "slug": "secret-credential-leak-scanner",
@@ -9952,8 +18477,7 @@ export const TOOL_CATALOG = [
     "slug": "secret-message-encoder",
     "name": "Secret Message Encoder",
     "categories": [
-      "Developer",
-      "Productivity"
+      "Developer"
     ],
     "description": "Encode, decode, inspect, copy, share, and export secret-message payloads with classical ciphers, Base64, URL, Morse, binary, and AES-GCM."
   },
@@ -9967,6 +18491,14 @@ export const TOOL_CATALOG = [
     "description": "Generate secret santa pair outputs quickly for sharing, planning, or creative work."
   },
   {
+    "slug": "secrets-rotation-schedule-planner",
+    "name": "Secrets Rotation Schedule Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build a rotation calendar for API keys, tokens, passwords and certificates with owners, due dates and overdue flags — all in your browser."
+  },
+  {
     "slug": "section-138-notice-draft-assistant",
     "name": "Section 138 Notice Draft Assistant",
     "categories": [
@@ -9975,6 +18507,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare."
+  },
+  {
+    "slug": "section-234f-late-fee-calculator",
+    "name": "Late Filing Fee Calculator Section 234F",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the section 234F late filing fee and section 234A interest on a belated income tax return from your income and filing date."
   },
   {
     "slug": "section-24b-home-loan-interest-deduction",
@@ -10017,6 +18557,22 @@ export const TOOL_CATALOG = [
     "description": "Check whether your taxable income qualifies for the Section 87A rebate and how much tax it wipes out."
   },
   {
+    "slug": "security-deposit-refund-calculator",
+    "name": "Security Deposit Refund Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the rental deposit due back after unpaid rent, damages, utilities and notice shortfall, with the Model Tenancy Act cap."
+  },
+  {
+    "slug": "security-guard-night-sleep-planner",
+    "name": "Security Guard Night Sleep Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Compare immediate, delayed and split daytime sleep schedules for overnight guard duty, with light and caffeine timing."
+  },
+  {
     "slug": "security-headers-checker",
     "name": "Security Headers Checker",
     "categories": [
@@ -10024,6 +18580,46 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Review pasted response headers for missing defensive controls."
+  },
+  {
+    "slug": "semester-exam-countdown-board",
+    "name": "Semester Exam Countdown Board",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See days left to each semester paper on one board, with per-subject readiness bars and at-risk flags for weak subjects close to their date."
+  },
+  {
+    "slug": "semester-to-quarter-credit-converter",
+    "name": "Semester To Quarter Credit Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert college credits between semester and quarter systems with the standard 1 semester = 1.5 quarter unit ratio."
+  },
+  {
+    "slug": "semver-bump-decision-helper",
+    "name": "Semver Bump Decision Helper",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Answer a few questions about your change and get the correct major, minor or patch bump per the SemVer 2.0.0 spec."
+  },
+  {
+    "slug": "semver-range-explainer",
+    "name": "Semver Range Explainer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Explain what a caret, tilde, hyphen, x or comparator semver range actually allows, in plain English with examples."
+  },
+  {
+    "slug": "senior-citizen-fd-calculator",
+    "name": "Senior Citizen FD Extra Rate Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "What the extra senior citizen deposit rate is worth, with the ₹1 lakh TDS threshold and the section 80TTB interest deduction."
   },
   {
     "slug": "senior-citizen-income-tax-calculator",
@@ -10051,6 +18647,14 @@ export const TOOL_CATALOG = [
     "description": "Phone permissions cleanup ka senior-friendly guide provide kare."
   },
   {
+    "slug": "senior-hydration-reminder-planner",
+    "name": "Senior Hydration Reminder Planner",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily drink target for an older adult using the ESPEN geriatric minimum or 30 ml per kg, split into small prompted servings anchored to meals and stopped before"
+  },
+  {
     "slug": "sentence-correction-practice",
     "name": "Sentence Correction Practice",
     "categories": [
@@ -10058,6 +18662,38 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Master English grammar by identifying and correcting errors in sentences with detailed explanations."
+  },
+  {
+    "slug": "seo-article-prompt-builder",
+    "name": "SEO Article Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Builds an SEO article prompt around a target query: search intent, heading structure, word budget and on-page limits baked in."
+  },
+  {
+    "slug": "serialization-format-chooser",
+    "name": "Serialization Format Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Rank JSON, Protocol Buffers, Avro, MessagePack and CBOR against your own requirements and see why each wins or loses."
+  },
+  {
+    "slug": "service-account-key-rotation-planner",
+    "name": "Service Account Key Rotation Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan rotation cadence and a safe cutover schedule for cloud service account keys, with due, overlap, disable and delete dates."
+  },
+  {
+    "slug": "service-mesh-comparison-tool",
+    "name": "Service Mesh Comparison Tool",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare Istio, Linkerd, Consul and Cilium on features, resource overhead and operational cost, weighted by your priorities."
   },
   {
     "slug": "severe-weather-watch",
@@ -10076,6 +18712,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Test dates, results aur reminders privately manage kare."
+  },
+  {
+    "slug": "sgpa-to-cgpa-calculator",
+    "name": "SGPA To CGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Combine semester SGPAs with their credits into a cumulative CGPA, see the running trend, and convert it to a percentage."
   },
   {
     "slug": "sha1-hash-generator",
@@ -10109,6 +18753,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Text ya probability distribution ka entropy visualize kare."
+  },
+  {
+    "slug": "shared-flat-rent-split-calculator",
+    "name": "Shared Flat Rent Split Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split flat rent between flatmates by room size, amenities and occupancy, with whole-rupee shares that add up exactly."
   },
   {
     "slug": "shared-resource-conflict-resolver",
@@ -10145,6 +18797,22 @@ export const TOOL_CATALOG = [
     "description": "Convert UK, US, EU, and Indian shoe sizes for men, women, and kids — or find your size from foot length in cm."
   },
   {
+    "slug": "shoe-size-converter-travel-shopping",
+    "name": "Shoe Size Converter for Travel Shopping",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert shoe sizes between UK, India, US men's, US women's, EU and Japanese sizing from a size or a foot measurement."
+  },
+  {
+    "slug": "shopify-description-prompt-builder",
+    "name": "Shopify Description Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build a Shopify product description prompt with brand voice, SEO title, meta description limits and a generated URL handle."
+  },
+  {
     "slug": "short-video-hook-marker",
     "name": "Short-Video Hook Marker",
     "categories": [
@@ -10157,9 +18825,17 @@ export const TOOL_CATALOG = [
     "slug": "shot-list-planner",
     "name": "Shot List Planner",
     "categories": [
-      "Design & Color"
+      "Lifestyle"
     ],
     "description": "Plan scenes, sequence shots, track production status, manage gear notes, and export printable shooting sheets."
+  },
+  {
+    "slug": "shower-water-usage-calculator",
+    "name": "Shower Water Usage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare bucket bath, hand shower and rain shower on litres, geyser units and rupees per bath, per month and per year."
   },
   {
     "slug": "sign-language-alphabet-trainer",
@@ -10177,6 +18853,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Long silences aur selected filler segments remove kare."
+  },
+  {
+    "slug": "silly-mistake-tracker",
+    "name": "Silly Mistake Tracker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Log avoidable errors from each mock test by category and watch the count and marks lost fall (or not) across attempts."
+  },
+  {
+    "slug": "silver-investment-return-calculator",
+    "name": "Silver Investment Return Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Track silver purchase cost, GST, buyback discount and post-tax return with an annualised figure."
   },
   {
     "slug": "sim-swap-recovery-pack",
@@ -10214,6 +18906,86 @@ export const TOOL_CATALOG = [
     "description": "Solve simple interest, principal, rate or time from the other three, with a yearly table."
   },
   {
+    "slug": "simple-vs-compound-interest",
+    "name": "Simple vs Compound Interest Comparator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare simple and compound interest on the same principal, rate and period, with a year-by-year table and the exact rupee gap."
+  },
+  {
+    "slug": "singapore-airlines-baggage-allowance-checker",
+    "name": "Singapore Airlines Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bags against Singapore Airlines weight-concept and Americas piece-concept allowances and the 115 cm cabin rule."
+  },
+  {
+    "slug": "singapore-airlines-excess-baggage-cost-estimator",
+    "name": "Singapore Airlines Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out Singapore Airlines excess baggage cost by fare brand and KrisFlyer tier, prepaid online versus at the airport."
+  },
+  {
+    "slug": "singapore-dress-code-planner",
+    "name": "Singapore Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan Singapore outfits by month: mosque and temple cover-up rules, Marina Bay door policies, air-con layers and a weighed packing list."
+  },
+  {
+    "slug": "singapore-sin-airport-arrival-buffer-calculator",
+    "name": "Singapore SIN Airport Arrival Buffer Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out when to leave home for Singapore Changi using drive time, traffic, check-in cut-off, immigration and gate-closing buffers."
+  },
+  {
+    "slug": "singapore-trip-budget-breakdown",
+    "name": "Singapore Trip Budget Breakdown",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a Singapore trip into flights, room, the 10% service charge and 9% GST, food, transport and attractions."
+  },
+  {
+    "slug": "singapore-visa-cost-estimator",
+    "name": "Singapore Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split Singapore's non-refundable processing fee from the on-approval issuance fee and total the whole trip in rupees."
+  },
+  {
+    "slug": "singapore-visa-cover-letter-builder",
+    "name": "Singapore Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a Form 14A visit-visa cover letter with itinerary, local contact, SG Arrival Card timing and visit pass checks."
+  },
+  {
+    "slug": "singapore-visa-rejection-reason-explainer",
+    "name": "Singapore Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "ICA gives no reason for a Singapore visa rejection - work through every assessment area and score what you have fixed."
+  },
+  {
+    "slug": "sinking-fund-calculator",
+    "name": "Sinking Fund Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the monthly reserve for known irregular bills like insurance, servicing, fees and travel."
+  },
+  {
     "slug": "sip-calculator",
     "name": "SIP Calculator",
     "categories": [
@@ -10221,6 +18993,22 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Estimate SIP maturity value, invested amount, and wealth gain with annual step-up."
+  },
+  {
+    "slug": "sip-goal-reverse-calculator",
+    "name": "SIP Goal Reverse Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work backwards from a target amount and target date to the exact monthly SIP you need, with step-up and inflation options."
+  },
+  {
+    "slug": "sip-top-up-percentage-calculator",
+    "name": "SIP Top Up Percentage Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "See how raising your SIP by a fixed percentage every year changes the final corpus, the amount invested and the date you hit your goal."
   },
   {
     "slug": "sitemap-generator",
@@ -10234,9 +19022,9 @@ export const TOOL_CATALOG = [
     "slug": "skill-demand-analyzer",
     "name": "Skill Demand Analyzer",
     "categories": [
-      "AI Tools"
+      "Business"
     ],
-    "description": "Analyze the demand for various skills in the job market."
+    "description": "Score how much the job market wants a skill from live openings, year-on-year growth, applicants per posting, salary premium and remote share."
   },
   {
     "slug": "skin-care-guide",
@@ -10266,6 +19054,30 @@ export const TOOL_CATALOG = [
     "description": "Discover your skin undertone — warm, cool, or neutral — using AI-powered color analysis. Find the perfect foundation, lipstick, and jewelry matches."
   },
   {
+    "slug": "skirting-length-calculator",
+    "name": "Skirting Length Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out skirting running length, number of pieces, corners, fixings and cost from room size minus doorways."
+  },
+  {
+    "slug": "sla-uptime-downtime-calculator",
+    "name": "SLA Uptime Downtime Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert an SLA uptime percentage into allowed downtime per day, week, month, quarter and year — and back."
+  },
+  {
+    "slug": "slack-ai-prompt-builder",
+    "name": "Slack AI Prompt Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build Slack thread summary, recap and action-item prompts that fit Slack's 40,000 character message and 3,000 character block limits."
+  },
+  {
     "slug": "sleep-calculator",
     "name": "Sleep Calculator",
     "categories": [
@@ -10292,6 +19104,14 @@ export const TOOL_CATALOG = [
     "description": "Log your last two weeks of sleep to see how many hours you owe, and get a realistic plan to repay it."
   },
   {
+    "slug": "sleep-debt-payback-planner",
+    "name": "Sleep Debt Payback Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Add up your weekly sleep shortfall and spread the recovery across several nights instead of one long weekend lie-in."
+  },
+  {
     "slug": "sleep-tracker",
     "name": "Sleep Tracking & Sleep Quality Analyzer",
     "categories": [
@@ -10306,6 +19126,14 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Free 15 puzzle sliding number game online — solve 3x3, 4x4 and 5x5 boards in the fewest moves."
+  },
+  {
+    "slug": "slope-percent-degree-converter",
+    "name": "Slope Percent Degree Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert slope between percent grade, degrees, 1-in-X ratio, inches per foot and roof pitch for ramps, drains and roofs."
   },
   {
     "slug": "slow-speech-playback-trainer",
@@ -10336,10 +19164,17 @@ export const TOOL_CATALOG = [
     "slug": "smart-goal-planner",
     "name": "SMART Goal Planner",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
-    "description": "Create SMART goals, manage milestones and tasks, track live progress, reminders, analytics, reports, and local autosave."
+    "description": "Score a goal against all five SMART criteria, track milestones, and check whether the pace you are holding will hit the target by the deadline."
+  },
+  {
+    "slug": "smart-home-power-budget",
+    "name": "Smart Home Power Budget",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up the standby and active power of every smart device and hub in your home, with daily kWh, running cost and the always-on vampire load."
   },
   {
     "slug": "smart-meter-interval-analyzer",
@@ -10360,6 +19195,14 @@ export const TOOL_CATALOG = [
     "description": "Landscape footage ko subject-aware 9:16 framing me convert kare."
   },
   {
+    "slug": "smartphone-resale-value-estimator",
+    "name": "Smartphone Resale Value Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate what a used phone is worth from launch price, age, condition, storage variant, battery health and accessories."
+  },
+  {
     "slug": "smile-detector",
     "name": "Smile Detector",
     "categories": [
@@ -10369,6 +19212,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Analyze your smile with AI-powered facial expression detection. Get smile score, emotion analysis, confidence meter, and detailed report."
+  },
+  {
+    "slug": "smoke-alarm-placement-planner",
+    "name": "Smoke Alarm Placement Planner",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Count the smoke and CO alarms a home needs under NFPA 72 and get the mounting distances for ceilings, walls and peaks."
   },
   {
     "slug": "snake-case-converter",
@@ -10406,6 +19257,14 @@ export const TOOL_CATALOG = [
     "description": "Play Snake Water Gun against the computer — pick your move, see who wins, and track your score across rounds."
   },
   {
+    "slug": "snapchat-ad-size-generator",
+    "name": "Snapchat Ad Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Produce Snap ad, story and geofilter creatives at the required resolution, safe zone and file weight."
+  },
+  {
     "slug": "sobriety-recovery-journal",
     "name": "Sobriety Recovery Journal",
     "categories": [
@@ -10423,6 +19282,14 @@ export const TOOL_CATALOG = [
     "description": "Simulate social media feeds and posts to preview their visual appearance and layouts in real-time."
   },
   {
+    "slug": "society-charge-splitter",
+    "name": "Property Maintenance and Society Charge Splitter",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split housing society maintenance flat by flat using the model bye-law basis: service charges equally, repairs by area, water by inlets."
+  },
+  {
     "slug": "society-maintenance-split-calculator",
     "name": "Society Maintenance Split Calculator",
     "categories": [
@@ -10437,6 +19304,38 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Split society maintenance across flats by equal, per sq ft, parking or custom basis with printable bills."
+  },
+  {
+    "slug": "society-noc-request-letter-generator",
+    "name": "Society NOC Request Letter Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a housing society NOC request for a sale, leave and licence, mortgage or renovation with the right enclosures and notice period."
+  },
+  {
+    "slug": "socratic-tutor-prompt-builder",
+    "name": "Socratic Tutor Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build an AI tutor prompt that guides with questions and a graded hint ladder instead of handing over the answer."
+  },
+  {
+    "slug": "solar-panel-area-calculator",
+    "name": "Solar Panel Area Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the panel count, module efficiency and roof area needed for a target solar capacity, plus expected daily generation."
+  },
+  {
+    "slug": "solar-panel-cleaning-planner",
+    "name": "Solar Panel Cleaning Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan solar panel cleaning frequency from dust level, tilt and rainfall, with the yield lost and the cost-optimal interval."
   },
   {
     "slug": "solar-panel-output-estimator",
@@ -10462,6 +19361,30 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Interactive 2.5D solar system planetarium with real orbital periods, planetary scale toggles, and astronomical data cards."
+  },
+  {
+    "slug": "solar-water-heater-size-calculator",
+    "name": "Solar Water Heater Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a solar water heater in litres per day from family size and bathing habits, with collector area and yearly savings."
+  },
+  {
+    "slug": "sop-document-prompt-builder",
+    "name": "SOP Document Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a standard operating procedure prompt with RACI roles, control checks and ISO 9001 document-control fields."
+  },
+  {
+    "slug": "sop-prompt-builder",
+    "name": "SOP Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a statement of purpose prompt that fits the real word or character limit, budgets each section and flags cliché openings."
   },
   {
     "slug": "sort-lines-tool",
@@ -10498,6 +19421,62 @@ export const TOOL_CATALOG = [
     "description": "Visualize live audio, microphone input, or uploaded songs as responsive color, frequency, and waveform art."
   },
   {
+    "slug": "source-map-strategy-chooser",
+    "name": "Source Map Strategy Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare webpack devtool source map types on build speed, rebuild speed, debug accuracy and production safety."
+  },
+  {
+    "slug": "south-korea-dress-code-planner",
+    "name": "South Korea Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan South Korea outfits by month: temple cover-up, shoes-off etiquette, jjimjilbang rules, jangma rain and a weighed packing list."
+  },
+  {
+    "slug": "south-korea-travel-etiquette-guide",
+    "name": "South Korea Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised South Korea etiquette briefing covering seniority, drinking rules, subway conduct and photography law."
+  },
+  {
+    "slug": "south-korea-visa-cost-estimator",
+    "name": "South Korea Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price a Korean single, double or multiple entry visa in rupees and see whether a multiple entry pays for itself."
+  },
+  {
+    "slug": "south-korea-visa-cover-letter-builder",
+    "name": "South Korea Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a C-3 short-term visit cover letter with itinerary, the 90-day sojourn limit, visa validity and fee totals."
+  },
+  {
+    "slug": "south-korea-visa-rejection-reason-explainer",
+    "name": "South Korea Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Match the short reason line on a Korean visa result to the rule behind it, and fix the file before the six-month restriction bites."
+  },
+  {
+    "slug": "souvenir-price-fairness-checker",
+    "name": "Souvenir Price Fairness Checker",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Check a quoted souvenir price against the local prices you recorded, with markup, counter-offer and walk-away figures."
+  },
+  {
     "slug": "space-rocks",
     "name": "Space Rocks",
     "categories": [
@@ -10512,6 +19491,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Detect spam content instantly using intelligent pattern analysis."
+  },
+  {
+    "slug": "spark-plug-gap-tool",
+    "name": "Spark Plug Gap Tool",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Convert spark plug gaps between mm, inches and thou, and check a measured gap against the typical range for your engine."
   },
   {
     "slug": "speed-date-rotation-planner",
@@ -10531,12 +19518,44 @@ export const TOOL_CATALOG = [
     "description": "Enter distance and time to get speed, with m/s and mph conversions."
   },
   {
+    "slug": "speed-limit-unit-converter",
+    "name": "Speed Limit Unit Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert posted speed limits between km/h, mph, knots and m/s, with the nearest sign-friendly value and travel time per kilometre."
+  },
+  {
+    "slug": "speed-unit-converter-vehicle",
+    "name": "Speed Unit Converter Vehicle",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert km/h, mph, knots, m/s, ft/s and Mach, with reaction and braking distance for the same speed."
+  },
+  {
     "slug": "spelling-checker",
     "name": "Spelling Checker",
     "categories": [
       "AI Tools"
     ],
     "description": "Check and correct spelling mistakes instantly with smart suggestions."
+  },
+  {
+    "slug": "spicejet-baggage-allowance-checker",
+    "name": "SpiceJet Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check bag weights and sizes against typical SpiceJet cabin and check-in allowances, and price any excess per kilogram."
+  },
+  {
+    "slug": "spicejet-excess-baggage-cost-estimator",
+    "name": "SpiceJet Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price SpiceJet extra kilos at the counter against a pre-booked baggage slab, including cabin bag overweight moved to check-in."
   },
   {
     "slug": "spin-the-bottle",
@@ -10564,6 +19583,14 @@ export const TOOL_CATALOG = [
     "description": "Generate customizable spirograph patterns and export them as PNG."
   },
   {
+    "slug": "split-vs-window-ac-comparison",
+    "name": "Split vs Window AC Comparison",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare split and window air conditioners on purchase price, installation, yearly electricity and total cost of ownership."
+  },
+  {
     "slug": "sponsored-disclosure-placement-checker",
     "name": "Sponsored Disclosure Placement Checker",
     "categories": [
@@ -10573,13 +19600,68 @@ export const TOOL_CATALOG = [
     "description": "Disclosure contrast, size, duration aur placement test kare."
   },
   {
+    "slug": "sports-current-affairs-tracker",
+    "name": "Sports Current Affairs Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log tournaments, winners, runners-up and venues in a searchable exam-ready table for sports current affairs questions."
+  },
+  {
+    "slug": "sppu-attendance-calculator",
+    "name": "SPPU Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check SPPU attendance subject-wise against the 75% defaulter line and see the exact safe bunk count for each subject."
+  },
+  {
+    "slug": "sppu-sgpa-calculator",
+    "name": "SPPU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute SPPU semester SGPA from credits and grades, then roll every semester into a cumulative CGPA."
+  },
+  {
+    "slug": "spreadsheet-formula-prompt-builder",
+    "name": "Spreadsheet Formula Prompt Builder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Map your headers to real column letters and ranges, then build a formula prompt for Excel, Sheets or Calc."
+  },
+  {
+    "slug": "sprint-capacity-calculator",
+    "name": "Sprint Capacity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute real sprint capacity in person-days and hours from headcount, leaves, holidays and ceremony or support overhead."
+  },
+  {
     "slug": "sprint-goal-generator",
     "name": "Sprint Goal Generator",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
     "description": "Create focused sprint goals with measurable outcomes, scope notes, risks, and review prompts for agile planning."
+  },
+  {
+    "slug": "sqft-to-sqm-converter",
+    "name": "Sqft to Sqm Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert square feet, square metres, square yards, acres and hectares, with rate per unit and total plot cost."
+  },
+  {
+    "slug": "sql-explain-prompt-builder",
+    "name": "SQL Explain Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Flag non-sargable predicates and costly plan nodes, then build a prompt that explains the query plan in plain language."
   },
   {
     "slug": "sql-formatter",
@@ -10595,7 +19677,103 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Format SQL queries with readable line breaks."
+    "description": "Format SQL queries with readable line breaks, configurable indentation and keyword case — entirely in your browser."
+  },
+  {
+    "slug": "sql-where-clause-builder",
+    "name": "SQL WHERE Clause Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build complex WHERE conditions visually with AND/OR groups, IN and BETWEEN operators and ?, $n, :name or @name parameter markers."
+  },
+  {
+    "slug": "sqlite-query-formatter",
+    "name": "SQLite Query Formatter",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Format SQLite SQL with clause-aligned line breaks, keyword casing and full support for PRAGMA statements and SQLite quoting."
+  },
+  {
+    "slug": "sqlserver-connection-string-builder",
+    "name": "SQL Server Connection String Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build ADO.NET and JDBC SQL Server connection strings with instance names, encryption, timeouts and correct value escaping."
+  },
+  {
+    "slug": "sri-lanka-entry-requirement-checklist",
+    "name": "Sri Lanka Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check your Sri Lanka ETA route, passport validity, permitted stay and visa cost, then build the document checklist for your trip."
+  },
+  {
+    "slug": "srt-to-txt-transcript",
+    "name": "SRT To Plain Transcript",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Strip timecodes and caption markup from an SRT file to get a clean, paragraphed transcript with word count and speaking rate."
+  },
+  {
+    "slug": "srt-to-vtt-converter",
+    "name": "SRT To VTT Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes."
+  },
+  {
+    "slug": "ssc-application-document-checklist",
+    "name": "SSC Application Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Every document and detail needed before filling an SSC form — OTR details, uploads, certificates, fee — plus an age-eligibility check."
+  },
+  {
+    "slug": "ssc-cgl-exam-countdown",
+    "name": "SSC CGL Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Days-and-hours countdown to SSC CGL Tier-I or Tier-II with revision-phase milestones mapped onto your remaining time."
+  },
+  {
+    "slug": "ssc-exam-day-checklist",
+    "name": "SSC Exam Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "SSC computer-based test day checklist with biometric, photo ID and admit card reminders plus a gate-closing reporting plan."
+  },
+  {
+    "slug": "ssc-exam-prompt-builder",
+    "name": "SSC Exam Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build SSC practice and explanation prompts for reasoning, maths, English and GK, with each exam's real marking, pacing and attempt maths."
+  },
+  {
+    "slug": "ssc-omr-practice-sheet",
+    "name": "SSC OMR Practice Sheet",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Print an SSC-style OMR answer sheet with A-D bubbles, CGL/CHSL Tier-I part blocks, marking scheme and a roll number grid for practice."
+  },
+  {
+    "slug": "ssh-key-type-chooser",
+    "name": "SSH Key Type Chooser",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Compare Ed25519, ECDSA and RSA SSH keys on security strength, size and OpenSSH support, then copy the exact ssh-keygen command."
   },
   {
     "slug": "ssl-certificate-inspector",
@@ -10622,6 +19800,22 @@ export const TOOL_CATALOG = [
     "description": "Estimate stamp duty, registration fees, and the full one-time cost of buying property across 23 Indian states and UTs."
   },
   {
+    "slug": "stamp-paper-denomination-splitter",
+    "name": "Stamp Paper Denomination Splitter",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the fewest non-judicial stamp papers that add up to a required stamp duty amount, plus any unavoidable excess."
+  },
+  {
+    "slug": "stand-up-india-eligibility-checker",
+    "name": "Stand Up India Loan Eligibility Checker",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check Stand Up India criteria for SC, ST and women entrepreneurs, then size the composite loan and margin money for a greenfield project."
+  },
+  {
     "slug": "standard-deduction-impact-calculator",
     "name": "Standard Deduction Impact Calculator",
     "categories": [
@@ -10636,6 +19830,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Population or sample standard deviation, variance and mean."
+  },
+  {
+    "slug": "standby-power-cost-calculator",
+    "name": "Standby Power Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up what always-on and standby devices cost you every year, ranked by the worst offender in your home."
   },
   {
     "slug": "star-life-cycle-explorer",
@@ -10653,6 +19855,54 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Advanced AI-powered naming generator and professional branding suite. Discover names, slogans, dynamic logo mockups, and color palettes."
+  },
+  {
+    "slug": "startup-runway-burn-calculator",
+    "name": "Startup Runway and Burn Rate Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Model gross burn, net burn and months of runway with revenue and cost growth, plus break-even month, burn multiple and funding gap."
+  },
+  {
+    "slug": "state-psc-application-checklist",
+    "name": "State PSC Application Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track state commission deadlines — fee date, submission date, correction window — and the certificates each state actually accepts."
+  },
+  {
+    "slug": "state-psc-exam-countdown",
+    "name": "State PSC Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Pick your state public service commission and count the days, weeks and study hours left to prelims, mains and interview."
+  },
+  {
+    "slug": "static-site-generator-comparison",
+    "name": "Static Site Generator Comparison",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll on build speed, client JS, rendering modes and ecosystem."
+  },
+  {
+    "slug": "stcg-shares-calculator-india",
+    "name": "Short Term Capital Gains Calculator on Shares",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 111A short term capital gains tax on listed equity, with STT context, deductible charges and the basic exemption adjustment."
+  },
+  {
+    "slug": "steel-rebar-weight-calculator",
+    "name": "Steel Rebar Weight Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Rebar weight in kg from bar diameter, length and count, with the d²/162 unit weight, stock bars and cost."
   },
   {
     "slug": "step-counter",
@@ -10703,12 +19953,60 @@ export const TOOL_CATALOG = [
     "description": "Accurate online stopwatch with laps, keyboard shortcuts, and fastest/slowest lap analysis."
   },
   {
+    "slug": "storage-unit-size-selector",
+    "name": "Storage Unit Size Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Add up what you plan to store and get the smallest self-storage unit that fits, allowing for sprinkler clearance and access."
+  },
+  {
+    "slug": "story-point-estimation-calculator",
+    "name": "Story Point Estimation Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert story points to hours from your team's own velocity, with a confidence range and sprint forecast."
+  },
+  {
     "slug": "storyboard-builder",
     "name": "Storyboard Builder",
     "categories": [
+      "Video & Audio"
+    ],
+    "description": "Sequence shots, plan scene durations with running SMPTE timecode, check dialogue length, and export a production sheet or CSV."
+  },
+  {
+    "slug": "storytelling-prompt-builder",
+    "name": "Storytelling Prompt Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Build a structured AI storytelling prompt with narrative arc, point of view, tone and pacing controls baked in."
+  },
+  {
+    "slug": "stream-brb-screen-maker",
+    "name": "Stream BRB Screen Maker",
+    "categories": [
       "Design & Color"
     ],
-    "description": "Create visual sequences, plan scene durations, sequence shots, sketch concepts, organize actor dialogue, and export production sheets."
+    "description": "Design a be-right-back stream scene with countdown, message and brand colours, with live WCAG contrast checking and SVG or PNG export."
+  },
+  {
+    "slug": "stream-overlay-size-calculator",
+    "name": "Stream Overlay Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out facecam, alert and chat overlay pixel sizes and safe-area positions for any stream canvas and output resolution."
+  },
+  {
+    "slug": "stream-scene-layout-planner",
+    "name": "Stream Scene Layout Planner",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Plan camera, gameplay and chat placement on a 1920x1080 scene and get exact OBS transform coordinates for every source."
   },
   {
     "slug": "stream-settings-calculator",
@@ -10717,6 +20015,38 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Calculate stream settings values quickly with a simple, structured workflow."
+  },
+  {
+    "slug": "stream-time-zone-converter",
+    "name": "Stream Time Zone Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert one stream start time into local times across your audience time zones, with day shifts and prime-time flags."
+  },
+  {
+    "slug": "streaming-bandwidth-calculator",
+    "name": "Streaming Bandwidth Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate the upload speed a live stream needs from video and audio bitrate, protocol overhead and safety headroom."
+  },
+  {
+    "slug": "streaming-data-usage-calculator",
+    "name": "Streaming Data Usage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate the mobile data an hour of audio or video streaming uses, and how long a data allowance will last at that quality."
+  },
+  {
+    "slug": "street-food-budget-planner",
+    "name": "Street Food Budget Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan a trip food budget across street stalls, cafés, snacks and splurge meals, and see how many nice meals your budget really allows."
   },
   {
     "slug": "strikethrough-text-generator",
@@ -10751,12 +20081,132 @@ export const TOOL_CATALOG = [
     "description": "Test your cognitive control — name the color, not the word. Measure your Stroop Effect and reaction time in this classic psychology experiment."
   },
   {
+    "slug": "student-distraction-log",
+    "name": "Distraction Log For Students",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log every distraction in a study session, find your top three triggers and estimate how much study time they cost you."
+  },
+  {
+    "slug": "student-mess-bill-splitter",
+    "name": "Mess Bill Splitter For Students",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split mess and grocery bills fairly among roommates by days present — fixed charges shared equally, food cost by attendance."
+  },
+  {
+    "slug": "student-monthly-budget-planner",
+    "name": "Student Budget Planner Monthly",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan a monthly student budget across mess, rent, travel, books and personal spends — see surplus, category shares and a 50/30/20 check."
+  },
+  {
+    "slug": "student-prompt-pack",
+    "name": "Student Prompt Pack",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Fill-in-the-blank AI prompts for study plans, active recall, essay feedback and exam prep that build understanding."
+  },
+  {
+    "slug": "study-break-ratio-optimiser",
+    "name": "Break Ratio Optimiser",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Match your focus span to a proven study-break protocol (25/5, 50/10, 52/17 or 90/20) and get a full session schedule."
+  },
+  {
+    "slug": "study-environment-score",
+    "name": "Study Environment Score",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Rate noise, lighting, desk setup, phone placement and more to get a weighted 0-100 score for your study environment."
+  },
+  {
+    "slug": "study-hydration-reminder",
+    "name": "Study Hydration Reminder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out how much water a study session needs from EFSA daily intake values and get a sip schedule sized to your bottle."
+  },
+  {
+    "slug": "study-lighting-calculator",
+    "name": "Study Lighting Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Lumen-method study desk lighting: target lux, room index, luminaire count, spacing grid and the desk lamp top-up needed."
+  },
+  {
+    "slug": "study-material-version-tracker",
+    "name": "Study Material Version Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track which edition of each textbook or module you are using against the latest edition, and see what is out of date."
+  },
+  {
+    "slug": "study-plan-prompt-builder",
+    "name": "Study Plan Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn your syllabus topics and exam date into an AI prompt for a spaced-repetition study plan with built-in review days."
+  },
+  {
+    "slug": "study-posture-break-reminder",
+    "name": "Study Posture Break Reminder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build a posture-reset and 20-20-20 eye-break schedule for a long study session, with a live timer that flags each break."
+  },
+  {
+    "slug": "study-room-planner",
+    "name": "Study Room Planner",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Size the desk, chair clearance, shelving and lighting for a study room from its floor dimensions."
+  },
+  {
+    "slug": "study-streak-tracker",
+    "name": "Study Streak Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track daily study streaks against an hour goal, with streak-freeze recovery rules, longest streak and adherence rate."
+  },
+  {
     "slug": "study-timetable-planner",
     "name": "Study Timetable Planner",
     "categories": [
       "Education & Science"
     ],
     "description": "Create smart study schedules with auto-balancing, productivity tracking, and analytics."
+  },
+  {
+    "slug": "subject-strength-radar",
+    "name": "Subject Strength Radar",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn subject-wise marks into a radar chart with strongest and weakest subjects and a balance score across all of them."
+  },
+  {
+    "slug": "subresource-integrity-generator",
+    "name": "Subresource Integrity Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate SHA-256, SHA-384 and SHA-512 integrity attributes for scripts and stylesheets, hashed locally in your browser."
   },
   {
     "slug": "subscript-generator",
@@ -10774,6 +20224,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Track all subscriptions with monthly and yearly cost totals, renewals, categories, and savings insights."
+  },
+  {
+    "slug": "subscription-spend-audit",
+    "name": "Subscription Spend Audit Tool",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Normalise every recurring subscription to a yearly cost, see the true annual drain and what cancelling the dead ones saves."
   },
   {
     "slug": "subtitle-timing-adjuster",
@@ -10810,6 +20268,46 @@ export const TOOL_CATALOG = [
     "description": "Project your daughter's Sukanya Samriddhi maturity with real scheme rules — 15 years of deposits, 21-year maturity, year-wise growth."
   },
   {
+    "slug": "sukanya-samriddhi-maturity-calculator",
+    "name": "Sukanya Samriddhi Maturity Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project the Sukanya Samriddhi corpus from yearly deposits, with the 15-year deposit window, 21-year maturity and annual compounding."
+  },
+  {
+    "slug": "summary-length-planner",
+    "name": "Summary Length Planner",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Turn a source word count and a compression ratio into a target length, sentence count, token budget and reading time saved."
+  },
+  {
+    "slug": "summits-reports-notes-tracker",
+    "name": "Summits And Reports Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track international summits, indices and reports with host, publisher, year and India's rank in one exam-ready table."
+  },
+  {
+    "slug": "sunset-viewpoint-timing-planner",
+    "name": "Sunset Viewpoint Timing Planner",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Work out when to leave to reach a viewpoint before golden hour, using NOAA solar equations for the light and Naismith's rule for the climb."
+  },
+  {
+    "slug": "supabase-cost-estimator",
+    "name": "Supabase Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate your monthly Supabase bill from database size, egress, storage, monthly active users, edge functions and compute tier."
+  },
+  {
     "slug": "superpower-generator",
     "name": "Superpower Generator",
     "categories": [
@@ -10836,12 +20334,28 @@ export const TOOL_CATALOG = [
     "description": "Accelerometer readings ka vibration timeline banaye."
   },
   {
+    "slug": "surname-change-after-marriage-checklist",
+    "name": "Surname Change After Marriage Checklist",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Phase-by-phase checklist for changing a surname after marriage, with the documents to carry and how many office visits are left."
+  },
+  {
     "slug": "survey-builder",
     "name": "Survey Builder",
     "categories": [
       "Business"
     ],
     "description": "Create custom surveys easily with interactive drag-and-drop fields."
+  },
+  {
+    "slug": "suspension-wear-checklist",
+    "name": "Suspension Wear Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Tick the noises and symptoms your car shows and get a ranked list of the suspension parts most likely responsible."
   },
   {
     "slug": "svg-blob-generator",
@@ -10864,10 +20378,17 @@ export const TOOL_CATALOG = [
     "slug": "svg-to-image",
     "name": "SVG to Image",
     "categories": [
-      "Design & Color",
       "Converters"
     ],
-    "description": "Render SVG markup to a downloadable PNG preview."
+    "description": "Rasterise SVG markup to a downloadable PNG, JPEG or WebP at any scale, entirely in your browser."
+  },
+  {
+    "slug": "sweat-rate-calculator",
+    "name": "Sweat Rate Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Find your hourly sweat rate from the weigh-in weigh-out method, plus fluid replacement and sodium loss estimates."
   },
   {
     "slug": "swiss-pairing-engine",
@@ -10930,6 +20451,70 @@ export const TOOL_CATALOG = [
     "description": "Find synonyms and antonyms for any English word. Browse 200+ headwords with detailed synonym lists, part-of-speech tags, and example sentences."
   },
   {
+    "slug": "system-prompt-coding-assistant",
+    "name": "Coding Assistant System Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build a system prompt for a coding assistant: stack, style guide, test policy, review checklist and refusal rules, with a token estimate."
+  },
+  {
+    "slug": "system-prompt-editor",
+    "name": "Editor System Prompt Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Configure a copy-editor AI persona: style guide, edit depth, English variant and change-tracking rules in one system prompt."
+  },
+  {
+    "slug": "system-prompt-hr-recruiter",
+    "name": "HR Recruiter System Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a recruiting assistant system prompt with fairness rules, candidate privacy constraints and a human-decision safeguard."
+  },
+  {
+    "slug": "system-prompt-product-manager",
+    "name": "Product Manager System Prompt Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a PM assistant system prompt for specs, user stories and tradeoffs, with a real prioritisation framework wired in."
+  },
+  {
+    "slug": "system-prompt-tutor-kids",
+    "name": "Kids Tutor System Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a child-safe AI tutor prompt with an age-matched reading level, safe-topic boundaries and trusted-adult referral rules."
+  },
+  {
+    "slug": "taiwan-entry-requirement-checklist",
+    "name": "Taiwan Entry Requirement Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Check your Taiwan visa-exempt allowance or Travel Authorization Certificate, passport validity, arrival card and the customs rules that carry real fines."
+  },
+  {
+    "slug": "tamil-nadu-board-cutoff-calculator",
+    "name": "Tamil Nadu Board Cutoff Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the TNEA engineering cutoff and the medical/agriculture cutoff out of 200 from your Tamil Nadu HSC subject marks."
+  },
+  {
+    "slug": "tan-format-validator",
+    "name": "TAN Format Validator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Validate the 4 letters, 5 digits, 1 letter structure of a TAN offline, decode its location code and catch typos."
+  },
+  {
     "slug": "tap-glider",
     "name": "Tap Glider",
     "categories": [
@@ -10938,12 +20523,108 @@ export const TOOL_CATALOG = [
     "description": "One-tap arcade glider game — flap through the gaps, earn medals, and beat your best score online free."
   },
   {
+    "slug": "tape-measure-fraction-reader",
+    "name": "Tape Measure Fraction Reader",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Read any tape measure mark as decimal inches, millimetres and feet-inches, or snap a metric size to the nearest tape fraction."
+  },
+  {
+    "slug": "tar-command-builder",
+    "name": "Tar Command Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build correct tar create, extract and list commands with compression, exclude patterns, strip-components and safe quoting."
+  },
+  {
+    "slug": "tax-jargon-glossary",
+    "name": "Tax Jargon Glossary Explorer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Searchable plain-language glossary of Indian income tax, GST, investing and banking terms, each with the section it comes from."
+  },
+  {
+    "slug": "tcs-motor-vehicle-calculator",
+    "name": "TCS on Motor Vehicle Sale Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 206C(1F) TCS at 1% on a car or notified luxury good above Rs 10 lakh, with buyer exemptions and the no-PAN rate."
+  },
+  {
+    "slug": "tcs-tour-package-calculator",
+    "name": "TCS on Overseas Tour Package Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 206C(1G) TCS on an overseas tour programme package, with the 5% and 20% slabs and the Rs 10 lakh yearly threshold."
+  },
+  {
     "slug": "tdee-calculator",
     "name": "TDEE Calculator",
     "categories": [
       "Health Calculators"
     ],
     "description": "Find your total daily energy expenditure from BMR and activity level, plus calorie targets for cutting, maintaining or bulking."
+  },
+  {
+    "slug": "tds-194-dividend-calculator",
+    "name": "TDS 194 Dividend Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "TDS a domestic company must deduct on dividend paid to a resident under Section 194, with the ₹10,000 proviso threshold, the 20% no-PAN rate and Form 15G/15H el"
+  },
+  {
+    "slug": "tds-194a-interest-calculator",
+    "name": "TDS on Interest Section 194A Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 194A TDS on deposit and loan interest with bank, non-bank and senior citizen thresholds and the no-PAN rate."
+  },
+  {
+    "slug": "tds-194c-calculator",
+    "name": "TDS on Contractor Payments Section 194C",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 194C TDS at 1% or 2% on contractor and sub-contractor bills, with the Rs 30,000 single and Rs 1,00,000 annual threshold test."
+  },
+  {
+    "slug": "tds-194h-commission-calculator",
+    "name": "TDS on Commission Section 194H Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 194H TDS on commission and brokerage with the 2% rate from October 2024 and the Rs 20,000 annual threshold."
+  },
+  {
+    "slug": "tds-194i-rent-calculator",
+    "name": "TDS on Rent Section 194I Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 194-I rent TDS at 10% for land and buildings or 2% for plant and machinery, with the Rs 50,000 per month threshold."
+  },
+  {
+    "slug": "tds-194ib-calculator",
+    "name": "TDS on Rent by Individuals Section 194IB",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Section 194-IB rent TDS for tenants paying over Rs 50,000 a month, with the last-month cap and Form 26QC and 16C due dates."
+  },
+  {
+    "slug": "tds-194j-calculator",
+    "name": "TDS on Professional Fees Section 194J",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out section 194J TDS at 10% or 2% on professional, technical, royalty and director payments with the annual threshold check."
   },
   {
     "slug": "tds-calculator-by-section",
@@ -10979,6 +20660,30 @@ export const TOOL_CATALOG = [
     "description": "Find the TDS rate and threshold for every common Income Tax section and calculate tax deducted plus net payout instantly."
   },
   {
+    "slug": "tds-return-due-date-tracker",
+    "name": "TDS Return Due Date Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Quarterly 24Q, 26Q, 27Q and 27EQ due dates with Form 16, 16A and 27D deadlines and the section 234E late fee."
+  },
+  {
+    "slug": "teacher-prompt-pack",
+    "name": "Teacher Prompt Pack",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Fill-in-the-blank AI prompts for lesson plans, rubrics, differentiation, feedback and parent emails, ready to copy."
+  },
+  {
+    "slug": "team-ai-seat-cost-calculator",
+    "name": "Team AI Seat Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare per-seat AI subscriptions against real team usage and against pay-as-you-go API pricing, with a break-even point."
+  },
+  {
     "slug": "team-generator",
     "name": "Team Generator",
     "categories": [
@@ -10986,6 +20691,30 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Generate balanced teams from a list of participants. Customize team count, size, and shuffle results."
+  },
+  {
+    "slug": "tech-spec-prompt-builder",
+    "name": "Tech Spec Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a design-doc prompt with goals, non-goals and alternatives, plus a section word budget, reading time and completeness score."
+  },
+  {
+    "slug": "tech-spec-template-generator",
+    "name": "Tech Spec Template Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create a technical design doc template with goals, non-goals, alternatives, risks and rollout, in the format your team needs."
+  },
+  {
+    "slug": "technical-doc-prompt-builder",
+    "name": "Technical Doc Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Build an AI documentation prompt with Diátaxis doc type, audience, scope and code example rules baked in."
   },
   {
     "slug": "temperature-converter",
@@ -10996,12 +20725,92 @@ export const TOOL_CATALOG = [
     "description": "Convert between Celsius, Fahrenheit and Kelvin instantly."
   },
   {
+    "slug": "temple-visit-etiquette-checklist",
+    "name": "Temple Visit Etiquette Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Footwear, dress, photography and offering etiquette for Buddhist, Hindu, Sikh, Jain and Shinto sites, scored by consequence."
+  },
+  {
+    "slug": "tenant-notice-to-vacate-generator",
+    "name": "Tenant Notice to Vacate Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a tenant's notice to vacate with the handover date, notice-period check, final rent and security deposit settlement."
+  },
+  {
     "slug": "term-insurance-cover-calculator",
     "name": "Term Insurance Cover Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Work out the life cover your family needs from income replacement, loans, dependants' goals and the assets and policies you already hold."
+  },
+  {
+    "slug": "terraform-naming-convention-generator",
+    "name": "Terraform Naming Convention Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a consistent Terraform resource naming standard across environments and regions, validated against real cloud name limits."
+  },
+  {
+    "slug": "terraform-provider-block-generator",
+    "name": "Terraform Provider Block Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate terraform required_providers and provider blocks with version constraints and alias configurations."
+  },
+  {
+    "slug": "terraform-workspace-strategy-planner",
+    "name": "Terraform Workspace Strategy Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Decide between CLI workspaces, directory-per-environment or fully separate state for Terraform, with scored trade-offs."
+  },
+  {
+    "slug": "test-case-naming-generator",
+    "name": "Test Case Naming Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Turn a scenario into consistent test names using given-when-then, should or unit_state_expected, with runnable suite scaffolding."
+  },
+  {
+    "slug": "test-coverage-target-calculator",
+    "name": "Test Coverage Target Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out exactly how many lines or branches you must cover to hit a coverage threshold, with new-code rules and a sprint ratchet plan."
+  },
+  {
+    "slug": "test-pyramid-ratio-planner",
+    "name": "Test Pyramid Ratio Planner",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Plan unit, integration and end-to-end test ratios and see the runtime, CI cost and flakiness each mix produces."
+  },
+  {
+    "slug": "tet-exam-countdown",
+    "name": "TET Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Countdown to CTET or a state TET with a paper-wise prep tracker, section readiness score and the 60%/55% qualifying mark check."
+  },
+  {
+    "slug": "tetanus-booster-due-checker",
+    "name": "Tetanus Booster Due Checker",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Check whether a tetanus booster is due from your last dose date, using the 10-year routine rule and the 5-year rule for dirty wounds."
   },
   {
     "slug": "text-behind-image",
@@ -11032,28 +20841,25 @@ export const TOOL_CATALOG = [
     "slug": "text-diff-tool",
     "name": "Text Diff Tool",
     "categories": [
-      "Developer",
-      "Text & Writing"
+      "Developer"
     ],
-    "description": "Compare two text blocks line-by-line and highlight differences."
+    "description": "Compare two text blocks line-by-line, highlight added and removed lines, and export a unified diff."
   },
   {
     "slug": "text-diff-viewer",
     "name": "Text Diff Viewer",
     "categories": [
-      "Developer",
-      "Productivity"
+      "Developer"
     ],
-    "description": "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export."
+    "description": "Compare text versions side-by-side with word-level highlighting, version history, churn analytics and markdown export."
   },
   {
     "slug": "text-encryptor",
     "name": "Text Encryptor",
     "categories": [
-      "Security & Privacy",
-      "Developer"
+      "Security & Privacy"
     ],
-    "description": "Hash text and encrypt or decrypt AES-GCM payloads locally."
+    "description": "Encrypt and decrypt text with AES-256-GCM and PBKDF2, or take SHA-1 to SHA-512 digests — entirely in your browser."
   },
   {
     "slug": "text-extractor",
@@ -11108,7 +20914,6 @@ export const TOOL_CATALOG = [
     "slug": "text-to-base64",
     "name": "Text to Base64",
     "categories": [
-      "Developer",
       "Converters"
     ],
     "description": "Encode text into Base64 and decode Base64 locally."
@@ -11182,6 +20987,86 @@ export const TOOL_CATALOG = [
     "description": "Translate text instantly across languages with accuracy and ease."
   },
   {
+    "slug": "textbook-buy-vs-rent-calculator",
+    "name": "Book Buy Vs Rent Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare buying a textbook (with expected resale) against renting it per term over your course — including the break-even point."
+  },
+  {
+    "slug": "texture-prompt-generator",
+    "name": "Texture Prompt Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Compose precise texture and material prompts — surface, finish, scale, lighting and wear — for AI image and PBR generators."
+  },
+  {
+    "slug": "thai-airways-baggage-allowance-checker",
+    "name": "Thai Airways Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bags against Thai Airways weight allowances, the 115 cm cabin rule and Americas piece-concept routes."
+  },
+  {
+    "slug": "thai-airways-excess-baggage-cost-estimator",
+    "name": "Thai Airways Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price Thai Airways excess baggage per kilogram or per piece, comparing prepaid blocks against the airport counter rate."
+  },
+  {
+    "slug": "thailand-dress-code-planner",
+    "name": "Thailand Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan Thailand outfits by month: temple and Grand Palace cover-up rules, rooftop-bar codes, beach limits and a weighed packing list."
+  },
+  {
+    "slug": "thailand-travel-etiquette-guide",
+    "name": "Thailand Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised Thailand etiquette briefing for the places on your itinerary, with the legal red lines flagged and a readiness score."
+  },
+  {
+    "slug": "thailand-visa-cost-estimator",
+    "name": "Thailand Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price a Thai e-Visa, extension of stay or visa exemption trip in rupees, including the capped overstay fine."
+  },
+  {
+    "slug": "thailand-visa-cover-letter-builder",
+    "name": "Thailand Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a Thai e-Visa tourist cover letter with itinerary, the 60-day stay stamp, funds proof and overstay-risk check."
+  },
+  {
+    "slug": "thailand-visa-rejection-reason-explainer",
+    "name": "Thailand Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn a one-line Thai e-Visa rejection into the requirement behind it, with the real funds benchmarks and ban lengths."
+  },
+  {
+    "slug": "thb-cash-budget-planner",
+    "name": "THB Cash Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan how much Thai baht to carry as notes versus card spend, costing the changer markup, GST, TCS and the flat Thai ATM fee."
+  },
+  {
     "slug": "therapy-notes-tracker",
     "name": "Therapy Notes Tracker",
     "categories": [
@@ -11189,6 +21074,38 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Keep private session takeaways, exercises, and triggers."
+  },
+  {
+    "slug": "thesis-outline-prompt-builder",
+    "name": "Thesis Outline Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Splits a thesis word count across the standard six chapters and writes an outline prompt with research questions and scope built in."
+  },
+  {
+    "slug": "third-party-motor-premium-estimator",
+    "name": "Third Party Motor Premium Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the notified motor third party premium for cars and two-wheelers by engine cc or kW, with owner-driver cover and 18% GST."
+  },
+  {
+    "slug": "threads-image-size-generator",
+    "name": "Threads Image Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Export Threads post images and carousels at native display sizes and check the supported aspect ratio range."
+  },
+  {
+    "slug": "three-hour-paper-pacing-tool",
+    "name": "Three Hour Paper Pacing Tool",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Split a three hour exam into timed checkpoints per section so you know the exact clock time each part must end."
   },
   {
     "slug": "three-phase-power-calculator",
@@ -11199,10 +21116,18 @@ export const TOOL_CATALOG = [
     "description": "kW, kVA, amps aur power factor convert kare."
   },
   {
+    "slug": "thumbnail-image-prompt-builder",
+    "name": "Thumbnail Image Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build high-contrast thumbnail prompts with a reserved text zone, plus the minimum text size computed from where the thumbnail renders."
+  },
+  {
     "slug": "thumbnail-layout-planner",
     "name": "Thumbnail Layout Planner",
     "categories": [
-      "Design & Color"
+      "Lifestyle"
     ],
     "description": "Plan YouTube thumbnail layouts with draggable visual elements, live preview, workflow tracking, branding notes, and exportable creative briefs."
   },
@@ -11216,12 +21141,36 @@ export const TOOL_CATALOG = [
     "description": "Play a responsive Tic-Tac-Toe game with score tracking, win detection, draw handling, and optional computer moves."
   },
   {
+    "slug": "tile-wastage-calculator",
+    "name": "Tile Wastage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Recommends a tile wastage percentage from layout pattern, room shape, tile size and cutouts, then converts it into boxes."
+  },
+  {
+    "slug": "timber-weight-calculator",
+    "name": "Timber Weight Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate the weight of wood by species density, size and moisture content, with volume in cubic feet and cubic metres."
+  },
+  {
     "slug": "time-blocking-planner",
     "name": "Time Blocking Planner",
     "categories": [
       "Productivity"
     ],
     "description": "Plan daily work with real-time draggable time blocks, reminders, notes, dashboard stats, filters, and local autosave."
+  },
+  {
+    "slug": "time-complexity-cheat-tool",
+    "name": "Time Complexity Cheat Tool",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Look up best, average and worst-case time and space complexity for common algorithms and data structures."
   },
   {
     "slug": "time-duration-calculator",
@@ -11240,6 +21189,14 @@ export const TOOL_CATALOG = [
     "description": "Explore world time zones in real-time — compare times across cities, convert between zones, and see live clocks with DST information."
   },
   {
+    "slug": "timecode-to-seconds-converter",
+    "name": "Timecode to Seconds Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert SMPTE HH:MM:SS:FF timecode to seconds and frames and back, with correct drop-frame and 1.001 pulldown handling."
+  },
+  {
     "slug": "timeline-builder",
     "name": "Timeline Builder",
     "categories": [
@@ -11254,6 +21211,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Add up weekly worked hours from daily clock in and out times, with break deduction and overtime split."
+  },
+  {
+    "slug": "timesheet-to-invoice-calculator",
+    "name": "Timesheet to Invoice Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Turn logged hours into an invoice total with billing increments, per-task rates, overtime, discounts and tax."
+  },
+  {
+    "slug": "tip-bill-split-calculator-india",
+    "name": "Tip and Bill Split Calculator India",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Split a restaurant bill with 5% or 18% GST, an optional service charge and a tip, equally or by what each person ate."
   },
   {
     "slug": "tip-calculator",
@@ -11273,6 +21246,78 @@ export const TOOL_CATALOG = [
     "description": "Work out the tip and each person's share of a bill, with flexible rounding options."
   },
   {
+    "slug": "tipping-guide-calculator-egypt",
+    "name": "Tipping Guide Calculator for Egypt",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary baksheesh amounts in Egypt for restaurants, taxis, hotels, guides and boat crews, with a trip total and small-note plan."
+  },
+  {
+    "slug": "tipping-guide-calculator-germany",
+    "name": "Tipping Guide Calculator for Germany",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary German Trinkgeld ranges for restaurants, cafés, taxis, hotels and guides, with round-up amounts and how to hand it over."
+  },
+  {
+    "slug": "tipping-guide-calculator-india",
+    "name": "Tipping Guide Calculator for India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary tipping amounts in India for restaurants, autos, hotels, drivers and guides, with the CCPA service-charge rule and GST handled."
+  },
+  {
+    "slug": "tipping-guide-calculator-singapore",
+    "name": "Tipping Guide Calculator for Singapore",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "What tipping is and is not customary in Singapore, with the 10% service charge and 9% GST '++' pricing worked out on your bill."
+  },
+  {
+    "slug": "tipping-guide-calculator-spain",
+    "name": "Tipping Guide Calculator for Spain",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary Spanish propina ranges for restaurants, tapas bars, taxis, hotels and guides, with the small amounts locals actually leave."
+  },
+  {
+    "slug": "tipping-guide-calculator-uae",
+    "name": "Tipping Guide Calculator for UAE",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary UAE tipping ranges for restaurants, taxis, hotels, valets and guides, with the 10% service charge and municipality fee stripped out."
+  },
+  {
+    "slug": "tipping-guide-calculator-uk",
+    "name": "Tipping Guide Calculator for UK",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary UK tipping ranges for restaurants, pubs, taxis, hotels and guides, with the discretionary service charge handled properly."
+  },
+  {
+    "slug": "tipping-guide-calculator-usa",
+    "name": "Tipping Guide Calculator for USA",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Customary US tipping ranges for restaurants, bars, taxis, hotels and guides, with the tip and total worked out on the pre-tax bill."
+  },
+  {
+    "slug": "title-safe-area-calculator",
+    "name": "Title Safe Area Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Get action safe and title safe margins in pixels for any resolution using the EBU R 95 and SMPTE RP 218 safe area rules."
+  },
+  {
     "slug": "tls-configuration-auditor",
     "name": "TLS Configuration Auditor",
     "categories": [
@@ -11290,6 +21335,54 @@ export const TOOL_CATALOG = [
     "description": "Manage daily tasks effortlessly with a smart checklist."
   },
   {
+    "slug": "toefl-score-converter",
+    "name": "TOEFL Score Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Sum TOEFL iBT section scores into the 0-120 total, see ETS performance levels and compare with IELTS bands via the ETS linking table."
+  },
+  {
+    "slug": "token-per-word-ratio-calculator",
+    "name": "Token Per Word Ratio Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute your text's tokens-per-word ratio from a sample or a real token count for accurate LLM budgeting."
+  },
+  {
+    "slug": "tokens-per-second-benchmark-sheet",
+    "name": "Tokens Per Second Benchmark Sheet",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Log local LLM runs and get decode and prefill tokens per second, model size by quantisation and the memory-bandwidth ceiling."
+  },
+  {
+    "slug": "tokens-to-words-converter",
+    "name": "Tokens to Words Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert an LLM token budget into an approximate word count, page count and reading time by content type."
+  },
+  {
+    "slug": "toml-to-json-converter",
+    "name": "TOML to JSON Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert TOML config files to JSON in the browser — tables, arrays of tables, dotted keys and dates handled per TOML 1.0."
+  },
+  {
+    "slug": "tone-consistency-rubric",
+    "name": "Tone Consistency Rubric",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Grade writing against a defined brand voice on six anchored 1-5 scales and get a weighted consistency score with drift direction."
+  },
+  {
     "slug": "tool-call-argument-policy-linter",
     "name": "Tool-Call Argument Policy Linter",
     "categories": [
@@ -11298,6 +21391,14 @@ export const TOOL_CATALOG = [
       "AI Tools"
     ],
     "description": "Lint AI tool-call JSON or JSONL locally against explicit name, path, domain, recipient, numeric-limit and confirmation policies without executing anything."
+  },
+  {
+    "slug": "tool-rental-vs-buy-calculator",
+    "name": "Tool Rental vs Buy Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Decide whether to rent or buy a tool from how often you use it, with the break-even number of usage days and total cost of each option."
   },
   {
     "slug": "touch-target-thumb-reach-map",
@@ -11309,6 +21410,14 @@ export const TOOL_CATALOG = [
     "description": "Review supplied target rectangles against transparent WCAG size and spacing geometry, then map approximate one-handed reach zones locally."
   },
   {
+    "slug": "tour-guide-driver-tip-planner",
+    "name": "Tour Guide and Driver Tip Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Budget guide, driver, porter and camp crew tips across a multi-day tour, with per-person-per-day rates and the cash to draw."
+  },
+  {
     "slug": "tournament-bracket-builder",
     "name": "Tournament Bracket Builder",
     "categories": [
@@ -11318,6 +21427,38 @@ export const TOOL_CATALOG = [
     "description": "Single/double elimination brackets aur byes generate kare."
   },
   {
+    "slug": "traffic-challan-tracker",
+    "name": "Traffic Challan Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log traffic fines privately, see what is pending or overdue, and work out how many months a budget needs to clear them."
+  },
+  {
+    "slug": "transcript-request-drafter",
+    "name": "Transcript Request Drafter",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a university transcript request letter with enrolment details, copies needed, delivery mode and an enclosure checklist."
+  },
+  {
+    "slug": "transitive-dependency-risk-explainer",
+    "name": "Transitive Dependency Risk Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Model how a handful of direct dependencies expands into hundreds of transitive packages, and what that does to your attack surface."
+  },
+  {
+    "slug": "travel-agency-prompt-pack",
+    "name": "Travel Agency Prompt Pack",
+    "categories": [
+      "Business"
+    ],
+    "description": "Fill-in-the-blank AI prompts for package copy, quotes and follow-ups, with a tour quote calculator covering markup, GST and TCS."
+  },
+  {
     "slug": "travel-cost-per-day",
     "name": "Travel Cost Per Day",
     "categories": [
@@ -11325,6 +21466,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Calculate total trip cost, daily cost, per-person/day split, category spending, payment timing, and budget signals."
+  },
+  {
+    "slug": "travel-data-usage-estimator",
+    "name": "Travel Data Usage Estimator",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Estimate how much mobile data a trip needs from maps, calls, streaming, social and photo backup habits."
   },
   {
     "slug": "travel-disruption-evidence-pack",
@@ -11345,6 +21494,78 @@ export const TOOL_CATALOG = [
     "description": "Build a travel-ready document checklist for passport, visa, tickets, hotel bookings, insurance, IDs, forex, and emergency copies."
   },
   {
+    "slug": "travel-document-folder-organiser",
+    "name": "Travel Document Folder Organiser",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Stack your printed travel documents in the exact order airports, borders and hotels ask for them, with passport validity checked."
+  },
+  {
+    "slug": "travel-fund-planner",
+    "name": "Travel Fund Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Build a full trip budget with forex markup, TCS and a contingency buffer, then back-solve the monthly saving it needs."
+  },
+  {
+    "slug": "travel-itinerary-prompt-builder",
+    "name": "Travel Itinerary Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a trip prompt with a realistic activity capacity for your pace and city hops, plus a per-day budget split across stay, food and travel."
+  },
+  {
+    "slug": "travel-phone-setup-checklist",
+    "name": "Travel Phone Setup Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Pre-flight phone setup checklist: backups, offline files, roaming toggles, battery rules and safety contacts."
+  },
+  {
+    "slug": "travel-photography-permission-checklist",
+    "name": "Photography Permission Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Check where photos, drones and tripods are restricted before shooting, with EASA and FAA drone limits checked numerically."
+  },
+  {
+    "slug": "travel-power-bank-capacity-planner",
+    "name": "Travel Power Bank Capacity Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Size a power bank in mAh and Wh from your device batteries and days off-grid, with the 100 Wh airline carry-on limit checked."
+  },
+  {
+    "slug": "travel-power-strip-load-calculator",
+    "name": "Travel Power Strip Load Calculator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Add up device wattages to see whether one hotel socket and travel power strip can safely run them all at your destination voltage."
+  },
+  {
+    "slug": "travel-toiletry-quantity-estimator",
+    "name": "Toiletry Quantity Estimator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Estimate how much shampoo, toothpaste, sunscreen and cream a trip needs, sized into travel bottles and checked against the 1 litre cabin bag."
+  },
+  {
+    "slug": "trimester-symptom-guide",
+    "name": "Trimester Symptom Guide",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "See which pregnancy symptoms and antenatal checks belong to your gestational week, with the signs that need same-day review."
+  },
+  {
     "slug": "trip-budget-planner",
     "name": "Trip Budget Planner",
     "categories": [
@@ -11352,6 +21573,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Plan travel costs by destination, days, travelers, budget style, expense categories, contingency, and per-person split."
+  },
+  {
+    "slug": "trip-shoe-selection-planner",
+    "name": "Shoe Selection Planner for Trips",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Find the fewest pairs of shoes that cover every condition on your trip — walking, formal, wet, beach or trail — and the lightest set among them."
   },
   {
     "slug": "trojan-source-detector",
@@ -11369,6 +21598,94 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Play the classic party game with multiple categories, difficulty levels, and hundreds of unique challenges."
+  },
+  {
+    "slug": "turbo-boost-converter",
+    "name": "Turbo Boost Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert boost between psi, bar, kPa and inHg, gauge or absolute, with pressure ratio, altitude and charge-air density."
+  },
+  {
+    "slug": "turf-roll-calculator",
+    "name": "Turf Roll Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate how many sod or turf rolls a lawn needs, including trim wastage, pallets and the delivered cost."
+  },
+  {
+    "slug": "turkey-travel-etiquette-guide",
+    "name": "Turkey Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised Turkey etiquette briefing for mosques, bazaars, tea houses and hammams, with the legal red lines flagged."
+  },
+  {
+    "slug": "turkey-visa-cost-estimator",
+    "name": "Turkey Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price a Turkish e-Visa or sticker visa in rupees, with the conditional e-Visa rule and the 90/180 stay limit checked."
+  },
+  {
+    "slug": "turkey-visa-cover-letter-builder",
+    "name": "Turkey Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft a Türkiye e-Visa cover letter with itinerary, the 90/180 rule and the 60-days-beyond-stay passport check."
+  },
+  {
+    "slug": "turkey-visa-rejection-reason-explainer",
+    "name": "Turkey Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Why a Turkish e-Visa or consular visa was refused - the 60-day validity rule, eligibility conditions, 90-in-180 and more."
+  },
+  {
+    "slug": "turkish-airlines-baggage-allowance-checker",
+    "name": "Turkish Airlines Baggage Allowance Checker",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Check cabin and check-in bags against Turkish Airlines weight allowances, the 8 kg cabin rule and Americas piece-concept routes."
+  },
+  {
+    "slug": "turkish-airlines-excess-baggage-cost-estimator",
+    "name": "Turkish Airlines Excess Baggage Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out Turkish Airlines excess baggage by kilogram or by piece, with pooled allowances and the online discount applied."
+  },
+  {
+    "slug": "tutor-income-tax-calculator",
+    "name": "Teacher and Tutor Income Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Tax on tuition and coaching income after expenses, comparing the old and new regimes and the 44AD presumptive option."
+  },
+  {
+    "slug": "tv-power-consumption-calculator",
+    "name": "TV Power Consumption Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate television electricity use and running cost from screen size, panel type, picture mode, daily hours and your tariff."
+  },
+  {
+    "slug": "tv-viewing-distance-calculator",
+    "name": "TV Viewing Distance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find the right TV size, seating distance and wall-mount height using SMPTE and THX viewing angles plus pixel acuity limits."
   },
   {
     "slug": "tv-viewing-distance-guide",
@@ -11396,12 +21713,60 @@ export const TOOL_CATALOG = [
     "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!"
   },
   {
+    "slug": "twitch-panel-size-generator",
+    "name": "Twitch Panel Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Generate channel panels, sub badges, emotes and offline art at exact Twitch pixel sizes and file limits."
+  },
+  {
+    "slug": "twitter-card-image-generator",
+    "name": "Twitter Card Image Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Draw and download a summary or large-image card at the size X requires, and copy the matching twitter:card meta tags."
+  },
+  {
+    "slug": "twitter-thread-prompt-builder",
+    "name": "Twitter Thread Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Generates thread prompts with post count, hook style and CTA — 280-character budgets and t.co link costs computed per post."
+  },
+  {
+    "slug": "two-round-attempt-planner",
+    "name": "Two Round Attempt Planner",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Plan a fast first pass and a focused second pass across a question paper, with per-question seconds for each round."
+  },
+  {
+    "slug": "two-tone-wall-paint-calculator",
+    "name": "Two Tone Wall Paint Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Split wall paint between an upper and a lower band at any dado height, with doors and windows deducted from the right band."
+  },
+  {
     "slug": "two-wheeler-loan-calculator",
     "name": "Two Wheeler Loan Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Bike and scooter loan EMI from on-road price, down payment and tenure, with loan-to-value and affordability checks."
+  },
+  {
+    "slug": "two-wheeler-service-cost-estimator",
+    "name": "Two Wheeler Service Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate a bike or scooter periodic service bill from engine oil, wear parts due at that odometer reading, labour and GST."
   },
   {
     "slug": "typing-master",
@@ -11429,6 +21794,78 @@ export const TOOL_CATALOG = [
     "description": "Structured typing lessons with live WPM, accuracy tracking, keyboard visualization, and progress charts."
   },
   {
+    "slug": "tyre-cost-per-km-calculator",
+    "name": "Tyre Cost Per KM Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare two tyre brands on true cost per kilometre using fitted price, expected life, fuel efficiency and break-even mileage."
+  },
+  {
+    "slug": "tyre-dot-date-decoder",
+    "name": "Tyre DOT Date Decoder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Read the DOT date code to find the week and year a tyre was made, its exact age today and the 6 and 10 year milestones."
+  },
+  {
+    "slug": "tyre-load-speed-rating-decoder",
+    "name": "Tyre Load Speed Rating Decoder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Decode a tyre sidewall code into load index in kilograms, speed symbol in km/h, overall diameter and revolutions per kilometre."
+  },
+  {
+    "slug": "tyre-pressure-guide",
+    "name": "Tyre Pressure Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Recommended cold tyre pressure by vehicle type, load and season, with temperature drift and sidewall-limit checks."
+  },
+  {
+    "slug": "tyre-rotation-schedule-planner",
+    "name": "Tyre Rotation Schedule Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan tyre rotation intervals and the correct crossing pattern for front, rear and all wheel drive cars."
+  },
+  {
+    "slug": "tyre-size-metric-to-inch-converter",
+    "name": "Tyre Size Metric to Inch Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert 205/55R16 style metric tyre sizes to 31x10.50R15 inch flotation sizes and back, with speedometer error."
+  },
+  {
+    "slug": "uae-dress-code-planner",
+    "name": "UAE Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan what to wear and pack for the UAE by month and emirate, covering mosque cover-up rules, mall dress codes, beaches and Ramadan."
+  },
+  {
+    "slug": "udyam-category-calculator",
+    "name": "Udyam Registration Category Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Classify a business as micro, small or medium under the MSMED Act composite investment and turnover test for Udyam registration."
+  },
+  {
+    "slug": "ufw-rule-generator",
+    "name": "UFW Rule Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate valid ufw allow, deny, reject and limit rules for ports, ranges, source networks and app profiles, plus a safe enable order."
+  },
+  {
     "slug": "ui-spacing-consistency-checker",
     "name": "UI Spacing Consistency Checker",
     "categories": [
@@ -11454,6 +21891,14 @@ export const TOOL_CATALOG = [
     "description": "Spin a customizable wheel to generate random choices easily."
   },
   {
+    "slug": "umask-calculator",
+    "name": "Umask Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "See the exact file and directory permissions any umask value produces, with symbolic form, a reverse calculator and safety warnings."
+  },
+  {
     "slug": "uncertainty-propagation-workbench",
     "name": "Uncertainty Propagation Workbench",
     "categories": [
@@ -11463,11 +21908,18 @@ export const TOOL_CATALOG = [
     "description": "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale."
   },
   {
+    "slug": "unclaimed-deposit-checklist",
+    "name": "Unclaimed Deposit Search Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Classify a dormant account, share folio, policy or EPF balance against the DEAF, IEPF and SCWF rules and get the exact claim checklist."
+  },
+  {
     "slug": "unicode-ascii-converter",
     "name": "Unicode / ASCII Converter",
     "categories": [
-      "Developer",
-      "Text & Writing"
+      "Converters"
     ],
     "description": "Convert text into Unicode escapes or ASCII codes and back."
   },
@@ -11505,6 +21957,22 @@ export const TOOL_CATALOG = [
     "description": "Compare price per unit across different pack sizes and brands to find which option is genuinely cheaper."
   },
   {
+    "slug": "unit-test-prompt-builder",
+    "name": "Unit Test Prompt Builder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Builds a test-generation prompt with your framework, coverage target and edge-case classes, plus a baseline test-count estimate."
+  },
+  {
+    "slug": "unit-test-weightage-calculator",
+    "name": "Unit Test Weightage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Combine unit test scores with their weightings into one final subject score using the weighted mean of percentages."
+  },
+  {
     "slug": "universal-pii-ai-redactor",
     "name": "Universal PII & AI Input Redactor",
     "categories": [
@@ -11521,6 +21989,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Convert Unix timestamps to readable local, UTC, and ISO dates."
+  },
+  {
+    "slug": "up-board-percentage-calculator",
+    "name": "UP Board Percentage Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate UP Board Class 10 (600 marks) or Class 12 (500 marks) percentage, pass status and division in seconds."
   },
   {
     "slug": "upi-autopay-mandate-calendar",
@@ -11550,12 +22026,60 @@ export const TOOL_CATALOG = [
     "description": "Create a UPI payment QR code from a VPA, payee name and optional fixed amount, note and reference."
   },
   {
+    "slug": "upi-transaction-limit-checker",
+    "name": "UPI Transaction Limit Checker",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Find the binding UPI limit for a payment — NPCI category cap, your bank's cap and what is left of today's quota."
+  },
+  {
+    "slug": "upsc-admit-card-day-checklist",
+    "name": "UPSC Admit Card Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Printable UPSC exam-day checklist covering admit card, photo ID and allowed items, with a reporting plan built on the 10-minute gate rule."
+  },
+  {
+    "slug": "upsc-answer-prompt-builder",
+    "name": "UPSC Answer Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build AI prompts for UPSC Mains answer practice with the real word limits, exam-time budget and intro-body-conclusion split."
+  },
+  {
+    "slug": "upsc-application-document-checklist",
+    "name": "UPSC Application Document Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Interactive checklist of every certificate, upload and detail needed to file the UPSC online application without a last-minute scramble."
+  },
+  {
+    "slug": "upsc-exam-countdown",
+    "name": "UPSC Exam Countdown",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Live countdown to UPSC Prelims and Mains with a daily study-hour target and prep-time milestones for any exam date."
+  },
+  {
     "slug": "upside-down-text",
     "name": "Upside Down Text",
     "categories": [
       "Text & Writing"
     ],
     "description": "Flip your text upside down and backwards using mathematical Unicode character mappings for creative styling."
+  },
+  {
+    "slug": "uptime-monitoring-cost-calculator",
+    "name": "Uptime Monitoring Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out monthly uptime monitoring cost from endpoint count, check interval, probe locations and alert volume — plus detection time."
   },
   {
     "slug": "url-encoder-decoder",
@@ -11582,12 +22106,84 @@ export const TOOL_CATALOG = [
     "description": "Break a URL into its protocol, host, path, query and hash parts."
   },
   {
+    "slug": "url-slug-collision-checker",
+    "name": "URL Slug Collision Checker",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Normalise a list of titles into URL slugs, find the ones that collide after folding and truncation, and assign WordPress-style numeric suffixes."
+  },
+  {
     "slug": "url-slug-generator",
     "name": "URL Slug Generator",
     "categories": [
       "Text & Writing"
     ],
     "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits."
+  },
+  {
+    "slug": "us-consulate-india-appointment-day-checklist",
+    "name": "US Consulate India Appointment Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Carry, wear and leave-behind checklist for a US visa OFC biometrics, interview or dropbox appointment in India, with arrival timing."
+  },
+  {
+    "slug": "us-gpa-to-percentage-converter",
+    "name": "US GPA To Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert a US 4.0-scale GPA back into an approximate percentage and letter grade using the standard US grading bands."
+  },
+  {
+    "slug": "usa-dress-code-planner",
+    "name": "USA Dress Code Planner for Travellers",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Plan USA outfits by region and month: courthouse and nightclub door rules, park layering, sun kit and a weighed packing list."
+  },
+  {
+    "slug": "usa-visa-cost-estimator",
+    "name": "USA Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add up the US MRV fee, SEVIS I-901, reciprocity charge, photos and courier into one editable rupee total."
+  },
+  {
+    "slug": "usa-visa-cover-letter-builder",
+    "name": "USA Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Build a printable B-1/B-2 cover letter with your itinerary, funding, DS-160 details and a 214(b) ties statement."
+  },
+  {
+    "slug": "usa-visa-rejection-reason-explainer",
+    "name": "USA Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Decode the INA section on a US visa refusal slip - 214(b), 221(g) and the rest - and get a checklist of what to fix."
+  },
+  {
+    "slug": "usd-cash-budget-planner",
+    "name": "USD Cash Budget Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Plan how many US dollars to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in."
+  },
+  {
+    "slug": "used-bike-buying-checklist",
+    "name": "Used Bike Buying Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Inspect a used motorcycle with a structured points checklist that scores condition and turns failures into an offer."
   },
   {
     "slug": "user-info-finder",
@@ -11607,6 +22203,14 @@ export const TOOL_CATALOG = [
     "description": "Generate unique, creative usernames instantly for any platform."
   },
   {
+    "slug": "utc-offset-team-matrix",
+    "name": "UTC Offset Team Matrix",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a 24-hour overlap grid for a distributed team — local clocks per city, shared working hours and the best meeting slots."
+  },
+  {
     "slug": "utility-tariff-csv-comparator",
     "name": "Utility Tariff CSV Comparator",
     "categories": [
@@ -11614,6 +22218,22 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Same usage profile ko multiple electricity plans par compare kare."
+  },
+  {
+    "slug": "utility-transfer-checklist",
+    "name": "Utility Transfer Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Date every electricity, water, gas, broadband and DTH action for a move, using the statutory new-connection timelines."
+  },
+  {
+    "slug": "utility-transfer-request-generator",
+    "name": "Utility Transfer Request Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft electricity, gas, water and broadband transfer applications with the right documents, the statutory timeline and a completion date."
   },
   {
     "slug": "utm-link-builder",
@@ -11641,6 +22261,22 @@ export const TOOL_CATALOG = [
     "description": "Forecast se comparatively lower-UV outdoor windows dikhaye."
   },
   {
+    "slug": "vacuum-cleaner-selector",
+    "name": "Vacuum Cleaner Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Match vacuum type, suction in air watts, filtration, bin size and battery runtime to your flooring, pets and home size."
+  },
+  {
+    "slug": "vagrantfile-generator",
+    "name": "Vagrantfile Generator",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Generate a ready-to-run Vagrantfile with box, hostname, networking, synced folders, provider resources and provisioner blocks."
+  },
+  {
     "slug": "vaporwave-text-generator",
     "name": "Vaporwave Text Generator",
     "categories": [
@@ -11658,12 +22294,116 @@ export const TOOL_CATALOG = [
     "description": "Weight, width aur optical-size axes visually inspect aur export kare."
   },
   {
+    "slug": "variable-pay-tax-calculator",
+    "name": "Variable Pay and Bonus Tax Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out the extra income tax and TDS your annual bonus or variable pay adds, under the new and old regime."
+  },
+  {
+    "slug": "vastu-colour-guide",
+    "name": "Vastu Colour Guide",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Informational guide to traditional vastu colour suggestions by direction, with a compass-bearing lookup for each room."
+  },
+  {
     "slug": "vat-calculator",
     "name": "VAT Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Add or remove VAT/GST from an amount at any rate."
+  },
+  {
+    "slug": "vat-calculator-france",
+    "name": "VAT Calculator France",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "French TVA calculator for the 20%, 10%, 5.5% and 2.1% rates, switching between HT and TTC with a franchise en base check."
+  },
+  {
+    "slug": "vat-calculator-germany",
+    "name": "VAT Calculator Germany",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compute German VAT (Mehrwertsteuer) at 19% and 7% with net-gross switching, the tax fraction and a Kleinunternehmer check."
+  },
+  {
+    "slug": "vat-calculator-ireland",
+    "name": "VAT Calculator Ireland",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Irish VAT calculator covering the 23%, 13.5%, 9%, 4.8% and zero rates, with registration threshold checks for goods and services."
+  },
+  {
+    "slug": "vat-calculator-italy",
+    "name": "VAT Calculator Italy",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Italian IVA calculator for the 22%, 10%, 5% and 4% rates, adding or scorporating tax with a regime forfettario check."
+  },
+  {
+    "slug": "vat-calculator-netherlands",
+    "name": "VAT Calculator Netherlands",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Dutch BTW calculator at 21% and 9% with reverse calculation, a KOR threshold check and a net BTW payable line."
+  },
+  {
+    "slug": "vat-calculator-poland",
+    "name": "VAT Calculator Poland",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Polish VAT calculator at 23%, 8% and 5% with gross-net switching, the exemption limit and a split payment check."
+  },
+  {
+    "slug": "vat-calculator-saudi-arabia",
+    "name": "VAT Calculator Saudi Arabia",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Extract or add 15% Saudi VAT using the 3/23 reverse fraction, with line discounts, the legacy 5% rate and ZATCA thresholds."
+  },
+  {
+    "slug": "vat-calculator-spain",
+    "name": "VAT Calculator Spain",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Spanish IVA calculator for the 21%, 10% and 4% bands, with base-to-total switching and the recargo de equivalencia surcharge."
+  },
+  {
+    "slug": "vat-calculator-uae",
+    "name": "VAT Calculator UAE",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add or remove 5% UAE VAT on any amount, with inclusive and exclusive pricing, zero-rated supplies and registration thresholds."
+  },
+  {
+    "slug": "vat-calculator-uk",
+    "name": "VAT Calculator United Kingdom",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Add or remove UK VAT at the 20% standard, 5% reduced and 0% zero rates, with the VAT fraction and registration threshold check."
+  },
+  {
+    "slug": "vector-storage-size-calculator",
+    "name": "Vector Storage Size Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate total vector index size from vector count, dimensions and data type, including HNSW or IVF overhead and replicas."
   },
   {
     "slug": "vehicle-compare",
@@ -11676,6 +22416,22 @@ export const TOOL_CATALOG = [
     "description": "Compare vehicles easily by price, features, and performance."
   },
   {
+    "slug": "vehicle-depreciation-calculator-india",
+    "name": "Vehicle Depreciation Value Calculator India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate a vehicle's current value using the motor tariff depreciation slabs, plus the income tax written down value at 15 or 30 percent."
+  },
+  {
+    "slug": "vehicle-document-expiry-reminder",
+    "name": "Vehicle Document Expiry Reminder",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track insurance, PUC, RC, fitness, permit and licence expiry dates in one private list with days left and reminder dates."
+  },
+  {
     "slug": "vehicle-document-reminder",
     "name": "Vehicle Document Reminder",
     "categories": [
@@ -11685,12 +22441,36 @@ export const TOOL_CATALOG = [
     "description": "RC, insurance, PUC aur licence expiry track kare."
   },
   {
+    "slug": "vehicle-downsizing-savings",
+    "name": "Vehicle Downsizing Savings",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate yearly savings from moving to a smaller car or a single-vehicle household, including fuel, insurance, depreciation and payback."
+  },
+  {
+    "slug": "vehicle-idv-calculator",
+    "name": "Vehicle IDV Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Calculate the Insured Declared Value of a car or bike using the India Motor Tariff GR.8 depreciation slabs."
+  },
+  {
     "slug": "vehicle-insurance-idv-calculator",
     "name": "Vehicle Insurance IDV Calculator",
     "categories": [
       "Finance Calculators"
     ],
     "description": "Insured Declared Value from ex-showroom price and vehicle age using the IRDAI depreciation grid, plus accessories and an indicative OD premium."
+  },
+  {
+    "slug": "vehicle-registration-decoder-india",
+    "name": "Vehicle Registration Decoder India",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Decode an Indian number plate into state, RTO office, letter series and serial, with plate colour and BH-series meaning."
   },
   {
     "slug": "vendor-data-processing-inventory",
@@ -11702,6 +22482,14 @@ export const TOOL_CATALOG = [
     "description": "Vendors, purposes, data categories aur retention terms track kare."
   },
   {
+    "slug": "vercel-usage-cost-estimator",
+    "name": "Vercel Usage Cost Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate your Vercel Pro bill from seats, bandwidth, edge requests, function invocations, duration and build minutes."
+  },
+  {
     "slug": "vertical-video-safe-zone-previewer",
     "name": "Vertical Video Safe-Zone Previewer",
     "categories": [
@@ -11709,6 +22497,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Reels, Shorts aur TikTok obstruction areas overlay kare."
+  },
+  {
+    "slug": "vfs-global-appointment-day-checklist",
+    "name": "VFS Global Appointment Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Build a personalised carry, wear and leave-behind checklist for a VFS Global visa application centre appointment, with a leave-home time."
+  },
+  {
+    "slug": "video-ad-length-compliance-checker",
+    "name": "Video Ad Length Compliance Checker",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Check one video ad duration against the minimum, maximum and recommended lengths for each placement you plan to run it in."
   },
   {
     "slug": "video-bitrate-calculator",
@@ -11743,6 +22547,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Selected frames ko PNG sequence ya sprite sheet me export kare."
+  },
+  {
+    "slug": "video-lecture-speed-planner",
+    "name": "Video Lecture Speed Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "See how playback speed changes your lecture backlog finish date, with a full 1x-2x comparison table."
   },
   {
     "slug": "video-script-timer",
@@ -11789,6 +22601,38 @@ export const TOOL_CATALOG = [
     "description": "Trim video clips in your browser with precise start and end controls."
   },
   {
+    "slug": "vietnam-travel-etiquette-guide",
+    "name": "Vietnam Travel Etiquette Guide",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a prioritised Vietnam etiquette briefing for pagodas, street food, markets and traffic, with the legal red lines flagged."
+  },
+  {
+    "slug": "vietnam-visa-cost-estimator",
+    "name": "Vietnam Visa Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Price a Vietnam e-visa, visa on arrival or embassy visa by validity band, with the under-14 concession applied."
+  },
+  {
+    "slug": "vietnam-visa-cover-letter-builder",
+    "name": "Vietnam Visa Cover Letter Builder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Build a Vietnam e-visa cover letter with itinerary, entry checkpoint, the 90-day limit and a working-day decision estimate."
+  },
+  {
+    "slug": "vietnam-visa-rejection-reason-explainer",
+    "name": "Vietnam Visa Rejection Reason Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Find why a Vietnam e-Visa was rejected - photo, scan, data mismatch or record - and what to correct before reapplying."
+  },
+  {
     "slug": "viral-thumbnail-maker",
     "name": "Viral Thumbnail Maker",
     "categories": [
@@ -11806,12 +22650,36 @@ export const TOOL_CATALOG = [
     "description": "Test your working memory capacity — memorize colored shapes and recall their positions in increasingly challenging rounds."
   },
   {
+    "slug": "vitamin-d-supplement-schedule",
+    "name": "Vitamin D Supplement Schedule",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Turn a weekly or monthly vitamin D dosing instruction into dated doses, with the average daily IU compared to the RDA and upper limit."
+  },
+  {
     "slug": "vitamin-intake-tracker",
     "name": "Vitamin Intake Tracker",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Track your daily vitamin and supplement intake — Vitamin D3, B-Complex, Magnesium, and more — with dosage guidance and adherence streaks."
+  },
+  {
+    "slug": "vitrified-vs-ceramic-tile-cost",
+    "name": "Vitrified vs Ceramic Tile Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compare material, laying and whole-life cost of vitrified versus ceramic tiles over the years you plan to keep them."
+  },
+  {
+    "slug": "viva-question-prompt-builder",
+    "name": "Viva Question Prompt Builder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Builds a mock-viva prompt from your abstract and methods, distributing likely examiner questions across the standard defence areas."
   },
   {
     "slug": "vocabulary-builder",
@@ -11857,6 +22725,22 @@ export const TOOL_CATALOG = [
     "description": "Convert spoken language into written text."
   },
   {
+    "slug": "voiceover-script-formatter",
+    "name": "Voiceover Script Formatter",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Split a script into numbered narration blocks with per-cue word counts, running timecodes and an estimated read time at your pace."
+  },
+  {
+    "slug": "voiceover-word-budget-calculator",
+    "name": "Voiceover Word Budget Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find how many words fit a 15, 30 or 60 second voiceover slot at your reading pace, after breath and tag allowances."
+  },
+  {
     "slug": "voiceprint-anonymizer",
     "name": "Voiceprint Anonymizer",
     "categories": [
@@ -11866,12 +22750,28 @@ export const TOOL_CATALOG = [
     "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare."
   },
   {
+    "slug": "voltage-converter-vs-adapter-explainer",
+    "name": "Voltage Converter vs Adapter Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Reads your appliance label against the destination mains to say whether a plug adapter is enough or you need a real converter."
+  },
+  {
     "slug": "voltage-drop-wire-gauge-calculator",
     "name": "Voltage Drop & Wire Gauge Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Length, current aur conductor se voltage loss estimate kare."
+  },
+  {
+    "slug": "voltage-stabilizer-selector",
+    "name": "Voltage Stabilizer Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a voltage stabilizer in kVA and pick the right working range for an AC, fridge or TV from its wattage and your site voltage swing."
   },
   {
     "slug": "voronoi-art-generator",
@@ -11889,6 +22789,38 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "EPIC number pattern validate aur normalize kare."
+  },
+  {
+    "slug": "vtt-to-srt-converter",
+    "name": "VTT To SRT Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift."
+  },
+  {
+    "slug": "vtu-attendance-calculator",
+    "name": "VTU Attendance Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute VTU subject-wise attendance, eligibility against the 85% rule and how many classes you can still miss."
+  },
+  {
+    "slug": "vtu-cgpa-percentage-converter",
+    "name": "VTU CGPA Percentage Converter",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert VTU CGPA to percentage by scheme, build SGPA from subject credits and see the class awarded."
+  },
+  {
+    "slug": "vtu-sgpa-calculator",
+    "name": "VTU SGPA Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute VTU SGPA from CIE and SEE marks per subject — grading, pass rules and the Σ(Ci×Gi)/ΣCi formula of the 2021/2022 scheme."
   },
   {
     "slug": "wacc-calculator",
@@ -11915,6 +22847,30 @@ export const TOOL_CATALOG = [
     "description": "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape."
   },
   {
+    "slug": "wall-art-hanging-calculator",
+    "name": "Wall Art Hanging Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out nail height, frame spacing and hook rating for single pictures and gallery walls using the 145 cm gallery centre line."
+  },
+  {
+    "slug": "wall-putty-quantity-calculator",
+    "name": "Wall Putty Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Calculate wall putty kilos and bags per square foot, plus mixing water and cost, for a smooth base before painting."
+  },
+  {
+    "slug": "wall-tile-quantity-calculator",
+    "name": "Wall Tile Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute wall tile count, boxes and cost from wall run, height and the door and window openings deducted."
+  },
+  {
     "slug": "warranty-receipt-vault",
     "name": "Warranty & Receipt Vault",
     "categories": [
@@ -11922,6 +22878,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Track receipts, serial numbers, warranty terms, and expiry dates."
+  },
+  {
+    "slug": "washing-machine-capacity-selector",
+    "name": "Washing Machine Capacity Selector",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Size a washing machine in kg from your household's weekly laundry weight, bed linen and how many washes you run."
+  },
+  {
+    "slug": "washing-machine-running-cost",
+    "name": "Washing Machine Running Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Per-wash electricity, water and detergent cost for front-load, top-load and semi-automatic machines, plus the monthly and yearly bill."
   },
   {
     "slug": "water-intake-calculator",
@@ -11933,12 +22905,60 @@ export const TOOL_CATALOG = [
     "description": "Estimate daily water intake from weight, activity, and climate."
   },
   {
+    "slug": "water-leakage-complaint-letter-generator",
+    "name": "Water Leakage Complaint Letter Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a seepage or water leakage complaint to your society or neighbour, with the responsible party and a dated repair deadline."
+  },
+  {
+    "slug": "water-meter-reading-tracker",
+    "name": "Water Meter Reading Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Log water meter readings to track litres per day, litres per person, cost and leak signals between any two readings."
+  },
+  {
+    "slug": "water-pump-electricity-cost",
+    "name": "Water Pump Electricity Cost",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Monthly cost of running a home water pump from its horsepower, motor efficiency, tank size and daily fills."
+  },
+  {
     "slug": "water-tank-calculator",
     "name": "Water Tank Size Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Size your overhead tank and sump from BIS per-capita water norms, with dimensions and filling time."
+  },
+  {
+    "slug": "water-tank-cleaning-planner",
+    "name": "Water Tank Cleaning Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Set the right cleaning interval for your overhead tank or sump, estimate the cost, and get the bleaching-powder dose for disinfection."
+  },
+  {
+    "slug": "water-tank-refill-time-calculator",
+    "name": "Water Tank Refill Time Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Find how long a pump takes to fill your water tank, plus the units and rupees each fill costs at your head and efficiency."
+  },
+  {
+    "slug": "water-tanker-cost-calculator",
+    "name": "Water Tanker Cost Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out how many water tankers your home needs each month, the monthly spend and the true cost per litre and per kilolitre."
   },
   {
     "slug": "watercolor-game",
@@ -12063,6 +23083,38 @@ export const TOOL_CATALOG = [
     "description": "Convert WebP images to high-quality PNG, JPG, or PDF files quickly in your browser. Batch convert multiple files and download as a ZIP archive."
   },
   {
+    "slug": "wedding-budget-planner-india",
+    "name": "Wedding Budget Planner India",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a wedding budget across venue, catering, jewellery and travel, with a per-plate ceiling."
+  },
+  {
+    "slug": "wedding-card-print-size-guide-india",
+    "name": "Wedding Card Print Size Guide India",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Indian wedding card trade sizes with flat artwork size, bleed, envelope and insert dimensions, paper GSM and per-invite weight."
+  },
+  {
+    "slug": "wedding-planning-prompt-builder",
+    "name": "Wedding Planning Prompt Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Split a wedding budget by category, get cost per guest and a phase checklist, then copy a planning prompt built from those numbers."
+  },
+  {
+    "slug": "wedding-travel-packing-list-builder",
+    "name": "Wedding Travel Packing List Builder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a wedding trip packing list from the events you are attending, with outfit weights checked against your baggage allowance."
+  },
+  {
     "slug": "week-number-calculator",
     "name": "Week Number Calculator",
     "categories": [
@@ -12079,13 +23131,28 @@ export const TOOL_CATALOG = [
     "description": "Plan your meals for the week with an organized interface and clear next steps."
   },
   {
+    "slug": "weekly-pill-organiser-builder",
+    "name": "Weekly Pill Organiser Builder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Lay out morning, noon, evening and night compartments for all seven days, with tablet counts per compartment and per week."
+  },
+  {
     "slug": "weekly-review-dashboard",
     "name": "Weekly Review Dashboard",
     "categories": [
-      "Productivity",
-      "Business"
+      "Productivity"
     ],
     "description": "Review weekly progress with real-time goals, tasks, reflections, planning, reminders, analytics, charts, local save, and exportable summaries."
+  },
+  {
+    "slug": "weight-loss-protein-calculator",
+    "name": "Weight-Loss Protein Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily protein floor to protect lean mass in a calorie deficit, using adjusted body weight when BMI is 30 or above."
   },
   {
     "slug": "weight-loss-tracker",
@@ -12103,6 +23170,22 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Compute a weighted mean from value and weight pairs with a live running total."
+  },
+  {
+    "slug": "weighted-vs-unweighted-gpa-calculator",
+    "name": "Weighted Vs Unweighted GPA Tool",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Compute both weighted and unweighted high school GPA from your courses, with Honors +0.5 and AP/IB +1.0 bonuses."
+  },
+  {
+    "slug": "west-bengal-board-percentage-calculator",
+    "name": "West Bengal Board Percentage Tool",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Madhyamik and Higher Secondary percentage from subject marks, with WBBSE letter grades and the best-five rule applied."
   },
   {
     "slug": "whack-a-mole",
@@ -12152,6 +23235,22 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Discover your hidden superpower with our free personality quiz. Answer 10 fun questions to reveal your unique superpower type and inner strengths. Fun online qu"
+  },
+  {
+    "slug": "whatsapp-status-size-generator",
+    "name": "WhatsApp Status Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Make status images and video covers fit the 9:16 screen without auto-crop, with safe zones and clip length planning."
+  },
+  {
+    "slug": "wheel-alignment-planner",
+    "name": "Wheel Alignment Planner",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan wheel alignment and balancing intervals from road quality and kilometres, and tell the two symptom sets apart."
   },
   {
     "slug": "wheregoes-tool",
@@ -12219,6 +23318,14 @@ export const TOOL_CATALOG = [
     "description": "Add participants and randomly select one person to pay the bill. Perfect for group dinners and outings."
   },
   {
+    "slug": "whole30-macro-planner",
+    "name": "Whole30 Macro Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Whole30-compliant daily macros translated into meal-template portions, plus the full allowed and excluded food checklist."
+  },
+  {
     "slug": "wifi-qr-generator",
     "name": "WiFi QR Code Generator",
     "categories": [
@@ -12228,12 +23335,60 @@ export const TOOL_CATALOG = [
     "description": "Create a scannable WiFi QR code so guests can join your network instantly. Generated locally, nothing is uploaded."
   },
   {
+    "slug": "windfall-allocation-planner",
+    "name": "Windfall Allocation Planner",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split a bonus, inheritance or sale proceeds across tax, emergency fund, high-interest debt, investing and guilt-free spending."
+  },
+  {
+    "slug": "window-blind-size-helper",
+    "name": "Window Blind Size Helper",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn three width and height measurements into an exact blind order size for inside or outside mount, with depth, squareness and bracket checks."
+  },
+  {
+    "slug": "wiper-blade-size-finder",
+    "name": "Wiper Blade Size Finder",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Turn a measured wiper blade into the nearest stocked size in millimetres and inches, and identify the arm fitting type."
+  },
+  {
     "slug": "wizard-name-generator",
     "name": "Wizard Name Generator",
     "categories": [
       "Fun"
     ],
     "description": "Generate mystical wizard names with magic schools, staff types, and enchanted quotes. Discover your fantasy wizard identity for RPGs and stories."
+  },
+  {
+    "slug": "wood-polish-quantity-calculator",
+    "name": "Wood Polish Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out melamine, PU or NC polish litres for doors and furniture, split into base, hardener and thinner."
+  },
+  {
+    "slug": "wood-screw-size-selector",
+    "name": "Wood Screw Size Selector",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Pick the right wood screw gauge, length, pilot hole and countersink for your board thickness, material and joint type."
+  },
+  {
+    "slug": "wood-stain-quantity-calculator",
+    "name": "Wood Stain Quantity Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Litres of wood stain, sealer or varnish for a surface area, adjusted for texture, wood porosity, coats and wastage."
   },
   {
     "slug": "word-character-counter",
@@ -12268,6 +23423,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Play word search puzzles online free — themed word lists, three grid sizes, and drag-to-select letters."
+  },
+  {
+    "slug": "words-to-tokens-estimator",
+    "name": "Words to Tokens Estimator",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Estimate LLM token usage from a word count before you write, with content-type ratios and a safety margin."
   },
   {
     "slug": "workflow-bottleneck-finder",
@@ -12306,12 +23469,36 @@ export const TOOL_CATALOG = [
     "description": "Plan workout tasks with organized inputs, timelines, and clear next steps."
   },
   {
+    "slug": "workout-prompt-builder",
+    "name": "Workout Prompt Builder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build a training plan prompt with evidence-based weekly set volume, a split matched to your days, rep and load ranges and a session time estimate."
+  },
+  {
     "slug": "world-facts-explorer",
     "name": "World Facts Explorer",
     "categories": [
       "Education & Science"
     ],
     "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries."
+  },
+  {
+    "slug": "writing-model-picker",
+    "name": "Writing Model Picker",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Rank drafting, editing and ideation options — hosted, grounded, self-hosted or local — against length, fact-checking, voice, privacy and budget."
+  },
+  {
+    "slug": "x-twitter-image-size-generator",
+    "name": "X Twitter Image Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Export header, post and card images at exact X dimensions with crop, bar and upscale checks before you upload."
   },
   {
     "slug": "xirr-calculator",
@@ -12338,6 +23525,38 @@ export const TOOL_CATALOG = [
     "description": "Format simple YAML, list keys, and convert YAML snippets to JSON."
   },
   {
+    "slug": "yaml-multi-document-splitter",
+    "name": "YAML Multi Document Splitter",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Split multi-document YAML on --- markers into separate validated files, suggest filenames, and recombine them cleanly."
+  },
+  {
+    "slug": "yaml-to-json-converter",
+    "name": "YAML to JSON Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert YAML to JSON in the browser — anchors and aliases resolved, multi-document files handled, output formatted your way."
+  },
+  {
+    "slug": "yarn-workspaces-config-generator",
+    "name": "Yarn Workspaces Config Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Set up Yarn workspaces with package globs, nohoist rules for Yarn 1 or .yarnrc.yml and constraints for Yarn Berry."
+  },
+  {
+    "slug": "year-on-year-marks-comparator",
+    "name": "Year On Year Marks Comparator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Compare marks across semesters or years, see percentage-point change per period and the least-squares trend of your scores."
+  },
+  {
     "slug": "yes-or-no-oracle",
     "name": "Yes or No Oracle",
     "categories": [
@@ -12355,12 +23574,28 @@ export const TOOL_CATALOG = [
     "description": "Upload a photo and simulate what your younger self would look like, along with retro polaroid frames and childhood traits summaries."
   },
   {
+    "slug": "youtube-script-prompt-builder",
+    "name": "YouTube Script Prompt Builder",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Creates video script prompts from runtime: word count at 150 wpm, a 15-second hook, chapter timings and retention beats."
+  },
+  {
     "slug": "youtube-thumbnail-downloader",
     "name": "YouTube Thumbnail Downloader",
     "categories": [
       "Marketing & Social"
     ],
     "description": "Preview and download YouTube video thumbnails in available sizes."
+  },
+  {
+    "slug": "youtube-thumbnail-size-generator",
+    "name": "YouTube Thumbnail Size Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Crop and export any image to YouTube's 1280x720 16:9 thumbnail spec, with minimum-width, aspect-ratio and 2 MB file-size checks."
   },
   {
     "slug": "youtube-video-analyzer",

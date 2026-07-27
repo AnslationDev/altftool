@@ -185,6 +185,21 @@ function getExtendedMeta(path, brandId) {
   }
 }
 
+function readVerificationEnv() {
+  const pick = (key) => {
+    const value = process.env[key];
+    return typeof value === "string" ? value.trim() : "";
+  };
+
+  return {
+    google: pick("ALTFT_VERIFY_GOOGLE"),
+    bing: pick("ALTFT_VERIFY_BING"),
+    yandex: pick("ALTFT_VERIFY_YANDEX"),
+    pinterest: pick("ALTFT_VERIFY_PINTEREST"),
+    facebook: pick("ALTFT_VERIFY_FACEBOOK"),
+  };
+}
+
 /** Map verification tokens to the Next.js metadata.verification shape. */
 function buildVerification(v) {
   if (!v || typeof v !== "object") return undefined;
@@ -261,7 +276,7 @@ export async function createPageMetadata(rawArgs = {}) {
     if (alt?.lang && alt?.href) languages[alt.lang] = absoluteUrl(alt.href);
   }
 
-  const verification = buildVerification(ext.verification);
+  const verification = buildVerification({ ...readVerificationEnv(), ...ext.verification });
   const icons = ext.favicon ? { icon: absoluteUrl(ext.favicon) } : undefined;
 
   const metadata = {

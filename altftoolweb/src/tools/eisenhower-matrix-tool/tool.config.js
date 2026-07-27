@@ -2,8 +2,8 @@ const eisenhowerMatrixToolConfig = {
   slug: "eisenhower-matrix-tool",
   name: "Eisenhower Matrix Tool",
   description:
-    "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
-  category: ["Productivity", "Business", "Utility"],
+    "Sort tasks into the four urgent/important quadrants from two 1-10 scores, and see how many hours go to firefighting versus planned work.",
+  category: "Productivity",
   icon: "layout-dashboard",
   iconColor: "text-cyan-600",
 };

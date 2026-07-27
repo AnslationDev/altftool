@@ -11,11 +11,11 @@ export function calculateComplexity(parsedCode, code, langId = 'javascript') {
         const complexity = calculateFunctionComplexity(fn.body, config, langId);
         const cognitiveComplexity = calculateCognitiveComplexity(fn.body, config, langId);
         const details = analyzeFunctionDetails(fn, config, langId);
-        
+
         // Basic Halstead per function (Simplified for this tool)
         const fnTokens = tokenize(fn.body, langId);
         const fnHalstead = calculateHalstead(fnTokens);
-        
+
         perFunction[fn.name] = complexity;
         functionDetails.push({
             ...fn,
@@ -66,7 +66,7 @@ function calculateCognitiveComplexity(body, config, langId) {
 
         // Increment nesting for structural elements
         const increaseNesting = /\b(if|for|while|do|switch|catch|def|elif|except)\b/.test(trimmed);
-        
+
         if (increaseNesting) {
             score += 1 + nesting;
             nesting++;
@@ -111,13 +111,13 @@ function calculateHalstead(tokens) {
 
     const u1 = operators.size; // distinct operators
     const u2 = operands.size; // distinct operands
-    
+
     const N = n1 + n2; // program length
     const U = u1 + u2; // program vocabulary
     const V = N * Math.log2(U || 1); // volume
     const D = (u1 / 2) * (n2 / (u2 || 1)); // difficulty
     const E = D * V; // effort
-    
+
     return {
         vocabulary: U,
         length: N,
@@ -134,7 +134,7 @@ function calculateMI(halstead, cyclomatic, loc) {
     const V = Math.max(1, halstead.volume);
     const G = cyclomatic;
     const L = Math.max(1, loc);
-    
+
     const mi = 171 - 5.2 * Math.log(V) - 0.23 * G - 16.2 * Math.log(L);
     const normalized = Math.max(0, Math.min(100, (mi * 100) / 171));
     return Math.round(normalized);
@@ -150,24 +150,32 @@ function calculateFunctionComplexity(body, config, langId) {
         // Skip comments
         if (trimmed.startsWith('//') || trimmed.startsWith('#') || trimmed.startsWith('*')) continue;
 
-        // Count branching keywords
-        if (/\bif\s*\(/.test(trimmed) || /\bif\s+/.test(trimmed) && langId === 'python') complexity++;
-        if (/\belse\s+if\s*\(/.test(trimmed) || /\belif\b/.test(trimmed)) complexity++;
+        // Count branching keywords.
+        // `else if` / `elif` is ONE decision point. Testing for a bare `if`
+        // first would match the same line twice and inflate every else-if
+        // chain, so the else-if case is detected up front and excluded below.
+        const isElseIf = /\belse\s+if\s*\(/.test(trimmed) || /\belif\b/.test(trimmed);
+        const isPlainIf =
+            /\bif\s*\(/.test(trimmed) || (/\bif\s+/.test(trimmed) && langId === 'python');
+        if (isElseIf || isPlainIf) complexity++;
         if (/\bfor\s*[\(]/.test(trimmed) || /\bfor\s+\w+\s+in\b/.test(trimmed)) complexity++;
         if (/\bwhile\s*[\(]/.test(trimmed) || /\bwhile\s+/.test(trimmed) && langId === 'python') complexity++;
         if (/\bdo\s*\{/.test(trimmed)) complexity++;
         if (/\bcase\s+/.test(trimmed)) complexity++;
         if (/\bcatch\s*[\(]/.test(trimmed) || /\bexcept\b/.test(trimmed)) complexity++;
 
-        // Count ternary operators
-        const ternaryCount = (trimmed.match(/\?[^?]/g) || []).length;
-        complexity += ternaryCount;
-
         // Count logical operators (each adds a path)
         const andCount = (trimmed.match(/&&/g) || []).length;
         const orCount = (trimmed.match(/\|\|/g) || []).length;
         const nullishCount = (trimmed.match(/\?\?/g) || []).length;
         complexity += andCount + orCount + nullishCount;
+
+        // Count ternary operators. `??` and `?.` are stripped first: both
+        // contain a `?` that would otherwise be counted a second time here
+        // after already being counted as a nullish operator above.
+        const withoutNullish = trimmed.replace(/\?\?/g, '').replace(/\?\./g, '');
+        const ternaryCount = (withoutNullish.match(/\?/g) || []).length;
+        complexity += ternaryCount;
 
         // Python logical operators
         if (langId === 'python') {

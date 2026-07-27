@@ -1,16 +1,18 @@
 "use client";
 
 import { Menu, ChevronRight, Home, Maximize2, Minimize2 } from "lucide-react";
-import PagePreferencesPanel from "./PagePreferencesPanel";
+import HomeSearchBar from "./HomeSearchBar";
 import SupportLandingPage from "./SupportLandingPage";
 import SettingDetailPage from "./SettingDetailPage";
 import UtilityPage, { UTILITY_TITLES } from "./UtilityPage";
 import AiToolDetailPage from "./AiToolDetailPage";
 import DeviceLandingPage from "./DeviceLandingPage";
+import CategoryHubPage from "./CategoryHubPage";
 import CompatibilityBanner from "./CompatibilityBanner";
 import { getCategoryById } from "../data/categories";
 import { getDeviceById } from "../data/deviceTaxonomy";
 import { getSettingsForDevice, ALL_DEVICE_SETTINGS } from "../data/devices";
+import { parseCategoryActiveId, getSettingsForCategory } from "../data/settingData";
 
 const PLATFORM_LABEL = { windows: "Windows", macos: "macOS", android: "Android", ios: "iOS" };
 
@@ -50,6 +52,7 @@ const SettingsContent = ({
   onVisit,
   onOpenSidebar,
   onGoHome,
+  searchInputRef,
   focusMode,
   onToggleFocusMode,
   isBookmarked,
@@ -66,10 +69,17 @@ const SettingsContent = ({
   const isDeviceLanding = typeof activeId === "string" && activeId.startsWith("device-");
   const activeDeviceLanding = isDeviceLanding ? getDeviceById(activeId.slice("device-".length)) : null;
 
+  const categoryRef = parseCategoryActiveId(activeId);
+  const isCategoryHub = categoryRef !== null;
+  const activeCategory = categoryRef ? getCategoryById(categoryRef.categoryId) : null;
+  const categorySettings = categoryRef ? getSettingsForCategory(categoryRef.platform, categoryRef.categoryId) : [];
+
   const activeOsSetting =
-    !isUtility && !isAiTool && !isDeviceLanding && activeId ? allSettings.find((s) => s.id === activeId) : null;
+    !isUtility && !isAiTool && !isDeviceLanding && !isCategoryHub && activeId
+      ? allSettings.find((s) => s.id === activeId)
+      : null;
   const activeDeviceSetting =
-    !isUtility && !isAiTool && !isDeviceLanding && activeId && !activeOsSetting
+    !isUtility && !isAiTool && !isDeviceLanding && !isCategoryHub && activeId && !activeOsSetting
       ? ALL_DEVICE_SETTINGS.find((s) => s.id === activeId)
       : null;
   const activeSetting = activeOsSetting || activeDeviceSetting;
@@ -92,6 +102,8 @@ const SettingsContent = ({
     breadcrumb = { section: "AI Tools", title: activeAiTool.name };
   } else if (activeDeviceLanding) {
     breadcrumb = { section: "Devices", title: activeDeviceLanding.name };
+  } else if (activeCategory) {
+    breadcrumb = { section: PLATFORM_LABEL[categoryRef.platform] || "Settings", title: activeCategory.label };
   }
 
   // Compatibility check (item 3): does the guide currently open match the
@@ -113,6 +125,25 @@ const SettingsContent = ({
       className={`support-settings-content support-text-${prefs.textSize} support-width-${prefs.readingWidth} support-linespacing-${prefs.lineSpacing}`}
     >
       <div className="support-settings-content-inner">
+        {/* THE one persistent "Find a setting" search bar — rendered here,
+            at the very top of the content pane, on every page including
+            Home. Matches every native Settings app (Windows, macOS,
+            Android, iOS): search lives in exactly one fixed top spot, never
+            in the side nav and never only-on-some-pages. It shares the same
+            searchQuery state the sidebar list filters against, so typing
+            here filters the sidebar too. */}
+        <div className="support-persistent-search">
+          <HomeSearchBar
+            ref={searchInputRef}
+            settings={allSettings}
+            searchQuery={searchQuery}
+            onSearchChange={onSearchChange}
+            onSelectSetting={onSelectSetting}
+            platform={platform}
+            onSwitchPlatform={platformState?.setOverride}
+          />
+        </div>
+
         {/* Mobile Sidebar Toggle */}
         <div className="md:hidden my-5">
           <button onClick={onOpenSidebar} className="support-settings-mobile-toggle">
@@ -166,16 +197,6 @@ const SettingsContent = ({
           />
         )}
 
-        <PagePreferencesPanel
-          prefs={prefs}
-          togglePref={togglePref}
-          updatePref={updatePref}
-          resetPrefs={resetPrefs}
-          bookmarkedCount={bookmarkedIds?.length || 0}
-          onClearBookmarks={onClearBookmarks}
-          onClearHistory={onClearHistory}
-        />
-
         {activeSetting ? (
           <SettingDetailPage
             key={activeSetting.id}
@@ -204,6 +225,13 @@ const SettingsContent = ({
             onSelectSetting={onSelectSetting}
             platformState={platformState}
             onGoHome={onGoHome}
+          />
+        ) : activeCategory ? (
+          <CategoryHubPage
+            category={activeCategory}
+            settings={categorySettings}
+            platform={categoryRef.platform}
+            onSelectSetting={onSelectSetting}
           />
         ) : (
           <SupportLandingPage

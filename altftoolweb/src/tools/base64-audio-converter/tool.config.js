@@ -1,14 +1,10 @@
 const toolConfig = {
   slug: "base64-audio-converter",
-  "slug": "base64-audio-converter",
-  "name": "Base64 Audio Converter",
-  "category": [
-    "Media",
-    "Converter"
-  ],
-  "description": "Preview and download Base64 audio data URLs.",
-  "icon": "volume2",
-  "iconColor": "text-pink-700"
+  name: "Base64 Audio Converter",
+  category: ["Video & Audio", "Converters"],
+  description: "Preview and download Base64 audio data URLs.",
+  icon: "volume2",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

@@ -1,15 +1,11 @@
 const toolConfig = {
   slug: "base64-url-encoder",
-  "slug": "base64-url-encoder",
-  "name": "Base64 URL Encoder",
-  "category": [
-    "Developer",
-    "Converter",
-    "Web"
-  ],
-  "description": "Encode text and Base64 payloads into URL-safe Base64.",
-  "icon": "link",
-  "iconColor": "text-sky-600"
+  name: "Base64 URL Encoder",
+  category: ["Developer", "Converters"],
+  description:
+    "Encode text, standard Base64 or hex bytes into URL-safe base64url (RFC 4648 §5), with padding control and URL and cookie size checks.",
+  icon: "link",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

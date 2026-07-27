@@ -50,7 +50,7 @@ export default function HistoryPanel({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2, delay: index * 0.03 }}
-              className="group rounded-xl border border-border bg-card p-4 hover:shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+              className="group rounded-xl border border-border bg-card p-4 hover:shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
               onClick={() => onSelect(item)}
               role="button"
               tabIndex={0}
@@ -83,7 +83,7 @@ export default function HistoryPanel({
                       e.stopPropagation();
                       onToggleFavorite(item.id);
                     }}
-                    className="p-1.5 rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                    className="p-1.5 rounded-lg hover:bg-muted/50 transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                     aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
                   >
                     <Heart
@@ -96,7 +96,7 @@ export default function HistoryPanel({
                       e.stopPropagation();
                       onDelete(item.id);
                     }}
-                    className="p-1.5 rounded-lg hover:bg-(--danger)/10 text-muted-foreground hover:text-(--danger) transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                    className="p-1.5 rounded-lg hover:bg-(--danger)/10 text-muted-foreground hover:text-(--danger) transition cursor-pointer focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                     aria-label="Delete"
                   >
                     <Trash2 size={14} />

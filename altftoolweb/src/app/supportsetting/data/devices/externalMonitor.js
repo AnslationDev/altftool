@@ -24,7 +24,7 @@ export const externalMonitorSettings = [
     ],
     important:
       "Running a non-native resolution on an LCD panel always looks slightly soft or blurry because the display has to interpolate pixels — for text-heavy work, native resolution matters more than raw pixel count.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/change-your-screen-resolution-in-windows-9022ea9d-e692-3e40-6106-4f5c599adc0d",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Change Screen Resolution",
     whyItMatters:
       "Resolution and refresh rate are the two settings most likely to be wrong out of the box on a fresh external monitor connection, and both are silent failures — the display still works, it's just softer or choppier than it should be, which is easy to live with for months without realizing a cable swap or a menu setting would fix it.",
@@ -61,7 +61,7 @@ export const externalMonitorSettings = [
       "As a starting point, set brightness so a plain white background feels comfortable in your room's ambient light (roughly 120–150 cd/m² for a dim room, higher for a bright one), then set contrast so blacks look dark without crushing shadow detail.",
     ],
     important: "Maxing out brightness and contrast is rarely correct — it increases eye strain and, on many panels, makes bright highlights lose detail (clipping) rather than actually improving picture quality.",
-    redirectUrl: "https://support.apple.com/guide/mac-help/adjust-display-brightness-mchl46f94ae2/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Adjust Display Brightness",
     whyItMatters:
       "Because brightness lives on the monitor rather than the OS, it's the setting people are most likely to never touch after unboxing — factory defaults are often tuned for a bright showroom floor and are noticeably too intense for a home or office desk, contributing to avoidable eye fatigue over a full workday.",
@@ -99,7 +99,7 @@ export const externalMonitorSettings = [
       "macOS: check or uncheck \"Mirror Displays\" in the same Arrangement tab to switch between an extended desktop and a mirrored (duplicate) one.",
     ],
     important: "If the on-screen arrangement doesn't match the physical desk layout, the mouse cursor will jump to the wrong monitor when moved off an edge — this is the single most common multi-monitor complaint and is fixed entirely in the Arrangement/Display settings, not the monitors themselves.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/manage-multiple-displays-in-windows-b62dc4f2-2f80-4c67-9e8b-6ceb0f8f0c0d",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Manage Multiple Displays",
     whyItMatters:
       "A correctly arranged multi-monitor setup lets you treat several screens as one continuous workspace, which is the entire point of adding a second or third display — get the arrangement wrong and the extra screen becomes a source of friction (a wandering cursor, windows opening on the wrong screen) instead of added productivity.",
@@ -137,7 +137,7 @@ export const externalMonitorSettings = [
       "Verify the cable and port support the required bandwidth (HDMI 2.0a or newer for 4K HDR at 60Hz, HDMI 2.1 or DisplayPort 1.4 for higher refresh rates) — insufficient bandwidth can cause the HDR toggle to fail silently or force a lower resolution/refresh rate.",
     ],
     important: "Many budget monitors are only certified to the entry-level \"DisplayHDR 400\" tier, which has no local dimming and limited peak brightness — on these panels, HDR content can actually look flatter than well-tuned SDR, so it's worth comparing both before assuming HDR is strictly better on a given monitor.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/use-hdr-and-wcg-color-on-windows-1b810b1e-2637-46b7-84fa-c3cba9caa9c4",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Use HDR on Windows",
     whyItMatters:
       "HDR support varies enormously between monitors even within the same marketing tier, so knowing where to enable and calibrate it — and recognizing when a specific monitor's HDR implementation isn't strong enough to be worthwhile — prevents chasing a setting that a given panel can't meaningfully deliver on.",
@@ -175,7 +175,7 @@ export const externalMonitorSettings = [
       "For color-critical work (photo, video, or design), a hardware colorimeter that measures the panel directly produces a far more accurate profile than either OS's built-in eyeball-based wizard.",
     ],
     important: "A manual eyeball calibration is a reasonable starting point for everyday use, but it is not accurate enough for professional color work — for that, a hardware colorimeter and the manufacturer's factory ICC profile (if provided) are the only reliable options.",
-    redirectUrl: "https://support.apple.com/guide/mac-help/calibrate-your-display-and-create-a-custom-profile-mchl4562e02b/mac",
+    redirectUrl: "https://support.apple.com/mac",
     actionLabel: "Open Apple Support: Calibrate Your Display",
     whyItMatters:
       "Without a correct ICC profile, colors can shift noticeably between monitors on the same desk, or between what you see on screen and what a photo or design looks like once printed or viewed elsewhere — for anyone doing color-sensitive work this isn't cosmetic, it's the difference between trusting what's on screen and not.",
@@ -213,7 +213,7 @@ export const externalMonitorSettings = [
       "macOS: verify connected peripherals under  → About This Mac → System Report → USB to confirm the monitor's hub is being detected as a USB host.",
     ],
     important: "Not every USB-C port on a laptop supports video output — some are data/charging only. Confirm the specific port you're using is labeled (or documented) as supporting DisplayPort Alt Mode before assuming a blank screen is the monitor's fault.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/connect-to-external-displays-79fca408-8060-5fbb-a80f-f4e42fdb9f4f",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Connect to External Displays",
     whyItMatters:
       "USB-C passthrough is what lets a single-cable docking setup work at all — plug in once, and video, charging, and every peripheral on the desk come along with it — but it only works reliably when the monitor's Power Delivery wattage and USB hub bandwidth are compatible with the laptop, which isn't always obvious from a spec sheet alone.",
@@ -250,7 +250,7 @@ export const externalMonitorSettings = [
       "Some monitors ship with a companion desktop app that mirrors OSD controls over the USB connection, letting you adjust picture mode or input source from the desktop instead of reaching for the physical buttons.",
       "If a specific button doesn't seem to do anything, check whether it's a shortcut button (often preset to input source or a picture-mode toggle) rather than the main menu button — these are usually distinguished by a small icon printed near the button.",
     ],
-    redirectUrl: "https://support.microsoft.com/en-us/windows/connect-to-external-displays-79fca408-8060-5fbb-a80f-f4e42fdb9f4f",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: External Display Troubleshooting",
     whyItMatters:
       "A meaningful portion of a monitor's functionality — input switching, picture modes, response time, HDR toggling, power-saving timers — lives entirely in the OSD and is invisible to both Windows and macOS, so not knowing how to navigate it means missing out on settings that directly affect image quality and usability.",
@@ -288,7 +288,7 @@ export const externalMonitorSettings = [
       "If the monitor takes several seconds to \"re-sync\" after waking (brief blank or flickering screen), that's typically the monitor re-negotiating the video signal's resolution and refresh rate — normal behavior, not a fault.",
     ],
     important: "If the OS sleep timer and the monitor's own OSD power-saving timer are set to very different values, the shorter of the two effectively wins — check both settings if the screen seems to blank sooner than the OS timer alone would suggest.",
-    redirectUrl: "https://support.microsoft.com/en-us/windows/change-when-your-screen-turns-off-in-windows-1c78bf25-3fb2-1234-6f6e-6a9a1f6d8fbb",
+    redirectUrl: "https://support.microsoft.com/en-us/windows/",
     actionLabel: "Open Windows Support: Change When Your Screen Turns Off",
     whyItMatters:
       "Auto-sleep timing is a genuine energy-saving feature and reduces panel wear over the years, but a monitor-level timer set independently of the OS is a common, confusing cause of a screen that blanks unexpectedly during active use — understanding that there are two separate timers is the key to fixing it correctly instead of just disabling power saving entirely.",

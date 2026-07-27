@@ -156,25 +156,22 @@ export function CardBubbleBackground({ isHovered, activeColor = "teal", burstTri
     <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl" aria-hidden="true">
       {/* Dynamic Radial Glow on Hover */}
       <div
-        className={`absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br transition-all duration-500 blur-xl ${
-          activeColor === "cyan" ? "from-cyan-400/30 to-teal-400/10" : "from-teal-400/30 to-cyan-400/10"
-        } ${isHovered ? "scale-150 opacity-100" : "scale-100 opacity-40"}`}
+        className={`absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br transition-all duration-500 blur-xl ${activeColor === "cyan" ? "from-cyan-400/30 to-teal-400/10" : "from-teal-400/30 to-cyan-400/10"
+          } ${isHovered ? "scale-150 opacity-100" : "scale-100 opacity-40"}`}
       />
       <div
-        className={`absolute -left-8 -bottom-8 h-28 w-28 rounded-full bg-gradient-to-tr transition-all duration-500 blur-xl ${
-          activeColor === "cyan" ? "from-teal-400/30 to-purple-400/10" : "from-cyan-400/30 to-purple-400/10"
-        } ${isHovered ? "scale-150 opacity-100" : "scale-100 opacity-40"}`}
+        className={`absolute -left-8 -bottom-8 h-28 w-28 rounded-full bg-gradient-to-tr transition-all duration-500 blur-xl ${activeColor === "cyan" ? "from-teal-400/30 to-purple-400/10" : "from-cyan-400/30 to-purple-400/10"
+          } ${isHovered ? "scale-150 opacity-100" : "scale-100 opacity-40"}`}
       />
 
       {/* Floating Card Background Bubbles */}
       {cardBubbles.map((b, i) => (
         <div
           key={i}
-          className={`animate-card-float-bubble absolute rounded-full border shadow-xs transition-all duration-300 ${
-            activeColor === "cyan"
+          className={`animate-card-float-bubble absolute rounded-full border shadow-xs transition-all duration-300 ${activeColor === "cyan"
               ? "border-cyan-300/40 bg-gradient-to-tr from-cyan-400/25 to-teal-200/20 dark:border-cyan-500/30 dark:from-cyan-500/20 dark:to-teal-400/10"
               : "border-teal-300/40 bg-gradient-to-tr from-teal-400/25 to-cyan-200/20 dark:border-teal-500/30 dark:from-teal-500/20 dark:to-cyan-400/10"
-          } ${isHovered ? "scale-125 border-cyan-400/60 shadow-cyan-300/30 opacity-90" : ""}`}
+            } ${isHovered ? "scale-125 border-cyan-400/60 shadow-cyan-300/30 opacity-90" : ""}`}
           style={{
             width: `${b.size}px`,
             height: `${b.size}px`,
@@ -496,9 +493,8 @@ export function InputControlsPanel({
               <span>Filter Styles</span>
               <button
                 onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-extrabold transition ${
-                  showFavoritesOnly ? "bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400" : "text-slate-400 hover:text-slate-600"
-                }`}
+                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-extrabold transition ${showFavoritesOnly ? "bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400" : "text-slate-400 hover:text-slate-600"
+                  }`}
                 type="button"
               >
                 <Heart className={`h-3 w-3 ${showFavoritesOnly ? "fill-rose-500 text-rose-500" : ""}`} />
@@ -577,11 +573,10 @@ export function BubbleStyleCard({
 
           <button
             onClick={() => onToggleFavorite(st.id)}
-            className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-200 ${
-              isFav
+            className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-200 ${isFav
                 ? "border-rose-300 bg-rose-50 text-rose-500 dark:border-rose-800 dark:bg-rose-950"
                 : "border-slate-200 bg-slate-50 text-slate-400 hover:text-rose-500 dark:border-slate-700 dark:bg-slate-800"
-            }`}
+              }`}
             type="button"
             title="Bookmark style"
           >

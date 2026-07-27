@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { storage } from "@/lib/firebase";
+import { serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { emitAlert } from "@/lib/alertBus";
+import { createSale, updateSale } from "../services/sales.service";
 import { logAuditEvent } from "@/lib/auditClient";
-import {
-  createSale,
-  updateSale,
-  uploadSaleImage,
-} from "../services/sales.service";
 import {
   X,
   Loader2,
@@ -384,6 +383,7 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState("idle");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   /* ── Populate fields from initialData ── */
   useEffect(() => {
@@ -457,19 +457,8 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
     if (config.hasImage && imageType === "url" && !imageUrl.trim()) {
       e.image = "Image URL is required";
     }
-    if (config.hasImage && imageType === "upload" && !imageFile && !imagePreview) {
-      e.image = "Choose an image to upload";
-    }
     if (config.hasHeroImage && heroImageType === "url" && !heroImageUrl.trim()) {
       e.heroImage = "Hero image URL is required";
-    }
-    if (
-      config.hasHeroImage &&
-      heroImageType === "upload" &&
-      !heroImageFile &&
-      !heroImagePreview
-    ) {
-      e.heroImage = "Choose a hero image to upload";
     }
 
     setErrors(e);
@@ -480,73 +469,153 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
   const saveSale = async () => {
     if (!validate()) return;
     setLoading(true);
-    setStep("saving");
 
     try {
-      const resolvedImage =
-        imageType === "upload" && imageFile
-          ? await uploadSaleImage(imageFile, "products")
-          : imageUrl || imagePreview || "";
-      const resolvedHeroImage =
-        heroImageType === "upload" && heroImageFile
-          ? await uploadSaleImage(heroImageFile, "heroes")
-          : heroImageUrl || heroImagePreview || "";
+    let resolvedImage = imageUrl;
+    let resolvedHeroImage = heroImageUrl;
 
-      let payload = {};
+    /* ── Upload main image ── */
+    if (imageType === "upload" && imageFile) {
+      setStep("uploading");
 
-      if (type === "flashSale" || type === "trendingSale") {
-        payload = {
-          type,
-          title: title.trim(),
-          subtitle: subtitle.trim(),
-          productTitle: productTitle.trim(),
-          image: resolvedImage,
-          price: price.trim(),
-          oldPrice: oldPrice.trim(),
-          discount: discount.trim(),
-          ctaLink: ctaLink.trim(),
-        };
-      } else if (type === "dealOfTheDay") {
-        payload = {
-          type,
-          title: title.trim(),
-          subtitle: subtitle.trim(),
-          image: resolvedImage,
-          link: ctaLink.trim(),
-        };
-      } else if (type === "hero") {
-        payload = {
-          type,
-          headline: title.trim(),
-          subtext: subtitle.trim(),
-          ctaLink: ctaLink.trim(),
-          heroImage: resolvedHeroImage,
-        };
-      }
+      const storageRef = ref(
+        storage,
+        `sales/${Date.now()}_${imageFile.name}`
+      );
 
-      const id = isEdit
-        ? await updateSale(initialData.id, payload)
-        : await createSale(payload);
+      resolvedImage = await new Promise((resolve, reject) => {
+        const task = uploadBytesResumable(storageRef, imageFile);
 
-      logAuditEvent({
-        module: "sale-locator",
-        action: isEdit ? "SALE_UPDATE" : "SALE_CREATE",
-        entityType: "sale",
-        entityId: id,
-        summary: `${isEdit ? "Updated" : "Created"} ${type} sale`,
-        changes: { type },
-        route: "/altftool/sale-locator",
+        task.on(
+          "state_changed",
+          (snap) => {
+            setUploadProgress(
+              Math.round(
+                (snap.bytesTransferred / snap.totalBytes) * 100
+              )
+            );
+          },
+          reject,
+          async () => {
+            try {
+              const url = await getDownloadURL(task.snapshot.ref);
+              resolve(url);
+            } catch (e) {
+              reject(e);
+            }
+          }
+        );
       });
+    }
 
-      onSave({ ...payload, id, createdAt: initialData?.createdAt || new Date().toISOString() });
+    /* ── Upload hero image ── */
+    if (heroImageType === "upload" && heroImageFile) {
+      const storageRef = ref(
+        storage,
+        `sales/${Date.now()}_${heroImageFile.name}`
+      );
 
-      setStep("done");
-      emitAlert({ type: "success", message: isEdit ? "Sale updated!" : "Sale created!" });
-      setTimeout(onClose, 500);
-    } catch (err) {
+      resolvedHeroImage = await new Promise((resolve, reject) => {
+        const task = uploadBytesResumable(storageRef, heroImageFile);
+
+        task.on(
+          "state_changed",
+          null,
+          reject,
+          async () => {
+            try {
+              const url = await getDownloadURL(task.snapshot.ref);
+              resolve(url);
+            } catch (e) {
+              reject(e);
+            }
+          }
+        );
+      });
+    }
+
+    setStep("saving");
+
+    /* ── Build payload ── */
+    let payload = {};
+
+    if (type === "flashSale" || type === "trendingSale") {
+      payload = {
+        type,
+        title: title.trim(),
+        subtitle: subtitle.trim(),
+        productTitle: productTitle.trim(),
+        image: resolvedImage,
+        price: price.trim(),
+        oldPrice: oldPrice.trim(),
+        discount: discount.trim(),
+        ctaLink: ctaLink.trim(),
+        updatedAt: serverTimestamp(),
+      };
+    } else if (type === "dealOfTheDay") {
+      payload = {
+        type,
+        title: title.trim(),
+        subtitle: subtitle.trim(),
+        image: resolvedImage,
+        link: ctaLink.trim(),
+        updatedAt: serverTimestamp(),
+      };
+    } else if (type === "hero") {
+      payload = {
+        type,
+        headline: title.trim(),
+        subtext: subtitle.trim(),
+        ctaLink: ctaLink.trim(),
+        heroImage: resolvedHeroImage,
+        updatedAt: serverTimestamp(),
+      };
+    }
+
+    /* ── Save ── */
+    let id = initialData?.id || Date.now();
+
+    if (isEdit) {
+      await updateSale(initialData.id, payload);
+    } else {
+      id = await createSale({
+        ...payload,
+        createdAt: serverTimestamp(),
+      });
+    }
+
+    /* ── Audit log ── */
+    logAuditEvent({
+      module: "sales",
+      action: isEdit ? "SALES_UPDATE" : "SALES_CREATE",
+      entityType: "sale",
+      entityId: id,
+      summary: `${isEdit ? "Updated" : "Created"} sale "${title.trim()}"`,
+      changes: { type },
+      route: "/sales",
+    });
+
+    /* ── UI update ── */
+    onSave({
+      ...payload,
+      id,
+      createdAt:
+        initialData?.createdAt || new Date().toISOString(),
+    });
+
+    setStep("done");
+
+    emitAlert({
+      type: "success",
+      message: isEdit ? "Sale updated!" : "Sale created!",
+    });
+
+    setTimeout(onClose, 500);
+  } catch (err) {
       console.error(err);
-      emitAlert({ type: "error", message: "Failed to save. Please try again." });
       setStep("idle");
+      setUploadProgress(0);
+      emitAlert({ type: "error", message: err?.message || "Failed to save sale" });
     } finally {
       setLoading(false);
     }
@@ -573,6 +642,7 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
 
   const stepLabel = {
     idle: isEdit ? "Update Sale" : "Create Sale",
+    uploading: `Uploading… ${uploadProgress}%`,
     saving: "Saving…",
     done: "Done!",
   }[step];

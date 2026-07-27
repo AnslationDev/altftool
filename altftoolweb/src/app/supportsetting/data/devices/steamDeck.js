@@ -35,7 +35,7 @@ export const steamDeckSettings = [
       "The Deck reboots automatically once an update finishes downloading and verifying.",
     ],
     important: "Don't hold the power button to force a shutdown while 'Installing update...' is shown on screen — interrupting this step can corrupt the system partition and require a recovery reimage.",
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/6960-1EE0-E2AF-1CB9",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: SteamOS Update",
     whyItMatters:
       "Valve ties compatibility layer (Proton) updates, controller firmware, and battery/thermal tuning to SteamOS releases, so an outdated system is one of the most common causes of games crashing on launch or running worse than they should.",
@@ -71,7 +71,7 @@ export const steamDeckSettings = [
       "For advanced options (forgetting networks, static IP, proxy), go to STEAM button > Settings > Network.",
       "Airplane Mode is a single toggle at the top of the Quick Access network tab that disables both Wi-Fi and Bluetooth at once.",
     ],
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/1EAA-8398-96D1-92F3",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Network & Bluetooth",
     whyItMatters:
       "A weak or dropped Wi-Fi connection is the most common cause of stalled downloads and cloud-save conflicts, and a mis-paired Bluetooth device can silently steal audio output from a game without any obvious on-screen warning.",
@@ -109,7 +109,7 @@ export const steamDeckSettings = [
       "General power behavior — sleep timer, screen-off timer, and the battery percentage/time-remaining display — is under STEAM button > Settings > Power.",
     ],
     important: "Frame Rate Limit only reduces power draw effectively when paired with Vsync or Half Rate Shading — capping FPS alone without those can still leave the GPU running near full tilt between frames.",
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/6D6A-A34C-6355-CF69",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Battery & Performance",
     whyItMatters:
       "The Deck's battery is small relative to its hardware, and an unconstrained TDP is the single biggest factor separating a 1.5-hour session from a 4+ hour one — most players get meaningfully more playtime just by dialing in these three sliders once per game.",
@@ -146,7 +146,7 @@ export const steamDeckSettings = [
       "Gyro behavior (always-on, as-mouse-while-touching-trackpad, etc.) and stick/trackpad sensitivity curves are set per layout under the same Configuration screen.",
       "Global controller behavior, such as swapping A/B or disabling Steam Input entirely for a specific game, is under STEAM button > Settings > Controller.",
     ],
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/54EC-1258-D8F6-DF3E",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Steam Input & Controller",
     whyItMatters:
       "Many PC games were never designed for a handheld's control layout, and Steam Input is what makes them playable at all on Deck — a bad or default mapping is one of the top reasons a game feels unplayable even when performance is fine.",
@@ -183,7 +183,7 @@ export const steamDeckSettings = [
       "The Downloads settings page lets you set the default install location for new game installs.",
     ],
     important: "Use a high-endurance, high-speed (A2-rated UHS-I or better) microSD card — slow or low-endurance cards cause noticeably longer load times and can wear out faster under constant game read/write.",
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/1EAF-8398-96D1-92F3",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Storage & microSD",
     whyItMatters:
       "Running out of storage mid-download is one of the most common Deck frustrations, and understanding Move versus reinstall saves significant time and mobile data when juggling a large library on limited internal space.",
@@ -219,7 +219,7 @@ export const steamDeckSettings = [
       "OLED models add extra Display options for color vibrance/contrast and an always-on-display-style dimming behavior.",
       "Per-game refresh rate can also be capped from the Quick Access Performance tab alongside frame rate limit for combined battery savings.",
     ],
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/80D1-A5AD-B4CE-6BFD",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Display Settings",
     whyItMatters:
       "Refresh rate and output scaling directly affect both battery life and how sharp or blurry a docked setup looks, and getting the resolution/scaling filter wrong when docked is a common cause of a blurry or stretched image on a TV.",
@@ -256,7 +256,7 @@ export const steamDeckSettings = [
       "Return to the game-focused interface via the Steam icon in the taskbar or the desktop's Power menu > 'Return to Gaming Mode'.",
     ],
     important: "Changes made outside the Steam client in Desktop Mode (system packages, file system edits) aren't covered by Valve's standard support and can be undone by a SteamOS reset — keep a note of anything you customize.",
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/643D-C0D5-DD2B-EE0B",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Desktop Mode",
     whyItMatters:
       "Desktop Mode is what turns the Deck from a game console into a general-purpose Linux PC — it's required for installing other game launchers, emulators, browsers, and productivity apps, and for any deeper troubleshooting that Game Mode's simplified UI doesn't expose.",
@@ -292,7 +292,7 @@ export const steamDeckSettings = [
       "Filter and sort the Library (installed, ready to play, by collection) from the Library tab's top menu to keep a large collection manageable.",
       "Per-game ••• menu options include Properties, where you can opt a specific title out of automatic updates.",
     ],
-    redirectUrl: "https://help.steampowered.com/en/faqs/view/3C5B-2E77-4A7B-8E51",
+    redirectUrl: "https://help.steampowered.com/en/wizard/HelpWithSteamDeck",
     actionLabel: "Open Steam Support: Library & Downloads",
     whyItMatters:
       "Automatic updates and a nearby download region are the difference between a game being ready when you pick up the Deck versus stalling on a multi-gigabyte patch right when you want to play, especially with limited mobile or shared home bandwidth.",

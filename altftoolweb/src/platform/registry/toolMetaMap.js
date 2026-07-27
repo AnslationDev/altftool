@@ -132,11 +132,46 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "absolute-vs-annualised-return": {
+    "name": "Absolute vs Annualised Return Converter",
+    "description": "Convert a total gain percentage into an annualised (CAGR) rate and back again for any holding period in years, months or days.",
+    "category": "Converters",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "absolute-vs-annualised-return-calculator": {
     "name": "Absolute vs Annualised Return Calculator",
     "description": "Convert total gain percentage to annualised CAGR and back, for any holding period in years and months.",
     "category": "Finance Calculators",
     "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "ac-copper-pipe-cost-estimator": {
+    "name": "AC Copper Pipe Cost Estimator",
+    "description": "Estimate the extra copper, drain, cable, core drilling and refrigerant top-up cost when a split AC outdoor unit sits far from the indoor unit.",
+    "category": "Calculators",
+    "icon": "pipette",
+    "iconColor": "text-(--primary)"
+  },
+  "ac-running-cost-per-hour": {
+    "name": "AC Running Cost Per Hour",
+    "description": "Compute air conditioner electricity cost per hour, day and month from tonnage, ISEER star rating and your unit tariff.",
+    "category": "Calculators",
+    "icon": "air-vent",
+    "iconColor": "text-(--primary)"
+  },
+  "ac-star-rating-savings-calculator": {
+    "name": "AC Star Rating Savings Calculator",
+    "description": "See how many years a 5-star AC takes to pay back its price premium over a 3-star model, with tariff escalation.",
+    "category": "Calculators",
+    "icon": "star",
+    "iconColor": "text-(--primary)"
+  },
+  "ac-temperature-savings-simulator": {
+    "name": "AC Temperature Savings Simulator",
+    "description": "See the units and rupees saved for every degree you raise the AC thermostat, with a full setpoint table from 18 to 30 °C.",
+    "category": "Calculators",
+    "icon": "thermometer-snowflake",
     "iconColor": "text-(--primary)"
   },
   "ac-tonnage-calculator": {
@@ -149,6 +184,13 @@ export const toolMetaMap = {
     ],
     "icon": "air-vent",
     "iconColor": "text-teal-600"
+  },
+  "accent-wall-colour-suggester": {
+    "name": "Accent Wall Colour Suggester",
+    "description": "Suggest accent wall shades that pair with your existing wall colour, with LRV, contrast and trim advice for each.",
+    "category": "Design & Color",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
   },
   "accessible-authentication-auditor": {
     "name": "Accessible Authentication Auditor",
@@ -180,6 +222,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "accountant-prompt-pack": {
+    "name": "Accountant Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for reconciliations, variance analysis, client emails and plain-English report notes.",
+    "category": "Business",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "achromatopsia-palette-simulator": {
+    "name": "Achromatopsia Palette Simulator",
+    "description": "See your palette with all colour removed and check every pair against the WCAG 3:1 and 4.5:1 contrast thresholds.",
+    "category": "Design & Color",
+    "icon": "contrast",
+    "iconColor": "text-(--primary)"
+  },
   "acne-severity-analyzer": {
     "name": "Acne Severity Analyzer",
     "description": "Analyze acne severity with AI-powered skin analysis. Detect blemishes, inflammation, and breakouts with detailed scoring and coverage metrics.",
@@ -207,25 +263,53 @@ export const toolMetaMap = {
     "icon": "text-cursor-input",
     "iconColor": "text-teal-500"
   },
+  "act-composite-score-calculator": {
+    "name": "ACT Composite Score Calculator",
+    "description": "Average ACT section scores into the official 1-36 Composite with ACT's half-up rounding, for classic and enhanced 2025 formats.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
   "ad-banner-size-finder-tool": {
     "name": "Ad Banner Size Finder",
     "description": "Find the exact standard dimensions for ad banners across all major platforms.",
-    "category": "Marketing & Social",
-    "topics": [
-      "Marketing"
+    "category": [
+      "Marketing & Social",
+      "Design & Color"
     ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "monitor",
+    "iconColor": "text-(--primary)"
   },
   "ad-copy-ab-planner": {
     "name": "Ad Copy A/B Planner",
-    "description": "Futuristic A/B ad copy planner, side-by-side comparison, live mock previews, and campaign testing scheduler.",
-    "category": "Marketing & Social",
-    "topics": [
-      "Marketing"
+    "description": "Plan an ad copy A/B test: write both variants against real platform character limits, then size the test and its run time with the two-proportion sample formula.",
+    "category": [
+      "Marketing & Social",
+      "Business"
     ],
-    "icon": "columns",
-    "iconColor": "text-blue-500"
+    "icon": "columns-2",
+    "iconColor": "text-(--primary)"
+  },
+  "ad-copy-prompt-builder": {
+    "name": "Ad Copy Prompt Builder",
+    "description": "Build an AI ad copy prompt with real platform character limits, a chosen angle and compliance notes baked in.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
+  },
+  "address-change-checklist-india": {
+    "name": "Address Change Checklist India",
+    "description": "Every record to update after relocating in India — Aadhaar, voter roll, RC, bank KYC, utilities — with the statutory deadlines dated.",
+    "category": "Productivity",
+    "icon": "map-pin",
+    "iconColor": "text-(--primary)"
+  },
+  "adhesive-selector": {
+    "name": "Adhesive Selector",
+    "description": "Ranks glues and sealants for the two materials you are joining, checking gap fill, water exposure, movement, load and surface energy.",
+    "category": "Education & Science",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
   },
   "adjustable-reading-reformatter": {
     "name": "Adjustable Reading Reformatter",
@@ -251,6 +335,13 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-primary"
   },
+  "adr-generator": {
+    "name": "ADR Generator",
+    "description": "Write an architecture decision record in the Nygard or MADR format with context, options, decision and consequences.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
   "advance-tax-installment-planner": {
     "name": "Advance Tax Installment Planner",
     "description": "Estimated tax ko applicable installments me schedule kare.",
@@ -273,20 +364,22 @@ export const toolMetaMap = {
     "icon": "calendar-clock",
     "iconColor": "text-(--primary)"
   },
+  "aed-cash-budget-planner": {
+    "name": "AED Cash Budget Planner",
+    "description": "Plan how many UAE dirhams to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
   "afterimage-generator": {
     "name": "Afterimage Generator",
-    "description": "Experience retinal adaptation and complementary afterimages through color staring or image processing.",
+    "description": "Experience retinal adaptation and complementary afterimages: pick a stimulus colour, stare at it, then see the complement the tool predicted.",
     "category": [
       "Education & Science",
-      "Fun"
+      "Design & Color"
     ],
-    "topics": [
-      "Neuroscience",
-      "Visual Experiments",
-      "Science"
-    ],
-    "icon": "scan-face",
-    "iconColor": "text-rose-600"
+    "icon": "eye",
+    "iconColor": "text-(--primary)"
   },
   "age-calculator": {
     "name": "Age Calculator",
@@ -324,6 +417,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar",
     "iconColor": "text-rose-600"
+  },
+  "age-on-exam-cutoff-date-calculator": {
+    "name": "Age On Cutoff Date Calculator",
+    "description": "Compute your exact age in years, months and days on any exam cutoff date, and test it against minimum and maximum age limits.",
+    "category": "Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "age-progression-generator": {
     "name": "Age Progression Generator",
@@ -363,6 +463,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "agent-guardrail-checklist": {
+    "name": "Agent Guardrail Checklist",
+    "description": "Score your AI agent's guardrails — permissions, spend caps, confirmation gates, injection defences — before you ship it.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "agent-memory-poisoning-inspector": {
     "name": "Agent Memory Poisoning Inspector",
     "description": "Compare two AI-memory exports locally and flag newly added instruction overrides, identity changes, permissions, hidden controls, and persistence cues.",
@@ -374,6 +481,13 @@ export const toolMetaMap = {
     "icon": "brain-circuit",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "agent-observability-checklist": {
+    "name": "Agent Observability Checklist",
+    "description": "Decide what to trace, measure, log and redact for a production LLM agent, with a readiness score and sampling plan.",
+    "category": "Developer",
+    "icon": "radar",
+    "iconColor": "text-(--primary)"
   },
   "agent-permission-policy-builder": {
     "name": "Agent Permission Policy Builder",
@@ -399,6 +513,69 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "ahmedabad-airport-transfer-time-planner": {
+    "name": "Ahmedabad Airport Transfer Time Planner",
+    "description": "Work out when to leave for Ahmedabad AMD airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-academic-integrity-checklist": {
+    "name": "AI Academic Integrity Checklist",
+    "description": "Check whether your AI use on an assignment matches typical institutional permission, disclosure and verification rules.",
+    "category": "Education & Science",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-adoption-readiness-quiz": {
+    "name": "AI Adoption Readiness Quiz",
+    "description": "Score your organisation's data, skills, process and governance readiness before rolling out AI, with a banded verdict and weakest-area callout.",
+    "category": "Business",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-art-style-reference-sheet": {
+    "name": "AI Art Style Reference Sheet",
+    "description": "Build a reusable image-prompt style sheet across eight axes, with a coverage score, de-duplication and a CLIP token estimate.",
+    "category": "Design & Color",
+    "icon": "palette",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-attribution-statement-builder": {
+    "name": "AI Attribution Statement Builder",
+    "description": "Build a citation-style attribution for AI assistance in APA 7, MLA 9 or Chicago format, plus an acknowledgement statement.",
+    "category": "Education & Science",
+    "icon": "quote",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-certification-study-planner": {
+    "name": "AI Certification Study Planner",
+    "description": "Turn an AI certification's published domain weights into a week-by-week study plan with hours per topic and a readiness check against your exam date.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-consent-conversation-guide": {
+    "name": "AI Consent Conversation Guide",
+    "description": "Work out how much AI disclosure a piece of work needs and get a ready-to-send script for clients or colleagues.",
+    "category": "Business",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-content-disclosure-generator": {
+    "name": "AI Content Disclosure Generator",
+    "description": "Generate a clear disclosure statement for AI-assisted articles, reports and marketing content, with role, review and tool details.",
+    "category": "Business",
+    "icon": "badge-info",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-content-disclosure-statement-generator": {
+    "name": "AI Content Disclosure Statement Generator",
+    "description": "Generate long, short and metadata disclosure text for AI articles, images, audio and video, with the platform obligations that apply.",
+    "category": "Marketing & Social",
+    "icon": "sparkles",
+    "iconColor": "text-(--primary)"
+  },
   "ai-conversation-privacy-scanner": {
     "name": "AI Conversation Privacy Scanner",
     "description": "Scan pasted or exported AI conversations locally for personal data and secrets, then create a redacted transcript and counts-only report.",
@@ -410,6 +587,13 @@ export const toolMetaMap = {
     "icon": "messages-square",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "ai-cost-per-1000-requests-calculator": {
+    "name": "AI Cost Per 1000 Requests Calculator",
+    "description": "Turn per-million-token pricing into cost per request, per 1,000 and per million, with retries, caching and a tier comparison.",
+    "category": "Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
   },
   "ai-domain-generator": {
     "name": "AI Domain Generator",
@@ -460,12 +644,68 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-violet-600"
   },
+  "ai-glossary-explorer": {
+    "name": "AI Glossary Explorer",
+    "description": "Searchable plain-English glossary of AI and machine learning terms, with examples, related terms and a self-test quiz.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-humanizer-checklist": {
+    "name": "AI Humanizer Checklist",
+    "description": "Scan an AI draft for tell-tale phrasing and uniform sentences, then work a weighted checklist of edits that restore your own voice.",
+    "category": "Text & Writing",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-image-cost-calculator": {
+    "name": "AI Image Cost Calculator",
+    "description": "Estimate AI image generation spend across resolutions, quality tiers, batch sizes and retry rates.",
+    "category": "Calculators",
+    "icon": "image",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-image-disclosure-label-generator": {
+    "name": "AI Disclosure Label Generator",
+    "description": "Build platform-ready AI disclosure badges, captions, alt text and IPTC digital source type tags for images and video you publish.",
+    "category": "Marketing & Social",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-image-licensing-checklist": {
+    "name": "AI Image Licensing Checklist",
+    "description": "Work through the usage-rights questions that matter before publishing AI-generated images commercially.",
+    "category": "Business",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-incident-response-checklist": {
+    "name": "AI Incident Response Checklist",
+    "description": "Generate a NIST-style response checklist for harmful, leaked or manipulated AI output incidents.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-(--primary)"
+  },
   "ai-jd-analyzer-tool": {
     "name": "AI JD Analyzer",
-    "description": "Analyze Job Descriptions using AI to extract skills, calculate match scores, and get rewrites.",
+    "description": "Analyse a job description offline: extract skills, score your match, check readability and gendered wording.",
     "category": "Business",
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-learning-roadmap-builder": {
+    "name": "AI Learning Roadmap Builder",
+    "description": "Build a week-by-week AI study path from prompting basics to fine-tuning, ordered by prerequisites and your hours per week.",
+    "category": "Education & Science",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-media-literacy-quiz": {
+    "name": "AI Media Literacy Quiz",
+    "description": "Practise spotting synthetic media and misleading AI claims, with scored questions on provenance, detectors and verification.",
+    "category": "Education & Science",
+    "icon": "scan-eye",
+    "iconColor": "text-(--primary)"
   },
   "ai-medical-report-analyzer": {
     "name": "AI Medical Report Analyzer",
@@ -511,16 +751,38 @@ export const toolMetaMap = {
   },
   "ai-passport-photo-maker": {
     "name": "AI Passport Photo Maker",
-    "description": "Create professional passport and visa photos with AI-powered face detection, background removal, and multi-format print sheets.",
-    "category": [
-      "Image & Photo",
-      "Productivity"
-    ],
-    "topics": [
-      "Photo"
-    ],
+    "description": "Crop a photo to official passport and visa sizes with published head-height guides, then lay out a print sheet.",
+    "category": "Image & Photo",
     "icon": "id-card",
-    "iconColor": "text-blue-600"
+    "iconColor": "text-(--primary)"
+  },
+  "ai-pilot-success-criteria-builder": {
+    "name": "AI Pilot Success Criteria Builder",
+    "description": "Set measurable go/no-go criteria for an AI pilot and size the sample needed to detect the lift at 95% confidence.",
+    "category": "Business",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-plagiarism-risk-worksheet": {
+    "name": "AI Plagiarism Risk Worksheet",
+    "description": "Assess how derivative an AI-assisted draft is and get a 0-100 risk score with the specific rewrites and citations needed.",
+    "category": "Education & Science",
+    "icon": "scan-search",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-policy-one-pager-generator": {
+    "name": "AI Policy One Pager Generator",
+    "description": "Assemble a single-page do and don't guide for staff AI use from a curated clause library — approved tools, data rules, review duty.",
+    "category": "Business",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-policy-quiz": {
+    "name": "AI Policy Quiz",
+    "description": "Test yourself or your team on acceptable AI use at work — 10 scenario questions with instant explanations and a readiness score.",
+    "category": "Education & Science",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
   },
   "ai-productivity-optimizer": {
     "name": "AI Productivity Optimizer",
@@ -534,6 +796,20 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-primary"
+  },
+  "ai-productivity-time-saved-calculator": {
+    "name": "AI Time Saved Calculator",
+    "description": "Estimate weekly and annual hours saved by AI per task from measured before and after timings and weekly frequency.",
+    "category": "Calculators",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-project-scoping-worksheet": {
+    "name": "AI Project Scoping Worksheet",
+    "description": "Define the problem, users, data, success metric and fallback for an AI project before you build — with a completeness score.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "ai-prompt-organizer": {
     "name": "AI Prompt Organizer",
@@ -560,6 +836,27 @@ export const toolMetaMap = {
     "icon": "brain",
     "iconColor": "text-teal-600"
   },
+  "ai-resume-prompt-builder": {
+    "name": "AI Resume Prompt Builder",
+    "description": "Build a precise resume-rewriting prompt with role, seniority, metrics focus and ATS keywords for any AI assistant.",
+    "category": "Business",
+    "icon": "file-user",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-roi-calculator": {
+    "name": "AI ROI Calculator",
+    "description": "Compare AI tool subscription cost against hours saved and hourly rates to get monthly ROI, payback and break-even hours.",
+    "category": "Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-scam-message-awareness-quiz": {
+    "name": "AI Scam Message Awareness Quiz",
+    "description": "Judge realistic AI-written messages as scam or genuine and get scored on recall, false alarms and balanced accuracy.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-(--primary)"
+  },
   "ai-selfie-enhancer": {
     "name": "AI Selfie Enhancer",
     "description": "Enhance your selfies with smart AI-driven filters, skin smoothing, lighting correction, and background tuning directly in your browser.",
@@ -575,6 +872,76 @@ export const toolMetaMap = {
     "icon": "sparkle",
     "iconColor": "text-teal-500"
   },
+  "ai-social-caption-detector": {
+    "name": "AI Social Caption Detector",
+    "description": "Scan a social caption for AI-style hooks, em dashes, emoji bullet patterns and hashtag padding, with a transparent signal score.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-spend-alert-planner": {
+    "name": "AI Spend Alert Planner",
+    "description": "Project month-end AI spend from your run rate and set threshold alerts, owners and actions before the budget is gone.",
+    "category": "Business",
+    "icon": "bell-ring",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-subscription-vs-api-calculator": {
+    "name": "AI Subscription vs API Calculator",
+    "description": "Find the usage point where paying per token beats a flat monthly AI plan, per seat and across the team.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-text-tone-rewriter-prompt": {
+    "name": "AI Tone Rewrite Prompt Builder",
+    "description": "Scores your text with Flesch Reading Ease, then builds a rewrite prompt targeting a chosen tone and reading level.",
+    "category": "Text & Writing",
+    "icon": "wand-sparkles",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-training-plan-builder": {
+    "name": "AI Training Plan Builder",
+    "description": "Design a week-by-week internal AI upskilling plan by role and skill level, with module hours packed to your weekly time budget.",
+    "category": "Business",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-usage-journal": {
+    "name": "AI Usage Journal",
+    "description": "Log every AI task, the model used and whether the answer shipped or had to be redone, then see first-pass rate and time saved.",
+    "category": "Productivity",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-usage-log-for-assignments": {
+    "name": "AI Usage Log for Assignments",
+    "description": "Record which AI tools helped with which parts of an assignment and export a clean usage log for submission.",
+    "category": "Education & Science",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-vendor-comparison-matrix": {
+    "name": "AI Vendor Comparison Matrix",
+    "description": "Score AI vendors on cost, control, support and compliance with a weighted decision matrix and get a ranked shortlist.",
+    "category": "Business",
+    "icon": "table-properties",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-vendor-due-diligence-checklist": {
+    "name": "AI Vendor Due Diligence Checklist",
+    "description": "Generate the questions to ask an AI vendor about data handling, training, subprocessors, security and exit.",
+    "category": "Business",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ai-writing-tell-scanner": {
+    "name": "AI Writing Tell Scanner",
+    "description": "Highlight over-used AI phrases like delve, tapestry and testament in your draft, with a plainer replacement suggested for each.",
+    "category": "Text & Writing",
+    "icon": "scan-text",
+    "iconColor": "text-(--primary)"
+  },
   "aim-trainer": {
     "name": "Aim Trainer",
     "description": "Free aim trainer online — hit shrinking targets, track reaction time and accuracy, and raise your score.",
@@ -585,6 +952,20 @@ export const toolMetaMap = {
     ],
     "icon": "crosshair",
     "iconColor": "text-red-600"
+  },
+  "air-cooler-vs-ac-cost": {
+    "name": "Air Cooler vs AC Cost",
+    "description": "Compare a desert cooler and an air conditioner on electricity, water and the temperature each can actually reach in your climate.",
+    "category": "Calculators",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
+  },
+  "air-filter-change-planner": {
+    "name": "Air Filter Change Planner",
+    "description": "Set engine air filter and cabin AC filter change intervals from your dust exposure, driving pattern and kilometres run.",
+    "category": "Productivity",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
   },
   "air-fryer-converter": {
     "name": "Air Fryer Time & Temp Converter",
@@ -598,6 +979,48 @@ export const toolMetaMap = {
     ],
     "icon": "flame",
     "iconColor": "text-teal-600"
+  },
+  "air-fryer-vs-oven-cost": {
+    "name": "Air Fryer vs Oven Cost",
+    "description": "Compare the electricity cost and total time of cooking in an air fryer versus a conventional electric oven, preheat included.",
+    "category": "Calculators",
+    "icon": "cooking-pot",
+    "iconColor": "text-(--primary)"
+  },
+  "akasa-air-baggage-allowance-checker": {
+    "name": "Akasa Air Baggage Allowance Checker",
+    "description": "Check cabin, personal and check-in bag weight and size against Akasa Air's published allowance and estimate the excess.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "akasa-air-excess-baggage-cost-estimator": {
+    "name": "Akasa Air Excess Baggage Cost Estimator",
+    "description": "Compare Akasa Air extra baggage bought at booking, at web check-in and at the airport counter to find the cheapest.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "aktu-attendance-calculator": {
+    "name": "AKTU Attendance Calculator",
+    "description": "Check AKTU attendance against the 75% rule — shortage in classes, consecutive classes to recover and safe bunks left.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
+  "aktu-cgpa-percentage-converter": {
+    "name": "AKTU CGPA Percentage Converter",
+    "description": "Convert AKTU CGPA to percentage with the university's (CGPA − 0.75) × 10 rule, work backwards, and combine semester SGPAs.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "aktu-sgpa-calculator": {
+    "name": "AKTU SGPA Calculator",
+    "description": "Calculate AKTU SGPA from credit-weighted grade points, roll semesters into CGPA and convert to percentage.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
   },
   "alcohol-unit-calculator": {
     "name": "Alcohol Units & BAC Calculator",
@@ -640,6 +1063,20 @@ export const toolMetaMap = {
     "icon": "eye",
     "iconColor": "text-teal-500"
   },
+  "allen-key-size-finder": {
+    "name": "Allen Key Size Finder",
+    "description": "Matches metric and imperial hex key sizes, shows which swaps are safe and which round the socket, and prints a true-scale gauge.",
+    "category": "Education & Science",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
+  "alloy-vs-steel-wheel-comparison": {
+    "name": "Alloy vs Steel Wheel Comparison",
+    "description": "Compare alloy and steel wheels on unsprung weight, price premium, fuel economy gain and payback period.",
+    "category": "Calculators",
+    "icon": "disc-3",
+    "iconColor": "text-(--primary)"
+  },
   "alphabet-explorer": {
     "name": "Alphabet Explorer",
     "description": "Browse writing systems from around the world — Latin, Greek, Cyrillic, Arabic, Hebrew, Devanagari, Japanese, Korean, Thai, Bengali, and more — with character names, pronunciation, Unicode values, and example words.",
@@ -666,20 +1103,26 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "amazon-listing-prompt-builder": {
+    "name": "Amazon Listing Prompt Builder",
+    "description": "Generate title, bullet and description prompts that respect Amazon field limits, plus a 250-byte backend search term string.",
+    "category": "Marketing & Social",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
+  },
   "ambiguous-figure-viewer": {
     "name": "Ambiguous Figure Viewer",
-    "description": "Experience and analyze classic optical illusions where the brain switches between multiple interpretations of the same image.",
-    "category": [
-      "Education & Science",
-      "Fun"
-    ],
-    "topics": [
-      "Neuroscience",
-      "Visual Experiments",
-      "Psychology"
-    ],
+    "description": "Watch classic bistable figures flip between two interpretations and measure your own dominance durations.",
+    "category": "Education & Science",
     "icon": "brain",
-    "iconColor": "text-purple-600"
+    "iconColor": "text-(--primary)"
+  },
+  "amsterdam-ams-airport-arrival-buffer-calculator": {
+    "name": "Amsterdam AMS Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Amsterdam Schiphol using drive time, traffic, check-in cut-off, passport control and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
   },
   "anagram-generator": {
     "name": "Anagram Generator",
@@ -763,6 +1206,69 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-blue-500"
   },
+  "anna-university-attendance-calculator": {
+    "name": "Anna University Attendance Calculator",
+    "description": "Check Anna University attendance percentage, the condonation band and how many classes it takes to reach 75%.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
+  "anna-university-cgpa-percentage-converter": {
+    "name": "Anna University CGPA Converter",
+    "description": "Convert Anna University CGPA to percentage, build CGPA from semester credits and check the degree classification.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "anna-university-gpa-calculator": {
+    "name": "Anna University GPA Calculator",
+    "description": "Compute your Anna University semester GPA from letter grades and course credits using the official Σ(Ci×GPi)/ΣCi formula.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "annual-financial-checklist": {
+    "name": "Annual Financial Checklist Builder",
+    "description": "Build a personalised year-end money checklist with real statutory deadlines, from tax-saving proofs to nominee updates.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "ansible-inventory-file-builder": {
+    "name": "Ansible Inventory File Builder",
+    "description": "Build Ansible INI and YAML inventories with groups, children and host variables from one simple spec, validated as you type.",
+    "category": "Developer",
+    "icon": "list-tree",
+    "iconColor": "text-(--primary)"
+  },
+  "ansible-vault-usage-planner": {
+    "name": "Ansible Vault Usage Planner",
+    "description": "Classify which Ansible variables belong in Vault and generate the vars/vault split plus the exact ansible-vault command workflow.",
+    "category": "Developer",
+    "icon": "lock-keyhole",
+    "iconColor": "text-(--primary)"
+  },
+  "apdex-score-calculator": {
+    "name": "Apdex Score Calculator",
+    "description": "Calculate an Apdex score from satisfied, tolerating and frustrated request counts, with the rating band and the fixes needed to reach a target.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "api-changelog-generator": {
+    "name": "API Changelog Generator",
+    "description": "Write a Keep a Changelog style API release note with Added, Changed, Deprecated, Removed and a SemVer version bump.",
+    "category": "Generators",
+    "icon": "file-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "api-doc-prompt-builder": {
+    "name": "API Doc Prompt Builder",
+    "description": "Parses your endpoint list and builds a documentation prompt covering params, auth, error cases and your chosen doc format.",
+    "category": "Developer",
+    "icon": "book-open-text",
+    "iconColor": "text-(--primary)"
+  },
   "api-documentation-maker": {
     "name": "API Documentation Maker",
     "description": "API Documentation Maker helps you create documentation for your project.",
@@ -777,12 +1283,33 @@ export const toolMetaMap = {
     "icon": "route",
     "iconColor": "text-primary"
   },
-  "api-stress-estimator": {
-    "name": "API STRESS ESTIMATOR",
-    "description": "Estimate the stress on your API under different traffic scenarios and configurations.",
+  "api-key-rotation-planner": {
+    "name": "API Key Rotation Planner",
+    "description": "Plan rotation dates, overlap windows and revocation steps for AI API keys based on their exposure level.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "api-key-vs-oauth-decision-helper": {
+    "name": "API Key vs OAuth Decision Helper",
+    "description": "Score API keys, OAuth 2.1 grants and mutual TLS against your consumer type, delegation, secrecy and rotation needs.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "api-rate-limit-header-designer": {
+    "name": "API Rate Limit Header Designer",
+    "description": "Design consistent rate limit headers and a 429 response — IETF RateLimit draft or legacy X-RateLimit style with an RFC 9457 body.",
     "category": "Developer",
-    "icon": "chart-bar",
-    "iconColor": "text-green-600"
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "api-stress-estimator": {
+    "name": "API Stress Estimator",
+    "description": "Estimate the stress on your API under different traffic scenarios and configurations, using an M/M/c queueing model.",
+    "category": "Developer",
+    "icon": "activity",
+    "iconColor": "text-(--primary)"
   },
   "api-tester": {
     "name": "API TESTER",
@@ -790,6 +1317,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "server",
     "iconColor": "text-blue-600"
+  },
+  "api-versioning-strategy-chooser": {
+    "name": "API Versioning Strategy Chooser",
+    "description": "Compare URL path, query parameter, custom header and media type API versioning — weighted scoring plus migration cost for each.",
+    "category": "Developer",
+    "icon": "signpost",
+    "iconColor": "text-(--primary)"
   },
   "app-finder": {
     "name": "App Finder",
@@ -811,6 +1345,13 @@ export const toolMetaMap = {
     "icon": "file-heart",
     "iconColor": "text-primary"
   },
+  "appliance-electricity-cost-estimator": {
+    "name": "Appliance Wise Electricity Cost Estimator",
+    "description": "See which appliance is driving your electricity bill, from wattage and hours of use, with duty, fixed charges and carbon output.",
+    "category": "Finance Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
   "appliance-load-shift-planner": {
     "name": "Appliance Load-Shift Planner",
     "description": "Flexible loads ko cheaper tariff windows me schedule kare.",
@@ -830,6 +1371,27 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-muted-foreground"
+  },
+  "appliance-resale-value-estimator": {
+    "name": "Appliance Resale Value Estimator",
+    "description": "Estimate the second-hand value of refrigerators, air conditioners and washing machines by age, condition and star rating.",
+    "category": "Finance Calculators",
+    "icon": "refrigerator",
+    "iconColor": "text-(--primary)"
+  },
+  "appliance-upgrade-payback-calculator": {
+    "name": "Appliance Upgrade Payback Calculator",
+    "description": "Work out simple payback, discounted payback and lifetime NPV of replacing an old appliance with an energy-efficient model.",
+    "category": "Finance Calculators",
+    "icon": "washing-machine",
+    "iconColor": "text-(--primary)"
+  },
+  "appliance-warranty-tracker": {
+    "name": "Appliance Warranty Tracker",
+    "description": "Track every appliance's purchase date, comprehensive and part warranty end, extended cover and AMC renewal — stored only in your browser.",
+    "category": "Productivity",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
   },
   "apr-to-apy-converter": {
     "name": "APR-to-APY Converter",
@@ -853,6 +1415,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "aquarium-power-cost-calculator": {
+    "name": "Aquarium Power Cost Calculator",
+    "description": "Monthly electricity cost of an aquarium's filter, air pump, light and heater, with the heater load worked out from heat loss.",
+    "category": "Calculators",
+    "icon": "fish",
+    "iconColor": "text-(--primary)"
+  },
   "archive-safety-inspector": {
     "name": "Archive Safety Inspector",
     "description": "Preflight a local ZIP central directory for risky paths, symlinks, encryption, compression pressure, and suspicious file types without extracting anything.",
@@ -866,6 +1435,13 @@ export const toolMetaMap = {
     "icon": "package-search",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "art-style-prompt-explorer": {
+    "name": "Art Style Prompt Explorer",
+    "description": "Browse 16 art movements with their real hallmarks, blend up to three, and build an image prompt that fits the 75-token CLIP window.",
+    "category": "Design & Color",
+    "icon": "palette",
+    "iconColor": "text-(--primary)"
   },
   "ascii-explorer": {
     "name": "ASCII Explorer",
@@ -890,6 +1466,13 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "asian-bmi-cutoff-calculator": {
+    "name": "Asian BMI Cutoff Calculator",
+    "description": "Classify BMI against the lower WHO Asia-Pacific thresholds (overweight 23, obese 25) and compare with the standard WHO bands.",
+    "category": "Health Calculators",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
   "aspect-ratio-calculator": {
     "name": "Aspect Ratio Calculator",
     "description": "Calculate simplified ratios and proportional dimensions for thumbnails, banners, and responsive layouts.",
@@ -904,11 +1487,25 @@ export const toolMetaMap = {
     "icon": "crop",
     "iconColor": "text-blue-600"
   },
+  "assignment-word-count-planner": {
+    "name": "Assignment Word Count Planner",
+    "description": "Split an assignment word budget across sections by weight and track how many words each section still needs.",
+    "category": "Text & Writing",
+    "icon": "align-left",
+    "iconColor": "text-(--primary)"
+  },
   "atal-pension-yojana-calculator": {
     "name": "Atal Pension Yojana Calculator",
     "description": "Find the exact APY monthly contribution for a ₹1,000–₹5,000 pension slab based on your joining age, plus total outgo and nominee corpus.",
     "category": "Finance Calculators",
     "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
+  "atkins-phase-macro-calculator": {
+    "name": "Atkins Phase Macro Calculator",
+    "description": "Net carb allowance, protein and fat targets for each Atkins phase — Induction, Balancing, Fine-Tuning and Lifetime Maintenance.",
+    "category": "Health & Fitness",
+    "icon": "salad",
     "iconColor": "text-(--primary)"
   },
   "atrial-fibrillation-risk-calculator": {
@@ -990,6 +1587,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "audio-file-size-calculator": {
+    "name": "Audio File Size Calculator",
+    "description": "Work out uncompressed audio file size and data rate from duration, sample rate, bit depth and channels, with codec comparisons.",
+    "category": "Calculators",
+    "icon": "file-audio",
+    "iconColor": "text-(--primary)"
+  },
   "audio-pitch-tempo-shifter": {
     "name": "Audio Pitch & Tempo Shifter",
     "description": "Pitch aur tempo independently control kare.",
@@ -1005,12 +1609,8 @@ export const toolMetaMap = {
     "name": "Audio to Base64",
     "description": "Convert local audio files into Base64 data URLs.",
     "category": "Converters",
-    "topics": [
-      "Media",
-      "Converter"
-    ],
     "icon": "music",
-    "iconColor": "text-pink-700"
+    "iconColor": "text-(--primary)"
   },
   "audio-transcript-alignment-checker": {
     "name": "Audio-Transcript Alignment Checker",
@@ -1044,11 +1644,8 @@ export const toolMetaMap = {
     "name": "Aura Color Generator",
     "description": "Upload a photo and discover your fictional aura color with playful descriptions!",
     "category": "Fun",
-    "topics": [
-      "Entertainment"
-    ],
-    "icon": "circle",
-    "iconColor": "text-purple-500"
+    "icon": "sparkles",
+    "iconColor": "text-(--primary)"
   },
   "aurora-visibility-forecast": {
     "name": "Aurora Visibility Forecast",
@@ -1060,6 +1657,27 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "australia-visa-cost-estimator": {
+    "name": "Australia Visa Cost Estimator",
+    "description": "Add up the Australian visa application charge, additional applicant charges, card surcharge and local fees in rupees.",
+    "category": "Finance Calculators",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "australia-visa-cover-letter-builder": {
+    "name": "Australia Visa Cover Letter Builder",
+    "description": "Write a subclass 600 visitor visa statement covering purpose, itinerary, funds, the genuine visitor test and condition 8558.",
+    "category": "Text & Writing",
+    "icon": "compass",
+    "iconColor": "text-(--primary)"
+  },
+  "australia-visa-rejection-reason-explainer": {
+    "name": "Australia Visa Rejection Reason Explainer",
+    "description": "Map the criterion named on an Australian visa refusal to what it tests, any exclusion period, and what to fix.",
+    "category": "Education & Science",
+    "icon": "shield-alert",
+    "iconColor": "text-(--primary)"
   },
   "availability-time-zone-finder": {
     "name": "Availability & Time-Zone Finder",
@@ -1082,6 +1700,20 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-(--primary)"
   },
+  "awards-honours-notes-tracker": {
+    "name": "Awards And Honours Tracker",
+    "description": "Log awards, recipients, fields and years in a searchable, sortable exam-ready table you can export as CSV.",
+    "category": "Productivity",
+    "icon": "award",
+    "iconColor": "text-(--primary)"
+  },
+  "aws-ebs-cost-calculator": {
+    "name": "AWS EBS Cost Calculator",
+    "description": "Estimate monthly AWS EBS cost across gp3, gp2, io1, io2, st1 and sc1 — storage, IOPS, throughput and snapshots.",
+    "category": "Calculators",
+    "icon": "hard-drive",
+    "iconColor": "text-(--primary)"
+  },
   "aws-iam-policy-validator": {
     "name": "AWS IAM Policy Validator",
     "description": "Review pasted AWS IAM policy JSON locally for structural mistakes, broad Allow patterns, PassRole, and privilege-management risk cues.",
@@ -1096,6 +1728,41 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "aws-lambda-cost-calculator": {
+    "name": "AWS Lambda Cost Calculator",
+    "description": "Estimate monthly AWS Lambda cost from invocations, memory size and duration, with the always-free tier applied.",
+    "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
+  "aws-nat-gateway-cost-calculator": {
+    "name": "AWS NAT Gateway Cost Calculator",
+    "description": "Find the true monthly cost of NAT gateways — hourly charges, per-GB data processing and the internet egress on top.",
+    "category": "Calculators",
+    "icon": "router",
+    "iconColor": "text-(--primary)"
+  },
+  "azerbaijan-entry-requirement-checklist": {
+    "name": "Azerbaijan Entry Requirement Checklist",
+    "description": "Check the ASAN e-visa route and fee, the 15-day registration deadline, passport validity and the documents Azerbaijan asks for on arrival.",
+    "category": "Productivity",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "azure-functions-cost-calculator": {
+    "name": "Azure Functions Cost Calculator",
+    "description": "Compute Azure Functions Consumption plan cost from executions and GB-seconds, with the free grants and an EP1 Premium comparison.",
+    "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
+  "baby-first-year-cost-calculator": {
+    "name": "Baby Cost First Year Calculator",
+    "description": "Estimate a baby's first-year cost from delivery to childcare, with diaper counts, the immunisation schedule and a monthly saving plan.",
+    "category": "Finance Calculators",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
   },
   "baby-growth-percentile-calculator": {
     "name": "Baby Growth Percentile Calculator",
@@ -1117,6 +1784,20 @@ export const toolMetaMap = {
     "icon": "baby",
     "iconColor": "text-teal-500"
   },
+  "baby-size-by-week-visualizer": {
+    "name": "Baby Size By Week Visualizer",
+    "description": "See average fetal length and weight for any week from 8 to 40, with a familiar fruit or vegetable comparison.",
+    "category": "Health & Fitness",
+    "icon": "apple",
+    "iconColor": "text-(--primary)"
+  },
+  "backpacking-packing-list-builder": {
+    "name": "Backpacking Packing List Builder",
+    "description": "Build a backpacking list as a weight budget: base weight, food by calorie density and water, checked against 20% of your body weight.",
+    "category": "Lifestyle",
+    "icon": "backpack",
+    "iconColor": "text-(--primary)"
+  },
   "backup-restore-verifier": {
     "name": "Backup Restore Verifier",
     "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain.",
@@ -1127,6 +1808,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "bajaj-service-schedule-planner": {
+    "name": "Bajaj Service Schedule Planner",
+    "description": "Plan Bajaj bike servicing by kilometres and months with parts, labour estimates and a prepaid package comparison.",
+    "category": "Productivity",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
   },
   "baking-pan-converter": {
     "name": "Baking Pan Size Converter",
@@ -1148,12 +1836,103 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-(--primary)"
   },
+  "balcony-grill-cost-calculator": {
+    "name": "Balcony Grill Cost Calculator",
+    "description": "Estimate balcony and window grill cost by area or by fabricated steel weight, with bar spacing, clear gap and safety check.",
+    "category": "Calculators",
+    "icon": "fence",
+    "iconColor": "text-(--primary)"
+  },
+  "balcony-makeover-planner": {
+    "name": "Balcony Makeover Planner",
+    "description": "Plan balcony flooring, planters, seating and lighting by size — with a budget and an added-load check.",
+    "category": "Design & Color",
+    "icon": "flower-2",
+    "iconColor": "text-(--primary)"
+  },
+  "balcony-solar-kit-estimator": {
+    "name": "Balcony Solar Kit Estimator",
+    "description": "Estimate yearly output, bill savings and payback for a plug-in balcony solar kit from tilt, orientation and latitude.",
+    "category": "Calculators",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
   "band-name-generator": {
     "name": "Band Name Generator",
     "description": "Generate band name ideas by genre.",
     "category": "Fun",
     "icon": "music",
     "iconColor": "text-purple-600"
+  },
+  "bandwidth-transfer-time-calculator": {
+    "name": "Bandwidth Transfer Time Calculator",
+    "description": "Calculate how long a file or dataset takes to transfer at a given link speed, with protocol overhead and unit conversions handled.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "bangalore-university-cgpa-converter": {
+    "name": "Bangalore University CGPA Converter",
+    "description": "Convert Bangalore University CGPA to percentage with the (CGPA - 0.75) x 10 rule and compare it against the other formulas in circulation.",
+    "category": "Calculators",
+    "icon": "award",
+    "iconColor": "text-(--primary)"
+  },
+  "bangkok-trip-budget-breakdown": {
+    "name": "Bangkok Trip Budget Breakdown",
+    "description": "Break a Bangkok trip into flights, stay, food, transport and activities in baht and rupees, with forex markup and VAT refund.",
+    "category": "Finance Calculators",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-account-masking-tool": {
+    "name": "Bank Account Number Masking Tool",
+    "description": "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document.",
+    "category": "Security & Privacy",
+    "icon": "eye-off",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-balance-certificate-request-generator": {
+    "name": "Bank Balance Certificate Request Generator",
+    "description": "Work out the funds a visa application needs and draft the letter asking your bank for a balance certificate in the right format.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-charges-penalty-estimator": {
+    "name": "Bank Charges and Penalty Estimator",
+    "description": "Estimate a year of minimum balance penalties, excess ATM fees, return charges and GST on an Indian savings account.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-exam-application-checklist": {
+    "name": "Bank Exam Application Checklist",
+    "description": "Check IBPS and SBI age eligibility on the cut-off date, then work through every form field, upload spec and document the application needs.",
+    "category": "Productivity",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-exam-countdown": {
+    "name": "Bank Exam Countdown",
+    "description": "Countdown board for IBPS, SBI and RBI stage dates with prelims-to-mains gap analysis, per-question speed and cutoff attempts.",
+    "category": "Productivity",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-exam-day-checklist": {
+    "name": "Bank Exam Day Checklist",
+    "description": "Bank exam day checklist for the call letter, photo ID with photocopy and photographs, plus a reporting-time plan and negative-marking maths.",
+    "category": "Productivity",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "bank-locker-cost-estimator": {
+    "name": "Locker Rent and Insurance Cost Estimator",
+    "description": "Work out annual bank locker rent with GST, the term deposit blocked as security, and the gap between RBI's liability cap and your contents.",
+    "category": "Finance Calculators",
+    "icon": "vault",
+    "iconColor": "text-(--primary)"
   },
   "bank-statement-redactor": {
     "name": "Bank Statement Redactor",
@@ -1190,15 +1969,16 @@ export const toolMetaMap = {
   "base-converter": {
     "name": "Base Converter",
     "description": "Convert numbers between binary, octal, decimal, hex, and base36.",
-    "category": [
-      "Developer",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
+    "category": "Developer",
     "icon": "binary",
-    "iconColor": "text-blue-700"
+    "iconColor": "text-(--primary)"
+  },
+  "base-url-path-joiner": {
+    "name": "Base URL Path Joiner",
+    "description": "Join a base URL with path segments the safe way, and see how it differs from RFC 3986 reference resolution with slashes, dot segments and query strings.",
+    "category": "Developer",
+    "icon": "waypoints",
+    "iconColor": "text-(--primary)"
   },
   "base32-encoder": {
     "name": "Base32 Encoder / Decoder",
@@ -1217,13 +1997,12 @@ export const toolMetaMap = {
   "base64-audio-converter": {
     "name": "Base64 Audio Converter",
     "description": "Preview and download Base64 audio data URLs.",
-    "category": "Converters",
-    "topics": [
-      "Media",
-      "Converter"
+    "category": [
+      "Video & Audio",
+      "Converters"
     ],
     "icon": "volume-2",
-    "iconColor": "text-pink-700"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-ascii": {
     "name": "Base64 to ASCII",
@@ -1246,11 +2025,8 @@ export const toolMetaMap = {
       "Converters",
       "Developer"
     ],
-    "topics": [
-      "Converter"
-    ],
     "icon": "download",
-    "iconColor": "text-indigo-700"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-hex": {
     "name": "Base64 to Hex",
@@ -1259,87 +2035,75 @@ export const toolMetaMap = {
       "Developer",
       "Converters"
     ],
-    "topics": [
-      "Converter"
-    ],
     "icon": "hash",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-image": {
     "name": "Base64 to Image",
-    "description": "Preview and download Base64 image data.",
+    "description": "Decode a Base64 string or data URL back into an image, identify its real format from the file signature, and read its pixel dimensions.",
     "category": [
       "Image & Photo",
       "Converters"
     ],
-    "topics": [
-      "Image",
-      "Converter"
-    ],
     "icon": "image",
-    "iconColor": "text-purple-600"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-pdf": {
     "name": "Base64 to PDF",
-    "description": "Preview and download Base64 PDF data.",
+    "description": "Decode a Base64 string or data URL back into a PDF, preview it, and check its version, page objects, encryption and trailer.",
     "category": [
       "PDF & Documents",
       "Converters"
     ],
-    "topics": [
-      "PDF",
-      "Converter"
-    ],
     "icon": "file-down",
-    "iconColor": "text-red-700"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-text": {
     "name": "Base64 to Text",
-    "description": "Decode Base64 strings into readable UTF-8 text.",
+    "description": "Decode Base64 strings into readable UTF-8 text, with padding repair, URL-safe alphabet support and a validity check.",
     "category": [
       "Developer",
       "Converters"
     ],
-    "topics": [
-      "Converter"
-    ],
     "icon": "binary",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-(--primary)"
   },
   "base64-to-video": {
     "name": "Base64 to Video",
-    "description": "Preview and download Base64 video data URLs.",
-    "category": "Converters",
-    "topics": [
-      "Media",
-      "Converter"
+    "description": "Decode a Base64 string or data URL back into a video file, identify the container from its magic bytes, and read duration, frame size and bitrate.",
+    "category": [
+      "Video & Audio",
+      "Converters"
     ],
     "icon": "video",
-    "iconColor": "text-blue-700"
+    "iconColor": "text-(--primary)"
   },
   "base64-url-converter": {
     "name": "Base64 URL Converter",
-    "description": "Convert standard Base64, URL-safe Base64, and text payloads.",
-    "category": "Developer",
-    "topics": [
-      "Web"
-    ],
-    "icon": "link",
-    "iconColor": "text-blue-600"
-  },
-  "base64-url-encoder": {
-    "name": "Base64 URL Encoder",
-    "description": "Encode text and Base64 payloads into URL-safe Base64.",
+    "description": "Convert between plain text, standard Base64 (RFC 4648 §4) and URL-safe base64url (§5), with padding repair and a URL length comparison.",
     "category": [
       "Developer",
       "Converters"
     ],
-    "topics": [
-      "Converter",
-      "Web"
+    "icon": "link",
+    "iconColor": "text-(--primary)"
+  },
+  "base64-url-encoder": {
+    "name": "Base64 URL Encoder",
+    "description": "Encode text, standard Base64 or hex bytes into URL-safe base64url (RFC 4648 §5), with padding control and URL and cookie size checks.",
+    "category": [
+      "Developer",
+      "Converters"
     ],
     "icon": "link",
-    "iconColor": "text-sky-600"
+    "iconColor": "text-(--primary)"
+  },
+  "bash-script-scaffold-generator": {
+    "name": "Bash Script Scaffold Generator",
+    "description": "Generate a safe bash script skeleton with strict mode, ERR and EXIT traps, usage, logging, root check and a flock guard.",
+    "category": "Generators",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
   },
   "basic-auth-header-generator": {
     "name": "Basic Auth Header Generator",
@@ -1357,6 +2121,13 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-teal-600"
+  },
+  "batch-api-savings-calculator": {
+    "name": "Batch API Savings Calculator",
+    "description": "Compare real-time and batch LLM pricing for bulk jobs and see the saving, blended cost and latency you trade for it.",
+    "category": "Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
   },
   "batch-face-privacy-blur": {
     "name": "Batch Face Privacy Blur",
@@ -1445,6 +2216,20 @@ export const toolMetaMap = {
     "icon": "brain-circuit",
     "iconColor": "text-primary"
   },
+  "beach-day-timing-planner": {
+    "name": "Beach Day Tide and Timing Planner",
+    "description": "Find the best hours on the beach by scoring every half-hour against UV, heat lag, crowds and the tide using the rule of twelfths.",
+    "category": "Lifestyle",
+    "icon": "waves",
+    "iconColor": "text-(--primary)"
+  },
+  "beach-holiday-packing-list-builder": {
+    "name": "Beach Holiday Packing List Builder",
+    "description": "Build and tick off a beach packing list sized by trip length, heat, laundry access and sun hours, with the sunscreen volume worked out.",
+    "category": "Lifestyle",
+    "icon": "umbrella",
+    "iconColor": "text-(--primary)"
+  },
   "beam-deflection-stress-calculator": {
     "name": "Beam Deflection & Stress Calculator",
     "description": "Standard load cases ka deflection aur bending stress nikale.",
@@ -1477,13 +2262,10 @@ export const toolMetaMap = {
   },
   "beautify-code-tool": {
     "name": "Code Beautifier",
-    "description": "Instantly format, clean up, and beautify messy code snippets.",
+    "description": "Instantly format, clean up and beautify messy JavaScript, JSON, CSS, HTML, XML and SQL — or compact it again.",
     "category": "Developer",
-    "topics": [
-      "Development"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
   },
   "beauty-score": {
     "name": "Beauty Score Calculator",
@@ -1494,6 +2276,27 @@ export const toolMetaMap = {
     ],
     "icon": "scan-face",
     "iconColor": "text-purple-500"
+  },
+  "bed-admission-merit-calculator": {
+    "name": "BEd Admission Merit Calculator",
+    "description": "Calculate B.Ed admission merit from graduation percentage and entrance score, with the NCTE 50% eligibility check built in.",
+    "category": "Calculators",
+    "icon": "book-open-check",
+    "iconColor": "text-(--primary)"
+  },
+  "bed-size-comparison-chart": {
+    "name": "Bed Size Comparison Chart",
+    "description": "Compare single, double, queen and king bed sizes across Indian, US, UK and EU standards in inches, cm and feet.",
+    "category": "Education & Science",
+    "icon": "bed-double",
+    "iconColor": "text-(--primary)"
+  },
+  "bedroom-ac-tonnage-calculator": {
+    "name": "Bedroom AC Tonnage Calculator",
+    "description": "Find the right AC tonnage for a bedroom from floor area, ceiling height, roof exposure, sunlight and how many people sleep in it.",
+    "category": "Calculators",
+    "icon": "bed-double",
+    "iconColor": "text-(--primary)"
   },
   "before-after-comparator": {
     "name": "Before vs After Comparator",
@@ -1533,6 +2336,20 @@ export const toolMetaMap = {
     "icon": "file-clock",
     "iconColor": "text-(--primary)"
   },
+  "bengaluru-airport-transfer-time-planner": {
+    "name": "Bengaluru Airport Transfer Time Planner",
+    "description": "Work out when to leave for Bengaluru BLR airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "bengaluru-blr-airport-arrival-buffer-calculator": {
+    "name": "Bengaluru BLR Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Bengaluru BLR using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
   "bg-remover": {
     "name": "Background Remover",
     "description": "Remove your Image background in just a one click",
@@ -1542,6 +2359,34 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-indigo-600"
+  },
+  "bhutan-entry-requirement-checklist": {
+    "name": "Bhutan Entry Requirement Checklist",
+    "description": "Work out Bhutan's Sustainable Development Fee for your party, test the permit or visa route and passport validity, and build the document checklist.",
+    "category": "Productivity",
+    "icon": "mountain",
+    "iconColor": "text-(--primary)"
+  },
+  "bicycle-chain-wear-checker": {
+    "name": "Bicycle Chain Wear Checker",
+    "description": "Turn a ruler measurement into chain elongation percentage and tell you whether the chain, cassette or chainrings need replacing.",
+    "category": "Education & Science",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "bicycle-frame-size-calculator": {
+    "name": "Bicycle Frame Size Calculator",
+    "description": "Find your road, mountain or hybrid bike frame size from height and inseam using the classic inseam-multiplier fit formulas.",
+    "category": "Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "bicycle-maintenance-planner": {
+    "name": "Bicycle Maintenance Planner",
+    "description": "Turn your weekly mileage and riding conditions into a dated bike service schedule: cleaning, lubing, and every part replacement interval.",
+    "category": "Productivity",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
   },
   "big-button-medical-info-card": {
     "name": "Big-Button Medical Info Card",
@@ -1556,6 +2401,48 @@ export const toolMetaMap = {
     "icon": "accessibility",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "bihar-board-percentage-calculator": {
+    "name": "Bihar Board Percentage Calculator",
+    "description": "Compute BSEB Matric or Inter percentage on the 500-mark aggregate with pass status and First, Second or Third Division.",
+    "category": "Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "bike-chain-slack-guide": {
+    "name": "Bike Chain Slack Guide",
+    "description": "Set correct chain slack, measure chain stretch across 20 links against the 2% service limit and time your next lube.",
+    "category": "Education & Science",
+    "icon": "link",
+    "iconColor": "text-(--primary)"
+  },
+  "bike-fuel-cost-calculator": {
+    "name": "Bike Fuel Cost Calculator",
+    "description": "Motorcycle and scooter fuel cost per trip, per month and per year, plus tank range, full-tank cost and refills needed.",
+    "category": "Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "bike-loan-emi-calculator": {
+    "name": "Bike Loan EMI Calculator",
+    "description": "Work out two-wheeler loan EMI, total interest, processing fee and a year-by-year amortisation schedule from the on-road price.",
+    "category": "Finance Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "bike-mileage-tracker": {
+    "name": "Bike Mileage Tracker",
+    "description": "Log two-wheeler fill-ups and get true tank-to-tank mileage, cost per kilometre and the trend across every full tank.",
+    "category": "Productivity",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "bill-of-supply-generator": {
+    "name": "Bill of Supply Generator",
+    "description": "Build a printable Rule 49 bill of supply for exempt, nil-rated and composition-scheme sales, with GSTIN check and amount in words.",
+    "category": "Generators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
   },
   "binary-hex-decimal-converter": {
     "name": "Binary / Hex / Decimal Converter",
@@ -1661,6 +2548,13 @@ export const toolMetaMap = {
     "icon": "chart-candlestick",
     "iconColor": "text-primary"
   },
+  "blister-pack-refill-tracker": {
+    "name": "Blister Pack Refill Tracker",
+    "description": "Count the tablets left in your strips and get the day supply runs out, the day to reorder, and how many packs to buy.",
+    "category": "Health & Fitness",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
+  },
   "block-stacker": {
     "name": "Block Stacker",
     "description": "Free falling-blocks puzzle game — stack pieces, clear lines, and chase a high score.",
@@ -1681,6 +2575,13 @@ export const toolMetaMap = {
     ],
     "icon": "list-tree",
     "iconColor": "text-emerald-600"
+  },
+  "blog-outline-prompt-builder": {
+    "name": "Blog Outline Prompt Builder",
+    "description": "Splits a target word count across intro, H2 sections, FAQs and conclusion, then writes the outline prompt with that budget built in.",
+    "category": "Text & Writing",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
   },
   "blog-post-ideas": {
     "name": "Blog Post Idea Generator",
@@ -1751,6 +2652,20 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-teal-600"
   },
+  "bls-international-appointment-day-checklist": {
+    "name": "BLS International Appointment Day Checklist",
+    "description": "Carry, wear and leave-behind checklist for a BLS International application centre visit, with a photocopy planner and leave-home time.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "blue-green-deployment-checklist": {
+    "name": "Blue Green Deployment Checklist",
+    "description": "Generate a blue-green cutover checklist with DNS wait time, canary ramp, session and migration steps, and rollback triggers.",
+    "category": "Developer",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "blur-comparison": {
     "name": "Blur Comparison",
     "description": "Interactively compare different blur intensities on your images with a side-by-side slider.",
@@ -1791,6 +2706,13 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "bmi-prime-calculator": {
+    "name": "BMI Prime Calculator",
+    "description": "BMI Prime is your BMI divided by the upper healthy limit, so 1.00 is the ceiling and 1.15 means 15 percent over it.",
+    "category": "Health Calculators",
+    "icon": "divide",
+    "iconColor": "text-(--primary)"
+  },
   "bmr-calculator": {
     "name": "BMR Calculator",
     "description": "Basal metabolic rate (calories at rest) via the Mifflin-St Jeor equation, plus daily needs.",
@@ -1800,6 +2722,27 @@ export const toolMetaMap = {
     ],
     "icon": "flame",
     "iconColor": "text-orange-600"
+  },
+  "board-exam-countdown": {
+    "name": "Board Exam Countdown",
+    "description": "Class 10 and 12 board exam countdown with a subject-wise datesheet, free study days between papers and marks-needed maths.",
+    "category": "Productivity",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
+  },
+  "board-exam-day-checklist": {
+    "name": "Board Exam Day Checklist",
+    "description": "Work back from your paper start time to a wake-up and gate-closing clock, then pack the right documents, stationery and permitted items.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "board-foot-calculator": {
+    "name": "Board Foot Calculator",
+    "description": "Convert timber thickness, width and length into board feet, cubic feet and cubic metres, with waste allowance and total cost.",
+    "category": "Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
   },
   "body-fat-calculator": {
     "name": "Body Fat Percentage Calculator",
@@ -1840,6 +2783,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-teal-600"
   },
+  "bodybuilder-protein-calculator": {
+    "name": "Bodybuilder Protein Calculator",
+    "description": "Daily and per-meal protein targets for hypertrophy blocks using ISSN g/kg ranges and the 0.4 g/kg per-meal dose.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-(--primary)"
+  },
   "bolt-torque-preload-calculator": {
     "name": "Bolt Torque & Preload Calculator",
     "description": "Bolt size aur K-factor se torque/clamp load estimate kare.",
@@ -1852,6 +2802,13 @@ export const toolMetaMap = {
     ],
     "icon": "nut",
     "iconColor": "text-primary"
+  },
+  "bonafide-certificate-request-drafter": {
+    "name": "Bonafide Certificate Request Drafter",
+    "description": "Draft a formal bonafide certificate request letter to your school or college with the purpose, roll number and details filled in.",
+    "category": "Text & Writing",
+    "icon": "file-badge",
+    "iconColor": "text-(--primary)"
   },
   "bond-duration-convexity-calculator": {
     "name": "Bond Duration & Convexity Calculator",
@@ -1881,6 +2838,13 @@ export const toolMetaMap = {
     "icon": "gift",
     "iconColor": "text-(--primary)"
   },
+  "book-page-bookmark-organizer": {
+    "name": "Bookmark Page Organizer For Books",
+    "description": "Save page references per topic across multiple books and get one sorted, copyable topic index.",
+    "category": "Productivity",
+    "icon": "bookmark",
+    "iconColor": "text-(--primary)"
+  },
   "bookmark-capsule": {
     "name": "Bookmark Capsule",
     "description": "Organize, search, categorize, preview, and manage your website bookmarks.",
@@ -1893,6 +2857,20 @@ export const toolMetaMap = {
     "description": "Organize bookmarks with folders, categories, tags, favorites, drag-and-drop, search, filters, bulk actions, and import/export.",
     "category": "Productivity",
     "icon": "bookmark",
+    "iconColor": "text-(--primary)"
+  },
+  "books-of-accounts-requirement-checker": {
+    "name": "Books of Accounts Requirement Checker",
+    "description": "Find out whether section 44AA and Rule 6F force you to keep formal books, and which registers you must maintain.",
+    "category": "Business",
+    "icon": "book-open-check",
+    "iconColor": "text-(--primary)"
+  },
+  "bookshelf-capacity-calculator": {
+    "name": "Bookshelf Capacity Calculator",
+    "description": "Count how many books a shelf holds, the load in kilograms, and the maximum span before the shelf sags.",
+    "category": "Calculators",
+    "icon": "library",
     "iconColor": "text-(--primary)"
   },
   "bootstrap-confidence-workbench": {
@@ -1983,6 +2961,13 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-yellow-500"
   },
+  "brand-asset-naming-convention-builder": {
+    "name": "Brand Asset Naming Convention Builder",
+    "description": "Build a file naming rule for logos, exports and campaign assets, validated against POSIX, Windows and S3 filename limits.",
+    "category": "Productivity",
+    "icon": "folder-tree",
+    "iconColor": "text-(--primary)"
+  },
   "brand-deal-rate-calculator": {
     "name": "Brand Deal Rate Calculator",
     "description": "Reach, CPM aur deliverables se pricing range estimate kare.",
@@ -2003,13 +2988,29 @@ export const toolMetaMap = {
       "Design & Color",
       "Marketing & Social"
     ],
-    "topics": [
-      "Design",
-      "Marketing",
-      "Creators"
-    ],
     "icon": "badge",
     "iconColor": "text-indigo-600"
+  },
+  "brand-social-avatar-kit-generator": {
+    "name": "Brand Social Avatar Kit Generator",
+    "description": "Crop one square source into circle-safe profile pictures at each platform's recommended upload size, entirely in your browser.",
+    "category": "Marketing & Social",
+    "icon": "circle-user-round",
+    "iconColor": "text-(--primary)"
+  },
+  "brand-voice-guideline-generator": {
+    "name": "Brand Voice Guideline Generator",
+    "description": "Turn four tone dials into a shareable brand voice guide with do and don't rules, word choices and reading-level targets.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
+  },
+  "brass-to-cft-converter": {
+    "name": "Brass to CFT Converter",
+    "description": "Convert brass to cubic feet, cubic metres, tonnes and truckloads for sand, aggregate and other loose construction material.",
+    "category": "Converters",
+    "icon": "boxes",
+    "iconColor": "text-(--primary)"
   },
   "breach-notification-timeline-planner": {
     "name": "Breach Notification Timeline Planner",
@@ -2032,6 +3033,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "break-even-accuracy-calculator": {
+    "name": "Break Even Accuracy Calculator",
+    "description": "Find the accuracy above which attempting a question earns marks under any negative marking scheme, and how many options you must rule out.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
   "break-even-calculator": {
     "name": "Break-Even Calculator",
     "description": "Calculate zero-profit break-even units, revenue, margin of safety, profit targets, and cost-volume scenarios.",
@@ -2046,12 +3054,40 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-blue-600"
   },
+  "break-even-point-calculator": {
+    "name": "Break Even Point Calculator for Small Business",
+    "description": "Find break-even units and revenue from fixed costs, price and variable cost, with margin of safety, target profit and operating leverage.",
+    "category": "Business",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "break-even-units-calculator": {
     "name": "Break-Even Units Calculator",
     "description": "How many units you must sell to cover your costs.",
     "category": "Business",
     "icon": "target",
     "iconColor": "text-rose-600"
+  },
+  "breaking-change-impact-checklist": {
+    "name": "Breaking Change Impact Checklist",
+    "description": "Generate a consumer impact checklist and risk score before shipping an API or library breaking change.",
+    "category": "Developer",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "breastfeeding-hydration-calculator": {
+    "name": "Breastfeeding Hydration Calculator",
+    "description": "Daily fluid target while nursing, derived from milk output and feeding frequency rather than a flat one-size figure.",
+    "category": "Health & Fitness",
+    "icon": "milk",
+    "iconColor": "text-(--primary)"
+  },
+  "breastfeeding-session-log": {
+    "name": "Breastfeeding Session Log",
+    "description": "Log every feed with side and duration, then see daily totals, gaps between feeds, left-right balance and the longest stretch.",
+    "category": "Health & Fitness",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
   },
   "brick-breaker": {
     "name": "Brick Breaker",
@@ -2063,6 +3099,27 @@ export const toolMetaMap = {
     ],
     "icon": "brick-wall",
     "iconColor": "text-orange-600"
+  },
+  "brick-quantity-calculator": {
+    "name": "Brick Quantity Calculator",
+    "description": "Bricks, mortar volume, cement bags and sand for a wall of any size, with joint thickness, openings and wastage.",
+    "category": "Calculators",
+    "icon": "brick-wall",
+    "iconColor": "text-(--primary)"
+  },
+  "british-airways-baggage-allowance-checker": {
+    "name": "British Airways Baggage Allowance Checker",
+    "description": "Check hand and checked bags against British Airways piece allowances, the 90 x 75 x 43 cm size rule and heavy-bag limits.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "british-airways-excess-baggage-cost-estimator": {
+    "name": "British Airways Excess Baggage Cost Estimator",
+    "description": "Price extra, heavy and oversize bags on a British Airways booking, prepaid against airport rates, and spot repacking savings.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
   },
   "brokerage-calculator": {
     "name": "Brokerage & Trading Charges Calculator",
@@ -2094,12 +3151,9 @@ export const toolMetaMap = {
     "wideWorkspace": true
   },
   "browser-fingerprint-visualizer": {
-    "name": "Browser FingerPrint",
-    "description": "Track your browser fingerprint",
+    "name": "Browser Fingerprint Visualizer",
+    "description": "See the exact canvas, WebGL, audio, font and hardware signals your browser leaks, and score how identifiable that fingerprint makes you.",
     "category": "Security & Privacy",
-    "topics": [
-      "Cybersecurity Tool"
-    ],
     "icon": "shield-check",
     "iconColor": "text-red-800"
   },
@@ -2123,6 +3177,13 @@ export const toolMetaMap = {
     ],
     "icon": "share-2",
     "iconColor": "text-teal-500"
+  },
+  "btu-to-ton-converter": {
+    "name": "BTU to Ton Converter",
+    "description": "Convert cooling capacity between BTU per hour, tons of refrigeration, kilowatts and kcal/h, with the electrical draw at a given COP.",
+    "category": "Converters",
+    "icon": "snowflake",
+    "iconColor": "text-(--primary)"
   },
   "bubble-text-generator": {
     "name": "Bubble Text Generator",
@@ -2152,6 +3213,13 @@ export const toolMetaMap = {
     "icon": "pie-chart",
     "iconColor": "text-teal-500"
   },
+  "budget-prompt-builder": {
+    "name": "Budget Prompt Builder",
+    "description": "Splits take-home pay by the 50/30/20 rule and writes an AI budgeting prompt with your real numbers and goals built in.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
   "buffer-ph-calculator": {
     "name": "Buffer pH Calculator",
     "description": "Henderson-Hasselbalch equation se buffer pH calculate kare.",
@@ -2170,6 +3238,13 @@ export const toolMetaMap = {
     "description": "Run many find and replace rules over text at once with regex, case and whole-word options.",
     "category": "Text & Writing",
     "icon": "replace",
+    "iconColor": "text-(--primary)"
+  },
+  "bulk-order-discount-calculator": {
+    "name": "Bulk Order Discount Calculator",
+    "description": "Price a quantity order across volume tiers, flat or graduated, and see the effective per unit cost and the next break worth reaching.",
+    "category": "Calculators",
+    "icon": "package",
     "iconColor": "text-(--primary)"
   },
   "bulk-text-replacer": {
@@ -2210,6 +3285,13 @@ export const toolMetaMap = {
     "icon": "id-card",
     "iconColor": "text-blue-500"
   },
+  "business-card-bleed-template": {
+    "name": "Business Card Bleed Template",
+    "description": "Generate a press-ready business card template with bleed, trim, safe zone and crop marks, sized in real millimetres.",
+    "category": "Design & Color",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
   "business-days-calculator": {
     "name": "Business Days Calculator",
     "description": "Count working days (Mon–Fri) between two dates, excluding weekends.",
@@ -2235,14 +3317,8 @@ export const toolMetaMap = {
   },
   "byte-converter": {
     "name": "Byte Converter",
-    "description": "Convert bytes, bits, KB, MB, GB, and binary units.",
-    "category": [
-      "Developer",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator"
-    ],
+    "description": "Convert bytes, bits, kB/MB/GB/TB and KiB/MiB/GiB/TiB in one place, and see why a 1 TB drive shows as 931 GiB.",
+    "category": "Converters",
     "icon": "binary",
     "iconColor": "text-blue-700"
   },
@@ -2262,6 +3338,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "caa-record-generator": {
+    "name": "CAA Record Generator",
+    "description": "Generate RFC 8659 CAA records that restrict which certificate authorities may issue TLS certificates for your domain.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "cac-calculator": {
     "name": "CAC Calculator",
     "description": "Calculate Customer Acquisition Cost across marketing channels, compare channel efficiency, and track LTV:CAC ratio in real time.",
@@ -2276,6 +3359,27 @@ export const toolMetaMap = {
     ],
     "icon": "target",
     "iconColor": "text-emerald-600"
+  },
+  "cache-hit-ratio-calculator": {
+    "name": "Cache Hit Ratio Calculator",
+    "description": "Compute cache hit ratio, backend load reduction and effective latency (AMAT) from hit and miss counts and latencies.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "cad-cash-budget-planner": {
+    "name": "CAD Cash Budget Planner",
+    "description": "Plan how many Canadian dollars to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
+  "caddyfile-generator": {
+    "name": "Caddyfile Generator",
+    "description": "Build a Caddy v2 Caddyfile with automatic HTTPS, reverse proxy or file server, compression, headers and logging.",
+    "category": "Developer",
+    "icon": "server",
+    "iconColor": "text-(--primary)"
   },
   "caffeine-tracker": {
     "name": "Caffeine Intake Tracker",
@@ -2305,6 +3409,13 @@ export const toolMetaMap = {
     "description": "Work out compound annual growth rate from a start value, end value and duration, with absolute return and a year-wise breakdown.",
     "category": "Finance Calculators",
     "icon": "chart-line",
+    "iconColor": "text-(--primary)"
+  },
+  "cagr-calculator-tool": {
+    "name": "CAGR Calculator",
+    "description": "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
     "iconColor": "text-(--primary)"
   },
   "calendar-privacy-scrubber": {
@@ -2348,6 +3459,13 @@ export const toolMetaMap = {
     ],
     "icon": "chart-scatter",
     "iconColor": "text-primary"
+  },
+  "calicut-university-cgpa-converter": {
+    "name": "Calicut University CGPA Converter",
+    "description": "Convert Calicut University CBCSS CGPA or SGPA to percentage marks, and turn course letter grades into a grade point average.",
+    "category": "Calculators",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
   },
   "call-to-action-generator": {
     "name": "Call-to-Action Generator",
@@ -2402,6 +3520,13 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-green-600"
   },
+  "calver-version-generator": {
+    "name": "CalVer Version Generator",
+    "description": "Generate calendar version numbers like YYYY.MM.MICRO from any date and scheme, with a preview timeline of future releases.",
+    "category": "Developer",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
+  },
   "camel-case-converter": {
     "name": "Camel Case Converter",
     "description": "Convert any phrase to camelCase — plus PascalCase and CONSTANT_CASE.",
@@ -2430,6 +3555,27 @@ export const toolMetaMap = {
     "icon": "pie-chart",
     "iconColor": "text-rose-500"
   },
+  "canada-visa-cost-estimator": {
+    "name": "Canada Visa Cost Estimator",
+    "description": "Add up the IRCC application fee, biometrics with its family cap, VFS charges and courier into one rupee total.",
+    "category": "Finance Calculators",
+    "icon": "leaf",
+    "iconColor": "text-(--primary)"
+  },
+  "canada-visa-cover-letter-builder": {
+    "name": "Canada Visa Cover Letter Builder",
+    "description": "Draft an IMM 5257 visitor visa letter of explanation with itinerary, funding, fee totals and a super visa insurance check.",
+    "category": "Text & Writing",
+    "icon": "mountain",
+    "iconColor": "text-(--primary)"
+  },
+  "canada-visa-rejection-reason-explainer": {
+    "name": "Canada Visa Rejection Reason Explainer",
+    "description": "Translate the ticked boxes on an IRCC refusal letter into the regulation behind them and a checklist of what to fix.",
+    "category": "Education & Science",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
   "candy-match-3": {
     "name": "Candy Match 3",
     "description": "Play Candy Match 3 free online — a sweet match-3 puzzle game. Swap candies, trigger combos, beat level targets, and chase your high score.",
@@ -2441,6 +3587,13 @@ export const toolMetaMap = {
       "Game"
     ],
     "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
+  "canva-ai-prompt-builder": {
+    "name": "Canva AI Prompt Builder",
+    "description": "Build a structured Canva AI design prompt with the exact canvas size, aspect ratio, brand slots and a legibility-checked copy budget.",
+    "category": "Design & Color",
+    "icon": "palette",
     "iconColor": "text-(--primary)"
   },
   "capital-city-quiz": {
@@ -2489,6 +3642,48 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "car-ac-fuel-cost-impact": {
+    "name": "Car AC Fuel Cost Impact",
+    "description": "Estimate the extra fuel, money and CO2 your car air conditioning costs per hour, month and year from compressor load.",
+    "category": "Calculators",
+    "icon": "snowflake",
+    "iconColor": "text-(--primary)"
+  },
+  "car-ac-gas-refill-cost": {
+    "name": "Car AC Gas Refill Cost",
+    "description": "Estimate a car AC regas bill from refrigerant type, charge weight, labour, parts and 18% GST, with an R134a versus R1234yf comparison.",
+    "category": "Calculators",
+    "icon": "snowflake",
+    "iconColor": "text-(--primary)"
+  },
+  "car-battery-replacement-planner": {
+    "name": "Car Battery Replacement Planner",
+    "description": "Predict when your car battery needs replacing from its age, battery type, climate, usage pattern and warning signs.",
+    "category": "Productivity",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
+  },
+  "car-depreciation-calculator": {
+    "name": "Car Depreciation Calculator",
+    "description": "Chart a car's year-by-year depreciation curve, remaining value and IRDAI insurance IDV from price, age and kilometres run.",
+    "category": "Finance Calculators",
+    "icon": "trending-down",
+    "iconColor": "text-(--primary)"
+  },
+  "car-detailing-cost-calculator": {
+    "name": "Car Detailing Cost Calculator",
+    "description": "Compare wax, sealant, ceramic coating and PPF on true cost per year over your ownership period, not sticker price.",
+    "category": "Calculators",
+    "icon": "sparkles",
+    "iconColor": "text-(--primary)"
+  },
+  "car-exchange-vs-private-sale": {
+    "name": "Car Exchange vs Private Sale",
+    "description": "Compare a dealer exchange offer plus bonus against the true net proceeds of a private sale after costs, waiting time and money's time value.",
+    "category": "Finance Calculators",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
   "car-loan-calculator": {
     "name": "Car Loan Calculator",
     "description": "Monthly payment, total interest and total cost for a car loan.",
@@ -2507,11 +3702,32 @@ export const toolMetaMap = {
     "iconColor": "text-(--primary)"
   },
   "car-ownership-cost-analyzer": {
-    "name": "car-cost-analyzer",
-    "description": "Calculate the total cost of owning a car, including purchase price, running costs, and depreciation.",
-    "category": "Other",
+    "name": "Car Ownership Cost Analyzer",
+    "description": "Calculate the true cost of owning a car — EMI, fuel with inflation, insurance, maintenance and depreciation — and compare it against taking taxis.",
+    "category": "Finance Calculators",
     "icon": "car",
     "iconColor": "text-blue-500"
+  },
+  "car-purchase-savings-planner": {
+    "name": "Car Purchase Savings Planner",
+    "description": "Plan the down payment, test the EMI against the 20/4/10 rule and see the full cost of owning the car after resale.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
+  "car-rental-cost-comparison": {
+    "name": "Car Rental Cost Comparison",
+    "description": "Compare self-drive rental quotes on daily rate, included km, excess-km charges, fuel policy, GST and deposit for one real trip.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
+  "car-storage-checklist": {
+    "name": "Car Storage Checklist",
+    "description": "Checklist to park a car safely for weeks or months, with battery drain days, storage tyre pressure and a return list.",
+    "category": "Productivity",
+    "icon": "warehouse",
+    "iconColor": "text-(--primary)"
   },
   "card-picker": {
     "name": "Random Card Picker",
@@ -2546,6 +3762,13 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "caret-tilde-range-visualizer": {
+    "name": "Caret Tilde Range Visualizer",
+    "description": "See the allowed version window for ^ and ~ semver ranges on a number line, with allowed and blocked neighbours.",
+    "category": "Developer",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
   "carpet-area-calculator": {
     "name": "Carpet / Floor Area Calculator",
     "description": "Calculate floor area and material needed for a room.",
@@ -2555,6 +3778,20 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-teal-600"
+  },
+  "carpet-roll-quantity-calculator": {
+    "name": "Carpet Roll Quantity Calculator",
+    "description": "Estimate carpet roll running metres, seams, offcut wastage and cost for a wall-to-wall installation.",
+    "category": "Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "carpool-cost-split-calculator": {
+    "name": "Carpool Cost Split Calculator",
+    "description": "Split carpool fuel, tolls, parking and running cost between riders by the distance each person actually travels.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "carpool-rotation-scheduler": {
     "name": "Carpool Rotation Scheduler",
@@ -2566,13 +3803,17 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-primary"
   },
+  "carry-on-only-trip-planner": {
+    "name": "Carry-On Only Trip Planner",
+    "description": "Plan a cabin-bag-only trip: the smallest capsule wardrobe that covers your days, plus a 3-1-1 liquids audit and a weight and volume check.",
+    "category": "Lifestyle",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
   "cart-bill-splitter": {
     "name": "Cart Bill Splitter",
-    "description": "Split shopping bills, manage shared expenses, and handle tax/delivery charges fairly.",
+    "description": "Split a shared cart or restaurant bill line by line — equally, by percentage, by quantity or by exact amount — apportion tax and delivery fairly, and settle up in the fewest transfers.",
     "category": "Finance Calculators",
-    "topics": [
-      "Finance Tools"
-    ],
     "icon": "wallet",
     "iconColor": "text-blue-500"
   },
@@ -2591,6 +3832,55 @@ export const toolMetaMap = {
     "icon": "paintbrush",
     "iconColor": "text-violet-600"
   },
+  "cascading-discount-calculator": {
+    "name": "Discount and Cascading Discount Calculator",
+    "description": "Stack successive discounts, a flat coupon and tax to get the true effective discount, final price and total saved.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "case-study-prompt-builder": {
+    "name": "Case Study Prompt Builder",
+    "description": "Build a structured AI prompt for a business case study with problem, approach and measurable results baked in.",
+    "category": "Business",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "cash-denomination-calculator": {
+    "name": "Rounding and Cash Denomination Calculator",
+    "description": "Round an amount to a cash-friendly figure and split it into the fewest ₹ notes and coins for payouts and envelopes.",
+    "category": "Calculators",
+    "icon": "banknote",
+    "iconColor": "text-(--primary)"
+  },
+  "cash-deposit-reporting-checker": {
+    "name": "Cash Deposit Reporting Threshold Checker",
+    "description": "Check which Rule 114E reporting, PAN-quoting and section 194N thresholds your cash deposits and withdrawals cross in a financial year.",
+    "category": "Business",
+    "icon": "banknote",
+    "iconColor": "text-(--primary)"
+  },
+  "caste-certificate-checklist": {
+    "name": "Caste Certificate Document Checklist",
+    "description": "Build the SC, ST or OBC caste certificate document list, check the religion and migration bars, and test the creamy layer income limit.",
+    "category": "Productivity",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
+  "cat-exam-countdown": {
+    "name": "CAT Exam Countdown",
+    "description": "CAT countdown with a phased mock schedule, sectional prep pace for VARC, DILR and QA, and attempts needed for a target score.",
+    "category": "Productivity",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "cat-exam-day-checklist": {
+    "name": "CAT Exam Day Checklist",
+    "description": "Map your CAT slot to a reporting, gate-closing and sectional clock, pace each 40-minute section, and pack only what the centre allows.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "cbc-report-interpreter": {
     "name": "CBC Report Interpreter",
     "description": "Complete Blood Count interpretation with differential analysis, anemia classification, infection pattern recognition, and clinical recommendations.",
@@ -2600,6 +3890,62 @@ export const toolMetaMap = {
     ],
     "icon": "test-tube",
     "iconColor": "text-rose-600"
+  },
+  "cbse-best-of-five-calculator": {
+    "name": "CBSE Best Of Five Calculator",
+    "description": "Work out the CBSE Class 12 best-of-five percentage: the compulsory language plus your four highest scoring subjects.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "cbse-class-10-percentage-calculator": {
+    "name": "CBSE Class 10 Percentage Calculator",
+    "description": "Calculate CBSE Class 10 percentage from subject marks — best-of-five average, overall percentage and the 33% pass check.",
+    "category": "Calculators",
+    "icon": "book-open-check",
+    "iconColor": "text-(--primary)"
+  },
+  "cbse-class-10-syllabus-tracker": {
+    "name": "CBSE Class 10 Syllabus Tracker",
+    "description": "Monitor CBSE Class 10 syllabus progress chapter by chapter, with revision status and the weekly pace needed before the boards.",
+    "category": "Productivity",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "cbse-class-12-syllabus-tracker": {
+    "name": "CBSE Class 12 Syllabus Tracker",
+    "description": "Track CBSE Class 12 chapter completion subject by subject and see the weekly pace needed to finish before the boards.",
+    "category": "Productivity",
+    "icon": "book-check",
+    "iconColor": "text-(--primary)"
+  },
+  "cbse-lesson-plan-prompt-builder": {
+    "name": "CBSE Lesson Plan Prompt Builder",
+    "description": "Build CBSE-aligned lesson plan prompts by class, subject and period length, with 5E or Herbartian time splits and the real internal-assessment scheme.",
+    "category": "Education & Science",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "ceiling-fan-electricity-cost": {
+    "name": "Ceiling Fan Electricity Cost",
+    "description": "Work out what your ceiling fans cost to run each year and how quickly a BLDC fan upgrade pays for itself.",
+    "category": "Calculators",
+    "icon": "fan",
+    "iconColor": "text-(--primary)"
+  },
+  "ceiling-fan-size-selector": {
+    "name": "Ceiling Fan Size Selector",
+    "description": "Pick ceiling fan sweep, fan count and downrod length from your room size, ceiling height and required air delivery.",
+    "category": "Calculators",
+    "icon": "fan",
+    "iconColor": "text-(--primary)"
+  },
+  "ceiling-paint-coverage-calculator": {
+    "name": "Ceiling Paint Coverage Calculator",
+    "description": "Work out ceiling paint litres and cost from room length, width, cove depth and the number of coats.",
+    "category": "Calculators",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
   },
   "celebrity-look-alike": {
     "name": "Which Celebrity Do You Look Like?",
@@ -2621,6 +3967,20 @@ export const toolMetaMap = {
     "icon": "dna",
     "iconColor": "text-teal-500"
   },
+  "cent-to-sqft-converter": {
+    "name": "Cent to Sqft Converter",
+    "description": "Convert cent, ground, are, ankanam, guntha and acre to square feet and square metres, with rate per cent and land value.",
+    "category": "Converters",
+    "icon": "map-pinned",
+    "iconColor": "text-(--primary)"
+  },
+  "certificate-expiry-tracker": {
+    "name": "Certificate Expiry Tracker",
+    "description": "Track TLS certificate expiry dates locally, see days remaining and renewal deadlines, and export calendar reminders.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "certificate-transparency-watchlist": {
     "name": "Certificate Transparency Watchlist",
     "description": "Prepare a domain watchlist and identify suspicious certificate names.",
@@ -2632,6 +3992,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cft-to-cubic-meter-converter": {
+    "name": "CFT to Cubic Meter Converter",
+    "description": "Convert cubic feet, cubic metres, litres and brass, with material weight in tonnes and truck loads for sand and aggregate.",
+    "category": "Converters",
+    "icon": "box",
+    "iconColor": "text-(--primary)"
+  },
   "cgpa-to-percentage-converter": {
     "name": "CGPA to Percentage Converter",
     "description": "Convert CGPA to percentage using CBSE, VTU, Mumbai University and custom multipliers.",
@@ -2642,12 +4009,40 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-(--primary)"
   },
+  "cgst-sgst-igst-split-calculator": {
+    "name": "CGST SGST IGST Split Calculator",
+    "description": "Enter supplier and place-of-supply state codes to see whether GST splits into CGST and SGST or is charged as IGST, with the amounts.",
+    "category": "Finance Calculators",
+    "icon": "split",
+    "iconColor": "text-(--primary)"
+  },
+  "change-freeze-calendar-planner": {
+    "name": "Change Freeze Calendar Planner",
+    "description": "Plan deployment freeze windows around festivals, sale events and fiscal close dates, with merged windows and frozen-day totals.",
+    "category": "Productivity",
+    "icon": "snowflake",
+    "iconColor": "text-(--primary)"
+  },
   "changelog-generator": {
     "name": "Changelog Generator",
     "description": "Turn a list of changes into a clean, categorised Keep-a-Changelog entry.",
     "category": "Developer",
     "icon": "file-text",
     "iconColor": "text-slate-600"
+  },
+  "changelog-prompt-builder": {
+    "name": "Changelog Prompt Builder",
+    "description": "Parse Conventional Commits into Keep a Changelog sections and a SemVer bump, then build the writing prompt.",
+    "category": "Developer",
+    "icon": "git-commit-vertical",
+    "iconColor": "text-(--primary)"
+  },
+  "changesets-config-generator": {
+    "name": "Changesets Config Generator",
+    "description": "Generate .changeset/config.json with changelog source, npm access, base branch, fixed/linked package groups and ignore rules.",
+    "category": "Generators",
+    "icon": "file-diff",
+    "iconColor": "text-(--primary)"
   },
   "character-limit-checker": {
     "name": "Character Limit Checker",
@@ -2679,6 +4074,27 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "chatbot-analytics-metric-planner": {
+    "name": "Chatbot Analytics Metric Planner",
+    "description": "Pick containment, CSAT and deflection metrics before launch and project deflected volume and savings.",
+    "category": "Business",
+    "icon": "bar-chart-3",
+    "iconColor": "text-(--primary)"
+  },
+  "chatbot-escalation-rules-planner": {
+    "name": "Chatbot Escalation Rules Planner",
+    "description": "Define an ordered rule set for when your chatbot must hand a conversation to a human agent.",
+    "category": "Business",
+    "icon": "phone-forwarded",
+    "iconColor": "text-(--primary)"
+  },
+  "chatbot-monthly-cost-estimator": {
+    "name": "Chatbot Monthly Cost Estimator",
+    "description": "Estimate a support chatbot's monthly token bill from conversation volume, RAG context and turn length, then compare it to agent cost.",
+    "category": "Calculators",
+    "icon": "message-square",
+    "iconColor": "text-(--primary)"
+  },
   "chatgpt-chat-export": {
     "name": "ChatGPT Chat Export",
     "description": "Convert exported ChatGPT conversations into beautiful documents. Parse, view, search, and export to PDF, DOCX, Markdown, HTML, and more.",
@@ -2704,6 +4120,34 @@ export const toolMetaMap = {
     "icon": "flask-conical",
     "iconColor": "text-teal-500"
   },
+  "chennai-airport-transfer-time-planner": {
+    "name": "Chennai Airport Transfer Time Planner",
+    "description": "Work out when to leave for Chennai MAA airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "chennai-auto-cab-fare-estimator": {
+    "name": "Chennai Auto and Cab Fare Estimator",
+    "description": "Estimate a fair Chennai auto or cab fare from distance, waiting time, night charges and surge, using the notified auto meter rate.",
+    "category": "Calculators",
+    "icon": "car-taxi-front",
+    "iconColor": "text-(--primary)"
+  },
+  "chennai-maa-airport-arrival-buffer-calculator": {
+    "name": "Chennai MAA Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Chennai MAA using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "cheque-amount-to-words-indian": {
+    "name": "Cheque Amount to Words Converter Indian",
+    "description": "Turn a rupee amount into cheque-ready words using the Indian lakh and crore system, with paise and digit grouping.",
+    "category": "Converters",
+    "icon": "spell-check",
+    "iconColor": "text-(--primary)"
+  },
   "chess-multiplayer": {
     "name": "Chess Multiplayer",
     "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
@@ -2722,6 +4166,13 @@ export const toolMetaMap = {
       "Game"
     ],
     "icon": "between-vertical-start",
+    "iconColor": "text-(--primary)"
+  },
+  "child-education-corpus-planner": {
+    "name": "Child Education Corpus Planner",
+    "description": "Project a degree's future cost with fee inflation and get the monthly SIP needed to fund it in time.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
     "iconColor": "text-(--primary)"
   },
   "child-education-cost-planner": {
@@ -2751,6 +4202,20 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "child-safety-home-checklist": {
+    "name": "Child Safety Home Checklist",
+    "description": "Room-by-room childproofing checklist matched to your child's age, your home's stairs, balconies and water, with a readiness score.",
+    "category": "Education & Science",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
+  "chimney-cleaning-planner": {
+    "name": "Chimney Cleaning Planner",
+    "description": "Work out how often your kitchen chimney filters need cleaning, when the next service is due and whether its suction suits your kitchen.",
+    "category": "Productivity",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
   },
   "chinese-character-generator": {
     "name": "Chinese Character Generator",
@@ -2789,6 +4254,13 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-teal-600"
   },
+  "chmod-permission-calculator": {
+    "name": "Chmod Permission Calculator",
+    "description": "Convert Unix file permissions between numeric (755) and symbolic (rwxr-xr-x) form with a checkbox grid, setuid, setgid and sticky bits.",
+    "category": "Calculators",
+    "icon": "file-lock",
+    "iconColor": "text-(--primary)"
+  },
   "chore-chart-maker": {
     "name": "Chore Chart Maker",
     "description": "Fairly assign a list of chores across people, round-robin.",
@@ -2807,6 +4279,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "chronotype-finder-quiz": {
+    "name": "Chronotype Finder Quiz",
+    "description": "Five-question rMEQ chronotype quiz scoring you as a morning, intermediate or evening type, with your natural sleep window.",
+    "category": "Health & Fitness",
+    "icon": "moon",
+    "iconColor": "text-(--primary)"
+  },
   "churn-rate-calculator": {
     "name": "Churn Rate Calculator",
     "description": "Customer churn and retention rate for a period.",
@@ -2816,6 +4295,27 @@ export const toolMetaMap = {
     ],
     "icon": "user-minus",
     "iconColor": "text-red-600"
+  },
+  "ci-build-matrix-explosion-estimator": {
+    "name": "CI Build Matrix Explosion Estimator",
+    "description": "See how many jobs and CI minutes your build matrix dimensions really generate — with GitHub's 256-job limit checked — before you commit.",
+    "category": "Developer",
+    "icon": "grid-3x3",
+    "iconColor": "text-(--primary)"
+  },
+  "cidr-subnet-calculator": {
+    "name": "CIDR Subnet Calculator",
+    "description": "Calculate network, broadcast, usable host range, subnet mask and wildcard mask from any IPv4 CIDR block.",
+    "category": "Calculators",
+    "icon": "network",
+    "iconColor": "text-(--primary)"
+  },
+  "cidr-to-ip-range-converter": {
+    "name": "CIDR to IP Range Converter",
+    "description": "Convert between CIDR notation, start-end IP ranges and Cisco wildcard masks in bulk, with minimal CIDR splitting for arbitrary ranges.",
+    "category": "Converters",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
   },
   "circled-text-generator": {
     "name": "Circled Text Generator",
@@ -2838,6 +4338,41 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-blue-600"
   },
+  "class-rank-percentile-calculator": {
+    "name": "Class Rank Percentile Calculator",
+    "description": "Convert your class rank and class size into the top-percent figure and percentile that college applications ask for.",
+    "category": "Calculators",
+    "icon": "trophy",
+    "iconColor": "text-(--primary)"
+  },
+  "class-wise-ncert-coverage-map": {
+    "name": "Class Wise NCERT Coverage Map",
+    "description": "Map your UPSC-style NCERT reading across classes 6-12 and subjects, and see coverage percentages and weak spots.",
+    "category": "Productivity",
+    "icon": "layout-grid",
+    "iconColor": "text-(--primary)"
+  },
+  "clat-exam-countdown": {
+    "name": "CLAT Exam Countdown",
+    "description": "CLAT countdown with mock-test capacity, current affairs coverage pace and section-wise daily targets under the 120-question pattern.",
+    "category": "Productivity",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "clat-syllabus-tracker": {
+    "name": "CLAT Syllabus Tracker",
+    "description": "Track all five CLAT sections by their official weights, log daily reading practice and project marks under +1 / -0.25 marking.",
+    "category": "Productivity",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "claude-api-cost-calculator": {
+    "name": "Claude API Cost Calculator",
+    "description": "Project Claude API costs by model, request count and token size, with prompt-cache read/write pricing and the batch discount.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
   "cleaning-schedule-planner": {
     "name": "Cleaning Schedule Planner",
     "description": "Organize recurring chores by room, day, priority, owner, and duration.",
@@ -2847,6 +4382,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-teal-500"
+  },
+  "clinic-front-desk-prompt-pack": {
+    "name": "Clinic Front Desk Prompt Pack",
+    "description": "Administrative AI prompts for appointments, reminders and billing, with an SMS segment counter and a clinical-advice screen.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "clipboard-capsule": {
     "name": "Clipboard Capsule",
@@ -2892,14 +4434,38 @@ export const toolMetaMap = {
   },
   "clothing-shoe-size-converter": {
     "name": "Clothing & Shoe Size Converter",
-    "description": "Convert clothing and shoe sizes across global standards with measurement-based fit guidance and quick comparison.",
+    "description": "Convert clothing and shoe sizes between US, UK, EU, IN and cm, and get a size recommendation from your own chest, waist or foot measurement.",
     "category": "Lifestyle",
-    "topics": [
-      "Shopping",
-      "Utility"
-    ],
     "icon": "arrow-left-right",
     "iconColor": "text-blue-600"
+  },
+  "clothing-size-converter-abroad": {
+    "name": "Clothing Size Converter for Shopping Abroad",
+    "description": "Convert clothing sizes between US, UK, EU, France, Italy, Japan and India, from a label or from your body measurements.",
+    "category": "Converters",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "cloud-budget-alert-planner": {
+    "name": "Cloud Budget Alert Planner",
+    "description": "Plan budget alert thresholds and forecast triggers from your month-to-date cloud spend, with the day each alert would fire.",
+    "category": "Developer",
+    "icon": "bell-ring",
+    "iconColor": "text-(--primary)"
+  },
+  "cloud-certification-path-planner": {
+    "name": "Cloud Certification Path Planner",
+    "description": "Plan an AWS, Azure or GCP certification sequence with exam fees, study hours and a week-by-week timeline.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "cloud-egress-fee-comparison": {
+    "name": "Cloud Egress Fee Comparison",
+    "description": "Compare what your monthly outbound traffic costs on AWS, Azure, GCP, Oracle, CloudFront, Bunny and Cloudflare.",
+    "category": "Calculators",
+    "icon": "arrow-up-from-line",
+    "iconColor": "text-(--primary)"
   },
   "cloud-status-board": {
     "name": "Cloud Status Board",
@@ -2912,15 +4478,68 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cloud-tagging-policy-generator": {
+    "name": "Cloud Tagging Policy Generator",
+    "description": "Generate a mandatory cloud tag schema for cost allocation with allowed values, provider-safe keys, examples and enforcement notes.",
+    "category": "Developer",
+    "icon": "tags",
+    "iconColor": "text-(--primary)"
+  },
+  "cloudflare-workers-cost-calculator": {
+    "name": "Cloudflare Workers Cost Calculator",
+    "description": "Compute Cloudflare Workers and KV cost from requests, CPU time, reads, writes, lists and storage on the Paid plan.",
+    "category": "Calculators",
+    "icon": "cloud-cog",
+    "iconColor": "text-(--primary)"
+  },
+  "coaching-fee-vs-self-study-cost": {
+    "name": "Coaching Fee Vs Self Study Cost",
+    "description": "Compare the all-in cost of a coaching programme against a self-study plan with books, test series and online courses.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "coaching-institute-prompt-pack": {
+    "name": "Coaching Institute Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for batch announcements, doubt replies and result posts, with a CCPA coaching-advertising claim check.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "code-comment-prompt-builder": {
+    "name": "Code Comment Prompt Builder",
+    "description": "Build a docstring prompt in JSDoc, TSDoc, Google or NumPy Python, Javadoc, Doxygen, XML doc, rustdoc or Go doc style with the right tags and line limit.",
+    "category": "Developer",
+    "icon": "message-square-code",
+    "iconColor": "text-(--primary)"
+  },
   "code-complexity-analyzer": {
     "name": "Code Complexity Analyzer",
-    "description": "Analyze the complexity of your code and get suggestions to improve it.",
-    "category": "Education & Science",
-    "topics": [
-      "education"
-    ],
+    "description": "Measure cyclomatic and cognitive complexity, Halstead volume and the maintainability index of your code, and get specific refactoring suggestions.",
+    "category": "Developer",
     "icon": "code",
-    "iconColor": "blue"
+    "iconColor": "text-blue-500"
+  },
+  "code-review-checklist-generator": {
+    "name": "Code Review Checklist Generator",
+    "description": "Generate a code review checklist tuned to your language, change type and risk level, ready to paste into a pull request.",
+    "category": "Generators",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "code-review-prompt-builder": {
+    "name": "Code Review Prompt Builder",
+    "description": "Builds an AI code-review prompt focused on correctness, security, performance or style, with severity labels and a review-size check.",
+    "category": "Developer",
+    "icon": "search-code",
+    "iconColor": "text-(--primary)"
+  },
+  "codeowners-file-generator": {
+    "name": "CODEOWNERS File Generator",
+    "description": "Build a CODEOWNERS file with path patterns and team handles, validate owners, and preview which rule wins for any file path.",
+    "category": "Generators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "codex-chat-transfer": {
     "name": "Codex Chat Transfer",
@@ -2932,6 +4551,13 @@ export const toolMetaMap = {
     ],
     "icon": "refresh-cw",
     "iconColor": "text-teal-500"
+  },
+  "coding-model-picker": {
+    "name": "Coding Model Picker",
+    "description": "Score hosted, open-weight and local coding assistants against your language, repo size, privacy rules and budget with a transparent weighted rubric.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-(--primary)"
   },
   "coffee-brew-ratio": {
     "name": "Coffee Brew Ratio Calculator",
@@ -2945,6 +4571,13 @@ export const toolMetaMap = {
     ],
     "icon": "coffee",
     "iconColor": "text-teal-600"
+  },
+  "coffee-shop-work-spot-rater": {
+    "name": "Coffee Shop Work Spot Rater",
+    "description": "Rate a café for remote work on Wi-Fi speed, latency, noise, sockets, table size and seating against real call and concentration thresholds.",
+    "category": "Lifestyle",
+    "icon": "coffee",
+    "iconColor": "text-(--primary)"
   },
   "cognitive-performance-tracker": {
     "name": "Cognitive Performance Tracker",
@@ -2981,18 +4614,40 @@ export const toolMetaMap = {
     "icon": "circle-dollar-sign",
     "iconColor": "text-amber-600"
   },
+  "cold-email-prompt-builder": {
+    "name": "Cold Email Prompt Builder",
+    "description": "Generates outreach prompts with persona, trigger event and one clear ask — sized to the 50-125 word range that gets replies.",
+    "category": "Business",
+    "icon": "send",
+    "iconColor": "text-(--primary)"
+  },
+  "college-admission-form-checklist": {
+    "name": "College Admission Form Checklist",
+    "description": "Track every college application's deadline and fee, hold one shared document list, and work out the UGC refund if you withdraw.",
+    "category": "Productivity",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
+  },
+  "college-fee-instalment-planner": {
+    "name": "College Fee Instalment Planner",
+    "description": "Turn a semester fee schedule into a monthly savings plan with due dates and reminder dates.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "colombo-trip-budget-breakdown": {
+    "name": "Colombo Trip Budget Breakdown",
+    "description": "Break a Colombo trip into flights, stay, food, transport and activities in rupees, with Sri Lanka's service charge, SSCL and VAT.",
+    "category": "Finance Calculators",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
+  },
   "color-blindness-simulator": {
     "name": "Color Blindness Simulator",
-    "description": "Advanced accessibility tool to simulate various types of color vision deficiencies in real-time.",
+    "description": "Simulate protanopia, deuteranopia, tritanopia and achromatopsia on your own images in real time, with an adjustable severity slider and side-by-side comparison.",
     "category": [
-      "Developer",
       "Design & Color",
       "Image & Photo"
-    ],
-    "topics": [
-      "Accessibility",
-      "Design",
-      "Image"
     ],
     "icon": "palette",
     "iconColor": "text-cyan-600"
@@ -3065,11 +4720,8 @@ export const toolMetaMap = {
   },
   "color-memory-precision-test": {
     "name": "Color Memory Precision Test",
-    "description": "Test your visual memory and color precision by recreating shades from memory.",
-    "category": "Design & Color",
-    "topics": [
-      "Design Tools"
-    ],
+    "description": "Study a colour, watch it disappear, then rebuild it from memory — and get a blended RGB and HSL accuracy score for how close you got.",
+    "category": "Education & Science",
     "icon": "brain",
     "iconColor": "text-indigo-600"
   },
@@ -3112,11 +4764,15 @@ export const toolMetaMap = {
     "name": "Color Psychology Analyzer",
     "description": "Analyze emotional impact, branding psychology, and cultural meanings of colors.",
     "category": "Design & Color",
-    "topics": [
-      "Design Tools"
-    ],
     "icon": "palette",
-    "iconColor": "text-fuchsia-600"
+    "iconColor": "text-(--primary)"
+  },
+  "colorblind-brand-logo-checker": {
+    "name": "Colourblind Logo Checker",
+    "description": "Preview a logo under protanopia, deuteranopia, tritanopia and achromatopsia, with CIELAB colour-difference scoring.",
+    "category": "Design & Color",
+    "icon": "eye-off",
+    "iconColor": "text-(--primary)"
   },
   "colorblind-safe-palette-fixer": {
     "name": "Colorblind-Safe Palette Fixer",
@@ -3133,12 +4789,33 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "commit-message-prompt-builder": {
+    "name": "Commit Message Prompt Builder",
+    "description": "Turns a diff summary into a Conventional Commits prompt with type, scope, breaking-change marker and the 50/72 length rules.",
+    "category": "Developer",
+    "icon": "git-commit-horizontal",
+    "iconColor": "text-(--primary)"
+  },
+  "commute-study-micro-planner": {
+    "name": "Commute Study Micro Planner",
+    "description": "Convert daily commute minutes into a weekly plan of audio lectures and flashcard reviews with real card counts.",
+    "category": "Productivity",
+    "icon": "train-front",
+    "iconColor": "text-(--primary)"
+  },
   "company-info-tool": {
     "name": "Company Info Explorer",
     "description": "Quickly look up key information and metrics about tech companies.",
     "category": "Business",
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "company-social-media-policy-generator": {
+    "name": "Company Social Media Policy Generator",
+    "description": "Build an employee social media policy with disclosure, confidentiality and lawful-speech clauses, plus a coverage score and gap flags.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
   },
   "compatibility-quiz": {
     "name": "Compatibility Quiz",
@@ -3169,6 +4846,20 @@ export const toolMetaMap = {
     ],
     "icon": "case-sensitive",
     "iconColor": "text-primary"
+  },
+  "composer-json-generator": {
+    "name": "Composer JSON Generator",
+    "description": "Build a valid composer.json with PSR-4 autoload, require and require-dev constraints, scripts, config and platform requirements.",
+    "category": "Generators",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
+  },
+  "compost-bin-size-calculator": {
+    "name": "Compost Bin Size Calculator",
+    "description": "Size a home compost bin in litres from daily kitchen waste, browns ratio and how often you turn the heap.",
+    "category": "Calculators",
+    "icon": "recycle",
+    "iconColor": "text-(--primary)"
   },
   "compound-interest-calculator": {
     "name": "Compound Interest Calculator",
@@ -3204,6 +4895,13 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
   },
+  "compound-interest-visualiser": {
+    "name": "Compound Interest Visualiser",
+    "description": "Chart how compounding pulls away from simple interest over decades, with yearly balances, contributions and the interest-on-interest gap.",
+    "category": "Education & Science",
+    "icon": "chart-line",
+    "iconColor": "text-(--primary)"
+  },
   "computer-parts-quiz": {
     "name": "Computer Parts Quiz",
     "description": "Test your knowledge of computer hardware components with interactive multiple-choice questions. Learn about CPUs, GPUs, RAM, storage, and more.",
@@ -3216,6 +4914,27 @@ export const toolMetaMap = {
     ],
     "icon": "monitor",
     "iconColor": "text-teal-500"
+  },
+  "concert-ear-protection-guide": {
+    "name": "Concert Ear Protection Guide",
+    "description": "Compare NRR, SNR and flat musician filter ratings and see the protected level and safe exposure time for a gig at any loudness.",
+    "category": "Health & Fitness",
+    "icon": "ear",
+    "iconColor": "text-(--primary)"
+  },
+  "concrete-volume-calculator": {
+    "name": "Concrete Volume Calculator",
+    "description": "Concrete volume for slabs, beams, columns and footings, plus cement bags, sand, aggregate and water by mix ratio.",
+    "category": "Calculators",
+    "icon": "box",
+    "iconColor": "text-(--primary)"
+  },
+  "concurrency-vs-rps-calculator": {
+    "name": "Concurrency vs RPS Calculator",
+    "description": "Convert between concurrent users, requests per second and response time using Little's Law, with think-time support.",
+    "category": "Calculators",
+    "icon": "activity",
+    "iconColor": "text-(--primary)"
   },
   "condorcet-election-judge": {
     "name": "Condorcet Election Judge",
@@ -3296,6 +5015,13 @@ export const toolMetaMap = {
     "icon": "hammer",
     "iconColor": "text-(--primary)"
   },
+  "construction-waste-cost-estimator": {
+    "name": "Construction Waste Cost Estimator",
+    "description": "Estimate debris removal cost from volume, bulking, truck trips, haul distance, tipping fees and loading labour.",
+    "category": "Calculators",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
+  },
   "consumer-complaint-draft-builder": {
     "name": "Consumer Complaint Draft Builder",
     "description": "Facts, relief aur evidence se complaint format banaye.",
@@ -3322,6 +5048,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "container-base-image-chooser": {
+    "name": "Container Base Image Chooser",
+    "description": "Compare alpine, slim, distroless, scratch and full base images by size, libc, shell and debug tooling — and get a ranked pick.",
+    "category": "Developer",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "container-image-digest-pinning-helper": {
+    "name": "Container Image Digest Pinning Helper",
+    "description": "Convert mutable image tags into pinned @sha256 digest references and scan Dockerfiles or manifests for unpinned images.",
+    "category": "Developer",
+    "icon": "pin",
+    "iconColor": "text-(--primary)"
+  },
   "content-calendar-planner": {
     "name": "Content Calendar Planner",
     "description": "Plan content calendar tasks with organized inputs, timelines, and clear next steps.",
@@ -3332,6 +5072,13 @@ export const toolMetaMap = {
     "icon": "calendar",
     "iconColor": "text-indigo-500"
   },
+  "content-creator-prompt-pack": {
+    "name": "Content Creator Prompt Pack",
+    "description": "Hook, script, title and repurposing prompts with a word budget worked out from your target runtime and speaking pace.",
+    "category": "Marketing & Social",
+    "icon": "mic-vocal",
+    "iconColor": "text-(--primary)"
+  },
   "continent-challenge": {
     "name": "Continent Challenge",
     "description": "Test your knowledge of the 7 continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring.",
@@ -3341,6 +5088,13 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-violet-700"
+  },
+  "contraction-timer": {
+    "name": "Contraction Timer",
+    "description": "Time contraction length and start-to-start gaps, test the 5-1-1 pattern, and copy a summary for your maternity unit.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
   },
   "contribution-margin-calculator": {
     "name": "Contribution Margin Calculator",
@@ -3404,6 +5158,13 @@ export const toolMetaMap = {
     "icon": "cookie",
     "iconColor": "text-amber-600"
   },
+  "coolant-mix-ratio-calculator": {
+    "name": "Coolant Mix Ratio Calculator",
+    "description": "Work out coolant and water litres for your radiator capacity, with the freeze point and cap-pressure boil point of the mix.",
+    "category": "Calculators",
+    "icon": "thermometer-snowflake",
+    "iconColor": "text-(--primary)"
+  },
   "coronary-artery-disease-risk-calculator": {
     "name": "Coronary Artery Disease Risk Calculator",
     "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using validated clinical risk calculators.",
@@ -3445,11 +5206,81 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cosine-similarity-calculator": {
+    "name": "Cosine Similarity Calculator",
+    "description": "Paste two embedding vectors and get cosine similarity, dot product, Euclidean distance and the angle between them.",
+    "category": "Calculators",
+    "icon": "move-diagonal",
+    "iconColor": "text-(--primary)"
+  },
   "cost-inflation-index-calculator": {
     "name": "Cost Inflation Index Calculator",
     "description": "Indexed cost of acquisition and improvement using the notified Cost Inflation Index for the purchase and sale financial years.",
     "category": "Finance Calculators",
     "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-blog-post-ai-calculator": {
+    "name": "Cost Per Blog Post AI Calculator",
+    "description": "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post.",
+    "category": "Calculators",
+    "icon": "pen-line",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-conversation-calculator": {
+    "name": "Cost Per Conversation Calculator",
+    "description": "Work out the true AI cost of a support or sales conversation, including resent context, caching and human escalation.",
+    "category": "Calculators",
+    "icon": "messages-square",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-document-processed-calculator": {
+    "name": "Cost Per Document Processed Calculator",
+    "description": "Estimate AI cost per document from pages, words per page, chunk overlap, OCR and embedding rates.",
+    "category": "Calculators",
+    "icon": "file-stack",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-image-generated-calculator": {
+    "name": "Cost Per Image Generated Calculator",
+    "description": "Work out the true cost of one usable AI image after rejected attempts, retouch passes and review time.",
+    "category": "Calculators",
+    "icon": "image",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-support-ticket-ai-calculator": {
+    "name": "Cost Per Support Ticket AI Calculator",
+    "description": "Compare AI handling cost against agent cost per ticket, with occupancy-adjusted labour and a break-even containment rate.",
+    "category": "Calculators",
+    "icon": "ticket",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-transcription-minute-calculator": {
+    "name": "Cost Per Transcription Minute Calculator",
+    "description": "Estimate speech-to-text plus AI summarisation cost per audio minute, per hour and per file.",
+    "category": "Calculators",
+    "icon": "mic",
+    "iconColor": "text-(--primary)"
+  },
+  "cost-per-unit-calculator": {
+    "name": "Cost Per Unit and Batch Cost Calculator",
+    "description": "Absorb fixed overheads and variable costs across a production batch to get true cost per unit, contribution and break-even.",
+    "category": "Business",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
+  },
+  "counselling-day-document-checklist": {
+    "name": "Counselling Day Checklist",
+    "description": "Documents to carry to admission counselling, the money to arrange on reporting day, and how much of it is refundable or adjusted later.",
+    "category": "Productivity",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "counselling-fee-refund-tracker": {
+    "name": "Counselling Fee Refund Tracker",
+    "description": "Track seat acceptance fees and withdrawal dates to see your expected refund under the UGC 100/90/80/50/0 percent slabs.",
+    "category": "Productivity",
+    "icon": "receipt-indian-rupee",
     "iconColor": "text-(--primary)"
   },
   "countdown-days-calculator": {
@@ -3500,6 +5331,20 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-emerald-600"
   },
+  "course-caption-coverage-tracker": {
+    "name": "Course Caption Coverage Tracker",
+    "description": "Track caption and transcript coverage across your course by lesson and by runtime, with an estimate of the work left.",
+    "category": "Education & Science",
+    "icon": "captions",
+    "iconColor": "text-(--primary)"
+  },
+  "course-trailer-script-builder": {
+    "name": "Course Trailer Script Builder",
+    "description": "Draft a structured online-course promo script with per-beat timing targets and a word budget for your narration pace.",
+    "category": "Text & Writing",
+    "icon": "clapperboard",
+    "iconColor": "text-(--primary)"
+  },
   "cover-letter": {
     "name": "Cover Letter",
     "description": "Create a cover letter for your next job interview",
@@ -3509,6 +5354,20 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-blue-400"
+  },
+  "cover-letter-prompt-builder": {
+    "name": "Cover Letter Prompt Builder",
+    "description": "Build a cover letter prompt with company research slots, tone, letter type and a paragraph-by-paragraph word budget.",
+    "category": "Business",
+    "icon": "mail",
+    "iconColor": "text-(--primary)"
+  },
+  "cpp-ei-deduction-calculator": {
+    "name": "Canada CPP and EI Deduction Calculator",
+    "description": "Employee and employer CPP, CPP2 and EI contributions with the YMPE, YAMPE and maximum insurable earnings ceilings applied.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "crc32-calculator": {
     "name": "CRC32 Calculator",
@@ -3565,6 +5424,27 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-(--primary)"
   },
+  "credit-utilisation-ratio-calculator": {
+    "name": "Credit Utilisation Ratio Calculator",
+    "description": "Credit utilisation across all your cards, per-card ratios, and the exact spend room to stay under 30 percent.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
+  "credit-weighted-sgpa-calculator": {
+    "name": "Credit Weighted SGPA Calculator",
+    "description": "Compute SGPA from subject grades and credit hours, with grade point tables and per-subject impact on the average.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "cron-expression-explainer": {
+    "name": "Cron Expression Explainer",
+    "description": "Translate any 5-field cron expression into plain English with a field-by-field breakdown and the next scheduled run times.",
+    "category": "Developer",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "cron-expression-generator": {
     "name": "Cron Expression Generator",
     "description": "Build cron expressions with readable schedule previews.",
@@ -3576,11 +5456,29 @@ export const toolMetaMap = {
     "name": "Crontab Evaluator",
     "description": "Preview upcoming run times for standard five-field cron expressions.",
     "category": "Developer",
-    "topics": [
-      "DevOps"
-    ],
     "icon": "clock",
-    "iconColor": "text-orange-600"
+    "iconColor": "text-(--primary)"
+  },
+  "crontab-line-builder": {
+    "name": "Crontab Line Builder",
+    "description": "Build and validate a crontab line, read it back in plain English, preview the next run times and wrap it with logging and a flock guard.",
+    "category": "Developer",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
+  },
+  "crop-to-aspect-ratio-calculator": {
+    "name": "Crop to Aspect Ratio Calculator",
+    "description": "Find the exact crop width, height and offsets to convert footage or an image to a target aspect ratio, with an ffmpeg crop string.",
+    "category": "Calculators",
+    "icon": "crop",
+    "iconColor": "text-(--primary)"
+  },
+  "cruise-holiday-packing-list-builder": {
+    "name": "Cruise Holiday Packing List Builder",
+    "description": "Build a cruise packing list from formal nights, port days and sea days, including the cabin items that get confiscated at embarkation.",
+    "category": "Lifestyle",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
   },
   "crush-percentage": {
     "name": "Crush Percentage",
@@ -3588,6 +5486,13 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "smile",
     "iconColor": "text-pink-500"
+  },
+  "crypto-loss-setoff-explainer": {
+    "name": "Crypto Loss Set Off Rules Explainer",
+    "description": "See why Section 115BBH blocks crypto losses from offsetting any gain, and what the no-set-off rule costs you in tax.",
+    "category": "Education & Science",
+    "icon": "bitcoin",
+    "iconColor": "text-(--primary)"
   },
   "crypto-pnl-calculator": {
     "name": "Crypto P&L Calculator",
@@ -3740,11 +5645,8 @@ export const toolMetaMap = {
     "name": "CSS Tools",
     "description": "Format and minify CSS quickly in the browser.",
     "category": "Developer",
-    "topics": [
-      "Web"
-    ],
-    "icon": "palette",
-    "iconColor": "text-violet-600"
+    "icon": "file-code-2",
+    "iconColor": "text-(--primary)"
   },
   "css-triangle-generator": {
     "name": "CSS Triangle Generator",
@@ -3772,12 +5674,9 @@ export const toolMetaMap = {
   "csv-converter": {
     "name": "CSV Converter",
     "description": "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries.",
-    "category": "Developer",
-    "topics": [
-      "Data"
-    ],
-    "icon": "file-spreadsheet",
-    "iconColor": "text-green-600"
+    "category": "Converters",
+    "icon": "table-2",
+    "iconColor": "text-(--primary)"
   },
   "csv-lead-cleaner": {
     "name": "CSV Lead Cleaner",
@@ -3793,6 +5692,34 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-purple-600"
   },
+  "csv-to-sql-insert-converter": {
+    "name": "CSV to SQL Insert Converter",
+    "description": "Convert CSV rows into INSERT statements with RFC 4180 parsing, type inference, dialect quoting and batched multi-row VALUES.",
+    "category": "Converters",
+    "icon": "file-spreadsheet",
+    "iconColor": "text-(--primary)"
+  },
+  "ctet-answer-key-score-calculator": {
+    "name": "CTET Answer Key Score Calculator",
+    "description": "Score CTET Paper 1 or Paper 2 section by section from your response sheet — 150 marks, no negative marking.",
+    "category": "Calculators",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "cuet-exam-countdown": {
+    "name": "CUET Exam Countdown",
+    "description": "CUET countdown with per-subject readiness bars from syllabus coverage and forgetting-curve decay, plus revision due alerts.",
+    "category": "Productivity",
+    "icon": "book-open-check",
+    "iconColor": "text-(--primary)"
+  },
+  "cumulative-vs-noncumulative-fd": {
+    "name": "Cumulative vs Non Cumulative FD Comparator",
+    "description": "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate.",
+    "category": "Finance Calculators",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "cups-to-grams": {
     "name": "Cups to Grams Converter",
     "description": "Convert cups, tablespoons and millilitres to grams for 40+ baking ingredients using real density data.",
@@ -3806,12 +5733,26 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-teal-600"
   },
+  "curl-command-builder": {
+    "name": "Curl Command Builder",
+    "description": "Compose a curl command with method, headers, auth, JSON or form bodies, proxies, timeouts and output options, with each flag explained.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
+  },
   "curl-to-code-converter": {
     "name": "cURL to Code Converter",
     "description": "Convert simple cURL commands into fetch, Axios, or Python requests.",
     "category": "Developer",
     "icon": "terminal",
-    "iconColor": "text-zinc-700"
+    "iconColor": "text-(--primary)"
+  },
+  "currency-amount-to-words": {
+    "name": "Currency Amount to Words Converter",
+    "description": "Spell any money amount in words for cheques, invoices and contracts — Indian or international numbering, eight currencies.",
+    "category": "Converters",
+    "icon": "spell-check",
+    "iconColor": "text-(--primary)"
   },
   "currency-conversion-fee-calculator": {
     "name": "Currency Conversion Fee Calculator",
@@ -3826,6 +5767,13 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "wallet",
     "iconColor": "text-green-700"
+  },
+  "currency-markup-calculator": {
+    "name": "Currency Conversion Markup Calculator",
+    "description": "Reveal the hidden spread between the mid-market rate and the rate you are offered, and the true all-in cost of a transfer.",
+    "category": "Finance Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "currency-profit-loss-calculator": {
     "name": "Currency Profit/Loss Calculator",
@@ -3857,6 +5805,34 @@ export const toolMetaMap = {
     "icon": "type",
     "iconColor": "text-pink-600"
   },
+  "curtain-colour-matcher": {
+    "name": "Curtain Colour Matcher",
+    "description": "Find curtain colours that complement wall paint and upholstery, with LRV gaps, hue distance and fade risk for each.",
+    "category": "Design & Color",
+    "icon": "blinds",
+    "iconColor": "text-(--primary)"
+  },
+  "curtain-fabric-calculator": {
+    "name": "Curtain Fabric Calculator",
+    "description": "Curtain fabric metres from track width, drop, fullness and heading type, including pattern repeat, lining, tape and hooks.",
+    "category": "Calculators",
+    "icon": "rows-3",
+    "iconColor": "text-(--primary)"
+  },
+  "curtain-thermal-savings-estimator": {
+    "name": "Curtain Thermal Savings Estimator",
+    "description": "Cooling saved by blackout or thermal curtains, from window area, glazing SHGC, U-value and the curtain's attenuation coefficient.",
+    "category": "Calculators",
+    "icon": "blinds",
+    "iconColor": "text-(--primary)"
+  },
+  "customer-support-prompt-pack": {
+    "name": "Customer Support Prompt Pack",
+    "description": "Build support-reply prompts for macro rewrites, tone softening and escalation summaries, with a Flesch readability check on your draft.",
+    "category": "Business",
+    "icon": "headset",
+    "iconColor": "text-(--primary)"
+  },
   "cute-text-generator": {
     "name": "Cute Text Generator",
     "description": "Convert your text into cute Unicode styles with kaomoji, decorative symbols, and emoji combinations.",
@@ -3883,12 +5859,40 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "cycle-commute-savings-calculator": {
+    "name": "Cycle Commute Savings Calculator",
+    "description": "Work out the fuel, parking, maintenance and CO2 you save by cycling to work, and how long the bicycle takes to pay for itself.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
+  "cycling-cadence-calculator": {
+    "name": "Cycling Cadence Calculator",
+    "description": "Turn cadence, chainring, cog and wheel size into road speed, gear inches, gain ratio and metres of development.",
+    "category": "Calculators",
+    "icon": "circle-gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "cycling-calorie-estimator": {
+    "name": "Cycling Calorie Estimator",
+    "description": "Estimate calories burned cycling from distance, speed, rider weight, terrain, gradient and headwind, using a physics power model.",
+    "category": "Health & Fitness",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "cyclist-hydration-calculator": {
+    "name": "Cyclist Hydration Calculator",
+    "description": "Bottles per hour, refill stops, carbs and sodium for a ride, from your weight, duration, heat, humidity and riding intensity.",
+    "category": "Health & Fitness",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
   "cymatics": {
     "name": "Cymatics Simulator",
     "description": "Explore how sound frequency and damping create Chladni-style geometric nodal patterns in a responsive browser simulation.",
     "category": "Education & Science",
     "icon": "waves",
-    "iconColor": "text-primary",
+    "iconColor": "text-(--primary)",
     "wideWorkspace": true
   },
   "cymatics-simulator": {
@@ -3922,6 +5926,13 @@ export const toolMetaMap = {
     ],
     "icon": "laugh",
     "iconColor": "text-teal-600"
+  },
+  "daily-commute-fuel-cost-calculator": {
+    "name": "Daily Commute Fuel Cost Calculator",
+    "description": "Turn your daily office commute into monthly and yearly fuel, toll and parking spend using your real mileage and fuel price.",
+    "category": "Calculators",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
   },
   "daily-panchang-calculator": {
     "name": "Daily Panchang Calculator",
@@ -3995,6 +6006,13 @@ export const toolMetaMap = {
     "icon": "scan-search",
     "iconColor": "text-primary"
   },
+  "dashboard-panel-layout-planner": {
+    "name": "Dashboard Panel Layout Planner",
+    "description": "Plan a service dashboard with the RED, USE or Four Golden Signals method: ordered panels, grid widths and starter queries.",
+    "category": "Developer",
+    "icon": "layout-dashboard",
+    "iconColor": "text-(--primary)"
+  },
   "data-deletion-proof-log": {
     "name": "Data Deletion Proof Log",
     "description": "Deletion requests aur system-wise completion evidence record kare.",
@@ -4041,6 +6059,27 @@ export const toolMetaMap = {
     ],
     "icon": "network",
     "iconColor": "text-teal-500"
+  },
+  "database-naming-convention-generator": {
+    "name": "Database Naming Convention Generator",
+    "description": "Define table, column, index and constraint naming rules with worked examples and per-DBMS identifier length checks.",
+    "category": "Generators",
+    "icon": "table-properties",
+    "iconColor": "text-(--primary)"
+  },
+  "dataset-class-balance-checker": {
+    "name": "Dataset Class Balance Checker",
+    "description": "Check label distribution in a classification dataset: imbalance ratio, entropy, balanced class weights and resampling counts.",
+    "category": "Developer",
+    "icon": "chart-column",
+    "iconColor": "text-(--primary)"
+  },
+  "dataset-train-test-splitter": {
+    "name": "Dataset Train Test Splitter",
+    "description": "Split a JSONL dataset into train, validation and test sets with a fixed seed for a reproducible, shuffled split.",
+    "category": "Developer",
+    "icon": "split",
+    "iconColor": "text-(--primary)"
   },
   "date-add-subtract-calculator": {
     "name": "Date Add Subtract Calculator",
@@ -4133,6 +6172,20 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-(--primary)"
   },
+  "debt-to-income-ratio-checker": {
+    "name": "Debt to Income Ratio Checker India",
+    "description": "Check your EMI load against lender FOIR caps and the 28/36 rule, with the zone you fall in and the EMI headroom left.",
+    "category": "Finance Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "decibel-change-calculator": {
+    "name": "Decibel Change Calculator",
+    "description": "Turn a decibel change into amplitude, power and perceived-loudness ratios, plus the equivalent distance and source count.",
+    "category": "Calculators",
+    "icon": "volume-2",
+    "iconColor": "text-(--primary)"
+  },
   "decimal-converter": {
     "name": "Decimal Converter",
     "description": "Convert between fractions, decimals, percentages, and mixed numbers with instant visual results and step-by-step explanations.",
@@ -4159,26 +6212,31 @@ export const toolMetaMap = {
   },
   "decision-matrix-tool": {
     "name": "Decision Matrix Tool",
-    "description": "Compare options with dynamic criteria, live weighted scoring, rankings, analytics, local save, filters, and exportable decision reports.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Planning"
-    ],
+    "description": "Compare options with weighted criteria, live scoring, rankings, sensitivity analysis, and an exportable decision report.",
+    "category": "Productivity",
     "icon": "table-properties",
-    "iconColor": "text-cyan-500"
+    "iconColor": "text-(--primary)"
   },
   "decision-wheel": {
     "name": "Decision Wheel",
-    "description": "Spin to decide! Random picker, team selector, giveaway wheel with full customization, statistics, and sharing.",
-    "category": [
-      "Fun",
-      "Productivity"
-    ],
-    "icon": "pi",
-    "iconColor": "text-teal-600"
+    "description": "Spin to decide! Weighted random picker, team selector and giveaway wheel with live odds, history and no-repeat draws.",
+    "category": "Fun",
+    "icon": "trophy",
+    "iconColor": "text-(--primary)"
+  },
+  "declutter-planner": {
+    "name": "Declutter Planner",
+    "description": "Plan a room-by-room decluttering sprint with keep, donate and sell piles, session-by-session timings and a finish date.",
+    "category": "Productivity",
+    "icon": "package-open",
+    "iconColor": "text-(--primary)"
+  },
+  "decluttering-prompt-builder": {
+    "name": "Decluttering Prompt Builder",
+    "description": "Build room-by-room keep-or-let-go prompts using the four-box, 20/20, 90/90 or KonMari rule, with a session plan.",
+    "category": "Lifestyle",
+    "icon": "package-open",
+    "iconColor": "text-(--primary)"
   },
   "deep-breathing-guide": {
     "name": "Deep Breathing Guide",
@@ -4187,18 +6245,89 @@ export const toolMetaMap = {
     "icon": "wind",
     "iconColor": "text-cyan-500"
   },
+  "deep-cleaning-time-estimator": {
+    "name": "Deep Cleaning Time Estimator",
+    "description": "Estimate the person-hours, elapsed time and crew size needed to deep clean a home of your size, soil level and room count.",
+    "category": "Productivity",
+    "icon": "spray-can",
+    "iconColor": "text-(--primary)"
+  },
+  "deep-freezer-size-selector": {
+    "name": "Deep Freezer Size Selector",
+    "description": "Choose deep freezer litres from household size or stock weight, with holdover time in a power cut and backup sizing.",
+    "category": "Calculators",
+    "icon": "refrigerator",
+    "iconColor": "text-(--primary)"
+  },
+  "deep-work-session-timer-exam": {
+    "name": "Deep Work Session Timer Exam",
+    "description": "Long-form focus timer for exam-style study blocks with reading time, pacing checkpoints and a final review phase.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "deepfake-awareness-checklist": {
+    "name": "Deepfake Awareness Checklist",
+    "description": "Score a suspicious video, voice note or call against known deepfake red flags and see which verification steps you still need to run.",
+    "category": "Security & Privacy",
+    "icon": "scan-face",
+    "iconColor": "text-(--primary)"
+  },
   "definition-of-done-generator": {
     "name": "Definition of Done Generator",
-    "description": "Generate a practical Definition of Done checklist tailored to project type, tech stack, team size, and compliance needs.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Planning"
-    ],
+    "description": "Generate a practical Definition of Done checklist tailored to project type, team size, release cadence, and compliance needs.",
+    "category": "Productivity",
     "icon": "list-checks",
-    "iconColor": "text-violet-500"
+    "iconColor": "text-(--primary)"
+  },
+  "degree-equivalence-explainer": {
+    "name": "Degree Equivalence Explainer",
+    "description": "See how Indian qualifications — Class 12, 3-year BA, BTech, MBBS, master's — map to the US, UK, Canada, Australia and Germany.",
+    "category": "Education & Science",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "dehumidifier-capacity-calculator": {
+    "name": "Dehumidifier Capacity Calculator",
+    "description": "Size a dehumidifier in litres per day from room volume, damp severity and humidity, with runtime and running cost.",
+    "category": "Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "delhi-airport-transfer-time-planner": {
+    "name": "Delhi Airport Transfer Time Planner",
+    "description": "Work out when to leave for Delhi IGI airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "delhi-auto-cab-fare-estimator": {
+    "name": "Delhi Auto and Cab Fare Estimator",
+    "description": "Estimate a fair Delhi auto or taxi fare from distance, waiting time, luggage and the 25% night charge on the notified meter.",
+    "category": "Calculators",
+    "icon": "car-taxi-front",
+    "iconColor": "text-(--primary)"
+  },
+  "delhi-del-airport-arrival-buffer-calculator": {
+    "name": "Delhi DEL Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Delhi DEL using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "delhi-university-attendance-calculator": {
+    "name": "Delhi University Attendance Calculator",
+    "description": "Track DU attendance per paper against the two-thirds (66.67%) Ordinance VII rule and see how many lectures you can still miss.",
+    "category": "Calculators",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
+  },
+  "delhi-university-cgpa-converter": {
+    "name": "Delhi University CGPA Converter",
+    "description": "Convert DU CGPA to percentage with the UGC 9.5 multiplier, build CGPA from semester SGPAs and check eligibility cutoffs.",
+    "category": "Calculators",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
   },
   "deliverable-revision-ledger": {
     "name": "Deliverable Revision Ledger",
@@ -4210,6 +6339,13 @@ export const toolMetaMap = {
     "icon": "history",
     "iconColor": "text-primary"
   },
+  "demat-account-cost-comparator": {
+    "name": "Demat Account Cost Comparator",
+    "description": "Compare the true yearly cost of demat plans across AMC, DP debit charges, brokerage, GST and statutory levies on equity delivery.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "density-calculator": {
     "name": "Density Calculator",
     "description": "Density from mass and volume, with common unit conversions.",
@@ -4219,6 +6355,13 @@ export const toolMetaMap = {
     ],
     "icon": "box",
     "iconColor": "text-cyan-600"
+  },
+  "dependabot-config-generator": {
+    "name": "Dependabot Config Generator",
+    "description": "Generate a valid .github/dependabot.yml with package ecosystems, update schedules, grouped PRs and ignore rules.",
+    "category": "Generators",
+    "icon": "bot",
+    "iconColor": "text-(--primary)"
   },
   "dependency-license-scanner": {
     "name": "Dependency License Scanner",
@@ -4258,6 +6401,27 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "deployment-window-timezone-planner": {
+    "name": "Deployment Window Timezone Planner",
+    "description": "Find a release window that dodges business and peak hours in every region you serve, hour by hour across UTC.",
+    "category": "Developer",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
+  },
+  "deposit-insurance-coverage-checker": {
+    "name": "Deposit Insurance Coverage Checker",
+    "description": "Check how much of your bank balances DICGC insures, grouped by bank and by the capacity in which each account is held.",
+    "category": "Finance Calculators",
+    "icon": "umbrella",
+    "iconColor": "text-(--primary)"
+  },
+  "deprecation-timeline-planner": {
+    "name": "Deprecation Timeline Planner",
+    "description": "Plan announce, warn, brownout and removal dates for a deprecation, with ready-to-send comms templates.",
+    "category": "Developer",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "depth-of-field-estimator": {
     "name": "Depth of Field Estimator",
     "description": "A practical photography tool for managing depth of field workflows efficiently.",
@@ -4267,6 +6431,13 @@ export const toolMetaMap = {
     ],
     "icon": "camera",
     "iconColor": "text-amber-500"
+  },
+  "desert-safari-packing-list-builder": {
+    "name": "Desert Safari Packing List Builder",
+    "description": "Build a desert safari packing list with the water litres, night-time layers and sleeping bag rating worked out from the day-night temperature swing.",
+    "category": "Lifestyle",
+    "icon": "sun",
+    "iconColor": "text-(--primary)"
   },
   "design-compare": {
     "name": "Design Compare",
@@ -4282,6 +6453,13 @@ export const toolMetaMap = {
     "icon": "columns-3",
     "iconColor": "text-cyan-600"
   },
+  "designer-prompt-pack": {
+    "name": "Designer Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for moodboards, critique, UX copy and design system decisions, ready to copy.",
+    "category": "Design & Color",
+    "icon": "palette",
+    "iconColor": "text-(--primary)"
+  },
   "desk-stretch-generator": {
     "name": "Desk Stretch Routine Generator",
     "description": "Build a guided desk stretch routine for the time you have, then follow it with timed holds and audio cues.",
@@ -4292,6 +6470,20 @@ export const toolMetaMap = {
     ],
     "icon": "stretch-horizontal",
     "iconColor": "text-teal-600"
+  },
+  "dev-notice-period-planner": {
+    "name": "Dev Notice Period Planner",
+    "description": "Work out your last working day, notice shortfall, buyout recovery and leave offset for an Indian notice period, plus a handover plan.",
+    "category": "Productivity",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "dev-onboarding-runbook-generator": {
+    "name": "Dev Onboarding Runbook Generator",
+    "description": "Build a day-one developer setup runbook with real install commands, access requests, repo clones and a first task.",
+    "category": "Generators",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
   },
   "devanagari-transliteration-keyboard": {
     "name": "Devanagari Transliteration Keyboard",
@@ -4306,18 +6498,26 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-primary"
   },
+  "developer-portfolio-readme-generator": {
+    "name": "Developer Portfolio Readme Generator",
+    "description": "Generate a GitHub profile README with skill badges, project cards, stats widgets and contact links.",
+    "category": "Generators",
+    "icon": "github",
+    "iconColor": "text-(--primary)"
+  },
+  "developer-prompt-pack": {
+    "name": "Developer Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for debugging, code review, tests, documentation and refactors, ready to paste.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-(--primary)"
+  },
   "device-browser-dashboard": {
     "name": "Device & Browser Dashboard",
-    "description": "Advanced client-side dashboard for device, browser, privacy, permissions, GPU, storage, and API capability analysis.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Web"
-    ],
+    "description": "Client-side dashboard for device, browser, privacy, GPU, storage, and web API capability analysis.",
+    "category": "Developer",
     "icon": "gauge",
-    "iconColor": "text-blue-600"
+    "iconColor": "text-(--primary)"
   },
   "device-sensor-calibration-checker": {
     "name": "Device Sensor Calibration Checker",
@@ -4432,6 +6632,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "digital-detox-study-planner": {
+    "name": "Digital Detox Study Planner",
+    "description": "Plan phone-free study blocks that escalate day by day, with a cap, milestone day and total phone-free hours computed.",
+    "category": "Productivity",
+    "icon": "smartphone",
+    "iconColor": "text-(--primary)"
+  },
   "digital-legacy-vault": {
     "name": "Digital Legacy Vault",
     "description": "Organize emergency instructions and important records for trusted family handoff.",
@@ -4454,15 +6661,26 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "digital-vs-physical-gold-comparator": {
+    "name": "Digital Gold vs Physical Gold Cost Comparator",
+    "description": "Price making charges, GST, storage and buy-sell spread across jewellery, coins, digital gold and ETFs.",
+    "category": "Finance Calculators",
+    "icon": "gem",
+    "iconColor": "text-(--primary)"
+  },
   "digital-wallet-tool": {
     "name": "Digital Wallet Manager",
-    "description": "A digital wallet interface for managing and tracking assets securely.",
+    "description": "Total every asset you hold, see each holding's share of the wallet, and score how concentrated the whole portfolio is.",
     "category": "Finance Calculators",
-    "topics": [
-      "Finance"
-    ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "digitalocean-droplet-cost-calculator": {
+    "name": "DigitalOcean Droplet Cost Calculator",
+    "description": "Estimate monthly DigitalOcean spend across droplets, block storage volumes, snapshots, load balancers and bandwidth overage.",
+    "category": "Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
   },
   "dilution-molarity-calculator": {
     "name": "Dilution & Molarity Calculator",
@@ -4486,6 +6704,13 @@ export const toolMetaMap = {
     ],
     "icon": "brackets",
     "iconColor": "text-primary"
+  },
+  "dining-table-size-calculator": {
+    "name": "Dining Table Size Calculator",
+    "description": "Size a rectangular, round or square dining table from seat count, then check chair clearance against your room.",
+    "category": "Calculators",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
   },
   "dino-run": {
     "name": "Dino Run Game",
@@ -4527,6 +6752,20 @@ export const toolMetaMap = {
     "icon": "biceps-muscle",
     "iconColor": "text-emerald-600"
   },
+  "direct-vs-regular-plan-calculator": {
+    "name": "Direct vs Regular Plan Cost Calculator",
+    "description": "Quantify the commission drag between direct and regular mutual fund plans from the expense ratio gap, for a lumpsum or a monthly SIP.",
+    "category": "Finance Calculators",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
+  "discord-banner-size-generator": {
+    "name": "Discord Banner Size Generator",
+    "description": "Export server banners, icons, invite splashes, emoji and stickers at exact Discord dimensions and limits.",
+    "category": "Design & Color",
+    "icon": "message-square",
+    "iconColor": "text-(--primary)"
+  },
   "discount-calculator": {
     "name": "Discount Calculator",
     "description": "Calculate sales savings. Tweak discount rates, stacked discounts (e.g. 20% + 10%), tax additions, and view dynamic financial breakdowns.",
@@ -4537,15 +6776,33 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-teal-600"
   },
+  "discount-final-price-calculator": {
+    "name": "Discount and Final Price Calculator",
+    "description": "Apply single or stacked percentage and flat discounts, add GST, and see the true saving and equivalent single discount.",
+    "category": "Calculators",
+    "icon": "tag",
+    "iconColor": "text-(--primary)"
+  },
   "discount-stacking-calculator": {
     "name": "Discount Stacking Calculator",
-    "description": "Optimize your shopping savings by combining multiple discounts, coupons, card offers, and cashback with real-time stacking analysis.",
+    "description": "Stack sale prices, coupons, card offers, shipping, tax and cashback in the order shops apply them and see the real cost of the basket.",
     "category": "Finance Calculators",
-    "topics": [
-      "Financial Tools"
-    ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "dishwasher-running-cost-calculator": {
+    "name": "Dishwasher Running Cost Calculator",
+    "description": "Compare the true cost of a dishwasher cycle against hand washing, counting electricity, water, detergent and your time.",
+    "category": "Calculators",
+    "icon": "utensils-crossed",
+    "iconColor": "text-(--primary)"
+  },
+  "dividend-income-tax-calculator-india": {
+    "name": "Dividend Income Tax Calculator India",
+    "description": "Tax on Indian dividend income at your slab rate, with the 20% interest deduction cap under section 57 and section 194 TDS credit.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
   },
   "dividend-yield-calculator": {
     "name": "Dividend Yield Calculator",
@@ -4575,6 +6832,20 @@ export const toolMetaMap = {
     "icon": "divide",
     "iconColor": "text-cyan-600"
   },
+  "diy-tool-kit-builder": {
+    "name": "DIY Tool Kit Builder",
+    "description": "Turns the jobs you plan to do into a phased tool list and budget, with a buy-or-hire test on every expensive item.",
+    "category": "Productivity",
+    "icon": "boxes",
+    "iconColor": "text-(--primary)"
+  },
+  "diy-vs-garage-service-cost": {
+    "name": "DIY vs Garage Service Cost",
+    "description": "Compare doing a basic car service yourself against workshop charges, including parts markup, labour, GST and tool payback.",
+    "category": "Calculators",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
   "dlt-sms-sender-id-explainer": {
     "name": "DLT SMS Sender ID Explainer",
     "description": "Explain documented Indian commercial SMS header, prefix and category-suffix formats locally without claiming sender authenticity or live DLT registration.",
@@ -4585,6 +6856,13 @@ export const toolMetaMap = {
     "icon": "message-square-text",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "dmarc-record-generator": {
+    "name": "DMARC Record Generator",
+    "description": "Generate a valid RFC 7489 DMARC TXT record with policy, subdomain policy, alignment modes, percentage and reporting addresses.",
+    "category": "Generators",
+    "icon": "mail-check",
+    "iconColor": "text-(--primary)"
   },
   "dna-double-helix-explorer": {
     "name": "DNA Double Helix Explorer",
@@ -4607,6 +6885,62 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "dns-propagation-timeline-explainer": {
+    "name": "DNS Propagation Timeline Explainer",
+    "description": "See how record TTL, negative caching and client-side caches determine when a DNS change actually takes effect.",
+    "category": "Education & Science",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
+  },
+  "dns-record-generator": {
+    "name": "DNS Record Generator",
+    "description": "Generate correctly formatted A, AAAA, CNAME, TXT, SRV and ALIAS zone-file records with full syntax validation.",
+    "category": "Generators",
+    "icon": "file-code",
+    "iconColor": "text-(--primary)"
+  },
+  "dns-ttl-strategy-planner": {
+    "name": "DNS TTL Strategy Planner",
+    "description": "Pick steady-state TTLs per record type and get a timed lower-cutover-restore plan for zero-surprise DNS migrations.",
+    "category": "Developer",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "docker-healthcheck-generator": {
+    "name": "Docker Healthcheck Generator",
+    "description": "Generate Dockerfile HEALTHCHECK and compose healthcheck blocks with tuned interval, timeout, retries and start period.",
+    "category": "Developer",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
+  },
+  "docker-network-mode-explainer": {
+    "name": "Docker Network Mode Explainer",
+    "description": "Compare Docker bridge, host, none, container and macvlan network modes and see exactly how your container is reached.",
+    "category": "Developer",
+    "icon": "network",
+    "iconColor": "text-(--primary)"
+  },
+  "docker-tag-naming-convention-builder": {
+    "name": "Docker Tag Naming Convention Builder",
+    "description": "Design a Docker image tagging scheme from semver, git sha, branch and date parts, validated against the OCI reference rules.",
+    "category": "Developer",
+    "icon": "tags",
+    "iconColor": "text-(--primary)"
+  },
+  "docker-volume-mount-planner": {
+    "name": "Docker Volume Mount Planner",
+    "description": "Plan bind mounts, named volumes and tmpfs mounts with correct -v, --mount and Compose syntax, read-only flags and propagation.",
+    "category": "Developer",
+    "icon": "hard-drive",
+    "iconColor": "text-(--primary)"
+  },
+  "dockerfile-prompt-builder": {
+    "name": "Dockerfile Prompt Builder",
+    "description": "Describe your runtime, dependencies and start command to get a precise, copy-ready AI prompt for a production Dockerfile.",
+    "category": "Developer",
+    "icon": "container",
+    "iconColor": "text-(--primary)"
+  },
   "dockerfile-security-linter": {
     "name": "Dockerfile Security Linter",
     "description": "Lint a pasted Dockerfile locally for risky build patterns, root runtime cues, floating bases, embedded secrets, broad copies, and missing health checks.",
@@ -4621,6 +6955,20 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "dockerignore-generator": {
+    "name": "Dockerignore Generator",
+    "description": "Create a .dockerignore tailored to your stack to shrink the build context and speed up docker build.",
+    "category": "Developer",
+    "icon": "file-x",
+    "iconColor": "text-(--primary)"
+  },
+  "document-attestation-tracker": {
+    "name": "Document Attestation Tracker",
+    "description": "Track which documents are attested, by whom and when — with validity countdowns that flag expiring and expired attestations.",
+    "category": "Productivity",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
   },
   "document-checklist-generator": {
     "name": "Document Checklist Generator",
@@ -4646,6 +6994,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "document-photocopy-set-planner": {
+    "name": "Photocopy Set Planner",
+    "description": "Plan how many photocopy sets you need across application, verification and admission stages — with pages, spares and cost.",
+    "category": "Productivity",
+    "icon": "printer",
+    "iconColor": "text-(--primary)"
+  },
+  "document-verification-stage-tracker": {
+    "name": "Document Verification Tracker",
+    "description": "Track every document your DV stage needs, its status and days left, with critical gaps flagged first.",
+    "category": "Productivity",
+    "icon": "file-check",
+    "iconColor": "text-(--primary)"
+  },
   "document-version-timeline": {
     "name": "Document Version Timeline",
     "description": "Convert document changelog notes into a clean timeline of versions, owners, dates, and change themes.",
@@ -4658,15 +7020,26 @@ export const toolMetaMap = {
   },
   "document-version-verifier": {
     "name": "Document Version Verifier",
-    "description": "Compare two local TXT, Markdown, JSON, CSV, or text-based PDF versions with bounded structural and line-level evidence.",
+    "description": "Enterprise-grade, privacy-first document version comparison & verification tool. Compare PDF, DOCX, TXT, JSON, CSV, HTML, XML & Markdown locally with metadata analysis, tampering detection, visual diffs, and AI insights.",
     "category": [
       "Text & Writing",
       "Developer",
-      "Productivity"
+      "Productivity",
+      "Security & Privacy"
     ],
-    "icon": "file-diff",
-    "iconColor": "text-primary",
+    "topics": [
+      "Security"
+    ],
+    "icon": "file-check",
+    "iconColor": "text-indigo-500",
     "wideWorkspace": true
+  },
+  "doha-doh-airport-arrival-buffer-calculator": {
+    "name": "Doha DOH Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Doha DOH using drive time, traffic, check-in cut-off, passport control and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
   },
   "domain-checker": {
     "name": "Domain Checker",
@@ -4700,6 +7073,20 @@ export const toolMetaMap = {
     "icon": "shuffle",
     "iconColor": "text-violet-600"
   },
+  "domicile-proof-checklist": {
+    "name": "Domicile and Residence Proof Checklist",
+    "description": "Build the document checklist for a domicile or residence certificate, test the continuous residence period and track how ready your file is.",
+    "category": "Productivity",
+    "icon": "map-pin-house",
+    "iconColor": "text-(--primary)"
+  },
+  "door-frame-material-calculator": {
+    "name": "Door Frame Material Calculator",
+    "description": "Frame timber running length and cft, shutter size and area, hinges and holdfasts for any door opening.",
+    "category": "Calculators",
+    "icon": "door-open",
+    "iconColor": "text-(--primary)"
+  },
   "double-pendulum-chaos-simulator": {
     "name": "Double Pendulum Chaos Simulator",
     "description": "Real-time chaos theory visualization with interactive double pendulum physics and glowing motion trails.",
@@ -4715,6 +7102,13 @@ export const toolMetaMap = {
     "icon": "circle-dashed",
     "iconColor": "text-blue-500"
   },
+  "doubt-resolution-log": {
+    "name": "Doubt Resolution Log",
+    "description": "Log every study doubt, who resolved it and whether you retested yourself, with resolution-time and retest-rate stats.",
+    "category": "Productivity",
+    "icon": "message-circle-question",
+    "iconColor": "text-(--primary)"
+  },
   "dough-hydration-calculator": {
     "name": "Dough Hydration Calculator",
     "description": "Baker's percentage calculator for bread and pizza — hydration, salt, yeast or sourdough starter, with recipe scaling.",
@@ -4727,6 +7121,13 @@ export const toolMetaMap = {
     ],
     "icon": "wheat",
     "iconColor": "text-teal-600"
+  },
+  "down-payment-savings-planner": {
+    "name": "House Down Payment Savings Planner",
+    "description": "Work out the monthly saving needed for a house down payment, including stamp duty, price growth and the RBI loan-to-value cap.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
   },
   "dpdp-consent-notice-checker": {
     "name": "DPDP Consent Notice Checker",
@@ -4769,6 +7170,13 @@ export const toolMetaMap = {
     "icon": "plane",
     "iconColor": "text-sky-500"
   },
+  "drill-bit-size-selector": {
+    "name": "Drill Bit Size Selector",
+    "description": "Pilot, clearance, tap and wall-plug drill sizes from the screw or bolt you are using, with the nearest real bit in metric and inches.",
+    "category": "Education & Science",
+    "icon": "drill",
+    "iconColor": "text-(--primary)"
+  },
   "drinking-game-picker": {
     "name": "Drinking Game Picker",
     "description": "Pick random drinking games and challenges with categories, penalty mode, and history tracking.",
@@ -4778,6 +7186,104 @@ export const toolMetaMap = {
     ],
     "icon": "beer",
     "iconColor": "text-amber-600"
+  },
+  "dripping-tap-water-loss-calculator": {
+    "name": "Dripping Tap Water Loss Calculator",
+    "description": "Turn drips per minute into litres and rupees lost per day, month and year — including the geyser units a hot tap leak burns.",
+    "category": "Calculators",
+    "icon": "droplet-off",
+    "iconColor": "text-(--primary)"
+  },
+  "driver-salary-calculator": {
+    "name": "Driver Salary Calculator",
+    "description": "Work out a driver's monthly pay with overtime at twice the ordinary rate, night duty, outstation days, PF and ESI.",
+    "category": "Business",
+    "icon": "car-taxi-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driveway-sealer-calculator": {
+    "name": "Driveway Sealer Calculator",
+    "description": "Calculate gallons, litres and 5-gallon pails of driveway sealer for your area, surface condition and number of coats.",
+    "category": "Calculators",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-break-planner": {
+    "name": "Driving Break Planner",
+    "description": "Plan rest stops, fuel halts and a realistic arrival time for a long drive using the 15-minute break every two hours rule.",
+    "category": "Productivity",
+    "icon": "coffee",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-australia-rules-explainer": {
+    "name": "Driving in Australia Rules Explainer",
+    "description": "Australian road rules for visitors: which side to drive on, state speed limits in km/h and mph, alcohol limits and licence requirements.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-germany-rules-explainer": {
+    "name": "Driving in Germany Rules Explainer",
+    "description": "German road rules for visitors: which side to drive on, speed limits in km/h and mph, blood-alcohol limits and licence or IDP requirements.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-italy-rules-explainer": {
+    "name": "Driving in Italy Rules Explainer",
+    "description": "Italian road rules for visitors: side of the road, autostrada and city speed limits in km/h and mph, alcohol limits, ZTL zones and IDP rules.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-japan-rules-explainer": {
+    "name": "Driving in Japan Rules Explainer",
+    "description": "Japanese road rules for visitors: which side to drive on, speed limits, the 0.03% alcohol limit and which International Driving Permit Japan accepts.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-spain-rules-explainer": {
+    "name": "Driving in Spain Rules Explainer",
+    "description": "Spanish road rules for visitors: side of the road, 20/30/50 city limits and autovia speeds in km/h and mph, alcohol limits and IDP requirements.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-switzerland-rules-explainer": {
+    "name": "Driving in Switzerland Rules Explainer",
+    "description": "Swiss road rules for visitors: speed limits, the motorway vignette, blood-alcohol limits and the Raser threshold that turns speeding into a crime.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-thailand-rules-explainer": {
+    "name": "Driving in Thailand Rules Explainer",
+    "description": "Thai road rules for visitors: which side to drive on, speed limits, blood-alcohol limits and the licence a car or motorbike actually needs.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-uae-rules-explainer": {
+    "name": "Driving in UAE Rules Explainer",
+    "description": "UAE road rules for visitors: which side to drive on, speed limits, the zero-alcohol rule, black points and whether your licence is accepted.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-usa-rules-explainer": {
+    "name": "Driving in USA Rules Explainer",
+    "description": "US road rules for visitors: which side to drive on, speed limits in mph and km/h, state blood-alcohol limits and licence or IDP requirements.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "driving-in-vietnam-rules-explainer": {
+    "name": "Driving in Vietnam Rules Explainer",
+    "description": "Vietnam road rules for visitors: side of the road, speed limits by road and vehicle in km/h and mph, the zero-alcohol law and which IDP is valid.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
   },
   "driving-licence-number-decoder": {
     "name": "Driving Licence Number Decoder",
@@ -4792,6 +7298,13 @@ export const toolMetaMap = {
     "icon": "car-front",
     "iconColor": "text-primary"
   },
+  "driving-licence-renewal-checklist": {
+    "name": "Driving Licence Renewal Checklist",
+    "description": "Build a document checklist, fee estimate and new validity date for renewing an Indian driving licence under the Motor Vehicles Act.",
+    "category": "Education & Science",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
   "dsar-request-tracker": {
     "name": "DSAR Request Tracker",
     "description": "Data-access requests, deadlines, responses aur evidence manage kare.",
@@ -4801,6 +7314,34 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-clock",
     "iconColor": "text-primary"
+  },
+  "dsc-requirement-checker": {
+    "name": "Digital Signature Requirement Checker",
+    "description": "Find which MCA, income tax, GST, DGFT and e-tender filings need a Class 3 digital signature certificate, and which allow EVC instead.",
+    "category": "Business",
+    "icon": "file-signature",
+    "iconColor": "text-(--primary)"
+  },
+  "dubai-dxb-airport-arrival-buffer-calculator": {
+    "name": "Dubai DXB Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Dubai DXB using drive time, traffic, check-in cut-off, passport control and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "dubai-trip-budget-breakdown": {
+    "name": "Dubai Trip Budget Breakdown",
+    "description": "Split a Dubai trip into flights, room, municipality fee, service charge, VAT, Tourism Dirham, food and activities.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "duolingo-english-test-score-converter": {
+    "name": "Duolingo English Test Converter",
+    "description": "Map Duolingo English Test scores (10-160) to IELTS bands, CEFR levels and derived TOEFL iBT ranges using published concordances.",
+    "category": "Calculators",
+    "icon": "languages",
+    "iconColor": "text-(--primary)"
   },
   "duplicate-image-finder": {
     "name": "Duplicate Image Finder",
@@ -4826,6 +7367,13 @@ export const toolMetaMap = {
     ],
     "icon": "list-x",
     "iconColor": "text-teal-500"
+  },
+  "duplicate-marksheet-request-helper": {
+    "name": "Duplicate Marksheet Request Helper",
+    "description": "Draft a duplicate marksheet application with a reason-specific affidavit and document checklist for lost, stolen or damaged marksheets.",
+    "category": "Text & Writing",
+    "icon": "file-warning",
+    "iconColor": "text-(--primary)"
   },
   "duplicate-photo-finder": {
     "name": "Duplicate Photo Finder",
@@ -4861,6 +7409,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "e-bike-range-estimator": {
+    "name": "E Bike Range Estimator",
+    "description": "Estimate electric bicycle range from battery watt-hours, assist level, terrain, gradient and temperature using a real power model.",
+    "category": "Calculators",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
+  },
+  "e-invoice-applicability-checker": {
+    "name": "E-Invoice Applicability Checker",
+    "description": "Check whether GST e-invoicing under Rule 48(4) applies to you, from which date, and if the 30-day IRP reporting limit binds.",
+    "category": "Business",
+    "icon": "file-check-2",
+    "iconColor": "text-(--primary)"
+  },
   "e-series-component-finder": {
     "name": "E-Series Component Finder",
     "description": "Nearest standard resistor/capacitor value suggest kare.",
@@ -4887,6 +7449,13 @@ export const toolMetaMap = {
     "icon": "truck",
     "iconColor": "text-primary"
   },
+  "early-morning-shift-sleep-planner": {
+    "name": "Early Morning Shift Sleep Planner",
+    "description": "Back-calculate bedtime, wind-down, caffeine cutoff and last meal from a 4am or 5am shift start time.",
+    "category": "Health & Fitness",
+    "icon": "sunrise",
+    "iconColor": "text-(--primary)"
+  },
   "ecg-qtc-calculator": {
     "name": "ECG QTc Calculator",
     "description": "Calculate corrected QT interval using Bazett, Fridericia, Framingham, and Hodges formulas with real-time comparison.",
@@ -4907,6 +7476,34 @@ export const toolMetaMap = {
     "icon": "sun-medium",
     "iconColor": "text-teal-500"
   },
+  "ecommerce-listing-prompt-builder": {
+    "name": "Ecommerce Listing Prompt Builder",
+    "description": "Build a structured product listing prompt with attributes, benefits and keyword slots inside real field limits.",
+    "category": "Marketing & Social",
+    "icon": "shopping-bag",
+    "iconColor": "text-(--primary)"
+  },
+  "ects-credit-load-calculator": {
+    "name": "ECTS Credit Load Calculator",
+    "description": "Plan how many ECTS credits you need per semester to finish your degree, with workload hours from the ECTS Users' Guide.",
+    "category": "Calculators",
+    "icon": "calendar-range",
+    "iconColor": "text-(--primary)"
+  },
+  "edge-vs-origin-decision-helper": {
+    "name": "Edge vs Origin Decision Helper",
+    "description": "Model whether an endpoint is faster at the edge or at the origin using round-trip latency, data locality, cache hit ratio and hard blockers.",
+    "category": "Developer",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "editorconfig-generator": {
+    "name": "EditorConfig Generator",
+    "description": "Generate a .editorconfig with indentation, charset, line-ending and whitespace rules, plus per-file-type sections.",
+    "category": "Generators",
+    "icon": "settings-2",
+    "iconColor": "text-(--primary)"
+  },
   "education-loan-emi-calculator": {
     "name": "Education Loan EMI Calculator",
     "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying.",
@@ -4914,18 +7511,26 @@ export const toolMetaMap = {
     "icon": "graduation-cap",
     "iconColor": "text-(--primary)"
   },
+  "egypt-entry-requirement-checklist": {
+    "name": "Egypt Entry Requirement Checklist",
+    "description": "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist.",
+    "category": "Productivity",
+    "icon": "pyramid",
+    "iconColor": "text-(--primary)"
+  },
   "eisenhower-matrix-tool": {
     "name": "Eisenhower Matrix Tool",
-    "description": "Prioritize tasks in a real-time four-quadrant matrix with drag-and-drop workflow, live dashboard, notes, filters, and local save.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Utility"
-    ],
+    "description": "Sort tasks into the four urgent/important quadrants from two 1-10 scores, and see how many hours go to firefighting versus planned work.",
+    "category": "Productivity",
     "icon": "layout-dashboard",
     "iconColor": "text-cyan-600"
+  },
+  "elderly-bmi-calculator": {
+    "name": "Elderly BMI Calculator",
+    "description": "BMI for adults over 65 with the age-adjusted 24-29 desirable range, knee-height stature estimation and a MUST malnutrition score.",
+    "category": "Health Calculators",
+    "icon": "user-round",
+    "iconColor": "text-(--primary)"
   },
   "electric-circuit-builder": {
     "name": "Electric Circuit Builder",
@@ -4936,6 +7541,13 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-teal-500"
+  },
+  "electric-scooter-range-calculator": {
+    "name": "Electric Scooter Range Calculator",
+    "description": "Estimate real e-scooter range from battery Wh, rider weight, speed, gradient and traffic using road-load physics.",
+    "category": "Calculators",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
   },
   "electricity-bill-calculator": {
     "name": "Electricity Bill Calculator",
@@ -4962,6 +7574,13 @@ export const toolMetaMap = {
     "description": "Track when each ELSS SIP instalment completes its 3-year lock-in, with unlocked, locked and next-to-free amounts.",
     "category": "Finance Calculators",
     "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "em-dash-ai-tell-checker": {
+    "name": "Em Dash AI Tell Checker",
+    "description": "Count em dashes, smart quotes, triads and other punctuation tells in a draft, with rates per 1,000 words and rewrite suggestions.",
+    "category": "Text & Writing",
+    "icon": "minus",
     "iconColor": "text-(--primary)"
   },
   "email-authentication-checker": {
@@ -5006,6 +7625,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "email-header-image-size-guide": {
+    "name": "Email Header Image Size Guide",
+    "description": "Get the export size, retina multiplier and img markup for an email header, plus how it renders in Outlook, Gmail and Apple Mail.",
+    "category": "Marketing & Social",
+    "icon": "mail",
+    "iconColor": "text-(--primary)"
   },
   "email-signature-builder": {
     "name": "Email Signature Builder",
@@ -5071,6 +7697,13 @@ export const toolMetaMap = {
     "icon": "unplug",
     "iconColor": "text-rose-600"
   },
+  "embedding-dimension-calculator": {
+    "name": "Embedding Dimension Calculator",
+    "description": "Calculate the memory an embedding vector needs from its dimension count and precision, with per-1K and per-1M totals.",
+    "category": "Calculators",
+    "icon": "memory-stick",
+    "iconColor": "text-(--primary)"
+  },
   "emergency-fund-calculator": {
     "name": "Emergency Fund Calculator",
     "description": "Size your emergency fund from real monthly essentials, see your savings gap, and get a month-by-month plan to fill it.",
@@ -5082,11 +7715,53 @@ export const toolMetaMap = {
     "icon": "shield",
     "iconColor": "text-teal-600"
   },
+  "emergency-fund-size-calculator-india": {
+    "name": "Emergency Fund Calculator",
+    "description": "Work out how many months of expenses your emergency fund should hold based on job stability, dependants and cover.",
+    "category": "Finance Calculators",
+    "icon": "shield",
+    "iconColor": "text-(--primary)"
+  },
+  "emergency-kit-generator": {
+    "name": "Emergency Kit Generator",
+    "description": "Builds a household emergency kit list with exact water, calorie and supply quantities for your family size, days of cover and local hazards.",
+    "category": "Productivity",
+    "icon": "briefcase-medical",
+    "iconColor": "text-(--primary)"
+  },
+  "emergency-light-backup-calculator": {
+    "name": "Emergency Light Backup Calculator",
+    "description": "Emergency light runtime from battery voltage, Ah, depth of discharge and LED load, with Peukert derating and recharge time.",
+    "category": "Calculators",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
+  },
+  "emi-affordability-checker": {
+    "name": "EMI Affordability Checker",
+    "description": "Check a proposed EMI against your FOIR, your monthly surplus and a rate-rise stress test before you sign the loan.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "emi-moratorium-impact-calculator": {
     "name": "EMI Moratorium Impact Calculator",
     "description": "See the extra interest, higher EMI and added tenure caused by pausing your loan EMIs for a few months.",
     "category": "Finance Calculators",
     "icon": "pause-circle",
+    "iconColor": "text-(--primary)"
+  },
+  "emirates-baggage-allowance-checker": {
+    "name": "Emirates Baggage Allowance Checker",
+    "description": "Check cabin and check-in bags against Emirates weight-concept and Americas piece-concept allowances, including the 300 cm size cap.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "emirates-excess-baggage-cost-estimator": {
+    "name": "Emirates Excess Baggage Cost Estimator",
+    "description": "Price Emirates excess baggage on weight-concept and piece-concept routes, comparing prepaid online weight with airport rates.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
     "iconColor": "text-(--primary)"
   },
   "emoji-hub": {
@@ -5126,12 +7801,8 @@ export const toolMetaMap = {
   },
   "emoji-remover": {
     "name": "Emoji Remover",
-    "description": "Remove emoji and symbol noise from text, comments, and captions.",
+    "description": "Remove emoji, flags, skin-tone modifiers and symbol noise from text, comments and captions without leaving broken fragments behind.",
     "category": "Text & Writing",
-    "topics": [
-      "Text",
-      "Content Creation"
-    ],
     "icon": "wand-2",
     "iconColor": "text-pink-600"
   },
@@ -5172,6 +7843,13 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-indigo-500"
   },
+  "emulsion-vs-distemper-cost-comparison": {
+    "name": "Emulsion vs Distemper Cost Comparison",
+    "description": "Compare emulsion and distemper on upfront cost, repaint cycles, lifetime present value and the break-even year.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "encoded-decoded": {
     "name": "Encoded/Decoded",
     "description": "Encode and decode text",
@@ -5201,6 +7879,55 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "endurance-athlete-protein-calculator": {
+    "name": "Endurance Athlete Protein Calculator",
+    "description": "Daily protein for runners, cyclists and triathletes scaled to weekly training hours, with post-session and per-meal doses.",
+    "category": "Health Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "energy-label-decoder": {
+    "name": "Energy Label Decoder",
+    "description": "Read a BEE star label properly: turn the kWh per year or ISEER figure into running cost, savings and payback between two models.",
+    "category": "Education & Science",
+    "icon": "tag",
+    "iconColor": "text-(--primary)"
+  },
+  "engine-displacement-calculator": {
+    "name": "Engine Displacement Calculator",
+    "description": "Work out engine cc from bore, stroke and cylinder count, with litres, cubic inches and bore-stroke ratio.",
+    "category": "Calculators",
+    "icon": "cog",
+    "iconColor": "text-(--primary)"
+  },
+  "engine-displacement-comparison": {
+    "name": "Engine Displacement Comparison",
+    "description": "Compare two motorcycle engines on specific output, BMEP, power-to-weight, piston speed and everyday tractability.",
+    "category": "Education & Science",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "engineering-style-guide-generator": {
+    "name": "Engineering Style Guide Generator",
+    "description": "Turn your team's conventions into a coding standards document plus a matching .editorconfig, per language.",
+    "category": "Generators",
+    "icon": "file-code",
+    "iconColor": "text-(--primary)"
+  },
+  "english-test-choice-helper": {
+    "name": "English Test Choice Helper",
+    "description": "Compare IELTS, TOEFL iBT, PTE Academic and the Duolingo English Test on cost, format, speed and acceptance for your destination.",
+    "category": "Education & Science",
+    "icon": "languages",
+    "iconColor": "text-(--primary)"
+  },
+  "english-test-retake-decision-helper": {
+    "name": "Test Retake Decision Helper",
+    "description": "Decide whether to retake IELTS, TOEFL, PTE or Duolingo based on your score gap, deadline and weekly study time.",
+    "category": "Education & Science",
+    "icon": "repeat",
+    "iconColor": "text-(--primary)"
+  },
   "enter-sql": {
     "name": "Enter SQL",
     "description": "Format, beautify, and compress SQL statement strings for easy viewing or filling.",
@@ -5210,6 +7937,62 @@ export const toolMetaMap = {
     ],
     "icon": "database",
     "iconColor": "text-[var(--primary)]"
+  },
+  "enum-constraint-builder": {
+    "name": "Enum Constraint Builder",
+    "description": "Define allowed values once and get the matching LLM prompt rule, JSON Schema enum, TypeScript union, Zod, Pydantic and SQL CHECK.",
+    "category": "Developer",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "env-file-diff-tool": {
+    "name": "Env File Diff Tool",
+    "description": "Compare two .env files side by side to find missing, extra and changed variables using dotenv parsing rules.",
+    "category": "Developer",
+    "icon": "file-diff",
+    "iconColor": "text-(--primary)"
+  },
+  "env-file-validator": {
+    "name": "Env File Validator",
+    "description": "Lint a .env file before deployment — syntax, quoting, duplicates, multiline values and parser-compatibility pitfalls.",
+    "category": "Developer",
+    "icon": "file-check",
+    "iconColor": "text-(--primary)"
+  },
+  "env-to-compose-environment-converter": {
+    "name": "Env to Compose Environment Converter",
+    "description": "Convert .env entries into docker-compose environment blocks (list or map form) or env_file references, with $$ escaping.",
+    "category": "Converters",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "env-to-example-generator": {
+    "name": "Env to Example Generator",
+    "description": "Turn a real .env into a safe .env.example — values stripped, comments and structure kept, secret keys always blanked.",
+    "category": "Developer",
+    "icon": "file-key",
+    "iconColor": "text-(--primary)"
+  },
+  "env-to-json-converter": {
+    "name": "Env to JSON Converter",
+    "description": "Convert dotenv files to JSON and back, with optional type coercion and double-underscore nesting.",
+    "category": "Converters",
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
+  },
+  "env-to-kubernetes-secret-converter": {
+    "name": "Env to Kubernetes Secret Converter",
+    "description": "Convert a .env file into a Kubernetes Secret manifest with base64-encoded data or plain stringData, validated against k8s naming rules.",
+    "category": "Converters",
+    "icon": "container",
+    "iconColor": "text-(--primary)"
+  },
+  "env-var-naming-checker": {
+    "name": "Env Var Naming Checker",
+    "description": "Check environment variable names against POSIX rules, UPPER_SNAKE_CASE convention, reserved names and risky prefixes.",
+    "category": "Developer",
+    "icon": "spell-check",
+    "iconColor": "text-(--primary)"
   },
   "envy-free-rent-splitter": {
     "name": "Envy-Free Rent Splitter",
@@ -5274,6 +8057,27 @@ export const toolMetaMap = {
     "icon": "list-collapse",
     "iconColor": "text-primary"
   },
+  "esi-contribution-calculator": {
+    "name": "ESI Contribution Calculator",
+    "description": "Employee and employer ESI contributions at 0.75% and 3.25% of wages, with the Rs 21,000 coverage ceiling check.",
+    "category": "Finance Calculators",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
+  },
+  "esic-contribution-calculator": {
+    "name": "ESIC Contribution Calculator",
+    "description": "Estimate employee and employer ESIC contributions from monthly wages with wage-limit and rate guidance.",
+    "category": "Finance Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "essay-feedback-prompt-builder": {
+    "name": "Essay Feedback Prompt Builder",
+    "description": "Create an AI feedback prompt focused on structure, evidence and clarity, with a comment budget scaled to essay length.",
+    "category": "Education & Science",
+    "icon": "file-pen-line",
+    "iconColor": "text-(--primary)"
+  },
   "eth-gas-now": {
     "name": "ETH Gas Now",
     "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye.",
@@ -5284,6 +8088,27 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "etihad-baggage-allowance-checker": {
+    "name": "Etihad Baggage Allowance Checker",
+    "description": "Check cabin and check-in bags against Etihad weight-concept allowances and the piece rules used on US, Canada and Brazil routes.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "etihad-excess-baggage-cost-estimator": {
+    "name": "Etihad Excess Baggage Cost Estimator",
+    "description": "Price Etihad excess kilos through every advance weight block against the airport rate and see which option really costs least.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "etsy-listing-prompt-builder": {
+    "name": "Etsy Listing Prompt Builder",
+    "description": "Create handmade-friendly Etsy listing prompts with a validated 13-tag set, 140-character title and a maker story angle.",
+    "category": "Marketing & Social",
+    "icon": "store",
+    "iconColor": "text-(--primary)"
   },
   "ev-battery-degradation-analyzer": {
     "name": "EV Battery Degradation Analyzer",
@@ -5324,12 +8149,47 @@ export const toolMetaMap = {
     "icon": "route",
     "iconColor": "text-primary"
   },
+  "ev-vs-diesel-running-cost": {
+    "name": "EV vs Diesel Running Cost",
+    "description": "Compare an EV and a BS6 diesel car per km including AdBlue, higher diesel service costs, CO2 and price-premium payback.",
+    "category": "Calculators",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "ev-vs-petrol-running-cost": {
+    "name": "EV vs Petrol Running Cost",
+    "description": "Compare an electric car and a petrol car on cost per km, yearly running cost, CO2 and the km at which the EV premium pays back.",
+    "category": "Calculators",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
+  "event-photographer-prompt-pack": {
+    "name": "Event Photographer Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for shot lists, client emails and gallery copy, plus a card, storage and edit-time planner.",
+    "category": "Business",
+    "icon": "camera",
+    "iconColor": "text-(--primary)"
+  },
+  "event-planning-prompt-builder": {
+    "name": "Event Planning Prompt Builder",
+    "description": "Build a timed run of show, floor area, staffing and catering-line figures for any headcount, then copy them as one logistics prompt.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "event-tool": {
     "name": "Event Planner",
-    "description": "Plan, organize, and manage your events efficiently.",
+    "description": "Turn a guest list into floor space, tables, staff, catering quantities and a costed budget with contingency.",
     "category": "Productivity",
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "calendar",
+    "iconColor": "text-teal-600"
+  },
+  "event-video-delivery-planner": {
+    "name": "Event Video Delivery Planner",
+    "description": "Turn an event date into a dated deliverables schedule with edit-hour estimates, start-by dates and a capacity check.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "evidence-chain-organizer": {
     "name": "Evidence Chain Organizer",
@@ -5353,6 +8213,104 @@ export const toolMetaMap = {
     "icon": "truck",
     "iconColor": "text-(--primary)"
   },
+  "ews-certificate-eligibility-checker": {
+    "name": "EWS Certificate Eligibility Checker",
+    "description": "Test the ₹8 lakh family income limit and all four asset exclusions for an Economically Weaker Section certificate.",
+    "category": "Business",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-answer-presentation-checker": {
+    "name": "Exam Answer Presentation Checker",
+    "description": "Self-check the presentation of an exam answer — structure, headings, diagrams and underlining — and get a weighted score.",
+    "category": "Education & Science",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-application-fee-calculator": {
+    "name": "Application Fee Calculator",
+    "description": "Total your exam application fees across SSC, UPSC, RRB, IBPS, SBI and CTET with category concessions and refundable amounts applied.",
+    "category": "Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-attempt-cost-tracker": {
+    "name": "Exam Attempt Cost Tracker",
+    "description": "Total what each exam attempt really cost — form fees, coaching, test series, books, travel and stay — across all attempts.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-burnout-self-check": {
+    "name": "Exam Burnout Self Check",
+    "description": "Informational 12-question self-check for study burnout across exhaustion, cynicism and efficacy, with recovery suggestions.",
+    "category": "Health & Fitness",
+    "icon": "battery-low",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-centre-travel-planner": {
+    "name": "Exam Centre Travel Planner",
+    "description": "Plan the journey to your exam centre with a buffer, a backup route and a switch-by time, worked back from the gate-closing time.",
+    "category": "Productivity",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-concentration-sound-timer": {
+    "name": "Exam Concentration Sound Timer",
+    "description": "Split an exam paper into timed sound blocks by marks, with checkpoint clock times and audible warning cues.",
+    "category": "Education & Science",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-date-clash-detector": {
+    "name": "Exam Clash Detector",
+    "description": "Spot same-day clashes and dangerously tight gaps across all the exams you have applied for.",
+    "category": "Productivity",
+    "icon": "calendar-x-2",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-day-meal-planner": {
+    "name": "Exam Day Meal Planner",
+    "description": "Work backward from your exam reporting time to a light, steady-energy meal and hydration timeline.",
+    "category": "Health & Fitness",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-diagram-practice-tracker": {
+    "name": "Diagram Practice Tracker",
+    "description": "Track which exam diagrams you can draw from memory within your time limit and see which ones to practise next.",
+    "category": "Education & Science",
+    "icon": "pen-tool",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-hall-rough-work-planner": {
+    "name": "Exam Hall Rough Work Planner",
+    "description": "Plan a numbered zone layout for your rough sheets so every calculation is findable and nothing is recomputed.",
+    "category": "Education & Science",
+    "icon": "layout-grid",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-motivation-milestone-board": {
+    "name": "Exam Motivation Milestone Board",
+    "description": "Set prep milestones between today and exam day, see target dates and whether you are ahead, on track or behind.",
+    "category": "Productivity",
+    "icon": "milestone",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-notification-alert-planner": {
+    "name": "Notification Alert Planner",
+    "description": "Plan reminder dates for the expected notification months of every exam you follow, sorted by urgency.",
+    "category": "Productivity",
+    "icon": "bell-ring",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-result-day-support-planner": {
+    "name": "Exam Result Day Support Planner",
+    "description": "Plan result day before it arrives — who to have around, how to check the score, and a first move for every outcome.",
+    "category": "Lifestyle",
+    "icon": "heart-handshake",
+    "iconColor": "text-(--primary)"
+  },
   "exam-score-analyzer": {
     "name": "Exam Score Analyzer",
     "description": "Analyze your exam performance with grades, insights, and interactive charts.",
@@ -5371,6 +8329,41 @@ export const toolMetaMap = {
       "Education & Science"
     ],
     "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-season-sleep-planner": {
+    "name": "Exam Season Sleep Planner",
+    "description": "Build study blocks and a bedtime plan around exam day, with a safe 30-minutes-per-day body clock shift.",
+    "category": "Health & Fitness",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-stress-reflection-prompts": {
+    "name": "Exam Stress Reflection Prompts",
+    "description": "Guided journalling prompts to name exam pressure, sort what you control and turn worry into one concrete next action.",
+    "category": "Lifestyle",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-tie-breaker-rule-explainer": {
+    "name": "Tie Breaker Rule Explainer",
+    "description": "Apply the published tie-breaking order of NEET, JEE Main, UPSC, SSC and IBPS to two candidates and see which criterion decides the rank.",
+    "category": "Education & Science",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "exam-to-job-mapping-explorer": {
+    "name": "Exam To Job Mapping Explorer",
+    "description": "See which posts each major Indian recruitment exam leads to, with pay level, entry basic pay and job profile.",
+    "category": "Education & Science",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "excel-copilot-prompt-builder": {
+    "name": "Excel Copilot Prompt Builder",
+    "description": "Build Excel Copilot prompts that name the exact sheet, A1 range and column headers, with grid limits validated before you paste.",
+    "category": "Productivity",
+    "icon": "file-spreadsheet",
     "iconColor": "text-(--primary)"
   },
   "excel-formula": {
@@ -5433,6 +8426,13 @@ export const toolMetaMap = {
     "icon": "shield-off",
     "iconColor": "text-slate-600"
   },
+  "exhaust-fan-size-calculator": {
+    "name": "Exhaust Fan Size Calculator",
+    "description": "Size a kitchen or bathroom exhaust fan from room volume and air changes per hour, with duct diameter and fan body size.",
+    "category": "Calculators",
+    "icon": "fan",
+    "iconColor": "text-(--primary)"
+  },
   "exif-data-viewer": {
     "name": "EXIF Data Viewer",
     "description": "Inspect image metadata including camera, date, and GPS fields.",
@@ -5454,6 +8454,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "exit-code-reference-explorer": {
+    "name": "Exit Code Reference Explorer",
+    "description": "Look up what a shell or process exit code means, including 128+N signal deaths, sysexits.h codes and Docker OOM kills.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
+  },
   "expanse-tacker": {
     "name": "Expanse Tracker",
     "description": "Provides information about Expanse game",
@@ -5468,6 +8475,13 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-(--primary)"
   },
+  "expense-report-generator": {
+    "name": "Expense Report Generator",
+    "description": "Build a claimable expense report with category totals, GST input credit, advance settlement and cash-limit checks.",
+    "category": "Business",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
   "exposure-triangle-guide": {
     "name": "Exposure Triangle Guide",
     "description": "Learn how aperture, shutter speed, and ISO interact with live exposure feedback and scene presets.",
@@ -5478,6 +8492,27 @@ export const toolMetaMap = {
     ],
     "icon": "aperture",
     "iconColor": "text-blue-600"
+  },
+  "express-route-scaffold-generator": {
+    "name": "Express Route Scaffold Generator",
+    "description": "Generate an Express router with validation, an async wrapper, correct status codes and four-argument error middleware.",
+    "category": "Generators",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
+  },
+  "extension-cord-load-checker": {
+    "name": "Extension Cord Load Checker",
+    "description": "Check whether the appliances on one extension board exceed its amp rating, the cord ampacity, the 80% continuous rule or safe voltage drop.",
+    "category": "Calculators",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
+  "exterior-wall-paint-quantity-calculator": {
+    "name": "Exterior Wall Paint Quantity Calculator",
+    "description": "Estimate litres of exterior emulsion from wall area, coats and surface porosity, with pack sizes and material cost.",
+    "category": "Calculators",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
   },
   "eye-rest-timer": {
     "name": "20-20-20 Eye Rest Timer",
@@ -5491,6 +8526,13 @@ export const toolMetaMap = {
     ],
     "icon": "eye",
     "iconColor": "text-teal-600"
+  },
+  "eye-strain-study-planner": {
+    "name": "Eye Strain Study Planner",
+    "description": "Plan a study session that alternates screen and paper blocks, with 20-20-20 micro-breaks and rest gaps to cut eye strain.",
+    "category": "Health & Fitness",
+    "icon": "eye",
+    "iconColor": "text-(--primary)"
   },
   "face-recognition-memory-test": {
     "name": "Face Recognition Memory Test",
@@ -5554,6 +8596,13 @@ export const toolMetaMap = {
     "icon": "x",
     "iconColor": "text-rose-600"
   },
+  "fahrenheit-travel-temperature-converter": {
+    "name": "Fahrenheit Travel Temperature Converter",
+    "description": "Convert forecast highs and lows between Fahrenheit and Celsius, with feels-like figures and a packing hint for each range.",
+    "category": "Converters",
+    "icon": "thermometer",
+    "iconColor": "text-(--primary)"
+  },
   "fake-chat-maker": {
     "name": "Fake Chat Maker",
     "description": "Create clearly watermarked mock chat screenshots for social posts, UI demos, scripts, and storytelling templates.",
@@ -5585,6 +8634,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
+  },
+  "family-car-size-selector": {
+    "name": "Family Car Size Selector",
+    "description": "Match a car body type to your seat count, child seats, luggage volume and the longest car your parking allows.",
+    "category": "Lifestyle",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
   },
   "family-emergency-contact-tree": {
     "name": "Family Emergency Contact Tree",
@@ -5636,6 +8692,13 @@ export const toolMetaMap = {
     "icon": "shuffle",
     "iconColor": "text-violet-600"
   },
+  "faq-generator-prompt-builder": {
+    "name": "FAQ Generator Prompt Builder",
+    "description": "Turn a product description into an FAQ prompt with intent coverage, answer length targets and FAQPage schema.",
+    "category": "Business",
+    "icon": "message-circle-question",
+    "iconColor": "text-(--primary)"
+  },
   "fast-click-challenge": {
     "name": "Fast Click Challenge",
     "description": "Test your clicking speed in 10 seconds. Click as fast as you can and compare your CPS with friends.",
@@ -5650,11 +8713,32 @@ export const toolMetaMap = {
     "icon": "mouse-pointer-click",
     "iconColor": "text-orange-500"
   },
+  "fastag-recharge-planner": {
+    "name": "Fastag Recharge Planner",
+    "description": "Plan FASTag top-ups from your toll usage: daily burn, days of balance left, recommended recharge and the return-journey saving.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
   "fd-ladder-planner": {
     "name": "Fixed Deposit Ladder Planner",
     "description": "Split a lump sum across staggered FD tenures and see each rung's maturity, date and the blended average yield.",
     "category": "Finance Calculators",
     "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "fd-maturity-calculator-with-tds": {
+    "name": "Bank FD Maturity Calculator with TDS",
+    "description": "Fixed deposit maturity value with quarterly compounding, year-wise interest accrual, section 194A TDS and your post-tax return.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "fd-premature-withdrawal-calculator": {
+    "name": "FD Premature Withdrawal Penalty Calculator",
+    "description": "What you actually get for breaking a fixed deposit early, and whether a loan against the FD would leave you better off.",
+    "category": "Finance Calculators",
+    "icon": "scissors",
     "iconColor": "text-(--primary)"
   },
   "fd-premature-withdrawal-penalty-calculator": {
@@ -5678,6 +8762,13 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-emerald-600"
   },
+  "feature-flag-naming-generator": {
+    "name": "Feature Flag Naming Generator",
+    "description": "Generate consistent feature flag names with type prefix, owning team, expiry tag and your team's case convention.",
+    "category": "Generators",
+    "icon": "flag",
+    "iconColor": "text-(--primary)"
+  },
   "feedback-categorizer": {
     "name": "Feedback Categorizer",
     "description": "Group customer feedback into themes, estimate sentiment, and surface high-priority product signals.",
@@ -5688,11 +8779,53 @@ export const toolMetaMap = {
     "icon": "messages-square",
     "iconColor": "text-primary"
   },
+  "feet-metres-altitude-converter": {
+    "name": "Feet to Metres Altitude Converter",
+    "description": "Convert trek and flight altitudes between feet and metres, with air pressure, effective oxygen and the altitude band.",
+    "category": "Converters",
+    "icon": "mountain",
+    "iconColor": "text-(--primary)"
+  },
+  "fence-post-spacing-calculator": {
+    "name": "Fence Post Spacing Calculator",
+    "description": "Calculate post count, even on-centre spacing, hole depth and diameter, and the concrete bags per hole for a fence run.",
+    "category": "Calculators",
+    "icon": "fence",
+    "iconColor": "text-(--primary)"
+  },
+  "feng-shui-room-guide": {
+    "name": "Feng Shui Room Guide",
+    "description": "Informational feng shui layout and element guide for each room, with bagua area, five-element cycle and colour split.",
+    "category": "Lifestyle",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
+  },
+  "festival-budget-planner": {
+    "name": "Festival and Gifting Budget Planner",
+    "description": "Plan festival spending across gifts, food, travel, decor and clothing, with a gift-tax check and the monthly saving it needs.",
+    "category": "Finance Calculators",
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
+  "fetal-kick-counter": {
+    "name": "Fetal Kick Counter",
+    "description": "Tap to count fetal movements and see how long ten took, using the count-to-ten method with session timing and history.",
+    "category": "Health & Fitness",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
   "fifty-thirty-twenty-budget-calculator": {
     "name": "50-30-20 Budget Rule Calculator",
     "description": "Split your take-home pay into 50% needs, 30% wants and 20% savings, then compare it against what you actually spend.",
     "category": "Finance Calculators",
     "icon": "pie-chart",
+    "iconColor": "text-(--primary)"
+  },
+  "figma-ai-prompt-builder": {
+    "name": "Figma AI Prompt Builder",
+    "description": "Build Figma AI prompts for wireframes, layer naming and design system cleanup, with real column-grid maths for your frame size.",
+    "category": "Design & Color",
+    "icon": "figma",
     "iconColor": "text-(--primary)"
   },
   "file-checksum-comparator": {
@@ -5735,12 +8868,16 @@ export const toolMetaMap = {
   "file-metadata-explorer": {
     "name": "File Metadata Explorer",
     "description": "Extract and explore detailed metadata from files — images, documents, audio, video, and more. All processing stays in your browser.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
+    "category": "Developer",
     "icon": "file-search",
     "iconColor": "text-violet-600"
+  },
+  "file-name-sanitiser-for-portals": {
+    "name": "File Name Sanitiser For Portals",
+    "description": "Clean file names of spaces, symbols, accents and reserved words that break government portal and legacy system uploads.",
+    "category": "Developer",
+    "icon": "file-cog",
+    "iconColor": "text-(--primary)"
   },
   "file-signature-verifier": {
     "name": "File Signature Verifier",
@@ -5759,14 +8896,8 @@ export const toolMetaMap = {
   },
   "file-to-base64": {
     "name": "File to Base64",
-    "description": "Convert local files into Base64 data URLs without uploading.",
-    "category": [
-      "Converters",
-      "Developer"
-    ],
-    "topics": [
-      "Converter"
-    ],
+    "description": "Convert local files into Base64 strings and data URLs without uploading them.",
+    "category": "Converters",
     "icon": "upload",
     "iconColor": "text-indigo-700"
   },
@@ -5798,12 +8929,26 @@ export const toolMetaMap = {
     "icon": "flag",
     "iconColor": "text-teal-500"
   },
+  "financial-literacy-quiz": {
+    "name": "Financial Literacy Quiz for Beginners",
+    "description": "A 16-question quiz on interest, inflation, insurance and tax, scored per topic with worked explanations for every answer.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
   "financial-update": {
     "name": "Financial Update",
     "description": "Financial Update allows you to track the stock market trends and get Updates on the latest financial news.",
     "category": "Business",
     "icon": "bar-chart-3",
     "iconColor": "text-indigo-500"
+  },
+  "financial-year-assessment-year-finder": {
+    "name": "Financial Year and Assessment Year Finder",
+    "description": "Map any date to the Indian financial year and assessment year, with the quarter and the statutory filing dates that follow.",
+    "category": "Converters",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
   },
   "find-and-replace-tool": {
     "name": "Find and Replace Tool",
@@ -5838,6 +8983,13 @@ export const toolMetaMap = {
     "icon": "flame",
     "iconColor": "text-orange-500"
   },
+  "fire-extinguisher-selector": {
+    "name": "Fire Extinguisher Selector",
+    "description": "Match the right extinguishing agent and size to a kitchen, garage, electrical or workshop risk, with NFPA 10 coverage maths.",
+    "category": "Education & Science",
+    "icon": "fire-extinguisher",
+    "iconColor": "text-(--primary)"
+  },
   "fire-number-calculator": {
     "name": "FIRE Number Calculator",
     "description": "Find the corpus that buys your freedom, the year you reach it, and whether you can already coast to it.",
@@ -5848,6 +9000,27 @@ export const toolMetaMap = {
     ],
     "icon": "flame",
     "iconColor": "text-teal-600"
+  },
+  "firewood-cord-calculator": {
+    "name": "Firewood Cord Calculator",
+    "description": "Calculate cords of firewood needed for a heating season by species and stove efficiency, plus stack length and weight.",
+    "category": "Calculators",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "first-car-budget-advisor": {
+    "name": "First Car Budget Advisor",
+    "description": "Set a safe first-car budget from income, savings and running costs using the 20/4/10 rule — down payment, EMI and on-road price.",
+    "category": "Finance Calculators",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "fiscal-quarter-converter": {
+    "name": "Quarter and Fiscal Period Converter",
+    "description": "Convert any date between calendar and fiscal quarters for any fiscal year start month, with both year-labelling conventions.",
+    "category": "Converters",
+    "icon": "calendar-range",
+    "iconColor": "text-(--primary)"
   },
   "flag-quiz": {
     "name": "Flag Quiz",
@@ -5888,11 +9061,32 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-blue-600"
   },
+  "flashcard-prompt-builder": {
+    "name": "Flashcard Prompt Builder",
+    "description": "Build an AI prompt that produces clean, importable question-and-answer flashcard sets in basic, cloze or term-definition format.",
+    "category": "Education & Science",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
   "flat-vs-reducing-rate-converter": {
     "name": "Flat vs Reducing Interest Rate Converter",
     "description": "Convert a flat interest rate to its true reducing-balance equivalent, or back again, with the EMI and total interest.",
     "category": "Finance Calculators",
     "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "flexitarian-macro-calculator": {
+    "name": "Flexitarian Macro Calculator",
+    "description": "Mostly-plant macro targets with the weekly meat allowance for the Beginner, Advanced and Expert flexitarian levels.",
+    "category": "Health & Fitness",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "floor-tile-quantity-calculator": {
+    "name": "Floor Tile Quantity Calculator",
+    "description": "Calculate floor tiles, boxes, adhesive and grout for any room area including a wastage allowance.",
+    "category": "Calculators",
+    "icon": "grid-2x2",
     "iconColor": "text-(--primary)"
   },
   "flow-chart-maker": {
@@ -5904,6 +9098,13 @@ export const toolMetaMap = {
     ],
     "icon": "workflow",
     "iconColor": "text-gray-500"
+  },
+  "flu-shot-reminder-planner": {
+    "name": "Flu Shot Reminder Planner",
+    "description": "Find your best annual flu vaccination window by hemisphere, with the date protection starts, travel deadlines and child second-dose timing.",
+    "category": "Health & Fitness",
+    "icon": "syringe",
+    "iconColor": "text-(--primary)"
   },
   "focus-reading-mask": {
     "name": "Focus Reading Mask",
@@ -5987,6 +9188,41 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "font-pairing-brutalist-vibe": {
+    "name": "Brutalist Font Pairing",
+    "description": "Grotesk and monospace pairings with a character grid, edge-to-edge headline sizing and tracking values.",
+    "category": "Design & Color",
+    "icon": "blocks",
+    "iconColor": "text-(--primary)"
+  },
+  "font-pairing-editorial-vibe": {
+    "name": "Editorial Vibe Font Pairing",
+    "description": "Magazine-style Google Font pairings with a modular type scale, measured line length and leading you can copy as CSS.",
+    "category": "Design & Color",
+    "icon": "newspaper",
+    "iconColor": "text-(--primary)"
+  },
+  "font-pairing-retro-vibe": {
+    "name": "Retro Vibe Font Pairing",
+    "description": "Seventies and eighties font pairs with matching palettes and live WCAG contrast ratios for every text and accent colour.",
+    "category": "Design & Color",
+    "icon": "disc-3",
+    "iconColor": "text-(--primary)"
+  },
+  "font-pairing-tech-startup-vibe": {
+    "name": "Tech Startup Font Pairing",
+    "description": "Geometric sans pairings with a grid-snapped UI type scale, mono face for numbers and a slide legibility check.",
+    "category": "Design & Color",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
+  },
+  "font-pairing-wedding-vibe": {
+    "name": "Wedding Font Pairing",
+    "description": "Script and serif pairings for invitations, with x-height in millimetres, line length and 300 dpi print sizes.",
+    "category": "Design & Color",
+    "icon": "heart",
+    "iconColor": "text-(--primary)"
+  },
   "font-subsetter-woff2-converter": {
     "name": "Font Subsetter & WOFF2 Converter",
     "description": "Unused glyphs remove karke web-optimized font banaye.",
@@ -6011,6 +9247,20 @@ export const toolMetaMap = {
     "icon": "refrigerator",
     "iconColor": "text-teal-600"
   },
+  "footage-storage-per-hour-calculator": {
+    "name": "Footage Storage Per Hour Calculator",
+    "description": "Plan card and drive space for a shoot: storage per hour by codec, resolution, frame rate and audio track count.",
+    "category": "Calculators",
+    "icon": "hard-drive",
+    "iconColor": "text-(--primary)"
+  },
+  "form-15g-15h-eligibility-checker": {
+    "name": "Form 15G and 15H Eligibility Checker",
+    "description": "Check whether you can file a Form 15G or 15H no-TDS declaration with your bank, and see the TDS at stake.",
+    "category": "Business",
+    "icon": "file-check",
+    "iconColor": "text-(--primary)"
+  },
   "form-abandonment-simulator": {
     "name": "Form Abandonment Simulator",
     "description": "Model form-step drop-off, estimate completion losses, and identify friction points before launch.",
@@ -6034,6 +9284,20 @@ export const toolMetaMap = {
     "icon": "form",
     "iconColor": "text-blue-500"
   },
+  "form-correction-window-tracker": {
+    "name": "Form Correction Window Tracker",
+    "description": "Count down an exam form correction window, see which fields that body actually lets you edit, and what the correction costs.",
+    "category": "Productivity",
+    "icon": "pencil-line",
+    "iconColor": "text-(--primary)"
+  },
+  "form-image-format-converter": {
+    "name": "Image Format Converter For Forms",
+    "description": "Convert photos and signatures between JPG, JPEG and PNG in the browser, with the exact extension and size portals demand.",
+    "category": "Converters",
+    "icon": "file-image",
+    "iconColor": "text-(--primary)"
+  },
   "form-label-auditor": {
     "name": "Form Label Auditor",
     "description": "Inspect pasted HTML locally for common form-control naming, label association, group legend, duplicate ID, and reference issues without executing the source.",
@@ -6051,6 +9315,13 @@ export const toolMetaMap = {
     ],
     "icon": "cookie",
     "iconColor": "text-amber-500"
+  },
+  "founder-prompt-pack": {
+    "name": "Founder Prompt Pack",
+    "description": "Fill in your company details once and generate ready-to-paste founder prompts for strategy, hiring and investor updates.",
+    "category": "Business",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
   },
   "four-in-a-row": {
     "name": "Four in a Row",
@@ -6130,6 +9401,27 @@ export const toolMetaMap = {
     "icon": "film",
     "iconColor": "text-teal-600"
   },
+  "frames-to-seconds-converter": {
+    "name": "Frames to Seconds Converter",
+    "description": "Convert frame counts to seconds and SMPTE timecode at any frame rate, including 29.97 drop-frame, and back again.",
+    "category": "Converters",
+    "icon": "film",
+    "iconColor": "text-(--primary)"
+  },
+  "france-dress-code-planner": {
+    "name": "France Dress Code Planner for Travellers",
+    "description": "Plan France outfits by month: cathedral cover-up rules, restaurant codes, the public-pool swim brief rule and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "frankfurt-fra-airport-arrival-buffer-calculator": {
+    "name": "Frankfurt FRA Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Frankfurt Airport using drive time, traffic, check-in cut-off, passport control and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
   "freelance-hourly-rate-calculator": {
     "name": "Freelance Hourly Rate Calculator",
     "description": "Work out the freelance hourly rate you need from target income, billable hours, expenses and tax.",
@@ -6163,11 +9455,32 @@ export const toolMetaMap = {
     "icon": "badge-indian-rupee",
     "iconColor": "text-teal-600"
   },
+  "freelance-rate-converter": {
+    "name": "Freelance Contract Rate Converter",
+    "description": "Convert a freelance rate between hourly, daily, weekly, monthly, annual and fixed-project figures using your real billable capacity.",
+    "category": "Converters",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "freelancer-advance-tax-planner": {
     "name": "Freelancer Advance Tax Planner",
     "description": "Plan quarterly advance tax instalments and due dates on freelance and professional income.",
     "category": "Finance Calculators",
     "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "freelancer-expense-deduction-checklist": {
+    "name": "Freelancer Expense Deduction Checklist",
+    "description": "Track deductible freelance expenses head by head, flag cash and TDS disallowances, and compare actual expenses against Section 44ADA.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "freelancer-prompt-pack": {
+    "name": "Freelancer Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for proposals, scope protection, rate rises and polite invoice chasing.",
+    "category": "Business",
+    "icon": "briefcase",
     "iconColor": "text-(--primary)"
   },
   "friend-elo-ladder": {
@@ -6204,9 +9517,51 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-cyan-500"
   },
+  "fssai-licence-selector": {
+    "name": "FSSAI Licence Category Selector",
+    "description": "Find whether you need FSSAI basic registration, a state licence or a central licence, from turnover, production capacity and activity.",
+    "category": "Business",
+    "icon": "utensils-crossed",
+    "iconColor": "text-(--primary)"
+  },
+  "fuel-cost-per-km-calculator": {
+    "name": "Fuel Cost Per Kilometre Calculator",
+    "description": "Work out the true cost of a kilometre from fuel price and mileage, add running costs, and find the break-even for a CNG kit or EV switch.",
+    "category": "Finance Calculators",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "fuel-cost-split-calculator": {
+    "name": "Fuel Cost Split Calculator",
+    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
   "fuel-cost-trip-calculator": {
     "name": "Fuel Cost Trip Calculator",
     "description": "Estimate trip fuel cost from distance, mileage and fuel price, then split it per person.",
+    "category": "Calculators",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "fuel-economy-unit-converter": {
+    "name": "Fuel Economy Unit Converter",
+    "description": "Convert fuel economy between km/l, l/100 km, US mpg and imperial mpg, with the fuel a given trip would use.",
+    "category": "Converters",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "fuel-price-per-litre-comparator": {
+    "name": "Fuel Price Per Litre Comparator",
+    "description": "Normalise fuel prices quoted per litre or per gallon in different currencies to one price per litre and rank them.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "fuel-tank-range-estimator": {
+    "name": "Fuel Tank Range Estimator",
+    "description": "Estimate how far you can still drive from the fuel gauge reading, tank size, mileage and the reserve you want to keep.",
     "category": "Calculators",
     "icon": "fuel",
     "iconColor": "text-(--primary)"
@@ -6241,12 +9596,26 @@ export const toolMetaMap = {
     "icon": "lock",
     "iconColor": "text-purple-600"
   },
+  "furniture-assembly-time-estimator": {
+    "name": "Furniture Assembly Time Estimator",
+    "description": "Estimate how long flat-pack furniture takes to build from part and fastener counts, skill, tools and helpers.",
+    "category": "Productivity",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
+  },
   "furniture-layout-planner": {
     "name": "Furniture Layout Planner",
     "description": "Plan room dimensions, arrange furniture pieces, check spacing, save layouts, and export printable floor plans.",
     "category": "Lifestyle",
     "icon": "armchair",
     "iconColor": "text-amber-600"
+  },
+  "furniture-resale-value-estimator": {
+    "name": "Furniture Resale Value Estimator",
+    "description": "Estimate the resale value of wooden and modular furniture from material, age, condition and whether it can be moved.",
+    "category": "Finance Calculators",
+    "icon": "sofa",
+    "iconColor": "text-(--primary)"
   },
   "future-baby-generator": {
     "name": "Future Baby Generator",
@@ -6314,6 +9683,97 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "gain-staging-calculator": {
+    "name": "Gain Staging Calculator",
+    "description": "Convert a level between dBFS, dBu, dBV, volts RMS and percent of full scale using a chosen alignment standard.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "gaj-to-sqft-converter": {
+    "name": "Gaj to Sqft Converter",
+    "description": "Convert gaj (square yard) to square feet, square metres, biswa, marla and kanal, with rate per gaj and plot cost.",
+    "category": "Converters",
+    "icon": "land-plot",
+    "iconColor": "text-(--primary)"
+  },
+  "gaming-pc-electricity-cost": {
+    "name": "Gaming PC Electricity Cost",
+    "description": "Work out gaming rig wall-socket power draw, monthly electricity cost and the PSU wattage your GPU and CPU actually need.",
+    "category": "Calculators",
+    "icon": "cpu",
+    "iconColor": "text-(--primary)"
+  },
+  "gap-certificate-explainer": {
+    "name": "Gap Certificate Explainer",
+    "description": "Check whether your study gap needs a gap certificate or affidavit, what it must contain, and get a ready draft for the notary.",
+    "category": "Education & Science",
+    "icon": "calendar-range",
+    "iconColor": "text-(--primary)"
+  },
+  "gap-year-eligibility-explainer": {
+    "name": "Gap Year Eligibility Explainer",
+    "description": "See which entrance exams accept gap years, how many, and what proof counselling bodies ask for — from your passing and attempt years.",
+    "category": "Education & Science",
+    "icon": "calendar-range",
+    "iconColor": "text-(--primary)"
+  },
+  "garden-fence-material-calculator": {
+    "name": "Garden Fence Material Calculator",
+    "description": "Calculate posts, bays, panels, wire strands and post-hole concrete for a garden fence of any length.",
+    "category": "Calculators",
+    "icon": "fence",
+    "iconColor": "text-(--primary)"
+  },
+  "garden-soil-volume-calculator": {
+    "name": "Garden Soil Volume Calculator",
+    "description": "Compute topsoil volume, weight, bags and bulk bags to fill a raised bed, level a lawn or top-dress a garden area.",
+    "category": "Calculators",
+    "icon": "shovel",
+    "iconColor": "text-(--primary)"
+  },
+  "gas-leak-safety-checklist": {
+    "name": "Gas Leak Safety Checklist",
+    "description": "How long an LPG or PNG leak takes to reach its flammable limit in your room, plus the detection and shut-down steps in the right order.",
+    "category": "Education & Science",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "gas-meter-reading-tracker": {
+    "name": "Gas Meter Reading Tracker",
+    "description": "Track piped gas meter readings in SCM and estimate the next bill on your distributor's telescopic slab tariff.",
+    "category": "Productivity",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "gate-exam-countdown": {
+    "name": "GATE Exam Countdown",
+    "description": "GATE countdown with a halving-cycle subject rotation schedule built from your branch syllabus and today's rotation reminder.",
+    "category": "Productivity",
+    "icon": "cpu",
+    "iconColor": "text-(--primary)"
+  },
+  "gcp-cloud-run-cost-calculator": {
+    "name": "GCP Cloud Run Cost Calculator",
+    "description": "Compute Google Cloud Run cost from requests, CPU, memory, concurrency and min instances — free tier and idle rates included.",
+    "category": "Calculators",
+    "icon": "container",
+    "iconColor": "text-(--primary)"
+  },
+  "gemfile-generator": {
+    "name": "Gemfile Generator",
+    "description": "Generate a Bundler Gemfile with source, ruby version, groups, git and path sources, and pessimistic version constraints.",
+    "category": "Generators",
+    "icon": "gem",
+    "iconColor": "text-(--primary)"
+  },
+  "gemini-api-cost-calculator": {
+    "name": "Gemini API Cost Calculator",
+    "description": "Estimate Gemini API spend across text, cached, long-context, image and audio tokens, per request and per month.",
+    "category": "Calculators",
+    "icon": "sparkles",
+    "iconColor": "text-(--primary)"
+  },
   "generate-random-string": {
     "name": "Generate Random String",
     "description": "Generate secure random strings, batches, patterns, QR codes, and exports in the browser.",
@@ -6334,6 +9794,27 @@ export const toolMetaMap = {
     ],
     "icon": "triangle",
     "iconColor": "text-amber-600"
+  },
+  "germany-dress-code-planner": {
+    "name": "Germany Dress Code Planner for Travellers",
+    "description": "Plan Germany outfits by month: textile-free sauna rules, cathedral cover-up, Christmas market layering and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "geyser-capacity-selector": {
+    "name": "Geyser Capacity Selector",
+    "description": "Size a water heater in litres for bucket baths or showers, with the mixing maths, reheat time and energy per heating cycle.",
+    "category": "Calculators",
+    "icon": "shower-head",
+    "iconColor": "text-(--primary)"
+  },
+  "geyser-electricity-cost-calculator": {
+    "name": "Geyser Electricity Cost Calculator",
+    "description": "Water heater running cost from litres used, temperature rise and BEE star standing loss, per day, month and year.",
+    "category": "Calculators",
+    "icon": "shower-head",
+    "iconColor": "text-(--primary)"
   },
   "gif-palette-optimizer": {
     "name": "GIF Palette Optimizer",
@@ -6359,6 +9840,13 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "gift",
     "iconColor": "text-indigo-600"
+  },
+  "gift-tax-relative-checker": {
+    "name": "Gift Tax Relative Definition Checker",
+    "description": "Check whether a gift giver is a relative under section 56(2)(x) and how much of the gift is taxable in the receiver's hands.",
+    "category": "Business",
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
   },
   "gig-earnings-mileage-analyzer": {
     "name": "Gig Earnings & Mileage Analyzer",
@@ -6386,6 +9874,34 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-primary"
   },
+  "girl-child-scholarship-finder": {
+    "name": "Girl Child Scholarship Finder",
+    "description": "Filter major Indian girl-child scholarship schemes by study level, family income, community and state to see what you can apply for.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "git-branch-naming-generator": {
+    "name": "Git Branch Naming Generator",
+    "description": "Create a branch naming convention with types, ticket IDs and separators — get the template, validation regex, examples and a CI check.",
+    "category": "Generators",
+    "icon": "git-branch",
+    "iconColor": "text-(--primary)"
+  },
+  "git-branching-strategy-comparison": {
+    "name": "Git Branching Strategy Comparison",
+    "description": "Compare git flow, GitHub flow, trunk-based development and release branching, scored against your team size and release cadence.",
+    "category": "Developer",
+    "icon": "git-fork",
+    "iconColor": "text-(--primary)"
+  },
+  "git-commit-message-linter": {
+    "name": "Git Commit Message Linter",
+    "description": "Lint a commit message against the Conventional Commits spec — type, scope, subject, body and footers — with a suggested fixed message.",
+    "category": "Developer",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
   "git-diff-exposure-checker": {
     "name": "Git Diff Exposure Checker",
     "description": "Inspect a pasted unified Git diff locally for added secret-like values, private-key material, contact PII, and sensitive filenames with redacted findings.",
@@ -6401,6 +9917,76 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "git-lfs-storage-estimator": {
+    "name": "Git LFS Storage Estimator",
+    "description": "Estimate Git LFS storage growth, monthly bandwidth and GitHub data-pack cost from file sizes, update rate and clone frequency.",
+    "category": "Calculators",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
+  },
+  "git-merge-vs-rebase-helper": {
+    "name": "Git Merge vs Rebase Helper",
+    "description": "Answer a few questions about your branch and get a merge, rebase or squash recommendation with history previews and the exact commands.",
+    "category": "Developer",
+    "icon": "git-merge",
+    "iconColor": "text-(--primary)"
+  },
+  "git-submodule-vs-subtree-chooser": {
+    "name": "Git Submodule vs Subtree Chooser",
+    "description": "Compare git submodules, git subtree and package dependencies for sharing code across repos, scored for your team and workflow.",
+    "category": "Developer",
+    "icon": "folder-git-2",
+    "iconColor": "text-(--primary)"
+  },
+  "git-tag-naming-generator": {
+    "name": "Git Tag Naming Generator",
+    "description": "Generate a consistent release tag format — v-prefix, SemVer 2.0.0, prerelease channels, build metadata — with regex and git commands.",
+    "category": "Generators",
+    "icon": "tag",
+    "iconColor": "text-(--primary)"
+  },
+  "gitattributes-generator": {
+    "name": "Gitattributes Generator",
+    "description": "Generate a .gitattributes file for line-ending normalization, Git LFS tracking, binary marking, export-ignore and diff drivers.",
+    "category": "Generators",
+    "icon": "file-cog",
+    "iconColor": "text-(--primary)"
+  },
+  "github-actions-cron-schedule-builder": {
+    "name": "GitHub Actions Cron Schedule Builder",
+    "description": "Build on.schedule cron entries in UTC from your local time and preview when the workflow runs for teammates around the world.",
+    "category": "Developer",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "github-actions-minutes-cost-calculator": {
+    "name": "GitHub Actions Minutes Cost Calculator",
+    "description": "Estimate monthly GitHub Actions cost from job counts and durations, with Linux, Windows 2x and macOS 10x runner multipliers.",
+    "category": "Calculators",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "github-actions-secrets-scope-planner": {
+    "name": "GitHub Actions Secrets Scope Planner",
+    "description": "Decide repository, environment or organization scope for each Actions secret and get the matching gh CLI setup commands.",
+    "category": "Developer",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "github-copilot-prompt-builder": {
+    "name": "GitHub Copilot Prompt Builder",
+    "description": "Turn a coding task into a Copilot-ready comment prompt with context, examples and constraints in your language's comment syntax.",
+    "category": "Developer",
+    "icon": "message-square-code",
+    "iconColor": "text-(--primary)"
+  },
+  "github-issue-template-generator": {
+    "name": "GitHub Issue Template Generator",
+    "description": "Create GitHub issue form YAML for bug reports, feature requests and support questions with validated fields and labels.",
+    "category": "Generators",
+    "icon": "circle-dot",
+    "iconColor": "text-(--primary)"
+  },
   "github-profile-finder": {
     "name": "GitHub Profile Finder",
     "description": "Search and discover detailed statistics, repository listings, star counts, fork metrics, and language breakdowns for any GitHub user profile.",
@@ -6412,15 +9998,17 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-teal-500"
   },
+  "gitignore-generator-by-stack": {
+    "name": "Gitignore Generator by Stack",
+    "description": "Build a .gitignore by combining language, framework, IDE and OS templates with automatic de-duplication.",
+    "category": "Generators",
+    "icon": "file-x-2",
+    "iconColor": "text-(--primary)"
+  },
   "giveaway-winner-picker": {
     "name": "Giveaway Winner Picker",
-    "description": "Create giveaways, manage participant entries, detect duplicates, and reveal fair random winners with animated draw history.",
+    "description": "Paste giveaway entries, detect duplicates, and draw fair, reproducible winners with a published seed and draw history.",
     "category": "Marketing & Social",
-    "topics": [
-      "Creators",
-      "Marketing",
-      "Utility"
-    ],
     "icon": "gift",
     "iconColor": "text-fuchsia-600"
   },
@@ -6458,6 +10046,13 @@ export const toolMetaMap = {
     "icon": "regex",
     "iconColor": "text-emerald-600"
   },
+  "global-emergency-fund-calculator": {
+    "name": "Global Emergency Fund Calculator",
+    "description": "Size an emergency fund in your own currency from essential outgo, income stability, dependants and expected job-search time.",
+    "category": "Finance Calculators",
+    "icon": "life-buoy",
+    "iconColor": "text-(--primary)"
+  },
   "global-market-session-clock": {
     "name": "Global Market Session Clock",
     "description": "Major exchanges ka open/closed status aur countdown dikhaye.",
@@ -6468,6 +10063,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "glossary-prompt-builder": {
+    "name": "Glossary Prompt Builder",
+    "description": "Extract candidate terms from your docs and build a glossary prompt using ISO 704 definition rules.",
+    "category": "Business",
+    "icon": "book-a",
+    "iconColor": "text-(--primary)"
   },
   "gmail-template-builder": {
     "name": "Gmail Template Builder",
@@ -6483,6 +10085,20 @@ export const toolMetaMap = {
     ],
     "icon": "mail",
     "iconColor": "text-teal-500"
+  },
+  "go-mod-generator": {
+    "name": "Go Mod Generator",
+    "description": "Generate a valid go.mod with module path, go and toolchain directives, require, replace, exclude and retract blocks.",
+    "category": "Generators",
+    "icon": "file-code",
+    "iconColor": "text-(--primary)"
+  },
+  "goa-trip-budget-breakdown": {
+    "name": "Goa Trip Budget Breakdown",
+    "description": "Break a Goa trip into flights, stay, food, scooter transport and activities, per person and per day, with a contingency buffer.",
+    "category": "Finance Calculators",
+    "icon": "palmtree",
+    "iconColor": "text-(--primary)"
   },
   "goal-based-sip-calculator": {
     "name": "Goal Based SIP Calculator",
@@ -6520,11 +10136,8 @@ export const toolMetaMap = {
   },
   "golden-hour-time-estimator": {
     "name": "Golden Hour Time Estimator",
-    "description": "Calculate precise golden hour, sunrise, sunset, and blue hour windows with real-time countdowns, sun path animation, and camera planning alerts.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
-    ],
+    "description": "Calculate precise golden hour, blue hour, sunrise, sunset and twilight windows for any date and place, with the sun's path across the day.",
+    "category": "Image & Photo",
     "icon": "sun",
     "iconColor": "text-amber-500"
   },
@@ -6556,6 +10169,20 @@ export const toolMetaMap = {
     "icon": "megaphone",
     "iconColor": "text-green-500"
   },
+  "google-sheets-ai-prompt-builder": {
+    "name": "Google Sheets AI Prompt Builder",
+    "description": "Build Google Sheets AI prompts with correctly quoted A1 ranges, a real column map and the 10 million cell budget checked for you.",
+    "category": "Productivity",
+    "icon": "sheet",
+    "iconColor": "text-(--primary)"
+  },
+  "government-hra-calculator": {
+    "name": "House Rent Allowance for Government Staff",
+    "description": "7th Pay Commission HRA for central government employees by X, Y or Z city class, with the DA-linked rate and the section 10(13A) exemption.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "gpa-cgpa-calculator": {
     "name": "GPA / CGPA Calculator",
     "description": "A smart academic calculator for Semester GPA, Overall CGPA, and Percentage prediction.",
@@ -6576,6 +10203,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "gpt-api-cost-calculator": {
+    "name": "GPT API Cost Calculator",
+    "description": "Estimate monthly OpenAI GPT API spend from daily request volume, average token counts, cached-input share and batch discount.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
   },
   "gpx-home-zone-privacy-scrubber": {
     "name": "GPX Home-Zone Privacy Scrubber",
@@ -6632,6 +10266,13 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-green-600"
   },
+  "granite-countertop-calculator": {
+    "name": "Granite Countertop Calculator",
+    "description": "Work out granite square feet, running feet and cost for a kitchen platform with backsplash, cutouts and edge profiles.",
+    "category": "Calculators",
+    "icon": "gem",
+    "iconColor": "text-(--primary)"
+  },
   "gratuity-calculator": {
     "name": "Gratuity Calculator",
     "description": "Estimate your gratuity payout under the Payment of Gratuity Act, with rounding rules, eligibility, and tax-free limits.",
@@ -6650,6 +10291,13 @@ export const toolMetaMap = {
     "icon": "hand-coins",
     "iconColor": "text-(--primary)"
   },
+  "gravel-driveway-calculator": {
+    "name": "Gravel Driveway Calculator",
+    "description": "Compute gravel tonnes, cubic yards and truck loads for a driveway or parking pad, layer by layer, with compaction allowed for.",
+    "category": "Calculators",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
+  },
   "gravity-orbit-simulator": {
     "name": "Gravity Orbit Simulator",
     "description": "Interactive N-body orbital mechanics simulator with velocity vectors, orbital eccentricity, escape velocity, and collision mechanics.",
@@ -6659,6 +10307,13 @@ export const toolMetaMap = {
     ],
     "icon": "orbit",
     "iconColor": "text-teal-500"
+  },
+  "grep-command-builder": {
+    "name": "Grep Command Builder",
+    "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
   },
   "grocery-list-builder": {
     "name": "Smart Grocery List Builder",
@@ -6697,6 +10352,13 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-teal-600"
   },
+  "group-trip-tip-splitter": {
+    "name": "Group Trip Tip Splitter",
+    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers.",
+    "category": "Finance Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
   "group-veto-picker": {
     "name": "Group Veto Picker",
     "description": "Member vetoes se options progressively narrow kare.",
@@ -6706,6 +10368,20 @@ export const toolMetaMap = {
     ],
     "icon": "users-round",
     "iconColor": "text-primary"
+  },
+  "group-viva-preparation-planner": {
+    "name": "Group Viva Preparation Planner",
+    "description": "Plan group viva practice with a round-robin rotation so every member asks and answers the same number of questions.",
+    "category": "Productivity",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
+  "gsm-paper-weight-calculator": {
+    "name": "GSM Paper Weight Calculator",
+    "description": "Turn GSM into sheet weight, ream weight and parcel weight, convert US lb basis weights, and get stack height for a print run.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
   },
   "gst-calculator": {
     "name": "GST Calculator",
@@ -6721,11 +10397,102 @@ export const toolMetaMap = {
     "icon": "file-spreadsheet",
     "iconColor": "text-green-600"
   },
+  "gst-calculator-australia": {
+    "name": "GST Calculator Australia",
+    "description": "Add or remove Australia's 10% GST using the divide-by-11 rule, with a BAS summary and the $75,000 registration check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-calculator-education-services": {
+    "name": "GST Calculator for Educational Services",
+    "description": "Check whether a school, college, coaching or training service is GST exempt under Notification 12/2017 and calculate the 18% tax when it is not.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-calculator-new-zealand": {
+    "name": "GST Calculator New Zealand",
+    "description": "Add or remove New Zealand GST at 15%, using the 3/23 inclusive fraction, with the $60,000 registration threshold check.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-calculator-singapore": {
+    "name": "GST Calculator Singapore",
+    "description": "Add or reverse Singapore GST at the current 9% rate, with historical 8% and 7% rates and the S$1 million registration test.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-calculator-small-traders": {
+    "name": "GST Calculator for Small Traders",
+    "description": "Compare the GST registration threshold, composition scheme tax and regular scheme net liability for a small trading, manufacturing or restaurant business.",
+    "category": "Finance Calculators",
+    "icon": "store",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-composition-eligibility-checker": {
+    "name": "GST Composition Scheme Eligibility Checker",
+    "description": "Run your turnover, state and business activity against every condition in section 10 of the CGST Act to see if the composition scheme is open to you.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-composition-scheme-calculator": {
+    "name": "GST Composition Scheme Calculator",
+    "description": "Estimate GST composition levy for traders, manufacturers and restaurants from taxable turnover and selected rate.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-delivery-challan-generator": {
+    "name": "GST Delivery Challan Generator",
+    "description": "Draft a Rule 55 delivery challan for job work, branch transfers and goods moved without a supply, with GSTIN checks, tax split and e-way bill flag.",
+    "category": "Business",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
+  },
   "gst-input-tax-credit-calculator": {
     "name": "GST Input Tax Credit Calculator",
     "description": "Net GST payable in cash after setting off input tax credit across IGST, CGST and SGST under the Rule 88A utilisation order.",
     "category": "Finance Calculators",
     "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-invoice-series-generator": {
+    "name": "GST Invoice Series Generator",
+    "description": "Build a consecutive tax invoice numbering series for a financial year and check it against the 16-character limit in Rule 46(b).",
+    "category": "Generators",
+    "icon": "hash",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-late-fee-interest-calculator": {
+    "name": "GST Late Fee and Interest Calculator",
+    "description": "Late fee and section 50 interest on delayed GSTR-1, GSTR-3B and GSTR-9 filing, with the turnover-linked late fee caps applied.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-on-advance-checker": {
+    "name": "GST on Advance Received Checker",
+    "description": "Check whether an advance attracts GST, split the CGST, SGST or IGST, and see which voucher and return line it belongs in.",
+    "category": "Business",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-query-prompt-builder": {
+    "name": "GST Query Prompt Builder",
+    "description": "Frame GST questions for AI with citation and non-advisory guardrails, plus a live registration-threshold check and statutory due dates.",
+    "category": "Business",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "gst-return-due-date-calendar": {
+    "name": "GST Return Due Date Calendar",
+    "description": "Generate every GSTR-1, GSTR-3B, CMP-08, IFF and annual return due date for a financial year, for monthly, QRMP or composition filers.",
+    "category": "Productivity",
+    "icon": "calendar-days",
     "iconColor": "text-(--primary)"
   },
   "gst-reverse-calculator": {
@@ -6748,6 +10515,27 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
+  },
+  "gtu-cgpa-percentage-converter": {
+    "name": "Gujarat Technological CGPA Converter",
+    "description": "Convert GTU SPI, CPI and CGPA to percentage with selectable regulation, and build the index from AA to FF course grades.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "guest-room-checklist": {
+    "name": "Guest Room Checklist",
+    "description": "Generate a guest-ready room checklist with exact linen, towel, toiletry and water quantities for your guests and nights.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "guntha-to-sqft-converter": {
+    "name": "Guntha to Sqft Converter",
+    "description": "Convert guntha, acre, are and hectare to square feet and square metres, including 7/12 extract hectare-are-sqm entries.",
+    "category": "Converters",
+    "icon": "map",
+    "iconColor": "text-(--primary)"
   },
   "gzip-encryption": {
     "name": "Gzip Encryption & Decryption",
@@ -6811,6 +10599,20 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-teal-500"
   },
+  "hand-gesture-meaning-guide": {
+    "name": "Hand Gesture Meaning Warning Guide",
+    "description": "Check which everyday hand gestures change meaning or turn offensive across countries, with a safer alternative for each.",
+    "category": "Education & Science",
+    "icon": "hand",
+    "iconColor": "text-(--primary)"
+  },
+  "handyman-cost-estimator": {
+    "name": "Handyman Cost Estimator",
+    "description": "Price common electrical, plumbing, carpentry and painting jobs by billable hours, materials, visit charge, urgency and GST.",
+    "category": "Calculators",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
   "hangman": {
     "name": "Hangman Word Game",
     "description": "Guess the hidden word letter by letter in this free hangman game with categories and hints.",
@@ -6864,9 +10666,6 @@ export const toolMetaMap = {
     "name": "Hashtag Set Organizer",
     "description": "Futuristic social media hashtag planner & marketing dashboard.",
     "category": "Marketing & Social",
-    "topics": [
-      "Marketing"
-    ],
     "icon": "hash",
     "iconColor": "text-blue-500"
   },
@@ -6880,6 +10679,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "headphone-listening-break-timer": {
+    "name": "Headphone Listening Break Timer",
+    "description": "Alternating listen and rest timer for long headphone sessions, with a break schedule and how much of the daily sound allowance you use.",
+    "category": "Health & Fitness",
+    "icon": "headphones",
+    "iconColor": "text-(--primary)"
   },
   "health-insurance-cover-calculator": {
     "name": "Health Insurance Cover Calculator",
@@ -6939,6 +10745,13 @@ export const toolMetaMap = {
     "icon": "thermometer-sun",
     "iconColor": "text-primary"
   },
+  "hedge-spacing-calculator": {
+    "name": "Hedge Spacing Calculator",
+    "description": "Work out how many hedging plants a run needs from its length, the species spacing and single or double staggered rows.",
+    "category": "Calculators",
+    "icon": "fence",
+    "iconColor": "text-(--primary)"
+  },
   "heic-to-jpg": {
     "name": "HEIC to JPG Converter",
     "description": "Convert Apple HEIC/HEIF images into standard JPG or PNG files locally in your web browser. Supports batch conversions, custom image quality, and ZIP exports.",
@@ -6950,15 +10763,33 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-teal-500"
   },
+  "helmet-size-finder": {
+    "name": "Helmet Size Finder",
+    "description": "Find your helmet size from head circumference, flag borderline fits and identify your head shape from the cephalic index.",
+    "category": "Lifestyle",
+    "icon": "hard-hat",
+    "iconColor": "text-(--primary)"
+  },
+  "herb-garden-spacing-planner": {
+    "name": "Herb Garden Spacing Planner",
+    "description": "Plan a kitchen herb bed: spacing between plants, how many fit, pot depth, sun hours and which herbs to keep apart.",
+    "category": "Lifestyle",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "hero-bike-service-schedule-planner": {
+    "name": "Hero Bike Service Schedule Planner",
+    "description": "Plan Hero motorcycle free and paid service intervals by kilometres and months, with parts and labour cost estimates.",
+    "category": "Productivity",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
   "hex-to-base64": {
     "name": "Hex to Base64",
     "description": "Convert hexadecimal strings into Base64 and back.",
     "category": [
       "Developer",
       "Converters"
-    ],
-    "topics": [
-      "Converter"
     ],
     "icon": "hash",
     "iconColor": "text-sky-600"
@@ -7023,6 +10854,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "high-protein-macro-calculator": {
+    "name": "High-Protein Macro Calculator",
+    "description": "High-protein macro split for holding on to muscle in a calorie deficit, with a fat floor and per-meal protein spread.",
+    "category": "Health & Fitness",
+    "icon": "dumbbell",
+    "iconColor": "text-(--primary)"
+  },
+  "highway-vs-city-mileage-estimator": {
+    "name": "Highway vs City Mileage Estimator",
+    "description": "Blend city and highway km/l into a true combined mileage using the harmonic fuel-weighted formula, plus monthly litres and cost.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "hiit-timer": {
     "name": "HIIT & Tabata Timer",
     "description": "Interval timer for HIIT, Tabata, EMOM, and boxing rounds with audio cues, sets, and drift-free timing.",
@@ -7046,19 +10891,23 @@ export const toolMetaMap = {
   },
   "hinglish-coding-tool": {
     "name": "Hinglish Coding Dictionary",
-    "description": "Learn coding concepts translated playfully into everyday Hinglish.",
+    "description": "Learn 40 core coding concepts explained three ways: precise English, everyday Hinglish, and an analogy — with a quiz.",
     "category": "Developer",
-    "topics": [
-      "Development"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "code-xml",
+    "iconColor": "text-emerald-600"
   },
   "home-affordability-calculator": {
     "name": "Home Affordability Calculator",
     "description": "Find the maximum property price you can afford from your income, EMI capacity, down payment, LTV cap and registration costs.",
     "category": "Finance Calculators",
     "icon": "home",
+    "iconColor": "text-(--primary)"
+  },
+  "home-air-filter-reminder": {
+    "name": "Home Air Filter Reminder",
+    "description": "Work out when each air purifier or AC filter is actually due, date the next change, and add up the yearly filter and electricity cost.",
+    "category": "Productivity",
+    "icon": "fan",
     "iconColor": "text-(--primary)"
   },
   "home-battery-tou-simulator": {
@@ -7073,6 +10922,13 @@ export const toolMetaMap = {
     ],
     "icon": "battery-charging",
     "iconColor": "text-primary"
+  },
+  "home-fire-safety-checklist": {
+    "name": "Home Fire Safety Checklist",
+    "description": "Audit your home against fire-safety practice — alarms, escape routes, cooking, heating, electrical and LPG — and size the equipment you need.",
+    "category": "Education & Science",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
   },
   "home-heat-loss-retrofit-estimator": {
     "name": "Home Heat-Loss & Retrofit Estimator",
@@ -7097,6 +10953,13 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "home-loan-eligibility-calculator": {
+    "name": "Home Loan Eligibility Calculator",
+    "description": "Estimate home loan eligibility from income, existing EMIs, tenure and age using FOIR limits and RBI loan-to-value ceilings.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
   },
   "home-loan-prepayment-calculator": {
     "name": "Home Loan Prepayment Calculator",
@@ -7125,12 +10988,75 @@ export const toolMetaMap = {
     "icon": "calendar-check",
     "iconColor": "text-emerald-600"
   },
+  "home-office-desk-setup-calculator": {
+    "name": "Home Office Desk Setup Calculator",
+    "description": "Get ergonomic seat, desk, standing-desk and monitor heights for your body height, plus footrest and riser needs.",
+    "category": "Health & Fitness",
+    "icon": "monitor",
+    "iconColor": "text-(--primary)"
+  },
+  "home-recycling-impact-calculator": {
+    "name": "Home Recycling Impact Calculator",
+    "description": "Turn what your household recycles each week into energy saved, water saved, CO2 avoided and waste kept out of landfill.",
+    "category": "Calculators",
+    "icon": "recycle",
+    "iconColor": "text-(--primary)"
+  },
+  "home-renovation-budget-planner": {
+    "name": "Home Renovation Budget Planner",
+    "description": "Build a room-by-room renovation budget with a quality tier, professional fees, GST on works contracts and a contingency buffer.",
+    "category": "Finance Calculators",
+    "icon": "hammer",
+    "iconColor": "text-(--primary)"
+  },
+  "home-state-quota-explainer": {
+    "name": "Home State Quota Explainer",
+    "description": "See whether you get Home State, Other State or All India quota at NITs, IITs, NEET UG and state CET counselling.",
+    "category": "Education & Science",
+    "icon": "map-pin",
+    "iconColor": "text-(--primary)"
+  },
+  "homework-help-guardrail-prompt": {
+    "name": "Homework Help Guardrail Prompt",
+    "description": "Generate an AI helper prompt that coaches a student through homework without writing the submittable answer for them.",
+    "category": "Education & Science",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
+  "honda-bike-service-schedule-planner": {
+    "name": "Honda Bike Service Schedule Planner",
+    "description": "Track Honda two-wheeler free and paid service milestones with the consumable replacements due at each visit.",
+    "category": "Productivity",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "hook-retention-timing-planner": {
+    "name": "Hook Retention Timing Planner",
+    "description": "Turn a short video length into a frame-accurate hook beat sheet built around each platform's view, skip and completion thresholds.",
+    "category": "Marketing & Social",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
   "horoscope-reader": {
     "name": "Horoscope Reader",
     "description": "Read daily horoscope insights tailored to your zodiac sign.",
     "category": "Lifestyle",
     "icon": "star",
     "iconColor": "text-orange-700"
+  },
+  "hostel-vs-pg-cost-comparator": {
+    "name": "Hostel Vs PG Cost Comparator",
+    "description": "Compare the true monthly cost of a hostel against a PG — rent, food, utilities, travel and one-time charges over your stay.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "hot-yoga-hydration-calculator": {
+    "name": "Hot Yoga Hydration Calculator",
+    "description": "Before, during and after fluid plan for heated yoga, from a measured weigh-in sweat rate or your room temperature and class style.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
   },
   "hourly-to-salary-calculator": {
     "name": "Hourly to Salary Calculator",
@@ -7142,12 +11068,33 @@ export const toolMetaMap = {
     "icon": "banknote",
     "iconColor": "text-emerald-600"
   },
+  "house-cleaning-cost-estimator": {
+    "name": "House Cleaning Cost Estimator",
+    "description": "Estimate what a professional house cleaning should cost by carpet area, service type, city tier, add-ons and 18% GST.",
+    "category": "Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "household-budget-planner-india": {
+    "name": "Household Budget Planner India",
+    "description": "Plan a rupee household budget across rent, EMI, groceries and savings, with 50/30/20 and FOIR ratio checks.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
   "household-electricity-bill": {
     "name": "Household Electricity Bill",
     "description": "Calculate your household electricity bill",
     "category": "Lifestyle",
     "icon": "plug",
     "iconColor": "text-blue-600"
+  },
+  "household-money-split-tool": {
+    "name": "Two Income Household Money Split Tool",
+    "description": "Compare equal, income-proportional and equal-leftover ways for a two-income couple to share household expenses fairly.",
+    "category": "Finance Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "how-lucky-are-you": {
     "name": "How Lucky Are You? Fortune Quiz",
@@ -7158,6 +11105,27 @@ export const toolMetaMap = {
     ],
     "icon": "clover",
     "iconColor": "text-green-600"
+  },
+  "hp-to-kw-converter": {
+    "name": "HP to kW Converter",
+    "description": "Convert horsepower, brake horsepower, metric PS, kilowatts and BTU/h, with drivetrain loss and power-to-weight.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "hpv-vaccine-schedule-planner": {
+    "name": "HPV Vaccine Schedule Planner",
+    "description": "Work out whether an HPV series needs two or three doses from the age at dose one, with recommended dates and minimum intervals.",
+    "category": "Health & Fitness",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
+  "hr-prompt-pack": {
+    "name": "HR Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for job posts, structured interviews, onboarding plans, policies and performance reviews.",
+    "category": "Business",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "hra-exemption-calculator": {
     "name": "HRA Exemption Calculator",
@@ -7187,6 +11155,13 @@ export const toolMetaMap = {
     "icon": "heart-pulse",
     "iconColor": "text-primary"
   },
+  "hsa-contribution-calculator": {
+    "name": "HSA Contribution and Tax Saving Calculator",
+    "description": "IRS HSA contribution limits with age 55 catch-up, month-by-month proration and the triple tax benefit estimate.",
+    "category": "Finance Calculators",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
+  },
   "hsn-code-gst-rate-finder": {
     "name": "HSN Code GST Rate Finder",
     "description": "Search HSN and SAC codes for common goods and services, see the GST slab and split any amount into CGST, SGST or IGST.",
@@ -7198,21 +11173,15 @@ export const toolMetaMap = {
     "name": "HTAccess to NGINX",
     "description": "Convert common Apache rewrite rules into starter NGINX rewrites.",
     "category": "Developer",
-    "topics": [
-      "Web"
-    ],
     "icon": "server",
-    "iconColor": "text-gray-700"
+    "iconColor": "text-(--primary)"
   },
   "html-editor": {
     "name": "HTML Editor",
     "description": "Format, minify, escape, and unescape HTML fragments.",
     "category": "Developer",
-    "topics": [
-      "Web"
-    ],
     "icon": "file-code",
-    "iconColor": "text-red-600"
+    "iconColor": "text-(--primary)"
   },
   "html-email-checker": {
     "name": "HTML Email Checker",
@@ -7309,6 +11278,13 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-violet-600"
   },
+  "http-header-reference-explorer": {
+    "name": "HTTP Header Reference Explorer",
+    "description": "Search HTTP request and response headers with meaning, direction, category and real example values.",
+    "category": "Developer",
+    "icon": "file-search",
+    "iconColor": "text-(--primary)"
+  },
   "http-status-code-explainer": {
     "name": "HTTP Status Code Explainer",
     "description": "Understand HTTP status codes with simple, clear explanations instantly.",
@@ -7350,6 +11326,20 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-(--primary)"
   },
+  "husky-config-generator": {
+    "name": "Husky Config Generator",
+    "description": "Generate a Husky v9 + lint-staged setup: exact install commands, hook files and package.json config for npm, pnpm, yarn or bun.",
+    "category": "Generators",
+    "icon": "git-commit-horizontal",
+    "iconColor": "text-(--primary)"
+  },
+  "hyderabad-airport-transfer-time-planner": {
+    "name": "Hyderabad Airport Transfer Time Planner",
+    "description": "Work out when to leave for Hyderabad RGIA, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
   "icon-maker": {
     "name": "Icon Maker Tool",
     "description": "Create, preview, copy, and export production-ready app icons, favicons, launcher assets, and PWA icons in the browser.",
@@ -7359,6 +11349,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-blue-500"
+  },
+  "icse-percentage-calculator": {
+    "name": "ICSE Percentage Calculator",
+    "description": "Compute ICSE and ISC percentage the CISCE way — English plus best 4 (ICSE) or best 3 (ISC) other subjects, with pass checks.",
+    "category": "Calculators",
+    "icon": "book-marked",
+    "iconColor": "text-(--primary)"
   },
   "ideal-body-weight-calculator": {
     "name": "Ideal Body Weight Calculator",
@@ -7416,6 +11413,125 @@ export const toolMetaMap = {
     "icon": "book-open-text",
     "iconColor": "text-violet-600"
   },
+  "idling-fuel-waste-calculator": {
+    "name": "Idling Fuel Waste Calculator",
+    "description": "Work out the fuel, money and CO2 wasted idling at signals and in traffic, and how much switching off would save.",
+    "category": "Calculators",
+    "icon": "timer-off",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-australia": {
+    "name": "IDP Requirement Checker for Australia",
+    "description": "See whether Australia expects an international driving permit or English translation with your licence, and how long each state gives a new resident.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-canada": {
+    "name": "IDP Requirement Checker for Canada",
+    "description": "See whether an international driving permit is expected with your licence in Canada, and how many days each province gives before you must switch.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-france": {
+    "name": "IDP Requirement Checker for France",
+    "description": "Check whether France needs an International Driving Permit with your licence, and when the one-year resident limit starts.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-germany": {
+    "name": "IDP Requirement Checker for Germany",
+    "description": "Check whether Germany expects an International Driving Permit with your licence, and how long that licence keeps working.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-italy": {
+    "name": "IDP Requirement Checker for Italy",
+    "description": "See whether Italy expects an international driving permit alongside your licence, and how long that licence keeps working once you live there.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-japan": {
+    "name": "IDP Requirement Checker for Japan",
+    "description": "See whether Japan accepts your international driving permit, which permits it refuses, and when the one-year window from your entry date closes.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-new-zealand": {
+    "name": "IDP Requirement Checker for New Zealand",
+    "description": "See whether New Zealand expects an international driving permit or English translation with your licence, and when the 12-month visitor window ends.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-uae": {
+    "name": "IDP Requirement Checker for UAE",
+    "description": "See whether the UAE expects an international driving permit with your licence as a tourist, and why a residence visa ends that arrangement entirely.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-uk": {
+    "name": "IDP Requirement Checker for UK",
+    "description": "See whether the UK expects an international driving permit with your licence, and how the 12-month visitor and resident windows actually work.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idp-requirement-checker-usa": {
+    "name": "IDP Requirement Checker for USA",
+    "description": "See whether an international driving permit is expected with your licence in the USA, state by state, and when you must switch to a state licence.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "idr-cash-budget-planner": {
+    "name": "IDR Cash Budget Planner",
+    "description": "Plan how much Indonesian rupiah to carry as notes versus card spend, costing the changer markup, GST, TCS and per-withdrawal ATM fees.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
+  "iec-requirement-checker": {
+    "name": "Import Export Code Requirement Checker",
+    "description": "Check whether your import, export or service activity needs an IEC from DGFT, using the Foreign Trade Policy exemption list.",
+    "category": "Business",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
+  },
+  "ielts-band-score-calculator": {
+    "name": "IELTS Band Score Calculator",
+    "description": "Convert IELTS Listening and Reading raw scores to bands and compute the Overall Band Score with the official rounding rules.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "ielts-speaking-practice-timer": {
+    "name": "IELTS Speaking Practice Timer",
+    "description": "Time IELTS Speaking Parts 1-3 to the real format - 1 minute cue card prep, 2 minute long turn - with practice cue cards included.",
+    "category": "Productivity",
+    "icon": "mic",
+    "iconColor": "text-(--primary)"
+  },
+  "ielts-writing-task-word-counter": {
+    "name": "IELTS Writing Task Word Counter",
+    "description": "Count words against the IELTS Task 1 (150) and Task 2 (250) minimums with paragraph and sentence structure analysis.",
+    "category": "Text & Writing",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "ifsc-code-format-validator": {
+    "name": "IFSC Code Format Validator",
+    "description": "Validate the 11-character IFSC structure offline, with per-character diagnostics, auto-fix suggestions and batch checking.",
+    "category": "Developer",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
   "ifsc-decoder-validator": {
     "name": "IFSC Decoder & Validator",
     "description": "IFSC format validate karke bank, branch aur location lookup kare.",
@@ -7429,6 +11545,13 @@ export const toolMetaMap = {
     ],
     "icon": "landmark",
     "iconColor": "text-primary"
+  },
+  "illegal-entry-objection-letter": {
+    "name": "Illegal Entry Objection Letter",
+    "description": "Log landlord entries, test each against the 24-hour notice and 7 am to 8 pm rules, and draft a dated objection letter.",
+    "category": "Business",
+    "icon": "shield-alert",
+    "iconColor": "text-(--primary)"
   },
   "image-collage-maker": {
     "name": "Image Collage Maker",
@@ -7492,6 +11615,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "image-file-size-budget-calculator": {
+    "name": "Image File Size Budget Calculator",
+    "description": "Set a page weight budget, subtract code and fonts, and see how many images of a given size and format still fit.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "image-flip-rotate-tool": {
     "name": "Image Flip & Rotate Tool",
     "description": "Flip, mirror, rotate, straighten, preview, and export images in browser with batch ZIP downloads.",
@@ -7503,6 +11633,13 @@ export const toolMetaMap = {
     ],
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
+  },
+  "image-generation-credit-planner": {
+    "name": "Image Generation Credit Planner",
+    "description": "Plan how many images a credit pack yields, how long it lasts at your volume, and the real cost per image.",
+    "category": "Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
   },
   "image-metadata-viewer": {
     "name": "Image Metadata Viewer",
@@ -7524,12 +11661,9 @@ export const toolMetaMap = {
   "image-noise-grain-adder": {
     "name": "Image Noise & Grain Adder",
     "description": "Add realistic film grain, vintage noise, and cinematic textures to your photos.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
-    ],
-    "icon": "image",
-    "iconColor": "text-blue-500"
+    "category": "Image & Photo",
+    "icon": "image-plus",
+    "iconColor": "text-(--primary)"
   },
   "image-quality-checker": {
     "name": "Image Quality Checker",
@@ -7614,17 +11748,16 @@ export const toolMetaMap = {
   "impossible-object-builder": {
     "name": "Impossible Object Builder",
     "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
-    "category": [
-      "Design & Color",
-      "Fun"
-    ],
-    "topics": [
-      "Design",
-      "3D",
-      "Optical Illusions"
-    ],
-    "icon": "layers",
-    "iconColor": "text-blue-500"
+    "category": "Design & Color",
+    "icon": "boxes",
+    "iconColor": "text-(--primary)"
+  },
+  "improvement-needed-calculator": {
+    "name": "Improvement Needed Calculator",
+    "description": "Compute exactly how many more marks you need in remaining exams to reach a target overall percentage, and whether it is still possible.",
+    "category": "Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
   },
   "inattentional-blindness": {
     "name": "Inattentional Blindness Test",
@@ -7638,6 +11771,27 @@ export const toolMetaMap = {
     ],
     "icon": "scan-face",
     "iconColor": "text-purple-600"
+  },
+  "inches-centimetres-bag-converter": {
+    "name": "Inches to Centimetres Bag Converter",
+    "description": "Convert bag dimensions between inches and centimetres and check them against a cabin or checked baggage allowance.",
+    "category": "Converters",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "incident-severity-matrix-builder": {
+    "name": "Incident Severity Matrix Builder",
+    "description": "Define SEV levels with impact, response targets and escalation paths, and export a ready-to-publish Markdown severity matrix.",
+    "category": "Business",
+    "icon": "siren",
+    "iconColor": "text-(--primary)"
+  },
+  "income-certificate-calculator": {
+    "name": "Income Certificate Income Calculator",
+    "description": "Aggregate family income the way EWS, OBC non-creamy-layer and state income certificate applications actually require, with the asset tests.",
+    "category": "Business",
+    "icon": "file-badge",
+    "iconColor": "text-(--primary)"
   },
   "income-tax-calculator": {
     "name": "Income Tax Calculator",
@@ -7653,11 +11807,32 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-indigo-600"
   },
+  "income-tax-notice-explainer": {
+    "name": "Income Tax Notice Type Explainer",
+    "description": "Understand what an income tax notice under section 139(9), 143(1), 143(2), 148 or 245 means, how long you have to reply and what to do next.",
+    "category": "Education & Science",
+    "icon": "file-warning",
+    "iconColor": "text-(--primary)"
+  },
   "income-tax-slab-visualizer": {
     "name": "Income Tax Slab Visualizer",
     "description": "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess.",
     "category": "Finance Calculators",
     "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "india-hosting-cost-comparison": {
+    "name": "India Hosting Cost Comparison",
+    "description": "Compare VPS, cloud and managed hosting for one workload in rupees, with 730-hour billing, egress charges, GST and 3-year TCO.",
+    "category": "Calculators",
+    "icon": "server",
+    "iconColor": "text-(--primary)"
+  },
+  "india-payment-gateway-fee-comparison": {
+    "name": "India Payment Gateway Fee Comparison",
+    "description": "Compare Indian payment gateway charges for your own payment mix, including 18% GST, zero-MDR UPI and RuPay, and net settlement.",
+    "category": "Finance Calculators",
+    "icon": "indian-rupee",
     "iconColor": "text-(--primary)"
   },
   "indian-holiday-finder": {
@@ -7675,6 +11850,13 @@ export const toolMetaMap = {
     "icon": "calendar-range",
     "iconColor": "text-blue-600"
   },
+  "indian-marks-to-uk-degree-class-converter": {
+    "name": "Indian Marks To UK Class",
+    "description": "Convert an Indian degree percentage into the UK First, 2:1, 2:2 and Third class equivalents UK universities use for admissions.",
+    "category": "Calculators",
+    "icon": "award",
+    "iconColor": "text-(--primary)"
+  },
   "indian-mobile-number-validator": {
     "name": "Indian Mobile Number Validator",
     "description": "Country code aur numbering-series sanity checks kare.",
@@ -7688,6 +11870,55 @@ export const toolMetaMap = {
     "icon": "smartphone",
     "iconColor": "text-primary"
   },
+  "indian-number-format-converter": {
+    "name": "Indian Number Format Converter",
+    "description": "Convert between lakh-crore and million-billion notation, with Indian 2-2-3 and international 3-3-3 digit grouping.",
+    "category": "Converters",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "indian-percentage-to-us-gpa-converter": {
+    "name": "Indian Percentage To US GPA",
+    "description": "Convert an Indian percentage or 10-point CGPA to the US 4.0 GPA scale using the division-based method and a linear estimate.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "indian-print-paper-size-guide": {
+    "name": "Indian Print Paper Size Guide",
+    "description": "Look up A-series, legal, foolscap, SRA and Indian trade sheet sizes in mm, inches, points and pixels, with an ups-per-sheet check.",
+    "category": "Design & Color",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "indian-resume-prompt-builder": {
+    "name": "Indian Resume Prompt Builder",
+    "description": "Build AI resume prompts tuned to Indian recruiter and ATS expectations, with page, bullet and keyword-match budgets computed.",
+    "category": "Business",
+    "icon": "file-user",
+    "iconColor": "text-(--primary)"
+  },
+  "indian-startup-pitch-prompt-builder": {
+    "name": "Indian Startup Pitch Prompt Builder",
+    "description": "Draft pitch deck and investor update prompts for Indian founders, with runway, post-money valuation and slide-by-slide timing worked out.",
+    "category": "Business",
+    "icon": "presentation",
+    "iconColor": "text-(--primary)"
+  },
+  "indigo-baggage-allowance-checker": {
+    "name": "IndiGo Baggage Allowance Checker",
+    "description": "Check cabin and check-in bag weight and size against IndiGo's published allowance and estimate excess baggage charges.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "indigo-excess-baggage-cost-estimator": {
+    "name": "IndiGo Excess Baggage Cost Estimator",
+    "description": "Compare IndiGo airport excess baggage charges against prepaid baggage slabs and see which option costs less.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
   "indirect-prompt-injection-scanner": {
     "name": "Indirect Prompt Injection Scanner",
     "description": "Scan pasted HTML, Markdown, CSV, or text locally for hidden instructions, role markers, data-exfiltration requests, and prompt-injection signals.",
@@ -7699,6 +11930,20 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "indonesia-dress-code-planner": {
+    "name": "Indonesia Dress Code Planner for Travellers",
+    "description": "Plan Indonesia outfits by month: Balinese sarong and sash rules, mosque cover-up, Aceh's dress law, volcano layers and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "induction-vs-lpg-cost-calculator": {
+    "name": "Induction vs LPG Cost Calculator",
+    "description": "Compare cooking cost on an induction hob against an LPG cylinder per month, with the break-even electricity tariff.",
+    "category": "Calculators",
+    "icon": "cooking-pot",
+    "iconColor": "text-(--primary)"
   },
   "inflation-adjusted-return-calculator": {
     "name": "Inflation Adjusted Return Calculator",
@@ -7732,6 +11977,13 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-rose-600"
   },
+  "inflation-time-machine-india": {
+    "name": "Inflation Time Machine India",
+    "description": "Convert a rupee amount between any two years using India's official CPI inflation series, with the purchasing power lost in between.",
+    "category": "Education & Science",
+    "icon": "history",
+    "iconColor": "text-(--primary)"
+  },
   "influencer-media-kit-builder": {
     "name": "Influencer Media Kit Builder",
     "description": "Creator metrics se professional media-kit PDF banaye.",
@@ -7747,11 +11999,85 @@ export const toolMetaMap = {
     "name": "Ingredient Substitute Finder",
     "description": "Find instant ingredient replacements with precise ratios and dietary filters.",
     "category": "Lifestyle",
-    "topics": [
-      "Kitchen Tools"
-    ],
     "icon": "chef-hat",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-(--primary)"
+  },
+  "ini-to-yaml-converter": {
+    "name": "INI to YAML Converter",
+    "description": "Convert INI configuration files to structured YAML with dotted sections nested and value types inferred.",
+    "category": "Converters",
+    "icon": "list-tree",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-aed-mental-math-cheat-sheet": {
+    "name": "INR to AED Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn a dirham price into rupees in your head, plus UAE hotel service, municipality fee and VAT.",
+    "category": "Finance Calculators",
+    "icon": "banknote",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-cad-mental-math-cheat-sheet": {
+    "name": "INR to CAD Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn Canadian dollar prices into rupees in your head, with the error percentage of each rule.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-chf-mental-math-cheat-sheet": {
+    "name": "INR to CHF Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn Swiss franc prices into rupees in your head, with the error percentage of each rule.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-gbp-mental-math-cheat-sheet": {
+    "name": "INR to GBP Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn a pound price into rupees in your head, plus VAT and restaurant service charges.",
+    "category": "Finance Calculators",
+    "icon": "pound-sterling",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-jpy-mental-math-cheat-sheet": {
+    "name": "INR to JPY Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn a yen price into rupees in your head, plus Japan's 10% and reduced 8% consumption tax.",
+    "category": "Finance Calculators",
+    "icon": "japanese-yen",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-myr-mental-math-cheat-sheet": {
+    "name": "INR to MYR Mental Math Cheat Sheet",
+    "description": "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder.",
+    "category": "Finance Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-npr-mental-math-cheat-sheet": {
+    "name": "INR to NPR Mental Math Cheat Sheet",
+    "description": "Mental shortcuts for the fixed NPR–INR peg of 1.60, including the exact five-eighths rule and its easier approximations.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-sgd-mental-math-cheat-sheet": {
+    "name": "INR to SGD Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn a Singapore dollar price into rupees in your head, plus the 10% service charge and GST.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-usd-mental-math-cheat-sheet": {
+    "name": "INR to USD Mental Math Cheat Sheet",
+    "description": "Rounding shortcuts that turn a dollar price into rupees in your head, plus sales tax and tipping, from today's rate.",
+    "category": "Finance Calculators",
+    "icon": "circle-dollar-sign",
+    "iconColor": "text-(--primary)"
+  },
+  "inr-vnd-mental-math-cheat-sheet": {
+    "name": "INR to VND Mental Math Cheat Sheet",
+    "description": "Zero-dropping shortcuts that turn Vietnamese dong prices into rupees in your head, with the error percentage of each rule.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
   },
   "insect-tracker": {
     "name": "Insect Tracker",
@@ -7780,6 +12106,13 @@ export const toolMetaMap = {
     "icon": "instagram",
     "iconColor": "text-pink-500"
   },
+  "insurance-claim-document-checklist": {
+    "name": "Claim Settlement Document Checklist",
+    "description": "Build the exact document list for a health, motor or life insurance claim and see the IRDAI settlement deadline for your case.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
   "insurance-policy-comparator": {
     "name": "Insurance Policy Comparator",
     "description": "Coverage, exclusions, waiting periods aur limits compare kare.",
@@ -7793,6 +12126,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary"
   },
+  "interior-design-prompt-generator": {
+    "name": "Interior Design Prompt Generator",
+    "description": "Turn a room, style and budget feel into an AI image prompt, with lighting lumens and rug size computed from your room dimensions.",
+    "category": "Lifestyle",
+    "icon": "sofa",
+    "iconColor": "text-(--primary)"
+  },
   "intermittent-fasting-timer": {
     "name": "Intermittent Fasting Timer",
     "description": "Track your fasting window live, see the metabolic phase you are in, and log every fast with streaks.",
@@ -7805,6 +12145,20 @@ export const toolMetaMap = {
     ],
     "icon": "timer",
     "iconColor": "text-teal-600"
+  },
+  "internal-marks-calculator": {
+    "name": "Internal Marks Calculator",
+    "description": "Compute your internal assessment marks from tests, assignments and attendance using your university's component weightings.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "international-call-cost-calculator": {
+    "name": "International Call Cost Calculator",
+    "description": "Compare roaming per-minute, local SIM, VoIP-over-data and calling-pack pricing for calls home during a trip.",
+    "category": "Productivity",
+    "icon": "phone-call",
+    "iconColor": "text-(--primary)"
   },
   "internet-speed-test": {
     "name": "Internet Speed Test",
@@ -7831,12 +12185,61 @@ export const toolMetaMap = {
     "icon": "music",
     "iconColor": "text-blue-600"
   },
+  "interview-day-document-checklist": {
+    "name": "Interview Day Document Checklist",
+    "description": "Build the originals-and-photocopies list for an exam interview, then price the sets: pages per set, total copies, signatures and photocopy cost.",
+    "category": "Productivity",
+    "icon": "file-check",
+    "iconColor": "text-(--primary)"
+  },
+  "interview-prep-prompt-builder": {
+    "name": "Interview Prep Prompt Builder",
+    "description": "Build mock-interview prompts by role, round and level, with a question count worked out from the real length of the slot.",
+    "category": "Business",
+    "icon": "briefcase-business",
+    "iconColor": "text-(--primary)"
+  },
   "interview-question": {
     "name": "Interview Question",
     "description": "Find interview question for you interview preparation",
     "category": "Other",
     "icon": "book",
     "iconColor": "text-blue-500"
+  },
+  "interview-weightage-calculator": {
+    "name": "Interview Weightage Calculator",
+    "description": "Combine written and interview marks under the official weightage of UPSC, IBPS or SBI and see exactly how much the interview can move your merit.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
+  "intro-music-level-calculator": {
+    "name": "Intro Music Level Calculator",
+    "description": "Work out how many decibels to duck an intro music bed under a voiceover, and what the mixed level lands at.",
+    "category": "Calculators",
+    "icon": "sliders-horizontal",
+    "iconColor": "text-(--primary)"
+  },
+  "inverter-ac-electricity-cost-calculator": {
+    "name": "Inverter AC Electricity Cost Calculator",
+    "description": "Estimate monthly and yearly inverter AC electricity cost from tonnage, ISEER, hours of use, thermostat setpoint and your tariff.",
+    "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
+  "inverter-ac-payback-calculator": {
+    "name": "Inverter AC Payback Calculator",
+    "description": "Work out how many years an inverter AC takes to repay its price premium over a fixed-speed unit, using ISEER and your tariff.",
+    "category": "Finance Calculators",
+    "icon": "air-vent",
+    "iconColor": "text-(--primary)"
+  },
+  "inverter-backup-time-calculator": {
+    "name": "Inverter Backup Time Calculator",
+    "description": "Estimate home inverter backup hours from battery Ah, bank voltage, connected load and inverter efficiency, with Peukert correction.",
+    "category": "Calculators",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
   },
   "inverter-battery-calculator": {
     "name": "Inverter & Battery Backup Calculator",
@@ -7909,6 +12312,13 @@ export const toolMetaMap = {
     "icon": "file-spreadsheet",
     "iconColor": "text-sky-600"
   },
+  "invoice-late-fee-calculator": {
+    "name": "Invoice Late Fee Calculator",
+    "description": "Work out interest and late fees on an overdue invoice using your agreed terms, day-count basis, grace period and statutory compensation.",
+    "category": "Finance Calculators",
+    "icon": "alarm-clock",
+    "iconColor": "text-(--primary)"
+  },
   "invoice-number-generator": {
     "name": "Invoice Number Generator",
     "description": "Generate sequential or date-based invoice numbering schemes in bulk, with prefixes, padding and period resets.",
@@ -7952,9 +12362,9 @@ export const toolMetaMap = {
   "ip-finder": {
     "name": "IP Address Finder",
     "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
-    "category": "Developer",
-    "topics": [
-      "Web"
+    "category": [
+      "Developer",
+      "Security & Privacy"
     ],
     "icon": "globe",
     "iconColor": "text-primary"
@@ -7969,6 +12379,13 @@ export const toolMetaMap = {
     "icon": "globe",
     "iconColor": "text-blue-600"
   },
+  "ip-range-overlap-checker": {
+    "name": "IP Range Overlap Checker",
+    "description": "Check whether CIDR blocks or IP ranges overlap before VPC peering, VPN setup or merging networks.",
+    "category": "Developer",
+    "icon": "git-compare-arrows",
+    "iconColor": "text-(--primary)"
+  },
   "ipa-to-text": {
     "name": "IPA to Text Helper",
     "description": "Paste IPA notation and get the most likely English word(s), with multiple candidate suggestions and validation for malformed input.",
@@ -7982,6 +12399,27 @@ export const toolMetaMap = {
     ],
     "icon": "audio-lines",
     "iconColor": "text-cyan-600"
+  },
+  "ipu-attendance-calculator": {
+    "name": "IPU Attendance Calculator",
+    "description": "Subject-wise GGSIPU attendance percentage, detention risk against the 75% rule, and how many classes you must still attend.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ipu-cgpa-percentage-converter": {
+    "name": "IPU CGPA Percentage Converter",
+    "description": "Convert GGSIPU CGPA to an equivalent percentage with the official (CGPA − 0.75) × 10 formula, in both directions.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "ipu-sgpa-calculator": {
+    "name": "IPU SGPA Calculator",
+    "description": "Compute GGSIPU semester GPA from credit-weighted grade points, roll it into CGPA and see each subject's impact.",
+    "category": "Calculators",
+    "icon": "award",
+    "iconColor": "text-(--primary)"
   },
   "ipv6-expander": {
     "name": "IPv6 Expander",
@@ -8044,6 +12482,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "istanbul-trip-budget-breakdown": {
+    "name": "Istanbul Trip Budget Breakdown",
+    "description": "Break an Istanbul trip into flights, stay, food, Istanbulkart rides and sights in lira and rupees, with lira inflation drift.",
+    "category": "Finance Calculators",
+    "icon": "moon-star",
+    "iconColor": "text-(--primary)"
+  },
+  "italy-travel-etiquette-guide": {
+    "name": "Italy Travel Etiquette Guide",
+    "description": "Build a prioritised Italy etiquette briefing for churches, restaurants, bars, trains and ZTL driving, with the fineable rules flagged.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
   "itinerary-builder": {
     "name": "Itinerary Builder",
     "description": "Build a day-wise travel itinerary with time slots, activities, costs, conflicts, pace, and export-ready plans.",
@@ -8078,11 +12530,53 @@ export const toolMetaMap = {
     "icon": "file-check-2",
     "iconColor": "text-(--primary)"
   },
+  "itr-deadline-tracker": {
+    "name": "Belated and Updated Return Deadline Tracker",
+    "description": "Track the section 139(1) due date, the belated and revised return window and the 48-month ITR-U timeline for any assessment year.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "itr-document-checklist-builder": {
     "name": "ITR Document Checklist Builder",
     "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions.",
     "category": "Finance Calculators",
     "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "jaipur-airport-transfer-time-planner": {
+    "name": "Jaipur Airport Transfer Time Planner",
+    "description": "Work out when to leave for Jaipur airport (JAI) using traffic by hour of day, check-in cutoffs and terminal processing time.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "jaipur-auto-cab-fare-estimator": {
+    "name": "Jaipur Auto and Cab Fare Estimator",
+    "description": "Estimate a fair Jaipur auto, e-rickshaw or cab fare from distance, waiting time, round trips and night premiums before you negotiate.",
+    "category": "Calculators",
+    "icon": "car-taxi-front",
+    "iconColor": "text-(--primary)"
+  },
+  "jaipur-trip-budget-breakdown": {
+    "name": "Jaipur Trip Budget Breakdown",
+    "description": "Break a Jaipur trip into travel, stay, food, autos, monument tickets and activities, per person and per day.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "japan-dress-code-planner": {
+    "name": "Japan Dress Code Planner for Travellers",
+    "description": "Plan what to wear and pack for Japan by month and region, covering temples, ryokan, onsen, restaurants and office dress codes.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "japan-travel-etiquette-guide": {
+    "name": "Japan Travel Etiquette Guide",
+    "description": "Build a prioritised Japan etiquette briefing for the places you will actually visit, with a readiness score and the phrases that matter.",
+    "category": "Education & Science",
+    "icon": "handshake",
     "iconColor": "text-(--primary)"
   },
   "javascript-tools": {
@@ -8091,6 +12585,62 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "code",
     "iconColor": "text-yellow-600"
+  },
+  "jdbc-url-builder": {
+    "name": "JDBC URL Builder",
+    "description": "Generate correct JDBC connection URLs for PostgreSQL, MySQL, Oracle, SQL Server, H2 and SQLite with driver-specific syntax.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
+  },
+  "jee-application-document-checklist": {
+    "name": "JEE Application Checklist",
+    "description": "Checklist of NTA JEE Main form fields, uploads and certificates to prepare in advance, with the fee for your category and gender.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "jee-doubt-prompt-builder": {
+    "name": "JEE Doubt Prompt Builder",
+    "description": "Frame physics, chemistry and maths doubts so AI explains step by step, with JEE Main time and negative-marking maths built in.",
+    "category": "Education & Science",
+    "icon": "atom",
+    "iconColor": "text-(--primary)"
+  },
+  "jee-exam-countdown": {
+    "name": "JEE Exam Countdown",
+    "description": "Countdown to JEE Main Session 1, Session 2 and JEE Advanced with a syllabus pace tracker that shows units per study day.",
+    "category": "Productivity",
+    "icon": "atom",
+    "iconColor": "text-(--primary)"
+  },
+  "jee-exam-day-checklist": {
+    "name": "JEE Exam Day Checklist",
+    "description": "JEE Main centre-day checklist — admit card, self-declaration, photo ID, dress rules — plus a reporting-time plan built on the gate-closing rule.",
+    "category": "Productivity",
+    "icon": "atom",
+    "iconColor": "text-(--primary)"
+  },
+  "jntu-cgpa-percentage-converter": {
+    "name": "JNTU CGPA Percentage Converter",
+    "description": "Convert JNTUH, JNTUK or JNTUA CGPA to percentage with the (CGPA − 0.75) × 10 rule and see the class band your figure earns.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "jntu-sgpa-calculator": {
+    "name": "JNTU SGPA Calculator",
+    "description": "Compute JNTU SGPA and CGPA from marks or grades, with regulation-specific letters, percentage and class awarded.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "job-description-prompt-builder": {
+    "name": "Job Description Prompt Builder",
+    "description": "Build an inclusive job description prompt that separates must-have requirements from nice-to-haves and budgets words per section.",
+    "category": "Business",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
   },
   "job-offer-comparison-tool": {
     "name": "Job Offer Comparison Tool",
@@ -8138,6 +12688,13 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-teal-600"
   },
+  "joining-formalities-checklist": {
+    "name": "Joining Formalities Checklist",
+    "description": "Phase-wise checklist for medical exam, police verification, attestation forms and day-one joining paperwork.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
   "joke-generator": {
     "name": "Joke Generator",
     "description": "Generate random jokes from multiple categories with favorites, search, and export options.",
@@ -8150,6 +12707,13 @@ export const toolMetaMap = {
     ],
     "icon": "smile",
     "iconColor": "text-amber-600"
+  },
+  "journaling-prompt-builder": {
+    "name": "Journaling Prompt Builder",
+    "description": "Pick a theme, mood and the minutes you have, and get a word-budgeted journaling session with prompts sized to fit.",
+    "category": "Lifestyle",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
   },
   "js-beautifier": {
     "name": "JS Beautifier",
@@ -8177,11 +12741,15 @@ export const toolMetaMap = {
     "name": "JSON Editor",
     "description": "Validate, format, minify, and convert JSON snippets.",
     "category": "Developer",
-    "topics": [
-      "Data"
-    ],
     "icon": "braces",
     "iconColor": "text-emerald-600"
+  },
+  "json-flatten-unflatten-tool": {
+    "name": "JSON Flatten Unflatten Tool",
+    "description": "Flatten nested JSON into dot-notation keys and rebuild the nested structure, with bracket or dot array styles.",
+    "category": "Converters",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
   },
   "json-formatter": {
     "name": "JSON Formatting",
@@ -8251,6 +12819,13 @@ export const toolMetaMap = {
     "icon": "braces",
     "iconColor": "text-blue-600"
   },
+  "json-to-toml-converter": {
+    "name": "JSON to TOML Converter",
+    "description": "Convert JSON into readable TOML with proper [table] sections, [[array of table]] syntax and safely quoted keys.",
+    "category": "Converters",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
   "json-to-typescript": {
     "name": "JSON to TypeScript",
     "description": "Convert JSON objects recursively into type-safe TypeScript interfaces or type statements with formatting options.",
@@ -8298,12 +12873,47 @@ export const toolMetaMap = {
     "icon": "dna",
     "iconColor": "text-violet-600"
   },
+  "kafka-topic-naming-builder": {
+    "name": "Kafka Topic Naming Builder",
+    "description": "Build a consistent Kafka topic naming convention from domain, entity, event type and version, with legality and collision checks.",
+    "category": "Generators",
+    "icon": "git-branch",
+    "iconColor": "text-(--primary)"
+  },
+  "karnataka-puc-percentage-calculator": {
+    "name": "Karnataka PUC Percentage Calculator",
+    "description": "Turn your Karnataka II PUC subject marks into an aggregate percentage, division class and a pass check on the 35% rule.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
   "kebab-case-converter": {
     "name": "Kebab Case Converter",
     "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug.",
     "category": "Developer",
     "icon": "case-sensitive",
     "iconColor": "text-amber-600"
+  },
+  "kenya-entry-requirement-checklist": {
+    "name": "Kenya Entry Requirement Checklist",
+    "description": "Work out whether you need Kenya's eTA, what it costs for your party, the yellow fever rule and the passenger declaration before arrival.",
+    "category": "Productivity",
+    "icon": "tent",
+    "iconColor": "text-(--primary)"
+  },
+  "kerala-plus-two-percentage-calculator": {
+    "name": "Kerala Plus Two Percentage Tool",
+    "description": "Kerala DHSE Plus Two percentage, A+ to E letter grades, grade points and GPA on the nine-point higher secondary scale.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "kerala-university-cgpa-converter": {
+    "name": "Kerala University CGPA Converter",
+    "description": "Convert Kerala University CGPA or SGPA to percentage on any grading scale, and find the SGPA still needed for a target CGPA.",
+    "category": "Calculators",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
   },
   "keyboard-focus-order-replay": {
     "name": "Keyboard Focus-Order Replay",
@@ -8333,6 +12943,20 @@ export const toolMetaMap = {
     "icon": "keyboard",
     "iconColor": "text-teal-600"
   },
+  "kids-ai-usage-guide-builder": {
+    "name": "Kids AI Usage Guide Builder",
+    "description": "Build a printable family agreement on when, how and how long children may use AI tools, with age-based rules.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
+  "kids-bicycle-size-selector": {
+    "name": "Kids Bicycle Size Selector",
+    "description": "Pick a child's wheel size from their inseam, then set saddle height and standover clearance and see how long the bike will fit.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
   "kids-milestone-vaccine-vault": {
     "name": "Kids Milestone & Vaccine Vault",
     "description": "Securely track child milestones and vaccination records.",
@@ -8344,6 +12968,41 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "kirana-shop-ai-prompt-pack": {
+    "name": "Kirana Shop AI Prompt Pack",
+    "description": "Ready-made AI prompts for kirana shops: reorder notes, offer broadcasts, WhatsApp replies and udhaar reminders in your language.",
+    "category": "Business",
+    "icon": "store",
+    "iconColor": "text-(--primary)"
+  },
+  "kirana-shop-tax-calculator": {
+    "name": "Kirana Shop Profit and Tax Calculator",
+    "description": "Gross margin, net profit and income tax for a small retail shop, with the 44AD presumptive and GST composition options.",
+    "category": "Finance Calculators",
+    "icon": "store",
+    "iconColor": "text-(--primary)"
+  },
+  "kisan-vikas-patra-calculator": {
+    "name": "Kisan Vikas Patra Doubling Calculator",
+    "description": "Find the Kisan Vikas Patra doubling period and maturity value at the current 7.5% rate, with a year-by-year growth table.",
+    "category": "Finance Calculators",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "kitchen-backsplash-tile-calculator": {
+    "name": "Kitchen Backsplash Tile Calculator",
+    "description": "Work out backsplash tile quantity, boxes and cost for the band between the counter and the overhead cabinets.",
+    "category": "Calculators",
+    "icon": "square-stack",
+    "iconColor": "text-(--primary)"
+  },
+  "kitchen-chimney-suction-selector": {
+    "name": "Kitchen Chimney Suction Selector",
+    "description": "Compute the chimney suction in cubic metres per hour your kitchen needs from its volume, air changes, burners and duct run.",
+    "category": "Calculators",
+    "icon": "air-vent",
+    "iconColor": "text-(--primary)"
+  },
   "kitchen-multi-timer": {
     "name": "Kitchen Multi-Timer",
     "description": "Run named timers for every dish at once, with real cook-time presets and a plan that gets everything ready together.",
@@ -8353,6 +13012,13 @@ export const toolMetaMap = {
     ],
     "icon": "timer-reset",
     "iconColor": "text-teal-600"
+  },
+  "kitchen-platform-granite-cost": {
+    "name": "Kitchen Platform Granite Cost",
+    "description": "Work out kitchen platform granite in running feet and square feet, with skirting, wastage, sink and hob cutouts and total cost.",
+    "category": "Calculators",
+    "icon": "chef-hat",
+    "iconColor": "text-(--primary)"
   },
   "kitchen-unit-converter": {
     "name": "Kitchen Unit Converter",
@@ -8365,6 +13031,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-[var(--primary)]"
   },
+  "kitchen-waste-compost-estimator": {
+    "name": "Kitchen Waste Compost Estimator",
+    "description": "Estimate finished compost yield, the browns needed to balance the C:N ratio and the waste you divert from landfill each year.",
+    "category": "Calculators",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
   "klondike-solitaire": {
     "name": "Klondike Solitaire",
     "description": "Play Klondike solitaire online free — draw 1 or draw 3, unlimited undo, and smart auto-complete.",
@@ -8375,6 +13048,69 @@ export const toolMetaMap = {
     ],
     "icon": "spade",
     "iconColor": "text-slate-600"
+  },
+  "kmpl-mileage-calculator": {
+    "name": "KMPL Mileage Calculator",
+    "description": "Work out true km/l with the tank-to-tank method from odometer and litres filled, with l/100km, mpg and cost per km.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "knowledge-base-article-prompt-builder": {
+    "name": "Knowledge Base Article Prompt Builder",
+    "description": "Turn steps, prerequisites and screenshot notes into a help-article prompt structured by DITA information type.",
+    "category": "Business",
+    "icon": "life-buoy",
+    "iconColor": "text-(--primary)"
+  },
+  "kochi-airport-transfer-time-planner": {
+    "name": "Kochi Airport Transfer Time Planner",
+    "description": "Work out when to leave for Kochi airport (COK) with hour-by-hour traffic, the Aluva metro option and airline check-in cutoffs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "kolkata-ccu-airport-arrival-buffer-calculator": {
+    "name": "Kolkata CCU Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Kolkata CCU using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "ktu-sgpa-calculator": {
+    "name": "KTU SGPA Calculator",
+    "description": "Calculate KTU SGPA and CGPA on the half-point S to P grade scale, with credits earned and grade distribution.",
+    "category": "Calculators",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
+  "kubectl-command-builder": {
+    "name": "Kubectl Command Builder",
+    "description": "Assemble correct kubectl commands with namespaces, label selectors, output formats and dry-run flags — no man page needed.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
+  },
+  "kubernetes-configmap-secret-generator": {
+    "name": "Kubernetes ConfigMap and Secret Generator",
+    "description": "Turn key=value pairs or an .env file into ConfigMap and base64-encoded Secret manifests with validated keys.",
+    "category": "Developer",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "kubernetes-label-selector-tester": {
+    "name": "Kubernetes Label Selector Tester",
+    "description": "Test matchLabels and matchExpressions (In, NotIn, Exists, DoesNotExist) against sample pod labels instantly.",
+    "category": "Developer",
+    "icon": "filter",
+    "iconColor": "text-(--primary)"
+  },
+  "kubernetes-service-yaml-generator": {
+    "name": "Kubernetes Service YAML Generator",
+    "description": "Generate ClusterIP, NodePort or LoadBalancer Service manifests with validated names, selectors and port mappings.",
+    "category": "Developer",
+    "icon": "file-code",
+    "iconColor": "text-(--primary)"
   },
   "kundli-birth-chart-generator": {
     "name": "Kundli / Birth Chart Generator",
@@ -8396,6 +13132,13 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "lab-attendance-requirement-tracker": {
+    "name": "Lab Attendance Requirement Tracker",
+    "description": "Track practical and lab attendance separately from theory, weight lab sessions by contact hours and see the experiments still pending.",
+    "category": "Calculators",
+    "icon": "flask-conical",
+    "iconColor": "text-(--primary)"
+  },
   "lab-results-history-tracker": {
     "name": "Lab Results History Tracker",
     "description": "Compare private lab measurements over time.",
@@ -8407,6 +13150,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "ladder-safety-calculator": {
+    "name": "Ladder Safety Calculator",
+    "description": "Safe ladder base distance, set-up angle, highest standing level and reach height using the OSHA 4-to-1 rule.",
+    "category": "Calculators",
+    "icon": "hard-hat",
+    "iconColor": "text-(--primary)"
+  },
+  "laminate-flooring-calculator": {
+    "name": "Laminate Flooring Calculator",
+    "description": "Estimate laminate planks, packs, underlay rolls and beading lengths for a room, with a wastage allowance.",
+    "category": "Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
   "land-area-converter": {
     "name": "Land Area Converter (Indian Units)",
     "description": "Convert bigha, katha, kanal, guntha, cent and acre using the exact value your state actually uses.",
@@ -8417,6 +13174,13 @@ export const toolMetaMap = {
     ],
     "icon": "land-plot",
     "iconColor": "text-teal-600"
+  },
+  "landlord-pan-requirement-checker": {
+    "name": "Landlord PAN Requirement Checker",
+    "description": "Check whether your annual rent forces landlord PAN disclosure, rent receipts or section 194-IB rent TDS.",
+    "category": "Business",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
   },
   "language-detector": {
     "name": "Language Detector",
@@ -8458,6 +13222,48 @@ export const toolMetaMap = {
     "icon": "terminal",
     "iconColor": "text-green-500"
   },
+  "laptop-resale-value-estimator": {
+    "name": "Laptop Resale Value Estimator",
+    "description": "Estimate a laptop's resale price from purchase price, age, condition, battery health and remaining warranty.",
+    "category": "Finance Calculators",
+    "icon": "laptop",
+    "iconColor": "text-(--primary)"
+  },
+  "last-minute-unit-priority-tool": {
+    "name": "Last Minute Unit Priority Tool",
+    "description": "Rank syllabus units by marks recoverable per study hour and get a greedy hour allocation for the time left before the paper.",
+    "category": "Education & Science",
+    "icon": "list-ordered",
+    "iconColor": "text-(--primary)"
+  },
+  "late-payment-reminder-builder": {
+    "name": "Late Payment Reminder Letter Builder",
+    "description": "Build escalating overdue-invoice chase letters, from a polite nudge to a final notice, with the right tone for how late the payment is.",
+    "category": "Text & Writing",
+    "icon": "mail-warning",
+    "iconColor": "text-(--primary)"
+  },
+  "lateral-entry-merit-calculator": {
+    "name": "Lateral Entry Merit Calculator",
+    "description": "Compute lateral entry (diploma to B.Tech) merit from diploma percentage and LEET/ECET score with the AICTE 45% check.",
+    "category": "Calculators",
+    "icon": "move-up-right",
+    "iconColor": "text-(--primary)"
+  },
+  "lawn-mowing-schedule-planner": {
+    "name": "Lawn Mowing Schedule Planner",
+    "description": "Plan mowing frequency, cutting height and season workload by grass type, season, shade and lawn care level.",
+    "category": "Productivity",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
+  },
+  "lawn-seed-quantity-calculator": {
+    "name": "Lawn Seed Quantity Calculator",
+    "description": "Work out grass seed in kilos for any lawn area from species sowing rate, purity, germination and wastage.",
+    "category": "Calculators",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
   "lcm-and-gcd-calculator": {
     "name": "LCM and GCD Calculator",
     "description": "Greatest common divisor and least common multiple of two numbers.",
@@ -8482,6 +13288,20 @@ export const toolMetaMap = {
     "icon": "calendar-check",
     "iconColor": "text-(--primary)"
   },
+  "leave-register-format-generator": {
+    "name": "Leave Register Format Generator",
+    "description": "Build a leave with wages register showing earned entitlement, carry forward, leave availed and the running balance.",
+    "category": "Business",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
+  },
+  "lecture-recording-checklist": {
+    "name": "Lecture Recording Checklist",
+    "description": "Weighted pre-flight checklist for audio levels, framing, lighting and screen capture before you record a lecture.",
+    "category": "Education & Science",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
   "led-pwm-flicker-detector": {
     "name": "LED PWM Flicker Detector",
     "description": "Camera rolling bands se approximate flicker pattern estimate kare.",
@@ -8493,6 +13313,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "led-vs-cfl-bulb-savings": {
+    "name": "LED vs CFL Bulb Savings",
+    "description": "Calculate energy, money and bulb-replacement savings from switching a whole home from CFL, halogen or incandescent to LED.",
+    "category": "Calculators",
+    "icon": "lightbulb",
+    "iconColor": "text-(--primary)"
+  },
+  "led-wattage-replacement-chart": {
+    "name": "LED Wattage Replacement Chart",
+    "description": "Convert incandescent, halogen and CFL wattages into the equivalent LED wattage by lumens, with the energy and cost saved per bulb.",
+    "category": "Converters",
+    "icon": "lightbulb",
+    "iconColor": "text-(--primary)"
+  },
   "leftover-recipe-finder": {
     "name": "Leftover Ingredients Recipe Finder",
     "description": "Tick what is left in your fridge and get real dishes you can cook tonight, plus ones you are one item away from.",
@@ -8503,12 +13337,40 @@ export const toolMetaMap = {
     "icon": "salad",
     "iconColor": "text-teal-600"
   },
+  "legal-deadline-countdown-board": {
+    "name": "Legal Deadline Countdown Board",
+    "description": "Track every legal deadline on one board with calendar days, working days remaining and colour-coded reminder bands.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "legal-document-version-log-builder": {
+    "name": "Legal Document Version Log Builder",
+    "description": "Build a numbered revision history for a contract or pleading with reviewers, dates, turnaround gaps and a paste-ready log.",
+    "category": "Productivity",
+    "icon": "file-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "legal-heir-certificate-checklist": {
+    "name": "Legal Heir Certificate Document Checklist",
+    "description": "Work out whether you need a legal heir certificate, succession certificate or probate, with Class I heir shares and the document list.",
+    "category": "Productivity",
+    "icon": "users-round",
+    "iconColor": "text-(--primary)"
+  },
+  "leh-ladakh-trip-budget-breakdown": {
+    "name": "Leh Ladakh Trip Budget Breakdown",
+    "description": "Break a Leh Ladakh trip into travel, stay, food, taxi or bike, permits and activities, per person and per day.",
+    "category": "Finance Calculators",
+    "icon": "mountain-snow",
+    "iconColor": "text-(--primary)"
+  },
   "lens-field-of-view-calculator": {
     "name": "Lens Field of View Calculator",
     "description": "Calculate camera field of view, crop factors, scene coverage, and compare lenses in real-time.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
+    "category": [
+      "Image & Photo",
+      "Calculators"
     ],
     "icon": "camera",
     "iconColor": "text-blue-500"
@@ -8523,10 +13385,45 @@ export const toolMetaMap = {
     "icon": "glasses",
     "iconColor": "text-teal-500"
   },
+  "lerna-config-generator": {
+    "name": "Lerna Config Generator",
+    "description": "Generate lerna.json with fixed or independent versioning, npm client, publish registry, conventional commits and branch rules.",
+    "category": "Generators",
+    "icon": "tags",
+    "iconColor": "text-(--primary)"
+  },
+  "lesson-plan-prompt-builder": {
+    "name": "Lesson Plan Prompt Builder",
+    "description": "Build a lesson plan prompt with Bloom's taxonomy objectives, a time-boxed 5E or Hunter structure and matching assessment.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "letterbox-pillarbox-calculator": {
+    "name": "Letterbox Pillarbox Calculator",
+    "description": "Work out exact letterbox or pillarbox bar sizes when fitting one aspect ratio inside another frame, in pixels and percent.",
+    "category": "Calculators",
+    "icon": "ratio",
+    "iconColor": "text-(--primary)"
+  },
+  "license-attribution-page-generator": {
+    "name": "License Attribution Page Generator",
+    "description": "Turn a dependency manifest into a ready-to-publish third-party licenses page in Markdown, HTML or plain text.",
+    "category": "Generators",
+    "icon": "book-open-text",
+    "iconColor": "text-(--primary)"
+  },
+  "license-header-generator": {
+    "name": "License Header Generator",
+    "description": "Generate per-language license header comments with year, copyright holder and SPDX identifier for 9 common licenses.",
+    "category": "Generators",
+    "icon": "file-code-2",
+    "iconColor": "text-(--primary)"
+  },
   "life-productivity-score": {
     "name": "Life Productivity Score",
     "description": "Calculate your life productivity score",
-    "category": "Lifestyle",
+    "category": "Productivity",
     "icon": "activity",
     "iconColor": "text-green-600"
   },
@@ -8604,6 +13501,20 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-blue-500"
   },
+  "linkedin-headline-prompt-builder": {
+    "name": "LinkedIn Headline Prompt Builder",
+    "description": "Budget your 220-character LinkedIn headline across positioning segments and generate headline and About-section prompts for any AI model.",
+    "category": "Marketing & Social",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "linkedin-post-prompt-builder": {
+    "name": "LinkedIn Post Prompt Builder",
+    "description": "Builds LinkedIn post prompts with hook, story and takeaway structure sized to the 3,000-character limit and the see-more fold.",
+    "category": "Marketing & Social",
+    "icon": "linkedin",
+    "iconColor": "text-(--primary)"
+  },
   "linkedin-profile-photo-generator": {
     "name": "LinkedIn Profile Photo Generator",
     "description": "Create a professional LinkedIn profile photo with customizable borders, overlays, filters, and backgrounds — all in real-time.",
@@ -8624,6 +13535,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "terminal",
     "iconColor": "text-cyan-500"
+  },
+  "linux-signal-reference-explorer": {
+    "name": "Linux Signal Reference Explorer",
+    "description": "Explore Linux signals with default actions, catchability, matching exit codes and how they behave as PID 1 in containers.",
+    "category": "Developer",
+    "icon": "radio-tower",
+    "iconColor": "text-(--primary)"
   },
   "lip-read-practice-mirror": {
     "name": "Lip-Read Practice Mirror",
@@ -8659,6 +13577,13 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-amber-600"
   },
+  "liquid-volume-travel-converter": {
+    "name": "Liquid Volume Travel Converter",
+    "description": "Convert millilitres, US and imperial fluid ounces, cups and spoons, and check bottles against the 100 ml cabin limit.",
+    "category": "Converters",
+    "icon": "beaker",
+    "iconColor": "text-(--primary)"
+  },
   "lissajous-pattern-generator": {
     "name": "Lissajous Pattern Generator",
     "description": "Generate elegant frequency-based mathematical curves and oscilloscope-style Lissajous patterns.",
@@ -8683,6 +13608,13 @@ export const toolMetaMap = {
     "icon": "sort-asc",
     "iconColor": "text-teal-500"
   },
+  "litre-to-gallon-converter": {
+    "name": "Litre to Gallon Converter",
+    "description": "Convert fuel and liquid volumes between litres, US gallons, imperial gallons, quarts and millilitres, with price per unit.",
+    "category": "Converters",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
   "live-caption-overlay": {
     "name": "Live Caption Overlay",
     "description": "Browser/local speech engine se adjustable live captions dikhaye.",
@@ -8697,6 +13629,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "living-room-ac-tonnage-calculator": {
+    "name": "Living Room AC Tonnage Calculator",
+    "description": "Size an AC for an open living room using a component heat-gain method: walls, roof, glazing, people, lights and air changes.",
+    "category": "Calculators",
+    "icon": "sofa",
+    "iconColor": "text-(--primary)"
+  },
+  "llm-cost-per-user-calculator": {
+    "name": "LLM Cost Per User Calculator",
+    "description": "Work out AI cost per active user per month from sessions, message length, conversation history growth and token pricing.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
   "llm-cost-privacy-analyzer": {
     "name": "LLM Cost & Privacy Analyzer",
     "description": "Analyze AI usage logs locally with user-supplied token rates, model cost summaries, and counts-only personal-data or secret signals.",
@@ -8708,6 +13654,20 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "llm-terms-dictionary": {
+    "name": "LLM Terms Dictionary",
+    "description": "A-Z dictionary of LLM terms — tokens, temperature, top-p, RAG, LoRA — with examples, typical values and a context budget check.",
+    "category": "Education & Science",
+    "icon": "book-marked",
+    "iconColor": "text-(--primary)"
+  },
+  "loan-against-fd-calculator": {
+    "name": "Loan Against Fixed Deposit Calculator",
+    "description": "Compare breaking a fixed deposit early against borrowing an overdraft on it, using the premature penalty and the FD rate plus spread.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
   },
   "loan-against-property-calculator": {
     "name": "Loan Against Property Calculator",
@@ -8739,6 +13699,13 @@ export const toolMetaMap = {
     "description": "Check the loan amount you qualify for from your income, existing EMIs and the FOIR limit lenders apply, with a tenure comparison.",
     "category": "Finance Calculators",
     "icon": "user-check",
+    "iconColor": "text-(--primary)"
+  },
+  "loan-eligibility-from-salary": {
+    "name": "Loan Eligibility from Salary Calculator",
+    "description": "Maximum loan you can get from take-home salary using common FOIR bands, plus the RBI loan-to-value ceiling on housing loans.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
     "iconColor": "text-(--primary)"
   },
   "loan-emi-calculator": {
@@ -8832,6 +13799,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "local-cuisine-bucket-list-builder": {
+    "name": "Local Cuisine Bucket List Builder",
+    "description": "Build a must-eat list for a destination, check it against the eating slots your trip actually has, and tick dishes off as you go.",
+    "category": "Lifestyle",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "local-festival-day-trip-planner": {
+    "name": "Local Festival Day Trip Planner",
+    "description": "Time a festival day backwards from the gates: queue build-up, arrival buffer, crowd density, exit clear time and the last service home.",
+    "category": "Lifestyle",
+    "icon": "party-popper",
+    "iconColor": "text-(--primary)"
+  },
   "local-sound-event-logger": {
     "name": "Local Sound-Event Logger",
     "description": "Loud audio events ko locally timestamped timeline me log kare.",
@@ -8865,6 +13846,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "log-level-strategy-planner": {
+    "name": "Log Level Strategy Planner",
+    "description": "Decide whether an event belongs at trace, debug, info, warn, error or fatal, plus per-environment minimum levels.",
+    "category": "Developer",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
   "logic-gate-simulator": {
     "name": "Logic Gate Simulator",
     "description": "Design and simulate interactive digital logic circuits with AND, OR, NOT, NAND, NOR, XOR, and XNOR gates. Build, test, analyze truth tables, and optimize boolean logic using Karnaugh maps.",
@@ -8877,6 +13865,13 @@ export const toolMetaMap = {
     ],
     "icon": "git-branch",
     "iconColor": "text-teal-500"
+  },
+  "logo-prompt-generator": {
+    "name": "Logo Prompt Generator",
+    "description": "Build an AI logo prompt from mark type, shape language and palette, with stroke, clear-space and favicon limits computed for you.",
+    "category": "Design & Color",
+    "icon": "shapes",
+    "iconColor": "text-(--primary)"
   },
   "logo-similarity-checker": {
     "name": "Logo Similarity Checker",
@@ -8899,6 +13894,20 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "logrotate-config-generator": {
+    "name": "Logrotate Config Generator",
+    "description": "Generate a logrotate rule with rotation frequency, retention, compression, create modes and postrotate hooks — with conflict warnings.",
+    "category": "Generators",
+    "icon": "file-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "long-study-session-stretch-guide": {
+    "name": "Long Study Session Stretch Guide",
+    "description": "Desk stretches scheduled across a long study day — rotating neck, shoulder, wrist and back sets with timing cues.",
+    "category": "Health & Fitness",
+    "icon": "stretch-horizontal",
+    "iconColor": "text-(--primary)"
   },
   "long-weekend-planner": {
     "name": "Long Weekend Planner",
@@ -8974,6 +13983,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "lpg-cylinder-usage-estimator": {
+    "name": "LPG Cylinder Usage Estimator",
+    "description": "Estimate how many days an LPG cylinder lasts from your daily burner hours, plus gas cost per day and the date to book the refill.",
+    "category": "Calculators",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "lpg-subsidy-benefit-checker": {
+    "name": "LPG Subsidy and Ujjwala Benefit Checker",
+    "description": "Work out the cost of an LPG cylinder after the Ujjwala subsidy, the 12-refill annual cap and your yearly cooking gas bill.",
+    "category": "Business",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
   "lucky-color-picker": {
     "name": "Lucky Color Picker",
     "description": "Discover your lucky color for today based on your mood, zodiac sign, or random selection with color psychology insights.",
@@ -8998,9 +14021,6 @@ export const toolMetaMap = {
     "name": "Lucky Face Score",
     "description": "Upload a photo and discover your fictional luck score with fun badges and fortune!",
     "category": "Fun",
-    "topics": [
-      "Entertainment"
-    ],
     "icon": "clover",
     "iconColor": "text-amber-500"
   },
@@ -9021,10 +14041,6 @@ export const toolMetaMap = {
     "name": "Ludo Multiplayer",
     "description": "Play classic Ludo with friends locally or challenge the AI. Features smart AI, 3D dice, themes, and full statistics.",
     "category": "Games",
-    "topics": [
-      "Game",
-      "Entertainment"
-    ],
     "icon": "dices",
     "iconColor": "text-amber-500"
   },
@@ -9111,6 +14127,27 @@ export const toolMetaMap = {
     "icon": "magnet",
     "iconColor": "text-teal-500"
   },
+  "maharashtra-hsc-percentage-calculator": {
+    "name": "Maharashtra HSC Percentage Calculator",
+    "description": "Compute your Maharashtra HSC percentage on the 600-mark base with best-of-five additional subject handling and result class.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "mahila-samman-certificate-calculator": {
+    "name": "Mahila Samman Savings Certificate Calculator",
+    "description": "MSSC maturity value at 7.5% compounded quarterly, the 40% partial withdrawal limit and premature closure at the reduced rate.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "maintenance-window-announcement-generator": {
+    "name": "Maintenance Window Announcement Generator",
+    "description": "Draft a clear scheduled-maintenance notice with UTC and local start times, expected impact and a rollback statement.",
+    "category": "Productivity",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
+  },
   "makeup-shade-finder": {
     "name": "Makeup Shade Finder",
     "description": "Find your perfect makeup shades with AI-powered skin analysis. Get personalized foundation, blush, lipstick, eyeshadow, and bronzer recommendations.",
@@ -9122,6 +14159,34 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-500"
+  },
+  "malaysia-visa-cost-estimator": {
+    "name": "Malaysia Visa Cost Estimator",
+    "description": "Check whether visa-free entry covers your stay, then total the eVISA fee, agent charges and extras in rupees.",
+    "category": "Finance Calculators",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "malaysia-visa-cover-letter-builder": {
+    "name": "Malaysia Visa Cover Letter Builder",
+    "description": "Draft a Malaysia eVISA cover letter with itinerary, the 30-day social visit pass, eVISA validity and MDAC timing.",
+    "category": "Text & Writing",
+    "icon": "waves",
+    "iconColor": "text-(--primary)"
+  },
+  "malaysia-visa-rejection-reason-explainer": {
+    "name": "Malaysia Visa Rejection Reason Explainer",
+    "description": "Work out why a Malaysia eVISA was rejected - specification, data, travel evidence or a monitoring-list record - and what to fix.",
+    "category": "Education & Science",
+    "icon": "file-x",
+    "iconColor": "text-(--primary)"
+  },
+  "maldives-entry-requirement-checklist": {
+    "name": "Maldives Entry Requirement Checklist",
+    "description": "Check the Maldives free 30-day visa on arrival, the IMUGA declaration, passport validity, funds rule and the Green Tax your stay will add.",
+    "category": "Productivity",
+    "icon": "waves",
+    "iconColor": "text-(--primary)"
   },
   "mandi-bhav": {
     "name": "Mandi Bhav",
@@ -9165,12 +14230,19 @@ export const toolMetaMap = {
     "icon": "badge-percent",
     "iconColor": "text-green-600"
   },
+  "margin-markup-converter": {
+    "name": "Profit Margin and Markup Converter",
+    "description": "Convert between gross margin and markup percentages and see the cost, selling price, profit and multiplier behind them.",
+    "category": "Converters",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "markdown-html-converter": {
     "name": "Markdown / HTML Converter",
     "description": "Convert Markdown into HTML and strip HTML back to text.",
-    "category": "Developer",
-    "topics": [
-      "Content Creation"
+    "category": [
+      "Developer",
+      "Text & Writing"
     ],
     "icon": "file-text",
     "iconColor": "text-slate-700"
@@ -9181,6 +14253,20 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "edit",
     "iconColor": "text-blue-500"
+  },
+  "market-bargaining-practice-simulator": {
+    "name": "Bargaining Practice Simulator",
+    "description": "Practise haggling: mirrored opening counter, target and walk-away price, plus a round-by-round concession ladder.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "marketer-prompt-pack": {
+    "name": "Marketer Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for every funnel stage — positioning, ads, email, landing pages and campaign analysis.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-(--primary)"
   },
   "marketplace-scam-checker": {
     "name": "Marketplace Scam Checker",
@@ -9208,6 +14294,13 @@ export const toolMetaMap = {
     "icon": "graduation-cap",
     "iconColor": "text-(--primary)"
   },
+  "marksheet-score-visualizer": {
+    "name": "Marksheet Score Visualizer",
+    "description": "Turn subject-wise marks into percentage bars that show your overall score, strongest subject and weakest subject.",
+    "category": "Education & Science",
+    "icon": "bar-chart-3",
+    "iconColor": "text-(--primary)"
+  },
   "markup-calculator": {
     "name": "Markup Calculator",
     "description": "Add a markup percentage to a cost to get the selling price and profit.",
@@ -9217,6 +14310,13 @@ export const toolMetaMap = {
     ],
     "icon": "tag",
     "iconColor": "text-orange-600"
+  },
+  "marla-kanal-converter": {
+    "name": "Marla Kanal Converter",
+    "description": "Convert marla, kanal, sarsai, killa and murabba to square feet, square yards and square metres, with plot pricing.",
+    "category": "Converters",
+    "icon": "grid-2x2",
+    "iconColor": "text-(--primary)"
   },
   "math-speed-challenge": {
     "name": "Math Speed Challenge",
@@ -9231,6 +14331,13 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-amber-600"
+  },
+  "mattress-size-selector": {
+    "name": "Mattress Size Selector",
+    "description": "Pick mattress size, thickness and firmness from sleeper count, height, body weight and sleeping position.",
+    "category": "Lifestyle",
+    "icon": "bed",
+    "iconColor": "text-(--primary)"
   },
   "maze-muncher": {
     "name": "Maze Muncher",
@@ -9263,6 +14370,20 @@ export const toolMetaMap = {
     ],
     "icon": "hash",
     "iconColor": "text-teal-500"
+  },
+  "meal-card-tax-benefit-calculator": {
+    "name": "Food Coupon and Meal Card Tax Benefit",
+    "description": "Yearly income tax saved on meal cards and food coupons using the Rs 50 per meal exemption, with slab, surcharge and cess.",
+    "category": "Finance Calculators",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
+  },
+  "meal-plan-prompt-builder": {
+    "name": "Meal Plan Prompt Builder",
+    "description": "Build a meal planning prompt with Mifflin-St Jeor calorie targets, macro grams, per-serving budget, cuisine and allergen exclusions.",
+    "category": "Lifestyle",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
   },
   "mean-arterial-pressure-calculator": {
     "name": "Mean Arterial Pressure Calculator",
@@ -9331,6 +14452,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "medication-cost-per-dose-calculator": {
+    "name": "Medication Cost Per Dose Calculator",
+    "description": "Work out cost per tablet, per dose, per day and for the full course from the pack price, and compare a brand against a generic.",
+    "category": "Health Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
   "medication-reminder": {
     "name": "Medication Reminder",
     "description": "Keep track of your daily medications and schedule reminders.",
@@ -9345,9 +14473,6 @@ export const toolMetaMap = {
     "name": "Medicine Schedule Builder",
     "description": "Organize routines, track doses, and receive real-time medicine reminders.",
     "category": "Health & Fitness",
-    "topics": [
-      "Health & Wellness"
-    ],
     "icon": "pill",
     "iconColor": "text-blue-500"
   },
@@ -9372,9 +14497,6 @@ export const toolMetaMap = {
       "Productivity",
       "Business"
     ],
-    "topics": [
-      "Planning"
-    ],
     "icon": "clipboard-list",
     "iconColor": "text-blue-500"
   },
@@ -9391,6 +14513,13 @@ export const toolMetaMap = {
     ],
     "icon": "users",
     "iconColor": "text-violet-600"
+  },
+  "meeting-notes-prompt-builder": {
+    "name": "Meeting Notes Prompt Builder",
+    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that fills the gaps it found.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "meeting-transcript-action-extractor": {
     "name": "Meeting Transcript Action Extractor",
@@ -9509,6 +14638,13 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-cyan-600"
   },
+  "metro-nonmetro-hra-impact": {
+    "name": "Metro vs Non Metro HRA Impact",
+    "description": "Compare your Rule 2A house rent allowance exemption at the 50% metro cap against the 40% non-metro cap, and see the tax the difference is worth.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "metronome": {
     "name": "Online Metronome",
     "description": "Keep perfect time with a precise online metronome — tap tempo, time signatures, subdivisions, and accented beats.",
@@ -9519,6 +14655,13 @@ export const toolMetaMap = {
     ],
     "icon": "music-2",
     "iconColor": "text-teal-600"
+  },
+  "metronome-practice-log": {
+    "name": "Metronome Practice Log",
+    "description": "Log practice minutes and metronome tempos per exercise, then see totals, streaks, tempo gains and a next-session ladder.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
   },
   "mic-waveform-visualizer": {
     "name": "Mic Waveform Visualizer",
@@ -9546,6 +14689,41 @@ export const toolMetaMap = {
     "icon": "scan-line",
     "iconColor": "text-primary"
   },
+  "microwave-running-cost-calculator": {
+    "name": "Microwave Running Cost Calculator",
+    "description": "Microwave electricity cost per meal, day, month and year for solo, grill and convection modes, including standby drain.",
+    "category": "Calculators",
+    "icon": "microwave",
+    "iconColor": "text-(--primary)"
+  },
+  "microwave-size-selector": {
+    "name": "Microwave Size Selector",
+    "description": "Pick microwave litres and the right type — solo, grill or convection — from family size, cooking needs and your largest dish.",
+    "category": "Calculators",
+    "icon": "microwave",
+    "iconColor": "text-(--primary)"
+  },
+  "mileage-reimbursement-calculator": {
+    "name": "Mileage Reimbursement Calculator",
+    "description": "Work out travel reimbursement from distance and a per-kilometre or per-mile rate, including two-tier rates and tolls.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
+  "miles-kilometres-travel-converter": {
+    "name": "Miles to Kilometres Travel Converter",
+    "description": "Convert road distances and speed limits between miles and kilometres, with a driving-time estimate for the trip.",
+    "category": "Converters",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
+  },
+  "mime-type-lookup-tool": {
+    "name": "MIME Type Lookup Tool",
+    "description": "Look up the MIME type for a file extension, or every extension for a MIME type, with charset and compression guidance.",
+    "category": "Developer",
+    "icon": "file-type",
+    "iconColor": "text-(--primary)"
+  },
   "minesweeper": {
     "name": "Minesweeper",
     "description": "Play classic Minesweeper online free — clear the board, flag the mines, beat your best time.",
@@ -9556,6 +14734,13 @@ export const toolMetaMap = {
     ],
     "icon": "bomb",
     "iconColor": "text-rose-600"
+  },
+  "minor-child-investment-tax-checker": {
+    "name": "Minor Child Investment Tax Checker",
+    "description": "Check how a minor child's investment income is taxed under section 64(1A) clubbing, the Rs 1,500 section 10(32) exemption and the exceptions.",
+    "category": "Business",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
   },
   "mirr-calculator": {
     "name": "MIRR Calculator",
@@ -9574,6 +14759,13 @@ export const toolMetaMap = {
     "category": "Fun",
     "icon": "flip-horizontal",
     "iconColor": "text-pink-600"
+  },
+  "missed-dose-guidance-helper": {
+    "name": "Missed Dose Guidance Helper",
+    "description": "Work out how late a missed dose is, whether the half-interval rule points to taking it or skipping it, and when the next dose is due.",
+    "category": "Health & Fitness",
+    "icon": "alarm-clock-off",
+    "iconColor": "text-(--primary)"
   },
   "mobile-deep-link-safety-inspector": {
     "name": "Mobile Deep-Link Safety Inspector",
@@ -9613,6 +14805,20 @@ export const toolMetaMap = {
     "icon": "atom",
     "iconColor": "text-teal-500"
   },
+  "money-habit-score-tool": {
+    "name": "Money Habit Score Tool",
+    "description": "Score your saving, spending and planning habits against standard benchmarks like the 20% savings rate and a six-month emergency fund.",
+    "category": "Education & Science",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "mongodb-connection-string-builder": {
+    "name": "MongoDB Connection String Builder",
+    "description": "Build mongodb:// and mongodb+srv:// URIs with replica set, auth source, read preference, write concern and TLS options.",
+    "category": "Developer",
+    "icon": "leaf",
+    "iconColor": "text-(--primary)"
+  },
   "monitor-ppi-calculator": {
     "name": "Monitor PPI Calculator",
     "description": "Calculate monitor ppi values quickly with a simple, structured workflow.",
@@ -9624,6 +14830,34 @@ export const toolMetaMap = {
     ],
     "icon": "monitor",
     "iconColor": "text-blue-600"
+  },
+  "monorepo-tool-comparison": {
+    "name": "Monorepo Tool Comparison",
+    "description": "Compare Nx, Turborepo, Bazel, Lerna and pnpm workspaces on caching, orchestration, languages and setup — weighted to your priorities.",
+    "category": "Developer",
+    "icon": "git-compare-arrows",
+    "iconColor": "text-(--primary)"
+  },
+  "monorepo-vs-polyrepo-decision-tool": {
+    "name": "Monorepo vs Polyrepo Decision Tool",
+    "description": "Answer eight questions about code sharing, tooling, releases and access control to get a scored monorepo-vs-polyrepo recommendation.",
+    "category": "Developer",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "monsoon-driving-readiness-checker": {
+    "name": "Monsoon Driving Readiness Checker",
+    "description": "Check monsoon readiness: wet stopping distance from tread depth, aquaplaning speed from tyre pressure and a weighted pre-rain checklist.",
+    "category": "Education & Science",
+    "icon": "cloud-rain",
+    "iconColor": "text-(--primary)"
+  },
+  "monsoon-trip-packing-list-builder": {
+    "name": "Monsoon Trip Packing List Builder",
+    "description": "Build a monsoon packing list from drying time and the IMD rainfall band, so you pack for clothes that will not dry overnight.",
+    "category": "Lifestyle",
+    "icon": "cloud-rain",
+    "iconColor": "text-(--primary)"
   },
   "monte-carlo-risk-scenario-lab": {
     "name": "Monte Carlo Risk Scenario Lab",
@@ -9649,6 +14883,13 @@ export const toolMetaMap = {
     ],
     "icon": "wallet",
     "iconColor": "text-blue-600"
+  },
+  "monthly-fuel-budget-planner": {
+    "name": "Monthly Fuel Budget Planner",
+    "description": "Plan a household fuel budget across several vehicles — petrol, diesel or CNG — and see the km to trim if you are over the cap.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
   },
   "moon-phase-simulator": {
     "name": "Moon Phase Simulator",
@@ -9701,14 +14942,10 @@ export const toolMetaMap = {
   },
   "morse-code-translator": {
     "name": "Morse Code Translator",
-    "description": "Translate plain text to Morse code and decode Morse back.",
+    "description": "Translate plain text to International Morse code, decode Morse back to text, and see the exact transmission time at any words-per-minute speed.",
     "category": [
       "Text & Writing",
       "Education & Science"
-    ],
-    "topics": [
-      "Text",
-      "Education"
     ],
     "icon": "arrow-left-right",
     "iconColor": "text-amber-600"
@@ -9736,17 +14973,19 @@ export const toolMetaMap = {
     "icon": "home",
     "iconColor": "text-blue-500"
   },
+  "mosquito-net-fabric-calculator": {
+    "name": "Mosquito Net Fabric Calculator",
+    "description": "Calculate mosquito net mesh off the roll, frame section and fixing tape for windows and doors, with a cutting plan and cost.",
+    "category": "Calculators",
+    "icon": "grid-2x2",
+    "iconColor": "text-(--primary)"
+  },
   "motion-aftereffect-illusion": {
     "name": "Motion Aftereffect Illusion",
     "description": "Watch moving patterns and experience static objects appearing to move using neuroscience-based visual illusions.",
     "category": [
-      "Fun",
-      "Education & Science"
-    ],
-    "topics": [
-      "Visual Experiments",
-      "Neuroscience",
-      "Interactive"
+      "Education & Science",
+      "Fun"
     ],
     "icon": "activity",
     "iconColor": "text-[var(--primary)]"
@@ -9779,6 +15018,20 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-teal-500"
   },
+  "motor-insurance-idv-calculator": {
+    "name": "Motor Insurance IDV Calculator",
+    "description": "Insured Declared Value from ex-showroom price and vehicle age using the motor tariff depreciation slabs, plus under-insurance impact.",
+    "category": "Finance Calculators",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "motorcycle-storage-checklist": {
+    "name": "Motorcycle Storage Checklist",
+    "description": "Prepare a bike for long storage with fuel, battery and tyre steps generated from your duration, climate and battery type.",
+    "category": "Productivity",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
   "mountain-quiz": {
     "name": "Mountain Quiz",
     "description": "Test your knowledge of the world's highest and most famous mountains — identify peaks, ranges, heights, and facts with timed quizzes and scoring.",
@@ -9788,6 +15041,20 @@ export const toolMetaMap = {
     ],
     "icon": "mountain",
     "iconColor": "text-stone-700"
+  },
+  "move-out-cleaning-checklist": {
+    "name": "Move Out Cleaning Checklist",
+    "description": "Room-by-room end-of-tenancy cleaning list with time estimates and what the remaining work would cost against your deposit.",
+    "category": "Productivity",
+    "icon": "spray-can",
+    "iconColor": "text-(--primary)"
+  },
+  "moving-boxes-calculator": {
+    "name": "Moving Boxes Calculator",
+    "description": "Estimate how many small, medium, large, dish and wardrobe cartons your home needs, plus tape, paper and bubble wrap.",
+    "category": "Calculators",
+    "icon": "boxes",
+    "iconColor": "text-(--primary)"
   },
   "moving-checklist": {
     "name": "Moving Checklist Builder",
@@ -9812,6 +15079,20 @@ export const toolMetaMap = {
     "icon": "truck",
     "iconColor": "text-emerald-600"
   },
+  "moving-checklist-generator": {
+    "name": "Moving Checklist Generator",
+    "description": "Turn your moving date into a dated countdown checklist from eight weeks out through moving day and the fortnight after.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "moving-truck-size-selector": {
+    "name": "Moving Truck Size Selector",
+    "description": "Add up your furniture, appliances and cartons to get the packed volume and the smallest tempo or truck that will hold it.",
+    "category": "Calculators",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
+  },
   "mp3-cutter-audio-trimmer": {
     "name": "MP3 Cutter / Audio Trimmer",
     "description": "Cut, trim, and export audio clips with browser-side controls.",
@@ -9828,14 +15109,48 @@ export const toolMetaMap = {
   },
   "mp4-to-base64": {
     "name": "MP4 to Base64",
-    "description": "Convert local MP4 files into Base64 data URLs.",
-    "category": "Converters",
-    "topics": [
-      "Media",
-      "Converter"
+    "description": "Convert a local MP4, WebM, MOV or OGV file into a Base64 data URL entirely in your browser.",
+    "category": [
+      "Converters",
+      "Video & Audio"
     ],
     "icon": "video",
     "iconColor": "text-blue-700"
+  },
+  "mpg-to-kmpl-converter": {
+    "name": "MPG to KMPL Converter",
+    "description": "Convert fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions.",
+    "category": "Converters",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
+  "msp-realisation-calculator": {
+    "name": "MSP Realisation Calculator",
+    "description": "Compare what you actually net at the mandi after fees, commission and transport against the announced MSP.",
+    "category": "Finance Calculators",
+    "icon": "wheat",
+    "iconColor": "text-(--primary)"
+  },
+  "mttr-mtbf-calculator": {
+    "name": "MTTR and MTBF Calculator",
+    "description": "Compute mean time to repair, mean time between failures, failure rate and resulting availability from real incident data.",
+    "category": "Calculators",
+    "icon": "timer-reset",
+    "iconColor": "text-(--primary)"
+  },
+  "mudra-loan-category-selector": {
+    "name": "Mudra Loan Category Selector",
+    "description": "Find whether your PMMY Mudra loan falls under Shishu, Kishore, Tarun or Tarun Plus, with the limits and eligibility checks that apply.",
+    "category": "Business",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "mulch-quantity-calculator": {
+    "name": "Mulch Quantity Calculator",
+    "description": "Work out mulch volume, bags and bulk loads for garden beds at your chosen depth, in cubic feet, cubic yards or litres.",
+    "category": "Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
   },
   "multi-country-clock": {
     "name": "Multi Country Clock Tool",
@@ -9846,6 +15161,13 @@ export const toolMetaMap = {
     ],
     "icon": "clock",
     "iconColor": "text-blue-600"
+  },
+  "multi-currency-invoice-calculator": {
+    "name": "Multi Currency Invoice Total Calculator",
+    "description": "Total an invoice whose lines are priced in different currencies using exchange rates you enter yourself, then add tax.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
   },
   "multi-currency-payout-reconciler": {
     "name": "Multi-Currency Payout Reconciler",
@@ -9910,11 +15232,67 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-purple-500"
   },
+  "mumbai-airport-transfer-time-planner": {
+    "name": "Mumbai Airport Transfer Time Planner",
+    "description": "Work out when to leave for Mumbai CSMIA, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "mumbai-bom-airport-arrival-buffer-calculator": {
+    "name": "Mumbai BOM Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Mumbai BOM using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "mumbai-university-cgpa-converter": {
+    "name": "Mumbai University CGPA Converter",
+    "description": "Convert Mumbai University CGPA to percentage with the CBCGS formula, or work the percentage out from raw semester marks.",
+    "category": "Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "museum-visit-time-estimator": {
+    "name": "Museum Visit Time Estimator",
+    "description": "Estimate how long a museum really takes from its size and your viewing pace, using measured per-object viewing times and museum-fatigue breaks.",
+    "category": "Lifestyle",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "music-interval-calculator": {
+    "name": "Music Interval Calculator",
+    "description": "Name the interval between any two notes, with semitone distance, cents, inversion and the just-intonation ratio.",
+    "category": "Calculators",
+    "icon": "music",
+    "iconColor": "text-(--primary)"
+  },
+  "mutual-fund-exit-load-calculator": {
+    "name": "Mutual Fund Exit Load Calculator",
+    "description": "Exit load, STT and net proceeds when you redeem mutual fund units inside the scheme holding period, including the 10% free-exit allowance.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
   "mutual-fund-xirr-calculator": {
     "name": "Mutual Fund XIRR Calculator",
     "description": "Calculate XIRR from irregular mutual fund investment dates, amounts and redemptions against today's value.",
     "category": "Finance Calculators",
     "icon": "chart-no-axes-combined",
+    "iconColor": "text-(--primary)"
+  },
+  "mx-record-priority-planner": {
+    "name": "MX Record Priority Planner",
+    "description": "Plan MX record preference values for single-provider, primary-plus-backup and provider-migration setups.",
+    "category": "Developer",
+    "icon": "mail",
+    "iconColor": "text-(--primary)"
+  },
+  "mysql-connection-string-builder": {
+    "name": "MySQL Connection String Builder",
+    "description": "Build MySQL connection strings in URI, Go DSN and JDBC forms with charset, time zone, TLS mode and connection limits.",
+    "category": "Developer",
+    "icon": "database-zap",
     "iconColor": "text-(--primary)"
   },
   "mysql-visualization-tools": {
@@ -9927,6 +15305,27 @@ export const toolMetaMap = {
     "icon": "database-zap",
     "iconColor": "text-cyan-500"
   },
+  "nagpur-auto-cab-fare-estimator": {
+    "name": "Nagpur Auto and Cab Fare Estimator",
+    "description": "Estimate a fair Nagpur auto, shared auto or cab fare from distance, waiting time and Maharashtra's 25% midnight-to-5am night charge.",
+    "category": "Calculators",
+    "icon": "car-taxi-front",
+    "iconColor": "text-(--primary)"
+  },
+  "nail-size-selector": {
+    "name": "Nail Size Selector",
+    "description": "Picks the penny size, length and gauge for framing, sheathing and trim from the penetration rule, with spacing and nail counts.",
+    "category": "Education & Science",
+    "icon": "hammer",
+    "iconColor": "text-(--primary)"
+  },
+  "name-change-record-update-tracker": {
+    "name": "Name Change Record Update Tracker",
+    "description": "Track which IDs, bank accounts and certificates still carry your old name, in the right dependency order with progress and next actions.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
   "name-compatibility": {
     "name": "Name Compatibility",
     "description": "Check the compatibility between two names with detailed love, friendship, and soulmate analysis.",
@@ -9936,6 +15335,118 @@ export const toolMetaMap = {
     ],
     "icon": "heart",
     "iconColor": "text-rose-600"
+  },
+  "ncert-chapter-tracker": {
+    "name": "NCERT Chapter Tracker",
+    "description": "Track reading and revision status of every NCERT chapter, book by book and class by class, with progress percentages.",
+    "category": "Productivity",
+    "icon": "book-open-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ncert-reading-speed-planner": {
+    "name": "NCERT Reading Speed Planner",
+    "description": "Work out how many NCERT pages to read per day — with days off and a revision buffer — to finish before your target date.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "nda-cds-exam-countdown": {
+    "name": "NDA CDS Exam Countdown",
+    "description": "Defence exam countdown for NDA and CDS covering the written date, paper-wise marks and the SSB interview window with its 5-day schedule.",
+    "category": "Productivity",
+    "icon": "shield",
+    "iconColor": "text-(--primary)"
+  },
+  "ndjson-to-json-converter": {
+    "name": "NDJSON to JSON Converter",
+    "description": "Convert newline-delimited JSON (NDJSON/JSON Lines) to a JSON array and back, with per-line error reporting.",
+    "category": "Converters",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-age-eligibility-checker": {
+    "name": "NEET Age Eligibility Checker",
+    "description": "Check the NEET minimum-age rule — 17 years completed by 31 December of the admission year — with your exact age and day margin.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-application-document-checklist": {
+    "name": "NEET Application Checklist",
+    "description": "Checklist of every detail, document, photo and upload the NTA NEET (UG) registration asks for, with the fee for your category.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-exam-countdown": {
+    "name": "NEET Exam Countdown",
+    "description": "NEET UG countdown with a chapter-wise pace indicator per subject and a daily question target split by the 45-45-90 paper pattern.",
+    "category": "Productivity",
+    "icon": "stethoscope",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-exam-day-checklist": {
+    "name": "NEET Exam Day Checklist",
+    "description": "NEET dress code, allowed items and document checklist you can tick off, with a reporting plan built on the entry closing time.",
+    "category": "Productivity",
+    "icon": "stethoscope",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-omr-practice-sheet": {
+    "name": "NEET OMR Practice Sheet",
+    "description": "Print a NEET-style OMR answer sheet with 200 or 180 question bubbles, Section A/B blocks and a roll number grid for timed practice.",
+    "category": "Education & Science",
+    "icon": "circle-dot",
+    "iconColor": "text-(--primary)"
+  },
+  "neet-study-prompt-builder": {
+    "name": "NEET Study Prompt Builder",
+    "description": "Build NEET (UG) revision, active-recall and MCQ-drill prompts by subject and chapter, with +4/-1 pacing and scoring maths.",
+    "category": "Education & Science",
+    "icon": "stethoscope",
+    "iconColor": "text-(--primary)"
+  },
+  "negative-marking-calculator-banking": {
+    "name": "Negative Marking Calculator Banking",
+    "description": "Work out your IBPS or SBI net score section by section under the one-fourth penalty for wrong answers.",
+    "category": "Calculators",
+    "icon": "banknote",
+    "iconColor": "text-(--primary)"
+  },
+  "negative-marking-calculator-jee": {
+    "name": "Negative Marking Calculator JEE",
+    "description": "Project a JEE Main raw score from MCQ and numerical-value attempts under the +4 / -1 scheme, including the cost of blind guesses.",
+    "category": "Calculators",
+    "icon": "sigma",
+    "iconColor": "text-(--primary)"
+  },
+  "negative-marking-calculator-neet": {
+    "name": "Negative Marking Calculator NEET",
+    "description": "Model your NEET UG score under the +4 / -1 marking scheme and compare what blind and educated guessing actually add.",
+    "category": "Calculators",
+    "icon": "stethoscope",
+    "iconColor": "text-(--primary)"
+  },
+  "negative-marking-calculator-ssc": {
+    "name": "Negative Marking Calculator SSC",
+    "description": "See exactly how many marks wrong answers cost in SSC CGL, CHSL and CPO — 0.5 penalty maths, break-even accuracy and net score.",
+    "category": "Calculators",
+    "icon": "minus-circle",
+    "iconColor": "text-(--primary)"
+  },
+  "negative-marking-calculator-upsc": {
+    "name": "Negative Marking Calculator UPSC",
+    "description": "Apply the UPSC prelims one-third penalty to your attempt plan and find the attempt count that maximises expected marks.",
+    "category": "Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "neighbourhood-walkability-scorer": {
+    "name": "Neighbourhood Walkability Scorer",
+    "description": "Score any address 0-100 for walking access to shops, parks, schools and transit using the Walk Score distance-decay model.",
+    "category": "Lifestyle",
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
   },
   "net-worth-calculator": {
     "name": "Net Worth Calculator",
@@ -9963,6 +15474,27 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-emerald-600"
+  },
+  "net-worth-tracker-tool": {
+    "name": "Net Worth Tracker Tool",
+    "description": "List assets and liabilities to get your net worth, liquidity, debt-to-asset ratio and asset mix.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "netlify-cost-estimator": {
+    "name": "Netlify Cost Estimator",
+    "description": "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro.",
+    "category": "Calculators",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
+  },
+  "netlify-toml-generator": {
+    "name": "Netlify TOML Generator",
+    "description": "Generate a netlify.toml with build settings, redirects, security headers, functions and edge function routes.",
+    "category": "Generators",
+    "icon": "file-code-2",
+    "iconColor": "text-(--primary)"
   },
   "networking-basics-quiz": {
     "name": "Networking Basics Quiz",
@@ -10001,11 +15533,81 @@ export const toolMetaMap = {
     "icon": "hand",
     "iconColor": "text-pink-600"
   },
+  "newborn-feeding-volume-calculator": {
+    "name": "Newborn Feeding Volume Calculator",
+    "description": "Estimate a newborn's daily and per-feed millilitres from weight, day of life and feeds per day using standard mL/kg/day guidance.",
+    "category": "Health Calculators",
+    "icon": "milk",
+    "iconColor": "text-(--primary)"
+  },
+  "newsletter-prompt-builder": {
+    "name": "Newsletter Prompt Builder",
+    "description": "Drafts a newsletter prompt with segment, cadence and CTA guidance — subject-line limits and a per-item word budget built in.",
+    "category": "Marketing & Social",
+    "icon": "mail",
+    "iconColor": "text-(--primary)"
+  },
+  "nginx-cache-header-planner": {
+    "name": "Nginx Cache Header Planner",
+    "description": "Plan Cache-Control and expires directives per asset type and copy a ready nginx location-block snippet.",
+    "category": "Developer",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
+  },
+  "nginx-compression-config-generator": {
+    "name": "Nginx Compression Config Generator",
+    "description": "Generate nginx gzip and brotli directives with tuned compression levels, MIME type lists and minimum length.",
+    "category": "Developer",
+    "icon": "file-archive",
+    "iconColor": "text-(--primary)"
+  },
+  "nginx-log-format-builder": {
+    "name": "Nginx Log Format Builder",
+    "description": "Compose a custom nginx log_format from real variables, preview a sample log line and copy the directive.",
+    "category": "Developer",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
+  "night-driving-safety-checklist": {
+    "name": "Night Driving Safety Checklist",
+    "description": "Pre-drive checklist for lights, glass and fatigue, scored with the hours-awake impairment rule and the 02:00–06:00 risk window.",
+    "category": "Education & Science",
+    "icon": "moon",
+    "iconColor": "text-(--primary)"
+  },
+  "nitrogen-vs-air-tyre-cost": {
+    "name": "Nitrogen vs Air Tyre Cost",
+    "description": "Compare the cost of nitrogen tyre filling against the fuel and tread savings its slower pressure loss actually delivers.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "nm-to-ftlb-converter": {
+    "name": "Nm to Ftlb Converter",
+    "description": "Convert torque between newton metres, foot-pounds, inch-pounds and kgf-m, with a torque wrench extension correction.",
+    "category": "Converters",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
   "no-claim-bonus-calculator": {
     "name": "No Claim Bonus Calculator",
     "description": "NCB percentage and premium saved after consecutive claim-free years, with next-year slab, add-ons and GST on your motor renewal.",
     "category": "Finance Calculators",
     "icon": "badge-percent",
+    "iconColor": "text-(--primary)"
+  },
+  "no-claim-bonus-tracker": {
+    "name": "No Claim Bonus Tracker",
+    "description": "Track motor insurance NCB growth across the 20-25-35-45-50 percent slabs and see what one claim really costs you.",
+    "category": "Finance Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
+  "noise-reduction-rating-calculator": {
+    "name": "Noise Reduction Rating Calculator",
+    "description": "Turn an NRR or SNR label into an estimated protected level using the OSHA, OSHA 50% and NIOSH derating methods, including dual protection.",
+    "category": "Calculators",
+    "icon": "ear-off",
     "iconColor": "text-(--primary)"
   },
   "nonogram": {
@@ -10018,6 +15620,27 @@ export const toolMetaMap = {
     ],
     "icon": "grid-3x3",
     "iconColor": "text-sky-600"
+  },
+  "normalization-formula-explainer": {
+    "name": "Normalization Formula Explainer",
+    "description": "Walk through the SSC, Z-score, NTA percentile and min-max normalization formulas step by step with your own numbers.",
+    "category": "Education & Science",
+    "icon": "sigma",
+    "iconColor": "text-(--primary)"
+  },
+  "notes-topic-tag-cloud": {
+    "name": "Topic Tag Cloud For Notes",
+    "description": "Paste your notes to see a weighted tag cloud of dominant topics and a list of thin topics that need more coverage.",
+    "category": "Text & Writing",
+    "icon": "tags",
+    "iconColor": "text-(--primary)"
+  },
+  "notice-file-generator": {
+    "name": "NOTICE File Generator",
+    "description": "Generate an Apache-style NOTICE file with copyright line and attribution blocks from your dependency list.",
+    "category": "Generators",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
   },
   "notice-period-buyout-calculator": {
     "name": "Notice Period Buyout Calculator",
@@ -10037,6 +15660,34 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-blue-500"
   },
+  "notice-period-rent-calculator": {
+    "name": "Notice Period Rent Liability Calculator",
+    "description": "Calculate the rent you still owe when you vacate before the notice period or lock-in ends, and what is left of the deposit.",
+    "category": "Finance Calculators",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "npm-pnpm-yarn-comparison": {
+    "name": "npm pnpm yarn Comparison",
+    "description": "Compare npm, pnpm and Yarn on install strategy, disk usage, lockfiles, strictness and workspaces — with a weighted recommendation for your project.",
+    "category": "Developer",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "npm-scripts-builder": {
+    "name": "npm Scripts Builder",
+    "description": "Compose npm scripts with pre/post hooks, sequential and parallel combinations, and cross-platform safety checks for Windows shells.",
+    "category": "Generators",
+    "icon": "square-terminal",
+    "iconColor": "text-(--primary)"
+  },
+  "nps-80ccd1b-calculator": {
+    "name": "NPS 80CCD1B Extra Deduction Calculator",
+    "description": "Work out the extra Rs 50,000 NPS deduction under section 80CCD(1B), over and above the Rs 1.5 lakh 80CCE limit, and the tax it saves.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "nps-calculator": {
     "name": "NPS Calculator",
     "description": "Project your NPS corpus at 60, the pension your mandatory annuity buys, and the real tax you save.",
@@ -10053,6 +15704,20 @@ export const toolMetaMap = {
     "description": "Estimate your NPS Tier 1 corpus at 60, the mandatory annuity share and the expected monthly pension.",
     "category": "Finance Calculators",
     "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "nre-vs-nro-account-comparator": {
+    "name": "NRE vs NRO Account Comparator",
+    "description": "Compare NRE and NRO deposits on tax, TDS and repatriation, with post-tax maturity value for the same interest rate.",
+    "category": "Education & Science",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "nuget-package-reference-builder": {
+    "name": "NuGet Package Reference Builder",
+    "description": "Build PackageReference items with version ranges, asset flags and Central Package Management, and see what each range really allows.",
+    "category": "Generators",
+    "icon": "boxes",
     "iconColor": "text-(--primary)"
   },
   "number-guessing-game": {
@@ -10078,6 +15743,13 @@ export const toolMetaMap = {
     ],
     "icon": "car",
     "iconColor": "text-teal-600"
+  },
+  "number-plate-format-validator": {
+    "name": "Number Plate Format Validator",
+    "description": "Validate Indian registration numbers against the standard, BH-series, diplomatic and defence formats, with the regex for each.",
+    "category": "Developer",
+    "icon": "scan-line",
+    "iconColor": "text-(--primary)"
   },
   "number-system-conversions": {
     "name": "Number System Conversions",
@@ -10152,6 +15824,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "obsidian-ai-prompt-pack": {
+    "name": "Obsidian AI Prompt Pack",
+    "description": "A dozen ready Obsidian prompts for linking, summarising and daily note review, with wikilink, tag and filename rules applied.",
+    "category": "Productivity",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
+  },
   "occasion-reminder": {
     "name": "Occasion Reminder",
     "description": "Track important occasions with smart reminders, recurrence rules, and action-ready schedules.",
@@ -10198,6 +15877,13 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-yellow-500"
   },
+  "oil-change-interval-planner": {
+    "name": "Oil Change Interval Planner",
+    "description": "Plan your next engine oil change from oil type, driving conditions and kilometres run, with severe-service adjustment.",
+    "category": "Productivity",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
   "okr-generator": {
     "name": "OKR Generator",
     "description": "Generate objectives with measurable key results and suggested initiatives using AI-style prompts.",
@@ -10205,11 +15891,15 @@ export const toolMetaMap = {
       "Productivity",
       "Business"
     ],
-    "topics": [
-      "Planning"
-    ],
     "icon": "circle-dot",
     "iconColor": "text-violet-500"
+  },
+  "old-age-pension-eligibility-checker": {
+    "name": "Old Age Pension Scheme Eligibility Checker",
+    "description": "Check IGNOAPS, widow and disability pension criteria under NSAP, with the central share, state top-up and monthly total.",
+    "category": "Business",
+    "icon": "hand-coins",
+    "iconColor": "text-(--primary)"
   },
   "old-photo-restorer": {
     "name": "Old Photo Restorer",
@@ -10225,6 +15915,13 @@ export const toolMetaMap = {
     "icon": "wand-2",
     "iconColor": "text-teal-500"
   },
+  "oman-entry-requirement-checklist": {
+    "name": "Oman Entry Requirement Checklist",
+    "description": "Compare Oman's 14-day visa-free entry with the e-visa options, test passport validity and funds, and build the arrival document checklist.",
+    "category": "Productivity",
+    "icon": "compass",
+    "iconColor": "text-(--primary)"
+  },
   "omega3-intake-calculator": {
     "name": "Omega-3 Intake Calculator",
     "description": "Calculate your daily EPA+DHA Omega-3 intake from fish, seeds, walnuts, and supplements and see if you're meeting recommended health guidelines.",
@@ -10238,6 +15935,20 @@ export const toolMetaMap = {
     ],
     "icon": "fish",
     "iconColor": "text-blue-500"
+  },
+  "omr-rough-work-time-planner": {
+    "name": "OMR Rough Work Time Planner",
+    "description": "Plan how many exam minutes to reserve for transferring answers to the OMR sheet, with batch strategies and a stop-solving clock mark.",
+    "category": "Education & Science",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "onboarding-doc-prompt-builder": {
+    "name": "Onboarding Doc Prompt Builder",
+    "description": "Turns a role, team and access list into a first-week onboarding document prompt with an hour-by-hour split across the standard sections.",
+    "category": "Business",
+    "icon": "user-plus",
+    "iconColor": "text-(--primary)"
   },
   "one-handed-keyboard-trainer": {
     "name": "One-Handed Keyboard Trainer",
@@ -10299,6 +16010,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "open-source-license-chooser": {
+    "name": "Open Source License Chooser",
+    "description": "Answer a few questions to pick between MIT, Apache-2.0, MPL-2.0, LGPL, GPL, AGPL and public-domain licenses.",
+    "category": "Business",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "osmania-university-cgpa-converter": {
+    "name": "Osmania University CGPA Converter",
+    "description": "Convert Osmania University CGPA to percentage with the (CGPA - 0.5) x 10 rule, reverse it, and build the CGPA from semester SGPAs.",
+    "category": "Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
   "oven-temperature-converter": {
     "name": "Oven Temperature Converter",
     "description": "Convert oven temperatures between Celsius, Fahrenheit, gas marks and fan settings with a full reference chart.",
@@ -10308,6 +16033,27 @@ export const toolMetaMap = {
     ],
     "icon": "thermometer",
     "iconColor": "text-teal-600"
+  },
+  "overhead-water-tank-size-calculator": {
+    "name": "Overhead Water Tank Size Calculator",
+    "description": "Size an overhead tank and sump in litres from family size, IS 1172 per-capita demand, garden use and days of storage.",
+    "category": "Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "overtime-pay-calculator": {
+    "name": "Overtime Pay Calculator",
+    "description": "Calculate overtime pay from hourly rate, regular hours, overtime hours and multiplier with weekly totals.",
+    "category": "Finance Calculators",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
+  },
+  "overtime-register-format-generator": {
+    "name": "Overtime Register Format Generator",
+    "description": "Build a Form IV style overtime register with hours, ordinary rate, double-rate overtime wages and payment dates.",
+    "category": "Business",
+    "icon": "clock-4",
+    "iconColor": "text-(--primary)"
   },
   "ovulation-calculator": {
     "name": "Ovulation Calculator",
@@ -10346,6 +16092,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "package-json-generator": {
+    "name": "Package JSON Generator",
+    "description": "Build a valid package.json with metadata, scripts, module type, exports, engines and license — validated against npm's naming and semver rules.",
+    "category": "Generators",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
+  },
   "package-version-checker": {
     "name": "Package Version Checker",
     "description": "Check package versions quickly and compare updates instantly.",
@@ -10377,6 +16130,27 @@ export const toolMetaMap = {
     "icon": "circle-dot",
     "iconColor": "text-teal-600"
   },
+  "paint-cost-per-sqft-india": {
+    "name": "Paint Cost Per Square Foot India",
+    "description": "Work out the all-in painting cost per square foot in India across economy, premium and luxury emulsion tiers.",
+    "category": "Calculators",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
+  },
+  "paint-labour-cost-estimator-india": {
+    "name": "Paint Labour Cost Estimator India",
+    "description": "Estimate painter labour charges per sqft by city tier, finish quality, putty work and ceiling height.",
+    "category": "Calculators",
+    "icon": "paint-roller",
+    "iconColor": "text-(--primary)"
+  },
+  "paint-recoat-time-planner": {
+    "name": "Paint Recoat Time Planner",
+    "description": "Adjust touch-dry, recoat and hard-dry times for temperature and humidity, then schedule every coat by the clock.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "palindrome-checker": {
     "name": "Palindrome Checker",
     "description": "Check if a word, phrase, sentence, or number reads the same backwards as forwards, with character-matching highlights and clean visual gauges.",
@@ -10386,6 +16160,13 @@ export const toolMetaMap = {
     ],
     "icon": "check-circle",
     "iconColor": "text-teal-500"
+  },
+  "pan-format-decoder": {
+    "name": "PAN Format Validator and Type Decoder",
+    "description": "Check PAN structure offline and decode the fourth character to reveal whether the holder is an individual, company, firm, HUF or trust.",
+    "category": "Developer",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
   },
   "pan-format-validator": {
     "name": "PAN Format Validator",
@@ -10417,10 +16198,10 @@ export const toolMetaMap = {
   },
   "pantry-expiry-tracker": {
     "name": "Pantry Expiry Tracker",
-    "description": "Futuristic kitchen inventory management with real-time expiry tracking and reminders.",
-    "category": "Lifestyle",
-    "topics": [
-      "Kitchen Tools"
+    "description": "Track what is in your fridge, freezer and cupboard, see what expires first, and put a number on the food value at risk this week.",
+    "category": [
+      "Lifestyle",
+      "Productivity"
     ],
     "icon": "shopping-basket",
     "iconColor": "text-blue-500"
@@ -10435,6 +16216,34 @@ export const toolMetaMap = {
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
   },
+  "parent-progress-summary-builder": {
+    "name": "Parent Progress Summary Builder",
+    "description": "Turn a student's subject marks and attendance into a clear one-page progress summary with grade, strengths and focus areas.",
+    "category": "Education & Science",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "parenting-prompt-builder": {
+    "name": "Parenting Prompt Builder",
+    "description": "Matches a child's age to a developmental stage and attention span, then writes an AI prompt for age-appropriate activities and conversations.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
+  "paris-trip-budget-breakdown": {
+    "name": "Paris Trip Budget Breakdown",
+    "description": "Split a Paris trip into flights, stay, taxe de séjour, food, transport and activities, per person and per day.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "parking-allotment-dispute-letter-generator": {
+    "name": "Parking Allotment Dispute Letter Generator",
+    "description": "Draft a housing society parking complaint over a denied slot, encroachment, unfair allotment or illegal parking charges.",
+    "category": "Business",
+    "icon": "circle-parking",
+    "iconColor": "text-(--primary)"
+  },
   "party-food-planner": {
     "name": "Party Food Quantity Planner",
     "description": "Plan exact party food and drink quantities with real per-person portions, totals, and a ready shopping list.",
@@ -10447,6 +16256,13 @@ export const toolMetaMap = {
     ],
     "icon": "party-popper",
     "iconColor": "text-teal-600"
+  },
+  "passing-marks-requirement-tool": {
+    "name": "Passing Marks Requirement Tool",
+    "description": "Find the external exam marks you need to pass a subject, given your internal score and your university's pass percentages.",
+    "category": "Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
   },
   "passkey-readiness-tester": {
     "name": "Passkey Readiness Tester",
@@ -10492,6 +16308,27 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-teal-600"
+  },
+  "payment-gateway-fee-calculator": {
+    "name": "Payment Gateway Fee Calculator",
+    "description": "Net settlement after a gateway's percentage, fixed fee, cross-border surcharge and tax — plus the amount to charge to net a target.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
+  "payment-receipt-generator": {
+    "name": "Payment Receipt Generator",
+    "description": "Create numbered payment receipts with payer, payment mode, amount in words and the balance still due on the invoice.",
+    "category": "Generators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "payroll-compliance-calendar-india": {
+    "name": "Payroll Compliance Calendar India",
+    "description": "Statutory due dates for PF, ESI, salary TDS and state professional tax for any wage month, plus late-deposit interest and Section 14B damages.",
+    "category": "Business",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
   },
   "pdf-active-content-inspector": {
     "name": "PDF Active Content Inspector",
@@ -10671,14 +16508,10 @@ export const toolMetaMap = {
   },
   "pdf-to-base64": {
     "name": "PDF to Base64",
-    "description": "Convert local PDF files into Base64 data URLs.",
+    "description": "Convert a local PDF into a Base64 data URL in your browser, with the exact encoded size and a header check.",
     "category": [
       "PDF & Documents",
       "Converters"
-    ],
-    "topics": [
-      "PDF",
-      "Converter"
     ],
     "icon": "file-up",
     "iconColor": "text-red-700"
@@ -10717,6 +16550,20 @@ export const toolMetaMap = {
     "icon": "file-lock",
     "iconColor": "text-red-600"
   },
+  "peak-traffic-headroom-calculator": {
+    "name": "Peak Traffic Headroom Calculator",
+    "description": "Project peak request load for sale days and viral spikes, then size instances and headroom against a target utilization.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "per-diem-allowance-calculator": {
+    "name": "Per Diem Allowance Calculator",
+    "description": "Total a business trip's daily allowance by city tier, with part-day rates, lodging nights and provided-meal deductions.",
+    "category": "Finance Calculators",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
   "percentage-calculator": {
     "name": "Percentage Calculator",
     "description": "Calculate percentages, percentage change, increase, decrease, and ratios instantly.",
@@ -10740,6 +16587,13 @@ export const toolMetaMap = {
     ],
     "icon": "percent",
     "iconColor": "text-violet-600"
+  },
+  "percentage-change-difference-calculator": {
+    "name": "Percentage Change and Difference Calculator",
+    "description": "Work out percentage increase, decrease, percentage difference, percentage of a number and percentage points in one place.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
   },
   "percentage-increase-decrease-calculator": {
     "name": "Percentage Increase Decrease Calculator",
@@ -10778,6 +16632,13 @@ export const toolMetaMap = {
     ],
     "icon": "egg",
     "iconColor": "text-teal-600"
+  },
+  "performance-review-prompt-builder": {
+    "name": "Performance Review Prompt Builder",
+    "description": "Turn rough review notes into a structured prompt, scoring each note for measurable evidence, timeframe and a concrete action.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "period-cycle-tracker": {
     "name": "Period & Cycle Tracker",
@@ -10819,9 +16680,6 @@ export const toolMetaMap = {
     "name": "Periodic Table Query Tool",
     "description": "Interactive periodic table explorer with live element search, filtering, comparison, favorites, and exports.",
     "category": "Education & Science",
-    "topics": [
-      "EdTech"
-    ],
     "icon": "atom",
     "iconColor": "text-cyan-500"
   },
@@ -10861,6 +16719,20 @@ export const toolMetaMap = {
     ],
     "icon": "shuffle",
     "iconColor": "text-violet-600"
+  },
+  "person-in-news-tracker": {
+    "name": "Person In News Tracker",
+    "description": "Track appointments and personalities in the news with role, organisation and date in a searchable exam-ready table.",
+    "category": "Productivity",
+    "icon": "user-round",
+    "iconColor": "text-(--primary)"
+  },
+  "personal-accident-cover-calculator": {
+    "name": "Personal Accident Cover Calculator",
+    "description": "Size accidental death and permanent disability cover from income, dependants, loans and goals, against the usual 10x income underwriting cap.",
+    "category": "Finance Calculators",
+    "icon": "heart-pulse",
+    "iconColor": "text-(--primary)"
   },
   "personal-crisis-safety-plan": {
     "name": "Personal Crisis Safety Plan",
@@ -10914,6 +16786,13 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-(--primary)"
   },
+  "pest-control-planner": {
+    "name": "Pest Control Planner",
+    "description": "Pick your pests and home size to get the right treatment method, service interval, 12-month schedule and cost with GST.",
+    "category": "Productivity",
+    "icon": "bug",
+    "iconColor": "text-(--primary)"
+  },
   "pet-age-converter": {
     "name": "Pet Age Calculator (Dog & Cat Years)",
     "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress.",
@@ -10923,6 +16802,20 @@ export const toolMetaMap = {
     ],
     "icon": "paw-print",
     "iconColor": "text-teal-600"
+  },
+  "pet-calming-sound-player": {
+    "name": "Pet Calming Sound Player",
+    "description": "Play low-stimulation noise loops for anxious pets and size the level so fireworks are masked without unsafe volume.",
+    "category": "Lifestyle",
+    "icon": "paw-print",
+    "iconColor": "text-(--primary)"
+  },
+  "pet-care-prompt-builder": {
+    "name": "Pet Care Prompt Builder",
+    "description": "Build training, routine and behaviour prompts from your pet's species, age, life stage and daily time budget.",
+    "category": "Lifestyle",
+    "icon": "paw-print",
+    "iconColor": "text-(--primary)"
   },
   "pet-health-records-vault": {
     "name": "Pet Health Records Vault",
@@ -10948,6 +16841,20 @@ export const toolMetaMap = {
     "icon": "dog",
     "iconColor": "text-teal-500"
   },
+  "pet-ownership-noc-request-generator": {
+    "name": "Pet Ownership NOC Request Generator",
+    "description": "Draft a courteous NOC request to your housing society for keeping a pet, with vaccination status, commitments and a readiness score.",
+    "category": "Lifestyle",
+    "icon": "paw-print",
+    "iconColor": "text-(--primary)"
+  },
+  "petty-cash-book-builder": {
+    "name": "Petty Cash Book Builder",
+    "description": "Build an analytical imprest petty cash book with running balance, expense-head totals and the reimbursement due.",
+    "category": "Business",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
+  },
   "ph-scale-visualizer": {
     "name": "pH Scale Visualizer",
     "description": "Interactive logarithmic pH scale visualizer with hydronium ion concentration, common household substances, and buffer concepts.",
@@ -10957,6 +16864,20 @@ export const toolMetaMap = {
     ],
     "icon": "droplet",
     "iconColor": "text-teal-500"
+  },
+  "phantom-load-checklist": {
+    "name": "Phantom Load Checklist",
+    "description": "Tick off the always-on devices in your home and see the standby power they draw, what it costs a year and how much you can switch off.",
+    "category": "Productivity",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
+  "philippines-entry-requirement-checklist": {
+    "name": "Philippines Entry Requirement Checklist",
+    "description": "Check your Philippines visa-free allowance, the eTravel registration window, passport validity beyond the stay and the extension you will need.",
+    "category": "Productivity",
+    "icon": "palmtree",
+    "iconColor": "text-(--primary)"
   },
   "phishing-url-x-ray": {
     "name": "Phishing URL X-Ray",
@@ -11007,6 +16928,13 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-indigo-500"
   },
+  "physical-test-day-checklist": {
+    "name": "Physical Test Day Checklist",
+    "description": "PET and PST day planner: lap-by-lap pace for the qualifying run, height and chest checks, plus the kit, documents and warm-up to take to the ground.",
+    "category": "Productivity",
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
+  },
   "pickup-line-generator": {
     "name": "Pickup Line Generator",
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
@@ -11016,6 +16944,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-pink-500"
+  },
+  "picture-frame-miter-calculator": {
+    "name": "Picture Frame Miter Calculator",
+    "description": "Miter saw angle, long and short point lengths and total moulding for rectangular or many-sided picture frames.",
+    "category": "Calculators",
+    "icon": "frame",
+    "iconColor": "text-(--primary)"
   },
   "pigmentation-analyzer": {
     "name": "Pigmentation Analyzer",
@@ -11033,6 +16968,13 @@ export const toolMetaMap = {
     "icon": "sun",
     "iconColor": "text-teal-500"
   },
+  "pillion-load-checker": {
+    "name": "Pillion Load Checker",
+    "description": "Check rider, pillion and luggage weight against your bike's gross vehicle weight, payload and rear tyre load index.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "pin-code-region-lookup": {
     "name": "PIN Code Region Lookup",
     "description": "Six-digit PIN se postal circle, state aur district lookup kare.",
@@ -11043,6 +16985,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "pinterest-pin-size-generator": {
+    "name": "Pinterest Pin Size Generator",
+    "description": "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks.",
+    "category": "Design & Color",
+    "icon": "pin",
+    "iconColor": "text-(--primary)"
   },
   "pirate-name-generator": {
     "name": "Pirate Name Generator",
@@ -11079,6 +17028,13 @@ export const toolMetaMap = {
     "icon": "leaf",
     "iconColor": "text-teal-500"
   },
+  "plastic-reduction-tracker": {
+    "name": "Plastic Reduction Tracker",
+    "description": "Log the single-use plastic you avoid each week and see the weight, CO2e and money you save over a year.",
+    "category": "Productivity",
+    "icon": "recycle",
+    "iconColor": "text-(--primary)"
+  },
   "plate-tectonics-simulator": {
     "name": "Plate Tectonics Simulator",
     "description": "Interactive lithospheric plate boundary simulator with mantle convection currents, subduction zones, continental rifting, and volcanism.",
@@ -11088,6 +17044,97 @@ export const toolMetaMap = {
     ],
     "icon": "layers",
     "iconColor": "text-teal-500"
+  },
+  "plug-voltage-guide-argentina": {
+    "name": "Plug and Voltage Guide for Argentina",
+    "description": "Argentina runs 220 V at 50 Hz on type I and type C sockets — check your plug, the reversed polarity and converter need.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-australia": {
+    "name": "Plug and Voltage Guide for Australia",
+    "description": "Australia runs 230 V at 50 Hz on the AS/NZS 3112 type I socket — check your plug, the 10/15/20 A pin ladder and converter need.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-china": {
+    "name": "Plug and Voltage Guide for China",
+    "description": "Mainland China runs 220 V at 50 Hz on type A, C and I sockets — check your plug, the 10/16 A limit and how Hong Kong differs.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-italy": {
+    "name": "Plug and Voltage Guide for Italy",
+    "description": "Italy runs 230 V at 50 Hz on type L, F and C sockets — check whether your plug fits and if you need a converter.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-japan": {
+    "name": "Plug and Voltage Guide for Japan",
+    "description": "Japan's 100 V supply, Type A sockets and the 50/60 Hz east-west grid split, with whether your device needs an adapter or a converter.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-south-africa": {
+    "name": "Plug and Voltage Guide for South Africa",
+    "description": "South Africa runs 230 V at 50 Hz on the old type M and the new SANS 164-2 type N socket — see which outlet takes your plug.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-uae": {
+    "name": "Plug and Voltage Guide for UAE",
+    "description": "The UAE runs 230 V at 50 Hz on British-style type G sockets, with type C and D legacy outlets — check adapter, fuse and converter need.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "plug-voltage-guide-uk": {
+    "name": "Plug and Voltage Guide for UK",
+    "description": "The UK runs 230 V at 50 Hz on the fused BS 1363 type G socket — check your plug, the fuse rating and whether you need a converter.",
+    "category": "Education & Science",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
+  },
+  "pm-kisan-eligibility-checker": {
+    "name": "PM Kisan Eligibility Checker",
+    "description": "Check landholding, exclusion categories and e-KYC readiness for the PM-KISAN farmer income support scheme of Rs 6,000 a year.",
+    "category": "Business",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "pm-vishwakarma-eligibility-checker": {
+    "name": "PM Vishwakarma Scheme Eligibility Checker",
+    "description": "Check the 18 covered trades and the age, family and prior-loan conditions for PM Vishwakarma, plus the toolkit, stipend and 5% loan benefits.",
+    "category": "Business",
+    "icon": "hammer",
+    "iconColor": "text-(--primary)"
+  },
+  "png-connection-cost-estimator": {
+    "name": "PNG Connection Cost Estimator",
+    "description": "Estimate a new piped gas connection: registration, refundable deposit, internal piping, extra points and payback against LPG.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "png-vs-lpg-cost-comparison": {
+    "name": "PNG vs LPG Cost Comparison",
+    "description": "Compare piped natural gas and cylinder LPG on equal energy, with monthly cost, cost per usable kWh and payback on the PNG connection fee.",
+    "category": "Calculators",
+    "icon": "fuel",
+    "iconColor": "text-(--primary)"
+  },
+  "pnpm-workspace-config-generator": {
+    "name": "pnpm Workspace Config Generator",
+    "description": "Generate pnpm-workspace.yaml with package globs, exclusions and catalog dependency versions, plus the catalog: usage snippet.",
+    "category": "Generators",
+    "icon": "package",
+    "iconColor": "text-(--primary)"
   },
   "podcast-de-noiser-echo-reducer": {
     "name": "Podcast De-noiser & Echo Reducer",
@@ -11100,12 +17147,75 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "podcast-episode-cost-calculator": {
+    "name": "Podcast Episode Cost Calculator",
+    "description": "Add up editing, hosting, artwork and gear costs per podcast episode, then see cost per minute and the sponsor CPM you need to break even.",
+    "category": "Finance Calculators",
+    "icon": "podcast",
+    "iconColor": "text-(--primary)"
+  },
+  "podcast-episode-length-planner": {
+    "name": "Podcast Episode Length Planner",
+    "description": "Budget fixed and flexible segments against a target runtime, with ad load, start timestamps and a word count for each block.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "podcast-episode-title-generator": {
+    "name": "Podcast Episode Title Generator",
+    "description": "Generate podcast episode titles from proven patterns and score each one on length, keyword position and truncation risk.",
+    "category": "Text & Writing",
+    "icon": "type",
+    "iconColor": "text-(--primary)"
+  },
+  "podcast-outline-prompt-builder": {
+    "name": "Podcast Outline Prompt Builder",
+    "description": "Builds episode outline prompts with timed segments, question counts and cold-open, intro and outro blocks sized to your runtime.",
+    "category": "Marketing & Social",
+    "icon": "mic",
+    "iconColor": "text-(--primary)"
+  },
+  "podcast-release-calendar-planner": {
+    "name": "Podcast Release Calendar Planner",
+    "description": "Plan a podcast season: publish dates, edit and recording deadlines, batch sessions and mid-season break on one grid.",
+    "category": "Productivity",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
+  },
+  "podcast-show-notes-formatter": {
+    "name": "Podcast Show Notes Formatter",
+    "description": "Turn rough episode notes into formatted show notes with normalised timestamps, a links list and YouTube chapter validation.",
+    "category": "Text & Writing",
+    "icon": "mic",
+    "iconColor": "text-(--primary)"
+  },
+  "poetry-vs-pip-planner": {
+    "name": "Poetry vs Pip Planner",
+    "description": "Answer a few questions about your Python project and get a ranked recommendation across poetry, pip-tools, uv and conda.",
+    "category": "Developer",
+    "icon": "package-search",
+    "iconColor": "text-(--primary)"
+  },
+  "police-exam-answer-key-scorer": {
+    "name": "Police Exam Answer Key Scorer",
+    "description": "Score state police constable written exams from your marked responses, with each exam's marks-per-question and negative marking.",
+    "category": "Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "poll-maker": {
     "name": "Poll Maker",
     "description": "Create interactive polls quickly and collect real-time responses.",
     "category": "Business",
     "icon": "bar-chart-2",
     "iconColor": "text-purple-600"
+  },
+  "polytechnic-admission-merit-calculator": {
+    "name": "Polytechnic Admission Merit Tool",
+    "description": "Compute your polytechnic diploma admission merit index from Class 10 percentage and entrance score with state-style weights.",
+    "category": "Calculators",
+    "icon": "hard-hat",
+    "iconColor": "text-(--primary)"
   },
   "pomodoro-session-planner": {
     "name": "Pomodoro Session Planner",
@@ -11120,6 +17230,27 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "timer",
     "iconColor": "text-[var(--primary)]"
+  },
+  "ponderal-index-calculator": {
+    "name": "Ponderal Index Calculator",
+    "description": "Ponderal index divides weight by height cubed, so it stays fair for very tall or very short adults, plus a newborn mode.",
+    "category": "Health Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "port-number-reference-explorer": {
+    "name": "Port Number Reference Explorer",
+    "description": "Search well-known and registered TCP/UDP ports by number, service name or protocol, with IANA range classification.",
+    "category": "Developer",
+    "icon": "network",
+    "iconColor": "text-(--primary)"
+  },
+  "portal-upload-spec-comparer": {
+    "name": "Portal Upload Spec Comparer",
+    "description": "Compare photo and signature upload rules across exam portals and find one file size and format that satisfies all of them.",
+    "category": "Education & Science",
+    "icon": "git-compare",
+    "iconColor": "text-(--primary)"
   },
   "portfolio-allocation-visualizer": {
     "name": "Portfolio Allocation Visualizer",
@@ -11173,6 +17304,13 @@ export const toolMetaMap = {
     "icon": "mailbox",
     "iconColor": "text-(--primary)"
   },
+  "post-office-rd-calculator": {
+    "name": "Post Office Recurring Deposit Calculator",
+    "description": "Five-year National Savings Recurring Deposit maturity with quarterly compounding, default fees, advance rebate and premature closure.",
+    "category": "Finance Calculators",
+    "icon": "mailbox",
+    "iconColor": "text-(--primary)"
+  },
   "post-office-scheme-calculator": {
     "name": "Post Office Scheme Calculator",
     "description": "NSC, KVP aur MIS maturity estimates compare kare.",
@@ -11188,6 +17326,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-primary"
   },
+  "post-office-time-deposit-calculator": {
+    "name": "Post Office Time Deposit Calculator",
+    "description": "Maturity value, annual interest payout and tax notes for 1, 2, 3 and 5 year Post Office Time Deposit accounts.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
   "post-quantum-migration-inventory": {
     "name": "Post-Quantum Migration Inventory",
     "description": "Inventory observable RSA, elliptic-curve, DSA, Diffie-Hellman, TLS, and post-quantum algorithm references in pasted code, config, or certificate metadata.",
@@ -11199,6 +17344,34 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "post-surgery-protein-calculator": {
+    "name": "Post-Surgery Protein Calculator",
+    "description": "Informational recovery protein and energy estimate using ESPEN surgical guideline g/kg bands and adjusted body weight.",
+    "category": "Health Calculators",
+    "icon": "bandage",
+    "iconColor": "text-(--primary)"
+  },
+  "postcss-config-generator": {
+    "name": "PostCSS Config Generator",
+    "description": "Generate a postcss.config file with import, nesting, preset-env, autoprefixer and cssnano plugins in the correct order.",
+    "category": "Generators",
+    "icon": "file-cog",
+    "iconColor": "text-(--primary)"
+  },
+  "poster-print-bleed-calculator": {
+    "name": "Poster Print Bleed Calculator",
+    "description": "Work out poster document size with bleed, safe margins, export resolution and minimum readable text sizes for a given viewing distance.",
+    "category": "Design & Color",
+    "icon": "crop",
+    "iconColor": "text-(--primary)"
+  },
+  "postgresql-connection-string-builder": {
+    "name": "PostgreSQL Connection String Builder",
+    "description": "Build postgres:// URIs and keyword/value DSNs with SSL mode, schema, timeout and pool parameters, correctly percent-encoded.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
+  },
   "posting-schedule-planner": {
     "name": "Posting Schedule Planner",
     "description": "Plan, schedule, and preview social media posts with caption limits and metrics tracking.",
@@ -11209,6 +17382,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar",
     "iconColor": "text-cyan-500"
+  },
+  "postmortem-template-generator": {
+    "name": "Postmortem Template Generator",
+    "description": "Generate a blameless postmortem document with metadata, timeline, root cause, lessons and tracked action items in Markdown.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
   },
   "posture-reminder": {
     "name": "Posture & Movement Reminder",
@@ -11233,6 +17413,27 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-primary"
   },
+  "potting-mix-ratio-calculator": {
+    "name": "Potting Mix Ratio Calculator",
+    "description": "Turn pot size into litres of soil, compost, cocopeat and perlite using proven mix ratios for pots, grow bags and troughs.",
+    "category": "Calculators",
+    "icon": "flask-conical",
+    "iconColor": "text-(--primary)"
+  },
+  "power-to-weight-ratio-calculator": {
+    "name": "Power to Weight Ratio Calculator",
+    "description": "Convert power and kerb weight into PS/tonne, kW/tonne and kg per PS, plus a physics-based 0-100 km/h estimate.",
+    "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
+  "power-tool-wattage-comparison": {
+    "name": "Power Tool Wattage Comparison",
+    "description": "Compares running and starting watts for common power tools and checks whether your generator, inverter or battery bank can actually run them.",
+    "category": "Education & Science",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
   "ppf-calculator": {
     "name": "PPF Calculator",
     "description": "Project your Public Provident Fund maturity with year-wise growth, loan and withdrawal limits, and tax-free returns.",
@@ -11251,6 +17452,13 @@ export const toolMetaMap = {
     "icon": "piggy-bank",
     "iconColor": "text-(--primary)"
   },
+  "practical-exam-prep-checklist": {
+    "name": "Practical Exam Prep Checklist",
+    "description": "Tick through records, apparatus, viva and exam-day items for a lab practical exam and see your readiness percentage per section.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
   "prayer-times-qibla": {
     "name": "Prayer Times & Qibla Direction",
     "description": "Get accurate daily prayer times and the Qibla bearing for any city, computed offline on your own device.",
@@ -11260,6 +17468,20 @@ export const toolMetaMap = {
     ],
     "icon": "compass",
     "iconColor": "text-teal-600"
+  },
+  "pre-exam-breathing-routine": {
+    "name": "Pre Exam Breathing Routine",
+    "description": "Guided box, 4-7-8 or extended-exhale breathing with a paced on-screen timer to steady nerves before entering the exam hall.",
+    "category": "Health & Fitness",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
+  },
+  "pre-matric-scholarship-eligibility-checker": {
+    "name": "Pre Matric Scholarship Checker",
+    "description": "Check eligibility for central pre-matric scholarships — SC, ST, OBC/EBC/DNT, minority and hazardous-occupation schemes.",
+    "category": "Education & Science",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
   },
   "pregnancy-due-date": {
     "name": "Pregnancy Due Date Calculator",
@@ -11274,6 +17496,27 @@ export const toolMetaMap = {
     "icon": "baby",
     "iconColor": "text-teal-600"
   },
+  "pregnancy-hydration-calculator": {
+    "name": "Pregnancy Hydration Calculator",
+    "description": "Trimester-adjusted daily water target from EFSA adequate intakes, split into evenly spaced servings with a bedtime cut-off.",
+    "category": "Health & Fitness",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
+  "prescription-refill-reminder-builder": {
+    "name": "Prescription Refill Reminder Builder",
+    "description": "Turn quantity dispensed, daily dose and repeats authorised into every refill date and the reminder date before each one.",
+    "category": "Health & Fitness",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "press-release-prompt-builder": {
+    "name": "Press Release Prompt Builder",
+    "description": "Builds press release prompts with an AP-style dateline, inverted-pyramid word budgets, attributed quotes and boilerplate.",
+    "category": "Business",
+    "icon": "newspaper",
+    "iconColor": "text-(--primary)"
+  },
   "pressure-cooker-converter": {
     "name": "Pressure Cooker Time Converter",
     "description": "Convert cook times to pressure-cooker whistles and Instant-Pot minutes, with dal, rice, rajma and meat charts.",
@@ -11286,6 +17529,20 @@ export const toolMetaMap = {
     ],
     "icon": "cooking-pot",
     "iconColor": "text-teal-600"
+  },
+  "presumptive-44ada-calculator": {
+    "name": "Presumptive Tax 44ADA Calculator",
+    "description": "Work out 50% presumptive income under section 44ADA, test the Rs 75 lakh cash-receipts condition and see the tax due.",
+    "category": "Finance Calculators",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "prettier-config-generator": {
+    "name": "Prettier Config Generator",
+    "description": "Generate a .prettierrc with every core formatting option, a live sample preview and per-file overrides.",
+    "category": "Generators",
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
   },
   "price-evidence-locker": {
     "name": "Price Evidence Locker",
@@ -11319,6 +17576,20 @@ export const toolMetaMap = {
     ],
     "icon": "sigma",
     "iconColor": "text-blue-600"
+  },
+  "primer-quantity-calculator": {
+    "name": "Primer Quantity Calculator",
+    "description": "Find primer litres required by primer type, substrate absorbency and coat count, with tin sizes and cost.",
+    "category": "Calculators",
+    "icon": "spray-can",
+    "iconColor": "text-(--primary)"
+  },
+  "print-bleed-calculator": {
+    "name": "Print Bleed Calculator",
+    "description": "Work out bleed, trim, safe margin and slug sizes for any print job in mm, inches, points and pixels at your chosen DPI.",
+    "category": "Design & Color",
+    "icon": "crop",
+    "iconColor": "text-(--primary)"
   },
   "privacy-policy-generator": {
     "name": "Privacy Policy Generator",
@@ -11396,6 +17667,20 @@ export const toolMetaMap = {
     "icon": "chart-spline",
     "iconColor": "text-primary"
   },
+  "probation-and-bond-explainer": {
+    "name": "Probation And Bond Explainer",
+    "description": "Understand probation periods and service bonds before accepting a post, and calculate what leaving early would cost.",
+    "category": "Education & Science",
+    "icon": "file-signature",
+    "iconColor": "text-(--primary)"
+  },
+  "product-description-prompt-builder": {
+    "name": "Product Description Prompt Builder",
+    "description": "Build listing-copy prompts with feature-to-benefit pairing, a per-section word budget and the real title and bullet limits of each marketplace.",
+    "category": "Marketing & Social",
+    "icon": "package-search",
+    "iconColor": "text-(--primary)"
+  },
   "product-image-compare": {
     "name": "Product Image Compare",
     "description": "Interactively compare two product images (e.g., Before/After or variations) side-by-side with a drag slider.",
@@ -11412,6 +17697,20 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-emerald-500"
   },
+  "product-photo-prompt-builder": {
+    "name": "Product Photo Prompt Builder",
+    "description": "Compose ecommerce product-shot prompts with surface, angle and lighting, sized to Amazon, Etsy, Shopify or Instagram image rules.",
+    "category": "Marketing & Social",
+    "icon": "camera",
+    "iconColor": "text-(--primary)"
+  },
+  "product-pricing-calculator": {
+    "name": "Product Pricing Calculator with Taxes",
+    "description": "Set a selling price from unit cost, target margin, marketplace commission and tax, with charm rounding and a break-even count.",
+    "category": "Business",
+    "icon": "tag",
+    "iconColor": "text-(--primary)"
+  },
   "product-recall-watchlist": {
     "name": "Product Recall Watchlist",
     "description": "Owned products ke official recall notices monitor kare.",
@@ -11423,11 +17722,74 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "professional-tax-andhra-pradesh": {
+    "name": "Professional Tax Calculator Andhra Pradesh",
+    "description": "Andhra Pradesh professional tax slabs for salaried staff, plus an employer head-count total and registration rules.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "professional-tax-calculator": {
     "name": "Professional Tax Calculator",
     "description": "Find your state-wise monthly and annual professional tax deduction from current salary slabs across Indian states.",
     "category": "Finance Calculators",
     "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-gujarat": {
+    "name": "Professional Tax Calculator Gujarat",
+    "description": "Gujarat professional tax by monthly salary band, with the Rs 12,000 exemption limit and the Section 16(iii) tax saving.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-karnataka": {
+    "name": "Professional Tax Calculator Karnataka",
+    "description": "Karnataka professional tax deduction by monthly salary, using the Rs 25,000 exemption threshold and Rs 200 flat rate.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-kerala": {
+    "name": "Professional Tax Calculator Kerala",
+    "description": "Half-yearly Kerala professional tax for panchayat, municipality and corporation slabs, with the annual total and payroll split.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-madhya-pradesh": {
+    "name": "Professional Tax Calculator Madhya Pradesh",
+    "description": "Madhya Pradesh professional tax by annual salary slab, with the monthly deduction split and annual deposit guidance.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-maharashtra": {
+    "name": "Professional Tax Calculator Maharashtra",
+    "description": "Monthly and annual Maharashtra professional tax by salary slab, including the February top-up and the women's exemption.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-tamil-nadu": {
+    "name": "Professional Tax Calculator Tamil Nadu",
+    "description": "Half-yearly professional tax for Tamil Nadu employees using the Greater Chennai Corporation income slabs.",
+    "category": "Finance Calculators",
+    "icon": "map-pin",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-telangana": {
+    "name": "Professional Tax Calculator Telangana",
+    "description": "Telangana professional tax for salaried employees by monthly slab, plus the enrolment tax for self-employed professionals.",
+    "category": "Finance Calculators",
+    "icon": "briefcase",
+    "iconColor": "text-(--primary)"
+  },
+  "professional-tax-west-bengal": {
+    "name": "Professional Tax Calculator West Bengal",
+    "description": "West Bengal professional tax by monthly salary slab, with the employer's month-by-month deposit schedule.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
     "iconColor": "text-(--primary)"
   },
   "profile-pic-bg-changer": {
@@ -11469,6 +17831,13 @@ export const toolMetaMap = {
     "icon": "user",
     "iconColor": "text-teal-500"
   },
+  "proforma-invoice-generator": {
+    "name": "Proforma Invoice Generator",
+    "description": "Build a proforma invoice with HS codes, Incoterms, freight and insurance, validity dates and the total spelled out in words.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
   "programming-terms-dictionary": {
     "name": "Programming Terms Dictionary",
     "description": "Browse and search a comprehensive dictionary of programming terms, concepts, and jargon with clear definitions and examples.",
@@ -11489,6 +17858,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-(--primary)"
   },
+  "project-manager-prompt-pack": {
+    "name": "Project Manager Prompt Pack",
+    "description": "Status updates, RAID logs, escalations and stakeholder emails as ready-to-paste prompts filled with your project context.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
   "projectile-motion-simulator": {
     "name": "Projectile Motion Simulator",
     "description": "Interactive physics simulator for projectile trajectories with real-time vectors, gravity presets, air resistance, and trajectory analytics.",
@@ -11498,6 +17874,27 @@ export const toolMetaMap = {
     ],
     "icon": "move-up-right",
     "iconColor": "text-teal-500"
+  },
+  "prompt-escape-helper": {
+    "name": "Prompt Escape Helper",
+    "description": "Escape a prompt for JavaScript, JSON, Python, shell, SQL, YAML, CSV, HTML or URL embedding, with braces and backslashes handled.",
+    "category": "Developer",
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
+  },
+  "prompt-markdown-cleaner": {
+    "name": "Prompt Markdown Cleaner",
+    "description": "Strip stray markdown, smart quotes and invisible characters from text before pasting it into an AI model.",
+    "category": "Text & Writing",
+    "icon": "eraser",
+    "iconColor": "text-(--primary)"
+  },
+  "prompt-markdown-to-plain": {
+    "name": "Prompt Markdown to Plain",
+    "description": "Strip Markdown from a prompt — headings, emphasis, links, code fences, tables — when the target expects plain text.",
+    "category": "Text & Writing",
+    "icon": "align-left",
+    "iconColor": "text-(--primary)"
   },
   "prompt-painter-react": {
     "name": "Prompt Painter",
@@ -11512,6 +17909,13 @@ export const toolMetaMap = {
     ],
     "icon": "code",
     "iconColor": "text-purple-500"
+  },
+  "prompt-whitespace-normalizer": {
+    "name": "Prompt Whitespace Normalizer",
+    "description": "Collapse stray spaces, tabs, blank lines and invisible Unicode characters in pasted prompts, with a before/after character count.",
+    "category": "Text & Writing",
+    "icon": "align-left",
+    "iconColor": "text-(--primary)"
   },
   "pronunciation-practice": {
     "name": "Pronunciation Practice",
@@ -11536,6 +17940,20 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-(--primary)"
   },
+  "property-registration-charge-estimator": {
+    "name": "Property Registration Charge Estimator",
+    "description": "Estimate stamp duty, registration fee, cess, scanning and franking charges on a property transfer, with the section 194-IA TDS check.",
+    "category": "Finance Calculators",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "property-rental-yield-calculator": {
+    "name": "Property Yield and Rental Return Calculator",
+    "description": "Gross and net rental yield on a property after vacancy, maintenance, municipal tax and income tax on house property.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "proportion-solver": {
     "name": "Proportion Solver",
     "description": "Solve a/b = c/d for any missing value with full cross multiplication steps.",
@@ -11550,6 +17968,41 @@ export const toolMetaMap = {
     "icon": "beef",
     "iconColor": "text-(--primary)"
   },
+  "psi-to-bar-converter": {
+    "name": "PSI to Bar Converter",
+    "description": "Convert tyre and system pressure between psi, bar, kPa, kgf/cm2 and atm, with a cold-to-hot tyre temperature correction.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "pubsub-vs-queue-decision-helper": {
+    "name": "PubSub vs Queue Decision Helper",
+    "description": "Answer nine questions about your workload and get a scored recommendation across work queues, pub/sub, partitioned logs and event buses.",
+    "category": "Developer",
+    "icon": "network",
+    "iconColor": "text-(--primary)"
+  },
+  "puc-renewal-planner": {
+    "name": "PUC Renewal Planner",
+    "description": "Plan pollution certificate renewal dates and yearly cost by vehicle category using the 12-month and 6-month PUC validity rule.",
+    "category": "Productivity",
+    "icon": "leaf",
+    "iconColor": "text-(--primary)"
+  },
+  "puja-room-planner": {
+    "name": "Puja Room Planner",
+    "description": "Plan a puja room: shrine width, platform height for your idols, seating depth, ventilation and traditional direction notes.",
+    "category": "Lifestyle",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "pull-request-template-generator": {
+    "name": "Pull Request Template Generator",
+    "description": "Generate a GitHub pull request template with summary, checklist, testing notes and screenshots sections, ready for .github/.",
+    "category": "Generators",
+    "icon": "git-pull-request",
+    "iconColor": "text-(--primary)"
+  },
   "pulse-pressure-calculator": {
     "name": "Pulse Pressure Calculator",
     "description": "Calculate pulse pressure and assess cardiovascular health from blood pressure readings.",
@@ -11560,11 +18013,32 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "pune-airport-transfer-time-planner": {
+    "name": "Pune Airport Transfer Time Planner",
+    "description": "Work out when to leave for Pune PNQ airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
+    "category": "Productivity",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
   "purchase-order-generator": {
     "name": "Purchase Order Generator",
     "description": "Build a printable purchase order with line items, GST, freight, delivery and payment terms.",
     "category": "Generators",
     "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "python-venv-setup-builder": {
+    "name": "Python Venv Setup Builder",
+    "description": "Exact venv creation, activation and dependency commands for your OS, shell, Python version and package manager.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-(--primary)"
+  },
+  "qatar-entry-requirement-checklist": {
+    "name": "Qatar Entry Requirement Checklist",
+    "description": "Test your Qatar entry route and permitted stay, price the compulsory visitor health insurance, and build the document checklist for arrival.",
+    "category": "Productivity",
+    "icon": "landmark",
     "iconColor": "text-(--primary)"
   },
   "qr-generator": {
@@ -11597,6 +18071,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "quantization-size-calculator": {
+    "name": "Quantization Size Calculator",
+    "description": "Compare LLM file sizes across FP16, 8-bit, 6-bit, 5-bit, 4-bit, 3-bit and 2-bit quantization formats.",
+    "category": "Calculators",
+    "icon": "cpu",
+    "iconColor": "text-(--primary)"
+  },
+  "query-parameter-encoder-builder": {
+    "name": "Query Parameter Encoder Builder",
+    "description": "Build a correctly percent-encoded query string from JSON, choosing how arrays, nested objects, spaces and unicode are serialised.",
+    "category": "Developer",
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
   },
   "query-string-parser": {
     "name": "Query String Parser",
@@ -11631,6 +18119,20 @@ export const toolMetaMap = {
     "icon": "circle-help",
     "iconColor": "text-teal-600"
   },
+  "quiz-prompt-builder": {
+    "name": "Quiz Prompt Builder",
+    "description": "Build a ready-to-paste AI quiz generation prompt with an exact difficulty mix, question types and a formatted answer key.",
+    "category": "Education & Science",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "quotation-estimate-generator": {
+    "name": "Quotation and Estimate Generator",
+    "description": "Build a quotation or a ranged estimate with materials and labour lines, contingency, tax, validity and a payment schedule.",
+    "category": "Generators",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
   "quotation-generator": {
     "name": "Quotation Generator",
     "description": "Create client quotations with line items, per-item discounts, GST and a validity period.",
@@ -11647,6 +18149,20 @@ export const toolMetaMap = {
     ],
     "icon": "quote",
     "iconColor": "text-purple-600"
+  },
+  "r2-vs-s3-cost-comparison": {
+    "name": "R2 vs S3 Cost Comparison",
+    "description": "Compare Cloudflare R2 and Amazon S3 monthly cost — storage, requests and the egress fees only one of them charges.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "rabbitmq-amqp-uri-builder": {
+    "name": "RabbitMQ AMQP URI Builder",
+    "description": "Build amqp:// and amqps:// connection URIs with vhost, heartbeat and connection timeout parameters, encoded per the RabbitMQ URI spec.",
+    "category": "Developer",
+    "icon": "cable",
+    "iconColor": "text-(--primary)"
   },
   "radioactive-decay-calculator": {
     "name": "Radioactive Decay Calculator",
@@ -11684,6 +18200,48 @@ export const toolMetaMap = {
     "icon": "database-zap",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "railway-application-document-checklist": {
+    "name": "Railway Application Checklist",
+    "description": "Build the RRB application file — form fields, photo and signature upload specs, certificates — and work out the fee after the CBT-1 refund.",
+    "category": "Productivity",
+    "icon": "train-front",
+    "iconColor": "text-(--primary)"
+  },
+  "railway-exam-countdown": {
+    "name": "Railway Exam Countdown",
+    "description": "RRB NTPC, Group D, ALP and JE countdown with a preparation phase indicator and a daily study mix that shifts towards mocks.",
+    "category": "Productivity",
+    "icon": "train-front",
+    "iconColor": "text-(--primary)"
+  },
+  "railway-exam-day-checklist": {
+    "name": "Railway Exam Day Checklist",
+    "description": "RRB exam day checklist covering the e-call letter, matching photo ID and travel plan, with a gate-closing timeline and CBT attempt maths.",
+    "category": "Productivity",
+    "icon": "train-front",
+    "iconColor": "text-(--primary)"
+  },
+  "rainy-day-backup-plan-builder": {
+    "name": "Rainy Day Backup Plan Builder",
+    "description": "Work out the real chance of losing an outdoor day to rain, then assign indoor alternatives and suggest day swaps that cut the risk.",
+    "category": "Lifestyle",
+    "icon": "cloud-rain",
+    "iconColor": "text-(--primary)"
+  },
+  "raised-bed-soil-calculator": {
+    "name": "Raised Bed Soil Calculator",
+    "description": "Work out soil, compost, cocopeat and perlite volume to fill raised garden beds, with settling allowance and block counts.",
+    "category": "Calculators",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "rajasthan-board-percentage-calculator": {
+    "name": "Rajasthan Board Percentage Calculator",
+    "description": "RBSE class 10 and 12 percentage, division and the 33% pass check, plus the marks needed for the next division.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
   },
   "random-business-idea": {
     "name": "Random Business Idea",
@@ -11726,11 +18284,8 @@ export const toolMetaMap = {
     "name": "Random Joke Generator",
     "description": "Get a random, funny joke instantly to brighten your day.",
     "category": "Fun",
-    "topics": [
-      "Entertainment"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "smile",
+    "iconColor": "text-(--primary)"
   },
   "random-life-challenge": {
     "name": "Random Life Challenge",
@@ -11780,18 +18335,15 @@ export const toolMetaMap = {
     "name": "Random Quote Generator",
     "description": "Get inspired instantly with random, thought-provoking quotes.",
     "category": "Fun",
-    "topics": [
-      "Entertainment"
-    ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "quote",
+    "iconColor": "text-(--primary)"
   },
   "random-si-generator-tool": {
     "name": "Random Startup Idea Generator",
     "description": "Generate creative startup and project ideas randomly to spark your imagination.",
     "category": "Business",
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "lightbulb",
+    "iconColor": "text-(--primary)"
   },
   "random-superpower-generator": {
     "name": "Random Superpower Generator",
@@ -11845,6 +18397,13 @@ export const toolMetaMap = {
       "Education & Science"
     ],
     "icon": "divide",
+    "iconColor": "text-(--primary)"
+  },
+  "ration-card-category-explainer": {
+    "name": "Ration Card Category Explainer",
+    "description": "Compare AAY, Priority Household and non-NFSA ration cards — monthly grain entitlement, issue prices and what the ration is worth.",
+    "category": "Education & Science",
+    "icon": "wheat",
     "iconColor": "text-(--primary)"
   },
   "raw-photo-developer": {
@@ -11921,6 +18480,13 @@ export const toolMetaMap = {
     "icon": "book-check",
     "iconColor": "text-teal-500"
   },
+  "reading-level-prompt-adjuster": {
+    "name": "Reading Level Prompt Adjuster",
+    "description": "Measure your text's Flesch-Kincaid grade and build a rewrite prompt targeting a specific grade or reading level.",
+    "category": "Education & Science",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "reading-speed-calculator": {
     "name": "Reading Speed Calculator",
     "description": "Calculate reading speed, reading time, and words per minute from pasted text or a timed reading test.",
@@ -11952,6 +18518,13 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-orange-600"
   },
+  "real-estate-agent-prompt-pack": {
+    "name": "Real Estate Agent Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for listing copy, seller outreach, neighbourhood guides and negotiation, with a fair housing language check.",
+    "category": "Business",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "recipe-nutrition-estimator": {
     "name": "Recipe Nutrition Estimator",
     "description": "Build any recipe from real ingredient data and see calories, protein, carbs, fat and fibre per serving.",
@@ -11966,6 +18539,13 @@ export const toolMetaMap = {
     "icon": "apple",
     "iconColor": "text-teal-600"
   },
+  "recipe-remix-prompt-builder": {
+    "name": "Recipe Remix Prompt Builder",
+    "description": "Turn leftover ingredients into a precise recipe prompt with role coverage, missing components and declarable allergens flagged.",
+    "category": "Lifestyle",
+    "icon": "chef-hat",
+    "iconColor": "text-(--primary)"
+  },
   "recipe-scaler": {
     "name": "Recipe Scaler & Serving Converter",
     "description": "Scale any recipe up or down by servings or pan size, with fraction-friendly amounts and smart tips for salt, spice, and leavening.",
@@ -11979,6 +18559,27 @@ export const toolMetaMap = {
     "icon": "chef-hat",
     "iconColor": "text-teal-600"
   },
+  "recommendation-letter-prompt-builder": {
+    "name": "Recommendation Letter Prompt Builder",
+    "description": "Build a reference letter prompt with specific examples, an honest percentile claim from rank and cohort size, and a per-section word budget.",
+    "category": "Education & Science",
+    "icon": "award",
+    "iconColor": "text-(--primary)"
+  },
+  "recruitment-height-weight-ratio-checker": {
+    "name": "Height Weight Ratio For Recruitment",
+    "description": "Check whether your weight sits inside the height band and BMI range used by Army, SSC GD and police physical standards.",
+    "category": "Health & Fitness",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "recurring-deposit-maturity-calculator": {
+    "name": "Recurring Deposit Maturity Calculator",
+    "description": "Bank RD maturity value with quarterly compounding, year-wise interest accrual, section 194A TDS and a post-tax view.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "redaction-proof-checker": {
     "name": "Redaction Proof Checker",
     "description": "Inspect redacted PDFs and images locally for exposed text, risky annotations, metadata, and visual warning signs before sharing.",
@@ -11990,6 +18591,20 @@ export const toolMetaMap = {
     "icon": "scan-search",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "redis-connection-url-builder": {
+    "name": "Redis Connection URL Builder",
+    "description": "Build redis:// and rediss:// URLs with database index, ACL username, password and TLS — plus the matching redis-cli command.",
+    "category": "Developer",
+    "icon": "server",
+    "iconColor": "text-(--primary)"
+  },
+  "redis-key-naming-builder": {
+    "name": "Redis Key Naming Builder",
+    "description": "Design a namespaced Redis key convention with environment, tenant and version segments plus cluster hash tags.",
+    "category": "Generators",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
   },
   "redness-analyzer": {
     "name": "Redness Analyzer",
@@ -12017,6 +18632,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
   },
+  "reel-script-prompt-builder": {
+    "name": "Reel Script Prompt Builder",
+    "description": "Build a short-form video script prompt with a time-coded beat sheet — hook, setup, payoff and CTA mapped to exact seconds.",
+    "category": "Marketing & Social",
+    "icon": "clapperboard",
+    "iconColor": "text-(--primary)"
+  },
+  "refactor-prompt-builder": {
+    "name": "Refactor Prompt Builder",
+    "description": "Builds a refactoring prompt with named goals, hard constraints and a complexity target, so behaviour stays exactly unchanged.",
+    "category": "Developer",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
   "refinance-savings-calculator": {
     "name": "Refinance Savings Calculator",
     "description": "Compare current loan versus refinance offers with new EMI, interest savings, closing costs, break-even month, and cash-flow impact.",
@@ -12030,6 +18659,90 @@ export const toolMetaMap = {
     ],
     "icon": "refresh-cw",
     "iconColor": "text-blue-600"
+  },
+  "refrigerator-capacity-selector": {
+    "name": "Refrigerator Capacity Selector",
+    "description": "Work out the fridge litres your household needs from headcount, cooking style, diet and how often you shop.",
+    "category": "Calculators",
+    "icon": "refrigerator",
+    "iconColor": "text-(--primary)"
+  },
+  "refrigerator-electricity-cost-calculator": {
+    "name": "Refrigerator Electricity Cost Calculator",
+    "description": "Estimate yearly fridge running cost from the BEE label's annual units, or from litres and star rating, adjusted for kitchen temperature.",
+    "category": "Calculators",
+    "icon": "refrigerator",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-cheatsheet-builder": {
+    "name": "Regex Cheatsheet Builder",
+    "description": "Build a printable regex cheatsheet filtered to your flavor — JavaScript, PCRE or Python — and only the feature groups you use.",
+    "category": "Developer",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-card-formats": {
+    "name": "Regex Library for Card Formats",
+    "description": "Card number format regex by network — Visa, Mastercard, Amex, RuPay, Discover, JCB, Diners — for formatting and masking, not verification.",
+    "category": "Developer",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-dates": {
+    "name": "Regex Library for Dates",
+    "description": "Date and time regex patterns for ISO 8601, DD/MM/YYYY, US dates, clock times and syslog or Apache log timestamps, with live testing.",
+    "category": "Developer",
+    "icon": "calendar-search",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-email": {
+    "name": "Regex Library for Email Validation",
+    "description": "Copy-ready email regex patterns from minimal to RFC 5322-flavoured, with live testing and honest notes on what each one misses.",
+    "category": "Developer",
+    "icon": "at-sign",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-indian-documents": {
+    "name": "Regex Library for Indian Documents",
+    "description": "Validation regex for PAN, GSTIN, IFSC, UPI ID, PIN code, vehicle numbers and Aadhaar format, with live testing and honest caveats.",
+    "category": "Developer",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-passwords": {
+    "name": "Regex Library for Passwords",
+    "description": "Password policy regex patterns from 8-char minimums to full complexity, with every lookahead explained and NIST-based caveats.",
+    "category": "Developer",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-phone-numbers": {
+    "name": "Regex Library for Phone Numbers",
+    "description": "Phone number regex patterns for E.164, India, US, UK and a loose international format, each with live testing and limitation notes.",
+    "category": "Developer",
+    "icon": "phone",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-library-urls": {
+    "name": "Regex Library for URLs",
+    "description": "URL, domain, IP-host and optional-protocol regex patterns with port, query and fragment handling, live testing and limitation notes.",
+    "category": "Developer",
+    "icon": "link",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-prompt-builder": {
+    "name": "Regex Prompt Builder",
+    "description": "Turns must-match and must-not-match examples into a regex-generation prompt, with flavour rules and example conflict checking.",
+    "category": "Developer",
+    "icon": "regex",
+    "iconColor": "text-(--primary)"
+  },
+  "regex-replace-preview-tool": {
+    "name": "Regex Replace Preview Tool",
+    "description": "Preview regex find-and-replace results with $1, $&, $<name> capture references and per-match breakdown before touching real data.",
+    "category": "Developer",
+    "icon": "replace",
+    "iconColor": "text-(--primary)"
   },
   "regex-tester": {
     "name": "Regex Tester",
@@ -12051,6 +18764,20 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "heart",
     "iconColor": "text-rose-600"
+  },
+  "release-notes-prompt-builder": {
+    "name": "Release Notes Prompt Builder",
+    "description": "Split a release into features, fixes and breaking changes, set a deprecation date and build the announcement prompt.",
+    "category": "Developer",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
+  },
+  "release-train-schedule-planner": {
+    "name": "Release Train Schedule Planner",
+    "description": "Plan fixed-cadence release dates with code freeze, release candidate and GA milestones, weekend-safe.",
+    "category": "Productivity",
+    "icon": "train-front",
+    "iconColor": "text-(--primary)"
   },
   "release-watchtower": {
     "name": "Release Watchtower",
@@ -12083,6 +18810,48 @@ export const toolMetaMap = {
     "icon": "space",
     "iconColor": "text-emerald-600"
   },
+  "render-vs-railway-cost-comparison": {
+    "name": "Render vs Railway Cost Comparison",
+    "description": "Compare what the same app costs on Render's fixed instances versus Railway's usage-based pricing, including egress and disk.",
+    "category": "Calculators",
+    "icon": "git-compare-arrows",
+    "iconColor": "text-(--primary)"
+  },
+  "renovation-permission-request-generator": {
+    "name": "Renovation Permission Request Generator",
+    "description": "Draft a flat renovation permission request with work scope, working hours, debris disposal plan and contractor details.",
+    "category": "Business",
+    "icon": "hammer",
+    "iconColor": "text-(--primary)"
+  },
+  "rent-agreement-renewal-notice-generator": {
+    "name": "Rent Agreement Renewal Notice Generator",
+    "description": "Draft a tenancy renewal intimation with revised rent, deposit, new term dates and a written response deadline.",
+    "category": "Business",
+    "icon": "file-signature",
+    "iconColor": "text-(--primary)"
+  },
+  "rent-escalation-calculator": {
+    "name": "Rent Increase and Escalation Calculator",
+    "description": "Project rent across a lease term with periodic escalation, and see the total outgo, final rent and true annual rate.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "rent-increase-notice-generator": {
+    "name": "Rent Increase Notice Generator",
+    "description": "Draft a landlord rent revision notice with the new rent, effective date, deposit top-up and a three-month notice-period check.",
+    "category": "Business",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "rent-increment-planner": {
+    "name": "Rent Increment Planner",
+    "description": "Project rent year by year at an agreed escalation, total the outgo, compare a second scenario and see the cost in today's money.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
   "rent-receipt-generator": {
     "name": "Rent Receipt Generator",
     "description": "Create print-ready monthly or quarterly rent receipts with amount in words, PAN line, and revenue stamp note.",
@@ -12100,6 +18869,13 @@ export const toolMetaMap = {
   "rent-receipt-generator-hra": {
     "name": "Rent Receipt Generator for HRA",
     "description": "Generate printable monthly rent receipts with landlord and PAN details for HRA claims.",
+    "category": "Generators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "rent-receipt-generator-india": {
+    "name": "Rent Receipt Generator with Revenue Stamp Guide",
+    "description": "Generate monthly rent receipts for HRA claims with amount in words, landlord PAN rules and revenue stamp guidance.",
     "category": "Generators",
     "icon": "receipt",
     "iconColor": "text-(--primary)"
@@ -12128,6 +18904,13 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-teal-600"
   },
+  "rental-agreement-cost-calculator": {
+    "name": "Rental Agreement Cost Calculator",
+    "description": "Estimate stamp duty, registration fee, brokerage and GST on a rent agreement, with state formulas and your share of the total.",
+    "category": "Finance Calculators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
   "rental-yield-calculator": {
     "name": "Rental Yield Calculator",
     "description": "Calculate gross and net rental yield, annual income, expenses, ROI, cash flow, and break-even for rental properties.",
@@ -12145,10 +18928,7 @@ export const toolMetaMap = {
   "renter-security-checklist": {
     "name": "Renter Security Checklist",
     "description": "Futuristic property verification and safety management tool for renters.",
-    "category": "Business",
-    "topics": [
-      "Property Management"
-    ],
+    "category": "Lifestyle",
     "icon": "shield-check",
     "iconColor": "text-blue-500"
   },
@@ -12161,6 +18941,41 @@ export const toolMetaMap = {
     ],
     "icon": "wrench",
     "iconColor": "text-primary"
+  },
+  "repair-request-letter-to-landlord": {
+    "name": "Repair Request Letter to Landlord",
+    "description": "Log pending repairs, split them between landlord and tenant duties, set a deadline and generate a documented request letter.",
+    "category": "Business",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
+  "requirements-txt-generator": {
+    "name": "Requirements TXT Generator",
+    "description": "Build a pip requirements.txt with pinned versions, extras and environment markers, validated against PEP 508 and PEP 440 rules.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "research-summary-prompt-builder": {
+    "name": "Research Summary Prompt Builder",
+    "description": "Build an AI prompt that summarises a research paper into structured sections with word budgets, including method and limitations.",
+    "category": "Education & Science",
+    "icon": "file-search",
+    "iconColor": "text-(--primary)"
+  },
+  "researcher-prompt-pack": {
+    "name": "Researcher Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for literature mapping, methods critique, abstracts and peer-review responses.",
+    "category": "Education & Science",
+    "icon": "microscope",
+    "iconColor": "text-(--primary)"
+  },
+  "reserved-instance-break-even-calculator": {
+    "name": "Reserved Instance Break-Even Calculator",
+    "description": "Find how many months of uptime make a 1 or 3 year cloud reservation cheaper than paying the on-demand rate.",
+    "category": "Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
   },
   "restaurant-bill-splitter": {
     "name": "Restaurant Bill Splitter",
@@ -12175,6 +18990,20 @@ export const toolMetaMap = {
     ],
     "icon": "receipt",
     "iconColor": "text-teal-600"
+  },
+  "restaurant-menu-prompt-builder": {
+    "name": "Restaurant Menu Prompt Builder",
+    "description": "Generate menu description prompts with cuisine, pricing tone and an allergen check against EU, US or Codex declaration lists.",
+    "category": "Business",
+    "icon": "utensils-crossed",
+    "iconColor": "text-(--primary)"
+  },
+  "result-date-expectation-tracker": {
+    "name": "Result Date Expectation Tracker",
+    "description": "Project a realistic result window for your exam from how long past cycles took between exam and result.",
+    "category": "Productivity",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
   },
   "resume-maker": {
     "name": "Resume Maker",
@@ -12223,15 +19052,40 @@ export const toolMetaMap = {
     "icon": "umbrella",
     "iconColor": "text-blue-500"
   },
+  "retry-after-header-calculator": {
+    "name": "Retry-After Header Calculator",
+    "description": "Build a spec-correct Retry-After header in delay-seconds or IMF-fixdate form, with an exponential backoff schedule for 429 and 503 responses.",
+    "category": "Developer",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "return-deadline-tracker": {
     "name": "Return Deadline Tracker",
     "description": "Track shopping return windows, refund status, and deadlines with futuristic precision.",
-    "category": "Lifestyle",
-    "topics": [
-      "Shopping Tools"
-    ],
+    "category": "Productivity",
     "icon": "package-check",
     "iconColor": "text-blue-500"
+  },
+  "revaluation-decision-helper": {
+    "name": "Revaluation Decision Helper",
+    "description": "Weigh the re-check fee, the chance of a change and the deadline before applying for revaluation of an answer book.",
+    "category": "Education & Science",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "reverse-gst-calculator": {
+    "name": "Reverse GST Calculator",
+    "description": "Extract the taxable value and the GST hidden inside any tax-inclusive amount, split into CGST and SGST or IGST, with optional cess.",
+    "category": "Finance Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "reward-points-value-calculator": {
+    "name": "Credit Card Reward Points Value Calculator",
+    "description": "Convert reward points to rupees and compare cards on effective return after fee, GST and caps.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
+    "iconColor": "text-(--primary)"
   },
   "reynolds-number-pipe-flow-calculator": {
     "name": "Reynolds Number & Pipe Flow Calculator",
@@ -12245,6 +19099,13 @@ export const toolMetaMap = {
     ],
     "icon": "waves",
     "iconColor": "text-primary"
+  },
+  "rgpv-cgpa-percentage-converter": {
+    "name": "RGPV CGPA Percentage Converter",
+    "description": "Convert RGPV CGPA to percentage with the (CGPA - 0.75) x 10 formula, reverse it, and read the grade point scale.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
   },
   "rice-water-ratio": {
     "name": "Rice & Grain Water Ratio Guide",
@@ -12270,6 +19131,20 @@ export const toolMetaMap = {
     ],
     "icon": "pen-tool",
     "iconColor": "text-teal-500"
+  },
+  "ride-fare-split-calculator": {
+    "name": "Ride Fare Split Calculator",
+    "description": "Split a shared cab fare fairly by the distance each passenger actually rode, segment by segment.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
+  "riding-gear-budget-planner": {
+    "name": "Riding Gear Budget Planner",
+    "description": "Allocate a riding gear budget in protection priority order, see body-coverage achieved, the shortfall and months to a full kit.",
+    "category": "Finance Calculators",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
   },
   "river-quiz": {
     "name": "River Quiz",
@@ -12302,6 +19177,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "road-trip-fuel-cost-calculator": {
+    "name": "Road Trip Fuel Cost Calculator",
+    "description": "Total fuel, tolls, refuel stops and cost per head for a road trip, adjusted for highway, city, hills, AC and load.",
+    "category": "Calculators",
+    "icon": "route",
+    "iconColor": "text-(--primary)"
+  },
+  "road-trip-packing-checklist": {
+    "name": "Road Trip Packing Checklist",
+    "description": "Generate a packing and car-prep checklist with real quantities, tailored to trip length, travellers, season and terrain.",
+    "category": "Productivity",
+    "icon": "backpack",
+    "iconColor": "text-(--primary)"
   },
   "roas-calculator": {
     "name": "ROAS Calculator",
@@ -12358,6 +19247,20 @@ export const toolMetaMap = {
     "icon": "coins",
     "iconColor": "text-amber-600"
   },
+  "roll-number-format-validator": {
+    "name": "Roll Number Format Validator",
+    "description": "Check a roll or registration number against length, character-set and prefix rules before you submit a form.",
+    "category": "Developer",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
+  },
+  "roll-number-grid-practice": {
+    "name": "Roll Number Grid Practice",
+    "description": "Practise bubbling roll number digit grids like a real OMR sheet — blanks, wrong digits and double marks are graded instantly.",
+    "category": "Education & Science",
+    "icon": "grid-3x3",
+    "iconColor": "text-(--primary)"
+  },
   "rolling-returns-calculator": {
     "name": "Rolling Returns Calculator",
     "description": "Average, best and worst annualised returns across every overlapping window in a NAV or index series.",
@@ -12375,6 +19278,76 @@ export const toolMetaMap = {
     ],
     "icon": "hash",
     "iconColor": "text-teal-600"
+  },
+  "rome-trip-budget-breakdown": {
+    "name": "Rome Trip Budget Breakdown",
+    "description": "Break a Rome trip into flights, Schengen visa, stay, food, transport and sights in euro and rupees, with city tax and coperto.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "roof-area-calculator": {
+    "name": "Roof Area Calculator",
+    "description": "True sloped roof area from footprint, eaves overhang and pitch, plus rafter length, ridge, gutter run and sheet count.",
+    "category": "Calculators",
+    "icon": "home",
+    "iconColor": "text-(--primary)"
+  },
+  "roof-box-capacity-planner": {
+    "name": "Roof Box Capacity Planner",
+    "description": "Plan roof box volume and weight against your car's dynamic roof load limit, with packing efficiency and fuel penalty.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "roof-pitch-calculator": {
+    "name": "Roof Pitch Calculator",
+    "description": "Convert roof pitch between rise-in-12, degrees, percent and ratio, with slope factor, rafter length and material suitability.",
+    "category": "Calculators",
+    "icon": "triangle",
+    "iconColor": "text-(--primary)"
+  },
+  "roof-rack-load-checker": {
+    "name": "Roof Rack Load Checker",
+    "description": "Check dynamic roof load limits against rack plus cargo weight, with payload, rollover stability and fuel penalty.",
+    "category": "Calculators",
+    "icon": "weight",
+    "iconColor": "text-(--primary)"
+  },
+  "roof-water-collection-estimator": {
+    "name": "Roof Water Collection Estimator",
+    "description": "Rainwater harvested per storm and per year from roof plan area, rainfall, runoff coefficient and first-flush diversion.",
+    "category": "Calculators",
+    "icon": "cloud-rain",
+    "iconColor": "text-(--primary)"
+  },
+  "room-color-temperature-selector": {
+    "name": "Room Color Temperature Selector",
+    "description": "Pick the right light colour temperature, CRI and lumen output for each room and mood, with a live colour preview.",
+    "category": "Design & Color",
+    "icon": "lightbulb",
+    "iconColor": "text-(--primary)"
+  },
+  "room-heater-running-cost": {
+    "name": "Room Heater Running Cost",
+    "description": "Winter heater electricity cost by wattage, hours and heater type, including how a reverse-cycle AC compares per unit of heat.",
+    "category": "Calculators",
+    "icon": "heater",
+    "iconColor": "text-(--primary)"
+  },
+  "room-humidity-comfort-checker": {
+    "name": "Room Humidity Comfort Checker",
+    "description": "Dew point, heat index, absolute humidity and comfort band from room temperature and relative humidity, with mould and condensation warnings.",
+    "category": "Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "room-mood-colour-selector": {
+    "name": "Room Mood Colour Selector",
+    "description": "Build a 60-30-10 room palette from the mood you want and the direction your window faces, with LRV and contrast checks.",
+    "category": "Design & Color",
+    "icon": "palette",
+    "iconColor": "text-(--primary)"
   },
   "room-paint-calculator": {
     "name": "Room Paint Calculator",
@@ -12421,6 +19394,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-green-800"
+  },
+  "royal-enfield-service-schedule-planner": {
+    "name": "Royal Enfield Service Schedule Planner",
+    "description": "Plan Royal Enfield service due dates, oil-change intervals and touring prep from your odometer, riding rate and last service.",
+    "category": "Productivity",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
   },
   "royalty-split-waterfall-calculator": {
     "name": "Royalty Split Waterfall Calculator",
@@ -12472,6 +19452,20 @@ export const toolMetaMap = {
     "icon": "box",
     "iconColor": "text-teal-600"
   },
+  "rubric-prompt-builder": {
+    "name": "Rubric Prompt Builder",
+    "description": "Build an AI prompt that generates a weighted grading rubric with named criteria, performance levels and exact point bands.",
+    "category": "Education & Science",
+    "icon": "table-properties",
+    "iconColor": "text-(--primary)"
+  },
+  "rug-size-selector": {
+    "name": "Rug Size Selector",
+    "description": "Pick the right standard rug size for a living, dining or bedroom layout, with placement rules and the floor border left around it.",
+    "category": "Design & Color",
+    "icon": "sofa",
+    "iconColor": "text-(--primary)"
+  },
   "rule-of-72-calculator": {
     "name": "Rule of 72 Calculator",
     "description": "Estimate how many years it takes for an investment to double at a given annual return rate, or find the required rate to double in a target number of years.",
@@ -12486,6 +19480,27 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
   },
+  "rule-of-72-doubling-time-tool": {
+    "name": "Rule of 72 and Doubling Time Tool",
+    "description": "Estimate how long money takes to double at any rate of return, and compare the Rule of 72 with the exact logarithmic answer.",
+    "category": "Finance Calculators",
+    "icon": "hourglass",
+    "iconColor": "text-(--primary)"
+  },
+  "runbook-template-generator": {
+    "name": "Runbook Template Generator",
+    "description": "Generate an operational runbook in Markdown with alert symptoms, diagnostic checks, remediation steps and an escalation ladder.",
+    "category": "Generators",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
+  "running-feet-to-sqft": {
+    "name": "Running Feet to Sqft",
+    "description": "Turn carpentry running feet quotes into square feet, compare per-rft and per-sqft rates, and total a kitchen or wardrobe job.",
+    "category": "Converters",
+    "icon": "sofa",
+    "iconColor": "text-(--primary)"
+  },
   "running-pace-calculator": {
     "name": "Running Pace Calculator",
     "description": "Work out your pace per kilometre and speed from a distance and finish time.",
@@ -12495,6 +19510,27 @@ export const toolMetaMap = {
     ],
     "icon": "timer",
     "iconColor": "text-indigo-600"
+  },
+  "runtime-sum-calculator": {
+    "name": "Runtime Sum Calculator",
+    "description": "Add up a list of clip durations in mixed formats and see total runtime, average length and how it fits a target slot.",
+    "category": "Calculators",
+    "icon": "list-plus",
+    "iconColor": "text-(--primary)"
+  },
+  "ryanair-baggage-allowance-checker": {
+    "name": "Ryanair Baggage Allowance Checker",
+    "description": "Check your small bag, Priority cabin bag and purchased 10 kg or 20 kg hold bag against Ryanair's published size and weight limits.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "ryanair-excess-baggage-cost-estimator": {
+    "name": "Ryanair Excess Baggage Cost Estimator",
+    "description": "Cost Ryanair cabin and hold bags per flight, add excess weight and gate fees, and find the cheapest bag combination.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
   },
   "sacred-geometry-generator": {
     "name": "Sacred Geometry Generator",
@@ -12506,6 +19542,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-amber-600"
+  },
+  "saddle-height-calculator": {
+    "name": "Saddle Height Calculator",
+    "description": "Set bike saddle height and setback from your inseam using the LeMond 0.883 and Hamley 109% fit methods, with crank length guidance.",
+    "category": "Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
   },
   "safe-defrost-calculator": {
     "name": "Safe Defrost Time Calculator",
@@ -12519,6 +19562,27 @@ export const toolMetaMap = {
     ],
     "icon": "snowflake",
     "iconColor": "text-teal-600"
+  },
+  "safe-listening-volume-guide": {
+    "name": "Safe Listening Volume Guide",
+    "description": "See how long headphone listening is considered safe at a given decibel level using the WHO-ITU 80 dB for 40 hours weekly sound allowance.",
+    "category": "Health Calculators",
+    "icon": "volume-2",
+    "iconColor": "text-(--primary)"
+  },
+  "safe-score-target-setter": {
+    "name": "Safe Score Target Setter",
+    "description": "Set a buffered exam target above the expected cutoff using past cutoff spread and the confidence level you want.",
+    "category": "Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "salary-hike-real-value-calculator": {
+    "name": "Salary Hike Real Value Calculator",
+    "description": "See what an appraisal is really worth after marginal tax, cess, surcharge and inflation.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
   },
   "salary-in-hand-calculator": {
     "name": "Salary In-Hand Calculator (CTC to Take-Home)",
@@ -12579,6 +19643,13 @@ export const toolMetaMap = {
     "icon": "receipt",
     "iconColor": "text-purple-500"
   },
+  "sales-prompt-pack": {
+    "name": "Sales Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for prospecting, cold email, discovery calls, follow-up sequences and objection handling.",
+    "category": "Business",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
   "sales-tax-calculator": {
     "name": "Sales Tax Calculator",
     "description": "Calculate sales tax and the final total for any purchase amount.",
@@ -12588,6 +19659,62 @@ export const toolMetaMap = {
     ],
     "icon": "receipt",
     "iconColor": "text-rose-600"
+  },
+  "sales-tax-calculator-california": {
+    "name": "US Sales Tax Calculator California",
+    "description": "California sales tax: 7.25% statewide base plus district tax, with exempt groceries, separately stated delivery and reverse mode.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "sales-tax-calculator-florida": {
+    "name": "US Sales Tax Calculator Florida",
+    "description": "Florida sales tax: 6% state rate plus county discretionary surtax, with the $5,000 per-item surtax cap applied correctly.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "sales-tax-calculator-illinois": {
+    "name": "US Sales Tax Calculator Illinois",
+    "description": "Illinois sales tax: 6.25% general merchandise rate plus local tax, with the 1% low rate for drugs and medical appliances.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "sales-tax-calculator-new-york": {
+    "name": "US Sales Tax Calculator New York",
+    "description": "New York sales tax: 4% state, county or city rate and the 0.375% MCTD surcharge, with the $110 clothing exemption applied.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "sales-tax-calculator-texas": {
+    "name": "US Sales Tax Calculator Texas",
+    "description": "Texas sales tax: 6.25% state rate plus local tax capped at 2%, with taxable delivery, exempt groceries and reverse mode.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "sales-tax-calculator-washington": {
+    "name": "US Sales Tax Calculator Washington",
+    "description": "Washington destination-based sales tax: 6.5% state rate plus your local rate, trade-in credit and the 0.3% vehicle tax.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "salon-business-tax-calculator": {
+    "name": "Salon and Beauty Business Tax Calculator",
+    "description": "Chair-level salon revenue, consumables and commission costs, break-even clients, GST thresholds and income tax on the profit.",
+    "category": "Finance Calculators",
+    "icon": "scissors",
+    "iconColor": "text-(--primary)"
+  },
+  "salon-marketing-prompt-pack": {
+    "name": "Salon Marketing Prompt Pack",
+    "description": "Ready prompts for salon offers, reminders and before-after captions, with SMS segment and channel character limits.",
+    "category": "Business",
+    "icon": "scissors",
+    "iconColor": "text-(--primary)"
   },
   "sample-size-power-calculator": {
     "name": "Sample Size & Power Calculator",
@@ -12601,6 +19728,13 @@ export const toolMetaMap = {
     ],
     "icon": "flask-conical",
     "iconColor": "text-primary"
+  },
+  "sandpaper-grit-selector": {
+    "name": "Sandpaper Grit Selector",
+    "description": "Builds the grit sequence from stripping to final finish for your material, with FEPA to CAMI conversion, sheet counts and sanding time.",
+    "category": "Education & Science",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
   },
   "sarcasm-generator": {
     "name": "Sarcasm Generator",
@@ -12645,6 +19779,20 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-teal-500"
   },
+  "savings-goal-countdown-tracker": {
+    "name": "Savings Goal Countdown Tracker",
+    "description": "Track progress to any savings target and get the exact date you hit it, with milestone dates and the top-up a deadline needs.",
+    "category": "Finance Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "savitribai-phule-pune-cgpa-converter": {
+    "name": "Pune University CGPA Converter",
+    "description": "Convert SPPU CGPA to percentage, turn course marks into grade points and build a credit-weighted CGPA.",
+    "category": "Calculators",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
   "sbom-generator": {
     "name": "SBOM Generator",
     "description": "Generate a local CycloneDX JSON SBOM from bounded npm manifest or lockfile data with explicit incomplete-inventory and metadata policies.",
@@ -12659,6 +19807,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "sbv-to-srt-converter": {
+    "name": "SBV To SRT Converter",
+    "description": "Convert YouTube SBV caption exports into standard SubRip .srt files, with speaker markers, renumbering and timing offset.",
+    "category": "Converters",
+    "icon": "file-type",
+    "iconColor": "text-(--primary)"
+  },
   "scam-message-triage": {
     "name": "Scam Message Triage",
     "description": "Review SMS, WhatsApp, and email text locally for common scam warning patterns and get safer next steps without sending the message anywhere.",
@@ -12666,6 +19821,55 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "schengen-visa-cost-estimator": {
+    "name": "Schengen Visa Cost Estimator",
+    "description": "Add up the Schengen visa fee, VFS service charge, courier, photos and insurance into one editable total in rupees.",
+    "category": "Finance Calculators",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "schengen-visa-cover-letter-builder": {
+    "name": "Schengen Visa Cover Letter Builder",
+    "description": "Write a printable Schengen cover letter with your itinerary, funding and a 90/180-day and passport-validity check.",
+    "category": "Text & Writing",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "schengen-visa-rejection-reason-explainer": {
+    "name": "Schengen Visa Rejection Reason Explainer",
+    "description": "Decode the numbered boxes on a Schengen visa refusal form and get a checklist of what to fix before you reapply.",
+    "category": "Education & Science",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "scholarship-application-checklist": {
+    "name": "Scholarship Application Checklist",
+    "description": "Test family income against each scheme's ceiling on the National Scholarships Portal, then build the exact document list that scheme needs.",
+    "category": "Productivity",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "scholarship-deadline-tracker": {
+    "name": "Scholarship Deadline Tracker",
+    "description": "Track scholarship application windows and document deadlines — see days left, what is closing soon and what has already shut.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "scholarship-income-certificate-helper": {
+    "name": "Scholarship Income Certificate Helper",
+    "description": "Total your family's annual income the way income certificates require and check it against common scholarship income ceilings.",
+    "category": "Education & Science",
+    "icon": "file-badge",
+    "iconColor": "text-(--primary)"
+  },
+  "school-attendance-percentage-tracker": {
+    "name": "School Attendance Percentage Tracker",
+    "description": "Track school attendance across the session against the 75% board exam eligibility rule, with a leave budget and end-of-year projection.",
+    "category": "Calculators",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
   },
   "scientific-calculator": {
     "name": "Scientific Calculator",
@@ -12680,14 +19884,7 @@ export const toolMetaMap = {
   "scientific-notation-calculator": {
     "name": "Scientific Notation Calculator",
     "description": "Convert large or tiny numbers into scientific and engineering notation.",
-    "category": [
-      "Converters",
-      "Calculators"
-    ],
-    "topics": [
-      "Calculator",
-      "Converter"
-    ],
+    "category": "Calculators",
     "icon": "calculator",
     "iconColor": "text-violet-600"
   },
@@ -12700,6 +19897,13 @@ export const toolMetaMap = {
     ],
     "icon": "sigma",
     "iconColor": "text-cyan-600"
+  },
+  "scooter-vs-bike-cost-comparison": {
+    "name": "Scooter vs Bike Cost Comparison",
+    "description": "Compare a scooter and a motorcycle on total cost of ownership: depreciation, fuel, service, tyres, insurance and the break-even distance.",
+    "category": "Finance Calculators",
+    "icon": "bike",
+    "iconColor": "text-(--primary)"
   },
   "scope-creep-change-order-builder": {
     "name": "Scope-Creep Change-Order Builder",
@@ -12818,6 +20022,13 @@ export const toolMetaMap = {
     "icon": "camera",
     "iconColor": "text-blue-500"
   },
+  "scss-quarterly-payout-calculator": {
+    "name": "Senior Citizen Savings Scheme Calculator",
+    "description": "SCSS quarterly interest payout, five-year total interest, TDS threshold check and premature closure deductions.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "seasonal-color-analysis": {
     "name": "Seasonal Color Analysis",
     "description": "Discover your personal color season — Spring, Summer, Autumn, or Winter — based on your skin tone, hair, and eye color. Get your custom palette.",
@@ -12830,12 +20041,26 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-teal-500"
   },
+  "seasonal-home-maintenance-checklist": {
+    "name": "Seasonal Home Maintenance Checklist",
+    "description": "Build a season-by-season home maintenance checklist tuned to your climate zone, home type and the systems you actually own.",
+    "category": "Productivity",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
   "seating-chart-maker": {
     "name": "Interactive Seating Chart Maker",
     "description": "Design seating arrangements for weddings, classrooms, and banquets with table layouts and attendee dragging.",
     "category": "Lifestyle",
     "icon": "users",
     "iconColor": "text-blue-500"
+  },
+  "second-car-affordability-checker": {
+    "name": "Second Car Affordability Checker",
+    "description": "Test a second vehicle against the 20/4/10 rule, your EMI-to-income ratio, emergency savings and parking.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
   },
   "secret-credential-leak-scanner": {
     "name": "Secret & Credential Leak Scanner",
@@ -12851,13 +20076,7 @@ export const toolMetaMap = {
   "secret-message-encoder": {
     "name": "Secret Message Encoder",
     "description": "Encode, decode, inspect, copy, share, and export secret-message payloads with classical ciphers, Base64, URL, Morse, binary, and AES-GCM.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
-    "topics": [
-      "Web"
-    ],
+    "category": "Developer",
     "icon": "lock",
     "iconColor": "text-blue-600"
   },
@@ -12870,6 +20089,13 @@ export const toolMetaMap = {
     ],
     "icon": "gift",
     "iconColor": "text-rose-600"
+  },
+  "secrets-rotation-schedule-planner": {
+    "name": "Secrets Rotation Schedule Planner",
+    "description": "Build a rotation calendar for API keys, tokens, passwords and certificates with owners, due dates and overdue flags — all in your browser.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
   },
   "section-138-notice-draft-assistant": {
     "name": "Section 138 Notice Draft Assistant",
@@ -12885,6 +20111,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-pen-line",
     "iconColor": "text-primary"
+  },
+  "section-234f-late-fee-calculator": {
+    "name": "Late Filing Fee Calculator Section 234F",
+    "description": "Work out the section 234F late filing fee and section 234A interest on a belated income tax return from your income and filing date.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
   },
   "section-24b-home-loan-interest-deduction": {
     "name": "Section 24B Home Loan Interest Deduction",
@@ -12921,6 +20154,20 @@ export const toolMetaMap = {
     "icon": "badge-check",
     "iconColor": "text-(--primary)"
   },
+  "security-deposit-refund-calculator": {
+    "name": "Security Deposit Refund Calculator",
+    "description": "Work out the rental deposit due back after unpaid rent, damages, utilities and notice shortfall, with the Model Tenancy Act cap.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
+  "security-guard-night-sleep-planner": {
+    "name": "Security Guard Night Sleep Planner",
+    "description": "Compare immediate, delayed and split daytime sleep schedules for overnight guard duty, with light and caffeine timing.",
+    "category": "Health & Fitness",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "security-headers-checker": {
     "name": "Security Headers Checker",
     "description": "Review pasted response headers for missing defensive controls.",
@@ -12931,6 +20178,41 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "semester-exam-countdown-board": {
+    "name": "Semester Exam Countdown Board",
+    "description": "See days left to each semester paper on one board, with per-subject readiness bars and at-risk flags for weak subjects close to their date.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "semester-to-quarter-credit-converter": {
+    "name": "Semester To Quarter Credit Converter",
+    "description": "Convert college credits between semester and quarter systems with the standard 1 semester = 1.5 quarter unit ratio.",
+    "category": "Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "semver-bump-decision-helper": {
+    "name": "Semver Bump Decision Helper",
+    "description": "Answer a few questions about your change and get the correct major, minor or patch bump per the SemVer 2.0.0 spec.",
+    "category": "Developer",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "semver-range-explainer": {
+    "name": "Semver Range Explainer",
+    "description": "Explain what a caret, tilde, hyphen, x or comparator semver range actually allows, in plain English with examples.",
+    "category": "Developer",
+    "icon": "package-search",
+    "iconColor": "text-(--primary)"
+  },
+  "senior-citizen-fd-calculator": {
+    "name": "Senior Citizen FD Extra Rate Calculator",
+    "description": "What the extra senior citizen deposit rate is worth, with the ₹1 lakh TDS threshold and the section 80TTB interest deduction.",
+    "category": "Finance Calculators",
+    "icon": "user-round-check",
+    "iconColor": "text-(--primary)"
   },
   "senior-citizen-income-tax-calculator": {
     "name": "Senior Citizen Income Tax Calculator",
@@ -12956,6 +20238,13 @@ export const toolMetaMap = {
     "icon": "shield-question",
     "iconColor": "text-primary"
   },
+  "senior-hydration-reminder-planner": {
+    "name": "Senior Hydration Reminder Planner",
+    "description": "Daily drink target for an older adult using the ESPEN geriatric minimum or 30 ml per kg, split into small prompted servings anchored to meals and stopped before bed.",
+    "category": "Health Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
   "sentence-correction-practice": {
     "name": "Sentence Correction Practice",
     "description": "Master English grammar by identifying and correcting errors in sentences with detailed explanations.",
@@ -12970,6 +20259,34 @@ export const toolMetaMap = {
     ],
     "icon": "check-circle-2",
     "iconColor": "text-emerald-600"
+  },
+  "seo-article-prompt-builder": {
+    "name": "SEO Article Prompt Builder",
+    "description": "Builds an SEO article prompt around a target query: search intent, heading structure, word budget and on-page limits baked in.",
+    "category": "Marketing & Social",
+    "icon": "search-check",
+    "iconColor": "text-(--primary)"
+  },
+  "serialization-format-chooser": {
+    "name": "Serialization Format Chooser",
+    "description": "Rank JSON, Protocol Buffers, Avro, MessagePack and CBOR against your own requirements and see why each wins or loses.",
+    "category": "Developer",
+    "icon": "git-compare-arrows",
+    "iconColor": "text-(--primary)"
+  },
+  "service-account-key-rotation-planner": {
+    "name": "Service Account Key Rotation Planner",
+    "description": "Plan rotation cadence and a safe cutover schedule for cloud service account keys, with due, overlap, disable and delete dates.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
+  },
+  "service-mesh-comparison-tool": {
+    "name": "Service Mesh Comparison Tool",
+    "description": "Compare Istio, Linkerd, Consul and Cilium on features, resource overhead and operational cost, weighted by your priorities.",
+    "category": "Developer",
+    "icon": "git-compare",
+    "iconColor": "text-(--primary)"
   },
   "severe-weather-watch": {
     "name": "Severe Weather Watch",
@@ -12994,6 +20311,13 @@ export const toolMetaMap = {
     ],
     "icon": "shield-plus",
     "iconColor": "text-primary"
+  },
+  "sgpa-to-cgpa-calculator": {
+    "name": "SGPA To CGPA Calculator",
+    "description": "Combine semester SGPAs with their credits into a cumulative CGPA, see the running trend, and convert it to a percentage.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
   },
   "sha1-hash-generator": {
     "name": "SHA1 Hash Generator",
@@ -13028,6 +20352,13 @@ export const toolMetaMap = {
     ],
     "icon": "binary",
     "iconColor": "text-primary"
+  },
+  "shared-flat-rent-split-calculator": {
+    "name": "Shared Flat Rent Split Calculator",
+    "description": "Split flat rent between flatmates by room size, amenities and occupancy, with whole-rupee shares that add up exactly.",
+    "category": "Finance Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
   },
   "shared-resource-conflict-resolver": {
     "name": "Shared-Resource Conflict Resolver",
@@ -13070,6 +20401,20 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-teal-600"
   },
+  "shoe-size-converter-travel-shopping": {
+    "name": "Shoe Size Converter for Travel Shopping",
+    "description": "Convert shoe sizes between UK, India, US men's, US women's, EU and Japanese sizing from a size or a foot measurement.",
+    "category": "Converters",
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
+  },
+  "shopify-description-prompt-builder": {
+    "name": "Shopify Description Prompt Builder",
+    "description": "Build a Shopify product description prompt with brand voice, SEO title, meta description limits and a generated URL handle.",
+    "category": "Marketing & Social",
+    "icon": "shopping-bag",
+    "iconColor": "text-(--primary)"
+  },
   "short-video-hook-marker": {
     "name": "Short-Video Hook Marker",
     "description": "Clip timeline par hook, beat aur review timestamps mark kare.",
@@ -13084,12 +20429,16 @@ export const toolMetaMap = {
   "shot-list-planner": {
     "name": "Shot List Planner",
     "description": "Plan scenes, sequence shots, track production status, manage gear notes, and export printable shooting sheets.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
-    ],
+    "category": "Lifestyle",
     "icon": "clapperboard",
     "iconColor": "text-cyan-500"
+  },
+  "shower-water-usage-calculator": {
+    "name": "Shower Water Usage Calculator",
+    "description": "Compare bucket bath, hand shower and rain shower on litres, geyser units and rupees per bath, per month and per year.",
+    "category": "Calculators",
+    "icon": "shower-head",
+    "iconColor": "text-(--primary)"
   },
   "sign-language-alphabet-trainer": {
     "name": "Sign Language Alphabet Trainer",
@@ -13111,6 +20460,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "silly-mistake-tracker": {
+    "name": "Silly Mistake Tracker",
+    "description": "Log avoidable errors from each mock test by category and watch the count and marks lost fall (or not) across attempts.",
+    "category": "Education & Science",
+    "icon": "circle-alert",
+    "iconColor": "text-(--primary)"
+  },
+  "silver-investment-return-calculator": {
+    "name": "Silver Investment Return Calculator",
+    "description": "Track silver purchase cost, GST, buyback discount and post-tax return with an annualised figure.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
   },
   "sim-swap-recovery-pack": {
     "name": "SIM Swap Recovery Pack",
@@ -13154,6 +20517,76 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-(--primary)"
   },
+  "simple-vs-compound-interest": {
+    "name": "Simple vs Compound Interest Comparator",
+    "description": "Compare simple and compound interest on the same principal, rate and period, with a year-by-year table and the exact rupee gap.",
+    "category": "Education & Science",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-airlines-baggage-allowance-checker": {
+    "name": "Singapore Airlines Baggage Allowance Checker",
+    "description": "Check cabin and check-in bags against Singapore Airlines weight-concept and Americas piece-concept allowances and the 115 cm cabin rule.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-airlines-excess-baggage-cost-estimator": {
+    "name": "Singapore Airlines Excess Baggage Cost Estimator",
+    "description": "Work out Singapore Airlines excess baggage cost by fare brand and KrisFlyer tier, prepaid online versus at the airport.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-dress-code-planner": {
+    "name": "Singapore Dress Code Planner for Travellers",
+    "description": "Plan Singapore outfits by month: mosque and temple cover-up rules, Marina Bay door policies, air-con layers and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-sin-airport-arrival-buffer-calculator": {
+    "name": "Singapore SIN Airport Arrival Buffer Calculator",
+    "description": "Work out when to leave home for Singapore Changi using drive time, traffic, check-in cut-off, immigration and gate-closing buffers.",
+    "category": "Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-trip-budget-breakdown": {
+    "name": "Singapore Trip Budget Breakdown",
+    "description": "Split a Singapore trip into flights, room, the 10% service charge and 9% GST, food, transport and attractions.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-visa-cost-estimator": {
+    "name": "Singapore Visa Cost Estimator",
+    "description": "Split Singapore's non-refundable processing fee from the on-approval issuance fee and total the whole trip in rupees.",
+    "category": "Finance Calculators",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-visa-cover-letter-builder": {
+    "name": "Singapore Visa Cover Letter Builder",
+    "description": "Draft a Form 14A visit-visa cover letter with itinerary, local contact, SG Arrival Card timing and visit pass checks.",
+    "category": "Text & Writing",
+    "icon": "building",
+    "iconColor": "text-(--primary)"
+  },
+  "singapore-visa-rejection-reason-explainer": {
+    "name": "Singapore Visa Rejection Reason Explainer",
+    "description": "ICA gives no reason for a Singapore visa rejection - work through every assessment area and score what you have fixed.",
+    "category": "Education & Science",
+    "icon": "badge-alert",
+    "iconColor": "text-(--primary)"
+  },
+  "sinking-fund-calculator": {
+    "name": "Sinking Fund Calculator",
+    "description": "Work out the monthly reserve for known irregular bills like insurance, servicing, fees and travel.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
   "sip-calculator": {
     "name": "SIP Calculator",
     "description": "Estimate SIP maturity value, invested amount, and wealth gain with annual step-up.",
@@ -13168,6 +20601,20 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-emerald-600"
   },
+  "sip-goal-reverse-calculator": {
+    "name": "SIP Goal Reverse Calculator",
+    "description": "Work backwards from a target amount and target date to the exact monthly SIP you need, with step-up and inflation options.",
+    "category": "Finance Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "sip-top-up-percentage-calculator": {
+    "name": "SIP Top Up Percentage Calculator",
+    "description": "See how raising your SIP by a fixed percentage every year changes the final corpus, the amount invested and the date you hit your goal.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
   "sitemap-generator": {
     "name": "Sitemap Generator",
     "description": "Create standard XML sitemaps containing page URLs, update frequency, priority levels, and modification dates to optimize crawling.",
@@ -13177,11 +20624,8 @@ export const toolMetaMap = {
   },
   "skill-demand-analyzer": {
     "name": "Skill Demand Analyzer",
-    "description": "Analyze the demand for various skills in the job market.",
-    "category": "AI Tools",
-    "topics": [
-      "AI"
-    ],
+    "description": "Score how much the job market wants a skill from live openings, year-on-year growth, applicants per posting, salary premium and remote share.",
+    "category": "Business",
     "icon": "trending-up",
     "iconColor": "text-green-600"
   },
@@ -13227,6 +20671,27 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-teal-500"
   },
+  "skirting-length-calculator": {
+    "name": "Skirting Length Calculator",
+    "description": "Work out skirting running length, number of pieces, corners, fixings and cost from room size minus doorways.",
+    "category": "Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "sla-uptime-downtime-calculator": {
+    "name": "SLA Uptime Downtime Calculator",
+    "description": "Convert an SLA uptime percentage into allowed downtime per day, week, month, quarter and year — and back.",
+    "category": "Calculators",
+    "icon": "activity",
+    "iconColor": "text-(--primary)"
+  },
+  "slack-ai-prompt-builder": {
+    "name": "Slack AI Prompt Builder",
+    "description": "Build Slack thread summary, recap and action-item prompts that fit Slack's 40,000 character message and 3,000 character block limits.",
+    "category": "Productivity",
+    "icon": "message-square",
+    "iconColor": "text-(--primary)"
+  },
   "sleep-calculator": {
     "name": "Sleep Calculator",
     "description": "Find ideal bedtime or wake-up options using 90-minute sleep cycles.",
@@ -13260,6 +20725,13 @@ export const toolMetaMap = {
     "icon": "bed",
     "iconColor": "text-teal-600"
   },
+  "sleep-debt-payback-planner": {
+    "name": "Sleep Debt Payback Planner",
+    "description": "Add up your weekly sleep shortfall and spread the recovery across several nights instead of one long weekend lie-in.",
+    "category": "Health & Fitness",
+    "icon": "bed-double",
+    "iconColor": "text-(--primary)"
+  },
   "sleep-tracker": {
     "name": "Sleep Tracking & Sleep Quality Analyzer",
     "description": "Track your sleep habits, automatically calculate sleep debt and efficiency, and get personalized recommendations.",
@@ -13280,6 +20752,13 @@ export const toolMetaMap = {
     ],
     "icon": "puzzle",
     "iconColor": "text-violet-600"
+  },
+  "slope-percent-degree-converter": {
+    "name": "Slope Percent Degree Converter",
+    "description": "Convert slope between percent grade, degrees, 1-in-X ratio, inches per foot and roof pitch for ramps, drains and roofs.",
+    "category": "Converters",
+    "icon": "triangle-right",
+    "iconColor": "text-(--primary)"
   },
   "slow-speech-playback-trainer": {
     "name": "Slow Speech Playback Trainer",
@@ -13311,16 +20790,17 @@ export const toolMetaMap = {
   },
   "smart-goal-planner": {
     "name": "SMART Goal Planner",
-    "description": "Create SMART goals, manage milestones and tasks, track live progress, reminders, analytics, reports, and local autosave.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Planning"
-    ],
+    "description": "Score a goal against all five SMART criteria, track milestones, and check whether the pace you are holding will hit the target by the deadline.",
+    "category": "Productivity",
     "icon": "target",
     "iconColor": "text-cyan-500"
+  },
+  "smart-home-power-budget": {
+    "name": "Smart Home Power Budget",
+    "description": "Add up the standby and active power of every smart device and hub in your home, with daily kWh, running cost and the always-on vampire load.",
+    "category": "Calculators",
+    "icon": "house-plug",
+    "iconColor": "text-(--primary)"
   },
   "smart-meter-interval-analyzer": {
     "name": "Smart-Meter Interval Analyzer",
@@ -13346,6 +20826,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "smartphone-resale-value-estimator": {
+    "name": "Smartphone Resale Value Estimator",
+    "description": "Estimate what a used phone is worth from launch price, age, condition, storage variant, battery health and accessories.",
+    "category": "Finance Calculators",
+    "icon": "smartphone",
+    "iconColor": "text-(--primary)"
+  },
   "smile-detector": {
     "name": "Smile Detector",
     "description": "Analyze your smile with AI-powered facial expression detection. Get smile score, emotion analysis, confidence meter, and detailed report.",
@@ -13362,6 +20849,13 @@ export const toolMetaMap = {
     ],
     "icon": "smile",
     "iconColor": "text-yellow-500"
+  },
+  "smoke-alarm-placement-planner": {
+    "name": "Smoke Alarm Placement Planner",
+    "description": "Count the smoke and CO alarms a home needs under NFPA 72 and get the mounting distances for ceilings, walls and peaks.",
+    "category": "Calculators",
+    "icon": "alarm-smoke",
+    "iconColor": "text-(--primary)"
   },
   "snake-case-converter": {
     "name": "Snake Case Converter",
@@ -13400,6 +20894,13 @@ export const toolMetaMap = {
     "icon": "gamepad-2",
     "iconColor": "text-teal-600"
   },
+  "snapchat-ad-size-generator": {
+    "name": "Snapchat Ad Size Generator",
+    "description": "Produce Snap ad, story and geofilter creatives at the required resolution, safe zone and file weight.",
+    "category": "Design & Color",
+    "icon": "ghost",
+    "iconColor": "text-(--primary)"
+  },
   "sobriety-recovery-journal": {
     "name": "Sobriety Recovery Journal",
     "description": "Sober days, urges, triggers aur coping wins privately track kare.",
@@ -13424,6 +20925,13 @@ export const toolMetaMap = {
     "icon": "share-2",
     "iconColor": "text-blue-500"
   },
+  "society-charge-splitter": {
+    "name": "Property Maintenance and Society Charge Splitter",
+    "description": "Split housing society maintenance flat by flat using the model bye-law basis: service charges equally, repairs by area, water by inlets.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
   "society-maintenance-split-calculator": {
     "name": "Society Maintenance Split Calculator",
     "description": "Split a housing society's monthly maintenance budget across flats by carpet area, equally, or on a hybrid basis.",
@@ -13441,6 +20949,34 @@ export const toolMetaMap = {
     ],
     "icon": "building-2",
     "iconColor": "text-teal-600"
+  },
+  "society-noc-request-letter-generator": {
+    "name": "Society NOC Request Letter Generator",
+    "description": "Draft a housing society NOC request for a sale, leave and licence, mortgage or renovation with the right enclosures and notice period.",
+    "category": "Business",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "socratic-tutor-prompt-builder": {
+    "name": "Socratic Tutor Prompt Builder",
+    "description": "Build an AI tutor prompt that guides with questions and a graded hint ladder instead of handing over the answer.",
+    "category": "Education & Science",
+    "icon": "message-circle-question",
+    "iconColor": "text-(--primary)"
+  },
+  "solar-panel-area-calculator": {
+    "name": "Solar Panel Area Calculator",
+    "description": "Find the panel count, module efficiency and roof area needed for a target solar capacity, plus expected daily generation.",
+    "category": "Calculators",
+    "icon": "sun",
+    "iconColor": "text-(--primary)"
+  },
+  "solar-panel-cleaning-planner": {
+    "name": "Solar Panel Cleaning Planner",
+    "description": "Plan solar panel cleaning frequency from dust level, tilt and rainfall, with the yield lost and the cost-optimal interval.",
+    "category": "Productivity",
+    "icon": "spray-can",
+    "iconColor": "text-(--primary)"
   },
   "solar-panel-output-estimator": {
     "name": "Solar Panel Output Estimator",
@@ -13476,6 +21012,27 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-teal-500"
+  },
+  "solar-water-heater-size-calculator": {
+    "name": "Solar Water Heater Size Calculator",
+    "description": "Size a solar water heater in litres per day from family size and bathing habits, with collector area and yearly savings.",
+    "category": "Calculators",
+    "icon": "shower-head",
+    "iconColor": "text-(--primary)"
+  },
+  "sop-document-prompt-builder": {
+    "name": "SOP Document Prompt Builder",
+    "description": "Build a standard operating procedure prompt with RACI roles, control checks and ISO 9001 document-control fields.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "sop-prompt-builder": {
+    "name": "SOP Prompt Builder",
+    "description": "Build a statement of purpose prompt that fits the real word or character limit, budgets each section and flags cliché openings.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
   },
   "sort-lines-tool": {
     "name": "Sort Lines Tool",
@@ -13522,6 +21079,55 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-blue-600"
   },
+  "source-map-strategy-chooser": {
+    "name": "Source Map Strategy Chooser",
+    "description": "Compare webpack devtool source map types on build speed, rebuild speed, debug accuracy and production safety.",
+    "category": "Developer",
+    "icon": "map",
+    "iconColor": "text-(--primary)"
+  },
+  "south-korea-dress-code-planner": {
+    "name": "South Korea Dress Code Planner for Travellers",
+    "description": "Plan South Korea outfits by month: temple cover-up, shoes-off etiquette, jjimjilbang rules, jangma rain and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "south-korea-travel-etiquette-guide": {
+    "name": "South Korea Travel Etiquette Guide",
+    "description": "Build a prioritised South Korea etiquette briefing covering seniority, drinking rules, subway conduct and photography law.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "south-korea-visa-cost-estimator": {
+    "name": "South Korea Visa Cost Estimator",
+    "description": "Price a Korean single, double or multiple entry visa in rupees and see whether a multiple entry pays for itself.",
+    "category": "Finance Calculators",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "south-korea-visa-cover-letter-builder": {
+    "name": "South Korea Visa Cover Letter Builder",
+    "description": "Draft a C-3 short-term visit cover letter with itinerary, the 90-day sojourn limit, visa validity and fee totals.",
+    "category": "Text & Writing",
+    "icon": "flag",
+    "iconColor": "text-(--primary)"
+  },
+  "south-korea-visa-rejection-reason-explainer": {
+    "name": "South Korea Visa Rejection Reason Explainer",
+    "description": "Match the short reason line on a Korean visa result to the rule behind it, and fix the file before the six-month restriction bites.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
+  "souvenir-price-fairness-checker": {
+    "name": "Souvenir Price Fairness Checker",
+    "description": "Check a quoted souvenir price against the local prices you recorded, with markup, counter-offer and walk-away figures.",
+    "category": "Lifestyle",
+    "icon": "tag",
+    "iconColor": "text-(--primary)"
+  },
   "space-rocks": {
     "name": "Space Rocks",
     "description": "Blast drifting space rocks in this free retro arcade shooter with inertia physics and waves.",
@@ -13543,6 +21149,13 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-red-600"
   },
+  "spark-plug-gap-tool": {
+    "name": "Spark Plug Gap Tool",
+    "description": "Convert spark plug gaps between mm, inches and thou, and check a measured gap against the typical range for your engine.",
+    "category": "Education & Science",
+    "icon": "zap",
+    "iconColor": "text-(--primary)"
+  },
   "speed-date-rotation-planner": {
     "name": "Speed-Date Rotation Planner",
     "description": "Non-repeating round-robin meeting schedule banaye.",
@@ -13563,6 +21176,20 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-blue-600"
   },
+  "speed-limit-unit-converter": {
+    "name": "Speed Limit Unit Converter",
+    "description": "Convert posted speed limits between km/h, mph, knots and m/s, with the nearest sign-friendly value and travel time per kilometre.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "speed-unit-converter-vehicle": {
+    "name": "Speed Unit Converter Vehicle",
+    "description": "Convert km/h, mph, knots, m/s, ft/s and Mach, with reaction and braking distance for the same speed.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "spelling-checker": {
     "name": "Spelling Checker",
     "description": "Check and correct spelling mistakes instantly with smart suggestions.",
@@ -13572,6 +21199,20 @@ export const toolMetaMap = {
     ],
     "icon": "spell-check",
     "iconColor": "text-blue-600"
+  },
+  "spicejet-baggage-allowance-checker": {
+    "name": "SpiceJet Baggage Allowance Checker",
+    "description": "Check bag weights and sizes against typical SpiceJet cabin and check-in allowances, and price any excess per kilogram.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "spicejet-excess-baggage-cost-estimator": {
+    "name": "SpiceJet Excess Baggage Cost Estimator",
+    "description": "Price SpiceJet extra kilos at the counter against a pre-booked baggage slab, including cabin bag overweight moved to check-in.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
   },
   "spin-the-bottle": {
     "name": "Spin the Bottle",
@@ -13604,6 +21245,13 @@ export const toolMetaMap = {
     "icon": "orbit",
     "iconColor": "text-cyan-600"
   },
+  "split-vs-window-ac-comparison": {
+    "name": "Split vs Window AC Comparison",
+    "description": "Compare split and window air conditioners on purchase price, installation, yearly electricity and total cost of ownership.",
+    "category": "Calculators",
+    "icon": "arrow-left-right",
+    "iconColor": "text-(--primary)"
+  },
   "sponsored-disclosure-placement-checker": {
     "name": "Sponsored Disclosure Placement Checker",
     "description": "Disclosure contrast, size, duration aur placement test kare.",
@@ -13615,18 +21263,61 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "sports-current-affairs-tracker": {
+    "name": "Sports Current Affairs Tracker",
+    "description": "Log tournaments, winners, runners-up and venues in a searchable exam-ready table for sports current affairs questions.",
+    "category": "Productivity",
+    "icon": "trophy",
+    "iconColor": "text-(--primary)"
+  },
+  "sppu-attendance-calculator": {
+    "name": "SPPU Attendance Calculator",
+    "description": "Check SPPU attendance subject-wise against the 75% defaulter line and see the exact safe bunk count for each subject.",
+    "category": "Calculators",
+    "icon": "notebook-pen",
+    "iconColor": "text-(--primary)"
+  },
+  "sppu-sgpa-calculator": {
+    "name": "SPPU SGPA Calculator",
+    "description": "Compute SPPU semester SGPA from credits and grades, then roll every semester into a cumulative CGPA.",
+    "category": "Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "spreadsheet-formula-prompt-builder": {
+    "name": "Spreadsheet Formula Prompt Builder",
+    "description": "Map your headers to real column letters and ranges, then build a formula prompt for Excel, Sheets or Calc.",
+    "category": "Productivity",
+    "icon": "table",
+    "iconColor": "text-(--primary)"
+  },
+  "sprint-capacity-calculator": {
+    "name": "Sprint Capacity Calculator",
+    "description": "Compute real sprint capacity in person-days and hours from headcount, leaves, holidays and ceremony or support overhead.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
   "sprint-goal-generator": {
     "name": "Sprint Goal Generator",
     "description": "Create focused sprint goals with measurable outcomes, scope notes, risks, and review prompts for agile planning.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Planning"
-    ],
+    "category": "Productivity",
     "icon": "flag",
     "iconColor": "text-violet-500"
+  },
+  "sqft-to-sqm-converter": {
+    "name": "Sqft to Sqm Converter",
+    "description": "Convert square feet, square metres, square yards, acres and hectares, with rate per unit and total plot cost.",
+    "category": "Converters",
+    "icon": "scaling",
+    "iconColor": "text-(--primary)"
+  },
+  "sql-explain-prompt-builder": {
+    "name": "SQL Explain Prompt Builder",
+    "description": "Flag non-sargable predicates and costly plan nodes, then build a prompt that explains the query plan in plain language.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
   },
   "sql-formatter": {
     "name": "SQL Formatter",
@@ -13637,13 +21328,94 @@ export const toolMetaMap = {
   },
   "sql-formatter-online": {
     "name": "SQL Formatter Online",
-    "description": "Format SQL queries with readable line breaks.",
+    "description": "Format SQL queries with readable line breaks, configurable indentation and keyword case — entirely in your browser.",
     "category": "Developer",
-    "topics": [
-      "Data"
-    ],
     "icon": "database",
     "iconColor": "text-cyan-700"
+  },
+  "sql-where-clause-builder": {
+    "name": "SQL WHERE Clause Builder",
+    "description": "Build complex WHERE conditions visually with AND/OR groups, IN and BETWEEN operators and ?, $n, :name or @name parameter markers.",
+    "category": "Developer",
+    "icon": "filter",
+    "iconColor": "text-(--primary)"
+  },
+  "sqlite-query-formatter": {
+    "name": "SQLite Query Formatter",
+    "description": "Format SQLite SQL with clause-aligned line breaks, keyword casing and full support for PRAGMA statements and SQLite quoting.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
+  },
+  "sqlserver-connection-string-builder": {
+    "name": "SQL Server Connection String Builder",
+    "description": "Build ADO.NET and JDBC SQL Server connection strings with instance names, encryption, timeouts and correct value escaping.",
+    "category": "Developer",
+    "icon": "server-cog",
+    "iconColor": "text-(--primary)"
+  },
+  "sri-lanka-entry-requirement-checklist": {
+    "name": "Sri Lanka Entry Requirement Checklist",
+    "description": "Check your Sri Lanka ETA route, passport validity, permitted stay and visa cost, then build the document checklist for your trip.",
+    "category": "Productivity",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "srt-to-txt-transcript": {
+    "name": "SRT To Plain Transcript",
+    "description": "Strip timecodes and caption markup from an SRT file to get a clean, paragraphed transcript with word count and speaking rate.",
+    "category": "Converters",
+    "icon": "align-left",
+    "iconColor": "text-(--primary)"
+  },
+  "srt-to-vtt-converter": {
+    "name": "SRT To VTT Converter",
+    "description": "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes.",
+    "category": "Converters",
+    "icon": "captions",
+    "iconColor": "text-(--primary)"
+  },
+  "ssc-application-document-checklist": {
+    "name": "SSC Application Document Checklist",
+    "description": "Every document and detail needed before filling an SSC form — OTR details, uploads, certificates, fee — plus an age-eligibility check.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "ssc-cgl-exam-countdown": {
+    "name": "SSC CGL Exam Countdown",
+    "description": "Days-and-hours countdown to SSC CGL Tier-I or Tier-II with revision-phase milestones mapped onto your remaining time.",
+    "category": "Productivity",
+    "icon": "hourglass",
+    "iconColor": "text-(--primary)"
+  },
+  "ssc-exam-day-checklist": {
+    "name": "SSC Exam Day Checklist",
+    "description": "SSC computer-based test day checklist with biometric, photo ID and admit card reminders plus a gate-closing reporting plan.",
+    "category": "Productivity",
+    "icon": "id-card",
+    "iconColor": "text-(--primary)"
+  },
+  "ssc-exam-prompt-builder": {
+    "name": "SSC Exam Prompt Builder",
+    "description": "Build SSC practice and explanation prompts for reasoning, maths, English and GK, with each exam's real marking, pacing and attempt maths.",
+    "category": "Education & Science",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "ssc-omr-practice-sheet": {
+    "name": "SSC OMR Practice Sheet",
+    "description": "Print an SSC-style OMR answer sheet with A-D bubbles, CGL/CHSL Tier-I part blocks, marking scheme and a roll number grid for practice.",
+    "category": "Education & Science",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "ssh-key-type-chooser": {
+    "name": "SSH Key Type Chooser",
+    "description": "Compare Ed25519, ECDSA and RSA SSH keys on security strength, size and OpenSSH support, then copy the exact ssh-keygen command.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-(--primary)"
   },
   "ssl-certificate-inspector": {
     "name": "SSL Certificate Inspector Studio",
@@ -13673,6 +21445,20 @@ export const toolMetaMap = {
     "icon": "file-signature",
     "iconColor": "text-teal-600"
   },
+  "stamp-paper-denomination-splitter": {
+    "name": "Stamp Paper Denomination Splitter",
+    "description": "Work out the fewest non-judicial stamp papers that add up to a required stamp duty amount, plus any unavoidable excess.",
+    "category": "Finance Calculators",
+    "icon": "stamp",
+    "iconColor": "text-(--primary)"
+  },
+  "stand-up-india-eligibility-checker": {
+    "name": "Stand Up India Loan Eligibility Checker",
+    "description": "Check Stand Up India criteria for SC, ST and women entrepreneurs, then size the composite loan and margin money for a greenfield project.",
+    "category": "Business",
+    "icon": "rocket",
+    "iconColor": "text-(--primary)"
+  },
   "standard-deduction-impact-calculator": {
     "name": "Standard Deduction Impact Calculator",
     "description": "See how the salaried standard deduction lowers your taxable income and final tax in the old and new regimes.",
@@ -13689,6 +21475,13 @@ export const toolMetaMap = {
     ],
     "icon": "sigma",
     "iconColor": "text-cyan-600"
+  },
+  "standby-power-cost-calculator": {
+    "name": "Standby Power Cost Calculator",
+    "description": "Add up what always-on and standby devices cost you every year, ranked by the worst offender in your home.",
+    "category": "Calculators",
+    "icon": "plug",
+    "iconColor": "text-(--primary)"
   },
   "star-life-cycle-explorer": {
     "name": "Star Life Cycle Explorer",
@@ -13712,6 +21505,48 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-cyan-500"
+  },
+  "startup-runway-burn-calculator": {
+    "name": "Startup Runway and Burn Rate Calculator",
+    "description": "Model gross burn, net burn and months of runway with revenue and cost growth, plus break-even month, burn multiple and funding gap.",
+    "category": "Business",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "state-psc-application-checklist": {
+    "name": "State PSC Application Checklist",
+    "description": "Track state commission deadlines — fee date, submission date, correction window — and the certificates each state actually accepts.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "state-psc-exam-countdown": {
+    "name": "State PSC Exam Countdown",
+    "description": "Pick your state public service commission and count the days, weeks and study hours left to prelims, mains and interview.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "static-site-generator-comparison": {
+    "name": "Static Site Generator Comparison",
+    "description": "Compare Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll on build speed, client JS, rendering modes and ecosystem.",
+    "category": "Developer",
+    "icon": "layout-template",
+    "iconColor": "text-(--primary)"
+  },
+  "stcg-shares-calculator-india": {
+    "name": "Short Term Capital Gains Calculator on Shares",
+    "description": "Section 111A short term capital gains tax on listed equity, with STT context, deductible charges and the basic exemption adjustment.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
+  },
+  "steel-rebar-weight-calculator": {
+    "name": "Steel Rebar Weight Calculator",
+    "description": "Rebar weight in kg from bar diameter, length and count, with the d²/162 unit weight, stock bars and cost.",
+    "category": "Calculators",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
   },
   "step-counter": {
     "name": "Step Counter",
@@ -13769,15 +21604,54 @@ export const toolMetaMap = {
     "icon": "timer",
     "iconColor": "text-teal-600"
   },
+  "storage-unit-size-selector": {
+    "name": "Storage Unit Size Selector",
+    "description": "Add up what you plan to store and get the smallest self-storage unit that fits, allowing for sprinkler clearance and access.",
+    "category": "Calculators",
+    "icon": "warehouse",
+    "iconColor": "text-(--primary)"
+  },
+  "story-point-estimation-calculator": {
+    "name": "Story Point Estimation Calculator",
+    "description": "Convert story points to hours from your team's own velocity, with a confidence range and sprint forecast.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
   "storyboard-builder": {
     "name": "Storyboard Builder",
-    "description": "Create visual sequences, plan scene durations, sequence shots, sketch concepts, organize actor dialogue, and export production sheets.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
-    ],
+    "description": "Sequence shots, plan scene durations with running SMPTE timecode, check dialogue length, and export a production sheet or CSV.",
+    "category": "Video & Audio",
     "icon": "clapperboard",
     "iconColor": "text-indigo-500"
+  },
+  "storytelling-prompt-builder": {
+    "name": "Storytelling Prompt Builder",
+    "description": "Build a structured AI storytelling prompt with narrative arc, point of view, tone and pacing controls baked in.",
+    "category": "Text & Writing",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
+  "stream-brb-screen-maker": {
+    "name": "Stream BRB Screen Maker",
+    "description": "Design a be-right-back stream scene with countdown, message and brand colours, with live WCAG contrast checking and SVG or PNG export.",
+    "category": "Design & Color",
+    "icon": "monitor-play",
+    "iconColor": "text-(--primary)"
+  },
+  "stream-overlay-size-calculator": {
+    "name": "Stream Overlay Size Calculator",
+    "description": "Work out facecam, alert and chat overlay pixel sizes and safe-area positions for any stream canvas and output resolution.",
+    "category": "Calculators",
+    "icon": "layout-template",
+    "iconColor": "text-(--primary)"
+  },
+  "stream-scene-layout-planner": {
+    "name": "Stream Scene Layout Planner",
+    "description": "Plan camera, gameplay and chat placement on a 1920x1080 scene and get exact OBS transform coordinates for every source.",
+    "category": "Design & Color",
+    "icon": "layout-template",
+    "iconColor": "text-(--primary)"
   },
   "stream-settings-calculator": {
     "name": "Stream Settings Calculator",
@@ -13788,6 +21662,34 @@ export const toolMetaMap = {
     ],
     "icon": "monitor-play",
     "iconColor": "text-blue-600"
+  },
+  "stream-time-zone-converter": {
+    "name": "Stream Time Zone Converter",
+    "description": "Convert one stream start time into local times across your audience time zones, with day shifts and prime-time flags.",
+    "category": "Converters",
+    "icon": "globe-2",
+    "iconColor": "text-(--primary)"
+  },
+  "streaming-bandwidth-calculator": {
+    "name": "Streaming Bandwidth Calculator",
+    "description": "Estimate the upload speed a live stream needs from video and audio bitrate, protocol overhead and safety headroom.",
+    "category": "Calculators",
+    "icon": "wifi",
+    "iconColor": "text-(--primary)"
+  },
+  "streaming-data-usage-calculator": {
+    "name": "Streaming Data Usage Calculator",
+    "description": "Estimate the mobile data an hour of audio or video streaming uses, and how long a data allowance will last at that quality.",
+    "category": "Calculators",
+    "icon": "wifi",
+    "iconColor": "text-(--primary)"
+  },
+  "street-food-budget-planner": {
+    "name": "Street Food Budget Planner",
+    "description": "Plan a trip food budget across street stalls, cafés, snacks and splurge meals, and see how many nice meals your budget really allows.",
+    "category": "Lifestyle",
+    "icon": "utensils-crossed",
+    "iconColor": "text-(--primary)"
   },
   "strikethrough-text-generator": {
     "name": "Strikethrough Text Generator",
@@ -13824,6 +21726,97 @@ export const toolMetaMap = {
     "icon": "brain",
     "iconColor": "text-purple-600"
   },
+  "student-distraction-log": {
+    "name": "Distraction Log For Students",
+    "description": "Log every distraction in a study session, find your top three triggers and estimate how much study time they cost you.",
+    "category": "Productivity",
+    "icon": "list-x",
+    "iconColor": "text-(--primary)"
+  },
+  "student-mess-bill-splitter": {
+    "name": "Mess Bill Splitter For Students",
+    "description": "Split mess and grocery bills fairly among roommates by days present — fixed charges shared equally, food cost by attendance.",
+    "category": "Finance Calculators",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
+  },
+  "student-monthly-budget-planner": {
+    "name": "Student Budget Planner Monthly",
+    "description": "Plan a monthly student budget across mess, rent, travel, books and personal spends — see surplus, category shares and a 50/30/20 check.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
+  "student-prompt-pack": {
+    "name": "Student Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for study plans, active recall, essay feedback and exam prep that build understanding.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
+  "study-break-ratio-optimiser": {
+    "name": "Break Ratio Optimiser",
+    "description": "Match your focus span to a proven study-break protocol (25/5, 50/10, 52/17 or 90/20) and get a full session schedule.",
+    "category": "Productivity",
+    "icon": "coffee",
+    "iconColor": "text-(--primary)"
+  },
+  "study-environment-score": {
+    "name": "Study Environment Score",
+    "description": "Rate noise, lighting, desk setup, phone placement and more to get a weighted 0-100 score for your study environment.",
+    "category": "Productivity",
+    "icon": "lamp-desk",
+    "iconColor": "text-(--primary)"
+  },
+  "study-hydration-reminder": {
+    "name": "Study Hydration Reminder",
+    "description": "Work out how much water a study session needs from EFSA daily intake values and get a sip schedule sized to your bottle.",
+    "category": "Health & Fitness",
+    "icon": "glass-water",
+    "iconColor": "text-(--primary)"
+  },
+  "study-lighting-calculator": {
+    "name": "Study Lighting Calculator",
+    "description": "Lumen-method study desk lighting: target lux, room index, luminaire count, spacing grid and the desk lamp top-up needed.",
+    "category": "Calculators",
+    "icon": "lamp-desk",
+    "iconColor": "text-(--primary)"
+  },
+  "study-material-version-tracker": {
+    "name": "Study Material Version Tracker",
+    "description": "Track which edition of each textbook or module you are using against the latest edition, and see what is out of date.",
+    "category": "Productivity",
+    "icon": "book-copy",
+    "iconColor": "text-(--primary)"
+  },
+  "study-plan-prompt-builder": {
+    "name": "Study Plan Prompt Builder",
+    "description": "Turn your syllabus topics and exam date into an AI prompt for a spaced-repetition study plan with built-in review days.",
+    "category": "Education & Science",
+    "icon": "calendar-days",
+    "iconColor": "text-(--primary)"
+  },
+  "study-posture-break-reminder": {
+    "name": "Study Posture Break Reminder",
+    "description": "Build a posture-reset and 20-20-20 eye-break schedule for a long study session, with a live timer that flags each break.",
+    "category": "Health & Fitness",
+    "icon": "armchair",
+    "iconColor": "text-(--primary)"
+  },
+  "study-room-planner": {
+    "name": "Study Room Planner",
+    "description": "Size the desk, chair clearance, shelving and lighting for a study room from its floor dimensions.",
+    "category": "Design & Color",
+    "icon": "lamp-desk",
+    "iconColor": "text-(--primary)"
+  },
+  "study-streak-tracker": {
+    "name": "Study Streak Tracker",
+    "description": "Track daily study streaks against an hour goal, with streak-freeze recovery rules, longest streak and adherence rate.",
+    "category": "Productivity",
+    "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
   "study-timetable-planner": {
     "name": "Study Timetable Planner",
     "description": "Create smart study schedules with auto-balancing, productivity tracking, and analytics.",
@@ -13833,6 +21826,20 @@ export const toolMetaMap = {
     ],
     "icon": "calendar",
     "iconColor": "text-indigo-600"
+  },
+  "subject-strength-radar": {
+    "name": "Subject Strength Radar",
+    "description": "Turn subject-wise marks into a radar chart with strongest and weakest subjects and a balance score across all of them.",
+    "category": "Education & Science",
+    "icon": "radar",
+    "iconColor": "text-(--primary)"
+  },
+  "subresource-integrity-generator": {
+    "name": "Subresource Integrity Generator",
+    "description": "Generate SHA-256, SHA-384 and SHA-512 integrity attributes for scripts and stylesheets, hashed locally in your browser.",
+    "category": "Security & Privacy",
+    "icon": "file-lock",
+    "iconColor": "text-(--primary)"
   },
   "subscript-generator": {
     "name": "Subscript Generator",
@@ -13858,6 +21865,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-clock",
     "iconColor": "text-violet-600"
+  },
+  "subscription-spend-audit": {
+    "name": "Subscription Spend Audit Tool",
+    "description": "Normalise every recurring subscription to a yearly cost, see the true annual drain and what cancelling the dead ones saves.",
+    "category": "Finance Calculators",
+    "icon": "repeat",
+    "iconColor": "text-(--primary)"
   },
   "subtitle-timing-adjuster": {
     "name": "Subtitle Timing Adjuster",
@@ -13905,6 +21919,41 @@ export const toolMetaMap = {
     "icon": "piggy-bank",
     "iconColor": "text-teal-600"
   },
+  "sukanya-samriddhi-maturity-calculator": {
+    "name": "Sukanya Samriddhi Maturity Calculator",
+    "description": "Project the Sukanya Samriddhi corpus from yearly deposits, with the 15-year deposit window, 21-year maturity and annual compounding.",
+    "category": "Finance Calculators",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
+  "summary-length-planner": {
+    "name": "Summary Length Planner",
+    "description": "Turn a source word count and a compression ratio into a target length, sentence count, token budget and reading time saved.",
+    "category": "Text & Writing",
+    "icon": "scissors",
+    "iconColor": "text-(--primary)"
+  },
+  "summits-reports-notes-tracker": {
+    "name": "Summits And Reports Tracker",
+    "description": "Track international summits, indices and reports with host, publisher, year and India's rank in one exam-ready table.",
+    "category": "Productivity",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "sunset-viewpoint-timing-planner": {
+    "name": "Sunset Viewpoint Timing Planner",
+    "description": "Work out when to leave to reach a viewpoint before golden hour, using NOAA solar equations for the light and Naismith's rule for the climb.",
+    "category": "Lifestyle",
+    "icon": "sunset",
+    "iconColor": "text-(--primary)"
+  },
+  "supabase-cost-estimator": {
+    "name": "Supabase Cost Estimator",
+    "description": "Estimate your monthly Supabase bill from database size, egress, storage, monthly active users, edge functions and compute tier.",
+    "category": "Calculators",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
+  },
   "superpower-generator": {
     "name": "Superpower Generator",
     "description": "Generate your unique superhero persona, complete with a primary superpower, a funny weakness, and a dramatic origin story.",
@@ -13937,12 +21986,26 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "surname-change-after-marriage-checklist": {
+    "name": "Surname Change After Marriage Checklist",
+    "description": "Phase-by-phase checklist for changing a surname after marriage, with the documents to carry and how many office visits are left.",
+    "category": "Lifestyle",
+    "icon": "heart-handshake",
+    "iconColor": "text-(--primary)"
+  },
   "survey-builder": {
     "name": "Survey Builder",
     "description": "Create custom surveys easily with interactive drag-and-drop fields.",
     "category": "Business",
     "icon": "list-checks",
     "iconColor": "text-purple-600"
+  },
+  "suspension-wear-checklist": {
+    "name": "Suspension Wear Checklist",
+    "description": "Tick the noises and symptoms your car shows and get a ranked list of the suspension parts most likely responsible.",
+    "category": "Education & Science",
+    "icon": "car-front",
+    "iconColor": "text-(--primary)"
   },
   "svg-blob-generator": {
     "name": "SVG Blob Generator",
@@ -13967,17 +22030,17 @@ export const toolMetaMap = {
   },
   "svg-to-image": {
     "name": "SVG to Image",
-    "description": "Render SVG markup to a downloadable PNG preview.",
-    "category": [
-      "Design & Color",
-      "Converters"
-    ],
-    "topics": [
-      "Design",
-      "Converter"
-    ],
+    "description": "Rasterise SVG markup to a downloadable PNG, JPEG or WebP at any scale, entirely in your browser.",
+    "category": "Converters",
     "icon": "image",
     "iconColor": "text-purple-600"
+  },
+  "sweat-rate-calculator": {
+    "name": "Sweat Rate Calculator",
+    "description": "Find your hourly sweat rate from the weigh-in weigh-out method, plus fluid replacement and sodium loss estimates.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
   },
   "swiss-pairing-engine": {
     "name": "Swiss Pairing Engine",
@@ -14058,6 +22121,62 @@ export const toolMetaMap = {
     "icon": "book-open-text",
     "iconColor": "text-indigo-600"
   },
+  "system-prompt-coding-assistant": {
+    "name": "Coding Assistant System Prompt Builder",
+    "description": "Build a system prompt for a coding assistant: stack, style guide, test policy, review checklist and refusal rules, with a token estimate.",
+    "category": "Developer",
+    "icon": "code",
+    "iconColor": "text-(--primary)"
+  },
+  "system-prompt-editor": {
+    "name": "Editor System Prompt Builder",
+    "description": "Configure a copy-editor AI persona: style guide, edit depth, English variant and change-tracking rules in one system prompt.",
+    "category": "Text & Writing",
+    "icon": "pen-line",
+    "iconColor": "text-(--primary)"
+  },
+  "system-prompt-hr-recruiter": {
+    "name": "HR Recruiter System Prompt Builder",
+    "description": "Build a recruiting assistant system prompt with fairness rules, candidate privacy constraints and a human-decision safeguard.",
+    "category": "Business",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
+  "system-prompt-product-manager": {
+    "name": "Product Manager System Prompt Builder",
+    "description": "Build a PM assistant system prompt for specs, user stories and tradeoffs, with a real prioritisation framework wired in.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "system-prompt-tutor-kids": {
+    "name": "Kids Tutor System Prompt Builder",
+    "description": "Build a child-safe AI tutor prompt with an age-matched reading level, safe-topic boundaries and trusted-adult referral rules.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "taiwan-entry-requirement-checklist": {
+    "name": "Taiwan Entry Requirement Checklist",
+    "description": "Check your Taiwan visa-exempt allowance or Travel Authorization Certificate, passport validity, arrival card and the customs rules that carry real fines.",
+    "category": "Productivity",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
+  },
+  "tamil-nadu-board-cutoff-calculator": {
+    "name": "Tamil Nadu Board Cutoff Calculator",
+    "description": "Work out the TNEA engineering cutoff and the medical/agriculture cutoff out of 200 from your Tamil Nadu HSC subject marks.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "tan-format-validator": {
+    "name": "TAN Format Validator",
+    "description": "Validate the 4 letters, 5 digits, 1 letter structure of a TAN offline, decode its location code and catch typos.",
+    "category": "Developer",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
+  },
   "tap-glider": {
     "name": "Tap Glider",
     "description": "One-tap arcade glider game — flap through the gaps, earn medals, and beat your best score online free.",
@@ -14069,11 +22188,95 @@ export const toolMetaMap = {
     "icon": "bird",
     "iconColor": "text-cyan-600"
   },
+  "tape-measure-fraction-reader": {
+    "name": "Tape Measure Fraction Reader",
+    "description": "Read any tape measure mark as decimal inches, millimetres and feet-inches, or snap a metric size to the nearest tape fraction.",
+    "category": "Converters",
+    "icon": "ruler",
+    "iconColor": "text-(--primary)"
+  },
+  "tar-command-builder": {
+    "name": "Tar Command Builder",
+    "description": "Build correct tar create, extract and list commands with compression, exclude patterns, strip-components and safe quoting.",
+    "category": "Developer",
+    "icon": "archive",
+    "iconColor": "text-(--primary)"
+  },
+  "tax-jargon-glossary": {
+    "name": "Tax Jargon Glossary Explorer",
+    "description": "Searchable plain-language glossary of Indian income tax, GST, investing and banking terms, each with the section it comes from.",
+    "category": "Education & Science",
+    "icon": "book-a",
+    "iconColor": "text-(--primary)"
+  },
+  "tcs-motor-vehicle-calculator": {
+    "name": "TCS on Motor Vehicle Sale Calculator",
+    "description": "Section 206C(1F) TCS at 1% on a car or notified luxury good above Rs 10 lakh, with buyer exemptions and the no-PAN rate.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
+  "tcs-tour-package-calculator": {
+    "name": "TCS on Overseas Tour Package Calculator",
+    "description": "Section 206C(1G) TCS on an overseas tour programme package, with the 5% and 20% slabs and the Rs 10 lakh yearly threshold.",
+    "category": "Finance Calculators",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
   "tdee-calculator": {
     "name": "TDEE Calculator",
     "description": "Find your total daily energy expenditure from BMR and activity level, plus calorie targets for cutting, maintaining or bulking.",
     "category": "Health Calculators",
     "icon": "flame",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194-dividend-calculator": {
+    "name": "TDS 194 Dividend Calculator",
+    "description": "TDS a domestic company must deduct on dividend paid to a resident under Section 194, with the ₹10,000 proviso threshold, the 20% no-PAN rate and Form 15G/15H eligibility.",
+    "category": "Finance Calculators",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194a-interest-calculator": {
+    "name": "TDS on Interest Section 194A Calculator",
+    "description": "Section 194A TDS on deposit and loan interest with bank, non-bank and senior citizen thresholds and the no-PAN rate.",
+    "category": "Finance Calculators",
+    "icon": "piggy-bank",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194c-calculator": {
+    "name": "TDS on Contractor Payments Section 194C",
+    "description": "Section 194C TDS at 1% or 2% on contractor and sub-contractor bills, with the Rs 30,000 single and Rs 1,00,000 annual threshold test.",
+    "category": "Finance Calculators",
+    "icon": "hard-hat",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194h-commission-calculator": {
+    "name": "TDS on Commission Section 194H Calculator",
+    "description": "Section 194H TDS on commission and brokerage with the 2% rate from October 2024 and the Rs 20,000 annual threshold.",
+    "category": "Finance Calculators",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194i-rent-calculator": {
+    "name": "TDS on Rent Section 194I Calculator",
+    "description": "Section 194-I rent TDS at 10% for land and buildings or 2% for plant and machinery, with the Rs 50,000 per month threshold.",
+    "category": "Finance Calculators",
+    "icon": "building-2",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194ib-calculator": {
+    "name": "TDS on Rent by Individuals Section 194IB",
+    "description": "Section 194-IB rent TDS for tenants paying over Rs 50,000 a month, with the last-month cap and Form 26QC and 16C due dates.",
+    "category": "Finance Calculators",
+    "icon": "house",
+    "iconColor": "text-(--primary)"
+  },
+  "tds-194j-calculator": {
+    "name": "TDS on Professional Fees Section 194J",
+    "description": "Work out section 194J TDS at 10% or 2% on professional, technical, royalty and director payments with the annual threshold check.",
+    "category": "Finance Calculators",
+    "icon": "briefcase",
     "iconColor": "text-(--primary)"
   },
   "tds-calculator-by-section": {
@@ -14112,6 +22315,27 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-(--primary)"
   },
+  "tds-return-due-date-tracker": {
+    "name": "TDS Return Due Date Tracker",
+    "description": "Quarterly 24Q, 26Q, 27Q and 27EQ due dates with Form 16, 16A and 27D deadlines and the section 234E late fee.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "teacher-prompt-pack": {
+    "name": "Teacher Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for lesson plans, rubrics, differentiation, feedback and parent emails, ready to copy.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "team-ai-seat-cost-calculator": {
+    "name": "Team AI Seat Cost Calculator",
+    "description": "Compare per-seat AI subscriptions against real team usage and against pay-as-you-go API pricing, with a break-even point.",
+    "category": "Calculators",
+    "icon": "users",
+    "iconColor": "text-(--primary)"
+  },
   "team-generator": {
     "name": "Team Generator",
     "description": "Generate balanced teams from a list of participants. Customize team count, size, and shuffle results.",
@@ -14121,6 +22345,27 @@ export const toolMetaMap = {
     ],
     "icon": "users",
     "iconColor": "text-blue-600"
+  },
+  "tech-spec-prompt-builder": {
+    "name": "Tech Spec Prompt Builder",
+    "description": "Generate a design-doc prompt with goals, non-goals and alternatives, plus a section word budget, reading time and completeness score.",
+    "category": "Developer",
+    "icon": "file-code-2",
+    "iconColor": "text-(--primary)"
+  },
+  "tech-spec-template-generator": {
+    "name": "Tech Spec Template Generator",
+    "description": "Create a technical design doc template with goals, non-goals, alternatives, risks and rollout, in the format your team needs.",
+    "category": "Generators",
+    "icon": "file-text",
+    "iconColor": "text-(--primary)"
+  },
+  "technical-doc-prompt-builder": {
+    "name": "Technical Doc Prompt Builder",
+    "description": "Build an AI documentation prompt with Diátaxis doc type, audience, scope and code example rules baked in.",
+    "category": "Developer",
+    "icon": "file-code",
+    "iconColor": "text-(--primary)"
   },
   "temperature-converter": {
     "name": "Temperature Converter",
@@ -14132,11 +22377,81 @@ export const toolMetaMap = {
     "icon": "thermometer",
     "iconColor": "text-red-600"
   },
+  "temple-visit-etiquette-checklist": {
+    "name": "Temple Visit Etiquette Checklist",
+    "description": "Footwear, dress, photography and offering etiquette for Buddhist, Hindu, Sikh, Jain and Shinto sites, scored by consequence.",
+    "category": "Education & Science",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "tenant-notice-to-vacate-generator": {
+    "name": "Tenant Notice to Vacate Generator",
+    "description": "Draft a tenant's notice to vacate with the handover date, notice-period check, final rent and security deposit settlement.",
+    "category": "Business",
+    "icon": "door-open",
+    "iconColor": "text-(--primary)"
+  },
   "term-insurance-cover-calculator": {
     "name": "Term Insurance Cover Calculator",
     "description": "Work out the life cover your family needs from income replacement, loans, dependants' goals and the assets and policies you already hold.",
     "category": "Finance Calculators",
     "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
+  "terraform-naming-convention-generator": {
+    "name": "Terraform Naming Convention Generator",
+    "description": "Generate a consistent Terraform resource naming standard across environments and regions, validated against real cloud name limits.",
+    "category": "Developer",
+    "icon": "tags",
+    "iconColor": "text-(--primary)"
+  },
+  "terraform-provider-block-generator": {
+    "name": "Terraform Provider Block Generator",
+    "description": "Generate terraform required_providers and provider blocks with version constraints and alias configurations.",
+    "category": "Developer",
+    "icon": "blocks",
+    "iconColor": "text-(--primary)"
+  },
+  "terraform-workspace-strategy-planner": {
+    "name": "Terraform Workspace Strategy Planner",
+    "description": "Decide between CLI workspaces, directory-per-environment or fully separate state for Terraform, with scored trade-offs.",
+    "category": "Developer",
+    "icon": "git-branch",
+    "iconColor": "text-(--primary)"
+  },
+  "test-case-naming-generator": {
+    "name": "Test Case Naming Generator",
+    "description": "Turn a scenario into consistent test names using given-when-then, should or unit_state_expected, with runnable suite scaffolding.",
+    "category": "Generators",
+    "icon": "flask-conical",
+    "iconColor": "text-(--primary)"
+  },
+  "test-coverage-target-calculator": {
+    "name": "Test Coverage Target Calculator",
+    "description": "Work out exactly how many lines or branches you must cover to hit a coverage threshold, with new-code rules and a sprint ratchet plan.",
+    "category": "Calculators",
+    "icon": "target",
+    "iconColor": "text-(--primary)"
+  },
+  "test-pyramid-ratio-planner": {
+    "name": "Test Pyramid Ratio Planner",
+    "description": "Plan unit, integration and end-to-end test ratios and see the runtime, CI cost and flakiness each mix produces.",
+    "category": "Developer",
+    "icon": "triangle",
+    "iconColor": "text-(--primary)"
+  },
+  "tet-exam-countdown": {
+    "name": "TET Exam Countdown",
+    "description": "Countdown to CTET or a state TET with a paper-wise prep tracker, section readiness score and the 60%/55% qualifying mark check.",
+    "category": "Productivity",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "tetanus-booster-due-checker": {
+    "name": "Tetanus Booster Due Checker",
+    "description": "Check whether a tetanus booster is due from your last dose date, using the 10-year routine rule and the 5-year rule for dirty wounds.",
+    "category": "Health & Fitness",
+    "icon": "shield",
     "iconColor": "text-(--primary)"
   },
   "text-behind-image": {
@@ -14175,37 +22490,22 @@ export const toolMetaMap = {
   },
   "text-diff-tool": {
     "name": "Text Diff Tool",
-    "description": "Compare two text blocks line-by-line and highlight differences.",
-    "category": [
-      "Developer",
-      "Text & Writing"
-    ],
-    "topics": [
-      "Text"
-    ],
+    "description": "Compare two text blocks line-by-line, highlight added and removed lines, and export a unified diff.",
+    "category": "Developer",
     "icon": "file-diff",
     "iconColor": "text-rose-600"
   },
   "text-diff-viewer": {
     "name": "Text Diff Viewer",
-    "description": "Compare text versions side-by-side with syntax highlighting, version history, analytics, and export.",
-    "category": [
-      "Developer",
-      "Productivity"
-    ],
+    "description": "Compare text versions side-by-side with word-level highlighting, version history, churn analytics and markdown export.",
+    "category": "Developer",
     "icon": "file-diff",
     "iconColor": "text-blue-600"
   },
   "text-encryptor": {
     "name": "Text Encryptor",
-    "description": "Hash text and encrypt or decrypt AES-GCM payloads locally.",
-    "category": [
-      "Security & Privacy",
-      "Developer"
-    ],
-    "topics": [
-      "Cybersecurity Tool"
-    ],
+    "description": "Encrypt and decrypt text with AES-256-GCM and PBKDF2, or take SHA-1 to SHA-512 digests — entirely in your browser.",
+    "category": "Security & Privacy",
     "icon": "key-round",
     "iconColor": "text-red-700"
   },
@@ -14274,13 +22574,7 @@ export const toolMetaMap = {
   "text-to-base64": {
     "name": "Text to Base64",
     "description": "Encode text into Base64 and decode Base64 locally.",
-    "category": [
-      "Developer",
-      "Converters"
-    ],
-    "topics": [
-      "Converter"
-    ],
+    "category": "Converters",
     "icon": "binary",
     "iconColor": "text-indigo-600"
   },
@@ -14381,6 +22675,76 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-blue-700"
   },
+  "textbook-buy-vs-rent-calculator": {
+    "name": "Book Buy Vs Rent Calculator",
+    "description": "Compare buying a textbook (with expected resale) against renting it per term over your course — including the break-even point.",
+    "category": "Finance Calculators",
+    "icon": "book-open",
+    "iconColor": "text-(--primary)"
+  },
+  "texture-prompt-generator": {
+    "name": "Texture Prompt Generator",
+    "description": "Compose precise texture and material prompts — surface, finish, scale, lighting and wear — for AI image and PBR generators.",
+    "category": "Design & Color",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "thai-airways-baggage-allowance-checker": {
+    "name": "Thai Airways Baggage Allowance Checker",
+    "description": "Check cabin and check-in bags against Thai Airways weight allowances, the 115 cm cabin rule and Americas piece-concept routes.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "thai-airways-excess-baggage-cost-estimator": {
+    "name": "Thai Airways Excess Baggage Cost Estimator",
+    "description": "Price Thai Airways excess baggage per kilogram or per piece, comparing prepaid blocks against the airport counter rate.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "thailand-dress-code-planner": {
+    "name": "Thailand Dress Code Planner for Travellers",
+    "description": "Plan Thailand outfits by month: temple and Grand Palace cover-up rules, rooftop-bar codes, beach limits and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "thailand-travel-etiquette-guide": {
+    "name": "Thailand Travel Etiquette Guide",
+    "description": "Build a prioritised Thailand etiquette briefing for the places on your itinerary, with the legal red lines flagged and a readiness score.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "thailand-visa-cost-estimator": {
+    "name": "Thailand Visa Cost Estimator",
+    "description": "Price a Thai e-Visa, extension of stay or visa exemption trip in rupees, including the capped overstay fine.",
+    "category": "Finance Calculators",
+    "icon": "sun",
+    "iconColor": "text-(--primary)"
+  },
+  "thailand-visa-cover-letter-builder": {
+    "name": "Thailand Visa Cover Letter Builder",
+    "description": "Draft a Thai e-Visa tourist cover letter with itinerary, the 60-day stay stamp, funds proof and overstay-risk check.",
+    "category": "Text & Writing",
+    "icon": "palmtree",
+    "iconColor": "text-(--primary)"
+  },
+  "thailand-visa-rejection-reason-explainer": {
+    "name": "Thailand Visa Rejection Reason Explainer",
+    "description": "Turn a one-line Thai e-Visa rejection into the requirement behind it, with the real funds benchmarks and ban lengths.",
+    "category": "Education & Science",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "thb-cash-budget-planner": {
+    "name": "THB Cash Budget Planner",
+    "description": "Plan how much Thai baht to carry as notes versus card spend, costing the changer markup, GST, TCS and the flat Thai ATM fee.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
   "therapy-notes-tracker": {
     "name": "Therapy Notes Tracker",
     "description": "Keep private session takeaways, exercises, and triggers.",
@@ -14391,6 +22755,34 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "thesis-outline-prompt-builder": {
+    "name": "Thesis Outline Prompt Builder",
+    "description": "Splits a thesis word count across the standard six chapters and writes an outline prompt with research questions and scope built in.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "third-party-motor-premium-estimator": {
+    "name": "Third Party Motor Premium Estimator",
+    "description": "Estimate the notified motor third party premium for cars and two-wheelers by engine cc or kW, with owner-driver cover and 18% GST.",
+    "category": "Finance Calculators",
+    "icon": "shield-alert",
+    "iconColor": "text-(--primary)"
+  },
+  "threads-image-size-generator": {
+    "name": "Threads Image Size Generator",
+    "description": "Export Threads post images and carousels at native display sizes and check the supported aspect ratio range.",
+    "category": "Design & Color",
+    "icon": "at-sign",
+    "iconColor": "text-(--primary)"
+  },
+  "three-hour-paper-pacing-tool": {
+    "name": "Three Hour Paper Pacing Tool",
+    "description": "Split a three hour exam into timed checkpoints per section so you know the exact clock time each part must end.",
+    "category": "Education & Science",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
   },
   "three-phase-power-calculator": {
     "name": "Three-Phase Power Calculator",
@@ -14403,13 +22795,17 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-primary"
   },
+  "thumbnail-image-prompt-builder": {
+    "name": "Thumbnail Image Prompt Builder",
+    "description": "Build high-contrast thumbnail prompts with a reserved text zone, plus the minimum text size computed from where the thumbnail renders.",
+    "category": "Marketing & Social",
+    "icon": "image-play",
+    "iconColor": "text-(--primary)"
+  },
   "thumbnail-layout-planner": {
     "name": "Thumbnail Layout Planner",
     "description": "Plan YouTube thumbnail layouts with draggable visual elements, live preview, workflow tracking, branding notes, and exportable creative briefs.",
-    "category": "Design & Color",
-    "topics": [
-      "Creators"
-    ],
+    "category": "Lifestyle",
     "icon": "layout-template",
     "iconColor": "text-cyan-500"
   },
@@ -14423,16 +22819,33 @@ export const toolMetaMap = {
     "icon": "grid-3x3",
     "iconColor": "text-teal-600"
   },
+  "tile-wastage-calculator": {
+    "name": "Tile Wastage Calculator",
+    "description": "Recommends a tile wastage percentage from layout pattern, room shape, tile size and cutouts, then converts it into boxes.",
+    "category": "Calculators",
+    "icon": "grid-3x3",
+    "iconColor": "text-(--primary)"
+  },
+  "timber-weight-calculator": {
+    "name": "Timber Weight Calculator",
+    "description": "Calculate the weight of wood by species density, size and moisture content, with volume in cubic feet and cubic metres.",
+    "category": "Calculators",
+    "icon": "weight",
+    "iconColor": "text-(--primary)"
+  },
   "time-blocking-planner": {
     "name": "Time Blocking Planner",
     "description": "Plan daily work with real-time draggable time blocks, reminders, notes, dashboard stats, filters, and local autosave.",
     "category": "Productivity",
-    "topics": [
-      "Planning",
-      "Utility"
-    ],
     "icon": "calendar-clock",
     "iconColor": "text-cyan-500"
+  },
+  "time-complexity-cheat-tool": {
+    "name": "Time Complexity Cheat Tool",
+    "description": "Look up best, average and worst-case time and space complexity for common algorithms and data structures.",
+    "category": "Education & Science",
+    "icon": "binary",
+    "iconColor": "text-(--primary)"
   },
   "time-duration-calculator": {
     "name": "Time Duration Calculator",
@@ -14447,6 +22860,13 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "clock",
     "iconColor": "text-indigo-700"
+  },
+  "timecode-to-seconds-converter": {
+    "name": "Timecode to Seconds Converter",
+    "description": "Convert SMPTE HH:MM:SS:FF timecode to seconds and frames and back, with correct drop-frame and 1.001 pulldown handling.",
+    "category": "Converters",
+    "icon": "clock",
+    "iconColor": "text-(--primary)"
   },
   "timeline-builder": {
     "name": "Timeline Builder",
@@ -14463,6 +22883,20 @@ export const toolMetaMap = {
     "description": "Add up weekly worked hours from daily clock in and out times, with break deduction and overtime split.",
     "category": "Productivity",
     "icon": "clipboard-list",
+    "iconColor": "text-(--primary)"
+  },
+  "timesheet-to-invoice-calculator": {
+    "name": "Timesheet to Invoice Calculator",
+    "description": "Turn logged hours into an invoice total with billing increments, per-task rates, overtime, discounts and tax.",
+    "category": "Business",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "tip-bill-split-calculator-india": {
+    "name": "Tip and Bill Split Calculator India",
+    "description": "Split a restaurant bill with 5% or 18% GST, an optional service charge and a tip, equally or by what each person ate.",
+    "category": "Calculators",
+    "icon": "receipt",
     "iconColor": "text-(--primary)"
   },
   "tip-calculator": {
@@ -14486,6 +22920,69 @@ export const toolMetaMap = {
     "icon": "users",
     "iconColor": "text-(--primary)"
   },
+  "tipping-guide-calculator-egypt": {
+    "name": "Tipping Guide Calculator for Egypt",
+    "description": "Customary baksheesh amounts in Egypt for restaurants, taxis, hotels, guides and boat crews, with a trip total and small-note plan.",
+    "category": "Finance Calculators",
+    "icon": "hand-coins",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-germany": {
+    "name": "Tipping Guide Calculator for Germany",
+    "description": "Customary German Trinkgeld ranges for restaurants, cafés, taxis, hotels and guides, with round-up amounts and how to hand it over.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-india": {
+    "name": "Tipping Guide Calculator for India",
+    "description": "Customary tipping amounts in India for restaurants, autos, hotels, drivers and guides, with the CCPA service-charge rule and GST handled.",
+    "category": "Finance Calculators",
+    "icon": "hand-coins",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-singapore": {
+    "name": "Tipping Guide Calculator for Singapore",
+    "description": "What tipping is and is not customary in Singapore, with the 10% service charge and 9% GST '++' pricing worked out on your bill.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-spain": {
+    "name": "Tipping Guide Calculator for Spain",
+    "description": "Customary Spanish propina ranges for restaurants, tapas bars, taxis, hotels and guides, with the small amounts locals actually leave.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-uae": {
+    "name": "Tipping Guide Calculator for UAE",
+    "description": "Customary UAE tipping ranges for restaurants, taxis, hotels, valets and guides, with the 10% service charge and municipality fee stripped out.",
+    "category": "Finance Calculators",
+    "icon": "hand-coins",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-uk": {
+    "name": "Tipping Guide Calculator for UK",
+    "description": "Customary UK tipping ranges for restaurants, pubs, taxis, hotels and guides, with the discretionary service charge handled properly.",
+    "category": "Finance Calculators",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
+  },
+  "tipping-guide-calculator-usa": {
+    "name": "Tipping Guide Calculator for USA",
+    "description": "Customary US tipping ranges for restaurants, bars, taxis, hotels and guides, with the tip and total worked out on the pre-tax bill.",
+    "category": "Finance Calculators",
+    "icon": "utensils",
+    "iconColor": "text-(--primary)"
+  },
+  "title-safe-area-calculator": {
+    "name": "Title Safe Area Calculator",
+    "description": "Get action safe and title safe margins in pixels for any resolution using the EBU R 95 and SMPTE RP 218 safe area rules.",
+    "category": "Calculators",
+    "icon": "scan",
+    "iconColor": "text-(--primary)"
+  },
   "tls-configuration-auditor": {
     "name": "TLS Configuration Auditor",
     "description": "Inspect pasted TLS/certificate output for weak protocol signals.",
@@ -14507,6 +23004,48 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-700"
   },
+  "toefl-score-converter": {
+    "name": "TOEFL Score Converter",
+    "description": "Sum TOEFL iBT section scores into the 0-120 total, see ETS performance levels and compare with IELTS bands via the ETS linking table.",
+    "category": "Calculators",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "token-per-word-ratio-calculator": {
+    "name": "Token Per Word Ratio Calculator",
+    "description": "Compute your text's tokens-per-word ratio from a sample or a real token count for accurate LLM budgeting.",
+    "category": "Calculators",
+    "icon": "divide",
+    "iconColor": "text-(--primary)"
+  },
+  "tokens-per-second-benchmark-sheet": {
+    "name": "Tokens Per Second Benchmark Sheet",
+    "description": "Log local LLM runs and get decode and prefill tokens per second, model size by quantisation and the memory-bandwidth ceiling.",
+    "category": "Developer",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "tokens-to-words-converter": {
+    "name": "Tokens to Words Converter",
+    "description": "Convert an LLM token budget into an approximate word count, page count and reading time by content type.",
+    "category": "Converters",
+    "icon": "arrow-right-left",
+    "iconColor": "text-(--primary)"
+  },
+  "toml-to-json-converter": {
+    "name": "TOML to JSON Converter",
+    "description": "Convert TOML config files to JSON in the browser — tables, arrays of tables, dotted keys and dates handled per TOML 1.0.",
+    "category": "Converters",
+    "icon": "braces",
+    "iconColor": "text-(--primary)"
+  },
+  "tone-consistency-rubric": {
+    "name": "Tone Consistency Rubric",
+    "description": "Grade writing against a defined brand voice on six anchored 1-5 scales and get a weighted consistency score with drift direction.",
+    "category": "Text & Writing",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
   "tool-call-argument-policy-linter": {
     "name": "Tool-Call Argument Policy Linter",
     "description": "Lint AI tool-call JSON or JSONL locally against explicit name, path, domain, recipient, numeric-limit and confirmation policies without executing anything.",
@@ -14519,6 +23058,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "tool-rental-vs-buy-calculator": {
+    "name": "Tool Rental vs Buy Calculator",
+    "description": "Decide whether to rent or buy a tool from how often you use it, with the break-even number of usage days and total cost of each option.",
+    "category": "Finance Calculators",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
   "touch-target-thumb-reach-map": {
     "name": "Touch-Target Thumb-Reach Map",
     "description": "Review supplied target rectangles against transparent WCAG size and spacing geometry, then map approximate one-handed reach zones locally.",
@@ -14530,6 +23076,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "tour-guide-driver-tip-planner": {
+    "name": "Tour Guide and Driver Tip Planner",
+    "description": "Budget guide, driver, porter and camp crew tips across a multi-day tour, with per-person-per-day rates and the cash to draw.",
+    "category": "Finance Calculators",
+    "icon": "map",
+    "iconColor": "text-(--primary)"
+  },
   "tournament-bracket-builder": {
     "name": "Tournament Bracket Builder",
     "description": "Single/double elimination brackets aur byes generate kare.",
@@ -14539,6 +23092,34 @@ export const toolMetaMap = {
     ],
     "icon": "users-round",
     "iconColor": "text-primary"
+  },
+  "traffic-challan-tracker": {
+    "name": "Traffic Challan Tracker",
+    "description": "Log traffic fines privately, see what is pending or overdue, and work out how many months a budget needs to clear them.",
+    "category": "Productivity",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "transcript-request-drafter": {
+    "name": "Transcript Request Drafter",
+    "description": "Draft a university transcript request letter with enrolment details, copies needed, delivery mode and an enclosure checklist.",
+    "category": "Text & Writing",
+    "icon": "scroll-text",
+    "iconColor": "text-(--primary)"
+  },
+  "transitive-dependency-risk-explainer": {
+    "name": "Transitive Dependency Risk Explainer",
+    "description": "Model how a handful of direct dependencies expands into hundreds of transitive packages, and what that does to your attack surface.",
+    "category": "Security & Privacy",
+    "icon": "network",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-agency-prompt-pack": {
+    "name": "Travel Agency Prompt Pack",
+    "description": "Fill-in-the-blank AI prompts for package copy, quotes and follow-ups, with a tour quote calculator covering markup, GST and TCS.",
+    "category": "Business",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
   },
   "travel-cost-per-day": {
     "name": "Travel Cost Per Day",
@@ -14553,6 +23134,13 @@ export const toolMetaMap = {
     ],
     "icon": "calculator",
     "iconColor": "text-blue-600"
+  },
+  "travel-data-usage-estimator": {
+    "name": "Travel Data Usage Estimator",
+    "description": "Estimate how much mobile data a trip needs from maps, calls, streaming, social and photo backup habits.",
+    "category": "Productivity",
+    "icon": "signal",
+    "iconColor": "text-(--primary)"
   },
   "travel-disruption-evidence-pack": {
     "name": "Travel Disruption Evidence Pack",
@@ -14580,6 +23168,69 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-blue-600"
   },
+  "travel-document-folder-organiser": {
+    "name": "Travel Document Folder Organiser",
+    "description": "Stack your printed travel documents in the exact order airports, borders and hotels ask for them, with passport validity checked.",
+    "category": "Lifestyle",
+    "icon": "folder-check",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-fund-planner": {
+    "name": "Travel Fund Planner",
+    "description": "Build a full trip budget with forex markup, TCS and a contingency buffer, then back-solve the monthly saving it needs.",
+    "category": "Finance Calculators",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-itinerary-prompt-builder": {
+    "name": "Travel Itinerary Prompt Builder",
+    "description": "Build a trip prompt with a realistic activity capacity for your pace and city hops, plus a per-day budget split across stay, food and travel.",
+    "category": "Lifestyle",
+    "icon": "plane",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-phone-setup-checklist": {
+    "name": "Travel Phone Setup Checklist",
+    "description": "Pre-flight phone setup checklist: backups, offline files, roaming toggles, battery rules and safety contacts.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-photography-permission-checklist": {
+    "name": "Photography Permission Checklist",
+    "description": "Check where photos, drones and tripods are restricted before shooting, with EASA and FAA drone limits checked numerically.",
+    "category": "Education & Science",
+    "icon": "camera",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-power-bank-capacity-planner": {
+    "name": "Travel Power Bank Capacity Planner",
+    "description": "Size a power bank in mAh and Wh from your device batteries and days off-grid, with the 100 Wh airline carry-on limit checked.",
+    "category": "Productivity",
+    "icon": "battery-charging",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-power-strip-load-calculator": {
+    "name": "Travel Power Strip Load Calculator",
+    "description": "Add up device wattages to see whether one hotel socket and travel power strip can safely run them all at your destination voltage.",
+    "category": "Education & Science",
+    "icon": "power",
+    "iconColor": "text-(--primary)"
+  },
+  "travel-toiletry-quantity-estimator": {
+    "name": "Toiletry Quantity Estimator",
+    "description": "Estimate how much shampoo, toothpaste, sunscreen and cream a trip needs, sized into travel bottles and checked against the 1 litre cabin bag.",
+    "category": "Lifestyle",
+    "icon": "droplet",
+    "iconColor": "text-(--primary)"
+  },
+  "trimester-symptom-guide": {
+    "name": "Trimester Symptom Guide",
+    "description": "See which pregnancy symptoms and antenatal checks belong to your gestational week, with the signs that need same-day review.",
+    "category": "Health & Fitness",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
+  },
   "trip-budget-planner": {
     "name": "Trip Budget Planner",
     "description": "Plan travel costs by destination, days, travelers, budget style, expense categories, contingency, and per-person split.",
@@ -14593,6 +23244,13 @@ export const toolMetaMap = {
     ],
     "icon": "wallet",
     "iconColor": "text-blue-600"
+  },
+  "trip-shoe-selection-planner": {
+    "name": "Shoe Selection Planner for Trips",
+    "description": "Find the fewest pairs of shoes that cover every condition on your trip — walking, formal, wet, beach or trail — and the lightest set among them.",
+    "category": "Lifestyle",
+    "icon": "footprints",
+    "iconColor": "text-(--primary)"
   },
   "trojan-source-detector": {
     "name": "Trojan Source Detector",
@@ -14614,6 +23272,83 @@ export const toolMetaMap = {
     ],
     "icon": "help-circle",
     "iconColor": "text-violet-600"
+  },
+  "turbo-boost-converter": {
+    "name": "Turbo Boost Converter",
+    "description": "Convert boost between psi, bar, kPa and inHg, gauge or absolute, with pressure ratio, altitude and charge-air density.",
+    "category": "Converters",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "turf-roll-calculator": {
+    "name": "Turf Roll Calculator",
+    "description": "Estimate how many sod or turf rolls a lawn needs, including trim wastage, pallets and the delivered cost.",
+    "category": "Calculators",
+    "icon": "sprout",
+    "iconColor": "text-(--primary)"
+  },
+  "turkey-travel-etiquette-guide": {
+    "name": "Turkey Travel Etiquette Guide",
+    "description": "Build a prioritised Turkey etiquette briefing for mosques, bazaars, tea houses and hammams, with the legal red lines flagged.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "turkey-visa-cost-estimator": {
+    "name": "Turkey Visa Cost Estimator",
+    "description": "Price a Turkish e-Visa or sticker visa in rupees, with the conditional e-Visa rule and the 90/180 stay limit checked.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "turkey-visa-cover-letter-builder": {
+    "name": "Turkey Visa Cover Letter Builder",
+    "description": "Draft a Türkiye e-Visa cover letter with itinerary, the 90/180 rule and the 60-days-beyond-stay passport check.",
+    "category": "Text & Writing",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "turkey-visa-rejection-reason-explainer": {
+    "name": "Turkey Visa Rejection Reason Explainer",
+    "description": "Why a Turkish e-Visa or consular visa was refused - the 60-day validity rule, eligibility conditions, 90-in-180 and more.",
+    "category": "Education & Science",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
+  "turkish-airlines-baggage-allowance-checker": {
+    "name": "Turkish Airlines Baggage Allowance Checker",
+    "description": "Check cabin and check-in bags against Turkish Airlines weight allowances, the 8 kg cabin rule and Americas piece-concept routes.",
+    "category": "Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "turkish-airlines-excess-baggage-cost-estimator": {
+    "name": "Turkish Airlines Excess Baggage Cost Estimator",
+    "description": "Work out Turkish Airlines excess baggage by kilogram or by piece, with pooled allowances and the online discount applied.",
+    "category": "Finance Calculators",
+    "icon": "luggage",
+    "iconColor": "text-(--primary)"
+  },
+  "tutor-income-tax-calculator": {
+    "name": "Teacher and Tutor Income Tax Calculator",
+    "description": "Tax on tuition and coaching income after expenses, comparing the old and new regimes and the 44AD presumptive option.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "tv-power-consumption-calculator": {
+    "name": "TV Power Consumption Calculator",
+    "description": "Estimate television electricity use and running cost from screen size, panel type, picture mode, daily hours and your tariff.",
+    "category": "Calculators",
+    "icon": "tv",
+    "iconColor": "text-(--primary)"
+  },
+  "tv-viewing-distance-calculator": {
+    "name": "TV Viewing Distance Calculator",
+    "description": "Find the right TV size, seating distance and wall-mount height using SMPTE and THX viewing angles plus pixel acuity limits.",
+    "category": "Calculators",
+    "icon": "tv",
+    "iconColor": "text-(--primary)"
   },
   "tv-viewing-distance-guide": {
     "name": "TV Viewing Distance Guide",
@@ -14643,17 +23378,56 @@ export const toolMetaMap = {
     "name": "Twin Finder",
     "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
     "category": "Fun",
-    "topics": [
-      "Entertainment"
-    ],
     "icon": "users",
     "iconColor": "text-pink-500"
+  },
+  "twitch-panel-size-generator": {
+    "name": "Twitch Panel Size Generator",
+    "description": "Generate channel panels, sub badges, emotes and offline art at exact Twitch pixel sizes and file limits.",
+    "category": "Design & Color",
+    "icon": "twitch",
+    "iconColor": "text-(--primary)"
+  },
+  "twitter-card-image-generator": {
+    "name": "Twitter Card Image Generator",
+    "description": "Draw and download a summary or large-image card at the size X requires, and copy the matching twitter:card meta tags.",
+    "category": "Marketing & Social",
+    "icon": "image",
+    "iconColor": "text-(--primary)"
+  },
+  "twitter-thread-prompt-builder": {
+    "name": "Twitter Thread Prompt Builder",
+    "description": "Generates thread prompts with post count, hook style and CTA — 280-character budgets and t.co link costs computed per post.",
+    "category": "Marketing & Social",
+    "icon": "twitter",
+    "iconColor": "text-(--primary)"
+  },
+  "two-round-attempt-planner": {
+    "name": "Two Round Attempt Planner",
+    "description": "Plan a fast first pass and a focused second pass across a question paper, with per-question seconds for each round.",
+    "category": "Education & Science",
+    "icon": "repeat",
+    "iconColor": "text-(--primary)"
+  },
+  "two-tone-wall-paint-calculator": {
+    "name": "Two Tone Wall Paint Calculator",
+    "description": "Split wall paint between an upper and a lower band at any dado height, with doors and windows deducted from the right band.",
+    "category": "Calculators",
+    "icon": "square-stack",
+    "iconColor": "text-(--primary)"
   },
   "two-wheeler-loan-calculator": {
     "name": "Two Wheeler Loan Calculator",
     "description": "Bike and scooter loan EMI from on-road price, down payment and tenure, with loan-to-value and affordability checks.",
     "category": "Finance Calculators",
     "icon": "bike",
+    "iconColor": "text-(--primary)"
+  },
+  "two-wheeler-service-cost-estimator": {
+    "name": "Two Wheeler Service Cost Estimator",
+    "description": "Estimate a bike or scooter periodic service bill from engine oil, wear parts due at that odometer reading, labour and GST.",
+    "category": "Calculators",
+    "icon": "wrench",
     "iconColor": "text-(--primary)"
   },
   "typing-master": {
@@ -14690,6 +23464,69 @@ export const toolMetaMap = {
     "icon": "keyboard",
     "iconColor": "text-teal-600"
   },
+  "tyre-cost-per-km-calculator": {
+    "name": "Tyre Cost Per KM Calculator",
+    "description": "Compare two tyre brands on true cost per kilometre using fitted price, expected life, fuel efficiency and break-even mileage.",
+    "category": "Calculators",
+    "icon": "circle-dollar-sign",
+    "iconColor": "text-(--primary)"
+  },
+  "tyre-dot-date-decoder": {
+    "name": "Tyre DOT Date Decoder",
+    "description": "Read the DOT date code to find the week and year a tyre was made, its exact age today and the 6 and 10 year milestones.",
+    "category": "Education & Science",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
+  "tyre-load-speed-rating-decoder": {
+    "name": "Tyre Load Speed Rating Decoder",
+    "description": "Decode a tyre sidewall code into load index in kilograms, speed symbol in km/h, overall diameter and revolutions per kilometre.",
+    "category": "Education & Science",
+    "icon": "scan-line",
+    "iconColor": "text-(--primary)"
+  },
+  "tyre-pressure-guide": {
+    "name": "Tyre Pressure Guide",
+    "description": "Recommended cold tyre pressure by vehicle type, load and season, with temperature drift and sidewall-limit checks.",
+    "category": "Education & Science",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
+  },
+  "tyre-rotation-schedule-planner": {
+    "name": "Tyre Rotation Schedule Planner",
+    "description": "Plan tyre rotation intervals and the correct crossing pattern for front, rear and all wheel drive cars.",
+    "category": "Productivity",
+    "icon": "rotate-cw",
+    "iconColor": "text-(--primary)"
+  },
+  "tyre-size-metric-to-inch-converter": {
+    "name": "Tyre Size Metric to Inch Converter",
+    "description": "Convert 205/55R16 style metric tyre sizes to 31x10.50R15 inch flotation sizes and back, with speedometer error.",
+    "category": "Converters",
+    "icon": "circle-dot",
+    "iconColor": "text-(--primary)"
+  },
+  "uae-dress-code-planner": {
+    "name": "UAE Dress Code Planner for Travellers",
+    "description": "Plan what to wear and pack for the UAE by month and emirate, covering mosque cover-up rules, mall dress codes, beaches and Ramadan.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "udyam-category-calculator": {
+    "name": "Udyam Registration Category Calculator",
+    "description": "Classify a business as micro, small or medium under the MSMED Act composite investment and turnover test for Udyam registration.",
+    "category": "Business",
+    "icon": "badge-check",
+    "iconColor": "text-(--primary)"
+  },
+  "ufw-rule-generator": {
+    "name": "UFW Rule Generator",
+    "description": "Generate valid ufw allow, deny, reject and limit rules for ports, ranges, source networks and app profiles, plus a safe enable order.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-(--primary)"
+  },
   "ui-spacing-consistency-checker": {
     "name": "UI Spacing Consistency Checker",
     "description": "Audit Tailwind spacing classes and pixel values against a consistent 4px design-system rhythm.",
@@ -14720,6 +23557,13 @@ export const toolMetaMap = {
     "icon": "circle-dashed",
     "iconColor": "text-pink-700"
   },
+  "umask-calculator": {
+    "name": "Umask Calculator",
+    "description": "See the exact file and directory permissions any umask value produces, with symbolic form, a reverse calculator and safety warnings.",
+    "category": "Calculators",
+    "icon": "folder-lock",
+    "iconColor": "text-(--primary)"
+  },
   "uncertainty-propagation-workbench": {
     "name": "Uncertainty Propagation Workbench",
     "description": "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale.",
@@ -14733,16 +23577,17 @@ export const toolMetaMap = {
     "icon": "sigma",
     "iconColor": "text-primary"
   },
+  "unclaimed-deposit-checklist": {
+    "name": "Unclaimed Deposit Search Checklist",
+    "description": "Classify a dormant account, share folio, policy or EPF balance against the DEAF, IEPF and SCWF rules and get the exact claim checklist.",
+    "category": "Productivity",
+    "icon": "archive-restore",
+    "iconColor": "text-(--primary)"
+  },
   "unicode-ascii-converter": {
     "name": "Unicode / ASCII Converter",
     "description": "Convert text into Unicode escapes or ASCII codes and back.",
-    "category": [
-      "Developer",
-      "Text & Writing"
-    ],
-    "topics": [
-      "Text"
-    ],
+    "category": "Converters",
     "icon": "file-text",
     "iconColor": "text-teal-600"
   },
@@ -14784,6 +23629,20 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-(--primary)"
   },
+  "unit-test-prompt-builder": {
+    "name": "Unit Test Prompt Builder",
+    "description": "Builds a test-generation prompt with your framework, coverage target and edge-case classes, plus a baseline test-count estimate.",
+    "category": "Developer",
+    "icon": "flask-conical",
+    "iconColor": "text-(--primary)"
+  },
+  "unit-test-weightage-calculator": {
+    "name": "Unit Test Weightage Calculator",
+    "description": "Combine unit test scores with their weightings into one final subject score using the weighted mean of percentages.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
   "universal-pii-ai-redactor": {
     "name": "Universal PII & AI Input Redactor",
     "description": "Detect and redact personal data, financial identifiers, and secrets locally before sharing text with AI or another person.",
@@ -14802,6 +23661,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "clock",
     "iconColor": "text-sky-600"
+  },
+  "up-board-percentage-calculator": {
+    "name": "UP Board Percentage Calculator",
+    "description": "Calculate UP Board Class 10 (600 marks) or Class 12 (500 marks) percentage, pass status and division in seconds.",
+    "category": "Calculators",
+    "icon": "school",
+    "iconColor": "text-(--primary)"
   },
   "upi-autopay-mandate-calendar": {
     "name": "UPI AutoPay Mandate Calendar",
@@ -14840,6 +23706,41 @@ export const toolMetaMap = {
     "icon": "qr-code",
     "iconColor": "text-(--primary)"
   },
+  "upi-transaction-limit-checker": {
+    "name": "UPI Transaction Limit Checker",
+    "description": "Find the binding UPI limit for a payment — NPCI category cap, your bank's cap and what is left of today's quota.",
+    "category": "Education & Science",
+    "icon": "smartphone",
+    "iconColor": "text-(--primary)"
+  },
+  "upsc-admit-card-day-checklist": {
+    "name": "UPSC Admit Card Day Checklist",
+    "description": "Printable UPSC exam-day checklist covering admit card, photo ID and allowed items, with a reporting plan built on the 10-minute gate rule.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "upsc-answer-prompt-builder": {
+    "name": "UPSC Answer Prompt Builder",
+    "description": "Build AI prompts for UPSC Mains answer practice with the real word limits, exam-time budget and intro-body-conclusion split.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-(--primary)"
+  },
+  "upsc-application-document-checklist": {
+    "name": "UPSC Application Document Checklist",
+    "description": "Interactive checklist of every certificate, upload and detail needed to file the UPSC online application without a last-minute scramble.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-(--primary)"
+  },
+  "upsc-exam-countdown": {
+    "name": "UPSC Exam Countdown",
+    "description": "Live countdown to UPSC Prelims and Mains with a daily study-hour target and prep-time milestones for any exam date.",
+    "category": "Productivity",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
   "upside-down-text": {
     "name": "Upside Down Text",
     "description": "Flip your text upside down and backwards using mathematical Unicode character mappings for creative styling.",
@@ -14849,6 +23750,13 @@ export const toolMetaMap = {
     ],
     "icon": "rotate-cw",
     "iconColor": "text-teal-500"
+  },
+  "uptime-monitoring-cost-calculator": {
+    "name": "Uptime Monitoring Cost Calculator",
+    "description": "Work out monthly uptime monitoring cost from endpoint count, check interval, probe locations and alert volume — plus detection time.",
+    "category": "Calculators",
+    "icon": "activity",
+    "iconColor": "text-(--primary)"
   },
   "url-encoder-decoder": {
     "name": "URL Encoder Decoder Tool",
@@ -14864,9 +23772,6 @@ export const toolMetaMap = {
     "name": "URL Escape / Unescape",
     "description": "Encode and decode URL text for query strings and redirects.",
     "category": "Developer",
-    "topics": [
-      "Web"
-    ],
     "icon": "link",
     "iconColor": "text-blue-600"
   },
@@ -14877,11 +23782,74 @@ export const toolMetaMap = {
     "icon": "link-2",
     "iconColor": "text-blue-600"
   },
+  "url-slug-collision-checker": {
+    "name": "URL Slug Collision Checker",
+    "description": "Normalise a list of titles into URL slugs, find the ones that collide after folding and truncation, and assign WordPress-style numeric suffixes.",
+    "category": "Developer",
+    "icon": "link-2",
+    "iconColor": "text-(--primary)"
+  },
   "url-slug-generator": {
     "name": "URL Slug Generator",
     "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits.",
     "category": "Text & Writing",
     "icon": "link-2",
+    "iconColor": "text-(--primary)"
+  },
+  "us-consulate-india-appointment-day-checklist": {
+    "name": "US Consulate India Appointment Day Checklist",
+    "description": "Carry, wear and leave-behind checklist for a US visa OFC biometrics, interview or dropbox appointment in India, with arrival timing.",
+    "category": "Productivity",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "us-gpa-to-percentage-converter": {
+    "name": "US GPA To Percentage Converter",
+    "description": "Convert a US 4.0-scale GPA back into an approximate percentage and letter grade using the standard US grading bands.",
+    "category": "Calculators",
+    "icon": "percent",
+    "iconColor": "text-(--primary)"
+  },
+  "usa-dress-code-planner": {
+    "name": "USA Dress Code Planner for Travellers",
+    "description": "Plan USA outfits by region and month: courthouse and nightclub door rules, park layering, sun kit and a weighed packing list.",
+    "category": "Lifestyle",
+    "icon": "shirt",
+    "iconColor": "text-(--primary)"
+  },
+  "usa-visa-cost-estimator": {
+    "name": "USA Visa Cost Estimator",
+    "description": "Add up the US MRV fee, SEVIS I-901, reciprocity charge, photos and courier into one editable rupee total.",
+    "category": "Finance Calculators",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
+  "usa-visa-cover-letter-builder": {
+    "name": "USA Visa Cover Letter Builder",
+    "description": "Build a printable B-1/B-2 cover letter with your itinerary, funding, DS-160 details and a 214(b) ties statement.",
+    "category": "Text & Writing",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "usa-visa-rejection-reason-explainer": {
+    "name": "USA Visa Rejection Reason Explainer",
+    "description": "Decode the INA section on a US visa refusal slip - 214(b), 221(g) and the rest - and get a checklist of what to fix.",
+    "category": "Education & Science",
+    "icon": "file-search",
+    "iconColor": "text-(--primary)"
+  },
+  "usd-cash-budget-planner": {
+    "name": "USD Cash Budget Planner",
+    "description": "Plan how many US dollars to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in.",
+    "category": "Finance Calculators",
+    "icon": "wallet",
+    "iconColor": "text-(--primary)"
+  },
+  "used-bike-buying-checklist": {
+    "name": "Used Bike Buying Checklist",
+    "description": "Inspect a used motorcycle with a structured points checklist that scores condition and turns failures into an offer.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
     "iconColor": "text-(--primary)"
   },
   "user-info-finder": {
@@ -14909,6 +23877,13 @@ export const toolMetaMap = {
     "icon": "user-search",
     "iconColor": "text-teal-700"
   },
+  "utc-offset-team-matrix": {
+    "name": "UTC Offset Team Matrix",
+    "description": "Build a 24-hour overlap grid for a distributed team — local clocks per city, shared working hours and the best meeting slots.",
+    "category": "Productivity",
+    "icon": "globe",
+    "iconColor": "text-(--primary)"
+  },
   "utility-tariff-csv-comparator": {
     "name": "Utility Tariff CSV Comparator",
     "description": "Same usage profile ko multiple electricity plans par compare kare.",
@@ -14921,6 +23896,20 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-primary"
+  },
+  "utility-transfer-checklist": {
+    "name": "Utility Transfer Checklist",
+    "description": "Date every electricity, water, gas, broadband and DTH action for a move, using the statutory new-connection timelines.",
+    "category": "Productivity",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
+  "utility-transfer-request-generator": {
+    "name": "Utility Transfer Request Generator",
+    "description": "Draft electricity, gas, water and broadband transfer applications with the right documents, the statutory timeline and a completion date.",
+    "category": "Business",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
   },
   "utm-link-builder": {
     "name": "UTM Link Builder",
@@ -14951,6 +23940,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "vacuum-cleaner-selector": {
+    "name": "Vacuum Cleaner Selector",
+    "description": "Match vacuum type, suction in air watts, filtration, bin size and battery runtime to your flooring, pets and home size.",
+    "category": "Education & Science",
+    "icon": "wind",
+    "iconColor": "text-(--primary)"
+  },
+  "vagrantfile-generator": {
+    "name": "Vagrantfile Generator",
+    "description": "Generate a ready-to-run Vagrantfile with box, hostname, networking, synced folders, provider resources and provisioner blocks.",
+    "category": "Developer",
+    "icon": "box",
+    "iconColor": "text-(--primary)"
+  },
   "vaporwave-text-generator": {
     "name": "Vaporwave Text Generator",
     "description": "Convert text into full-width Unicode vaporwave aesthetic with decorative Japanese symbols and separators.",
@@ -14973,6 +23976,20 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "variable-pay-tax-calculator": {
+    "name": "Variable Pay and Bonus Tax Calculator",
+    "description": "Work out the extra income tax and TDS your annual bonus or variable pay adds, under the new and old regime.",
+    "category": "Finance Calculators",
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
+  "vastu-colour-guide": {
+    "name": "Vastu Colour Guide",
+    "description": "Informational guide to traditional vastu colour suggestions by direction, with a compass-bearing lookup for each room.",
+    "category": "Lifestyle",
+    "icon": "compass",
+    "iconColor": "text-(--primary)"
+  },
   "vat-calculator": {
     "name": "VAT Calculator",
     "description": "Add or remove VAT/GST from an amount at any rate.",
@@ -14982,6 +23999,83 @@ export const toolMetaMap = {
     ],
     "icon": "receipt",
     "iconColor": "text-blue-600"
+  },
+  "vat-calculator-france": {
+    "name": "VAT Calculator France",
+    "description": "French TVA calculator for the 20%, 10%, 5.5% and 2.1% rates, switching between HT and TTC with a franchise en base check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-germany": {
+    "name": "VAT Calculator Germany",
+    "description": "Compute German VAT (Mehrwertsteuer) at 19% and 7% with net-gross switching, the tax fraction and a Kleinunternehmer check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-ireland": {
+    "name": "VAT Calculator Ireland",
+    "description": "Irish VAT calculator covering the 23%, 13.5%, 9%, 4.8% and zero rates, with registration threshold checks for goods and services.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-italy": {
+    "name": "VAT Calculator Italy",
+    "description": "Italian IVA calculator for the 22%, 10%, 5% and 4% rates, adding or scorporating tax with a regime forfettario check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-netherlands": {
+    "name": "VAT Calculator Netherlands",
+    "description": "Dutch BTW calculator at 21% and 9% with reverse calculation, a KOR threshold check and a net BTW payable line.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-poland": {
+    "name": "VAT Calculator Poland",
+    "description": "Polish VAT calculator at 23%, 8% and 5% with gross-net switching, the exemption limit and a split payment check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-saudi-arabia": {
+    "name": "VAT Calculator Saudi Arabia",
+    "description": "Extract or add 15% Saudi VAT using the 3/23 reverse fraction, with line discounts, the legacy 5% rate and ZATCA thresholds.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-spain": {
+    "name": "VAT Calculator Spain",
+    "description": "Spanish IVA calculator for the 21%, 10% and 4% bands, with base-to-total switching and the recargo de equivalencia surcharge.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-uae": {
+    "name": "VAT Calculator UAE",
+    "description": "Add or remove 5% UAE VAT on any amount, with inclusive and exclusive pricing, zero-rated supplies and registration thresholds.",
+    "category": "Finance Calculators",
+    "icon": "receipt-text",
+    "iconColor": "text-(--primary)"
+  },
+  "vat-calculator-uk": {
+    "name": "VAT Calculator United Kingdom",
+    "description": "Add or remove UK VAT at the 20% standard, 5% reduced and 0% zero rates, with the VAT fraction and registration threshold check.",
+    "category": "Finance Calculators",
+    "icon": "receipt",
+    "iconColor": "text-(--primary)"
+  },
+  "vector-storage-size-calculator": {
+    "name": "Vector Storage Size Calculator",
+    "description": "Estimate total vector index size from vector count, dimensions and data type, including HNSW or IVF overhead and replicas.",
+    "category": "Calculators",
+    "icon": "database",
+    "iconColor": "text-(--primary)"
   },
   "vehicle-compare": {
     "name": "Vehicle Compare",
@@ -14997,6 +24091,20 @@ export const toolMetaMap = {
     "icon": "car",
     "iconColor": "text-indigo-600"
   },
+  "vehicle-depreciation-calculator-india": {
+    "name": "Vehicle Depreciation Value Calculator India",
+    "description": "Estimate a vehicle's current value using the motor tariff depreciation slabs, plus the income tax written down value at 15 or 30 percent.",
+    "category": "Finance Calculators",
+    "icon": "trending-down",
+    "iconColor": "text-(--primary)"
+  },
+  "vehicle-document-expiry-reminder": {
+    "name": "Vehicle Document Expiry Reminder",
+    "description": "Track insurance, PUC, RC, fitness, permit and licence expiry dates in one private list with days left and reminder dates.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
+  },
   "vehicle-document-reminder": {
     "name": "Vehicle Document Reminder",
     "description": "RC, insurance, PUC aur licence expiry track kare.",
@@ -15010,11 +24118,32 @@ export const toolMetaMap = {
     "icon": "calendar-check-2",
     "iconColor": "text-primary"
   },
+  "vehicle-downsizing-savings": {
+    "name": "Vehicle Downsizing Savings",
+    "description": "Estimate yearly savings from moving to a smaller car or a single-vehicle household, including fuel, insurance, depreciation and payback.",
+    "category": "Finance Calculators",
+    "icon": "arrow-down-wide-narrow",
+    "iconColor": "text-(--primary)"
+  },
+  "vehicle-idv-calculator": {
+    "name": "Vehicle IDV Calculator",
+    "description": "Calculate the Insured Declared Value of a car or bike using the India Motor Tariff GR.8 depreciation slabs.",
+    "category": "Finance Calculators",
+    "icon": "car",
+    "iconColor": "text-(--primary)"
+  },
   "vehicle-insurance-idv-calculator": {
     "name": "Vehicle Insurance IDV Calculator",
     "description": "Insured Declared Value from ex-showroom price and vehicle age using the IRDAI depreciation grid, plus accessories and an indicative OD premium.",
     "category": "Finance Calculators",
     "icon": "car-front",
+    "iconColor": "text-(--primary)"
+  },
+  "vehicle-registration-decoder-india": {
+    "name": "Vehicle Registration Decoder India",
+    "description": "Decode an Indian number plate into state, RTO office, letter series and serial, with plate colour and BH-series meaning.",
+    "category": "Education & Science",
+    "icon": "search",
     "iconColor": "text-(--primary)"
   },
   "vendor-data-processing-inventory": {
@@ -15027,6 +24156,13 @@ export const toolMetaMap = {
     "icon": "table-properties",
     "iconColor": "text-primary"
   },
+  "vercel-usage-cost-estimator": {
+    "name": "Vercel Usage Cost Estimator",
+    "description": "Estimate your Vercel Pro bill from seats, bandwidth, edge requests, function invocations, duration and build minutes.",
+    "category": "Calculators",
+    "icon": "triangle",
+    "iconColor": "text-(--primary)"
+  },
   "vertical-video-safe-zone-previewer": {
     "name": "Vertical Video Safe-Zone Previewer",
     "description": "Reels, Shorts aur TikTok obstruction areas overlay kare.",
@@ -15037,6 +24173,20 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "vfs-global-appointment-day-checklist": {
+    "name": "VFS Global Appointment Day Checklist",
+    "description": "Build a personalised carry, wear and leave-behind checklist for a VFS Global visa application centre appointment, with a leave-home time.",
+    "category": "Productivity",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "video-ad-length-compliance-checker": {
+    "name": "Video Ad Length Compliance Checker",
+    "description": "Check one video ad duration against the minimum, maximum and recommended lengths for each placement you plan to run it in.",
+    "category": "Marketing & Social",
+    "icon": "video",
+    "iconColor": "text-(--primary)"
   },
   "video-bitrate-calculator": {
     "name": "Video Bitrate Calculator",
@@ -15081,6 +24231,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "video-lecture-speed-planner": {
+    "name": "Video Lecture Speed Planner",
+    "description": "See how playback speed changes your lecture backlog finish date, with a full 1x-2x comparison table.",
+    "category": "Productivity",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
   },
   "video-script-timer": {
     "name": "Video Script Timer",
@@ -15149,6 +24306,34 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-red-600"
   },
+  "vietnam-travel-etiquette-guide": {
+    "name": "Vietnam Travel Etiquette Guide",
+    "description": "Build a prioritised Vietnam etiquette briefing for pagodas, street food, markets and traffic, with the legal red lines flagged.",
+    "category": "Education & Science",
+    "icon": "handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "vietnam-visa-cost-estimator": {
+    "name": "Vietnam Visa Cost Estimator",
+    "description": "Price a Vietnam e-visa, visa on arrival or embassy visa by validity band, with the under-14 concession applied.",
+    "category": "Finance Calculators",
+    "icon": "ticket",
+    "iconColor": "text-(--primary)"
+  },
+  "vietnam-visa-cover-letter-builder": {
+    "name": "Vietnam Visa Cover Letter Builder",
+    "description": "Build a Vietnam e-visa cover letter with itinerary, entry checkpoint, the 90-day limit and a working-day decision estimate.",
+    "category": "Text & Writing",
+    "icon": "ship",
+    "iconColor": "text-(--primary)"
+  },
+  "vietnam-visa-rejection-reason-explainer": {
+    "name": "Vietnam Visa Rejection Reason Explainer",
+    "description": "Find why a Vietnam e-Visa was rejected - photo, scan, data mismatch or record - and what to correct before reapplying.",
+    "category": "Education & Science",
+    "icon": "plane-takeoff",
+    "iconColor": "text-(--primary)"
+  },
   "viral-thumbnail-maker": {
     "name": "Viral Thumbnail Maker",
     "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, customize text overlays, and download.",
@@ -15175,6 +24360,13 @@ export const toolMetaMap = {
     "icon": "brain",
     "iconColor": "text-purple-600"
   },
+  "vitamin-d-supplement-schedule": {
+    "name": "Vitamin D Supplement Schedule",
+    "description": "Turn a weekly or monthly vitamin D dosing instruction into dated doses, with the average daily IU compared to the RDA and upper limit.",
+    "category": "Health & Fitness",
+    "icon": "sun",
+    "iconColor": "text-(--primary)"
+  },
   "vitamin-intake-tracker": {
     "name": "Vitamin Intake Tracker",
     "description": "Track your daily vitamin and supplement intake — Vitamin D3, B-Complex, Magnesium, and more — with dosage guidance and adherence streaks.",
@@ -15184,6 +24376,20 @@ export const toolMetaMap = {
     ],
     "icon": "pill",
     "iconColor": "text-amber-500"
+  },
+  "vitrified-vs-ceramic-tile-cost": {
+    "name": "Vitrified vs Ceramic Tile Cost",
+    "description": "Compare material, laying and whole-life cost of vitrified versus ceramic tiles over the years you plan to keep them.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "viva-question-prompt-builder": {
+    "name": "Viva Question Prompt Builder",
+    "description": "Builds a mock-viva prompt from your abstract and methods, distributing likely examiner questions across the standard defence areas.",
+    "category": "Education & Science",
+    "icon": "message-circle-question",
+    "iconColor": "text-(--primary)"
   },
   "vocabulary-builder": {
     "name": "Vocabulary Builder",
@@ -15203,9 +24409,6 @@ export const toolMetaMap = {
     "name": "Vocabulary Complexity Analyzer",
     "description": "Analyze the complexity of vocabulary in text",
     "category": "Education & Science",
-    "topics": [
-      "Education"
-    ],
     "icon": "book-open",
     "iconColor": "text-blue-600"
   },
@@ -15244,6 +24447,20 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-rose-500"
   },
+  "voiceover-script-formatter": {
+    "name": "Voiceover Script Formatter",
+    "description": "Split a script into numbered narration blocks with per-cue word counts, running timecodes and an estimated read time at your pace.",
+    "category": "Text & Writing",
+    "icon": "align-left",
+    "iconColor": "text-(--primary)"
+  },
+  "voiceover-word-budget-calculator": {
+    "name": "Voiceover Word Budget Calculator",
+    "description": "Find how many words fit a 15, 30 or 60 second voiceover slot at your reading pace, after breath and tag allowances.",
+    "category": "Calculators",
+    "icon": "mic",
+    "iconColor": "text-(--primary)"
+  },
   "voiceprint-anonymizer": {
     "name": "Voiceprint Anonymizer",
     "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare.",
@@ -15255,6 +24472,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "voltage-converter-vs-adapter-explainer": {
+    "name": "Voltage Converter vs Adapter Explainer",
+    "description": "Reads your appliance label against the destination mains to say whether a plug adapter is enough or you need a real converter.",
+    "category": "Education & Science",
+    "icon": "plug-zap",
+    "iconColor": "text-(--primary)"
+  },
   "voltage-drop-wire-gauge-calculator": {
     "name": "Voltage Drop & Wire Gauge Calculator",
     "description": "Length, current aur conductor se voltage loss estimate kare.",
@@ -15265,6 +24489,13 @@ export const toolMetaMap = {
     ],
     "icon": "cable",
     "iconColor": "text-primary"
+  },
+  "voltage-stabilizer-selector": {
+    "name": "Voltage Stabilizer Selector",
+    "description": "Size a voltage stabilizer in kVA and pick the right working range for an AC, fridge or TV from its wattage and your site voltage swing.",
+    "category": "Calculators",
+    "icon": "gauge",
+    "iconColor": "text-(--primary)"
   },
   "voronoi-art-generator": {
     "name": "Voronoi Art Generator",
@@ -15289,6 +24520,34 @@ export const toolMetaMap = {
     ],
     "icon": "badge-check",
     "iconColor": "text-primary"
+  },
+  "vtt-to-srt-converter": {
+    "name": "VTT To SRT Converter",
+    "description": "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift.",
+    "category": "Converters",
+    "icon": "subtitles",
+    "iconColor": "text-(--primary)"
+  },
+  "vtu-attendance-calculator": {
+    "name": "VTU Attendance Calculator",
+    "description": "Compute VTU subject-wise attendance, eligibility against the 85% rule and how many classes you can still miss.",
+    "category": "Calculators",
+    "icon": "clipboard-check",
+    "iconColor": "text-(--primary)"
+  },
+  "vtu-cgpa-percentage-converter": {
+    "name": "VTU CGPA Percentage Converter",
+    "description": "Convert VTU CGPA to percentage by scheme, build SGPA from subject credits and see the class awarded.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
+  "vtu-sgpa-calculator": {
+    "name": "VTU SGPA Calculator",
+    "description": "Compute VTU SGPA from CIE and SEE marks per subject — grading, pass rules and the Σ(Ci×Gi)/ΣCi formula of the 2021/2022 scheme.",
+    "category": "Calculators",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
   },
   "wacc-calculator": {
     "name": "WACC Calculator",
@@ -15318,6 +24577,27 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-(--primary)"
   },
+  "wall-art-hanging-calculator": {
+    "name": "Wall Art Hanging Calculator",
+    "description": "Work out nail height, frame spacing and hook rating for single pictures and gallery walls using the 145 cm gallery centre line.",
+    "category": "Calculators",
+    "icon": "frame",
+    "iconColor": "text-(--primary)"
+  },
+  "wall-putty-quantity-calculator": {
+    "name": "Wall Putty Quantity Calculator",
+    "description": "Calculate wall putty kilos and bags per square foot, plus mixing water and cost, for a smooth base before painting.",
+    "category": "Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "wall-tile-quantity-calculator": {
+    "name": "Wall Tile Quantity Calculator",
+    "description": "Compute wall tile count, boxes and cost from wall run, height and the door and window openings deducted.",
+    "category": "Calculators",
+    "icon": "layout-grid",
+    "iconColor": "text-(--primary)"
+  },
   "warranty-receipt-vault": {
     "name": "Warranty & Receipt Vault",
     "description": "Track receipts, serial numbers, warranty terms, and expiry dates.",
@@ -15328,6 +24608,20 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "washing-machine-capacity-selector": {
+    "name": "Washing Machine Capacity Selector",
+    "description": "Size a washing machine in kg from your household's weekly laundry weight, bed linen and how many washes you run.",
+    "category": "Calculators",
+    "icon": "washing-machine",
+    "iconColor": "text-(--primary)"
+  },
+  "washing-machine-running-cost": {
+    "name": "Washing Machine Running Cost",
+    "description": "Per-wash electricity, water and detergent cost for front-load, top-load and semi-automatic machines, plus the monthly and yearly bill.",
+    "category": "Calculators",
+    "icon": "washing-machine",
+    "iconColor": "text-(--primary)"
   },
   "water-intake-calculator": {
     "name": "Water Intake Calculator",
@@ -15342,6 +24636,27 @@ export const toolMetaMap = {
     "icon": "droplet",
     "iconColor": "text-sky-600"
   },
+  "water-leakage-complaint-letter-generator": {
+    "name": "Water Leakage Complaint Letter Generator",
+    "description": "Draft a seepage or water leakage complaint to your society or neighbour, with the responsible party and a dated repair deadline.",
+    "category": "Business",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "water-meter-reading-tracker": {
+    "name": "Water Meter Reading Tracker",
+    "description": "Log water meter readings to track litres per day, litres per person, cost and leak signals between any two readings.",
+    "category": "Productivity",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "water-pump-electricity-cost": {
+    "name": "Water Pump Electricity Cost",
+    "description": "Monthly cost of running a home water pump from its horsepower, motor efficiency, tank size and daily fills.",
+    "category": "Calculators",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
   "water-tank-calculator": {
     "name": "Water Tank Size Calculator",
     "description": "Size your overhead tank and sump from BIS per-capita water norms, with dimensions and filling time.",
@@ -15352,6 +24667,27 @@ export const toolMetaMap = {
     ],
     "icon": "droplets",
     "iconColor": "text-teal-600"
+  },
+  "water-tank-cleaning-planner": {
+    "name": "Water Tank Cleaning Planner",
+    "description": "Set the right cleaning interval for your overhead tank or sump, estimate the cost, and get the bleaching-powder dose for disinfection.",
+    "category": "Productivity",
+    "icon": "droplets",
+    "iconColor": "text-(--primary)"
+  },
+  "water-tank-refill-time-calculator": {
+    "name": "Water Tank Refill Time Calculator",
+    "description": "Find how long a pump takes to fill your water tank, plus the units and rupees each fill costs at your head and efficiency.",
+    "category": "Calculators",
+    "icon": "timer",
+    "iconColor": "text-(--primary)"
+  },
+  "water-tanker-cost-calculator": {
+    "name": "Water Tanker Cost Calculator",
+    "description": "Work out how many water tankers your home needs each month, the monthly spend and the true cost per litre and per kilolitre.",
+    "category": "Calculators",
+    "icon": "truck",
+    "iconColor": "text-(--primary)"
   },
   "watercolor-game": {
     "name": "Watercolor Sort Puzzle",
@@ -15517,6 +24853,34 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-teal-600"
   },
+  "wedding-budget-planner-india": {
+    "name": "Wedding Budget Planner India",
+    "description": "Split a wedding budget across venue, catering, jewellery and travel, with a per-plate ceiling.",
+    "category": "Finance Calculators",
+    "icon": "heart-handshake",
+    "iconColor": "text-(--primary)"
+  },
+  "wedding-card-print-size-guide-india": {
+    "name": "Wedding Card Print Size Guide India",
+    "description": "Indian wedding card trade sizes with flat artwork size, bleed, envelope and insert dimensions, paper GSM and per-invite weight.",
+    "category": "Design & Color",
+    "icon": "heart",
+    "iconColor": "text-(--primary)"
+  },
+  "wedding-planning-prompt-builder": {
+    "name": "Wedding Planning Prompt Builder",
+    "description": "Split a wedding budget by category, get cost per guest and a phase checklist, then copy a planning prompt built from those numbers.",
+    "category": "Lifestyle",
+    "icon": "heart",
+    "iconColor": "text-(--primary)"
+  },
+  "wedding-travel-packing-list-builder": {
+    "name": "Wedding Travel Packing List Builder",
+    "description": "Build a wedding trip packing list from the events you are attending, with outfit weights checked against your baggage allowance.",
+    "category": "Lifestyle",
+    "icon": "gem",
+    "iconColor": "text-(--primary)"
+  },
   "week-number-calculator": {
     "name": "Week Number Calculator",
     "description": "Find the ISO-8601 week number for any date of the year.",
@@ -15531,24 +24895,29 @@ export const toolMetaMap = {
     "name": "Weekly Meal Planner",
     "description": "Plan your meals for the week with an organized interface and clear next steps.",
     "category": "Lifestyle",
-    "topics": [
-      "Food"
-    ],
     "icon": "calendar-days",
     "iconColor": "text-green-600"
+  },
+  "weekly-pill-organiser-builder": {
+    "name": "Weekly Pill Organiser Builder",
+    "description": "Lay out morning, noon, evening and night compartments for all seven days, with tablet counts per compartment and per week.",
+    "category": "Health & Fitness",
+    "icon": "grid-3x3",
+    "iconColor": "text-(--primary)"
   },
   "weekly-review-dashboard": {
     "name": "Weekly Review Dashboard",
     "description": "Review weekly progress with real-time goals, tasks, reflections, planning, reminders, analytics, charts, local save, and exportable summaries.",
-    "category": [
-      "Productivity",
-      "Business"
-    ],
-    "topics": [
-      "Planning"
-    ],
+    "category": "Productivity",
     "icon": "layout-dashboard",
     "iconColor": "text-cyan-500"
+  },
+  "weight-loss-protein-calculator": {
+    "name": "Weight-Loss Protein Calculator",
+    "description": "Daily protein floor to protect lean mass in a calorie deficit, using adjusted body weight when BMI is 30 or above.",
+    "category": "Health Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
   },
   "weight-loss-tracker": {
     "name": "Weight Loss Tracker",
@@ -15568,6 +24937,20 @@ export const toolMetaMap = {
       "Education & Science"
     ],
     "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "weighted-vs-unweighted-gpa-calculator": {
+    "name": "Weighted Vs Unweighted GPA Tool",
+    "description": "Compute both weighted and unweighted high school GPA from your courses, with Honors +0.5 and AP/IB +1.0 bonuses.",
+    "category": "Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
+  "west-bengal-board-percentage-calculator": {
+    "name": "West Bengal Board Percentage Tool",
+    "description": "Madhyamik and Higher Secondary percentage from subject marks, with WBBSE letter grades and the best-five rule applied.",
+    "category": "Calculators",
+    "icon": "percent",
     "iconColor": "text-(--primary)"
   },
   "whack-a-mole": {
@@ -15633,6 +25016,20 @@ export const toolMetaMap = {
     ],
     "icon": "zap",
     "iconColor": "text-yellow-500"
+  },
+  "whatsapp-status-size-generator": {
+    "name": "WhatsApp Status Size Generator",
+    "description": "Make status images and video covers fit the 9:16 screen without auto-crop, with safe zones and clip length planning.",
+    "category": "Design & Color",
+    "icon": "message-circle",
+    "iconColor": "text-(--primary)"
+  },
+  "wheel-alignment-planner": {
+    "name": "Wheel Alignment Planner",
+    "description": "Plan wheel alignment and balancing intervals from road quality and kilometres, and tell the two symptom sets apart.",
+    "category": "Productivity",
+    "icon": "circle-dot",
+    "iconColor": "text-(--primary)"
   },
   "wheregoes-tool": {
     "name": "WhereGoes Tool",
@@ -15715,6 +25112,13 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-emerald-600"
   },
+  "whole30-macro-planner": {
+    "name": "Whole30 Macro Planner",
+    "description": "Whole30-compliant daily macros translated into meal-template portions, plus the full allowed and excluded food checklist.",
+    "category": "Health & Fitness",
+    "icon": "calendar-check",
+    "iconColor": "text-(--primary)"
+  },
   "wifi-qr-generator": {
     "name": "WiFi QR Code Generator",
     "description": "Create a scannable WiFi QR code so guests can join your network instantly. Generated locally, nothing is uploaded.",
@@ -15729,6 +25133,27 @@ export const toolMetaMap = {
     "icon": "wifi",
     "iconColor": "text-teal-600"
   },
+  "windfall-allocation-planner": {
+    "name": "Windfall Allocation Planner",
+    "description": "Split a bonus, inheritance or sale proceeds across tax, emergency fund, high-interest debt, investing and guilt-free spending.",
+    "category": "Finance Calculators",
+    "icon": "gift",
+    "iconColor": "text-(--primary)"
+  },
+  "window-blind-size-helper": {
+    "name": "Window Blind Size Helper",
+    "description": "Turn three width and height measurements into an exact blind order size for inside or outside mount, with depth, squareness and bracket checks.",
+    "category": "Calculators",
+    "icon": "blinds",
+    "iconColor": "text-(--primary)"
+  },
+  "wiper-blade-size-finder": {
+    "name": "Wiper Blade Size Finder",
+    "description": "Turn a measured wiper blade into the nearest stocked size in millimetres and inches, and identify the arm fitting type.",
+    "category": "Education & Science",
+    "icon": "cloud-rain",
+    "iconColor": "text-(--primary)"
+  },
   "wizard-name-generator": {
     "name": "Wizard Name Generator",
     "description": "Generate mystical wizard names with magic schools, staff types, and enchanted quotes. Discover your fantasy wizard identity for RPGs and stories.",
@@ -15738,6 +25163,27 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-indigo-600"
+  },
+  "wood-polish-quantity-calculator": {
+    "name": "Wood Polish Quantity Calculator",
+    "description": "Work out melamine, PU or NC polish litres for doors and furniture, split into base, hardener and thinner.",
+    "category": "Calculators",
+    "icon": "brush",
+    "iconColor": "text-(--primary)"
+  },
+  "wood-screw-size-selector": {
+    "name": "Wood Screw Size Selector",
+    "description": "Pick the right wood screw gauge, length, pilot hole and countersink for your board thickness, material and joint type.",
+    "category": "Education & Science",
+    "icon": "wrench",
+    "iconColor": "text-(--primary)"
+  },
+  "wood-stain-quantity-calculator": {
+    "name": "Wood Stain Quantity Calculator",
+    "description": "Litres of wood stain, sealer or varnish for a surface area, adjusted for texture, wood porosity, coats and wastage.",
+    "category": "Calculators",
+    "icon": "paintbrush",
+    "iconColor": "text-(--primary)"
   },
   "word-character-counter": {
     "name": "Word & Character Counter",
@@ -15787,6 +25233,13 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-green-600"
   },
+  "words-to-tokens-estimator": {
+    "name": "Words to Tokens Estimator",
+    "description": "Estimate LLM token usage from a word count before you write, with content-type ratios and a safety margin.",
+    "category": "Converters",
+    "icon": "calculator",
+    "iconColor": "text-(--primary)"
+  },
   "workflow-bottleneck-finder": {
     "name": "Workflow Bottleneck Finder",
     "description": "Find slow workflow steps by comparing active time, wait time, rework, and throughput pressure.",
@@ -15833,6 +25286,13 @@ export const toolMetaMap = {
     "icon": "dumbbell",
     "iconColor": "text-orange-600"
   },
+  "workout-prompt-builder": {
+    "name": "Workout Prompt Builder",
+    "description": "Build a training plan prompt with evidence-based weekly set volume, a split matched to your days, rep and load ranges and a session time estimate.",
+    "category": "Health & Fitness",
+    "icon": "dumbbell",
+    "iconColor": "text-(--primary)"
+  },
   "world-facts-explorer": {
     "name": "World Facts Explorer",
     "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries.",
@@ -15842,6 +25302,20 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-pink-700"
+  },
+  "writing-model-picker": {
+    "name": "Writing Model Picker",
+    "description": "Rank drafting, editing and ideation options — hosted, grounded, self-hosted or local — against length, fact-checking, voice, privacy and budget.",
+    "category": "Text & Writing",
+    "icon": "pen-tool",
+    "iconColor": "text-(--primary)"
+  },
+  "x-twitter-image-size-generator": {
+    "name": "X Twitter Image Size Generator",
+    "description": "Export header, post and card images at exact X dimensions with crop, bar and upscale checks before you upload.",
+    "category": "Design & Color",
+    "icon": "twitter",
+    "iconColor": "text-(--primary)"
   },
   "xirr-calculator": {
     "name": "XIRR Calculator",
@@ -15858,9 +25332,6 @@ export const toolMetaMap = {
     "name": "XML Editor",
     "description": "Format, minify, and inspect XML documents.",
     "category": "Developer",
-    "topics": [
-      "Data"
-    ],
     "icon": "code",
     "iconColor": "text-orange-600"
   },
@@ -15868,11 +25339,36 @@ export const toolMetaMap = {
     "name": "YAML Formatter",
     "description": "Format simple YAML, list keys, and convert YAML snippets to JSON.",
     "category": "Developer",
-    "topics": [
-      "Data"
-    ],
     "icon": "braces",
     "iconColor": "text-emerald-600"
+  },
+  "yaml-multi-document-splitter": {
+    "name": "YAML Multi Document Splitter",
+    "description": "Split multi-document YAML on --- markers into separate validated files, suggest filenames, and recombine them cleanly.",
+    "category": "Developer",
+    "icon": "split",
+    "iconColor": "text-(--primary)"
+  },
+  "yaml-to-json-converter": {
+    "name": "YAML to JSON Converter",
+    "description": "Convert YAML to JSON in the browser — anchors and aliases resolved, multi-document files handled, output formatted your way.",
+    "category": "Converters",
+    "icon": "file-json-2",
+    "iconColor": "text-(--primary)"
+  },
+  "yarn-workspaces-config-generator": {
+    "name": "Yarn Workspaces Config Generator",
+    "description": "Set up Yarn workspaces with package globs, nohoist rules for Yarn 1 or .yarnrc.yml and constraints for Yarn Berry.",
+    "category": "Generators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
+  "year-on-year-marks-comparator": {
+    "name": "Year On Year Marks Comparator",
+    "description": "Compare marks across semesters or years, see percentage-point change per period and the least-squares trend of your scores.",
+    "category": "Education & Science",
+    "icon": "trending-up",
+    "iconColor": "text-(--primary)"
   },
   "yes-or-no-oracle": {
     "name": "Yes or No Oracle",
@@ -15898,6 +25394,13 @@ export const toolMetaMap = {
     "icon": "undo",
     "iconColor": "text-cyan-500"
   },
+  "youtube-script-prompt-builder": {
+    "name": "YouTube Script Prompt Builder",
+    "description": "Creates video script prompts from runtime: word count at 150 wpm, a 15-second hook, chapter timings and retention beats.",
+    "category": "Marketing & Social",
+    "icon": "youtube",
+    "iconColor": "text-(--primary)"
+  },
   "youtube-thumbnail-downloader": {
     "name": "YouTube Thumbnail Downloader",
     "description": "Preview and download YouTube video thumbnails in available sizes.",
@@ -15908,6 +25411,13 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-red-600"
+  },
+  "youtube-thumbnail-size-generator": {
+    "name": "YouTube Thumbnail Size Generator",
+    "description": "Crop and export any image to YouTube's 1280x720 16:9 thumbnail spec, with minimum-width, aspect-ratio and 2 MB file-size checks.",
+    "category": "Design & Color",
+    "icon": "youtube",
+    "iconColor": "text-(--primary)"
   },
   "youtube-video-analyzer": {
     "name": "YouTube Video Analyzer",

@@ -135,7 +135,7 @@ export default function AuraColorGeneratorMain() {
         <button
           onClick={() => setShowFaq(!showFaq)}
           aria-expanded={showFaq}
-          className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+          className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
         >
           <div className="flex items-center gap-2">
             <HelpCircle className="h-5 w-5 text-(--primary)" />
@@ -160,7 +160,7 @@ export default function AuraColorGeneratorMain() {
           <button
             onClick={() => setShowDashboard(!showDashboard)}
             aria-expanded={showDashboard}
-            className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            className="flex w-full items-center justify-between min-h-11 rounded-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           >
             <div className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5 text-(--primary)" />
@@ -207,7 +207,7 @@ export default function AuraColorGeneratorMain() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             className={`fixed bottom-8 left-1/2 -translate-x-1/2 rounded-2xl px-6 py-3 text-sm font-semibold shadow-2xl z-50 ${
-              toast.type === "error" ? "bg-(--danger) text-white" : "bg-(--primary) text-white"
+              toast.type === "error" ? "bg-(--danger) text-(--primary-foreground)" : "bg-(--primary) text-(--primary-foreground)"
             }`}
           >
             {toast.message}

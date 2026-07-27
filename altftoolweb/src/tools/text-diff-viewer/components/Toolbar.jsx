@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 const ICON_BTN =
-  "flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35";
+  "flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg hover:bg-(--muted) text-(--muted-foreground) transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)";
 
 export default function Toolbar({
   viewMode, setViewMode, diffMode, setDiffMode,
@@ -24,7 +24,7 @@ export default function Toolbar({
           onClick={() => setViewMode("side-by-side")}
           aria-label="Side by side view"
           aria-pressed={viewMode === "side-by-side"}
-          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${viewMode === "side-by-side" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
+          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${viewMode === "side-by-side" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
           title="Side by side"
         >
           <Columns2 size="16" />
@@ -33,7 +33,7 @@ export default function Toolbar({
           onClick={() => setViewMode("inline")}
           aria-label="Inline view"
           aria-pressed={viewMode === "inline"}
-          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${viewMode === "inline" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
+          className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-md transition motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${viewMode === "inline" ? "bg-(--card) shadow-sm text-(--primary)" : "text-(--muted-foreground)"}`}
           title="Inline"
         >
           <AlignLeft size="16" />
@@ -59,7 +59,7 @@ export default function Toolbar({
         onClick={() => setIgnoreSpaces(!ignoreSpaces)}
         aria-label="Ignore spaces"
         aria-pressed={ignoreSpaces}
-        className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+        className={`flex min-h-11 min-w-11 sm:min-h-8 sm:min-w-8 items-center justify-center p-1.5 rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
           ignoreSpaces ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border)"
         }`}
         title="Ignore spaces"
@@ -71,7 +71,7 @@ export default function Toolbar({
         onClick={() => setIgnoreCase(!ignoreCase)}
         aria-label="Ignore case"
         aria-pressed={ignoreCase}
-        className={`px-2 min-h-11 sm:min-h-8 h-auto rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+        className={`px-2 min-h-11 sm:min-h-8 h-auto rounded-lg text-xs font-medium transition border active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
           ignoreCase ? "bg-(--primary) text-(--primary-foreground) border-(--primary)" : "bg-(--card) text-(--muted-foreground) border-(--border)"
         }`}
         title="Ignore case"

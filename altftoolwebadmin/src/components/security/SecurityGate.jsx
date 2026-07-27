@@ -17,16 +17,28 @@ import { auth } from "@/lib/firebaseAuth";
 const LOGOUT_REASONS = new Set(["idle_timeout", "absolute_timeout", "forced_logout", "force_logout"]);
 
 const HEARTBEAT_MS = 30_000;
+// How long to wait after session/start has exhausted its retries before asking
+// for a fresh round. Without a re-trigger the gate stays permanently disarmed.
+const SESSION_START_COOLDOWN_MS = 60_000;
 
 export default function SecurityGate() {
   const { user, logout } = useAuth();
   const [consent, setConsent] = useState(null); // { required, currentVersion, policySummary }
   const [accepting, setAccepting] = useState(false);
+  // Bumping this re-runs the session-start effect. It must be state, not a ref:
+  // resetting `startedForUidRef` alone is invisible to the effect's dependency
+  // list, so a persistent start failure previously disarmed the security gate
+  // (no heartbeat, no idle timeout, no force-logout) for the tab's whole life.
+  const [startAttempt, setStartAttempt] = useState(0);
   const sessionRef = useRef(null);
   const idleMinutesRef = useRef(30);
   const lastActivityRef = useRef(Date.now());
   const activeSinceBeatRef = useRef(false);
   const startedForUidRef = useRef(null);
+  // Wall-clock instant before which the heartbeat must NOT ask for another
+  // session-start round. Survives the effect teardown that a re-arm causes, so
+  // the cooldown is actually honoured (a timer alone was cancelled by it).
+  const startCooldownUntilRef = useRef(0);
   const dialogRef = useRef(null);
   const acceptButtonRef = useRef(null);
 
@@ -52,6 +64,11 @@ export default function SecurityGate() {
   // 1. Start session + load consent ONCE per logged-in admin, with retry/backoff
   useEffect(() => {
     if (!user?.uid) return;
+    // The local-dev admin has no Firebase credential, so authFetch below throws
+    // "no-user" immediately and every round is guaranteed to fail. Skipping is
+    // not a weakening: the calls could never have succeeded, and retrying them
+    // forever churned a full effect teardown + 5 timers every cooldown window.
+    if (user.isLocalAdmin) return;
     if (startedForUidRef.current === user.uid) return; // dedupe
     startedForUidRef.current = user.uid;
     let alive = true;
@@ -61,6 +78,7 @@ export default function SecurityGate() {
         const res = await authFetch("/api/security/session/start", { method: "POST" });
         if (!alive) return;
         sessionRef.current = res.sessionId;
+        startCooldownUntilRef.current = 0; // a good round clears any back-off
         idleMinutesRef.current = res.idleTimeoutMinutes || 30;
         lastActivityRef.current = Date.now(); // RESET client-side activity timer on session start!
         if (res.consent?.required) setConsent({ ...res.consent });
@@ -73,10 +91,16 @@ export default function SecurityGate() {
           // session/start failure is usually transient (server cold-start, 5xx,
           // network blip, or a shields/ad-blocker interfering); signing an
           // authenticated admin out here just turns a backend hiccup into an
-          // unexpected logout. Reset the dedupe so a later trigger can retry;
-          // idle enforcement still runs server-side on the next heartbeat.
+          // unexpected logout. Reset the dedupe AND schedule a real re-run —
+          // the ref reset on its own never re-triggered this effect, which left
+          // the session id null and the heartbeat/idle enforcement dead.
           console.warn("[auth] SecurityGate: session start failed persistently; will retry later (no logout)");
           startedForUidRef.current = null;
+          startCooldownUntilRef.current = Date.now() + SESSION_START_COOLDOWN_MS;
+          retryTimer = setTimeout(() => {
+            if (!alive) return;
+            setStartAttempt((n) => n + 1);
+          }, SESSION_START_COOLDOWN_MS);
         }
       }
     };
@@ -87,7 +111,7 @@ export default function SecurityGate() {
       if (retryTimer) clearTimeout(retryTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.uid, authFetch]);
+  }, [user?.uid, authFetch, startAttempt]);
 
   // 2. Track activity to reset idle timeout.
   useEffect(() => {
@@ -121,17 +145,35 @@ export default function SecurityGate() {
   // 3. Heartbeat + idle / forced-logout enforcement.
   useEffect(() => {
     if (!user) return;
+    if (user.isLocalAdmin) return; // no security session exists to beat against
     const timer = setInterval(async () => {
       const sessionId = sessionRef.current;
-      if (!sessionId) return;
+      if (!sessionId) {
+        // No live session — either session/start gave up or the server told us
+        // our id was stale. Both paths clear the dedupe ref; nudge the start
+        // effect so it actually runs again instead of waiting forever. Respect
+        // the cooldown the give-up branch set: without that check this nudge
+        // fires every 30s, and the effect cleanup it triggers cancels the very
+        // cooldown timer that was meant to space the retries out.
+        if (startedForUidRef.current === null && Date.now() >= startCooldownUntilRef.current) {
+          setStartAttempt((n) => n + 1);
+        }
+        return;
+      }
+
+      // Idle enforcement stays BEHIND the session-id guard on purpose.
+      // `idleMinutesRef` only holds the org's real policy after a successful
+      // session/start; before that it is the hardcoded 30-minute default, so
+      // evaluating it here would force-sign-out admins of an org with a longer
+      // idle policy whenever session/start is failing.
       const idleMs = idleMinutesRef.current * 60_000;
       const idleFor = Date.now() - lastActivityRef.current;
-
       if (idleFor >= idleMs) {
         console.info("[auth] SecurityGate: client idle timeout reached → sign out", { idleFor, idleMs });
         await forceSignOut();
         return;
       }
+
       try {
         const active = activeSinceBeatRef.current;
         activeSinceBeatRef.current = false;

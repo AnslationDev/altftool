@@ -3,6 +3,55 @@ import { enforceRateLimit } from "@altftool/core/http";
 
 const VALID_ROLE_TYPES = new Set(["admin", "superadmin"]);
 
+/* Firestore document ids may not contain "/", may not be "." or "..", may not
+   match the reserved __*__ pattern, and are capped at 1500 UTF-8 *bytes*.
+   These keys are used verbatim as document ids below, so a bad key would
+   throw *after* the Firebase Auth user was created, orphaning it.
+   JSON.parse() materialises "__proto__" as an own enumerable key, so without
+   the reserved-pattern test a body like {"projectAccess":{"__proto__":{}}}
+   would sail through validation and only blow up at batch.commit(). */
+const INVALID_ID_CHARS = /\//;
+const RESERVED_ID_PATTERN = /^__.*__$/;
+const MAX_ID_BYTES = 1500;
+const idByteEncoder = new TextEncoder();
+
+const MIN_PASSWORD_LENGTH = 6;
+/* Firebase Auth itself accepts up to 4096 characters — matching its bound means
+   we never reject a password the provider would have accepted. */
+const MAX_PASSWORD_LENGTH = 4096;
+
+/* Firebase Auth codes that mean "the arguments you gave us are bad", i.e. real
+   client errors. Everything else (auth/internal-error,
+   auth/network-request-failed, auth/too-many-requests, …) is transient or
+   server-side and must stay a 500, so the operator retries instead of being
+   told to edit a form that was already correct. */
+const CLIENT_AUTH_ERROR_CODES = new Set([
+  "auth/email-already-exists",
+  "auth/invalid-argument",
+  "auth/invalid-display-name",
+  "auth/invalid-email",
+  "auth/invalid-password",
+  "auth/invalid-photo-url",
+  "auth/invalid-uid",
+  "auth/uid-already-exists",
+]);
+
+function isPlainObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function hasInvalidKey(map) {
+  return Object.keys(map).some(
+    (key) =>
+      !key.trim() ||
+      idByteEncoder.encode(key).length > MAX_ID_BYTES ||
+      key === "." ||
+      key === ".." ||
+      RESERVED_ID_PATTERN.test(key) ||
+      INVALID_ID_CHARS.test(key),
+  );
+}
+
 export async function POST(req) {
   const limited = enforceRateLimit(NextResponse, req, {
     limit: 10,
@@ -55,11 +104,84 @@ export async function POST(req) {
       { status: 400 },
     );
   }
-  if (password && String(password).length < 6) {
+  /* Password is optional (Google-sign-in admins already have an Auth record),
+     but when supplied it must be a real string. The old check coerced with
+     String(), so e.g. a numeric password passed here and then blew up inside
+     the Firebase Admin SDK as a raw 500 for what is a client error. */
+  const hasPassword =
+    password !== undefined && password !== null && password !== "";
+  if (hasPassword && typeof password !== "string") {
     return NextResponse.json(
-      { error: "Password must be at least 6 characters" },
+      { error: "Password must be a string" },
       { status: 400 },
     );
+  }
+  if (
+    hasPassword &&
+    (password.length < MIN_PASSWORD_LENGTH ||
+      password.length > MAX_PASSWORD_LENGTH)
+  ) {
+    return NextResponse.json(
+      {
+        error: `Password must be between ${MIN_PASSWORD_LENGTH} and ${MAX_PASSWORD_LENGTH} characters`,
+      },
+      { status: 400 },
+    );
+  }
+
+  /* permissions / projectAccess keys become Firestore document ids and doc
+     fields further down, after the Auth user has already been created.
+     Reject bad shapes up front so we never orphan an Auth user. */
+  if (permissions !== undefined && permissions !== null) {
+    if (!isPlainObject(permissions)) {
+      return NextResponse.json(
+        { error: "permissions must be an object" },
+        { status: 400 },
+      );
+    }
+    if (hasInvalidKey(permissions)) {
+      return NextResponse.json(
+        { error: "permissions contains an invalid module id" },
+        { status: 400 },
+      );
+    }
+  }
+
+  if (projectAccess !== undefined && projectAccess !== null) {
+    if (!isPlainObject(projectAccess)) {
+      return NextResponse.json(
+        { error: "projectAccess must be an object" },
+        { status: 400 },
+      );
+    }
+    if (hasInvalidKey(projectAccess)) {
+      return NextResponse.json(
+        { error: "projectAccess contains an invalid project id" },
+        { status: 400 },
+      );
+    }
+    for (const access of Object.values(projectAccess)) {
+      if (access !== undefined && access !== null && !isPlainObject(access)) {
+        return NextResponse.json(
+          { error: "Each projectAccess entry must be an object" },
+          { status: 400 },
+        );
+      }
+      const modulePerms = access?.permissions;
+      if (modulePerms === undefined || modulePerms === null) continue;
+      if (!isPlainObject(modulePerms)) {
+        return NextResponse.json(
+          { error: "projectAccess permissions must be an object" },
+          { status: 400 },
+        );
+      }
+      if (hasInvalidKey(modulePerms)) {
+        return NextResponse.json(
+          { error: "projectAccess contains an invalid module id" },
+          { status: 400 },
+        );
+      }
+    }
   }
 
   let actor;
@@ -97,13 +219,7 @@ export async function POST(req) {
       const existingAuthUser = await adminAuth.getUserByEmail(normalizedEmail);
       uid = existingAuthUser.uid;
       authUserExisted = true;
-      if (password) {
-        if (password.length < 6) {
-          return NextResponse.json(
-            { error: "Password must be at least 6 characters" },
-            { status: 400 },
-          );
-        }
+      if (hasPassword) {
         await adminAuth.updateUser(uid, {
           password,
           displayName: normalizedFullName,
@@ -112,7 +228,7 @@ export async function POST(req) {
     } catch (lookupErr) {
       if (lookupErr.code === "auth/user-not-found") {
         // No Firebase Auth user → must be a new password-based admin
-        if (!password || password.length < 6) {
+        if (!hasPassword) {
           return NextResponse.json(
             {
               error:
@@ -263,8 +379,25 @@ export async function POST(req) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("ADMIN_CREATE_ERROR:", err);
+    // Firebase Auth *argument rejections* are client errors, not server faults —
+    // and their raw messages are internal detail we should not echo back.
+    // Transient/infra auth codes deliberately fall through to the 500 below.
+    if (err?.code === "auth/email-already-exists") {
+      return NextResponse.json(
+        {
+          error: `An account already exists for ${normalizedEmail}. Refresh the admin list and use Edit Admin to update it.`,
+        },
+        { status: 409 },
+      );
+    }
+    if (typeof err?.code === "string" && CLIENT_AUTH_ERROR_CODES.has(err.code)) {
+      return NextResponse.json(
+        { error: "Could not create the admin account with the details provided." },
+        { status: 400 },
+      );
+    }
     return NextResponse.json(
-      { error: err.message ?? "Failed to create admin" },
+      { error: "Failed to create admin" },
       { status: 500 },
     );
   }

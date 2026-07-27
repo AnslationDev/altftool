@@ -46,7 +46,7 @@ export function Dashboard() {
           <p className="description mb-6">{error}</p>
           <button
             onClick={refresh}
-            className="px-6 py-2.5 rounded-xl bg-(--primary) text-white
+            className="px-6 py-2.5 rounded-xl bg-(--primary) text-(--primary-foreground)
                        text-sm font-medium font-secondary hover:opacity-90
                        transition-opacity active:scale-95 cursor-pointer"
           >
@@ -63,7 +63,7 @@ export function Dashboard() {
 
       {/* ─ 3-column: Left Ad | Content | Right Ad ─ */}
       <div className="flex w-full max-w-[1600px] mx-auto ">
-       
+
 
         {/*  MAIN CONTENT ─ */}
         <main className="flex-1 min-w-0 ">
@@ -95,7 +95,7 @@ export function Dashboard() {
             riskScore={riskScore}
             loading={loading}
           />
-       
+
           <div className="md:py-8 py-5">
 <SectionDivider
             title=" Fingerprint Signals"
@@ -114,15 +114,15 @@ export function Dashboard() {
           </div>
           </div>
 
-          
+
 
           {/* Row 4 */}
           <div className="mb-3">
             <FontDetection fonts={signals.fonts} loading={loading} />
           </div>
 
-          
-        
+
+
 
 <div  className="md:py-8 py-5">
  <SectionDivider
@@ -137,7 +137,7 @@ export function Dashboard() {
             <ScreenGraphics screen={signals.screen} loading={loading} />
           </div>
 </div>
-         
+
 
           {/* Row 6 */}
           <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 mb-4 p-5">
@@ -175,10 +175,10 @@ export function Dashboard() {
               {loading ? "Analyzing..." : "Re-run Analysis"}
             </button>
           </div>
-         
+
         </main>
 
-       
+
       </div>
 
       <Footer />

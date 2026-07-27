@@ -17,7 +17,7 @@ export default function Trending({ searchQuery = "" }) {
               <Flame size={20} color="#ff5c1d" /> Trending Right Now
             </h2>
             <Link className="top9-link" href="/top9">
-              View all trending&nbsp; ?
+View all trending&nbsp; →
             </Link>
           </div>
           {items.length ? (

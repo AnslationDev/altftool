@@ -694,7 +694,7 @@ export default function StoryboardBuilder() {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
-    
+
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -757,7 +757,7 @@ export default function StoryboardBuilder() {
     if (!presSoundEnabled) return;
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      
+
       const osc = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       osc.connect(gainNode);
@@ -913,7 +913,7 @@ export default function StoryboardBuilder() {
 
   return (
     <div className="px-4 py-6 text-(--foreground) bg-(--background) font-secondary selection:bg-primary/20">
-      
+
       {/* ================================= HEADER MATCHING AGE CALCULATOR ================================= */}
       {!isPresentationMode && !isExportMode && (
         <motion.div
@@ -953,13 +953,13 @@ export default function StoryboardBuilder() {
       {!isPresentationMode && !isExportMode && (
         <div className="max-w-5xl mx-auto bg-(--card) rounded-xl shadow-lg py-5 border border-(--border)">
           <div className="p-6 space-y-6">
-            
+
             {/* Global Actions Row */}
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-(--background) text-(--secondary) p-4 rounded-xl border border-(--border)">
               <div className="flex gap-3">
                 <button
                   onClick={() => setIsNewProjOpen(true)}
-                  className="bg-(--primary) hover:bg-(--primary-hover) text-white px-6 py-2.5 rounded-lg cursor-pointer transition-all font-bold text-xs uppercase tracking-wider"
+                  className="bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) px-6 py-2.5 rounded-lg cursor-pointer transition-all font-bold text-xs uppercase tracking-wider"
                 >
                   <Plus size={14} className="inline mr-1" /> New Storyboard
                 </button>
@@ -968,7 +968,7 @@ export default function StoryboardBuilder() {
                   <input type="file" accept=".json" onChange={handleImportJSON} className="hidden" />
                 </label>
               </div>
-              
+
               <div className="text-[10px] font-black text-(--primary) uppercase tracking-wider flex items-center gap-1.5 select-none">
                 <Clock size={11} className="shrink-0 text-(--primary) animate-pulse" /> Studio Time: {liveLocalTime || "00:00:00"}
               </div>
@@ -976,7 +976,7 @@ export default function StoryboardBuilder() {
 
             {/* Split Dashboard Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              
+
               {/* LEFT BAR: Active Project selection */}
               <div className="lg:col-span-4 space-y-6">
                 <GlassCard title="Storyboard Projects" icon={Bookmark}>
@@ -1081,7 +1081,7 @@ export default function StoryboardBuilder() {
 
               {/* RIGHT DASHBOARD: Metrics summary & Timeline view */}
               <div className="lg:col-span-8 space-y-6">
-                
+
                 {/* Studio Metrics styled as Age Calculator Cards */}
                 {activeProject && (
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-(--background) text-(--secondary) p-4 rounded-xl border border-(--border)">
@@ -1129,7 +1129,7 @@ export default function StoryboardBuilder() {
                           return (
                             <React.Fragment key={sc.id}>
                               {idx > 0 && <ArrowRight size={12} className="text-(--secondary) opacity-50 shrink-0" />}
-                              
+
                               {/* Timeline Node card */}
                               <div
                                 onClick={() => setActiveSceneId(sc.id)}
@@ -1167,7 +1167,7 @@ export default function StoryboardBuilder() {
             {/* ================================= THE SCENE CREATOR & LIST SYSTEM ================================= */}
             {activeProject && (
               <div className="space-y-4 border-t border-(--border) pt-6">
-                
+
                 {/* Scenes Grid Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="space-y-0.5">
@@ -1179,7 +1179,7 @@ export default function StoryboardBuilder() {
 
                   <button
                     onClick={handleAddScene}
-                    className="bg-(--primary) hover:bg-(--primary-hover) text-white px-6 py-2.5 rounded-lg cursor-pointer transition-all font-bold text-xs uppercase tracking-wider"
+                    className="bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) px-6 py-2.5 rounded-lg cursor-pointer transition-all font-bold text-xs uppercase tracking-wider"
                   >
                     <Plus size={14} className="inline mr-1" /> Add Scene Card
                   </button>
@@ -1226,7 +1226,7 @@ export default function StoryboardBuilder() {
                               <span className="text-xs font-bold bg-black/5 dark:bg-white/5 border border-(--border) text-(--foreground) px-2 py-0.5 rounded">
                                 Scene {sc.number}
                               </span>
-                              
+
                               {/* Scene Title Input inline */}
                               <input
                                 type="text"
@@ -1271,9 +1271,9 @@ export default function StoryboardBuilder() {
 
                                 {openStatusDropdownId === sc.id && (
                                   <>
-                                    <div 
-                                      className="fixed inset-0 z-20 cursor-default" 
-                                      onClick={() => setOpenStatusDropdownId(null)} 
+                                    <div
+                                      className="fixed inset-0 z-20 cursor-default"
+                                      onClick={() => setOpenStatusDropdownId(null)}
                                     />
                                     <div className="absolute right-0 top-full mt-1.5 w-36 bg-(--card) border border-(--border) rounded-lg shadow-lg py-1 z-30 animate-in fade-in slide-in-from-top-2 duration-150">
                                       {SCENE_STATUSES.map((st) => (
@@ -1284,8 +1284,8 @@ export default function StoryboardBuilder() {
                                             setOpenStatusDropdownId(null);
                                           }}
                                           className={`w-full text-left px-3 py-2 text-[10px] font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-black/5 dark:hover:bg-white/5 transition-all ${
-                                            sc.status === st.value 
-                                              ? "text-(--primary) bg-primary/5 font-extrabold" 
+                                            sc.status === st.value
+                                              ? "text-(--primary) bg-primary/5 font-extrabold"
                                               : "text-(--foreground)"
                                           }`}
                                         >
@@ -1334,7 +1334,7 @@ export default function StoryboardBuilder() {
                                 exit={{ opacity: 0, height: 0 }}
                                 className="overflow-hidden border-t border-(--border) px-4 py-4 space-y-6 pl-7 bg-(--background)/50"
                               >
-                                
+
                                 {/* Section 1: Objective & Script Direction notes */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <div className="space-y-1.5">
@@ -1382,7 +1382,7 @@ export default function StoryboardBuilder() {
                                         key={sh.id}
                                         className="bg-(--background) border border-(--border) rounded-lg p-3.5 space-y-3 hover:border-(--primary) transition-all"
                                       >
-                                        
+
                                         {/* Shot Frame Header */}
                                         <div className="flex items-center justify-between">
                                           <span className="text-[9px] font-bold bg-black/5 dark:bg-white/5 border border-(--border) text-(--secondary) px-2 py-0.5 rounded">
@@ -1412,11 +1412,11 @@ export default function StoryboardBuilder() {
                                           <div className="absolute inset-0 bg-black/80 opacity-0 group-hover/canvas:opacity-100 transition-opacity flex items-center justify-center gap-2">
                                             <button
                                               onClick={() => openCanvasModal(sc.id, sh.id)}
-                                              className="px-3 py-1.5 bg-(--primary) hover:bg-(--primary-hover) text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all scale-95 cursor-pointer"
+                                              className="px-3 py-1.5 bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all scale-95 cursor-pointer"
                                             >
                                               <Edit3 size={10} className="inline mr-1" /> Sketch
                                             </button>
-                                            
+
                                             <label className="px-3 py-1.5 bg-black/90 hover:bg-black border border-white/20 text-white rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all scale-95 cursor-pointer flex items-center">
                                               <Upload size={10} className="inline mr-1" /> Upload
                                               <input
@@ -1565,7 +1565,7 @@ export default function StoryboardBuilder() {
               exit={{ scale: 0.95, opacity: 0 }}
               className="bg-(--card) border border-(--border) rounded-xl w-full max-w-4xl overflow-hidden shadow-2xl flex flex-col"
             >
-              
+
               {/* Header */}
               <div className="px-5 py-4 border-b border-(--border) flex items-center justify-between bg-black/5 dark:bg-white/5">
                 <div className="space-y-0.5">
@@ -1584,11 +1584,11 @@ export default function StoryboardBuilder() {
 
               {/* Layout body */}
               <div className="grid grid-cols-1 lg:grid-cols-12">
-                
+
                 {/* Left block: Canvas Board */}
                 <div className="lg:col-span-8 p-5 flex flex-col items-center justify-center bg-black/5 dark:bg-black/20">
                   <div className="relative border border-(--border) rounded-xl overflow-hidden shadow-inner aspect-video w-full bg-(--card) select-none">
-                    
+
                     <canvas
                       ref={canvasRef}
                       width={640}
@@ -1645,7 +1645,7 @@ export default function StoryboardBuilder() {
                 {/* Right block: Drawing toolbox */}
                 <div className="lg:col-span-4 p-5 border-l border-(--border) flex flex-col justify-between bg-black/5 dark:bg-white/5">
                   <div className="space-y-5">
-                    
+
                     {/* Tool switcher */}
                     <div className="space-y-1.5">
                       <label className="text-[9px] uppercase tracking-widest text-(--secondary) font-black">Drawing Tool</label>
@@ -1654,7 +1654,7 @@ export default function StoryboardBuilder() {
                           onClick={() => setDrawTool("pencil")}
                           className={`py-1.5 px-3 rounded-lg border text-xs font-bold transition-all cursor-pointer ${
                             drawTool === "pencil"
-                              ? "bg-(--primary) text-white border-(--primary)"
+                              ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                               : "bg-(--background) border-(--border) text-(--secondary)"
                           }`}
                         >
@@ -1664,7 +1664,7 @@ export default function StoryboardBuilder() {
                           onClick={() => setDrawTool("eraser")}
                           className={`py-1.5 px-3 rounded-lg border text-xs font-bold transition-all cursor-pointer ${
                             drawTool === "eraser"
-                              ? "bg-(--primary) text-white border-(--primary)"
+                              ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                               : "bg-(--background) border-(--border) text-(--secondary)"
                           }`}
                         >
@@ -1748,7 +1748,7 @@ export default function StoryboardBuilder() {
                           <RotateCw size={12} /> Redo
                         </button>
                       </div>
-                      
+
                       <button
                         onClick={handleCanvasClear}
                         className="w-full py-1.5 bg-red-50 hover:bg-red-100 border border-red-200 text-red-650 rounded-lg text-xs font-bold transition-all cursor-pointer"
@@ -1762,7 +1762,7 @@ export default function StoryboardBuilder() {
                   <div className="pt-4 border-t border-(--border)">
                     <button
                       onClick={handleSaveSketch}
-                      className="w-full py-2.5 bg-(--primary) hover:bg-(--primary-hover) text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                      className="w-full py-2.5 bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                     >
                       Save Concept Sketch
                     </button>
@@ -1781,7 +1781,7 @@ export default function StoryboardBuilder() {
       <AnimatePresence>
         {isPresentationMode && (
           <div className="fixed inset-0 z-50 bg-(--background) flex flex-col justify-between p-6 text-(--foreground)">
-            
+
             {/* Header */}
             <div className="flex items-center justify-between border-b border-(--border) pb-4">
               <div className="space-y-0.5 text-left">
@@ -1828,7 +1828,7 @@ export default function StoryboardBuilder() {
             {/* Central presentation visual */}
             {activePresShot && (
               <div className="my-auto max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                
+
                 {/* Visual Shot panel */}
                 <div className="md:col-span-7 space-y-3">
                   <div className="relative aspect-video rounded-xl bg-(--card) border border-(--border) overflow-hidden shadow-lg">
@@ -1920,7 +1920,7 @@ export default function StoryboardBuilder() {
 
                 <button
                   onClick={() => setPresAutoPlay(!presAutoPlay)}
-                  className="px-6 py-2 bg-(--primary) hover:bg-(--primary-hover) text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer justify-center"
+                  className="px-6 py-2 bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 cursor-pointer justify-center"
                 >
                   {presAutoPlay ? <><Pause size={12} /> Pause</> : <><Play size={12} /> Auto Play</>}
                 </button>
@@ -1945,7 +1945,7 @@ export default function StoryboardBuilder() {
               <div className="flex justify-between text-[9px] text-(--secondary) uppercase tracking-widest font-bold">
                 <span>Beat {currentPresIdx + 1} of {presentationShotsList.length}</span>
                 <span>
-                  {presAutoPlay 
+                  {presAutoPlay
                     ? `Time: 0:${presElapsedSeconds < 10 ? '0' : ''}${presElapsedSeconds} / 0:${(activePresShot?.duration || presSlideTime) < 10 ? '0' : ''}${activePresShot?.duration || presSlideTime}`
                     : `Paused: 0:${presElapsedSeconds < 10 ? '0' : ''}${presElapsedSeconds} / 0:${(activePresShot?.duration || presSlideTime) < 10 ? '0' : ''}${activePresShot?.duration || presSlideTime}`
                   }
@@ -1981,7 +1981,7 @@ export default function StoryboardBuilder() {
       <AnimatePresence>
         {isExportMode && activeProject && (
           <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm overflow-y-auto p-4 md:p-6 print:relative print:inset-auto print:bg-white print:p-0 print:overflow-visible">
-            
+
             {/* Export control header bar */}
             <div className="max-w-5xl mx-auto mb-6 bg-(--card) border border-(--border) rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 print:hidden">
               <div className="space-y-0.5 text-left">
@@ -1991,7 +1991,7 @@ export default function StoryboardBuilder() {
               <div className="flex gap-2">
                 <button
                   onClick={handlePrint}
-                  className="bg-(--primary) hover:bg-(--primary-hover) text-white px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                 >
                   <Printer size={12} className="inline mr-1" /> Print / Save PDF
                 </button>
@@ -2006,7 +2006,7 @@ export default function StoryboardBuilder() {
 
             {/* Print paper layout structure */}
             <div className="max-w-5xl mx-auto bg-(--card) border border-(--border) rounded-xl p-6 md:p-10 shadow-lg text-left text-(--foreground) space-y-8 print:border-0 print:p-0 print:bg-white print:text-black print:shadow-none">
-              
+
               {/* Cover top info */}
               <div className="border-b-2 border-(--primary) pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 print:border-black print:pb-2">
                 <div className="space-y-1.5">
@@ -2032,7 +2032,7 @@ export default function StoryboardBuilder() {
                     key={sc.id}
                     className="border border-(--border) rounded-xl p-4 space-y-4 page-break-inside:avoid bg-(--background)/30 print:border-zinc-350 print:bg-white print:text-black print:p-3"
                   >
-                    
+
                     {/* Scene banner bar */}
                     <div className="flex justify-between items-center border-b border-(--border) pb-2 print:border-zinc-200">
                       <div className="flex items-center gap-2">
@@ -2093,7 +2093,7 @@ export default function StoryboardBuilder() {
                           <p className="text-(--muted-foreground) italic print:text-zinc-900 leading-relaxed">"{sc.dialogue}"</p>
                         </div>
                       )}
-                      
+
                       {sc.voiceover && (
                         <div className="text-[11px]">
                           <span className="text-[8px] uppercase tracking-wider text-(--secondary) font-bold block mb-0.5">Voiceover</span>
@@ -2189,7 +2189,7 @@ export default function StoryboardBuilder() {
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-(--primary) hover:bg-(--primary-hover) text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="w-full py-2.5 bg-(--primary) hover:bg-(--primary-hover) text-(--primary-foreground) rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                 >
                   Create Board
                 </button>

@@ -1,7 +1,7 @@
 "use client";
-import App from "./page/App.jsx";
+
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <App />;
+  return <ToolHome />;
 }
-

@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-26T17:11:01.184Z",
-  "buildId": "T3CX9JBisSqaLVLW_Hfb0",
-  "ok": true,
-  "indexControlOk": true,
-  "qualityOk": true,
-  "score": 100,
+  "generatedAt": "2026-07-27T15:12:20.927Z",
+  "buildId": "G2Y0C3tgA2QG6Z5Iex4Ej",
+  "ok": false,
+  "indexControlOk": false,
+  "qualityOk": false,
+  "score": 97,
   "totals": {
-    "routes": 958,
-    "indexable": 845,
+    "routes": 1047,
+    "indexable": 934,
     "noindex": 113,
-    "sitemapUrls": 3313,
+    "sitemapUrls": 4709,
     "sitemapCovered": 845,
-    "sitemapCoverage": 100,
+    "sitemapCoverage": 90,
     "indexConflicts": 0,
-    "missingCanonicalTargets": 0,
-    "routesWithIssues": 0,
-    "routesWithAdvisories": 0,
+    "missingCanonicalTargets": 89,
+    "routesWithIssues": 89,
+    "routesWithAdvisories": 19,
     "medianRouteScore": 100,
     "p95RouteScore": 100
   },
@@ -28,8 +28,8 @@
       "noindex": 73,
       "sitemapCovered": 138,
       "issues": 0,
-      "advisories": 0,
-      "score": 100,
+      "advisories": 1,
+      "score": 99,
       "sitemapCoverage": 100
     },
     {
@@ -77,14 +77,25 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Transform",
+      "routes": 65,
+      "indexable": 65,
+      "noindex": 0,
+      "sitemapCovered": 0,
+      "issues": 65,
+      "advisories": 16,
+      "score": 74,
+      "sitemapCoverage": 0
+    },
+    {
       "group": "Top9",
       "routes": 50,
       "indexable": 50,
       "noindex": 0,
       "sitemapCovered": 50,
       "issues": 0,
-      "advisories": 0,
-      "score": 100,
+      "advisories": 2,
+      "score": 99,
       "sitemapCoverage": 100
     },
     {
@@ -108,6 +119,17 @@
       "advisories": 0,
       "score": 100,
       "sitemapCoverage": 100
+    },
+    {
+      "group": "Alternatives",
+      "routes": 24,
+      "indexable": 24,
+      "noindex": 0,
+      "sitemapCovered": 0,
+      "issues": 24,
+      "advisories": 0,
+      "score": 75,
+      "sitemapCoverage": 0
     },
     {
       "group": "Stories",
@@ -605,7 +627,2145 @@
       "sitemapCoverage": 100
     }
   ],
-  "watchlist": [],
+  "watchlist": [
+    {
+      "route": "/transform/flow-to-typescript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Flow to TypeScript Converter | AltFTool",
+      "descriptionLength": 44,
+      "canonical": "https://www.altftool.com/transform/flow-to-typescript",
+      "canonicalPath": "/transform/flow-to-typescript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (44)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/graphql-to-flow",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Flow Converter | AltFTool",
+      "descriptionLength": 42,
+      "canonical": "https://www.altftool.com/transform/graphql-to-flow",
+      "canonicalPath": "/transform/graphql-to-flow",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (42)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/graphql-to-java",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Java Converter | AltFTool",
+      "descriptionLength": 42,
+      "canonical": "https://www.altftool.com/transform/graphql-to-java",
+      "canonicalPath": "/transform/graphql-to-java",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (42)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/js-object-to-typescript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JS Object to TypeScript Converter | AltFTool",
+      "descriptionLength": 62,
+      "canonical": "https://www.altftool.com/transform/js-object-to-typescript",
+      "canonicalPath": "/transform/js-object-to-typescript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (62)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/json-to-toml",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to TOML Converter | AltFTool",
+      "descriptionLength": 64,
+      "canonical": "https://www.altftool.com/transform/json-to-toml",
+      "canonicalPath": "/transform/json-to-toml",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (64)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/json-to-yaml",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to YAML Converter | AltFTool",
+      "descriptionLength": 45,
+      "canonical": "https://www.altftool.com/transform/json-to-yaml",
+      "canonicalPath": "/transform/json-to-yaml",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (45)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/jsonld-to-nquads",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to N-Quads Converter | AltFTool",
+      "descriptionLength": 44,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-nquads",
+      "canonicalPath": "/transform/jsonld-to-nquads",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (44)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/markdown-to-html",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Markdown to HTML Converter | AltFTool",
+      "descriptionLength": 66,
+      "canonical": "https://www.altftool.com/transform/markdown-to-html",
+      "canonicalPath": "/transform/markdown-to-html",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (66)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/toml-to-json",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TOML to JSON Converter | AltFTool",
+      "descriptionLength": 35,
+      "canonical": "https://www.altftool.com/transform/toml-to-json",
+      "canonicalPath": "/transform/toml-to-json",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (35)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/toml-to-yaml",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TOML to YAML Converter | AltFTool",
+      "descriptionLength": 37,
+      "canonical": "https://www.altftool.com/transform/toml-to-yaml",
+      "canonicalPath": "/transform/toml-to-yaml",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (37)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/typescript-to-flow",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TypeScript to Flow Converter | AltFTool",
+      "descriptionLength": 64,
+      "canonical": "https://www.altftool.com/transform/typescript-to-flow",
+      "canonicalPath": "/transform/typescript-to-flow",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (64)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/typescript-to-json-schema",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TypeScript to JSON Schema Converter | AltFTool",
+      "descriptionLength": 59,
+      "canonical": "https://www.altftool.com/transform/typescript-to-json-schema",
+      "canonicalPath": "/transform/typescript-to-json-schema",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (59)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/typescript-to-zod",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TypeScript to Zod Converter | AltFTool",
+      "descriptionLength": 58,
+      "canonical": "https://www.altftool.com/transform/typescript-to-zod",
+      "canonicalPath": "/transform/typescript-to-zod",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (58)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/xml-to-json",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "XML to JSON Converter | AltFTool",
+      "descriptionLength": 47,
+      "canonical": "https://www.altftool.com/transform/xml-to-json",
+      "canonicalPath": "/transform/xml-to-json",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (47)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/yaml-to-json",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "YAML to JSON Converter | AltFTool",
+      "descriptionLength": 21,
+      "canonical": "https://www.altftool.com/transform/yaml-to-json",
+      "canonicalPath": "/transform/yaml-to-json",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (21)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/transform/yaml-to-toml",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "YAML to TOML Converter | AltFTool",
+      "descriptionLength": 37,
+      "canonical": "https://www.altftool.com/transform/yaml-to-toml",
+      "canonicalPath": "/transform/yaml-to-toml",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [
+        "Non-ideal description (37)"
+      ],
+      "score": 71
+    },
+    {
+      "route": "/alternatives",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Alternatives to Popular Online Tools | AltFTool",
+      "descriptionLength": 159,
+      "canonical": "https://www.altftool.com/alternatives",
+      "canonicalPath": "/alternatives",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/123apps",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free 123apps Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 136,
+      "canonical": "https://www.altftool.com/alternatives/123apps",
+      "canonicalPath": "/alternatives/123apps",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/adobe-acrobat-online",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Adobe Acrobat Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 154,
+      "canonical": "https://www.altftool.com/alternatives/adobe-acrobat-online",
+      "canonicalPath": "/alternatives/adobe-acrobat-online",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/calculator-net",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Calculator.net Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 150,
+      "canonical": "https://www.altftool.com/alternatives/calculator-net",
+      "canonicalPath": "/alternatives/calculator-net",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/canva",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Canva Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 132,
+      "canonical": "https://www.altftool.com/alternatives/canva",
+      "canonicalPath": "/alternatives/canva",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/cloudconvert",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free CloudConvert Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 146,
+      "canonical": "https://www.altftool.com/alternatives/cloudconvert",
+      "canonicalPath": "/alternatives/cloudconvert",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/code-beautify",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Code Beautify Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 148,
+      "canonical": "https://www.altftool.com/alternatives/code-beautify",
+      "canonicalPath": "/alternatives/code-beautify",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/convertio",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Convertio Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 140,
+      "canonical": "https://www.altftool.com/alternatives/convertio",
+      "canonicalPath": "/alternatives/convertio",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/freeconvert",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free FreeConvert Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 144,
+      "canonical": "https://www.altftool.com/alternatives/freeconvert",
+      "canonicalPath": "/alternatives/freeconvert",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/iloveimg",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free iLoveIMG Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 138,
+      "canonical": "https://www.altftool.com/alternatives/iloveimg",
+      "canonicalPath": "/alternatives/iloveimg",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/ilovepdf",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free iLovePDF Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 138,
+      "canonical": "https://www.altftool.com/alternatives/ilovepdf",
+      "canonicalPath": "/alternatives/ilovepdf",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/jsonformatter",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free JSONFormatter Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 148,
+      "canonical": "https://www.altftool.com/alternatives/jsonformatter",
+      "canonicalPath": "/alternatives/jsonformatter",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/kraken-io",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Kraken.io Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 140,
+      "canonical": "https://www.altftool.com/alternatives/kraken-io",
+      "canonicalPath": "/alternatives/kraken-io",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/omni-calculator",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Omni Calculator Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 152,
+      "canonical": "https://www.altftool.com/alternatives/omni-calculator",
+      "canonicalPath": "/alternatives/omni-calculator",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/pdf24",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free PDF24 Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 138,
+      "canonical": "https://www.altftool.com/alternatives/pdf24",
+      "canonicalPath": "/alternatives/pdf24",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/photopea",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Photopea Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 138,
+      "canonical": "https://www.altftool.com/alternatives/photopea",
+      "canonicalPath": "/alternatives/photopea",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/pixlr",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Pixlr Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 132,
+      "canonical": "https://www.altftool.com/alternatives/pixlr",
+      "canonicalPath": "/alternatives/pixlr",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/remove-bg",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free remove.bg Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 140,
+      "canonical": "https://www.altftool.com/alternatives/remove-bg",
+      "canonicalPath": "/alternatives/remove-bg",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/sejda",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Sejda Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 132,
+      "canonical": "https://www.altftool.com/alternatives/sejda",
+      "canonicalPath": "/alternatives/sejda",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/smallpdf",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Smallpdf Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 138,
+      "canonical": "https://www.altftool.com/alternatives/smallpdf",
+      "canonicalPath": "/alternatives/smallpdf",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/squoosh",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Squoosh Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 136,
+      "canonical": "https://www.altftool.com/alternatives/squoosh",
+      "canonicalPath": "/alternatives/squoosh",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/tinypng",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free TinyPNG Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 145,
+      "canonical": "https://www.altftool.com/alternatives/tinypng",
+      "canonicalPath": "/alternatives/tinypng",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/tinywow",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free TinyWow Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 136,
+      "canonical": "https://www.altftool.com/alternatives/tinywow",
+      "canonicalPath": "/alternatives/tinywow",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/alternatives/zamzar",
+      "group": "Alternatives",
+      "indexState": "index",
+      "title": "Free Zamzar Alternative — Runs In Your Browser | AltFTool",
+      "descriptionLength": 134,
+      "canonical": "https://www.altftool.com/alternatives/zamzar",
+      "canonicalPath": "/alternatives/zamzar",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 3,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Transform — Format & Code Converters | AltFTool",
+      "descriptionLength": 139,
+      "canonical": "https://www.altftool.com/transform",
+      "canonicalPath": "/transform",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/cadence-to-go",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Cadence to Go Converter | AltFTool",
+      "descriptionLength": 98,
+      "canonical": "https://www.altftool.com/transform/cadence-to-go",
+      "canonicalPath": "/transform/cadence-to-go",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/css-to-js",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "CSS to JS Object Converter | AltFTool",
+      "descriptionLength": 98,
+      "canonical": "https://www.altftool.com/transform/css-to-js",
+      "canonicalPath": "/transform/css-to-js",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/css-to-tailwind",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "CSS to Tailwind Converter | AltFTool",
+      "descriptionLength": 74,
+      "canonical": "https://www.altftool.com/transform/css-to-tailwind",
+      "canonicalPath": "/transform/css-to-tailwind",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/flow-to-javascript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Flow to JavaScript Converter | AltFTool",
+      "descriptionLength": 72,
+      "canonical": "https://www.altftool.com/transform/flow-to-javascript",
+      "canonicalPath": "/transform/flow-to-javascript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/flow-to-typescript-declaration",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Flow to TypeScript Declaration Converter | AltFTool",
+      "descriptionLength": 70,
+      "canonical": "https://www.altftool.com/transform/flow-to-typescript-declaration",
+      "canonicalPath": "/transform/flow-to-typescript-declaration",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-components",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to React Apollo Components Converter | AltFTool",
+      "descriptionLength": 73,
+      "canonical": "https://www.altftool.com/transform/graphql-to-components",
+      "canonicalPath": "/transform/graphql-to-components",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-fragment-matcher",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Fragment Matcher Converter | AltFTool",
+      "descriptionLength": 91,
+      "canonical": "https://www.altftool.com/transform/graphql-to-fragment-matcher",
+      "canonicalPath": "/transform/graphql-to-fragment-matcher",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-introspection-json",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Introspection JSON Converter | AltFTool",
+      "descriptionLength": 90,
+      "canonical": "https://www.altftool.com/transform/graphql-to-introspection-json",
+      "canonicalPath": "/transform/graphql-to-introspection-json",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-resolvers-signature",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Resolvers Signature Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/graphql-to-resolvers-signature",
+      "canonicalPath": "/transform/graphql-to-resolvers-signature",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-schema-ast",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to Schema AST Converter | AltFTool",
+      "descriptionLength": 81,
+      "canonical": "https://www.altftool.com/transform/graphql-to-schema-ast",
+      "canonicalPath": "/transform/graphql-to-schema-ast",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-typescript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to TypeScript Converter | AltFTool",
+      "descriptionLength": 70,
+      "canonical": "https://www.altftool.com/transform/graphql-to-typescript",
+      "canonicalPath": "/transform/graphql-to-typescript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/graphql-to-typescript-mongodb",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "GraphQL to TypeScript MongoDB Converter | AltFTool",
+      "descriptionLength": 101,
+      "canonical": "https://www.altftool.com/transform/graphql-to-typescript-mongodb",
+      "canonicalPath": "/transform/graphql-to-typescript-mongodb",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/html-to-jsx",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "HTML to JSX Converter | AltFTool",
+      "descriptionLength": 134,
+      "canonical": "https://www.altftool.com/transform/html-to-jsx",
+      "canonicalPath": "/transform/html-to-jsx",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/html-to-pug",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "HTML to Pug Converter | AltFTool",
+      "descriptionLength": 76,
+      "canonical": "https://www.altftool.com/transform/html-to-pug",
+      "canonicalPath": "/transform/html-to-pug",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/js-object-to-json",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JS Object to JSON Converter | AltFTool",
+      "descriptionLength": 104,
+      "canonical": "https://www.altftool.com/transform/js-object-to-json",
+      "canonicalPath": "/transform/js-object-to-json",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-schema-to-openapi-schema",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON Schema to OpenAPI Schema Converter | AltFTool",
+      "descriptionLength": 114,
+      "canonical": "https://www.altftool.com/transform/json-schema-to-openapi-schema",
+      "canonicalPath": "/transform/json-schema-to-openapi-schema",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-schema-to-protobuf",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON Schema to Protobuf Converter | AltFTool",
+      "descriptionLength": 74,
+      "canonical": "https://www.altftool.com/transform/json-schema-to-protobuf",
+      "canonicalPath": "/transform/json-schema-to-protobuf",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-schema-to-typescript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON Schema to TypeScript Converter | AltFTool",
+      "descriptionLength": 87,
+      "canonical": "https://www.altftool.com/transform/json-schema-to-typescript",
+      "canonicalPath": "/transform/json-schema-to-typescript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-schema-to-zod",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON Schema to Zod Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-schema-to-zod",
+      "canonicalPath": "/transform/json-schema-to-zod",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-big-query",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to BigQuery Schema Converter | AltFTool",
+      "descriptionLength": 102,
+      "canonical": "https://www.altftool.com/transform/json-to-big-query",
+      "canonicalPath": "/transform/json-to-big-query",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-flow",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Flow Converter | AltFTool",
+      "descriptionLength": 87,
+      "canonical": "https://www.altftool.com/transform/json-to-flow",
+      "canonicalPath": "/transform/json-to-flow",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-go",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Go Converter | AltFTool",
+      "descriptionLength": 85,
+      "canonical": "https://www.altftool.com/transform/json-to-go",
+      "canonicalPath": "/transform/json-to-go",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-go-bson",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Go (BSON) Converter | AltFTool",
+      "descriptionLength": 102,
+      "canonical": "https://www.altftool.com/transform/json-to-go-bson",
+      "canonicalPath": "/transform/json-to-go-bson",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-graphql",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to GraphQL Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-to-graphql",
+      "canonicalPath": "/transform/json-to-graphql",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-io-ts",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to io-ts Converter | AltFTool",
+      "descriptionLength": 91,
+      "canonical": "https://www.altftool.com/transform/json-to-io-ts",
+      "canonicalPath": "/transform/json-to-io-ts",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-java",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Java Converter | AltFTool",
+      "descriptionLength": 88,
+      "canonical": "https://www.altftool.com/transform/json-to-java",
+      "canonicalPath": "/transform/json-to-java",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-jsdoc",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to JSDoc Converter | AltFTool",
+      "descriptionLength": 92,
+      "canonical": "https://www.altftool.com/transform/json-to-jsdoc",
+      "canonicalPath": "/transform/json-to-jsdoc",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-json-schema",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to JSON Schema Converter | AltFTool",
+      "descriptionLength": 85,
+      "canonical": "https://www.altftool.com/transform/json-to-json-schema",
+      "canonicalPath": "/transform/json-to-json-schema",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-kotlin",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Kotlin Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-to-kotlin",
+      "canonicalPath": "/transform/json-to-kotlin",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-mobx-state-tree",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to MobX-State-Tree Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-to-mobx-state-tree",
+      "canonicalPath": "/transform/json-to-mobx-state-tree",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-mongoose",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Mongoose Converter | AltFTool",
+      "descriptionLength": 89,
+      "canonical": "https://www.altftool.com/transform/json-to-mongoose",
+      "canonicalPath": "/transform/json-to-mongoose",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-mysql",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to MySQL Converter | AltFTool",
+      "descriptionLength": 86,
+      "canonical": "https://www.altftool.com/transform/json-to-mysql",
+      "canonicalPath": "/transform/json-to-mysql",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-proptypes",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to PropTypes Converter | AltFTool",
+      "descriptionLength": 91,
+      "canonical": "https://www.altftool.com/transform/json-to-proptypes",
+      "canonicalPath": "/transform/json-to-proptypes",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-rust-serde",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Rust Serde Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-to-rust-serde",
+      "canonicalPath": "/transform/json-to-rust-serde",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-sarcastic",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Sarcastic Converter | AltFTool",
+      "descriptionLength": 113,
+      "canonical": "https://www.altftool.com/transform/json-to-sarcastic",
+      "canonicalPath": "/transform/json-to-sarcastic",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-scala-case-class",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Scala Case Class Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/json-to-scala-case-class",
+      "canonicalPath": "/transform/json-to-scala-case-class",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-typescript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to TypeScript Converter | AltFTool",
+      "descriptionLength": 92,
+      "canonical": "https://www.altftool.com/transform/json-to-typescript",
+      "canonicalPath": "/transform/json-to-typescript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/json-to-zod",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON to Zod Converter | AltFTool",
+      "descriptionLength": 78,
+      "canonical": "https://www.altftool.com/transform/json-to-zod",
+      "canonicalPath": "/transform/json-to-zod",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/jsonld-to-compacted",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to Compacted Converter | AltFTool",
+      "descriptionLength": 86,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-compacted",
+      "canonicalPath": "/transform/jsonld-to-compacted",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/jsonld-to-expanded",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to Expanded Converter | AltFTool",
+      "descriptionLength": 78,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-expanded",
+      "canonicalPath": "/transform/jsonld-to-expanded",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/jsonld-to-flattened",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to Flattened Converter | AltFTool",
+      "descriptionLength": 82,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-flattened",
+      "canonicalPath": "/transform/jsonld-to-flattened",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/jsonld-to-framed",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to Framed Converter | AltFTool",
+      "descriptionLength": 77,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-framed",
+      "canonicalPath": "/transform/jsonld-to-framed",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/jsonld-to-normalized",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "JSON-LD to Normalized Converter | AltFTool",
+      "descriptionLength": 83,
+      "canonical": "https://www.altftool.com/transform/jsonld-to-normalized",
+      "canonicalPath": "/transform/jsonld-to-normalized",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/object-styles-to-template-literal",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "Object Styles to Template Literal Converter | AltFTool",
+      "descriptionLength": 104,
+      "canonical": "https://www.altftool.com/transform/object-styles-to-template-literal",
+      "canonicalPath": "/transform/object-styles-to-template-literal",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/svg-to-jsx",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "SVG to JSX Converter | AltFTool",
+      "descriptionLength": 109,
+      "canonical": "https://www.altftool.com/transform/svg-to-jsx",
+      "canonicalPath": "/transform/svg-to-jsx",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/svg-to-react-native",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "SVG to React Native Converter | AltFTool",
+      "descriptionLength": 119,
+      "canonical": "https://www.altftool.com/transform/svg-to-react-native",
+      "canonicalPath": "/transform/svg-to-react-native",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/typescript-to-javascript",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TypeScript to JavaScript Converter | AltFTool",
+      "descriptionLength": 89,
+      "canonical": "https://www.altftool.com/transform/typescript-to-javascript",
+      "canonicalPath": "/transform/typescript-to-javascript",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/transform/typescript-to-typescript-declaration",
+      "group": "Transform",
+      "indexState": "index",
+      "title": "TypeScript to Declaration Converter | AltFTool",
+      "descriptionLength": 81,
+      "canonical": "https://www.altftool.com/transform/typescript-to-typescript-declaration",
+      "canonicalPath": "/transform/typescript-to-typescript-declaration",
+      "ownsCanonical": true,
+      "sitemapIncluded": false,
+      "canonicalInSitemap": false,
+      "h1Count": 1,
+      "schemaCount": 1,
+      "issues": [
+        "Canonical target is missing from sitemap"
+      ],
+      "advisories": [],
+      "score": 75
+    },
+    {
+      "route": "/bops/housingneeds",
+      "group": "Business Ops",
+      "indexState": "index",
+      "title": "Housing Needs — Free Home Improvement Quotes & Expert Guides | AltFTool",
+      "descriptionLength": 160,
+      "canonical": "https://www.altftool.com/bops/housingneeds",
+      "canonicalPath": "/bops/housingneeds",
+      "ownsCanonical": true,
+      "sitemapIncluded": true,
+      "canonicalInSitemap": true,
+      "h1Count": 1,
+      "schemaCount": 2,
+      "issues": [],
+      "advisories": [
+        "Long title (71)"
+      ],
+      "score": 96
+    },
+    {
+      "route": "/top9",
+      "group": "Top9",
+      "indexState": "index",
+      "title": "Top9 Lists - Ranked Guides, Entertainment, Sports & Tools | AltFTool",
+      "descriptionLength": 116,
+      "canonical": "https://www.altftool.com/top9",
+      "canonicalPath": "/top9",
+      "ownsCanonical": true,
+      "sitemapIncluded": true,
+      "canonicalInSitemap": true,
+      "h1Count": 0,
+      "schemaCount": 1,
+      "issues": [],
+      "advisories": [
+        "No rendered H1"
+      ],
+      "score": 96
+    },
+    {
+      "route": "/top9/offensive-tackles-going-into-2026-nfl-season",
+      "group": "Top9",
+      "indexState": "index",
+      "title": "Top 9 Best Offensive Tackles Going Into the 2026 NFL Season | Top9 | AltFTool",
+      "descriptionLength": 126,
+      "canonical": "https://www.altftool.com/top9/offensive-tackles-going-into-2026-nfl-season",
+      "canonicalPath": "/top9/offensive-tackles-going-into-2026-nfl-season",
+      "ownsCanonical": true,
+      "sitemapIncluded": true,
+      "canonicalInSitemap": true,
+      "h1Count": 1,
+      "schemaCount": 2,
+      "issues": [],
+      "advisories": [
+        "Long title (77)"
+      ],
+      "score": 96
+    }
+  ],
   "conflicts": [],
-  "missingCanonicalTargets": []
+  "missingCanonicalTargets": [
+    {
+      "route": "/alternatives/123apps",
+      "canonicalPath": "/alternatives/123apps"
+    },
+    {
+      "route": "/alternatives/adobe-acrobat-online",
+      "canonicalPath": "/alternatives/adobe-acrobat-online"
+    },
+    {
+      "route": "/alternatives/calculator-net",
+      "canonicalPath": "/alternatives/calculator-net"
+    },
+    {
+      "route": "/alternatives/canva",
+      "canonicalPath": "/alternatives/canva"
+    },
+    {
+      "route": "/alternatives/cloudconvert",
+      "canonicalPath": "/alternatives/cloudconvert"
+    },
+    {
+      "route": "/alternatives/code-beautify",
+      "canonicalPath": "/alternatives/code-beautify"
+    },
+    {
+      "route": "/alternatives/convertio",
+      "canonicalPath": "/alternatives/convertio"
+    },
+    {
+      "route": "/alternatives/freeconvert",
+      "canonicalPath": "/alternatives/freeconvert"
+    },
+    {
+      "route": "/alternatives/iloveimg",
+      "canonicalPath": "/alternatives/iloveimg"
+    },
+    {
+      "route": "/alternatives/ilovepdf",
+      "canonicalPath": "/alternatives/ilovepdf"
+    },
+    {
+      "route": "/alternatives/jsonformatter",
+      "canonicalPath": "/alternatives/jsonformatter"
+    },
+    {
+      "route": "/alternatives/kraken-io",
+      "canonicalPath": "/alternatives/kraken-io"
+    },
+    {
+      "route": "/alternatives/omni-calculator",
+      "canonicalPath": "/alternatives/omni-calculator"
+    },
+    {
+      "route": "/alternatives/pdf24",
+      "canonicalPath": "/alternatives/pdf24"
+    },
+    {
+      "route": "/alternatives/photopea",
+      "canonicalPath": "/alternatives/photopea"
+    },
+    {
+      "route": "/alternatives/pixlr",
+      "canonicalPath": "/alternatives/pixlr"
+    },
+    {
+      "route": "/alternatives/remove-bg",
+      "canonicalPath": "/alternatives/remove-bg"
+    },
+    {
+      "route": "/alternatives/sejda",
+      "canonicalPath": "/alternatives/sejda"
+    },
+    {
+      "route": "/alternatives/smallpdf",
+      "canonicalPath": "/alternatives/smallpdf"
+    },
+    {
+      "route": "/alternatives/squoosh",
+      "canonicalPath": "/alternatives/squoosh"
+    },
+    {
+      "route": "/alternatives/tinypng",
+      "canonicalPath": "/alternatives/tinypng"
+    },
+    {
+      "route": "/alternatives/tinywow",
+      "canonicalPath": "/alternatives/tinywow"
+    },
+    {
+      "route": "/alternatives/zamzar",
+      "canonicalPath": "/alternatives/zamzar"
+    },
+    {
+      "route": "/alternatives",
+      "canonicalPath": "/alternatives"
+    },
+    {
+      "route": "/transform/cadence-to-go",
+      "canonicalPath": "/transform/cadence-to-go"
+    },
+    {
+      "route": "/transform/css-to-js",
+      "canonicalPath": "/transform/css-to-js"
+    },
+    {
+      "route": "/transform/css-to-tailwind",
+      "canonicalPath": "/transform/css-to-tailwind"
+    },
+    {
+      "route": "/transform/flow-to-javascript",
+      "canonicalPath": "/transform/flow-to-javascript"
+    },
+    {
+      "route": "/transform/flow-to-typescript-declaration",
+      "canonicalPath": "/transform/flow-to-typescript-declaration"
+    },
+    {
+      "route": "/transform/flow-to-typescript",
+      "canonicalPath": "/transform/flow-to-typescript"
+    },
+    {
+      "route": "/transform/graphql-to-components",
+      "canonicalPath": "/transform/graphql-to-components"
+    },
+    {
+      "route": "/transform/graphql-to-flow",
+      "canonicalPath": "/transform/graphql-to-flow"
+    },
+    {
+      "route": "/transform/graphql-to-fragment-matcher",
+      "canonicalPath": "/transform/graphql-to-fragment-matcher"
+    },
+    {
+      "route": "/transform/graphql-to-introspection-json",
+      "canonicalPath": "/transform/graphql-to-introspection-json"
+    },
+    {
+      "route": "/transform/graphql-to-java",
+      "canonicalPath": "/transform/graphql-to-java"
+    },
+    {
+      "route": "/transform/graphql-to-resolvers-signature",
+      "canonicalPath": "/transform/graphql-to-resolvers-signature"
+    },
+    {
+      "route": "/transform/graphql-to-schema-ast",
+      "canonicalPath": "/transform/graphql-to-schema-ast"
+    },
+    {
+      "route": "/transform/graphql-to-typescript-mongodb",
+      "canonicalPath": "/transform/graphql-to-typescript-mongodb"
+    },
+    {
+      "route": "/transform/graphql-to-typescript",
+      "canonicalPath": "/transform/graphql-to-typescript"
+    },
+    {
+      "route": "/transform/html-to-jsx",
+      "canonicalPath": "/transform/html-to-jsx"
+    },
+    {
+      "route": "/transform/html-to-pug",
+      "canonicalPath": "/transform/html-to-pug"
+    },
+    {
+      "route": "/transform/js-object-to-json",
+      "canonicalPath": "/transform/js-object-to-json"
+    },
+    {
+      "route": "/transform/js-object-to-typescript",
+      "canonicalPath": "/transform/js-object-to-typescript"
+    },
+    {
+      "route": "/transform/json-schema-to-openapi-schema",
+      "canonicalPath": "/transform/json-schema-to-openapi-schema"
+    },
+    {
+      "route": "/transform/json-schema-to-protobuf",
+      "canonicalPath": "/transform/json-schema-to-protobuf"
+    },
+    {
+      "route": "/transform/json-schema-to-typescript",
+      "canonicalPath": "/transform/json-schema-to-typescript"
+    },
+    {
+      "route": "/transform/json-schema-to-zod",
+      "canonicalPath": "/transform/json-schema-to-zod"
+    },
+    {
+      "route": "/transform/json-to-big-query",
+      "canonicalPath": "/transform/json-to-big-query"
+    },
+    {
+      "route": "/transform/json-to-flow",
+      "canonicalPath": "/transform/json-to-flow"
+    },
+    {
+      "route": "/transform/json-to-go-bson",
+      "canonicalPath": "/transform/json-to-go-bson"
+    },
+    {
+      "route": "/transform/json-to-go",
+      "canonicalPath": "/transform/json-to-go"
+    },
+    {
+      "route": "/transform/json-to-graphql",
+      "canonicalPath": "/transform/json-to-graphql"
+    },
+    {
+      "route": "/transform/json-to-io-ts",
+      "canonicalPath": "/transform/json-to-io-ts"
+    },
+    {
+      "route": "/transform/json-to-java",
+      "canonicalPath": "/transform/json-to-java"
+    },
+    {
+      "route": "/transform/json-to-jsdoc",
+      "canonicalPath": "/transform/json-to-jsdoc"
+    },
+    {
+      "route": "/transform/json-to-json-schema",
+      "canonicalPath": "/transform/json-to-json-schema"
+    },
+    {
+      "route": "/transform/json-to-kotlin",
+      "canonicalPath": "/transform/json-to-kotlin"
+    },
+    {
+      "route": "/transform/json-to-mobx-state-tree",
+      "canonicalPath": "/transform/json-to-mobx-state-tree"
+    },
+    {
+      "route": "/transform/json-to-mongoose",
+      "canonicalPath": "/transform/json-to-mongoose"
+    },
+    {
+      "route": "/transform/json-to-mysql",
+      "canonicalPath": "/transform/json-to-mysql"
+    },
+    {
+      "route": "/transform/json-to-proptypes",
+      "canonicalPath": "/transform/json-to-proptypes"
+    },
+    {
+      "route": "/transform/json-to-rust-serde",
+      "canonicalPath": "/transform/json-to-rust-serde"
+    },
+    {
+      "route": "/transform/json-to-sarcastic",
+      "canonicalPath": "/transform/json-to-sarcastic"
+    },
+    {
+      "route": "/transform/json-to-scala-case-class",
+      "canonicalPath": "/transform/json-to-scala-case-class"
+    },
+    {
+      "route": "/transform/json-to-toml",
+      "canonicalPath": "/transform/json-to-toml"
+    },
+    {
+      "route": "/transform/json-to-typescript",
+      "canonicalPath": "/transform/json-to-typescript"
+    },
+    {
+      "route": "/transform/json-to-yaml",
+      "canonicalPath": "/transform/json-to-yaml"
+    },
+    {
+      "route": "/transform/json-to-zod",
+      "canonicalPath": "/transform/json-to-zod"
+    },
+    {
+      "route": "/transform/jsonld-to-compacted",
+      "canonicalPath": "/transform/jsonld-to-compacted"
+    },
+    {
+      "route": "/transform/jsonld-to-expanded",
+      "canonicalPath": "/transform/jsonld-to-expanded"
+    },
+    {
+      "route": "/transform/jsonld-to-flattened",
+      "canonicalPath": "/transform/jsonld-to-flattened"
+    },
+    {
+      "route": "/transform/jsonld-to-framed",
+      "canonicalPath": "/transform/jsonld-to-framed"
+    },
+    {
+      "route": "/transform/jsonld-to-normalized",
+      "canonicalPath": "/transform/jsonld-to-normalized"
+    },
+    {
+      "route": "/transform/jsonld-to-nquads",
+      "canonicalPath": "/transform/jsonld-to-nquads"
+    },
+    {
+      "route": "/transform/markdown-to-html",
+      "canonicalPath": "/transform/markdown-to-html"
+    },
+    {
+      "route": "/transform/object-styles-to-template-literal",
+      "canonicalPath": "/transform/object-styles-to-template-literal"
+    },
+    {
+      "route": "/transform/svg-to-jsx",
+      "canonicalPath": "/transform/svg-to-jsx"
+    },
+    {
+      "route": "/transform/svg-to-react-native",
+      "canonicalPath": "/transform/svg-to-react-native"
+    },
+    {
+      "route": "/transform/toml-to-json",
+      "canonicalPath": "/transform/toml-to-json"
+    },
+    {
+      "route": "/transform/toml-to-yaml",
+      "canonicalPath": "/transform/toml-to-yaml"
+    },
+    {
+      "route": "/transform/typescript-to-flow",
+      "canonicalPath": "/transform/typescript-to-flow"
+    },
+    {
+      "route": "/transform/typescript-to-javascript",
+      "canonicalPath": "/transform/typescript-to-javascript"
+    },
+    {
+      "route": "/transform/typescript-to-json-schema",
+      "canonicalPath": "/transform/typescript-to-json-schema"
+    },
+    {
+      "route": "/transform/typescript-to-typescript-declaration",
+      "canonicalPath": "/transform/typescript-to-typescript-declaration"
+    },
+    {
+      "route": "/transform/typescript-to-zod",
+      "canonicalPath": "/transform/typescript-to-zod"
+    },
+    {
+      "route": "/transform/xml-to-json",
+      "canonicalPath": "/transform/xml-to-json"
+    },
+    {
+      "route": "/transform/yaml-to-json",
+      "canonicalPath": "/transform/yaml-to-json"
+    },
+    {
+      "route": "/transform/yaml-to-toml",
+      "canonicalPath": "/transform/yaml-to-toml"
+    },
+    {
+      "route": "/transform",
+      "canonicalPath": "/transform"
+    }
+  ]
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import FurnitureLayoutPlanner from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <FurnitureLayoutPlanner />;
+  return <ToolHome />;
 }

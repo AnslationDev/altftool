@@ -1,7 +1,7 @@
 "use client";
 
-import LuckyFaceScoreMain from "./pages/main";
+import ToolHome from "./pages";
 
-export default function Entry() {
-  return <LuckyFaceScoreMain />;
+export default function ToolEntry() {
+  return <ToolHome />;
 }

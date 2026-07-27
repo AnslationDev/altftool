@@ -27,7 +27,7 @@ export const nintendoSwitchSettings = [
       "Some game cartridges and downloads include their own separate update prompt the first time you launch them, in addition to the system update.",
     ],
     important: "Never power off the console or remove it from the dock while 'Updating system...' is on screen — interrupting an update can corrupt the system software and require a repair.",
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/22568/~/how-to-update-the-system-software-of-a-nintendo-switch-console",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: System Update",
     whyItMatters:
       "Online play, the Nintendo eShop, and Nintendo Switch Online features all require a reasonably current firmware version — falling too far behind can lock you out of multiplayer and store access until you update anyway, usually at a less convenient moment.",
@@ -63,7 +63,7 @@ export const nintendoSwitchSettings = [
       "eShop purchases, downloadable content, and Nintendo Switch Online membership are tied to whichever Nintendo Account made the purchase, not to the console itself.",
       "A Nintendo Account can be linked to more than one console, but only one profile per console can use it as the primary account for purchases at a time.",
     ],
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/27002/~/creating-a-nintendo-account",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Nintendo Account",
     whyItMatters:
       "A properly linked Nintendo Account is what protects purchases, save data, and online access if the console is ever lost, stolen, or replaced — without it, eShop content and cloud saves can't be recovered onto a new system.",
@@ -100,7 +100,7 @@ export const nintendoSwitchSettings = [
       "Playtime limits can pause the console with a reminder, or fully suspend software launches once the daily limit is reached.",
     ],
     important: "Losing or forgetting the Parental Controls PIN requires contacting Nintendo Support to reset it, since it cannot be bypassed from the console itself.",
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/22271/~/nintendo-switch-parental-controls",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Parental Controls",
     whyItMatters:
       "Console-level restrictions apply consistently regardless of which game is running, which is more reliable than relying on individual games' own age gates or settings.",
@@ -136,7 +136,7 @@ export const nintendoSwitchSettings = [
       "5GHz Wi-Fi networks generally give a faster, more stable connection than 2.4GHz when the console is close enough to the router.",
       "A saved network can be prioritized or removed under Internet Settings if the console keeps connecting to the wrong access point.",
     ],
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/22405/~/connecting-to-a-wireless-network-on-nintendo-switch",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Internet Connection",
     whyItMatters:
       "A weak or unstable Wi-Fi connection is the most common cause of failed downloads, disconnects during online matches, and system updates that stall partway through.",
@@ -174,7 +174,7 @@ export const nintendoSwitchSettings = [
       "Up to eight Joy-Con or Pro Controllers can be paired to one console at a time for local multiplayer.",
     ],
     important: "Stick drift that calibration doesn't fix is a hardware wear issue, not a settings issue — Nintendo offers a free repair program for confirmed Joy-Con drift.",
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/22380/~/pairing-a-controller-with-a-nintendo-switch-console",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Controller Pairing",
     whyItMatters:
       "Controller connection issues are one of the most common day-to-day annoyances, especially in tabletop and multiplayer setups, and most are solved by this same short re-pair or recalibration flow.",
@@ -212,7 +212,7 @@ export const nintendoSwitchSettings = [
       "Use a card rated UHS-I or faster for noticeably quicker load times on large open-world titles.",
     ],
     important: "Never remove a microSD card while the console is powered on — doing so can corrupt game data or, in rare cases, the card itself.",
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/29499/~/inserting-and-removing-a-microsd-card-nintendo-switch-family",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: microSD Cards",
     whyItMatters:
       "Nintendo Switch and Switch Lite ship with relatively limited internal storage, and modern game file sizes have grown well beyond what fits comfortably without an expansion card.",
@@ -248,7 +248,7 @@ export const nintendoSwitchSettings = [
       "Toggle whether the console auto-wakes when re-docked under System Settings > Sleep Mode > Wake if Console is Undocked While Playing.",
       "A full shutdown (holding the Power button, then selecting Power Options > Turn Off) fully stops background downloads and updates, unlike sleep.",
     ],
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/22378/~/sleep-mode-on-nintendo-switch",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Sleep Mode",
     whyItMatters:
       "Sleep Mode is how most players leave the console between sessions, and shorter auto-sleep timing meaningfully reduces both battery drain in handheld mode and standby power use when docked.",
@@ -285,7 +285,7 @@ export const nintendoSwitchSettings = [
       "A small number of titles — mainly ones with strict anti-cheat or competitive save requirements — opt out of cloud backup entirely; the game's save data screen will indicate this.",
     ],
     important: "If a Nintendo Switch Online membership lapses, existing cloud backups are kept for a period but new saves stop uploading until membership is renewed — don't rely on it as your only backup if the subscription is about to expire.",
-    redirectUrl: "https://en-americas-support.nintendo.com/app/answers/detail/a_id/40626/~/nintendo-switch-online-save-data-cloud-backup",
+    redirectUrl: "https://en-americas-support.nintendo.com/app/products/detail/p/897",
     actionLabel: "Open Nintendo Support: Save Data Cloud Backup",
     whyItMatters:
       "Save data lost to a damaged, lost, or stolen console is usually unrecoverable without a cloud backup, and dozens or hundreds of hours of progress in a single title can be gone permanently otherwise.",

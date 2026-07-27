@@ -1,5 +1,7 @@
-import ColorMemoryPrecisionTest from "./App";
+"use client";
 
-export default function Entry() {
-  return <ColorMemoryPrecisionTest />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

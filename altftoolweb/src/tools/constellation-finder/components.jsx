@@ -116,11 +116,10 @@ export const ObservatoryControlBar = ({
           <button
             key={s}
             onClick={() => onSeasonChange(s)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-              selectedSeason === s
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${selectedSeason === s
                 ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs"
                 : "bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-            }`}
+              }`}
             type="button"
           >
             {s}
@@ -132,22 +131,20 @@ export const ObservatoryControlBar = ({
       <div className="flex items-center gap-1 bg-[var(--surface-soft)] p-1 rounded-xl border border-[var(--border)]">
         <button
           onClick={() => onMapStyleChange("realistic")}
-          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-            mapStyle === "realistic"
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${mapStyle === "realistic"
               ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs"
               : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-          }`}
+            }`}
           type="button"
         >
           Realistic
         </button>
         <button
           onClick={() => onMapStyleChange("stylized")}
-          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-            mapStyle === "stylized"
+          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${mapStyle === "stylized"
               ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs"
               : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-          }`}
+            }`}
           type="button"
         >
           Stylized
@@ -251,7 +248,7 @@ export const ObservatoryCanvasFullWidth = ({
 
     // Stars
     const time = Date.now() * 0.002;
-    bgStars.forEach((star, idx) => {
+    bgStarsRef.current.forEach((star, idx) => {
       const tw = Math.sin(time * star.twinkleSpeed + idx) * 0.25;
       const currentAlpha = Math.max(0.1, Math.min(1, star.alpha + tw));
 
@@ -281,8 +278,8 @@ export const ObservatoryCanvasFullWidth = ({
       ctx.strokeStyle = isSelected
         ? "#2dd4bf"
         : mapStyle === "realistic"
-        ? "rgba(45, 212, 191, 0.4)"
-        : "rgba(255, 255, 255, 0.25)";
+          ? "rgba(45, 212, 191, 0.4)"
+          : "rgba(255, 255, 255, 0.25)";
       ctx.stroke();
 
       if (isSelected) {
@@ -420,9 +417,8 @@ export const ObservatoryCanvasFullWidth = ({
   return (
     <div
       ref={containerRef}
-      className={`w-full mb-6 rounded-3xl border border-[var(--border)] bg-[#040814] overflow-hidden relative select-none shadow-md transition-all ${
-        isFullscreen ? "h-screen w-screen rounded-none border-none mb-0" : "min-h-[520px] lg:min-h-[600px]"
-      }`}
+      className={`w-full mb-6 rounded-3xl border border-[var(--border)] bg-[#040814] overflow-hidden relative select-none shadow-md transition-all ${isFullscreen ? "h-screen w-screen rounded-none border-none mb-0" : "min-h-[520px] lg:min-h-[600px]"
+        }`}
     >
       <canvas
         ref={canvasRef}
@@ -443,9 +439,8 @@ export const ObservatoryCanvasFullWidth = ({
       <div className="absolute top-1/2 right-4 -translate-y-1/2 constellation-compass-badge pointer-events-none z-10">E</div>
 
       {/* Toolbar Controls */}
-      <div className={`absolute top-6 z-30 flex flex-col gap-2 p-2 bg-[var(--card)]/90 border border-[var(--border)] backdrop-blur-md rounded-2xl shadow-xl transition-all ${
-        isFullscreen && showLeftSidebar ? "left-[300px]" : "left-6"
-      }`}>
+      <div className={`absolute top-6 z-30 flex flex-col gap-2 p-2 bg-[var(--card)]/90 border border-[var(--border)] backdrop-blur-md rounded-2xl shadow-xl transition-all ${isFullscreen && showLeftSidebar ? "left-[300px]" : "left-6"
+        }`}>
         <button
           onClick={resetView}
           className="p-2.5 text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--surface-soft)] rounded-xl transition-all"
@@ -494,9 +489,8 @@ export const ObservatoryCanvasFullWidth = ({
             <div className="h-px w-full bg-[var(--border)] my-0.5" />
             <button
               onClick={() => setShowLeftSidebar(prev => !prev)}
-              className={`p-2.5 rounded-xl transition-all ${
-                showLeftSidebar ? "text-[var(--primary)] bg-[var(--primary-soft)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-              }`}
+              className={`p-2.5 rounded-xl transition-all ${showLeftSidebar ? "text-[var(--primary)] bg-[var(--primary-soft)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                }`}
               title="Toggle Left Constellations List"
               type="button"
             >
@@ -504,9 +498,8 @@ export const ObservatoryCanvasFullWidth = ({
             </button>
             <button
               onClick={() => setShowRightSidebar(prev => !prev)}
-              className={`p-2.5 rounded-xl transition-all ${
-                showRightSidebar ? "text-[var(--primary)] bg-[var(--primary-soft)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-              }`}
+              className={`p-2.5 rounded-xl transition-all ${showRightSidebar ? "text-[var(--primary)] bg-[var(--primary-soft)]" : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                }`}
               title="Toggle Right Details Panel"
               type="button"
             >
@@ -628,11 +621,10 @@ export const ObservatoryList = ({
             <button
               key={item.id}
               onClick={() => onSelectConstellation(item.id)}
-              className={`w-full text-left p-3 rounded-xl flex items-center justify-between transition-all duration-200 ${
-                isSelected
+              className={`w-full text-left p-3 rounded-xl flex items-center justify-between transition-all duration-200 ${isSelected
                   ? "constellation-item-selected font-black"
                   : "bg-[var(--surface-soft)]/50 border border-transparent hover:bg-[var(--surface-soft)] hover:border-[var(--border)] text-[var(--foreground)]"
-              }`}
+                }`}
               type="button"
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -710,11 +702,10 @@ export const ObservatoryInfoPanel = ({
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={() => onToggleBookmark(constellation.id)}
-            className={`p-2 rounded-xl border transition-all ${
-              isBookmarked
+            className={`p-2 rounded-xl border transition-all ${isBookmarked
                 ? "bg-[var(--primary-soft)] border-[var(--primary)] text-[var(--primary)]"
                 : "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--card)]"
-            }`}
+              }`}
             title={isBookmarked ? "Remove Bookmark" : "Bookmark Constellation"}
             type="button"
           >

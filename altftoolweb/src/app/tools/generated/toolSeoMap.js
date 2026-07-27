@@ -2,9 +2,17 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 import shard0 from "./toolSeoShard0";
+import shard1 from "./toolSeoShard1";
+import shard2 from "./toolSeoShard2";
+import shard3 from "./toolSeoShard3";
+import shard4 from "./toolSeoShard4";
 
 export const generatedToolSeo = {
   ...shard0,
+  ...shard1,
+  ...shard2,
+  ...shard3,
+  ...shard4,
 };
 
 export default generatedToolSeo;

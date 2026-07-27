@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { playSound } from "@/app/altfgame/_lib/sounds";
+import { playSound } from "@/lib/sounds";
 
 /* ============================================================
    LEVEL DEVIL — a trap platformer.

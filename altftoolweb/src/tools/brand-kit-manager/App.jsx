@@ -26,9 +26,19 @@ import {
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  SUPPORTED_LOGO_TYPES,
+  buildBrandSummary,
+  cleanFilename,
+  isHex,
+  isValidBrandUrl as validUrl,
+  normalizeHex,
+  summarizeKits,
+  usableColors,
+  validateKit,
+} from "./lib";
 
 const STORAGE_KEY = "altftools:brand-kit-manager:v1";
-const supportedTypes = ["image/png", "image/jpeg", "image/svg+xml", "image/webp"];
 
 const footerCards = [
   {
@@ -93,35 +103,12 @@ function createId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-function isHex(value) {
-  return /^#[0-9A-F]{6}$/i.test(value.trim());
-}
-
-function normalizeHex(value) {
-  const text = value.trim();
-  return text.startsWith("#") ? text.toUpperCase() : `#${text}`.toUpperCase();
-}
-
-function validUrl(value) {
-  if (!value.trim()) return true;
-  try {
-    const url = new URL(value);
-    return ["http:", "https:", "mailto:"].includes(url.protocol);
-  } catch {
-    return false;
-  }
-}
-
 function readableDate(value) {
   try {
     return new Date(value).toLocaleDateString();
   } catch {
     return "Today";
   }
-}
-
-function cleanFilename(value) {
-  return (value || "brand-kit").trim().replace(/[^a-z0-9-]+/gi, "-").replace(/-+/g, "-").replace(/^-|-$/g, "").toLowerCase();
 }
 
 function downloadText(filename, text, type = "text/plain;charset=utf-8") {
@@ -231,28 +218,9 @@ export default function BrandKitManagerApp() {
     [activeId, kits],
   );
 
-  const stats = useMemo(() => {
-    const assets = kits.reduce((sum, kit) => sum + kit.assets.filter((asset) => asset.dataUrl).length, 0);
-    const colors = kits.reduce((sum, kit) => sum + kit.colors.length, 0);
-    const fonts = kits.reduce(
-      (sum, kit) => sum + Number(Boolean(kit.typography.heading)) + Number(Boolean(kit.typography.body)),
-      0,
-    );
-    return { kits: kits.length, assets, colors, fonts };
-  }, [kits]);
+  const stats = useMemo(() => summarizeKits(kits), [kits]);
 
-  const errors = useMemo(() => {
-    if (!activeKit) return {};
-    const linkErrors = {};
-    activeKit.links.forEach((linkItem) => {
-      if (!validUrl(linkItem.url)) linkErrors[linkItem.id] = "Use a valid http, https, or mailto link.";
-    });
-    return {
-      name: activeKit.name.trim() ? "" : "Brand name is required.",
-      website: validUrl(activeKit.website) ? "" : "Use a valid website URL.",
-      links: linkErrors,
-    };
-  }, [activeKit]);
+  const errors = useMemo(() => validateKit(activeKit), [activeKit]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(kits));
@@ -324,7 +292,7 @@ export default function BrandKitManagerApp() {
 
   function uploadAsset(assetId, file) {
     if (!file) return;
-    if (!supportedTypes.includes(file.type)) {
+    if (!SUPPORTED_LOGO_TYPES.includes(file.type)) {
       flash("Upload PNG, JPG, SVG, or WEBP only.");
       return;
     }
@@ -393,25 +361,7 @@ export default function BrandKitManagerApp() {
   }
 
   function copySummary() {
-    const text = [
-      `${activeKit.name} Brand Kit`,
-      activeKit.tagline,
-      "",
-      `Industry: ${activeKit.industry}`,
-      `Website: ${activeKit.website}`,
-      `Contact: ${activeKit.contact}`,
-      "",
-      "Colors:",
-      ...activeKit.colors.map((color) => `- ${color.name}: ${color.value}`),
-      "",
-      `Heading font: ${activeKit.typography.heading}`,
-      `Body font: ${activeKit.typography.body}`,
-      "",
-      "Guidelines:",
-      activeKit.guidelines.voice,
-      activeKit.guidelines.messaging,
-      activeKit.guidelines.designRules,
-    ].join("\n");
+    const text = buildBrandSummary(activeKit);
     navigator.clipboard
       .writeText(text)
       .then(() => flash("Brand summary copied."))
@@ -427,7 +377,7 @@ export default function BrandKitManagerApp() {
 
   if (!activeKit) return null;
 
-  const safeColors = activeKit.colors.filter((color) => isHex(color.value));
+  const safeColors = usableColors(activeKit);
   const primary = safeColors[0]?.value || "#3B82F6";
   const secondary = safeColors[1]?.value || "#111827";
   const accent = safeColors[2]?.value || "#8B5CF6";

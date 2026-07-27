@@ -18,6 +18,7 @@ import {
   ChartColumnBig,
   PieChart as PieChartIcon,
 } from "lucide-react";
+import { SectionCard } from "@/ansets";
 import { formatNumber } from "@/lib/analytics/analytics.utils";
 
 // Brand chart palette per master.md (teal + cyan + violet first), resolved from
@@ -102,7 +103,7 @@ function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm shadow-lg">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm shadow-lg">
       <p className="font-semibold text-[var(--foreground)]">{label}</p>
       {payload.map((entry) => (
         <p key={entry.dataKey} className="mt-1 text-[var(--muted)]">
@@ -151,22 +152,11 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
   const barChartLabel = view === "projects" ? "Project-wise comparison" : "Module-wise comparison";
 
   return (
-    <section className="border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm rounded-md">
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-2 text-[var(--muted)]">
-              <BarChart3 className="h-4 w-4" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">Analytics view</h2>
-              <p className="text-sm text-[var(--muted)]">
-                Compare activity by project or by module with switchable metrics.
-              </p>
-            </div>
-          </div>
-        </div>
-
+    <SectionCard
+      icon={BarChart3}
+      title="Analytics view"
+      description="Compare activity by project or by module with switchable metrics."
+      actions={
         <div className="flex flex-col gap-3 xl:items-end">
           <div className="flex flex-wrap gap-2">
             <ChartToggle label="Projects" active={view === "projects"} onClick={() => setView("projects")} />
@@ -179,17 +169,17 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
             <MetricButton label="Stale" active={metric === "stale"} onClick={() => setMetric("stale")} />
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.8fr] ">
-        <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-4 rounded-md">
+      }
+    >
+      <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-4">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-sm font-semibold text-[var(--foreground)]">{metricLabelMap[metric]}</p>
               <p className="text-xs text-[var(--muted)]">{barChartLabel}</p>
             </div>
-            <div className="border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
-              <ChartColumnBig className="h-4 w-4" />
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
+              <ChartColumnBig className="h-4 w-4" aria-hidden="true" />
             </div>
           </div>
           <div className="h-[320px]">
@@ -225,10 +215,10 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
           </div>
         </div>
 
-        <div className="border border-[var(--border)] bg-[var(--surface-soft)] p-4 rounded-md">
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-4">
           <div className="mb-4 flex items-center gap-3">
-            <div className="border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
-              <PieChartIcon className="h-4 w-4" />
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-2 text-[var(--muted)]">
+              <PieChartIcon className="h-4 w-4" aria-hidden="true" />
             </div>
             <div>
               <p className="text-sm font-semibold text-[var(--foreground)]">Record share</p>
@@ -263,8 +253,9 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
               <div key={item.name} className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2">
                   <span
-                    className="h-2.5 w-2.5"
+                    className="h-2.5 w-2.5 rounded-sm"
                     style={{ backgroundColor: chartColors[index % chartColors.length] }}
+                    aria-hidden="true"
                   />
                   <span className="text-[var(--muted)]">{item.name}</span>
                 </div>
@@ -274,6 +265,6 @@ export default function AnalyticsCharts({ projectData, moduleData }) {
           </div>
         </div>
       </div>
-    </section>
+    </SectionCard>
   );
 }

@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useAuth } from "@/context/AuthContext";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
-  Bell,
-  Send,
-  Trash2,
-  X,
-  Users,
-  Globe,
   AlertTriangle,
+  Bell,
+  Globe,
   Info,
   Megaphone,
-  Plus,
   RefreshCw,
+  Send,
+  Trash2,
+  Users,
+  X,
 } from "lucide-react";
+import { Alert, Button, Field, Input, Tabs, Textarea } from "@altftool/ui";
+import { DataState, EmptyState, PageHeader, SectionCard } from "@/ansets";
+import { useAuth } from "@/context/AuthContext";
+import { emitAlert } from "@/lib/alertBus";
+import { readApiJson, getErrorMessage } from "@/lib/apiClient";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
@@ -27,6 +30,48 @@ function fmtDate(ms) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+/**
+ * The action URL is handed to `router.push()` on every recipient's device, so a
+ * bare host like "altftool.com/tools" would resolve relative to whatever route
+ * the admin happens to be on. Accept only an absolute http(s) URL or an in-app
+ * path, and reject protocol-relative values.
+ * @returns {string|null} an error message, or null when the value is usable.
+ */
+function validateActionUrl(value) {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith("/")) {
+    // Resolve against a throwaway origin and require the result to stay on it.
+    // Peeking at trimmed[1] is not enough: the WHATWG URL parser strips TAB, LF
+    // and CR *before* parsing, so "/\t/evil.com" and "/\t\\evil.com" look like
+    // in-app paths character-by-character but normalise to protocol-relative
+    // URLs that would navigate every recipient off-site.
+    const PROBE_ORIGIN = "https://altft-probe.invalid";
+    let resolved;
+    try {
+      resolved = new URL(trimmed, PROBE_ORIGIN);
+    } catch {
+      return "Enter a full URL (https://…) or an in-app path starting with “/”.";
+    }
+    if (resolved.origin !== PROBE_ORIGIN) {
+      return "Protocol-relative links aren’t allowed. Use https://… or an in-app path like /support.";
+    }
+    return null;
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    return "Enter a full URL (https://…) or an in-app path starting with “/”.";
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    return "Only http:// and https:// links are allowed.";
+  }
+  return null;
 }
 
 const TYPE_META = {
@@ -47,10 +92,25 @@ const TYPE_META = {
   },
 };
 
+const TYPE_KEYS = ["announcement", "warning", "notice"];
+
 const STATUS_META = {
   draft: { label: "Draft", cls: "bg-[var(--surface-soft)] text-[var(--muted)]" },
   scheduled: { label: "Scheduled", cls: "bg-[var(--warning-soft)] text-[var(--warning)]" },
   sent: { label: "Sent", cls: "bg-[var(--success-soft)] text-[var(--success)]" },
+  // deliverBroadcast() writes status:"failed"; without this entry StatusBadge
+  // fell back to "Draft" and the operator never saw the failure.
+  // AA: --danger on --danger-soft is only 3.06:1 in the light theme, so the
+  // label uses --foreground (14.4:1 light / 15.5:1 dark) and the red signal is
+  // carried by the icon, which as a graphical object only needs 3:1. This is
+  // why these two badges stay local instead of using the shared `Badge` tones —
+  // `alt-ui-badge--danger` paints its label in --danger and would undo the fix.
+  failed: {
+    label: "Failed",
+    cls: "bg-[var(--danger-soft)] text-[var(--foreground)]",
+    icon: AlertTriangle,
+    iconCls: "text-[var(--danger)]",
+  },
 };
 
 // ─── sub-components ───────────────────────────────────────────────────────────
@@ -62,7 +122,7 @@ function TypeBadge({ type }) {
     <span
       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${meta.cls}`}
     >
-      <Icon size={10} />
+      <Icon size={10} aria-hidden="true" />
       {meta.label}
     </span>
   );
@@ -70,17 +130,49 @@ function TypeBadge({ type }) {
 
 function StatusBadge({ status }) {
   const meta = STATUS_META[status] ?? STATUS_META.draft;
+  const Icon = meta.icon;
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${meta.cls}`}>
+    <span
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ${meta.cls}`}
+    >
+      {Icon && <Icon size={10} className={meta.iconCls} aria-hidden="true" />}
       {meta.label}
     </span>
   );
 }
 
+/** Small icon-only row action. Colour carries meaning, so each keeps a label. */
+function RowAction({ label, tone, onClick, disabled, children }) {
+  const toneCls = {
+    primary: "text-[var(--primary)] hover:bg-[var(--surface-soft)]",
+    warning: "text-[var(--warning)] hover:bg-[var(--warning-soft)]",
+    danger: "text-[var(--danger-text)] hover:bg-[var(--danger-soft)]",
+  }[tone];
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      title={label}
+      aria-label={label}
+      className={`rounded-lg p-1.5 transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${toneCls}`}
+    >
+      {children}
+    </button>
+  );
+}
+
 // ─── Create Form ─────────────────────────────────────────────────────────────
 
-function CreateBroadcastPanel({ adminsList, onCreated }) {
+function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
   const { user } = useAuth();
+  const uid = useId();
+  const titleFieldId = `${uid}-title`;
+  const bodyFieldId = `${uid}-body`;
+  const urlFieldId = `${uid}-url`;
+  const urlErrorId = `${uid}-url-error`;
+  const userSearchId = `${uid}-user-search`;
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -91,6 +183,7 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
   const [actionUrl, setActionUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [urlError, setUrlError] = useState("");
 
   const filteredAdmins = adminsList.filter((a) => {
     const q = userSearch.toLowerCase();
@@ -107,8 +200,24 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
     );
   };
 
+  // /api/admin/list returns EVERY admin, suspended ones included, but the
+  // server's resolveTargetUsers() for target="all" delivers only to admins that
+  // are explicitly active. Counting the raw list overstated the audience on a
+  // non-recallable action where the count is the whole point.
+  const activeAdminCount = adminsList.filter((a) => a.isActive === true).length;
+  const recipientCount = targetType === "all" ? activeAdminCount : selectedUsers.length;
+  const audienceLabel =
+    adminsError
+      ? "an unknown number of admins"
+      : targetType === "all"
+      ? recipientCount
+        ? `all ${recipientCount} admin${recipientCount === 1 ? "" : "s"}`
+        : "all admins"
+      : `${recipientCount} selected admin${recipientCount === 1 ? "" : "s"}`;
+
   const handleSubmit = async () => {
     setError("");
+    setUrlError("");
     if (!title.trim() || !body.trim()) {
       setError("Title and body are required.");
       return;
@@ -117,6 +226,19 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
       setError("Select at least one user.");
       return;
     }
+
+    const actionUrlError = validateActionUrl(actionUrl);
+    if (actionUrlError) {
+      setUrlError(actionUrlError);
+      return;
+    }
+
+    // Sending is irreversible: it writes an in-app notification per recipient
+    // AND fires device push. Deleting the broadcast afterwards removes neither.
+    const confirmed = window.confirm(
+      `Send “${title.trim()}” to ${audienceLabel}?\n\nThis delivers an in-app notification and a push alert immediately and cannot be undone.`,
+    );
+    if (!confirmed) return;
 
     try {
       setLoading(true);
@@ -141,8 +263,7 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed");
+      const data = await readApiJson(res, "Failed to send broadcast.");
 
       // Reset
       setTitle("");
@@ -152,86 +273,119 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
       setSelectedUsers([]);
       setActionUrl("");
 
+      const delivered =
+        typeof data?.recipientCount === "number" ? ` to ${data.recipientCount} recipient(s)` : "";
+      emitAlert({
+        type: "success",
+        message: `Broadcast sent${delivered}.${data?.broadcastId ? ` ID: ${data.broadcastId}` : ""}`,
+      });
+
       onCreated?.();
     } catch (err) {
-      setError(err.message);
+      setError(getErrorMessage(err, "Failed to send broadcast."));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-6 space-y-5">
-      <h2 className="text-base font-semibold text-[var(--foreground)] flex items-center gap-2">
-        <Plus size={16} className="text-[var(--muted)]" />
-        New Broadcast
-      </h2>
-
-      {error && (
-        <div className="bg-[var(--danger-soft)] border border-[var(--border)] text-[var(--danger)] text-sm rounded-xl px-4 py-2.5">
-          {error}
+    <SectionCard
+      title="New Broadcast"
+      description="Compose a system notification and deliver it to admins."
+      bodyClassName="space-y-5"
+      footer={
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-5 text-[var(--muted)]">
+            This will notify{" "}
+            <span className="font-semibold text-[var(--foreground)]">{audienceLabel}</span>{" "}
+            immediately. Delivered notifications and push alerts cannot be recalled.
+          </p>
+          <Button
+            onClick={handleSubmit}
+            loading={loading}
+            loadingLabel="Sending broadcast"
+            // Block the send while the recipient list is unknown. This action
+            // cannot be recalled, so "we could not resolve who receives this"
+            // must stop it rather than quietly deliver to nobody.
+            disabled={Boolean(adminsError) && targetType === "all"}
+            title={
+              adminsError && targetType === "all"
+                ? "Recipients can't be resolved right now"
+                : undefined
+            }
+            className="w-full sm:w-auto sm:shrink-0"
+          >
+            {loading ? null : <Send className="h-3.5 w-3.5" aria-hidden="true" />}
+            Send Broadcast
+          </Button>
         </div>
-      )}
+      }
+    >
+      {error ? <Alert tone="danger">{error}</Alert> : null}
 
-      {/* Title */}
-      <div>
-        <label className="block text-xs font-semibold text-[var(--muted)] mb-1.5">Title</label>
-        <input
+      <Field label="Title" htmlFor={titleFieldId}>
+        <Input
+          id={titleFieldId}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. System maintenance tonight"
-          className="w-full border border-[var(--border)] rounded-xl px-3.5 py-2.5 text-sm outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] transition"
         />
-      </div>
+      </Field>
 
-      {/* Body */}
-      <div>
-        <label className="block text-xs font-semibold text-[var(--muted)] mb-1.5">Body</label>
-        <textarea
+      <Field label="Body" htmlFor={bodyFieldId}>
+        <Textarea
+          id={bodyFieldId}
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows={3}
           placeholder="Notification message…"
-          className="w-full border border-[var(--border)] rounded-xl px-3.5 py-2.5 text-sm outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] transition resize-none"
         />
-      </div>
+      </Field>
 
-      {/* Type */}
-      <div>
-        <label className="block text-xs font-semibold text-[var(--muted)] mb-1.5">Type</label>
-        <div className="flex gap-2 flex-wrap">
-          {["announcement", "warning", "notice"].map((t) => {
+      {/* Type — a real radio group: the old version was three unlabelled
+          <button>s, so assistive tech never announced which one was chosen. */}
+      <fieldset className="min-w-0">
+        <legend className="mb-1.5 text-xs font-semibold text-[var(--muted)]">Type</legend>
+        <div className="flex flex-wrap gap-2">
+          {TYPE_KEYS.map((t) => {
             const meta = TYPE_META[t];
             const Icon = meta.icon;
+            const active = type === t;
             return (
-              <button
+              <label
                 key={t}
-                onClick={() => setType(t)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition ${
-                  type === t
-                    ? "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]"
-                    : "bg-[var(--surface)] text-[var(--muted)] border-[var(--border)] hover:border-[var(--border-strong)]"
+                className={`flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition has-[:focus-visible]:[box-shadow:var(--focus-ring)] ${
+                  active
+                    ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                    : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--border-strong)]"
                 }`}
               >
-                <Icon size={12} />
+                <input
+                  type="radio"
+                  name="broadcast-type"
+                  className="sr-only"
+                  checked={active}
+                  onChange={() => setType(t)}
+                />
+                <Icon size={12} aria-hidden="true" />
                 {meta.label}
-              </button>
+              </label>
             );
           })}
         </div>
-      </div>
+      </fieldset>
 
       {/* Target */}
-      <div>
-        <label className="block text-xs font-semibold text-[var(--muted)] mb-1.5">Target</label>
-        <div className="flex gap-3 mb-3">
+      <fieldset className="min-w-0">
+        <legend className="mb-1.5 text-xs font-semibold text-[var(--muted)]">Target</legend>
+        <div className="mb-3 flex gap-3">
           {[
             { val: "all", label: "All users", Icon: Globe },
             { val: "users", label: "Specific users", Icon: Users },
           ].map(({ val, label, Icon }) => (
             <label
               key={val}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm cursor-pointer transition has-[:focus-visible]:[box-shadow:var(--focus-ring)] ${
+              className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3.5 py-2 text-sm transition has-[:focus-visible]:[box-shadow:var(--focus-ring)] ${
                 targetType === val
                   ? "border-[var(--primary)] bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
                   : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--border-strong)]"
@@ -240,37 +394,49 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
               <input
                 type="radio"
                 name="broadcast-target"
-                className="peer sr-only"
+                className="sr-only"
                 checked={targetType === val}
                 onChange={() => setTargetType(val)}
               />
-              <Icon size={14} />
+              <Icon size={14} aria-hidden="true" />
               {label}
             </label>
           ))}
         </div>
 
         {targetType === "users" && (
-          <div className="border border-[var(--border)] rounded-xl overflow-hidden">
-            <div className="px-3 py-2 border-b border-[var(--border)] bg-[var(--surface-soft)]">
-              <input
+          <div className="overflow-hidden rounded-lg border border-[var(--border)]">
+            <div className="border-b border-[var(--border)] bg-[var(--surface-soft)] p-2">
+              <label htmlFor={userSearchId} className="sr-only">
+                Search admins
+              </label>
+              <Input
+                id={userSearchId}
+                type="search"
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
                 placeholder="Search admins…"
-                className="w-full text-sm outline-none bg-transparent placeholder:text-[var(--muted)]"
               />
             </div>
-            <div className="max-h-44 overflow-y-auto divide-y divide-[var(--border)]">
-              {filteredAdmins.length === 0 && (
-                <p className="text-xs text-[var(--muted)] px-4 py-3">No admins found</p>
-              )}
+            <div className="max-h-44 divide-y divide-[var(--border)] overflow-y-auto">
+              {filteredAdmins.length === 0 &&
+                (adminsError ? (
+                  <p
+                    role="alert"
+                    className="px-4 py-3 text-xs text-[var(--danger-text)]"
+                  >
+                    {adminsError}
+                  </p>
+                ) : (
+                  <p className="px-4 py-3 text-xs text-[var(--muted)]">No admins found</p>
+                ))}
               {filteredAdmins.map((a) => {
                 const checked = selectedUsers.includes(a.id);
                 const name = a.fullName || a.firstName || a.email;
                 return (
                   <label
                     key={a.id}
-                    className="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-[var(--surface-soft)] transition"
+                    className="flex cursor-pointer items-center gap-3 px-4 py-2.5 transition hover:bg-[var(--surface-soft)]"
                   >
                     <input
                       type="checkbox"
@@ -279,123 +445,128 @@ function CreateBroadcastPanel({ adminsList, onCreated }) {
                       className="rounded"
                     />
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-[var(--foreground)] truncate">{name}</p>
-                      <p className="text-xs text-[var(--muted)] truncate">{a.email}</p>
+                      <p className="truncate text-sm font-medium text-[var(--foreground)]">{name}</p>
+                      <p className="truncate text-xs text-[var(--muted)]">{a.email}</p>
                     </div>
                   </label>
                 );
               })}
             </div>
             {selectedUsers.length > 0 && (
-              <div className="px-4 py-2 bg-[var(--surface-soft)] border-t border-[var(--border)] text-xs text-[var(--muted)] font-medium">
+              <div className="border-t border-[var(--border)] bg-[var(--surface-soft)] px-4 py-2 text-xs font-medium text-[var(--muted)]">
                 {selectedUsers.length} selected
               </div>
             )}
           </div>
         )}
-      </div>
+      </fieldset>
 
-      {/* Action URL */}
-      <div>
-        <label className="block text-xs font-semibold text-[var(--muted)] mb-1.5">
-          Action URL <span className="font-normal text-[var(--muted)]">(optional)</span>
-        </label>
-        <input
+      <Field label="Action URL (optional)" htmlFor={urlFieldId}>
+        <Input
+          id={urlFieldId}
           value={actionUrl}
-          onChange={(e) => setActionUrl(e.target.value)}
-          placeholder="https://…"
-          className="w-full border border-[var(--border)] rounded-xl px-3.5 py-2.5 text-sm outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] transition"
+          onChange={(e) => {
+            setActionUrl(e.target.value);
+            if (urlError) setUrlError("");
+          }}
+          onBlur={(e) => setUrlError(validateActionUrl(e.target.value) || "")}
+          placeholder="https://… or /support"
+          invalid={Boolean(urlError)}
+          aria-describedby={urlError ? urlErrorId : undefined}
         />
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-semibold rounded-xl hover:bg-[var(--primary-hover)] transition disabled:opacity-60"
-      >
-        {loading ? (
-          <div className="w-4 h-4 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin" />
-        ) : (
-          <>
-            <Send size={14} /> Send Broadcast
-          </>
-        )}
-      </button>
-    </div>
+        {/* Rendered here rather than through Field's `error` slot so the message
+            keeps its id for aria-describedby, and so it can use --danger-text
+            (--danger alone fails AA for body copy on the light surface). */}
+        {urlError ? (
+          <p id={urlErrorId} className="text-xs font-medium text-[var(--danger-text)]">
+            {urlError}
+          </p>
+        ) : null}
+      </Field>
+    </SectionCard>
   );
 }
 
 // ─── Broadcast List ───────────────────────────────────────────────────────────
 
-function BroadcastList({ broadcasts, onRefresh, onDelete, onCancel }) {
-  if (!broadcasts.length) {
-    return (
-      <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-10 text-center">
-        <Bell size={28} className="text-[var(--muted)] mx-auto mb-2" />
-        <p className="text-sm text-[var(--muted)]">No broadcasts yet</p>
-      </div>
-    );
-  }
-
+function BroadcastList({ broadcasts, onDelete, onCancel, onResend, busyId = null }) {
   return (
     <div className="space-y-3">
       {broadcasts.map((b) => (
-        <div key={b.id} className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm px-5 py-4">
+        <SectionCard
+          key={b.id}
+          footer={
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[var(--muted)]">
+              <span>
+                <span className="font-semibold">Target:</span>{" "}
+                {b.target?.type === "all"
+                  ? "All users"
+                  : `${b.target?.userIds?.length ?? 0} user(s)`}
+              </span>
+              <span>
+                <span className="font-semibold">Created:</span> {fmtDate(b.createdAt)}
+              </span>
+              {b.sentAt && (
+                <span>
+                  <span className="font-semibold">Sent:</span> {fmtDate(b.sentAt)}
+                </span>
+              )}
+              {b.status === "scheduled" && b.scheduledAt && (
+                <span>
+                  <span className="font-semibold">Scheduled:</span> {fmtDate(b.scheduledAt)}
+                </span>
+              )}
+            </div>
+          }
+        >
           <div className="flex items-start justify-between gap-3">
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-2 mb-1">
+            <div className="min-w-0 flex-1">
+              <div className="mb-1 flex flex-wrap items-center gap-2">
                 <TypeBadge type={b.type} />
                 <StatusBadge status={b.status} />
               </div>
-              <p className="text-sm font-semibold text-[var(--foreground)] truncate">{b.title}</p>
-              <p className="text-xs text-[var(--muted)] mt-0.5 line-clamp-2">{b.body}</p>
+              <p className="truncate text-sm font-semibold text-[var(--foreground)]">{b.title}</p>
+              <p className="mt-0.5 line-clamp-2 text-xs text-[var(--muted)]">{b.body}</p>
             </div>
 
-            <div className="flex items-center gap-1.5 shrink-0">
-              {b.status === "scheduled" && (
-                <button
-                  onClick={() => onCancel(b.id)}
-                  title="Cancel schedule"
-                  aria-label="Cancel schedule"
-                  className="p-1.5 rounded-lg text-[var(--warning)] hover:bg-[var(--warning-soft)] transition"
+            <div className="flex shrink-0 items-center gap-1.5">
+              {(b.status === "failed" || b.status === "draft") && (
+                <RowAction
+                  label={b.status === "failed" ? "Retry send" : "Send now"}
+                  tone="primary"
+                  onClick={() => onResend?.(b)}
+                  disabled={busyId === b.id}
                 >
-                  <X size={14} />
-                </button>
+                  <Send size={14} aria-hidden="true" />
+                </RowAction>
               )}
-              <button
+              {b.status === "scheduled" && (
+                <RowAction
+                  label="Cancel schedule"
+                  tone="warning"
+                  onClick={() => onCancel(b.id)}
+                  disabled={busyId === b.id}
+                >
+                  <X size={14} aria-hidden="true" />
+                </RowAction>
+              )}
+              <RowAction
+                label="Delete broadcast"
+                tone="danger"
                 onClick={() => onDelete(b.id)}
-                title="Delete broadcast"
-                aria-label="Delete broadcast"
-                className="p-1.5 rounded-lg text-[var(--danger)] hover:bg-[var(--danger-soft)] transition"
+                disabled={busyId === b.id}
               >
-                <Trash2 size={14} />
-              </button>
+                <Trash2 size={14} aria-hidden="true" />
+              </RowAction>
             </div>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-[var(--muted)]">
-            <span>
-              <span className="font-medium text-[var(--muted)]">Target:</span>{" "}
-              {b.target?.type === "all"
-                ? "All users"
-                : `${b.target?.userIds?.length ?? 0} user(s)`}
-            </span>
-            <span>
-              <span className="font-medium text-[var(--muted)]">Created:</span> {fmtDate(b.createdAt)}
-            </span>
-            {b.sentAt && (
-              <span>
-                <span className="font-medium text-[var(--muted)]">Sent:</span> {fmtDate(b.sentAt)}
-              </span>
-            )}
-            {b.status === "scheduled" && b.scheduledAt && (
-              <span>
-                <span className="font-medium text-[var(--muted)]">Scheduled:</span>{" "}
-                {fmtDate(b.scheduledAt)}
-              </span>
-            )}
-          </div>
-        </div>
+          {b.status === "failed" && (
+            <p className="mt-3 rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger-soft)_60%,var(--surface))] px-3 py-2 text-xs text-[var(--foreground)]">
+              {b.error || "Delivery failed. Use “Retry send” to try again."}
+            </p>
+          )}
+        </SectionCard>
       ))}
     </div>
   );
@@ -408,7 +579,12 @@ export default function NotificationBroadcastPage() {
 
   const [broadcasts, setBroadcasts] = useState([]);
   const [adminsList, setAdminsList] = useState([]);
+  // Set when /api/admin/list fails, so the target picker can say "we could not
+  // ask" instead of silently rendering "no admins".
+  const [adminsError, setAdminsError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
+  const [busyId, setBusyId] = useState(null);
   const [tab, setTab] = useState("create"); // "create" | "history"
   const fetchAbortRef = useRef(null);
 
@@ -429,18 +605,43 @@ export default function NotificationBroadcastPage() {
       ]);
 
       if (controller.signal.aborted) return;
+
+      // A non-OK broadcast response used to fall through to "No broadcasts yet",
+      // which reads as an empty history rather than a failed/unauthorized load.
       if (bRes.ok) {
         const { broadcasts: list } = await bRes.json();
         setBroadcasts(list ?? []);
+        setLoadError(null);
+      } else {
+        const payload = await bRes.json().catch(() => ({}));
+        setBroadcasts([]);
+        setLoadError(
+          bRes.status === 401 || bRes.status === 403
+            ? "You aren’t authorized to manage broadcasts. Ask a super admin to check your access."
+            : bRes.status >= 500
+              ? `The broadcast service is having trouble (${bRes.status}). Try again in a moment.`
+              : payload?.error || `Couldn’t load broadcasts (${bRes.status}).`,
+        );
       }
 
       if (aRes.ok) {
         const { admins } = await aRes.json();
         setAdminsList(admins ?? []);
+        setAdminsError("");
+      } else {
+        // Without this branch a failed /api/admin/list left adminsList empty,
+        // so the target picker showed "No admins found" and the audience count
+        // read "all 0 admins" — a confident wrong answer on a send that cannot
+        // be recalled. Surface it instead, and let Send guard on it.
+        setAdminsList([]);
+        setAdminsError(
+          "Couldn’t load the admin directory, so recipients can’t be resolved right now.",
+        );
       }
     } catch (err) {
       if (err?.name !== "AbortError" && !controller.signal.aborted) {
         console.error("Failed to load notification broadcasts", err);
+        setLoadError("Couldn’t reach the broadcast service. Check your connection and try again.");
       }
     } finally {
       if (!controller.signal.aborted) setLoading(false);
@@ -453,94 +654,164 @@ export default function NotificationBroadcastPage() {
     return () => fetchAbortRef.current?.abort();
   }, [fetchData]);
 
+  const retry = useCallback(() => {
+    setLoading(true);
+    setLoadError(null);
+    return fetchData();
+  }, [fetchData]);
+
   const handleDelete = async (id) => {
     if (!confirm("Delete this broadcast?")) return;
+    setBusyId(id);
     try {
       const token = await user.getIdToken();
-      await fetch(`/api/notifications/broadcast?id=${id}`, {
+      const res = await fetch(`/api/notifications/broadcast?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
+      // Only drop the row once the server has actually accepted the delete —
+      // the optimistic removal made a rejected request look successful.
+      await readApiJson(res, "Failed to delete broadcast.");
       setBroadcasts((prev) => prev.filter((b) => b.id !== id));
+      emitAlert({ type: "success", message: "Broadcast deleted." });
     } catch (err) {
       console.error(err);
+      emitAlert({ type: "error", message: getErrorMessage(err, "Failed to delete broadcast.") });
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const handleResend = async (broadcast) => {
+    const isRetry = broadcast.status === "failed";
+    const confirmed = window.confirm(
+      `${isRetry ? "Retry sending" : "Send"} “${broadcast.title}” now?\n\n` +
+        (isRetry
+          ? "Some recipients may already have been notified by the failed attempt — they would receive it twice. "
+          : "") +
+        "This delivers an in-app notification and a push alert immediately and cannot be undone.",
+    );
+    if (!confirmed) return;
+
+    setBusyId(broadcast.id);
+    try {
+      const token = await user.getIdToken();
+      const res = await fetch(
+        `/api/notifications/broadcast?id=${encodeURIComponent(broadcast.id)}&action=resend`,
+        {
+          method: "PATCH",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      const data = await readApiJson(res, "Failed to send the broadcast.");
+      const delivered =
+        typeof data?.recipientCount === "number" ? ` to ${data.recipientCount} recipient(s)` : "";
+      emitAlert({ type: "success", message: `Broadcast sent${delivered}.` });
+      fetchData();
+    } catch (err) {
+      console.error(err);
+      emitAlert({ type: "error", message: getErrorMessage(err, "Failed to send the broadcast.") });
+    } finally {
+      setBusyId(null);
     }
   };
 
   const handleCancel = async (id) => {
+    setBusyId(id);
     try {
       const token = await user.getIdToken();
-      await fetch(`/api/notifications/broadcast?id=${id}&action=cancel`, {
-        method: "PATCH",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `/api/notifications/broadcast?id=${encodeURIComponent(id)}&action=cancel`,
+        {
+          method: "PATCH",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      await readApiJson(res, "Failed to cancel the scheduled broadcast.");
+      emitAlert({ type: "success", message: "Scheduled broadcast cancelled." });
       fetchData();
     } catch (err) {
       console.error(err);
+      emitAlert({
+        type: "error",
+        message: getErrorMessage(err, "Failed to cancel the scheduled broadcast."),
+      });
+    } finally {
+      setBusyId(null);
     }
   };
 
+  const tabItems = [
+    { key: "create", label: "Create" },
+    { key: "history", label: "History", count: broadcasts.length },
+  ];
+
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
-      {/* Page header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-[var(--foreground)] flex items-center gap-2">
-            <Bell size={20} />
-            Notification Broadcasts
-          </h1>
-          <p className="text-sm text-[var(--muted)] mt-0.5">
-            Create and manage system-wide notifications for all admins.
-          </p>
-        </div>
-        <button
-          onClick={fetchData}
-          className="p-2 rounded-xl text-[var(--muted)] hover:bg-[var(--surface-soft)] transition"
-          title="Refresh"
-          aria-label="Refresh"
-        >
-          <RefreshCw size={16} />
-        </button>
-      </div>
+    <div className="mx-auto w-full max-w-7xl p-6">
+      <PageHeader
+        eyebrow="Super Admin Console"
+        icon={Bell}
+        title="Notification Broadcasts"
+        description="Create and manage system-wide notifications for all admins."
+        actions={
+          <Button variant="secondary" onClick={fetchData}>
+            <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+            Refresh
+          </Button>
+        }
+      >
+        <Tabs
+          items={tabItems}
+          value={tab}
+          onChange={setTab}
+          ariaLabel="Notification broadcast views"
+        />
+      </PageHeader>
 
-      {/* Tabs */}
-      <div className="flex gap-1 bg-[var(--surface-soft)] rounded-xl p-1 w-fit">
-        {[
-          { key: "create", label: "Create" },
-          { key: "history", label: `History (${broadcasts.length})` },
-        ].map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition ${
-              tab === key ? "bg-[var(--surface)] text-[var(--foreground)] shadow-sm" : "text-[var(--muted)] hover:text-[var(--foreground)]"
-            }`}
+      <div role="tabpanel" aria-label={tab === "create" ? "Create" : "History"}>
+        {tab === "create" ? (
+          // A failed history GET must NOT take the Create panel away: POST is a
+          // separate endpoint that still works, and the GET handler reports every
+          // fault the same way, so a transient blip used to lock a legitimate
+          // super admin out of sending and told them they were unauthorized.
+          // `error` is deliberately not passed here for that reason.
+          <DataState loading={loading} loadingVariant="detail">
+            <CreateBroadcastPanel
+              adminsList={adminsList}
+              adminsError={adminsError}
+              onCreated={() => {
+                fetchData();
+                setTab("history");
+              }}
+            />
+          </DataState>
+        ) : (
+          <DataState
+            loading={loading}
+            error={loadError}
+            isEmpty={!broadcasts.length}
+            onRetry={retry}
+            errorTitle="Couldn’t load broadcasts"
+            loadingVariant="cards"
+            rows={3}
+            empty={
+              <EmptyState
+                icon={Bell}
+                title="No broadcasts yet"
+                description="Broadcasts you send appear here with their delivery status."
+              />
+            }
           >
-            {label}
-          </button>
-        ))}
+            <BroadcastList
+              broadcasts={broadcasts}
+              onDelete={handleDelete}
+              onCancel={handleCancel}
+              onResend={handleResend}
+              busyId={busyId}
+            />
+          </DataState>
+        )}
       </div>
-
-      {loading ? (
-        <div className="flex items-center justify-center py-16 text-[var(--muted)]">
-          <div className="w-6 h-6 border-2 border-[var(--border)] border-t-[var(--muted)] rounded-full animate-spin" />
-        </div>
-      ) : tab === "create" ? (
-        <CreateBroadcastPanel
-          adminsList={adminsList}
-          onCreated={() => {
-            fetchData();
-            setTab("history");
-          }}
-        />
-      ) : (
-        <BroadcastList
-          broadcasts={broadcasts}
-          onRefresh={fetchData}
-          onDelete={handleDelete}
-          onCancel={handleCancel}
-        />
-      )}
     </div>
   );
 }

@@ -31,7 +31,7 @@ import {
   calculateTotals,
   calculateSettlement,
   formatCurrency
-} from "./utils/splitterUtils";
+} from "./lib";
 
 // --- Shared Components ---
 

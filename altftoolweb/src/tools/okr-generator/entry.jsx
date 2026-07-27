@@ -1,3 +1,7 @@
-import OKRGeneratorApp from "./App";
+"use client";
 
-export default OKRGeneratorApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

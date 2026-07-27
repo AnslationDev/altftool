@@ -122,7 +122,7 @@ export default function TextDiffViewerPage() {
             <button
               onClick={() => { diff.setSearchQuery(""); diff.setShowSearch(false); }}
               aria-label="Close search"
-              className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+              className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
             >
               <X size="16" />
             </button>
@@ -186,7 +186,7 @@ export default function TextDiffViewerPage() {
                 <button
                   onClick={() => setShowTimeline(false)}
                   aria-label="Hide timeline"
-                  className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+                  className="flex min-h-11 min-w-11 items-center justify-center p-1 rounded hover:bg-(--muted) text-(--muted-foreground) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
                 >
                   <X size="14" />
                 </button>
@@ -206,7 +206,7 @@ export default function TextDiffViewerPage() {
         {!showTimeline && (
           <button
             onClick={() => setShowTimeline(true)}
-            className="fixed bottom-6 right-6 z-40 min-h-11 px-4 py-2 rounded-full bg-(--primary) text-(--primary-foreground) shadow-lg text-sm font-semibold hover:opacity-90 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+            className="fixed bottom-6 right-6 z-40 min-h-11 px-4 py-2 rounded-full bg-(--primary) text-(--primary-foreground) shadow-lg text-sm font-semibold hover:opacity-90 transition active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
           >
             Timeline ({diff.versions.length})
           </button>

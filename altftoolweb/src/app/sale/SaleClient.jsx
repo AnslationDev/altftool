@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import HeroSection from "./components/HeroSection";
 import SalesNearYou from "./components/SalesNearYou";
 import saleData from "./data/saleData";
-import { CITY_OPTIONS } from "./data/cities";
+import { CITY_OPTIONS, getRefCoords } from "./data/cities";
 import RouteLazySection from "@/components/ui/RouteLazySection";
 import { RouteCardGridSkeleton, RouteSectionSkeleton, RouteStripSkeleton } from "@/components/ui/route-loading";
 
@@ -32,7 +32,7 @@ const NewsletterSection = dynamic(() => import("./components/NewsletterSection")
 });
 
 export default function SaleLocatorPage() {
-  // ── 1. Location state — shared between Hero dropdown & SalesNearYou 
+  // ── 1. Location state — shared between Hero dropdown & SalesNearYou
   // status: "idle" | "detecting" | "resolved" | "denied" | "error"
   const [locationName, setLocationName] = useState(
     saleData.hero.defaultLocation,
@@ -40,10 +40,10 @@ export default function SaleLocatorPage() {
   const [locationStatus, setLocationStatus] = useState("idle");
   const [userCoords, setUserCoords] = useState(null); // { lat, lng } from GPS
 
-  //  Search query — used ONLY by SalesNearYou 
+  //  Search query — used ONLY by SalesNearYou
   const [nearbySearch, setNearbySearch] = useState("");
 
-  //  Newsletter 
+  //  Newsletter
   const [email, setEmail] = useState("");
 
   // API-fetched deals state
@@ -80,7 +80,7 @@ export default function SaleLocatorPage() {
   }, []);
 
 
-  // GPS detect → Nominatim reverse geocode 
+  // GPS detect → Nominatim reverse geocode
   const detectLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setLocationStatus("error");
@@ -212,6 +212,19 @@ export default function SaleLocatorPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ⚡ Also warm the server-side Nearby Sale Search cache for the default
+  // city's coordinates on mount — a background, fire-and-forget request
+  // (nothing stored client-side here). By the time a user actually searches
+  // "mall"/"nearby sale"/etc., the OSM data for their likely location is
+  // already cached server-side, so that search resolves instantly instead
+  // of paying the real Overpass round-trip in the moment.
+  useEffect(() => {
+    const coords = getRefCoords(null, saleData.hero.defaultLocation, []);
+    if (!coords) return;
+    const params = new URLSearchParams({ latitude: String(coords.lat), longitude: String(coords.lng), keyword: "mall" });
+    fetch(`/api/search/nearby?${params.toString()}`).catch(() => {});
+  }, []);
+
   // Debounce the search text so we don't hit the deals API on every
   // keystroke — only once the user pauses typing.
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -235,7 +248,32 @@ export default function SaleLocatorPage() {
     }
   }, [locationName, nearbySearch, fetchNearbyDeals]);
 
- 
+  // 🏬 Hero "Nearby Stores" button — detect the user's current location AND
+  // immediately show nearby malls/famous shops (SalesNearYou's mall-search
+  // view), scrolling down to the results. Distinct from the plain
+  // "Explore Offers" button, which just scrolls without changing search.
+  const handleNearbyStoresClick = useCallback(() => {
+    detectLocation();
+    setNearbySearch("Nearby Sale");
+    const el = document.getElementById("sales-near-you");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }, [detectLocation]);
+
+  // 🏷️ Explore Categories click — filter Sales Near You to that category's
+  // deals (real search against the live deals API, same as typing into the
+  // search bar) and scroll down to the results.
+  const handleCategorySelect = useCallback(
+    (query) => {
+      if (!query) return;
+      setNearbySearch(query);
+      if (locationName) fetchNearbyDeals(locationName, query);
+      const el = document.getElementById("sales-near-you");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    },
+    [locationName, fetchNearbyDeals],
+  );
+
+
   return (
     // <div className="min-h-screen text-(--foreground) flex flex-col space-y-10 ">
     <div>
@@ -245,6 +283,13 @@ export default function SaleLocatorPage() {
         locationName={locationName}
         locationStatus={locationStatus}
         onDetectLocation={detectLocation}
+        onNearbyStoresClick={handleNearbyStoresClick}
+        onCitySelect={handleCitySelect}
+        onCitySearch={resolveCityQuery}
+        dynamicCities={dynamicCities}
+        searchQuery={nearbySearch}
+        onSearchChange={setNearbySearch}
+        onSearchSubmit={searchDealsNow}
       />
 
       {/* 4. Sales Near You — location-aware + search filter */}
@@ -264,7 +309,7 @@ export default function SaleLocatorPage() {
       />
 
       <RouteLazySection fallback={<RouteStripSkeleton items={5} />} minHeight={260}>
-        <ExploreCategories />
+        <ExploreCategories onCategorySelect={handleCategorySelect} />
       </RouteLazySection>
 
       <RouteLazySection fallback={<RouteCardGridSkeleton cards={4} columns="lg:grid-cols-4" />} minHeight={420}>

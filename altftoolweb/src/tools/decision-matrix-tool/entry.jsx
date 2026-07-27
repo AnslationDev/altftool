@@ -1,3 +1,7 @@
-import DecisionMatrixToolApp from "./App";
+"use client";
 
-export default DecisionMatrixToolApp;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
+}

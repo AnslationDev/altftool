@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { extensionMap } from "@/data/extensions";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
-import { deleteExtension, fetchExtensions } from "./services/extensions.service";
+import { deleteExtension } from "./services/extensions.service";
 
 import ExtensionsHeader from "./components/ExtensionsHeader";
 import ExtensionsFilters from "./components/ExtensionsFilters";
@@ -25,10 +27,10 @@ export default function ExtensionsPage() {
   const [showCreate, setShowCreate] = useState(false);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState(null);
-const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-const [bulkIds, setBulkIds] = useState([]);
-const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
+  const [bulkIds, setBulkIds] = useState([]);
+  const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
 
   /* ── Filters ── */
   const [search, setSearch] = useState("");
@@ -46,7 +48,8 @@ const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
         const data = Object.entries(extensionMap).map(([slug, d]) => ({ id: slug, slug, ...d }));
         setExtensions(data);
       } else {
-        setExtensions(await fetchExtensions());
+        const snap = await getDocs(collection(db, "projects", "altftool", "extensions"));
+        setExtensions(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
       }
     } catch (err) {
       console.error(err);

@@ -1,4 +1,7 @@
-import TextDiffViewerPage from "./pages/main";
-export default function Entry() {
-  return <TextDiffViewerPage />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

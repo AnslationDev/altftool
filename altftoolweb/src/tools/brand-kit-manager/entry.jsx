@@ -1,8 +1,7 @@
-import React from "react";
-import App from "./App";
+"use client";
 
-const BrandKitManager = () => {
-  return <App />;
-};
+import ToolHome from "./pages";
 
-export default BrandKitManager;
+export default function ToolEntry() {
+  return <ToolHome />;
+}

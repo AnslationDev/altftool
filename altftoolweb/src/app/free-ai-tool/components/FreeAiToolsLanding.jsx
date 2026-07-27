@@ -84,8 +84,6 @@ export default function FreeAiToolsLanding() {
         </div>
 
         <FaqSection />
-
-        <NewsletterCtaSection onExplore={scrollToExplorer} />
       </main>
     </AuthProvider>
   );

@@ -43,6 +43,12 @@ const floatingCategories = [
   { label: "Security", icon: LockKeyhole, position: "about-float-security" },
 ];
 
+const communityAvatars = [
+  { src: "/personality/testimonials/image2.jpg", alt: "AltF Tools community member" },
+  { src: "/personality/testimonials/image3.jpg", alt: "AltF Tools community member" },
+  { src: "/academy/feedback/rahul.jpg", alt: "AltF Tools community member" },
+];
+
 const processSteps = [
   {
     number: "01",
@@ -152,9 +158,32 @@ const testimonials = [
     role: "Student",
     avatar: "/academy/feedback/rahul.jpg",
   },
+  {
+    quote:
+      "The tool pages are direct and useful. I can compare options quickly and move back to my work without friction.",
+    name: "Maya Chen",
+    role: "Product Manager",
+    avatar: "/personality/testimonials/image1.jpg",
+  },
+  {
+    quote:
+      "AltF Tools makes everyday digital work feel organized. The categories, reviews, and quick links are easy to trust.",
+    name: "Amit Verma",
+    role: "Founder",
+    avatar: "/academy/feedback/amit.png",
+  },
+  {
+    quote:
+      "I use it to find browser extensions and quick utilities for client work. The experience is clean and predictable.",
+    name: "Sofia Reed",
+    role: "Marketing Lead",
+    avatar: "/personality/testimonials/image3.jpg",
+  },
 ];
 
 export default function About() {
+  const testimonialSlides = [...testimonials, ...testimonials];
+
   return (
     <main className="altf-home altf-about">
       <section className="about-hero-banner">
@@ -176,54 +205,6 @@ export default function About() {
 
       <section className="about-section about-intro-section">
         <div className="about-container about-intro-grid">
-          <div className="about-visual-card about-platform-visual">
-            <div className="about-visual-orb" aria-hidden="true" />
-            <Image
-              src="/assets/home-about-visual-transparent.png"
-              alt="AltF Tools visual showing curated digital tools"
-              width={1275}
-              height={1020}
-              priority
-              className="about-main-person about-main-lady"
-            />
-            <div className="about-community-badge">
-              <span className="about-avatar-stack" aria-hidden="true">
-                <Image
-                  src="/academy/feedback/rahul.jpg"
-                  alt=""
-                  width={40}
-                  height={40}
-                />
-                <Image
-                  src="/academy/feedback/amit.png"
-                  alt=""
-                  width={40}
-                  height={40}
-                />
-                <Image
-                  src="/personality/testimonials/image2.jpg"
-                  alt=""
-                  width={40}
-                  height={40}
-                />
-              </span>
-              Trusted by 100K+ users
-            </div>
-            {floatingCategories.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <span
-                  className={`about-floating-chip ${item.position}`}
-                  key={item.label}
-                >
-                  <Icon className="h-4 w-4" strokeWidth={2.25} />
-                  {item.label}
-                </span>
-              );
-            })}
-          </div>
-
           <div className="about-copy-block">
             <div className="home-reference-badge">
               <Info className="h-4 w-4" strokeWidth={2.35} />
@@ -260,6 +241,45 @@ export default function About() {
               Explore Tools
               <ArrowRight className="h-4 w-4" />
             </Link>
+          </div>
+
+          <div className="about-visual-card about-platform-visual">
+            <Image
+              src="/assets/home-about-visual-transparent.png"
+              alt="AltF Tools curated tool discovery workspace"
+              width={520}
+              height={480}
+              priority
+              className="about-main-person about-main-lady"
+            />
+            <div className="about-community-badge">
+              <span className="about-avatar-stack" aria-hidden="true">
+                {communityAvatars.map((avatar) => (
+                  <span key={avatar.src}>
+                    <Image
+                      src={avatar.src}
+                      alt={avatar.alt}
+                      width={36}
+                      height={36}
+                    />
+                  </span>
+                ))}
+              </span>
+              Trusted by 100K+ users
+            </div>
+            {floatingCategories.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <span
+                  className={`about-floating-chip ${item.position}`}
+                  key={item.label}
+                >
+                  <Icon className="h-4 w-4" strokeWidth={2.25} />
+                  {item.label}
+                </span>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -439,34 +459,42 @@ export default function About() {
             <h2>What Our Community Says</h2>
           </div>
 
-          <div className="about-testimonial-grid">
-            {testimonials.map((item) => (
-              <article className="about-testimonial-card" key={item.name}>
-                <div className="about-stars" aria-label="5 out of 5 stars">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <Star
-                      key={index}
-                      className="h-4 w-4"
-                      fill="currentColor"
-                      strokeWidth={1.6}
-                    />
-                  ))}
-                </div>
-                <p>&ldquo;{item.quote}&rdquo;</p>
-                <div className="about-reviewer">
-                  <Image
-                    src={item.avatar}
-                    alt=""
-                    width={52}
-                    height={52}
-                    className="about-reviewer-avatar"
-                  />
-                  <div>
-                    <strong>{item.name}</strong>
-                    <span>{item.role}</span>
+          <div className="about-testimonial-slider" aria-label="Community review slider">
+            <div className="about-testimonial-track">
+              {testimonialSlides.map((item, index) => (
+                <article className="about-testimonial-card" key={`${item.name}-${index}`}>
+                  <div className="about-stars" aria-label="5 out of 5 stars">
+                    {Array.from({ length: 5 }).map((_, starIndex) => (
+                      <Star
+                        key={starIndex}
+                        className="h-4 w-4"
+                        fill="currentColor"
+                        strokeWidth={1.6}
+                      />
+                    ))}
                   </div>
-                </div>
-              </article>
+                  <p>&ldquo;{item.quote}&rdquo;</p>
+                  <div className="about-reviewer">
+                    <Image
+                      src={item.avatar}
+                      alt=""
+                      width={52}
+                      height={52}
+                      className="about-reviewer-avatar"
+                    />
+                    <div>
+                      <strong>{item.name}</strong>
+                      <span>{item.role}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="about-testimonial-pagination" aria-hidden="true">
+            {testimonials.map((item) => (
+              <span key={item.name} />
             ))}
           </div>
         </div>

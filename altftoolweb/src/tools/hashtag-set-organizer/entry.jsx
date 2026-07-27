@@ -1,8 +1,7 @@
-import React from 'react';
-import App from './App';
+"use client";
 
-const HashtagSetOrganizer = () => {
-  return <App />;
-};
+import ToolHome from "./pages";
 
-export default HashtagSetOrganizer;
+export default function ToolEntry() {
+  return <ToolHome />;
+}

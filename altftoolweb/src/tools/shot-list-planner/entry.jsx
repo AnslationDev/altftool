@@ -1,7 +1,5 @@
 "use client";
-
-import ShotListPlanner from "./App";
-
+import ToolHome from "./pages";
 export default function ToolEntry() {
-  return <ShotListPlanner />;
+  return <ToolHome />;
 }

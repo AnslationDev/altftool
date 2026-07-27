@@ -1,9 +1,13 @@
-module.exports = {
-  id: "beautify-code-tool",
+const toolConfig = {
+  slug: "beautify-code-tool",
   name: "Code Beautifier",
-  description: "Instantly format, clean up, and beautify messy code snippets.",
-  icon: "Braces",
-  category: "Development",
+  category: ["Developer"],
+  description:
+    "Instantly format, clean up and beautify messy JavaScript, JSON, CSS, HTML, XML and SQL — or compact it again.",
+  icon: "braces",
+  iconColor: "text-(--primary)",
   isNew: true,
   isPremium: false,
 };
+
+export default toolConfig;

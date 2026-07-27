@@ -44,7 +44,7 @@ export const getRecommendation = (measurements, category, subCategory, gender, f
     if (!data) return null;
 
     const footLength = parseFloat(measurements.footLength);
-    if (isNaN(footLength)) return null;
+    if (!Number.isFinite(footLength) || footLength <= 0) return null;
 
     // Find the closest CM match that is equal or greater than footLength
     const match = data.find(item => parseFloat(item.cm) >= footLength);
@@ -55,8 +55,14 @@ export const getRecommendation = (measurements, category, subCategory, gender, f
     const data = SIZE_DATA.clothing[gender]?.[subCategory];
     if (!data) return null;
 
-    const { chest, waist, hip } = measurements;
-    const fitOffset = FIT_TYPES[fitType].offset;
+    const { chest, waist } = measurements;
+    // An unknown fit name must not throw; fall back to a regular (0) offset.
+    const fitOffset = (FIT_TYPES[fitType] ?? FIT_TYPES.REGULAR).offset;
+    // Without at least one usable body measurement there is nothing to match
+    // against, and returning the largest size would be a silent wrong answer.
+    if (!Number.isFinite(parseFloat(chest)) && !Number.isFinite(parseFloat(waist))) {
+      return null;
+    }
 
     // Recommendation logic: find the first size where measurements fit within range
     // Range is typically "34-36", so we check against the upper bound

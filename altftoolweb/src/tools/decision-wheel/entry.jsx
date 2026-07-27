@@ -1,4 +1,7 @@
-import DecisionWheelPage from "./pages/main";
-export default function Entry() {
-  return <DecisionWheelPage />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

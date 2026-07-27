@@ -1,6 +1,6 @@
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
 import { NextResponse } from "next/server";
-import { adminAuth } from "@/lib/firebaseAdmin";
+import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { FieldValue } from "firebase-admin/firestore";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { enforceRateLimit } from "@altftool/core/http";
@@ -20,11 +20,37 @@ const ALLOWED_ADMIN_UPDATE_FIELDS = new Set([
   "projectAccess",
 ]);
 
+const VALID_ROLE_TYPES = new Set(["admin", "superadmin"]);
+// Firestore caps a batch at 500 writes; stay comfortably below it.
+const MAX_BATCH_OPERATIONS = 400;
+
 function sanitizeAdminUpdates(updates) {
   if (!updates || typeof updates !== "object" || Array.isArray(updates)) return null;
   return Object.fromEntries(
     Object.entries(updates).filter(([key]) => ALLOWED_ADMIN_UPDATE_FIELDS.has(key)),
   );
+}
+
+function hasOwn(source, key) {
+  return Object.prototype.hasOwnProperty.call(source || {}, key);
+}
+
+function isSuperAdminDoc(data = {}) {
+  return (
+    data.isSuperAdmin === true ||
+    data.roleType === "superadmin" ||
+    data.roleId === "super_admin"
+  );
+}
+
+async function commitOperations(operations) {
+  for (let index = 0; index < operations.length; index += MAX_BATCH_OPERATIONS) {
+    const batch = adminDb.batch();
+    operations
+      .slice(index, index + MAX_BATCH_OPERATIONS)
+      .forEach((applyOperation) => applyOperation(batch));
+    await batch.commit();
+  }
 }
 
 export async function POST(req) {
@@ -62,55 +88,177 @@ export async function POST(req) {
     if (normalizedFullName !== undefined) safeUpdates.fullName = normalizedFullName;
     if (normalizedTeam !== undefined) safeUpdates.team = normalizedTeam;
 
+    // Privilege-bearing fields are only honoured when the caller actually sent
+    // them. Deriving them with defaults meant a partial update (e.g. `{team}`)
+    // silently demoted a superadmin and reactivated a suspended account.
+    const rolePresent = hasOwn(safeUpdates, "roleType");
+    if (rolePresent && !VALID_ROLE_TYPES.has(safeUpdates.roleType)) {
+      return NextResponse.json(
+        { error: "roleType must be 'admin' or 'superadmin'" },
+        { status: 400 },
+      );
+    }
+    const activePresent = hasOwn(safeUpdates, "isActive");
+    if (activePresent && typeof safeUpdates.isActive !== "boolean") {
+      return NextResponse.json({ error: "isActive must be a boolean" }, { status: 400 });
+    }
+    const projectAccessPresent = hasOwn(safeUpdates, "projectAccess");
+    if (
+      projectAccessPresent
+      && (!safeUpdates.projectAccess
+        || typeof safeUpdates.projectAccess !== "object"
+        || Array.isArray(safeUpdates.projectAccess))
+    ) {
+      return NextResponse.json({ error: "projectAccess must be an object" }, { status: 400 });
+    }
+
     const authUpdates = {};
     if (normalizedEmail) {
       authUpdates.email = normalizedEmail;
       safeUpdates.email = normalizedEmail;
     }
     if (normalizedFullName) authUpdates.displayName = normalizedFullName;
-    if (Object.keys(authUpdates).length) await adminAuth.updateUser(uid, authUpdates);
 
-    const roleType = safeUpdates.roleType === "superadmin" ? "superadmin" : "admin";
-    const isActive = safeUpdates.isActive !== false;
+    // Firebase Auth is updated FIRST, before any Firestore write.
+    //
+    // Auth is shared with the consumer site, so `auth/email-already-exists`
+    // means the address belongs to a different real account. If we wrote
+    // Firestore first and Auth then rejected the email, the admin document
+    // would be left claiming an address its Auth account does not own — and
+    // /api/admin/me resolves an admin by email when the uid lookup misses, so
+    // the owner of that address would inherit this admin's role on next
+    // sign-in. Failing before any Firestore write keeps that state unreachable.
+    if (Object.keys(authUpdates).length) {
+      try {
+        await adminAuth.updateUser(uid, authUpdates);
+      } catch (authErr) {
+        console.error("ADMIN_UPDATE_AUTH_ERROR:", authErr?.code || authErr);
+        const code = authErr?.code;
+        const clientFault =
+          code === "auth/email-already-exists" || code === "auth/invalid-email";
+        return NextResponse.json(
+          {
+            error: clientFault
+              ? "That email is invalid or already belongs to another account. Nothing was changed."
+              : "The sign-in account could not be updated. Nothing was changed.",
+          },
+          { status: clientFault ? 400 : 500 },
+        );
+      }
+    }
+
     const adminUserRef = getRbacRootRef().collection(RBAC_COLLECTIONS.adminUsers).doc(uid);
-    await adminUserRef.set({
-      ...safeUpdates,
-      roleType,
-      roleId: roleType === "superadmin" ? "super_admin" : "admin",
-      isSuperAdmin: roleType === "superadmin",
-      status: isActive ? "active" : "suspended",
-      isActive,
-      updatedAt: FieldValue.serverTimestamp(),
-    }, { merge: true });
+    const legacyAdminRef = adminDb.collection("admins").doc(uid);
+    const [existingSnap, legacySnap] = await Promise.all([
+      adminUserRef.get(),
+      legacyAdminRef.get(),
+    ]);
+    const existingData = existingSnap.exists
+      ? existingSnap.data() || {}
+      : (legacySnap.exists ? legacySnap.data() || {} : {});
 
-    if (roleType !== "superadmin" && safeUpdates.projectAccess) {
-      const permissionBatch = adminUserRef.firestore.batch();
-      Object.entries(safeUpdates.projectAccess).forEach(([projectId, access]) => {
-        const projectRef = adminUserRef.collection(RBAC_COLLECTIONS.projectAccess).doc(projectId);
-        permissionBatch.set(projectRef, {
+    // Effective values: what the admin ends up with once this request is applied.
+    const roleType = rolePresent
+      ? safeUpdates.roleType
+      : (isSuperAdminDoc(existingData) ? "superadmin" : "admin");
+    const isActive = activePresent ? safeUpdates.isActive : existingData.isActive !== false;
+
+    const docUpdates = {
+      ...safeUpdates,
+      updatedAt: FieldValue.serverTimestamp(),
+    };
+    // When we are creating the RBAC doc for a legacy-only admin we must
+    // materialise the inherited role/status, otherwise the new doc outranks the
+    // legacy one while carrying no role at all.
+    if (rolePresent || !existingSnap.exists) {
+      docUpdates.roleType = roleType;
+      docUpdates.roleId = roleType === "superadmin" ? "super_admin" : "admin";
+      docUpdates.isSuperAdmin = roleType === "superadmin";
+    }
+    if (activePresent || !existingSnap.exists) {
+      docUpdates.status = isActive ? "active" : "suspended";
+      docUpdates.isActive = isActive;
+    }
+
+    await adminUserRef.set(docUpdates, { merge: true });
+
+    if (roleType !== "superadmin" && projectAccessPresent) {
+      const submittedProjects = safeUpdates.projectAccess;
+      const projectAccessRef = adminUserRef.collection(RBAC_COLLECTIONS.projectAccess);
+      const existingProjectsSnap = await projectAccessRef.get();
+      const operations = [];
+
+      Object.entries(submittedProjects).forEach(([projectId, access]) => {
+        const projectRef = projectAccessRef.doc(projectId);
+        operations.push((batch) => batch.set(projectRef, {
           projectId,
           access: access?.access !== false,
           roleId: access?.roleId || "admin",
           updatedAt: FieldValue.serverTimestamp(),
-        }, { merge: true });
+        }, { merge: true }));
 
         Object.entries(access?.permissions || {}).forEach(([moduleId, modulePerms]) => {
-          permissionBatch.set(projectRef.collection(RBAC_COLLECTIONS.modules).doc(moduleId), {
-            moduleId,
-            access: modulePerms?.read === true || modulePerms?.write === true || modulePerms?.delete === true,
-            actions: {
-              read: modulePerms?.read === true,
-              view: modulePerms?.read === true,
-              write: modulePerms?.write === true,
-              create: modulePerms?.write === true,
-              edit: modulePerms?.write === true,
-              delete: modulePerms?.delete === true,
+          operations.push((batch) => batch.set(
+            projectRef.collection(RBAC_COLLECTIONS.modules).doc(moduleId),
+            {
+              moduleId,
+              access: modulePerms?.read === true || modulePerms?.write === true || modulePerms?.delete === true,
+              actions: {
+                read: modulePerms?.read === true,
+                view: modulePerms?.read === true,
+                write: modulePerms?.write === true,
+                create: modulePerms?.write === true,
+                edit: modulePerms?.write === true,
+                delete: modulePerms?.delete === true,
+              },
+              updatedAt: FieldValue.serverTimestamp(),
             },
-            updatedAt: FieldValue.serverTimestamp(),
-          }, { merge: true });
+            { merge: true },
+          ));
         });
       });
-      await permissionBatch.commit();
+
+      // Revocation is a diff, not a merge: the stored module/project docs are
+      // the only thing readRbacProjectAccess looks at, so anything the payload
+      // no longer grants has to be removed. Without this, "Clear All" (which
+      // posts `permissions: {}`) wrote nothing and left full access in place.
+      await Promise.all(existingProjectsSnap.docs.map(async (projectDoc) => {
+        const isSubmitted = hasOwn(submittedProjects, projectDoc.id);
+        const submittedProject = isSubmitted ? submittedProjects[projectDoc.id] : null;
+        const keptModuleIds = new Set(Object.keys(submittedProject?.permissions || {}));
+        const modulesSnap = await projectDoc.ref.collection(RBAC_COLLECTIONS.modules).get();
+
+        modulesSnap.docs.forEach((moduleDoc) => {
+          if (!keptModuleIds.has(moduleDoc.id)) {
+            operations.push((batch) => batch.delete(moduleDoc.ref));
+          }
+        });
+        if (!isSubmitted) {
+          operations.push((batch) => batch.delete(projectDoc.ref));
+        }
+      }));
+
+      await commitOperations(operations);
+    }
+
+    // Many routes still authorize straight off the legacy `admins` doc, so a
+    // status/role change that only lands in the RBAC store would not take
+    // effect there. Mirror it — but never create a legacy doc that is not
+    // already present.
+    if (legacySnap.exists) {
+      const legacyMirror = {};
+      if (safeUpdates.email !== undefined) legacyMirror.email = safeUpdates.email;
+      if (safeUpdates.fullName !== undefined) legacyMirror.fullName = safeUpdates.fullName;
+      if (safeUpdates.team !== undefined) legacyMirror.team = safeUpdates.team;
+      if (rolePresent) legacyMirror.roleType = roleType;
+      if (activePresent) {
+        legacyMirror.isActive = isActive;
+        legacyMirror.status = isActive ? "active" : "suspended";
+      }
+      if (Object.keys(legacyMirror).length) {
+        legacyMirror.updatedAt = FieldValue.serverTimestamp();
+        await legacyAdminRef.set(legacyMirror, { merge: true });
+      }
     }
 
     await writeAdminAuditLog({

@@ -1,8 +1,11 @@
 module.exports = {
   id: "ai-jd-analyzer-tool",
+  slug: "ai-jd-analyzer-tool",
   name: "AI JD Analyzer",
-  description: "Analyze Job Descriptions using AI to extract skills, calculate match scores, and get rewrites.",
-  icon: "Briefcase",
+  description:
+    "Analyse a job description offline: extract skills, score your match, check readability and gendered wording.",
+  icon: "briefcase",
+  iconColor: "text-(--primary)",
   category: "Business",
   isNew: true,
   isPremium: false,

@@ -19,6 +19,16 @@ export function getOrSetSaleCache(key, loader, ttlMs = SALE_CACHE_TTL_MS) {
   return saleCache.getOrSet(key, loader, ttlMs, { returnStaleOnError: true });
 }
 
+/**
+ * Read a cached value without triggering the loader — undefined if there's
+ * no fresh entry. Used where a caller wants to skip work entirely when a
+ * fresh cached result already exists (e.g. streaming responses).
+ * @param {string} key
+ */
+export function peekSaleCache(key) {
+  return saleCache.get(key);
+}
+
 export function clearSaleCache(key) {
   if (key) saleCache.delete(key);
   else saleCache.clear();

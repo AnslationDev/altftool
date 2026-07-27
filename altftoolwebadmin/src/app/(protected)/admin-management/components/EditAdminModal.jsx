@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import PermissionMatrix from "./PermissionMatrix";
-import { getAuth } from "firebase/auth";
+import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import { readApiJson } from "@/lib/apiClient";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import { PROJECTS } from "@/projects";
 import {
   X, Mail, Lock, Eye, EyeOff, Shield, ShieldCheck, Users,
@@ -13,12 +14,13 @@ import {
 
 const PROJECT_LIST = Object.values(PROJECTS);
 
-function Field({ label, hint, error, icon, htmlFor, children }) {
+function Field({ label, hint, error, icon, htmlFor, required, children }) {
   return (
     <div className="space-y-1.5">
       <label htmlFor={htmlFor} className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
         {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
+        {required && <span className="text-[var(--danger)]">*</span>}
       </label>
       {children}
       {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
@@ -44,6 +46,7 @@ function Section({ title, children }) {
 }
 
 export default function EditAdminModal({ admin, onClose, refresh }) {
+  const { user: currentUser } = useAuth();
   const [email, setEmail] = useState(admin.email || "");
   const [fullName, setFullName] = useState(admin.fullName || "");
   const [team, setTeam] = useState(admin.team || "");
@@ -53,6 +56,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
   const [isActive, setIsActive] = useState(admin.isActive);
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState("idle");
@@ -61,19 +65,18 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
 
   const deleteAdmin = async () => {
     if (isSelf) {
-      
+
       emitAlert({ type: "warning", message: "You cannot delete your own account" });
       return;
     }
     setLoading(true);
     setDeleting(true);
     try {
-      const user = getAuth().currentUser;
-      if (!user) {
+      const token = await getAdminIdToken(true);
+      if (!token) {
         emitAlert({ type: "error", message: "Session expired." });
         return;
       }
-      const token = await user.getIdToken(true);
       const res = await fetch("/api/admin/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
@@ -93,7 +96,10 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
     }
   };
 
-  const currentUserUid = getAuth().currentUser?.uid;
+  // From context, not getAuth().currentUser: under the local-admin dev session
+  // there is no Firebase user, so a raw Firebase read left this self-protection
+  // check permanently disabled in that mode.
+  const currentUserUid = currentUser?.uid;
   const isSelf = currentUserUid === admin.id;
 
   const activeProject = PROJECTS[activeProjectId];
@@ -116,6 +122,15 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
       emitAlert({ type: "warning", message: "You cannot deactivate your own account" });
       return;
     }
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setEmailError("Email address is required");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setEmailError("Enter a valid email address");
+      return;
+    }
     if (newPassword && newPassword.length < 6) {
       setPasswordError("Password must be at least 6 characters");
       return;
@@ -124,9 +139,8 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
     setLoading(true);
     setStep("saving");
     try {
-      const user = getAuth().currentUser;
-      if (!user) { emitAlert({ type: "error", message: "Session expired." }); setStep("idle"); return; }
-      const token = await user.getIdToken(true);
+      const token = await getAdminIdToken(true);
+      if (!token) { emitAlert({ type: "error", message: "Session expired." }); setStep("idle"); return; }
 
       const updateRes = await fetch("/api/admin/update", {
         method: "POST",
@@ -134,7 +148,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
         body: JSON.stringify({
           uid: admin.id,
           updates: {
-            email,
+            email: trimmedEmail,
             fullName,
             team,
             roleType,
@@ -206,15 +220,19 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                 </span>
               </div>
             </div>
-            <Field label="Login Email" htmlFor="edit-admin-email" icon={<Mail className="w-3.5 h-3.5" />} hint="Used to sign in to the admin panel.">
+            <Field label="Login Email" htmlFor="edit-admin-email" icon={<Mail className="w-3.5 h-3.5" />} required
+              hint="Used to sign in to the admin panel." error={emailError}>
               <input
                 id="edit-admin-email"
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => { setEmail(event.target.value); setEmailError(""); }}
                 disabled={loading}
                 autoComplete="email"
-                className="w-full text-sm px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30 focus:border-[var(--primary)] transition"
+                aria-invalid={emailError ? "true" : undefined}
+                className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 transition ${
+                  emailError ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30" : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"
+                }`}
               />
             </Field>
             <div className="grid gap-4 sm:grid-cols-2">

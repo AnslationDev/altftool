@@ -46,30 +46,70 @@
   backdrop-filter: blur(16px);
   padding: 1.25rem 1.25rem 0.75rem;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   position: sticky;
   top: 0;
   z-index: 10;
   border-bottom: 1px solid;
 }
 
+/* Icon + wordmark, styled to match the same premium language as the hero
+   title (brand gradient, confident weight) instead of sitting as bare
+   text — this is the small "masthead" for the whole sidebar. */
+.support-settings-sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.support-settings-sidebar-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius);
+  background: var(--support-cta-gradient);
+  color: var(--primary-foreground);
+  box-shadow: var(--support-cta-shadow);
+}
+
 .support-settings-sidebar-header h2 {
   font-family: var(--font-primary);
-  letter-spacing: 0;
-  font-size: 1.125rem;
-  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  font-weight: 780;
   color: var(--foreground);
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .support-settings-close {
   border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
-  padding: 0.5rem;
-  border-radius: var(--anslation-ds-radius);
-  background: transparent;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
   cursor: pointer;
+  flex-shrink: 0;
   display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.support-settings-close:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 32%, var(--border));
+  color: var(--support-primary);
 }
 
 .support-settings-nav {
@@ -169,6 +209,30 @@
   width: 0.2rem;
   border-radius: 999px;
   background: linear-gradient(180deg, var(--support-primary), var(--support-secondary));
+}
+
+/* Category rows (the default OS sidebar view — see SettingsSidebar.jsx)
+   reuse `.support-settings-nav-item` as-is and just add a trailing count
+   badge + chevron, matching the "label ... count >" row shape every native
+   Settings app category list uses. */
+.support-settings-nav-item-count {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+}
+
+.support-settings-nav-item-active .support-settings-nav-item-count {
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 16%, var(--card));
+}
+
+.support-settings-nav-item-chevron {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--muted-foreground) 65%, transparent);
 }
 
 /* Grid — not flex — for the main-content/sponsored-rail split. Tailwind's
@@ -315,6 +379,21 @@
   box-shadow: var(--support-cta-shadow);
 }
 
+/* `.support-platform-pill:hover` (a class + a pseudo-class, specificity
+   0,0,2,0) outranks `.support-platform-pill-active` (0,0,1,0) on its own,
+   so without this override, hovering the currently-active pill (e.g.
+   "macOS" while previewing macOS) swapped its text back to
+   `--support-primary` — a teal that reads as near-invisible against the
+   pill's own teal/dark gradient background, showing up as a "dark text"
+   blob instead of the label. Keeping the light foreground color and
+   transparent border on hover fixes that; the lift (`translateY`) and
+   shadow from the base hover rule still apply underneath, so hovering the
+   active pill still gives feedback, just without breaking contrast. */
+.support-platform-pill-active:hover {
+  color: var(--primary-foreground);
+  border-color: transparent;
+}
+
 .support-platform-pill-tag {
   font-size: 0.6rem;
   font-weight: 700;
@@ -339,6 +418,15 @@
   min-height: 2.25rem;
 }
 
+/* Icon-only now in every mode (see PlatformSwitcher.jsx) — the RotateCcw
+   glyph + title/aria-label tooltip already say "reset", so this is a small
+   circular button rather than a pill sized for a text label. */
+.support-platform-pill-reset-icononly {
+  padding: 0.45rem;
+  min-width: 2.25rem;
+  justify-content: center;
+}
+
 /* ============================================================
    Search
 ============================================================ */
@@ -360,47 +448,56 @@
 /* ============================================================
    Page preferences panel
 ============================================================ */
+/* Collapsed, this is just a positioning anchor for a small pill button —
+   not the bordered full-width card it used to be. The expanded body
+   (`.support-prefs-body-open`) floats below it as its own card instead. */
 .support-prefs-panel {
-  border: 1px solid color-mix(in srgb, var(--support-primary) 14%, var(--border));
-  border-radius: var(--anslation-ds-radius-lg);
-  background: var(--card);
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
   margin-bottom: 1.25rem;
-  overflow: hidden;
 }
 
 .support-prefs-trigger {
-  width: 100%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem 1.1rem;
-  background: transparent;
-  border: none;
-  font-weight: 600;
-  font-size: 0.875rem;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 18%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 5%, var(--card));
   color: var(--foreground);
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  transition: transform 150ms ease, box-shadow 150ms ease, color 150ms ease, background 150ms ease;
+}
+
+.support-prefs-trigger:hover {
+  color: var(--support-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--support-primary) 14%, transparent);
 }
 
 .support-prefs-trigger span:first-child {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
-.support-prefs-trigger-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
-}
-
-.support-prefs-summary {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  text-transform: none;
-  letter-spacing: normal;
+/* Small dot on the icon when any preference differs from the default —
+   replaces the old always-visible text summary; the full summary is still
+   available as the trigger's native title/tooltip. */
+.support-prefs-trigger-dot {
+  position: absolute;
+  top: -0.15rem;
+  right: -0.35rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--support-primary);
 }
 
 .support-prefs-body {
@@ -411,20 +508,35 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  transition: max-height 280ms ease, opacity 220ms ease, padding-top 280ms ease;
+  transition: max-height 220ms ease, opacity 180ms ease;
 }
 
 .support-prefs-body-open {
-  max-height: 60rem;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 40;
+  width: min(22rem, 88vw);
+  max-height: min(32rem, 70vh);
   opacity: 1;
-  padding-top: 1rem;
-  padding-bottom: 1.1rem;
-  border-top: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  overflow-y: auto;
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 14%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  box-shadow: 0 24px 48px color-mix(in srgb, var(--foreground) 16%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .support-prefs-body {
     transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .support-prefs-body-open {
+    width: min(20rem, 92vw);
+    right: -0.5rem;
   }
 }
 
@@ -1290,9 +1402,12 @@
 [data-theme="dark"] .support-card,
 [data-theme="dark"] .support-category-header,
 [data-theme="dark"] .support-platform-switcher,
-[data-theme="dark"] .support-prefs-panel,
+[data-theme="dark"] .support-prefs-trigger,
+[data-theme="dark"] .support-prefs-body-open,
 [data-theme="dark"] .support-accordion-item,
-[data-theme="dark"] .support-help-card {
+[data-theme="dark"] .support-help-card,
+[data-theme="dark"] .support-category-hub-list,
+[data-theme="dark"] .support-detail-native-list {
   border-color: color-mix(in srgb, var(--support-primary) 22%, var(--border));
 }
 
@@ -1483,15 +1598,68 @@
 }
 
 .support-platform-switcher-compact .support-platform-switcher-pills {
-  gap: 0.4rem;
+  gap: 0.25rem;
+}
+
+/* Sidebar OS selector — single horizontal row instead of the old 2x2 wrap.
+   Only the active platform carries a label (via .support-platform-pill-
+   compact below); everything else in this row is icon-only
+   (.support-platform-pill-icononly / the compact device-menu trigger), so
+   4 platforms + "More Devices" comfortably fit one line at sidebar width
+   (288px / w-72, used for both the desktop rail and the mobile slide-over —
+   this row renders identically, fully functional, in both).
+   `flex-wrap: wrap` is the safety net here rather than horizontal scroll:
+   if a narrower viewport, a vertical scrollbar eating into the column, or a
+   future addition ever makes one line too tight, the row wraps to a second
+   line instead of clipping "More Devices" out of reach — nothing is ever
+   hidden or unreachable. */
+.support-platform-switcher-pills-compact {
+  flex-wrap: wrap;
+  row-gap: 0.35rem;
 }
 
 .support-platform-pill-compact {
-  padding: 0.4rem;
-  min-height: 2rem;
-  min-width: 2rem;
+  padding: 0.4rem 0.5rem;
+  min-height: 1.85rem;
+  gap: 0.3rem;
+  /* Set explicitly rather than inherited, so this never rides on whatever
+     .support-platform-pill's base font-size happens to resolve to at a
+     given viewport (it varies by breakpoint) — a stable size here is what
+     keeps the row's fit-in-one-line math predictable everywhere. */
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+/* The collapsed, icon-only inactive platform buttons that make the single-
+   row layout possible — small circular targets with the platform name
+   available via title/aria-label rather than always-visible text. */
+.support-platform-pill-icononly {
+  padding: 0.3rem;
+  min-height: 1.75rem;
+  min-width: 1.75rem;
   justify-content: center;
+  flex-shrink: 0;
   position: relative;
+}
+
+.support-platform-pill-icononly .support-platform-pill-icon {
+  color: inherit;
+}
+
+/* At this small (~28px) circular size, the default .support-platform-pill
+   hover — a much stronger border tint plus the icon switching solid teal —
+   reads as the whole circle going dark rather than a gentle highlight.
+   Overriding with a light background tint only (no border/icon-color
+   change, no lift) keeps hover feedback obviously present but subtle.
+   `(hover: hover)` also keeps this from getting "stuck" looking dark on
+   touchscreens, which don't have a real hover to release. */
+@media (hover: hover) {
+  .support-platform-pill-icononly:hover {
+    border-color: color-mix(in srgb, var(--support-primary) 16%, var(--border));
+    background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+    color: var(--muted-foreground);
+    transform: none;
+  }
 }
 
 .support-platform-pill-dot {
@@ -1506,10 +1674,113 @@
 }
 
 .support-platform-pill-reset-compact {
-  padding: 0.4rem;
-  min-height: 2rem;
-  min-width: 2rem;
+  padding: 0.3rem;
+  min-height: 1.75rem;
+  min-width: 1.75rem;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+/* "More Devices" in compact mode is sized to match via
+   .support-platform-switcher-compact .support-devicemenu-trigger-compact
+   further down (kept next to the existing compact-trigger rule it
+   overrides, rather than fighting it with !important here). */
+
+/* ---- Device context banner ----
+   Shown in the sidebar whenever a device's landing page or one of its
+   guides is open. It's the one visual cue that says "you're inside
+   {Device}'s settings now, and the list below is its own" — the same job
+   the active platform pill does for Windows/macOS/Android/iOS, just for
+   devices that live behind "More Devices" instead of their own pill. */
+.support-sidebar-device-context {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0.85rem 0;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 22%, var(--border));
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 8%, var(--card));
+}
+
+.support-sidebar-device-context-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--card));
+  color: var(--device-accent, var(--support-primary));
+}
+
+.support-sidebar-device-context-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-sidebar-device-context-eyebrow {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.support-sidebar-device-context-name {
+  margin: 0.05rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.support-sidebar-device-context-exit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 24%, var(--border));
+  background: var(--card);
+  color: var(--muted-foreground);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  .support-sidebar-device-context-exit:hover {
+    background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--card));
+    color: var(--device-accent, var(--support-primary));
+  }
+}
+
+/* The group label above a device's own settings list reuses
+   .support-settings-nav-group-label-with-badge's flex layout (icon + text +
+   badge already sit in a row for the "AI Tools · New" label) and only adds
+   a count pill in the same visual language as .support-devicemenu-trigger-
+   count, so "how many settings does this device have" is answered before
+   scrolling the list. */
+.support-settings-nav-group-count {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
 }
 
 /* ---- Sidebar search box ---- */
@@ -1693,6 +1964,43 @@
   color: var(--support-primary);
 }
 
+/* Native-style grouped list — used for Quick Facts / Best Practices / Tips
+   & Tricks in place of a plain bulleted `<ul>`. This is the same "rows in
+   a bordered box" shape a native Settings app uses for a grouped section
+   (e.g. Windows' "Brightness & color" box) — a divided, bordered container
+   with one row per fact/tip, rather than a loose bullet list. */
+.support-detail-native-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-lg);
+  overflow: hidden;
+}
+
+.support-detail-native-row {
+  position: relative;
+  padding: 0.75rem 1rem 0.75rem 2.1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.support-detail-native-row:last-child {
+  border-bottom: none;
+}
+
+.support-detail-native-row::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--support-primary);
+}
+
 .support-detail-image {
   margin-bottom: 1rem;
 }
@@ -1838,6 +2146,128 @@
 
 .support-landing-hero {
   margin-bottom: 0;
+}
+
+/* ---- Landing page: two-column widget dashboard ----
+   Mirrors how a native Settings app's Home page is actually laid out — a
+   couple of primary widget cards (a short heading + a dense row list)
+   next to a stack of smaller secondary ones, instead of one long column
+   of big marketing-style cards. */
+.support-landing-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.support-landing-dashboard-main,
+.support-landing-dashboard-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.support-landing-widget {
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.support-landing-widget-list {
+  margin-top: 1rem;
+}
+
+/* The row list / chip list / empty state is nested inside a widget card
+   that already has its own border — drop the list's own border/radius so
+   there's exactly one outer card, not a card inside a card. */
+.support-landing-widget .support-category-hub-list {
+  border: none;
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .support-landing-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Persistent top search bar (see SettingsContent) ---- */
+.support-persistent-search {
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Premium platform/device picker panel — moved here from the sidebar.
+   PlatformSwitcher's non-compact mode already draws its own card (border/
+   background/padding); stripped here so it doesn't double up inside the
+   `.support-landing-widget` card wrapping it, same pattern used for the
+   row-list-inside-a-widget case above. ---- */
+.support-landing-platform-panel .support-platform-switcher {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* ---- Personalize widget — real wallpaper-style thumbnail photos (not
+   CSS-drawn swatches), same idea as the wallpaper gallery in Windows
+   "Personalize > Background" or macOS "Wallpaper" settings: a grid of
+   actual image thumbnails you tap to open personalization settings. ---- */
+.support-personalize-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.support-personalize-tile {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--anslation-ds-radius);
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  background: var(--muted);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.support-personalize-tile:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.support-personalize-tile-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.support-personalize-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--support-primary);
+  cursor: pointer;
+}
+
+.support-personalize-more:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .support-personalize-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
 }
 
 .support-landing-tips {
@@ -2586,6 +3016,75 @@
   }
 }
 
+/* Home-page "Browse {Platform} Settings" category grid — the native-
+   Settings-app-style entry point, same category list the sidebar leads
+   with (see SettingsSidebar.jsx's `.support-settings-nav-item-category`).
+   Styled as tiles rather than the sidebar's list rows since this section
+   sits in the wide main column, not a 288px-fixed rail. */
+.support-category-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.support-category-tile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.support-category-tile:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 32%, var(--border));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--support-primary) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+.support-category-tile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-category-tile-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.support-category-tile-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-category-tile-count {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
+
+.support-category-tile-arrow {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--support-primary) 60%, transparent);
+}
+
 @media (max-width: 480px) {
   .support-discovery-tools {
     grid-template-columns: 1fr;
@@ -2911,6 +3410,22 @@
   border-color: color-mix(in srgb, var(--support-primary) 30%, var(--border));
 }
 
+/* ---- Persistent "Find a setting" top search bar ----
+   Rendered once in SettingsContent above the breadcrumb, on every
+   non-landing page (category hub, detail, utility, AI tool, device) — the
+   landing page already has its own prominent HomeSearchBar, so this only
+   needs to cover everywhere else, matching how every native Settings app
+   keeps its search box visible no matter which page you're on. */
+.support-content-topsearch {
+  max-width: 26rem;
+  margin-bottom: 1rem;
+}
+
+.support-content-topsearch .alt-ui-search__input {
+  min-height: 2.75rem;
+  border-radius: var(--anslation-ds-radius-pill);
+}
+
 /* ---- 4. Shared breadcrumb + Back-to-Home + Focus Mode bar,
    rendered once in SettingsContent for every non-landing page. ---- */
 .support-page-nav {
@@ -3067,7 +3582,20 @@
 .support-settings-nav-group-label-with-badge {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   gap: 0.4rem;
+}
+
+/* Keeps the device icon and count badge always visible and un-clipped —
+   only the device name itself truncates with an ellipsis if it's long
+   (e.g. "Bluetooth Speakers", "External Monitor"), rather than the whole
+   label wrapping to an awkward second line. */
+.support-settings-nav-group-label-text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .support-new-badge {
@@ -3211,6 +3739,19 @@
   display: none;
 }
 
+/* `.support-platform-pill-current`'s default colors (teal-on-teal-tint) are
+   tuned for sitting on the pill's normal `--card` background. Inside the
+   ACTIVE pill the surrounding background switches to the primary gradient
+   (`.support-platform-pill-active`, light foreground text) — left as-is,
+   the badge's own teal text became nearly unreadable against that same-hue
+   gradient, which is exactly the "Currently Selected text not showing"
+   report. Override to a light-on-gradient treatment here, matching how the
+   rest of the active pill's text/icon already handle this background. */
+.support-platform-pill-active .support-platform-pill-current {
+  background: color-mix(in srgb, var(--primary-foreground) 26%, transparent);
+  color: var(--primary-foreground);
+}
+
 /* ---- "More Devices" trigger + mega menu ---- */
 .support-devicemenu-trigger {
   display: inline-flex;
@@ -3240,6 +3781,88 @@
 .support-platform-switcher-compact .support-devicemenu-trigger {
   padding: 0.35rem 0.55rem;
   font-size: 0.7rem;
+}
+
+/* The sidebar's "More Devices" trigger — deliberately its own full row
+   below the platform pills (see .support-platform-switcher-more) rather
+   than another icon squeezed into that row, specifically so it always
+   carries a legible label instead of asking a first-time visitor to
+   decode a bare grid icon. A solid tinted fill (vs. the dashed outline
+   the full-size trigger uses) plus the trailing chevron read as a
+   deliberate "open something" action/CTA, not just another toggle. */
+.support-platform-switcher-compact .support-devicemenu-trigger-compact {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.75rem;
+  border-style: solid;
+  background: color-mix(in srgb, var(--support-primary) 10%, var(--card));
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--support-primary) 10%, transparent);
+}
+
+.support-platform-switcher-compact .support-devicemenu-trigger-compact:hover {
+  background: color-mix(in srgb, var(--support-primary) 18%, var(--card));
+  transform: translateY(-1px);
+}
+
+.support-platform-switcher-compact .support-devicemenu-trigger-compact:hover .support-devicemenu-trigger-arrow {
+  transform: translateX(2px);
+}
+
+/* Mini "app icon" treatment for the trigger's grid icon — same gradient-
+   chip language as the sidebar header's icon badge, so this reads as a
+   deliberate, branded entry point rather than a plain inline glyph. */
+.support-devicemenu-trigger-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: var(--support-cta-gradient);
+  color: var(--primary-foreground);
+}
+
+.support-devicemenu-trigger-label {
+  flex: 1;
+  text-align: left;
+}
+
+/* How many devices are actually behind this button — a live count (from
+   the same taxonomy the picker itself reads) rather than a decorative
+   flourish, so it grows on its own as more devices get added. */
+.support-devicemenu-trigger-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.1rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--support-primary) 18%, var(--card));
+  color: var(--support-primary);
+  font-size: 0.62rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.support-devicemenu-trigger-arrow {
+  color: color-mix(in srgb, var(--support-primary) 70%, transparent);
+  flex-shrink: 0;
+  transition: transform 160ms ease;
+}
+
+/* Small gap between the platform-pills row and the "More Devices" row
+   beneath it — enough to read as two related but distinct controls,
+   not enough to feel like a separate section. */
+.support-platform-switcher-more {
+  margin-top: 0.4rem;
+}
+
+.support-platform-switcher-more .support-devicemenu-wrap {
+  display: block;
+  width: 100%;
 }
 
 .support-devicemenu-wrap {
@@ -3666,27 +4289,206 @@
   width: 60%;
 }
 
-/* ---- Device landing / coming-soon pages ---- */
+/* ---- Device landing / coming-soon pages ----
+   Every device in the taxonomy already carries its own brand color
+   (device.color, e.g. Apple blue for iPad, graphite for AirPods, Samsung
+   navy for Galaxy Watch) — DeviceLandingPage now exposes it as
+   `--device-accent` on the page root, not just the small hero icon, so it
+   can tint the hero panel, the guide cards, and every accent below. This
+   is what makes one device's page read as its own space instead of a
+   copy-pasted list wearing the same generic teal everywhere. Every rule
+   here is scoped to `.support-device-landing` (or a class that only ever
+   renders inside it), so none of it reaches OS/utility/AI-tool pages. */
 .support-device-landing-hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
+  padding: 1.5rem 1.65rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--border));
+  background:
+    radial-gradient(circle at 8% -10%, color-mix(in srgb, var(--device-accent, var(--support-primary)) 12%, transparent), transparent 60%),
+    var(--card);
+}
+
+.support-device-landing-hero .support-hero-eyebrow {
+  border-color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 22%, var(--border));
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 10%, var(--card));
+  color: var(--device-accent, var(--support-primary));
 }
 
 .support-device-landing-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: var(--anslation-ds-radius-lg);
   background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--card));
   color: var(--device-accent, var(--support-primary));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--device-accent, var(--support-primary)) 22%, transparent);
 }
 
 .support-device-landing-badge {
   margin-top: 0.25rem;
+}
+
+/* Guide-count + official-support-link row shown under a device's name
+   when it has real guides (replaces the "coming soon" badge in that
+   case). These classes were referenced by DeviceLandingPage.jsx but had
+   no matching rules yet, which is what made this row render as bare,
+   unstyled inline text/icons instead of a proper meta row. */
+.support-device-landing-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+.support-device-landing-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.support-device-landing-meta-item svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.support-device-landing-meta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--device-accent, var(--support-primary));
+  text-decoration: none;
+}
+
+.support-device-landing-meta-link:hover {
+  text-decoration: underline;
+}
+
+/* "Most used for {device}" highlight block above the full guide list —
+   wrapped in its own soft panel (rather than sitting flush with the rest
+   of the page) so it reads as a featured strip, not just the first
+   section in a flat list. */
+.support-device-landing-highlight {
+  margin-bottom: 1.75rem;
+  padding: 1.1rem 1.1rem 1.25rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--border));
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 4%, var(--card));
+}
+
+.support-device-landing-highlight-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.85rem;
+}
+
+.support-device-landing-highlight-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--card));
+  color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 70%, #f5a524);
+}
+
+/* Difficulty / reading-time badges on each guide card. */
+.support-card-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0;
+}
+
+.support-card-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+}
+
+.support-card-meta-badge svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Guide cards sit in a CSS grid row (.support-card-grid), and grid rows
+   stretch every item to match the tallest one by default. `.support-card-
+   description` (the base class this extends) carries `flex: 1` so it can
+   grow to push the CTA to the bottom in OTHER, non-clamped uses — but on a
+   clamped description that same flex-grow lets a taller sibling card in the
+   row stretch this box past its intended 2-line height, and a `-webkit-box`
+   line-clamp doesn't clip cleanly once something else has forced it taller
+   than its own content — the result is a sliver of a 3rd/4th line peeking
+   out, chopped mid-character, instead of a clean two-line ellipsis. Pinning
+   `flex` back to its own content size and adding an explicit max-height
+   backstop (2 lines at this class's own 1.5 line-height) makes the clamp
+   height deterministic regardless of how tall the row stretches the card —
+   the CTA below still lands at the bottom via its own `margin-top: auto`,
+   so nothing about the card's overall layout changes. */
+.support-card-description-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 0 1 auto;
+  max-height: 3em;
+}
+
+/* Guides grouped by category, when a device has more than one category
+   worth of settings. */
+.support-device-landing-category-section {
+  margin-bottom: 1.75rem;
+}
+
+.support-device-landing-category-section:last-child {
+  margin-bottom: 0;
+}
+
+.support-device-landing-category-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.85rem;
+  padding-left: 0.7rem;
+  border-left: 3px solid var(--device-accent, var(--support-primary));
+}
+
+.support-device-landing-category-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--device-accent, var(--support-primary));
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 10%, var(--card));
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
 }
 
 .support-device-comingsoon {
@@ -3729,6 +4531,124 @@
 
 .support-device-landing-sibling-grid {
   margin-top: 0.5rem;
+}
+
+/* Guide cards on a device page reuse the sitewide `.support-card` /
+   `.support-card-icon` classes (also used by OS settings, AI tools, and
+   utility pages) — these two rules only retint them while inside
+   `.support-device-landing`, so every other page keeps its plain
+   `--support-primary` teal exactly as before. */
+.support-device-landing .support-card-icon {
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--card));
+  color: var(--device-accent, var(--support-primary));
+}
+
+.support-device-landing .support-card:hover {
+  border-color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 32%, var(--border));
+  box-shadow: 0 16px 32px color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, transparent);
+}
+
+.support-device-landing .support-device-guide-card-cta {
+  color: var(--device-accent, var(--support-primary));
+}
+
+/* ---- Category hub: flat native-style settings list ----
+   Replaces the card-grid layout for OS category pages (e.g. "Display,
+   Sound & Notifications") with a single, dense, divided list — the shape
+   every native Settings app uses for a category's sub-settings (icon,
+   title, one-line description, chevron; no badges, no "most used"
+   callout, no card grid). Scoped entirely to its own classes, so
+   `.support-card` / `.support-device-landing-guides` and every page that
+   still uses the card-grid layout (device pages, AI tools, utilities)
+   are completely unaffected. */
+.support-category-hub-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  overflow: hidden;
+}
+
+.support-category-hub-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.support-category-hub-row:last-child {
+  border-bottom: none;
+}
+
+.support-category-hub-row:hover,
+.support-category-hub-row:focus-visible {
+  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 6%, var(--card));
+  outline: none;
+}
+
+.support-category-hub-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 0.6rem;
+  /* `--category-accent` is set inline per-row (see CategoryHubPage,
+     SettingDetailPage's Related Settings, and SupportLandingPage's
+     Recommended/Popular/Favorite widgets), one distinct color per setting
+     category — matching how native Settings apps give each category area
+     its own icon color instead of repeating one brand color everywhere.
+     Falls back to the platform/device accent, then the app's teal brand
+     color, for any row that doesn't set a category (there shouldn't be
+     any, but this keeps old callers from breaking). */
+  background: color-mix(in srgb, var(--category-accent, var(--device-accent, var(--support-primary))) 14%, var(--card));
+  color: var(--category-accent, var(--device-accent, var(--support-primary)));
+}
+
+.support-category-hub-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.support-category-hub-row-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.support-category-hub-row-desc {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-category-hub-row-chevron {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--muted-foreground) 65%, transparent);
+}
+
+@media (max-width: 480px) {
+  .support-category-hub-row-desc {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 /* ---- Bookmark star button ---- */
@@ -3968,7 +4888,9 @@
 .support-high-contrast .support-detail-section,
 .support-high-contrast .support-resource-card,
 .support-high-contrast .support-devicemenu-item,
-.support-high-contrast .support-platform-pill {
+.support-high-contrast .support-platform-pill,
+.support-high-contrast .support-category-hub-list,
+.support-high-contrast .support-detail-native-list {
   border-width: 2px;
 }
 
@@ -3995,6 +4917,23 @@
 
   .support-platform-pill {
     flex-shrink: 0;
+  }
+
+  /* The compact sidebar switcher (mobile slide-over + desktop rail both
+     use it) manages its own responsive behavior — icon-only inactive
+     pills sized to fit, with `flex-wrap: wrap` as its own safety net.
+     Without this override, the generic nowrap/overflow-x rules above
+     (written for the older, non-compact switcher) would win by source
+     order at this breakpoint and clip "More Devices" out of reach on
+     phones, which is exactly the bug being fixed here. */
+  .support-platform-switcher-compact .support-platform-switcher-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .support-platform-switcher-pills-compact {
+    flex-wrap: wrap;
   }
 
   .support-devicemenu-grid {

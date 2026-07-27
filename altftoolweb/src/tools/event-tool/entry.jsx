@@ -1,5 +1,7 @@
-import App from './App';
+"use client";
 
-export default function EventToolEntry() {
-  return <App />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

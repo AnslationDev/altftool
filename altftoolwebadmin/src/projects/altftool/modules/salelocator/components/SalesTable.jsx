@@ -571,7 +571,7 @@ function ExpandedRow({ item, colSpan, onEdit }) {
               </div>
             )}
 
-            {/* hero hero image path */}
+            {/* hero image path */}
             {isHero && item.heroImage && (
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hero Image</p>
@@ -632,9 +632,11 @@ function filterByType(data, query, type) {
       item.subtext?.toLowerCase().includes(q)
     );
   }
-  // nearby (fallback)
+  // nearby / all (fallback)
   return data.filter((item) =>
     item.title?.toLowerCase().includes(q) ||
+    item.subtitle?.toLowerCase().includes(q) ||
+    item.headline?.toLowerCase().includes(q) ||
     item.subTitle?.toLowerCase().includes(q) ||
     item.area?.toLowerCase().includes(q) ||
     item.city?.toLowerCase().includes(q) ||
@@ -651,35 +653,34 @@ const TYPE_LABELS = {
   dealOfTheDay: "Deal of the Day",
   hero:         "Hero",
   nearby:       "Nearby Deals",
+  all:          "Sale",
 };
 
 /* ════════════════════════════════════════
    Main SalesTable
 ════════════════════════════════════════ */
-export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
-  const [selected,        setSelected]        = useState([]);
-  const [expandedId,      setExpandedId]      = useState(null);
-  const [sorting,         setSorting]         = useState([]);
+export default function SalesTable({ data = [], selected, toggleSelect, toggleSelectAll, activeTab, onEdit, onDelete }) {
+  const [expandedId,       setExpandedId]       = useState(null);
+  const [sorting,          setSorting]          = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
-  const [columnSizing,    setColumnSizing]    = useState({});
-  const [showColumnPanel, setShowColumnPanel] = useState(false);
-  const [isFullscreen,    setIsFullscreen]    = useState(false);
-  const [searchQuery,     setSearchQuery]     = useState("");
-  const [hoveredRowId,    setHoveredRowId]    = useState(null);
+  const [columnSizing,     setColumnSizing]     = useState({});
+  const [showColumnPanel,  setShowColumnPanel]  = useState(false);
+  const [isFullscreen,     setIsFullscreen]     = useState(false);
+  const [searchQuery,      setSearchQuery]      = useState("");
+  const [hoveredRowId,     setHoveredRowId]     = useState(null);
 
   const columnPanelRef = useRef(null);
   const searchRef      = useRef(null);
 
   /* ── Reset on tab change ── */
   useEffect(() => {
-    setSelected([]);
     setExpandedId(null);
     setSearchQuery("");
     setColumnVisibility({});
     setSorting([]);
   }, [activeTab]);
 
-  /* ── New-badge tracking ── */
+  /* ── New-badge tracking (mirrors ExtensionsTable pattern) ── */
   const initialIdsRef = useRef(null);
   const [newIds, setNewIds] = useState(new Set());
   useEffect(() => {
@@ -702,15 +703,27 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
     }
   }, [data]);
 
-  /* ── Selection helpers ── */
-  const toggleSelect    = (id) => setSelected((p) => p.includes(id) ? p.filter((x) => x !== id) : [...p, id]);
-  const toggleSelectAll = ()   => setSelected((p) => p.length === filteredData.length ? [] : filteredData.map((d) => d.id));
+  /* ── Sorted + filtered data (mirrors ExtensionsTable pattern) ── */
+  const filteredData = useMemo(() => {
+    // Sort newest first — use createdAt if available, fall back to id comparison
+    const sorted = [...data].sort((a, b) => {
+      if (a.createdAt && b.createdAt) {
+        // Handle both Firestore Timestamps and plain date strings/numbers
+        const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime();
+        const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime();
+        return bTime - aTime;
+      }
+      // Fallback: numeric or string id
+      const aId = typeof a.id === "number" ? a.id : parseInt(a.id, 10) || 0;
+      const bId = typeof b.id === "number" ? b.id : parseInt(b.id, 10) || 0;
+      return bId - aId;
+    });
 
-  /* ── Filtered data ── */
-  const filteredData = useMemo(
-    () => filterByType(data, searchQuery, activeTab),
-    [data, searchQuery, activeTab]
-  );
+    return filterByType(sorted, searchQuery, activeTab);
+  }, [data, searchQuery, activeTab]);
+
+  const totalCount    = data.length;
+  const filteredCount = filteredData.length;
 
   const allSelected  = filteredData.length > 0 && selected.length === filteredData.length;
   const someSelected = selected.length > 0 && selected.length < filteredData.length;
@@ -720,7 +733,7 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
     const shared = { selected, allSelected, someSelected, toggleSelect, toggleSelectAll, newIds, onEdit, onDelete };
 
     if (activeTab === "flashSale" || activeTab === "trendingSale" || activeTab === "all")
-       return buildProductColumns(shared);
+      return buildProductColumns(shared);
     if (activeTab === "dealOfTheDay") return buildDotdColumns(shared);
     if (activeTab === "hero")         return buildHeroColumns(shared);
 
@@ -810,12 +823,12 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
     getRowId: (row) => String(row.id),
   });
 
-  const totalCount    = data.length;
-  const filteredCount = filteredData.length;
-
   /* ── Outside click: column panel ── */
   useEffect(() => {
-    const h = (e) => { if (columnPanelRef.current && !columnPanelRef.current.contains(e.target)) setShowColumnPanel(false); };
+    const h = (e) => {
+      if (columnPanelRef.current && !columnPanelRef.current.contains(e.target))
+        setShowColumnPanel(false);
+    };
     if (showColumnPanel) document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, [showColumnPanel]);
@@ -836,13 +849,16 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
   /* ── Cmd/Ctrl+F: focus search ── */
   useEffect(() => {
     const h = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "f") { e.preventDefault(); searchRef.current?.focus(); }
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
     };
     document.addEventListener("keydown", h);
     return () => document.removeEventListener("keydown", h);
   }, []);
 
-  const typeLabel    = TYPE_LABELS[activeTab] || "Sales";
+  const typeLabel    = TYPE_LABELS[activeTab] || "Sale";
   const wrapperClass = isFullscreen
     ? "fixed inset-0 z-50 bg-white flex flex-col"
     : "bg-white rounded-2xl border border-gray-200/80 shadow-sm flex flex-col overflow-hidden";
@@ -859,7 +875,7 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search ${typeLabel.toLowerCase()}… (⌘F)`}
+            placeholder={`Search ${typeLabel.toLowerCase()}s… (⌘F)`}
             className="w-full pl-9 pr-8 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition-all placeholder:text-gray-400"
           />
           {searchQuery && (
@@ -916,13 +932,13 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setSelected([])}
+              onClick={() => toggleSelectAll()}
               className="text-xs text-gray-500 hover:text-gray-700 font-medium px-2 py-1.5 rounded-lg hover:bg-white/60 transition-colors">
               Clear selection
             </button>
-            <button 
-            onClick={() => onDelete(selected)}
-            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm shadow-red-200 hover:shadow-red-300">
+            <button
+              onClick={() => onDelete(selected)}
+              className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition-all shadow-sm shadow-red-200 hover:shadow-red-300">
               <Trash2 className="w-3.5 h-3.5" />
               Delete {selected.length > 1 ? `${selected.length} items` : "item"}
             </button>
@@ -963,7 +979,7 @@ export default function SalesTable({ data = [], activeTab, onEdit, onDelete }) {
                       <Search className="w-6 h-6 text-gray-300" />
                     </div>
                     <div className="space-y-1">
-                      <p className="text-sm font-semibold text-gray-600">No {typeLabel.toLowerCase()} found</p>
+                      <p className="text-sm font-semibold text-gray-600">No {typeLabel.toLowerCase()}s found</p>
                       {searchQuery && (
                         <p className="text-xs text-gray-400">
                           No results for "<span className="font-medium">{searchQuery}</span>"{" · "}

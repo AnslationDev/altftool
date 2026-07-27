@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 const envConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -89,10 +90,17 @@ export async function getDocById(colName, id) {
  * client's Firestore security-rule/auth state (e.g. the "Local Admin"
  * dev session, which never performs real Firebase Auth and previously
  * caused "Missing or insufficient permissions" on Save).
+ *
+ * The bearer token comes from `getAdminIdToken()` rather than
+ * `auth.currentUser`, because the "Local Admin" dev session has no Firebase
+ * user at all — reading `currentUser` there yields null, no Authorization
+ * header is sent, and the save/delete routes (which now require the
+ * well-known local-dev bearer for their no-Firebase-token path) answer 401.
+ * `getAdminIdToken()` returns the real Firebase ID token when one exists and
+ * the local-dev token when a local-admin session is active.
  */
 async function callAnternetApi(path, body) {
-  const user = auth?.currentUser;
-  const idToken = user ? await user.getIdToken().catch(() => null) : null;
+  const idToken = await getAdminIdToken().catch(() => null);
   const res = await fetch(path, {
     method: "POST",
     headers: {

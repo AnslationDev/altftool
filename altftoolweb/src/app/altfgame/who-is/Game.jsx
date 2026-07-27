@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useGameSounds, playSound } from "@/app/altfgame/_lib/sounds";
+import { useGameSounds, playSound } from "@/lib/sounds";
 
 /* ============================================================
    WHO IS? — an original detective / riddle mini-game.
@@ -799,7 +799,7 @@ export default function WhoIs() {
           <div className="wi-brand">
             <div className="wi-brand-dot" />
             <div className="wi-brand-logo">WHO IS?</div>
-            <div className="wi-brand-tag">{"// Detective Case Files"}</div>
+            <div className="wi-brand-tag">Detective Case Files</div>
           </div>
           <div className="wi-stats">
             <div className="wi-pill"><span className="lbl">Case</span><span className="val">{roundIndex + 1}/{TOTAL_ROUNDS}</span></div>

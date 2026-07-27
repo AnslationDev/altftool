@@ -8,6 +8,33 @@
 // The title/body live inside the "data" payload instead.
 
 import { adminDb, adminMessaging } from "@/lib/firebaseAdmin";
+import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
+import { getRbacRootRef } from "@/lib/serverRbac";
+
+/**
+ * Read an admin's registered FCM tokens from whichever store holds them.
+ *
+ * Tokens live in the RBAC store for admins created through the RBAC path and
+ * in the legacy `admins` collection for older accounts. Reading only the legacy
+ * collection silently delivered zero pushes to every RBAC-era admin.
+ */
+async function readTokensForUid(uid) {
+  const [rbacSnap, legacySnap] = await Promise.all([
+    getRbacRootRef()
+      .collection(RBAC_COLLECTIONS.adminUsers)
+      .doc(uid)
+      .get()
+      .catch(() => null),
+    adminDb.collection("admins").doc(uid).get().catch(() => null),
+  ]);
+
+  const tokens = new Set();
+  for (const snap of [rbacSnap, legacySnap]) {
+    const list = snap?.data()?.fcmTokens;
+    if (Array.isArray(list)) list.forEach((t) => t && tokens.add(t));
+  }
+  return [...tokens];
+}
 
 /**
  * Send a push notification to one or more admin users.
@@ -22,18 +49,9 @@ export async function sendPushToUsers({ userIds, title, body, data = {} }) {
   if (!userIds?.length || !title) return;
 
   try {
-    // ── 1. Collect FCM tokens ──────────────────────────────────────────────
-    const snapshots = await Promise.all(
-      userIds.map((uid) => adminDb.collection("admins").doc(uid).get())
-    );
-
-    const tokens = [];
-    for (const snap of snapshots) {
-      const fcmTokens = snap.data()?.fcmTokens;
-      if (Array.isArray(fcmTokens) && fcmTokens.length) {
-        tokens.push(...fcmTokens);
-      }
-    }
+    // ── 1. Collect FCM tokens (RBAC store + legacy collection) ─────────────
+    const perUser = await Promise.all(userIds.map((uid) => readTokensForUid(uid)));
+    const tokens = [...new Set(perUser.flat())];
 
     if (tokens.length === 0) {
       return;

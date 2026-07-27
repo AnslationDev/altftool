@@ -1,42 +1,74 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { adminDb } from "@/lib/firebaseAdmin";
+import { createLocalDevAdminActor, isLocalDevAdminRequest } from "@/lib/adminAccess";
+import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 
 export const runtime = "nodejs";
 
 const PROJECT_ID = "carrerbook";
+const CONTACT_MODULE_KEY = "contact-us";
 const SETTINGS_REF = ["projects", PROJECT_ID, "contact", "settings"];
 const LEADS_REF = ["projects", PROJECT_ID, "contact", "settings", "submissions"];
-const LOCAL_ADMIN_TOKEN = "local-dev-admin-token";
 
-function getBearerToken(request) {
-  const header = request.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) return "";
-  return header.split("Bearer ")[1];
+function httpError(message, status) {
+  const error = new Error(message);
+  error.status = status;
+  error.expose = true;
+  return error;
+}
+
+// Distinguishes "the caller's credentials are missing/invalid" (401) from an
+// infrastructure fault raised while checking them. verifyActiveAdmin also reads
+// Firestore, so a transient UNAVAILABLE/DEADLINE_EXCEEDED must not be reported
+// to the client as an authentication failure.
+function isAuthenticationFailure(error) {
+  // Thrown by getBearerToken() when the Authorization header is missing/malformed.
+  if (error?.message === "Unauthorized") return true;
+  // firebase-admin auth errors: auth/id-token-expired, auth/argument-error, ...
+  const code = error?.code || error?.errorInfo?.code || "";
+  return typeof code === "string" && code.startsWith("auth/");
 }
 
 async function verifyAdminRequest(request) {
-  const token = getBearerToken(request);
-
-  if (process.env.NODE_ENV === "development" && token === LOCAL_ADMIN_TOKEN) {
-    return { uid: "local-dev-admin", email: "admin@altftool.local" };
+  if (isLocalDevAdminRequest(request)) {
+    return createLocalDevAdminActor();
   }
 
-  if (!token) {
-    const error = new Error("Unauthorized");
-    error.status = 401;
-    throw error;
+  // RBAC store first, legacy `admins` as fallback (verifyActiveAdmin does both),
+  // then a project-scoped module check — sending mail from the organisation's
+  // sender is not something every admin of every project may do.
+  let decoded;
+  let admin;
+  try {
+    ({ decoded, admin } = await verifyActiveAdmin(request));
+  } catch (authErr) {
+    // "Forbidden"/"Inactive admin" = authenticated but not an eligible admin.
+    if (authErr?.message === "Forbidden" || authErr?.message === "Inactive admin") {
+      throw httpError("Forbidden", 403);
+    }
+    // Missing/expired/invalid credentials = authentication issue.
+    if (isAuthenticationFailure(authErr)) {
+      throw httpError("Unauthorized", 401);
+    }
+    // Anything else is a genuine backend fault: rethrow so the outer catch logs
+    // it and answers 500 instead of telling the client to re-authenticate.
+    throw authErr;
   }
 
-  const decoded = await adminAuth.verifyIdToken(token);
-  const adminSnap = await adminDb.collection("admins").doc(decoded.uid).get();
-  if (!adminSnap.exists || adminSnap.data()?.isActive === false) {
-    const error = new Error("Forbidden");
-    error.status = 403;
-    throw error;
+  if (
+    !hasModuleAccess({
+      adminData: admin,
+      projectId: PROJECT_ID,
+      moduleKey: CONTACT_MODULE_KEY,
+      action: "write",
+    })
+  ) {
+    throw httpError("Forbidden", 403);
   }
 
-  return decoded;
+  return { ...decoded, email: decoded?.email || admin?.email || null };
 }
 
 function renderGreetingHtml({ subject, message, lead, settings }) {
@@ -80,14 +112,25 @@ function escapeHtml(value = "") {
 export async function POST(request) {
   try {
     const actor = await verifyAdminRequest(request);
-    const body = await request.json();
-    const leadId = String(body?.leadId || "").trim();
-    const to = String(body?.to || "").trim();
-    const subject = String(body?.subject || "").trim();
-    const message = String(body?.message || "").trim();
 
-    if (!leadId || !to || !subject || !message) {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+    }
+
+    const leadId = typeof body?.leadId === "string" ? body.leadId.trim() : "";
+    const requestedTo = typeof body?.to === "string" ? body.to.trim() : "";
+    const subject = typeof body?.subject === "string" ? body.subject.trim() : "";
+    const message = typeof body?.message === "string" ? body.message.trim() : "";
+
+    if (!leadId || !requestedTo || !subject || !message) {
       return NextResponse.json({ error: "leadId, to, subject and message are required." }, { status: 400 });
+    }
+
+    if (leadId.includes("/")) {
+      return NextResponse.json({ error: "Invalid leadId." }, { status: 400 });
     }
 
     const settingsSnap = await adminDb.doc(`projects/${PROJECT_ID}/contact/settings`).get();
@@ -99,10 +142,22 @@ export async function POST(request) {
       return NextResponse.json({ error: "Lead not found." }, { status: 404 });
     }
 
+    const lead = leadSnap.data() || {};
+
+    // The recipient is always the address stored on the lead — never a
+    // caller-supplied one, so this endpoint cannot be used to relay arbitrary
+    // mail from the organisation's sender. A `to` that differs from the stored
+    // address is ignored rather than rejected, so the feature keeps working; the
+    // address actually used is echoed back and recorded in `greetingTo`.
+    const to = typeof lead.email === "string" ? lead.email.trim() : "";
+    if (!to) {
+      return NextResponse.json({ error: "This lead has no email address on file." }, { status: 400 });
+    }
+
     const html = renderGreetingHtml({
       subject,
       message,
-      lead: leadSnap.data() || {},
+      lead,
       settings,
     });
 
@@ -150,9 +205,15 @@ export async function POST(request) {
       { merge: true },
     );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, to });
   } catch (error) {
     console.error("[contact/send-greeting]", error);
-    return NextResponse.json({ error: error?.message || "Failed to send greeting." }, { status: error?.status || 500 });
+    // Only trust `status` on errors this route authored (httpError). Rethrown
+    // infrastructure errors can carry unrelated `status`/`code` fields.
+    const status = error?.expose && Number.isInteger(error?.status) ? error.status : 500;
+    // Only surface messages this route authored; provider/internal errors stay
+    // in the server log.
+    const safeMessage = error?.expose && error?.message ? error.message : "Failed to send greeting.";
+    return NextResponse.json({ error: safeMessage }, { status });
   }
 }

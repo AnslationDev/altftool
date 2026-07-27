@@ -1,4 +1,7 @@
-import BrowserSessionMain from "./pages/main";
-export default function Entry() {
-  return <BrowserSessionMain />;
+"use client";
+
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

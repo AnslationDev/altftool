@@ -1,14 +1,10 @@
 const toolConfig = {
   slug: "base64-to-file",
-  "slug": "base64-to-file",
-  "name": "Base64 to File",
-  "category": [
-    "Converter",
-    "Developer"
-  ],
-  "description": "Turn Base64 strings or data URLs into downloadable files.",
-  "icon": "download",
-  "iconColor": "text-indigo-700"
+  name: "Base64 to File",
+  category: ["Converters", "Developer"],
+  description: "Turn Base64 strings or data URLs into downloadable files.",
+  icon: "download",
+  iconColor: "text-(--primary)",
 };
 
 export default toolConfig;

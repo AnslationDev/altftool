@@ -15,6 +15,7 @@ export const SELF_CHROME_PREFIXES = [
   // microsites with their own header/footer
   "/altfloveimg",
   "/altflovepdf",
+  "/altpintrest",
   "/apps",
   "/tripfindbox",
   "/homeserv",

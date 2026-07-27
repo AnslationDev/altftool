@@ -1,69 +1,80 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
+import { Badge, Button } from "@altftool/ui";
+import {
+  DataTable,
+  EmptyState,
+  FilterBar,
+  PageHeader,
+  StatTile,
+  useTableControls,
+} from "@/ansets";
 import {
   TicketIcon,
-  Loader2,
-  Search,
-  ChevronRight,
   Clock,
   UserCheck,
-  X,
-  SlidersHorizontal,
   TrendingUp,
   AlertCircle,
   CheckCircle2,
   Circle,
 } from "lucide-react";
 
-// ── Design tokens ─────────────────────────────────────────────────────────────
+// ── Status + priority vocabulary ──────────────────────────────────────────────
+//
+// `tone` feeds the Badge primitive, `statTone` feeds StatTile (which has no
+// "info" tone — open maps to primary there). Neither hardcodes a colour.
 
 const STATUS_CONFIG = {
-  open: {
-    badge: "bg-[var(--info-soft)] text-[var(--info)] ring-1 ring-[var(--border)]",
-    stat: "bg-[var(--info-soft)] border-[var(--border)] text-[var(--info)]",
-    activeStat: "bg-[var(--info)] text-[var(--primary-foreground)] border-[var(--info)]",
-    dot: "bg-[var(--info)]",
-    label: "Open",
-    icon: Circle,
-  },
+  open: { tone: "info", statTone: "primary", label: "Open", icon: Circle },
   in_progress: {
-    badge: "bg-[var(--warning-soft)] text-[var(--warning)] ring-1 ring-[var(--border)]",
-    stat: "bg-[var(--warning-soft)] border-[var(--border)] text-[var(--warning)]",
-    activeStat: "bg-[var(--warning)] text-[var(--primary-foreground)] border-[var(--warning)]",
-    dot: "bg-[var(--warning)]",
+    tone: "warning",
+    statTone: "warning",
     label: "In Progress",
     icon: TrendingUp,
   },
   resolved: {
-    badge: "bg-[var(--success-soft)] text-[var(--success)] ring-1 ring-[var(--border)]",
-    stat: "bg-[var(--success-soft)] border-[var(--border)] text-[var(--success)]",
-    activeStat: "bg-[var(--success)] text-[var(--primary-foreground)] border-[var(--success)]",
-    dot: "bg-[var(--success)]",
+    tone: "success",
+    statTone: "success",
     label: "Resolved",
     icon: CheckCircle2,
   },
-  closed: {
-    badge: "bg-[var(--surface-soft)] text-[var(--muted)] ring-1 ring-[var(--border)]",
-    stat: "bg-[var(--surface-soft)] border-[var(--border)] text-[var(--muted)]",
-    activeStat: "bg-[var(--primary)] text-[var(--primary-foreground)] border-[var(--primary)]",
-    dot: "bg-[var(--muted)]",
-    label: "Closed",
-    icon: AlertCircle,
-  },
+  closed: { tone: "neutral", statTone: "default", label: "Closed", icon: AlertCircle },
 };
 
+const STATUS_ORDER = ["open", "in_progress", "resolved", "closed"];
+
 const PRIORITY_CONFIG = {
-  low: { badge: "bg-[var(--surface-soft)] text-[var(--muted)] ring-1 ring-[var(--border)]", label: "Low" },
-  medium: { badge: "bg-[var(--warning-soft)] text-[var(--warning)] ring-1 ring-[var(--border)]", label: "Medium" },
-  high: { badge: "bg-[var(--danger-soft)] text-[var(--danger)] ring-1 ring-[var(--border)]", label: "High" },
+  low: { tone: "neutral", label: "Low" },
+  medium: { tone: "warning", label: "Medium" },
+  high: { tone: "danger", label: "High" },
 };
 
 const TYPE_LABEL = { bug: "🐛 Bug", feature: "✨ Feature", query: "💬 Query" };
+
+const STATUS_OPTIONS = [
+  { value: "", label: "All statuses" },
+  ...STATUS_ORDER.map((s) => ({ value: s, label: STATUS_CONFIG[s].label })),
+];
+
+const PRIORITY_OPTIONS = [
+  { value: "", label: "All priorities" },
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
+];
+
+// Module scope so useTableControls' memo keeps a stable identity across renders.
+const SEARCH_FIELDS = ["title"];
+const TABLE_FILTERS = {
+  status: (row, value) => row.status === value,
+  priority: (row, value) => row.priority === value,
+};
 
 function fmtDate(ts) {
   if (!ts) return "";
@@ -77,109 +88,36 @@ function fmtDate(ts) {
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 }
 
-// ── Stat card ─────────────────────────────────────────────────────────────────
+// ── Clickable KPI ─────────────────────────────────────────────────────────────
+//
+// StatTile has no click affordance and must not be forked, so the tile stays the
+// anset and the button wraps it. The selected ring lives on the wrapper rather
+// than overriding the tile's border, because `cn` concatenates (no tw-merge).
 
-function StatCard({ status, count, active, onClick }) {
+function StatusFilterTile({ status, count, active, unavailable, onClick }) {
   const cfg = STATUS_CONFIG[status];
-  const Icon = cfg.icon;
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`flex flex-col p-4 rounded-2xl border transition-all duration-150 text-left group ${
-        active
-          ? cfg.activeStat + " shadow-md"
-          : cfg.stat + " hover:shadow-sm hover:scale-[1.01]"
+      aria-pressed={active}
+      aria-label={
+        unavailable
+          ? `Filter by ${cfg.label} — count unavailable`
+          : `Filter by ${cfg.label} — ${count}`
+      }
+      className={`rounded-xl text-left transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
+        active ? "ring-2 ring-[var(--primary)]" : "hover:shadow-md"
       }`}
     >
-      <div className="flex items-center justify-between mb-2">
-        <Icon className={`w-4 h-4 ${active ? "opacity-80" : "opacity-60"}`} />
-        {active && <X className="w-3 h-3 opacity-60" />}
-      </div>
-      <p className={`text-2xl font-black tabular-nums leading-none`}>{count}</p>
-      <p className={`text-[11px] font-bold mt-1 ${active ? "opacity-80" : "opacity-60"}`}>
-        {cfg.label}
-      </p>
-    </button>
-  );
-}
-
-// ── Empty state ───────────────────────────────────────────────────────────────
-
-function EmptyState({ hasFilters }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <div className="w-16 h-16 rounded-3xl bg-[var(--surface-soft)] flex items-center justify-center">
-        <TicketIcon className="w-7 h-7 text-[var(--muted)]" />
-      </div>
-      <div className="text-center">
-        <p className="text-sm font-semibold text-[var(--muted)]">No tickets found</p>
-        <p className="text-xs text-[var(--muted)] mt-1">
-          {hasFilters ? "Try adjusting your filters" : "All caught up!"}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ── Ticket row ────────────────────────────────────────────────────────────────
-
-function TicketRow({ ticket, onClick }) {
-  const statusCfg = STATUS_CONFIG[ticket.status] ?? STATUS_CONFIG.open;
-  const priorityCfg = PRIORITY_CONFIG[ticket.priority] ?? PRIORITY_CONFIG.low;
-
-  return (
-    <button
-      onClick={onClick}
-      className="w-full text-left px-5 py-4 hover:bg-[var(--surface-soft)] transition-colors group"
-    >
-      {/* Mobile layout */}
-      <div className="sm:hidden flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-[var(--foreground)] truncate transition-colors">
-            {ticket.title}
-          </p>
-          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${priorityCfg.badge}`}>
-              {priorityCfg.label}
-            </span>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusCfg.badge}`}>
-              {statusCfg.label}
-            </span>
-            <span className="text-[10px] text-[var(--muted)] flex items-center gap-0.5">
-              <Clock className="w-2.5 h-2.5" /> {fmtDate(ticket.createdAt)}
-            </span>
-          </div>
-        </div>
-        <ChevronRight className="w-4 h-4 text-[var(--muted)] shrink-0 mt-1 transition-colors" />
-      </div>
-
-      {/* Desktop layout */}
-      <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 items-center">
-        <div className="min-w-0">
-          <p className="text-sm font-semibold text-[var(--foreground)] truncate transition-colors">
-            {ticket.title}
-          </p>
-          {ticket.assignedTo && (
-            <span className="inline-flex items-center gap-1 text-[10px] text-[var(--muted)] mt-0.5">
-              <UserCheck className="w-2.5 h-2.5" /> Assigned
-            </span>
-          )}
-        </div>
-        <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] ring-1 ring-[var(--border)] w-fit">
-          {TYPE_LABEL[ticket.type] ?? ticket.type}
-        </span>
-        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full w-fit ${priorityCfg.badge}`}>
-          {priorityCfg.label}
-        </span>
-        <div className="flex items-center gap-1.5">
-          <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${statusCfg.dot}`} />
-          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${statusCfg.badge}`}>
-            {statusCfg.label}
-          </span>
-        </div>
-        <span className="text-xs text-[var(--muted)] whitespace-nowrap">{fmtDate(ticket.createdAt)}</span>
-        <ChevronRight className="w-3.5 h-3.5 text-[var(--muted)] transition-colors" />
-      </div>
+      <StatTile
+        label={cfg.label}
+        value={unavailable ? "—" : count}
+        hint={active ? "Active filter" : undefined}
+        tone={cfg.statTone}
+        icon={cfg.icon}
+        className="h-full"
+      />
     </button>
   );
 }
@@ -192,32 +130,55 @@ export default function SupportManagementPage() {
 
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [priorityFilter, setPriorityFilter] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const {
+    search,
+    onSearchChange,
+    filterValues,
+    setFilter,
+    rows: visibleTickets,
+    total,
+    matched,
+  } = useTableControls(tickets, {
+    searchFields: SEARCH_FIELDS,
+    filters: TABLE_FILTERS,
+  });
 
   useEffect(() => {
     if (!user) return;
+    setLoading(true);
+    setLoadError("");
     const q = query(
       collection(db, "support_tickets"),
       where("isDeleted", "!=", true),
       orderBy("isDeleted"),
       orderBy("createdAt", "desc")
     );
-    const unsub = onSnapshot(q, (snap) => {
-      setTickets(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-      setLoading(false);
-    });
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        setTickets(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+        setLoadError("");
+        setLoading(false);
+      },
+      (err) => {
+        setTickets([]);
+        setLoadError(
+          err?.code === "permission-denied"
+            ? "Your admin account does not have permission to read support tickets."
+            : "The ticket list is temporarily unavailable. Please try again."
+        );
+        setLoading(false);
+      }
+    );
     return () => unsub();
-  }, [user]);
+  }, [user, reloadKey]);
 
-  const filtered = tickets.filter((t) => {
-    if (statusFilter && t.status !== statusFilter) return false;
-    if (priorityFilter && t.priority !== priorityFilter) return false;
-    if (search && !t.title.toLowerCase().includes(search.toLowerCase())) return false;
-    return true;
-  });
+  const statusFilter = filterValues.status ?? "";
+  const priorityFilter = filterValues.priority ?? "";
+  const hasFilters = Boolean(search || statusFilter || priorityFilter);
 
   const counts = {
     open: tickets.filter((t) => t.status === "open").length,
@@ -226,186 +187,185 @@ export default function SupportManagementPage() {
     closed: tickets.filter((t) => t.status === "closed").length,
   };
 
-  const activeFilterCount = [statusFilter, priorityFilter, search].filter(Boolean).length;
-  const hasFilters = activeFilterCount > 0;
+  // While the list is loading or the listener has failed, `tickets` is empty for
+  // reasons unrelated to the real counts — never assert a factual zero then.
+  const countsUnavailable = loading || Boolean(loadError);
 
   const clearFilters = () => {
-    setSearch("");
-    setStatusFilter("");
-    setPriorityFilter("");
+    onSearchChange("");
+    setFilter("status", "");
+    setFilter("priority", "");
   };
 
-  return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      {/* Page header */}
-      <div className="bg-[var(--surface)] border-b border-[var(--border)]">
-        <div className="max-w-7xl mx-auto px-5 py-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-xl font-bold text-[var(--foreground)]">Support Management</h1>
-              <p className="text-sm text-[var(--muted)] mt-0.5">
-                {loading ? "Loading…" : `${tickets.length} total ticket${tickets.length !== 1 ? "s" : ""}`}
-              </p>
-            </div>
-          </div>
+  const headerDescription = loading
+    ? "Loading…"
+    : loadError
+    ? "Ticket list unavailable"
+    : `${total} total ticket${total !== 1 ? "s" : ""}`;
 
-          {/* Stat cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
-            {(["open", "in_progress", "resolved", "closed"]).map((s) => (
-              <StatCard
-                key={s}
-                status={s}
-                count={counts[s]}
-                active={statusFilter === s}
-                onClick={() => setStatusFilter(statusFilter === s ? "" : s)}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+  const countLabel = loading
+    ? "Loading…"
+    : loadError
+    ? "Unavailable"
+    : hasFilters
+    ? `${matched} of ${total} tickets`
+    : `${total} ticket${total !== 1 ? "s" : ""}`;
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-5 py-5 space-y-4">
-
-        {/* Search + filters bar */}
-        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-3 flex flex-col sm:flex-row gap-3">
-          {/* Search */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)] pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search tickets by title…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--border-strong)] placeholder:text-[var(--muted)] transition"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
-
-          {/* Filter toggles */}
-          <div className="flex gap-2 shrink-0">
-            <button
-              onClick={() => setShowFilters((v) => !v)}
-              className={`flex items-center gap-1.5 px-3.5 py-2.5 text-sm font-medium rounded-xl border transition ${
-                showFilters || priorityFilter
-                  ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                  : "border-[var(--border)] text-[var(--muted)] hover:bg-[var(--surface-soft)]"
-              }`}
+  const columns = [
+    {
+      key: "title",
+      header: "Ticket",
+      render: (t) => {
+        const statusCfg = STATUS_CONFIG[t.status] ?? STATUS_CONFIG.open;
+        const priorityCfg = PRIORITY_CONFIG[t.priority] ?? PRIORITY_CONFIG.low;
+        return (
+          <div className="min-w-0">
+            <Link
+              href={`/tickets/${t.id}`}
+              onClick={(event) => event.stopPropagation()}
+              className="block truncate rounded-sm text-sm font-semibold text-[var(--foreground)] transition-colors hover:text-[var(--primary)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
             >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              Filters
-              {activeFilterCount > 0 && (
-                <span className="w-4 h-4 rounded-full bg-[var(--primary-foreground)]/20 text-[9px] font-black flex items-center justify-center">
-                  {activeFilterCount}
-                </span>
-              )}
-            </button>
+              {t.title}
+            </Link>
 
-            {hasFilters && (
-              <button
-                onClick={clearFilters}
-                className="px-3.5 py-2.5 text-sm font-medium text-[var(--muted)] hover:text-[var(--foreground)] border border-[var(--border)] rounded-xl hover:bg-[var(--surface-soft)] transition"
-              >
+            {t.assignedTo ? (
+              <span className="mt-0.5 hidden items-center gap-1 text-xs text-[var(--muted)] sm:inline-flex">
+                <UserCheck className="h-3 w-3" aria-hidden="true" /> Assigned
+              </span>
+            ) : null}
+
+            {/* Narrow screens: restate the columns that are hidden below `sm`. */}
+            <div className="mt-1.5 flex flex-wrap items-center gap-1.5 sm:hidden">
+              <Badge tone={priorityCfg.tone}>{priorityCfg.label}</Badge>
+              <Badge tone={statusCfg.tone}>{statusCfg.label}</Badge>
+              <span className="inline-flex items-center gap-1 text-xs text-[var(--muted)]">
+                <Clock className="h-3 w-3" aria-hidden="true" />
+                {fmtDate(t.createdAt)}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      key: "type",
+      header: "Type",
+      hideBelow: "sm",
+      width: "8.5rem",
+      render: (t) => <Badge tone="primary">{TYPE_LABEL[t.type] ?? t.type}</Badge>,
+    },
+    {
+      key: "priority",
+      header: "Priority",
+      hideBelow: "sm",
+      width: "7rem",
+      render: (t) => {
+        const cfg = PRIORITY_CONFIG[t.priority] ?? PRIORITY_CONFIG.low;
+        return <Badge tone={cfg.tone}>{cfg.label}</Badge>;
+      },
+    },
+    {
+      key: "status",
+      header: "Status",
+      hideBelow: "sm",
+      width: "8rem",
+      render: (t) => {
+        const cfg = STATUS_CONFIG[t.status] ?? STATUS_CONFIG.open;
+        return <Badge tone={cfg.tone}>{cfg.label}</Badge>;
+      },
+    },
+    {
+      key: "createdAt",
+      header: "Date",
+      hideBelow: "sm",
+      align: "right",
+      width: "7rem",
+      render: (t) => (
+        <span className="whitespace-nowrap text-xs text-[var(--muted)]">
+          {fmtDate(t.createdAt)}
+        </span>
+      ),
+    },
+  ];
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <PageHeader
+        icon={TicketIcon}
+        title="Support Management"
+        description={headerDescription}
+      >
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {STATUS_ORDER.map((s) => (
+            <StatusFilterTile
+              key={s}
+              status={s}
+              count={counts[s]}
+              unavailable={countsUnavailable}
+              active={statusFilter === s}
+              onClick={() => setFilter("status", statusFilter === s ? "" : s)}
+            />
+          ))}
+        </div>
+      </PageHeader>
+
+      <div className="space-y-4">
+        <FilterBar
+          search={search}
+          onSearchChange={onSearchChange}
+          searchPlaceholder="Search tickets by title…"
+          filters={[
+            {
+              key: "status",
+              label: "Filter by status",
+              value: statusFilter,
+              onChange: (value) => setFilter("status", value),
+              options: STATUS_OPTIONS,
+            },
+            {
+              key: "priority",
+              label: "Filter by priority",
+              value: priorityFilter,
+              onChange: (value) => setFilter("priority", value),
+              options: PRIORITY_OPTIONS,
+            },
+          ]}
+          count={countLabel}
+          actions={
+            hasFilters ? (
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
                 Clear
-              </button>
-            )}
-          </div>
-        </div>
+              </Button>
+            ) : null
+          }
+        />
 
-        {/* Expanded filters */}
-        {showFilters && (
-          <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-4 flex flex-wrap gap-3">
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">Status</label>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="text-sm px-3 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] text-[var(--foreground)] min-w-[140px]"
-              >
-                <option value="">All Status</option>
-                <option value="open">Open</option>
-                <option value="in_progress">In Progress</option>
-                <option value="resolved">Resolved</option>
-                <option value="closed">Closed</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">Priority</label>
-              <select
-                value={priorityFilter}
-                onChange={(e) => setPriorityFilter(e.target.value)}
-                className="text-sm px-3 py-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] focus:outline-none focus:[box-shadow:var(--focus-ring)] text-[var(--foreground)] min-w-[140px]"
-              >
-                <option value="">All Priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
-          </div>
-        )}
-
-        {/* Results summary */}
-        {hasFilters && !loading && (
-          <div className="flex items-center gap-2 px-1">
-            <span className="text-xs text-[var(--muted)]">
-              Showing <span className="font-bold text-[var(--foreground)]">{filtered.length}</span> of{" "}
-              <span className="font-bold text-[var(--foreground)]">{tickets.length}</span> tickets
-            </span>
-          </div>
-        )}
-
-        {/* Ticket table */}
-        <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm overflow-hidden">
-          {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 gap-3">
-              <Loader2 className="w-6 h-6 animate-spin text-[var(--muted)]" />
-              <p className="text-sm text-[var(--muted)]">Loading tickets…</p>
-            </div>
-          ) : filtered.length === 0 ? (
-            <EmptyState hasFilters={hasFilters} />
-          ) : (
-            <>
-              {/* Table header (desktop only) */}
-              <div className="hidden sm:grid grid-cols-[1fr_120px_80px_100px_90px_32px] gap-4 px-5 py-3 bg-[var(--surface-soft)] border-b border-[var(--border)] text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider">
-                <span>Ticket</span>
-                <span>Type</span>
-                <span>Priority</span>
-                <span>Status</span>
-                <span>Date</span>
-                <span />
-              </div>
-
-              <div className="divide-y divide-[var(--border)]">
-                {filtered.map((t) => (
-                  <TicketRow
-                    key={t.id}
-                    ticket={t}
-                    onClick={() => router.push(`/tickets/${t.id}`)}
-                  />
-                ))}
-              </div>
-
-              {/* Footer */}
-              <div className="px-5 py-3 bg-[var(--surface-soft)] border-t border-[var(--border)]">
-                <p className="text-[11px] text-[var(--muted)]">
-                  {filtered.length} ticket{filtered.length !== 1 ? "s" : ""}
-                  {hasFilters ? " matching filters" : " total"}
-                </p>
-              </div>
-            </>
-          )}
-        </div>
-
+        <DataTable
+          columns={columns}
+          rows={visibleTickets}
+          getRowKey={(t) => t.id}
+          loading={loading}
+          error={loadError || null}
+          onRetry={() => setReloadKey((k) => k + 1)}
+          onRowClick={(t) => router.push(`/tickets/${t.id}`)}
+          caption="All support tickets raised across the platform"
+          empty={
+            <EmptyState
+              icon={TicketIcon}
+              title="No tickets found"
+              description={
+                hasFilters ? "Try adjusting your filters." : "All caught up!"
+              }
+              action={
+                hasFilters ? (
+                  <Button variant="secondary" size="sm" onClick={clearFilters}>
+                    Clear filters
+                  </Button>
+                ) : null
+              }
+            />
+          }
+        />
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ export const galaxyBudsSettings = [
     ],
     important:
       "Only one phone can hold an active Bluetooth audio connection at a time; pairing to a second device doesn't disconnect the first automatically.",
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-pair-galaxy-buds-with-galaxy-wearable-app/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds Pairing",
     whyItMatters:
       "Pairing through Galaxy Wearable (rather than only through the phone's generic Bluetooth menu) is what unlocks touch-control customization, equalizer presets, and firmware updates — buds paired purely as a generic Bluetooth headset will still play audio but stay stuck on default settings.",
@@ -75,7 +75,7 @@ export const galaxyBudsSettings = [
       "Under Noise Cancelling, pick High or Low intensity depending on how much outside sound you want blocked.",
       "Assign a touch gesture (Touchpad settings > Long press to control > Noise controls) so you can cycle ANC modes on the earbud itself without opening the app.",
     ],
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-use-active-noise-cancelling-on-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds ANC",
     whyItMatters:
       "ANC intensity directly trades off noise blocking against battery life and awareness of your surroundings, so picking Adaptive rather than always-on High keeps runtime longer for buds that aren't in a constantly loud environment.",
@@ -113,7 +113,7 @@ export const galaxyBudsSettings = [
       "Under Labs, run 'Optimize sound for me' (Adapt Sound), a short in-app hearing test that builds a personalized EQ profile automatically.",
       "Equalizer changes only apply while the connected phone is the active audio source — a second paired phone keeps its own separate setting.",
     ],
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-change-equalizer-sound-settings-on-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds Sound Settings",
     whyItMatters:
       "The default preset rarely matches every genre or every listener's hearing, and a mismatched EQ is a common reason buds are dismissed as 'muddy' or 'tinny' when the hardware itself is capable of much better sound with a few adjustments.",
@@ -150,7 +150,7 @@ export const galaxyBudsSettings = [
       "On models with in-ear volume control (e.g. Buds2 Pro and later), assign press-and-hold to Volume up/down instead of noise control if you'd rather adjust volume from the earbuds.",
       "Turn off the touchpad entirely from Touchpad settings > Touchpad lock if accidental touches keep pausing music during workouts or when adjusting an earbud's fit.",
     ],
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-customize-touch-controls-on-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds Touch Controls",
     whyItMatters:
       "The factory-default gesture layout doesn't fit every use case — commuters often want quick ANC toggling, while runners want to avoid accidental track skips — and remapping controls directly reduces frustration far more than getting used to defaults that don't match your habits.",
@@ -187,7 +187,7 @@ export const galaxyBudsSettings = [
       "Turn on Auto power off under earbud settings so idle earbuds outside the case power down after a set time instead of draining in the background.",
       "A solid LED on the case (color varies by model) indicates charging status; check the case's own indicator when the phone is out of Bluetooth range.",
     ],
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-check-battery-and-charge-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds Battery",
     whyItMatters:
       "Because the case both stores and charges the earbuds, a case that isn't itself charged is one of the most common reasons buds appear 'dead' even though they were left in the case overnight — knowing where to check both battery numbers avoids that confusion.",
@@ -224,7 +224,7 @@ export const galaxyBudsSettings = [
       "If a firmware update won't start, update the Galaxy Wearable app itself from the Galaxy Store first, since an outdated app can block newer firmware packages.",
     ],
     important: "Don't close the case lid or move out of Bluetooth range while a firmware update is installing — interrupting it can leave an earbud temporarily unresponsive until the update is retried.",
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-update-galaxy-buds-firmware/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Galaxy Buds Firmware Update",
     whyItMatters:
       "Firmware updates have shipped real fixes for connection drops and touch-control lag, and have added features like Adaptive ANC or 360 Audio to earlier models after launch — buds that seem to 'just have quirks' are sometimes simply behind on firmware.",
@@ -261,7 +261,7 @@ export const galaxyBudsSettings = [
       "Enable Offline finding in SmartThings Find settings ahead of time so lost buds can potentially be located using other nearby Galaxy devices' networks.",
     ],
     important: "The in-app chime only works while the earbuds have battery remaining and are within Bluetooth range of the paired phone — it cannot ring buds that are powered off or far away.",
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-find-my-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Find My Galaxy Buds",
     whyItMatters:
       "Because earbuds are small and easy to leave behind in a couch cushion, gym bag, or car seat, having Find My Earbuds and SmartThings Find set up before they're lost is the difference between a quick chime-guided search and buds that are gone for good.",
@@ -297,7 +297,7 @@ export const galaxyBudsSettings = [
       "Under ANC/Ambient settings, turn on Voice Detect so ANC automatically eases off and ambient sound rises whenever you start speaking.",
       "Adjust how quickly normal ANC resumes after you stop talking using the Voice Detect sensitivity/duration option, on supported Pro models.",
     ],
-    redirectUrl: "https://www.samsung.com/support/mobile-devices/how-to-use-ambient-sound-and-voice-detect-on-galaxy-buds/",
+    redirectUrl: "https://www.samsung.com/us/support/mobile/wearables/",
     actionLabel: "Open Samsung Support: Ambient Sound & Voice Detect",
     whyItMatters:
       "Ambient Sound and Voice Detect remove the need to pull an earbud out for a quick conversation or to stay street-aware while walking or running, which matters both for convenience and for basic safety in traffic or shared spaces.",

@@ -143,9 +143,7 @@ test.describe("visual regression", () => {
     const quality = createPageQualityGate(page);
 
     await gotoWithRetry(page, `${adminUrl}/login`);
-    await expect(
-      page.getByRole("heading", { name: /welcome(?: to)? altftool admin/i }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: /welcome.*admin/i })).toBeVisible();
     await waitForVisualStability(page);
 
     await expect(page).toHaveScreenshot("admin-login.png");

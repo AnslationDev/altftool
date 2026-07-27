@@ -199,7 +199,7 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
     setUploadProgress(0);
 
     try {
-      
+
       let profileImageUrl = "";
 
       const tempId = crypto.randomUUID();
@@ -249,6 +249,10 @@ const AddOurTeamModal = ({ onClose, onSubmit }) => {
     setFields((p) => ({ ...p, [key]: e.target.value }));
     setErrors((p) => ({ ...p, [key]: undefined }));
   };
+
+
+
+
 
   return (
     <div

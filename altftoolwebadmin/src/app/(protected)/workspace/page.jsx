@@ -1,8 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { Activity, BarChart3, ChevronRight, Layers, RefreshCw, User, X } from "lucide-react";
+import { Activity, BarChart3, Layers, RefreshCw, User, X } from "lucide-react";
+import { Button, IconButton } from "@altftool/ui";
+import { DataState, EmptyState, PageHeader, SectionCard } from "@/ansets";
+import { getAdminIdToken } from "@/lib/adminIdToken";
+import { readApiJson, getErrorMessage } from "@/lib/apiClient";
+import { emitAlert } from "@/lib/alertBus";
 import ExplorerTree from "./components/ExplorerTree";
 import ActivityTimeline from "./components/ActivityTimeline";
 import ActivityAnalytics from "./components/ActivityAnalytics";
@@ -25,21 +29,36 @@ export default function WorkspaceExplorerPage() {
   const [filters, setFilters] = useState({ search: "", kind: "all" });
   const [drawerEvent, setDrawerEvent] = useState(null);
   const [reloadKey, setReloadKey] = useState(0);
+  const [feedError, setFeedError] = useState(null);
   // Bumped every time the feed (node/scope/reload) changes, so an in-flight
   // "load more" for the previous feed can detect it and drop its stale page.
   const feedTokenRef = useRef(0);
 
-  const authFetch = useCallback(async (url) => {
-    try {
-      const token = await getAuth().currentUser?.getIdToken();
-      if (!token) return null;
-      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-      if (!res.ok) return null;
-      return await res.json();
-    } catch {
-      return null;
+  const reload = useCallback(() => setReloadKey((k) => k + 1), []);
+
+  // Throwing variant — used by this page so a 401/500/offline is reported as a
+  // failure instead of being flattened into an empty timeline.
+  const requestJson = useCallback(async (url) => {
+    const token = await getAdminIdToken();
+    if (!token) {
+      throw new Error("Your session isn't ready — please sign in again.");
     }
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    return readApiJson(res, `Couldn't load workspace activity (${res.status}).`);
   }, []);
+
+  // Non-throwing wrapper kept for the child components (ExplorerTree,
+  // ActivityAnalytics), which treat a null result as "this request failed".
+  const authFetch = useCallback(
+    async (url) => {
+      try {
+        return await requestJson(url);
+      } catch {
+        return null;
+      }
+    },
+    [requestJson],
+  );
 
   const eventsParams = useCallback((cursor) => {
     const p = new URLSearchParams({ pageSize: String(PAGE_SIZE) });
@@ -57,29 +76,47 @@ export default function WorkspaceExplorerPage() {
     let alive = true;
     setLoading(true);
     setEvents([]);
-    authFetch(`/api/activity/events?${eventsParams()}`).then((data) => {
-      if (!alive) return;
-      setEvents(data?.events || []);
-      setNextCursor(data?.nextCursor || null);
-      setHasMore(Boolean(data?.hasMore));
-      setLoading(false);
-    });
+    setFeedError(null);
+    requestJson(`/api/activity/events?${eventsParams()}`)
+      .then((data) => {
+        if (!alive) return;
+        setEvents(data?.events || []);
+        setNextCursor(data?.nextCursor || null);
+        setHasMore(Boolean(data?.hasMore));
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (!alive) return;
+        setEvents([]);
+        setNextCursor(null);
+        setHasMore(false);
+        setFeedError(getErrorMessage(err, "Couldn't load workspace activity."));
+        setLoading(false);
+      });
     return () => { alive = false; };
-  }, [view, eventsParams, authFetch, reloadKey]);
+  }, [view, eventsParams, requestJson, reloadKey]);
 
   const loadMore = useCallback(async () => {
     if (!nextCursor) return;
     const token = feedTokenRef.current;
     setLoadingMore(true);
-    const data = await authFetch(`/api/activity/events?${eventsParams(nextCursor)}`);
-    // The node/scope changed while this page was in flight — drop it so events
-    // from the previous feed don't get appended to the new one.
-    if (token !== feedTokenRef.current) { setLoadingMore(false); return; }
-    setEvents((prev) => [...prev, ...(data?.events || [])]);
-    setNextCursor(data?.nextCursor || null);
-    setHasMore(Boolean(data?.hasMore));
-    setLoadingMore(false);
-  }, [nextCursor, eventsParams, authFetch]);
+    try {
+      const data = await requestJson(`/api/activity/events?${eventsParams(nextCursor)}`);
+      // The node/scope changed while this page was in flight — drop it so events
+      // from the previous feed don't get appended to the new one.
+      if (token !== feedTokenRef.current) return;
+      setEvents((prev) => [...prev, ...(data?.events || [])]);
+      setNextCursor(data?.nextCursor || null);
+      setHasMore(Boolean(data?.hasMore));
+    } catch (err) {
+      if (token !== feedTokenRef.current) return;
+      // Keep nextCursor/hasMore so the "Load more" control stays available as
+      // the retry affordance instead of silently dead-ending the list.
+      emitAlert({ type: "error", message: getErrorMessage(err, "Couldn't load more activity.") });
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [nextCursor, eventsParams, requestJson]);
 
   const availableKinds = useMemo(() => new Set(events.map((e) => e.actionKind)), [events]);
   const filtered = useMemo(() => {
@@ -103,109 +140,136 @@ export default function WorkspaceExplorerPage() {
   const scopeEntity = useCallback((entityType, entityId, label) => { setScope({ type: "entity", entityType, entityId, label }); setView("timeline"); }, []);
   const clearScope = useCallback(() => setScope(null), []);
 
+  const filtersActive = filters.kind !== "all" || Boolean(filters.search.trim());
+
+  // Panel heading: the active scope chip, or the selected tree node. Rendered as
+  // the SectionCard's h2 so the page keeps exactly one h1 (the PageHeader).
+  const panelTitle = scope ? (
+    <span className="flex items-center gap-2">
+      <User className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+      {scope.type === "actor" ? "User" : "Entity"}: {scope.label}
+    </span>
+  ) : (
+    selected.label
+  );
+
+  const panelDescription = scope
+    ? "Every recorded action for this scope, newest first."
+    : selected.path
+      ? selected.path.split("/").join(" › ")
+      : "Everything across the workspace";
+
+  const panelActions = scope ? (
+    <IconButton onClick={clearScope} aria-label="Clear scope">
+      <X className="h-4 w-4" aria-hidden="true" />
+    </IconButton>
+  ) : (
+    <div className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.5">
+      {[
+        { k: "timeline", label: "Timeline", icon: Activity },
+        { k: "analytics", label: "Analytics", icon: BarChart3 },
+      ].map((t) => (
+        <button
+          key={t.k}
+          type="button"
+          onClick={() => setView(t.k)}
+          aria-pressed={view === t.k}
+          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${
+            view === t.k
+              ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
+              : "text-[var(--muted)] hover:text-[var(--foreground)]"
+          }`}
+        >
+          <t.icon className="h-4 w-4" aria-hidden="true" /> {t.label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <div className="min-h-full bg-[var(--background)] px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-[var(--foreground)]">
-              <Layers className="h-6 w-6 text-[var(--primary)]" strokeWidth={1.9} />
-              Workspace Activity
-            </h1>
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              Explore every project, application, module, and feature — and the activity within.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setReloadKey((k) => k + 1)}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
-          >
-            <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-            Refresh
-          </button>
-        </div>
+        <PageHeader
+          icon={Layers}
+          title="Workspace Activity"
+          description="Explore every project, application, module, and feature — and the activity within."
+          actions={
+            <Button variant="secondary" onClick={reload}>
+              <RefreshCw
+                className={`h-4 w-4 ${loading ? "animate-spin motion-reduce:animate-none" : ""}`}
+                aria-hidden="true"
+              />
+              Refresh
+            </Button>
+          }
+        />
 
         <MigrationBanner />
 
         <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
-          <aside className="h-max rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-[var(--shadow-sm)] lg:sticky lg:top-4">
-            <p className="px-2 pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--muted)]">Projects</p>
-            <div className="max-h-[70vh] overflow-y-auto pr-1">
-              <ExplorerTree selectedPath={scope ? "__scope__" : selected.path} onSelect={selectNode} authFetch={authFetch} />
+          <SectionCard title="Projects" flush className="h-max lg:sticky lg:top-4">
+            <div className="max-h-[70vh] overflow-y-auto p-3">
+              <ExplorerTree
+                selectedPath={scope ? "__scope__" : selected.path}
+                onSelect={selectNode}
+                authFetch={authFetch}
+              />
             </div>
-          </aside>
+          </SectionCard>
 
-          <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)] sm:p-5">
-            {/* Header: node breadcrumb OR active scope chip */}
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-              <div className="min-w-0">
-                {scope ? (
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary-soft,color-mix(in_srgb,var(--primary)_14%,transparent))] px-2.5 py-1 text-xs font-bold text-[var(--primary)]">
-                      <User className="h-3.5 w-3.5" />
-                      {scope.type === "actor" ? "User" : "Entity"}: {scope.label}
-                    </span>
-                    <button type="button" onClick={clearScope} className="grid h-6 w-6 place-items-center rounded text-[var(--muted)] hover:text-[var(--foreground)]" aria-label="Clear scope"><X className="h-3.5 w-3.5" /></button>
-                  </div>
-                ) : (
-                  <>
-                    <h2 className="text-lg font-black tracking-tight text-[var(--foreground)]">{selected.label}</h2>
-                    {selected.path ? (
-                      <p className="mt-0.5 flex flex-wrap items-center gap-x-1 text-xs text-[var(--muted)]">
-                        {selected.path.split("/").map((seg, i) => (
-                          <span key={i} className="flex items-center gap-1">{i > 0 && <ChevronRight className="h-3 w-3 opacity-60" />}{seg}</span>
-                        ))}
-                      </p>
-                    ) : <p className="mt-0.5 text-xs text-[var(--muted)]">Everything across the workspace</p>}
-                  </>
-                )}
-              </div>
-
-              {/* View tabs (hidden while a scope is active) */}
-              {!scope && (
-                <div className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.5">
-                  {[{ k: "timeline", label: "Timeline", icon: Activity }, { k: "analytics", label: "Analytics", icon: BarChart3 }].map((t) => (
-                    <button
-                      key={t.k}
-                      type="button"
-                      onClick={() => setView(t.k)}
-                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-bold transition ${
-                        view === t.k ? "bg-[var(--primary)] text-[var(--primary-foreground)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"
-                      }`}
-                    >
-                      <t.icon className="h-4 w-4" /> {t.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
+          <SectionCard title={panelTitle} description={panelDescription} actions={panelActions}>
             {view === "analytics" && !scope ? (
               <ActivityAnalytics
                 path={selected.path}
                 authFetch={authFetch}
                 reloadKey={reloadKey}
+                onRetry={reload}
                 onSelectNode={selectNode}
                 onScopeActor={scopeActor}
                 onScopeEntity={scopeEntity}
               />
             ) : (
               <>
-                <div className="mb-4">
-                  <ActivityFilters filters={filters} onChange={setFilters} availableKinds={availableKinds} />
-                </div>
-                <ActivityTimeline
-                  events={filtered}
-                  loading={loading}
-                  hasMore={hasMore && filters.kind === "all" && !filters.search}
-                  onLoadMore={loadMore}
-                  loadingMore={loadingMore}
-                  onSelectEvent={setDrawerEvent}
+                <ActivityFilters
+                  filters={filters}
+                  onChange={setFilters}
+                  availableKinds={availableKinds}
+                  count={
+                    events.length
+                      ? `${filtered.length} of ${events.length} events`
+                      : null
+                  }
+                  className="mb-4"
                 />
+                <DataState
+                  loading={loading}
+                  error={feedError}
+                  isEmpty={!filtered.length}
+                  onRetry={reload}
+                  loadingVariant="table"
+                  rows={6}
+                  empty={
+                    <EmptyState
+                      title={filtersActive ? "No matching activity" : "No activity here yet"}
+                      description={
+                        filtersActive
+                          ? "No event in this feed matches the current search and filter."
+                          : "Actions in this part of the workspace will appear here as they happen."
+                      }
+                    />
+                  }
+                >
+                  <ActivityTimeline
+                    events={filtered}
+                    hasMore={hasMore && filters.kind === "all" && !filters.search}
+                    onLoadMore={loadMore}
+                    loadingMore={loadingMore}
+                    onSelectEvent={setDrawerEvent}
+                  />
+                </DataState>
               </>
             )}
-          </section>
+          </SectionCard>
         </div>
       </div>
 

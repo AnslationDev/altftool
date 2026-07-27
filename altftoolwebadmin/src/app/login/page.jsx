@@ -28,8 +28,12 @@ export default function Login() {
     adminData,
     loading,
     isPendingUser,
+    isInactive,
     localAdminLoginEnabled,
     signInLocalAdmin,
+    syncFailed,
+    refreshAuth,
+    logout,
   } = useAuth();
   const pathname = usePathname();
   const [email, setEmail] = useState("");
@@ -38,19 +42,35 @@ export default function Login() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [googleError, setGoogleError] = useState(false);
+  // Set when the profile resolves but grants access to nothing. Without it the
+  // redirect effect returned early and the page spun on "Opening your admin
+  // workspace…" forever, with only a toast to explain why.
+  const [noModules, setNoModules] = useState(false);
+  const [retrying, setRetrying] = useState(false);
 
   /* ── Redirect once auth state is resolved ── */
   useEffect(() => {
     if (loading) return;
+    // Fail closed. googleError means /api/admin/google-login explicitly REJECTED
+    // this identity, so we must not route it anywhere — not even if a stale
+    // /api/admin/me profile is still in state. The "stranded session" case this
+    // used to guard against (signOut throwing after a rejection) is handled the
+    // right way instead: the latch keeps the form visible, and every
+    // user-initiated sign-in entry point below clears it before retrying.
     if (googleError) return;
     if (isPendingUser && pathname !== "/access-requested") {
       router.replace("/access-requested");
+      return;
+    }
+    if (isInactive && pathname !== "/account-inactive") {
+      router.replace("/account-inactive");
       return;
     }
     if (!user || !adminData) return;
 
     const destination = getFirstAllowedRoute(adminData);
     if (!destination) {
+      setNoModules(true);
       emitAlert({
         type: "warning",
         message: "No modules assigned. Contact your super admin.",
@@ -58,6 +78,7 @@ export default function Login() {
       return;
     }
 
+    setNoModules(false);
     emitAlert({
       type: "success",
       message: user.isLocalAdmin
@@ -67,13 +88,17 @@ export default function Login() {
           : "Login successful",
     });
     router.replace(destination);
-  }, [user, adminData, loading, isPendingUser, googleError, pathname, router]);
+  }, [user, adminData, loading, isPendingUser, isInactive, googleError, pathname, router]);
 
   /* ── Email / Password login ── */
   const login = async (e) => {
     e.preventDefault();
     try {
       setSubmitting(true);
+      // Clear any latched Google failure — otherwise a successful email/password
+      // sign-in is stuck behind the `!googleError` guards on the redirect effect
+      // and both post-auth render branches, leaving the form up while signed in.
+      setGoogleError(false);
       await signInWithEmailAndPassword(auth, email, password);
     } catch {
       emitAlert({ type: "error", message: "Invalid email or password" });
@@ -92,6 +117,15 @@ export default function Login() {
     });
 
     const data = await res.json().catch(() => ({}));
+
+    if (data.status === "inactive") {
+      // Deactivated account — keep the session alive so AuthContext's own
+      // /api/admin/me sync resolves `isInactive` and the account-inactive
+      // screen can explain what happened, instead of signing out with only a
+      // toast (and no way to know who to contact) to show for it.
+      router.replace("/account-inactive");
+      return;
+    }
 
     if (!res.ok) {
       setGoogleError(true);
@@ -114,6 +148,9 @@ export default function Login() {
         forces an account chooser so the user can pick the correct account. ── */
   const loginWithGoogle = async () => {
     setGoogleLoading(true);
+    // Reset the latch so retrying with a different account can succeed; it is
+    // re-set by finishGoogleLogin if this attempt is rejected too.
+    setGoogleError(false);
     try {
       // signInWithPopup must be the first async call — any await before it
       // (e.g. signOut) drops the user-activation and the popup gets blocked.
@@ -147,6 +184,9 @@ export default function Login() {
   };
 
   const loginWithLocalAdmin = () => {
+    // Same latch reset as the other sign-in entry points: this one also sets
+    // `user`, so a stale googleError would strand the session on the form.
+    setGoogleError(false);
     const started = signInLocalAdmin?.();
     if (!started) {
       emitAlert({
@@ -156,6 +196,66 @@ export default function Login() {
       return;
     }
   };
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    setNoModules(false);
+    try {
+      await refreshAuth();
+    } finally {
+      setRetrying(false);
+    }
+  };
+
+  // A signed-in session that cannot resolve a usable admin profile is a
+  // terminal state, not a loading one. Always give the user a way out —
+  // previously both of these rendered an endless spinner.
+  if (user && !googleError && (syncFailed || noModules)) {
+    return (
+      <main
+        className="h-screen flex items-center justify-center px-4"
+        style={{ background: "var(--background)" }}
+      >
+        <Card className="p-8 w-full max-w-md text-center">
+          <h1
+            className="text-lg font-semibold mb-2"
+            style={{ color: "var(--foreground)" }}
+          >
+            {noModules
+              ? "No modules assigned"
+              : "We couldn’t load your admin profile"}
+          </h1>
+          <p className="text-sm mb-6" style={{ color: "var(--muted)" }}>
+            {noModules
+              ? "You’re signed in, but no modules are assigned to your account yet. Ask your super admin to grant access."
+              : "You’re still signed in, but your permissions couldn’t be fetched. This is usually temporary."}
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {!noModules ? (
+              <Button
+                type="button"
+                onClick={handleRetry}
+                loading={retrying}
+                disabled={retrying}
+                className="w-full"
+              >
+                {retrying ? "Retrying…" : "Try again"}
+              </Button>
+            ) : null}
+            <Button
+              type="button"
+              onClick={logout}
+              variant="secondary"
+              disabled={retrying}
+              className="w-full"
+            >
+              Sign out
+            </Button>
+          </div>
+        </Card>
+      </main>
+    );
+  }
 
   // Show a neutral spinner — never the sign-in form — while the session is
   // resolving OR when an admin is already authenticated. Without this, if the

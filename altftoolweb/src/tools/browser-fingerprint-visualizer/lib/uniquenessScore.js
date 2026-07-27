@@ -6,7 +6,7 @@
  * @returns {Object} - uniqueness estimate
  */
 export function estimateUniqueness(signals) {
- 
+
   let probability = 1.0;
 
   // Canvas — nearly unique per device (research: ~1 in 10,000)
@@ -29,8 +29,11 @@ export function estimateUniqueness(signals) {
     probability *= 0.033;
   }
 
-  // CPU cores — 6-8 common values (~1 in 5)
-  if (signals.device?.cpuCores !== "Unknown") {
+  // CPU cores — 6-8 common values (~1 in 5).
+  // Only counts when the collector actually read a value; `undefined` means the
+  // probe never ran and must not be treated as a disclosed core count.
+  const cores = signals.device?.cpuCores;
+  if (cores !== undefined && cores !== null && cores !== "Unknown") {
     probability *= 0.2;
   }
 
@@ -53,11 +56,20 @@ export function estimateUniqueness(signals) {
   }
 
 
-  const rawOneIn = Math.round(1 / Math.max(probability, 1e-12));
+  // Reporting ceiling. Multiplying the per-signal frequencies assumes the
+  // signals are independent, which they are not (a rare GPU implies a rare
+  // canvas hash), so the raw product runs away into the trillions. There are
+  // on the order of a few billion browsers in the world, so anything past
+  // 1 billion is reported as "1 billion+" rather than as a made-up figure.
+  const REPORTING_CEILING = 1_000_000_000;
+  const rawOneIn = Math.min(
+    REPORTING_CEILING,
+    Math.round(1 / Math.max(probability, 1e-12)),
+  );
 
   // Format the number nicely
   const formatNumber = (n) => {
-    if (n >= 1_000_000_000) return `${(n / 1_000_000_000).toFixed(1)} billion`;
+    if (n >= REPORTING_CEILING) return "1 billion+";
     if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)} million`;
     if (n >= 1_000) return `${(n / 1_000).toFixed(0)},000`;
     return n.toLocaleString();

@@ -1,7 +1,7 @@
 "use client";
 
-import StoryboardBuilder from "./App";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <StoryboardBuilder />;
+  return <ToolHome />;
 }
