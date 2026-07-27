@@ -1,6 +1,6 @@
 ﻿import Link from 'next/link';
 
-const ArticleCard = ({ id = 1, image, title, author, plays }) => {
+const ArticleCard = ({ id = 1, image, title, plays }) => {
   return (
     <Link
       href={`/playbuzz/quiz-play?id=${id}`}
@@ -37,9 +37,11 @@ const ArticleCard = ({ id = 1, image, title, author, plays }) => {
         <h3 className="text-sm font-medium mb-2 leading-tight" style={{ color: 'var(--foreground)' }}>
           {title}
         </h3>
-        <p className="text-xs font-normal" style={{ color: 'var(--muted-foreground)' }}>
-          {author} <span className="mx-1">·</span> {plays}
-        </p>
+        {plays ? (
+          <p className="text-xs font-normal" style={{ color: 'var(--muted-foreground)' }}>
+            {plays}
+          </p>
+        ) : null}
       </div>
     </Link>
   );

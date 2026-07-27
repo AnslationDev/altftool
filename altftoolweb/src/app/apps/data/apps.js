@@ -1,3 +1,9 @@
+// NOTE ON MISSING FIELDS
+// This catalogue deliberately carries no rating, review-count, review-text or
+// install/download-count fields. AltFTool has no review or analytics pipeline
+// for these APKs, so any such number would be invented. `apkUrl` is only set
+// when a real installable file exists; apps without one render no download CTA
+// and emit no schema downloadUrl.
 export const apps = [
   {
     slug: "speed-test",
@@ -10,9 +16,6 @@ export const apps = [
     version: "2.1.0",
     apkSize: "69.4 MB",
     androidRequired: "Android 5.0+",
-    downloads: "1M+",
-    rating: "4.6",
-    reviewCount: "12.4K",
     lastUpdated: "May 10, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/speed-test/icon.svg",
@@ -31,10 +34,6 @@ export const apps = [
       "Share results with one tap",
     ],
     highlights: ["100% Safe", "No Ads", "Latest Version", "Works Offline", "Regular Updates"],
-    reviews: [
-      { name: "John D.", date: "May 8, 2024", text: "Very accurate and easy to use. Best speed test app." },
-      { name: "Sarah L.", date: "May 6, 2024", text: "Love the speed history feature. Super helpful." },
-    ],
   },
   {
     slug: "storage-cleanup",
@@ -47,9 +46,6 @@ export const apps = [
     version: "1.4.0",
     apkSize: "5.6 KB",
     androidRequired: "Android 6.0+",
-    downloads: "960K",
-    rating: "4.7",
-    reviewCount: "9.8K",
     lastUpdated: "May 12, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/storage-cleanup/icon.svg",
@@ -68,10 +64,6 @@ export const apps = [
       "Fast device analysis",
     ],
     highlights: ["100% Safe", "Lightweight", "Fast Scan", "Easy Cleanup", "Regular Updates"],
-    reviews: [
-      { name: "Mike R.", date: "May 5, 2024", text: "Helped me quickly find files I did not need." },
-      { name: "Priya S.", date: "May 2, 2024", text: "Clean interface and simple cleanup flow." },
-    ],
   },
   {
     slug: "grammerly",
@@ -84,9 +76,6 @@ export const apps = [
     version: "1.2.0",
     apkSize: "60.4 MB",
     androidRequired: "Android 7.0+",
-    downloads: "875K",
-    rating: "4.8",
-    reviewCount: "10.2K",
     lastUpdated: "May 9, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/grammerly/icon.svg",
@@ -105,10 +94,6 @@ export const apps = [
       "Useful for notes and messages",
     ],
     highlights: ["100% Safe", "Writing Helper", "Latest Version", "Simple Editor", "Regular Updates"],
-    reviews: [
-      { name: "Aman K.", date: "May 9, 2024", text: "Useful for quick text checks before sending messages." },
-      { name: "Neha P.", date: "May 4, 2024", text: "The suggestions are easy to understand." },
-    ],
   },
   {
     slug: "pdf-ocr-scanner",
@@ -119,11 +104,9 @@ export const apps = [
       "PDF OCR Scanner helps users capture documents, extract text with OCR, organize scans, and export clean PDF files for work, study, and records.",
     category: "Tools",
     version: "1.8.0",
-    apkSize: "38.2 MB",
+    // Measured from public/downloads/apps/pdf-ocr-scanner/pdf-ocr-scanner.apk
+    apkSize: "27.9 MB",
     androidRequired: "Android 7.0+",
-    downloads: "650K",
-    rating: "4.6",
-    reviewCount: "8.1K",
     lastUpdated: "May 11, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/pdf-ocr-scanner/icon.svg",
@@ -142,10 +125,6 @@ export const apps = [
       "Useful for work and study",
     ],
     highlights: ["100% Safe", "OCR Support", "PDF Export", "Document Tools", "Regular Updates"],
-    reviews: [
-      { name: "Ravi M.", date: "May 7, 2024", text: "OCR works well for my notes and receipts." },
-      { name: "Lisa T.", date: "May 3, 2024", text: "Good scanner layout and fast PDF export." },
-    ],
   },
   {
     slug: "anternet",
@@ -158,9 +137,6 @@ export const apps = [
     version: "1.0.0",
     apkSize: "53 MB",
     androidRequired: "Android 6.0+",
-    downloads: "New",
-    rating: "4.5",
-    reviewCount: "1.2K",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/anternet/icon.svg",
@@ -179,10 +155,6 @@ export const apps = [
       "Simple daily workflow",
     ],
     highlights: ["100% Safe", "Network Tools", "Lightweight", "Quick Access", "Regular Updates"],
-    reviews: [
-      { name: "Dev P.", date: "May 12, 2024", text: "Useful internet shortcuts in one place." },
-      { name: "Kiran J.", date: "May 10, 2024", text: "Simple and fast for daily network checks." },
-    ],
   },
   {
     slug: "syncplay",
@@ -195,13 +167,11 @@ export const apps = [
     version: "1.0.0",
     apkSize: "Coming Soon",
     androidRequired: "Android 7.0+",
-    downloads: "New",
-    rating: "4.6",
-    reviewCount: "1.8K",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/syncplay/icon.svg",
-    apkUrl: "/downloads/apps/syncplay/syncplay.apk",
+    // No APK has been published for SyncPlay yet, so no download is offered.
+    apkUrl: null,
     screenshots: [
       "https://placehold.co/420x840/1e1b4b/a78bfa.png?text=Sync+Room",
       "https://placehold.co/420x840/312e81/f8f5eb.png?text=Playback+Control",
@@ -216,10 +186,6 @@ export const apps = [
       "Clean media dashboard",
     ],
     highlights: ["100% Safe", "Media Sync", "Shared Sessions", "Easy Controls", "Regular Updates"],
-    reviews: [
-      { name: "Aisha R.", date: "May 11, 2024", text: "Good app for keeping playback timing organized." },
-      { name: "Mohit V.", date: "May 8, 2024", text: "The room controls are easy to understand." },
-    ],
   },
   {
     slug: "app-builder",
@@ -232,13 +198,11 @@ export const apps = [
     version: "1.0.0",
     apkSize: "Coming Soon",
     androidRequired: "Android 7.0+",
-    downloads: "New",
-    rating: "4.7",
-    reviewCount: "2.1K",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/app-builder/icon.svg",
-    apkUrl: "/downloads/apps/app-builder/app-builder.apk",
+    // No APK has been published for App Builder yet, so no download is offered.
+    apkUrl: null,
     screenshots: [
       "https://placehold.co/420x840/3b2602/fbbf24.png?text=Project+Builder",
       "https://placehold.co/420x840/4a2f05/fff7ed.png?text=Screen+Planner",
@@ -253,10 +217,6 @@ export const apps = [
       "Useful for creators",
     ],
     highlights: ["100% Safe", "Project Planner", "Creator Tools", "Clean Workspace", "Regular Updates"],
-    reviews: [
-      { name: "Nina S.", date: "May 13, 2024", text: "Nice for collecting app ideas before development." },
-      { name: "Arjun B.", date: "May 9, 2024", text: "The screen planning flow is simple and useful." },
-    ],
   },
 ];
 

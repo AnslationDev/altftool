@@ -3,7 +3,7 @@
 import "./clearpath-debt.css";
 import {
   Waves,
-  Phone,
+  Mail,
   ArrowRight,
   CheckCircle2,
   ShieldCheck,
@@ -15,13 +15,14 @@ import {
   Star,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/clearpath-debt";
-const PHONE_TEL = "tel:+18115550245";
-const PHONE_DISPLAY = "(811) 555-0245";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 function QuoteButton({ className = "clearpath-btn", children = "Get a Free Quote" }) {
   return (
-    <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" className={className}>
+    <a href={CONTACT_URL} className={className}>
       {children}
       <ArrowRight size={18} aria-hidden="true" />
     </a>
@@ -40,9 +41,9 @@ export default function ClearPathDebtPage() {
             ClearPath Debt
           </a>
           <div className="clearpath-nav-actions">
-            <a href={PHONE_TEL} className="clearpath-nav-phone">
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a href={CONTACT_URL} className="clearpath-nav-phone">
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
           </div>
@@ -67,9 +68,9 @@ export default function ClearPathDebtPage() {
               </p>
               <div className="clearpath-hero-ctas">
                 <QuoteButton className="clearpath-btn clearpath-btn-lg" />
-                <a href={PHONE_TEL} className="clearpath-btn clearpath-btn-ghost">
-                  <Phone size={18} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="clearpath-btn clearpath-btn-ghost">
+                  <Mail size={18} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <p className="clearpath-hero-note">
@@ -260,9 +261,9 @@ export default function ClearPathDebtPage() {
                 </ul>
                 <div className="clearpath-hero-ctas">
                   <QuoteButton className="clearpath-btn clearpath-btn-lg" />
-                  <a href={PHONE_TEL} className="clearpath-btn clearpath-btn-ghost">
-                    <Phone size={18} aria-hidden="true" />
-                    Call {PHONE_DISPLAY}
+                  <a href={CONTACT_URL} className="clearpath-btn clearpath-btn-ghost">
+                    <Mail size={18} aria-hidden="true" />
+                    {CONTACT_LABEL}
                   </a>
                 </div>
               </div>
@@ -329,9 +330,9 @@ export default function ClearPathDebtPage() {
               </p>
               <QuoteButton className="clearpath-btn clearpath-btn-lg" />
               <br />
-              <a href={PHONE_TEL} className="clearpath-band-phone">
-                <Phone size={18} aria-hidden="true" />
-                Or call {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="clearpath-band-phone">
+                <Mail size={18} aria-hidden="true" />
+                Or call {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -348,8 +349,8 @@ export default function ClearPathDebtPage() {
               ClearPath Debt
             </a>
             <nav className="clearpath-footer-links" aria-label="Footer">
-              <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Get a Free Quote</a>
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>Get a Free Quote</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </nav>
           </div>
           <p className="clearpath-disclaimer">

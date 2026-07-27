@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Phone, X } from "lucide-react";
+import { MessageSquare, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+
+const CONTACT_URL = "/policypages/contact";
 
 export default function PapercallInterceptor() {
   const [loading, setLoading] = useState(false);
@@ -170,7 +172,7 @@ export default function PapercallInterceptor() {
                 {/* Phone icon inside the central badge */}
                 <g transform="translate(48, 48)">
                   <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                    d="M8 10h.01M12 10h.01M16 10h.01M21 11.5c0 4.142-4.03 7.5-9 7.5a10.2 10.2 0 0 1-3.4-.57L3 20.5l1.7-3.6A7.2 7.2 0 0 1 3 11.5C3 7.358 7.03 4 12 4s9 3.358 9 7.5z"
                     fill="none"
                     stroke="#ffffff"
                     strokeWidth={2}
@@ -189,25 +191,21 @@ export default function PapercallInterceptor() {
                 <path d="M 92 44 A 23 23 0 0 1 92 76" stroke="#000000" strokeWidth="2" strokeLinecap="round" opacity="0.4" />
               </svg>
 
-              {/* Now Call Toll Free */}
+              {/* Contact CTA */}
               <h4 className="text-xl font-bold mb-3 mt-4" style={{ color: "#000000" }}>
-                Now Call Toll Free
+                Send us your project
               </h4>
 
               {/* Phone Button */}
               <a
-                href="tel:+18005550192"
+                href={CONTACT_URL}
                 className="flex items-center justify-center gap-3 text-2xl font-extrabold py-4 px-6 rounded-2xl w-full shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] mb-2"
                 style={{ backgroundColor: "#000000", color: "#ffffff" }}
               >
-                <Phone size={24} fill="none" stroke="currentColor" strokeWidth={2.5} />
-                <span>+1-800-555-0192</span>
+                <MessageSquare size={24} fill="none" stroke="currentColor" strokeWidth={2.5} />
+                <span>Contact us</span>
               </a>
 
-              {/* Available 24x7 */}
-              <p className="text-sm font-semibold tracking-wide mb-6" style={{ color: "#737373" }}>
-                We are available 24x7
-              </p>
 
 
             </motion.div>

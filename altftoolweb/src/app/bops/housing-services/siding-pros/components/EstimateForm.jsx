@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { CheckCircle2, ArrowRight, User, Mail, Phone, Home, Wrench, MessageSquare, Shield, Clock, Award, PhoneCall, X, CalendarCheck } from "lucide-react";
+import { ArrowRight, Award, CalendarCheck, CheckCircle2, Clock, Home, Mail, MessageSquare, Shield, User, Wrench, X } from "lucide-react";
+
+const CONTACT_URL = "/policypages/contact";
 
 const initial = { name: "", phone: "", email: "", propertyType: "", service: "", message: "" };
 
@@ -228,7 +230,7 @@ function CallPopup({
               Live Call Desk Online
             </div>
             <div className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center mb-5 shadow-glow">
-              <PhoneCall className="w-8 h-8" />
+              <MessageSquare className="w-8 h-8" />
             </div>
             <h3 id="call-popup-title" className="font-display font-extrabold text-2xl lg:text-3xl leading-tight">
               {callBooked ? "Callback Request Confirmed" : `Thanks, ${firstName}! Want a Faster Call?`}
@@ -268,11 +270,11 @@ function CallPopup({
           ) : (
             <div className="space-y-3">
               <a
-                href="tel:+18005551234"
+                href={CONTACT_URL}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-gradient-to-r from-[#0D3B66] to-[#1E5AA8] text-white font-bold shadow-premium hover:shadow-glow hover:scale-[1.02] transition-all"
               >
-                <PhoneCall className="w-5 h-5" />
-                Call Now: (800) 555-1234
+                <MessageSquare className="w-5 h-5" />
+                Contact us
               </a>
               <button
                 onClick={onBook}

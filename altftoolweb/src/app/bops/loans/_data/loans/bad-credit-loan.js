@@ -32,7 +32,6 @@ export const badCreditLoan = {
   ],
 
   quoteLabel: "See my options",
-  quoteUrl: "https://example.com/quote/bad-credit-loan",
 
   featuresTitle: "More than a number on a credit report",
   featuresIntro:

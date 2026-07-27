@@ -5,6 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
+const CONTACT_URL = "/policypages/contact";
+
 export async function generateStaticParams() {
   return blogArticles.map((article) => ({
     slug: article.slug,
@@ -282,10 +284,10 @@ export default async function BlogPage({ params }) {
                     Book Appointment
                   </Link>
                   <a
-                    href="tel:8005551234"
+                    href={CONTACT_URL}
                     className="block text-center border border-[#1a1a1a]/40 hover:border-[#1a1a1a] text-[#1a1a1a] py-3 px-6 rounded-full font-semibold text-sm transition-colors duration-300"
                   >
-                    📞 Call (800) 555-1234
+                    Contact us
                   </a>
                 </div>
               </div>
@@ -349,10 +351,10 @@ export default async function BlogPage({ params }) {
               Book Service
             </Link>
             <a
-              href="tel:8005551234"
+              href={CONTACT_URL}
               className="border border-[#1a1a1a]/40 hover:border-[#1a1a1a] text-[#1a1a1a] px-8 py-4 rounded-full font-semibold transition-transform duration-300 hover:-translate-y-0.5 inline-block text-sm"
             >
-              Call Now: (800) 555-1234
+              Contact us
             </a>
           </div>
         </div>

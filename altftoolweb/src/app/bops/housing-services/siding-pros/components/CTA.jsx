@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, MessageSquare } from "lucide-react";
+
+const CONTACT_URL = "/policypages/contact";
 
 export default function CTA() {
   return (
@@ -38,11 +40,11 @@ export default function CTA() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="tel:+18005551234"
+                href={CONTACT_URL}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full glass-dark text-white font-semibold hover:bg-white/15 transition-colors"
               >
-                <Phone className="w-4 h-4" />
-                (800) 555-1234
+                <MessageSquare className="w-4 h-4" />
+                Contact us
               </a>
             </div>
           </div>

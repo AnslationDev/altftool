@@ -5,6 +5,10 @@ import { ArrowRight, Check } from 'lucide-react';
 import FAQAccordion from '../components/FAQAccordion';
 import CTASection from '../components/CTASection';
 
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
+
 const ServiceDetail = () => {
   const { slug } = useParams();
   const service = services.find(s => s.slug === slug) || services[0];
@@ -46,7 +50,7 @@ const ServiceDetail = () => {
 
           <div className="flex gap-3 mt-8">
             <Link to="/book" state={{ service: service.slug }} className="btn btn-primary px-8">Book This Service</Link>
-            <a href="tel:7865679554" className="btn bg-white/10 border border-white/30 text-white px-7">Call Now</a>
+            <a href={CONTACT_URL} className="btn bg-white/10 border border-white/30 text-white px-7">Contact Us</a>
           </div>
         </div>
       </div>

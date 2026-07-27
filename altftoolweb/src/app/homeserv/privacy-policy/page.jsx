@@ -16,6 +16,7 @@ export default function PrivacyPolicyPage() {
       <SiteHeader />
       <section className="hs-plain">
         <span className="hs-eyebrow">Privacy Policy</span>
+        <h1>QuoteNest Pros Privacy Policy</h1>
 
         <h2>Overview</h2>
         <p>

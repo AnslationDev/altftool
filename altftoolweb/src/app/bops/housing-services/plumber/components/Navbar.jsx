@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, PhoneCall, X } from 'lucide-react';
+import { Menu, MessageSquare, X } from 'lucide-react';
 import '../styles/Navbar.css';
+
+const CONTACT_URL = '/policypages/contact';
 
 const links = [
   { label: 'Services',     id: 'services'      },
@@ -93,13 +95,13 @@ export default function Navbar() {
         </div>
 
         <div className="fp-nav__right">
-          <a href="tel:8005550100" className="fp-nav__phone" aria-label="Emergency plumber phone number">
+          <a href={CONTACT_URL} className="fp-nav__phone" aria-label="Contact FlowPro">
             <span className="fp-nav__phone-icon" aria-hidden="true">
-              <PhoneCall size={19} strokeWidth={2.4} />
+              <MessageSquare size={19} strokeWidth={2.4} />
             </span>
             <span className="fp-nav__phone-copy">
-              <span className="fp-nav__phone-number">+1-714-782-7278</span>
-              <span className="fp-nav__phone-label">Call 24/7 for emergency help</span>
+              <span className="fp-nav__phone-number">Contact us</span>
+              <span className="fp-nav__phone-label">Tell us what you need fixed</span>
             </span>
           </a>
         </div>

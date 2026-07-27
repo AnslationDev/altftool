@@ -4,7 +4,6 @@ import TrendingSection from './components/TrendingSection'
 import data from "./data/bookData.json";
 import MustReadFanfiction from './components/MustReadFanfiction';
 import BookCategorySection from './components/BookCategorySection';
-import UserReview from './components/UserReview';
 import Faqs from './components/Faqs';
 import JsonLd from '@/platform/seo/JsonLd';
 import {
@@ -36,6 +35,7 @@ export default function WattpadPage() {
 
   return (
     <div>
+    <h1 className="sr-only">Trending stories and fanfiction</h1>
     <JsonLd
       id="wattpad-collection-schema"
       data={[
@@ -56,7 +56,6 @@ export default function WattpadPage() {
     <TrendingSection trendingData={data.trending}/>
 
     <MustReadFanfiction mustReadData={data.mustRead} />
-    <UserReview feedback={data.reviews} />
     <Faqs faq={data.faq} />
     </div>
   )

@@ -59,7 +59,9 @@ function createAppJsonLd(app) {
     operatingSystem: app.androidRequired || "Android",
     softwareVersion: app.version,
     fileSize: app.apkSize,
-    downloadUrl: absoluteUrl(app.apkUrl),
+    // Only advertise a download when a real installable file is published for
+    // this app; apps still in progress carry no apkUrl and get no downloadUrl.
+    ...(app.apkUrl ? { downloadUrl: absoluteUrl(app.apkUrl) } : {}),
     author: {
       "@type": "Organization",
       name: app.developer || "AltFTool Team",

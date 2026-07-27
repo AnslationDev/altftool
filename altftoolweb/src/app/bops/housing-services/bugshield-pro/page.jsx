@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   ShieldCheck,
   Shield,
-  Phone,
+  Mail,
   Check,
   CheckCircle2,
   Bug,
@@ -20,13 +20,14 @@ import {
 } from "lucide-react";
 import "./bugshield-pro.css";
 
-const QUOTE_URL = "https://example.com/quote/bugshield-pro";
-const PHONE_DISPLAY = "(833) 555-0119";
-const PHONE_TEL = "tel:+18335550119";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 function QuoteButton({ className = "bugshield-btn bugshield-btn-solid", children = "Get a Free Quote" }) {
   return (
-    <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" className={className}>
+    <a href={CONTACT_URL} className={className}>
       {children}
       <ArrowRight size={17} aria-hidden="true" />
     </a>
@@ -138,9 +139,9 @@ export default function BugShieldProPage() {
           </nav>
 
           <div className="bugshield-nav-ctas">
-            <a href={PHONE_TEL} className="bugshield-btn bugshield-btn-ghost">
-              <Phone size={16} aria-hidden="true" />
-              <span className="bugshield-nav-phone-label">{PHONE_DISPLAY}</span>
+            <a href={CONTACT_URL} className="bugshield-btn bugshield-btn-ghost">
+              <Mail size={16} aria-hidden="true" />
+              <span className="bugshield-nav-phone-label">{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
             <button
@@ -188,9 +189,9 @@ export default function BugShieldProPage() {
               </ul>
               <div className="bugshield-hero-ctas">
                 <QuoteButton />
-                <a href={PHONE_TEL} className="bugshield-btn bugshield-btn-ghost">
-                  <Phone size={16} aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="bugshield-btn bugshield-btn-ghost">
+                  <Mail size={16} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <div className="bugshield-hero-stats">
@@ -369,9 +370,9 @@ export default function BugShieldProPage() {
               </p>
               <div className="bugshield-hero-ctas">
                 <QuoteButton className="bugshield-btn bugshield-btn-invert" />
-                <a href={PHONE_TEL} className="bugshield-btn bugshield-btn-invert">
-                  <Phone size={16} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="bugshield-btn bugshield-btn-invert">
+                  <Mail size={16} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -471,9 +472,9 @@ export default function BugShieldProPage() {
             </p>
             <div className="bugshield-final-ctas">
               <QuoteButton />
-              <a href={PHONE_TEL} className="bugshield-btn bugshield-btn-ghost">
-                <Phone size={16} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="bugshield-btn bugshield-btn-ghost">
+                <Mail size={16} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -489,8 +490,8 @@ export default function BugShieldProPage() {
             </span>
             BugShield <span className="bugshield-brand-pro">Pro</span>
           </span>
-          <a href={PHONE_TEL}>
-            <Phone size={15} aria-hidden="true" /> {PHONE_DISPLAY}
+          <a href={CONTACT_URL}>
+            <Mail size={15} aria-hidden="true" /> {CONTACT_LABEL}
           </a>
           <p className="bugshield-footer-note">
             BugShield Pro is a fictional brand shown for demonstration. *Pricing shown is

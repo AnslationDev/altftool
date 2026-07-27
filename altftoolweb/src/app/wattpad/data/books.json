@@ -9,24 +9,14 @@
     "bannerImage": "/wattpad/hero/banner-wattpad.png",
     "summary": "A love story beyond time",
     "description": "A timeless romance that defies fate and reality.",
-    "tags": ["love", "drama"],
+    "tags": [
+      "love",
+      "drama"
+    ],
     "language": "English",
-    "price": 199,
-    "isFree": false,
-    "stats": {
-      "rating": 4.5,
-      "totalReviews": 1200,
-      "views": 54000,
-      "totalChapters": 25
-    },
-    "meta": {
-      "pages": 320,
-      "readingTime": "5h"
-    },
     "status": "published",
     "createdAt": "2025-01-01"
   },
-
   {
     "id": "book_002",
     "title": "Midnight Desires",
@@ -37,24 +27,14 @@
     "bannerImage": "/wattpad/hero/banner-watt2.png",
     "summary": "A passionate love story",
     "description": "Two souls collide under forbidden circumstances.",
-    "tags": ["romance", "passion"],
+    "tags": [
+      "romance",
+      "passion"
+    ],
     "language": "English",
-    "price": 0,
-    "isFree": true,
-    "stats": {
-      "rating": 4.7,
-      "totalReviews": 2100,
-      "views": 88000,
-      "totalChapters": 30
-    },
-    "meta": {
-      "pages": 410,
-      "readingTime": "6h"
-    },
     "status": "published",
     "createdAt": "2025-02-10"
   },
-
   {
     "id": "book_003",
     "title": "The Silent Killer",
@@ -65,24 +45,14 @@
     "bannerImage": "/wattpad/hero/banner-wattpad3.png",
     "summary": "A deadly game of survival",
     "description": "A serial killer leaves no trace behind.",
-    "tags": ["crime", "mystery"],
+    "tags": [
+      "crime",
+      "mystery"
+    ],
     "language": "English",
-    "price": 149,
-    "isFree": false,
-    "stats": {
-      "rating": 4.6,
-      "totalReviews": 980,
-      "views": 67000,
-      "totalChapters": 20
-    },
-    "meta": {
-      "pages": 280,
-      "readingTime": "4h"
-    },
     "status": "published",
     "createdAt": "2025-03-05"
   },
-
   {
     "id": "book_004",
     "title": "Realm of Shadows",
@@ -93,24 +63,14 @@
     "bannerImage": "/wattpad/hero/banner-wattpad.png",
     "summary": "A magical world awaits",
     "description": "A young warrior discovers hidden powers.",
-    "tags": ["magic", "adventure"],
+    "tags": [
+      "magic",
+      "adventure"
+    ],
     "language": "English",
-    "price": 0,
-    "isFree": true,
-    "stats": {
-      "rating": 4.8,
-      "totalReviews": 3000,
-      "views": 120000,
-      "totalChapters": 40
-    },
-    "meta": {
-      "pages": 500,
-      "readingTime": "8h"
-    },
     "status": "published",
     "createdAt": "2025-01-20"
   },
-
   {
     "id": "book_005",
     "title": "Dark Academia",
@@ -121,24 +81,14 @@
     "bannerImage": "/wattpad/hero/banner-watt2.png",
     "summary": "Secrets buried deep",
     "description": "A university hides dangerous secrets.",
-    "tags": ["mystery", "dark"],
+    "tags": [
+      "mystery",
+      "dark"
+    ],
     "language": "English",
-    "price": 99,
-    "isFree": false,
-    "stats": {
-      "rating": 4.3,
-      "totalReviews": 600,
-      "views": 35000,
-      "totalChapters": 18
-    },
-    "meta": {
-      "pages": 250,
-      "readingTime": "3h"
-    },
     "status": "published",
     "createdAt": "2025-04-01"
   },
-
   {
     "id": "book_006",
     "title": "Haunted Nights",
@@ -149,24 +99,14 @@
     "bannerImage": "/wattpad/hero/banner-wattpad3.png",
     "summary": "Fear comes alive",
     "description": "A haunted house reveals its dark past.",
-    "tags": ["ghost", "fear"],
+    "tags": [
+      "ghost",
+      "fear"
+    ],
     "language": "English",
-    "price": 0,
-    "isFree": true,
-    "stats": {
-      "rating": 4.4,
-      "totalReviews": 850,
-      "views": 50000,
-      "totalChapters": 22
-    },
-    "meta": {
-      "pages": 300,
-      "readingTime": "4h"
-    },
     "status": "published",
     "createdAt": "2025-02-25"
   },
-
   {
     "id": "book_007",
     "title": "Future 2099",
@@ -177,24 +117,14 @@
     "bannerImage": "/wattpad/hero/banner-wattpad.png",
     "summary": "A futuristic journey",
     "description": "Technology controls human destiny.",
-    "tags": ["future", "ai"],
+    "tags": [
+      "future",
+      "ai"
+    ],
     "language": "English",
-    "price": 199,
-    "isFree": false,
-    "stats": {
-      "rating": 4.6,
-      "totalReviews": 1400,
-      "views": 76000,
-      "totalChapters": 28
-    },
-    "meta": {
-      "pages": 360,
-      "readingTime": "5h"
-    },
     "status": "published",
     "createdAt": "2025-03-18"
   },
-
   {
     "id": "book_008",
     "title": "War of Kings",
@@ -205,20 +135,11 @@
     "bannerImage": "/wattpad/hero/banner-watt2.png",
     "summary": "Battle for the throne",
     "description": "Kingdoms clash in a war of power.",
-    "tags": ["war", "action"],
+    "tags": [
+      "war",
+      "action"
+    ],
     "language": "English",
-    "price": 149,
-    "isFree": false,
-    "stats": {
-      "rating": 4.5,
-      "totalReviews": 1100,
-      "views": 64000,
-      "totalChapters": 26
-    },
-    "meta": {
-      "pages": 340,
-      "readingTime": "5h"
-    },
     "status": "published",
     "createdAt": "2025-02-12"
   }

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Sun,
-  Phone,
   ArrowRight,
   Check,
   Video,
@@ -13,13 +12,11 @@ import {
   HeartPulse,
   Wallet,
   ChevronDown,
-  Star,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./medibright-health.css";
 
 const QUOTE_URL = "https://example.com/quote/medibright-health";
-const PHONE_TEL = "tel:+18665550334";
-const PHONE_DISPLAY = "(866) 555-0334";
 
 const PLANS = [
   {
@@ -99,21 +96,6 @@ const GALLERY = [
   },
 ];
 
-const QUOTES = [
-  {
-    text: "The quote call took eleven minutes and nobody used the word 'coinsurance' without explaining it. Refreshing.",
-    name: "Priya S., Austin TX",
-  },
-  {
-    text: "My daughter saw a virtual pediatrician at 9pm on a Sunday. $0. I keep telling everyone about it.",
-    name: "Marcus D., Columbus OH",
-  },
-  {
-    text: "I finally understand what my deductible actually does. The one-page summary should be an industry law.",
-    name: "Elena R., Tampa FL",
-  },
-];
-
 const FAQS = [
   {
     q: "Are virtual visits really $0?",
@@ -173,10 +155,6 @@ export default function MediBrightHealthPage() {
             </ul>
           </nav>
           <div className="medibright-nav-cta">
-            <a href={PHONE_TEL} className="medibright-phone-link">
-              <Phone size={17} aria-hidden="true" />
-              {PHONE_DISPLAY}
-            </a>
             <a
               href={QUOTE_URL}
               target="_blank"
@@ -190,6 +168,8 @@ export default function MediBrightHealthPage() {
       </header>
 
       <main id="medibright-top">
+        <DemoBrandNotice brand="MediBright Health" />
+
         {/* Hero */}
         <section className="medibright-hero">
           <div className="medibright-wrap medibright-hero-grid">
@@ -225,9 +205,6 @@ export default function MediBrightHealthPage() {
                   className="medibright-btn medibright-btn-coral"
                 >
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
-                </a>
-                <a href={PHONE_TEL} className="medibright-btn medibright-btn-ghost">
-                  <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
                 </a>
               </div>
               <p className="medibright-hero-note">
@@ -354,9 +331,6 @@ export default function MediBrightHealthPage() {
                 >
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
                 </a>
-                <a href={PHONE_TEL} className="medibright-btn medibright-btn-ghost">
-                  <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
-                </a>
               </div>
             </div>
           </div>
@@ -386,32 +360,6 @@ export default function MediBrightHealthPage() {
                     <p>{card.body}</p>
                   </div>
                 </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials */}
-        <section className="medibright-section medibright-section-mint">
-          <div className="medibright-wrap">
-            <div className="medibright-section-head">
-              <span className="medibright-kicker">
-                <Star size={15} aria-hidden="true" /> Member stories
-              </span>
-              <h2>Real people, brighter days</h2>
-              <p>Illustrative member experiences. Individual results vary.</p>
-            </div>
-            <div className="medibright-quote-grid">
-              {QUOTES.map((q) => (
-                <figure className="medibright-quote-card" key={q.name}>
-                  <div className="medibright-stars" aria-hidden="true">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} size={16} fill="currentColor" />
-                    ))}
-                  </div>
-                  <blockquote>&ldquo;{q.text}&rdquo;</blockquote>
-                  <figcaption>{q.name}</figcaption>
-                </figure>
               ))}
             </div>
           </div>
@@ -476,9 +424,6 @@ export default function MediBrightHealthPage() {
                 >
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
                 </a>
-                <a href={PHONE_TEL} className="medibright-btn medibright-btn-ghost">
-                  <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
-                </a>
               </div>
             </div>
           </div>
@@ -500,11 +445,6 @@ export default function MediBrightHealthPage() {
               <li><a href="#medibright-how">How it works</a></li>
               <li><a href="#medibright-care">Why MediBright</a></li>
               <li><a href="#medibright-faq">FAQ</a></li>
-              <li>
-                <a href={PHONE_TEL} className="medibright-footer-phone">
-                  {PHONE_DISPLAY}
-                </a>
-              </li>
             </ul>
           </div>
           <p className="medibright-fineprint">

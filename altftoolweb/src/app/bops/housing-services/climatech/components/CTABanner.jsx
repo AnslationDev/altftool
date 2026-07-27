@@ -1,6 +1,8 @@
 "use client";
 import { useReveal } from "../hooks/useReveal";
 
+const CONTACT_URL = "/policypages/contact";
+
 export default function CTABanner() {
   const ref = useReveal();
 
@@ -55,7 +57,7 @@ export default function CTABanner() {
                 </svg>
               </a>
               <a
-                href="tel:8005551234"
+                href={CONTACT_URL}
                 className="px-8 py-4 rounded-full text-[#1a1a1a] font-semibold border border-[#1a1a1a]/40 hover:border-[#1a1a1a] hover:bg-[#1a1a1a]/10 transition-all duration-500 flex items-center gap-2"
               >
                 <svg
@@ -68,10 +70,10 @@ export default function CTABanner() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    d="M8 10h.01M12 10h.01M16 10h.01M21 11.5c0 4.142-4.03 7.5-9 7.5a10.2 10.2 0 01-3.4-.57L3 20.5l1.7-3.6A7.2 7.2 0 013 11.5C3 7.358 7.03 4 12 4s9 3.358 9 7.5z"
                   />
                 </svg>
-                (800) 555-1234
+                Contact us
               </a>
             </div>
           </div>

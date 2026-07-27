@@ -9,7 +9,7 @@ import {
   Clock,
   ShieldCheck,
   Star,
-  Phone,
+  Mail,
   ArrowRight,
   CheckCircle2,
   Recycle,
@@ -23,9 +23,10 @@ import {
 } from "lucide-react";
 import "./movemint.css";
 
-const QUOTE_URL = "https://example.com/quote/movemint";
-const PHONE_TEL = "tel:+18335550139";
-const PHONE_DISPLAY = "(833) 555-0139";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?auto=format&fit=crop&w=1600&q=80",
@@ -45,9 +46,7 @@ function QuoteButton({ className = "movemint-btn movemint-btn-primary", children
   return (
     <a
       className={className}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || (
         <>
@@ -87,9 +86,9 @@ export default function MoveMintPage() {
           </ul>
 
           <div className="movemint-nav-cta">
-            <a className="movemint-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="movemint-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
             <button
@@ -124,8 +123,8 @@ export default function MoveMintPage() {
               </p>
               <div className="movemint-hero-actions">
                 <QuoteButton />
-                <a className="movemint-btn movemint-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="movemint-btn movemint-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="movemint-chips">
@@ -315,13 +314,13 @@ export default function MoveMintPage() {
                 <h2>Your flat price in about 90 seconds.</h2>
                 <p>
                   No home visit needed — or talk it through at{" "}
-                  <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>.
+                  <a href={CONTACT_URL}>{CONTACT_LABEL}</a>.
                 </p>
               </div>
               <div className="movemint-band-actions">
                 <QuoteButton />
-                <a className="movemint-btn movemint-btn-ghost" href={PHONE_TEL} style={{ color: "#fff", borderColor: "#4a545e" }}>
-                  <Phone size={18} aria-hidden="true" /> Call us
+                <a className="movemint-btn movemint-btn-ghost" href={CONTACT_URL} style={{ color: "#fff", borderColor: "#4a545e" }}>
+                  <Mail size={18} aria-hidden="true" /> Contact us
                 </a>
               </div>
             </div>
@@ -517,14 +516,14 @@ export default function MoveMintPage() {
                 <h2>Ready for a mint-condition move?</h2>
                 <p>
                   Lock a flat price today, or call{" "}
-                  <a href={PHONE_TEL}>{PHONE_DISPLAY}</a> — real humans, seven days a
+                  <a href={CONTACT_URL}>{CONTACT_LABEL}</a> — real humans, seven days a
                   week.
                 </p>
               </div>
               <div className="movemint-band-actions">
                 <QuoteButton />
-                <a className="movemint-btn movemint-btn-dark" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="movemint-btn movemint-btn-dark" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -549,8 +548,8 @@ export default function MoveMintPage() {
               </p>
             </div>
             <div className="movemint-footer-contact">
-              <a href={PHONE_TEL}>
-                <Phone size={19} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a href={CONTACT_URL}>
+                <Mail size={19} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
               <p>Open 7 days, 7am&ndash;9pm local time</p>
             </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Truck,
-  Phone,
+  Mail,
   Star,
   ArrowRight,
   Menu,
@@ -29,8 +29,10 @@ import {
 } from "lucide-react";
 import "./swiftshift-movers.css";
 
-const PHONE_DISPLAY = "(866) 555-0177";
-const PHONE_TEL = "tel:+18665550177";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const MARQUEE_ITEMS = [
   { icon: Sofa, label: "Sectionals" },
@@ -199,8 +201,8 @@ export default function SwiftShiftMoversPage() {
                   <a href="#quote" className="swiftshift-btn swiftshift-btn--yellow">
                     Get my flat quote <ArrowRight size={18} aria-hidden="true" />
                   </a>
-                  <a href={PHONE_TEL} className="swiftshift-btn swiftshift-btn--ghost">
-                    <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                  <a href={CONTACT_URL} className="swiftshift-btn swiftshift-btn--ghost">
+                    <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                   </a>
                 </div>
               </div>
@@ -378,7 +380,7 @@ export default function SwiftShiftMoversPage() {
                   Lock my flat quote <ArrowRight size={20} aria-hidden="true" />
                 </button>
                 <p className="swiftshift-form-note">
-                  Demo form — nothing is sent. Call {PHONE_DISPLAY} instead.
+                  Demo form — nothing is sent. {CONTACT_LABEL} instead.
                 </p>
               </form>
             </div>
@@ -415,8 +417,8 @@ export default function SwiftShiftMoversPage() {
             <h2 className="swiftshift-display">
               One call. <em>One flat price.</em>
             </h2>
-            <a href={PHONE_TEL} className="swiftshift-cta-phone">
-              <Phone size={26} aria-hidden="true" /> {PHONE_DISPLAY}
+            <a href={CONTACT_URL} className="swiftshift-cta-phone">
+              <Mail size={26} aria-hidden="true" /> {CONTACT_LABEL}
             </a>
             <p className="swiftshift-cta-sub">
               Lines open 7 days · Same-week slots on most routes
@@ -457,7 +459,7 @@ export default function SwiftShiftMoversPage() {
                 <a href="#playbook">Move-day playbook</a>
                 <a href="#reviews">Reviews</a>
                 <a href="#quote">Flat quote</a>
-                <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+                <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
               </div>
             </nav>
           </div>

@@ -6,8 +6,6 @@ import {
   Grid2X2,
   ShieldCheck,
   Sparkles,
-  Star,
-  Users,
 } from "lucide-react";
 import AppCard from "./AppCard";
 import { AppIconSvg } from "./AppVisualAssets";
@@ -26,7 +24,6 @@ const safetyItems = [
   { title: "Malware-Free Apps", detail: "Security-first downloads", icon: ShieldCheck },
   { title: "Fast Downloads", detail: "Optimized APK delivery", icon: Sparkles },
   { title: "Regular Updates", detail: "Fresh versions tracked", icon: Grid2X2 },
-  { title: "Top Rated Apps", detail: "Curated by user signals", icon: Star },
 ];
 
 function CategorySvgIcon({ type }) {
@@ -127,11 +124,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
           <div className="home-hero-inner relative mx-auto max-w-[1320px] px-[var(--anslation-ds-gutter)] lg:!min-h-[calc(100svh-64px)]">
             <div className="grid items-center gap-8 lg:grid-cols-[0.86fr_0.88fr] xl:grid-cols-[0.9fr_0.84fr]">
               <div className="z-10 lg:-translate-y-10">
-                <div className="home-reference-badge w-fit">
-                  <ShieldCheck size={15} aria-hidden="true" />
-                  Trusted by 100K+ Users
-                </div>
-                <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-extrabold leading-[1.03] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
+                <h1 className="max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-extrabold leading-[1.03] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
                   Discover. Download. Enjoy the <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">Best Apps</span>
                 </h1>
                 <p className="mt-6 max-w-[34rem] text-[1.04rem] font-semibold leading-8 text-[var(--muted-foreground)]">
@@ -158,9 +151,8 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                         <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                          <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.downloads} downloads</p>
+                          <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.category}</p>
                         </div>
-                        <span className="text-[9px] font-semibold text-[var(--foreground)] sm:text-[11px]">{app.rating}</span>
                       </div>
                     ))}
                   </div>
@@ -168,81 +160,33 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
               </div>
 
               <div className="absolute left-0 top-8 w-[140px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-2 sm:top-24 sm:w-[196px] sm:rounded-[22px] sm:p-3.5 lg:left-4">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Trending Apps</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Featured apps</p>
                 <div className="mt-2 space-y-2 sm:mt-3 sm:space-y-3">
                   {apps.slice(0, 2).map((app) => (
                     <div key={app.slug} className="flex items-center gap-2 sm:gap-3">
                       <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                       <div className="min-w-0">
                         <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.rating} rating</p>
+                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.category}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="absolute right-[-4px] top-9 w-[148px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:top-24 sm:w-[206px] sm:rounded-[22px] sm:p-3 lg:right-14">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Download Statistics</p>
-                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">3.4M+</p>
-                <div className="mt-2 overflow-hidden rounded-[14px] bg-[var(--home-surface)] p-2 sm:mt-2.5 sm:rounded-[16px] sm:p-2.5">
-                  <svg viewBox="0 0 160 62" className="h-[42px] w-full sm:h-[62px]" role="img" aria-label="Download progress chart">
-                    <defs>
-                      <linearGradient id="download-chart-fill" x1="0" y1="0" x2="1" y2="0">
-                        <stop stopColor="#14B8A6" />
-                        <stop offset="1" stopColor="#38BDF8" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="#e4e6f1" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="url(#download-chart-fill)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20 L152 58 L8 58 Z" fill="#14B8A6" opacity=".12" />
-                    {[62, 98, 134, 152].map((cx, index) => (
-                      <circle key={cx} cx={cx} cy={[34, 24, 14, 20][index]} r="4.2" fill="#fff" stroke="#14B8A6" strokeWidth="3" />
-                    ))}
-                  </svg>
-                </div>
-              </div>
-
-              <div className="absolute bottom-24 left-1 w-[152px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-8 sm:w-[188px] sm:rounded-[22px] sm:p-3 lg:bottom-28 lg:left-14 lg:w-[224px] lg:p-4">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Recently Added</p>
+              <div className="absolute bottom-24 right-1 w-[154px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:w-[204px] sm:rounded-[22px] sm:p-3.5 lg:bottom-28 lg:right-12 lg:w-[224px] lg:p-4">
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">In the catalogue</p>
                 <div className="mt-2 flex -space-x-2 sm:mt-3">
                   {apps.slice(0, 5).map((app) => (
                     <AppIconSvg key={app.slug} app={app} className="h-7 w-7 rounded-[9px] ring-2 ring-white sm:h-9 sm:w-9 sm:rounded-[11px] sm:ring-4 lg:h-10 lg:w-10 lg:rounded-[12px]" />
                   ))}
                 </div>
-                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">Fresh APKs reviewed weekly</p>
-              </div>
-
-              <div className="absolute bottom-24 right-1 w-[154px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:w-[204px] sm:rounded-[22px] sm:p-3.5 lg:right-12 lg:w-[224px]">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Performance Insights</p>
-                <p className="mt-1.5 text-base font-bold text-[var(--foreground)] sm:mt-2 sm:text-xl">99.9% uptime</p>
-                <div className="mt-2 grid gap-1.5 sm:mt-3 sm:gap-2">
-                  {[92, 84, 76].map((value, index) => (
-                    <div key={value} className="flex items-center gap-2">
-                      <span className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--home-border)]">
-                        <span
-                          className="block h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] transition-all duration-300"
-                          style={{ width: `${value}%` }}
-                        />
-                      </span>
-                      <span className="w-6 text-right text-[8px] font-semibold text-[var(--foreground)] sm:w-7 sm:text-[10px]">{["92", "84", "76"][index]}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="absolute left-1/2 top-[142px] -translate-x-1/2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-sm)] backdrop-blur-xl sm:top-12 sm:px-4 sm:py-3">
-                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">Top Rated Apps · 4.7 ★</p>
-              </div>
-
-              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:bottom-7 sm:gap-3 sm:px-4 sm:py-3">
-                <Users size={15} className="text-[var(--primary)] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">User Activity +28%</p>
+                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">{apps.length} Android apps</p>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-[26px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-5">
+          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-[26px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
             {safetyItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -299,7 +243,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             ))}
           </div>
         ) : (
-          <div className="mt-5 rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-8 text-center shadow-[0_14px_34px_rgba(15,23,42,0.075)]">
+          <div className="mt-5 rounded-lg border border-[var(--home-border)] bg-[var(--card)] p-8 text-center shadow-[var(--anslation-ds-shadow-sm)]">
             <p className="text-lg font-semibold text-[var(--foreground)]">No apps found</p>
             <p className="mt-2 text-sm font-normal text-[var(--muted-foreground)]">Try searching by app name, category, or tool type.</p>
           </div>
@@ -307,40 +251,31 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       </section>
 
 
-      <section id="top-rated-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-14 pt-4 sm:px-6 lg:px-8 lg:pb-16">
+      <section id="all-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-14 pt-4 sm:px-6 lg:px-8 lg:pb-16">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Top Rated Apps</h2>
-            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">High quality apps loved by users.</p>
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">All Apps</h2>
+            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">Every Android app in the AppHub catalogue.</p>
           </div>
         </div>
         <div className="mt-5 grid gap-5 lg:grid-cols-4">
-          {filteredApps
-            .slice()
-            .sort((a, b) => Number(b.rating) - Number(a.rating))
-            .map((app) => (
-              <Link key={app.slug} href={`/apps/${app.slug}`} className="group flex min-h-[172px] flex-col justify-between rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-6 shadow-[0_14px_34px_rgba(15,23,42,0.075)] transition hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] hover:shadow-[0_22px_48px_rgba(15,23,42,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--primary)_25%,transparent)]">
-                <div className="flex items-center gap-4">
-                  <AppIconSvg app={app} className="h-[72px] w-[72px] rounded-[20px]" />
-                  <div className="min-w-0">
-                    <p className="text-[17px] font-semibold text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
-                      {app.name}
-                    </p>
-                    <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{app.category}</p>
-                  </div>
+          {filteredApps.map((app) => (
+            <Link key={app.slug} href={`/apps/${app.slug}`} className="group flex min-h-[172px] flex-col justify-between rounded-lg border border-[var(--home-border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)] transition hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] hover:shadow-[var(--anslation-ds-shadow-md)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)] motion-reduce:transform-none">
+              <div className="flex items-center gap-4">
+                <AppIconSvg app={app} className="h-[72px] w-[72px] rounded-[20px]" />
+                <div className="min-w-0">
+                  <p className="text-[17px] font-semibold text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
+                    {app.name}
+                  </p>
+                  <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{app.category}</p>
                 </div>
-                <div className="mt-6 flex items-center justify-between gap-3 text-sm">
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[16px] font-semibold text-[var(--foreground)]">{app.rating}</span>
-                      <span className="tracking-[1px] text-[#f5a400]" aria-label={`${app.rating} star rating`}>★★★★★</span>
-                    </div>
-                    <p className="mt-1 text-xs font-medium text-[var(--muted-foreground)]">{app.reviews?.length ?? 0} reviews</p>
-                  </div>
-                  <span className="rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] px-3 py-1.5 text-xs font-semibold text-[var(--primary)]">{app.downloads}</span>
-                </div>
-              </Link>
-            ))}
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-2 text-sm">
+                <span className="rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] px-3 py-1.5 text-xs font-semibold text-[var(--primary)]">{app.apkSize}</span>
+                <span className="rounded-full border border-[var(--home-border)] px-3 py-1.5 text-xs font-semibold text-[var(--muted-foreground)]">{app.androidRequired}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
     </main>

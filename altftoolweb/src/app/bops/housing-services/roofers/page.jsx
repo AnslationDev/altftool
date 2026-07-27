@@ -1,61 +1,40 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import logoImage from "./Logo.png";
 import "./styles.css";
 
-const phoneNumber = "+17185550167";
-const phoneDisplay = "(718) 555-0198";
+const CONTACT_ROUTE = "/policypages/contact";
 
 const services = [
   {
     title: "Cedar Roofing",
     text: "Natural beauty, durability, and expert craftsmanship built to protect and impress.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0241-1-scaled.webp",
-    alt: "Cedar roofing project",
   },
   {
     title: "EPDM / TPO",
     text: "Durable, energy-efficient roofing systems designed for long-term protection.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
-    alt: "Workers on a rooftop",
   },
   {
     title: "Flat Roofing",
     text: "Dependable flat roofing systems for homes, buildings, and commercial properties.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IGOR-1-scaled.webp",
-    alt: "Flat roof with vents",
   },
   {
     title: "Metal Roofing",
     text: "Strong, modern, energy-efficient roofs with lasting performance and style.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0711-1-scaled.webp",
-    alt: "Modern metal roof",
   },
   {
     title: "Shingles",
     text: "Affordable and reliable shingle roofing installed with quality materials.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0778-scaled.webp",
-    alt: "Shingle roof project",
   },
   {
     title: "Slate",
     text: "Timeless natural protection with premium installation and restoration detail.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0332-scaled.webp",
-    alt: "Slate roof with trees",
   },
   {
     title: "Spanish Tile",
     text: "Mediterranean character, lasting durability, and carefully finished tile work.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0203-scaled.webp",
-    alt: "Spanish tile roof",
   },
 ];
 
@@ -65,8 +44,6 @@ const blogPosts = [
     title: "Flat Roof Repair in NYC: Signs You Should Not Ignore",
     excerpt:
       "Learn the early warning signs of flat roof damage before small leaks become expensive repairs.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IGOR-1-scaled.webp",
     category: "Flat Roofing",
     description: [
       "Flat roofs are common across Queens, Brooklyn, Manhattan, and Long Island because they are practical for residential and commercial buildings. The challenge is that water, foot traffic, and weather changes can create hidden problems.",
@@ -79,8 +56,6 @@ const blogPosts = [
     title: "How to Maintain a Cedar Roof for Long Lasting Beauty",
     excerpt:
       "Cedar roofing needs the right care plan to keep its natural character and weather resistance.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0241-1-scaled.webp",
     category: "Cedar Roofing",
     description: [
       "Cedar roofs add warmth, texture, and curb appeal, but they need steady maintenance to perform well in New York weather.",
@@ -93,8 +68,6 @@ const blogPosts = [
     title: "EPDM vs TPO: Choosing the Right Commercial Roof",
     excerpt:
       "Compare two popular single-ply roofing systems for durability, energy performance, and maintenance.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
     category: "EPDM / TPO",
     description: [
       "EPDM and TPO are both strong choices for commercial flat roofs. EPDM is known for flexibility and proven long-term performance, while TPO is valued for heat reflection and energy efficiency.",
@@ -107,8 +80,6 @@ const blogPosts = [
     title: "Why Metal Roofing Is Becoming Popular in New York",
     excerpt:
       "Metal roofs offer clean style, strong protection, and long-term performance for modern properties.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0711-1-scaled.webp",
     category: "Metal Roofing",
     description: [
       "Metal roofing is growing in popularity because it gives properties a sharp modern look while also delivering durability.",
@@ -121,8 +92,6 @@ const blogPosts = [
     title: "When Should You Replace a Shingle Roof?",
     excerpt:
       "Know the difference between a simple repair and a full roof replacement decision.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0778-scaled.webp",
     category: "Shingles",
     description: [
       "Shingle roofs are reliable, affordable, and versatile, but every system has a service life. Missing shingles, granule loss, curled edges, and repeated leaks can point to replacement.",
@@ -135,8 +104,6 @@ const blogPosts = [
     title: "Slate Roof Restoration: Preserving a Premium Roof",
     excerpt:
       "Slate roofs need specialized repair methods to preserve their natural strength and timeless look.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0332-scaled.webp",
     category: "Slate Roofing",
     description: [
       "Slate roofing is known for longevity and classic appearance. It is also a system that requires experienced handling because damaged tiles must be repaired carefully.",
@@ -149,8 +116,6 @@ const blogPosts = [
     title: "Spanish Tile Roofing: Style, Strength, and Care",
     excerpt:
       "Spanish tile adds distinct character and dependable protection when installed and maintained correctly.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0203-scaled.webp",
     category: "Spanish Tile",
     description: [
       "Spanish tile roofing brings a warm, architectural look that stands out. It is also durable when the roof deck, underlayment, and flashing are installed properly.",
@@ -163,8 +128,6 @@ const blogPosts = [
     title: "Roof Waterproofing: Protecting Buildings From Moisture",
     excerpt:
       "Waterproofing can reduce leak risk and protect important structural details from long-term damage.",
-    image:
-      "https://maspethroofing.com/wp-content/uploads/2025/04/IMG_9179-scaled.webp",
     category: "Waterproofing",
     description: [
       "Waterproofing is one of the most important parts of protecting a building in New York. Roofs, parapets, walls, and below-grade areas all need proper moisture control.",
@@ -177,7 +140,6 @@ const blogPosts = [
     title: "Facade Restoration Basics for NYC Properties",
     excerpt:
       "Facade issues can affect safety, curb appeal, and water protection for residential and commercial buildings.",
-    image: "https://maspethroofing.com/wp-content/uploads/2025/04/img2.webp",
     category: "Facade Restoration",
     description: [
       "Facade restoration improves building appearance and helps protect the structure from water intrusion. Cracks, damaged joints, and loose materials should be reviewed quickly.",
@@ -187,78 +149,7 @@ const blogPosts = [
   },
 ];
 
-const clientLogosOne = [
-  [
-    "Acadia",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Acadia.webp",
-  ],
-  [
-    "Adaptive",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Adaptive-green.webp",
-  ],
-  [
-    "Aiello Associates",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/AIELLO-ASSOCIATES.webp",
-  ],
-  ["Autun", "https://maspethroofing.com/wp-content/uploads/2025/04/Autun.webp"],
-  [
-    "BAR Construction",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Bar.webp",
-  ],
-  [
-    "Consigli",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Consigli.webp",
-  ],
-  [
-    "Cushman Wakefield",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Cushman-Wakefield.webp",
-  ],
-  [
-    "DHI Construction",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/DHI-Construction.webp",
-  ],
-];
-
-const clientLogosTwo = [
-  [
-    "Extra Space",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Extra-space.webp",
-  ],
-  [
-    "Gabrielli Truck",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Gabrielli-Truck.webp",
-  ],
-  [
-    "Hudson Meridian",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Hudson-Meridian.webp",
-  ],
-  ["Mega", "https://maspethroofing.com/wp-content/uploads/2025/04/Mega.webp"],
-  [
-    "Prologis",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Prologis.webp",
-  ],
-  [
-    "Rimkus",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Rimkus.webp",
-  ],
-  [
-    "Triton",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/Triton.webp",
-  ],
-  [
-    "Vornado",
-    "https://maspethroofing.com/wp-content/uploads/2025/04/vornado.webp",
-  ],
-];
-
-const mobileLinks = [
-  "Home",
-  "Services",
-  "About Us",
-  "Blogs",
-  "Clients",
-  "Contact",
-];
+const mobileLinks = ["Home", "Services", "About Us", "Blogs", "Contact"];
 
 function getSlideClass(index, activeIndex) {
   const total = services.length;
@@ -338,7 +229,7 @@ function ReferencePopup({
           </svg>
         </button>
 
-        {/* Call Icon */}
+        {/* Message Icon */}
         <div className="ref-icon">
           <svg
             width="90"
@@ -350,56 +241,30 @@ function ReferencePopup({
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-            <path d="M15 4a5 5 0 0 1 5 5" />
-            <path d="M15 1a8 8 0 0 1 8 8" />
+            <path d="M4 5h16v12H8l-4 4V5Z" />
+            <path d="M8 10h8" />
+            <path d="M8 13.5h5" />
           </svg>
         </div>
 
         <h2 className="ref-title">Hello! Need a Roofer?</h2>
 
         <p className="ref-subtitle">
-          Let our expert team help you with <strong>{sectionName}</strong>.
-          Speak directly with a CrestNova roofing specialist for a free estimate
-          and professional guidance.
+          Let our expert team help you with <strong>{sectionName}</strong>. Send
+          us your details and we&rsquo;ll get back to you about your project.
         </p>
 
         <div className="ref-divider"></div>
 
-        <div className="ref-cta-label">Call Now for Instant Help</div>
+        <div className="ref-cta-label">Get in touch</div>
 
-        <a className="ref-phone-btn" href={`tel:${phoneNumber}`}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-          </svg>
-          {phoneDisplay}
-        </a>
-
-        <div className="ref-availability">
-          <svg
-            className="ref-availability-icon"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <circle cx="10" cy="10" r="5" />
-          </svg>
-          We are available 24/7
-        </div>
+        <Link className="ref-contact-btn" href={CONTACT_ROUTE}>
+          Contact us
+        </Link>
 
         <br />
 
-        <button
-          className="ref-continue-btn"
-          type="button"
-          onClick={onContinue}
-        >
+        <button className="ref-continue-btn" type="button" onClick={onContinue}>
           {continueLabel}
         </button>
       </div>
@@ -464,9 +329,7 @@ export default function App() {
       { threshold: 0.16 },
     );
     document
-      .querySelectorAll(
-        ".reveal, .about-image, .journey-line, .question-section",
-      )
+      .querySelectorAll(".reveal, .journey-line, .question-section")
       .forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, [view, activeBlogSlug]);
@@ -592,30 +455,6 @@ export default function App() {
       className={`roofing-page${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}
     >
       <header>
-        <div className="topbar">
-          <span>54-30 44th Street, Queens, NY 11378</span>
-          <a
-            className="topbar-phone"
-            href={`tel:${phoneNumber}`}
-            onClick={(event) => {
-              event.preventDefault();
-              triggerPhoneCall("Instant Roofing Help");
-            }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-            </svg>
-            {phoneDisplay}
-          </a>
-        </div>
-
         <nav className="navbar" aria-label="Primary navigation">
           <div className="nav-menu left">
             <div className="nav-item">
@@ -647,14 +486,7 @@ export default function App() {
             <img src={logoImage.src} alt="CrestNova Roofing" />
           </button>
 
-          <a
-            className="mobile-contact-link"
-            href={`tel:${phoneNumber}`}
-            onClick={(event) => {
-              event.preventDefault();
-              triggerPhoneCall("Mobile Contact");
-            }}
-          >
+          <Link className="mobile-contact-link" href={CONTACT_ROUTE}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -664,10 +496,10 @@ export default function App() {
               strokeLinejoin="round"
               aria-hidden="true"
             >
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+              <path d="M4 5h16v12H8l-4 4V5Z" />
             </svg>
-            <span>{phoneDisplay}</span>
-          </a>
+            <span>Contact</span>
+          </Link>
 
           <div className="nav-menu right">
             <div className="nav-item">
@@ -697,15 +529,6 @@ export default function App() {
                   </button>
                 ))}
               </div>
-            </div>
-            <div className="nav-item">
-              <button
-                className="nav-link"
-                type="button"
-                onClick={() => directScroll("clients")}
-              >
-                Clients
-              </button>
             </div>
             <div className="nav-item">
               <button
@@ -771,11 +594,6 @@ export default function App() {
               </button>
             ))}
           </div>
-
-          <div className="mobile-panel-address">
-            <span>Visit Us</span>
-            <strong>54-30 44th Street, Queens, NY 11378</strong>
-          </div>
         </div>
       </header>
 
@@ -807,9 +625,10 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <span>54-30 44th Street, Queens, NY 11378</span>
         <span>(c) 2026 CrestNova Roofing. Landing page recreation.</span>
-        <span className="footer-phone">(718) 555-0198</span>
+        <Link className="footer-contact" href={CONTACT_ROUTE}>
+          Contact us
+        </Link>
       </footer>
 
       <PageLoader visible={loaderVisible} fading={loaderFading} />
@@ -922,7 +741,6 @@ function HomeContent({ activeIndex, moveCarousel, handleSubmit, onPaperCall }) {
                 className={getSlideClass(index, activeIndex)}
                 key={service.title}
               >
-                <img src={service.image} alt={service.alt} />
                 <div className="service-info">
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
@@ -978,12 +796,6 @@ function HomeContent({ activeIndex, moveCarousel, handleSubmit, onPaperCall }) {
               investigations.
             </p>
           </div>
-          <figure className="about-image reveal from-right">
-            <img
-              src="https://maspethroofing.com/wp-content/uploads/2025/04/img2.webp"
-              alt="Modern building with service vehicles"
-            />
-          </figure>
         </div>
       </section>
 
@@ -1020,45 +832,8 @@ function HomeContent({ activeIndex, moveCarousel, handleSubmit, onPaperCall }) {
         </div>
       </section>
 
-      <section className="section clients" id="clients">
-        <div className="container">
-          <div className="section-head reveal">
-            <span className="section-eyebrow">our clients</span>
-            <h2 className="section-title">Trusted Brands</h2>
-            <p className="section-copy">
-              Clients trust our expertise, dedication, and quality services for
-              durable results and long-term value.
-            </p>
-          </div>
-
-          <LogoMarquee logos={clientLogosOne} label="Client logos row one" />
-          <LogoMarquee
-            logos={clientLogosTwo}
-            label="Client logos row two"
-            reverse
-          />
-        </div>
-      </section>
-
       <QuestionSection handleSubmit={handleSubmit} />
     </>
-  );
-}
-
-function LogoMarquee({ logos, label, reverse = false }) {
-  return (
-    <div className="logo-marquee reveal" aria-label={label}>
-      <div className={`logo-track${reverse ? " reverse" : ""}`}>
-        {[...logos, ...logos].map(([name, src], index) => (
-          <img
-            className="logo-item"
-            src={src}
-            alt={`${name} logo`}
-            key={`${name}-${index}`}
-          />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -1076,15 +851,6 @@ function QuestionSection({ handleSubmit }) {
       </div>
 
       <div className="question-grid">
-        <div className="map-wrap reveal from-left">
-          <iframe
-            title="CrestNova Roofing map"
-            src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=54-30%2044th%20Street,%20Queens,%20NY%2011378&t=&z=14&ie=UTF8&iwloc=B&output=embed"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-
         <div className="question-form-shell reveal from-right">
           <form className="question-form" onSubmit={handleSubmit}>
             <input
@@ -1201,7 +967,6 @@ function BlogList({ onOpenBlog, onBackHome }) {
             type="button"
             onClick={() => onOpenBlog(post.slug)}
           >
-            <img src={post.image} alt={post.title} />
             <span>{post.category}</span>
             <h2>{post.title}</h2>
             <p>{post.excerpt}</p>
@@ -1219,7 +984,6 @@ function BlogDetail({ blog, relatedBlogs, onOpenBlog, onBackBlogs }) {
         Back to all blogs
       </button>
       <div className="blog-detail-hero reveal">
-        <img src={blog.image} alt={blog.title} />
         <div>
           <span className="section-eyebrow">{blog.category}</span>
           <h1>{blog.title}</h1>
@@ -1244,7 +1008,6 @@ function BlogDetail({ blog, relatedBlogs, onOpenBlog, onBackBlogs }) {
               type="button"
               onClick={() => onOpenBlog(post.slug)}
             >
-              <img src={post.image} alt={post.title} />
               <span>{post.category}</span>
               <h3>{post.title}</h3>
             </button>

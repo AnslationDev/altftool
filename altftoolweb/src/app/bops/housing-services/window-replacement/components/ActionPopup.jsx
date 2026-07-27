@@ -112,7 +112,7 @@ function ResultPopup({ onClose, onModify }) {
             {/* Headset icon cluster */}
             <div className="relative flex items-center justify-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-bronze-600 text-white shadow-md shadow-bronze-700/40">
-                <Icon name="phone" className="h-8 w-8" />
+                <Icon name="mail" className="h-8 w-8" />
               </div>
               <span
                 className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white shadow"
@@ -127,18 +127,15 @@ function ResultPopup({ onClose, onModify }) {
         <div className="px-8 pb-8">
           {/* Call section */}
           <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">
-            Now Call Toll Free
+            Send us your project
           </p>
           <a
-            href={`tel:${company.phoneHref}`}
+            href={company.contactUrl}
             className="mt-3 flex items-center justify-center gap-3 rounded-2xl bg-ink px-6 py-4 font-display text-xl font-semibold text-white shadow-lg shadow-ink/20 transition-all hover:-translate-y-0.5 hover:bg-stone-800"
           >
-            <Icon name="phone" className="h-5 w-5 text-bronze-400" />
-            {company.phone}
+            <Icon name="mail" className="h-5 w-5 text-bronze-400" />
+            {company.contactLabel}
           </a>
-          <p className="mt-3 text-xs font-medium text-stone-500">
-            We are available 24×7
-          </p>
 
           {/* Modify search button */}
           <button

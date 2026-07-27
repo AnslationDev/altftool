@@ -1,4 +1,6 @@
-import { Shield, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MapPin, MessageSquare, Shield } from "lucide-react";
+
+const CONTACT_URL = "/policypages/contact";
 
 const cols = [
   {
@@ -56,8 +58,8 @@ export default function Footer() {
               properties. Built to protect, beautify, and last a lifetime.
             </p>
             <div className="mt-6 space-y-3 text-sm text-white/80">
-              <a href="tel:+18005551234" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
-                <Phone className="w-4 h-4 text-[#00AEEF]" /> (800) 555-1234
+              <a href={CONTACT_URL} className="flex items-center gap-3 hover:text-[#00AEEF] transition">
+                <MessageSquare className="w-4 h-4 text-[#00AEEF]" /> Contact us
               </a>
               <a href="mailto:hello@eliteshield.com" className="flex items-center gap-3 hover:text-[#00AEEF] transition">
                 <Mail className="w-4 h-4 text-[#00AEEF]" /> hello@eliteshield.com

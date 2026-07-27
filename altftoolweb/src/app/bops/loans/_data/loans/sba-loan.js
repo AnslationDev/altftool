@@ -26,7 +26,6 @@ export const sbaLoan = {
   ],
 
   quoteLabel: "Check my eligibility",
-  quoteUrl: "https://example.com/quote/sba-loan",
 
   featuresTitle: "One guarantee, many ways to grow",
   featuresIntro:

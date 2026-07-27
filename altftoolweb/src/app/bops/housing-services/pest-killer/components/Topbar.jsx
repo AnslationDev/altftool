@@ -1,13 +1,15 @@
 import './Topbar.css';
 
+const CONTACT_URL = '/policypages/contact';
+
 export default function Topbar() {
   return (
     <div className="topbar">
       <div className="container">
         <div className="topbar-left">
-          <a href="tel:+919999605070">
-            <i className="fa-solid fa-phone"></i>
-            <span>Phone: +91-9999605070</span>
+          <a href={CONTACT_URL}>
+            <i className="fa-solid fa-comment-dots"></i>
+            <span>Contact us</span>
           </a>
           <a href="mailto:pcds.ggn@gmail.com">
             <i className="fa-solid fa-envelope"></i>

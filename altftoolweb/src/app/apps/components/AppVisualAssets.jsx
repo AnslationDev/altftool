@@ -124,64 +124,6 @@ export function AppIconSvg({ app, className = "" }) {
   );
 }
 
-export function HeroPhoneSvg({ apps }) {
-  return (
-    <svg viewBox="0 0 330 560" role="img" aria-label="AppHub mobile dashboard mockup" className="h-auto w-[210px] lg:w-[286px]">
-      <defs>
-        <filter id="phone-shadow" x="-30%" y="-20%" width="160%" height="150%">
-          <feDropShadow dx="0" dy="26" stdDeviation="22" floodColor="#0f172a" floodOpacity=".22" />
-        </filter>
-      </defs>
-      <rect x="23" y="10" width="284" height="540" rx="54" fill="#111827" filter="url(#phone-shadow)" />
-      <rect x="38" y="28" width="254" height="506" rx="42" fill="#f8fafc" />
-      <rect x="112" y="42" width="106" height="28" rx="14" fill="#020617" />
-      <text x="68" y="118" fontFamily="Inter, Arial, sans-serif" fontSize="18" fontWeight="900" fill="#111827">Hi, Alex</text>
-      <rect x="68" y="140" width="194" height="38" rx="19" fill="#fff" stroke="#e8ecf5" />
-      <text x="88" y="164" fontFamily="Inter, Arial, sans-serif" fontSize="12" fontWeight="700" fill="#94a3b8">Search anything...</text>
-      <text x="68" y="220" fontFamily="Inter, Arial, sans-serif" fontSize="14" fontWeight="900" fill="#111827">Categories</text>
-      {apps.slice(0, 4).map((app, index) => {
-        const x = 68 + index * 50;
-        const style = styleFor(app.slug);
-        return (
-          <g key={app.slug}>
-            <rect x={x} y="238" width="38" height="54" rx="13" fill="#fff" stroke="#e8ecf5" />
-            <rect x={x + 7} y="246" width="24" height="24" rx="8" fill={style.bg} />
-            <text x={x + 19} y="264" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="9" fontWeight="900" fill="#fff">
-              {style.label.slice(0, 1)}
-            </text>
-            <text x={x + 19} y="284" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="7" fontWeight="800" fill="#647086">
-              {app.category.slice(0, 5)}
-            </text>
-          </g>
-        );
-      })}
-      <text x="68" y="338" fontFamily="Inter, Arial, sans-serif" fontSize="14" fontWeight="900" fill="#111827">Trending Apps</text>
-      {apps.slice(0, 3).map((app, index) => {
-        const y = 356 + index * 58;
-        const style = styleFor(app.slug);
-        return (
-          <g key={app.slug}>
-            <rect x="68" y={y} width="194" height="44" rx="15" fill="#fff" stroke="#e8ecf5" />
-            <rect x="80" y={y + 9} width="26" height="26" rx="8" fill={style.bg} />
-            <text x="93" y={y + 27} textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="8" fontWeight="900" fill="#fff">
-              {style.label.slice(0, 1)}
-            </text>
-            <text x="116" y={y + 20} fontFamily="Inter, Arial, sans-serif" fontSize="11" fontWeight="900" fill="#111827">
-              {app.name}
-            </text>
-            <text x="116" y={y + 34} fontFamily="Inter, Arial, sans-serif" fontSize="9" fontWeight="700" fill="#94a3b8">
-              {app.downloads}
-            </text>
-            <text x="238" y={y + 27} fontFamily="Inter, Arial, sans-serif" fontSize="11" fontWeight="900" fill="#111827">
-              {app.rating}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-
 export function AppScreenSvg({ app, index = 0, className = "" }) {
   const style = styleFor(app.slug);
   const title = SCREEN_TITLES[app.slug]?.[index] || "Dashboard";

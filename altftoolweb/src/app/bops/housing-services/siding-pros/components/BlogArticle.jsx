@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, Home, Phone, Share2, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, Home, MessageSquare, Share2, User } from "lucide-react";
 import { blogPosts, categoryColor } from "../data/blogPosts";
+
+const CONTACT_URL = "/policypages/contact";
 
 export default function BlogArticle({ slug }) {
   const post = blogPosts.find((item) => item.slug === slug) || blogPosts[0];
@@ -120,8 +122,8 @@ export default function BlogArticle({ slug }) {
                   <button className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 text-slate-600 text-sm font-semibold hover:bg-[#0D3B66] hover:text-white transition">
                     <Share2 className="w-4 h-4" /> Copy Link
                   </button>
-                  <a href="tel:+18005551234" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-sm font-semibold hover:bg-[#00AEEF] hover:text-white transition">
-                    <Phone className="w-4 h-4" /> Call an Expert
+                  <a href={CONTACT_URL} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-sm font-semibold hover:bg-[#00AEEF] hover:text-white transition">
+                    <MessageSquare className="w-4 h-4" /> Contact us
                   </a>
                 </div>
               </div>

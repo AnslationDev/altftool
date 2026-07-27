@@ -3,7 +3,7 @@
 import "./cityhop-movers.css";
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   ArrowRight,
   Menu,
   X,
@@ -14,13 +14,14 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/cityhop-movers";
-const PHONE_TEL = "tel:+18555550239";
-const PHONE_DISPLAY = "(855) 555-0239";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 function QuoteButton({ className = "cityhop-btn", label = "Get a Free Quote" }) {
   return (
-    <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" className={className}>
+    <a href={CONTACT_URL} className={className}>
       {label}
       <ArrowRight size={18} className="cityhop-btn-arrow" aria-hidden="true" />
     </a>
@@ -53,9 +54,9 @@ export default function CityHopMoversPage() {
             <a href="#cityhop-why">Why CityHop</a>
           </nav>
           <div className="cityhop-nav-cta">
-            <a href={PHONE_TEL} className="cityhop-nav-phone">
-              <Phone size={16} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a href={CONTACT_URL} className="cityhop-nav-phone">
+              <Mail size={16} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
             <QuoteButton className="cityhop-btn cityhop-btn--sm" />
             <button
@@ -73,7 +74,7 @@ export default function CityHopMoversPage() {
           <a href="#cityhop-services" onClick={() => setMenuOpen(false)}>Services</a>
           <a href="#cityhop-how" onClick={() => setMenuOpen(false)}>How it works</a>
           <a href="#cityhop-why" onClick={() => setMenuOpen(false)}>Why CityHop</a>
-          <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" onClick={() => setMenuOpen(false)}>
+          <a href={CONTACT_URL} onClick={() => setMenuOpen(false)}>
             Get a Free Quote
           </a>
         </div>
@@ -108,9 +109,9 @@ export default function CityHopMoversPage() {
               </p>
               <div className="cityhop-hero-ctas">
                 <QuoteButton />
-                <a href={PHONE_TEL} className="cityhop-nav-phone">
-                  <Phone size={16} aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="cityhop-nav-phone">
+                  <Mail size={16} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="cityhop-hero-trust">
@@ -260,9 +261,9 @@ export default function CityHopMoversPage() {
             </div>
             <div className="cityhop-band-actions">
               <QuoteButton className="cityhop-btn cityhop-btn--light" />
-              <a href={PHONE_TEL} className="cityhop-band-phone">
-                <Phone size={18} aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="cityhop-band-phone">
+                <Mail size={18} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -345,9 +346,9 @@ export default function CityHopMoversPage() {
             </div>
             <div className="cityhop-band-actions">
               <QuoteButton />
-              <a href={PHONE_TEL} className="cityhop-band-phone">
-                <Phone size={18} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="cityhop-band-phone">
+                <Mail size={18} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -363,7 +364,7 @@ export default function CityHopMoversPage() {
           <div className="cityhop-footer-links">
             <a href="#cityhop-services">Services</a>
             <a href="#cityhop-how">How it works</a>
-            <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+            <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
           </div>
           <p className="cityhop-footer-note">Independent service provider listing</p>
         </div>

@@ -1,31 +1,13 @@
-import {
-  AlertTriangle,
-  CheckSquare,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Mail,
-  Phone,
-  Clock,
-  MapPin,
-  ShieldCheck,
-  Star,
-  Award,
-  Zap,
-  Shield,
-  Sparkles,
-  Search,
-  Check,
-  Quote
-} from "lucide-react";
+import { AlertTriangle, Award, Check, CheckSquare, Clock, Facebook, Instagram, Linkedin, Mail, MapPin, MessageSquare, Quote, Search, Shield, ShieldCheck, Sparkles, Star, Twitter, Zap } from "lucide-react";
 import Image from "next/image";
 import EstimateForm from "./EstimateForm";
 import NewsletterForm from "./NewsletterForm";
 import "./styles.css";
 
-const phoneDisplay = "(786) 400-3830";
-const phoneHref = "tel:7864003830";
+// No phone line is live for this page, so every contact CTA points at the
+// site's real contact route.
+const contactUrl = "/policypages/contact";
+const contactLabel = "Contact us";
 
 const trustPoints = [
   {
@@ -154,7 +136,7 @@ export default function KairosPestControlPage() {
         <div className="kairos-header-copy">
           <p>Talk to a Pest Expert</p>
           <strong>
-            Call Now: <a href={phoneHref}>{phoneDisplay}</a>
+            <a href={contactUrl}>{contactLabel}</a>
           </strong>
         </div>
       </header>
@@ -190,16 +172,12 @@ export default function KairosPestControlPage() {
               </div>
             </div>
 
-            <p className="kairos-text-direct">
-              Or text us directly for a quick reply at <a href={phoneHref}>{phoneDisplay}</a>
-            </p>
-
             <div className="kairos-mobile-actions">
               <a className="kairos-outline-button" href="#contact">
                 GET A FREE ESTIMATE
               </a>
-              <a className="kairos-call-button" href={phoneHref}>
-                Call Us: {phoneDisplay}
+              <a className="kairos-call-button" href={contactUrl}>
+                {contactLabel}
               </a>
             </div>
           </div>
@@ -444,11 +422,11 @@ export default function KairosPestControlPage() {
             <div className="kairos-bottom-contact-details">
               <div className="kairos-detail-item">
                 <div className="kairos-detail-icon-wrapper">
-                  <Phone size={18} />
+                  <MessageSquare size={18} />
                 </div>
                 <div className="kairos-detail-text">
-                  <strong>Call or Text Directly</strong>
-                  <span>{phoneDisplay}</span>
+                  <strong>Get in touch</strong>
+                  <span>{contactLabel}</span>
                 </div>
               </div>
               <div className="kairos-detail-item">
@@ -518,8 +496,8 @@ export default function KairosPestControlPage() {
           <div className="kairos-footer-contact">
             <h3>Contact Info</h3>
             <div className="kairos-footer-contact-item">
-              <Phone size={16} className="kairos-contact-icon" />
-              <p><strong>Call or Text:</strong> <a href={phoneHref} className="kairos-footer-phone">{phoneDisplay}</a></p>
+              <MessageSquare size={16} className="kairos-contact-icon" />
+              <p><a href={contactUrl} className="kairos-footer-phone">{contactLabel}</a></p>
             </div>
             <div className="kairos-footer-contact-item">
               <Clock size={16} className="kairos-contact-icon" />

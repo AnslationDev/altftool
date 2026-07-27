@@ -5,15 +5,16 @@ import {
   ArrowUpRight,
   CheckCircle2,
   Droplets,
-  Phone,
+  Mail,
   ShieldCheck,
   Wrench,
 } from "lucide-react";
 import "./gutterflow-pros.css";
 
-const QUOTE_URL = "https://example.com/quote/gutterflow-pros";
-const PHONE_DISPLAY = "(855) 555-0232";
-const PHONE_TEL = "tel:+18555550232";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1620385019253-b051a26048ce?auto=format&fit=crop&w=1600&q=80",
@@ -31,9 +32,7 @@ function QuoteButton({ small, children }) {
   return (
     <a
       className={`gutterflow-btn${small ? " gutterflow-btn--small" : ""}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowUpRight size={16} aria-hidden="true" />
@@ -43,9 +42,9 @@ function QuoteButton({ small, children }) {
 
 function PhoneLink({ className }) {
   return (
-    <a className={className} href={PHONE_TEL}>
-      <Phone size={15} aria-hidden="true" />
-      {PHONE_DISPLAY}
+    <a className={className} href={CONTACT_URL}>
+      <Mail size={15} aria-hidden="true" />
+      {CONTACT_LABEL}
     </a>
   );
 }
@@ -373,7 +372,7 @@ export default function GutterFlowProsPage() {
               </h2>
               <p>
                 Written, itemized and yours to keep. Or talk to a person right now at{" "}
-                {PHONE_DISPLAY}.
+                {CONTACT_LABEL}.
               </p>
             </div>
             <div className="gutterflow-cta-row">
@@ -387,7 +386,7 @@ export default function GutterFlowProsPage() {
       <footer className="gutterflow-footer">
         <div className="gutterflow-shell gutterflow-footer-inner">
           <span>GutterFlow Pros — seamless installs, guards &amp; cleanouts.</span>
-          <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+          <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
           <span className="gutterflow-footer-note">
             Independent service provider listing.
           </span>

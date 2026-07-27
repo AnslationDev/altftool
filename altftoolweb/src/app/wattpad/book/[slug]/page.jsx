@@ -13,12 +13,14 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Eye,
-  Star,
-  List,
-  ChevronRight,
-} from "lucide-react";
+import { List } from "lucide-react";
+
+// Chapter counts are derived from chapters.json so the page can only ever show
+// the number of parts that actually exist. The catalogue carries no rating,
+// review-count, view-count or price data, so none is displayed.
+function countChapters(bookId) {
+  return chapters.filter((chapter) => chapter.bookId === bookId).length;
+}
 
 export const dynamic = "force-static";
 
@@ -57,6 +59,9 @@ export default async function BookDetailPage({ params }) {
   const bookChapters = chapters.filter(
     (chapter) => chapter.bookId === book.id
   );
+  const firstChapter = bookChapters
+    .slice()
+    .sort((a, b) => a.chapterNumber - b.chapterNumber)[0];
 
   const relatedBooks = books
     .filter(
@@ -76,7 +81,7 @@ export default async function BookDetailPage({ params }) {
   ];
 
   return (
-    <div className="bg-background min-h-screen">
+    <main className="min-h-screen bg-background">
       <JsonLd id={`story-${book.slug}-schema`} data={jsonLd} />
       <div className="wp-section pt-8 lg:pt-12">
         <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-10 items-start">
@@ -88,6 +93,7 @@ export default async function BookDetailPage({ params }) {
                     src={book.coverImage}
                     fill
                     alt={book.title}
+                    sizes="210px"
                     className="object-cover"
                     priority
                   />
@@ -100,14 +106,6 @@ export default async function BookDetailPage({ params }) {
                 </h1>
 
                 <div className="flex items-center gap-3 mt-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden relative bg-(--muted)">
-                    <Image
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                      fill
-                      alt="author"
-                      className="object-cover"
-                    />
-                  </div>
                   <div>
                     <p className="font-medium text-base text-(--foreground)">
                       {book.authorId}
@@ -117,28 +115,26 @@ export default async function BookDetailPage({ params }) {
 
                 <div className="flex flex-wrap items-center gap-5 mt-6 text-sm text-(--muted-foreground)">
                   <div className="flex items-center gap-1.5">
-                    <Eye size={18} />
-                    <span>{book.stats.views}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Star size={18} />
-                    <span>{book.stats.totalReviews}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
                     <List size={18} />
-                    <span>{book.stats.totalChapters} parts</span>
+                    <span>
+                      {bookChapters.length} {bookChapters.length === 1 ? "part" : "parts"}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 mt-8">
-                  <Link
-                    href={`/wattpad/read/${book.slug}/1`}
-                    className="flex-1 md:flex-none"
-                  >
-                    <button className="w-full md:w-[400px] h-14 rounded-full bg-(--primary) text-white font-semibold text-base hover:opacity-90 transition cursor-pointer shadow-md hover:shadow-lg">
+                  {firstChapter ? (
+                    <Link
+                      href={`/wattpad/read/${book.slug}/${firstChapter.chapterNumber}`}
+                      className="flex h-14 flex-1 items-center justify-center rounded-full bg-(--primary) text-base font-semibold text-primary-foreground shadow-md transition hover:opacity-90 hover:shadow-lg md:w-[400px] md:flex-none"
+                    >
                       Start reading
-                    </button>
-                  </Link>
+                    </Link>
+                  ) : (
+                    <p className="flex h-14 flex-1 items-center justify-center rounded-full border border-(--border) bg-(--muted) text-base font-semibold text-(--muted-foreground) md:w-[400px] md:flex-none">
+                      No parts published yet
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -173,10 +169,7 @@ export default async function BookDetailPage({ params }) {
                           <p className="wp-related-author">{item.authorId}</p>
                           <div className="wp-related-stats">
                             <span className="flex items-center gap-1">
-                              <Eye size={16} />{item.stats.views}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <List size={16} /> {item.stats.totalChapters} parts
+                              <List size={16} /> {countChapters(item.id)} parts
                             </span>
                           </div>
                           <p className="wp-related-summary">{item.summary}</p>
@@ -199,19 +192,19 @@ export default async function BookDetailPage({ params }) {
               <p className="text-sm text-(--muted-foreground) text-center mb-3">
                 Advertisement
               </p>
-              <div className="overflow-hidden rounded-xl">
+              <div className="relative aspect-[16/25] w-full overflow-hidden rounded-xl">
                 <Image
                   src="https://images.unsplash.com/photo-1616418625298-baef98bc34f8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGFkdmVydGlzaW5nfGVufDB8fDB8fHww"
-                  width={320}
-                  height={500}
+                  fill
+                  sizes="320px"
                   alt="Advertisement"
-                  className="w-full h-auto object-cover"
+                  className="object-cover"
                 />
               </div>
             </div>
           </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

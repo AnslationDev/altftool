@@ -49,6 +49,7 @@ export async function generateMetadata({ params }) {
       title: "News Article - AltFTool News",
       description: "Read latest technology and web tools news on AltFTool.",
       path: `/news/${slug}`,
+      noindex: true,
     });
   }
 
@@ -59,6 +60,10 @@ export async function generateMetadata({ params }) {
     image: article.image_url,
     keywords: [article.category, ...(article.tags || []), "AltFTool News"].filter(Boolean),
     type: "article",
+    // The reporting belongs to the original publisher, so this page carries
+    // only their headline and summary — it must not compete with them in
+    // search. follow stays on so the outbound source link still counts.
+    noindex: true,
   });
 }
 

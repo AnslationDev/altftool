@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   ArrowUpRight,
   Ruler,
   Hammer,
@@ -13,9 +13,10 @@ import {
 } from "lucide-react";
 import "./panecraft.css";
 
-const QUOTE_URL = "https://example.com/quote/panecraft";
-const PHONE_TEL = "tel:+18555550243";
-const PHONE_DISPLAY = "(855) 555-0243";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1711006777187-2c991e1b90b2?auto=format&fit=crop&w=1600&q=80",
@@ -67,9 +68,7 @@ function QuoteButton({ ghost, children }) {
   return (
     <a
       className={`panecraft-btn ${ghost ? "panecraft-btn-ghost" : "panecraft-btn-primary"}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowUpRight size={17} aria-hidden="true" />
@@ -101,9 +100,9 @@ export default function PaneCraftPage() {
             </ul>
           </nav>
           <div className="panecraft-nav-actions">
-            <a className="panecraft-nav-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="panecraft-nav-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
           </div>
@@ -125,9 +124,9 @@ export default function PaneCraftPage() {
             </p>
             <div className="panecraft-hero-ctas">
               <QuoteButton />
-              <a className="panecraft-btn panecraft-btn-ghost" href={PHONE_TEL}>
-                <Phone size={17} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+              <a className="panecraft-btn panecraft-btn-ghost" href={CONTACT_URL}>
+                <Mail size={17} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
             <p className="panecraft-hero-note">
@@ -274,9 +273,9 @@ export default function PaneCraftPage() {
             </div>
             <div className="panecraft-band-actions">
               <QuoteButton />
-              <a className="panecraft-band-phone" href={PHONE_TEL}>
-                <Phone size={16} aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a className="panecraft-band-phone" href={CONTACT_URL}>
+                <Mail size={16} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -356,9 +355,9 @@ export default function PaneCraftPage() {
             </div>
             <div className="panecraft-band-actions">
               <QuoteButton />
-              <a className="panecraft-band-phone" href={PHONE_TEL}>
-                <Phone size={16} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+              <a className="panecraft-band-phone" href={CONTACT_URL}>
+                <Mail size={16} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -381,10 +380,10 @@ export default function PaneCraftPage() {
             </p>
           </div>
           <div className="panecraft-footer-links">
-            <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+            <a href={CONTACT_URL}>
               Get a Free Quote
             </a>
-            <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+            <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
           </div>
         </div>
       </footer>

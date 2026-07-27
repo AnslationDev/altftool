@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Leaf,
-  Phone,
+  Mail,
   ShieldCheck,
   Sprout,
   PawPrint,
@@ -17,9 +17,10 @@ import {
 } from "lucide-react";
 import "./greenguard-pest.css";
 
-const QUOTE_URL = "https://example.com/quote/greenguard-pest";
-const PHONE_DISPLAY = "(855) 555-0219";
-const PHONE_TEL = "tel:+18555550219";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1724556295094-62d093eddd87?auto=format&fit=crop&w=1600&q=80",
@@ -85,9 +86,7 @@ function QuoteButton({ big, ghost, children }) {
   return (
     <a
       className={`greenguard-btn ${ghost ? "greenguard-btn--ghost" : "greenguard-btn--solid"}${big ? " greenguard-btn--big" : ""}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowRight size={18} aria-hidden="true" />
@@ -97,9 +96,9 @@ function QuoteButton({ big, ghost, children }) {
 
 function PhoneLink() {
   return (
-    <a className="greenguard-nav-phone" href={PHONE_TEL}>
-      <Phone size={17} aria-hidden="true" />
-      <span>{PHONE_DISPLAY}</span>
+    <a className="greenguard-nav-phone" href={CONTACT_URL}>
+      <Mail size={17} aria-hidden="true" />
+      <span>{CONTACT_LABEL}</span>
     </a>
   );
 }
@@ -145,8 +144,8 @@ export default function GreenGuardPestPage() {
               </p>
               <div className="greenguard-hero-ctas">
                 <QuoteButton big />
-                <a className="greenguard-btn greenguard-btn--ghost greenguard-btn--big" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="greenguard-btn greenguard-btn--ghost greenguard-btn--big" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
               <p className="greenguard-hero-note">
@@ -313,9 +312,9 @@ export default function GreenGuardPestPage() {
               </div>
               <div className="greenguard-midcta-actions">
                 <QuoteButton big />
-                <a className="greenguard-nav-phone" href={PHONE_TEL}>
-                  <Phone size={17} aria-hidden="true" />
-                  <span>{PHONE_DISPLAY}</span>
+                <a className="greenguard-nav-phone" href={CONTACT_URL}>
+                  <Mail size={17} aria-hidden="true" />
+                  <span>{CONTACT_LABEL}</span>
                 </a>
               </div>
             </div>
@@ -432,8 +431,8 @@ export default function GreenGuardPestPage() {
             </p>
             <div className="greenguard-final-actions">
               <QuoteButton big />
-              <a className="greenguard-btn greenguard-btn--ghost greenguard-btn--big" href={PHONE_TEL}>
-                <Phone size={18} aria-hidden="true" /> Call {PHONE_DISPLAY}
+              <a className="greenguard-btn greenguard-btn--ghost greenguard-btn--big" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -446,7 +445,7 @@ export default function GreenGuardPestPage() {
           <span>
             © {new Date().getFullYear()} GreenGuard Exterminators. All rights reserved.
           </span>
-          <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+          <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
           <span className="greenguard-footer-note">Independent service provider listing</span>
         </div>
       </footer>

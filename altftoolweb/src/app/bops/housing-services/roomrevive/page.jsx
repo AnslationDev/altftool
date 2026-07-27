@@ -2,11 +2,12 @@
 
 import "./roomrevive.css";
 import { useState } from "react";
-import { ArrowUpRight, Check, Menu, Phone, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, Check, Mail, Menu, Sparkles, X } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/roomrevive";
-const PHONE_TEL = "tel:+18555550287";
-const PHONE_DISPLAY = "(855) 555-0287";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1600&q=80",
@@ -26,9 +27,7 @@ function QuoteLink({ variant = "solid", children = "Get a Free Quote" }) {
   return (
     <a
       className={`roomrevive-btn roomrevive-btn--${variant}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
       <ArrowUpRight size={17} aria-hidden="true" />
@@ -58,10 +57,10 @@ export default function RoomRevivePage() {
             <div className="roomrevive-nav-cta">
               <a
                 className="roomrevive-nav-phone roomrevive-nav-phone--desktop"
-                href={PHONE_TEL}
+                href={CONTACT_URL}
               >
-                <Phone size={16} aria-hidden="true" />
-                {PHONE_DISPLAY}
+                <Mail size={16} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
               <QuoteLink variant="solid" />
               <button
@@ -80,7 +79,7 @@ export default function RoomRevivePage() {
               <a href="#roomrevive-approach" onClick={() => setMenuOpen(false)}>Approach</a>
               <a href="#roomrevive-rooms" onClick={() => setMenuOpen(false)}>Rooms</a>
               <a href="#roomrevive-process" onClick={() => setMenuOpen(false)}>Process</a>
-              <a href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </nav>
           )}
         </div>
@@ -103,9 +102,9 @@ export default function RoomRevivePage() {
                 </p>
                 <div className="roomrevive-hero-actions">
                   <QuoteLink variant="solid" />
-                  <a className="roomrevive-btn roomrevive-btn--ghost" href={PHONE_TEL}>
-                    <Phone size={16} aria-hidden="true" />
-                    {PHONE_DISPLAY}
+                  <a className="roomrevive-btn roomrevive-btn--ghost" href={CONTACT_URL}>
+                    <Mail size={16} aria-hidden="true" />
+                    {CONTACT_LABEL}
                   </a>
                 </div>
               </div>
@@ -240,9 +239,9 @@ export default function RoomRevivePage() {
               </div>
               <div className="roomrevive-band-actions">
                 <QuoteLink variant="blush" />
-                <a className="roomrevive-band-phone" href={PHONE_TEL}>
-                  <Phone size={20} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="roomrevive-band-phone" href={CONTACT_URL}>
+                  <Mail size={20} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -350,9 +349,9 @@ export default function RoomRevivePage() {
               </div>
               <div className="roomrevive-band-actions">
                 <QuoteLink variant="blush" />
-                <a className="roomrevive-band-phone" href={PHONE_TEL}>
-                  <Phone size={20} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="roomrevive-band-phone" href={CONTACT_URL}>
+                  <Mail size={20} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
                 <p className="roomrevive-band-fineprint">
                   Free quotes. No obligation. Coordinated through vetted local
@@ -375,7 +374,7 @@ export default function RoomRevivePage() {
               <li><a href="#roomrevive-approach">Approach</a></li>
               <li><a href="#roomrevive-rooms">Rooms</a></li>
               <li><a href="#roomrevive-process">Process</a></li>
-              <li><a href={PHONE_TEL}>{PHONE_DISPLAY}</a></li>
+              <li><a href={CONTACT_URL}>{CONTACT_LABEL}</a></li>
             </ul>
             <p className="roomrevive-footnote">
               Independent service provider listing. RoomRevive is a service

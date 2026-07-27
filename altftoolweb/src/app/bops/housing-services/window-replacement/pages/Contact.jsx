@@ -15,13 +15,12 @@ const contactCards = [
     icon: "mapPin",
     label: "Visit our studio",
     value: company.address,
-    href: "https://maps.google.com/?q=Mumbai",
   },
   {
-    icon: "phone",
-    label: "Call us",
-    value: company.phone,
-    href: `tel:${company.phoneHref}`,
+    icon: "mail",
+    label: "Contact us",
+    value: company.contactLabel,
+    href: company.contactUrl,
   },
   {
     icon: "mail",
@@ -360,7 +359,7 @@ export default function Contact() {
                 className="flex h-16 w-16 items-center justify-center rounded-full bg-bronze-600 text-white"
                 style={{ animation: "callRing 0.8s ease-in-out infinite" }}
               >
-                <Icon name="phone" className="h-8 w-8" />
+                <Icon name="mail" className="h-8 w-8" />
               </span>
             </div>
 
@@ -375,20 +374,20 @@ export default function Contact() {
 
             <div className="mt-6 rounded-2xl bg-cream-100 p-5">
               <div className="text-xs font-semibold uppercase tracking-wider text-stone-500">
-                Call us directly
+                Get in touch
               </div>
               <div className="mt-2 font-display text-2xl font-semibold text-bronze-700">
-                {company.phone}
+                {company.contactLabel}
               </div>
             </div>
 
             <div className="mt-6 flex flex-col gap-3">
               <a
-                href={`tel:${company.phoneHref}`}
+                href={company.contactUrl}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-bronze-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-bronze-700/20 transition-all hover:-translate-y-0.5 hover:bg-bronze-700"
               >
-                <Icon name="phone" className="h-4 w-4" />
-                Call Now
+                <Icon name="mail" className="h-4 w-4" />
+                Contact us
               </a>
               <button
                 onClick={() => setShowCallPopup(false)}

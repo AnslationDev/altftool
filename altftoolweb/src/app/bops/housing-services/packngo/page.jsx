@@ -9,15 +9,17 @@ import {
   Home,
   Leaf,
   Package,
-  Phone,
+  Mail,
   Recycle,
   Sprout,
   Truck,
 } from "lucide-react";
 import "./packngo.css";
 
-const PHONE_DISPLAY = "(877) 555-0163";
-const PHONE_HREF = "tel:+18775550163";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const STEPS = [
   {
@@ -345,9 +347,9 @@ export default function PackNGoPage() {
                 Tell us a little about your move and a planner calls back within the
                 hour — or skip the form and talk to a person right now.
               </p>
-              <a className="packngo-phone" href={PHONE_HREF}>
-                <Phone size={18} strokeWidth={1.5} aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a className="packngo-phone" href={CONTACT_URL}>
+                <Mail size={18} strokeWidth={1.5} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
               <p className="packngo-phone-caption">Mon–Sat, 8am–8pm. Real humans only.</p>
             </div>
@@ -368,8 +370,8 @@ export default function PackNGoPage() {
             <a className="packngo-link" href="#packngo-pricing">
               Pricing
             </a>
-            <a className="packngo-link" href={PHONE_HREF}>
-              {PHONE_DISPLAY}
+            <a className="packngo-link" href={CONTACT_URL}>
+              {CONTACT_LABEL}
             </a>
           </nav>
           <p className="packngo-footer-note">

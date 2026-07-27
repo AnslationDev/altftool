@@ -26,7 +26,6 @@ export const studentLoanRefinance = {
   ],
 
   quoteLabel: "Check my rate",
-  quoteUrl: "https://example.com/quote/student-loan-refinance",
 
   featuresTitle: "Refinancing that fits your life after graduation",
   featuresIntro:

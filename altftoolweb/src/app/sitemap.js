@@ -32,7 +32,6 @@ import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
 import { brandSlug } from "@/app/exclusivedeals/lib/brandSlug";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
-import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { CALCULATORS as altCalculators } from "@/app/altfcalculators/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
@@ -95,12 +94,9 @@ const staticRoutes = [
   { path: "/prank-socialmedia/templates", priority: 0.58 },
   { path: "/windowswap/pricing", priority: 0.45 },
   { path: "/trendingvids", priority: 0.7 },
-  { path: "/news", priority: 0.7 },
-  { path: "/news/headlines", priority: 0.6 },
-  { path: "/news/local", priority: 0.6 },
-  { path: "/news/newsletter", priority: 0.48 },
-  { path: "/news/topics", priority: 0.6 },
-  { path: "/news/trending", priority: 0.6 },
+  // The whole /news section is noindex: it republishes wire-service headlines
+  // the original publishers own, so we would only be competing with our own
+  // sources. The routes still work for humans; they are just not submitted.
   { path: "/brandrating", priority: 0.7 },
   { path: "/deals", priority: 0.85 },
   { path: "/exclusivedeals", priority: 0.85 },
@@ -817,17 +813,9 @@ async function buildSitemapEntries({
     );
   }
 
-  for (const article of newsData.news || []) {
-    if (article?.slug) {
-      pushUnique(entries, seen, `/news/${article.slug}`, {
-        priority: 0.55,
-        changeFrequency: "weekly",
-      });
-    }
-  }
-
-  // News topic pages are noindexed (client-loaded feeds, thin server content),
-  // so they are intentionally excluded from the sitemap to save crawl budget.
+  // News article pages are noindexed (syndicated third-party headlines the
+  // original publishers own), so they are intentionally excluded from the
+  // sitemap — as are the news hubs and topic pages, for the same reason.
 
   // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
   for (const tool of altPdfTools || []) {

@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { serviceAreas } from '../data/services';
 import { MapPin } from 'lucide-react';
 
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
+
 const ServiceAreas = () => {
   return (
     <div>
@@ -29,10 +33,10 @@ const ServiceAreas = () => {
         <div className="mt-14 rounded-3xl bg-[#F8FAFC] p-9 md:p-12">
           <div className="max-w-2xl">
             <h3 className="font-bold text-3xl tracking-tight mb-3">Don't see your city?</h3>
-            <p className="text-[#374151] mb-5">We serve many additional neighborhoods across India. Call us - chances are we're already in your area.</p>
+            <p className="text-[#374151] mb-5">We serve many additional neighborhoods across India. Contact us - chances are we're already in your area.</p>
             <div className="flex flex-wrap gap-3">
               <Link to="/book" className="btn btn-primary">Check Availability</Link>
-              <a href="tel:7865679554" className="btn btn-secondary">Call (786) 567-9554</a>
+              <a href={CONTACT_URL} className="btn btn-secondary">Contact us</a>
             </div>
           </div>
         </div>

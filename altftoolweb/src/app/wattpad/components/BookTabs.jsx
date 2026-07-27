@@ -40,14 +40,6 @@ export default function BookTabs({ book, bookChapters }) {
 
       {activeTab === "summary" && (
         <div>
-          <div className="py-6 border-b border-(--border)">
-            <div className="flex flex-wrap items-center gap-3 text-sm">
-              <span className="font-bold text-(--foreground)">Complete</span>
-              <span className="text-(--muted-foreground)">•</span>
-              <span className="text-(--muted-foreground)">13h 13m</span>
-            </div>
-          </div>
-
           <div className="flex flex-wrap gap-3 py-8">
             {book.tags?.map((tag) => (
               <span key={tag} className="wp-book-tag">{tag}</span>
@@ -76,16 +68,6 @@ export default function BookTabs({ book, bookChapters }) {
             <div className="flex items-center gap-3 text-(--foreground)">
               <Headphones size={20} />
               <span className="text-base">Text-to-speech</span>
-            </div>
-          </div>
-
-          <div className="py-6 border-b border-(--border)">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-2xl font-bold text-(--foreground)">#2</span>
-                <span className="wp-book-tag">romance</span>
-              </div>
-              <ChevronRight size={22} className="text-(--muted-foreground)" />
             </div>
           </div>
         </div>

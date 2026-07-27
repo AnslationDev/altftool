@@ -368,84 +368,9 @@
 
 @media (min-width: 640px) { .wp-cat-name { font-size: 0.875rem; } }
 
-/* ── Review card ── */
-.wp-review-card {
-  position: relative;
-  border-radius: 12px;
-  padding: 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.wp-review-card:hover {
-  box-shadow: var(--wp-card-hover-shadow);
-  transform: translateY(-2px);
-}
-
-.wp-review-avatar {
-  position: absolute;
-  top: -24px;
-  left: 20px;
-  width: 64px;
-  height: 64px;
-  border-radius: 9999px;
-  overflow: hidden;
-  border: 3px solid var(--card);
-  box-shadow: var(--shadow-sm);
-}
-
-.wp-review-text {
-  margin-top: 32px;
-  font-size: 0.85rem;
-  line-height: 1.65;
-  color: var(--muted-foreground);
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.wp-review-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 16px 0;
-}
-
-.wp-review-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--foreground);
-}
-
-.wp-review-handle {
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
-}
-
-.wp-review-dot {
-  height: 8px;
-  border-radius: 9999px;
-  background: var(--muted-foreground);
-  opacity: 0.4;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.wp-review-dot-active {
-  width: 32px;
-  background: var(--primary);
-  opacity: 1;
-}
-
-.wp-review-dot-inactive {
-  width: 8px;
-}
+/* The .wp-review-* rules were removed with the reader-testimonial carousel:
+   the testimonials, avatars and star ratings they styled were invented, and
+   AltFTool has no real reader reviews to put back in their place. */
 
 /* ── FAQ accordion ── */
 .wp-faq-item {

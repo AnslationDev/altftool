@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, MessageSquare, X } from "lucide-react";
+
+const CONTACT_URL = "/policypages/contact";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -49,12 +51,12 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href="tel:+18005551234"
+            href={CONTACT_URL}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#0D3B66] to-[#1E5AA8] border border-[#1E5AA8]/30 shadow-[0_8px_22px_rgba(13,59,102,0.18)] hover:from-[#1E5AA8] hover:to-[#00AEEF] transition-all"
           >
-            <Phone className="w-4 h-4 text-white" />
+            <MessageSquare className="w-4 h-4 text-white" />
             <span className="text-base font-bold text-white">
-              (800) 555-1234
+              Contact us
             </span>
           </a>
         </div>

@@ -18,9 +18,10 @@ import {
 } from "lucide-react";
 import "./irongate-security.css";
 
-const QUOTE_URL = "https://example.com/quote/irongate-security";
-const PHONE_DISPLAY = "(833) 555-0128";
-const PHONE_TEL = "tel:+18335550128";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   heroCamera:
@@ -111,9 +112,7 @@ function QuoteButton({ variant = "irongate-btn-red", label = "Get a Free Quote" 
   return (
     <a
       className={`irongate-btn ${variant}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {label}
       <ArrowRight size={17} aria-hidden="true" />
@@ -147,9 +146,9 @@ export default function IronGateSecurityPage() {
           </nav>
 
           <div className="irongate-nav-cta">
-            <a className="irongate-nav-phone" href={PHONE_TEL}>
+            <a className="irongate-nav-phone" href={CONTACT_URL}>
               <PhoneCall size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
             <button
@@ -193,9 +192,9 @@ export default function IronGateSecurityPage() {
               </p>
               <div className="irongate-hero-actions">
                 <QuoteButton />
-                <a className="irongate-btn irongate-btn-steel" href={PHONE_TEL}>
+                <a className="irongate-btn irongate-btn-steel" href={CONTACT_URL}>
                   <PhoneCall size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="irongate-hero-ticks">
@@ -274,9 +273,9 @@ export default function IronGateSecurityPage() {
               </h2>
               <div className="irongate-band-actions">
                 <QuoteButton />
-                <a className="irongate-btn irongate-btn-steel" href={PHONE_TEL}>
+                <a className="irongate-btn irongate-btn-steel" href={CONTACT_URL}>
                   <PhoneCall size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -423,9 +422,9 @@ export default function IronGateSecurityPage() {
               </h2>
               <div className="irongate-band-actions">
                 <QuoteButton />
-                <a className="irongate-btn irongate-btn-steel" href={PHONE_TEL}>
+                <a className="irongate-btn irongate-btn-steel" href={CONTACT_URL}>
                   <PhoneCall size={17} aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -443,9 +442,9 @@ export default function IronGateSecurityPage() {
               </span>
               Iron<em>Gate</em>
             </a>
-            <a className="irongate-footer-phone" href={PHONE_TEL}>
+            <a className="irongate-footer-phone" href={CONTACT_URL}>
               <PhoneCall size={18} aria-hidden="true" />
-              {PHONE_DISPLAY}
+              {CONTACT_LABEL}
             </a>
           </div>
           <div className="irongate-footer-fine">

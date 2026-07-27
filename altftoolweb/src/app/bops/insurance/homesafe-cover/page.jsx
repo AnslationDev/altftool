@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Home,
-  Phone,
   ArrowRight,
   ShieldCheck,
   Flame,
@@ -19,11 +18,10 @@ import {
   Check,
   ChevronDown,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./homesafe-cover.css";
 
 const QUOTE_URL = "https://example.com/quote/homesafe-cover";
-const PHONE_TEL = "tel:+18665550323";
-const PHONE_DISPLAY = "(866) 555-0323";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1733493520076-56882ea21085?auto=format&fit=crop&w=1600&q=80",
@@ -83,15 +81,13 @@ export default function HomeSafeCoverPage() {
             <a href="#homesafe-claims">Claims</a>
             <a href="#homesafe-faq">FAQ</a>
           </nav>
-          <a href={PHONE_TEL} className="homesafe-nav-phone">
-            <Phone size={16} aria-hidden="true" />
-            <span>{PHONE_DISPLAY}</span>
-          </a>
           <QuoteButton />
         </div>
       </header>
 
       <main id="homesafe-top">
+        <DemoBrandNotice brand="HomeSafe Cover" />
+
         <section className="homesafe-hero homesafe-blueprint">
           <div className="homesafe-wrap homesafe-hero-grid">
             <div className="homesafe-hero-copy">
@@ -106,10 +102,6 @@ export default function HomeSafeCoverPage() {
               </p>
               <div className="homesafe-cta-row">
                 <QuoteButton />
-                <a href={PHONE_TEL} className="homesafe-btn homesafe-btn-ghost">
-                  <Phone size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
-                </a>
               </div>
               <ul className="homesafe-checklist">
                 <li><Check size={16} aria-hidden="true" /> Rebuild-cost assessed cover, not guesswork</li>
@@ -124,24 +116,7 @@ export default function HomeSafeCoverPage() {
                   alt="Modern detached family house with a clean brick facade and landscaped front garden"
                 />
               </div>
-              <div className="homesafe-rate-card homesafe-ticked" aria-label="Illustrative pricing example">
-                <span className="homesafe-rate-label">Sample rate — 3-bed home</span>
-                <p className="homesafe-rate-value">from $32/mo</p>
-                <p className="homesafe-rate-note">
-                  Illustrative example only. Your price depends on your property,
-                  location and cover choices.
-                </p>
-              </div>
             </div>
-          </div>
-        </section>
-
-        <section className="homesafe-stats" aria-label="HomeSafe Cover highlights">
-          <div className="homesafe-stats-inner">
-            <div className="homesafe-stat"><strong>4.7/5</strong><span>average customer rating</span></div>
-            <div className="homesafe-stat"><strong>1 handler</strong><span>named contact per claim</span></div>
-            <div className="homesafe-stat"><strong>24/7</strong><span>claims line, every day</span></div>
-            <div className="homesafe-stat"><strong>A-rated</strong><span>underwriting partners</span></div>
           </div>
         </section>
 
@@ -230,10 +205,6 @@ export default function HomeSafeCoverPage() {
             </p>
             <div className="homesafe-cta-row">
               <QuoteButton />
-              <a href={PHONE_TEL} className="homesafe-btn homesafe-btn-ghost">
-                <Phone size={17} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
-              </a>
             </div>
           </section>
         </div>
@@ -302,15 +273,11 @@ export default function HomeSafeCoverPage() {
         <section className="homesafe-final">
           <h2>Ready to put your home on solid ground?</h2>
           <p>
-            Get a personalised house and contents quote in minutes, or talk it
-            through with a real person on the phone. No obligation either way.
+            Get a personalised house and contents quote in minutes. No
+            obligation either way.
           </p>
           <div className="homesafe-cta-row">
             <QuoteButton invert />
-            <a href={PHONE_TEL} className="homesafe-btn homesafe-btn-ghost">
-              <Phone size={17} aria-hidden="true" />
-              {PHONE_DISPLAY}
-            </a>
           </div>
         </section>
       </main>
@@ -323,7 +290,6 @@ export default function HomeSafeCoverPage() {
               HomeSafe Cover
             </a>
             <div className="homesafe-footer-contact">
-              <a href={PHONE_TEL}><Phone size={15} aria-hidden="true" /> {PHONE_DISPLAY}</a>
               <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
                 Get a Free Quote <ArrowRight size={15} aria-hidden="true" />
               </a>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   Star,
   Plus,
   Check,
@@ -14,9 +14,10 @@ import {
 } from "lucide-react";
 import "./aqualux-baths.css";
 
-const QUOTE_URL = "https://example.com/quote/aqualux-baths";
-const PHONE_DISPLAY = "(833) 555-0176";
-const PHONE_TEL = "tel:+18335550176";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1756079664354-34944e001f6d?auto=format&fit=crop&w=1600&q=80",
@@ -116,9 +117,7 @@ function QuoteButton({ variant = "", small = false, children = "Get a Free Quote
   return (
     <a
       className={`aqualux-btn ${variant} ${small ? "aqualux-btn--small" : ""}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
       <ArrowRight size={15} aria-hidden="true" />
@@ -147,9 +146,9 @@ export default function AquaLuxBathsPage() {
             </ul>
           </nav>
           <div className="aqualux-nav-actions">
-            <a className="aqualux-nav-phone" href={PHONE_TEL}>
-              <Phone size={15} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="aqualux-nav-phone" href={CONTACT_URL}>
+              <Mail size={15} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton variant="aqualux-btn--gold" small />
           </div>
@@ -172,9 +171,9 @@ export default function AquaLuxBathsPage() {
             </p>
             <div className="aqualux-hero-ctas">
               <QuoteButton />
-              <a className="aqualux-hero-phone" href={PHONE_TEL}>
-                <Phone size={18} aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a className="aqualux-hero-phone" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -328,9 +327,9 @@ export default function AquaLuxBathsPage() {
           </p>
           <div className="aqualux-cta-band-actions">
             <QuoteButton variant="aqualux-btn--ivory" />
-            <a className="aqualux-cta-band-phone" href={PHONE_TEL}>
-              <Phone size={18} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="aqualux-cta-band-phone" href={CONTACT_URL}>
+              <Mail size={18} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
           </div>
         </section>
@@ -437,9 +436,9 @@ export default function AquaLuxBathsPage() {
           </p>
           <div className="aqualux-final-actions">
             <QuoteButton variant="aqualux-btn--ivory" />
-            <a className="aqualux-final-phone" href={PHONE_TEL}>
-              <Phone size={20} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="aqualux-final-phone" href={CONTACT_URL}>
+              <Mail size={20} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
           </div>
           <p className="aqualux-final-note">Mon&ndash;Sat &middot; 8am to 7pm &middot; Free consultations</p>
@@ -452,8 +451,8 @@ export default function AquaLuxBathsPage() {
           <span className="aqualux-footer-brand">
             Aqua<em>Lux</em> Baths
           </span>
-          <a className="aqualux-footer-phone" href={PHONE_TEL}>
-            {PHONE_DISPLAY}
+          <a className="aqualux-footer-phone" href={CONTACT_URL}>
+            {CONTACT_LABEL}
           </a>
           <span className="aqualux-footer-legal">
             Independent service provider listing
