@@ -114,6 +114,7 @@
     "emoji-picker-react": "^4.17.1",
     "file-saver": "^2.0.5",
     "firebase": "^12.9.0",
+    "firebase-admin": "^14.2.0",
     "framer-motion": "^12.42.2",
     "gif.js": "^0.2.0",
     "gif.js.optimized": "^1.0.1",

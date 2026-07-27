@@ -1,0 +1,332 @@
+/*
+  ALTFTool Backlink Marketplace
+  Scoped to .altf-linking-container and mapped to the global semantic tokens
+  so the route follows the ALTFTool light/dark design system.
+  Location: src/app/altflinking/altflinking.css
+*/
+
+.altf-linking-container {
+  --bg-canvas: var(--anslation-ds-page);
+  --bg-surface: var(--anslation-ds-surface);
+  --bg-surface-subtle: var(--anslation-ds-soft);
+  --bg-surface-elevated: var(--anslation-ds-surface);
+  --bg-surface-hover: var(--anslation-ds-hover);
+
+  --border-color: var(--anslation-ds-border);
+  --border-color-subtle: var(--anslation-ds-border-strong);
+  --border-color-hover: var(--anslation-ds-primary);
+  --border-brand: var(--anslation-ds-primary);
+
+  --text-primary: var(--anslation-ds-text);
+  --text-secondary: var(--anslation-ds-text-soft);
+  --text-muted: var(--anslation-ds-muted);
+  --text-brand: var(--anslation-ds-primary-text);
+
+  --brand-primary: var(--anslation-ds-primary);
+  --brand-gradient: var(--anslation-ds-cta-gradient);
+  --brand-gradient-hover: var(--anslation-ds-cta-gradient-hover);
+  --brand-shadow: var(--anslation-ds-shadow-md);
+
+  --accent-emerald: var(--anslation-ds-success-text);
+  --accent-emerald-bg: var(--anslation-ds-success-soft);
+  --accent-amber: var(--anslation-ds-warning-text);
+  --accent-amber-bg: var(--anslation-ds-warning-soft);
+  --accent-cyan: var(--anslation-ds-info);
+  --accent-cyan-bg: var(--anslation-ds-info-soft);
+  --accent-indigo: var(--anslation-ds-primary-text);
+  --accent-indigo-bg: var(--anslation-ds-primary-soft);
+
+  --nav-bg: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+  --card-shadow: var(--anslation-ds-shadow-sm);
+  --card-hover-shadow: var(--anslation-ds-shadow-md);
+  --modal-overlay: var(--anslation-ds-overlay);
+}
+
+/* Base Body & Container Defaults */
+.altf-linking-container {
+  min-height: 100vh;
+  background-color: var(--bg-canvas) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+/* Glassmorphic Top Navigation */
+.altf-linking-container .altf-glass-nav,
+.altf-linking-container header {
+  background: var(--nav-bg) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  box-shadow: var(--card-shadow) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Elevated Cards System */
+.altf-card {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--card-shadow) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: var(--text-primary) !important;
+}
+
+.altf-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--border-color-hover) !important;
+  box-shadow: var(--card-hover-shadow) !important;
+}
+
+/* Badge Color System */
+.altf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.altf-badge-verified {
+  background-color: var(--accent-emerald-bg) !important;
+  color: var(--accent-emerald) !important;
+  border: 1px solid var(--accent-emerald) !important;
+}
+
+.altf-badge-dr-high {
+  background-color: var(--accent-indigo-bg) !important;
+  color: var(--accent-indigo) !important;
+  border: 1px solid var(--border-brand) !important;
+}
+
+.altf-badge-pending {
+  background-color: var(--accent-amber-bg) !important;
+  color: var(--accent-amber) !important;
+  border: 1px solid var(--accent-amber) !important;
+}
+
+/* Buttons */
+.altf-btn-primary {
+  background: var(--brand-gradient) !important;
+  color: var(--anslation-ds-primary-foreground) !important;
+  font-weight: 700 !important;
+  padding: 0.625rem 1.25rem !important;
+  border-radius: 14px !important;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  box-shadow: var(--brand-shadow) !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.altf-btn-primary:hover {
+  background: var(--brand-gradient-hover) !important;
+  transform: translateY(-1.5px) !important;
+  box-shadow: var(--card-hover-shadow) !important;
+}
+
+.altf-btn-secondary {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-color-subtle) !important;
+  font-weight: 600 !important;
+  padding: 0.625rem 1.25rem !important;
+  border-radius: 14px !important;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  cursor: pointer !important;
+  box-shadow: var(--anslation-ds-shadow-sm) !important;
+}
+
+.altf-btn-secondary:hover {
+  background-color: var(--bg-surface-hover) !important;
+  border-color: var(--brand-primary) !important;
+  color: var(--brand-primary) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Inputs & Form Controls */
+.altf-input,
+.altf-linking-container input:not([type="checkbox"]):not([type="radio"]),
+.altf-linking-container select,
+.altf-linking-container textarea {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid var(--border-color-subtle) !important;
+  border-radius: 14px !important;
+  padding: 0.625rem 0.875rem !important;
+  color: var(--text-primary) !important;
+  font-size: 0.875rem !important;
+  outline: none !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.altf-input:focus,
+.altf-linking-container input:focus,
+.altf-linking-container select:focus,
+.altf-linking-container textarea:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: var(--anslation-ds-focus-ring) !important;
+}
+
+/* Tables */
+.altf-linking-container table thead,
+.altf-linking-container thead {
+  background-color: var(--bg-surface-subtle) !important;
+}
+
+.altf-linking-container table thead th,
+.altf-linking-container thead th {
+  color: var(--text-muted) !important;
+}
+
+.altf-linking-container table tbody tr,
+.altf-linking-container tbody tr {
+  transition: background-color 0.15s ease !important;
+}
+
+.altf-linking-container table tbody tr:hover,
+.altf-linking-container tbody tr:hover {
+  background-color: var(--bg-surface-hover) !important;
+}
+
+/* Drawers & Modals */
+.altf-drawer-overlay {
+  background: var(--modal-overlay) !important;
+  backdrop-filter: blur(8px) !important;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.altf-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 32rem;
+  background: var(--bg-surface) !important;
+  border-left: 1px solid var(--border-color) !important;
+  z-index: 51;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: var(--anslation-ds-shadow-lg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Normalize imported dark utility classes to this route's semantic surfaces. */
+.altf-linking-container .bg-slate-950,
+.altf-linking-container .bg-slate-950\/40,
+.altf-linking-container .bg-slate-950\/60,
+.altf-linking-container .bg-slate-950\/80,
+.altf-linking-container .bg-slate-950\/85,
+.altf-linking-container .bg-slate-950\/90,
+.altf-linking-container .bg-slate-950\/95,
+.altf-linking-container .bg-slate-900,
+.altf-linking-container .bg-slate-900\/40,
+.altf-linking-container .bg-slate-900\/50,
+.altf-linking-container .bg-slate-900\/60,
+.altf-linking-container .bg-slate-900\/80,
+.altf-linking-container .bg-slate-900\/90,
+.altf-linking-container .bg-slate-900\/95,
+.altf-linking-container .bg-slate-850,
+.altf-linking-container .bg-slate-800,
+.altf-linking-container .bg-black,
+.altf-linking-container .dark\:bg-slate-950,
+.altf-linking-container .dark\:bg-slate-900,
+.altf-linking-container .dark\:bg-slate-900\/90,
+.altf-linking-container .dark\:bg-slate-900\/80,
+.altf-linking-container .dark\:bg-slate-900\/60,
+.altf-linking-container .dark\:bg-slate-900\/50,
+.altf-linking-container .dark\:bg-slate-950\/85,
+.altf-linking-container .dark\:bg-slate-800 {
+  background-color: var(--bg-surface-subtle) !important;
+  background-image: none !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Normalize dark border utilities to semantic borders. */
+.altf-linking-container .border-slate-800,
+.altf-linking-container .border-slate-800\/50,
+.altf-linking-container .border-slate-800\/60,
+.altf-linking-container .border-slate-800\/80,
+.altf-linking-container .border-slate-700,
+.altf-linking-container .dark\:border-slate-800,
+.altf-linking-container .dark\:border-slate-800\/80,
+.altf-linking-container .dark\:border-slate-700 {
+  border-color: var(--border-color) !important;
+}
+
+/* Normalize imported light text utility classes to semantic foreground. */
+.altf-linking-container .text-white,
+.altf-linking-container .dark\:text-white,
+.altf-linking-container .dark\:text-slate-100,
+.altf-linking-container .dark\:text-slate-200,
+.altf-linking-container .dark\:text-slate-300,
+.altf-linking-container .dark\:text-slate-400 {
+  color: var(--text-primary) !important;
+}
+
+/* Keep Primary CTA Button Text White */
+.altf-btn-primary,
+.altf-btn-primary *,
+.altf-linking-container .bg-indigo-600.text-white,
+.altf-linking-container .bg-blue-600.text-white {
+  color: var(--anslation-ds-primary-foreground) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .altf-linking-container *,
+  .altf-linking-container *::before,
+  .altf-linking-container *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive Touch Target & Spacing */
+@media (max-width: 640px) {
+  .altf-btn-primary,
+  .altf-btn-secondary {
+    min-height: 2.375rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .altf-card {
+    padding: 1rem !important;
+    border-radius: 16px !important;
+  }
+
+  .altf-drawer {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 1.25rem !important;
+  }
+}
+
+/* Table Responsive Wrapper */
+.altf-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Image & Visual Asset Max Scaling */
+.altf-linking-container img,
+.altf-linking-container svg {
+  max-width: 100%;
+  height: auto;
+}

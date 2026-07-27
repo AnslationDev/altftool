@@ -28,6 +28,7 @@ function gitFiles(args) {
   const result = spawnSync("git", args, {
     cwd: root,
     encoding: "buffer",
+    maxBuffer: 64 * 1024 * 1024,
   });
   if (result.status !== 0) {
     throw new Error(result.stderr.toString("utf8") || "Unable to list Git files.");

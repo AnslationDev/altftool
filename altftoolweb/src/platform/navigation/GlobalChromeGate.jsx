@@ -16,6 +16,7 @@ export const SELF_CHROME_PREFIXES = [
   "/altfloveimg",
   "/altflovepdf",
   "/altpintrest",
+  "/altflinking",
   "/apps",
   "/tripfindbox",
   "/homeserv",
