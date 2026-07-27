@@ -9,6 +9,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import RelatedContentSection from "@/platform/linking/RelatedContentSection";
 import { getRelatedContentForPreset } from "@/platform/linking/relatedContent";
 import { ALTFTOOL_POSITION, INCUMBENTS } from "../data/incumbents";
@@ -18,9 +19,12 @@ import ComparisonTable from "../components/ComparisonTable";
 export const dynamic = "force-static";
 export const revalidate = 86400;
 
-// Only 23 pages — no need for the bulk-prerender deferral guard that
-// /tools/all/[slug] uses for its ~1,900 URLs.
+// Deferred on Amplify like every other family. These pages are only 23 URLs,
+// but each prerenders to ~650 KB of .html + .rsc + segments — 15 MiB total,
+// which is 7% of the 205 MiB artifact gate. ISR still caches them on first
+// request, so deferring costs nothing but the first hit.
 export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
   return Object.keys(INCUMBENTS).map((incumbent) => ({ incumbent }));
 }
 
