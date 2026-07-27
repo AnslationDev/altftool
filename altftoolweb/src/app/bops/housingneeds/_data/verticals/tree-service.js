@@ -6,6 +6,8 @@
 // Services intentionally carry no image field and fall back to designed icon
 // tiles; only hero, benefit, and detail use photography.
 
+import { quoteUrlFor } from "../site";
+
 const treeService = {
   "images": {
     "hero": {
@@ -29,13 +31,14 @@ const treeService = {
   "headline": "Remove what's dangerous, protect what's worth keeping",
   "headlineAccent": "worth keeping",
   "subheadline": "A tree is a living structure, and every cut either helps it seal and grow or opens it to decay. The same judgment decides whether a struggling tree can be saved or has become a hazard — which is why the honest answer depends on the tree's health, its structure, and what sits underneath it if something fails.",
+  "answer": "Tree work is a judgment call before it is a cutting job: every cut either helps a tree seal and grow or opens it to decay, and whether a struggling tree can be kept depends on its health, its structure, and what sits underneath it if it fails. Pruning and crown thinning are typically repeated every 3-5 years, crown reduction holds several years but will not save a declining tree, and removal is permanent — stump grinding is a separate job.",
   "heroPoints": [
     "Remove-vs-save decisions explained",
     "Access and crane costs detailed",
     "Storm and hazard work done safely"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/tree-service",
+  "quoteUrl": quoteUrlFor("tree-service"),
   "seo": {
     "title": "Tree Service Guide: Removal, Trimming, Stumps & Costs",
     "description": "Learn how tree service works: removal vs trimming, stump grinding, storm and hazard removal, ISA-certified arborists, permits, and what drives the cost."

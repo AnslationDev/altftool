@@ -3,6 +3,8 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 
+import { quoteUrlFor } from "../site";
+
 const flooring = {
   "images": {
     "hero": {
@@ -26,13 +28,14 @@ const flooring = {
   "headline": "The right floor for how your home actually lives",
   "headlineAccent": "actually lives",
   "subheadline": "New flooring looks like a surface decision, but it performs like a system — the subfloor underneath, the moisture in the slab or crawl space, and the wear your household delivers all decide how a material holds up. Understanding those pieces makes it far easier to choose between hardwood, vinyl plank, laminate, tile, and carpet with confidence.",
+  "answer": "New flooring looks like a surface decision but performs like a system: the subfloor underneath, the moisture in the slab or crawl space, and the traffic your household delivers decide how any material holds up. Typical service life runs about 5-15 years for carpet, 10-25 for luxury vinyl plank, 15-25 for laminate, 30-100 for hardwood that can be refinished, and 50+ years for porcelain or ceramic tile.",
   "heroPoints": [
     "Hardwood, LVP and tile compared",
     "Subfloor prep explained honestly",
     "Pet and kid durability rated"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/flooring",
+  "quoteUrl": quoteUrlFor("flooring"),
   "seo": {
     "title": "Flooring Guide: Materials, Costs, Installation & Refinishing",
     "description": "Compare hardwood, LVP, laminate, tile, and carpet flooring: durability, waterproof options, subfloor prep, refinishing, and what drives installation costs."

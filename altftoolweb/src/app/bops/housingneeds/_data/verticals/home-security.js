@@ -6,6 +6,8 @@
 // Plain serialisable data: no imports, no logic. The CTA points at a literal
 // quoteUrl rather than a helper so this file stays self-contained.
 
+import { quoteUrlFor } from "../site";
+
 const homeSecurity = {
   "images": {
     "hero": {
@@ -29,13 +31,14 @@ const homeSecurity = {
   "headline": "A security system built around how break-ins really happen",
   "headlineAccent": "how break-ins really happen",
   "subheadline": "A single camera is not a security system. Real protection layers detection, deterrence, and response — sensors that notice an intrusion, cameras that document it, and a monitoring plan that gets someone to act on it. Understanding how those pieces fit together makes it far easier to judge what you actually need, what you are paying a monthly fee for, and where a cheaper approach quietly leaves a gap.",
+  "answer": "A home security system layers detection, deterrence and response — sensors that notice an intrusion, cameras that document it, and a monitoring plan that gets someone to act on it. A single camera records an event but summons no one, which is the practical difference between the two main paths: a self-monitored system has no contract and relies on your own phone alerts, while professional monitoring adds a monthly fee and a dispatch path. Equipment typically lasts 5-10 years either way.",
   "heroPoints": [
     "DIY vs professional monitoring compared",
     "What insurers actually reward",
     "Renter-friendly and no-contract options"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/home-security",
+  "quoteUrl": quoteUrlFor("home-security"),
   "seo": {
     "title": "Home Security Guide: Cameras, Alarms, Monitoring & Costs",
     "description": "How home security systems work: cameras, video doorbells, smart locks, sensors, DIY vs professional 24/7 monitoring, insurance discounts, and what drives cost."

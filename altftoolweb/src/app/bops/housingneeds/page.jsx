@@ -2,12 +2,12 @@ import {
   ArrowRight,
   BadgeCheck,
   ClipboardCheck,
-  Clock,
-  MapPin,
+  FileText,
+  Landmark,
+  Layers,
   PhoneCall,
   Scale,
   ShieldCheck,
-  Star,
 } from "lucide-react";
 import HnHeader from "./_components/HnHeader";
 import HnTrustBar from "./_components/HnTrustBar";
@@ -37,13 +37,13 @@ import "@/app/_altf/altf-brand.css";
 // The Housing Needs front door — a standalone, USA-focused lead-gen lander.
 // Indexable: this is the brand's landing page, not an internal dashboard.
 export const metadata = createPageMetadata({
-  title: "Housing Needs Home Quotes & Guides",
+  title: "Home Improvement Guides: Roofing, HVAC, Plumbing & More",
   description:
-    "America's one-stop home improvement resource. Compare roofing, plumbing, HVAC, electrical and more — read expert guides and get free quotes from licensed local pros.",
+    "AltFTool's home improvement library: in-depth guides to roofing, plumbing, HVAC, electrical and more — what each job involves, and what drives the cost.",
   path: "/bops/housingneeds",
   keywords: [
     "home improvement guides",
-    "home service quotes",
+    "home maintenance guide",
     "roofing guide",
     "plumbing guide",
     "HVAC guide",
@@ -53,21 +53,25 @@ export const metadata = createPageMetadata({
 
 const QUOTE = { mode: "cta", label: "Get a Free Quote", href: "#quote" };
 
+// What a reader actually does here. The earlier version promised matching with
+// licensed, insured professionals in their area; HousingNeeds runs no such
+// network, so the steps now describe reading a guide and taking it to a real
+// local pro.
 const STEPS = [
   {
     icon: Scale,
-    title: "Tell us the job",
-    text: "Pick your project — roofing to restoration — and see exactly what the work involves before you spend a dime.",
+    title: "Find the job you are planning",
+    text: "Pick your project — roofing to restoration — and read what the work involves, start to finish, before you call anyone.",
   },
   {
     icon: BadgeCheck,
-    title: "Get matched with vetted pros",
-    text: "We connect you with licensed, insured professionals serving your area — no cold calls, no pressure.",
+    title: "Learn what moves the price",
+    text: "Every guide lists the variables that explain most of the gap between two estimates, so a quote reads as information rather than a number.",
   },
   {
     icon: PhoneCall,
-    title: "Compare free quotes",
-    text: "Side-by-side quotes in minutes, so you hire with confidence and never overpay for good work.",
+    title: "Take the questions to a local pro",
+    text: "Bring the guide's questions to a licensed professional near you, and confirm permit and code requirements with your building department.",
   },
 ];
 
@@ -124,8 +128,8 @@ export default function HousingNeedsLanding() {
           <HnHeroOffer
             pageKey="hub"
             source="hero-hub"
-            heading="Free quotes + your home savings kit — today"
-            subtext="Enter your email to unlock free quotes from licensed pros, our 12-month maintenance calendar, and exclusive limited-time local offers."
+            heading="Get the free home maintenance calendar"
+            subtext="Leave your email and we will send AltFTool's 12-month home maintenance calendar, plus new HousingNeeds guides as they are published."
           >
             <p className="hn-hero-eyebrow">America&rsquo;s home improvement HQ</p>
 
@@ -136,24 +140,29 @@ export default function HousingNeedsLanding() {
               />
             </h1>
 
+            {/* Answer-first: the paragraph directly under the h1 says what this
+                page is, in full, without needing anything else on the page. */}
             <p className="hn-hero-sub">
-              {stats.categories} home services. Expert guides. Free quotes from
-              licensed, insured pros near you. One place for everything your
-              house needs — coast to coast.
+              HousingNeeds is AltFTool&rsquo;s home improvement library —{" "}
+              {stats.categories} in-depth guides covering roofing, plumbing, HVAC,
+              electrical and the rest, each explaining what the work involves, how
+              the common options compare, and which variables actually move a quote.
+              It publishes information only: AltFTool is not a contractor and quotes
+              no prices.
             </p>
 
             <ul className="hn-hero-points">
               <li>
+                <Layers size={15} strokeWidth={2.4} />
+                {stats.categories} in-depth service guides
+              </li>
+              <li>
                 <ShieldCheck size={15} strokeWidth={2.4} />
-                Licensed &amp; insured pros
+                Independent — not a contractor
               </li>
               <li>
-                <Clock size={15} strokeWidth={2.4} />
-                Free quotes in minutes
-              </li>
-              <li>
-                <MapPin size={15} strokeWidth={2.4} />
-                Serving all 50 states
+                <FileText size={15} strokeWidth={2.4} />
+                Free to read, no account
               </li>
             </ul>
 
@@ -190,14 +199,15 @@ export default function HousingNeedsLanding() {
               </p>
             </HnReveal>
 
-            <div className="hn-steps" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+            {/* Ordered list: these steps only mean anything in sequence. */}
+            <ol className="hn-steps" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
               {STEPS.map((step, index) => (
-                <HnReveal key={step.title} className="hn-step" delay={index * 80}>
+                <HnReveal as="li" key={step.title} className="hn-step" delay={index * 80}>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
                 </HnReveal>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
 
@@ -251,11 +261,14 @@ export default function HousingNeedsLanding() {
                 <div>
                   <p className="hn-eyebrow">Free homeowner resource</p>
                   <h2>Own a home? Get ahead of it.</h2>
+                  {/* Previously opened with an invented statistic about what the
+                      average homeowner spends. Removed — the calendar is a real
+                      enough reason on its own. */}
                   <p className="hn-lede" style={{ margin: "0.75rem 0 0" }}>
-                    The average homeowner spends thousands on repairs they could
-                    have prevented. Our free maintenance calendar tells you exactly
-                    what to check, and when — so small problems never become big
-                    bills. Grab it in seconds.
+                    Most of what goes wrong in a house runs on a schedule —
+                    gutters before the autumn rain, the furnace before winter,
+                    seals and filters on their own cycle. Our free maintenance
+                    calendar lists what to check, and when.
                   </p>
                 </div>
                 <HnEmailCapture source="hub-benefits" announce={false} />
@@ -264,55 +277,21 @@ export default function HousingNeedsLanding() {
           </section>
         </HnSubscribedGate>
 
-        {/* ---------- social proof ---------- */}
-        <section className="hn-section hn-section--tint">
+        {/* ---------- what this is ----------
+            Replaces two sections that could not be backed: a testimonial strip
+            with invented quotes, names and star ratings, and a "every pro,
+            vetted before they reach you" band claiming license and insurance
+            verification, reputation screening and real homeowner reviews.
+            HousingNeeds has no pro network, so all of it was fiction. What is
+            left is the part a reader can check. */}
+        <section className="hn-section hn-section--tint" id="about">
           <div className="hn-wrap">
             <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Homeowners like you</p>
-              <h2 className="hn-h2">Why homeowners start here</h2>
-            </HnReveal>
-
-            <div className="hn-testimonials">
-              {[
-                {
-                  quote:
-                    "Read the roofing guide, knew what a fair price looked like, and saved real money on the quote we accepted.",
-                  who: "Jennifer M. — North Carolina",
-                },
-                {
-                  quote:
-                    "Three plumbing quotes by the next morning. Picked the middle one and couldn't be happier.",
-                  who: "David S. — Arizona",
-                },
-                {
-                  quote:
-                    "The maintenance calendar alone is worth it — it reminded us to service the furnace before winter.",
-                  who: "Angela P. — Michigan",
-                },
-              ].map((t, index) => (
-                <HnReveal key={t.who} className="hn-testimonial" delay={index * 60}>
-                  <span className="hn-testimonial-stars" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} size={13} strokeWidth={0} fill="currentColor" />
-                    ))}
-                  </span>
-                  <p>&ldquo;{t.quote}&rdquo;</p>
-                  <footer>{t.who}</footer>
-                </HnReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- vetting / trust ---------- */}
-        <section className="hn-section">
-          <div className="hn-wrap">
-            <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Peace of mind</p>
-              <h2 className="hn-h2">Every pro, vetted before they reach you</h2>
+              <p className="hn-eyebrow">Before you start</p>
+              <h2 className="hn-h2">What HousingNeeds is, and what it is not</h2>
               <p className="hn-lede">
-                We do the background work so you don&rsquo;t have to — the pros
-                you compare have already cleared the checks that matter.
+                Knowing the limits of a source is part of using it well — so here
+                they are, stated plainly.
               </p>
             </HnReveal>
 
@@ -320,23 +299,23 @@ export default function HousingNeedsLanding() {
               {[
                 {
                   icon: ClipboardCheck,
-                  title: "License & insurance verified",
-                  text: "We confirm every pro carries a valid license and insurance before they ever reach you.",
+                  title: "Guides, written to be read end to end",
+                  text: `${stats.categories} services, one long-form guide each: the jobs involved, how the main options compare on typical service life, the usual order of work, and the cost factors.`,
                 },
                 {
                   icon: ShieldCheck,
-                  title: "Reputation-screened",
-                  text: "Only established local pros with a solid track record make it into our network.",
+                  title: "Not a contractor, not a network",
+                  text: "AltFTool does not perform, quote, or supervise any of the work described, and does not maintain a roster of vetted local pros.",
                 },
                 {
-                  icon: Star,
-                  title: "Real homeowner reviews",
-                  text: "Ratings come from real customers — so you hire with your eyes wide open.",
+                  icon: FileText,
+                  title: "Cost factors, not price tags",
+                  text: "The guides name the variables that move an estimate rather than a dollar figure, because size, access, and local labor make national averages misleading.",
                 },
                 {
-                  icon: BadgeCheck,
-                  title: "Free & no pressure",
-                  text: "Comparing quotes costs nothing, and you’re never obligated to hire anyone.",
+                  icon: Landmark,
+                  title: "Verify locally before you commit",
+                  text: "Code, permit and inspection requirements come from your building department; condition and scope come from a licensed professional who has seen the house.",
                 },
               ].map((v, index) => {
                 const Icon = v.icon;
@@ -358,11 +337,11 @@ export default function HousingNeedsLanding() {
         <section className="hn-section hn-section--tint" id="quote">
           <div className="hn-wrap">
             <HnReveal className="hn-cta">
-              <h2>Your project won&rsquo;t fix itself. Your quote is free.</h2>
+              <h2>Know the job before you call a contractor.</h2>
               <p>
-                Pick your service, leave your email, and compare free,
-                no-obligation quotes from licensed pros near you — in minutes,
-                not weeks.
+                Pick the service you are planning and we will carry it through to
+                the contact form. HousingNeeds publishes guides — it does not
+                perform, quote, or supervise the work described on these pages.
               </p>
               <HnQuoteForm
                 source="hub-cta"

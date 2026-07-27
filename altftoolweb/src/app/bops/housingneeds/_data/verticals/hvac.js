@@ -3,8 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL below; swap it for a real destination
-// when one exists.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("hvac") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const hvac = {
   "images": {
@@ -29,13 +31,14 @@ const hvac = {
   "headline": "A heating and cooling system that is sized, sealed, and balanced",
   "headlineAccent": "sized, sealed, and balanced",
   "subheadline": "An HVAC system is more than the box outside — it is the load calculation that sizes it, the ductwork that carries the air, the refrigerant charge, and the controls that run it, all working as one. When any of those is wrong, even an expensive high-efficiency unit can leave rooms hot, cold, or costing more to run than it should. Understanding how the pieces fit makes it far easier to judge whether a repair, a replacement, or an upgrade is the honest answer.",
+  "answer": "An HVAC system is more than the box outside: a load calculation sizes it, the ductwork carries the air, and the refrigerant charge and controls run it, so a wrong answer anywhere leaves rooms hot or cold no matter how efficient the equipment is rated. Central air conditioners typically last 12-17 years, furnaces and ductless mini-splits 15-20, and air-source heat pumps 12-15 — age against that range, rather than a single breakdown, is what decides repair versus replacement.",
   "heroPoints": [
     "Right-sizing with a Manual J load calc",
     "SEER2 and AFUE efficiency explained",
     "Rebates and tax credits worth checking"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/hvac",
+  "quoteUrl": quoteUrlFor("hvac"),
   "seo": {
     "title": "HVAC Guide: AC, Furnaces, Heat Pumps, Costs & Efficiency",
     "description": "Learn how HVAC systems work: central AC, furnaces, heat pumps, and mini-splits, plus SEER2 efficiency, proper sizing, rebates, and what drives install costs."

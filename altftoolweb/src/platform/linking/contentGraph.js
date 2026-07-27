@@ -252,7 +252,11 @@ function buildGraph() {
     pushItem(items, seen, {
       href: `/altfcalculators/${calculator.slug}`,
       title: calculator.name || calculator.title,
-      description: calculator.description || calculator.desc || calculator.tagline,
+      // `summary` is the full 120-158 char sentence; `desc` is the short card
+      // label. Prefer the richer text — the scorer matches on description
+      // tokens, so a 20-char label gives it almost nothing to work with.
+      description:
+        calculator.summary || calculator.description || calculator.desc || calculator.tagline,
       section: "calculators",
       tags: [calculator.category, calculator.sidebarCategory, calculator.slug.split("-")],
     });

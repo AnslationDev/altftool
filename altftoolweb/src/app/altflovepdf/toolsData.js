@@ -96,7 +96,9 @@ export const TOOLS = [
     name: "Webpage → PDF",
     slug: "webpage-to-pdf",
     panelId: "web2pdf",
-    desc: "Convert web addresses or URLs into PDF documents.",
+    // The tool takes saved .html/.htm files or pasted markup; live-URL fetching
+    // only exists inside the companion Chrome extension (tab capture).
+    desc: "Convert saved HTML pages or pasted markup into PDF documents.",
     icon: "#s-globe",
     category: "Convert & Export",
     sidebarCategory: "Convert"
@@ -316,7 +318,8 @@ export const TOOLS = [
     name: "Format Convert",
     slug: "format-convert",
     panelId: "imgconvert",
-    desc: "Convert image files to JPEG, PNG, WebP, or GIF.",
+    // Output picker offers PNG / JPG / WebP only — no GIF encoder in-browser.
+    desc: "Convert image files between JPEG, PNG, and WebP.",
     icon: "#s-convert",
     category: "Image Tools",
     sidebarCategory: "Image Tools"

@@ -3,6 +3,8 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 
+import { quoteUrlFor } from "../site";
+
 const restoration = {
   "images": {
     "hero": {
@@ -26,13 +28,14 @@ const restoration = {
   "headline": "Extraction, drying, and repair as one measured response",
   "headlineAccent": "one measured response",
   "subheadline": "Water damage is a race against absorption: drywall wicks, subfloors swell, and mold can begin colonizing damp materials within 24 to 48 hours. Good restoration is not just pumping water out — it is extraction, monitored structural drying, contamination control, and documented repairs working as one sequence, so the house ends up verifiably dry rather than just looking dry.",
+  "answer": "Water damage restoration is a race against absorption: drywall wicks, subfloors swell, and mold can begin colonizing damp materials within 24 to 48 hours. The work is extraction, monitored structural drying, contamination control and documented repair — and the water's category sets the method, since clean Category 1 water can degrade to Category 2 within 24-48 hours and to hazardous Category 3 in roughly 48.",
   "heroPoints": [
     "24/7 emergency water extraction",
     "Drying verified with moisture meters",
     "Insurance claim documentation help"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/restoration",
+  "quoteUrl": quoteUrlFor("restoration"),
   "seo": {
     "title": "Water Damage Restoration Guide: Categories, Drying & Costs",
     "description": "Learn how water damage restoration works: the 24-48 hour mold window, clean vs gray vs black water, structural drying, insurance claims, and what drives cost."

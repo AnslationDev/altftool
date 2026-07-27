@@ -6,6 +6,8 @@
 // The quote CTA points at a placeholder URL. Swap it for the real destination
 // when the electrical funnel goes live.
 
+import { quoteUrlFor } from "../site";
+
 const electrical = {
   "images": {
     "hero": {
@@ -29,13 +31,14 @@ const electrical = {
   "headline": "Safe, code-compliant power for everything you plug in",
   "headlineAccent": "everything you plug in",
   "subheadline": "A home electrical system is a chain — service entrance, panel, branch circuits, devices — and it is only as safe as its weakest connection. Whether you are adding an EV charger, chasing nuisance breaker trips, or wondering if a 100-amp panel can keep up, understanding how capacity, wiring, and code fit together makes every decision easier and every quote easier to judge.",
+  "answer": "A home electrical system is a chain — service entrance, panel, branch circuits, devices — and it is only as safe as its weakest connection, so capacity, wiring condition and code compliance have to be judged together rather than one at a time. 200-amp service covers most whole-home upgrades and all-electric plans while 100-amp suits small homes with gas appliances; panels commonly serve 25-40 years, and panel or circuit work normally requires a permit and inspection.",
   "heroPoints": [
     "100A vs 200A upgrades explained",
     "EV charging circuits done right",
     "Permits and inspections handled"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/electrical",
+  "quoteUrl": quoteUrlFor("electrical"),
   "seo": {
     "title": "Electrical Guide: Panel Upgrades, Wiring, EV Chargers & Costs",
     "description": "Understand home electrical work: 100A vs 200A panel upgrades, rewiring, EV chargers, generator hookups, NEC code compliance, permits, and what drives cost."

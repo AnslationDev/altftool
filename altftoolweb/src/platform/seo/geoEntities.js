@@ -24,13 +24,50 @@ import {
   getSiteUrl,
   siteConfig,
 } from "./generateMetadata.js";
-import { getGeoChain, getGeoLocation } from "./geoLocations.js";
+import { getAllGeoSlugs, getGeoChain, getGeoLocation } from "./geoLocations.js";
 
 const PLACE_TYPE = {
   Country: "Country",
   State: "State",
   City: "City",
 };
+
+/* ------------------------- indexability allowlist ------------------------- */
+
+/**
+ * Locations whose /locations/{slug} page carries genuinely distinct,
+ * hand-written content — the ONLY geo pages allowed into the index or the
+ * sitemap.
+ *
+ * WHY AN ALLOWLIST: the geo registry holds 141 places, and a shared template
+ * with the place name swapped in produces near-identical pages (India vs
+ * Ireland measured at 0.837 Jaccard similarity over ~1,010 words). That is a
+ * doorway-page pattern and a site-wide risk. Every geo page still renders and
+ * stays internally linked for humans; the undifferentiated ones are just
+ * `noindex, follow` and are kept out of the sitemap.
+ *
+ * TO ADD A MARKET: write the hand-authored content module first (see
+ * src/app/locations/_content/india.js), wire it into the route, then add the
+ * slug here. Adding a slug WITHOUT hand-written content re-creates the
+ * doorway problem — the allowlist is the promise that the content exists.
+ */
+export const DIFFERENTIATED_GEOS = Object.freeze(["india"]);
+
+const DIFFERENTIATED_GEO_SET = new Set(DIFFERENTIATED_GEOS);
+
+/** True when {slug} has hand-written, location-specific content. */
+export function isDifferentiatedGeo(slug = "") {
+  return DIFFERENTIATED_GEO_SET.has(String(slug).trim().toLowerCase());
+}
+
+/**
+ * The geo slugs that may appear in the sitemap and be indexed.
+ * Registry order is preserved, and unknown allowlist entries are dropped so a
+ * typo can never emit a 404 URL.
+ */
+export function getIndexableGeoSlugs() {
+  return getAllGeoSlugs().filter((slug) => DIFFERENTIATED_GEO_SET.has(slug));
+}
 
 function geoId(location) {
   return `${getSiteUrl()}/#geo-${location.slug}`;
@@ -219,6 +256,10 @@ export function buildGeoJsonLdBundle(slugOrLocation, { path, title, description 
  * Next.js Metadata for a geo landing page — unique title/description per
  * location, canonical, OG/Twitter, robots — all inherited from the central
  * createPageMetadata() generator. No duplication, no stuffing.
+ *
+ * Robots: `noindex, follow` unless the slug is in DIFFERENTIATED_GEOS. Follow
+ * is kept on deliberately — the page is a real directory surface and its
+ * outbound links to tools and categories should still pass.
  */
 export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
   const location =
@@ -228,6 +269,7 @@ export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
   const chain = getGeoChain(location.slug);
   const context =
     chain.length > 1 ? `${location.name}, ${chain[chain.length - 1].name}` : location.name;
+  const differentiated = isDifferentiatedGeo(location.slug);
 
   return createPageMetadata({
     title: overrides.title || `${siteConfig.name} ${location.name} — Free Online Tools & Utilities`,
@@ -241,6 +283,8 @@ export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
       `free tools ${location.name}`,
       ...(overrides.keywords || []),
     ],
+    noindex: !differentiated,
+    follow: true,
     ...overrides,
   });
 }

@@ -3,7 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL for this vertical.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("fencing") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const fencing = {
   "images": {
@@ -28,13 +31,14 @@ const fencing = {
   "headline": "A fence that holds the line and stands up to the seasons",
   "headlineAccent": "stands up to the seasons",
   "subheadline": "A fence is only as good as what you cannot see: the posts, their depth, and the boundary they sit on. Get the property line, the footings, and the material right for your climate and the pickets on top largely take care of themselves — get any of the three wrong and even the best panels end up leaning, disputed, or torn back out.",
+  "answer": "A fence is only as good as what you cannot see: the property line it sits on, the post depth, and the footings. Get those three right and the pickets largely take care of themselves. Cedar typically lasts 15-25 years and treated pine 15-20 with upkeep, vinyl 20-30+, chain-link 15-20 galvanized and aluminum 30-40+ — and many cities require a permit and cap fence height, commonly near 4 feet in front yards and 6 to 8 feet in back.",
   "heroPoints": [
     "Wood, vinyl, metal, and composite compared",
     "Property lines, permits, and HOA covered",
     "Posts set to frost depth in cold states"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/fencing",
+  "quoteUrl": quoteUrlFor("fencing"),
   "seo": {
     "title": "Fencing Guide: Materials, Styles, Costs & Installation",
     "description": "Compare fence materials — wood, vinyl, chain-link, aluminum, and composite — plus gates, permits, property lines, post depth, and what drives fencing costs."

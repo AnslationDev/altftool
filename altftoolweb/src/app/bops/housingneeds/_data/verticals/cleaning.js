@@ -3,7 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL for this vertical.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("cleaning") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const cleaning = {
   "images": {
@@ -28,13 +31,14 @@ const cleaning = {
   "headline": "Professional cleaning that goes deeper than tidy",
   "headlineAccent": "deeper than tidy",
   "subheadline": "A tidy house and a clean house are not the same thing. Professional cleaning works through the buildup that everyday wipe-downs miss — baseboards, grout, appliance interiors, the tops of door frames — on a checklist and a schedule, so the house stays genuinely clean rather than repeatedly rescued. Knowing what each service level actually covers makes it much easier to buy the right one.",
+  "answer": "Professional house cleaning is sold in levels, and buying the wrong level is the usual reason a clean disappoints. A standard recurring clean maintains a home that is already in good shape and repeats every 1-4 weeks; a deep clean works through built-up grime on baseboards, grout and appliance interiors and is typically done once or twice a year; move-out and post-construction cleans are one-off jobs tied to a date rather than a schedule.",
   "heroPoints": [
     "Standard vs deep clean compared",
     "Flat-rate and hourly pricing explained",
     "Background-checked, bonded cleaners"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/cleaning",
+  "quoteUrl": quoteUrlFor("cleaning"),
   "seo": {
     "title": "House Cleaning Guide: Services, Costs & What to Expect",
     "description": "Compare standard, deep, and move-out cleaning, learn what drives house cleaning costs, and know what to expect from background-checked, bonded cleaning crews."

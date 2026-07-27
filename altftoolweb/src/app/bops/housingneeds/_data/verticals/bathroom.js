@@ -3,8 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL below; swap it for a real destination
-// when one exists.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("bathroom") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const bathroom = {
   "images": {
@@ -29,13 +31,14 @@ const bathroom = {
   "headline": "A bathroom that stays dry where it counts",
   "headlineAccent": "stays dry",
   "subheadline": "A bathroom is one of the few rooms where a hidden failure — water getting behind the tile — can quietly rot subfloor and framing for years before anything shows. Understanding what a remodel really involves, from waterproofing and plumbing to ventilation and finish, makes it far easier to judge whether a cosmetic refresh, a mid-range remodel, or a full gut is the honest answer.",
+  "answer": "A bathroom remodel is decided behind the tile: waterproofing, plumbing and ventilation are what stop a hidden leak from rotting subfloor and framing for years before anything shows on the surface. Scope drives the cost — a cosmetic refresh keeps the fixtures and buys roughly 5-10 years of updated looks, a same-footprint mid-range remodel typically serves 15-20+ years, and moving walls or relocating plumbing turns the job into a full gut.",
   "heroPoints": [
     "Refresh vs remodel vs gut, explained",
     "Waterproofing behind tile detailed",
     "Aging-in-place upgrades covered"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/bathroom",
+  "quoteUrl": quoteUrlFor("bathroom"),
   "seo": {
     "title": "Bathroom Remodeling Guide: Showers, Tubs, Costs & Layout",
     "description": "Learn how bathroom remodels work: walk-in showers, tub-to-shower conversions, tile and waterproofing, accessibility upgrades, and what drives the cost."

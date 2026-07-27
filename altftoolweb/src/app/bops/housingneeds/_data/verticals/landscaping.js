@@ -3,8 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL below; swap it for a real destination
-// when one exists.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("landscaping") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const landscaping = {
   "images": {
@@ -29,13 +31,14 @@ const landscaping = {
   "headline": "A yard that works as one living system",
   "headlineAccent": "living system",
   "subheadline": "A landscape is not just plants — it is grading, drainage, soil, irrigation, and hardscape working together, and a weakness in any one of them undermines the rest. Understanding how those pieces interact makes it far easier to judge where money is well spent: on the lawn you see, or on the water management and soil work underneath it.",
+  "answer": "Landscaping is grading, drainage, soil, irrigation and hardscape working as one system, and a weakness in any one of them undermines the planting on top of it. Money usually goes further underneath than on show: sod gives a usable lawn within weeks, seeding takes 1-2 seasons to mature, artificial turf lasts about 8-15 years, and a drought-tolerant xeriscape takes 2-3 seasons to fill in but is long-lived once established.",
   "heroPoints": [
     "Sod vs seed vs turf compared",
     "Paver and concrete hardscapes explained",
     "Irrigation and drainage detailed"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/landscaping",
+  "quoteUrl": quoteUrlFor("landscaping"),
   "seo": {
     "title": "Landscaping Guide: Design, Lawns, Hardscaping & Costs",
     "description": "Learn how landscaping projects come together: sod vs seed vs turf, hardscape materials, irrigation zones, xeriscaping, seasonal timing, and what drives cost."

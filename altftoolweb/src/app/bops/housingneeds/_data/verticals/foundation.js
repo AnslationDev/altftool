@@ -3,11 +3,13 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quote URL below; swap it for a real destination,
-// or route it through quoteUrlFor("foundation") in _data/site.js if preferred.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("foundation") with a literal URL.
 //
 // Note: the intended hero icon "Building2" is not bundled in _lib/icons.js, so
 // the nearest valid in-file icon ("House") is used to avoid the Wrench fallback.
+
+import { quoteUrlFor } from "../site";
 
 const foundation = {
   "images": {
@@ -32,13 +34,14 @@ const foundation = {
   "headline": "A foundation that stays level, dry, and structurally sound",
   "headlineAccent": "structurally sound",
   "subheadline": "A cracked wall or a door that suddenly sticks is rarely the real problem — it is a symptom of soil moving, water pooling, or a footing that has lost its support. Understanding what is actually shifting the house is what separates a lasting structural fix from a cosmetic patch that reopens next season.",
+  "answer": "A cracked wall or a door that suddenly sticks is a symptom, not the problem: foundation movement is nearly always soil moisture, poor drainage, or a footing that has lost its support, so a lasting fix starts with what is moving rather than with the crack. Steel push piers and helical piers underpin settled footings down to stable soil, slab jacking and polyurethane foam lift settled flatwork, and wall anchors or carbon-fiber reinforcement stabilize bowing basement walls.",
   "heroPoints": [
     "Cracks and settling diagnosed by cause",
     "Piering vs slab jacking compared",
     "Drainage and waterproofing addressed too"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/foundation",
+  "quoteUrl": quoteUrlFor("foundation"),
   "seo": {
     "title": "Foundation Repair Guide: Cracks, Settling, Piers & Waterproofing",
     "description": "Learn how foundation problems really start, when cracks and settling turn serious, and how piering, slab jacking, wall anchors, and waterproofing fix them."

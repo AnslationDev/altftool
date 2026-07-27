@@ -1,6 +1,9 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
+import JsonLd from "@/platform/seo/JsonLd";
 import { TOOLS } from "../toolsData";
+import { buildToolJsonLd } from "../seo";
+import ToolFacts from "../components/ToolFacts";
 import PageView from "./PageView";
 
 const TITLE_SUFFIX = {
@@ -99,7 +102,11 @@ export default async function Page(props) {
 
   return (
     <>
+      {tool && (
+        <JsonLd id={`altflovepdf-${toolSlug}-jsonld`} data={buildToolJsonLd(tool)} />
+      )}
       <PageView {...props} />
+      {tool && <ToolFacts slug={toolSlug} name={getToolLabel(tool)} />}
       <RelatedContentSection
         title="Related tools & guides"
         items={relatedItems}

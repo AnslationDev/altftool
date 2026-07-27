@@ -30,6 +30,7 @@ const roofing = {
   "headline": "A roof system that sheds water and breathes",
   "headlineAccent": "breathes",
   "subheadline": "A roof is not just shingles — it is decking, underlayment, flashing, and ventilation working as one system, and a failure in any layer shortens the life of the rest. Understanding how those layers interact makes it far easier to judge whether a repair, a re-roof, or a full tear-off is the honest answer.",
+  "answer": "A residential roof is a layered system — decking, underlayment, flashing, covering and attic ventilation — and most leaks start at flashing, valleys and penetrations rather than in the open field of shingles. Whether a repair, an overlay or a full tear-off is the honest answer depends on the roof's age against its expected service life (roughly 20-30 years for architectural asphalt, 40-70 for standing seam metal), how widespread the wear is, and whether the decking underneath is still sound.",
   "heroPoints": [
     "Tear-off vs overlay explained",
     "Flashing and ventilation detailed",

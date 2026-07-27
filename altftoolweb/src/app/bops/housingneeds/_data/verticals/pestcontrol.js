@@ -30,6 +30,7 @@ const pestcontrol = {
   "headline": "Pest control starts with identification, not spraying",
   "headlineAccent": "not spraying",
   "subheadline": "Modern residential pest work follows Integrated Pest Management: identify the species, shut off entry points and food or moisture sources, monitor, and apply product only where the inspection says it is needed. Understanding that sequence is the difference between getting ahead of an infestation and paying to suppress it indefinitely.",
+  "answer": "Residential pest control follows Integrated Pest Management: identify the species, shut off entry points and food or moisture sources, monitor, and apply product only where the inspection says it is needed. Spraying before identification is what turns a fixable problem into an indefinite subscription — recurring perimeter programs are commonly serviced quarterly, termite bait stations roughly quarterly, and exclusion repairs are durable but worth re-inspecting each year.",
   "heroPoints": [
     "Identification before any treatment",
     "Exclusion and sealing, not just spray",

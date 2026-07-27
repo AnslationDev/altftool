@@ -1,7 +1,14 @@
 import { notFound } from "next/navigation";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import {
+  createBreadcrumbJsonLd,
+  createFaqJsonLd,
+  createHowToJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { CALCULATORS } from "../toolsData";
+import { getToolInfo } from "../toolInfo";
 import PageView from "./PageView";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
@@ -43,7 +50,11 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: `${tool.name} — Free Online Calculator`,
+    // `summary` is the 120-158 char sentence written from this calculator's own
+    // info entry. `desc` (the tile label) is far too short to survive as a
+    // snippet, so search and answer engines rewrite it from scraped body text.
     description:
+      tool.summary ||
       tool.desc ||
       `Use the free ${tool.name} online. Fast, accurate and 100% private — it runs entirely in your browser.`,
     path: `/altfcalculators/${toolSlug}`,
@@ -55,11 +66,26 @@ export default async function Page(props) {
   const tool = findCalculator(toolSlug);
   if (!tool) notFound();
 
+  const toolPath = `/altfcalculators/${toolSlug}`;
+  // Structured data is built from the SAME hand-written entry that <ToolInfo/>
+  // renders on the page (src/app/altfcalculators/info/*.js), so every question,
+  // answer and step in the markup is visible to a human on this URL. A
+  // calculator with no curated info entry emits neither FAQPage nor HowTo.
+  const info = getToolInfo(toolSlug);
+  const curatedSteps = Array.isArray(info?.howToUse)
+    ? info.howToUse.filter((step) => typeof step === "string" && step.trim())
+    : [];
+  const curatedFaqs = Array.isArray(info?.faqs)
+    ? info.faqs
+      .filter((item) => typeof item?.q === "string" && typeof item?.a === "string")
+      .map((item) => ({ question: item.q, answer: item.a }))
+    : [];
+
   const relatedItems = getRelatedContent({
     source: {
-      href: `/altfcalculators/${toolSlug}`,
+      href: toolPath,
       title: tool.name,
-      description: tool.desc,
+      description: tool.summary || tool.desc,
       tags: [tool.category, tool.sidebarCategory].filter(Boolean),
       section: "calculators",
     },
@@ -72,11 +98,32 @@ export default async function Page(props) {
 
   return (
     <>
+      <JsonLd
+        id={`calculator-schema-${toolSlug}`}
+        data={[
+          curatedSteps.length
+            ? createHowToJsonLd({
+              path: toolPath,
+              name: `How to use the ${tool.name}`,
+              description: tool.summary || tool.desc,
+              steps: curatedSteps,
+            })
+            : null,
+          curatedFaqs.length
+            ? createFaqJsonLd({ path: toolPath, questions: curatedFaqs })
+            : null,
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Calculators", path: "/altfcalculators" },
+            { name: tool.name, path: toolPath },
+          ]),
+        ]}
+      />
       <PageView {...props} />
       <RelatedContentSection
         title="Related tools & guides"
         items={relatedItems}
-        path={`/altfcalculators/${toolSlug}`}
+        path={toolPath}
         jsonLdName="Related tools & guides"
       />
     </>

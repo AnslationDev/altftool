@@ -3,6 +3,8 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 
+import { quoteUrlFor } from "../site";
+
 const garageDriveway = {
   "images": {
     "hero": {
@@ -26,13 +28,14 @@ const garageDriveway = {
   "headline": "A garage and driveway that pull their weight",
   "headlineAccent": "pull their weight",
   "subheadline": "The garage door cycles more than almost any moving part of a house, and the driveway carries thousands of pounds through every freeze and thaw. Both are systems — door, springs, opener, and tracks on one side; base, drainage, and surface on the other — and knowing how the parts depend on each other is what separates a fix that lasts from one you repeat every few years.",
+  "answer": "A garage door and a driveway fail in different ways: the door is springs, opener, tracks and panels cycling thousands of times a year, while the driveway is base, drainage and surface carrying vehicle loads through every freeze and thaw. Poured concrete typically lasts 25-40 years, asphalt 15-30 with periodic sealing, interlocking pavers 30-50, and gravel indefinitely with regrading — but over a failing base, sealing is cosmetic rather than a repair.",
   "heroPoints": [
     "Door repair vs replacement explained",
     "Concrete, asphalt and pavers compared",
     "Freeze-thaw base prep detailed"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/garage-driveway",
+  "quoteUrl": quoteUrlFor("garage-driveway"),
   "seo": {
     "title": "Garage & Driveway Guide: Doors, Paving, Costs & Repairs",
     "description": "How garage doors, openers, and driveways really work: repair vs replacement, concrete vs asphalt vs pavers, freeze-thaw base prep, and what drives project cost."

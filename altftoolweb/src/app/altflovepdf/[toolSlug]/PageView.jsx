@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { TOOLS, SIDEBAR_CATEGORIES } from "../toolsData";
+import { getToolFacts } from "../toolFacts";
 import AltfPdfPanels from "../panels";
 import { ToolRegistry } from "../tools/registry";
 import { motion } from "framer-motion";
@@ -14,7 +15,7 @@ const TOOL_INFO_MAP = {
       "Reorder pages via drag & drop",
       "Optional table of contents",
       "Custom output filename",
-      "Unlimited files with Pro"
+      "No file-count limit — merging runs on your device"
     ],
     steps: [
       "Select or drag your PDF files into the upload area",
@@ -177,12 +178,14 @@ export default function AltfPdfToolPage() {
     );
   };
 
+  const facts = getToolFacts(activeTool.slug);
+
   const info = TOOL_INFO_MAP[activeTool.slug] || {
     features: [
-      "100% private local processing",
-      "No file size or page count limits",
-      "Completely free with no registration",
-      "Secure client-side rendering"
+      "Runs on your device — files are never uploaded",
+      "No upload size cap; limited only by your device's memory",
+      "Free, with no account and no watermark",
+      "Result downloads straight from your browser"
     ],
     steps: [
       "Choose or drag files into the dashed upload area below",
@@ -314,7 +317,10 @@ export default function AltfPdfToolPage() {
               <h1 className="altf-tool-title">
                 {activeTool.name.split(" ")[0]} <em>{activeTool.name.split(" ").slice(1).join(" ")}.</em>
               </h1>
-              <p className="altf-tool-desc">{activeTool.desc}</p>
+              {/* Answer-first: a self-contained sentence that states exactly
+                  what this tool does and that it runs in the browser, so it can
+                  be quoted without any surrounding context. */}
+              <p className="altf-tool-desc">{facts?.answer || activeTool.desc}</p>
               <div className="altf-feature-list">
                 {info.features.map((feature, idx) => (
                   <div key={idx} className="altf-feature-row">

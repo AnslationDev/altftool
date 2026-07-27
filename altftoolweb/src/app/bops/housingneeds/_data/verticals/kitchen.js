@@ -3,8 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quoteUrl below; swap it for a real destination
-// when one exists.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("kitchen") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const kitchen = {
   "images": {
@@ -29,13 +31,14 @@ const kitchen = {
   "headline": "A kitchen where layout, storage, and light finally agree",
   "headlineAccent": "finally agree",
   "subheadline": "A kitchen is far more than new cabinet doors — it is the work triangle, the storage, the lighting, the countertops, and the plumbing and electrical hidden behind the walls, all working together as one system. Understanding how those pieces interact makes it much easier to judge whether a cosmetic refresh, a cabinet reface, or a full gut remodel is the honest answer for your house and budget.",
+  "answer": "A kitchen remodel is a system — layout and work triangle, cabinets, countertops, lighting, and the plumbing and electrical behind the walls — so the first honest question is whether the existing cabinet boxes and layout are worth keeping. Refacing sound, well-configured cabinets costs far less than replacing them; on countertops, quartz and granite both last decades with normal care, laminate roughly 10-20 years, and butcher block is refinishable rather than disposable.",
   "heroPoints": [
     "Reface vs replace cabinets explained",
     "Countertop materials compared honestly",
     "Permits and layout changes demystified"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/kitchen",
+  "quoteUrl": quoteUrlFor("kitchen"),
   "seo": {
     "title": "Kitchen Remodeling Guide: Cabinets, Countertops & Costs",
     "description": "Learn how a kitchen remodel fits together: cabinet reface vs replace, quartz vs granite countertops, islands, backsplash, permits, and what drives cost."

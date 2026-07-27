@@ -1,4 +1,7 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import ToolFacts from "../components/ToolFacts";
+import { buildToolJsonLd } from "../seo";
 import CompressClient from "./CompressClient";
 import RelatedToolsBand from "../components/RelatedToolsBand";
 
@@ -14,7 +17,9 @@ export async function generateMetadata() {
 export default function Page() {
   return (
     <>
+      <JsonLd id="altfloveimg-compress-jsonld" data={buildToolJsonLd("compress")} />
       <CompressClient />
+      <ToolFacts slug="compress" />
       <RelatedToolsBand slug="compress" />
     </>
   );

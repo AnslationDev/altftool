@@ -12,7 +12,19 @@ export const siteConfig = {
   logoPath: "/assets/logo3.png",
   defaultImagePath: "/assets/og-default.png",
   locale: "en_US",
+  // Entity description used in the Organization / WebSite JSON-LD. It is
+  // deliberately separate from `description` above: `description` is the
+  // <meta name="description"> fallback and must stay inside the ~160-character
+  // SERP budget, while this one is read by answer engines resolving "what is
+  // AltFTool" and should be a self-contained, factual sentence. Both nodes use
+  // this same string so the entity never describes itself two different ways.
+  entityDescription:
+    "AltFTool is a free web platform of browser-based online tools — PDF and image utilities, file converters, calculators, and developer and text tools — alongside browser games, curated Chrome extensions, software deals and written guides. Tools open without an account and there is no paid tier.",
   twitterHandle: "@altftool17279",
+  // Every URL here is a profile that exists in this repo's own configuration:
+  // src/platform/SocialLinks.jsx renders exactly these five and nothing else.
+  // Never add a profile that is not rendered somewhere on the site — an
+  // unreachable sameAs is a broken entity claim, not a ranking signal.
   sameAs: [
     "https://x.com/altftool17279",
     "https://www.facebook.com/profile.php?id=61586134133885",
@@ -20,6 +32,10 @@ export const siteConfig = {
     "https://www.threads.com/@altftools",
     "https://www.youtube.com/@AltFTool",
   ],
+  // Intrinsic pixel size of `logoPath`, so consumers that require explicit
+  // dimensions on an Organization logo do not have to fetch the file.
+  logoWidth: 366,
+  logoHeight: 192,
   keywords: [
     "AltFTool",
     "online tools",
@@ -46,7 +62,12 @@ export const siteConfig = {
     "Chrome extensions",
   ],
   contactPath: "/policypages/contact",
+  aboutPath: "/policypages/about",
   // Optional Knowledge Graph signals — set via env when ready; omitted when empty.
+  // `legalName` is the registered company name, which is NOT necessarily the
+  // brand name, so it is never inferred from `name`: an unset env var means the
+  // property is omitted rather than guessed.
+  legalName: process.env.NEXT_PUBLIC_ORG_LEGAL_NAME || "",
   founderName: process.env.NEXT_PUBLIC_ORG_FOUNDER || "",
   foundingDate: process.env.NEXT_PUBLIC_ORG_FOUNDING_DATE || "",
   contactEmail: process.env.NEXT_PUBLIC_ORG_CONTACT_EMAIL || "",
@@ -54,6 +75,21 @@ export const siteConfig = {
 
 export function getSiteUrl() {
   return siteConfig.url.replace(/\/+$/, "");
+}
+
+/**
+ * Absolute, de-duplicated https profile URLs for `sameAs`.
+ * A malformed or relative entry is dropped rather than emitted: a sameAs the
+ * crawler cannot resolve back to the same entity weakens the claim.
+ */
+export function getVerifiedProfiles() {
+  const seen = new Set();
+  return siteConfig.sameAs.filter((value) => {
+    if (typeof value !== "string" || !value.startsWith("https://")) return false;
+    if (seen.has(value)) return false;
+    seen.add(value);
+    return true;
+  });
 }
 
 export function absoluteUrl(path = "/") {
@@ -392,25 +428,26 @@ export function createOrganizationJsonLd() {
     "@type": "Organization",
     "@id": `${getSiteUrl()}/#organization`,
     name: siteConfig.name,
-    alternateName: siteConfig.shortName,
-    legalName: siteConfig.name,
-    description: siteConfig.description,
+    description: siteConfig.entityDescription,
     url: getSiteUrl(),
     logo: {
       "@type": "ImageObject",
       "@id": `${getSiteUrl()}/#logo`,
       url: logoUrl,
       contentUrl: logoUrl,
+      width: siteConfig.logoWidth,
+      height: siteConfig.logoHeight,
       caption: siteConfig.name,
     },
-    image: logoUrl,
-    sameAs: siteConfig.sameAs,
+    image: { "@id": `${getSiteUrl()}/#logo` },
+    sameAs: getVerifiedProfiles(),
     brand: {
       "@type": "Brand",
       name: siteConfig.name,
       logo: logoUrl,
     },
     knowsAbout: siteConfig.knowsAbout,
+    mainEntityOfPage: absoluteUrl(siteConfig.aboutPath),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
@@ -424,6 +461,12 @@ export function createOrganizationJsonLd() {
     })),
   };
 
+  // `alternateName` is only meaningful when it differs from `name`; emitting
+  // the same string twice is noise a validator will (rightly) ignore.
+  if (siteConfig.shortName && siteConfig.shortName !== siteConfig.name) {
+    node.alternateName = siteConfig.shortName;
+  }
+  if (siteConfig.legalName) node.legalName = siteConfig.legalName;
   if (siteConfig.contactEmail) node.email = siteConfig.contactEmail;
   if (siteConfig.foundingDate) node.foundingDate = siteConfig.foundingDate;
   if (siteConfig.founderName) {
@@ -433,6 +476,14 @@ export function createOrganizationJsonLd() {
   return node;
 }
 
+/**
+ * The site entity. Deliberately mirrors createOrganizationJsonLd() on name,
+ * url and description so an answer engine reading either node gets the same
+ * answer to "what is AltFTool"; the two are joined by `publisher`/`@id`.
+ *
+ * `potentialAction` must stay in sync with src/app/search/page.jsx, which reads
+ * the query from the `q` search param.
+ */
 export function createWebsiteJsonLd() {
   return {
     "@context": "https://schema.org",
@@ -440,10 +491,17 @@ export function createWebsiteJsonLd() {
     "@id": `${getSiteUrl()}/#website`,
     name: siteConfig.name,
     alternateName: `${siteConfig.name} — Free Online Tools`,
-    description: siteConfig.description,
+    description: siteConfig.entityDescription,
     url: getSiteUrl(),
     inLanguage: "en",
+    // Verifiable and load-bearing for GEO: there is no paid tier and no
+    // signed-in-only tool (see ALTFTOOL_POSITION in
+    // src/app/alternatives/data/incumbents.js).
+    isAccessibleForFree: true,
     publisher: {
+      "@id": `${getSiteUrl()}/#organization`,
+    },
+    copyrightHolder: {
       "@id": `${getSiteUrl()}/#organization`,
     },
     potentialAction: {

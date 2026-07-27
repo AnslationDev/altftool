@@ -3,8 +3,10 @@
 // Content only. Structure and styling live in _components/HnVerticalPage.jsx
 // and housingneeds.css, so editing this file changes copy without touching layout.
 //
-// The CTA points at a literal quoteUrl below. To route it through the shared
-// contact flow instead, swap the string for quoteUrlFor("moving") from _data/site.js.
+// To point the CTA at a real destination, set the URL in _data/site.js
+// (HN_QUOTE_BASE) or replace quoteUrlFor("moving") with a literal URL.
+
+import { quoteUrlFor } from "../site";
 
 const moving = {
   "images": {
@@ -29,13 +31,14 @@ const moving = {
   "headline": "A move that protects your things and respects your time",
   "headlineAccent": "respects your time",
   "subheadline": "A move is more than a truck and a few strong backs — it is packing, protection, logistics, and licensing working together, and a weak link in any one of them is where damage, delays, and surprise charges creep in. Understanding how full-service, labor-only, container, and DIY options actually differ makes it far easier to judge which one honestly fits your distance, your budget, and how much of the work you want to do yourself.",
+  "answer": "Movers come in four shapes: full-service (they pack, load, drive and unload), labor-only (you rent the truck, they load it), a portable container you fill at your own pace, and a DIY truck rental. Local moves are typically billed hourly — crew size and truck at a rate per hour — while long-distance moves are priced on the shipment's weight or volume plus distance, so access, volume and packing are what actually move the number.",
   "heroPoints": [
     "Local hourly vs long-distance pricing explained",
     "Licensed FMCSA carriers and binding estimates",
     "Full-service, container, and DIY compared"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/moving",
+  "quoteUrl": quoteUrlFor("moving"),
   "seo": {
     "title": "Moving & Storage Guide: Movers, Costs, Estimates & Options",
     "description": "Learn how moving works: local vs long-distance pricing, full-service vs labor-only vs pods vs DIY, packing, storage, licensed movers, and the real cost drivers."

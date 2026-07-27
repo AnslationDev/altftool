@@ -1,22 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { BadgeCheck, CheckCircle2, Lock, Mail, ShieldCheck, Star, Zap } from "lucide-react";
+import { BadgeCheck, CheckCircle2, Lock, Mail, ShieldCheck, Zap } from "lucide-react";
 import { markSubscribed } from "../_lib/leadState";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+// Perks describe the thing being sent. The earlier list promised quotes from
+// licensed insured pros and limited-time local-pro deals — HousingNeeds has no
+// pro network and runs no offers, so those claims are gone.
 const DEFAULT_PERKS = [
-  "Free quotes from licensed, insured pros near you",
-  "Real cost ranges — so you never overpay a contractor",
-  "First dibs on limited-time local-pro deals & offers",
+  "A free 12-month home maintenance calendar",
+  "Plain-English guides to what each job involves",
+  "The cost factors that explain a quote, before you accept one",
 ];
 
 // Small reassurance chips shown under the field, at the point of action.
+// A "4.9/5 rated" chip used to sit here; there is no rating to report, and an
+// invented one is exactly the kind of claim that also breaks review schema.
 const TRUST_BADGES = [
   { Icon: ShieldCheck, label: "Secure & encrypted" },
   { Icon: BadgeCheck, label: "No spam, ever" },
-  { Icon: Star, label: "4.9/5 rated" },
 ];
 
 /**
@@ -35,8 +39,8 @@ const TRUST_BADGES = [
 export default function HnEmailCapture({
   source = "housingneeds",
   compact = false,
-  heading = "Free quotes + your home savings kit — today",
-  subtext = "Enter your email to unlock free quotes from vetted local pros, our 12-month maintenance calendar, and exclusive limited-time offers.",
+  heading = "Get the free home maintenance calendar",
+  subtext = "Leave your email and we will send AltFTool's 12-month home maintenance calendar, plus new HousingNeeds guides as they are published.",
   perks = DEFAULT_PERKS,
   onDone,
   // Whether a successful submit broadcasts the subscribe event to the rest of
@@ -86,7 +90,7 @@ export default function HnEmailCapture({
         <>
           <span className="hn-email-tag">
             <Zap size={13} strokeWidth={2.4} aria-hidden="true" />
-            Limited-time &middot; 100% free
+            Free &middot; No account needed
           </span>
           <p className="hn-email-heading">{heading}</p>
           <p className="hn-email-subtext">{subtext}</p>
@@ -145,28 +149,13 @@ export default function HnEmailCapture({
         ))}
       </ul>
 
+      {/* A social-proof block sat here showing five gold stars, four fake
+          avatars and "Rated 4.9/5 by 14,000+ U.S. homeowners". No such rating
+          or subscriber count exists, so it is removed rather than softened. */}
       <p className="hn-email-trust">
         <Lock size={13} strokeWidth={2.4} aria-hidden="true" />
-        We never sell your email. Unsubscribe in one click.
+        We never sell your email.
       </p>
-
-      {!compact && (
-        <div className="hn-email-proof">
-          <span className="hn-email-avatars" aria-hidden="true">
-            {["ER", "MJ", "DS", "AL"].map((initials) => (
-              <span key={initials}>{initials}</span>
-            ))}
-          </span>
-          <span className="hn-email-proof-text">
-            <span className="hn-email-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={12} strokeWidth={0} fill="currentColor" />
-              ))}
-            </span>
-            Rated <strong>4.9/5</strong> by <strong>14,000+</strong> U.S. homeowners
-          </span>
-        </div>
-      )}
     </form>
   );
 }

@@ -1,12 +1,15 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import ToolFacts from "../components/ToolFacts";
+import { buildToolJsonLd } from "../seo";
 import BackgroundRemoverClient from "./BackgroundRemoverClient";
 import RelatedToolsBand from "../components/RelatedToolsBand";
 
 export async function generateMetadata() {
   return createPageMetadata({
-  title: "Background Remover — Transparent PNG",
+  title: "Background Remover — Free Transparent PNG Maker",
   description:
-    "Remove image backgrounds automatically on your device and export a transparent PNG. Private, no uploads, free.",
+    "Remove an image background and export a transparent PNG. The segmentation model runs on your device with WebAssembly, so your photo is never uploaded. Free.",
   path: "/altfloveimg/background-remover",
 });
 }
@@ -14,7 +17,9 @@ export async function generateMetadata() {
 export default function Page() {
   return (
     <>
+      <JsonLd id="altfloveimg-background-remover-jsonld" data={buildToolJsonLd("background-remover")} />
       <BackgroundRemoverClient />
+      <ToolFacts slug="background-remover" />
       <RelatedToolsBand slug="background-remover" />
     </>
   );

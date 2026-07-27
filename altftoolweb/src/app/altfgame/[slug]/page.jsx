@@ -4,15 +4,19 @@ import GamePlayer from "@/app/altfgame/_components/GamePlayer";
 import RelatedGames from "@/app/altfgame/_components/RelatedGames";
 import GameGrid from "@/app/altfgame/_components/GameGrid";
 import GameThumb from "@/app/altfgame/_components/GameThumb";
+import GameGuide from "@/app/altfgame/_components/GameGuide";
 import StarRating from "@/app/altfgame/_components/StarRating";
 import { GAMES, getGame, getRelated, getRecommended } from "@/app/altfgame/_data/games";
+import { getGameContent } from "@/app/altfgame/_data/gameContent";
 import { GAME_COMPONENTS } from "../registry";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
+  createFaqJsonLd,
   createGameJsonLd,
+  createHowToJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
@@ -67,6 +71,10 @@ export default async function GamePage({ params }) {
       { sections: ["blogs", "top9", "hubs"], limit: 3, minScore: 0 },
     ],
   });
+  // HowTo and FAQPage are emitted only when the hand-written guide is actually
+  // rendered on this page — the schema never describes content a reader
+  // cannot see.
+  const content = getGameContent(slug);
   const jsonLd = [
     createBreadcrumbJsonLd([
       { name: "Home", path: "/" },
@@ -74,7 +82,24 @@ export default async function GamePage({ params }) {
       { name: game.title, path: gamePath },
     ]),
     createGameJsonLd({ game, path: gamePath }),
-  ];
+    content
+      ? createHowToJsonLd({
+          path: gamePath,
+          name: `How to play ${game.title}`,
+          description: content.answer,
+          steps: content.steps,
+        })
+      : null,
+    content?.faqs?.length
+      ? createFaqJsonLd({
+          path: gamePath,
+          questions: content.faqs.map((faq) => ({
+            question: faq.question,
+            answer: faq.answer,
+          })),
+        })
+      : null,
+  ].filter(Boolean);
 
   return (
     <main id="main-content" className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
@@ -84,6 +109,8 @@ export default async function GamePage({ params }) {
         <GamePlayer game={game}>
           <Game />
         </GamePlayer>
+
+        <GameGuide game={game} content={content} />
 
         <RelatedGames title={`More ${game.category} games`} games={related} />
 

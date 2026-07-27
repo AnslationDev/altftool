@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, CircleDollarSign, Star } from "lucide-react";
+import { ArrowRight, CheckCircle2, CircleDollarSign } from "lucide-react";
 import HnHeader from "./HnHeader";
 import HnTrustBar from "./HnTrustBar";
 import HnEmailCapture from "./HnEmailCapture";
@@ -14,7 +14,7 @@ import HnImage from "./HnImage";
 import HnHeadline from "./HnHeadline";
 import AltfLauncher from "@/app/_altf/AltfLauncher";
 import JsonLd from "@/platform/seo/JsonLd";
-import { buildBreadcrumbJsonLd, buildFaqJsonLd } from "../_lib/seo";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildFaqJsonLd } from "../_lib/seo";
 import { VERTICALS, getVertical } from "../_data/verticals";
 import { hnVerticalUrl } from "../_data/site";
 import { fetchQuoteConfig, resolveQuoteAction } from "../_data/quoteConfig";
@@ -46,6 +46,7 @@ export default async function HnVerticalPage({ slug }) {
     headline,
     headlineAccent,
     subheadline,
+    answer,
     heroPoints = [],
     services = [],
     benefits = [],
@@ -82,7 +83,16 @@ export default async function HnVerticalPage({ slug }) {
 
   return (
     <div className="hn-app hn-shell" data-accent={accent}>
-      <JsonLd id={`hn-faq-${slug}`} data={[buildFaqJsonLd(slug), buildBreadcrumbJsonLd(slug)]} />
+      {/* Article + FAQPage + BreadcrumbList. Every node describes content that
+          is actually on the page: the Article abstract is the answer paragraph
+          rendered under the h1, and the FAQ entries are the same `faqs` array
+          HnFaq renders. No datePublished/dateModified is emitted — the content
+          files carry no authored date, and stamping "now" at build time would
+          be a fabricated freshness signal. */}
+      <JsonLd
+        id={`hn-schema-${slug}`}
+        data={[buildArticleJsonLd(slug), buildFaqJsonLd(slug), buildBreadcrumbJsonLd(slug)]}
+      />
 
       {/* Anchors, not sibling verticals: these are paid-campaign landing pages,
           so the header navigates WITHIN the page rather than offering exits.
@@ -109,8 +119,8 @@ export default async function HnVerticalPage({ slug }) {
           <HnHeroOffer
             pageKey={`vertical:${slug}`}
             source={`hero-${slug}`}
-            heading={`Free ${name.toLowerCase()} quotes + savings kit — today`}
-            subtext={`Enter your email for free ${name.toLowerCase()} quotes from vetted local pros, our home maintenance calendar, and limited-time offers — before you pay a cent.`}
+            heading="Get the free home maintenance calendar"
+            subtext={`Leave your email and we will send the AltFTool home maintenance calendar, plus new ${name.toLowerCase()} guides as they are published.`}
           >
             <p className="hn-hero-eyebrow">{eyebrow}</p>
 
@@ -118,7 +128,12 @@ export default async function HnVerticalPage({ slug }) {
               <HnHeadline text={headline} accent={headlineAccent} />
             </h1>
 
-            <p className="hn-hero-sub">{subheadline}</p>
+            {/* Answer-first. This is a self-contained answer to the question
+                the page title asks, sitting directly under the h1 — an answer
+                engine that lifts only this paragraph still gets a complete,
+                correct answer. The longer framing moves down to "What this
+                covers", so the hero does not grow. */}
+            <p className="hn-hero-sub">{answer || subheadline}</p>
 
             {heroPoints.length > 0 && (
               <ul className="hn-hero-points">
@@ -160,7 +175,9 @@ export default async function HnVerticalPage({ slug }) {
                 <p className="hn-eyebrow">What this covers</p>
                 <h2 className="hn-h2">{name} work, end to end</h2>
                 <p className="hn-lede">
-                  The jobs that fall under {name.toLowerCase()}, and what each one actually involves.
+                  {answer
+                    ? subheadline
+                    : `The jobs that fall under ${name.toLowerCase()}, and what each one actually involves.`}
                 </p>
               </HnReveal>
 
@@ -219,6 +236,32 @@ export default async function HnVerticalPage({ slug }) {
                 <p className="hn-lede">{options.intro}</p>
               </HnReveal>
 
+              {/* A real table, not a styled grid. The option / best-for /
+                  service-life triple is the most quotable fact on these pages,
+                  and a <table> is what makes it extractable. Rows cover every
+                  option in the data, including any the card grid below trims. */}
+              <HnReveal className="hn-facts">
+                <table>
+                  <caption>{options.title}: at a glance</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Option</th>
+                      <th scope="col">Best for</th>
+                      <th scope="col">Typical service life</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {options.items.map((item) => (
+                      <tr key={item.name}>
+                        <th scope="row">{item.name}</th>
+                        <td>{item.bestFor}</td>
+                        <td>{item.lifespan}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </HnReveal>
+
               <div className="hn-grid hn-grid--options">
                 {options.items.slice(0, 4).map((item, index) => (
                   <HnReveal key={item.name} className="hn-option" delay={index * 70}>
@@ -227,12 +270,6 @@ export default async function HnVerticalPage({ slug }) {
                       <p className="hn-option-summary">{item.summary}</p>
                     </div>
 
-                    <dl className="hn-option-meta">
-                      <dt>Best for</dt>
-                      <dd>{item.bestFor}</dd>
-                      <dt>Typical life</dt>
-                      <dd>{item.lifespan}</dd>
-                    </dl>
 
                     {item.considerations?.length > 0 && (
                       <div className="hn-option-consider">
@@ -317,17 +354,21 @@ export default async function HnVerticalPage({ slug }) {
             <div className="hn-wrap">
               <HnReveal className="hn-head--center">
                 <p className="hn-eyebrow">How the work happens</p>
-                <h2 className="hn-h2">From first look to finished job</h2>
+                <h2 className="hn-h2">
+                  What are the steps in a {name.toLowerCase()} project?
+                </h2>
               </HnReveal>
 
-              <div className="hn-steps">
+              {/* Ordered list, because this is a sequence: the steps only make
+                  sense in order, and `ol` is what says so to a parser. */}
+              <ol className="hn-steps">
                 {process.map((step, index) => (
-                  <HnReveal key={step.title} className="hn-step" delay={index * 80}>
+                  <HnReveal as="li" key={step.title} className="hn-step" delay={index * 80}>
                     <h3>{step.title}</h3>
                     <p>{step.description}</p>
                   </HnReveal>
                 ))}
-              </div>
+              </ol>
             </div>
           </section>
         )}
@@ -363,7 +404,7 @@ export default async function HnVerticalPage({ slug }) {
             <div className="hn-wrap">
               <HnReveal>
                 <p className="hn-eyebrow">Budgeting</p>
-                <h2 className="hn-h2">What moves the price</h2>
+                <h2 className="hn-h2">What drives {name.toLowerCase()} costs?</h2>
                 <p className="hn-lede">
                   {name} quotes vary widely. These are the variables that explain most of the
                   difference between one estimate and another.
@@ -385,40 +426,43 @@ export default async function HnVerticalPage({ slug }) {
           </section>
         )}
 
-        {/* ---------- social proof ---------- */}
-        <section className="hn-section">
+        {/* ---------- about this guide ----------
+            Replaces a testimonial strip whose quotes, names and star ratings
+            were invented. Everything here is verifiable from the page itself:
+            who publishes it, what it covers, and what it deliberately does not
+            do — which is also the part answer engines quote when a reader asks
+            how far to trust a source. */}
+        <section className="hn-section" id="about-this-guide">
           <div className="hn-wrap">
-            <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Homeowners like you</p>
-              <h2 className="hn-h2">Trusted for {name.toLowerCase()} projects across the U.S.</h2>
-            </HnReveal>
+            <HnReveal className="hn-about">
+              <p className="hn-eyebrow">About this guide</p>
+              <h2 className="hn-h2">Who wrote this, and what it is for</h2>
+              <p className="hn-lede">
+                This {name.toLowerCase()} guide is written and published by AltFTool as
+                part of its HousingNeeds library. It explains how the work is scoped,
+                what the common options trade against each other, and which variables
+                move a quote — so an estimate reads as information rather than a number.
+              </p>
 
-            <div className="hn-testimonials">
-              {[
-                {
-                  quote: `Compared three ${name.toLowerCase()} quotes in a day and picked the one that actually explained the work. Painless.`,
-                  who: "Sarah K. — Ohio",
-                },
-                {
-                  quote: "The guide told me exactly what drives the price, so I knew the quote I got was fair before I said yes.",
-                  who: "Marcus T. — Texas",
-                },
-                {
-                  quote: "Free to use, no pushy calls, and the pro we hired showed up when they said they would.",
-                  who: "Linda R. — Florida",
-                },
-              ].map((t, index) => (
-                <HnReveal key={t.who} className="hn-testimonial" delay={index * 60}>
-                  <span className="hn-testimonial-stars" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} size={13} strokeWidth={0} fill="currentColor" />
-                    ))}
-                  </span>
-                  <p>&ldquo;{t.quote}&rdquo;</p>
-                  <footer>{t.who}</footer>
-                </HnReveal>
-              ))}
-            </div>
+              <ul className="hn-about-list">
+                <li>
+                  <strong>What it covers.</strong> The jobs involved, the material and
+                  method choices with their typical service life, the usual order of
+                  work, and the factors that explain most of the gap between two quotes.
+                </li>
+                <li>
+                  <strong>What it does not do.</strong> It quotes no prices, recommends
+                  no contractor, and cannot tell you what your local code requires. The
+                  service lives and cost factors here are general industry ranges, not
+                  measurements of your house.
+                </li>
+                <li>
+                  <strong>Where to verify.</strong> A licensed local professional and your
+                  building department. AltFTool is not a contractor and does not perform,
+                  quote, or supervise any of the work described on this page.
+                </li>
+              </ul>
+            </HnReveal>
           </div>
         </section>
 

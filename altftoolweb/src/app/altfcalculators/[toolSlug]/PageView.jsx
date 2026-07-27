@@ -154,7 +154,11 @@ export default function AltfCalcToolPage() {
             <div>
               <span className="afc-tool-chip">{activeTool.category}</span>
               <h1 className="afc-tool-title">{activeTool.name}</h1>
-              <p className="afc-tool-desc">{activeTool.desc}</p>
+              {/* Answer-first: one self-contained sentence directly under the
+                  h1 saying what this calculator computes. `summary` is written
+                  from the calculator's own info entry; `desc` is the short tile
+                  label and only stands in if a summary is missing. */}
+              <p className="afc-tool-desc">{activeTool.summary || activeTool.desc}</p>
             </div>
           </motion.section>
 

@@ -27,6 +27,7 @@ const plumbing = {
   "headline": "From hidden leaks to whole-home repipes",
   "headlineAccent": "whole-home repipes",
   "subheadline": "Most plumbing problems announce themselves late — a stained ceiling, a slow drain, a water bill that climbs for no obvious reason. Understanding how supply lines, drains, and water heaters actually fail makes it far easier to decide between a targeted repair and a system replacement.",
+  "answer": "Home plumbing is three systems — pressurized supply lines, gravity drain-waste-vent lines, and the water heater — and most failures announce themselves late, as a stained ceiling, a slow drain or a water bill that climbs for no obvious reason. Choosing between a targeted repair and a repipe comes down to pipe material and age: PEX typically lasts 30-50 years, Type L copper 50-70, CPVC 40-75, and PVC or ABS drain lines 50-100.",
   "heroPoints": [
     "Leaks located before walls open",
     "Camera-verified sewer diagnostics",

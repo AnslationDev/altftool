@@ -30,6 +30,7 @@ const gutters = {
   "headline": "Move roof water away before it finds the foundation",
   "headlineAccent": "finds the foundation",
   "subheadline": "A gutter system is really a drainage system: it has to catch what the roof sheds, carry it at the right pitch, and discharge it far enough from the house to matter. Sizing, downspout placement, and the condition of the fascia and drip edge decide whether it works or just looks tidy.",
+  "answer": "A gutter system is a drainage system: it has to catch what the roof sheds, carry it at the right pitch, and discharge it far enough from the house that the water never reaches the foundation. Sizing (5-inch versus 6-inch K-style), downspout count and placement, and the condition of the fascia and drip edge decide whether it works — seamless aluminum typically lasts 20-30 years, steel 15-35, copper 50-100 and vinyl 10-20.",
   "heroPoints": [
     "Seamless runs formed on site",
     "5-inch and 6-inch K-style",

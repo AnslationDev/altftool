@@ -12,6 +12,9 @@ import {
 
 export const dynamic = "force-static";
 
+// Below this many games a category page is a thin listing and is not indexed.
+const MIN_INDEXABLE_GAMES = 4;
+
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return CATEGORIES.map((c) => ({ name: c.slug }));
@@ -35,6 +38,10 @@ export async function generateMetadata({ params }) {
     path: `/altfgame/category/${name}`,
     keywords: [`${category.name} games`, "free browser games", "online games"],
     pageType: "games",
+    // A category holding fewer than four games is a thin listing: it adds no
+    // information the game pages do not already carry. Keep it crawlable for
+    // the links, but out of the index.
+    noindex: gameCount < MIN_INDEXABLE_GAMES,
   });
 }
 
