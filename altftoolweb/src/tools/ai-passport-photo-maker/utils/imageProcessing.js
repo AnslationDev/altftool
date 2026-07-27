@@ -20,7 +20,7 @@ export function applyAdjustments(ctx, width, height, adjustments) {
   const c = adjustments.contrast || 0;
   const s = adjustments.saturation || 0;
 
-  const contrastFactor = (100 + c) / 100;
+  let contrastFactor = (100 + c) / 100;
   contrastFactor *= contrastFactor;
 
   for (let i = 0; i < data.length; i += 4) {
