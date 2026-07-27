@@ -30,6 +30,7 @@ import { GAMES } from "@/app/altfgame/_data/games";
 import { CALCULATORS } from "@/app/altfcalculators/toolsData";
 import { TOOLS as PDF_TOOLS } from "@/app/altflovepdf/toolsData";
 import { TOOLS as IMAGE_TOOLS, BASE as IMAGE_BASE } from "@/app/altfloveimg/data/tools";
+import { INCUMBENTS, INCUMBENT_SLUGS } from "@/app/alternatives/data/incumbents";
 import { getAllGeoLocations } from "@/platform/seo/geoLocations";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
@@ -54,6 +55,7 @@ export const SECTION_LABELS = {
   news: "News",
   games: "Game",
   n8n: "Automation",
+  alternatives: "Comparison",
   hubs: "Explore",
 };
 
@@ -124,6 +126,7 @@ const HUB_ITEMS = [
   { href: "/news", title: "News", description: "Current headlines and topic pages.", tags: ["news", "headlines"] },
   { href: "/academy", title: "Academy", description: "Compare learning platforms and build skills.", tags: ["academy", "learning", "education"] },
   { href: "/site-map", title: "Site map", description: "Every AltFTool destination in one organized directory.", tags: ["sitemap", "directory"] },
+  { href: "/alternatives", title: "Tool alternatives", description: "Honest comparisons with the hosted PDF, image, converter and calculator services people already pay for.", tags: ["alternatives", "comparison", "pricing"] },
 ];
 
 function buildGraph() {
@@ -274,6 +277,19 @@ function buildGraph() {
       description: tool.description || tool.tagline,
       section: "imageTools",
       tags: ["image", "photo", tool.category, tool.slug.split("-")],
+    });
+  });
+
+  INCUMBENT_SLUGS.forEach((slug) => {
+    const entry = INCUMBENTS[slug];
+    pushItem(items, seen, {
+      href: `/alternatives/${slug}`,
+      title: `${entry.shortName || entry.name} alternative`,
+      description: entry.valueProp,
+      section: "alternatives",
+      // The mapped tool slugs are the strongest signal here: a page about
+      // pdf-merger should be able to surface the iLovePDF comparison.
+      tags: [entry.category, entry.name, "alternative", entry.tools],
     });
   });
 

@@ -14,6 +14,7 @@ import {
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import { getDeals } from "@/app/deals/data/deals";
+import { INCUMBENT_SLUGS } from "@/app/alternatives/data/incumbents";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
@@ -506,6 +507,19 @@ async function buildSitemapEntries({
   for (const slug of Object.keys(toolMetaMap)) {
     pushUnique(entries, seen, `/tools/all/${slug}`, {
       priority: 0.78,
+      changeFrequency: "monthly",
+    });
+  }
+
+  // Incumbent comparison pages. Small, hand-written family — every URL is a
+  // curated page, so they carry a higher priority than the templated corpora.
+  pushUnique(entries, seen, "/alternatives", {
+    priority: 0.85,
+    changeFrequency: "weekly",
+  });
+  for (const alternativeSlug of INCUMBENT_SLUGS) {
+    pushUnique(entries, seen, `/alternatives/${alternativeSlug}`, {
+      priority: 0.82,
       changeFrequency: "monthly",
     });
   }

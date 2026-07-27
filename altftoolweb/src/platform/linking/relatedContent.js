@@ -157,15 +157,24 @@ export function getRelatedContent({ source = {}, slots = [], excludeHrefs = [] }
  */
 export const RELATED_PRESETS = {
   // Interactive tool/calculator/game pages: guides + adjacent utilities.
+  //
+  // `alternatives` gets its own slot rather than sharing the guides slot.
+  // Comparison items carry the mapped tool slugs as tags, so they score very
+  // highly on a matching tool page and would otherwise take both guide slots.
+  // The slot includes "hubs" purely to suppress the shortfall top-up: when no
+  // comparison clears minScore the band simply renders one item shorter,
+  // instead of padding itself with an unrelated hub link.
   utility: [
     { sections: ["blogs", "top9", "top11"], limit: 2 },
     { sections: ["tools", "calculators", "pdfTools", "imageTools"], limit: 3 },
+    { sections: ["alternatives", "hubs"], limit: 1, minScore: 8 },
     { sections: ["experiences", "games", "products", "hubs"], limit: 1, minScore: 0 },
   ],
   // Editorial pages (listicles, news, facts): tools + more reading.
   editorial: [
     { sections: ["tools", "calculators", "deals"], limit: 3 },
     { sections: ["blogs", "top9", "top11", "news"], limit: 2 },
+    { sections: ["alternatives", "hubs"], limit: 1, minScore: 8 },
     { sections: ["hubs"], limit: 1, minScore: 0 },
   ],
   // Landing/SEO pages (locations, landers, signals): broad discovery.

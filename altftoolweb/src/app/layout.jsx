@@ -15,7 +15,10 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import { AlertProvider } from "@/shared/ui/AlertProvider";
 import JsonLd from "@/platform/seo/JsonLd";
-import { primeSeoConfig, loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import {
+  getSeoConfigSnapshot,
+  primeSeoConfig,
+} from "@/platform/seo/seoConfigSource";
 import { resolveInjectedCode } from "@altftool/core/seo";
 import InjectedCode from "@/platform/seo/InjectedCode";
 import PerPageCode from "@/platform/seo/PerPageCode";
@@ -76,9 +79,12 @@ const baseMetadata = {
     address: false,
     telephone: false,
   },
-  alternates: {
-    canonical: "/",
-  },
+  // NOTE: no `alternates.canonical` here on purpose. App Router metadata is
+  // inherited, and `alternates` is replaced wholesale by the deepest segment
+  // that defines it — so a static canonical at the root would declare the
+  // HOMEPAGE as the canonical of every page that doesn't set its own
+  // (Google then drops those URLs). Pages canonicalize themselves through
+  // createPageMetadata(); the rest fall back to their own URL.
   openGraph: {
     type: "website",
     siteName: "AltFTool",
@@ -148,7 +154,7 @@ export default async function RootLayout({ children }) {
 
   // Admin-authored custom code (raw HTML/scripts). Global is SSR-injected here;
   // per-page code is injected client-side (only when the site has any).
-  const seoConfig = await loadSeoConfig().catch(() => null);
+  const seoConfig = getSeoConfigSnapshot();
   const { global: customCode } = resolveInjectedCode(seoConfig, null);
   const hasPageCode =
     seoConfig?.enabled !== false &&
@@ -160,10 +166,27 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://firestore.googleapis.com" />
-        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+        {/* Preconnect only to hosts on the critical path of a typical page.
+            Firebase is idle on tool/blog reads, so those handshakes just ate
+            connections; AdSense is the one third party that blocks paint. */}
+        {shouldLoadGoogleAds ? (
+          <link
+            rel="preconnect"
+            href="https://pagead2.googlesyndication.com"
+            crossOrigin="anonymous"
+          />
+        ) : null}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.clarity.ms" />
+        {/* Feed autodiscovery. Declared here rather than in metadata.alternates
+            because a child segment's `alternates` replaces the root's, which
+            would drop the feed link on nearly every page. */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="AltFTool — Latest posts"
+          href="/rss.xml"
+        />
         <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />
         <JsonLd
           id="altftool-site-schema"
@@ -230,9 +253,12 @@ export default async function RootLayout({ children }) {
           `}
         </Script>
 
+        {/* gtag.js is ~90 KB of non-essential JS. Defer it past load; the
+            inline ga-init below queues into window.dataLayer, which gtag.js
+            drains when it arrives, so no hits are lost. */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-G07GM6LKP1"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
 
         <Script id="ga-init" strategy="afterInteractive">

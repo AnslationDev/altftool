@@ -8,6 +8,9 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { formatCategoryLabel, getToolCategorySlugs } from "./toolRouteUtils";
 
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
 export async function generateMetadata() {
   return createPageMetadata({
     title: "Micro Tools – 100+ Free Daily Use Online Tools",

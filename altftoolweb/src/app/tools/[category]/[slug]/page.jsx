@@ -17,6 +17,31 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
 import ToolSeoSection from "../../ToolSeoSection";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+// Prerender each tool under its own canonical categories so crawlers get a
+// cached page. Amplify builds defer the bulk prerender (artifact-size limit)
+// and let ISR fill the cache on demand — same guard as /blogs/[slug].
+export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
+
+  const params = [];
+  Object.entries(toolMetaMap).forEach(([slug, tool]) => {
+    const seen = new Set();
+    getToolCategories(tool).forEach((category) => {
+      const categorySlug = slugifyRouteSegment(category);
+      // "all" is served by the dedicated /tools/all/[slug] route.
+      if (!categorySlug || categorySlug === "all" || seen.has(categorySlug)) return;
+      seen.add(categorySlug);
+      params.push({ category: categorySlug, slug });
+    });
+  });
+  return params;
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

@@ -2,6 +2,18 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { CALCULATORS } from "../toolsData";
 import PageView from "./PageView";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+// Prerender every calculator so crawlers hit a cached page. Amplify builds
+// defer the bulk prerender (artifact-size limit) and let ISR fill the cache on
+// demand — same guard as /blogs/[slug].
+export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
+  return CALCULATORS.map((tool) => ({ toolSlug: tool.slug }));
+}
 
 function formatToolName(slug) {
   return String(slug || "Calculator")

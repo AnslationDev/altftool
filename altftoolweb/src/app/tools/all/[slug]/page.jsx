@@ -11,6 +11,20 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
 import ToolSeoSection from "../../ToolSeoSection";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+// Prerender the tool corpus so crawlers are served a cached page instead of a
+// cold dynamic render. Amplify builds defer the bulk prerender (artifact-size
+// limit) and let ISR fill the cache on demand instead — same guard as
+// /blogs/[slug] and /tools/[category].
+export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
+  return Object.keys(toolMetaMap).map((slug) => ({ slug }));
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
