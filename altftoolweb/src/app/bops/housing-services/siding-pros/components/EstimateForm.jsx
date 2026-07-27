@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowRight, Award, CalendarCheck, CheckCircle2, Clock, Home, Mail, MessageSquare, Shield, User, Wrench, X } from "lucide-react";
+import { ArrowRight, Award, CalendarCheck, CheckCircle2, Clock, Home, Mail, MessageSquare, Phone, Shield, User, Wrench, X } from "lucide-react";
 
 const CONTACT_URL = "/policypages/contact";
 

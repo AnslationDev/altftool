@@ -2,19 +2,20 @@
 
 import "./rainright-gutters.css";
 import {
+  ArrowRight,
+  CheckCircle2,
+  CloudRain,
   Droplet,
   Droplets,
-  Mail,
-  ShieldCheck,
-  Leaf,
   Flower2,
-  CloudRain,
-  CheckCircle2,
-  ArrowRight,
-  Ruler,
-  Wrench,
-  Sparkles,
   Home,
+  Leaf,
+  Mail,
+  Ruler,
+  ShieldCheck,
+  Sparkles,
+  Tag as TagIcon,
+  Wrench,
 } from "lucide-react";
 
 // No quote partner and no phone line are live for this page, so every
