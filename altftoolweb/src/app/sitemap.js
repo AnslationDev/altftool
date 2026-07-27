@@ -84,7 +84,6 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },

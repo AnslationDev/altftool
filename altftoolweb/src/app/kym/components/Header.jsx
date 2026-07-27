@@ -107,7 +107,7 @@ export default function Header({ compact = false }) {
 
       {compact ? (
         <div className="kym-compact-brand">
-          <Link href="/kym">Know Your Meme</Link>
+          <Link href="/kym">Meme Encyclopedia</Link>
         </div>
       ) : null}
 
@@ -119,11 +119,15 @@ export default function Header({ compact = false }) {
           Internet culture encyclopedia
         </p>
         <h1>
-          Know Your{" "}
-          <span className="kym-hero__accent">Meme</span>
+          Meme{" "}
+          <span className="kym-hero__accent">Encyclopedia</span>
         </h1>
         <form className="kym-search" onSubmit={handleSubmit} role="search">
-          <button className="kym-search__submit" type="submit" aria-label="Search KYM">
+          <button
+            className="kym-search__submit"
+            type="submit"
+            aria-label="Search the meme encyclopedia"
+          >
             <Search size={18} strokeWidth={2.5} />
           </button>
           <input
@@ -166,7 +170,7 @@ export default function Header({ compact = false }) {
                 ))
               ) : (
                 <p className="kym-search-empty">
-                  No KYM results found for &quot;{query.trim()}&quot;.
+                  No meme entries found for &quot;{query.trim()}&quot;.
                 </p>
               )}
             </div>

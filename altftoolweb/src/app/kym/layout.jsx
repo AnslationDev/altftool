@@ -1,7 +1,7 @@
 import "./style/kym.css";
 
 export const metadata = {
-  title: "Know Your Meme — ALTFTool",
+  title: "Meme Encyclopedia — AltFTool",
   description:
     "Browse meme encyclopedia entries, trending images, explainers, and vote for Meme of the Month.",
 };

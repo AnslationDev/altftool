@@ -69,13 +69,9 @@ function createAppJsonLd(app) {
       name: "AltFTool",
       url: absoluteUrl("/"),
     },
-    aggregateRating: app.rating
-      ? {
-          "@type": "AggregateRating",
-          ratingValue: app.rating,
-          reviewCount: String(app.reviewCount || "0").replace(/[^0-9.]/g, "") || undefined,
-        }
-      : undefined,
+    // No aggregateRating / review or download counters are emitted: the app
+    // catalogue carries no verified rating, review or install data, and
+    // publishing unverifiable numbers would be fabricated review markup.
     offers: {
       "@type": "Offer",
       price: "0",

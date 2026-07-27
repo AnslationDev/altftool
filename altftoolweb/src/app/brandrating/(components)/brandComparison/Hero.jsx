@@ -61,7 +61,7 @@ export default function HeroSection({ title, subtitle }) {
               const section = document.getElementById("top-rated");
               section?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-(--primary) text-white text-base font-semibold hover:bg-blue-700 transition">
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-(--primary) text-(--primary-foreground) text-base font-semibold hover:bg-blue-700 transition">
             Explore Now
           </button>
         </div>

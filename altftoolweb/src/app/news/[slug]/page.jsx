@@ -13,18 +13,6 @@ import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/li
 
 export const revalidate = 600;
 
-const ALL_CATEGORIES = [
-  "politics", "tech", "business", "science", "sports", "health", "world", "entertainment",
-];
-
-const AUTHORS = [
-  { name: "Rohan Mehta", designation: "Senior Political Correspondent", avatar: "RM", bio: "Rohan Mehta covers national politics and policy with over 12 years of experience in investigative journalism." },
-  { name: "Ananya Sharma", designation: "Technology Editor", avatar: "AS", bio: "Ananya Sharma reports on emerging tech, AI, and digital innovation. Previously at TechCrunch and The Verge." },
-  { name: "James Carter", designation: "Business Analyst", avatar: "JC", bio: "James Carter specializes in global markets, economic policy, and business strategy with a decade of reporting experience." },
-  { name: "Dr. Priya Nair", designation: "Science & Health Correspondent", avatar: "PN", bio: "Dr. Priya Nair brings a PhD in molecular biology to her reporting on health, science, and medical breakthroughs." },
-  { name: "Vikram Joshi", designation: "Sports Journalist", avatar: "VJ", bio: "Vikram Joshi has covered major sporting events worldwide including the Olympics, World Cup, and Grand Slams." },
-];
-
 function slugify(value = "") {
   return String(value)
     .toLowerCase()
@@ -34,53 +22,22 @@ function slugify(value = "") {
     .replace(/(^-|-$)/g, "");
 }
 
-function pick(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
-function enrichArticle(article) {
-  const author = pick(AUTHORS);
-  const category = article.category || pick(ALL_CATEGORIES);
-  const tags = article.tags?.length
-    ? article.tags
-    : [category, article.source?.toLowerCase().replace(/\s+/g, ""), "trending"].filter(Boolean);
-  const readingTime = article.reading_time_minutes || Math.max(3, Math.ceil((article.summary?.length || 100) / 200) * 3 + 2);
-  const content = article.content || [
-    article.summary || "Detailed coverage of this developing story continues to unfold as new information emerges from official sources and eyewitness accounts.",
-    "Authorities have confirmed that investigations are underway to determine the full circumstances surrounding the event. Multiple agencies are collaborating to ensure a thorough review of all available evidence.",
-    "Local community leaders have called for transparency and accountability, emphasizing the need for clear communication between law enforcement agencies and the public they serve.",
-    "This incident has sparked broader discussions about enforcement procedures and the importance of maintaining public trust while ensuring safety and security for all citizens.",
-    "As the story develops, updates will be provided by official channels. Residents are encouraged to stay informed through verified news sources and official statements.",
-  ];
-
-  return {
-    ...article,
-    category,
-    tags,
-    reading_time_minutes: readingTime,
-    content,
-    author,
-    subtitle: article.subtitle || `An in-depth look at ${article.headline?.toLowerCase() || "this developing story"}, exploring the key developments, reactions, and what comes next.`,
-    highlights: article.highlights || [
-      { label: "Key Development", description: article.summary?.slice(0, 100) || "Major developments continue to shape the narrative around this story." },
-      { label: "Official Response", description: "Authorities have issued statements acknowledging the situation and promising a thorough investigation." },
-      { label: "Community Impact", description: "Local communities are organizing response efforts and calling for greater transparency from officials." },
-      { label: "What's Next", description: "Further updates are expected as investigations proceed and more information becomes available." },
-    ],
-    author_bio: article.author_bio || author.bio,
-    author_avatar: article.author_avatar || author.avatar,
-    author_designation: article.author_designation || author.designation,
-    image_caption: article.image_caption || `${article.source || "News"} — A visual report on the ongoing developments.`,
-  };
-}
-
+/**
+ * These are real news stories about real people, aggregated from third-party
+ * feeds. We only ever render what the feed actually gave us.
+ *
+ * Do NOT reintroduce synthesised fields here — no invented bylines, no
+ * generated body paragraphs, no "official response" highlights, no image
+ * captions, no fabricated publish dates. If a field is missing it must stay
+ * missing so the UI and the structured data omit it.
+ */
 async function findArticle(slug) {
   let article = (newsData.news || []).find((n) => n.slug === slug);
   if (!article) {
     const remoteNews = await getNewsDataServer();
     article = (remoteNews || []).find((n) => n.slug === slug);
   }
-  return article ? enrichArticle(article) : null;
+  return article || null;
 }
 
 export async function generateMetadata({ params }) {
@@ -100,7 +57,7 @@ export async function generateMetadata({ params }) {
     description: article.summary || "Read the latest news update on AltFTool News.",
     path: `/news/${article.slug}`,
     image: article.image_url,
-    keywords: [article.category, ...(article.tags || []), "AltFTool News"],
+    keywords: [article.category, ...(article.tags || []), "AltFTool News"].filter(Boolean),
     type: "article",
   });
 }
@@ -124,6 +81,13 @@ export default async function NewsDetailPage({ params }) {
     .sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares))
     .slice(0, 5);
 
+  // Records that carry real provenance: either a link back to the publisher
+  // (RSS-normalised items) or a curated publisher_type (bundled newsdata.json).
+  // Placeholder records from the dummy fallback have neither.
+  const hasKnownPublisher = Boolean(
+    article.source && (article.external_url || article.publisher_type)
+  );
+
   const relatedContentItems = getRelatedContentForPreset(
     {
       href: `/news/${slug}`,
@@ -145,18 +109,22 @@ export default async function NewsDetailPage({ params }) {
             headline: article.headline,
             description: article.summary,
             image: article.image_url,
-            datePublished: article.published_at || new Date().toISOString(),
-            author: article.author?.name || article.source,
+            // Never claim a publish date we do not have — an absent value is
+            // dropped from the JSON-LD rather than stamped with "now".
+            datePublished: article.published_at || undefined,
+            // The originating publisher, never an invented byline.
+            author: article.source || undefined,
           }),
-          createBreadcrumbJsonLd([
-            { name: "Home", path: "/" },
-            { name: "News", path: "/news" },
-            {
-              name: article.category || "General",
-              path: article.category ? `/news/topics/${slugify(article.category)}` : "/news",
-            },
-            { name: article.headline, path: `/news/${article.slug}` },
-          ]),
+          createBreadcrumbJsonLd(
+            [
+              { name: "Home", path: "/" },
+              { name: "News", path: "/news" },
+              article.category
+                ? { name: article.category, path: `/news/topics/${slugify(article.category)}` }
+                : null,
+              { name: article.headline, path: `/news/${article.slug}` },
+            ].filter(Boolean)
+          ),
         ]}
       />
       <NewsArticleView
@@ -164,6 +132,43 @@ export default async function NewsDetailPage({ params }) {
         relatedNews={relatedNews}
         trendingArticles={trendingArticles}
       />
+
+      {/* Honest attribution: this page carries a headline and summary only,
+          the reporting belongs to the original publisher. Only claim a
+          publisher for records that actually carry provenance — placeholder
+          fallback records must never be attributed to a real newsroom. */}
+      {hasKnownPublisher && (
+        <section className="mx-auto w-full max-w-[1360px] px-4 pb-10 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
+            <h2 className="text-base font-bold text-[var(--foreground)]">
+              Reported by {article.source}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted-foreground)]">
+              {article.external_url
+                ? "AltFTool News shows the headline and summary from the original report. Read the full story at the publisher."
+                : "AltFTool News shows the headline and summary from the original report. The full story is published by the source above."}
+            </p>
+            {article.external_url && (
+              <a
+                href={article.external_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  mt-4 inline-flex items-center gap-1.5 rounded-xl border border-[var(--border)]
+                  px-4 py-2.5 text-sm font-semibold text-[var(--primary)] transition
+                  hover:bg-[var(--muted)]
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]
+                "
+              >
+                Read the full story at {article.source}
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
       <RelatedContentSection
         title="Tools & guides from AltFTool"
         items={relatedContentItems}

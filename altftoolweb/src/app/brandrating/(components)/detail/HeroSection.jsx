@@ -160,7 +160,7 @@ function HeroSection({ brand, category }) {
                 href={externalLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full sm:w-auto h-[48px] sm:h-[52px] lg:h-[60px] px-5 sm:px-6 lg:px-7 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base lg:text-lg font-semibold bg-[var(--primary)] text-white"
+                className="group w-full sm:w-auto h-[48px] sm:h-[52px] lg:h-[60px] px-5 sm:px-6 lg:px-7 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base lg:text-lg font-semibold bg-[var(--primary)] text-(--primary-foreground)"
               >
                 View Site
                 <ArrowUpRight className="w-4 h-4 md:w-6 md:h-6 transition-transform duration-300 group-hover:[transform:rotate(45deg)]" />
