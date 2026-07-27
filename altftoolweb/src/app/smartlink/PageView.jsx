@@ -1,102 +1,33 @@
-"use client";
+import Link from "next/link";
+import { Unlink, Wrench } from "lucide-react";
 
-import { useEffect } from "react";
-import useHydrated from "@/hooks/useHydrated";
-
-const REDIRECT_URL =
-  "https://126d3999de4f.sunkissed-morn.com/?p=23600&media_type=mainstream";
-
-const REDIRECT_URL_WITH_TYPE =
-  "https://126d3999de4f.sunkissed-morn.com/?p=23600&media_type=mainstream&source_type=redirect";
-
-const POPUNDER_SCRIPT =
-  "https://scripts.sunkissed-morn.com/smart.popunder.js?p=23600&media_type=mainstream&source_type=popunder";
-
-// 🔁 Loader
-function InfiniteLoader() {
+// This route previously forwarded visitors to a third-party ad network while
+// showing crawlers a loading shell. That behaviour has been removed. There is no
+// legitimate destination behind /smartlink, so the route now renders a plain
+// notice and sends people to the tools directory instead.
+export default function SmartLink() {
   return (
-    <div className="bg-[var(--background)] min-h-screen flex flex-col justify-center items-center">
-      <div
-        style={{
-          width: 64,
-          height: 64,
-          border: "3px solid #222",
-          borderTop: "3px solid #e5c97e",
-          borderRadius: "50%",
-          animation: "spin 0.9s linear infinite",
-          marginBottom: 32,
-        }}
-      />
-      <p className="text-[#e5c97e] tracking-widest uppercase text-sm">
-        Loading...
-      </p>
+    <div className="section flex min-h-[70vh] items-center justify-center py-16">
+      <div className="w-full max-w-xl text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) text-(--primary) shadow-[var(--anslation-ds-shadow-sm)]">
+          <Unlink className="h-6 w-6" aria-hidden="true" />
+        </div>
+        <h1 className="mt-6 text-3xl font-bold tracking-normal text-(--foreground) sm:text-4xl">
+          This link is no longer active
+        </h1>
+        <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-(--muted-foreground) sm:text-base">
+          The smart link you followed has been retired and no longer points
+          anywhere. Nothing was installed or opened on your device.
+        </p>
 
-      <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+        <Link
+          href="/tools/all"
+          className="mt-8 inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] bg-(--primary) px-4 text-sm font-semibold text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)] transition duration-200 hover:bg-(--primary-active) hover:shadow-[var(--anslation-ds-shadow-md)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) motion-reduce:transition-none motion-reduce:transform-none"
+        >
+          <Wrench className="h-4 w-4" aria-hidden="true" />
+          Browse all tools
+        </Link>
+      </div>
     </div>
   );
-}
-
-export default function SmartLink() {
-  const hydrated = useHydrated();
-  const mode = hydrated
-    ? (new URLSearchParams(window.location.search).get("mode") || "").toLowerCase()
-    : "";
-
-  useEffect(() => {
-    // 🚀 direct redirect
-    if (mode === "direct") {
-      window.location.replace(REDIRECT_URL);
-      return;
-    }
-
-    // 🚀 redirect (meta equivalent)
-    if (mode === "redirect") {
-      window.location.replace(REDIRECT_URL_WITH_TYPE);
-      return;
-    }
-
-    // ⚡ popunder
-    if (mode === "pus") {
-      const script = document.createElement("script");
-      script.src = POPUNDER_SCRIPT;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, [mode]);
-
-  // 🔁 No mode → infinite loader
-  if (!mode) {
-    return <InfiniteLoader />;
-  }
-
-  // 🔁 redirect modes → show loader briefly
-  if (mode === "direct" || mode === "redirect") {
-    return <InfiniteLoader />;
-  }
-
-  // 🔘 Button mode
-  if (mode === "btn") {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
-        <a
-          href={REDIRECT_URL}
-          className="bg-[var(--primary)] text-2xl md:text-4xl px-8 py-4 text-white rounded-xl font-bold"
-        >
-          Click here
-        </a>
-      </div>
-    );
-  }
-
-  // 🔁 PUS mode (script already injected)
-  if (mode === "pus") {
-    return <InfiniteLoader />;
-  }
-
-  // 🔁 fallback
-  return <InfiniteLoader />;
 }

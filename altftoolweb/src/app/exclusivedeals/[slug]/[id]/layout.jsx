@@ -5,10 +5,13 @@ import {
   createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { brandSlug, findBrandByUrlKey } from "@/app/exclusivedeals/lib/brandSlug";
 
 function findDeal(slug, id) {
   const category = (dealData.categories || []).find((item) => item.slug === slug);
-  const brand = category?.brands?.find((item) => String(item.id) === String(id));
+  // Slug is canonical (see lib/brandSlug.js); numeric ids still resolve so
+  // links made while the sitemap advertised ids do not start 404ing.
+  const brand = findBrandByUrlKey(category, id);
   return { category, brand };
 }
 
@@ -26,7 +29,7 @@ export async function generateMetadata({ params }) {
   return createPageMetadata({
     title: `${brand.brandName} Coupons, Promo Codes & Offers`,
     description: brand.about || `Find current ${brand.brandName} deals, coupons, and offers in ${category.categoryName}.`,
-    path: `/exclusivedeals/${category.slug}/${brand.id}`,
+    path: `/exclusivedeals/${category.slug}/${brandSlug(brand.brandName || brand.name)}`,
     image: brand.imagedeal || brand.img || brand.brandLogo,
     keywords: [
       `${brand.brandName} coupons`,
@@ -43,7 +46,7 @@ export default async function ExclusiveDealDetailLayout({ children, params }) {
 
   if (!category || !brand) return children;
 
-  const path = `/exclusivedeals/${category.slug}/${brand.id}`;
+  const path = `/exclusivedeals/${category.slug}/${brandSlug(brand.brandName || brand.name)}`;
 
   return (
     <>

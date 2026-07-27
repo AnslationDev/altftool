@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, MapPin, ChevronDown } from 'lucide-react';
+import { Menu, X, MessageSquare, MapPin, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { services } from '../data/services';
+
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +25,7 @@ const Navbar = () => {
 
   const topBarItems = [
     { icon: <MapPin size={14} />, text: "Serving South Florida" },
-    { icon: <Phone size={14} />, text: "(786) 567-9554" },
+    { icon: <MessageSquare size={14} />, text: "Contact us" },
   ];
 
   return (
@@ -48,9 +52,9 @@ const Navbar = () => {
               <MapPin size={15} className="text-[#4ADE80]" />
               <span>Serving South Florida</span>
             </div>
-            <a href="tel:7865679554" className="flex items-center gap-2 font-semibold hover:text-[#4ADE80] transition-colors">
-              <Phone size={15} />
-              (786) 567-9554
+            <a href={CONTACT_URL} className="flex items-center gap-2 font-semibold hover:text-[#4ADE80] transition-colors">
+              <MessageSquare size={15} />
+              Contact us
             </a>
           </div>
         </div>
@@ -130,8 +134,8 @@ const Navbar = () => {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a href="tel:7865679554" className="btn btn-secondary text-sm px-5 py-2.5 hidden xl:flex">
-                Call Now
+              <a href={CONTACT_URL} className="btn btn-secondary text-sm px-5 py-2.5 hidden xl:flex">
+                Contact Us
               </a>
               <Link to="/book" className="btn btn-primary text-sm px-6 py-2.5">
                 Get Free Quote
@@ -173,7 +177,7 @@ const Navbar = () => {
                 <Link to="/services" onClick={() => setIsOpen(false)} className="py-3 px-4 font-medium">All Services</Link>
 
                 <div className="pt-3 flex flex-col gap-3">
-                  <a href="tel:7865679554" className="btn btn-secondary w-full justify-center">Call (786) 567-9554</a>
+                  <a href={CONTACT_URL} className="btn btn-secondary w-full justify-center">Contact us</a>
                   <Link to="/book" onClick={() => setIsOpen(false)} className="btn btn-primary w-full justify-center">Get Free Quote</Link>
                 </div>
               </div>

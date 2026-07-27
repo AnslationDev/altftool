@@ -120,7 +120,6 @@ const BottomSections = ({ category }) => {
                 id={article.id}
                 image={article.image}
                 title={article.title}
-                author={article.author}
                 plays={article.plays}
               />
             </div>
@@ -158,12 +157,6 @@ const BottomSections = ({ category }) => {
                 >
                   {article.title}
                 </h4>
-                <span
-                  className="text-[10px] mt-0.5 inline-block"
-                  style={{ color: 'var(--muted-foreground)' }}
-                >
-                  {article.author}
-                </span>
               </div>
             </Link>
           ))}

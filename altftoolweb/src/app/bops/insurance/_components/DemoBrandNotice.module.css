@@ -1,0 +1,33 @@
+/* Disclosure strip for the brand-style insurance landers.
+   These pages are design demonstrations, not real insurers, and that has to be
+   readable at the top of the page rather than buried in footer fine print.
+   Colours come from the semantic tokens so the strip stays AA in light and
+   dark; the background/text pair flips together, so it is self-consistent even
+   though the landers themselves ship their own fixed palettes. */
+
+.notice {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 0.875rem 1.125rem;
+  background: var(--warning-soft);
+  color: var(--warning-text);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.notice svg {
+  flex: none;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 700px) {
+  .notice {
+    margin: 0 1rem;
+    border-radius: 0.625rem;
+  }
+}

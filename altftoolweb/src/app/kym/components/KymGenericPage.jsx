@@ -16,12 +16,12 @@ import { slugifyTitle } from "../data/slug";
 const contentGroups = [
   ...spotlightCards,
   ...freshEntries,
-  ...explainers.map((item) => ({ ...item, category: "Explainer", meta: "KYM Staff - recently" })),
-  ...episodes.map((item) => ({ ...item, category: "Episode", meta: "KYM Staff - recently" })),
+  ...explainers.map((item) => ({ ...item, category: "Explainer", meta: "Recently updated" })),
+  ...episodes.map((item) => ({ ...item, category: "Episode", meta: "Recently updated" })),
   ...editorials,
   ...latest,
-  ...topEntries.map((item) => ({ ...item, category: "Entry", meta: "KYM Staff - trending" })),
-  ...topMemes.map((item) => ({ ...item, category: "Meme", meta: "KYM Staff - trending" })),
+  ...topEntries.map((item) => ({ ...item, category: "Entry", meta: "Trending entry" })),
+  ...topMemes.map((item) => ({ ...item, category: "Meme", meta: "Trending entry" })),
 ];
 
 export function getAllKymRoutes() {
@@ -35,7 +35,7 @@ const CATEGORY_COPY = {
     about:
       "This explainer tracks how the phrase moved through comment sections, captions and short-form video posts before becoming a recognizable reaction shorthand.",
     origin:
-      "The format is presented here as a local KYM-style summary: a compact definition, the situation it describes and the reason users began applying it outside the original context.",
+      "The format is presented here as a compact encyclopedia summary: a short definition, the situation it describes and the reason users began applying it outside the original context.",
     spread:
       "After the phrase became legible on its own, creators reused it in stitched clips, caption jokes and quote-post replies where the setup needed almost no extra explanation.",
     notes: ["Definition-focused", "Caption-friendly", "Common in reaction posts"],
@@ -128,7 +128,7 @@ function getArticleProfile(item, category) {
   if (lowerTitle.includes("what does") || lowerTitle.includes("what is")) {
     return {
       ...CATEGORY_COPY.Explainer,
-      lede: `${item.title} is presented as a KYM-style explainer for readers who have seen the phrase or image in posts but want the context behind the joke.`,
+      lede: `${item.title} is presented as an explainer for readers who have seen the phrase or image in posts but want the context behind the joke.`,
       examples: [
         `People use ${titleKeyword} as a quick reference when a caption needs an instantly readable setup.`,
         "The format works best in short posts, screenshots and replies where the audience already understands the mood.",
@@ -227,7 +227,7 @@ export default function KymGenericPage({ item }) {
           <h1>{item.title}</h1>
           <img className="kym-article-hero" src={item.image.src} alt="" />
           <div className="kym-article-meta">
-            <span>{item.meta || "KYM Staff - recently"}</span>
+            <span>{item.meta || "Recently updated"}</span>
             <span>Status: {profile.status}</span>
             <span>Type: {profile.type}</span>
             
@@ -255,7 +255,7 @@ export default function KymGenericPage({ item }) {
           </section>
           <section className="kym-article-section">
             <h2>Spread</h2>
-            <p>{profile.spread} The local version of <strong>{item.title}</strong> keeps the page distinct from the other cards while preserving the same KYM-style article structure.</p>
+            <p>{profile.spread} The local version of <strong>{item.title}</strong> keeps the page distinct from the other cards while preserving the same encyclopedia article structure.</p>
           </section>
           <section className="kym-article-section">
             <h2>Common Examples</h2>

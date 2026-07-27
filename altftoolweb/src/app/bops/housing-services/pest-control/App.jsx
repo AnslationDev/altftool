@@ -18,6 +18,10 @@ import BookAppointment from './pages/BookAppointment';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
+
 // Scroll to top on route change
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -62,7 +66,7 @@ export default function App() {
 
       {/* Mobile Sticky CTA */}
       <div className="md:hidden sticky-cta flex gap-3">
-        <a href="tel:7865679554" className="flex-1 btn btn-secondary text-sm py-[13px]">Call Now</a>
+        <a href={CONTACT_URL} className="flex-1 btn btn-secondary text-sm py-[13px]">Contact Us</a>
         <Link to="/book" className="flex-1 btn btn-primary text-sm py-[13px]">Get Free Quote</Link>
       </div>
     </div>

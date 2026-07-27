@@ -6,6 +6,9 @@ export async function generateMetadata() {
   description: "Track trending news, viral stories, and fast-moving updates on AltFTool News.",
   path: "/news/trending",
   keywords: ["trending news", "viral stories", "popular headlines"],
+  // Syndicated wire-service headlines the original publishers own — kept out
+  // of the index (follow stays on so internal links still pass through).
+  noindex: true,
 });
 }
 

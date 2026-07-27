@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   ArrowRight,
   ShieldCheck,
   Clock3,
@@ -18,9 +18,10 @@ import {
 } from "lucide-react";
 import "./homebridge-mortgage.css";
 
-const QUOTE_URL = "https://example.com/quote/homebridge-mortgage";
-const PHONE_TEL = "tel:+18115550212";
-const PHONE_DISPLAY = "(811) 555-0212";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1758523671413-cd178a883d6a?auto=format&fit=crop&w=1600&q=80",
@@ -126,14 +127,12 @@ function CtaPair({ light }) {
     <>
       <a
         className={`homebridge-btn ${light ? "homebridge-btn-light" : "homebridge-btn-gold"}`}
-        href={QUOTE_URL}
-        target="_blank"
-        rel="sponsored noopener noreferrer"
+        href={CONTACT_URL}
       >
         Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
       </a>
-      <a className={light ? "homebridge-band-phone" : "homebridge-hero-phone"} href={PHONE_TEL}>
-        <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
+      <a className={light ? "homebridge-band-phone" : "homebridge-hero-phone"} href={CONTACT_URL}>
+        <Mail size={17} aria-hidden="true" /> {CONTACT_LABEL}
       </a>
     </>
   );
@@ -157,14 +156,12 @@ export default function HomeBridgeMortgagePage() {
             <li><a href="#faq">FAQ</a></li>
           </ul>
           <div className="homebridge-nav-cta">
-            <a className="homebridge-nav-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+            <a className="homebridge-nav-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
             </a>
             <a
               className="homebridge-btn homebridge-btn-gold homebridge-btn-sm"
-              href={QUOTE_URL}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
+              href={CONTACT_URL}
             >
               Get a Free Quote
             </a>
@@ -426,8 +423,8 @@ export default function HomeBridgeMortgagePage() {
               <li><a href="#advisors">Advisors</a></li>
               <li><a href="#faq">FAQ</a></li>
             </ul>
-            <a className="homebridge-footer-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+            <a className="homebridge-footer-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
             </a>
           </div>
           <p className="homebridge-footer-legal">

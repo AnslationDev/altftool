@@ -3,10 +3,18 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Know Your Meme – Trending Memes & Internet Culture",
+    title: "Meme Encyclopedia – Trending Memes & Internet Culture",
     description:
-      "Explore trending memes, viral moments, and internet culture on AltFTool's KYM hub. Browse meme origins, roundups, and community polls.",
+      "Explore trending memes, viral moments, and internet culture in the AltFTool meme encyclopedia. Browse meme origins, roundups, and community polls.",
     path: "/kym",
+    keywords: [
+      "meme encyclopedia",
+      "trending memes",
+      "internet culture",
+      "meme origins",
+      "viral memes",
+      "meme explainers",
+    ],
   });
 }
 

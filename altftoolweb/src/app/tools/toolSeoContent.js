@@ -84,11 +84,73 @@ function chooseTemplate(categories, slug = "", name = "") {
   return workflowTemplates.default;
 }
 
-function buildMetaDescription(name, description, primaryCategory) {
-  const base = cleanText(description) || `${name} is a free online tool for quick browser-based workflows.`;
-  const suffix = `Use ${name} online for ${primaryCategory || "daily"} tasks with quick examples and copy-ready results.`;
-  const combined = `${base} ${suffix}`;
-  return combined.length > 158 ? `${combined.slice(0, 155).trim()}...` : combined;
+// Google shows roughly 155–160 characters of a snippet. The tool's own
+// description is the only part that can match a real query, so it leads; the
+// differentiator is appended only when it genuinely fits, never at the cost of
+// pushing the useful copy out of the snippet.
+const META_DESCRIPTION_MAX = 158;
+const META_DIFFERENTIATOR = "Free, no signup, runs in your browser.";
+
+// A cut can land right after a conjunction or preposition ("… verification or");
+// drop those so the snippet still reads as a finished sentence.
+const DANGLING_TAIL =
+  /\s+(?:a|an|and|as|at|but|by|for|from|in|into|nor|of|on|or|per|plus|so|than|that|the|then|to|via|vs|with|without)$/i;
+
+function endSentence(value = "") {
+  const text = cleanText(value).replace(/[\s,;:—–-]+$/g, "");
+  if (!text) return "";
+  return /[.!?]$/.test(text) ? text : `${text}.`;
+}
+
+function endTruncatedSentence(value = "") {
+  let text = cleanText(value).replace(/[\s,;:—–-]+$/g, "");
+  while (DANGLING_TAIL.test(text)) text = text.replace(DANGLING_TAIL, "");
+  return endSentence(text);
+}
+
+/**
+ * Trim to `maxLength` at the nearest clause boundary — sentence end first, then
+ * a comma/semicolon/dash, then a word boundary — instead of slicing mid-word
+ * and appending an ellipsis.
+ */
+function trimAtClause(value = "", maxLength = META_DESCRIPTION_MAX) {
+  const text = cleanText(value);
+  if (!text) return "";
+  if (text.length <= maxLength) return endSentence(text);
+
+  const clipped = text.slice(0, maxLength);
+  const floor = Math.floor(maxLength * 0.55);
+  const lastBoundary = (pattern) =>
+    [...clipped.matchAll(pattern)].map((match) => match.index).pop();
+
+  const sentenceEnd = lastBoundary(/[.!?](?=\s|$)/g);
+  if (sentenceEnd !== undefined && sentenceEnd >= floor) {
+    return clipped.slice(0, sentenceEnd + 1).trim();
+  }
+
+  const clauseEnd = lastBoundary(/[,;:—–](?=\s)/g);
+  if (clauseEnd !== undefined && clauseEnd >= floor) {
+    return endTruncatedSentence(clipped.slice(0, clauseEnd));
+  }
+
+  const wordEnd = clipped.lastIndexOf(" ");
+  return endTruncatedSentence(wordEnd > floor ? clipped.slice(0, wordEnd) : clipped);
+}
+
+function buildMetaDescription(name, description) {
+  const base = trimAtClause(description, META_DESCRIPTION_MAX);
+
+  if (!base) {
+    return trimAtClause(
+      `${name} runs entirely in your browser on AltFTool — no signup, no install, and nothing to upload`,
+      META_DESCRIPTION_MAX,
+    );
+  }
+
+  const withDifferentiator = `${base} ${META_DIFFERENTIATOR}`;
+  return withDifferentiator.length <= META_DESCRIPTION_MAX
+    ? withDifferentiator
+    : base;
 }
 
 export function buildToolSeoContent(slug, tool = {}) {
@@ -97,7 +159,7 @@ export function buildToolSeoContent(slug, tool = {}) {
   const categories = getCategories(tool);
   const primaryCategory = categories[0] || "online";
   const template = chooseTemplate(categories, slug, name);
-  const summary = buildMetaDescription(name, description, primaryCategory);
+  const summary = buildMetaDescription(name, description);
 
   // Keep short acronym categories (AI, SEO, CSS…) uppercase in prose;
   // longer labels read naturally in lowercase.
@@ -154,6 +216,16 @@ export function buildToolSeoContent(slug, tool = {}) {
         },
       ];
 
+  // Whether the FAQs/steps above came from a real per-tool source rather than
+  // the shared category template. Google requires FAQPage markup to be unique
+  // to the page; emitting the four name-swapped fallback Q&As as FAQPage on
+  // every templated tool is a structured-data policy risk across ~1,900 URLs.
+  // The fallback prose still renders for readers — only the schema is gated.
+  const hasCuratedFaqs = Boolean(central.faqs?.length || override?.faqs?.length);
+  const hasCuratedSteps = Boolean(
+    central.steps?.length || override?.steps?.length,
+  );
+
   return {
     name,
     h1: central.h1 || name,
@@ -161,6 +233,8 @@ export function buildToolSeoContent(slug, tool = {}) {
     summary,
     intro,
     metaDescription: summary,
+    hasCuratedFaqs,
+    hasCuratedSteps,
     useCases: central.useCases?.length ? central.useCases : override?.useCases || [],
     examples,
     // Per-tool "How to use" steps when available (admin override > hand/AI

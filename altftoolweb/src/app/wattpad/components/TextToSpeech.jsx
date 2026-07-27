@@ -148,7 +148,7 @@ export default function TextToSpeech({ text }) {
       <div className="md:hidden sticky bottom-5 flex justify-start z-45">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="w-14 h-14 rounded-full bg-(--primary) text-white shadow-lg flex items-center justify-center hover:opacity-90 transition"
+          className="w-14 h-14 rounded-full bg-(--primary) text-(--primary-foreground) shadow-lg flex items-center justify-center hover:opacity-90 transition"
         >
           <Volume2 size={24} />
         </button>
@@ -162,7 +162,7 @@ export default function TextToSpeech({ text }) {
         >
           <div className="wp-tts-player">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-(--primary) text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-(--primary) text-(--primary-foreground) flex items-center justify-center">
                 <Volume2 size={18} />
               </div>
               <div>

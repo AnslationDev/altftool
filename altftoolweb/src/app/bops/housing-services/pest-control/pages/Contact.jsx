@@ -1,6 +1,10 @@
 import React from 'react';
 import ContactForm from '../components/ContactForm';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { MessageSquare, Mail, MapPin, Clock } from 'lucide-react';
+
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
 
 const Contact = () => {
   return (
@@ -33,10 +37,9 @@ const Contact = () => {
                   </div>
                 </a>
                 <div className="flex gap-4">
-                  <Phone className="text-[#1D7A43] mt-0.5" size={21} />
+                  <MessageSquare className="text-[#1D7A43] mt-0.5" size={21} />
                   <div>
-                    <a href="tel:7865679554" className="font-semibold block hover:underline">(786) 567-9554</a>
-                    <div className="text-xs text-[#64748b]">Main Line • 24/7 Emergencies</div>
+                    <a href={CONTACT_URL} className="font-semibold block hover:underline">Contact us</a>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -57,7 +60,7 @@ const Contact = () => {
             </div>
 
             <div className="mt-5 rounded-2xl bg-[#F8FAFC] px-6 py-5 text-sm">
-              <span className="font-semibold">Emergency?</span> Call our 24/7 line. A live technician is always available for urgent situations.
+              <span className="font-semibold">Emergency?</span> Contact us and flag it as urgent so we can prioritise your request.
             </div>
           </div>
         </div>

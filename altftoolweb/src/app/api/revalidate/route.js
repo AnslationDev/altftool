@@ -10,6 +10,7 @@ import {
   SEO_CONFIG_REVALIDATE_TAG,
   __expireSeoConfigCache,
 } from "@/platform/seo/seoConfigSource";
+import { submitToIndexNow } from "@/platform/seo/indexNow";
 
 export const dynamic = "force-dynamic";
 
@@ -44,8 +45,25 @@ export async function POST(request) {
     if (Array.isArray(body?.paths)) {
       for (const p of body.paths) if (typeof p === "string" && p.startsWith("/")) paths.push(p);
     }
-    for (const p of [...new Set(paths)]) revalidatePath(p);
-    return NextResponse.json({ ok: true, revalidated: tag, paths: [...new Set(paths)] });
+    const uniquePaths = [...new Set(paths)];
+    for (const p of uniquePaths) revalidatePath(p);
+
+    // Push the same paths to IndexNow so Bing (and therefore ChatGPT search and
+    // Copilot) sees the change now instead of at the next recrawl. Best effort:
+    // submitToIndexNow never throws, and a failure must not fail a publish.
+    const indexNow = uniquePaths.length
+      ? await submitToIndexNow(uniquePaths)
+      : { skipped: "no-paths" };
+    if (indexNow?.ok === false) {
+      console.warn("[api/revalidate] IndexNow submission failed", indexNow);
+    }
+
+    return NextResponse.json({
+      ok: true,
+      revalidated: tag,
+      paths: uniquePaths,
+      indexNow,
+    });
   } catch (error) {
     console.error("[api/revalidate]", error);
     return NextResponse.json({ error: "Revalidation failed" }, { status: 500 });

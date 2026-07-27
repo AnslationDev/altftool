@@ -185,9 +185,42 @@ function getExtendedMeta(path, brandId) {
   }
 }
 
+/**
+ * Search-engine verification tokens, read from the environment.
+ *
+ * The central SEO engine can also supply these, but it stays inert unless
+ * ALTFT_SEO_ENGINE_ENABLED is set — which would make Search Console and Bing
+ * Webmaster Tools verification impossible to ship without turning the whole
+ * engine on. These env vars are therefore a first-class source; engine config
+ * still wins when both are present. Read at call time (not module scope) so a
+ * value set only in the runtime environment is not baked in at build.
+ *
+ * Google Search Console DOMAIN properties verify over DNS TXT and need no tag;
+ * these matter for URL-prefix properties and for Bing/Pinterest/Facebook.
+ */
+function getEnvVerification() {
+  return {
+    google: process.env.ALTFT_VERIFY_GOOGLE,
+    bing: process.env.ALTFT_VERIFY_BING,
+    yandex: process.env.ALTFT_VERIFY_YANDEX,
+    pinterest: process.env.ALTFT_VERIFY_PINTEREST,
+    facebook: process.env.ALTFT_VERIFY_FACEBOOK,
+  };
+}
+
+/** Drop empty values so a blank env var cannot mask a configured token. */
+function compact(source) {
+  const out = {};
+  for (const [key, value] of Object.entries(source || {})) {
+    if (typeof value === "string" && value.trim()) out[key] = value.trim();
+  }
+  return out;
+}
+
 /** Map verification tokens to the Next.js metadata.verification shape. */
-function buildVerification(v) {
-  if (!v || typeof v !== "object") return undefined;
+function buildVerification(configured) {
+  const v = { ...compact(getEnvVerification()), ...compact(configured) };
+  if (!Object.keys(v).length) return undefined;
   const out = {};
   if (v.google) out.google = v.google;
   if (v.yandex) out.yandex = v.yandex;
@@ -492,7 +525,6 @@ export function createGameJsonLd({ game, path } = {}) {
   if (!game?.title || !path) return null;
 
   const url = absoluteUrl(path);
-  const playCount = Number(game.plays || 0);
 
   return compactJsonLdObject({
     "@context": "https://schema.org",
@@ -520,13 +552,9 @@ export function createGameJsonLd({ game, path } = {}) {
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
     },
-    interactionStatistic: playCount
-      ? {
-          "@type": "InteractionCounter",
-          interactionType: { "@type": "PlayAction" },
-          userInteractionCount: playCount,
-        }
-      : undefined,
+    // No interactionStatistic play counter: `game.plays` is a hand-authored
+    // number in the games data with no play-tracking behind it, so publishing
+    // it as userInteractionCount would assert engagement that never happened.
     publisher: { "@id": `${getSiteUrl()}/#organization` },
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
@@ -537,9 +565,6 @@ export function createBookJsonLd({ book, path } = {}) {
   if (!book?.title || !path) return null;
 
   const url = absoluteUrl(path);
-  const reviewCount = Number(book.stats?.totalReviews || 0);
-  const ratingValue = Number(book.stats?.rating || 0);
-  const price = Number(book.price || 0);
 
   return compactJsonLdObject({
     "@context": "https://schema.org",
@@ -558,23 +583,9 @@ export function createBookJsonLd({ book, path } = {}) {
     inLanguage: book.language || "English",
     numberOfPages: Number(book.meta?.pages || 0) || undefined,
     datePublished: book.createdAt || undefined,
-    isAccessibleForFree: Boolean(book.isFree || price === 0),
-    aggregateRating:
-      ratingValue > 0 && reviewCount > 0
-        ? {
-            "@type": "AggregateRating",
-            ratingValue,
-            bestRating: 5,
-            worstRating: 1,
-            reviewCount,
-          }
-        : undefined,
-    offers: {
-      "@type": "Offer",
-      price: String(price),
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-    },
+    // No aggregateRating, Offer or isAccessibleForFree is emitted here: the
+    // catalogue's rating, review-count and price fields are placeholder values,
+    // not real reader reviews and not a real purchasable listing.
     publisher: { "@id": `${getSiteUrl()}/#organization` },
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },

@@ -2,14 +2,26 @@
 
 import { useState } from "react";
 import {
-  ArrowRight, BadgeCheck, ChevronDown, Clock, Leaf, Phone,
-  ShieldCheck, Sparkles, Star, Sun, Thermometer, Volume2, Wind,
+  ArrowRight,
+  BadgeCheck,
+  ChevronDown,
+  Clock,
+  Leaf,
+  Mail,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Sun,
+  Thermometer,
+  Volume2,
+  Wind,
 } from "lucide-react";
 import "./clearview-windows.css";
 
-const QUOTE_URL = "https://example.com/quote/clearview-windows";
-const PHONE_HUMAN = "(833) 555-0143";
-const PHONE_TEL = "tel:+18335550143";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG_HERO =
   "https://images.unsplash.com/photo-1464519586905-a8c004d307cc?auto=format&fit=crop&w=1600&q=80";
@@ -85,9 +97,7 @@ function QuoteLink({ className, children }) {
   return (
     <a
       className={className}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
     </a>
@@ -96,9 +106,9 @@ function QuoteLink({ className, children }) {
 
 function PhoneLink({ className, withIcon = true }) {
   return (
-    <a className={className} href={PHONE_TEL}>
-      {withIcon && <Phone size={16} aria-hidden="true" />}
-      <span>{PHONE_HUMAN}</span>
+    <a className={className} href={CONTACT_URL}>
+      {withIcon && <Mail size={16} aria-hidden="true" />}
+      <span>{CONTACT_LABEL}</span>
     </a>
   );
 }

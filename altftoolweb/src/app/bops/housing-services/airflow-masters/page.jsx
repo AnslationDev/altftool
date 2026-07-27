@@ -8,7 +8,7 @@ import {
   Flame,
   Gauge,
   MapPin,
-  Phone,
+  Mail,
   ShieldCheck,
   Snowflake,
   Sparkles,
@@ -19,9 +19,10 @@ import {
 } from "lucide-react";
 import "./airflow-masters.css";
 
-const QUOTE_URL = "https://example.com/quote/airflow-masters";
-const PHONE_DISPLAY = "(833) 555-0198";
-const PHONE_HREF = "tel:+18335550198";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const img = (id, w) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
@@ -150,9 +151,7 @@ function QuoteButton({ variant = "airflow-btn--warm" }) {
   return (
     <a
       className={`airflow-btn ${variant}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       Get a Free Quote
       <ArrowRight className="airflow-btn-icon" size={18} aria-hidden="true" />
@@ -162,9 +161,9 @@ function QuoteButton({ variant = "airflow-btn--warm" }) {
 
 function PhoneButton({ variant = "airflow-btn--ghost" }) {
   return (
-    <a className={`airflow-btn ${variant}`} href={PHONE_HREF}>
-      <Phone size={17} aria-hidden="true" />
-      {PHONE_DISPLAY}
+    <a className={`airflow-btn ${variant}`} href={CONTACT_URL}>
+      <Mail size={17} aria-hidden="true" />
+      {CONTACT_LABEL}
     </a>
   );
 }
@@ -199,15 +198,13 @@ export default function AirFlowMastersPage() {
             <a className="airflow-nav-link" href="#airflow-gallery">Recent Work</a>
             <a className="airflow-nav-link" href="#airflow-reviews">Reviews</a>
           </nav>
-          <a className="airflow-nav-phone" href={PHONE_HREF}>
-            <Phone size={16} aria-hidden="true" />
-            <span className="airflow-nav-phone-text">{PHONE_DISPLAY}</span>
+          <a className="airflow-nav-phone" href={CONTACT_URL}>
+            <Mail size={16} aria-hidden="true" />
+            <span className="airflow-nav-phone-text">{CONTACT_LABEL}</span>
           </a>
           <a
             className="airflow-btn airflow-btn--warm airflow-nav-cta"
-            href={QUOTE_URL}
-            target="_blank"
-            rel="sponsored noopener noreferrer"
+            href={CONTACT_URL}
           >
             Get a Free Quote
           </a>
@@ -505,8 +502,8 @@ export default function AirFlowMastersPage() {
                 Heating and cooling done right the first time — installs, repairs,
                 and tune-ups across the metro.
               </p>
-              <a className="airflow-footer-phone" href={PHONE_HREF}>
-                <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a className="airflow-footer-phone" href={CONTACT_URL}>
+                <Mail size={17} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
             <nav aria-label="Footer">

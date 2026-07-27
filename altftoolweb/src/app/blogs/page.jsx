@@ -40,6 +40,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 const laneIcons = [ReceiptText, GraduationCap, TrendingUp, Lightbulb];
@@ -196,7 +197,7 @@ function CompactArticle({ post, index }) {
     <Link
       href={`/blogs/${post.slug}`}
       prefetch={false}
-      className="interactive-card group flex flex-col sm:flex-row gap-5 sm:gap-6 p-4 sm:p-5 transition-all duration-300 ease-out h-full border border-(--border) bg-(--card) rounded-2xl shadow-sm hover:shadow-[var(--anslation-ds-shadow-md)] hover:border-(--anslation-ds-border-strong)"
+      className="interactive-card group flex flex-col sm:flex-row gap-5 sm:gap-6 p-4 sm:p-5 transition-all duration-300 ease-out h-full border border-(--border) bg-(--card) rounded-lg shadow-sm hover:shadow-[var(--anslation-ds-shadow-md)] hover:border-(--anslation-ds-border-strong)"
     >
       <div className="relative aspect-[16/9] w-full sm:aspect-auto sm:w-[40%] shrink-0 overflow-hidden rounded-xl bg-(--anslation-ds-soft)">
         <Image
@@ -262,7 +263,7 @@ function MarketLaneGrid() {
             <Link
               key={lane.title}
               href={lane.href || "/blogs"}
-              className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
+              className="group flex flex-col rounded-lg border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-(--anslation-ds-primary-soft) text-(--primary) transition-colors group-hover:bg-(--primary) group-hover:text-(--primary-foreground)">
                 <Icon className="h-5 w-5" />
@@ -298,7 +299,7 @@ function TopicClusterBand({ clusters }) {
           <Link
             key={cluster.slug}
             href={`/blogs/topics/${cluster.slug}`}
-            className="group flex flex-col rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
+            className="group flex flex-col rounded-lg border border-(--border) bg-(--card) p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-(--anslation-ds-border-strong) hover:shadow-[var(--anslation-ds-shadow-md)]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
@@ -359,12 +360,12 @@ export default async function BlogsPage() {
           ]),
         ]}
       />
-      <div className="section-wide mx-auto w-full px-3 py-6 sm:px-5 md:py-8 lg:px-8">
+      <div className="section section-wide py-6 md:py-8">
         {/* Compact header — the featured hero carousel leads the page. */}
         <section className="pb-5">
           <h1
             id="blog-index-title"
-            className="text-2xl font-bold tracking-tight text-(--foreground) sm:text-3xl"
+            className="text-3xl font-bold tracking-tight text-(--foreground) sm:text-4xl"
           >
             AltFTool <span className="text-(--primary)">Blog</span>
           </h1>

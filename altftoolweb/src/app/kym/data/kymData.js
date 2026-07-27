@@ -57,7 +57,7 @@ export const spotlightCards = [
       "The Weekly Meme Roundup: Bowie Knife99, Julie Tsirkin, Tryna Ignore It And More",
     image: img26,
     category: "Editorial",
-    meta: "Phil - 12 hours ago",
+    meta: "Updated 12 hours ago",
     size: "large",
     href: "/kym/weekly-meme-roundup",
   },
@@ -65,13 +65,13 @@ export const spotlightCards = [
     title: "What Does 'Tweaking' Mean? The Slang Term Explained",
     image: img06,
     category: "Explainer",
-    meta: "Adam - 15 hours ago",
+    meta: "Updated 15 hours ago",
   },
   {
     title: "Cast Your Vote For May 2026's Meme Of The Month!",
     image: img27,
     category: "Poll",
-    meta: "KYM Staff - 19 hours ago",
+    meta: "Updated 19 hours ago",
     href: "/kym/meme-of-the-month-may-2026",
   },
 ];
@@ -125,7 +125,7 @@ export const editorials = [
   ["The Weekly Meme Roundup: Bowie Knife99 And More", img26, "News"],
   ["Did Your Family Ever Witness Any Cryptid Encounters?", img49, "Collections"],
   ["Temporary Human Rage: Cat Photos We Just Understand", img50, "Collections"],
-].map(([title, image, category]) => ({ title, image, category, meta: "KYM Staff - a day ago" }));
+].map(([title, image, category]) => ({ title, image, category, meta: "Updated a day ago" }));
 
 export const latest = [
   ["The Boys 'It's What Clara Would Have Wanted' Meme Explained", img51, "Meme"],
@@ -133,7 +133,7 @@ export const latest = [
   ["25 Super Unsatisfying Design Flaws And Fails", img53, "Collection"],
   ["What Is Vocaloid? The Software That Spawned Countless Memes", img54, "Culture"],
   ["25 Actors Spotted In Small Roles Before They Became Famous", img55, "Collection"],
-].map(([title, image, category]) => ({ title, image, category, meta: "K.J. Genualdo - a day ago" }));
+].map(([title, image, category]) => ({ title, image, category, meta: "Updated a day ago" }));
 
 export const topEntries = [
   ["Will Levis And Gia Duddy Video", img21],

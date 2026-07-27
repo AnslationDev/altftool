@@ -1,5 +1,7 @@
-import { ArrowRight, Mail, Phone } from 'lucide-react';
+import { ArrowRight, Mail, MessageSquare } from 'lucide-react';
 import '../styles/Footer.css';
+
+const CONTACT_URL = '/policypages/contact';
 
 const companyLinks = [
   { label: 'Services', href: '#services' },
@@ -9,7 +11,7 @@ const companyLinks = [
 ];
 
 const supportLinks = [
-  { label: '(800) 555-0100', href: 'tel:8005550100' },
+  { label: 'Contact us', href: CONTACT_URL },
   { label: 'info@flowpro.com', href: 'mailto:info@flowpro.com' },
   { label: 'Book a Plumber', href: '#book-form' },
   { label: 'Free Estimate', href: '#book-form' },
@@ -31,7 +33,7 @@ export default function Footer() {
               Licensed plumbers at your door in under 60 minutes. Clear pricing, clean work, 24/7 response.
             </p>
             <div className="fp-footer__contact-row">
-              <a href="tel:8005550100"><Phone size={14} /> Call</a>
+              <a href={CONTACT_URL}><MessageSquare size={14} /> Contact</a>
               <a href="mailto:info@flowpro.com"><Mail size={14} /> Email</a>
             </div>
           </div>

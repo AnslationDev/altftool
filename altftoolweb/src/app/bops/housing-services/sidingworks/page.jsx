@@ -2,7 +2,7 @@
 
 import "./sidingworks.css";
 import {
-  Phone,
+  Mail,
   ArrowUpRight,
   Ruler,
   Palette,
@@ -12,9 +12,10 @@ import {
   Hammer,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/sidingworks";
-const TEL_HREF = "tel:+18555550221";
-const TEL_LABEL = "(855) 555-0221";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1721815693498-cc28507c0ba2?auto=format&fit=crop&w=1600&q=80",
@@ -29,9 +30,7 @@ function QuoteButton({ variant = "", children = "Get a Free Quote" }) {
   return (
     <a
       className={`sidingworks-btn ${variant}`.trim()}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
       <ArrowUpRight size={18} aria-hidden="true" />
@@ -50,9 +49,9 @@ export default function SidingWorksPage() {
             SidingWorks Studio
           </a>
           <div className="sidingworks-nav-actions">
-            <a className="sidingworks-nav-tel" href={TEL_HREF}>
-              <Phone size={16} aria-hidden="true" />
-              <span>{TEL_LABEL}</span>
+            <a className="sidingworks-nav-tel" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton variant="sidingworks-btn--nav" />
           </div>
@@ -77,9 +76,9 @@ export default function SidingWorksPage() {
                 </p>
                 <div className="sidingworks-hero-ctas">
                   <QuoteButton />
-                  <a className="sidingworks-btn sidingworks-btn--ghost" href={TEL_HREF}>
-                    <Phone size={18} aria-hidden="true" />
-                    {TEL_LABEL}
+                  <a className="sidingworks-btn sidingworks-btn--ghost" href={CONTACT_URL}>
+                    <Mail size={18} aria-hidden="true" />
+                    {CONTACT_LABEL}
                   </a>
                 </div>
               </div>
@@ -179,9 +178,9 @@ export default function SidingWorksPage() {
             </h2>
             <div className="sidingworks-midband-ctas">
               <QuoteButton variant="sidingworks-btn--blue" />
-              <a className="sidingworks-btn sidingworks-btn--ghost" href={TEL_HREF}>
-                <Phone size={18} aria-hidden="true" />
-                Call {TEL_LABEL}
+              <a className="sidingworks-btn sidingworks-btn--ghost" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -336,9 +335,9 @@ export default function SidingWorksPage() {
             </p>
             <div className="sidingworks-final-ctas">
               <QuoteButton variant="sidingworks-btn--yellow" />
-              <a className="sidingworks-final-tel" href={TEL_HREF}>
-                <Phone size={18} aria-hidden="true" />
-                {TEL_LABEL}
+              <a className="sidingworks-final-tel" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -348,7 +347,7 @@ export default function SidingWorksPage() {
       <footer className="sidingworks-footer">
         <div className="sidingworks-shell sidingworks-footer-inner">
           <span>SidingWorks Studio — design-led cladding</span>
-          <a href={TEL_HREF}>{TEL_LABEL}</a>
+          <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
           <span className="sidingworks-footer-note">
             Independent service provider listing
           </span>

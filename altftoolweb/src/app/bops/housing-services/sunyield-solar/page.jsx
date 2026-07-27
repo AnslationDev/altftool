@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Sun,
-  Phone,
+  Mail,
   ArrowRight,
   Menu,
   X,
@@ -22,9 +22,10 @@ import {
 } from "lucide-react";
 import "./sunyield-solar.css";
 
-const QUOTE_URL = "https://example.com/quote/sunyield-solar";
-const PHONE_DISPLAY = "(833) 555-0154";
-const PHONE_HREF = "tel:+18335550154";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1509389928833-fe62aef36deb?auto=format&fit=crop&w=1600&q=80",
@@ -62,9 +63,7 @@ function QuoteButton({ className = "sunyield-btn sunyield-btn-primary", children
   return (
     <a
       className={className}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
     </a>
@@ -96,9 +95,9 @@ export default function SunYieldSolarPage() {
           </ul>
 
           <div className="sunyield-nav-cta">
-            <a className="sunyield-nav-phone" href={PHONE_HREF}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="sunyield-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton className="sunyield-btn sunyield-btn-primary sunyield-btn-sm">
               Get a Free Quote
@@ -138,8 +137,8 @@ export default function SunYieldSolarPage() {
                 <QuoteButton>
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
                 </QuoteButton>
-                <a className="sunyield-btn sunyield-btn-ghost" href={PHONE_HREF}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="sunyield-btn sunyield-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="sunyield-hero-ticks">
@@ -406,8 +405,8 @@ export default function SunYieldSolarPage() {
                 <QuoteButton className="sunyield-btn sunyield-btn-light">
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
                 </QuoteButton>
-                <a className="sunyield-btn sunyield-btn-ghost" href={PHONE_HREF}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="sunyield-btn sunyield-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -420,7 +419,7 @@ export default function SunYieldSolarPage() {
             <span className="sunyield-kicker">Good questions</span>
             <h2>Everything homeowners ask us before going solar.</h2>
             <p className="sunyield-section-lead">
-              Still wondering about something? Call us — a real person picks up.
+              Still wondering about something? Contact us — a real person replies.
             </p>
             <div className="sunyield-faq">
               {FAQS.map((item, i) => {
@@ -458,8 +457,8 @@ export default function SunYieldSolarPage() {
               <QuoteButton className="sunyield-btn sunyield-btn-light">
                 Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
               </QuoteButton>
-              <a className="sunyield-btn sunyield-btn-ghost" href={PHONE_HREF}>
-                <Phone size={18} aria-hidden="true" /> Call {PHONE_DISPLAY}
+              <a className="sunyield-btn sunyield-btn-ghost" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -475,8 +474,8 @@ export default function SunYieldSolarPage() {
             </span>
             SunYield Solar
           </a>
-          <a className="sunyield-footer-phone" href={PHONE_HREF}>
-            <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+          <a className="sunyield-footer-phone" href={CONTACT_URL}>
+            <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
           </a>
           <p className="sunyield-footer-note">
             Independent service provider listing. SunYield Solar is a fictional

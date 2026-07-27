@@ -2,14 +2,25 @@
 
 import { useState } from "react";
 import {
-  Zap, Phone, ArrowRight, Activity, BatteryCharging, Sun, Gauge,
-  ShieldCheck, Wrench, CheckCircle2, Menu, X,
+  Activity,
+  ArrowRight,
+  BatteryCharging,
+  CheckCircle2,
+  Gauge,
+  Mail,
+  Menu,
+  ShieldCheck,
+  Sun,
+  Wrench,
+  X,
+  Zap,
 } from "lucide-react";
 import "./ecovolt-solar.css";
 
-const QUOTE_URL = "https://example.com/quote/ecovolt-solar";
-const PHONE_TEL = "tel:+18555550254";
-const PHONE_TEXT = "(855) 555-0254";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const STATS = [
   { num: "25 yr", cap: "panel performance warranty on installed modules" },
@@ -67,19 +78,17 @@ function QuoteButton({ ghost = false, small = false }) {
   return (
     <a
       className={`ecovolt-btn${ghost ? " ecovolt-btn--ghost" : ""}${small ? " ecovolt-btn--sm" : ""}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
     </a>
   );
 }
 
-function PhoneButton({ label = PHONE_TEXT }) {
+function PhoneButton({ label = CONTACT_LABEL }) {
   return (
-    <a className="ecovolt-btn ecovolt-btn--ghost" href={PHONE_TEL}>
-      <Phone size={17} aria-hidden="true" /> {label}
+    <a className="ecovolt-btn ecovolt-btn--ghost" href={CONTACT_URL}>
+      <Mail size={17} aria-hidden="true" /> {label}
     </a>
   );
 }
@@ -127,9 +136,9 @@ export default function EcoVoltSolarPage() {
             ))}
           </nav>
           <div className="ecovolt-nav-actions">
-            <a className="ecovolt-nav-phone" href={PHONE_TEL}>
-              <Phone size={15} aria-hidden="true" />
-              <span>{PHONE_TEXT}</span>
+            <a className="ecovolt-nav-phone" href={CONTACT_URL}>
+              <Mail size={15} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton small />
             <button
@@ -267,7 +276,7 @@ export default function EcoVoltSolarPage() {
               </div>
               <div className="ecovolt-band-actions">
                 <QuoteButton />
-                <PhoneButton label={`Call ${PHONE_TEXT}`} />
+                <PhoneButton label={`Call ${CONTACT_LABEL}`} />
               </div>
             </div>
           </div>
@@ -356,9 +365,9 @@ export default function EcoVoltSolarPage() {
             <a href="#ecovolt-top" className="ecovolt-logo" aria-label="Back to top">
               <Logo />
             </a>
-            <a href={PHONE_TEL} className="ecovolt-nav-phone">
-              <Phone size={15} aria-hidden="true" />
-              <span>{PHONE_TEXT}</span>
+            <a href={CONTACT_URL} className="ecovolt-nav-phone">
+              <Mail size={15} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
           </div>
           <div className="ecovolt-track ecovolt-track--slow" aria-hidden="true" />

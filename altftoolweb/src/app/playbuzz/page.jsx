@@ -3,10 +3,18 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Playbuzz – Fun Quizzes & Personality Tests",
+    title: "Fun Quizzes & Personality Tests",
     description:
-      "Play fun quizzes and personality tests on Playbuzz and discover something new about yourself with engaging, shareable results.",
+      "Play fun quizzes and personality tests on AltFTool and discover something new about yourself with engaging, shareable results.",
     path: "/playbuzz",
+    keywords: [
+      "fun quizzes",
+      "personality tests",
+      "online quizzes",
+      "trivia quiz",
+      "quiz games",
+      "shareable quiz results",
+    ],
   });
 }
 

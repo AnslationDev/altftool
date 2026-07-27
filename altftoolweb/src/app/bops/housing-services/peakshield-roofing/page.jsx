@@ -2,7 +2,7 @@
 
 import "./peakshield-roofing.css";
 import {
-  Phone,
+  Mail,
   ShieldCheck,
   Home,
   Layers,
@@ -15,9 +15,10 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/peakshield-roofing";
-const PHONE_DISPLAY = "(833) 555-0110";
-const PHONE_TEL = "tel:+18335550110";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1635424709961-f3a150459ad4?auto=format&fit=crop&w=1600&q=80",
@@ -33,9 +34,7 @@ function QuoteButton({ ghost = false, children = "Get a Free Quote" }) {
   return (
     <a
       className={`peakshield-btn ${ghost ? "peakshield-btn-ghost" : "peakshield-btn-primary"}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
       <ArrowRight size={17} aria-hidden="true" />
@@ -50,7 +49,7 @@ export default function PeakShieldRoofingPage() {
       <p className="peakshield-ribbon">
         <AlertTriangle size={15} aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: "0.4rem" }} />
         Storm damage? We handle the insurance claim —{" "}
-        <a href={PHONE_TEL}>call {PHONE_DISPLAY} now</a>
+        <a href={CONTACT_URL}>call {CONTACT_LABEL} now</a>
       </p>
 
       {/* Nav */}
@@ -71,9 +70,9 @@ export default function PeakShieldRoofingPage() {
             </ul>
           </nav>
           <div className="peakshield-nav-actions">
-            <a className="peakshield-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="peakshield-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
           </div>
@@ -105,9 +104,9 @@ export default function PeakShieldRoofingPage() {
               </p>
               <div className="peakshield-hero-ctas">
                 <QuoteButton />
-                <a className="peakshield-btn peakshield-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="peakshield-btn peakshield-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={17} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <div className="peakshield-hero-stats">
@@ -293,9 +292,9 @@ export default function PeakShieldRoofingPage() {
               </ol>
               <div className="peakshield-midcta">
                 <QuoteButton>Start My Free Quote</QuoteButton>
-                <a className="peakshield-btn peakshield-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="peakshield-btn peakshield-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={17} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -388,9 +387,9 @@ export default function PeakShieldRoofingPage() {
             </p>
             <div className="peakshield-cta-band-actions">
               <QuoteButton>Get My Free Quote</QuoteButton>
-              <a className="peakshield-btn peakshield-btn-ghost" href={PHONE_TEL}>
-                <Phone size={17} aria-hidden="true" />
-                Call {PHONE_DISPLAY}
+              <a className="peakshield-btn peakshield-btn-ghost" href={CONTACT_URL}>
+                <Mail size={17} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -407,9 +406,9 @@ export default function PeakShieldRoofingPage() {
               </span>
               Peak<em>Shield</em>
             </a>
-            <a className="peakshield-footer-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="peakshield-footer-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
           </div>
           <div className="peakshield-footer-meta">

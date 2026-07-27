@@ -4,7 +4,7 @@ import "./rainright-gutters.css";
 import {
   Droplet,
   Droplets,
-  Phone,
+  Mail,
   ShieldCheck,
   Leaf,
   Flower2,
@@ -17,9 +17,10 @@ import {
   Home,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/rainright-gutters";
-const PHONE_DISPLAY = "(833) 555-0132";
-const PHONE_TEL = "tel:+18335550132";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1567361808976-260065224468?auto=format&fit=crop&w=1600&q=80",
@@ -120,7 +121,7 @@ const STATS = [
 
 function QuoteButton({ className = "rainright-btn rainright-btn-primary", children }) {
   return (
-    <a className={className} href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+    <a className={className} href={CONTACT_URL}>
       {children || (
         <>
           Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
@@ -139,9 +140,9 @@ function CtaBand({ heading, copy }) {
       </div>
       <div className="rainright-band-ctas">
         <QuoteButton className="rainright-btn rainright-btn-light" />
-        <a className="rainright-band-phone" href={PHONE_TEL}>
-          <Phone size={19} aria-hidden="true" />
-          {PHONE_DISPLAY}
+        <a className="rainright-band-phone" href={CONTACT_URL}>
+          <Mail size={19} aria-hidden="true" />
+          {CONTACT_LABEL}
         </a>
       </div>
     </div>
@@ -166,9 +167,9 @@ export default function RainRightGuttersPage() {
             </ul>
           </nav>
           <div className="rainright-nav-actions">
-            <a className="rainright-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="rainright-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton className="rainright-btn rainright-btn-primary rainright-btn-sm" />
           </div>
@@ -195,9 +196,9 @@ export default function RainRightGuttersPage() {
                 </p>
                 <div className="rainright-hero-ctas">
                   <QuoteButton />
-                  <a className="rainright-btn rainright-btn-ghost" href={PHONE_TEL}>
-                    <Phone size={18} aria-hidden="true" />
-                    Call {PHONE_DISPLAY}
+                  <a className="rainright-btn rainright-btn-ghost" href={CONTACT_URL}>
+                    <Mail size={18} aria-hidden="true" />
+                    {CONTACT_LABEL}
                   </a>
                 </div>
                 <ul className="rainright-hero-points">
@@ -263,9 +264,7 @@ export default function RainRightGuttersPage() {
                     <p>{body}</p>
                     <a
                       className="rainright-card-link"
-                      href={QUOTE_URL}
-                      target="_blank"
-                      rel="sponsored noopener noreferrer"
+                      href={CONTACT_URL}
                     >
                       {cta} <ArrowRight size={15} aria-hidden="true" />
                     </a>
@@ -388,9 +387,9 @@ export default function RainRightGuttersPage() {
               <Droplet size={24} className="rainright-brand-drop" aria-hidden="true" />
               RainRight Gutters
             </a>
-            <a className="rainright-footer-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="rainright-footer-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
           </div>
           <div className="rainright-footer-note">

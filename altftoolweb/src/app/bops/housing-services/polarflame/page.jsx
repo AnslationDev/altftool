@@ -6,7 +6,7 @@ import {
   CheckCircle2,
   Flame,
   Gauge,
-  Phone,
+  Mail,
   Ruler,
   ShieldCheck,
   Snowflake,
@@ -16,9 +16,10 @@ import {
 } from "lucide-react";
 import "./polarflame.css";
 
-const QUOTE_URL = "https://example.com/quote/polarflame";
-const PHONE_HREF = "tel:+18555550298";
-const PHONE_TEXT = "(855) 555-0298";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 const TAGLINE = "Cold done hot. Heat done cool.";
 
 const IMG = {
@@ -37,7 +38,7 @@ const MODES = {
 
 function QuoteButton({ className = "polarflame-btn", children }) {
   return (
-    <a className={className} href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+    <a className={className} href={CONTACT_URL}>
       {children}
       <ArrowRight size={18} aria-hidden="true" />
     </a>
@@ -78,9 +79,9 @@ export default function PolarFlamePage() {
             <a href="#sizing">Right-sizing</a>
             <a href="#why">Why PolarFlame</a>
           </nav>
-          <a className="polarflame-nav-phone" href={PHONE_HREF}>
-            <Phone size={16} aria-hidden="true" />
-            {PHONE_TEXT}
+          <a className="polarflame-nav-phone" href={CONTACT_URL}>
+            <Mail size={16} aria-hidden="true" />
+            {CONTACT_LABEL}
           </a>
           <QuoteButton>Get a Free Quote</QuoteButton>
         </div>
@@ -105,9 +106,9 @@ export default function PolarFlamePage() {
               </p>
               <div className="polarflame-hero-ctas">
                 <QuoteButton>Get a Free Quote</QuoteButton>
-                <a className="polarflame-btn polarflame-btn--ghost" href={PHONE_HREF}>
-                  <Phone size={18} aria-hidden="true" />
-                  Call {PHONE_TEXT}
+                <a className="polarflame-btn polarflame-btn--ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="polarflame-hero-chips">
@@ -159,7 +160,7 @@ export default function PolarFlamePage() {
                     for the coldest snaps. We&apos;ll tell you plainly if your home and rates
                     make a heat pump the smart move — or not.
                   </p>
-                  <a className="polarflame-card-link" href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+                  <a className="polarflame-card-link" href={CONTACT_URL}>
                     Quote a heat pump <ArrowRight size={15} aria-hidden="true" />
                   </a>
                 </div>
@@ -175,7 +176,7 @@ export default function PolarFlamePage() {
                     repairs. Right-sized systems dehumidify properly instead of blasting and
                     stopping — that&apos;s where comfort actually comes from.
                   </p>
-                  <a className="polarflame-card-link" href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+                  <a className="polarflame-card-link" href={CONTACT_URL}>
                     Quote cooling <ArrowRight size={15} aria-hidden="true" />
                   </a>
                 </div>
@@ -191,7 +192,7 @@ export default function PolarFlamePage() {
                     included. If a repair buys your current unit a few more good winters,
                     that&apos;s what we&apos;ll recommend first.
                   </p>
-                  <a className="polarflame-card-link" href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+                  <a className="polarflame-card-link" href={CONTACT_URL}>
                     Quote a furnace <ArrowRight size={15} aria-hidden="true" />
                   </a>
                 </div>
@@ -280,8 +281,8 @@ export default function PolarFlamePage() {
             </div>
             <div className="polarflame-band-actions">
               <QuoteButton className="polarflame-btn polarflame-btn--paper">Get a Free Quote</QuoteButton>
-              <a className="polarflame-btn polarflame-btn--ghost" href={PHONE_HREF}>
-                <Phone size={18} aria-hidden="true" /> {PHONE_TEXT}
+              <a className="polarflame-btn polarflame-btn--ghost" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -297,7 +298,7 @@ export default function PolarFlamePage() {
               />
             </div>
             <div>
-              <p className="polarflame-kicker"><ShieldCheck size={14} aria-hidden="true" /> Why homeowners call us</p>
+              <p className="polarflame-kicker"><ShieldCheck size={14} aria-hidden="true" /> Why homeowners choose us</p>
               <h2 className="polarflame-display polarflame-h2">Comfort you can measure</h2>
               <p className="polarflame-lede">
                 We&apos;re a fictional-sounding name with a very unfictional habit: writing
@@ -320,8 +321,8 @@ export default function PolarFlamePage() {
             <h2 className="polarflame-display">Ready when your thermostat isn&apos;t</h2>
             <div className="polarflame-final-actions">
               <QuoteButton className="polarflame-btn polarflame-btn--paper">Get a Free Quote</QuoteButton>
-              <a className="polarflame-btn polarflame-btn--ghost" href={PHONE_HREF}>
-                <Phone size={18} aria-hidden="true" /> Call {PHONE_TEXT}
+              <a className="polarflame-btn polarflame-btn--ghost" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -331,8 +332,8 @@ export default function PolarFlamePage() {
       <footer className="polarflame-footer">
         <div className="polarflame-wrap polarflame-footer-inner">
           <span className="polarflame-display" style={{ fontSize: "1.2rem" }}>PolarFlame HVAC</span>
-          <a href={PHONE_HREF}>{PHONE_TEXT}</a>
-          <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Get a Free Quote</a>
+          <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
+          <a href={CONTACT_URL}>Get a Free Quote</a>
           <span className="polarflame-footer-note">
             Independent service provider listing. PolarFlame is a fictional brand shown for
             directory purposes; availability, pricing, and timelines vary by location and season.

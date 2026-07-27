@@ -12,7 +12,10 @@
 //   heroPoints      3 short trust bullets (rendered with a check)
 //   heroStats       optional trust chips [{ icon, label }]
 //   quoteLabel      CTA button text (the conversion action)
-//   quoteUrl        outbound quote-partner URL (placeholder until CMS-wired)
+//   quoteUrl        outbound quote-partner URL. Deliberately absent: no lending
+//                   partner is wired up yet, and LoanQuoteButton renders nothing
+//                   without it, so the pages ship with no quote CTA rather than
+//                   a link to nowhere. Set it per loan when a real partner lands.
 //   featuresTitle   optional; defaults to `${name}s, made simple`
 //   featuresIntro   optional lede under the features head
 //   features        6 [{ icon, title, description }]
@@ -51,7 +54,6 @@ export const personalLoan = {
   ],
 
   quoteLabel: "Check your rate",
-  quoteUrl: "https://example.com/quote/personal-loan",
 
   featuresTitle: "One loan, plenty of reasons",
   featuresIntro:

@@ -17,6 +17,31 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
 import ToolSeoSection from "../../ToolSeoSection";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+// Prerender each tool under its own canonical categories so crawlers get a
+// cached page. Amplify builds defer the bulk prerender (artifact-size limit)
+// and let ISR fill the cache on demand — same guard as /blogs/[slug].
+export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
+
+  const params = [];
+  Object.entries(toolMetaMap).forEach(([slug, tool]) => {
+    const seen = new Set();
+    getToolCategories(tool).forEach((category) => {
+      const categorySlug = slugifyRouteSegment(category);
+      // "all" is served by the dedicated /tools/all/[slug] route.
+      if (!categorySlug || categorySlug === "all" || seen.has(categorySlug)) return;
+      seen.add(categorySlug);
+      params.push({ category: categorySlug, slug });
+    });
+  });
+  return params;
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -49,13 +74,20 @@ export default async function ToolPage({ params }) {
         id={`tool-schema-${category}-${slug}`}
         data={[
           createToolJsonLd({ slug, tool, category }),
-          createHowToJsonLd({
-            path: toolPath,
-            name: `${tool.name} workflow`,
-            description: seoContent.summary,
-            steps: seoContent.steps,
-          }),
-          createFaqJsonLd({ path: toolPath, questions: seoContent.faqs }),
+          // Only tools with real per-tool steps/FAQs emit HowTo/FAQPage.
+          // Templated fallback copy is shared across ~1,900 URLs, and Google
+          // requires this markup to be unique to the page.
+          seoContent.hasCuratedSteps
+            ? createHowToJsonLd({
+              path: toolPath,
+              name: `${tool.name} workflow`,
+              description: seoContent.summary,
+              steps: seoContent.steps,
+            })
+            : null,
+          seoContent.hasCuratedFaqs
+            ? createFaqJsonLd({ path: toolPath, questions: seoContent.faqs })
+            : null,
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Tools", path: "/tools" },

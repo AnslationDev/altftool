@@ -2,14 +2,26 @@
 
 import { useState } from "react";
 import {
-  Phone, ArrowRight, Droplets, ShowerHead, Ruler, ShieldCheck, Sparkles,
-  Star, ChevronDown, CheckCircle2, Layers, Menu, X,
+  ArrowRight,
+  CheckCircle2,
+  ChevronDown,
+  Droplets,
+  Layers,
+  Mail,
+  Menu,
+  Ruler,
+  ShieldCheck,
+  ShowerHead,
+  Sparkles,
+  Star,
+  X,
 } from "lucide-react";
 import "./tiletrend-bath.css";
 
-const QUOTE_URL = "https://example.com/quote/tiletrend-bath";
-const PHONE_DISPLAY = "(855) 555-0276";
-const PHONE_HREF = "tel:+18555550276";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1661107259637-4e1c55462428?auto=format&fit=crop&w=1600&q=80",
@@ -81,7 +93,7 @@ const FAQS = [
 
 function QuoteLink({ className, children }) {
   return (
-    <a className={className} href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+    <a className={className} href={CONTACT_URL}>
       {children}
     </a>
   );
@@ -89,9 +101,9 @@ function QuoteLink({ className, children }) {
 
 function PhoneLink({ className }) {
   return (
-    <a className={className} href={PHONE_HREF} aria-label={`Call TileTrend Bath at ${PHONE_DISPLAY}`}>
-      <Phone size={17} aria-hidden="true" />
-      {PHONE_DISPLAY}
+    <a className={className} href={CONTACT_URL} aria-label={`Call TileTrend Bath at ${CONTACT_LABEL}`}>
+      <Mail size={17} aria-hidden="true" />
+      {CONTACT_LABEL}
     </a>
   );
 }
@@ -363,7 +375,7 @@ export default function TileTrendBathPage() {
               {NAV_LINKS.map((l) => (
                 <a key={l.href} href={l.href}>{l.label}</a>
               ))}
-              <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </nav>
           </div>
           <p className="tiletrend-footer-note">

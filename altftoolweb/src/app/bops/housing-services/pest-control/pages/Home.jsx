@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Shield, Clock, Award, Phone, Leaf, BadgeCheck, MapPin, DollarSign, Zap } from 'lucide-react';
+import { ArrowRight, Shield, Clock, Award, MessageSquare, Leaf, BadgeCheck, MapPin, DollarSign, Zap } from 'lucide-react';
 
 import ServiceCard from '../components/ServiceCard';
 import ProcessTimeline from '../components/ProcessTimeline';
@@ -11,6 +11,10 @@ import CTASection from '../components/CTASection';
 
 import { services, pricingPreview } from '../data/services';
 import { faqs } from '../data/faqs';
+
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
 
 const Home = () => {
   const featuredServices = services.slice(0, 8);
@@ -74,8 +78,8 @@ const Home = () => {
               <Link to="/book" className="btn btn-primary w-full px-9 py-4 text-base sm:w-auto">
                 Get Free Quote <ArrowRight size={19} />
               </Link>
-              <a href="tel:7865679554" className="btn w-full border border-white/30 bg-white/10 px-8 py-4 text-base text-white hover:bg-white/15 sm:w-auto">
-                <Phone size={18} /> Call Now
+              <a href={CONTACT_URL} className="btn w-full border border-white/30 bg-white/10 px-8 py-4 text-base text-white hover:bg-white/15 sm:w-auto">
+                <MessageSquare size={18} /> Contact Us
               </a>
             </motion.div>
 

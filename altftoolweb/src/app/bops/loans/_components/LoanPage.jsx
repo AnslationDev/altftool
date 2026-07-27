@@ -71,9 +71,10 @@ export default function LoanPage({ slug }) {
   const benefitImage = images?.benefit?.src;
   const detailImage = images?.detail?.src;
 
-  // Loan CTAs are outbound quote-partner links. Static for now (from the data
-  // file); the same shape the CMS will later populate, so the pages don't
-  // change when that lands.
+  // Loan CTAs are outbound quote-partner links. No partner is wired up yet, so
+  // `quoteUrl` is absent from every content file and LoanQuoteButton renders
+  // nothing — the pages ship without a quote CTA rather than with a link to
+  // nowhere. Setting `quoteUrl` on a loan turns its CTAs back on everywhere.
   const quoteAction = { mode: "cta", label: quoteLabel, href: quoteUrl };
 
   const others = LOANS.filter((item) => item.slug !== slug).slice(0, 6);
@@ -342,16 +343,18 @@ export default function LoanPage({ slug }) {
               <h2>{ctaTitle || `See your ${name.toLowerCase()} options`}</h2>
               <p>
                 {ctaText ||
-                  "Check your rate in minutes. You'll be taken to our lending partner to continue — comparing options won't affect your credit score."}
+                  "Compare your options in minutes — checking what's available won't affect your credit score."}
               </p>
-              <div className="hn-hero-actions">
-                <LoanQuoteButton
-                  href={quoteAction.href}
-                  label={quoteAction.label}
-                  mode={quoteAction.mode}
-                  size="hn-btn--lg"
-                />
-              </div>
+              {quoteAction.href && (
+                <div className="hn-hero-actions">
+                  <LoanQuoteButton
+                    href={quoteAction.href}
+                    label={quoteAction.label}
+                    mode={quoteAction.mode}
+                    size="hn-btn--lg"
+                  />
+                </div>
+              )}
               {fineprint && <p className="loan-finelegal">{fineprint}</p>}
             </HnReveal>
           </div>

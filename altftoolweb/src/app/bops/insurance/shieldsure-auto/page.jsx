@@ -4,24 +4,21 @@ import { useState } from "react";
 import {
   Shield,
   ShieldCheck,
-  Phone,
   Smartphone,
   Zap,
   Clock,
   Car,
   CheckCircle2,
-  Star,
   ChevronDown,
   ArrowRight,
   Gauge,
   Users,
   Wrench,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./shieldsure-auto.css";
 
 const QUOTE_URL = "https://example.com/quote/shieldsure-auto";
-const PHONE_TEL = "tel:+18665550301";
-const PHONE_DISPLAY = "(866) 555-0301";
 
 const COVERAGE_CARDS = [
   {
@@ -142,16 +139,14 @@ export default function ShieldSureAutoPage() {
             <li><a href="#shieldsure-faq">FAQ</a></li>
           </ul>
           <div className="shieldsure-nav-cta">
-            <a href={PHONE_TEL} className="shieldsure-nav-phone">
-              <Phone size={16} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
-            </a>
             <QuoteButton>Get a Free Quote</QuoteButton>
           </div>
         </nav>
       </header>
 
       <main id="shieldsure-top">
+        <DemoBrandNotice brand="ShieldSure Auto" />
+
         {/* ---------- Hero ---------- */}
         <section className="shieldsure-hero">
           <div className="shieldsure-wrap shieldsure-hero-grid">
@@ -169,12 +164,8 @@ export default function ShieldSureAutoPage() {
                 <QuoteButton>
                   Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
                 </QuoteButton>
-                <a href={PHONE_TEL} className="shieldsure-btn shieldsure-btn-ghost">
-                  <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
-                </a>
               </div>
               <div className="shieldsure-hero-trust">
-                <span><Star size={15} aria-hidden="true" /> 4.8/5 from surveyed drivers</span>
                 <span><ShieldCheck size={15} aria-hidden="true" /> Licensed agents</span>
                 <span><Clock size={15} aria-hidden="true" /> 24/7 claims line</span>
               </div>
@@ -186,23 +177,7 @@ export default function ShieldSureAutoPage() {
                   alt="Modern car cruising down an open road, safeguarded and confident"
                 />
               </div>
-              <div className="shieldsure-rate-chip" aria-label="Sample rate illustration">
-                <small>Sample rate — 2021 sedan, clean record</small>
-                <strong>from $68/mo*</strong>
-                <small>*Illustrative only. Your rate depends on your profile.</small>
-              </div>
             </div>
-          </div>
-        </section>
-
-        <hr className="shieldsure-chrome-line" />
-
-        {/* ---------- Stats ---------- */}
-        <section className="shieldsure-stats" aria-label="ShieldSure at a glance">
-          <div className="shieldsure-wrap shieldsure-stats-row">
-            <div className="shieldsure-stat"><strong>~3 min</strong><span>average time to an online rate estimate</span></div>
-            <div className="shieldsure-stat"><strong>24/7</strong><span>claims hotline and in-app filing</span></div>
-            <div className="shieldsure-stat"><strong>3 taps</strong><span>to start a claim from your phone</span></div>
           </div>
         </section>
 
@@ -279,9 +254,6 @@ export default function ShieldSureAutoPage() {
               <QuoteButton>
                 Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
               </QuoteButton>
-              <a href={PHONE_TEL} className="shieldsure-btn shieldsure-btn-ghost">
-                <Phone size={17} aria-hidden="true" /> Call {PHONE_DISPLAY}
-              </a>
             </div>
           </div>
         </section>
@@ -315,8 +287,7 @@ export default function ShieldSureAutoPage() {
             <p className="shieldsure-kicker">Good questions</p>
             <h2>Frequently asked questions</h2>
             <p className="shieldsure-section-lede">
-              Straight answers, no fine-print gymnastics. Still curious? Call {PHONE_DISPLAY} and
-              ask a licensed agent anything.
+              Straight answers, no fine-print gymnastics.
             </p>
             <div className="shieldsure-faq-list">
               {FAQS.map((item, i) => (
@@ -343,9 +314,6 @@ export default function ShieldSureAutoPage() {
               <QuoteButton>
                 Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
               </QuoteButton>
-              <a href={PHONE_TEL} className="shieldsure-btn shieldsure-btn-ghost">
-                <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
-              </a>
             </div>
           </div>
         </section>
@@ -359,17 +327,13 @@ export default function ShieldSureAutoPage() {
               <span className="shieldsure-logo-badge" aria-hidden="true"><Shield size={16} /></span>
               ShieldSure Auto
             </span>
-            <a href={PHONE_TEL}>
-              <Phone size={14} aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: "6px" }} />
-              {PHONE_DISPLAY}
-            </a>
           </div>
           <p className="shieldsure-footer-fine">
             Independent provider listing. Not financial or insurance advice. ShieldSure Auto is a
             fictional brand shown for directory illustration purposes. Coverage availability,
             discounts, accident forgiveness and rates vary by state, driver profile, vehicle and
-            eligibility; sample rates are illustrative only and not an offer of coverage. All
-            policies are subject to underwriting review, terms, conditions and exclusions.
+            eligibility. All policies are subject to underwriting review, terms, conditions and
+            exclusions.
             &copy; {new Date().getFullYear()} ShieldSure Auto.
           </p>
         </div>

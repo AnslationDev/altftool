@@ -4,12 +4,16 @@ import Link from "next/link";
 import { Fragment } from "react";
 import {
   ArrowRight,
+  Bath,
+  ChefHat,
   ClipboardCheck,
   MapPin,
   MousePointerClick,
   ShieldCheck,
   Star,
   Users,
+  Wind,
+  Wrench,
 } from "lucide-react";
 import Footer from "@/platform/navigation/Footer";
 import { SiteHeader } from "./components/SiteHeader";
@@ -77,10 +81,10 @@ const homeServiceTitles = {
 };
 
 const homeServiceIcons = {
-  "kitchen-refresh": "https://cdn-icons-png.flaticon.com/128/4282/4282551.png",
-  "bath-remodel": "https://cdn-icons-png.flaticon.com/128/745/745476.png",
-  "hvac-tune-up": "https://cdn-icons-png.flaticon.com/128/1850/1850682.png",
-  "whole-home-repairs": "https://cdn-icons-png.flaticon.com/128/4429/4429367.png",
+  "kitchen-refresh": ChefHat,
+  "bath-remodel": Bath,
+  "hvac-tune-up": Wind,
+  "whole-home-repairs": Wrench,
 };
 
 const homeServiceBadges = {
@@ -112,8 +116,7 @@ export default function HomePage() {
             Trusted home-service quotes
           </span>
           <h1>
-            Compare Local Pros,{" "}
-            <span>Not Just Prices.</span>
+            Compare Local Pros, <span>Not Just Prices.</span>
           </h1>
           <p>
             Select your project, check local availability, and compare quotes
@@ -147,41 +150,60 @@ export default function HomePage() {
         <div className="hs-heading hs-heading-center">
           <span className="hs-eyebrow">Start with the project</span>
           <h2>Popular home services</h2>
-          <p>Select a service below to see available pros & pricing immediately.</p>
+          <p>
+            Select a service below to see available pros & pricing immediately.
+          </p>
         </div>
         <div className="hs-service-grid">
-          {services.map((service) => (
-            <Link
-              className="hs-service-card"
-              key={service.slug}
-              href={`/homeserv/services/${service.slug}`}
-            >
-              <span className="hs-service-badge">{homeServiceBadges[service.slug]}</span>
-              <span className="hs-service-icon-wrap">
-                <img src={homeServiceIcons[service.slug]} alt="" aria-hidden="true" />
-              </span>
-              <span className="hs-service-title">
-                {homeServiceTitles[service.slug] ?? service.title}
-              </span>
-              <span className="hs-service-desc">
-                {homeServiceDescriptions[service.slug] ?? service.text}
-              </span>
-            </Link>
-          ))}
+          {services.map((service) => {
+            const ServiceIcon = homeServiceIcons[service.slug] ?? Wrench;
+            return (
+              <Link
+                className="hs-service-card"
+                key={service.slug}
+                href={`/homeserv/services/${service.slug}`}
+              >
+                <span className="hs-service-badge">
+                  {homeServiceBadges[service.slug]}
+                </span>
+                <span className="hs-service-icon-wrap" aria-hidden="true">
+                  <ServiceIcon size={44} strokeWidth={1.6} />
+                </span>
+                <span className="hs-service-title">
+                  {homeServiceTitles[service.slug] ?? service.title}
+                </span>
+                <span className="hs-service-desc">
+                  {homeServiceDescriptions[service.slug] ?? service.text}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
       {/* Process */}
       <section className="hs-process-section" id="process">
         <span className="hs-process-divider" aria-hidden="true" />
-        <div className="hs-heading hs-heading-center" style={{ marginBottom: 24 }}>
+        <div
+          className="hs-heading hs-heading-center"
+          style={{ marginBottom: 24 }}
+        >
           <span className="hs-eyebrow">How it works</span>
-          <h2 style={{ fontSize: "clamp(30px, 3.25vw, 38px)" }}>A cleaner path to quotes</h2>
-          <p>Get matched with trusted local professionals in minutes, not days.</p>
+          <h2 style={{ fontSize: "clamp(30px, 3.25vw, 38px)" }}>
+            A cleaner path to quotes
+          </h2>
+          <p>
+            Get matched with trusted local professionals in minutes, not days.
+          </p>
         </div>
         <div className="hs-process-grid">
           {steps.map((step, index) => {
-            const StepIcon = index === 0 ? MousePointerClick : index === 1 ? ClipboardCheck : MapPin;
+            const StepIcon =
+              index === 0
+                ? MousePointerClick
+                : index === 1
+                  ? ClipboardCheck
+                  : MapPin;
             return (
               <Fragment key={step.title}>
                 <article className="hs-process-card">
@@ -189,7 +211,11 @@ export default function HomePage() {
                     <StepIcon size={42} />
                   </span>
                   <span className="hs-process-step">
-                    {index === 0 ? "Choose project" : index === 1 ? "Compare options" : "Match locally"}
+                    {index === 0
+                      ? "Choose project"
+                      : index === 1
+                        ? "Compare options"
+                        : "Match locally"}
                   </span>
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
@@ -209,18 +235,16 @@ export default function HomePage() {
       <section className="hs-section" id="reviews">
         <div className="hs-heading hs-heading-center">
           <span className="hs-eyebrow">Homeowner notes</span>
-          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>Trusted by Homeowners</h2>
-          <p style={{ fontSize: 16 }}>Real feedback from people who compared local quotes.</p>
+          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>
+            Trusted by Homeowners
+          </h2>
+          <p style={{ fontSize: 16 }}>
+            Real feedback from people who compared local quotes.
+          </p>
         </div>
         <div className="hs-testimonial-grid">
           {testimonials.map((item) => (
             <article className="hs-testimonial-card" key={item.name}>
-              <span className="hs-testimonial-avatar">
-                <img
-                  src={`https://i.pravatar.cc/160?u=${item.name}`}
-                  alt={`${item.name}, ${item.role}`}
-                />
-              </span>
               <span className="hs-stars" aria-label="Five star rating">
                 {Array.from({ length: 5 }).map((_, starIndex) => (
                   <Star key={starIndex} size={17} fill="currentColor" />

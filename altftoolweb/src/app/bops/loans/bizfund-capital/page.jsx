@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   TrendingUp,
-  Phone,
+  Mail,
   ArrowRight,
   CheckCircle2,
   BadgeCheck,
@@ -16,9 +16,10 @@ import {
 } from "lucide-react";
 import "./bizfund-capital.css";
 
-const QUOTE_URL = "https://example.com/quote/bizfund-capital";
-const PHONE_TEL = "tel:+18115550234";
-const PHONE_DISPLAY = "(811) 555-0234";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 const IMG = {
   hero: "https://images.unsplash.com/photo-1608613304899-ea8098577e38?auto=format&fit=crop&w=1600&q=80",
   workshop: "https://images.unsplash.com/photo-1547609434-b732edfee020?auto=format&fit=crop&w=900&q=80",
@@ -29,7 +30,7 @@ const IMG = {
 
 function QuoteButton({ className, children }) {
   return (
-    <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" className={className}>
+    <a href={CONTACT_URL} className={className}>
       {children}
     </a>
   );
@@ -84,8 +85,8 @@ export default function BizFundCapitalPage() {
             <a href="#bizfund-faq">FAQ</a>
           </nav>
           <div className="bizfund-nav-cta">
-            <a href={PHONE_TEL} className="bizfund-phone-link">
-              <Phone size={15} aria-hidden="true" /><span>{PHONE_DISPLAY}</span>
+            <a href={CONTACT_URL} className="bizfund-phone-link">
+              <Mail size={15} aria-hidden="true" /><span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton className="bizfund-btn bizfund-btn-solid">Get a Free Quote</QuoteButton>
           </div>
@@ -109,8 +110,8 @@ export default function BizFundCapitalPage() {
                 <QuoteButton className="bizfund-btn bizfund-btn-solid">
                   Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
                 </QuoteButton>
-                <a href={PHONE_TEL} className="bizfund-btn bizfund-btn-ghost">
-                  <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="bizfund-btn bizfund-btn-ghost">
+                  <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
               <ul className="bizfund-hero-points">
@@ -183,8 +184,8 @@ export default function BizFundCapitalPage() {
                 <QuoteButton className="bizfund-btn bizfund-btn-mint">
                   Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
                 </QuoteButton>
-                <a href={PHONE_TEL} className="bizfund-btn bizfund-btn-ghost">
-                  <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="bizfund-btn bizfund-btn-ghost">
+                  <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -307,8 +308,8 @@ export default function BizFundCapitalPage() {
               <QuoteButton className="bizfund-btn bizfund-btn-mint">
                 Get a Free Quote <ArrowRight size={17} aria-hidden="true" />
               </QuoteButton>
-              <a href={PHONE_TEL} className="bizfund-btn bizfund-btn-ghost">
-                <Phone size={16} aria-hidden="true" /> Call {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="bizfund-btn bizfund-btn-ghost">
+                <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -324,7 +325,7 @@ export default function BizFundCapitalPage() {
             </span>
             <span className="bizfund-footer-meta">
               <Clock size={14} aria-hidden="true" /> Mon–Fri 8am–7pm ET ·{" "}
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </span>
             <span className="bizfund-footer-meta">
               <ShieldCheck size={14} aria-hidden="true" /> Soft-pull rate checks only

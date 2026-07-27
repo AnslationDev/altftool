@@ -26,7 +26,6 @@ export const autoRefinance = {
   ],
 
   quoteLabel: "Check my savings",
-  quoteUrl: "https://example.com/quote/auto-refinance",
 
   featuresTitle: "Why drivers refinance their car",
   featuresIntro:

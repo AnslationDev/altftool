@@ -1,7 +1,7 @@
 // "use client";
 
 // import { useState, useEffect, useRef } from "react";
-// import { Phone, X } from "lucide-react";
+// import { MessageSquare, X } from "lucide-react";
 // import { AnimatePresence, motion } from "framer-motion";
 
 // export default function PapercallInterceptor() {
@@ -200,11 +200,11 @@
 
 //               {/* Phone Button */}
 //               <a
-//                 href="tel:+18005550192"
+//                 href={CONTACT_URL}
 //                 className="flex items-center justify-center gap-3 bg-[#1a1a1a] hover:bg-[#333] text-[#F7F3EB] text-2xl font-extrabold py-4 px-6 rounded-2xl w-full shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] mb-2 font-serif-display"
 //               >
-//                 <Phone size={24} fill="currentColor" stroke="none" />
-//                 <span>+1-800-555-0192</span>
+//                 <MessageSquare size={24} />
+//                 <span>Contact us</span>
 //               </a>
 
 //               {/* Available 24x7 */}
@@ -225,8 +225,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Phone, X } from "lucide-react";
+import { MessageSquare, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+
+const CONTACT_URL = "/policypages/contact";
 
 export default function PapercallInterceptor() {
   const [loading, setLoading] = useState(false);
@@ -459,23 +461,20 @@ export default function PapercallInterceptor() {
                 />
               </svg>
 
-              {/* Call Toll Free */}
+              {/* Contact CTA */}
               <h4 className="text-[#1a1a1a] text-xl font-bold mb-3 mt-4 font-serif-display">
-                Now Call Toll Free
+                Send us your job
               </h4>
 
               {/* Phone Button */}
               <a
-                href="tel:+18005550192"
+                href={CONTACT_URL}
                 className="flex items-center justify-center gap-3 bg-[#1a1a1a] hover:bg-[#333] text-[#F7F3EB] text-2xl font-extrabold py-4 px-6 rounded-2xl w-full shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] mb-2 font-serif-display"
               >
-                <Phone size={24} fill="currentColor" stroke="none" />
-                <span>+1-800-555-0192</span>
+                <MessageSquare size={24} />
+                <span>Contact us</span>
               </a>
 
-              <p className="text-[#6b6b6b] text-sm font-semibold tracking-wide mb-6">
-                We are available 24x7
-              </p>
             </motion.div>
           </motion.div>
         )}

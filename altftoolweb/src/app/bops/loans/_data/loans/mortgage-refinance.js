@@ -26,7 +26,6 @@ export const mortgageRefinance = {
   ],
 
   quoteLabel: "Check refi savings",
-  quoteUrl: "https://example.com/quote/mortgage-refinance",
 
   featuresTitle: "One refinance, many goals",
   featuresIntro:

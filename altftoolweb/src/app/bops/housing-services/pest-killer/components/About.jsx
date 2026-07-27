@@ -3,6 +3,8 @@ import about1Img from '../assets/about1.png';
 import about2Img from '../assets/about2.png';
 import './About.css';
 
+const CONTACT_URL = '/policypages/contact';
+
 export default function About() {
   const [count, setCount] = useState(0);
   const badgeRef = useRef(null);
@@ -85,7 +87,7 @@ export default function About() {
               </div>
             </div>
           </div>
-          <a href="tel:+919711177747" className="btn-green">Contact Us</a>
+          <a href={CONTACT_URL} className="btn-green">Contact Us</a>
         </div>
       </div>
     </section>

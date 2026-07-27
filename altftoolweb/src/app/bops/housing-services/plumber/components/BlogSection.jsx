@@ -8,7 +8,6 @@ const posts = [
     category: 'Emergency',
     date: 'May 31, 2026',
     readTime: '5 min read',
-    image: 'https://www.mcgillplumbing.com/_next/image?url=%2Fcdn--media%2Fistock_1074493878.1_.2408291530208_jg6wlxdjljqp9uot4iqfk-454x303.jpg&w=1080&q=75&dpl=dpl_BJzBWJgBEkN6WsvYWstUHQ7u2hjg',
     excerpt: 'A burst pipe can damage floors, walls, and cabinets quickly. These first steps help reduce damage before your plumber arrives.',
     body: [
       'The first move is to shut off the main water supply. Most homes have a main valve near the meter, basement, garage, or utility room. Turning it off stops the pressure feeding the broken pipe.',
@@ -21,7 +20,6 @@ const posts = [
     category: 'Drain Care',
     date: 'June 02, 2026',
     readTime: '4 min read',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnrTJgD0blrx2ZcLE1r8HO2HO9GYh5eO1WdQ&s',
     excerpt: 'If the same drain blocks again and again, the real problem is usually deeper than the visible opening or trap.',
     body: [
       'Repeat drain clogs usually come from grease buildup, soap residue, hair, scale, or roots inside the pipe. A quick snake may punch a small hole through the blockage, but it may not clean the pipe wall.',
@@ -34,7 +32,6 @@ const posts = [
     category: 'Water Heater',
     date: 'June 08, 2026',
     readTime: '6 min read',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgjcg786VaF827JJ6Zgsss4zHKouLnYtETCg&s',
     excerpt: 'Age, water temperature, tank condition, and repair cost all decide whether a heater fix is worth it.',
     body: [
       'A younger water heater with a simple part failure is often worth repairing. Common repairable issues include a bad thermostat, heating element, pilot assembly, or pressure relief valve.',
@@ -43,8 +40,6 @@ const posts = [
     ],
   },
 ];
-
-const imageSrc = (image) => (typeof image === 'string' ? image : image.src);
 
 export default function BlogSection() {
   const [activePost, setActivePost] = useState(null);
@@ -62,9 +57,6 @@ export default function BlogSection() {
         <div className="fp-blog__grid">
           {posts.map((post) => (
             <article className="fp-blog__card" key={post.title}>
-              <div className="fp-blog__image">
-                <img src={imageSrc(post.image)} alt={post.title} loading="lazy" />
-              </div>
               <div className="fp-blog__content">
                 <div className="fp-blog__meta">
                   <span><CalendarDays size={12} /> {post.date}</span>
@@ -93,9 +85,6 @@ export default function BlogSection() {
             <button type="button" className="fp-blog-modal__close" onClick={() => setActivePost(null)} aria-label="Close blog">
               <X size={18} />
             </button>
-            <div className="fp-blog-modal__image">
-              <img src={imageSrc(activePost.image)} alt={activePost.title} />
-            </div>
             <div className="fp-blog-modal__body">
               <div className="fp-blog-modal__meta">
                 <span><CalendarDays size={14} /> {activePost.date}</span>

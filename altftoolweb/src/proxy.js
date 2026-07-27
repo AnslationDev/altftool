@@ -2,11 +2,33 @@ import { NextResponse } from "next/server";
 import { toolMetaMap } from "./platform/registry/toolMetaMap.js";
 import { getActiveRedirects } from "./platform/seo/redirectSource.js";
 import { resolveRedirect } from "@altftool/core/seo/resolver";
-import { getLegacyCategorySlugMap } from "./platform/registry/categoryTaxonomy.js";
+import {
+  getLegacyCategorySlugMap,
+  slugifyCategory,
+} from "./platform/registry/categoryTaxonomy.js";
 
 // Pre-consolidation category slugs (e.g. /tools/calculator, /tools/utility)
 // → canonical category routes. Static data, computed once per worker.
 const LEGACY_CATEGORY_REDIRECTS = getLegacyCategorySlugMap();
+
+// Every real /tools/:category slug. Mirrors getToolCategorySlugs() in
+// src/app/tools/toolRouteUtils.js exactly (same derivation: "all" plus every
+// slugified tool category in toolMetaMap), but is inlined here because
+// toolRouteUtils.js also pulls in the tool SEO content bundle
+// (toolContentOverrides.js alone is ~800 KB) and proxy.js runs on every
+// request — see the note at the top of platform/seo/redirectSource.js.
+const KNOWN_CATEGORY_SLUGS = new Set(["all"]);
+Object.values(toolMetaMap ?? {}).forEach((tool) => {
+  const categories = Array.isArray(tool?.category)
+    ? tool.category
+    : tool?.category
+      ? [tool.category]
+      : [];
+  categories.forEach((category) => {
+    const slug = slugifyCategory(category);
+    if (slug) KNOWN_CATEGORY_SLUGS.add(slug);
+  });
+});
 
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
@@ -66,6 +88,14 @@ export async function proxy(request) {
       } else if (LEGACY_CATEGORY_REDIRECTS[slug]) {
         // Legacy free-text category slug → canonical category route.
         pathname = `/tools/${LEGACY_CATEGORY_REDIRECTS[slug]}`;
+        changed = true;
+      } else if (!KNOWN_CATEGORY_SLUGS.has(slug)) {
+        // Unknown slug. /tools/[category] has dynamicParams on (it must: the
+        // Amplify build defers bulk prerendering, so generateStaticParams()
+        // returns []), which used to render a 200 self-canonical "Zzq Garbage
+        // Tools" doorway page for every typo, scrape, and guessed URL — an
+        // unbounded indexable surface. Collapse them all onto the real hub.
+        pathname = "/tools/all";
         changed = true;
       }
     }

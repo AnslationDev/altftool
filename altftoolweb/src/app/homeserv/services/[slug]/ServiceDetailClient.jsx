@@ -28,7 +28,7 @@ import {
   Paintbrush,
   PanelTop,
   PackageCheck,
-  PhoneCall,
+  MessagesSquare,
   Plug,
   ShieldCheck,
   ShowerHead,
@@ -301,18 +301,18 @@ export function ServiceDetailClient({ service }) {
               aria-labelledby="call-modal-title"
               onClick={(event) => event.stopPropagation()}
             >
-              <button className="hs-modal-close" type="button" aria-label="Close call details" onClick={() => setCallModalPro("")}>
+              <button className="hs-modal-close" type="button" aria-label="Close quote details" onClick={() => setCallModalPro("")}>
                 <X size={20} />
               </button>
               <span className="hs-caller-pulse" aria-hidden="true">
-                <PhoneCall size={42} />
+                <MessagesSquare size={42} />
               </span>
-              <span className="hs-eyebrow">Call to compare quotes</span>
+              <span className="hs-eyebrow">Request a quote</span>
               <h2 id="call-modal-title">{callModalPro}</h2>
-              <a className="hs-call-number" href="tel:+18884520194">
-                (888) 452-0194
-              </a>
-              <p>Speak with a quote specialist to review local availability and next steps.</p>
+              <Link className="hs-call-number" href="/policypages/contact">
+                Contact us
+              </Link>
+              <p>Send us your project details and we&apos;ll follow up about local availability and next steps.</p>
             </div>
           </div>
         ) : null}

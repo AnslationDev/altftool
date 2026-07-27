@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import {
-  ArrowRight, Check, ChevronDown,
-  Phone, User, Wrench, Clock, MapPin, FileText, Star,
-  Shield, Lock, Award,
-} from 'lucide-react';
+import { ArrowRight, Award, Check, ChevronDown, Clock, FileText, Lock, MapPin, MessageSquare, Phone, Shield, Star, User, Wrench } from 'lucide-react';
 import '../styles/BottomForm.css';
+
+const CONTACT_URL = '/policypages/contact';
 
 const services = [
   'Emergency Repair','Drain Cleaning','Water Heater','Pipe Repair',
@@ -94,8 +92,8 @@ function EstimateForm() {
         <span className="fp-bform__divider-text">or</span>
         <span className="fp-bform__divider-line" />
       </div>
-      <a href="tel:8005550100" className="fp-bform__alt">
-        <Phone size={16} /> Call (800) 555-0100
+      <a href={CONTACT_URL} className="fp-bform__alt">
+        <MessageSquare size={16} /> Contact us
       </a>
       <p className="fp-bform__note">No credit card required · 100% free · No obligation</p>
     </form>

@@ -3,9 +3,9 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Newsletter – Local News Delivered Daily | AltFTool News",
+    title: "Newsletter – Coming Soon | AltFTool News",
     description:
-      "Subscribe to the AltFTool News newsletter and get curated local stories — politics, tech, business, and sports — delivered to your inbox every morning.",
+      "The AltFTool News email briefing is not live yet. Sign-ups are not open, and no email addresses are being collected. Read the news feed in the meantime.",
     path: "/news/newsletter",
     keywords: ["news newsletter", "local news newsletter", "daily news digest"],
   });

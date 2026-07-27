@@ -3,7 +3,7 @@
 import "./freshcoat-interiors.css";
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   Paintbrush,
   Palette,
   Sparkles,
@@ -18,9 +18,10 @@ import {
   Clock,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/freshcoat-interiors";
-const PHONE_TEL = "tel:+18335550187";
-const PHONE_DISPLAY = "(833) 555-0187";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=80",
@@ -150,9 +151,7 @@ function QuoteBtn({ variant = "" }) {
   return (
     <a
       className={`freshcoat-btn ${variant}`.trim()}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
     </a>
@@ -161,8 +160,8 @@ function QuoteBtn({ variant = "" }) {
 
 function PhoneBtn({ variant = "freshcoat-btn--ghost" }) {
   return (
-    <a className={`freshcoat-btn ${variant}`} href={PHONE_TEL}>
-      <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+    <a className={`freshcoat-btn ${variant}`} href={CONTACT_URL}>
+      <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
     </a>
   );
 }
@@ -212,15 +211,13 @@ export default function FreshCoatInteriorsPage() {
           </nav>
 
           <div className="freshcoat-nav-cta">
-            <a className="freshcoat-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="freshcoat-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <a
               className="freshcoat-btn"
-              href={QUOTE_URL}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
+              href={CONTACT_URL}
             >
               Get a Free Quote
             </a>
@@ -434,8 +431,8 @@ export default function FreshCoatInteriorsPage() {
                 </li>
               ))}
             </ul>
-            <a className="freshcoat-footer-phone" href={PHONE_TEL}>
-              <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+            <a className="freshcoat-footer-phone" href={CONTACT_URL}>
+              <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
             </a>
           </div>
           <div className="freshcoat-footer-fine">

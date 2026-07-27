@@ -7,6 +7,8 @@ import bedbugImg from '../assets/services/bedbug.png';
 import sectionBg from '../assets/services/section-bg-1 (2).webp';
 import './Services.css';
 
+const CONTACT_URL = '/policypages/contact';
+
 const services = [
   { img: termiteImg, title: 'Termite Treatment', desc: 'Protect your property from termite damage with long-lasting treatment that safeguards walls, furniture, and structure completely.' },
   { img: generalImg, title: 'Pest Control Solution', desc: 'Our general pest control service protects your space from multiple pests and keeps your environment clean always.' },
@@ -29,7 +31,7 @@ export default function Services() {
           </div>
           <div className="services-desc">
             <p>We provide safe, effective, and long-lasting pest control services to protect your home and workplace from all types of pests.</p>
-            <a href="tel:+919711177747" className="btn-green">Get Free Quote</a>
+            <a href={CONTACT_URL} className="btn-green">Get Free Quote</a>
           </div>
         </div>
 
@@ -42,7 +44,7 @@ export default function Services() {
               <div className="service-card-body">
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-                <a href="tel:+919711177747" className="btn-green">
+                <a href={CONTACT_URL} className="btn-green">
                   <i className="fa-solid fa-shield-heart" style={{marginRight:'7px'}}></i> Book Service
                 </a>
               </div>

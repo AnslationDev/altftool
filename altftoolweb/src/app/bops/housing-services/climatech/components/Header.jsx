@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
+const CONTACT_URL = "/policypages/contact";
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -59,7 +61,7 @@ export default function Header() {
           {/* CTA */}
           <div className="flex items-center gap-6">
             <a
-              href="tel:8005551234"
+              href={CONTACT_URL}
               className={`hidden md:flex items-center text-1xl font-semibold gap-2 transition-colors  duration-500 ${scrolled ? "text-[#555] hover:text-[#1a1a1a]" : "text-white/80 hover:text-white"
                 }`}
             >
@@ -74,10 +76,10 @@ export default function Header() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  d="M8 10h.01M12 10h.01M16 10h.01M21 11.5c0 4.142-4.03 7.5-9 7.5a10.2 10.2 0 01-3.4-.57L3 20.5l1.7-3.6A7.2 7.2 0 013 11.5C3 7.358 7.03 4 12 4s9 3.358 9 7.5z"
                 />
               </svg>
-              (800) 555-1234
+              Contact us
             </a>
             <Link
               href="#contact"

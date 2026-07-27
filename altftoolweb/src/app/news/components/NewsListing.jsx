@@ -57,11 +57,11 @@ function NewsletterWidget() {
   return (
     <div className="flex flex-col">
       <div className="flex items-start gap-4">
-        <div className="flex h-[66px] w-[66px] shrink-0 items-center justify-center rounded-[18px] bg-[var(--primary)]/10 text-[var(--primary)]">
+        <div className="flex h-[66px] w-[66px] shrink-0 items-center justify-center rounded-lg bg-[var(--primary)]/10 text-[var(--primary)]">
           <Mail size={30} />
         </div>
         <div>
-          <h3 className="text-[18px] font-bold uppercase text-[var(--foreground)]">
+          <h3 className="text-lg font-semibold text-[var(--foreground)]">
             Subscribe to Newsletter
           </h3>
           <p className="mt-[6px] max-w-[240px] text-[14px] leading-[1.6] text-[var(--muted-foreground)]">
@@ -79,18 +79,18 @@ function NewsletterWidget() {
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); }}
             placeholder="Enter your email"
-            className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] transition focus:border-[var(--primary)] focus:bg-[var(--card)] focus:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/10"
+            className="h-11 w-full rounded-md border border-[var(--border)] bg-[var(--card)] px-3.5 text-[14px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] transition focus:border-[var(--primary)] focus:bg-[var(--card)] focus:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/10"
           />
         </div>
         <button
           type="submit"
           disabled={state === "loading"}
-          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-xl news-action px-4 text-[14px] font-semibold transition hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60"
+          className="flex h-11 w-[120px] shrink-0 items-center justify-center rounded-md news-action px-4 text-[14px] font-semibold transition hover:-translate-y-0.5 active:scale-[0.97] disabled:opacity-60"
         >
           {state === "loading" ? "Loading\u2026" : "Subscribe"}
         </button>
       </form>
-      {error && <p className="mt-2 text-xs text-[var(--anslation-ds-danger)]">{error}</p>}
+      {error && <p className="mt-2 text-xs text-[var(--danger-text)]">{error}</p>}
 
       <p className="mt-4 text-[12px] leading-[1.5] text-[var(--muted-foreground)]">
         We respect your privacy. Unsubscribe anytime.
@@ -109,7 +109,7 @@ const SOCIAL_LINKS = [
 function FollowUs() {
   return (
     <div>
-      <h3 className="mb-5 text-[20px] font-bold uppercase text-[var(--foreground)]">Follow Us</h3>
+      <h3 className="mb-5 text-lg font-semibold text-[var(--foreground)]">Follow Us</h3>
       <div className="flex flex-col">
         {SOCIAL_LINKS.map((s, i) => (
           <a
@@ -125,7 +125,7 @@ function FollowUs() {
               </div>
               <span className="text-[15px] font-semibold text-[var(--foreground)]">{s.name}</span>
             </div>
-            <span className="cursor-pointer text-[14px] font-semibold text-[var(--primary)] transition hover:underline">
+            <span className="cursor-pointer text-[14px] font-semibold text-[var(--primary-text)] transition hover:underline">
               {s.action}
             </span>
           </a>
@@ -139,7 +139,7 @@ function TopNewsCard({ news }) {
   const [saved, setSaved] = useState(false);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+    <article className="group flex flex-col overflow-hidden rounded-lg news-card-surface hover:-translate-y-1">
       <Link href={`/news/${news.slug}`}>
         <div className="relative h-[200px] overflow-hidden">
           {news.image_url ? (
@@ -157,7 +157,7 @@ function TopNewsCard({ news }) {
       </Link>
       <div className="flex flex-1 flex-col px-4 pb-4 pt-[14px]">
         <div className="flex items-center gap-2">
-          <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
+          <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary-text)]">
             {news.category || "General"}
           </span>
           <span className="text-[12px] text-[var(--muted-foreground)]">
@@ -165,7 +165,7 @@ function TopNewsCard({ news }) {
           </span>
         </div>
         <Link href={`/news/${news.slug}`}>
-          <h3 className="mt-[6px] text-xl font-bold leading-[1.35] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+          <h3 className="mt-[6px] text-xl font-bold leading-[1.35] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary-text)] line-clamp-2">
             {news.headline}
           </h3>
         </Link>
@@ -182,7 +182,7 @@ function TopNewsCard({ news }) {
           <button
             onClick={(e) => { e.preventDefault(); setSaved((v) => !v); }}
             aria-label={saved ? "Unsave" : "Save"}
-            className={`flex h-5 w-5 items-center justify-center transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
+            className={`-m-3 flex h-11 w-11 items-center justify-center transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
           >
             <Bookmark size={16} className={saved ? "fill-[var(--primary)]" : ""} />
           </button>
@@ -197,10 +197,10 @@ function TrendingItem({ news, rank }) {
 
   return (
     <Link href={`/news/${news.slug}`} className="group flex items-center gap-[14px]">
-      <span className="flex w-[42px] shrink-0 justify-center text-[32px] font-bold text-[var(--border)]">
+      <span className="flex w-[42px] shrink-0 justify-center text-[32px] font-bold text-[var(--muted-foreground)]">
         {String(rank).padStart(2, "0")}
       </span>
-      <div className="relative h-[60px] w-[60px] shrink-0 overflow-hidden rounded-[10px]">
+      <div className="relative h-[60px] w-[60px] shrink-0 overflow-hidden rounded-md">
         {news.image_url ? (
           <ManagedImage
             src={news.image_url}
@@ -214,14 +214,14 @@ function TrendingItem({ news, rank }) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-[6px] min-w-0">
-        <p className="text-[15px] font-semibold leading-[1.4] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+        <p className="text-[15px] font-semibold leading-[1.4] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary-text)] line-clamp-2">
           {news.headline}
         </p>
         <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
           {readTime} min read &bull; {formatCount(news.likes + news.comments + news.shares)} views
         </span>
       </div>
-      <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
+      <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary-text)]">
         &gt;
       </span>
     </Link>
@@ -234,7 +234,7 @@ function MoreNewsRow({ news }) {
   return (
     <div className="group flex items-start justify-between py-4">
       <div className="flex flex-1 gap-4">
-        <div className="relative h-[60px] w-[80px] shrink-0 overflow-hidden rounded-[10px]">
+        <div className="relative h-[60px] w-[80px] shrink-0 overflow-hidden rounded-md">
           {news.image_url ? (
             <ManagedImage
               src={news.image_url}
@@ -249,14 +249,14 @@ function MoreNewsRow({ news }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px]">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--primary)]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--primary-text)]">
               {news.category || "General"}
             </span>
             <span className="text-xs text-[var(--muted-foreground)]">
               {timeAgo(news.published_hours_ago)}
             </span>
           </div>
-          <p className="mt-[4px] text-lg font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
+          <p className="mt-[4px] text-lg font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary-text)] line-clamp-2">
             {news.headline}
           </p>
           {news.summary && (
@@ -314,8 +314,8 @@ export default function NewsListing({ title, articles = [], description }) {
 
   if (!articles.length) {
     return (
-      <div className="mx-auto max-w-[1440px] space-y-8">
-        <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-12 text-center">
+      <div className="space-y-8">
+        <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-12 text-center">
           <p className="text-sm text-[var(--muted-foreground)]">No stories found.</p>
         </div>
       </div>
@@ -323,11 +323,11 @@ export default function NewsListing({ title, articles = [], description }) {
   }
 
   return (
-    <div className="mx-auto max-w-[1440px] space-y-8">
+    <div className="space-y-8">
       {/* ── Trending Bar ──────────────────────────────────────────────── */}
-      <div className="mx-auto mt-[8px] w-[95%] rounded-2xl border border-[var(--border)] bg-[var(--muted)] py-3 shadow-sm">
+      <div className="mt-[8px] w-full rounded-lg border border-[var(--border)] bg-[var(--muted)] py-3 shadow-sm">
         <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
-          <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
+          <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary-text)]">
             <Zap size={16} />
             Trending Now
           </span>
@@ -337,7 +337,7 @@ export default function NewsListing({ title, articles = [], description }) {
                 {i > 0 && <span className="text-[var(--border)]">•</span>}
                 <Link
                   href={tag.href}
-                  className="whitespace-nowrap text-[14px] font-bold text-[var(--muted-foreground)] transition-colors hover:text-[var(--primary)]"
+                  className="whitespace-nowrap text-[14px] font-bold text-[var(--muted-foreground)] transition-colors hover:text-[var(--primary-text)]"
                 >
                   {tag.label}
                 </Link>
@@ -346,7 +346,7 @@ export default function NewsListing({ title, articles = [], description }) {
           </div>
           <Link
             href="/news/trending"
-            className="ml-auto shrink-0 text-[14px] font-bold text-[var(--primary)] hover:underline"
+            className="ml-auto shrink-0 text-[14px] font-bold text-[var(--primary-text)] hover:underline"
           >
             View All
           </Link>
@@ -354,17 +354,17 @@ export default function NewsListing({ title, articles = [], description }) {
       </div>
 
       {/* ── Page Title ────────────────────────────────────────────────── */}
-      <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
-        <div className="flex items-center justify-between">
+      <section className="rounded-lg news-card-surface px-6 py-6 sm:px-8">
+        <div className="flex items-center justify-between gap-4">
           <div>
-            <h1 className="text-[28px] font-bold uppercase text-[var(--foreground)]">{title}</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl">{title}</h1>
             {description && (
               <p className="mt-1 text-[15px] text-[var(--muted-foreground)]">{description}</p>
             )}
           </div>
           <Link
             href="/news"
-            className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
+            className="flex min-h-11 shrink-0 items-center text-[15px] font-semibold text-[var(--primary-text)] hover:underline"
           >
             Back to Home
           </Link>
@@ -380,9 +380,9 @@ export default function NewsListing({ title, articles = [], description }) {
       <div className="-mt-[22px] grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Main Content – 8/12 (≈70%) */}
         <div className="lg:col-span-8">
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-6 shadow-sm sm:px-8">
+          <div className="rounded-lg news-card-surface px-6 py-6 sm:px-8">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">{title}</h2>
+              <h2 className="text-2xl font-bold text-[var(--foreground)]">{title}</h2>
             </div>
 
             {topNews.length > 0 ? (
@@ -392,7 +392,7 @@ export default function NewsListing({ title, articles = [], description }) {
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-6 py-14 text-center">
+              <div className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--card)] px-6 py-14 text-center">
                 <p className="text-sm text-[var(--muted-foreground)]">No stories to show.</p>
               </div>
             )}
@@ -400,12 +400,12 @@ export default function NewsListing({ title, articles = [], description }) {
 
           {/* ── More News ──────────────────────────────────────────────── */}
           {moreNews.length > 0 && (
-            <div className="mt-[10px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-5 shadow-sm sm:px-8 sm:py-6">
+            <div className="mt-[10px] overflow-hidden rounded-lg news-card-surface px-6 py-5 sm:px-8 sm:py-6">
               <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">More News</h2>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">More News</h2>
                 <Link
                   href="/news/headlines"
-                  className="text-[15px] font-medium text-[var(--primary)] hover:underline"
+                  className="flex min-h-11 items-center text-[15px] font-medium text-[var(--primary-text)] hover:underline"
                 >
                   View All
                 </Link>
@@ -430,12 +430,12 @@ export default function NewsListing({ title, articles = [], description }) {
           <div className="space-y-[10px] lg:sticky lg:top-8">
             {/* Popular / Trending */}
             {trending.length > 0 && (
-              <div className="overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+              <div className="overflow-hidden rounded-lg news-card-surface p-6">
                 <div className="mb-6 flex items-center justify-between">
-                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Trending Now</h3>
+                  <h3 className="text-lg font-semibold text-[var(--foreground)]">Trending Now</h3>
                   <Link
                     href="/news/trending"
-                    className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
+                    className="flex min-h-11 items-center text-[15px] font-semibold text-[var(--primary-text)] hover:underline"
                   >
                     View All
                   </Link>
@@ -451,8 +451,8 @@ export default function NewsListing({ title, articles = [], description }) {
                       onClick={() => setTrendingTab(tab.key)}
                       className={`relative text-sm font-medium transition ${
                         trendingTab === tab.key
-                          ? "font-semibold text-[var(--primary)]"
-                          : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
+                          ? "font-semibold text-[var(--primary-text)]"
+                          : "text-[var(--muted-foreground)] hover:text-[var(--primary-text)]"
                       }`}
                     >
                       {tab.label}
@@ -471,12 +471,12 @@ export default function NewsListing({ title, articles = [], description }) {
             )}
 
             {/* Newsletter Widget */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+            <div className="rounded-lg news-card-surface p-6">
               <NewsletterWidget />
             </div>
 
             {/* Follow Us */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+            <div className="rounded-lg news-card-surface p-6">
               <FollowUs />
             </div>
           </div>

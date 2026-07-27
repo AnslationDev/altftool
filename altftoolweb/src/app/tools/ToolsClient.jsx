@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import Icon from "@/shared/ui/Icon";
 import CTAButton from "@/shared/ui/CTAButton";
+import { LoadingBone } from "@/components/ui/route-loading";
 import { useAds } from "@/ads/AdsProvider";
 import { injectAds } from "@/ads/adInjector";
 import AdPairRow from "@/ads/layouts/tools/AdToolPairRow";
@@ -41,6 +42,10 @@ import {
   writeStoredSlugs,
 } from "./toolStorage";
 import { prefetchToolModule } from "./toolLoaderResolver";
+// Read the canonical label straight from the taxonomy (a dependency-free data
+// module) instead of formatCategoryLabel in ./toolRouteUtils — that module
+// pulls in the 670 KB toolMetaMap, which this hub deliberately loads lazily.
+import { getCanonicalCategoryBySlug } from "@/platform/registry/categoryTaxonomy";
 
 const ITEMS_PER_PAGE = 24;
 let fullCatalogPromise;
@@ -267,6 +272,24 @@ const getToolCategories = (tool) =>
     ? tool.category.map((item) => slugify(item))
     : [slugify(tool?.category || "")].filter(Boolean);
 
+// Category hubs (/tools/pdf-documents …) need a keyword-bearing H1 instead of
+// the generic directory headline; /tools and /tools/all keep the original copy.
+// Returns null for those two so the caller falls back to the old heading.
+const getCategoryHeadingParts = (category) => {
+  const slug = slugify(category || "");
+  if (!slug || slug === "all") return null;
+
+  // /tools/games is the games hub (its metadata targets "free online games"),
+  // so the heading follows that intent rather than reading "Games Tools".
+  if (slug === "games") return { lead: "Free Online ", accent: "Games" };
+
+  const canonical = getCanonicalCategoryBySlug(slug);
+  const label = canonical?.label || formatLabel(slug);
+  // Labels that already end in "Tools" ("AI Tools") must not become "AI Tools Tools".
+  const lead = label.replace(/\s*tools$/i, "").trim();
+  return { lead: lead ? `${lead} ` : "", accent: "Tools" };
+};
+
 const subscribeToToolStorage = (callback) => {
   if (typeof window === "undefined") return () => {};
 
@@ -339,28 +362,31 @@ const subscribeToDevice = (callback) => {
   return () => window.removeEventListener("resize", callback);
 };
 
-function Skeleton({ className = "" }) {
-  return (
-    <div className={`tools-skeleton animate-pulse motion-reduce:animate-none rounded-md bg-[var(--color-muted)] ${className}`} />
-  );
-}
-
+// The placeholder reuses the real card geometry (.tools-card-grid /
+// .tools-directory-card) and the shared LoadingBone, so the skeleton and the
+// result it stands in for have one source of truth.
 function ToolCardSkeleton() {
   return (
-    <div className="space-y-4 rounded-[8px] border border-[var(--color-border)] p-6">
-      <div className="flex gap-4 items-center">
-        <Skeleton className="h-12 w-12 rounded-[7px]" />
-        <Skeleton className="h-4 w-40" />
+    <div className="tools-directory-card" aria-hidden="true">
+      <div className="tool-card-top">
+        <LoadingBone className="h-12 w-12" />
+        <div className="min-w-0 space-y-2">
+          <LoadingBone className="h-4 w-40 max-w-full" />
+          <LoadingBone className="h-3 w-full" />
+        </div>
+        <LoadingBone className="h-[34px] w-[34px]" />
       </div>
-      <Skeleton className="h-3 w-full" />
-      <Skeleton className="h-3 w-3/4" />
+      <div className="tool-card-footer">
+        <LoadingBone className="h-5 w-24" />
+        <LoadingBone className="h-4 w-14" />
+      </div>
     </div>
   );
 }
 
 function ToolsGridSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="tools-card-grid">
       {Array.from({ length: 6 }).map((_, i) => (
         <ToolCardSkeleton key={i} />
       ))}
@@ -429,6 +455,9 @@ export default function ToolsClient({
   const categorySectionRef = useRef(null);
   const resultsSectionRef = useRef(null);
   const categoryname = selectedCategory;
+  // Route-level category only (never the in-page filter), so the H1 stays
+  // stable while browsing and matches the page title on category hubs.
+  const categoryHeading = useMemo(() => getCategoryHeadingParts(category), [category]);
   const favoriteSlugs = useMemo(
     () => favoriteSnapshot.split("\n").filter((slug) => meta[slug]),
     [favoriteSnapshot, meta]
@@ -867,7 +896,16 @@ export default function ToolsClient({
         <section className="tools-hero">
           <div className="tools-hero-copy">
             <h1 className="route-title">
-              Ready to find your perfect <span className="tp-accent-word">tool?</span>
+              {categoryHeading ? (
+                <>
+                  {categoryHeading.lead}
+                  <span className="tp-accent-word">{categoryHeading.accent}</span>
+                </>
+              ) : (
+                <>
+                  Ready to find your perfect <span className="tp-accent-word">tool?</span>
+                </>
+              )}
             </h1>
             <p className="route-description">
               Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
@@ -1084,10 +1122,10 @@ export default function ToolsClient({
               <div className="request-tool-card">
                 <strong>Can&apos;t find a tool?</strong>
                 <p>Request a tool and we&apos;ll try to add it.</p>
-                <button type="button">
+                <Link href="/request-a-tool">
                   Request a Tool
                   <MessageCircleQuestion className="h-4 w-4" />
-                </button>
+                </Link>
               </div>
             </div>
           </aside>
@@ -1171,7 +1209,7 @@ export default function ToolsClient({
                         key={slug}
                         data-testid={`tool-card-${slug}`}
                         data-tool-slug={slug}
-                        className="tool-card group"
+                        className="tools-directory-card group"
                       >
                         <div className="tool-card-top">
                           <div className="tool-icon">

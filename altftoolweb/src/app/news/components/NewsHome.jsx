@@ -344,9 +344,9 @@ export default function NewsHome({ initialNewsData }) {
   }
 
   return (
-    <div className="space-y-8">
+    <div>
       {/* ── Trending Bar ──────────────────────────────────────────────── */}
-      <div className="mx-auto mt-[8px] w-[95%] rounded-2xl news-soft-surface py-3 shadow-sm">
+      <div className="mx-auto mt-2 w-full max-w-[1440px] rounded-2xl news-soft-surface py-3 shadow-sm">
         <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
           <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
             <Zap size={16} />
@@ -381,7 +381,7 @@ export default function NewsHome({ initialNewsData }) {
       </div>
 
       {/* ── Hero Section (3-column) ──────────────────────────────────── */}
-      <section className="mx-auto max-w-[1440px] rounded-2xl news-card-surface px-6 py-6 sm:px-8">
+      <section className="mx-auto mt-8 max-w-[1440px] rounded-2xl news-card-surface px-6 py-6 sm:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_0.9fr]">
           <div className="md:col-span-2 lg:col-span-1">
             <HeroSlider stories={sorted.slice(0, 5)} timeAgo={timeAgo} formatCount={formatCount} />
@@ -392,12 +392,12 @@ export default function NewsHome({ initialNewsData }) {
       </section>
 
       {/* ── Categories Slider ────────────────────────────────────────── */}
-      <div className="-mt-[22px]">
+      <div className="mt-3">
         <CategoriesSection articles={articles} />
       </div>
 
       {/* ── Top News + Sidebar (70/30) ───────────────────────────────── */}
-      <div className="-mt-[22px] grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <div className="mt-3 grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Main Content – 8/12 (≈70%) */}
         <div className="lg:col-span-8">
           <div className="rounded-2xl news-card-surface px-6 py-6 sm:px-8">
@@ -426,7 +426,7 @@ export default function NewsHome({ initialNewsData }) {
 
           {/* ── More News ──────────────────────────────────────────────── */}
           {moreNews.length > 0 && (
-            <div className="mt-[10px] overflow-hidden rounded-2xl news-card-surface px-6 py-5 sm:px-8 sm:py-6">
+            <div className="mt-3 overflow-hidden rounded-2xl news-card-surface px-6 py-5 sm:px-8 sm:py-6">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-[22px] font-bold uppercase text-[var(--foreground)]">More News</h2>
                 <Link
@@ -453,7 +453,7 @@ export default function NewsHome({ initialNewsData }) {
 
         {/* Sidebar – 4/12 (≈30%) */}
         <aside className="lg:col-span-4">
-          <div className="space-y-[10px] lg:sticky lg:top-8">
+          <div className="space-y-3 lg:sticky lg:top-8">
             {/* Popular / Trending */}
             {trending.length > 0 && (
               <div className="overflow-hidden rounded-[20px] news-card-surface p-6">
@@ -474,15 +474,17 @@ export default function NewsHome({ initialNewsData }) {
                   ].map((tab) => (
                     <button
                       key={tab.key}
+                      type="button"
                       onClick={() => setTrendingTab(tab.key)}
-                      className={`relative text-sm font-medium transition ${trendingTab === tab.key
+                      aria-pressed={trendingTab === tab.key}
+                      className={`relative py-3 -my-3 text-sm font-medium transition ${trendingTab === tab.key
                           ? "font-semibold text-[var(--primary)]"
                           : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
                         }`}
                     >
                       {tab.label}
                       {trendingTab === tab.key && (
-                        <span className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-sm bg-[var(--primary)]" />
+                        <span className="absolute bottom-2 left-0 right-0 h-[3px] rounded-sm bg-[var(--primary)]" />
                       )}
                     </button>
                   ))}
@@ -559,7 +561,7 @@ function TopNewsCard({ news }) {
           <button
             onClick={(e) => { e.preventDefault(); setSaved((v) => !v); }}
             aria-label={saved ? "Unsave" : "Save"}
-            className={`flex h-5 w-5 items-center justify-center transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
+            className={`flex h-11 w-11 -m-3 items-center justify-center transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
           >
             <Bookmark size={16} className={saved ? "fill-[var(--primary)]" : ""} />
           </button>
@@ -652,7 +654,7 @@ function MoreNewsRow({ news }) {
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
           aria-label={saved ? "Unsave" : "Save"}
-          className={`flex h-6 w-6 items-center justify-center rounded transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
+          className={`flex h-11 w-11 -m-2.5 items-center justify-center rounded transition ${saved ? "text-[var(--primary)]" : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"}`}
         >
           <Bookmark size={16} className={saved ? "fill-[var(--primary)]" : ""} />
         </button>

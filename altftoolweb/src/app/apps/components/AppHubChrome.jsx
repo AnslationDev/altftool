@@ -24,7 +24,7 @@ export function AppHubHeader() {
     { label: "Home", href: "/apps#apphub-home" },
     { label: "Categories", href: "/apps#categories" },
     { label: "Featured Apps", href: "/apps#featured-apps" },
-    { label: "Top Rated Apps", href: "/apps#top-rated-apps" },
+    { label: "All Apps", href: "/apps#all-apps" },
   ];
 
   return (
@@ -53,7 +53,7 @@ export function AppHubHeader() {
           </form>
           <a
             href="#featured-apps"
-            className="inline-flex h-10 shrink-0 items-center rounded-full bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] px-4 text-[12px] font-semibold text-[var(--primary-foreground)] shadow-[0_14px_28px_rgba(20,184,166,0.24)] transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] lg:px-5"
+            className="inline-flex h-10 shrink-0 items-center rounded-full bg-[image:var(--anslation-ds-cta-gradient)] px-4 text-[12px] font-semibold text-[var(--primary-foreground)] shadow-[0_14px_28px_color-mix(in_srgb,var(--primary)_24%,transparent)] transition hover:-translate-y-0.5 hover:bg-[image:var(--anslation-ds-cta-gradient-hover)] lg:px-5"
           >
             Get in Touch
           </a>

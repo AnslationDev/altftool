@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { MessageSquare, Mail, MapPin } from 'lucide-react';
+
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
 
 const Footer = () => {
   const serviceLinks = [
@@ -76,11 +80,10 @@ const Footer = () => {
           <div>
             <div className="font-semibold mb-5 tracking-wide text-sm">CONTACT US</div>
             <div className="space-y-4 text-sm">
-              <a href="tel:7865679554" className="flex items-start gap-3 group">
-                <Phone size={17} className="mt-0.5 text-[#4ADE80] flex-shrink-0" />
+              <a href={CONTACT_URL} className="flex items-start gap-3 group">
+                <MessageSquare size={17} className="mt-0.5 text-[#4ADE80] flex-shrink-0" />
                 <div>
-                  <div className="font-semibold text-white">(786) 567-9554</div>
-                  <div className="text-xs text-white/60">24/7 Emergency Line</div>
+                  <div className="font-semibold text-white">Contact us</div>
                 </div>
               </a>
               <a href="mailto:info@pestxmiami.com" className="flex items-center gap-3 hover:text-white text-white/80">

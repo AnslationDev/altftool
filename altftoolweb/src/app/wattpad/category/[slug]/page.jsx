@@ -1,17 +1,22 @@
 import books from "@/app/wattpad/data/books.json";
 import categories from "@/app/wattpad/data/categories.json";
+import chapters from "@/app/wattpad/data/chapters.json";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
-import {
-  Eye,
-  List,
-} from "lucide-react";
+import { List } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
 
 export const dynamic = "force-static";
+
+// Part counts come from chapters.json so a card can only claim the parts that
+// actually exist. No rating, review-count, view-count or price is displayed:
+// the catalogue holds no real data for any of them.
+function countChapters(bookId) {
+  return chapters.filter((chapter) => chapter.bookId === bookId).length;
+}
 
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
@@ -154,10 +159,7 @@ export default async function CategoryPage({ params }) {
                         <p className="wp-related-author">{book.authorId}</p>
                         <div className="wp-related-stats">
                           <span className="flex items-center gap-1">
-                            <Eye size={16}/> {book.stats.views}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <List size={16} /> {book.stats.totalChapters} parts
+                            <List size={16} /> {countChapters(book.id)} parts
                           </span>
                         </div>
                         <p className="wp-related-summary">{book.summary}</p>

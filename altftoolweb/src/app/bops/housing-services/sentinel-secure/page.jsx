@@ -11,7 +11,7 @@ import {
   Siren,
   Flame,
   Smartphone,
-  Phone,
+  Mail,
   Menu,
   X,
   Check,
@@ -19,8 +19,10 @@ import {
   Star,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(855) 555-0142";
-const PHONE_TEL = "tel:+18555550142";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const NAV_LINKS = [
   { href: "#protect", label: "Protection" },
@@ -222,8 +224,8 @@ export default function SentinelSecurePage() {
                 <a href="#quote" className="sentinel-btn sentinel-btn-primary">
                   Get Protected <ArrowRight size={16} />
                 </a>
-                <a href={PHONE_TEL} className="sentinel-btn sentinel-btn-ghost">
-                  <Phone size={16} /> {PHONE_DISPLAY}
+                <a href={CONTACT_URL} className="sentinel-btn sentinel-btn-ghost">
+                  <Mail size={16} /> {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -372,8 +374,8 @@ export default function SentinelSecurePage() {
                 Talk to a security specialist — not a sales script. We&apos;ll map your
                 home&apos;s risks and quote a system in about ten minutes.
               </p>
-              <a href={PHONE_TEL} className="sentinel-cta-phone">
-                <Phone size={24} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a href={CONTACT_URL} className="sentinel-cta-phone">
+                <Mail size={24} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
 
@@ -426,7 +428,7 @@ export default function SentinelSecurePage() {
               </li>
             ))}
             <li>
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </li>
           </ul>
           <p className="sentinel-footer-fine">

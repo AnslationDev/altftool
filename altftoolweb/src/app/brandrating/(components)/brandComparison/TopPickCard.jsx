@@ -132,7 +132,7 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                         target="_blank"
                         className={`mt-auto w-full h-[48px] sm:h-[52px] lg:h-[48px] rounded-full flex items-center justify-center gap-2 text-[15px] sm:text-[16px] font-semibold transition-all
               ${isActive
-                                ? "bg-[var(--primary)] text-white"
+                                ? "bg-[var(--primary)] text-(--primary-foreground)"
                                 : "border border-[var(--border)] hover:border-[var(--primary)] hover:text-[var(--primary)] text-[var(--foreground)]"
                             }`}
                     >

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   Star,
   ShieldCheck,
   ClipboardCheck,
@@ -15,9 +15,10 @@ import {
 } from "lucide-react";
 import "./topnotch-roofing.css";
 
-const QUOTE_URL = "https://example.com/quote/topnotch-roofing";
-const PHONE_TEL = "tel:+18555550210";
-const PHONE_DISPLAY = "(855) 555-0210";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1633759593085-1eaeb724fc88?auto=format&fit=crop&w=1600&q=80",
@@ -41,9 +42,7 @@ function QuoteButton({ variant = "red", className = "", children }) {
   return (
     <a
       className={`topnotch-btn topnotch-btn--${variant} ${className}`.trim()}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowRight size={18} aria-hidden="true" />
@@ -53,9 +52,9 @@ function QuoteButton({ variant = "red", className = "", children }) {
 
 function PhoneLink({ light = false }) {
   return (
-    <a className={light ? "topnotch-phone-link topnotch-phone-link--light" : "topnotch-phone-link"} href={PHONE_TEL}>
-      <Phone size={18} aria-hidden="true" />
-      {PHONE_DISPLAY}
+    <a className={light ? "topnotch-phone-link topnotch-phone-link--light" : "topnotch-phone-link"} href={CONTACT_URL}>
+      <Mail size={18} aria-hidden="true" />
+      {CONTACT_LABEL}
     </a>
   );
 }
@@ -327,7 +326,7 @@ export default function TopNotchRoofingPage() {
               <a href="#services">Services</a>
               <a href="#process">Our Process</a>
               <a href="#reviews">Reviews</a>
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+              <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
             </div>
           </div>
           <p className="topnotch-footer-note">Independent service provider listing</p>

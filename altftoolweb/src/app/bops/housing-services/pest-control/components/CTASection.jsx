@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// This SPA lives inside a Next route; the site-wide contact page is outside the
+// router, so it's a full navigation rather than a react-router <Link>.
+const CONTACT_URL = '/policypages/contact';
+
 const CTASection = () => {
   return (
     <div className="bg-[#14532D] py-14 text-white">
@@ -11,7 +15,7 @@ const CTASection = () => {
           <p className="text-white/75 text-lg mb-8">Our team is ready to help. Get a free quote or speak to a specialist right away.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/book" className="btn bg-white text-[#14532D] hover:bg-[#F8FAFC] px-10 text-base">Book Service Now</Link>
-            <a href="tel:7865679554" className="btn border-2 border-white/70 hover:bg-white/10 text-white px-9 text-base">Call (786) 567-9554</a>
+            <a href={CONTACT_URL} className="btn border-2 border-white/70 hover:bg-white/10 text-white px-9 text-base">Contact us</a>
           </div>
         </div>
       </div>

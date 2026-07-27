@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Headphones, PhoneCall, Search, X } from "lucide-react";
+import { Headphones, MessageSquare, Search, X } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
@@ -18,6 +18,8 @@ import EstimateForm from "./components/EstimateForm";
 import ServiceAreas from "./components/ServiceAreas";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
+
+const CONTACT_URL = "/policypages/contact";
 
 export default function App() {
   const [blogSlug, setBlogSlug] = useState(() => getBlogSlug());
@@ -186,18 +188,15 @@ function SidingSearchPopup({ state, onClose }) {
                 </div>
 
                 <h3 className="mt-6 font-display text-2xl font-extrabold text-[#11122d] sm:text-3xl">
-                  Now Call Toll Free
+                  Send us your job
                 </h3>
                 <a
-                  href="tel:+18005551234"
+                  href={CONTACT_URL}
                   className="mx-auto mt-3 flex max-w-lg items-center justify-center gap-3 rounded-2xl bg-[#30339a] px-4 py-3 text-2xl font-extrabold text-white shadow-[0_22px_45px_rgba(49,52,151,0.22)] transition hover:bg-[#24277e] sm:text-3xl"
                 >
-                  <PhoneCall className="h-6 w-6 sm:h-7 sm:w-7" />
-                  +1-800-555-1234
+                  <MessageSquare className="h-6 w-6 sm:h-7 sm:w-7" />
+                  Contact us
                 </a>
-                <p className="mt-4 text-xl font-extrabold text-[#17182f] sm:text-2xl">
-                  We are available 24x7
-                </p>
                 <button
                   type="button"
                   onClick={onClose}

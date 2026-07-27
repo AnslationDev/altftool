@@ -11,7 +11,7 @@ import {
   Check,
   X,
   Star,
-  Phone,
+  Mail,
   ChevronDown,
   Lock,
   Moon,
@@ -19,8 +19,10 @@ import {
   Sparkles,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(844) 555-0198";
-const PHONE_TEL = "tel:+18445550198";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const NAV_LINKS = [
   { href: "#guardnest-features", label: "Made for families" },
@@ -201,9 +203,9 @@ export default function GuardNestPage() {
                 <a className="guardnest-pill" href="#quote">
                   Get my free quote
                 </a>
-                <a className="guardnest-pill guardnest-pill-ghost" href={PHONE_TEL}>
-                  <Phone size={17} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="guardnest-pill guardnest-pill-ghost" href={CONTACT_URL}>
+                  <Mail size={17} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <p className="guardnest-trust">
@@ -359,7 +361,7 @@ export default function GuardNestPage() {
           <div className="guardnest-container">
             <div className="guardnest-section-head">
               <h2 id="guardnest-faq-title">Gentle answers to fair questions</h2>
-              <p>Still curious? Call us — a human picks up.</p>
+              <p>Still curious? Contact us — a human replies.</p>
             </div>
             <div className="guardnest-faq-list">
               {FAQS.map((faq) => (
@@ -385,9 +387,9 @@ export default function GuardNestPage() {
                   Tell us a little about your place and we&apos;ll put together a
                   friendly, no-pressure quote. Or just call — we love a chat.
                 </p>
-                <a className="guardnest-cta-phone" href={PHONE_TEL}>
-                  <Phone size={22} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="guardnest-cta-phone" href={CONTACT_URL}>
+                  <Mail size={22} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <form className="guardnest-form" onSubmit={handleQuoteSubmit}>
@@ -463,7 +465,7 @@ export default function GuardNestPage() {
               <h3>Say hello</h3>
               <ul>
                 <li>
-                  <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+                  <a href={CONTACT_URL}>{CONTACT_LABEL}</a>
                 </li>
                 <li><a href="#quote">Request a free quote</a></li>
               </ul>

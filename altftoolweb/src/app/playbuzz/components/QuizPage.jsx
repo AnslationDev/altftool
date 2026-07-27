@@ -32,7 +32,9 @@ const YouMightAlsoLike = ({ relatedArticles }) => (
           </div>
           <div className="px-3.5 py-3 border-t border-border">
             <div className="text-sm font-bold text-center leading-tight mb-1.5" style={{ color: 'var(--foreground)' }}>{article.title}</div>
-            <div className="text-xs font-normal text-center" style={{ color: 'var(--muted-foreground)' }}>{article.author} &middot; {article.plays}</div>
+            {article.plays ? (
+              <div className="text-xs font-normal text-center" style={{ color: 'var(--muted-foreground)' }}>{article.plays}</div>
+            ) : null}
           </div>
         </Link>
       ))}
@@ -72,7 +74,6 @@ const QuizPage = () => {
     if (quiz) {
       return {
         title: quiz.title,
-        author: quiz.author,
         image: quiz.heroImage || quiz.cardImage,
         plays: quiz.plays,
         category: quiz.category,
@@ -81,13 +82,22 @@ const QuizPage = () => {
     }
     return {
       title: 'Only Highly Gifted People Can Read Backwards. Can You?',
-      author: 'Terry Stein',
       image: 'https://picsum.photos/seed/forest-path/1200/600',
       plays: '2.4M plays',
       category: 'Trivia',
       questions: FALLBACK_QUESTIONS,
     };
   }, [articleId]);
+
+  const quizMeta = useMemo(
+    () =>
+      [
+        quizData.plays,
+        `${quizData.questions.length} questions`,
+        quizData.category || 'Trivia',
+      ].filter(Boolean),
+    [quizData],
+  );
 
   const relatedArticles = useMemo(() => {
     const sameCategory = articlesData.filter((a) => a.id !== articleId && a.category === quizData.category).slice(0, 2);
@@ -299,19 +309,13 @@ const QuizPage = () => {
           {gameState === 'intro' && (
             <>
               <div className="flex flex-col items-center text-center pb-2.5">
-                <div className="flex items-center gap-3 mb-5 text-sm w-full justify-start" style={{ color: 'var(--muted-foreground)' }}>
-                  <div className="w-9 h-9 rounded-full overflow-hidden">
-                    <img src="https://picsum.photos/seed/avatar1/64/64" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span>by <strong style={{ color: 'var(--foreground)' }}>{quizData.author}</strong></span>
-                    <span className="mx-0.5">&middot;</span>
-                    <span>{quizData.plays}</span>
-                    <span className="mx-0.5">&middot;</span>
-                    <span>{quizData.questions.length} questions</span>
-                    <span className="mx-0.5">&middot;</span>
-                    <span>{quizData.category || 'Trivia'}</span>
-                  </div>
+                <div className="flex flex-wrap items-center gap-2 mb-5 text-sm w-full justify-start" style={{ color: 'var(--muted-foreground)' }}>
+                  {quizMeta.map((part, idx) => (
+                    <span key={`${idx}-${part}`} className="flex items-center gap-2">
+                      {idx > 0 && <span aria-hidden="true">&middot;</span>}
+                      <span>{part}</span>
+                    </span>
+                  ))}
                 </div>
                 <div className="w-full rounded-md overflow-hidden mb-6" style={{ boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
                   <img src={quizData.image} alt={quizData.title} className="w-full h-auto block object-cover" />

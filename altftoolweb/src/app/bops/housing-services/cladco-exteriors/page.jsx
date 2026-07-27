@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  Phone,
+  Mail,
   ArrowRight,
   Check,
   Star,
@@ -14,9 +14,10 @@ import {
 } from "lucide-react";
 import "./cladco-exteriors.css";
 
-const QUOTE_URL = "https://example.com/quote/cladco-exteriors";
-const PHONE_DISPLAY = "(833) 555-0121";
-const PHONE_TEL = "tel:+18335550121";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1574359411659-15573a27fd0c?auto=format&fit=crop&w=1600&q=80",
@@ -128,9 +129,7 @@ function QuoteButton({ className = "cladco-btn cladco-btn-solid", children }) {
   return (
     <a
       className={className}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowRight size={16} aria-hidden="true" />
@@ -159,9 +158,9 @@ export default function CladCoExteriorsPage() {
             <li><a href="#reviews">Reviews</a></li>
           </ul>
           <div className="cladco-nav-cta">
-            <a className="cladco-nav-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="cladco-nav-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
             <QuoteButton />
           </div>
@@ -181,9 +180,9 @@ export default function CladCoExteriorsPage() {
               </p>
               <div className="cladco-hero-actions">
                 <QuoteButton />
-                <a className="cladco-btn cladco-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={16} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="cladco-btn cladco-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={16} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <div className="cladco-hero-stats">
@@ -369,9 +368,9 @@ export default function CladCoExteriorsPage() {
               </p>
             </div>
             <div className="cladco-band-actions">
-              <a className="cladco-band-phone" href={PHONE_TEL}>
-                <Phone aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a className="cladco-band-phone" href={CONTACT_URL}>
+                <Mail aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
               <QuoteButton className="cladco-btn cladco-btn-invert" />
             </div>
@@ -413,9 +412,9 @@ export default function CladCoExteriorsPage() {
             </p>
             <div className="cladco-final-actions">
               <QuoteButton className="cladco-btn cladco-btn-invert" />
-              <a className="cladco-btn cladco-btn-outline-light" href={PHONE_TEL}>
-                <Phone size={16} aria-hidden="true" />
-                {PHONE_DISPLAY}
+              <a className="cladco-btn cladco-btn-outline-light" href={CONTACT_URL}>
+                <Mail size={16} aria-hidden="true" />
+                {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -430,9 +429,9 @@ export default function CladCoExteriorsPage() {
             </span>
             CladCo Exteriors
           </a>
-          <a className="cladco-nav-phone" href={PHONE_TEL}>
-            <Phone size={16} aria-hidden="true" />
-            {PHONE_DISPLAY}
+          <a className="cladco-nav-phone" href={CONTACT_URL}>
+            <Mail size={16} aria-hidden="true" />
+            {CONTACT_LABEL}
           </a>
           <p className="cladco-footer-note">
             Independent service provider listing. CladCo Exteriors is a

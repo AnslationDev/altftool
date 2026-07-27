@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   PawPrint,
-  Phone,
   HeartPulse,
   Stethoscope,
   Zap,
@@ -13,18 +12,13 @@ import {
   ShieldCheck,
   Smile,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./pawcover.css";
 
 const QUOTE_URL = "https://example.com/quote/pawcover";
-const PHONE_DISPLAY = "(866) 555-0345";
-const PHONE_TEL = "tel:+18665550345";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1613915588863-e6cc05fcaa16?auto=format&fit=crop&w=1600&q=80",
-  cat: "https://images.unsplash.com/photo-1570824104629-1817c91f7d1d?auto=format&fit=crop&w=900&q=80",
-  pup: "https://images.unsplash.com/photo-1736128081617-b468f8bf7920?auto=format&fit=crop&w=900&q=80",
-  buddy: "https://images.unsplash.com/photo-1650903177650-6abbb380abaa?auto=format&fit=crop&w=900&q=80",
-  friend: "https://images.unsplash.com/photo-1570117267998-63272030c1c3?auto=format&fit=crop&w=900&q=80",
 };
 
 const FAQS = [
@@ -62,15 +56,6 @@ function QuoteButton({ ghost, small, children }) {
   );
 }
 
-function PhoneLink({ label }) {
-  return (
-    <a href={PHONE_TEL} className="pawcover-phone">
-      <Phone size={17} aria-hidden="true" />
-      <span>{label || PHONE_DISPLAY}</span>
-    </a>
-  );
-}
-
 function PawStamp({ style }) {
   return (
     <span className="pawcover-paw-stamp" style={style} aria-hidden="true">
@@ -85,7 +70,7 @@ function Polaroid({ src, alt, caption, left, eager }) {
       <div className="pawcover-polaroid-img">
         <img src={src} alt={alt} loading={eager ? undefined : "lazy"} />
       </div>
-      <figcaption className="pawcover-polaroid-caption">{caption}</figcaption>
+      {caption && <figcaption className="pawcover-polaroid-caption">{caption}</figcaption>}
     </figure>
   );
 }
@@ -107,18 +92,18 @@ export default function PawCoverPage() {
             <ul className="pawcover-nav-links">
               <li><a href="#pawcover-coverage">Coverage</a></li>
               <li><a href="#pawcover-how">How It Works</a></li>
-              <li><a href="#pawcover-rates">Sample Rates</a></li>
               <li><a href="#pawcover-faq">FAQ</a></li>
             </ul>
           </nav>
           <div className="pawcover-nav-cta">
-            <PhoneLink />
             <QuoteButton small>Free Quote</QuoteButton>
           </div>
         </div>
       </header>
 
       <main id="pawcover-top">
+        <DemoBrandNotice brand="PawCover" />
+
         <section className="pawcover-hero">
           <PawStamp style={{ top: 30, left: "4%", width: 54, height: 54, transform: "rotate(-18deg)" }} />
           <PawStamp style={{ bottom: 40, right: "6%", width: 70, height: 70, transform: "rotate(14deg)" }} />
@@ -136,7 +121,6 @@ export default function PawCoverPage() {
               </p>
               <div className="pawcover-hero-ctas">
                 <QuoteButton>Get a Free Quote</QuoteButton>
-                <PhoneLink label={`Call ${PHONE_DISPLAY}`} />
               </div>
               <ul className="pawcover-hero-points">
                 <li><CheckCircle2 size={17} aria-hidden="true" /> Use any licensed U.S. vet</li>
@@ -148,7 +132,6 @@ export default function PawCoverPage() {
               <Polaroid
                 src={IMG.hero}
                 alt="Happy golden-coated dog looking up with bright eyes"
-                caption="Milo, insured &amp; muddy since 2024"
                 eager
               />
             </div>
@@ -228,64 +211,6 @@ export default function PawCoverPage() {
           </div>
         </section>
 
-        <section className="pawcover-section pawcover-section--tint">
-          <div className="pawcover-wrap">
-            <div className="pawcover-section-head">
-              <h2>Meet the PawCover pack</h2>
-              <p>Real-life goofballs, chaos gremlins, and couch potatoes — all part of the family.</p>
-            </div>
-            <div className="pawcover-gallery">
-              <Polaroid
-                src={IMG.cat}
-                alt="Tabby cat lounging comfortably and gazing at the camera"
-                caption="Biscuit — professional napper"
-                left
-              />
-              <Polaroid
-                src={IMG.pup}
-                alt="Small dog with perked ears sitting attentively"
-                caption="Pepper — sock enthusiast"
-              />
-              <Polaroid
-                src={IMG.buddy}
-                alt="Playful dog outdoors enjoying the fresh air"
-                caption="Waffles — zoomies champion"
-                left
-              />
-              <Polaroid
-                src={IMG.friend}
-                alt="Curious dog resting its head and watching calmly"
-                caption="Noodle — treat negotiator"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="pawcover-section" id="pawcover-rates">
-          <PawStamp style={{ top: 24, right: "8%", width: 60, height: 60, transform: "rotate(-12deg)" }} />
-          <div className="pawcover-wrap pawcover-rate">
-            <div className="pawcover-rate-copy">
-              <h2>What might it cost?</h2>
-              <p>
-                Every pet is different — age, breed, and zip code all shape your rate. The examples
-                here are illustrative starting points only, not offers of coverage. Your actual
-                quote takes about two minutes on the secure quote site.
-              </p>
-              <div className="pawcover-hero-ctas">
-                <QuoteButton>See My Real Rate</QuoteButton>
-                <PhoneLink label={`Or call ${PHONE_DISPLAY}`} />
-              </div>
-            </div>
-            <div className="pawcover-rate-card" role="img" aria-label="Illustrative sample monthly rates: young dog from about 24 dollars, adult cat from about 14 dollars, senior dog from about 41 dollars">
-              <h3>Sample monthly rates</h3>
-              <p className="pawcover-rate-note">Illustrative examples only — your quote may differ.</p>
-              <div className="pawcover-rate-row"><span>Young dog (2 yrs, mixed breed)</span><strong>from ~$24/mo</strong></div>
-              <div className="pawcover-rate-row"><span>Adult cat (4 yrs, indoor)</span><strong>from ~$14/mo</strong></div>
-              <div className="pawcover-rate-row"><span>Senior dog (8 yrs, large breed)</span><strong>from ~$41/mo</strong></div>
-            </div>
-          </div>
-        </section>
-
         <section className="pawcover-section pawcover-section--tint" id="pawcover-faq">
           <div className="pawcover-wrap">
             <div className="pawcover-section-head">
@@ -325,7 +250,6 @@ export default function PawCoverPage() {
             </p>
             <div className="pawcover-band-ctas">
               <QuoteButton>Get a Free Quote</QuoteButton>
-              <PhoneLink label={`Call ${PHONE_DISPLAY}`} />
             </div>
           </div>
         </section>

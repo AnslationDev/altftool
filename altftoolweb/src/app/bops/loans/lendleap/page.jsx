@@ -3,7 +3,7 @@
 import "./lendleap.css";
 import {
   Zap,
-  Phone,
+  Mail,
   Smartphone,
   Timer,
   BadgeCheck,
@@ -16,9 +16,10 @@ import {
   FileX2,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/lendleap";
-const PHONE_DISPLAY = "(811) 555-0201";
-const PHONE_TEL = "tel:+18115550201";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1681826292838-c37fbd22263a?auto=format&fit=crop&w=1600&q=80",
@@ -32,9 +33,7 @@ function QuoteButton({ className = "lendleap-btn lendleap-btn-primary", children
   return (
     <a
       className={className}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children}
       <ArrowRight size={18} aria-hidden="true" />
@@ -55,9 +54,9 @@ export default function LendLeapPage() {
             LendLeap
           </a>
           <div className="lendleap-nav-actions">
-            <a className="lendleap-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="lendleap-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton>Get a Free Quote</QuoteButton>
           </div>
@@ -81,9 +80,9 @@ export default function LendLeapPage() {
               </p>
               <div className="lendleap-hero-ctas">
                 <QuoteButton>Get a Free Quote</QuoteButton>
-                <a className="lendleap-btn lendleap-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="lendleap-btn lendleap-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
               <div className="lendleap-chips">
@@ -280,9 +279,9 @@ export default function LendLeapPage() {
               </ul>
               <div className="lendleap-split-ctas">
                 <QuoteButton>Get a Free Quote</QuoteButton>
-                <a className="lendleap-btn lendleap-btn-dark" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
+                <a className="lendleap-btn lendleap-btn-dark" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -335,9 +334,9 @@ export default function LendLeapPage() {
               </p>
               <div className="lendleap-final-ctas">
                 <QuoteButton>Get a Free Quote</QuoteButton>
-                <a className="lendleap-btn lendleap-btn-ghost" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" />
-                  {PHONE_DISPLAY}
+                <a className="lendleap-btn lendleap-btn-ghost" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" />
+                  {CONTACT_LABEL}
                 </a>
               </div>
             </div>
@@ -355,9 +354,9 @@ export default function LendLeapPage() {
               </span>
               LendLeap
             </a>
-            <a className="lendleap-footer-phone" href={PHONE_TEL}>
-              <Phone size={16} aria-hidden="true" />
-              {PHONE_DISPLAY}
+            <a className="lendleap-footer-phone" href={CONTACT_URL}>
+              <Mail size={16} aria-hidden="true" />
+              {CONTACT_LABEL}
             </a>
             <span>
               <ShieldCheck size={16} aria-hidden="true" style={{ verticalAlign: "-3px", marginRight: 6 }} />

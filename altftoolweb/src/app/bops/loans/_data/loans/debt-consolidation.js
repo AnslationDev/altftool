@@ -24,7 +24,6 @@ export const debtConsolidation = {
   ],
 
   quoteLabel: "See your options",
-  quoteUrl: "https://example.com/quote/debt-consolidation",
 
   featuresTitle: "One loan to tidy up your debt",
   featuresIntro:

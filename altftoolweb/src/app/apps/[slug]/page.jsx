@@ -59,7 +59,9 @@ function createAppJsonLd(app) {
     operatingSystem: app.androidRequired || "Android",
     softwareVersion: app.version,
     fileSize: app.apkSize,
-    downloadUrl: absoluteUrl(app.apkUrl),
+    // Only advertise a download when a real installable file is published for
+    // this app; apps still in progress carry no apkUrl and get no downloadUrl.
+    ...(app.apkUrl ? { downloadUrl: absoluteUrl(app.apkUrl) } : {}),
     author: {
       "@type": "Organization",
       name: app.developer || "AltFTool Team",
@@ -69,13 +71,9 @@ function createAppJsonLd(app) {
       name: "AltFTool",
       url: absoluteUrl("/"),
     },
-    aggregateRating: app.rating
-      ? {
-          "@type": "AggregateRating",
-          ratingValue: app.rating,
-          reviewCount: String(app.reviewCount || "0").replace(/[^0-9.]/g, "") || undefined,
-        }
-      : undefined,
+    // No aggregateRating / review or download counters are emitted: the app
+    // catalogue carries no verified rating, review or install data, and
+    // publishing unverifiable numbers would be fabricated review markup.
     offers: {
       "@type": "Offer",
       price: "0",

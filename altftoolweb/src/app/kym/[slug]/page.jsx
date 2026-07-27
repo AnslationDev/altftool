@@ -8,7 +8,8 @@ import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/li
 const CUSTOM_PAGES = {
   "weekly-meme-roundup": {
     title: "The Weekly Meme Roundup",
-    description: "Local KYM-style article page for the weekly meme roundup.",
+    description:
+      "The AltFTool weekly meme roundup: the formats, edits and reaction images that moved fastest this week.",
     component: KymArticlePage,
   },
   "meme-of-the-month-may-2026": {
@@ -35,14 +36,14 @@ export async function generateMetadata({ params }) {
 
   if (!item) {
     return createPageMetadata({
-      title: "KYM Page",
+      title: "Meme Encyclopedia",
       path,
     });
   }
 
   return createPageMetadata({
     title: item.title,
-    description: `Local KYM-style detail page for ${item.title}.`,
+    description: `${item.title} explained in the AltFTool meme encyclopedia: origin, spread and common examples.`,
     path,
   });
 }
@@ -100,7 +101,7 @@ export default async function Page({ params }) {
       <KymRelatedBand
         slug={slug}
         title={item.title}
-        description={`Local KYM-style detail page for ${item.title}.`}
+        description={`${item.title} explained in the AltFTool meme encyclopedia: origin, spread and common examples.`}
         category={item.category}
       />
     </>

@@ -14,6 +14,7 @@ import {
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import { getDeals } from "@/app/deals/data/deals";
+import { INCUMBENT_SLUGS } from "@/app/alternatives/data/incumbents";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import top11Categories from "@/app/top11/data/categoryData";
 import { getTop9Items } from "@/app/top9/data/getTop9Items";
@@ -28,8 +29,9 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { getAllGeoSlugs } from "@/platform/seo/geoLocations";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
+import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
+import { brandSlug } from "@/app/exclusivedeals/lib/brandSlug";
 import { resolveSitemap } from "@altftool/core/seo/resolver";
-import newsData from "../../public/data/newsdata.json";
 import { TOOLS as altPdfTools } from "@/app/altflovepdf/toolsData";
 import { CALCULATORS as altCalculators } from "@/app/altfcalculators/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
@@ -81,7 +83,6 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
@@ -93,12 +94,9 @@ const staticRoutes = [
   { path: "/prank-socialmedia/templates", priority: 0.58 },
   { path: "/windowswap/pricing", priority: 0.45 },
   { path: "/trendingvids", priority: 0.7 },
-  { path: "/news", priority: 0.7 },
-  { path: "/news/headlines", priority: 0.6 },
-  { path: "/news/local", priority: 0.6 },
-  { path: "/news/newsletter", priority: 0.48 },
-  { path: "/news/topics", priority: 0.6 },
-  { path: "/news/trending", priority: 0.6 },
+  // The whole /news section is noindex: it republishes wire-service headlines
+  // the original publishers own, so we would only be competing with our own
+  // sources. The routes still work for humans; they are just not submitted.
   { path: "/brandrating", priority: 0.7 },
   { path: "/deals", priority: 0.85 },
   { path: "/exclusivedeals", priority: 0.85 },
@@ -508,6 +506,19 @@ async function buildSitemapEntries({
     });
   }
 
+  // Incumbent comparison pages. Small, hand-written family — every URL is a
+  // curated page, so they carry a higher priority than the templated corpora.
+  pushUnique(entries, seen, "/alternatives", {
+    priority: 0.85,
+    changeFrequency: "weekly",
+  });
+  for (const alternativeSlug of INCUMBENT_SLUGS) {
+    pushUnique(entries, seen, `/alternatives/${alternativeSlug}`, {
+      priority: 0.82,
+      changeFrequency: "monthly",
+    });
+  }
+
   for (const signal of SIGNAL_CATALOG) {
     pushUnique(entries, seen, `/signals/${signal.slug}`, {
       priority: 0.74,
@@ -716,11 +727,16 @@ async function buildSitemapEntries({
     });
 
     for (const brand of category.brands || []) {
-      if (!brand?.id) continue;
+      // Key by slugified brand NAME, not brand.id. Every internal link builds
+      // these URLs that way and BrandDetail resolves the last path segment by
+      // matching slugified names — an id URL renders a permanent loading
+      // skeleton at HTTP 200, i.e. a soft 404. This emitted 60 of them.
+      const slug = brandSlug(brand?.brandName || brand?.name);
+      if (!slug) continue;
       pushUnique(
         entries,
         seen,
-        `/exclusivedeals/${category.slug}/${brand.id}`,
+        `/exclusivedeals/${category.slug}/${slug}`,
         {
           priority: 0.64,
           changeFrequency: "weekly",
@@ -729,7 +745,7 @@ async function buildSitemapEntries({
       pushUnique(
         entries,
         seen,
-        `/exclusivedeals/store/${category.slug}/${brand.id}`,
+        `/exclusivedeals/store/${category.slug}/${slug}`,
         {
           priority: 0.58,
           changeFrequency: "weekly",
@@ -795,17 +811,9 @@ async function buildSitemapEntries({
     );
   }
 
-  for (const article of newsData.news || []) {
-    if (article?.slug) {
-      pushUnique(entries, seen, `/news/${article.slug}`, {
-        priority: 0.55,
-        changeFrequency: "weekly",
-      });
-    }
-  }
-
-  // News topic pages are noindexed (client-loaded feeds, thin server content),
-  // so they are intentionally excluded from the sitemap to save crawl budget.
+  // News article pages are noindexed (syndicated third-party headlines the
+  // original publishers own), so they are intentionally excluded from the
+  // sitemap — as are the news hubs and topic pages, for the same reason.
 
   // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
   for (const tool of altPdfTools || []) {
@@ -959,5 +967,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
 );
 
 export default async function sitemap() {
-  return getSitemapEntries();
+  // Escape only here, at the XML boundary. getSitemapEntries() must keep
+  // returning raw URLs — /site-map and the search index render them as links.
+  return toXmlSafeSitemap(await getSitemapEntries());
 }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Moon,
-  Phone,
+  Mail,
   ArrowRight,
   Video,
   Radar,
@@ -18,9 +18,10 @@ import {
 } from "lucide-react";
 import "./nightwatch-security.css";
 
-const QUOTE_URL = "https://example.com/quote/nightwatch-security";
-const PHONE_DISPLAY = "(855) 555-0228";
-const PHONE_TEL = "tel:+18555550228";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   city: "https://images.unsplash.com/photo-1496368077930-c1e31b4e5b44",
@@ -122,9 +123,7 @@ function QuoteButton({ ghost = false, children = "Get a Free Quote" }) {
   return (
     <a
       className={`nightwatch-btn ${ghost ? "nightwatch-btn--ghost" : "nightwatch-btn--solid"}`}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children} <ArrowRight size={16} aria-hidden="true" />
     </a>
@@ -151,9 +150,9 @@ export default function NightWatchSecurityPage() {
             <a href="#nightwatch-faq">FAQ</a>
           </nav>
           <div className="nightwatch-nav-cta">
-            <a className="nightwatch-nav-phone" href={PHONE_TEL}>
-              <Phone size={15} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="nightwatch-nav-phone" href={CONTACT_URL}>
+              <Mail size={15} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <QuoteButton />
           </div>
@@ -178,8 +177,8 @@ export default function NightWatchSecurityPage() {
               </p>
               <div className="nightwatch-hero-actions">
                 <QuoteButton />
-                <a className="nightwatch-btn nightwatch-btn--ghost" href={PHONE_TEL}>
-                  <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="nightwatch-btn nightwatch-btn--ghost" href={CONTACT_URL}>
+                  <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
               </div>
               <div className="nightwatch-hero-chips">
@@ -277,8 +276,8 @@ export default function NightWatchSecurityPage() {
             </p>
             <div className="nightwatch-band-actions">
               <QuoteButton />
-              <a className="nightwatch-btn nightwatch-btn--ghost" href={PHONE_TEL}>
-                <Phone size={16} aria-hidden="true" /> Call {PHONE_DISPLAY}
+              <a className="nightwatch-btn nightwatch-btn--ghost" href={CONTACT_URL}>
+                <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -406,8 +405,8 @@ export default function NightWatchSecurityPage() {
             </p>
             <div className="nightwatch-band-actions">
               <QuoteButton>Get a Free Quote</QuoteButton>
-              <a className="nightwatch-btn nightwatch-btn--ghost" href={PHONE_TEL}>
-                <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a className="nightwatch-btn nightwatch-btn--ghost" href={CONTACT_URL}>
+                <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </div>
           </div>
@@ -427,8 +426,8 @@ export default function NightWatchSecurityPage() {
           </div>
           <div>
             <p>
-              <a className="nightwatch-nav-phone" href={PHONE_TEL}>
-                <Phone size={14} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a className="nightwatch-nav-phone" href={CONTACT_URL}>
+                <Mail size={14} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
             </p>
             <p className="nightwatch-footer-note">Independent service provider listing</p>

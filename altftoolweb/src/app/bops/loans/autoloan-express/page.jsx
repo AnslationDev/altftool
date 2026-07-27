@@ -14,17 +14,16 @@ import {
   Zap,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/autoloan-express";
-const PHONE_DISPLAY = "(811) 555-0223";
-const PHONE_HREF = "tel:+18115550223";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 function QuoteButton({ ghost, children }) {
   return (
     <a
       className={ghost ? "autoexpress-btn autoexpress-btn--ghost" : "autoexpress-btn"}
-      href={QUOTE_URL}
-      target="_blank"
-      rel="sponsored noopener noreferrer"
+      href={CONTACT_URL}
     >
       {children || "Get a Free Quote"}
       <ArrowRight size={17} aria-hidden="true" />
@@ -34,9 +33,9 @@ function QuoteButton({ ghost, children }) {
 
 function PhoneLink() {
   return (
-    <a className="autoexpress-tel" href={PHONE_HREF}>
+    <a className="autoexpress-tel" href={CONTACT_URL}>
       <PhoneCall size={17} aria-hidden="true" />
-      <span>{PHONE_DISPLAY}</span>
+      <span>{CONTACT_LABEL}</span>
     </a>
   );
 }
@@ -224,7 +223,7 @@ export default function AutoLoanExpressPage() {
                   <li><CheckCircle2 size={18} aria-hidden="true" /> Compare multiple lender offers in one pass</li>
                   <li><CheckCircle2 size={18} aria-hidden="true" /> New, used, private-party, and refinance options</li>
                   <li><CheckCircle2 size={18} aria-hidden="true" /> No fee to request a quote, no obligation to accept</li>
-                  <li><CheckCircle2 size={18} aria-hidden="true" /> Real humans on the line at {PHONE_DISPLAY}</li>
+                  <li><CheckCircle2 size={18} aria-hidden="true" /> Real humans on the line at {CONTACT_LABEL}</li>
                 </ul>
                 <div className="autoexpress-hero-ctas">
                   <QuoteButton />
@@ -313,7 +312,7 @@ export default function AutoLoanExpressPage() {
           </div>
           <p>
             <BadgeCheck size={14} aria-hidden="true" style={{ verticalAlign: "-2px" }} />{" "}
-            Questions? Call <a className="autoexpress-tel" href={PHONE_HREF} style={{ display: "inline" }}>{PHONE_DISPLAY}</a>
+            Questions? Call <a className="autoexpress-tel" href={CONTACT_URL} style={{ display: "inline" }}>{CONTACT_LABEL}</a>
           </p>
           <p>
             <Route size={14} aria-hidden="true" style={{ verticalAlign: "-2px" }} />{" "}

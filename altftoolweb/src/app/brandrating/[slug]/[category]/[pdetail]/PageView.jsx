@@ -327,7 +327,7 @@ useEffect(() => {
                         transition-colors duration-200
                         cursor-pointer
                         ${isActive
-                            ? "bg-(--primary) text-white border-(--primary)"
+                            ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                             : "bg-(--background) text-(--muted-foreground) border-(--border) hover:bg-(--primary) hover:text-white hover:border-(--primary)"
                           }
                       `}

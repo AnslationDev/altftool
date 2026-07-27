@@ -2,13 +2,27 @@
 
 import "./pipeworks-pro.css";
 import {
-  Phone, Wrench, Clock, CheckCircle2, ChevronRight, Droplets, Flame,
-  ShowerHead, Hammer, ShieldCheck, BadgeCheck, Truck, Star, AlertTriangle, ArrowRight,
+  AlertTriangle,
+  ArrowRight,
+  BadgeCheck,
+  CheckCircle2,
+  ChevronRight,
+  Clock,
+  Droplets,
+  Flame,
+  Hammer,
+  Mail,
+  ShieldCheck,
+  ShowerHead,
+  Star,
+  Truck,
+  Wrench,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(833) 555-0165";
-const PHONE_TEL = "tel:+18335550165";
-const QUOTE_URL = "https://example.com/quote/pipeworks-pro";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1526898943670-92bfa9f94c12?auto=format&fit=crop&w=1600&q=80",
@@ -43,7 +57,7 @@ const SERVICES = [
 ];
 
 const STEPS = [
-  { title: `Call ${PHONE_DISPLAY}`, sub: "Real plumber answers, day or night" },
+  { title: `Call ${CONTACT_LABEL}`, sub: "Real plumber answers, day or night" },
   { title: "Dispatched", sub: "Nearest stocked truck heads your way" },
   { title: "Fixed", sub: "Flat-rate quote approved before we start" },
 ];
@@ -93,7 +107,7 @@ const REVIEWS = [
 
 function QuoteLink({ className, children }) {
   return (
-    <a className={className} href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
+    <a className={className} href={CONTACT_URL}>
       {children}
     </a>
   );
@@ -130,8 +144,8 @@ export default function PipeWorksProPage() {
             <AlertTriangle size={18} aria-hidden="true" />
             Burst pipe or flooding? Emergency crews are standing by right now.
           </p>
-          <a className="pipeworks-alertbar-call" href={PHONE_TEL}>
-            <Phone size={22} aria-hidden="true" /> Call {PHONE_DISPLAY}
+          <a className="pipeworks-alertbar-call" href={CONTACT_URL}>
+            <Mail size={22} aria-hidden="true" /> {CONTACT_LABEL}
           </a>
         </div>
       </div>
@@ -170,8 +184,8 @@ export default function PipeWorksProPage() {
                 a year. One call and a fully stocked truck is on its way.
               </p>
               <div className="pipeworks-hero-ctas">
-                <a className="pipeworks-btn pipeworks-btn-red pipeworks-hero-call" href={PHONE_TEL}>
-                  <Phone size={20} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="pipeworks-btn pipeworks-btn-red pipeworks-hero-call" href={CONTACT_URL}>
+                  <Mail size={20} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
                 <QuoteLink className="pipeworks-btn pipeworks-btn-ghost">
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
@@ -223,7 +237,7 @@ export default function PipeWorksProPage() {
             <h2 className="pipeworks-h2">Whatever burst, blocked, or broke — we fix it tonight</h2>
             <p className="pipeworks-lede">
               Every PipeWorks Pro truck carries the parts to finish 9 out of 10
-              jobs on the first visit. Call {PHONE_DISPLAY} and describe the
+              jobs on the first visit. {CONTACT_LABEL} and describe the
               problem — we&rsquo;ll tell you exactly what happens next.
             </p>
             <div className="pipeworks-cards">
@@ -237,8 +251,8 @@ export default function PipeWorksProPage() {
                       <Icon size={22} aria-hidden="true" /> {title}
                     </h3>
                     <p>{text}</p>
-                    <a className="pipeworks-card-call" href={PHONE_TEL}>
-                      <Phone size={16} aria-hidden="true" /> Call {PHONE_DISPLAY}
+                    <a className="pipeworks-card-call" href={CONTACT_URL}>
+                      <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
                     </a>
                   </div>
                 </article>
@@ -271,8 +285,8 @@ export default function PipeWorksProPage() {
                   </li>
                 ))}
               </ul>
-              <a className="pipeworks-btn pipeworks-btn-red" href={PHONE_TEL}>
-                <Phone size={18} aria-hidden="true" /> Call {PHONE_DISPLAY} Now
+              <a className="pipeworks-btn pipeworks-btn-red" href={CONTACT_URL}>
+                <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL} Now
               </a>
             </div>
           </div>
@@ -287,8 +301,8 @@ export default function PipeWorksProPage() {
                 <p>Talk to a live dispatcher now — or get a free written quote in minutes.</p>
               </div>
               <div className="pipeworks-band-ctas">
-                <a className="pipeworks-btn pipeworks-btn-red" href={PHONE_TEL}>
-                  <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+                <a className="pipeworks-btn pipeworks-btn-red" href={CONTACT_URL}>
+                  <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
                 </a>
                 <QuoteLink className="pipeworks-btn pipeworks-btn-ghost">Get a Free Quote</QuoteLink>
               </div>
@@ -303,7 +317,7 @@ export default function PipeWorksProPage() {
             <h2 className="pipeworks-h2">Fixed right, photographed proud</h2>
             <p className="pipeworks-lede">
               A few jobs from the past month — every one dispatched, quoted, and
-              completed within 24 hours of the first call to {PHONE_DISPLAY}.
+              completed within 24 hours of the first call to {CONTACT_LABEL}.
             </p>
             <div className="pipeworks-gallery">
               {GALLERY.map(({ img, alt, caption }) => (
@@ -345,7 +359,7 @@ export default function PipeWorksProPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="pipeworks-final" aria-label="Call now">
+        <section className="pipeworks-final" aria-label="Contact us">
           <div className="pipeworks-wrap">
             <p className="pipeworks-pulse-badge">
               <span className="pipeworks-pulse-dot" aria-hidden="true" />
@@ -357,8 +371,8 @@ export default function PipeWorksProPage() {
               average, we&rsquo;re on-site in 45 minutes.
             </p>
             <div className="pipeworks-final-ctas">
-              <a className="pipeworks-btn pipeworks-btn-red pipeworks-final-call" href={PHONE_TEL}>
-                <Phone size={24} aria-hidden="true" /> {PHONE_DISPLAY}
+              <a className="pipeworks-btn pipeworks-btn-red pipeworks-final-call" href={CONTACT_URL}>
+                <Mail size={24} aria-hidden="true" /> {CONTACT_LABEL}
               </a>
               <QuoteLink className="pipeworks-btn pipeworks-btn-ghost pipeworks-final-call">
                 Get a Free Quote
@@ -372,8 +386,8 @@ export default function PipeWorksProPage() {
       <footer className="pipeworks-footer">
         <div className="pipeworks-wrap pipeworks-footer-inner">
           <span className="pipeworks-brand"><Brand iconSize={16} /></span>
-          <a className="pipeworks-footer-phone" href={PHONE_TEL}>
-            <Phone size={16} aria-hidden="true" /> {PHONE_DISPLAY}
+          <a className="pipeworks-footer-phone" href={CONTACT_URL}>
+            <Mail size={16} aria-hidden="true" /> {CONTACT_LABEL}
           </a>
           <p className="pipeworks-footer-note">Independent service provider listing.</p>
         </div>

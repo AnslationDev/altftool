@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { PhoneCall, X } from 'lucide-react';
+import { MessageSquare, X } from 'lucide-react';
 import '../styles/PayPerCallOverlay.css';
 
-const PHONE_NUMBER = '+1-714-782-7278';
+const CONTACT_URL = '/policypages/contact';
 
 export default function PayPerCallOverlay() {
   const [phase, setPhase] = useState('idle');
@@ -98,12 +98,11 @@ export default function PayPerCallOverlay() {
             <span className="fp-pcall__dots"><i /><i /><i /></span>
           </div>
 
-          <h3>Now Call Toll Free</h3>
-          <a href="tel:+17147827278" className="fp-pcall__phone">
-            <PhoneCall size={33} />
-            <span>{PHONE_NUMBER}</span>
+          <h3>Send us your job</h3>
+          <a href={CONTACT_URL} className="fp-pcall__phone">
+            <MessageSquare size={33} />
+            <span>Contact us</span>
           </a>
-          <p className="fp-pcall__available">We are available 24/7 for emergency plumbing.</p>
         </div>
       )}
     </div>

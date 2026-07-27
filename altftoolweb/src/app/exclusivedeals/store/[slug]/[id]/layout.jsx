@@ -1,9 +1,12 @@
 import dealData from "../../../(data)/db.json";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { brandSlug, findBrandByUrlKey } from "@/app/exclusivedeals/lib/brandSlug";
 
 function findStoreOffer(slug, id) {
   const category = (dealData.categories || []).find((item) => item.slug === slug);
-  const brand = category?.brands?.find((item) => String(item.id) === String(id));
+  // Slug is canonical (see lib/brandSlug.js); numeric ids still resolve so
+  // links made while the sitemap advertised ids do not start 404ing.
+  const brand = findBrandByUrlKey(category, id);
   return { category, brand };
 }
 
@@ -21,7 +24,7 @@ export async function generateMetadata({ params }) {
   return createPageMetadata({
     title: `${brand.brandName} Store Offer & Coupon Details`,
     description: brand.about || `Review ${brand.brandName} store offers, coupon terms, and savings details on AltFTool.`,
-    path: `/exclusivedeals/store/${category.slug}/${brand.id}`,
+    path: `/exclusivedeals/store/${category.slug}/${brandSlug(brand.brandName || brand.name)}`,
     image: brand.imagedeal || brand.img || brand.brandLogo,
     keywords: [
       `${brand.brandName} store offer`,

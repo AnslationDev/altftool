@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import './Testimonials.css';
 
+const CONTACT_URL = '/policypages/contact';
+
 const testimonials = [
   { text: '"We had a serious cockroach problem, but their team handled it quickly. Now our home feels completely clean and safe."', name: 'Rahul Sharma', role: 'Homeowner' },
   { text: '"Very professional service. They explained everything clearly and solved our termite issue without any hassle. Highly recommended."', name: 'Pooja Verma', role: 'Shop Owner' },
@@ -61,7 +63,7 @@ export default function Testimonials() {
               <h2>Real experiences from customers who trust our pest control services</h2>
             </div>
 
-            <a href="tel:+919711177747" className="btn-green btn-icon">
+            <a href={CONTACT_URL} className="btn-green btn-icon">
               Contact Us <i className="fa-solid fa-arrow-right"></i>
             </a>
 
@@ -106,9 +108,9 @@ export default function Testimonials() {
         <div className="testimonials-footer reveal">
           <div className="footer-left">
             <div className="footer-icon-wrap">
-              <i className="fa-solid fa-phone-volume"></i>
+              <i className="fa-solid fa-comment-dots"></i>
             </div>
-            <p>Trusted pest control solutions that keep your home safe and pest-free – <a href="tel:+919711177747">Contact Us Today</a></p>
+            <p>Trusted pest control solutions that keep your home safe and pest-free – <a href={CONTACT_URL}>Contact Us Today</a></p>
           </div>
           <div className="footer-right">
             <span className="footer-score">4.9/5</span>

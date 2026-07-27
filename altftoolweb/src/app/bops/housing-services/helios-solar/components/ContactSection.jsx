@@ -1,9 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Mail, ArrowRight, X } from "lucide-react";
+import { ArrowRight, Mail, MessageSquare, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
+const CONTACT_URL = "/policypages/contact";
+
 const contactMethods = [
-  { icon: <Phone className="w-6 h-6" strokeWidth={1.5} />, title: "Call Us", desc: "Mon – Fri, 8:00 – 18:00 (EST)", href: "tel:+18005550192" },
+  { icon: <MessageSquare className="w-6 h-6" strokeWidth={1.5} />, title: "Contact us", desc: "We reply by email", href: CONTACT_URL },
   { icon: <Mail className="w-6 h-6" strokeWidth={1.5} />, title: "Email", desc: "hello@heliosolar.com", href: "mailto:hello@heliosolar.com" },
 ];
 
@@ -151,9 +153,9 @@ export default function ContactSection() {
                 Contact us now for the quick estimate and installation
               </p>
 
-              <a href="tel:+18005550192" className="contact-modal-cta">
-                <Phone size={18} />
-                <span>Call Us Now</span>
+              <a href={CONTACT_URL} className="contact-modal-cta">
+                <MessageSquare size={18} />
+                <span>Contact us</span>
               </a>
             </motion.div>
           </motion.div>

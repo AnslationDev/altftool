@@ -170,23 +170,196 @@ export function getRelatedTools(slug, limit = 6) {
     .map(({ slug: relatedSlug, name }) => ({ slug: relatedSlug, name }));
 }
 
+// ---------------------------------------------------------------------------
+// Tool page titles
+//
+// Google renders about 60 characters of a <title>, and the root layout appends
+// " | AltFTool" through its title.template — so a tool page owns roughly 49.
+// The old fixed "{name} - Free Online Tool" suffix spent 19 of those on
+// boilerplate, which pushed 441 of ~2,050 tool titles past the cut-off, where
+// they truncate into look-alike duplicates. Titles now lead with the tool's own
+// name (never rewritten) and spend whatever room is left on the words people
+// actually search for — "free", "online" and the category head noun — skipping
+// any word the name already carries.
+// ---------------------------------------------------------------------------
+const TITLE_MAX_LENGTH = 60;
+// Keep in sync with the title.template in src/app/layout.jsx.
+const TITLE_BRAND_SUFFIX = " | AltFTool";
+const TITLE_BASE_MAX = TITLE_MAX_LENGTH - TITLE_BRAND_SUFFIX.length;
+const TITLE_SEPARATOR = " - ";
+
+// The head noun searchers pair with a tool of this category ("free online pdf
+// tool", "free online calculator"). Categories without a distinctive noun fall
+// through to the generic "Tool".
+const CATEGORY_TITLE_KEYWORDS = {
+  "AI Tools": "AI Tool",
+  Calculators: "Calculator",
+  Converters: "Converter",
+  "Design & Color": "Design Tool",
+  Developer: "Developer Tool",
+  "Finance Calculators": "Calculator",
+  Games: "Game",
+  Generators: "Generator",
+  "Health & Fitness": "Health Tool",
+  "Health Calculators": "Calculator",
+  "Image & Photo": "Image Tool",
+  "Marketing & Social": "Marketing Tool",
+  "PDF & Documents": "PDF Tool",
+  "Security & Privacy": "Privacy Tool",
+  "Text & Writing": "Text Tool",
+  "Video & Audio": "Media Tool",
+};
+
+function normalizeTitleText(value = "") {
+  return String(value).replace(/\s+/g, " ").trim();
+}
+
+/** Singular/plural tolerant word test, so "Images" blocks "Image Tool". */
+function nameContainsWord(name, word) {
+  const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${escaped}(?:e?s)?\\b`, "i").test(name);
+}
+
+function getTitleKeyword(name, tool) {
+  const isNewToName = (noun) =>
+    noun.split(" ").every((word) => !nameContainsWord(name, word));
+
+  // Walk the tool's categories in order. A category with no distinctive noun is
+  // skipped; the first one that does have a noun decides — either the noun is
+  // new to the name and gets used, or the name already says it ("2048 Game",
+  // "Image Compressor") and we fall back to the generic "Tool" rather than
+  // borrowing a secondary category's noun, which would mislabel the tool.
+  for (const category of getToolCategories(tool)) {
+    const noun = CATEGORY_TITLE_KEYWORDS[normalizeTitleText(category)];
+    if (!noun) continue;
+    if (isNewToName(noun)) return noun;
+    break;
+  }
+
+  return isNewToName("Tool") ? "Tool" : "";
+}
+
+/**
+ * Append as many of the trailing phrases as the 60-character budget allows.
+ * Phrases stay atomic, so a title never degrades to "… - Free Online Developer".
+ */
+function fitTitle(name, phrases = []) {
+  const parts = phrases.filter(Boolean);
+  for (let count = parts.length; count > 0; count -= 1) {
+    const candidate = `${name}${TITLE_SEPARATOR}${parts.slice(0, count).join(" ")}`;
+    if (candidate.length <= TITLE_BASE_MAX) return candidate;
+  }
+  return name;
+}
+
+function clipToolName(name) {
+  if (name.length <= TITLE_BASE_MAX) return name;
+  const clipped = name.slice(0, TITLE_BASE_MAX);
+  const wordBoundary = clipped.lastIndexOf(" ");
+  return (
+    wordBoundary > TITLE_BASE_MAX * 0.6 ? clipped.slice(0, wordBoundary) : clipped
+  )
+    .replace(/[\s&,:;-]+$/g, "")
+    .trim();
+}
+
+let toolNameGroups = null;
+
+/** Slugs grouped by tool name, keeping only the names used by 2+ tools. */
+function getToolNameGroups() {
+  if (toolNameGroups) return toolNameGroups;
+  const groups = new Map();
+
+  Object.entries(toolMetaMap).forEach(([slug, tool]) => {
+    const key = normalizeTitleText(tool?.name || slug).toLowerCase();
+    const bucket = groups.get(key);
+    if (bucket) bucket.push(slug);
+    else groups.set(key, [slug]);
+  });
+
+  toolNameGroups = new Map(
+    [...groups]
+      .filter(([, slugs]) => slugs.length > 1)
+      .map(([key, slugs]) => [key, [...slugs].sort()]),
+  );
+  return toolNameGroups;
+}
+
+/**
+ * A handful of tools ship under a name another tool already uses (duplicate
+ * registry entries). Give each the first category/topic label its name-twins do
+ * not share, so two pages never compete for one title. Returns "" when the
+ * registry offers nothing to tell them apart.
+ */
+function getToolTitleDifferentiator(slug, name) {
+  const group = getToolNameGroups().get(name.toLowerCase());
+  if (!group) return "";
+
+  const labelsFor = (candidateSlug) => {
+    const candidate = toolMetaMap[candidateSlug] || {};
+    return [...getToolCategories(candidate), ...(candidate.topics || [])]
+      .map(normalizeTitleText)
+      .filter(Boolean);
+  };
+  const taken = new Set(
+    group
+      .filter((candidateSlug) => candidateSlug !== slug)
+      .flatMap(labelsFor)
+      .map((label) => label.toLowerCase()),
+  );
+
+  return (
+    labelsFor(slug).find(
+      (label) =>
+        !taken.has(label.toLowerCase()) &&
+        `${name}${TITLE_SEPARATOR}${label}`.length <= TITLE_BASE_MAX,
+    ) || ""
+  );
+}
+
+export function buildToolTitle(slug, tool = {}) {
+  const rawName =
+    normalizeTitleText(tool?.name) ||
+    normalizeTitleText(String(slug).replace(/[-_]/g, " "));
+  const name = clipToolName(rawName);
+
+  const differentiator = getToolTitleDifferentiator(slug, rawName);
+  if (differentiator) return fitTitle(name, [differentiator]);
+
+  const modifiers = ["Free", "Online"].filter(
+    (word) => !nameContainsWord(name, word),
+  );
+  return fitTitle(name, [...modifiers, getTitleKeyword(name, tool)]);
+}
+
 export async function buildToolMetadata(slug) {
   // Warm the central SEO config so per-URL admin overrides apply to tool pages.
   await primeSeoConfig();
   const tool = getTool(slug);
 
   if (!tool) {
-    return {
+    // Unknown slugs render the 404 page. Without an explicit robots directive
+    // they inherited index,follow (plus the site-wide canonical), so any junk
+    // /tools/all/<anything> URL was indexable.
+    return createPageMetadata({
       title: "Tool Not Found",
-      description: "The requested tool does not exist.",
-    };
+      description:
+        "This tool page does not exist. Browse the AltFTool library to find a free online tool for the job.",
+      path: `/tools/all/${slug}`,
+      noindex: true,
+    });
   }
 
   const seoContent = buildToolSeoContent(slug, tool);
 
   return createPageMetadata({
-    title: `${tool.name} - Free Online Tool`,
+    title: buildToolTitle(slug, tool),
     description: seoContent.metaDescription,
     path: `/tools/all/${slug}`,
+    keywords: [
+      tool.name,
+      ...getToolCategories(tool),
+      ...(tool.topics || []),
+    ].filter(Boolean),
   });
 }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Droplets,
-  Phone,
+  Mail,
   ArrowRight,
   Wrench,
   Search,
@@ -17,9 +17,10 @@ import {
 } from "lucide-react";
 import "./draindoctors.css";
 
-const QUOTE_URL = "https://example.com/quote/draindoctors";
-const PHONE_DISPLAY = "(855) 555-0265";
-const PHONE_TEL = "tel:+18555550265";
+// No quote partner and no phone line are live for this page, so every
+// conversion CTA points at the site's real contact route.
+const CONTACT_URL = "/policypages/contact";
+const CONTACT_LABEL = "Contact us";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1766330977065-4458b54c6d1a?auto=format&fit=crop&w=1600&q=80",
@@ -92,14 +93,12 @@ function CtaPair({ variant }) {
     <div className="draindoctors-band-actions">
       <a
         className={`draindoctors-btn ${variant === "light" ? "draindoctors-btn-yellow" : "draindoctors-btn-blue"}`}
-        href={QUOTE_URL}
-        target="_blank"
-        rel="sponsored noopener noreferrer"
+        href={CONTACT_URL}
       >
         <Zap size={18} aria-hidden="true" /> Get a Free Quote
       </a>
-      <a className="draindoctors-btn draindoctors-btn-white" href={PHONE_TEL}>
-        <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
+      <a className="draindoctors-btn draindoctors-btn-white" href={CONTACT_URL}>
+        <Mail size={18} aria-hidden="true" /> {CONTACT_LABEL}
       </a>
     </div>
   );
@@ -127,15 +126,13 @@ export default function DrainDoctorsPage() {
             </ul>
           </nav>
           <div className="draindoctors-nav-cta">
-            <a className="draindoctors-nav-phone" href={PHONE_TEL}>
-              <Phone size={17} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
+            <a className="draindoctors-nav-phone" href={CONTACT_URL}>
+              <Mail size={17} aria-hidden="true" />
+              <span>{CONTACT_LABEL}</span>
             </a>
             <a
               className="draindoctors-btn draindoctors-btn-yellow"
-              href={QUOTE_URL}
-              target="_blank"
-              rel="sponsored noopener noreferrer"
+              href={CONTACT_URL}
             >
               Get a Free Quote
             </a>
@@ -222,9 +219,7 @@ export default function DrainDoctorsPage() {
                     <p>{copy}</p>
                     <a
                       className="draindoctors-card-link"
-                      href={QUOTE_URL}
-                      target="_blank"
-                      rel="sponsored noopener noreferrer"
+                      href={CONTACT_URL}
                     >
                       Get a Free Quote <ArrowRight size={16} aria-hidden="true" />
                     </a>
@@ -349,7 +344,7 @@ export default function DrainDoctorsPage() {
               <span className="draindoctors-logo-mark" aria-hidden="true"><Droplets size={20} /></span>
               DrainDoctors
             </a>
-            <a className="draindoctors-footer-phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+            <a className="draindoctors-footer-phone" href={CONTACT_URL}>{CONTACT_LABEL}</a>
           </div>
           <p className="draindoctors-footer-note">
             Independent service provider listing. DrainDoctors is a fictional brand shown for

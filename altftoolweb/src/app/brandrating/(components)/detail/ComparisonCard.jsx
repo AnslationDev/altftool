@@ -69,7 +69,7 @@ function ComparisonCard({ brand,category }) {
 
                 <Link
                    href={`/brandrating/subcategories/${getUrlLink(category)}`}
-                    className="w-full h-[42px] sm:h-[45px] rounded-[49.23px] bg-(--primary) flex items-center justify-center gap-2 text-white font-semibold"
+                    className="w-full h-[42px] sm:h-[45px] rounded-[49.23px] bg-(--primary) flex items-center justify-center gap-2 text-(--primary-foreground) font-semibold"
                 >
                     Compare Now
                     <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:rotate-45 group-active:rotate-45" />

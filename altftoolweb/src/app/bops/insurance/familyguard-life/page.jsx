@@ -4,8 +4,6 @@ import "./familyguard-life.css";
 import { useState } from "react";
 import {
   Shield,
-  ShieldCheck,
-  Phone,
   Check,
   ChevronDown,
   Users,
@@ -13,14 +11,12 @@ import {
   FileText,
   ArrowRight,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 
 const QUOTE_URL = "https://example.com/quote/familyguard-life";
-const PHONE_TEL = "tel:+18665550312";
-const PHONE_DISPLAY = "(866) 555-0312";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1604251163789-4b8f70807273?auto=format&fit=crop&w=1600&q=80",
-  band: "https://images.unsplash.com/photo-1626450780751-d0d764738e86?auto=format&fit=crop&w=1600&q=80",
   cardTerm: "https://images.unsplash.com/photo-1635179850613-37de539a0a4d?auto=format&fit=crop&w=900&q=80",
   cardWhole: "https://images.unsplash.com/photo-1605656816284-e3031500e190?auto=format&fit=crop&w=900&q=80",
   cardFinal: "https://images.unsplash.com/photo-1627662235844-6f5d8f54816b?auto=format&fit=crop&w=900&q=80",
@@ -66,13 +62,6 @@ const VALUES = [
     title: "Claims Handled Like Family",
     copy: "When a claim comes, your advisor walks your beneficiaries through it personally. Most complete claims are paid within days of approval.",
   },
-];
-
-const RATES = [
-  { profile: "Female, 35, non-smoker · 20-yr term, $500K", rate: "from $24/mo" },
-  { profile: "Male, 40, non-smoker · 20-yr term, $500K", rate: "from $33/mo" },
-  { profile: "Female, 50, non-smoker · Whole life, $100K", rate: "from $138/mo" },
-  { profile: "Male, 62 · Final expense, $15K", rate: "from $71/mo" },
 ];
 
 const FAQS = [
@@ -123,10 +112,6 @@ export default function FamilyGuardLifePage() {
             </span>
           </a>
           <div className="familyguard-nav-actions">
-            <a href={PHONE_TEL} className="familyguard-nav-phone">
-              <Phone size={16} aria-hidden="true" />
-              <span>{PHONE_DISPLAY}</span>
-            </a>
             <a
               href={QUOTE_URL}
               target="_blank"
@@ -140,16 +125,12 @@ export default function FamilyGuardLifePage() {
       </header>
 
       <main id="familyguard-top">
+        <DemoBrandNotice brand="FamilyGuard Life" />
+
         {/* Hero */}
         <section className="familyguard-hero">
           <div className="familyguard-wrap familyguard-hero-grid">
             <div>
-              <p className="familyguard-crest">
-                <span className="familyguard-crest-shield" aria-hidden="true">
-                  <ShieldCheck size={16} />
-                </span>
-                Est. legacy protection · Advisors since day one
-              </p>
               <h1>
                 Protection your family will feel, <em>long after the paperwork is filed.</em>
               </h1>
@@ -166,9 +147,6 @@ export default function FamilyGuardLifePage() {
                 >
                   Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
                 </a>
-                <a href={PHONE_TEL} className="familyguard-hero-phone">
-                  <Phone size={17} aria-hidden="true" /> {PHONE_DISPLAY}
-                </a>
               </div>
               <p className="familyguard-hero-note">No obligation. A licensed advisor reviews every quote personally.</p>
             </div>
@@ -179,28 +157,6 @@ export default function FamilyGuardLifePage() {
                 width="430"
                 height="538"
               />
-            </div>
-          </div>
-        </section>
-
-        {/* Trust strip */}
-        <section className="familyguard-strip" aria-label="FamilyGuard Life at a glance">
-          <div className="familyguard-wrap familyguard-strip-inner">
-            <div className="familyguard-strip-item">
-              <strong>1:1</strong>
-              <span>Dedicated advisor per household</span>
-            </div>
-            <div className="familyguard-strip-item">
-              <strong>3</strong>
-              <span>Plain-language plan families</span>
-            </div>
-            <div className="familyguard-strip-item">
-              <strong>$0</strong>
-              <span>Cost to get a personal quote</span>
-            </div>
-            <div className="familyguard-strip-item">
-              <strong>50 states</strong>
-              <span>Licensed advisor network</span>
             </div>
           </div>
         </section>
@@ -246,37 +202,6 @@ export default function FamilyGuardLifePage() {
           </div>
         </section>
 
-        {/* Sample rates (text-only mock, no inputs) */}
-        <section className="familyguard-section familyguard-section--paper">
-          <div className="familyguard-wrap familyguard-rates">
-            <div className="familyguard-rates-copy">
-              <p className="familyguard-kicker">Honest numbers first</p>
-              <h2>What families like yours often pay</h2>
-              <hr className="familyguard-divider familyguard-divider--left" />
-              <p>
-                These illustrative starting rates show typical pricing for healthy applicants. Your actual premium
-                depends on age, health, coverage amount, and underwriting — your advisor will quote your exact figure
-                by phone, with nothing hidden in a footnote.
-              </p>
-              <a href={PHONE_TEL} className="familyguard-btn familyguard-btn--outline">
-                <Phone size={17} aria-hidden="true" /> Call {PHONE_DISPLAY}
-              </a>
-            </div>
-            <div className="familyguard-rate-card" role="figure" aria-label="Illustrative sample monthly rates">
-              <h3>Illustrative monthly rates</h3>
-              {RATES.map((row) => (
-                <div key={row.profile} className="familyguard-rate-row">
-                  <span>{row.profile}</span>
-                  <strong>{row.rate}</strong>
-                </div>
-              ))}
-              <p className="familyguard-rate-foot">
-                Sample figures for illustration only; not an offer of coverage. Final rates are set at underwriting.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Values */}
         <section className="familyguard-section">
           <div className="familyguard-wrap">
@@ -295,20 +220,6 @@ export default function FamilyGuardLifePage() {
                   <p>{value.copy}</p>
                 </article>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Quote band */}
-        <section className="familyguard-band" aria-label="Client story">
-          <img src={IMG.band} alt="Parents and children enjoying an afternoon together outdoors" loading="lazy" />
-          <div className="familyguard-band-overlay">
-            <div className="familyguard-wrap">
-              <blockquote>
-                “Our advisor called us by name for eleven years. When my husband passed, she called again — and the
-                policy did exactly what she said it would.”
-                <cite>— Margaret T., Heritage Whole Life policyholder (illustrative account)</cite>
-              </blockquote>
             </div>
           </div>
         </section>
@@ -339,8 +250,8 @@ export default function FamilyGuardLifePage() {
           <div className="familyguard-wrap">
             <h2>Leave your family certainty, not questions.</h2>
             <p>
-              Speak with a licensed FamilyGuard advisor today. No pressure, no scripts — just a clear quote and terms
-              you can read over Sunday dinner.
+              No pressure, no scripts — just a clear quote and terms you can read over Sunday
+              dinner.
             </p>
             <div className="familyguard-final-ctas">
               <a
@@ -350,9 +261,6 @@ export default function FamilyGuardLifePage() {
                 className="familyguard-btn familyguard-btn--gold"
               >
                 Get a Free Quote <ArrowRight size={18} aria-hidden="true" />
-              </a>
-              <a href={PHONE_TEL} className="familyguard-hero-phone">
-                <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
               </a>
             </div>
           </div>
@@ -364,12 +272,10 @@ export default function FamilyGuardLifePage() {
         <div className="familyguard-wrap">
           <div className="familyguard-footer-inner">
             <span>© {new Date().getFullYear()} FamilyGuard Life. A fictional brand presented for directory listing purposes.</span>
-            <a href={PHONE_TEL}>Advisors: {PHONE_DISPLAY}</a>
           </div>
           <p className="familyguard-footer-disclaimer">
             Independent provider listing. Not financial or insurance advice. Coverage subject to underwriting,
-            eligibility, and state availability; premiums and benefits vary by policy. Sample rates are illustrative
-            only and do not constitute an offer of insurance.
+            eligibility, and state availability; premiums and benefits vary by policy.
           </p>
         </div>
       </footer>
