@@ -17,7 +17,8 @@ import {
   Search,
   Star,
   LayoutGrid,
-  Users,
+  Layers,
+  Chrome,
   MessageSquare,
   GraduationCap,
   PenTool,
@@ -25,7 +26,11 @@ import {
   Code,
 } from "lucide-react";
 
-export default function ExtensionsPage() {
+export default function ExtensionsPage({
+  initialExtensions = [],
+  extensionCount = 0,
+  categoryCount = 0,
+}) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -34,13 +39,13 @@ export default function ExtensionsPage() {
 
   const device = useDevice();
 
-  // 🔥 Firebase — replaces getSortedExtensions()
+  // Seeded from the server catalog read; falls back to the live client read.
   const {
     extensions: allExtensions,
     loading,
     error,
     refresh,
-  } = useFirebaseExtensions();
+  } = useFirebaseExtensions(initialExtensions);
 
   /* ---------------- SEARCH DEBOUNCE ---------------- */
   useEffect(() => {
@@ -114,13 +119,16 @@ export default function ExtensionsPage() {
             <section className="extensions-hero-card" aria-labelledby="extensions-hero-title">
               <div className="extensions-hero-copy">
                 <h1 id="extensions-hero-title" className="extensions-hero-title">
-                  Boost Productivity{" "}
+                  Chrome Extensions{" "}
                   <br />
-                  with <span>Smart Extensions</span>
+                  from <span>AltFTool</span>
                 </h1>
 
+                {/* Answer-first: what this page is, in one self-contained sentence. */}
                 <p className="extensions-hero-subtitle">
-                  Discover high-quality extensions and themes for productivity, security, and creativity.
+                  {extensionCount > 0
+                    ? `AltFTool lists ${extensionCount} Chrome extensions across ${categoryCount} categories — calculators, formatters, SEO and analytics, writing, accessibility and developer tools. Every listing links to the extension's official Chrome Web Store page.`
+                    : "AltFTool lists Chrome extensions for calculators, formatters, SEO and analytics, writing, accessibility and developer workflows. Every listing links to the extension's official Chrome Web Store page."}
                 </p>
 
                 <form
@@ -143,21 +151,25 @@ export default function ExtensionsPage() {
                   </button>
                 </form>
 
-                <div className="extensions-hero-stats" aria-label="Extension catalog highlights">
+                <div className="extensions-hero-stats" aria-label="Extension catalog facts">
+                  {extensionCount > 0 ? (
+                    <span className="extensions-hero-stat-item">
+                      <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
+                      <span className="extensions-hero-stat-value">{extensionCount}</span>
+                      <span className="extensions-hero-stat-label">Extensions listed</span>
+                    </span>
+                  ) : null}
+                  {categoryCount > 0 ? (
+                    <span className="extensions-hero-stat-item">
+                      <Layers className="extensions-hero-stat-icon" aria-hidden="true" />
+                      <span className="extensions-hero-stat-value">{categoryCount}</span>
+                      <span className="extensions-hero-stat-label">Categories</span>
+                    </span>
+                  ) : null}
                   <span className="extensions-hero-stat-item">
-                    <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">Extensions</span>
-                    <span className="extensions-hero-stat-label">Curated add-ons</span>
-                  </span>
-                  <span className="extensions-hero-stat-item">
-                    <Users className="extensions-hero-stat-icon" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">100K+</span>
-                    <span className="extensions-hero-stat-label">Monthly Users</span>
-                  </span>
-                  <span className="extensions-hero-stat-item">
-                    <Star className="extensions-hero-stat-icon extensions-hero-stat-icon-gold" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">4.8/5</span>
-                    <span className="extensions-hero-stat-label">Average Rating</span>
+                    <Chrome className="extensions-hero-stat-icon" aria-hidden="true" />
+                    <span className="extensions-hero-stat-value">Chrome</span>
+                    <span className="extensions-hero-stat-label">Install via Web Store</span>
                   </span>
                 </div>
               </div>

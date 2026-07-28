@@ -5,14 +5,7 @@ import { ArrowRight, Star } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
-
-  // deterministic mock users
-  const seed = slug
-    ? slug.split("").reduce((a, c) => a + c.charCodeAt(0), 0)
-    : 0;
-
-  const randomUsers = ((seed * 9301 + 49297) % 50) + 5;
-  const usersCount = extension.users || `${randomUsers}K+`;
+  const rating = Number(extension.rating) > 0 ? extension.rating : null;
 
   return (
     <Link
@@ -47,22 +40,23 @@ export default function ListingCard({ extension, slug }) {
         </h3>
 
         {/* Rating row */}
-        <div className="flex items-center gap-2 text-sm mt-1">
-          <span className="text-(--muted-foreground) font-medium">
-            {extension.rating}
-          </span>
-          <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
-        </div>
+        {rating ? (
+          <div className="flex items-center gap-2 text-sm mt-1">
+            <span className="text-(--muted-foreground) font-medium">{rating}</span>
+            <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
+            <span className="sr-only">AltFTool catalog rating out of 5</span>
+          </div>
+        ) : null}
 
         {/* Description */}
         <p className="text-sm text-(--muted-foreground) mt-2 line-clamp-2">
           {extension.description}
         </p>
 
-        {/* Footer (users) */}
+        {/* Footer */}
         <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-xs text-(--muted-foreground)">
-          <span>{usersCount} users</span>
-          <span className="extension-listing-action inline-flex items-center gap-1 font-bold">
+          <span className="line-clamp-1">{extension.category}</span>
+          <span className="extension-listing-action inline-flex shrink-0 items-center gap-1 font-bold">
             Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
         </div>

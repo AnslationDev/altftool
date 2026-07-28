@@ -1,5 +1,5 @@
 "use client";
-import { BarChart3, Brain, Grid3X3, Play } from "lucide-react";
+import { BarChart3, BookOpen, Brain, Grid3X3, Play } from "lucide-react";
 import HumanBenchmark from "./components/HumanBenchmark";
 
 export default function ReflexLabPage() {
@@ -30,6 +30,8 @@ function HumanBenchmarkHeader() {
           <HeaderLink href="#overview" icon={<BarChart3 className="h-4 w-4" />} label="Overview" />
           <HeaderLink href="#tests" icon={<Grid3X3 className="h-4 w-4" />} label="Tests" />
           <HeaderLink href="#scores" icon={<Brain className="h-4 w-4" />} label="Scores" />
+          {/* Server-rendered explainer in components/TestGuides.jsx. */}
+          <HeaderLink href="#test-guides" icon={<BookOpen className="h-4 w-4" />} label="Guide" />
         </nav>
 
         <a

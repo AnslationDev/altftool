@@ -6,6 +6,7 @@ import {
   Grid2x2, LayoutGrid
 } from "lucide-react";
 import { useScores, useBeep } from "../hooks/hooks";
+import { BENCHMARK_TESTS } from "../data/tests";
 import ReactionTime from "./tests/ReactionTime";
 import VisualMemory from "./tests/VisualMemory";
 import NumberMemory from "./tests/NumberMemory";
@@ -15,16 +16,15 @@ import AimTrainer from "./tests/AimTrainer";
 import ChimpTest from "./tests/ChimpTest";
 import SequenceMemory from "./tests/SequenceMemory";
 
-const TESTS = [
-  { id:"reaction_time",  name:"Reaction Time",   Icon:Zap,          color:"text-yellow-400",  bg:"bg-yellow-400/10",  desc:"Click when the screen turns green.",                  unit:"ms",  lowerBetter:true  },
-  { id:"visual_memory",  name:"Visual Memory",   Icon:Eye,          color:"text-blue-400",    bg:"bg-blue-400/10",    desc:"Memorize and recall flashing squares.",               unit:"lvl", lowerBetter:false },
-  { id:"number_memory",  name:"Number Memory",   Icon:Hash,         color:"text-purple-400",  bg:"bg-purple-400/10",  desc:"Remember increasingly long numbers.",                 unit:"lvl", lowerBetter:false },
-  { id:"verbal_memory",  name:"Verbal Memory",   Icon:MessageSquare,color:"text-green-400",   bg:"bg-green-400/10",   desc:"Identify words you have seen before.",                unit:"pts", lowerBetter:false },
-  { id:"typing_test",    name:"Typing Test",     Icon:Keyboard,     color:"text-cyan-400",    bg:"bg-cyan-400/10",    desc:"Type a paragraph as fast and accurately as you can.", unit:"WPM", lowerBetter:false },
-  { id:"aim_trainer",    name:"Aim Trainer",     Icon:Crosshair,    color:"text-red-400",     bg:"bg-red-400/10",     desc:"Click targets as quickly as possible.",               unit:"ms",  lowerBetter:true  },
-  { id:"chimp_test",     name:"Chimp Test",      Icon:Grid2x2,      color:"text-orange-400",  bg:"bg-orange-400/10",  desc:"Click numbers in order before they vanish.",          unit:"N",   lowerBetter:false },
-  { id:"sequence_memory",name:"Sequence Memory", Icon:LayoutGrid,   color:"text-pink-400",    bg:"bg-pink-400/10",    desc:"Repeat the flashing square sequence.",                unit:"seq", lowerBetter:false },
-];
+// Icons cannot live in data/tests.js: that module is imported by the server
+// guide and by layout.jsx's JSON-LD, which must stay free of React components.
+// The data carries the lucide export name and this map resolves it here.
+const ICONS = { Zap, Eye, Hash, MessageSquare, Keyboard, Crosshair, Grid2x2, LayoutGrid };
+
+// Single source of truth for the eight tests — see ../data/tests.js. The
+// server-rendered guide under the dashboard reads the same list, so the cards,
+// the score table and the structured data can never disagree.
+const TESTS = BENCHMARK_TESTS.map((test) => ({ ...test, Icon: ICONS[test.icon] }));
 
 const FEATURE_STEPS = [
   { Icon: MousePointer2, title: "Choose a test", desc: "Start with reflexes, memory, typing, aim, or pattern recall." },
@@ -122,8 +122,8 @@ export default function HumanBenchmark() {
               </a>
             </div>
             <div className="mt-8 grid max-w-2xl grid-cols-3 gap-3">
-              <HeroMetric label="Tests" value="8" />
-              <HeroMetric label="Completed" value={`${completedTests}/8`} />
+              <HeroMetric label="Tests" value={TESTS.length} />
+              <HeroMetric label="Completed" value={`${completedTests}/${TESTS.length}`} />
               <HeroMetric label="Attempts" value={totalAttempts} />
             </div>
           </div>

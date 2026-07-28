@@ -307,11 +307,16 @@
 }
 
 /* ---------- details pages (FAQ, Use Cases) ---------- */
+/* The immersive mixer above is always dark, but this documentation strip is
+   ordinary page content: UseCases and FAQSection ship full light *and* dark
+   variants. Hardcoding a near-black background here left their light-mode text
+   (slate-900 on #030708) far below the WCAG AA contrast floor, so the surface
+   follows the theme tokens instead. */
 .extra-content-section {
   position: relative;
   z-index: 10;
-  background: #030708;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--background);
+  border-top: 1px solid var(--border);
 }
 
 /* Responsive adjustment */
