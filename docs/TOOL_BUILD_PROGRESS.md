@@ -561,10 +561,45 @@ transformer registry. Safe to externalise: nothing outside `src/app/transform` i
 of them, `_lib` has no `"use client"`, and the packages stay in each route's `.nft.json`
 so they still ship for runtime.
 
-**Not a lever any more: CSS source scoping.** 12 of the 19 `@import "tailwindcss"`
-stylesheets already carry `source(...)`, and all emitted CSS totals ~5 MiB, so the 11.7 MiB
-figure recorded above is stale. Scoping the remaining 7 per-tool sheets is worth a couple
-of MiB at most, against a real risk of dropping classes the tool actually renders.
+**Dead lever — CSS source scoping. Measured at exactly 0 MiB; do not retry.** 12 of the 19
+`@import "tailwindcss"` stylesheets already carry `source(...)`, and all emitted CSS totals
+~5 MiB, so the 11.7 MiB figure recorded above is long stale. Scoping the remaining 7
+per-tool sheets (4 at the tool root with `source("./")`, 3 in `pages/` with `source("../")`
+so the sibling `components/` dir stays in scope) produced **216.42 → 216.42 MiB — no change
+at all**. Those sheets were not each re-emitting the utility surface; the build already
+shares it. Reverted, because it bought nothing and scoping can only ever drop classes.
 
 **The kill-list deletions were not needed.** Both fixes here are pure engineering; no
 product surface was removed.
+
+### Then the catalogue grew again — 216.42 MiB, and the levers really are spent now
+
+`ab58778a6` ("release: 114 tools") landed on `canonical-web` afterwards. At 3,668 tools the
+artifact is **216.42 MiB against the 215 gate**. Attribution, from measurements either side
+of the merge:
+
+| State | Artifact |
+|---|---|
+| 3,554 tools, wave-3 SEO content included | 213.53 MiB |
+| + the 114 tools from `ab58778a6` | **216.42 MiB** (+2.89) |
+
+So `ab58778a6` **on its own is already ≈215.9 MiB and over the gate** — the 92 wave-3 seo.js
+files account for only 0.49 MiB of the total. Whoever fixes this should not go looking in
+the SEO content.
+
+Everything cheap has now been tried and measured: no route family is left un-deferred
+(`/transform`, `/products`, `/signals` are the only un-guarded `generateStaticParams` and
+they are ~250 KB each), `server/app` is a long tail with `bops` at 31 MiB and nothing else
+above 4, `static/chunks` is 105 MiB and is simply one chunk per tool, and CSS scoping
+measured zero (above).
+
+**This is the owner's call, and it is the second time it has come up. Two options:**
+
+1. **Raise the gate again, 215 → ~218.** The artifact genuinely fits AWS's 220 ceiling
+   today. But it leaves under 4 MiB for the adapter's packaging metadata, and the gate stops
+   being able to catch the next regression — which is exactly how the reverted deferral in
+   §9 went unnoticed. The gate has already moved 205 → 212 → 215 in one day.
+2. **Take something out of the artifact.** `bops` is 31 MiB of marketing surfaces; making
+   some of those pages dynamic, or dropping route families, is a product decision.
+
+Do not raise the gate a third time without deciding which of these is the actual plan.
