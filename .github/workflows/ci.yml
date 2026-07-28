@@ -22,6 +22,7 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
   ALTFT_NODE_MAX_OLD_SPACE_SIZE: "12288"
   ALTFT_DISABLE_SHARED_ASYNC_VENDOR_CHUNKS: "true"
+  NEXT_PUBLIC_WHEREGOES_API_URL: "https://wheregoes.example.invalid"
 
 jobs:
   # Deterministic gate: install, lint, build, and fast unit tests only.

@@ -10,12 +10,13 @@ const skipAdminServer = process.env.ALTFT_SKIP_ADMIN_SERVER === "true";
 const serverMode = process.env.ALTFT_PLAYWRIGHT_SERVER || "dev";
 const webServerMode = process.env.ALTFT_PLAYWRIGHT_WEB_SERVER || serverMode;
 const adminServerMode = process.env.ALTFT_PLAYWRIGHT_ADMIN_SERVER || serverMode;
+const withNodeMemory = (command) => `node scripts/run-with-node-memory.mjs ${command}`;
 const webServerCommand = webServerMode === "production"
-  ? `npm --prefix altftoolweb run start -- -p ${webPort}`
-  : `npm --prefix altftoolweb run dev -- -p ${webPort}`;
+  ? withNodeMemory(`npm --prefix altftoolweb run start -- -p ${webPort}`)
+  : withNodeMemory(`npm --prefix altftoolweb run dev -- -p ${webPort}`);
 const adminServerCommand = adminServerMode === "production"
-  ? `npm --prefix altftoolwebadmin run start -- -p ${adminPort}`
-  : `npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`;
+  ? withNodeMemory(`npm --prefix altftoolwebadmin run start -- -p ${adminPort}`)
+  : withNodeMemory(`npm --prefix altftoolwebadmin run dev -- -p ${adminPort}`);
 
 const webServers = skipWebServer
   ? []
