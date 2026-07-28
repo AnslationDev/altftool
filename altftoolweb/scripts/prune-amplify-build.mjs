@@ -6,8 +6,12 @@ const isAmplifyBuild = process.env.ALTFT_DEFER_BULK_PRERENDER === "true";
 if (!isAmplifyBuild) process.exit(0);
 
 const nextDir = path.resolve(".next");
+// AWS's hosted-build ceiling is 220 MiB; 212 keeps ~8 MiB of packaging
+// headroom (raised from 205 on 2026-07-28 — the catalogue's fixed platform
+// cost had already used up the prior margin, see docs/TOOL_BUILD_PROGRESS.md
+// §9. Do not raise this past ~215 without re-measuring the real ceiling.
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 205 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 212 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {
