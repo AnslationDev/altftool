@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See which pregnancy symptoms and antenatal checks belong to your gestational week, with the signs that need same-day review.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

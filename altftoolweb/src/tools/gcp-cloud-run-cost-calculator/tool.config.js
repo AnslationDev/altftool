@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute Google Cloud Run cost from requests, CPU, memory, concurrency and min instances — free tier and idle rates included.",
   icon: "container",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

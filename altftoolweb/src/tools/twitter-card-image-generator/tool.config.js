@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draw and download a summary or large-image card at the size X requires, and copy the matching twitter:card meta tags.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

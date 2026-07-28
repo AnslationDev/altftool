@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute Cloudflare Workers and KV cost from requests, CPU time, reads, writes, lists and storage on the Paid plan.",
   icon: "cloud-cog",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

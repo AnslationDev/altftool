@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a structured AI storytelling prompt with narrative arc, point of view, tone and pacing controls baked in.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

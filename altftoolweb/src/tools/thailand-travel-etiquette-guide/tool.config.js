@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a prioritised Thailand etiquette briefing for the places on your itinerary, with the legal red lines flagged and a readiness score.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

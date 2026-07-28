@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build escalating overdue-invoice chase letters, from a polite nudge to a final notice, with the right tone for how late the payment is.",
   icon: "mail-warning",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

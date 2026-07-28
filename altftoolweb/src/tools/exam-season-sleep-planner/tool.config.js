@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build study blocks and a bedtime plan around exam day, with a safe 30-minutes-per-day body clock shift.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

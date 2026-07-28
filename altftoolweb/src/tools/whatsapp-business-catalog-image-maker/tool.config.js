@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create square WhatsApp catalogue product tiles with grid-legible type, corner-safe insets and 500 px / 5 MB upload checks.",
   icon: "shopping-bag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

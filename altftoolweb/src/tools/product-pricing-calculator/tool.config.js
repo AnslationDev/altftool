@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set a selling price from unit cost, target margin, marketplace commission and tax, with charm rounding and a break-even count.",
   icon: "tag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

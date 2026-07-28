@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the final corpus of a one-time lumpsum investment against an equivalent monthly SIP at the same return.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

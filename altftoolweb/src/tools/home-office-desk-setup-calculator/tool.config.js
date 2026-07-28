@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Get ergonomic seat, desk, standing-desk and monitor heights for your body height, plus footrest and riser needs.",
   icon: "monitor",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

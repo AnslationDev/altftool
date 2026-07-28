@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Count your bullets, budget the paragraphs and sentences they should expand into, and build the prompt that turns notes into prose.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

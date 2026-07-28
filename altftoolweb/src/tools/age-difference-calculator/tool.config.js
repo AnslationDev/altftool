@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the exact age gap between two people in years, months and days, plus total weeks and days.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

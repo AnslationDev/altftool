@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Explain what a caret, tilde, hyphen, x or comparator semver range actually allows, in plain English with examples.",
   icon: "package-search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

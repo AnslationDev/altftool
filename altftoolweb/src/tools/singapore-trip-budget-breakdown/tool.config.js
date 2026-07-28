@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a Singapore trip into flights, room, the 10% service charge and 9% GST, food, transport and attractions.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

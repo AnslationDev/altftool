@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan FASTag top-ups from your toll usage: daily burn, days of balance left, recommended recharge and the return-journey saving.",
   icon: "credit-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

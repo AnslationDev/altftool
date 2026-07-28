@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a week-by-week AI study path from prompting basics to fine-tuning, ordered by prerequisites and your hours per week.",
   icon: "route",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a child-safe AI tutor prompt with an age-matched reading level, safe-topic boundaries and trusted-adult referral rules.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

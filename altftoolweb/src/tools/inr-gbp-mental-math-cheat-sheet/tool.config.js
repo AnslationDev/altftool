@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn a pound price into rupees in your head, plus VAT and restaurant service charges.",
   icon: "pound-sterling",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

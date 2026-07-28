@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Preview regex find-and-replace results with $1, $&, $<name> capture references and per-match breakdown before touching real data.",
   icon: "replace",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

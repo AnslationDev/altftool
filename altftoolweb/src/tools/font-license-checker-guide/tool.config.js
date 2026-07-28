@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check which font licences your project needs across desktop, web, app, ePub, server and broadcast use before you ship.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

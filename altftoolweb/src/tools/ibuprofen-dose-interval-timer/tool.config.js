@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the earliest safe next ibuprofen dose and how much of the daily milligram ceiling is left.",
   icon: "pill",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

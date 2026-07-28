@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work backward from your exam reporting time to a light, steady-energy meal and hydration timeline.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

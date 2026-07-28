@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare two .env files side by side to find missing, extra and changed variables using dotenv parsing rules.",
   icon: "file-diff",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build and tick off a beach packing list sized by trip length, heat, laundry access and sun hours, with the sunscreen volume worked out.",
   icon: "umbrella",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

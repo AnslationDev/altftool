@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Extract base price and GST from a GST-inclusive amount across every Indian GST slab.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

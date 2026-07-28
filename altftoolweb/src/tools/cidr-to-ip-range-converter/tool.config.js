@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert between CIDR notation, start-end IP ranges and Cisco wildcard masks in bulk, with minimal CIDR splitting for arbitrary ranges.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

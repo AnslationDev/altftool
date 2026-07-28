@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an employee social media policy with disclosure, confidentiality and lawful-speech clauses, plus a coverage score and gap flags.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

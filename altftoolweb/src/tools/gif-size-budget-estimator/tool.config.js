@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate GIF file size from dimensions, frame count and palette size, and see what fits inside an upload limit.",
   icon: "file-image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

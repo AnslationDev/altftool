@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Trimester-adjusted protein target from the IOM reference intakes, with extra energy for the stage and the published weight-gain range.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan phone-free study blocks that escalate day by day, with a cap, milestone day and total phone-free hours computed.",
   icon: "smartphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

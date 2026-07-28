@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a leave with wages register showing earned entitlement, carry forward, leave availed and the running balance.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

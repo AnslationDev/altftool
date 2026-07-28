@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate the rent you still owe when you vacate before the notice period or lock-in ends, and what is left of the deposit.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "How many paying members you need after platform and processing fees to cover monthly production costs, plus churn replacement and time to get there.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
     "Analyze emotional impact, branding psychology, and cultural meanings of colors.",
   category: "Design & Color",
   icon: "palette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   status: "New",
   featured: true,
 };

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn a dollar price into rupees in your head, plus sales tax and tipping, from today's rate.",
   icon: "circle-dollar-sign",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

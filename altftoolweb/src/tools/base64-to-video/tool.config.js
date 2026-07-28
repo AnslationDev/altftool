@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decode a Base64 string or data URL back into a video file, identify the container from its magic bytes, and read duration, frame size and bitrate.",
   icon: "video",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

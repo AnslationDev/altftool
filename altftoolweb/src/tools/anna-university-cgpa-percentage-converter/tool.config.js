@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert Anna University CGPA to percentage, build CGPA from semester credits and check the degree classification.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

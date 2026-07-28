@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a tenant's notice to vacate with the handover date, notice-period check, final rent and security deposit settlement.",
   icon: "door-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

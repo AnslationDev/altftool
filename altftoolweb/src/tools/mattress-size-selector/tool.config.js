@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick mattress size, thickness and firmness from sleeper count, height, body weight and sleeping position.",
   icon: "bed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

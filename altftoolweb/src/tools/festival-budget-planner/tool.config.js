@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan festival spending across gifts, food, travel, decor and clothing, with a gift-tax check and the monthly saving it needs.",
   icon: "gift",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

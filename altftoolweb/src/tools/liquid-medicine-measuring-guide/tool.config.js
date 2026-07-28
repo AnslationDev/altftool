@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a prescribed dose into millilitres, the right oral syringe size and the exact marking to fill to.",
   icon: "syringe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

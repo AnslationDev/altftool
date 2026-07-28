@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an inclusive job description prompt that separates must-have requirements from nice-to-haves and budgets words per section.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

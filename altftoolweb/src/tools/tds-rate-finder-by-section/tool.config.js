@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the TDS rate and threshold for every common Income Tax section and calculate tax deducted plus net payout instantly.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

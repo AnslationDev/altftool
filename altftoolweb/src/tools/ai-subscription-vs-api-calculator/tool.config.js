@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the usage point where paying per token beats a flat monthly AI plan, per seat and across the team.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

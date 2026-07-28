@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert Mumbai University CGPA to percentage with the CBCGS formula, or work the percentage out from raw semester marks.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Sachet-to-water ratios, homemade sugar-salt proportions and WHO replacement volumes for oral rehydration solution.",
   icon: "flask-conical",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

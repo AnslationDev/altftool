@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Quarterly 24Q, 26Q, 27Q and 27EQ due dates with Form 16, 16A and 27D deadlines and the section 234E late fee.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

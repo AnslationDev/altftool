@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your polytechnic diploma admission merit index from Class 10 percentage and entrance score with state-style weights.",
   icon: "hard-hat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

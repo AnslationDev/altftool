@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate body fat with the US Navy tape method using height, neck, waist and hip measurements.",
   icon: "activity",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

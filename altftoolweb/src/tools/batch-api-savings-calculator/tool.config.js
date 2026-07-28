@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare real-time and batch LLM pricing for bulk jobs and see the saving, blended cost and latency you trade for it.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

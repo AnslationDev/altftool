@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate project cost and delivery timeline from task hours, hourly rate and a risk buffer.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

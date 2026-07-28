@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare URL path, query parameter, custom header and media type API versioning — weighted scoring plus migration cost for each.",
   icon: "signpost",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

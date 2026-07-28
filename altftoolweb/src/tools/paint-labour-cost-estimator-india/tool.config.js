@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate painter labour charges per sqft by city tier, finish quality, putty work and ceiling height.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

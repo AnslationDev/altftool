@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Informational guide to traditional vastu colour suggestions by direction, with a compass-bearing lookup for each room.",
   icon: "compass",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

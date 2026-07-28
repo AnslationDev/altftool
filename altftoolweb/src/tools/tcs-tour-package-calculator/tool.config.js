@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Section 206C(1G) TCS on an overseas tour programme package, with the 5% and 20% slabs and the Rs 10 lakh yearly threshold.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

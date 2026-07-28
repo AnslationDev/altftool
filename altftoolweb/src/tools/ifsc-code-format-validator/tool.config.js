@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Validate the 11-character IFSC structure offline, with per-character diagnostics, auto-fix suggestions and batch checking.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

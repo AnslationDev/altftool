@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate litres of exterior emulsion from wall area, coats and surface porosity, with pack sizes and material cost.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

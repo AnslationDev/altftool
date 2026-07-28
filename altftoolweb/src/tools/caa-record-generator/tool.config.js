@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate RFC 8659 CAA records that restrict which certificate authorities may issue TLS certificates for your domain.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

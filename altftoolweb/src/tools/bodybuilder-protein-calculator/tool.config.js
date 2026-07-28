@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Daily and per-meal protein targets for hypertrophy blocks using ISSN g/kg ranges and the 0.4 g/kg per-meal dose.",
   icon: "dumbbell",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

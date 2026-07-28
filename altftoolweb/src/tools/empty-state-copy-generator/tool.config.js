@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate empty, error and loading state microcopy in four tones, then lint it for length, blame and weak button labels.",
   icon: "inbox",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

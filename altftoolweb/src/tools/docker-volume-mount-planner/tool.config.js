@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan bind mounts, named volumes and tmpfs mounts with correct -v, --mount and Compose syntax, read-only flags and propagation.",
   icon: "hard-drive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

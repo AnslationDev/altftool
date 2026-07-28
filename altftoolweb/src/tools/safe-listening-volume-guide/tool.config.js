@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how long headphone listening is considered safe at a given decibel level using the WHO-ITU 80 dB for 40 hours weekly sound allowance.",
   icon: "volume-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

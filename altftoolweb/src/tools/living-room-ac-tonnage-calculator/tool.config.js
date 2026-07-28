@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size an AC for an open living room using a component heat-gain method: walls, roof, glazing, people, lights and air changes.",
   icon: "sofa",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

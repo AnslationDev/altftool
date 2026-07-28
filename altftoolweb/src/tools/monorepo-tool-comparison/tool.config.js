@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Nx, Turborepo, Bazel, Lerna and pnpm workspaces on caching, orchestration, languages and setup — weighted to your priorities.",
   icon: "git-compare-arrows",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a consistent release tag format — v-prefix, SemVer 2.0.0, prerelease channels, build metadata — with regex and git commands.",
   icon: "tag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

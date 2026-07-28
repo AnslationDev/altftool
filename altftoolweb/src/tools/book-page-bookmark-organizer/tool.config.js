@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Save page references per topic across multiple books and get one sorted, copyable topic index.",
   icon: "bookmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

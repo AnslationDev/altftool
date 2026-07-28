@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Builds press release prompts with an AP-style dateline, inverted-pyramid word budgets, attributed quotes and boilerplate.",
   icon: "newspaper",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

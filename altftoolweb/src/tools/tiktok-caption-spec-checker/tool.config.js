@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check a TikTok caption against the 2,200 character limit and test whether on-screen text clears the app's UI safe zones.",
   icon: "captions",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project the Sukanya Samriddhi corpus from yearly deposits, with the 15-year deposit window, 21-year maturity and annual compounding.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

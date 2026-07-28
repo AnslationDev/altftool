@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project rent across a lease term with periodic escalation, and see the total outgo, final rent and true annual rate.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

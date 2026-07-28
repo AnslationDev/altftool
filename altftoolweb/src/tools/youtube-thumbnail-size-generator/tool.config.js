@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Crop and export any image to YouTube's 1280x720 16:9 thumbnail spec, with minimum-width, aspect-ratio and 2 MB file-size checks.",
   icon: "youtube",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track state commission deadlines — fee date, submission date, correction window — and the certificates each state actually accepts.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

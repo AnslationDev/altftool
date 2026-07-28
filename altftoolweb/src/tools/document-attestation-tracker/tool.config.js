@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track which documents are attested, by whom and when — with validity countdowns that flag expiring and expired attestations.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

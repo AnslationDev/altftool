@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find break-even units and revenue from fixed costs, price and variable cost, with margin of safety, target profit and operating leverage.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

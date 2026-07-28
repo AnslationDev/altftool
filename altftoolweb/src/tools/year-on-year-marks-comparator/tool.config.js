@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare marks across semesters or years, see percentage-point change per period and the least-squares trend of your scores.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Builds LinkedIn post prompts with hook, story and takeaway structure sized to the 3,000-character limit and the see-more fold.",
   icon: "linkedin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

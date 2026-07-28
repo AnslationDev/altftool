@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your internal assessment marks from tests, assignments and attendance using your university's component weightings.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

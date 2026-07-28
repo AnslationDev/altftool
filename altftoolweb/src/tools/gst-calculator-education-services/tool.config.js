@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether a school, college, coaching or training service is GST exempt under Notification 12/2017 and calculate the 18% tax when it is not.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI roleplay prompt to rehearse a pay conversation, with compa-ratio and range penetration worked out from your numbers.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

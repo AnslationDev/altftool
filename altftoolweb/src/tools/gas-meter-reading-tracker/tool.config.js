@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track piped gas meter readings in SCM and estimate the next bill on your distributor's telescopic slab tariff.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

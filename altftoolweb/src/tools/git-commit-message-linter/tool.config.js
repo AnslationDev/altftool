@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lint a commit message against the Conventional Commits spec — type, scope, subject, body and footers — with a suggested fixed message.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

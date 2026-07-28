@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate weekly and annual hours saved by AI per task from measured before and after timings and weekly frequency.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

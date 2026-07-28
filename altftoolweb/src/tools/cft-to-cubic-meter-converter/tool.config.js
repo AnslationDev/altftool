@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert cubic feet, cubic metres, litres and brass, with material weight in tonnes and truck loads for sand and aggregate.",
   icon: "box",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

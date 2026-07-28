@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare split and window air conditioners on purchase price, installation, yearly electricity and total cost of ownership.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the all-in cost of a coaching programme against a self-study plan with books, test series and online courses.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

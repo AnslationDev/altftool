@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how playback speed changes your lecture backlog finish date, with a full 1x-2x comparison table.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how much water a study session needs from EFSA daily intake values and get a sip schedule sized to your bottle.",
   icon: "glass-water",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

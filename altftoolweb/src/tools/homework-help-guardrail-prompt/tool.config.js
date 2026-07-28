@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate an AI helper prompt that coaches a student through homework without writing the submittable answer for them.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

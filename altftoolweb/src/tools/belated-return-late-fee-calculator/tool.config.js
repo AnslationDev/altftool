@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Late filing fee under Section 234F plus 234A interest for income tax returns filed after the due date.",
   icon: "file-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

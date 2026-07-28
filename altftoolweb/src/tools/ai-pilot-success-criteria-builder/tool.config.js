@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set measurable go/no-go criteria for an AI pilot and size the sample needed to detect the lift at 95% confidence.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

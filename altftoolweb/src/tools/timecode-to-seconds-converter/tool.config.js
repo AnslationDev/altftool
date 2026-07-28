@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert SMPTE HH:MM:SS:FF timecode to seconds and frames and back, with correct drop-frame and 1.001 pulldown handling.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

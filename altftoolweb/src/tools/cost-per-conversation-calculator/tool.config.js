@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the true AI cost of a support or sales conversation, including resent context, caching and human escalation.",
   icon: "messages-square",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn leftover ingredients into a precise recipe prompt with role coverage, missing components and declarable allergens flagged.",
   icon: "chef-hat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

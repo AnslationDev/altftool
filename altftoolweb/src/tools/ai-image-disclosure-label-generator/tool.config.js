@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build platform-ready AI disclosure badges, captions, alt text and IPTC digital source type tags for images and video you publish.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

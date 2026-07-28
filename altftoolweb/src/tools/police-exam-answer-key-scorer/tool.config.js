@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score state police constable written exams from your marked responses, with each exam's marks-per-question and negative marking.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

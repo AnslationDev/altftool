@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "On-screen gamma match, step wedge, banding ramp and clipping patches to sanity-check a display's tone response.",
   icon: "monitor",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

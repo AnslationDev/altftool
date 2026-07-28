@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Income tax for 60+ and 80+ residents with higher basic exemption limits, compared across old and new regimes.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

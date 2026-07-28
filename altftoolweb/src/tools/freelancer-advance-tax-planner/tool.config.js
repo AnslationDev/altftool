@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Plan quarterly advance tax instalments and due dates on freelance and professional income.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

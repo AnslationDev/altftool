@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate overtime pay from hourly rate, regular hours, overtime hours and multiplier with weekly totals.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

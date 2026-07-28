@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes.",
   icon: "captions",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

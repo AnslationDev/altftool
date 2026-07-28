@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Carry, wear and leave-behind checklist for a BLS International application centre visit, with a photocopy planner and leave-home time.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

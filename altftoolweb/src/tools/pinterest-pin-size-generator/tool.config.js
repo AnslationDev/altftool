@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks.",
   icon: "pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert trek and flight altitudes between feet and metres, with air pressure, effective oxygen and the altitude band.",
   icon: "mountain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

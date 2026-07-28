@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split multi-document YAML on --- markers into separate validated files, suggest filenames, and recombine them cleanly.",
   icon: "split",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

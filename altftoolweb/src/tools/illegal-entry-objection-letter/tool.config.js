@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log landlord entries, test each against the 24-hour notice and 7 am to 8 pm rules, and draft a dated objection letter.",
   icon: "shield-alert",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

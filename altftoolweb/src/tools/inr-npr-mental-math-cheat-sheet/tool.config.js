@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Mental shortcuts for the fixed NPR–INR peg of 1.60, including the exact five-eighths rule and its easier approximations.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

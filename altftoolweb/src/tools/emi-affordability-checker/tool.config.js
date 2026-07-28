@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check a proposed EMI against your FOIR, your monthly surplus and a rate-rise stress test before you sign the loan.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

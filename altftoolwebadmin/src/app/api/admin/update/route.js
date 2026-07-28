@@ -261,31 +261,37 @@ export async function POST(req) {
       }
     }
 
-    await writeAdminAuditLog({
-      action: "ADMIN_UPDATE",
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      targetUid: uid,
-      targetEmail: safeUpdates.email ?? null,
-      summary: `Updated admin ${uid}`,
-      changes: safeUpdates,
-    });
-    await writeRbacAuditLog({
-      action: "admin.update",
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      targetType: "admin_user",
-      targetId: uid,
-      targetEmail: safeUpdates.email ?? null,
-      message: `Updated admin ${uid}`,
-    });
+    await Promise.all([
+      writeAdminAuditLog({
+        action: "ADMIN_UPDATE",
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        targetUid: uid,
+        targetEmail: safeUpdates.email ?? null,
+        summary: `Updated admin ${uid}`,
+        changes: safeUpdates,
+      }),
+      writeRbacAuditLog({
+        action: "admin.update",
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        targetType: "admin_user",
+        targetId: uid,
+        targetEmail: safeUpdates.email ?? null,
+        message: `Updated admin ${uid}`,
+      }),
+    ]);
 
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error(err);
-    const message = err?.message || "Failed to update admin";
+    // Every sibling mutation route (delete, toggle-status, create,
+    // change-password) classifies auth failures and returns a generic message
+    // otherwise — this route was the outlier, echoing raw Firestore/Auth error
+    // text (err.message) straight back to the browser on any other failure.
+    const message = err?.message || "";
     return NextResponse.json(
-      { error: message === "Unauthorized" ? "Unauthorized" : message },
+      { error: message === "Unauthorized" ? "Unauthorized" : "Failed to update admin" },
       { status: message === "Unauthorized" ? 401 : 500 },
     );
   }

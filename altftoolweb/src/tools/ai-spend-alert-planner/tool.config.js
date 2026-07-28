@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project month-end AI spend from your run rate and set threshold alerts, owners and actions before the budget is gone.",
   icon: "bell-ring",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

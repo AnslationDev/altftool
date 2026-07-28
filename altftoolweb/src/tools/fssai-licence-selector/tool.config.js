@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find whether you need FSSAI basic registration, a state licence or a central licence, from turnover, production capacity and activity.",
   icon: "utensils-crossed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

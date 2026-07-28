@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Write a printable Schengen cover letter with your itinerary, funding and a 90/180-day and passport-validity check.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

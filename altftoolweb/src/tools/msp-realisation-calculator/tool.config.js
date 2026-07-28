@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare what you actually net at the mandi after fees, commission and transport against the announced MSP.",
   icon: "wheat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

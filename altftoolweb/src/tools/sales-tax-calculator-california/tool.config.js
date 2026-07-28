@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "California sales tax: 7.25% statewide base plus district tax, with exempt groceries, separately stated delivery and reverse mode.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

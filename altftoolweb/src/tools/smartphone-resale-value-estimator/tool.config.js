@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate what a used phone is worth from launch price, age, condition, storage variant, battery health and accessories.",
   icon: "smartphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

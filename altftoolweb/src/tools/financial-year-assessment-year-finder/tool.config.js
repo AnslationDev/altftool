@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Map any date to the Indian financial year and assessment year, with the quarter and the statutory filing dates that follow.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

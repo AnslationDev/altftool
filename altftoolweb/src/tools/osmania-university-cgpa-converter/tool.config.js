@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert Osmania University CGPA to percentage with the (CGPA - 0.5) x 10 rule, reverse it, and build the CGPA from semester SGPAs.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

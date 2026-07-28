@@ -20,6 +20,12 @@ const NO_SESSION_MESSAGE =
 const NO_PROFILE_RECORD_MESSAGE =
   "No editable admin record is linked to your account id. Ask a super admin to re-link your admin profile, then try again.";
 
+// The <input accept="image/*"> attribute is a picker hint only — a file can
+// still be dropped/selected around it — so the actual type and size must be
+// checked in code before anything is uploaded.
+const ALLOWED_PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+
 /**
  * Resolve where this admin's profile actually lives, mirroring /api/admin/me:
  * RBAC store first (`super_admin_dashboard/main/admin_users/{uid}`), legacy
@@ -156,6 +162,17 @@ export default function ProfilePage() {
   const handlePhotoUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (!ALLOWED_PHOTO_TYPES.has(file.type)) {
+      emitAlert({ type: "error", message: "Please choose a JPEG, PNG, WEBP or GIF image." });
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
+    if (file.size > MAX_PHOTO_BYTES) {
+      emitAlert({ type: "error", message: "Image must be 5MB or smaller." });
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
 
     const uid = auth.currentUser?.uid;
     if (!uid) {

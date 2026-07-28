@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a full trip budget with forex markup, TCS and a contingency buffer, then back-solve the monthly saving it needs.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up a list of clip durations in mixed formats and see total runtime, average length and how it fits a target slot.",
   icon: "list-plus",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

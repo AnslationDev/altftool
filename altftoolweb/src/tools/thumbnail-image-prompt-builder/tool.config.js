@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build high-contrast thumbnail prompts with a reserved text zone, plus the minimum text size computed from where the thumbnail renders.",
   icon: "image-play",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

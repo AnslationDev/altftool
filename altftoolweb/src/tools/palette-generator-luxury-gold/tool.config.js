@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build deep-neutral palettes with gold accents, audited for WCAG contrast and given a CMYK build and ink-limit check for foil print.",
   icon: "gem",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

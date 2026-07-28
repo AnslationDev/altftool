@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out interest and late fees on an overdue invoice using your agreed terms, day-count basis, grace period and statutory compensation.",
   icon: "alarm-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

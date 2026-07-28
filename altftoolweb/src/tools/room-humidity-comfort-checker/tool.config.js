@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Dew point, heat index, absolute humidity and comfort band from room temperature and relative humidity, with mould and condensation warnings.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

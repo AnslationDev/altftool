@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your AI use on an assignment matches typical institutional permission, disclosure and verification rules.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

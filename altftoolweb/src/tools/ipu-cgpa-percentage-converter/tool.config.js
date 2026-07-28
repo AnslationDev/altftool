@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert GGSIPU CGPA to an equivalent percentage with the official (CGPA − 0.75) × 10 formula, in both directions.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

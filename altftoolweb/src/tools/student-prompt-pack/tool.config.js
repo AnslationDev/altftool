@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fill-in-the-blank AI prompts for study plans, active recall, essay feedback and exam prep that build understanding.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

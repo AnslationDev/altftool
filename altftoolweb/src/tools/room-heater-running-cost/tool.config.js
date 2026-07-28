@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Winter heater electricity cost by wattage, hours and heater type, including how a reverse-cycle AC compares per unit of heat.",
   icon: "heater",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

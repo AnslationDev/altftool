@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert views and new subscribers into a per-1,000-views conversion rate, with goal projections and period-over-period trend.",
   icon: "user-plus",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

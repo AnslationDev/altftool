@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a per-client audio delivery checklist with the exact format, sample rate and loudness target each destination requires.",
   icon: "file-audio",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Tick off the always-on devices in your home and see the standby power they draw, what it costs a year and how much you can switch off.",
   icon: "plug-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

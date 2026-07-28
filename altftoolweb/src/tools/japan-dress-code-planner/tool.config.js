@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan what to wear and pack for Japan by month and region, covering temples, ryokan, onsen, restaurants and office dress codes.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

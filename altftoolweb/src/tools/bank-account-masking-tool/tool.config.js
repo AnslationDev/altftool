@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document.",
   icon: "eye-off",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

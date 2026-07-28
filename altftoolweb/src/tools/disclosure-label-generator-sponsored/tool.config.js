@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate clear paid-partnership disclosures per platform, with placement rules from the FTC, ASA and ASCI guidance.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

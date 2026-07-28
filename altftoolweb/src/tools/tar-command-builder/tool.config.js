@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build correct tar create, extract and list commands with compression, exclude patterns, strip-components and safe quoting.",
   icon: "archive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert tyre and system pressure between psi, bar, kPa, kgf/cm2 and atm, with a cold-to-hot tyre temperature correction.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

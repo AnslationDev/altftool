@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate AI image generation spend across resolutions, quality tiers, batch sizes and retry rates.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

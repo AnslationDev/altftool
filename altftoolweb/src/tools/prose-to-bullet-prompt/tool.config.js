@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Measure dense prose, set a compression target and bullet budget, and build the prompt that turns paragraphs into scannable points.",
   icon: "list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

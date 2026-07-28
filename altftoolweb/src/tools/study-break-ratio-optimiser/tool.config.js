@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Match your focus span to a proven study-break protocol (25/5, 50/10, 52/17 or 90/20) and get a full session schedule.",
   icon: "coffee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test yourself or your team on acceptable AI use at work — 10 scenario questions with instant explanations and a readiness score.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

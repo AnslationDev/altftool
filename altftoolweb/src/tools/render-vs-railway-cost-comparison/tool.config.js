@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare what the same app costs on Render's fixed instances versus Railway's usage-based pricing, including egress and disk.",
   icon: "git-compare-arrows",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

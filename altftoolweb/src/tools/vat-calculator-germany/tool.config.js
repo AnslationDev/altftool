@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute German VAT (Mehrwertsteuer) at 19% and 7% with net-gross switching, the tax fraction and a Kleinunternehmer check.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build Google Sheets AI prompts with correctly quoted A1 ranges, a real column map and the 10 million cell budget checked for you.",
   icon: "sheet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

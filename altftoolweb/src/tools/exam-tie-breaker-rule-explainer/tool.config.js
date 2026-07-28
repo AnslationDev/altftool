@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Apply the published tie-breaking order of NEET, JEE Main, UPSC, SSC and IBPS to two candidates and see which criterion decides the rank.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

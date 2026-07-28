@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the true cost of a dishwasher cycle against hand washing, counting electricity, water, detergent and your time.",
   icon: "utensils-crossed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

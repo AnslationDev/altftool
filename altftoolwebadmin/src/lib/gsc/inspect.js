@@ -83,18 +83,6 @@ export function normalizeInspection(result = {}, inspectedUrl = "") {
   };
 }
 
-/** Aggregate many inspections into a per-issue-type summary for dashboards. */
-export function summarizeInspections(items = []) {
-  const summary = { total: items.length, indexed: 0, notIndexed: 0, canonicalIssues: 0, blocked: 0, healthy: 0 };
-  for (const it of items) {
-    if (it.indexed) summary.indexed += 1; else summary.notIndexed += 1;
-    if (it.canonical?.mismatch) summary.canonicalIssues += 1;
-    if (it.issues?.some((i) => i.type === "robots" || i.type === "noindex")) summary.blocked += 1;
-    if (it.healthy) summary.healthy += 1;
-  }
-  return summary;
-}
-
 /** Deep link to the Search Console URL Inspection tool (manual "Request indexing"). */
 export function inspectionUiUrl(siteUrl = "", inspectedUrl = "") {
   const resource = siteUrl.startsWith("sc-domain:")

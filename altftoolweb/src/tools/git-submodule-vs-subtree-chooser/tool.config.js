@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare git submodules, git subtree and package dependencies for sharing code across repos, scored for your team and workflow.",
   icon: "folder-git-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

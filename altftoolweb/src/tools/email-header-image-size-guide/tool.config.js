@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Get the export size, retina multiplier and img markup for an email header, plus how it renders in Outlook, Gmail and Apple Mail.",
   icon: "mail",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate B.Ed admission merit from graduation percentage and entrance score, with the NCTE 50% eligibility check built in.",
   icon: "book-open-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

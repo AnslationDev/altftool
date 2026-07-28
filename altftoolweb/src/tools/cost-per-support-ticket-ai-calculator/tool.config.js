@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare AI handling cost against agent cost per ticket, with occupancy-adjusted labour and a break-even containment rate.",
   icon: "ticket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

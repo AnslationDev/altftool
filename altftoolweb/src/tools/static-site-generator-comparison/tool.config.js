@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Next.js, Astro, Hugo, Eleventy, Gatsby, SvelteKit and Jekyll on build speed, client JS, rendering modes and ecosystem.",
   icon: "layout-template",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

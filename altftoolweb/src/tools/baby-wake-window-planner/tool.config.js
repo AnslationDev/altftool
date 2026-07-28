@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a nap and bedtime schedule from age-based awake windows, nap counts and total sleep needs for babies and toddlers.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

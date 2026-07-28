@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Paste two embedding vectors and get cosine similarity, dot product, Euclidean distance and the angle between them.",
   icon: "move-diagonal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

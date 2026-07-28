@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Developer"],
   description: "Convert common Apache rewrite rules into starter NGINX rewrites.",
   icon: "server",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

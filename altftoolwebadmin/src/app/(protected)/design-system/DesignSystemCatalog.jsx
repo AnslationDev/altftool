@@ -43,18 +43,22 @@ import {
 import { useAdminTheme } from "@/context/ThemeContext";
 
 const COLOR_TOKENS = [
-  { label: "Page", token: "--anslation-ds-page" },
-  { label: "Surface", token: "--anslation-ds-surface" },
-  { label: "Soft", token: "--anslation-ds-soft" },
-  { label: "Border", token: "--anslation-ds-border" },
-  { label: "Text", token: "--anslation-ds-text" },
-  { label: "Muted", token: "--anslation-ds-muted" },
-  { label: "Primary", token: "--anslation-ds-primary" },
-  { label: "Secondary", token: "--anslation-ds-secondary" },
-  { label: "Success", token: "--anslation-ds-success" },
-  { label: "Warning", token: "--anslation-ds-warning" },
-  { label: "Danger", token: "--anslation-ds-danger" },
-  { label: "Info", token: "--anslation-ds-info" },
+  // These deliberately reference the SEMANTIC aliases (defined in globals.css),
+  // not the raw --anslation-ds-* primitives — this catalog's job is to document
+  // the layer app code is actually supposed to consume (per master.md), and it
+  // was previously bypassing that layer on its own showcase page.
+  { label: "Page", token: "--page" },
+  { label: "Surface", token: "--surface" },
+  { label: "Soft", token: "--surface-soft" },
+  { label: "Border", token: "--border" },
+  { label: "Text", token: "--foreground" },
+  { label: "Muted", token: "--muted" },
+  { label: "Primary", token: "--primary" },
+  { label: "Secondary", token: "--secondary" },
+  { label: "Success", token: "--success" },
+  { label: "Warning", token: "--warning" },
+  { label: "Danger", token: "--danger" },
+  { label: "Info", token: "--info" },
 ];
 
 const TAB_ITEMS = [
@@ -123,7 +127,7 @@ export default function DesignSystemCatalog() {
             {COLOR_TOKENS.map((item) => (
               <Card key={item.token} className="overflow-hidden">
                 <div
-                  className="h-16 border-b border-[var(--anslation-ds-border)]"
+                  className="h-16 border-b border-[var(--border)]"
                   style={{ backgroundColor: `var(${item.token})` }}
                 />
                 <div className="p-3">

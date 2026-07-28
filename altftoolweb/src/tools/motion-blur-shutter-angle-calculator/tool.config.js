@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert between shutter angle and shutter speed at any frame rate, with 180-degree rule and mains flicker-safe settings.",
   icon: "aperture",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

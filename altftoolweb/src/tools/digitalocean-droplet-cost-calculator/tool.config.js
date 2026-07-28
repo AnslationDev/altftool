@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate monthly DigitalOcean spend across droplets, block storage volumes, snapshots, load balancers and bandwidth overage.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

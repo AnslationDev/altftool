@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a blue-green cutover checklist with DNS wait time, canary ramp, session and migration steps, and rollback triggers.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

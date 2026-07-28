@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design consistent rate limit headers and a 429 response — IETF RateLimit draft or legacy X-RateLimit style with an RFC 9457 body.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

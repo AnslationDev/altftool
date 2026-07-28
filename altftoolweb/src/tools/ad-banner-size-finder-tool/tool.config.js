@@ -4,7 +4,7 @@ module.exports = {
   name: "Ad Banner Size Finder",
   description: "Find the exact standard dimensions for ad banners across all major platforms.",
   icon: "monitor",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   category: ["Marketing & Social", "Design & Color"],
   isNew: true,
   isPremium: false,

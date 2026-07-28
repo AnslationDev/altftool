@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Daily protein floor to protect lean mass in a calorie deficit, using adjusted body weight when BMI is 30 or above.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

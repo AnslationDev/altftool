@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build Figma AI prompts for wireframes, layer naming and design system cleanup, with real column-grid maths for your frame size.",
   icon: "figma",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

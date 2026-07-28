@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a Husky v9 + lint-staged setup: exact install commands, hook files and package.json config for npm, pnpm, yarn or bun.",
   icon: "git-commit-horizontal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

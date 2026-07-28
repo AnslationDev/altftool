@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Round an amount to a cash-friendly figure and split it into the fewest ₹ notes and coins for payouts and envelopes.",
   icon: "banknote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

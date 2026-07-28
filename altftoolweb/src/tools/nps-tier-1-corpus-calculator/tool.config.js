@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate your NPS Tier 1 corpus at 60, the mandatory annuity share and the expected monthly pension.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

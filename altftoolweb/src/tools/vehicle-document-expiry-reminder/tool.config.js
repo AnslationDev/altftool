@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track insurance, PUC, RC, fitness, permit and licence expiry dates in one private list with days left and reminder dates.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

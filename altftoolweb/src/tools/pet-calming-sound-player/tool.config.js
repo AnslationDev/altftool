@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Play low-stimulation noise loops for anxious pets and size the level so fireworks are masked without unsafe volume.",
   icon: "paw-print",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

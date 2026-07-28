@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a backpacking list as a weight budget: base weight, food by calorie density and water, checked against 20% of your body weight.",
   icon: "backpack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

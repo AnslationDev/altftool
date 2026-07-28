@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a reference letter prompt with specific examples, an honest percentile claim from rank and cohort size, and a per-section word budget.",
   icon: "award",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

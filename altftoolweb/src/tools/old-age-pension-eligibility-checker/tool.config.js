@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check IGNOAPS, widow and disability pension criteria under NSAP, with the central share, state top-up and monthly total.",
   icon: "hand-coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

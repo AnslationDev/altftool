@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a quotation or a ranged estimate with materials and labour lines, contingency, tax, validity and a payment schedule.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

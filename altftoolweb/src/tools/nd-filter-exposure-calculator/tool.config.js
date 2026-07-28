@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a metered shutter speed into the filtered exposure for any ND strength, including stacked filters, optical density and bulb timing.",
   icon: "aperture",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

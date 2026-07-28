@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Maximum print width and height for each t-shirt size from garment measurements and platen limits, with placement offsets and pixel sizes.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate lerna.json with fixed or independent versioning, npm client, publish registry, conventional commits and branch rules.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

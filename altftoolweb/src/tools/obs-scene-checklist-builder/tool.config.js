@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a pre-live checklist for scenes, audio, sources and alerts, with the bitrate and upload headroom your stream needs.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

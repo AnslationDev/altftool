@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Make Diwali sale and greeting posters in warm festive palettes, with the discount maths and WCAG contrast checked.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

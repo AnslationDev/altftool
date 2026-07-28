@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check your EMI load against lender FOIR caps and the 28/36 rule, with the zone you fall in and the EMI headroom left.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

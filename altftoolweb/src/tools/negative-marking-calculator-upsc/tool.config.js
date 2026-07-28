@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Apply the UPSC prelims one-third penalty to your attempt plan and find the attempt count that maximises expected marks.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

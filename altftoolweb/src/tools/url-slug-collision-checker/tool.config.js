@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Normalise a list of titles into URL slugs, find the ones that collide after folding and truncation, and assign WordPress-style numeric suffixes.",
   icon: "link-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

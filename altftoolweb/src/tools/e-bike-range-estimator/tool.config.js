@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate electric bicycle range from battery watt-hours, assist level, terrain, gradient and temperature using a real power model.",
   icon: "battery-charging",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

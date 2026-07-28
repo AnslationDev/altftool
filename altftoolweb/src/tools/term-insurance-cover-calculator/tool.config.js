@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the life cover your family needs from income replacement, loans, dependants' goals and the assets and policies you already hold.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

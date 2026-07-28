@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up what you plan to store and get the smallest self-storage unit that fits, allowing for sprinkler clearance and access.",
   icon: "warehouse",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

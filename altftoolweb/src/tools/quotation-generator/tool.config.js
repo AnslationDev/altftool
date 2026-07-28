@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create client quotations with line items, per-item discounts, GST and a validity period.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

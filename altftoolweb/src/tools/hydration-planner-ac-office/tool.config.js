@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an hourly drinking schedule for dry air-conditioned workspaces, with caffeine and insensible water loss accounted for.",
   icon: "air-vent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

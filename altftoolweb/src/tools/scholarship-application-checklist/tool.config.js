@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test family income against each scheme's ceiling on the National Scholarships Portal, then build the exact document list that scheme needs.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

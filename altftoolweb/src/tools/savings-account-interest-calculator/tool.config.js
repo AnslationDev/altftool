@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Savings account interest on daily closing balance, credited quarterly, with a quarter-by-quarter breakdown.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

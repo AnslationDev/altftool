@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate seasonal sale and festive campaign palettes with WCAG contrast checks and copyable CSS variables.",
   icon: "sparkles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

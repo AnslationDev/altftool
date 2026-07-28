@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log water meter readings to track litres per day, litres per person, cost and leak signals between any two readings.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

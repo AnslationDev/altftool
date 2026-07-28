@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track every appliance's purchase date, comprehensive and part warranty end, extended cover and AMC renewal — stored only in your browser.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

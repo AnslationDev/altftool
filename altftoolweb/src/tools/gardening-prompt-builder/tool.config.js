@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out plants per bed, weekly watering and the harvest date from your spacing, zone and sowing date, then build a planting prompt.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

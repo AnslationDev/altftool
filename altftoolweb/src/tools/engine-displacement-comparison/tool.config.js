@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare two motorcycle engines on specific output, BMEP, power-to-weight, piston speed and everyday tractability.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

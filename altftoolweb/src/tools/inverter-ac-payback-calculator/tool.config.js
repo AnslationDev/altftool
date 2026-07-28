@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how many years an inverter AC takes to repay its price premium over a fixed-speed unit, using ISEER and your tariff.",
   icon: "air-vent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

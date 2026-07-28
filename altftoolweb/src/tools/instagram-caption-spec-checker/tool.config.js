@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check a caption against the 2,200 character limit, the 30 hashtag cap and the 125 character feed truncation point before posting.",
   icon: "instagram",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

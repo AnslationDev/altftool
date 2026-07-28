@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan fixed-cadence release dates with code freeze, release candidate and GA milestones, weekend-safe.",
   icon: "train-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

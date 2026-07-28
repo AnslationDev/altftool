@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a three hour exam into timed checkpoints per section so you know the exact clock time each part must end.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

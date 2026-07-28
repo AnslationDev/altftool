@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out when to leave for Jaipur airport (JAI) using traffic by hour of day, check-in cutoffs and terminal processing time.",
   icon: "plane-takeoff",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

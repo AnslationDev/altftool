@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check hand and checked bags against British Airways piece allowances, the 90 x 75 x 43 cm size rule and heavy-bag limits.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bags against Etihad weight-concept allowances and the piece rules used on US, Canada and Brazil routes.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

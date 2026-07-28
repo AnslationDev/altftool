@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn Swiss franc prices into rupees in your head, with the error percentage of each rule.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

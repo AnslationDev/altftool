@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a short-form video script prompt with a time-coded beat sheet — hook, setup, payoff and CTA mapped to exact seconds.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

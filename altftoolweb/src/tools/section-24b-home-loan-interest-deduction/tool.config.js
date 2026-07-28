@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Deductible home loan interest under Section 24(b) for self-occupied and let-out property, with the Rs 2 lakh cap.",
   icon: "house",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

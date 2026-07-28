@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Frame duration, sheet dimensions, refresh-rate alignment and ready-made CSS steps() keyframes for sprite sheet animation.",
   icon: "film",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

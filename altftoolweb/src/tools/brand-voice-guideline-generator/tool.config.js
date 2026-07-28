@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn four tone dials into a shareable brand voice guide with do and don't rules, word choices and reading-level targets.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

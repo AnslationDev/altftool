@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a tempo into delay, pre-delay and LFO times in milliseconds, hertz and samples for every straight, dotted and triplet note value.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

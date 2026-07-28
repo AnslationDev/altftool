@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track which IDs, bank accounts and certificates still carry your old name, in the right dependency order with progress and next actions.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

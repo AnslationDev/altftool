@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lay out a 1920x1080 Twitch offline screen with the player control bar mapped and a grid for schedule and socials blocks.",
   icon: "twitch",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

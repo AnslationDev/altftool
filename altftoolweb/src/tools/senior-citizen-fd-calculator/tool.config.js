@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "What the extra senior citizen deposit rate is worth, with the ₹1 lakh TDS threshold and the section 80TTB interest deduction.",
   icon: "user-round-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

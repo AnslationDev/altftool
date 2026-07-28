@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the upload speed a live stream needs from video and audio bitrate, protocol overhead and safety headroom.",
   icon: "wifi",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert cooling capacity between BTU per hour, tons of refrigeration, kilowatts and kcal/h, with the electrical draw at a given COP.",
   icon: "snowflake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the gold loan you can get from jewellery weight, karat purity and the lender's LTV cap, with per-gram value and repayment preview.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

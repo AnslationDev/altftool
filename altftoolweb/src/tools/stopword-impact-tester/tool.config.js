@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Strip stopwords and filler words to see the change in word count, characters and estimated tokens — and what meaning it costs.",
   icon: "filter",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

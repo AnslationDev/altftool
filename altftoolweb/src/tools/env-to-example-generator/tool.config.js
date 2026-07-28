@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a real .env into a safe .env.example — values stripped, comments and structure kept, secret keys always blanked.",
   icon: "file-key",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

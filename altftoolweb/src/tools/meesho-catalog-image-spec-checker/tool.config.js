@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check Meesho catalogue images for the 500 px minimum, square ratio, clean background and the no-watermark, no-price-text rules.",
   icon: "shopping-cart",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

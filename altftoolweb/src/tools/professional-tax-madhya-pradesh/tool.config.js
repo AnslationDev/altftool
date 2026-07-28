@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Madhya Pradesh professional tax by annual salary slab, with the monthly deduction split and annual deposit guidance.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

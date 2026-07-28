@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out coolant and water litres for your radiator capacity, with the freeze point and cap-pressure boil point of the mix.",
   icon: "thermometer-snowflake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

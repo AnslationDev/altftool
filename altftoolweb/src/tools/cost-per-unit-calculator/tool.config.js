@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Absorb fixed overheads and variable costs across a production batch to get true cost per unit, contribution and break-even.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

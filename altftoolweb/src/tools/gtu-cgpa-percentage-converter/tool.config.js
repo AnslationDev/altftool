@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert GTU SPI, CPI and CGPA to percentage with selectable regulation, and build the index from AA to FF course grades.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Map your headers to real column letters and ranges, then build a formula prompt for Excel, Sheets or Calc.",
   icon: "table",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

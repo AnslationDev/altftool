@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert km/h, mph, knots, m/s, ft/s and Mach, with reaction and braking distance for the same speed.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

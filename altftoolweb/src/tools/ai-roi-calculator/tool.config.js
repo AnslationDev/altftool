@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare AI tool subscription cost against hours saved and hourly rates to get monthly ROI, payback and break-even hours.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

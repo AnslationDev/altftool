@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log tournaments, winners, runners-up and venues in a searchable exam-ready table for sports current affairs questions.",
   icon: "trophy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

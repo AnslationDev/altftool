@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Scan a social caption for AI-style hooks, em dashes, emoji bullet patterns and hashtag padding, with a transparent signal score.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

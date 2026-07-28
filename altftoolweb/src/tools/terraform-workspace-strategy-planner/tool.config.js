@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decide between CLI workspaces, directory-per-environment or fully separate state for Terraform, with scored trade-offs.",
   icon: "git-branch",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a source word count and a compression ratio into a target length, sentence count, token budget and reading time saved.",
   icon: "scissors",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

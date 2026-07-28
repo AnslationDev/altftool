@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert .env entries into docker-compose environment blocks (list or map form) or env_file references, with $$ escaping.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

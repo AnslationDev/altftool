@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the all-in painting cost per square foot in India across economy, premium and luxury emulsion tiers.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

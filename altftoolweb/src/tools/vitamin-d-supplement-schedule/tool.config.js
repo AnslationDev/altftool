@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a weekly or monthly vitamin D dosing instruction into dated doses, with the average daily IU compared to the RDA and upper limit.",
   icon: "sun",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

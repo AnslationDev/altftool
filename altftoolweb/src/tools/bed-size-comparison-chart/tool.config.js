@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare single, double, queen and king bed sizes across Indian, US, UK and EU standards in inches, cm and feet.",
   icon: "bed-double",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

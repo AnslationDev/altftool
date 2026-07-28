@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build Excel Copilot prompts that name the exact sheet, A1 range and column headers, with grid limits validated before you paste.",
   icon: "file-spreadsheet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

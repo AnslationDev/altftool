@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate menu description prompts with cuisine, pricing tone and an allergen check against EU, US or Codex declaration lists.",
   icon: "utensils-crossed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

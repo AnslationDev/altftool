@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Ranks glues and sealants for the two materials you are joining, checking gap fill, water exposure, movement, load and surface energy.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Protein and fat targets for an all-animal-food diet, with the fat-to-protein ratio, a protein ceiling check and matching cuts.",
   icon: "beef",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

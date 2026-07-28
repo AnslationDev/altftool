@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Organize bookmarks with folders, categories, tags, favorites, drag-and-drop, search, filters, bulk actions, and import/export.",
   icon: "bookmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

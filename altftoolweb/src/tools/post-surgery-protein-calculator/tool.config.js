@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Informational recovery protein and energy estimate using ESPEN surgical guideline g/kg bands and adjusted body weight.",
   icon: "bandage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

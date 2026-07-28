@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fill-in-the-blank AI prompts for batch announcements, doubt replies and result posts, with a CCPA coaching-advertising claim check.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

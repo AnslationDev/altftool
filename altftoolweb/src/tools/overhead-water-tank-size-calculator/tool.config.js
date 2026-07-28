@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size an overhead tank and sump in litres from family size, IS 1172 per-capita demand, garden use and days of storage.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

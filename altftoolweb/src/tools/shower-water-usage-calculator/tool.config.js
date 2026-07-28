@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare bucket bath, hand shower and rain shower on litres, geyser units and rupees per bath, per month and per year.",
   icon: "shower-head",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

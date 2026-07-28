@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turns a diff summary into a Conventional Commits prompt with type, scope, breaking-change marker and the 50/72 length rules.",
   icon: "git-commit-horizontal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

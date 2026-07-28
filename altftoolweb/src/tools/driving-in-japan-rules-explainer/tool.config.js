@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Japanese road rules for visitors: which side to drive on, speed limits, the 0.03% alcohol limit and which International Driving Permit Japan accepts.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

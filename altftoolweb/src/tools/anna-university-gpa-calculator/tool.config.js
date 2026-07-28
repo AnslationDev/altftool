@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your Anna University semester GPA from letter grades and course credits using the official Σ(Ci×GPi)/ΣCi formula.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

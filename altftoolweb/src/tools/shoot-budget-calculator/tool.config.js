@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a line-item shoot budget from crew day rates, gear, location, travel and post hours, with contingency and GST.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

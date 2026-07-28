@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Assemble a single-page do and don't guide for staff AI use from a curated clause library — approved tools, data rules, review duty.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

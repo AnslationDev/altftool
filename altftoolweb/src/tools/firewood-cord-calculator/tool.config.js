@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate cords of firewood needed for a heating season by species and stove efficiency, plus stack length and weight.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

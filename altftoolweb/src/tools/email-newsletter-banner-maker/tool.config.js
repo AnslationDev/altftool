@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design newsletter headers at real email widths, export at 2x for retina and check how they read on light and dark clients.",
   icon: "mail",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

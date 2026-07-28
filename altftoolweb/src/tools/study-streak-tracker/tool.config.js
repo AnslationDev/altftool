@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track daily study streaks against an hour goal, with streak-freeze recovery rules, longest streak and adherence rate.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

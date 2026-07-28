@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Classic proportion targets for chest, waist, arms, thighs and calves scaled from your wrist using McCallum and Steve Reeves ratios.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

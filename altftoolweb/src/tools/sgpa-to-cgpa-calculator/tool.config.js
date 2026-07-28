@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Combine semester SGPAs with their credits into a cumulative CGPA, see the running trend, and convert it to a percentage.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

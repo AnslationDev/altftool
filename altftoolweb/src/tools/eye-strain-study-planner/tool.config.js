@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a study session that alternates screen and paper blocks, with 20-20-20 micro-breaks and rest gaps to cut eye strain.",
   icon: "eye",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

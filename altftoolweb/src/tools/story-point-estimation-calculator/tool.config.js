@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert story points to hours from your team's own velocity, with a confidence range and sprint forecast.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

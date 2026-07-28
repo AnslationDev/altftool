@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Picks the penny size, length and gauge for framing, sheathing and trim from the penetration rule, with spacing and nail counts.",
   icon: "hammer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

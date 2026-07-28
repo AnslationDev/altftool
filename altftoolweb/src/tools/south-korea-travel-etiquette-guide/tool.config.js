@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a prioritised South Korea etiquette briefing covering seniority, drinking rules, subway conduct and photography law.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

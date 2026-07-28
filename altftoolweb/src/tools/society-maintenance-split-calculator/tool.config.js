@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a housing society's monthly maintenance budget across flats by carpet area, equally, or on a hybrid basis.",
   icon: "building-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

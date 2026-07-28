@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a dehumidifier in litres per day from room volume, damp severity and humidity, with runtime and running cost.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

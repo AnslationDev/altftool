@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "A private worksheet that scores how AI chat fits your time, routines, boundaries and social life.",
   icon: "message-circle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

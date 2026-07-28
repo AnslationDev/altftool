@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the exact speed multiplier needed to hit a required runtime, plus how much to cut if the speed change is too aggressive.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

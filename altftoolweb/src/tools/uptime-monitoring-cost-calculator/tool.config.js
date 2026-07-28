@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out monthly uptime monitoring cost from endpoint count, check interval, probe locations and alert volume — plus detection time.",
   icon: "activity",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

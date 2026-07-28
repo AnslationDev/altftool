@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a flat interest rate to its true reducing-balance equivalent, or back again, with the EMI and total interest.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

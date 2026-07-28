@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan pollution certificate renewal dates and yearly cost by vehicle category using the 12-month and 6-month PUC validity rule.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

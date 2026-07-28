@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a Thai e-Visa tourist cover letter with itinerary, the 60-day stay stamp, funds proof and overstay-risk check.",
   icon: "palmtree",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

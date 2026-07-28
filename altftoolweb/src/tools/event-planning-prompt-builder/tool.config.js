@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a timed run of show, floor area, staffing and catering-line figures for any headcount, then copy them as one logistics prompt.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

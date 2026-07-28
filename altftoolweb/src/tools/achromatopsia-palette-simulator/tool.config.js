@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See your palette with all colour removed and check every pair against the WCAG 3:1 and 4.5:1 contrast thresholds.",
   icon: "contrast",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Adjust touch-dry, recoat and hard-dry times for temperature and humidity, then schedule every coat by the clock.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

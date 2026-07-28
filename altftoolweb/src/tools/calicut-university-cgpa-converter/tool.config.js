@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert Calicut University CBCSS CGPA or SGPA to percentage marks, and turn course letter grades into a grade point average.",
   icon: "school",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

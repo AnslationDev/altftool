@@ -30,6 +30,7 @@ import {
 } from "@/ansets";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebaseAuth";
+import { pageCache } from "@/lib/security/pageCache";
 
 const TABS = [
   { key: "overview", label: "Overview", icon: ShieldCheck },
@@ -49,14 +50,11 @@ const FOCUS_RING =
 
 /* --------------------- perf hooks: cache, debounce, paging --------------------- */
 
-// Module-level cache: data survives tab switches within the SPA session, so
-// re-opening a tab renders instantly instead of refetching. This is why the
-// screen keeps its own fetch hooks instead of useAdminResource — that hook has
-// no cross-mount cache, no cursor paging, and cannot POST.
-const pageCache = new Map();
-export function clearSecurityCache() {
-  pageCache.clear();
-}
+// Module-level cache (src/lib/security/pageCache.js): data survives tab
+// switches within the SPA session, so re-opening a tab renders instantly
+// instead of refetching. This is why the screen keeps its own fetch hooks
+// instead of useAdminResource — that hook has no cross-mount cache, no cursor
+// paging, and cannot POST. AuthContext clears it on logout.
 
 // Operator-facing copy for a failed request. Raw transport strings like
 // "Request failed (401)" tell a super admin nothing actionable.
@@ -286,18 +284,20 @@ function PageShell({ children }) {
 
 function OverviewTab({ authFetch }) {
   const fetcher = useCallback(async () => {
-    const [s, e, cfg] = await Promise.all([
+    // Counts come from a true aggregate query, not a bounded recent-events
+    // page — deriving them from e.g. the 50 most recent events silently
+    // understated an active incident once more than 50 events existed.
+    const [s, counts, cfg] = await Promise.all([
       authFetch("/api/security/sessions"),
-      authFetch("/api/security/events?limit=50"),
+      authFetch("/api/security/events?action=counts"),
       authFetch("/api/security/settings"),
     ]);
     const sessions = s.sessions || [];
-    const events = e.events || [];
     return {
       activeSessions: sessions.filter((x) => x.status === "active").length,
       totalSessions: sessions.length,
-      suspicious: events.filter((x) => x.riskLevel === "high" || x.riskLevel === "medium").length,
-      failed: events.filter((x) => x.type === "login.failed" || x.type === "login.rate_limited").length,
+      suspicious: counts.suspicious ?? 0,
+      failed: counts.failed ?? 0,
       settings: cfg,
     };
   }, [authFetch]);
@@ -674,7 +674,17 @@ function SessionsTab({ authFetch }) {
         >
           <div className="space-y-2">
             {active.map((s) => (
-              <SessionRow key={s.id} s={s} onRevoke={() => revoke(s.id)} busy={busy === s.id} />
+              <SessionRow
+                key={s.id}
+                s={s}
+                onRevoke={() => {
+                  const label = s.deviceLabel || `${s.browser} on ${s.os}`;
+                  if (window.confirm(`Force logout "${label}"${s.email ? ` (${s.email})` : ""}? This ends the session immediately.`)) {
+                    revoke(s.id);
+                  }
+                }}
+                busy={busy === s.id}
+              />
             ))}
           </div>
         </DataState>
@@ -970,7 +980,17 @@ function SettingsTab({ authFetch }) {
   }
   if (!form) return <LoadingState variant="detail" />;
 
-  const num = (key, val) => setForm((f) => ({ ...f, [key]: Number(val) }));
+  // NumberField's min/max are HTML hints only — a browser lets someone type
+  // (or paste) a value outside them directly, and that unclamped number was
+  // going straight into a platform-wide policy write.
+  const clamp = (val, min, max) => {
+    const n = Number(val);
+    if (!Number.isFinite(n)) return min ?? 0;
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const num = (key, val, min, max) => setForm((f) => ({ ...f, [key]: clamp(val, min, max) }));
   const rl = form.loginRateLimit || {};
 
   return (
@@ -981,7 +1001,11 @@ function SettingsTab({ authFetch }) {
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
-            onClick={save}
+            onClick={() => {
+              if (window.confirm("Save these security settings? They apply to every admin session on the platform immediately.")) {
+                save();
+              }
+            }}
             disabled={saving}
             className={`inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover)] disabled:opacity-60 ${FOCUS_RING}`}
           >
@@ -1001,20 +1025,20 @@ function SettingsTab({ authFetch }) {
       }
     >
       <div className="grid gap-4 sm:grid-cols-2">
-        <NumberField label="Max devices per admin" value={form.deviceLimit} onChange={(v) => num("deviceLimit", v)} min={1} max={25} />
-        <NumberField label="Idle timeout (minutes)" value={form.idleTimeoutMinutes} onChange={(v) => num("idleTimeoutMinutes", v)} min={1} max={480} />
-        <NumberField label="Absolute session cap (hours)" value={form.sessionAbsoluteHours} onChange={(v) => num("sessionAbsoluteHours", v)} min={1} max={168} />
+        <NumberField label="Max devices per admin" value={form.deviceLimit} onChange={(v) => num("deviceLimit", v, 1, 25)} min={1} max={25} />
+        <NumberField label="Idle timeout (minutes)" value={form.idleTimeoutMinutes} onChange={(v) => num("idleTimeoutMinutes", v, 1, 480)} min={1} max={480} />
+        <NumberField label="Absolute session cap (hours)" value={form.sessionAbsoluteHours} onChange={(v) => num("sessionAbsoluteHours", v, 1, 168)} min={1} max={168} />
         <NumberField
           label="Login attempts before block"
           value={rl.maxAttempts}
-          onChange={(v) => setForm((f) => ({ ...f, loginRateLimit: { ...f.loginRateLimit, maxAttempts: Number(v) } }))}
+          onChange={(v) => setForm((f) => ({ ...f, loginRateLimit: { ...f.loginRateLimit, maxAttempts: clamp(v, 1, 100) } }))}
           min={1}
           max={100}
         />
         <NumberField
           label="Login window (minutes)"
           value={rl.windowMinutes}
-          onChange={(v) => setForm((f) => ({ ...f, loginRateLimit: { ...f.loginRateLimit, windowMinutes: Number(v) } }))}
+          onChange={(v) => setForm((f) => ({ ...f, loginRateLimit: { ...f.loginRateLimit, windowMinutes: clamp(v, 1, 120) } }))}
           min={1}
           max={120}
         />

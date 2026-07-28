@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Parses your endpoint list and builds a documentation prompt covering params, auth, error cases and your chosen doc format.",
   icon: "book-open-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

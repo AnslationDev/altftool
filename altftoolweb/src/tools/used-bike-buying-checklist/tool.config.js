@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Inspect a used motorcycle with a structured points checklist that scores condition and turns failures into an offer.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

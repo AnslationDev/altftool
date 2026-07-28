@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Average buy price across multiple purchases of the same stock, with total quantity, invested amount and averaging-down planner.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

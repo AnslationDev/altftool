@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calories burned swimming by stroke, effort and time, with pool distance, pace per 100 m and calories per length.",
   icon: "waves",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

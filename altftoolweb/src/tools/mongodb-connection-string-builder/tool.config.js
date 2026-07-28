@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build mongodb:// and mongodb+srv:// URIs with replica set, auth source, read preference, write concern and TLS options.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

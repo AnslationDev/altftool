@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a JSONL dataset into train, validation and test sets with a fixed seed for a reproducible, shuffled split.",
   icon: "split",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

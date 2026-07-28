@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up what always-on and standby devices cost you every year, ranked by the worst offender in your home.",
   icon: "plug",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

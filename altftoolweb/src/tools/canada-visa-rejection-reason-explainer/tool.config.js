@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Education & Science"],
   description: "Translate the ticked boxes on an IRCC refusal letter into the regulation behind them and a checklist of what to fix.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

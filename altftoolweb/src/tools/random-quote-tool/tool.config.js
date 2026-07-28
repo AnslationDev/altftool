@@ -4,7 +4,7 @@ const toolConfig = {
   name: "Random Quote Generator",
   description: "Get inspired instantly with random, thought-provoking quotes.",
   icon: "quote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   category: "Fun",
   isNew: true,
   isPremium: false,

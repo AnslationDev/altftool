@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out exact pillarbox or letterbox bar sizes, scaled video dimensions and the ffmpeg pad filter for any ratio inside any frame.",
   icon: "ratio",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

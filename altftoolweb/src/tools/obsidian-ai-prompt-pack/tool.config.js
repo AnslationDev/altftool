@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "A dozen ready Obsidian prompts for linking, summarising and daily note review, with wikilink, tag and filename rules applied.",
   icon: "notebook-pen",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

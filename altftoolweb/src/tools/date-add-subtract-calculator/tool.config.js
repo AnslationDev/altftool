@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add or subtract days, weeks, months or years from any date and get the exact resulting date.",
   icon: "calendar-plus",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

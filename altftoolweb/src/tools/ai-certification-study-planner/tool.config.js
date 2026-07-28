@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn an AI certification's published domain weights into a week-by-week study plan with hours per topic and a readiness check against your exam date.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

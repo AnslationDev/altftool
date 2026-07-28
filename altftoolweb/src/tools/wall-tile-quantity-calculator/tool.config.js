@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute wall tile count, boxes and cost from wall run, height and the door and window openings deducted.",
   icon: "layout-grid",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

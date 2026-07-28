@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design a namespaced Redis key convention with environment, tenant and version segments plus cluster hash tags.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

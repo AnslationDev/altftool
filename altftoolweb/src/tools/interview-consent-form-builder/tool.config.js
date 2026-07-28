@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a plain-language interview recording consent form covering purpose, usage, retention and the right to withdraw.",
   icon: "file-signature",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -202,7 +202,7 @@ export async function writeActivityEvent(entry = {}, opts = {}) {
       // silently dropped. Still reject path separators / reserved chars.
       const actorKey = event.actorUid && /^[A-Za-z0-9_.:@|=-]+$/.test(event.actorUid) ? event.actorUid : null;
       const rollupBatch = adminDb.batch();
-      for (const path of ancestorPaths(event.hierarchyPath)) {
+      for (const path of event.pathAncestors) {
         const ref = adminDb.collection(ACTIVITY_ROLLUPS_COLLECTION).doc(rollupDocId(path));
         const rollup = {
           hierarchyPath: path,

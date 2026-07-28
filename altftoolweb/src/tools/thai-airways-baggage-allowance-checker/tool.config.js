@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bags against Thai Airways weight allowances, the 115 cm cabin rule and Americas piece-concept routes.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert CSV into JSON, HTML, XML, SQL inserts, or Python dictionaries.",
   icon: "table-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

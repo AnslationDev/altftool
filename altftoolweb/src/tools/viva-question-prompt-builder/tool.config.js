@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Builds a mock-viva prompt from your abstract and methods, distributing likely examiner questions across the standard defence areas.",
   icon: "message-circle-question",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Configure a copy-editor AI persona: style guide, edit depth, English variant and change-tracking rules in one system prompt.",
   icon: "pen-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

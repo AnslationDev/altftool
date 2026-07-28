@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how often your kitchen chimney filters need cleaning, when the next service is due and whether its suction suits your kitchen.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

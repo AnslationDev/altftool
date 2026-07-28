@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate consistent, sortable video file names across course modules and lessons, with padding, case style and length checks.",
   icon: "file-video",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

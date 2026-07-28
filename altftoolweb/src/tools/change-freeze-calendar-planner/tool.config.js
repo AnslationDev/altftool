@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan deployment freeze windows around festivals, sale events and fiscal close dates, with merged windows and frozen-day totals.",
   icon: "snowflake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

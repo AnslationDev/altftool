@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a clear scheduled-maintenance notice with UTC and local start times, expected impact and a rollback statement.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

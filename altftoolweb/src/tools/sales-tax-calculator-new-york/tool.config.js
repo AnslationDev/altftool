@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "New York sales tax: 4% state, county or city rate and the 0.375% MCTD surcharge, with the $110 clothing exemption applied.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

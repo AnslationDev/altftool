@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project EPF corpus at retirement from salary, contribution rate and expected hikes.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

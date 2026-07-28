@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Produce Snap ad, story and geofilter creatives at the required resolution, safe zone and file weight.",
   icon: "ghost",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

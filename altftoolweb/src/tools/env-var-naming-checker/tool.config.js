@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check environment variable names against POSIX rules, UPPER_SNAKE_CASE convention, reserved names and risky prefixes.",
   icon: "spell-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

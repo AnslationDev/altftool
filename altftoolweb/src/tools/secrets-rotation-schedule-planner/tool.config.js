@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a rotation calendar for API keys, tokens, passwords and certificates with owners, due dates and overdue flags — all in your browser.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

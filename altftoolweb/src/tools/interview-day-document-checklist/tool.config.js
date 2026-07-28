@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build the originals-and-photocopies list for an exam interview, then price the sets: pages per set, total copies, signatures and photocopy cost.",
   icon: "file-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

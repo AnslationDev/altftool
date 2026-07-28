@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check your small bag, Priority cabin bag and purchased 10 kg or 20 kg hold bag against Ryanair's published size and weight limits.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

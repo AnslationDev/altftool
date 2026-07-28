@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Creates video script prompts from runtime: word count at 150 wpm, a 15-second hook, chapter timings and retention beats.",
   icon: "youtube",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

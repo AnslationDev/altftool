@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate monthly and yearly inverter AC electricity cost from tonnage, ISEER, hours of use, thermostat setpoint and your tariff.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

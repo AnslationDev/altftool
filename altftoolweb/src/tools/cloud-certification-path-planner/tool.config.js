@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan an AWS, Azure or GCP certification sequence with exam fees, study hours and a week-by-week timeline.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan mowing frequency, cutting height and season workload by grass type, season, shade and lawn care level.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

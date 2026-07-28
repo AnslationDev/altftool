@@ -130,17 +130,26 @@ export async function sendPushToUsers({ userIds, title, body, data = {} }) {
 async function removeStaleTokens(staleTokens) {
   if (!staleTokens.length) return;
   try {
-    const staleSet  = new Set(staleTokens);
-    const hitDocs   = new Map();
+    const staleSet = new Set(staleTokens);
+    const hitDocs = new Map();
+    const rbacAdminUsers = getRbacRootRef().collection(RBAC_COLLECTIONS.adminUsers);
 
+    // Search BOTH stores — readTokensForUid() above reads tokens from both, so
+    // a stale token belonging to an RBAC-era admin was never actually removed
+    // here (only the legacy `admins` collection was queried), and kept being
+    // re-collected and re-sent (and re-failing) on every subsequent push.
     await Promise.all(
-      staleTokens.map(async (token) => {
-        const snap = await adminDb
+      staleTokens.flatMap((token) => [
+        adminDb
           .collection("admins")
           .where("fcmTokens", "array-contains", token)
-          .get();
-        snap.docs.forEach((d) => hitDocs.set(d.id, d));
-      })
+          .get()
+          .then((snap) => snap.docs.forEach((d) => hitDocs.set(`legacy:${d.id}`, d))),
+        rbacAdminUsers
+          .where("fcmTokens", "array-contains", token)
+          .get()
+          .then((snap) => snap.docs.forEach((d) => hitDocs.set(`rbac:${d.id}`, d))),
+      ])
     );
 
     const batch = adminDb.batch();

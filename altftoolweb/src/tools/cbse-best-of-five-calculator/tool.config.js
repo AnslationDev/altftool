@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the CBSE Class 12 best-of-five percentage: the compulsory language plus your four highest scoring subjects.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

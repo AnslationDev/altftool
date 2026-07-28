@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators"],
   description: "Solve simple interest, principal, rate or time from the other three, with a yearly table.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

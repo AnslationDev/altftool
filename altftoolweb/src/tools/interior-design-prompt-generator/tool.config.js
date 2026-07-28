@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a room, style and budget feel into an AI image prompt, with lighting lumens and rug size computed from your room dimensions.",
   icon: "sofa",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

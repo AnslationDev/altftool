@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn steps, prerequisites and screenshot notes into a help-article prompt structured by DITA information type.",
   icon: "life-buoy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

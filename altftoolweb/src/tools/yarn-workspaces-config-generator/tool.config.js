@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set up Yarn workspaces with package globs, nohoist rules for Yarn 1 or .yarnrc.yml and constraints for Yarn Berry.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

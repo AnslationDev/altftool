@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert square feet, square metres, square yards, acres and hectares, with rate per unit and total plot cost.",
   icon: "scaling",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

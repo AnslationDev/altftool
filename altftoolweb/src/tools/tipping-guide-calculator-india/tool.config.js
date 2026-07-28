@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Customary tipping amounts in India for restaurants, autos, hotels, drivers and guides, with the CCPA service-charge rule and GST handled.",
   icon: "hand-coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

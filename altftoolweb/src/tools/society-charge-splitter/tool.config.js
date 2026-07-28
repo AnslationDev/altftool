@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split housing society maintenance flat by flat using the model bye-law basis: service charges equally, repairs by area, water by inlets.",
   icon: "building-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

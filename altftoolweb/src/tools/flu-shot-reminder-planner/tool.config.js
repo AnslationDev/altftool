@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find your best annual flu vaccination window by hemisphere, with the date protection starts, travel deadlines and child second-dose timing.",
   icon: "syringe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

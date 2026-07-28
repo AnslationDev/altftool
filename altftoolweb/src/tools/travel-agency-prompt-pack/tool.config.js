@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fill-in-the-blank AI prompts for package copy, quotes and follow-ups, with a tour quote calculator covering markup, GST and TCS.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

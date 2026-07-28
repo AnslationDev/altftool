@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a rupee amount into cheque-ready words using the Indian lakh and crore system, with paise and digit grouping.",
   icon: "spell-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

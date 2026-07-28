@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Body fat percentage from neck, waist and hip tape measurements using the US Navy circumference equations.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

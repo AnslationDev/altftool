@@ -42,9 +42,13 @@ export async function GET(request) {
     // Totals + byAction (O(1) rollups). Root has no single rollup → aggregate projects.
     let total = 0;
     const byAction = {};
-    const childSnaps = await Promise.all(
-      children.map((c) => adminDb.collection(ROLLUPS).doc(rid(c.hierarchyPath)).get().catch(() => null)),
-    );
+    // One batched RPC (adminDb.getAll) instead of one .get() per sibling —
+    // Promise.all already ran these in parallel, but each was still a
+    // separate round trip, scaling with workspace size on every analytics load.
+    const childRefs = children.map((c) => adminDb.collection(ROLLUPS).doc(rid(c.hierarchyPath)));
+    const childSnaps = childRefs.length
+      ? await adminDb.getAll(...childRefs).catch(() => childRefs.map(() => null))
+      : [];
     if (path) {
       const snap = await adminDb.collection(ROLLUPS).doc(rid(path)).get().catch(() => null);
       if (snap?.exists) {

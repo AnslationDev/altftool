@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fit one image to every Instagram feed, portrait, landscape and story size, with crop preview and batch export.",
   icon: "instagram",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

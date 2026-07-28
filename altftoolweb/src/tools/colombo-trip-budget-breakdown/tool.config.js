@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break a Colombo trip into flights, stay, food, transport and activities in rupees, with Sri Lanka's service charge, SSCL and VAT.",
   icon: "ship",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

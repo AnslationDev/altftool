@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how many sod or turf rolls a lawn needs, including trim wastage, pallets and the delivered cost.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

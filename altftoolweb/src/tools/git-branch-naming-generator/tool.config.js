@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create a branch naming convention with types, ticket IDs and separators — get the template, validation regex, examples and a CI check.",
   icon: "git-branch",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

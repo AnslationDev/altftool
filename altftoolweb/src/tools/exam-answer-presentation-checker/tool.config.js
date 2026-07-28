@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Self-check the presentation of an exam answer — structure, headings, diagrams and underlining — and get a weighted score.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

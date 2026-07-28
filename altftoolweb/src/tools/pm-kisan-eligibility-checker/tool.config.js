@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check landholding, exclusion categories and e-KYC readiness for the PM-KISAN farmer income support scheme of Rs 6,000 a year.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

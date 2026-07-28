@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft electricity, gas, water and broadband transfer applications with the right documents, the statutory timeline and a completion date.",
   icon: "plug-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

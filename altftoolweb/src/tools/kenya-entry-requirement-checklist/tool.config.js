@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out whether you need Kenya's eTA, what it costs for your party, the yellow fever rule and the passenger declaration before arrival.",
   icon: "tent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

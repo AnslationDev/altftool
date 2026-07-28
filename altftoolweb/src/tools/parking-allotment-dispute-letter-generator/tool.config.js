@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a housing society parking complaint over a denied slot, encroachment, unfair allotment or illegal parking charges.",
   icon: "circle-parking",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

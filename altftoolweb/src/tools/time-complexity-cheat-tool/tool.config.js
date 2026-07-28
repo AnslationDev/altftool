@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Look up best, average and worst-case time and space complexity for common algorithms and data structures.",
   icon: "binary",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

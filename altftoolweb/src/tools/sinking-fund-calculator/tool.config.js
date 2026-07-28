@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the monthly reserve for known irregular bills like insurance, servicing, fees and travel.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

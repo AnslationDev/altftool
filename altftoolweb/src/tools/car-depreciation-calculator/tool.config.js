@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Chart a car's year-by-year depreciation curve, remaining value and IRDAI insurance IDV from price, age and kilometres run.",
   icon: "trending-down",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

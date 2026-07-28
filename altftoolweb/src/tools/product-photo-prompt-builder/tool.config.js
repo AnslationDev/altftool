@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compose ecommerce product-shot prompts with surface, angle and lighting, sized to Amazon, Etsy, Shopify or Instagram image rules.",
   icon: "camera",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

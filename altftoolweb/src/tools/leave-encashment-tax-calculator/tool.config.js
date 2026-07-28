@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Taxable vs exempt leave encashment on retirement for private employees.",
   icon: "calendar-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

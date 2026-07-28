@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Preview upcoming run times for standard five-field cron expressions.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan rotation dates, overlap windows and revocation steps for AI API keys based on their exposure level.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

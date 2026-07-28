@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check how much of your bank balances DICGC insures, grouped by bank and by the capacity in which each account is held.",
   icon: "umbrella",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

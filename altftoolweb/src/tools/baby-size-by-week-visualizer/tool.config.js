@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See average fetal length and weight for any week from 8 to 40, with a familiar fruit or vegetable comparison.",
   icon: "apple",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

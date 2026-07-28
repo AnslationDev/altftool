@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Number of shares to buy based on your capital, risk per trade and stop loss distance, with capital and leverage limits applied.",
   icon: "scaling",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

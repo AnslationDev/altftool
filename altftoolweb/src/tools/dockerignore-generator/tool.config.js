@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create a .dockerignore tailored to your stack to shrink the build context and speed up docker build.",
   icon: "file-x",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

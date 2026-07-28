@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total an invoice whose lines are priced in different currencies using exchange rates you enter yourself, then add tax.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

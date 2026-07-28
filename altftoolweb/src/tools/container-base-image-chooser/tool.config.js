@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare alpine, slim, distroless, scratch and full base images by size, libc, shell and debug tooling — and get a ranked pick.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

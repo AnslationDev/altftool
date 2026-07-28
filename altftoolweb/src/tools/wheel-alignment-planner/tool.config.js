@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan wheel alignment and balancing intervals from road quality and kilometres, and tell the two symptom sets apart.",
   icon: "circle-dot",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

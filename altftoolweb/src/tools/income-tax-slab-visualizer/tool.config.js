@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track which exam diagrams you can draw from memory within your time limit and see which ones to practise next.",
   icon: "pen-tool",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

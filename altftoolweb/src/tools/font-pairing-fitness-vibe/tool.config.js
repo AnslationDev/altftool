@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "High-impact condensed font pairs with a headline fitting calculator for gym, sports and supplement branding.",
   icon: "dumbbell",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

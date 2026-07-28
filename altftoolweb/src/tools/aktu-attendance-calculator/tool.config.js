@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check AKTU attendance against the 75% rule — shortage in classes, consecutive classes to recover and safe bunks left.",
   icon: "calendar-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

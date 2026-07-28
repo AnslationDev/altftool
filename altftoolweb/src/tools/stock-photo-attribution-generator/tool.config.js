@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build correct credit lines for stock and Creative Commons images in plain text, HTML and Markdown using the TASL rule.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

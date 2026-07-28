@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up device wattages to see whether one hotel socket and travel power strip can safely run them all at your destination voltage.",
   icon: "power",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

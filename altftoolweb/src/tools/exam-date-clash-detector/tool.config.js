@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Spot same-day clashes and dangerously tight gaps across all the exams you have applied for.",
   icon: "calendar-x-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

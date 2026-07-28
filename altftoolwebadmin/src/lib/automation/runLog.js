@@ -41,6 +41,29 @@ export async function sumCostToday() {
   return total;
 }
 
+/**
+ * countProducedToday(kind) + sumCostToday() combined into one query — every
+ * lane run (blogLane, seoLane) called both back-to-back, fetching the exact
+ * same day's run docs twice.
+ */
+export async function getTodayUsage(kind) {
+  const snap = await adminDb
+    .collection(fsPath(RUNS_COLLECTION))
+    .where("startedAt", ">=", startOfTodayUtc())
+    .get();
+
+  let produced = 0;
+  let totalCost = 0;
+  snap.forEach((doc) => {
+    const data = doc.data();
+    if (data.kind === kind) {
+      produced += Array.isArray(data.created) ? data.created.length : Number(data.createdCount || 0);
+    }
+    totalCost += Number(data?.costEstimate) || 0;
+  });
+  return { produced, totalCost };
+}
+
 /** Create a run doc up-front so crashes still leave a visible trace. */
 export async function startRun({ kind, trigger = "cron", startedBy = "" }) {
   const ref = adminDb.collection(fsPath(RUNS_COLLECTION)).doc();

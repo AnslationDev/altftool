@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Time a festival day backwards from the gates: queue build-up, arrival buffer, crowd density, exit clear time and the last service home.",
   icon: "party-popper",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

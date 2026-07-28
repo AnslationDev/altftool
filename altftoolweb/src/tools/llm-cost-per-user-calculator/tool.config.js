@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out AI cost per active user per month from sessions, message length, conversation history growth and token pricing.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

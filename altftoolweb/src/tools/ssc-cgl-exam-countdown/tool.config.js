@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Days-and-hours countdown to SSC CGL Tier-I or Tier-II with revision-phase milestones mapped onto your remaining time.",
   icon: "hourglass",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

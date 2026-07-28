@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare IndiGo airport excess baggage charges against prepaid baggage slabs and see which option costs less.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

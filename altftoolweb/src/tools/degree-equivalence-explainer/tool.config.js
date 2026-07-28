@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how Indian qualifications — Class 12, 3-year BA, BTech, MBBS, master's — map to the US, UK, Canada, Australia and Germany.",
   icon: "globe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

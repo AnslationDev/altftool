@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Indexed cost of acquisition and improvement using the notified Cost Inflation Index for the purchase and sale financial years.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

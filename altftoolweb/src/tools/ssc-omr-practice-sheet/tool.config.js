@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Print an SSC-style OMR answer sheet with A-D bubbles, CGL/CHSL Tier-I part blocks, marking scheme and a roll number grid for practice.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

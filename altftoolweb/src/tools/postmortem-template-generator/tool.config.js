@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a blameless postmortem document with metadata, timeline, root cause, lessons and tracked action items in Markdown.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan how many photocopy sets you need across application, verification and admission stages — with pages, spares and cost.",
   icon: "printer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

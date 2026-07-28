@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Spanish road rules for visitors: side of the road, 20/30/50 city limits and autovia speeds in km/h and mph, alcohol limits and IDP requirements.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

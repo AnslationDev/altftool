@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a .gitattributes file for line-ending normalization, Git LFS tracking, binary marking, export-ignore and diff drivers.",
   icon: "file-cog",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Customary baksheesh amounts in Egypt for restaurants, taxis, hotels, guides and boat crews, with a trip total and small-note plan.",
   icon: "hand-coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

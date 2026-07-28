@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "RBSE class 10 and 12 percentage, division and the 33% pass check, plus the marks needed for the next division.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the binding UPI limit for a payment — NPCI category cap, your bank's cap and what is left of today's quota.",
   icon: "smartphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

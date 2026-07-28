@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a trip prompt with a realistic activity capacity for your pace and city hops, plus a per-day budget split across stay, food and travel.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

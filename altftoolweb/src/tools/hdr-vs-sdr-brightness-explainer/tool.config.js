@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert nits to PQ and HLG code values, see the headroom above reference white and why untone-mapped HDR looks flat on SDR.",
   icon: "contrast",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

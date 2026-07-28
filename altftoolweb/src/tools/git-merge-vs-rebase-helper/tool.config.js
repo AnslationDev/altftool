@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Answer a few questions about your branch and get a merge, rebase or squash recommendation with history previews and the exact commands.",
   icon: "git-merge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Due date from an IVF embryo transfer or egg retrieval date, with the day-3, day-5 and day-6 transfer offsets and a milestone timeline.",
   icon: "calendar-heart",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a new piped gas connection: registration, refundable deposit, internal piping, extra points and payback against LPG.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

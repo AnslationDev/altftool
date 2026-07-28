@@ -37,25 +37,25 @@ export default function OverviewDashboard({ ads }) {
           label="Active Ads"
           value={active}
           icon={<Activity className="w-5 h-5" />}
-          iconBg="bg-green-100"
-          iconColor="text-green-600"
-          valueColor="text-green-600"
+          iconBg="bg-[var(--success-soft)]"
+          iconColor="text-[var(--success-text)]"
+          valueColor="text-[var(--success-text)]"
         />
         <KpiCard
           label="Paused Ads"
           value={paused}
           icon={<PauseCircle className="w-5 h-5" />}
-          iconBg="bg-amber-100"
-          iconColor="text-amber-600"
-          valueColor="text-amber-600"
+          iconBg="bg-[var(--warning-soft)]"
+          iconColor="text-[var(--warning-text)]"
+          valueColor="text-[var(--warning-text)]"
         />
         <KpiCard
           label="Active Rate"
           value={`${activeRate}%`}
           icon={<TrendingUp className="w-5 h-5" />}
-          iconBg={activeRate >= 70 ? "bg-blue-100" : "bg-red-100"}
-          iconColor={activeRate >= 70 ? "text-blue-600" : "text-red-500"}
-          valueColor={activeRate >= 70 ? "text-blue-600" : "text-red-500"}
+          iconBg={activeRate >= 70 ? "bg-[var(--success-soft)]" : "bg-[var(--danger-soft)]"}
+          iconColor={activeRate >= 70 ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}
+          valueColor={activeRate >= 70 ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}
           hint={activeRate >= 70 ? "Looking healthy" : "Below 70% threshold"}
         />
       </div>
@@ -66,8 +66,8 @@ export default function OverviewDashboard({ ads }) {
         <div className="lg:col-span-2 bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-6 space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-                <BarChart2 className="w-4 h-4 text-indigo-600" />
+              <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center">
+                <BarChart2 className="w-4 h-4 text-[var(--accent)]" />
               </div>
               <h3 className="text-sm font-bold text-[var(--foreground)]">Ads by Placement</h3>
             </div>
@@ -87,7 +87,7 @@ export default function OverviewDashboard({ ads }) {
                       <span className="text-xs text-[var(--muted)] tabular-nums">{count} ad{count !== 1 ? "s" : ""} · {pct}%</span>
                     </div>
                     <div className="h-2 rounded-full bg-[var(--surface-soft)] overflow-hidden">
-                      <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-blue-400 transition-all duration-500"
+                      <div className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent)]/70 transition-all duration-500"
                         style={{ width: `${pct}%` }} />
                     </div>
                   </div>
@@ -100,8 +100,8 @@ export default function OverviewDashboard({ ads }) {
         {/* ── Quick insights ── */}
         <div className="bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-6 space-y-5">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-              <TrendingUp className="w-4 h-4 text-amber-600" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--warning-soft)] flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-[var(--warning-text)]" />
             </div>
             <h3 className="text-sm font-bold text-[var(--foreground)]">Insights</h3>
           </div>
@@ -174,9 +174,9 @@ function KpiCard({ label, value, icon, iconBg, iconColor, valueColor = "text-[va
 }
 
 function InsightRow({ label, value, accent, capitalize }) {
-  const color = accent === "green" ? "text-green-600"
-    : accent === "red" ? "text-red-500"
-    : accent === "amber" ? "text-amber-600"
+  const color = accent === "green" ? "text-[var(--success-text)]"
+    : accent === "red" ? "text-[var(--danger-text)]"
+    : accent === "amber" ? "text-[var(--warning-text)]"
     : "text-[var(--foreground)]";
   return (
     <div className="flex items-center justify-between py-2.5 border-b border-[var(--border)] last:border-0">
@@ -189,8 +189,8 @@ function InsightRow({ label, value, accent, capitalize }) {
 function StatusBadge({ status }) {
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold shrink-0 ${
-      status === "active" ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"}`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${status === "active" ? "bg-green-500" : "bg-amber-400"}`} />
+      status === "active" ? "bg-[var(--success-soft)] text-[var(--success-text)]" : "bg-[var(--warning-soft)] text-[var(--warning-text)]"}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${status === "active" ? "bg-[var(--success)]" : "bg-[var(--warning)]"}`} />
       {status}
     </span>
   );

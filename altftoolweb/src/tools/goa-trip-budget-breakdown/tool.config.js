@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break a Goa trip into flights, stay, food, scooter transport and activities, per person and per day, with a contingency buffer.",
   icon: "palmtree",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

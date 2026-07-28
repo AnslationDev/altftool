@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Telangana professional tax for salaried employees by monthly slab, plus the enrolment tax for self-employed professionals.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

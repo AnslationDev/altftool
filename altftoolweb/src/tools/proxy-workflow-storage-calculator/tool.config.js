@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size the disk a project needs for camera originals, proxies, render previews, media cache and backup copies.",
   icon: "hard-drive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

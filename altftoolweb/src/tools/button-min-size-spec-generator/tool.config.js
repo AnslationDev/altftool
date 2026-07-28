@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn font size, line height and padding into a button box, then check it against WCAG 2.5.8, WCAG 2.5.5, Apple HIG and Material target sizes.",
   icon: "square-dashed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

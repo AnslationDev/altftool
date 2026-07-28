@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Search HSN and SAC codes for common goods and services, see the GST slab and split any amount into CGST, SGST or IGST.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

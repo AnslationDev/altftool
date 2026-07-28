@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track which edition of each textbook or module you are using against the latest edition, and see what is out of date.",
   icon: "book-copy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price Etihad excess kilos through every advance weight block against the airport rate and see which option really costs least.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

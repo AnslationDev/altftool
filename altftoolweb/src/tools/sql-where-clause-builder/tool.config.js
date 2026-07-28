@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build complex WHERE conditions visually with AND/OR groups, IN and BETWEEN operators and ?, $n, :name or @name parameter markers.",
   icon: "filter",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

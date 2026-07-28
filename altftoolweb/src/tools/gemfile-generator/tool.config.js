@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a Bundler Gemfile with source, ruby version, groups, git and path sources, and pessimistic version constraints.",
   icon: "gem",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a PM assistant system prompt for specs, user stories and tradeoffs, with a real prioritisation framework wired in.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

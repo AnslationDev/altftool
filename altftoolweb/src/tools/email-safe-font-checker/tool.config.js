@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Resolve a CSS font stack client by client, see which fonts actually install where, and get an email-safe fallback chain.",
   icon: "case-sensitive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

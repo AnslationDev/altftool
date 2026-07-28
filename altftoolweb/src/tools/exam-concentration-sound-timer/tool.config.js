@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split an exam paper into timed sound blocks by marks, with checkpoint clock times and audible warning cues.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

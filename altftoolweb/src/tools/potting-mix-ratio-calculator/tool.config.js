@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn pot size into litres of soil, compost, cocopeat and perlite using proven mix ratios for pots, grow bags and troughs.",
   icon: "flask-conical",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

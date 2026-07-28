@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan South Korea outfits by month: temple cover-up, shoes-off etiquette, jjimjilbang rules, jangma rain and a weighed packing list.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

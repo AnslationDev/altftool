@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare an EV and a BS6 diesel car per km including AdBlue, higher diesel service costs, CO2 and price-premium payback.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

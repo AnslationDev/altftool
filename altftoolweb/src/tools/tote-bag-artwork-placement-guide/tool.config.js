@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Safe print area and exact placement offsets for tote bags, allowing for side seams, handle stitching and the gusset that folds under the base.",
   icon: "shopping-bag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

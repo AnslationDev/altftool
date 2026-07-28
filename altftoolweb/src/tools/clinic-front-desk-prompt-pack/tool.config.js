@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Administrative AI prompts for appointments, reminders and billing, with an SMS segment counter and a clinical-advice screen.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -12,6 +12,7 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
+  limit,
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebaseFirestore";
@@ -38,8 +39,12 @@ function mapSnapshot(snap) {
    READ (REALTIME)
 ========================= */
 
+// Bounded so a growing ads collection can't stream an unbounded number of
+// realtime documents into every admin who opens the overview.
+const ALL_ADS_LIMIT = 1000;
+
 export function subscribeAllAds(cb) {
-  const q = query(adsRef, orderBy("createdAt", "desc"));
+  const q = query(adsRef, orderBy("createdAt", "desc"), limit(ALL_ADS_LIMIT));
 
   return onSnapshot(q, (snap) => {
     cb(mapSnapshot(snap));

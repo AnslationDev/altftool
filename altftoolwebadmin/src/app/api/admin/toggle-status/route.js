@@ -130,24 +130,25 @@ export async function POST(req) {
       }
     }
 
-    await writeAdminAuditLog({
-      action: "ADMIN_STATUS_TOGGLE",
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      targetUid: adminId,
-      targetEmail,
-      summary: `Set admin ${targetEmail || adminId} to ${isActive ? "active" : "inactive"}`,
-      changes: { isActive },
-    });
-
-    await writeRbacAuditLog({
-      action: "admin.status.toggle",
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      targetType: "admin_user",
-      targetId: adminId,
-      message: `Set admin ${adminId} to ${isActive ? "active" : "suspended"}`,
-    });
+    await Promise.all([
+      writeAdminAuditLog({
+        action: "ADMIN_STATUS_TOGGLE",
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        targetUid: adminId,
+        targetEmail,
+        summary: `Set admin ${targetEmail || adminId} to ${isActive ? "active" : "inactive"}`,
+        changes: { isActive },
+      }),
+      writeRbacAuditLog({
+        action: "admin.status.toggle",
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        targetType: "admin_user",
+        targetId: adminId,
+        message: `Set admin ${adminId} to ${isActive ? "active" : "suspended"}`,
+      }),
+    ]);
 
     return NextResponse.json({ success: true });
 

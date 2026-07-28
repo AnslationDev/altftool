@@ -4,7 +4,7 @@ const toolConfig = {
   category: "Converters",
   description: "Convert local audio files into Base64 data URLs.",
   icon: "music",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare wax, sealant, ceramic coating and PPF on true cost per year over your ownership period, not sticker price.",
   icon: "sparkles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

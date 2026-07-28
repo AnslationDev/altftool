@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work back from your wake-up time to find when to switch on night mode, stop screens and turn the lights out tonight.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

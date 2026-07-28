@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the TNEA engineering cutoff and the medical/agriculture cutoff out of 200 from your Tamil Nadu HSC subject marks.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

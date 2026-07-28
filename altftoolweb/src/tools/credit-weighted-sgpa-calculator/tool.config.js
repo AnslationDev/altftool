@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute SGPA from subject grades and credit hours, with grade point tables and per-subject impact on the average.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

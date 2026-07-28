@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate AI cost per document from pages, words per page, chunk overlap, OCR and embedding rates.",
   icon: "file-stack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert VTU CGPA to percentage by scheme, build SGPA from subject credits and see the class awarded.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

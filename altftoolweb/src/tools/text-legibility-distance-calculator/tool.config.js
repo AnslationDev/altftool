@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the minimum cap height and point size text needs to stay legible at a viewing distance, using visual-angle standards.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

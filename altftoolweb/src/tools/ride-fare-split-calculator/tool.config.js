@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a shared cab fare fairly by the distance each passenger actually rode, segment by segment.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

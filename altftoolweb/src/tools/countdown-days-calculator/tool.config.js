@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how many days are left until any target date, with weeks, months and working-day breakdowns.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

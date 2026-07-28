@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check your Taiwan visa-exempt allowance or Travel Authorization Certificate, passport validity, arrival card and the customs rules that carry real fines.",
   icon: "ship",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

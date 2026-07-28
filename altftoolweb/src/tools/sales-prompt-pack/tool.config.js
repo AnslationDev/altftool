@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fill-in-the-blank AI prompts for prospecting, cold email, discovery calls, follow-up sequences and objection handling.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

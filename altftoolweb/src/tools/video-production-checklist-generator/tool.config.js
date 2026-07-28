@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate pre-production, shoot-day and post checklists with time estimates and a call-sheet timeline for any video type.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

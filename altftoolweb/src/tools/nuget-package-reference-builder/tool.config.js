@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build PackageReference items with version ranges, asset flags and Central Package Management, and see what each range really allows.",
   icon: "boxes",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

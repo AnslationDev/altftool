@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate Git LFS storage growth, monthly bandwidth and GitHub data-pack cost from file sizes, update rate and clone frequency.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Step-by-step technique checks for pMDI, spacer, dry powder, soft mist and breath-actuated inhalers.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

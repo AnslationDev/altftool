@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Validate Indian registration numbers against the standard, BH-series, diplomatic and defence formats, with the regex for each.",
   icon: "scan-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

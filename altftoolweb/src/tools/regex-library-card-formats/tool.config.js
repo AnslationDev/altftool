@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Card number format regex by network — Visa, Mastercard, Amex, RuPay, Discover, JCB, Diners — for formatting and masking, not verification.",
   icon: "credit-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

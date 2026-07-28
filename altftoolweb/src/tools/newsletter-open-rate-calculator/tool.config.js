@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate open, click, click-to-open, bounce, unsubscribe and complaint rates on the correct denominators, with a privacy-proxy adjustment.",
   icon: "mail-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

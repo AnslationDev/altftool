@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Frame GST questions for AI with citation and non-advisory guardrails, plus a live registration-threshold check and statutory due dates.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

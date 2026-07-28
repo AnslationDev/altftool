@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Sort hashtags into mega, large, niche and micro tiers by post volume and build a balanced set sized for your account.",
   icon: "hash",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

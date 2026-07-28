@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate consistent square control-surface key icons with labels, exported as SVG or PNG with a WCAG contrast check.",
   icon: "layout-grid",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

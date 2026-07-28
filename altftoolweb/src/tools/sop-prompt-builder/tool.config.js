@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a statement of purpose prompt that fits the real word or character limit, budgets each section and flags cliché openings.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

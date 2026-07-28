@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the capture frame rate, speed percentage, shutter speed and light loss for any slow-motion target.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

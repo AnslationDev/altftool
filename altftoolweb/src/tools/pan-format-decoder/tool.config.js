@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check PAN structure offline and decode the fourth character to reveal whether the holder is an individual, company, firm, HUF or trust.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

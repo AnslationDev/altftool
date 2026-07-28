@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out your last working day, notice shortfall, buyout recovery and leave offset for an Indian notice period, plus a handover plan.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

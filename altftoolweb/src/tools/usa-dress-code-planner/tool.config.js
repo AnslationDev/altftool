@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan USA outfits by region and month: courthouse and nightclub door rules, park layering, sun kit and a weighed packing list.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build AI prompts for UPSC Mains answer practice with the real word limits, exam-time budget and intro-body-conclusion split.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

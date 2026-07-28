@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Developer"],
   description: "Format, minify, escape, and unescape HTML fragments.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

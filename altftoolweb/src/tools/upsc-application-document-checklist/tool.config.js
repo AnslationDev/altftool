@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Interactive checklist of every certificate, upload and detail needed to file the UPSC online application without a last-minute scramble.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

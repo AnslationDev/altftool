@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your weight sits inside the height band and BMI range used by Army, SSC GD and police physical standards.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

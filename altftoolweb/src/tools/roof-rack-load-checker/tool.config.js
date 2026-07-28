@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check dynamic roof load limits against rack plus cargo weight, with payload, rollover stability and fuel penalty.",
   icon: "weight",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

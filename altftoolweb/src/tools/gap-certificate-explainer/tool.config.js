@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your study gap needs a gap certificate or affidavit, what it must contain, and get a ready draft for the notary.",
   icon: "calendar-range",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

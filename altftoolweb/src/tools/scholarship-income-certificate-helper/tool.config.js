@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total your family's annual income the way income certificates require and check it against common scholarship income ceilings.",
   icon: "file-badge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

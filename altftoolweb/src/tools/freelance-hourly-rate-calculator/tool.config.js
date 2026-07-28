@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the freelance hourly rate you need from target income, billable hours, expenses and tax.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

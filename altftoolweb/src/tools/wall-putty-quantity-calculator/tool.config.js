@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate wall putty kilos and bags per square foot, plus mixing water and cost, for a smooth base before painting.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

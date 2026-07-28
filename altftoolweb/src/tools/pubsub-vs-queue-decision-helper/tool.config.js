@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Answer nine questions about your workload and get a scored recommendation across work queues, pub/sub, partitioned logs and event buses.",
   icon: "network",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

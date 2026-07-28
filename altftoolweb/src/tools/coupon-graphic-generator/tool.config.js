@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design discount code graphics with the real saving worked out, an expiry countdown and a complete terms line.",
   icon: "ticket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

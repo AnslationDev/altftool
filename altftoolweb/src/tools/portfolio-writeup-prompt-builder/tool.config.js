@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a project's before/after numbers into a case study prompt built on STAR, CARE, Double Diamond or Problem-Process-Outcome.",
   icon: "layout-template",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Filter major Indian girl-child scholarship schemes by study level, family income, community and state to see what you can apply for.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

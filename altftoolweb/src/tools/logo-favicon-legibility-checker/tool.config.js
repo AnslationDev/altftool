@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether a logo's strokes and lettering survive at 16, 32, 48 and 180 pixel favicon sizes, with real downscaled previews.",
   icon: "scan-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

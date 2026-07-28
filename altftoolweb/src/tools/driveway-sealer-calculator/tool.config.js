@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate gallons, litres and 5-gallon pails of driveway sealer for your area, surface condition and number of coats.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

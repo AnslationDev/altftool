@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split weekly production hours between Shorts and long videos by solving every feasible split for the best expected return.",
   icon: "split",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

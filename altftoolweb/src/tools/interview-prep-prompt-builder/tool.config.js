@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build mock-interview prompts by role, round and level, with a question count worked out from the real length of the slot.",
   icon: "briefcase-business",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

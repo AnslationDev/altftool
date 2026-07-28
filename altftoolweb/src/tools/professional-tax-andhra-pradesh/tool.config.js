@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Andhra Pradesh professional tax slabs for salaried staff, plus an employer head-count total and registration rules.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate calendar version numbers like YYYY.MM.MICRO from any date and scheme, with a preview timeline of future releases.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

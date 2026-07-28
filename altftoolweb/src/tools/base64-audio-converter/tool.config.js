@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Video & Audio", "Converters"],
   description: "Preview and download Base64 audio data URLs.",
   icon: "volume2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the extra fluid a fever adds to daily maintenance needs, using the 12% per degree Celsius rule (informational).",
   icon: "thermometer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

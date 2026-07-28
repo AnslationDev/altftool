@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fill-in-the-blank AI prompts for debugging, code review, tests, documentation and refactors, ready to paste.",
   icon: "code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare self-drive rental quotes on daily rate, included km, excess-km charges, fuel policy, GST and deposit for one real trip.",
   icon: "car",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

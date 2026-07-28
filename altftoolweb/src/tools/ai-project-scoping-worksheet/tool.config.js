@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Define the problem, users, data, success metric and fallback for an AI project before you build — with a completeness score.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

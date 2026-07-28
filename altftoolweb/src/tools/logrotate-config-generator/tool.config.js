@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a logrotate rule with rotation frequency, retention, compression, create modes and postrotate hooks — with conflict warnings.",
   icon: "file-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

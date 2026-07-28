@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Export server banners, icons, invite splashes, emoji and stickers at exact Discord dimensions and limits.",
   icon: "message-square",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

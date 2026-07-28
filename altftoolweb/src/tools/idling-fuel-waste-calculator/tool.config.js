@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the fuel, money and CO2 wasted idling at signals and in traffic, and how much switching off would save.",
   icon: "timer-off",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

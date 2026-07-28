@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether the appliances on one extension board exceed its amp rating, the cord ampacity, the 80% continuous rule or safe voltage drop.",
   icon: "plug-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

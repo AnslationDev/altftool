@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators", "Education & Science"],
   description: "Compute a weighted mean from value and weight pairs with a live running total.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

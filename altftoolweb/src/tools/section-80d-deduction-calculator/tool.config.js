@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your Section 80D deduction for self, family, parents and senior citizens, including the preventive checkup cap.",
   icon: "heart-pulse",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

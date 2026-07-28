@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a dependency manifest into a ready-to-publish third-party licenses page in Markdown, HTML or plain text.",
   icon: "book-open-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

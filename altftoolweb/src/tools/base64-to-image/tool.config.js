@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decode a Base64 string or data URL back into an image, identify its real format from the file signature, and read its pixel dimensions.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate A4, A5 and DL flyer artboards with correct bleed, safe margins, crop marks and fold panel positions.",
   icon: "crop",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

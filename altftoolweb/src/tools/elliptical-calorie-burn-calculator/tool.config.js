@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Cross-trainer calories from average heart rate using the Keytel equation, or from console watts, with resistance and ramp logged.",
   icon: "waves",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

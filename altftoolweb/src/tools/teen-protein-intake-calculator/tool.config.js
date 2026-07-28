@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Age and activity based protein target for 9 to 18 year olds, using the IOM reference intakes and the published athlete range.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

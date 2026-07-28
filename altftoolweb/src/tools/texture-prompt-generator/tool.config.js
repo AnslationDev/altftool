@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compose precise texture and material prompts — surface, finish, scale, lighting and wear — for AI image and PBR generators.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

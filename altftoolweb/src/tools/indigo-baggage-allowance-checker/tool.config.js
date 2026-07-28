@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bag weight and size against IndiGo's published allowance and estimate excess baggage charges.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

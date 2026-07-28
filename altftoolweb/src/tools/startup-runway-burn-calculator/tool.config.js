@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Model gross burn, net burn and months of runway with revenue and cost growth, plus break-even month, burn multiple and funding gap.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

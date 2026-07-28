@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Informational 12-question self-check for study burnout across exhaustion, cynicism and efficacy, with recovery suggestions.",
   icon: "battery-low",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

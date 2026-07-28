@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators", "Education & Science"],
   description: "Find the final exam score you need to reach your target overall grade in a course.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

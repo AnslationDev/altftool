@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate Gemini API spend across text, cached, long-context, image and audio tokens, per request and per month.",
   icon: "sparkles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

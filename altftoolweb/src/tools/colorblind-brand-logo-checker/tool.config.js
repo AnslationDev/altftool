@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Preview a logo under protanopia, deuteranopia, tritanopia and achromatopsia, with CIELAB colour-difference scoring.",
   icon: "eye-off",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

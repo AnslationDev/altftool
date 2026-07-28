@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pre-drive checklist for lights, glass and fatigue, scored with the hours-awake impairment rule and the 02:00–06:00 risk window.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan Indonesia outfits by month: Balinese sarong and sash rules, mosque cover-up, Aceh's dress law, volcano layers and a weighed packing list.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

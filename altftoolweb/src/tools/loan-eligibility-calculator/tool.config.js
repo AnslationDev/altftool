@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check the loan amount you qualify for from your income, existing EMIs and the FOIR limit lenders apply, with a tenure comparison.",
   icon: "user-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

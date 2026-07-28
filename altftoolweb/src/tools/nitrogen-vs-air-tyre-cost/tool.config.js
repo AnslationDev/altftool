@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the cost of nitrogen tyre filling against the fuel and tread savings its slower pressure loss actually delivers.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

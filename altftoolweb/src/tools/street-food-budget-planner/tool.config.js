@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a trip food budget across street stalls, cafés, snacks and splurge meals, and see how many nice meals your budget really allows.",
   icon: "utensils-crossed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

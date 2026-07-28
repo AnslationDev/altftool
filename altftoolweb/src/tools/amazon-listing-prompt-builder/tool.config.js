@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate title, bullet and description prompts that respect Amazon field limits, plus a 250-byte backend search term string.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

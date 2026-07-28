@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate opening hooks from proven copywriting patterns, timed against the first-three-seconds budget for your video format.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

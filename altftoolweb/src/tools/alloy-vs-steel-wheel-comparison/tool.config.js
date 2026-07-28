@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare alloy and steel wheels on unsprung weight, price premium, fuel economy gain and payback period.",
   icon: "disc-3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

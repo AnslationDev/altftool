@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out cost per tablet, per dose, per day and for the full course from the pack price, and compare a brand against a generic.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -347,34 +347,35 @@ export async function POST(req) {
     /* ─────────────────────────────────────────────────────────────
        Sync custom claims from Firestore
     ───────────────────────────────────────────────────────────── */
-    await writeAdminAuditLog({
-      action: "ADMIN_CREATE",
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      targetUid: uid,
-      targetEmail: normalizedEmail,
-      summary: `Created admin ${normalizedEmail}`,
-      changes: {
-        fullName: normalizedFullName,
-        team: normalizedTeam,
-        roleType: normalizedRoleType,
-        permissions:
-          normalizedRoleType === "superadmin" ? {} : permissions || {},
-        projectAccess:
-          normalizedRoleType === "superadmin" ? {} : projectAccess || {},
-        isActive: true,
-      },
-    });
-
-    await writeRbacAuditLog({
-      actorUid: actor?.uid ?? null,
-      actorEmail: actor?.email ?? null,
-      action: "admin.create",
-      targetType: "admin_user",
-      targetId: uid,
-      targetEmail: normalizedEmail,
-      message: `Created admin ${normalizedEmail}`,
-    });
+    await Promise.all([
+      writeAdminAuditLog({
+        action: "ADMIN_CREATE",
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        targetUid: uid,
+        targetEmail: normalizedEmail,
+        summary: `Created admin ${normalizedEmail}`,
+        changes: {
+          fullName: normalizedFullName,
+          team: normalizedTeam,
+          roleType: normalizedRoleType,
+          permissions:
+            normalizedRoleType === "superadmin" ? {} : permissions || {},
+          projectAccess:
+            normalizedRoleType === "superadmin" ? {} : projectAccess || {},
+          isActive: true,
+        },
+      }),
+      writeRbacAuditLog({
+        actorUid: actor?.uid ?? null,
+        actorEmail: actor?.email ?? null,
+        action: "admin.create",
+        targetType: "admin_user",
+        targetId: uid,
+        targetEmail: normalizedEmail,
+        message: `Created admin ${normalizedEmail}`,
+      }),
+    ]);
 
     return NextResponse.json({ success: true });
   } catch (err) {

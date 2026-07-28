@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Validate the 4 letters, 5 digits, 1 letter structure of a TAN offline, decode its location code and catch typos.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

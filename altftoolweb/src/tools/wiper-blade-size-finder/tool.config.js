@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a measured wiper blade into the nearest stocked size in millimetres and inches, and identify the arm fitting type.",
   icon: "cloud-rain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

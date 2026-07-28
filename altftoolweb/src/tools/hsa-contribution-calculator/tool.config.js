@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "IRS HSA contribution limits with age 55 catch-up, month-by-month proration and the triple tax benefit estimate.",
   icon: "heart-pulse",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

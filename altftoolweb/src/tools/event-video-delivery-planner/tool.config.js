@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn an event date into a dated deliverables schedule with edit-hour estimates, start-by dates and a capacity check.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

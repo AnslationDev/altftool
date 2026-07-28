@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Assemble correct kubectl commands with namespaces, label selectors, output formats and dry-run flags — no man page needed.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

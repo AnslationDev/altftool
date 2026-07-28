@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick your state public service commission and count the days, weeks and study hours left to prelims, mains and interview.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

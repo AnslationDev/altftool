@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price Thai Airways excess baggage per kilogram or per piece, comparing prepaid blocks against the airport counter rate.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

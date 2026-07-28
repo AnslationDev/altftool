@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Searchable plain-language glossary of Indian income tax, GST, investing and banking terms, each with the section it comes from.",
   icon: "book-a",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

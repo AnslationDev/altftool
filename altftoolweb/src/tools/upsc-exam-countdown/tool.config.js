@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Live countdown to UPSC Prelims and Mains with a daily study-hour target and prep-time milestones for any exam date.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

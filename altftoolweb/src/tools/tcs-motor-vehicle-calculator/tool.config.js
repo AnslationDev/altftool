@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Section 206C(1F) TCS at 1% on a car or notified luxury good above Rs 10 lakh, with buyer exemptions and the no-PAN rate.",
   icon: "car",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft first-three-second Reels hooks with a spoken word budget, timed beat sheet and on-screen text safe-zone cues.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

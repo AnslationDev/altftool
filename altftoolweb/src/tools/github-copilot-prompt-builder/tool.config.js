@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a coding task into a Copilot-ready comment prompt with context, examples and constraints in your language's comment syntax.",
   icon: "message-square-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out grass seed in kilos for any lawn area from species sowing rate, purity, germination and wastage.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

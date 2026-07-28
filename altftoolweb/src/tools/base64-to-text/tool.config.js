@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decode Base64 strings into readable UTF-8 text, with padding repair, URL-safe alphabet support and a validity check.",
   icon: "binary",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

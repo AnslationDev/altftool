@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick the right wood screw gauge, length, pilot hole and countersink for your board thickness, material and joint type.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

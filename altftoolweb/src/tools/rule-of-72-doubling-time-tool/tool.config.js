@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how long money takes to double at any rate of return, and compare the Rule of 72 with the exact logarithmic answer.",
   icon: "hourglass",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -90,27 +90,6 @@ export function getFreshnessStatus(value, staleDays = 5) {
   return { tone: "success", label: "Healthy" };
 }
 
-export function getCoverageMeta(coverage) {
-  if (coverage === "exact") {
-    return {
-      label: "Exact coverage",
-      chipClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    };
-  }
-
-  if (coverage === "partial") {
-    return {
-      label: "Partial coverage",
-      chipClass: "bg-amber-50 text-amber-700 border-amber-200",
-    };
-  }
-
-  return {
-    label: "Unavailable",
-    chipClass: "bg-rose-50 text-rose-700 border-rose-200",
-  };
-}
-
 export function sortByTimestampDesc(items, key = "timestampMs") {
   return [...items].sort((a, b) => (b[key] ?? 0) - (a[key] ?? 0));
 }

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a Malaysia eVISA cover letter with itinerary, the 30-day social visit pass, eVISA validity and MDAC timing.",
   icon: "waves",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

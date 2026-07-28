@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Recommends a tile wastage percentage from layout pattern, room shape, tile size and cutouts, then converts it into boxes.",
   icon: "grid-3x3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

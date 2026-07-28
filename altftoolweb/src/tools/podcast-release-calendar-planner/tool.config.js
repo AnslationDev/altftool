@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a podcast season: publish dates, edit and recording deadlines, batch sessions and mid-season break on one grid.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

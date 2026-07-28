@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Converters", "Developer"],
   description: "Turn Base64 strings or data URLs into downloadable files.",
   icon: "download",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

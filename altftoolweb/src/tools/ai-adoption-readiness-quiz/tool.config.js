@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score your organisation's data, skills, process and governance readiness before rolling out AI, with a banded verdict and weakest-area callout.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan unit, integration and end-to-end test ratios and see the runtime, CI cost and flakiness each mix produces.",
   icon: "triangle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

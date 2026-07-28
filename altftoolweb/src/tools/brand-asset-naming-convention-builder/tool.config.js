@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a file naming rule for logos, exports and campaign assets, validated against POSIX, Windows and S3 filename limits.",
   icon: "folder-tree",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

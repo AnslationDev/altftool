@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a service dashboard with the RED, USE or Four Golden Signals method: ordered panels, grid widths and starter queries.",
   icon: "layout-dashboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

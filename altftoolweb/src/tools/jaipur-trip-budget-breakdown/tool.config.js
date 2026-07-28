@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break a Jaipur trip into travel, stay, food, autos, monument tickets and activities, per person and per day.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

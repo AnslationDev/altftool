@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a printable purchase order with line items, GST, freight, delivery and payment terms.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find how long a pump takes to fill your water tank, plus the units and rupees each fill costs at your head and efficiency.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

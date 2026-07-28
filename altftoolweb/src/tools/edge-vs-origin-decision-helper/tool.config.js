@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Model whether an endpoint is faster at the edge or at the origin using round-trip latency, data locality, cache hit ratio and hard blockers.",
   icon: "globe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

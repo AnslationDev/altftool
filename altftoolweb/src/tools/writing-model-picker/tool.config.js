@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rank drafting, editing and ideation options — hosted, grounded, self-hosted or local — against length, fact-checking, voice, privacy and budget.",
   icon: "pen-tool",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

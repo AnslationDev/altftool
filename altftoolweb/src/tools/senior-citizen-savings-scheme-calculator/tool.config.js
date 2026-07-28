@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out SCSS quarterly interest payout, annual income, total interest and maturity value from your deposit at the current rate.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

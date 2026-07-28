@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a night's sleep diary into sleep efficiency, total sleep time and the time-in-bed window used in sleep restriction therapy.",
   icon: "bed-double",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

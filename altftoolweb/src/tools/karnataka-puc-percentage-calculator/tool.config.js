@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn your Karnataka II PUC subject marks into an aggregate percentage, division class and a pass check on the 35% rule.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

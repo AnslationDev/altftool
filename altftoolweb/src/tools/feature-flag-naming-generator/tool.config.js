@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate consistent feature flag names with type prefix, owning team, expiry tag and your team's case convention.",
   icon: "flag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate an operational runbook in Markdown with alert symptoms, diagnostic checks, remediation steps and an escalation ladder.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

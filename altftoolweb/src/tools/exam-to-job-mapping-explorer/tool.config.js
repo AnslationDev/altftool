@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See which posts each major Indian recruitment exam leads to, with pay level, entry basic pay and job profile.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

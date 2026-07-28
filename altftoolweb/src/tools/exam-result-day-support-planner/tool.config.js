@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan result day before it arrives — who to have around, how to check the score, and a first move for every outcome.",
   icon: "heart-handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

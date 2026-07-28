@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build reusable video descriptions with chapters, links and hashtags, checked against the 5,000-character and chapter rules.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

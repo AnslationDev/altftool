@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the percentage change between two numbers, see whether it is an increase or decrease, and apply a percentage to any value.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

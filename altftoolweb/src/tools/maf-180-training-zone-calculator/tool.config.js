@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Maximum aerobic function heart rate ceiling and training zone from the Maffetone 180-minus-age method.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

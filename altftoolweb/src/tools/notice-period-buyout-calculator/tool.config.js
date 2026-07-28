@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the cost of buying out an unserved notice period from your salary components, leave adjustment and per-day basis.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

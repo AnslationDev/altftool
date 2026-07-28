@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a fair Jaipur auto, e-rickshaw or cab fare from distance, waiting time, round trips and night premiums before you negotiate.",
   icon: "car-taxi-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

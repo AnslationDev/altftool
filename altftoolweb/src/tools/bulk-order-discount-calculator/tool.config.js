@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price a quantity order across volume tiers, flat or graduated, and see the effective per unit cost and the next break worth reaching.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Audit your home against fire-safety practice — alarms, escape routes, cooking, heating, electrical and LPG — and size the equipment you need.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

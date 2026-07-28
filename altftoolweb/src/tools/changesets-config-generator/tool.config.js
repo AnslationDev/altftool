@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate .changeset/config.json with changelog source, npm access, base branch, fixed/linked package groups and ignore rules.",
   icon: "file-diff",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

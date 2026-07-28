@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a complete README with real install steps, licence terms and support notes for a preset, LUT or brush pack you sell.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

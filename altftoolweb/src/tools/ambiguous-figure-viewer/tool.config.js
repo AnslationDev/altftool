@@ -8,7 +8,7 @@ export default {
   slug: "ambiguous-figure-viewer",
   category: "Education & Science",
   icon: "brain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   tags: ["Illusion", "Perception", "Psychology", "Interactive"],
   version: "1.0.0",
 };

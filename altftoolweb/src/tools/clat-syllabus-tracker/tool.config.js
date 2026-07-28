@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track all five CLAT sections by their official weights, log daily reading practice and project marks under +1 / -0.25 marking.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

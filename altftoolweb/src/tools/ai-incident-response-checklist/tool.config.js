@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a NIST-style response checklist for harmful, leaked or manipulated AI output incidents.",
   icon: "shield-alert",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

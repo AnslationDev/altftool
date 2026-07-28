@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draw straight or curved annotation arrows on a quadratic Bezier path and export clean, editable SVG markup.",
   icon: "spline",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

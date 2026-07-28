@@ -25,6 +25,7 @@ import {
   StatGrid,
 } from "@/ansets";
 import { useAuth } from "@/context/AuthContext";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 const STATUS_FILTERS = [
   { value: "all", label: "All tools" },
@@ -134,14 +135,21 @@ export default function ToolReadinessExplorer() {
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    if (!user?.getIdToken) return undefined;
     const controller = new AbortController();
 
     async function load() {
       setLoading(true);
       setError("");
       try {
-        const token = await user.getIdToken();
+        // getAdminIdToken() (not user.getIdToken() directly) so this also
+        // works under a local-admin dev session, which has no real Firebase
+        // user at all — reading it straight off `user` left this effect
+        // permanently bailing via the guard below, spinning forever with no
+        // error and no retry affordance.
+        const token = await getAdminIdToken();
+        if (!token) {
+          throw new Error("Your session isn't ready. Sign in again and retry.");
+        }
         const params = new URLSearchParams({
           status,
           apiStatus,

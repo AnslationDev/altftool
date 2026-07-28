@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate calm corporate trust palettes with accessible blues, neutrals, accent colors and brand-use notes.",
   icon: "palette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

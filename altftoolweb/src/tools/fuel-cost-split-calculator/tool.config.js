@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

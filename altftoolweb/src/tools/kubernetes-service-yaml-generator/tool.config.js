@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate ClusterIP, NodePort or LoadBalancer Service manifests with validated names, selectors and port mappings.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

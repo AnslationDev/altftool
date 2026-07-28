@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out Bhutan's Sustainable Development Fee for your party, test the permit or visa route and passport validity, and build the document checklist.",
   icon: "mountain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare NRE and NRO deposits on tax, TDS and repatriation, with post-tax maturity value for the same interest rate.",
   icon: "globe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

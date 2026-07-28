@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split mess and grocery bills fairly among roommates by days present — fixed charges shared equally, food cost by attendance.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

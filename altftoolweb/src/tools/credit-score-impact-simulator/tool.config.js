@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how utilisation, hard enquiries and missed payments move your credit score, with a before and after comparison.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

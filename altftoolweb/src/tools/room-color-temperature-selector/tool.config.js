@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick the right light colour temperature, CRI and lumen output for each room and mood, with a live colour preview.",
   icon: "lightbulb",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

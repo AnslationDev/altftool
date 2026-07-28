@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track progress to any savings target and get the exact date you hit it, with milestone dates and the top-up a deadline needs.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

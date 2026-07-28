@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out STCG and LTCG on listed equity from your holding period, with the annual exemption, cess and grandfathering.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

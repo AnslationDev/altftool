@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Room-by-room childproofing checklist matched to your child's age, your home's stairs, balconies and water, with a readiness score.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

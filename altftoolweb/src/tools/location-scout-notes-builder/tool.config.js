@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Record a location with real sun direction, golden hour times and a weighted score for noise, power, access and permission.",
   icon: "map-pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

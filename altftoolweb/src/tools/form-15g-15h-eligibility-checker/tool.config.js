@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether you can file a Form 15G or 15H no-TDS declaration with your bank, and see the TDS at stake.",
   icon: "file-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

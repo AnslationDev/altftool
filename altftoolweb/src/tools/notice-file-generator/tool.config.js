@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate an Apache-style NOTICE file with copyright line and attribution blocks from your dependency list.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

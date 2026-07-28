@@ -442,12 +442,22 @@ export async function recordLoginAttempt({ email, success, request }) {
   }
 }
 
+// recordLoginAttempt() writes a new doc on every attempt with no cleanup, so
+// this collection grows forever per email. This route is reachable pre-auth
+// (every /api/security/login-event call), so an unbounded read here scales
+// with an attacker's own attempt volume. A `.limit()` is the fix that needs
+// no new Firestore index — adding a server-side `tsMs`/`success` filter here
+// would need a new composite index (email + success + tsMs range) that isn't
+// deployed, so this caps the read instead of narrowing the query shape.
+const RECENT_LOGIN_ATTEMPTS_SCAN_CAP = 1000;
+
 export async function countRecentFailedLogins(email, windowMinutes) {
   if (!email) return 0;
   const since = Date.now() - windowMinutes * 60_000;
   const q = await adminDb
     .collection(C.loginAttempts)
     .where("email", "==", email.toLowerCase())
+    .limit(RECENT_LOGIN_ATTEMPTS_SCAN_CAP)
     .get();
   return q.docs.filter((d) => d.data().success === false && (d.data().tsMs || 0) >= since).length;
 }
@@ -471,6 +481,21 @@ export async function evaluateLoginRateLimit({ email, request }) {
 }
 
 /* ---------------- events / audit reads ---------------- */
+
+// True totals, not derived from a bounded recent-events page — the Overview
+// tab's "Suspicious Logins" / "Failed / Blocked" tiles previously counted only
+// the 50 most recent events, silently understating an active incident once
+// more than 50 events existed since it started.
+export async function getSecurityEventCounts() {
+  const [suspiciousAgg, failedAgg] = await Promise.all([
+    adminDb.collection(C.events).where("riskLevel", "in", ["high", "medium"]).count().get(),
+    adminDb.collection(C.events).where("type", "in", ["login.failed", "login.rate_limited"]).count().get(),
+  ]);
+  return {
+    suspicious: suspiciousAgg.data().count || 0,
+    failed: failedAgg.data().count || 0,
+  };
+}
 
 export async function listSecurityEvents({ limit = 30, cursor = null } = {}) {
   let query = adminDb.collection(C.events).orderBy("createdAtMs", "desc");

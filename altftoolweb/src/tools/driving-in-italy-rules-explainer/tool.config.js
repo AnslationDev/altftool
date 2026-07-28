@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Italian road rules for visitors: side of the road, autostrada and city speed limits in km/h and mph, alcohol limits, ZTL zones and IDP rules.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find which MCA, income tax, GST, DGFT and e-tender filings need a Class 3 digital signature certificate, and which allow EVC instead.",
   icon: "file-signature",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Grotesk and monospace pairings with a character grid, edge-to-edge headline sizing and tracking values.",
   icon: "blocks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

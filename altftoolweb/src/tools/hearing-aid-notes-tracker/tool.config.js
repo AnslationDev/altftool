@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log which hearing aid programme you used in each listening situation, rate clarity and comfort, and see what works.",
   icon: "notebook-pen",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

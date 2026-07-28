@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track Honda two-wheeler free and paid service milestones with the consumable replacements due at each visit.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decide repository, environment or organization scope for each Actions secret and get the matching gh CLI setup commands.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

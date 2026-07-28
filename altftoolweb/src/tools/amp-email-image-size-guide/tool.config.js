@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out amp-img dimensions, retina source sizes and estimated file weight against the 200 KB AMP for Email limit.",
   icon: "image-down",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

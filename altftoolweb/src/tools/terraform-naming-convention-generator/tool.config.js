@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a consistent Terraform resource naming standard across environments and regions, validated against real cloud name limits.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

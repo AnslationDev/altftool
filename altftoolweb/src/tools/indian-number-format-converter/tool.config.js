@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert between lakh-crore and million-billion notation, with Indian 2-2-3 and international 3-3-3 digit grouping.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

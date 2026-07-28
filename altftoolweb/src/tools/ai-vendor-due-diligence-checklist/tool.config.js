@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate the questions to ask an AI vendor about data handling, training, subprocessors, security and exit.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

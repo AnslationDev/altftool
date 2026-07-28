@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate monthly AWS EBS cost across gp3, gp2, io1, io2, st1 and sc1 — storage, IOPS, throughput and snapshots.",
   icon: "hard-drive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

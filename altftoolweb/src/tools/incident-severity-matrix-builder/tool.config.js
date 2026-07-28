@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Define SEV levels with impact, response targets and escalation paths, and export a ready-to-publish Markdown severity matrix.",
   icon: "siren",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

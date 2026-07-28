@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Long-form focus timer for exam-style study blocks with reading time, pacing checkpoints and a final review phase.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log the single-use plastic you avoid each week and see the weight, CO2e and money you save over a year.",
   icon: "recycle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

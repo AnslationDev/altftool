@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split your take-home pay into 50% needs, 30% wants and 20% savings, then compare it against what you actually spend.",
   icon: "pie-chart",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

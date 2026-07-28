@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare immediate, delayed and split daytime sleep schedules for overnight guard duty, with light and caffeine timing.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

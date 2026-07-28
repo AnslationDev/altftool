@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a shoot-specific gear list with calculated battery counts, card capacity, backup storage and total pack weight.",
   icon: "backpack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

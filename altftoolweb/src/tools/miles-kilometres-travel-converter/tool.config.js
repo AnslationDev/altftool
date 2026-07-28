@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert road distances and speed limits between miles and kilometres, with a driving-time estimate for the trip.",
   icon: "route",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

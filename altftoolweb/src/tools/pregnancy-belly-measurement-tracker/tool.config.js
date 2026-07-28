@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log fundal height and belly circumference week by week, compare against McDonald's rule and see the growth trend.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

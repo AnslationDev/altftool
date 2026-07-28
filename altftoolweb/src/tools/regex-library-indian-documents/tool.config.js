@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Validation regex for PAN, GSTIN, IFSC, UPI ID, PIN code, vehicle numbers and Aadhaar format, with live testing and honest caveats.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

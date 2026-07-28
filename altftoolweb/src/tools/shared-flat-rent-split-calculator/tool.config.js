@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split flat rent between flatmates by room size, amenities and occupancy, with whole-rupee shares that add up exactly.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

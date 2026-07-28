@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out gaming rig wall-socket power draw, monthly electricity cost and the PSU wattage your GPU and CPU actually need.",
   icon: "cpu",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

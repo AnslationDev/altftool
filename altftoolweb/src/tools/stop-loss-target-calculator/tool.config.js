@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Stop loss and target prices from your entry price and risk-reward ratio, for long or short trades, with per-trade risk and reward amounts.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

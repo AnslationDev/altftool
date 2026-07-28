@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Gross and net rental yield on a property after vacancy, maintenance, municipal tax and income tax on house property.",
   icon: "building-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

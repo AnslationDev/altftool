@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out whether an HPV series needs two or three doses from the age at dose one, with recommended dates and minimum intervals.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

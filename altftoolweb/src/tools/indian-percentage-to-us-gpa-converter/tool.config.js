@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert an Indian percentage or 10-point CGPA to the US 4.0 GPA scale using the division-based method and a linear estimate.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

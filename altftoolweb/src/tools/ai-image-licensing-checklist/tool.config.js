@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work through the usage-rights questions that matter before publishing AI-generated images commercially.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

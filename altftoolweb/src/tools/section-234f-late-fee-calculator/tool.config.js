@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the section 234F late filing fee and section 234A interest on a belated income tax return from your income and filing date.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

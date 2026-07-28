@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a day-one developer setup runbook with real install commands, access requests, repo clones and a first task.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

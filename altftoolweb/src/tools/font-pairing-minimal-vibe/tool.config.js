@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Clean minimal heading and body font pairs with a modular type scale, measured line length and copyable CSS.",
   icon: "type",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

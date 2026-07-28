@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a safe bash script skeleton with strict mode, ERR and EXIT traps, usage, logging, root check and a flock guard.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

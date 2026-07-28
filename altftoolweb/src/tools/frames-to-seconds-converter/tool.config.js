@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert frame counts to seconds and SMPTE timecode at any frame rate, including 29.97 drop-frame, and back again.",
   icon: "film",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

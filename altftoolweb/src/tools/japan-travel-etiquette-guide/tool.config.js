@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a prioritised Japan etiquette briefing for the places you will actually visit, with a readiness score and the phrases that matter.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

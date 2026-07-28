@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a rectangular, round or square dining table from seat count, then check chair clearance against your room.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

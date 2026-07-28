@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find a release window that dodges business and peak hours in every region you serve, hour by hour across UTC.",
   icon: "rocket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate television electricity use and running cost from screen size, panel type, picture mode, daily hours and your tariff.",
   icon: "tv",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

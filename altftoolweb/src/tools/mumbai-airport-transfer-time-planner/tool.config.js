@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out when to leave for Mumbai CSMIA, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
   icon: "plane-takeoff",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

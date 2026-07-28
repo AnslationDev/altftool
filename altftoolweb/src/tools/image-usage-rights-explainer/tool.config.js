@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Answer six questions about an image and get a plain-language checklist of the copyright, licence, model release and trademark clearances your use needs.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

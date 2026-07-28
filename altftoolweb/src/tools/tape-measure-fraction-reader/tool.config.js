@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Read any tape measure mark as decimal inches, millimetres and feet-inches, or snap a metric size to the nearest tape fraction.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

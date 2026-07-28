@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the exact crop width, height and offsets to convert footage or an image to a target aspect ratio, with an ffmpeg crop string.",
   icon: "crop",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

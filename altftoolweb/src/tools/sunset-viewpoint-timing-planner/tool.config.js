@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out when to leave to reach a viewpoint before golden hour, using NOAA solar equations for the light and Naismith's rule for the climb.",
   icon: "sunset",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

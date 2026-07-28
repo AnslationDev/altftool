@@ -3,6 +3,7 @@ import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { PROJECTS } from "@/projects";
 import { RBAC_COLLECTIONS, SUPER_ADMIN_DASHBOARD_COLLECTION, SUPER_ADMIN_DASHBOARD_DOC } from "@/lib/rbacPaths";
 import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
+import { enforceRateLimit } from "@altftool/core/http";
 
 const DEFAULT_ROLES = {
   super_admin: {
@@ -110,6 +111,13 @@ async function requireSuperAdmin(request) {
 
 export async function POST(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 10,
+      scope: "rbac:bootstrap",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const { decoded, profile } = await requireSuperAdmin(request);
     const root = adminDb.collection(SUPER_ADMIN_DASHBOARD_COLLECTION).doc(SUPER_ADMIN_DASHBOARD_DOC);
     const batch = adminDb.batch();

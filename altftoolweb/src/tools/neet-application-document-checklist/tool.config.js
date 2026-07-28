@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Checklist of every detail, document, photo and upload the NTA NEET (UG) registration asks for, with the fee for your category.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

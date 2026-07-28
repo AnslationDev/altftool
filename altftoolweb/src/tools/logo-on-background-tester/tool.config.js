@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test a logo colour against light, dark and photographic backgrounds using WCAG contrast ratios, and get the scrim opacity that fixes it.",
   icon: "contrast",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

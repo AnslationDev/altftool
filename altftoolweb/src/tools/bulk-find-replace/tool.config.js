@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Run many find and replace rules over text at once with regex, case and whole-word options.",
   icon: "replace",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

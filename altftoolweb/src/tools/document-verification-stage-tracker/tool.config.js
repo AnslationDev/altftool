@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track every document your DV stage needs, its status and days left, with critical gaps flagged first.",
   icon: "file-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

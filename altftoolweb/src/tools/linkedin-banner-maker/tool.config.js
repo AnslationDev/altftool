@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a 1584x396 profile or 1128x191 company banner with the avatar overlap mapped and a safe text zone you can export.",
   icon: "linkedin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

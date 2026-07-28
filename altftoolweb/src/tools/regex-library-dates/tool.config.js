@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Date and time regex patterns for ISO 8601, DD/MM/YYYY, US dates, clock times and syslog or Apache log timestamps, with live testing.",
   icon: "calendar-search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

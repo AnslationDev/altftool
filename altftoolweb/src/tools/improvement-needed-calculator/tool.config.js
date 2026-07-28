@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute exactly how many more marks you need in remaining exams to reach a target overall percentage, and whether it is still possible.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

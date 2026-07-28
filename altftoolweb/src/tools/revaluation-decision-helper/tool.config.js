@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Weigh the re-check fee, the chance of a change and the deadline before applying for revaluation of an answer book.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

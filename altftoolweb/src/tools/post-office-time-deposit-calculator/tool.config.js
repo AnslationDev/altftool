@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Maturity value, annual interest payout and tax notes for 1, 2, 3 and 5 year Post Office Time Deposit accounts.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

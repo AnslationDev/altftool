@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a ready-to-paste AI quiz generation prompt with an exact difficulty mix, question types and a formatted answer key.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Spanish IVA calculator for the 21%, 10% and 4% bands, with base-to-total switching and the recargo de equivalencia surcharge.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

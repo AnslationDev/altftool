@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the second-hand value of refrigerators, air conditioners and washing machines by age, condition and star rating.",
   icon: "refrigerator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

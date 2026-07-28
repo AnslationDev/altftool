@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See the extra interest, higher EMI and added tenure caused by pausing your loan EMIs for a few months.",
   icon: "pause-circle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

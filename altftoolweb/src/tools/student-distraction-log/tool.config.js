@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log every distraction in a study session, find your top three triggers and estimate how much study time they cost you.",
   icon: "list-x",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

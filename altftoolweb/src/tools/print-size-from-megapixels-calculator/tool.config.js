@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the largest quality print an image supports at any PPI, in inches and centimetres, plus the megapixels a target print size needs.",
   icon: "printer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

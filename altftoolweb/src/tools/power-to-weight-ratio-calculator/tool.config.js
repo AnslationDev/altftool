@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert power and kerb weight into PS/tonne, kW/tonne and kg per PS, plus a physics-based 0-100 km/h estimate.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

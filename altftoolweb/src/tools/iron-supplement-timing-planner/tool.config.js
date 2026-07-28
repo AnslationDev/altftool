@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Space an iron tablet away from tea, dairy, antacids and meals, and see the elemental iron it delivers.",
   icon: "droplet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

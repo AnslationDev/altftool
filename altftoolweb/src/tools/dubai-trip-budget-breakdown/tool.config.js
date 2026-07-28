@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a Dubai trip into flights, room, municipality fee, service charge, VAT, Tourism Dirham, food and activities.",
   icon: "building-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

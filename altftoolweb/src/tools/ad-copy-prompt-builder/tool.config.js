@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI ad copy prompt with real platform character limits, a chosen angle and compliance notes baked in.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score a suspicious video, voice note or call against known deepfake red flags and see which verification steps you still need to run.",
   icon: "scan-face",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

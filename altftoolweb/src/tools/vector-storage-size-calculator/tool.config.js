@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate total vector index size from vector count, dimensions and data type, including HNSW or IVF overhead and replicas.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

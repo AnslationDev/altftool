@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price a Vietnam e-visa, visa on arrival or embassy visa by validity band, with the under-14 concession applied.",
   icon: "ticket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

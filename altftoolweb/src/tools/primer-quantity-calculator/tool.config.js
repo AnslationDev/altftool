@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find primer litres required by primer type, substrate absorbency and coat count, with tin sizes and cost.",
   icon: "spray-can",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

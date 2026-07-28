@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Identify major and minor keys from sharps and flats, with instant scoring and the circle-of-fifths rule behind every answer.",
   icon: "music",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

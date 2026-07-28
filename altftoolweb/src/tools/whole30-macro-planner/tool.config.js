@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Whole30-compliant daily macros translated into meal-template portions, plus the full allowed and excluded food checklist.",
   icon: "calendar-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

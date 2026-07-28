@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price your included revision rounds, see your real effective hourly rate, and draft the scope clause that ends endless changes.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

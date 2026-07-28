@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the external exam marks you need to pass a subject, given your internal score and your university's pass percentages.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

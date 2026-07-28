@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See the interest you save by transferring a loan to a lower rate, net of processing fees, plus the break-even month.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check IBPS and SBI age eligibility on the cut-off date, then work through every form field, upload spec and document the application needs.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a university transcript request letter with enrolment details, copies needed, delivery mode and an enclosure checklist.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

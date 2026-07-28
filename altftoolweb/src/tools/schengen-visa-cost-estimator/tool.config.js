@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up the Schengen visa fee, VFS service charge, courier, photos and insurance into one editable total in rupees.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

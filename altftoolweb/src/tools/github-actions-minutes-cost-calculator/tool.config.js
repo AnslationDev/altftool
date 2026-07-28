@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate monthly GitHub Actions cost from job counts and durations, with Linux, Windows 2x and macOS 10x runner multipliers.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Tax on tuition and coaching income after expenses, comparing the old and new regimes and the 44AD presumptive option.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

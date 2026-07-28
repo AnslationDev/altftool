@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Microwave electricity cost per meal, day, month and year for solo, grill and convection modes, including standby drain.",
   icon: "microwave",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Count words against the IELTS Task 1 (150) and Task 2 (250) minimums with paragraph and sentence structure analysis.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Weighted pre-flight checklist for audio levels, framing, lighting and screen capture before you record a lecture.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

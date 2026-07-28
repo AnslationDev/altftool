@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
   icon: "boxes",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   tags: [
     "impossible object",
     "penrose triangle",

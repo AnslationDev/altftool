@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fluid plan for humid Indian monsoon weather using heat index, sweat evaporation efficiency and safe drinking-water volumes.",
   icon: "cloud-rain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

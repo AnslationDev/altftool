@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test whether a high BMI is muscle or fat using body fat percentage, FFMI and waist-to-height ratio.",
   icon: "dumbbell",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

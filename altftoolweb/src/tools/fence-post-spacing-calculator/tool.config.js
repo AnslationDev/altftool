@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate post count, even on-centre spacing, hole depth and diameter, and the concrete bags per hole for a fence run.",
   icon: "fence",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

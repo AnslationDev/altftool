@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find what percent one number is of another, plus reverse lookups for the missing part or the missing total.",
   icon: "pie-chart",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

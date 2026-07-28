@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a room-by-room renovation budget with a quality tier, professional fees, GST on works contracts and a contingency buffer.",
   icon: "hammer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

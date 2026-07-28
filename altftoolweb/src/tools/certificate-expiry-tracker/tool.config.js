@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track TLS certificate expiry dates locally, see days remaining and renewal deadlines, and export calendar reminders.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

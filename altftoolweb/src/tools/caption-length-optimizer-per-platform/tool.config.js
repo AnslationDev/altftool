@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check one caption against every platform's character limit and truncation point, including X's 23-character URL rule.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

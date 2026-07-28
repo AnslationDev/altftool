@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how long flat-pack furniture takes to build from part and fastener counts, skill, tools and helpers.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

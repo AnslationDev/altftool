@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Predict when your car battery needs replacing from its age, battery type, climate, usage pattern and warning signs.",
   icon: "battery-charging",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

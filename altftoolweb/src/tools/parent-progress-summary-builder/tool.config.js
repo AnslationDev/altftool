@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a student's subject marks and attendance into a clear one-page progress summary with grade, strengths and focus areas.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

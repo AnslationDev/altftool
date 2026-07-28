@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate video export file size from bitrate and duration, or derive a bitrate from resolution, frame rate and codec.",
   icon: "film",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

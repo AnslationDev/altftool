@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI documentation prompt with Diátaxis doc type, audience, scope and code example rules baked in.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

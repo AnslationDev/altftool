@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post.",
   icon: "pen-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

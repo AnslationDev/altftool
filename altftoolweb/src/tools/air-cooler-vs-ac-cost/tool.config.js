@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare a desert cooler and an air conditioner on electricity, water and the temperature each can actually reach in your climate.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Bricks, mortar volume, cement bags and sand for a wall of any size, with joint thickness, openings and wastage.",
   icon: "brick-wall",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "The UK runs 230 V at 50 Hz on the fused BS 1363 type G socket — check your plug, the fuse rating and whether you need a converter.",
   icon: "plug",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

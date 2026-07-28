@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan Cache-Control and expires directives per asset type and copy a ready nginx location-block snippet.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

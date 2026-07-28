@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Customary German Trinkgeld ranges for restaurants, cafés, taxis, hotels and guides, with round-up amounts and how to hand it over.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

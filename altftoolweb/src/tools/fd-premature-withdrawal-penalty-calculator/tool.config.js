@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Net payout when you break a fixed deposit early — reduced card rate, penalty deduction and the interest you give up.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

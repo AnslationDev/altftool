@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute BSEB Matric or Inter percentage on the 500-mark aggregate with pass status and First, Second or Third Division.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

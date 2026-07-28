@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate employee and employer ESIC contributions from monthly wages with wage-limit and rate guidance.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

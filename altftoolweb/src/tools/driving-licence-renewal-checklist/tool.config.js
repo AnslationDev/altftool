@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a document checklist, fee estimate and new validity date for renewing an Indian driving licence under the Motor Vehicles Act.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

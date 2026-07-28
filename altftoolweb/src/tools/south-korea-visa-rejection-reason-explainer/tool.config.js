@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Education & Science"],
   description: "Match the short reason line on a Korean visa result to the rule behind it, and fix the file before the six-month restriction bites.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan solar panel cleaning frequency from dust level, tilt and rainfall, with the yield lost and the cost-optimal interval.",
   icon: "spray-can",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

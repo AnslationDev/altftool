@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Half-yearly professional tax for Tamil Nadu employees using the Greater Chennai Corporation income slabs.",
   icon: "map-pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

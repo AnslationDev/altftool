@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert gaj (square yard) to square feet, square metres, biswa, marla and kanal, with rate per gaj and plot cost.",
   icon: "land-plot",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

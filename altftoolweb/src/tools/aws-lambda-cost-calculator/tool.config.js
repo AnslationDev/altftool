@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate monthly AWS Lambda cost from invocations, memory size and duration, with the always-free tier applied.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

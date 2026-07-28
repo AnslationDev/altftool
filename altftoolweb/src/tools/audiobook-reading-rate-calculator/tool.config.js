@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a manuscript word count into finished audiobook hours, studio time, editing time and ACX-spec file size.",
   icon: "headphones",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

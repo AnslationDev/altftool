@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan card and drive space for a shoot: storage per hour by codec, resolution, frame rate and audio track count.",
   icon: "hard-drive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the extra Rs 50,000 NPS deduction under section 80CCD(1B), over and above the Rs 1.5 lakh 80CCE limit, and the tax it saves.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

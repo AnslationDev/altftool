@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a mandatory cloud tag schema for cost allocation with allowed values, provider-safe keys, examples and enforcement notes.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate carpet roll running metres, seams, offcut wastage and cost for a wall-to-wall installation.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

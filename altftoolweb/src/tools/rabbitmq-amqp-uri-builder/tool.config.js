@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build amqp:// and amqps:// connection URIs with vhost, heartbeat and connection timeout parameters, encoded per the RabbitMQ URI spec.",
   icon: "cable",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether a tetanus booster is due from your last dose date, using the 10-year routine rule and the 5-year rule for dirty wounds.",
   icon: "shield",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

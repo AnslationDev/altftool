@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a structured online-course promo script with per-beat timing targets and a word budget for your narration pace.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

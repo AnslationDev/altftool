@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Extract candidate terms from your docs and build a glossary prompt using ISO 704 definition rules.",
   icon: "book-a",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

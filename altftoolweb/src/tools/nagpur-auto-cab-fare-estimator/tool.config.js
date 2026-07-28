@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a fair Nagpur auto, shared auto or cab fare from distance, waiting time and Maharashtra's 25% midnight-to-5am night charge.",
   icon: "car-taxi-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

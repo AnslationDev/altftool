@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether the UK expects an international driving permit with your licence, and how the 12-month visitor and resident windows actually work.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

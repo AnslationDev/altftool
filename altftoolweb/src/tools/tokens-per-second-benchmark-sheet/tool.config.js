@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log local LLM runs and get decode and prefill tokens per second, model size by quantisation and the memory-bandwidth ceiling.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check Shopify product photos against the 20 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio.",
   icon: "store",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

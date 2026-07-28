@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a semester fee schedule into a monthly savings plan with due dates and reminder dates.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

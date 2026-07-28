@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a claimable expense report with category totals, GST input credit, advance settlement and cash-limit checks.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

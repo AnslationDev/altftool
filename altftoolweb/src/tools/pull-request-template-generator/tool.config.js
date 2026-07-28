@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a GitHub pull request template with summary, checklist, testing notes and screenshots sections, ready for .github/.",
   icon: "git-pull-request",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

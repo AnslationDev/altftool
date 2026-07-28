@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a Shopify product description prompt with brand voice, SEO title, meta description limits and a generated URL handle.",
   icon: "shopping-bag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

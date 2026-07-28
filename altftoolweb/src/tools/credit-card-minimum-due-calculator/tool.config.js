@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how many years and how much interest it takes to clear a credit card balance if you only ever pay the minimum due.",
   icon: "credit-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

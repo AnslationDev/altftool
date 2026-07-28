@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan Hero motorcycle free and paid service intervals by kilometres and months, with parts and labour cost estimates.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a meal planning prompt with Mifflin-St Jeor calorie targets, macro grams, per-serving budget, cuisine and allergen exclusions.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

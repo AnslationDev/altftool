@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a 3-2-1 backup plan for your footage library: drives needed, cloud cost over time and how long a full restore takes.",
   icon: "hard-drive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

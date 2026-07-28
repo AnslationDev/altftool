@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Customary US tipping ranges for restaurants, bars, taxis, hotels and guides, with the tip and total worked out on the pre-tax bill.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

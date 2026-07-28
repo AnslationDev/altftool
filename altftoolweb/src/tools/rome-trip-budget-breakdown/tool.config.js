@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break a Rome trip into flights, Schengen visa, stay, food, transport and sights in euro and rupees, with city tax and coperto.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

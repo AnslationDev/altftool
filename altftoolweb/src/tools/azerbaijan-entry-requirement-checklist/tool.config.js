@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check the ASAN e-visa route and fee, the 15-day registration deadline, passport validity and the documents Azerbaijan asks for on arrival.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

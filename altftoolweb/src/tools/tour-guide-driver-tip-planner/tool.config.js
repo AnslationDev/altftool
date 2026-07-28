@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Budget guide, driver, porter and camp crew tips across a multi-day tour, with per-person-per-day rates and the cash to draw.",
   icon: "map",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

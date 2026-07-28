@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate XIRR from irregular mutual fund investment dates, amounts and redemptions against today's value.",
   icon: "chart-no-axes-combined",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

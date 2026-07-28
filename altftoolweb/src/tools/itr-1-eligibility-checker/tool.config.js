@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Answer a few questions to see whether ITR-1 Sahaj can be filed for your income sources.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

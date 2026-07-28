@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert nominal returns into real, inflation-adjusted returns over any period and see what your money is truly worth.",
   icon: "trending-down",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

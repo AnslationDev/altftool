@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create numbered payment receipts with payer, payment mode, amount in words and the balance still due on the invoice.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

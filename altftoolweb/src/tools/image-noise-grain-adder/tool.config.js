@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Image & Photo"],
   description: "Add realistic film grain, vintage noise, and cinematic textures to your photos.",
   icon: "image-plus",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

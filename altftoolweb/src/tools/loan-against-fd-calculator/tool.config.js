@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare breaking a fixed deposit early against borrowing an overdraft on it, using the premature penalty and the FD rate plus spread.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

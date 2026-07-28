@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI prompt that produces clean, importable question-and-answer flashcard sets in basic, cloze or term-definition format.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "BMI for adults over 65 with the age-adjusted 24-29 desirable range, knee-height stature estimation and a MUST malnutrition score.",
   icon: "user-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

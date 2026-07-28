@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate correct JDBC connection URLs for PostgreSQL, MySQL, Oracle, SQL Server, H2 and SQLite with driver-specific syntax.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

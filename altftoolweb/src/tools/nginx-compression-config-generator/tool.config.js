@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate nginx gzip and brotli directives with tuned compression levels, MIME type lists and minimum length.",
   icon: "file-archive",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

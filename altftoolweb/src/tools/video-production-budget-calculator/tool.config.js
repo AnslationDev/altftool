@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a video budget from crew day rates, gear rental, post-production hours, contingency, production fee and 18% GST.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

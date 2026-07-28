@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

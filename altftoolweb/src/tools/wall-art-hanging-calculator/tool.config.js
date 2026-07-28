@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out nail height, frame spacing and hook rating for single pictures and gallery walls using the 145 cm gallery centre line.",
   icon: "frame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

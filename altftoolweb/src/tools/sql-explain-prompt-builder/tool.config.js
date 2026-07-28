@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Flag non-sargable predicates and costly plan nodes, then build a prompt that explains the query plan in plain language.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

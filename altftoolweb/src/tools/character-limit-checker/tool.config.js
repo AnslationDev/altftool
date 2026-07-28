@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check text against X, Instagram, LinkedIn, SEO and SMS character limits with a live remaining count.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

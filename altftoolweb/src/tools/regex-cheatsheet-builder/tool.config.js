@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a printable regex cheatsheet filtered to your flavor — JavaScript, PCRE or Python — and only the feature groups you use.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

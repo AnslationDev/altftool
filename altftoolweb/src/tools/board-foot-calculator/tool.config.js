@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert timber thickness, width and length into board feet, cubic feet and cubic metres, with waste allowance and total cost.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

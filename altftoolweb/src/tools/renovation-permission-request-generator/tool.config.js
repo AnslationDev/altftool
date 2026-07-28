@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a flat renovation permission request with work scope, working hours, debris disposal plan and contractor details.",
   icon: "hammer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

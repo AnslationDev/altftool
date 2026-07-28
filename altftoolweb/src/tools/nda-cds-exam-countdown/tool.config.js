@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Defence exam countdown for NDA and CDS covering the written date, paper-wise marks and the SSB interview window with its 5-day schedule.",
   icon: "shield",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

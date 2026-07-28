@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Strip timecodes and caption markup from an SRT file to get a clean, paragraphed transcript with word count and speaking rate.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Gujarat professional tax by monthly salary band, with the Rs 12,000 exemption limit and the Section 16(iii) tax saving.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

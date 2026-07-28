@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Guided journalling prompts to name exam pressure, sort what you control and turn worry into one concrete next action.",
   icon: "notebook-pen",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

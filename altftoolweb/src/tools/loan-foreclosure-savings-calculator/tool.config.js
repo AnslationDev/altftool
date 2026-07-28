@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the cost of closing a loan early with the interest still left on it to see your real net savings.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

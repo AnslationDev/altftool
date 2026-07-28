@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the uploads, view duration and weeks needed to reach a watch-hour target such as YouTube's 4,000 hours.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

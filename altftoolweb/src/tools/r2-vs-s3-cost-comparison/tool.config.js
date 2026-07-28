@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Cloudflare R2 and Amazon S3 monthly cost — storage, requests and the egress fees only one of them charges.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

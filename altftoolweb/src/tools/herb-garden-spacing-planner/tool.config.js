@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a kitchen herb bed: spacing between plants, how many fit, pot depth, sun hours and which herbs to keep apart.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a UGC creator brief with a timed shot list, per-scene word budgets, delivery specs and clear dos and don'ts.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

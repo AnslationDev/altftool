@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Macro targets for a lacto-vegetarian Indian diet, then translated into chapatis, katoris of dal and rice, paneer and curd.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

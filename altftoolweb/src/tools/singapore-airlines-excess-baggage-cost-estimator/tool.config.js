@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out Singapore Airlines excess baggage cost by fare brand and KrisFlyer tier, prepaid online versus at the airport.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

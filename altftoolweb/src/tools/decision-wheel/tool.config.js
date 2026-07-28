@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Spin to decide! Weighted random picker, team selector and giveaway wheel with live odds, history and no-repeat draws.",
   icon: "trophy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

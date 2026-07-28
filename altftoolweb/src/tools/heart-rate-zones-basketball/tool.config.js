@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Basketball conditioning zones in bpm with a shuttle drill planner, heart-rate restart cue and one-minute recovery score.",
   icon: "trophy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

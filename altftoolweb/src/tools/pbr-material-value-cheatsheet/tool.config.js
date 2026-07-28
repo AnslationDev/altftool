@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Reference F0, albedo and roughness values for metals and dielectrics, with sRGB conversion and a base-colour validator.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate an ideal weight range from height using the Devine, Robinson, Miller, Hamwi and healthy-BMI methods.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

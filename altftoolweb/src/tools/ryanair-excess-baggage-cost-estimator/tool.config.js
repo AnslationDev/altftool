@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Cost Ryanair cabin and hold bags per flight, add excess weight and gate fees, and find the cheapest bag combination.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

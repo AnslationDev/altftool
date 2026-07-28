@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Indian payment gateway charges for your own payment mix, including 18% GST, zero-MDR UPI and RuPay, and net settlement.",
   icon: "indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

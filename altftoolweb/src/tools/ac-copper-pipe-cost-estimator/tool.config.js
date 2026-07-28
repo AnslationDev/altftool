@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the extra copper, drain, cable, core drilling and refrigerant top-up cost when a split AC outdoor unit sits far from the indoor unit.",
   icon: "pipette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build postgres:// URIs and keyword/value DSNs with SSL mode, schema, timeout and pool parameters, correctly percent-encoded.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

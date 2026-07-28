@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Employee and employer CPP, CPP2 and EI contributions with the YMPE, YAMPE and maximum insurable earnings ceilings applied.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

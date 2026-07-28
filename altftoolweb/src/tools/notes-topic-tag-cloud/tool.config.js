@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Paste your notes to see a weighted tag cloud of dominant topics and a list of thin topics that need more coverage.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

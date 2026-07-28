@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score API keys, OAuth 2.1 grants and mutual TLS against your consumer type, delegation, secrecy and rotation needs.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

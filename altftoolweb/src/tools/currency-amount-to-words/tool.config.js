@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Spell any money amount in words for cheques, invoices and contracts — Indian or international numbering, eight currencies.",
   icon: "spell-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

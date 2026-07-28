@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate YouTube channel earnings from monthly views and RPM, with a low/expected/high scenario band and a CPM cross-check.",
   icon: "youtube",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

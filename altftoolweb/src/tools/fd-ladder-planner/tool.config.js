@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a lump sum across staggered FD tenures and see each rung's maturity, date and the blended average yield.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the closest CSS colour names and plain-English colour terms for any hex value using CIEDE2000 distance.",
   icon: "palette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

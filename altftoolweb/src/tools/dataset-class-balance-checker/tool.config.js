@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check label distribution in a classification dataset: imbalance ratio, entropy, balanced class weights and resampling counts.",
   icon: "chart-column",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

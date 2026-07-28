@@ -325,6 +325,14 @@ export const TOOL_CATALOG = [
     "description": "Plan how many UAE dirhams to carry as notes versus card spend, with the changer markup, GST, TCS and RBI cash limit costed in."
   },
   {
+    "slug": "aerobics-calorie-burn-calculator",
+    "name": "Aerobics Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories for low impact, high impact, water and step aerobics classes, with the walking and running distance that matches."
+  },
+  {
     "slug": "afterimage-generator",
     "name": "Afterimage Generator",
     "categories": [
@@ -1198,12 +1206,28 @@ export const TOOL_CATALOG = [
     "description": "Classify which Ansible variables belong in Vault and generate the vars/vault split plus the exact ansible-vault command workflow."
   },
   {
+    "slug": "anxiety-check-questionnaire",
+    "name": "Anxiety Check Questionnaire",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "A seven-item informational anxiety self-check scored 0-21, with severity bands and a dated log so you can track changes."
+  },
+  {
     "slug": "apdex-score-calculator",
     "name": "Apdex Score Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Calculate an Apdex score from satisfied, tolerating and frustrated request counts, with the rating band and the fixes needed to reach a target."
+  },
+  {
+    "slug": "apgar-score-calculator",
+    "name": "Apgar Score Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Score newborn appearance, pulse, grimace, activity and respiration at 1, 5 and 10 minutes for a total out of 10."
   },
   {
     "slug": "api-changelog-generator",
@@ -1779,6 +1803,14 @@ export const TOOL_CATALOG = [
     "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain."
   },
   {
+    "slug": "badminton-calorie-burn-calculator",
+    "name": "Badminton Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned playing badminton singles or doubles from your body weight, rally time and break time."
+  },
+  {
     "slug": "bajaj-service-schedule-planner",
     "name": "Bajaj Service Schedule Planner",
     "categories": [
@@ -1826,6 +1858,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Estimate yearly output, bill savings and payback for a plug-in balcony solar kit from tilt, orientation and latitude."
+  },
+  {
+    "slug": "ballet-calorie-burn-calculator",
+    "name": "Ballet Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories for a ballet class broken into barre, centre, allegro and pointe work, with weekly totals for your class schedule."
   },
   {
     "slug": "band-name-generator",
@@ -2088,6 +2128,14 @@ export const TOOL_CATALOG = [
     "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history."
   },
   {
+    "slug": "basketball-calorie-burn-calculator",
+    "name": "Basketball Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned in basketball from body weight and court time, for full-court games, half-court pick-up, drills or shooting."
+  },
+  {
     "slug": "batch-api-savings-calculator",
     "name": "Batch API Savings Calculator",
     "categories": [
@@ -2148,6 +2196,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Predict battery health, degradation risk, charging cycles, and estimated device lifespan from usage patterns."
+  },
+  {
+    "slug": "battle-ropes-calorie-calculator",
+    "name": "Battle Ropes Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Interval calorie estimate for battle rope conditioning from rounds, work-to-rest ratio, wave style and body weight, with an EPOC range."
   },
   {
     "slug": "bayesian-update-calculator",
@@ -2260,6 +2316,14 @@ export const TOOL_CATALOG = [
     "description": "Late filing fee under Section 234F plus 234A interest for income tax returns filed after the due date."
   },
   {
+    "slug": "belly-dance-calorie-calculator",
+    "name": "Belly Dance Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories for a belly dance class, drill session or drum solo, including the extra load of veil, cane or sword work."
+  },
+  {
     "slug": "bengaluru-airport-transfer-time-planner",
     "name": "Bengaluru Airport Transfer Time Planner",
     "categories": [
@@ -2282,6 +2346,22 @@ export const TOOL_CATALOG = [
       "AI Tools"
     ],
     "description": "Remove your Image background in just a one click"
+  },
+  {
+    "slug": "bhangra-calorie-burn-calculator",
+    "name": "Bhangra Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned in a bhangra session from body weight, minutes danced and how hard you go, using MET energy maths."
+  },
+  {
+    "slug": "bharatanatyam-calorie-calculator",
+    "name": "Bharatanatyam Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned in Bharatanatyam practice, split across adavu drill, nritta, item run-throughs and abhinaya."
   },
   {
     "slug": "bhutan-entry-requirement-checklist",
@@ -2363,6 +2443,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Log two-wheeler fill-ups and get true tank-to-tank mileage, cost per kilometre and the trend across every full tank."
+  },
+  {
+    "slug": "bilirubin-unit-converter",
+    "name": "Bilirubin Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert total and direct bilirubin between mg/dL and micromol/L with the 17.1 factor, and derive indirect bilirubin and the direct fraction."
   },
   {
     "slug": "bill-of-supply-generator",
@@ -2509,6 +2597,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate BAC from standard drinks using the Widmark formula. For education only."
   },
   {
+    "slug": "blood-glucose-unit-converter",
+    "name": "Blood Glucose Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert blood sugar between mg/dL and mmol/L using the 18.0182 glucose factor, with fasting, post-meal and random reference bands."
+  },
+  {
     "slug": "blood-pressure-checker",
     "name": "Blood Pressure Checker",
     "categories": [
@@ -2531,6 +2627,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Log blood pressure readings, see each one categorised by the AHA scale, and print a clean trend summary for your doctor."
+  },
+  {
+    "slug": "blood-pressure-unit-converter",
+    "name": "Blood Pressure Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert systolic and diastolic blood pressure between mmHg and kPa, with mean arterial pressure, pulse pressure and category."
   },
   {
     "slug": "blood-sugar-log",
@@ -2946,6 +3050,14 @@ export const TOOL_CATALOG = [
     "description": "Generate a consumer impact checklist and risk score before shipping an API or library breaking change."
   },
   {
+    "slug": "breast-self-exam-reminder",
+    "name": "Breast Self-Exam Reminder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out the best monthly day for a breast self-check from your cycle, with a step-by-step guide and 12 upcoming dates."
+  },
+  {
     "slug": "breastfeeding-hydration-calculator",
     "name": "Breastfeeding Hydration Calculator",
     "categories": [
@@ -3252,6 +3364,14 @@ export const TOOL_CATALOG = [
     "description": "Build a Caddy v2 Caddyfile with automatic HTTPS, reverse proxy or file server, compression, headers and logging."
   },
   {
+    "slug": "cafe-working-posture-routine",
+    "name": "Cafe Working Posture Routine",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Pick the right cafe table height for your body, size the cushion and riser you need, and time your breaks."
+  },
+  {
     "slug": "caffeine-cutoff-time-calculator",
     "name": "Caffeine Cutoff Time Calculator",
     "categories": [
@@ -3291,6 +3411,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time."
+  },
+  {
+    "slug": "calcium-intake-calculator-for-women",
+    "name": "Calcium Intake Calculator For Women",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily calcium and vitamin D targets by life stage, plus a food tally showing how close your day actually gets."
   },
   {
     "slug": "calendar-privacy-scrubber",
@@ -3605,6 +3733,14 @@ export const TOOL_CATALOG = [
     "description": "Checklist to park a car safely for weeks or months, with battery drain days, storage tyre pressure and a return list."
   },
   {
+    "slug": "car-washing-calorie-calculator",
+    "name": "Car Washing Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned hand-washing and drying a vehicle, stage by stage, from the 4.5 MET wash-and-wax compendium value."
+  },
+  {
     "slug": "card-picker",
     "name": "Random Card Picker",
     "categories": [
@@ -3914,6 +4050,14 @@ export const TOOL_CATALOG = [
     "description": "Enter supplier and place-of-supply state codes to see whether GST splits into CGST and SGST or is charged as IGST, with the amounts."
   },
   {
+    "slug": "chair-height-calculator",
+    "name": "Chair Height Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Seat height, seat depth, matching desk height and footrest size from your lower-leg measurement."
+  },
+  {
     "slug": "change-freeze-calendar-planner",
     "name": "Change Freeze Calendar Planner",
     "categories": [
@@ -4102,6 +4246,30 @@ export const TOOL_CATALOG = [
     "description": "Room-by-room childproofing checklist matched to your child's age, your home's stairs, balconies and water, with a readiness score."
   },
   {
+    "slug": "child-screen-time-planner",
+    "name": "Child Screen Time Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Age-based daily screen limits from WHO and AAP guidance, with sleep, activity, outdoor and eye-break targets built into a 24-hour day budget."
+  },
+  {
+    "slug": "childcare-calorie-burn-calculator",
+    "name": "Childcare Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned while feeding, carrying, playing with children and pushing a pram, with active play counted separately."
+  },
+  {
+    "slug": "childcare-calorie-calculator",
+    "name": "Childcare Calorie Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Estimate calories burned during childcare tasks from body weight, minutes, and activity intensity."
+  },
+  {
     "slug": "chimney-cleaning-planner",
     "name": "Chimney Cleaning Planner",
     "categories": [
@@ -4142,6 +4310,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Convert Unix file permissions between numeric (755) and symbolic (rwxr-xr-x) form with a checkbox grid, setuid, setgid and sticky bits."
+  },
+  {
+    "slug": "cholesterol-unit-converter",
+    "name": "Cholesterol Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert total, LDL, HDL and triglycerides between mg/dL and mmol/L, with non-HDL, the total-to-HDL ratio and reference bands."
   },
   {
     "slug": "chore-chart-maker",
@@ -4280,6 +4456,22 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Administrative AI prompts for appointments, reminders and billing, with an SMS segment counter and a clinical-advice screen."
+  },
+  {
+    "slug": "clinical-height-converter",
+    "name": "Clinical Height Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert height between centimetres, metres, inches and feet-and-inches with the exact 2.54 cm inch and clinical rounding steps."
+  },
+  {
+    "slug": "clinical-weight-converter",
+    "name": "Clinical Weight Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert body weight between kilograms, grams, pounds, pounds and ounces, and stones, with newborn and infant rounding steps."
   },
   {
     "slug": "clipboard-capsule",
@@ -4435,6 +4627,14 @@ export const TOOL_CATALOG = [
       "Generators"
     ],
     "description": "Build a CODEOWNERS file with path patterns and team handles, validate owners, and preview which rule wins for any file path."
+  },
+  {
+    "slug": "coder-eye-break-timer",
+    "name": "Coder Eye Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Fits 20-20-20 eye breaks around your build and test waits, and shows how many extra prompts you still need."
   },
   {
     "slug": "codex-chat-transfer",
@@ -4894,6 +5094,14 @@ export const TOOL_CATALOG = [
     "description": "Facts, relief aur evidence se complaint format banaye."
   },
   {
+    "slug": "contact-lens-wear-tracker",
+    "name": "Contact Lens Wear Tracker",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Track daily wear hours, replacement dates and lens case changes for daily, fortnightly, monthly, quarterly or yearly contact lenses."
+  },
+  {
     "slug": "contact-memory-vault",
     "name": "Contact Memory Vault",
     "categories": [
@@ -5010,12 +5218,28 @@ export const TOOL_CATALOG = [
     "description": "View, manage, add, edit, and delete browser cookies in real-time."
   },
   {
+    "slug": "cooking-calorie-burn-calculator",
+    "name": "Cooking Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned prepping, cooking, serving and washing up, from compendium MET values for kitchen work and your body weight."
+  },
+  {
     "slug": "coolant-mix-ratio-calculator",
     "name": "Coolant Mix Ratio Calculator",
     "categories": [
       "Calculators"
     ],
     "description": "Work out coolant and water litres for your radiator capacity, with the freeze point and cap-pressure boil point of the mix."
+  },
+  {
+    "slug": "cooper-test-vo2-max-calculator",
+    "name": "Cooper Test VO2 Max Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Turn the distance covered in a 12-minute run into an estimated VO2 max, pace, METs and a Cooper fitness rating."
   },
   {
     "slug": "copyright-notice-generator",
@@ -5263,6 +5487,14 @@ export const TOOL_CATALOG = [
     "description": "Compute the CRC32 checksum of text as a hex value."
   },
   {
+    "slug": "creatinine-unit-converter",
+    "name": "Creatinine Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert serum creatinine between mg/dL and micromoles per litre with the 88.4 factor, plus an optional CKD-EPI 2021 eGFR."
+  },
+  {
     "slug": "creative-brief-generator",
     "name": "Creative Brief Generator",
     "categories": [
@@ -5367,6 +5599,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Compute SGPA from subject grades and credit hours, with grade point tables and per-subject impact on the average."
+  },
+  {
+    "slug": "cricket-calorie-burn-calculator",
+    "name": "Cricket Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned across a full cricket match, split by batting, bowling overs, fielding position and time waiting to bat."
   },
   {
     "slug": "cron-expression-explainer",
@@ -5794,6 +6034,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate calories burned cycling from distance, speed, rider weight, terrain, gradient and headwind, using a physics power model."
   },
   {
+    "slug": "cycling-commute-calorie-calculator",
+    "name": "Cycling Commute Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned riding to work plus the fuel, money and CO2 you avoid by leaving the car at home."
+  },
+  {
     "slug": "cyclist-hydration-calculator",
     "name": "Cyclist Hydration Calculator",
     "categories": [
@@ -5920,6 +6168,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights."
+  },
+  {
+    "slug": "data-rate-bitrate-converter",
+    "name": "Data Rate Bitrate Converter",
+    "categories": [
+      "Converters"
+    ],
+    "description": "Convert between Mbps, kbps, MB/s and GB per hour, and turn any bitrate into the file size it produces."
   },
   {
     "slug": "data-retention-schedule-builder",
@@ -6335,6 +6591,14 @@ export const TOOL_CATALOG = [
     "description": "Build a design-to-development handoff checklist for your platform and features, then score how ready the handoff really is."
   },
   {
+    "slug": "designer-eye-break-timer",
+    "name": "Designer Eye Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Schedules 20-20-20 eye rest plus neutral-grey adaptation resets before every colour-critical judgement."
+  },
+  {
     "slug": "designer-prompt-pack",
     "name": "Designer Prompt Pack",
     "categories": [
@@ -6495,6 +6759,14 @@ export const TOOL_CATALOG = [
     "description": "Plan phone-free study blocks that escalate day by day, with a cap, milestone day and total phone-free hours computed."
   },
   {
+    "slug": "digital-eye-strain-self-check",
+    "name": "Digital Eye Strain Self-Check",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Score 16 screen-related eye symptoms by frequency and intensity using the published CVS-Q method, with the score-6 cut-off explained."
+  },
+  {
     "slug": "digital-legacy-vault",
     "name": "Digital Legacy Vault",
     "categories": [
@@ -6645,6 +6917,14 @@ export const TOOL_CATALOG = [
     "description": "Compare the true cost of a dishwasher cycle against hand washing, counting electricity, water, detergent and your time."
   },
   {
+    "slug": "dishwashing-calorie-calculator",
+    "name": "Dishwashing Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned washing dishes by method, minutes and load, with weekly and yearly totals from compendium MET values."
+  },
+  {
     "slug": "display-calibration-checklist",
     "name": "Display Calibration Checklist",
     "categories": [
@@ -6701,6 +6981,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Compare doing a basic car service yourself against workshop charges, including parts markup, labour, GST and tool payback."
+  },
+  {
+    "slug": "dj-transition-length-calculator",
+    "name": "DJ Transition Length Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out how long a blend runs in bars, beats and seconds when the two tracks sit at different tempos."
   },
   {
     "slug": "dlt-sms-sender-id-explainer",
@@ -6880,6 +7168,14 @@ export const TOOL_CATALOG = [
     "description": "Enterprise-grade, privacy-first document version comparison & verification tool. Compare PDF, DOCX, TXT, JSON, CSV, HTML, XML & Markdown locally with metadata a"
   },
   {
+    "slug": "dog-walking-calorie-calculator",
+    "name": "Dog Walking Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories you burn on a dog walk, with sniff stops counted separately, plus your dog's daily energy and exercise guidance."
+  },
+  {
     "slug": "doha-doh-airport-arrival-buffer-calculator",
     "name": "Doha DOH Airport Arrival Buffer Calculator",
     "categories": [
@@ -7039,6 +7335,14 @@ export const TOOL_CATALOG = [
     "description": "Work out a driver's monthly pay with overtime at twice the ordinary rate, night duty, outstation days, PF and ESI."
   },
   {
+    "slug": "driver-seat-posture-routine",
+    "name": "Driver Seat Posture Routine",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Seat, wheel and head-restraint targets plus a legal break schedule and stretch routine for long drives."
+  },
+  {
     "slug": "driveway-sealer-calculator",
     "name": "Driveway Sealer Calculator",
     "categories": [
@@ -7150,6 +7454,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Build a document checklist, fee estimate and new validity date for renewing an Indian driving licence under the Motor Vehicles Act."
+  },
+  {
+    "slug": "dry-eye-blink-trainer",
+    "name": "Dry Eye Blink Trainer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Measure your blink rate, compare it with the 15-20 blinks a minute seen at rest, and build a paced complete-blink drill for screen work."
   },
   {
     "slug": "dsar-request-tracker",
@@ -7888,6 +8200,14 @@ export const TOOL_CATALOG = [
     "description": "Estimate your monthly EPS-95 pension from pensionable salary and years of service, with early/deferred pension and family pension."
   },
   {
+    "slug": "epworth-sleepiness-scale",
+    "name": "Epworth Sleepiness Scale",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Rate your chance of dozing in eight everyday situations to get an Epworth score out of 24 with its sleepiness band."
+  },
+  {
     "slug": "equation-practice",
     "name": "Equation Practice",
     "categories": [
@@ -8381,6 +8701,22 @@ export const TOOL_CATALOG = [
     "description": "Estimate litres of exterior emulsion from wall area, coats and surface porosity, with pack sizes and material cost."
   },
   {
+    "slug": "eye-checkup-reminder-planner",
+    "name": "Eye Checkup Reminder Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Recommended eye examination intervals by age and risk factor, with your next due date and how overdue the last exam has become."
+  },
+  {
+    "slug": "eye-exercise-routine-builder",
+    "name": "Eye Exercise Routine Builder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build a timed daily routine from focus shifts, palming, figure-of-eight, warm compress and blink drills, with a running order and total time."
+  },
+  {
     "slug": "eye-rest-timer",
     "name": "20-20-20 Eye Rest Timer",
     "categories": [
@@ -8706,6 +9042,30 @@ export const TOOL_CATALOG = [
     "description": "Estimate the extra fluid a fever adds to daily maintenance needs, using the 12% per degree Celsius rule (informational)."
   },
   {
+    "slug": "fever-temperature-converter",
+    "name": "Fever Temperature Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert body temperature between Celsius, Fahrenheit and Kelvin and adjust for oral, rectal, ear, forehead or armpit readings."
+  },
+  {
+    "slug": "ffmi-calculator",
+    "name": "FFMI Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Fat-free mass index and height-normalised FFMI from weight, height and body fat percentage, with natural-limit context for lifters."
+  },
+  {
+    "slug": "field-hockey-calorie-calculator",
+    "name": "Field Hockey Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned in field hockey across drills, halves and full matches from your body weight and minutes played."
+  },
+  {
     "slug": "fifty-thirty-twenty-budget-calculator",
     "name": "50-30-20 Budget Rule Calculator",
     "categories": [
@@ -8847,6 +9207,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "AI-Powered Matchmaking based on interests and personality."
+  },
+  {
+    "slug": "findrisc-diabetes-risk-score",
+    "name": "FINDRISC Diabetes Risk Score",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Answer eight questions to get your FINDRISC score out of 26 and the matching 10-year type 2 diabetes risk band."
   },
   {
     "slug": "fire-calculator",
@@ -9066,6 +9434,14 @@ export const TOOL_CATALOG = [
     "description": "Check which font licences your project needs across desktop, web, app, ePub, server and broadcast use before you ship."
   },
   {
+    "slug": "font-license-usage-explainer",
+    "name": "Font Licence Usage Explainer",
+    "categories": [
+      "Business"
+    ],
+    "description": "Check what a desktop, webfont, app, ePub, server, broadcast or open font licence actually permits before you ship."
+  },
+  {
     "slug": "font-pairing-brutalist-vibe",
     "name": "Brutalist Font Pairing",
     "categories": [
@@ -9178,6 +9554,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Plan card and drive space for a shoot: storage per hour by codec, resolution, frame rate and audio track count."
+  },
+  {
+    "slug": "football-calorie-burn-calculator",
+    "name": "Football Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned playing football from body weight, minutes played, match intensity and your position on the pitch."
   },
   {
     "slug": "form-15g-15h-eligibility-checker",
@@ -9519,6 +9903,14 @@ export const TOOL_CATALOG = [
     "description": "Plan room dimensions, arrange furniture pieces, check spacing, save layouts, and export printable floor plans."
   },
   {
+    "slug": "furniture-moving-calorie-calculator",
+    "name": "Furniture Moving Calorie Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Estimate calories burned while packing, loading, carrying furniture, pushing heavy items, and using stairs."
+  },
+  {
     "slug": "furniture-resale-value-estimator",
     "name": "Furniture Resale Value Estimator",
     "categories": [
@@ -9595,6 +9987,22 @@ export const TOOL_CATALOG = [
     "description": "Convert gaj (square yard) to square feet, square metres, biswa, marla and kanal, with rate per gaj and plot cost."
   },
   {
+    "slug": "gamer-eye-break-timer",
+    "name": "Gamer Eye Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Puts 20-20-20 eye breaks in the lobby between matches, so nothing interrupts a live round."
+  },
+  {
+    "slug": "gaming-chair-posture-planner",
+    "name": "Gaming Chair Posture Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Seat, armrest, lumbar and recline settings from your height, plus a break plan that lands between matches."
+  },
+  {
     "slug": "gaming-pc-electricity-cost",
     "name": "Gaming PC Electricity Cost",
     "categories": [
@@ -9619,6 +10027,14 @@ export const TOOL_CATALOG = [
     "description": "See which entrance exams accept gap years, how many, and what proof counselling bodies ask for — from your passing and attempt years."
   },
   {
+    "slug": "garba-calorie-burn-calculator",
+    "name": "Garba Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Navratri garba and dandiya calorie estimate by tempo band, dancing time and standing time, across all nine nights."
+  },
+  {
     "slug": "garden-fence-material-calculator",
     "name": "Garden Fence Material Calculator",
     "categories": [
@@ -9633,6 +10049,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Compute topsoil volume, weight, bags and bulk bags to fill a raised bed, level a lawn or top-dress a garden area."
+  },
+  {
+    "slug": "gardening-calorie-burn-calculator",
+    "name": "Gardening Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Digging, weeding, mowing and watering calorie estimates by time, with weekly MET-minutes against the WHO activity target."
   },
   {
     "slug": "gardening-prompt-builder",
@@ -9960,6 +10384,14 @@ export const TOOL_CATALOG = [
     "description": "Paste giveaway entries, detect duplicates, and draw fair, reproducible winners with a published seed and draw history."
   },
   {
+    "slug": "glasgow-coma-scale-calculator",
+    "name": "Glasgow Coma Scale Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Score eye, verbal and motor responses to get a total GCS (3-15), severity band and GCS-Pupils score, for training and revision."
+  },
+  {
     "slug": "glasses-tryon",
     "name": "Glasses Try-on",
     "categories": [
@@ -10244,6 +10676,14 @@ export const TOOL_CATALOG = [
     "description": "Build categorised grocery lists with smart auto-sorting, check-off shopping mode, restock suggestions, and easy sharing."
   },
   {
+    "slug": "grocery-shopping-calorie-calculator",
+    "name": "Grocery Shopping Calorie Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Estimate calories burned during a grocery trip, including walking, trolley time, carrying bags, stairs, and unpacking."
+  },
+  {
     "slug": "grounding-exercise",
     "name": "5-4-3-2-1 Grounding Exercise",
     "categories": [
@@ -10481,6 +10921,14 @@ export const TOOL_CATALOG = [
     "description": "Calculate the cost of your habits and make informed decisions."
   },
   {
+    "slug": "haemoglobin-unit-converter",
+    "name": "Haemoglobin Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert haemoglobin between g/dL, g/L and mmol/L, and compare the result against WHO anaemia thresholds by age and sex."
+  },
+  {
     "slug": "hair-care-tool",
     "name": "Hair Care Guide",
     "categories": [
@@ -10573,6 +11021,14 @@ export const TOOL_CATALOG = [
       "Marketing & Social"
     ],
     "description": "Futuristic social media hashtag planner & marketing dashboard."
+  },
+  {
+    "slug": "hba1c-to-average-glucose-converter",
+    "name": "HbA1c to Average Glucose Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert HbA1c between DCCT percent, IFCC mmol/mol and estimated average glucose in mg/dL and mmol/L using the ADAG equation."
   },
   {
     "slug": "hdr-vs-sdr-brightness-explainer",
@@ -10680,6 +11136,14 @@ export const TOOL_CATALOG = [
     "description": "Friel bike heart rate zones from your threshold heart rate, paired with Coggan power bands worked out from your FTP."
   },
   {
+    "slug": "heart-rate-zones-elliptical",
+    "name": "Heart Rate Zones for Elliptical",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Cross-trainer heart rate zones from age and resting pulse, paired with stride-rate and resistance-level settings scaled to your machine."
+  },
+  {
     "slug": "heart-rate-zones-football",
     "name": "Heart Rate Zones for Football",
     "categories": [
@@ -10710,6 +11174,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Five running heart rate zones in bpm with the matching pace band for each, from Tanaka, Fox or Gulati max HR and Friel pace zones."
+  },
+  {
+    "slug": "heart-rate-zones-walking",
+    "name": "Heart Rate Zones for Walking",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Brisk-walk heart rate targets from your age and resting pulse, using ACSM intensity bands plus matching steps-per-minute cadence goals."
   },
   {
     "slug": "heat-pump-vs-furnace-estimator",
@@ -10862,6 +11334,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Learn 40 core coding concepts explained three ways: precise English, everyday Hinglish, and an analogy — with a quiz."
+  },
+  {
+    "slug": "hip-hop-dance-calorie-calculator",
+    "name": "Hip Hop Dance Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories for a hip hop session, counting full-out run-throughs separately from the marking and learning time in between."
   },
   {
     "slug": "home-affordability-calculator",
@@ -11316,6 +11796,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Estimate daily fluid needs in cold, dry air from respiratory water loss, sweat under layers and cold-induced diuresis."
+  },
+  {
+    "slug": "hydration-calculator-desert-climate",
+    "name": "Desert Climate Hydration Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Daily fluid and sodium replacement plan for hot, very dry desert conditions, from body weight, temperature, humidity and exposure hours."
   },
   {
     "slug": "hydration-calculator-humid-climate",
@@ -12457,6 +12945,14 @@ export const TOOL_CATALOG = [
     "description": "Challenge your brain with an IQ-style mini quiz featuring logical reasoning, pattern recognition, memory, and problem-solving questions across multiple difficul"
   },
   {
+    "slug": "iron-intake-calculator-for-women",
+    "name": "Iron Intake Calculator For Women",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily iron target from age, life stage, diet type and menstrual blood loss, using the IOM dietary reference intakes."
+  },
+  {
     "slug": "iron-supplement-timing-planner",
     "name": "Iron Supplement Timing Planner",
     "categories": [
@@ -12861,6 +13357,14 @@ export const TOOL_CATALOG = [
     "description": "Generate real anchor, smooth scroll, route navigation, button jump, and reusable navigation snippets instantly."
   },
   {
+    "slug": "jump-rope-calorie-calculator",
+    "name": "Jump Rope Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned skipping, from skips per minute, body weight and your work-to-rest interval, using Compendium of Physical Activities MET values."
+  },
+  {
     "slug": "jwt-decoder",
     "name": "JWT Decoder",
     "categories": [
@@ -12875,6 +13379,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Check if all 7 planets (Sun through Saturn) are positioned between Rahu and Ketu, forming Kaal Sarp Dosha. Identifies the dosha type — Anant, Kulik, Vasuki, Tak"
+  },
+  {
+    "slug": "kabaddi-calorie-burn-calculator",
+    "name": "Kabaddi Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned in kabaddi from your body weight, mat time and whether you raid, defend or play all-rounder."
   },
   {
     "slug": "kafka-topic-naming-builder",
@@ -12901,12 +13413,36 @@ export const TOOL_CATALOG = [
     "description": "Training zones from the Karvonen heart rate reserve method using your resting and maximum heart rate."
   },
   {
+    "slug": "kathak-calorie-burn-calculator",
+    "name": "Kathak Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Segment-by-segment calorie estimate for Kathak riyaz — abhinaya, tatkar at each laya and chakkars, with ghungroo load included."
+  },
+  {
+    "slug": "kayaking-calorie-burn-calculator",
+    "name": "Kayaking Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Paddling calorie estimate from distance, time and water type, using published Compendium MET values for each paddling speed."
+  },
+  {
     "slug": "kebab-case-converter",
     "name": "Kebab Case Converter",
     "categories": [
       "Developer"
     ],
     "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug."
+  },
+  {
+    "slug": "kegel-exercise-timer",
+    "name": "Kegel Exercise Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Guided hold-and-release pelvic floor timer with progression levels, set rests and a daily contraction count."
   },
   {
     "slug": "kenya-entry-requirement-checklist",
@@ -12941,6 +13477,14 @@ export const TOOL_CATALOG = [
     "description": "Daily fat, protein and net carb targets for a ketogenic diet, from Mifflin-St Jeor BMR, your activity level and your weight goal."
   },
   {
+    "slug": "kettlebell-swing-calorie-calculator",
+    "name": "Kettlebell Swing Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories from swing count, bell weight, cadence and rest between sets, anchored on the measured oxygen cost of two-hand kettlebell swings."
+  },
+  {
     "slug": "key-signature-quiz",
     "name": "Key Signature Quiz",
     "categories": [
@@ -12963,6 +13507,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Test your keyboard layout interactively — see which keys register, check rollover, and diagnose stuck or ghost keys in real time."
+  },
+  {
+    "slug": "keyboard-mouse-position-guide",
+    "name": "Keyboard and Mouse Position Guide",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out keyboard height, keyboard tilt and how far your keyboard pushes the mouse out of a neutral reach."
   },
   {
     "slug": "keyboard-shortcut-trainer",
@@ -13092,6 +13644,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Work out true km/l with the tank-to-tank method from odometer and litres filled, with l/100km, mpg and cost per km."
+  },
+  {
+    "slug": "kneeling-chair-adaptation-planner",
+    "name": "Kneeling Chair Adaptation Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Week-by-week ramp from your first short sit to a full day on a kneeling chair, using the 10% weekly load rule."
   },
   {
     "slug": "knowledge-base-article-prompt-builder",
@@ -13266,6 +13826,14 @@ export const TOOL_CATALOG = [
     "description": "Simulated laptop hacking terminal for educational and entertainment purposes."
   },
   {
+    "slug": "laptop-only-desk-posture-fixer",
+    "name": "Laptop-Only Desk Posture Fixer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out the exact riser height, chair change and neck angle you need when a laptop is your only screen."
+  },
+  {
     "slug": "laptop-resale-value-estimator",
     "name": "Laptop Resale Value Estimator",
     "categories": [
@@ -13296,6 +13864,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Compute lateral entry (diploma to B.Tech) merit from diploma percentage and LEET/ECET score with the AICTE 45% check."
+  },
+  {
+    "slug": "laundry-calorie-burn-calculator",
+    "name": "Laundry Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Hand-wash versus machine-load calorie estimates for laundry day, priced stage by stage with compendium MET values."
   },
   {
     "slug": "lawn-mowing-schedule-planner",
@@ -13992,6 +14568,14 @@ export const TOOL_CATALOG = [
     "description": "Find every long weekend of the year and the exact leaves to apply for, so a handful of days off buys you weeks of holiday."
   },
   {
+    "slug": "loop-bars-calculator",
+    "name": "Loop Bars Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert loop lengths between bars, beats, seconds and samples at any tempo, with a note-division delay table."
+  },
+  {
     "slug": "lorem-ipsum-generator",
     "name": "Lorem Ipsum Generator",
     "categories": [
@@ -14135,6 +14719,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Compare the final corpus of a one-time lumpsum investment against an equivalent monthly SIP at the same return."
+  },
+  {
+    "slug": "luteal-phase-length-calculator",
+    "name": "Luteal Phase Length Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Work out luteal phase length from your ovulation date and the next period start date, with follicular and cycle length too."
   },
   {
     "slug": "lyric-line-splitter",
@@ -14525,6 +15117,14 @@ export const TOOL_CATALOG = [
     "description": "Organize routines, track doses, and receive real-time medicine reminders."
   },
   {
+    "slug": "medicine-spoon-to-ml-converter",
+    "name": "Medicine Spoon to Millilitre Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert teaspoon, tablespoon and dessertspoon medicine instructions into exact millilitres, and back again."
+  },
+  {
     "slug": "meditation-timer",
     "name": "Meditation Timer",
     "categories": [
@@ -14618,6 +15218,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Measure your short-term memory span with digit, letter, and visual sequence tests. Track your span over time and learn the neuroscience behind it."
+  },
+  {
+    "slug": "menstrual-cup-size-finder",
+    "name": "Menstrual Cup Size Finder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Cup size, length and firmness guidance from your age, birth history and a measured cervix height."
   },
   {
     "slug": "mental-math-trainer",
@@ -14852,12 +15460,28 @@ export const TOOL_CATALOG = [
     "description": "Build mongodb:// and mongodb+srv:// URIs with replica set, auth source, read preference, write concern and TLS options."
   },
   {
+    "slug": "monitor-brightness-match-guide",
+    "name": "Monitor Brightness Match Guide",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Match screen luminance to room light using the Lambertian lux-to-nits formula, the ISO 9241 3:1 surround ratio and the ISO 3664 80 cd/m2 floor."
+  },
+  {
     "slug": "monitor-gamma-test-pattern",
     "name": "Monitor Gamma Test Pattern",
     "categories": [
       "Design & Color"
     ],
     "description": "On-screen gamma match, step wedge, banding ramp and clipping patches to sanity-check a display's tone response."
+  },
+  {
+    "slug": "monitor-height-calculator",
+    "name": "Monitor Height Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Exact top, centre and bottom screen heights from your seated eye height, screen size and viewing distance."
   },
   {
     "slug": "monitor-ppi-calculator",
@@ -14925,6 +15549,14 @@ export const TOOL_CATALOG = [
     "description": "Plan a household fuel budget across several vehicles — petrol, diesel or CNG — and see the km to trim if you are over the cap."
   },
   {
+    "slug": "mood-check-questionnaire",
+    "name": "Mood Check Questionnaire",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "A nine-item informational mood self-check scored 0-27, with severity bands and a plain-language reading of the result."
+  },
+  {
     "slug": "moon-phase-simulator",
     "name": "Moon Phase Simulator",
     "categories": [
@@ -14940,6 +15572,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "See today's moon phase, illumination and age, plus a full monthly calendar and upcoming new and full moon dates."
+  },
+  {
+    "slug": "mopping-calorie-burn-calculator",
+    "name": "Mopping Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned mopping floors from your body weight and either the minutes spent or the floor area covered."
   },
   {
     "slug": "morse-code-audio",
@@ -15303,6 +15943,14 @@ export const TOOL_CATALOG = [
     "description": "Plan MX record preference values for single-provider, primary-plus-backup and provider-migration setups."
   },
   {
+    "slug": "myopia-progression-log",
+    "name": "Myopia Progression Log",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Log spectacle powers by date and get dioptres per year, a least-squares trend line, IMI severity bands and an axial-length equivalent."
+  },
+  {
     "slug": "mysql-connection-string-builder",
     "name": "MySQL Connection String Builder",
     "categories": [
@@ -15406,6 +16054,22 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert newline-delimited JSON (NDJSON/JSON Lines) to a JSON array and back, with per-line error reporting."
+  },
+  {
+    "slug": "neck-circumference-risk-checker",
+    "name": "Neck Circumference Risk Checker",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Compare your neck measurement against published screening cut-offs for overweight, obesity and sleep apnoea risk, with an optional BMI cross-check."
+  },
+  {
+    "slug": "neck-shoulder-stretch-timer",
+    "name": "Neck and Shoulder Stretch Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Timed neck, upper back and shoulder release sequence, plus how many of these breaks fit between your focus blocks each day."
   },
   {
     "slug": "neet-age-eligibility-checker",
@@ -15636,6 +16300,14 @@ export const TOOL_CATALOG = [
     "description": "Pre-drive checklist for lights, glass and fatigue, scored with the hours-awake impairment rule and the 02:00–06:00 risk window."
   },
   {
+    "slug": "night-shift-eye-strain-timer",
+    "name": "Night Shift Eye Strain Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Maps eye breaks across an overnight shift, flags the 3-5 am circadian low and sets a screen wind-down before you finish."
+  },
+  {
     "slug": "nitrogen-vs-air-tyre-cost",
     "name": "Nitrogen vs Air Tyre Cost",
     "categories": [
@@ -15690,6 +16362,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Walk through the SSC, Z-score, NTA percentile and min-max normalization formulas step by step with your own numbers."
+  },
+  {
+    "slug": "note-frequency-chart",
+    "name": "Note Frequency Chart",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Every note name, octave, MIDI number and frequency in equal temperament, with an adjustable A4 reference."
   },
   {
     "slug": "notes-topic-tag-cloud",
@@ -16073,6 +16753,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Convert Osmania University CGPA to percentage with the (CGPA - 0.5) x 10 rule, reverse it, and build the CGPA from semester SGPAs."
+  },
+  {
+    "slug": "outdoor-time-for-eyes-planner",
+    "name": "Outdoor Time For Eyes Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Plan daily daylight minutes against the 2 hours a day and 11 hours a week outdoor targets used in myopia research, with a lux-hour estimate."
   },
   {
     "slug": "oven-temperature-converter",
@@ -16716,6 +17404,30 @@ export const TOOL_CATALOG = [
     "description": "Predict your next periods, fertile window, and ovulation day, and log past cycles for personalised accuracy."
   },
   {
+    "slug": "period-date-shift-planner",
+    "name": "Period Date Shift Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "See how travel, exams or events line up against predicted period dates and how many days a clash would need to move."
+  },
+  {
+    "slug": "period-pain-intensity-log",
+    "name": "Period Pain Intensity Log",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Log cramp intensity on the 0-10 pain scale with the relief methods you used, and see patterns across cycles."
+  },
+  {
+    "slug": "period-product-usage-estimator",
+    "name": "Period Product Usage Estimator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate pads, tampons or liners needed per cycle and per year from flow days, plus cost and a menstrual cup comparison."
+  },
+  {
     "slug": "periodic-table-explorer",
     "name": "Periodic Table Explorer",
     "categories": [
@@ -17043,12 +17755,28 @@ export const TOOL_CATALOG = [
     "description": "Generate swashbuckling pirate names with ships, bounties, and mottos. Find your perfect pirate identity for adventures, games, and cosplay."
   },
   {
+    "slug": "pitch-percent-bpm-calculator",
+    "name": "Pitch Percent BPM Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Turn a turntable or CDJ pitch percentage into the resulting tempo, key shift and track length."
+  },
+  {
     "slug": "pixar-style-generator",
     "name": "Pixar Style Generator",
     "categories": [
       "Design & Color"
     ],
     "description": "Generate Pixar-style 3D characters via free AI prompts, or upload your own photo/URL to apply local 3D claymation filters and glassy animated eyes."
+  },
+  {
+    "slug": "plank-hold-benchmark-tool",
+    "name": "Plank Hold Benchmark Tool",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Time a front plank with the built-in stopwatch and compare the hold against an age-adjusted core endurance target."
   },
   {
     "slug": "plant-scanner",
@@ -18173,6 +18901,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Generate QR codes instantly for links, text, and data."
+  },
+  {
+    "slug": "qsofa-score-calculator",
+    "name": "qSOFA Score Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Score the three Sepsis-3 qSOFA criteria — respiratory rate, systolic pressure and mentation — for study and revision use."
   },
   {
     "slug": "quadratic-equation-solver",
@@ -19319,6 +20055,14 @@ export const TOOL_CATALOG = [
     "description": "Create standard robots.txt files for search engines with interactive forms to configure crawling rules, delays, and sitemaps."
   },
   {
+    "slug": "rock-climbing-calorie-calculator",
+    "name": "Rock Climbing Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories for a bouldering or roped climbing session, counting wall time separately from belaying and rest."
+  },
+  {
     "slug": "rock-paper-scissors",
     "name": "Rock Paper Scissors",
     "categories": [
@@ -19797,6 +20541,14 @@ export const TOOL_CATALOG = [
     "description": "Ready prompts for salon offers, reminders and before-after captions, with SMS segment and channel character limits."
   },
   {
+    "slug": "salsa-dance-calorie-calculator",
+    "name": "Salsa Dance Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned social dancing or rehearsing salsa, counted song by song so time spent sitting out is priced separately."
+  },
+  {
     "slug": "sample-size-power-calculator",
     "name": "Sample Size & Power Calculator",
     "categories": [
@@ -20035,6 +20787,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Privately preview a selected screen or window, place rehearsal covers, and complete a local privacy checklist before sharing."
+  },
+  {
+    "slug": "screen-viewing-distance-calculator",
+    "name": "Screen Viewing Distance Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Ideal eye-to-screen distance from diagonal size, aspect ratio and resolution, using pixel density, the SMPTE and THX viewing angles and desk ergonomics."
   },
   {
     "slug": "screenshot-change-detector",
@@ -20534,6 +21294,14 @@ export const TOOL_CATALOG = [
     "description": "Compare bucket bath, hand shower and rain shower on litres, geyser units and rupees per bath, per month and per year."
   },
   {
+    "slug": "shutter-angle-calculator",
+    "name": "Shutter Angle Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Convert between shutter angle and shutter speed at any frame rate, with a flicker check for 50 Hz and 60 Hz mains."
+  },
+  {
     "slug": "sign-language-alphabet-trainer",
     "name": "Sign Language Alphabet Trainer",
     "categories": [
@@ -20707,12 +21475,28 @@ export const TOOL_CATALOG = [
     "description": "See how raising your SIP by a fixed percentage every year changes the final corpus, the amount invested and the date you hit your goal."
   },
   {
+    "slug": "sit-stand-ratio-planner",
+    "name": "Sit-Stand Ratio Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Turn your workday and seated meeting hours into a clock-timed sitting and standing rotation with posture-change warnings."
+  },
+  {
     "slug": "sitemap-generator",
     "name": "Sitemap Generator",
     "categories": [
       "Developer"
     ],
     "description": "Create standard XML sitemaps containing page URLs, update frequency, priority levels, and modification dates to optimize crawling."
+  },
+  {
+    "slug": "skating-calorie-burn-calculator",
+    "name": "Skating Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Inline, quad and ice skating calorie estimates from your skating speed and session length using published MET bands."
   },
   {
     "slug": "skill-demand-analyzer",
@@ -20748,6 +21532,14 @@ export const TOOL_CATALOG = [
       "Image & Photo"
     ],
     "description": "Discover your skin undertone — warm, cool, or neutral — using AI-powered color analysis. Find the perfect foundation, lipstick, and jewelry matches."
+  },
+  {
+    "slug": "skipping-rope-outdoor-calorie-tool",
+    "name": "Skipping Rope Outdoor Calorie Tool",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Interval skipping calorie estimator using round, work and rest inputs with Compendium MET values for each skip rate."
   },
   {
     "slug": "skirting-length-calculator",
@@ -21040,6 +21832,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Build an AI tutor prompt that guides with questions and a graded hint ladder instead of handing over the answer."
+  },
+  {
+    "slug": "sofa-working-posture-routine",
+    "name": "Sofa Working Posture Routine",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Score your couch workstation, get the exact back and seat cushion depths you need, and a timed reset routine."
   },
   {
     "slug": "solar-panel-area-calculator",
@@ -21528,6 +22328,22 @@ export const TOOL_CATALOG = [
     "description": "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports."
   },
   {
+    "slug": "stair-running-calorie-calculator",
+    "name": "Stair Running Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories from flights climbed, step height and body weight, with a vertical-work cross-check and descent time included."
+  },
+  {
+    "slug": "stairmaster-calorie-calculator",
+    "name": "Stairmaster Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Step-mill calorie burn from steps per minute, step height and body weight, using the mechanical work of climbing and a 25% efficiency factor."
+  },
+  {
     "slug": "staking-rewards-calculator",
     "name": "Staking Rewards Calculator",
     "categories": [
@@ -21582,6 +22398,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Add up what always-on and standby devices cost you every year, ranked by the worst offender in your home."
+  },
+  {
+    "slug": "standing-desk-posture-routine",
+    "name": "Standing Desk Posture Routine",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build a sit-stand rotation with micro-movement breaks and get your standing desk and monitor heights from your body height."
   },
   {
     "slug": "star-life-cycle-explorer",
@@ -21703,6 +22527,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Build correct credit lines for stock and Creative Commons images in plain text, HTML and Markdown using the TASL rule."
+  },
+  {
+    "slug": "stop-bang-sleep-apnoea-score",
+    "name": "STOP-BANG Sleep Apnoea Score",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Eight yes/no items on snoring, tiredness, blood pressure, BMI, age, neck size and sex give a STOP-BANG score out of 8."
   },
   {
     "slug": "stop-loss-target-calculator",
@@ -21879,6 +22711,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Log every distraction in a study session, find your top three triggers and estimate how much study time they cost you."
+  },
+  {
+    "slug": "student-eye-break-timer",
+    "name": "Student Eye Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Builds 20-20-20 eye rest into study pomodoros and gives you clock times and a finish time for the whole revision block."
   },
   {
     "slug": "student-mess-bill-splitter",
@@ -22215,6 +23055,14 @@ export const TOOL_CATALOG = [
     "description": "Find your hourly sweat rate from the weigh-in weigh-out method, plus fluid replacement and sodium loss estimates."
   },
   {
+    "slug": "sweeping-calorie-burn-calculator",
+    "name": "Sweeping Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned sweeping indoors, sweeping outside and dusting, from your body weight and minutes on each task."
+  },
+  {
     "slug": "swimming-calorie-burn-calculator",
     "name": "Swimming Calorie Burn Calculator",
     "categories": [
@@ -22329,6 +23177,22 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Maximum print width and height for each t-shirt size from garment measurements and platen limits, with placement offsets and pixel sizes."
+  },
+  {
+    "slug": "table-tennis-calorie-calculator",
+    "name": "Table Tennis Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned playing table tennis from body weight, games played, minutes per game and break time."
+  },
+  {
+    "slug": "tablet-strength-split-calculator",
+    "name": "Tablet Strength Split Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Work out how many whole, half or quarter tablets of a given strength make a target dose, and how long a pack will last."
   },
   {
     "slug": "taiwan-entry-requirement-checklist",
@@ -22611,6 +23475,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Draft a tenant's notice to vacate with the handover date, notice-period check, final rent and security deposit settlement."
+  },
+  {
+    "slug": "tennis-calorie-burn-calculator",
+    "name": "Tennis Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned per set and per match from your body weight, court time and whether you play singles or doubles."
   },
   {
     "slug": "term-insurance-cover-calculator",
@@ -23673,6 +24545,14 @@ export const TOOL_CATALOG = [
     "description": "Turn your own post text into a clean branded quote graphic sized for square, portrait, story and link-card placements."
   },
   {
+    "slug": "twenty-twenty-twenty-eye-break-timer",
+    "name": "20-20-20 Eye Break Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Every 20 minutes, look 20 feet away for 20 seconds — a running timer with break counts and total rest time."
+  },
+  {
     "slug": "twin-finder",
     "name": "Twin Finder",
     "categories": [
@@ -24080,6 +24960,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Work out monthly uptime monitoring cost from endpoint count, check interval, probe locations and alert volume — plus detection time."
+  },
+  {
+    "slug": "urea-bun-converter",
+    "name": "Urea and BUN Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert between blood urea nitrogen and urea in mg/dL and mmol/L, with the BUN to creatinine ratio and reference intervals."
   },
   {
     "slug": "url-encoder-decoder",
@@ -24523,6 +25411,14 @@ export const TOOL_CATALOG = [
     "description": "Check one video ad duration against the minimum, maximum and recommended lengths for each placement you plan to run it in."
   },
   {
+    "slug": "video-ad-specs-comparator",
+    "name": "Video Ad Specs Comparator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Check one video cut against the length, aspect ratio, file size and format rules of every major ad placement."
+  },
+  {
     "slug": "video-aspect-pillarbox-calculator",
     "name": "Pillarbox Padding Calculator",
     "categories": [
@@ -24645,6 +25541,14 @@ export const TOOL_CATALOG = [
     "description": "Score every 15-minute upload slot against your audience's timezones and find the publish time that lands in the most local prime windows."
   },
   {
+    "slug": "video-render-time-estimator",
+    "name": "Video Render Time Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate export time from timeline length, resolution, frame rate, codec, effects load and machine class."
+  },
+  {
     "slug": "video-script-hook-generator",
     "name": "Video Script Hook Generator",
     "categories": [
@@ -24713,6 +25617,14 @@ export const TOOL_CATALOG = [
     "description": "Trim video clips in your browser with precise start and end controls."
   },
   {
+    "slug": "video-upload-time-estimator",
+    "name": "Video Upload Time Estimator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Estimate how long a video file takes to upload from its size and your connection speed, including protocol overhead."
+  },
+  {
     "slug": "vietnam-travel-etiquette-guide",
     "name": "Vietnam Travel Etiquette Guide",
     "categories": [
@@ -24778,12 +25690,28 @@ export const TOOL_CATALOG = [
     "description": "Turn a weekly or monthly vitamin D dosing instruction into dated doses, with the average daily IU compared to the RDA and upper limit."
   },
   {
+    "slug": "vitamin-d-unit-converter",
+    "name": "Vitamin D Unit Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert 25-OH vitamin D between ng/mL and nmol/L and see which deficiency, insufficiency or sufficiency band the level falls in."
+  },
+  {
     "slug": "vitamin-intake-tracker",
     "name": "Vitamin Intake Tracker",
     "categories": [
       "Health & Fitness"
     ],
     "description": "Track your daily vitamin and supplement intake — Vitamin D3, B-Complex, Magnesium, and more — with dosage guidance and adherence streaks."
+  },
+  {
+    "slug": "vitamin-iu-to-microgram-converter",
+    "name": "Vitamin IU to Microgram Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Convert vitamin A, D and E between IU and micrograms using the official per-form factors, with Daily Value and upper-limit context."
   },
   {
     "slug": "vitrified-vs-ceramic-tile-cost",
@@ -24884,6 +25812,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare."
+  },
+  {
+    "slug": "volleyball-calorie-burn-calculator",
+    "name": "Volleyball Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Estimate calories burned playing indoor or beach volleyball from body weight, sets played and time between sets."
   },
   {
     "slug": "voltage-converter-vs-adapter-explainer",
@@ -25291,6 +26227,14 @@ export const TOOL_CATALOG = [
     "description": "Review weekly progress with real-time goals, tasks, reflections, planning, reminders, analytics, charts, local save, and exportable summaries."
   },
   {
+    "slug": "weight-based-dose-converter",
+    "name": "Weight-Based Dose Converter",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Turn a mg-per-kg instruction into a total daily dose, a per-dose amount and a syrup volume, with optional maximum-dose caps."
+  },
+  {
     "slug": "weight-loss-protein-calculator",
     "name": "Weight-Loss Protein Calculator",
     "categories": [
@@ -25527,6 +26471,14 @@ export const TOOL_CATALOG = [
     "description": "Generate mystical wizard names with magic schools, staff types, and enchanted quotes. Discover your fantasy wizard identity for RPGs and stories."
   },
   {
+    "slug": "wong-baker-pain-scale-tracker",
+    "name": "Wong-Baker Pain Scale Tracker",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Log pain on a face-based 0-10 scale over time, with averages, severity bands and a timeline children and carers can use."
+  },
+  {
     "slug": "wood-polish-quantity-calculator",
     "name": "Wood Polish Quantity Calculator",
     "categories": [
@@ -25643,6 +26595,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries."
+  },
+  {
+    "slug": "wrist-stretch-routine-timer",
+    "name": "Wrist Stretch Routine Timer",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Guided wrist and forearm stretch sequence with per-side holds, rest gaps and a running timer for heavy keyboard and mouse users."
   },
   {
     "slug": "writing-model-picker",
@@ -25845,5 +26805,13 @@ export const TOOL_CATALOG = [
       "Design & Color"
     ],
     "description": "Create branded 16:9 Zoom backgrounds with a measured face-safe zone, WCAG contrast scoring and gallery-tile legibility checks."
+  },
+  {
+    "slug": "zumba-calorie-burn-calculator",
+    "name": "Zumba Calorie Burn Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories burned in a Zumba class by format and class length, with an optional heart-rate estimate using the Keytel equation."
   }
 ];

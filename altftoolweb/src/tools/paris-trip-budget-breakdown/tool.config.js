@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a Paris trip into flights, stay, taxe de séjour, food, transport and activities, per person and per day.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out export size, retina dimensions, minimum readable text size on mobile and a file-weight budget for an email header image.",
   icon: "mail",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

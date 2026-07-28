@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Italian IVA calculator for the 22%, 10%, 5% and 4% rates, adding or scorporating tax with a regime forfettario check.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

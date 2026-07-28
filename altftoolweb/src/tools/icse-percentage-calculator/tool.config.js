@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute ICSE and ISC percentage the CISCE way — English plus best 4 (ICSE) or best 3 (ISC) other subjects, with pass checks.",
   icon: "book-marked",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

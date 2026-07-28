@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Generators"],
   description: "Generate printable monthly rent receipts with landlord and PAN details for HRA claims.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

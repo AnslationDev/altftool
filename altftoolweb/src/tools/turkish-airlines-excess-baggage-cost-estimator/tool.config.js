@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out Turkish Airlines excess baggage by kilogram or by piece, with pooled allowances and the online discount applied.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

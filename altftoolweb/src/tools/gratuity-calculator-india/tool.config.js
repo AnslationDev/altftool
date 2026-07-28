@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Gratuity payable under the Payment of Gratuity Act with 15/26 formula and tax-free cap.",
   icon: "hand-coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

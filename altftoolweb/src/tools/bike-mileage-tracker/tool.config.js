@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log two-wheeler fill-ups and get true tank-to-tank mileage, cost per kilometre and the trend across every full tank.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

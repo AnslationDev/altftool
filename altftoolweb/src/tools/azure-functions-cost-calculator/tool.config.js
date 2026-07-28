@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute Azure Functions Consumption plan cost from executions and GB-seconds, with the free grants and an EP1 Premium comparison.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

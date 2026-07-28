@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a newborn's daily and per-feed millilitres from weight, day of life and feeds per day using standard mL/kg/day guidance.",
   icon: "milk",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

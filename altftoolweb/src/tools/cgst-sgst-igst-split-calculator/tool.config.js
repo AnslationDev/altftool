@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Enter supplier and place-of-supply state codes to see whether GST splits into CGST and SGST or is charged as IGST, with the amounts.",
   icon: "split",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

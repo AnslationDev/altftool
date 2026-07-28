@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn your syllabus topics and exam date into an AI prompt for a spaced-repetition study plan with built-in review days.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

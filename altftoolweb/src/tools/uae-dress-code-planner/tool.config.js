@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan what to wear and pack for the UAE by month and emirate, covering mosque cover-up rules, mall dress codes, beaches and Ramadan.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

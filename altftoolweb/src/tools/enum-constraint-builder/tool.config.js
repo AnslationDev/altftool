@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Define allowed values once and get the matching LLM prompt rule, JSON Schema enum, TypeScript union, Zod, Pydantic and SQL CHECK.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

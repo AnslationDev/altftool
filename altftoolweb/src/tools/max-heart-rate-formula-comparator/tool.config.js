@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Fox, Tanaka, Gulati, Nes and other age-predicted maximum heart rate equations side by side.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size the desk, chair clearance, shelving and lighting for a study room from its floor dimensions.",
   icon: "lamp-desk",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

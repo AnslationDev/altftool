@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn one long video into a counted set of shorts, carousels, threads and posts, with production hours and a publishing calendar.",
   icon: "recycle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

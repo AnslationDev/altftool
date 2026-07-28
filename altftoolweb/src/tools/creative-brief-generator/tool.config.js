@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a tight, agency-standard creative brief with audience, single-minded proposition, mandatories and a completeness score.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

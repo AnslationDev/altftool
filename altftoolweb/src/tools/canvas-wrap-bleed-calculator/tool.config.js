@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out gallery wrap bleed, total print size and the safe zone so nothing important wraps around the stretcher bar edge.",
   icon: "square-dashed",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

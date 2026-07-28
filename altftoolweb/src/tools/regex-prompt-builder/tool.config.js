@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turns must-match and must-not-match examples into a regex-generation prompt, with flavour rules and example conflict checking.",
   icon: "regex",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

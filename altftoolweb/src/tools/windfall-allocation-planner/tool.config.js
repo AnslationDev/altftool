@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a bonus, inheritance or sale proceeds across tax, emergency fund, high-interest debt, investing and guilt-free spending.",
   icon: "gift",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

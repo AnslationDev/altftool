@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert YouTube SBV caption exports into standard SubRip .srt files, with speaker markers, renumbering and timing offset.",
   icon: "file-type",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

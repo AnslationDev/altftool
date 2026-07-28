@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the latest time to drink coffee using caffeine half-life decay, your bedtime and the residual dose you are willing to sleep on.",
   icon: "coffee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Collapse stray spaces, tabs, blank lines and invisible Unicode characters in pasted prompts, with a before/after character count.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

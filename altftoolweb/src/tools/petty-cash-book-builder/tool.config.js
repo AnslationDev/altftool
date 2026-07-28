@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an analytical imprest petty cash book with running balance, expense-head totals and the reimbursement due.",
   icon: "notebook-pen",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

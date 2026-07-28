@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Model how a handful of direct dependencies expands into hundreds of transitive packages, and what that does to your attack surface.",
   icon: "network",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

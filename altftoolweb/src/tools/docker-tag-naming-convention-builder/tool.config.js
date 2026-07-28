@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design a Docker image tagging scheme from semver, git sha, branch and date parts, validated against the OCI reference rules.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

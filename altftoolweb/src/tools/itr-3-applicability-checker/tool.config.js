@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your business or professional income means you must file ITR-3, or whether ITR-1, ITR-2 or ITR-4 fits.",
   icon: "file-check-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

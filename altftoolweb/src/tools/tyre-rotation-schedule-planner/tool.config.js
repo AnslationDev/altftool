@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan tyre rotation intervals and the correct crossing pattern for front, rear and all wheel drive cars.",
   icon: "rotate-cw",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

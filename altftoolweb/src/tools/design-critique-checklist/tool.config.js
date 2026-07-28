@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Run a structured design critique with a timed agenda, artefact-specific prompts and a vague-feedback checker.",
   icon: "message-square-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

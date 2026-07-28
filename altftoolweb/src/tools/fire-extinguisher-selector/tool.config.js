@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Match the right extinguishing agent and size to a kitchen, garage, electrical or workshop risk, with NFPA 10 coverage maths.",
   icon: "fire-extinguisher",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

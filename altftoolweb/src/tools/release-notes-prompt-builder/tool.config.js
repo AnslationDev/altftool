@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a release into features, fixes and breaking changes, set a deprecation date and build the announcement prompt.",
   icon: "rocket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

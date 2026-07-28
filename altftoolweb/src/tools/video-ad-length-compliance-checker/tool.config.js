@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check one video ad duration against the minimum, maximum and recommended lengths for each placement you plan to run it in.",
   icon: "video",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

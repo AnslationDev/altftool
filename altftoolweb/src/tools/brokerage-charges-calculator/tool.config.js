@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total trade cost including brokerage, STT, GST, stamp duty, SEBI and exchange transaction charges for equity, futures and options.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

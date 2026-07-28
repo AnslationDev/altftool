@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a courteous NOC request to your housing society for keeping a pet, with vaccination status, commitments and a readiness score.",
   icon: "paw-print",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn a Singapore dollar price into rupees in your head, plus the 10% service charge and GST.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

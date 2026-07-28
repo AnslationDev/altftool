@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score hosted, open-weight and local coding assistants against your language, repo size, privacy rules and budget with a transparent weighted rubric.",
   icon: "code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

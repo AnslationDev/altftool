@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build ready-to-paste AI prompts for gym membership offers, class descriptions, check-ins and win-back messages.",
   icon: "dumbbell",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

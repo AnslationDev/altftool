@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Encode text, standard Base64 or hex bytes into URL-safe base64url (RFC 4648 §5), with padding control and URL and cookie size checks.",
   icon: "link",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

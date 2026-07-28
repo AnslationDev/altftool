@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute gravel tonnes, cubic yards and truck loads for a driveway or parking pad, layer by layer, with compaction allowed for.",
   icon: "truck",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

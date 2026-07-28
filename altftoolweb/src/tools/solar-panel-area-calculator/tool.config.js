@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the panel count, module efficiency and roof area needed for a target solar capacity, plus expected daily generation.",
   icon: "sun",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

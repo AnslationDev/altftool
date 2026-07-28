@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Extract the taxable value and the GST hidden inside any tax-inclusive amount, split into CGST and SGST or IGST, with optional cess.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

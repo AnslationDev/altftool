@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan France outfits by month: cathedral cover-up rules, restaurant codes, the public-pool swim brief rule and a weighed packing list.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

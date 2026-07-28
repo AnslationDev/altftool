@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate sequential or date-based invoice numbering schemes in bulk, with prefixes, padding and period resets.",
   icon: "hash",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

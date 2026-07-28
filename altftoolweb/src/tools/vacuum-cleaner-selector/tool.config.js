@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Match vacuum type, suction in air watts, filtration, bin size and battery runtime to your flooring, pets and home size.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out two-wheeler loan EMI, total interest, processing fee and a year-by-year amortisation schedule from the on-road price.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

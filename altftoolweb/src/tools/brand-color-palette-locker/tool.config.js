@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lock brand colours and generate tints, shades, hex, RGB, HSL and CMYK tables with contrast and ink coverage checks.",
   icon: "lock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

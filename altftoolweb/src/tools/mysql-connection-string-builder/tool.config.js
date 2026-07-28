@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build MySQL connection strings in URI, Go DSN and JDBC forms with charset, time zone, TLS mode and connection limits.",
   icon: "database-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

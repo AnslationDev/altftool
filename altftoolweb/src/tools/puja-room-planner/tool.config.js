@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a puja room: shrine width, platform height for your idols, seating depth, ventilation and traditional direction notes.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert between SMPTE timecode, total frames and real seconds at any frame rate, with correct drop-frame handling.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

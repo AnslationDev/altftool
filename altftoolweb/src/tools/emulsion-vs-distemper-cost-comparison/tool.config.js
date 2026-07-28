@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare emulsion and distemper on upfront cost, repaint cycles, lifetime present value and the break-even year.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

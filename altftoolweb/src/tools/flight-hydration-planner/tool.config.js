@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Hour-by-hour drinking plan for a flight, accounting for dry cabin air, alcohol and caffeine, plus arrival time and jet lag.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

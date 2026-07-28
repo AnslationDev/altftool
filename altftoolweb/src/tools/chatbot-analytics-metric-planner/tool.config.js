@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick containment, CSAT and deflection metrics before launch and project deflected volume and savings.",
   icon: "bar-chart-3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

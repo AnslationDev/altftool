@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Status updates, RAID logs, escalations and stakeholder emails as ready-to-paste prompts filled with your project context.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

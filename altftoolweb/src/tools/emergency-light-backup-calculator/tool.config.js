@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Emergency light runtime from battery voltage, Ah, depth of discharge and LED load, with Peukert derating and recharge time.",
   icon: "battery-charging",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Indian wedding card trade sizes with flat artwork size, bleed, envelope and insert dimensions, paper GSM and per-invite weight.",
   icon: "heart",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

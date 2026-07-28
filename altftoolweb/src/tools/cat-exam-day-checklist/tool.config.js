@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Map your CAT slot to a reporting, gate-closing and sectional clock, pace each 40-minute section, and pack only what the centre allows.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

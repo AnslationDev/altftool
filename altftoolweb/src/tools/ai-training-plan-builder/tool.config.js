@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design a week-by-week internal AI upskilling plan by role and skill level, with module hours packed to your weekly time budget.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

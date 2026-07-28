@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Matches metric and imperial hex key sizes, shows which swaps are safe and which round the socket, and prints a true-scale gauge.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

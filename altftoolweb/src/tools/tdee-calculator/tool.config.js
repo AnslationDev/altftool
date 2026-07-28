@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find your total daily energy expenditure from BMR and activity level, plus calorie targets for cutting, maintaining or bulking.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

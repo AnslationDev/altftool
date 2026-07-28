@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate chrome, bubblegum and holographic Y2K palettes from a seed word, with a metal ramp and WCAG contrast checks.",
   icon: "disc-3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

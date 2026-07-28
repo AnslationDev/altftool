@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your text's tokens-per-word ratio from a sample or a real token count for accurate LLM budgeting.",
   icon: "divide",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

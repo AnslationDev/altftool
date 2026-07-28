@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert cent, ground, are, ankanam, guntha and acre to square feet and square metres, with rate per cent and land value.",
   icon: "map-pinned",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

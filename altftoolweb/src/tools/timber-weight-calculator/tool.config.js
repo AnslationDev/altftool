@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate the weight of wood by species density, size and moisture content, with volume in cubic feet and cubic metres.",
   icon: "weight",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

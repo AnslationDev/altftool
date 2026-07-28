@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Normalise every recurring subscription to a yearly cost, see the true annual drain and what cancelling the dead ones saves.",
   icon: "repeat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

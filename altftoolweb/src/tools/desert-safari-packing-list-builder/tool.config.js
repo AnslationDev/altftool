@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a desert safari packing list with the water litres, night-time layers and sleeping bag rating worked out from the day-night temperature swing.",
   icon: "sun",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

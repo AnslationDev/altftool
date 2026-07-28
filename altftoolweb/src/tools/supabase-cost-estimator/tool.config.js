@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate your monthly Supabase bill from database size, egress, storage, monthly active users, edge functions and compute tier.",
   icon: "database",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

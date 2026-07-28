@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out ceiling paint litres and cost from room length, width, cove depth and the number of coats.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a prioritised Turkey etiquette briefing for mosques, bazaars, tea houses and hammams, with the legal red lines flagged.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

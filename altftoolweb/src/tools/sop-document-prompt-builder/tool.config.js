@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a standard operating procedure prompt with RACI roles, control checks and ISO 9001 document-control fields.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

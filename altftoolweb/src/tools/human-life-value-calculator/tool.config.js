@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Economic value of your future earnings for life insurance planning, with growth, discount rate, loans and existing cover.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

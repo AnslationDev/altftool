@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate balcony and window grill cost by area or by fabricated steel weight, with bar spacing, clear gap and safety check.",
   icon: "fence",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

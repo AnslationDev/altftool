@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Clay, ochre, moss and umber palettes built on real earth-pigment hues, with kraft packaging and contrast checks.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

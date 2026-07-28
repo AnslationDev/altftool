@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decode an Indian number plate into state, RTO office, letter series and serial, with plate colour and BH-series meaning.",
   icon: "search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

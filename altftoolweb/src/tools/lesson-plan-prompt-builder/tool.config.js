@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a lesson plan prompt with Bloom's taxonomy objectives, a time-boxed 5E or Hunter structure and matching assessment.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

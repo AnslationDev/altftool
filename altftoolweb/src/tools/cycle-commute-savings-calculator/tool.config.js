@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the fuel, parking, maintenance and CO2 you save by cycling to work, and how long the bicycle takes to pay for itself.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

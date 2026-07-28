@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Monitor CBSE Class 10 syllabus progress chapter by chapter, with revision status and the weekly pace needed before the boards.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

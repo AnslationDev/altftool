@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Argentina runs 220 V at 50 Hz on type I and type C sockets — check your plug, the reversed polarity and converter need.",
   icon: "plug",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

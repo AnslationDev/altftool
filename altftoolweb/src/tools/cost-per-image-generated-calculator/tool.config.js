@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the true cost of one usable AI image after rejected attempts, retouch passes and review time.",
   icon: "image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

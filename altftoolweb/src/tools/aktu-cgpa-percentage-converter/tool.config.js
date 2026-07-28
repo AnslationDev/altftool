@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert AKTU CGPA to percentage with the university's (CGPA − 0.75) × 10 rule, work backwards, and combine semester SGPAs.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

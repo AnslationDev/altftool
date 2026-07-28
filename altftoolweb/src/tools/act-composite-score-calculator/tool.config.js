@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Average ACT section scores into the official 1-36 Composite with ACT's half-up rounding, for classic and enhanced 2025 formats.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

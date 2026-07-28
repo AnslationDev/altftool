@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Map Duolingo English Test scores (10-160) to IELTS bands, CEFR levels and derived TOEFL iBT ranges using published concordances.",
   icon: "languages",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

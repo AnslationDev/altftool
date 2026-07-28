@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total a business trip's daily allowance by city tier, with part-day rates, lodging nights and provided-meal deductions.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

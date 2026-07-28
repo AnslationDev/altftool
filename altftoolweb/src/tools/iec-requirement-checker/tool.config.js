@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your import, export or service activity needs an IEC from DGFT, using the Foreign Trade Policy exemption list.",
   icon: "ship",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

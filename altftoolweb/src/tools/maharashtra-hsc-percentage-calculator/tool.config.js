@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute your Maharashtra HSC percentage on the 600-mark base with best-of-five additional subject handling and result class.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

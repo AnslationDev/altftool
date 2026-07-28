@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Walk through the SSC, Z-score, NTA percentile and min-max normalization formulas step by step with your own numbers.",
   icon: "sigma",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

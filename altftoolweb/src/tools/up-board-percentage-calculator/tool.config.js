@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate UP Board Class 10 (600 marks) or Class 12 (500 marks) percentage, pass status and division in seconds.",
   icon: "school",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

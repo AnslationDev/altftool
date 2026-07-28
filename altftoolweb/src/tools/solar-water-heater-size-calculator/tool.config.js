@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a solar water heater in litres per day from family size and bathing habits, with collector area and yearly savings.",
   icon: "shower-head",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

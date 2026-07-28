@@ -136,13 +136,6 @@ export async function writeRbacAuditLog(payload = {}) {
   });
 }
 
-export async function writeRbacSecurityEvent(payload = {}) {
-  await getRbacRootRef().collection(RBAC_COLLECTIONS.securityEvents).add({
-    ...payload,
-    createdAt: new Date(),
-  });
-}
-
 function rootRef() {
   return getRbacRootRef();
 }

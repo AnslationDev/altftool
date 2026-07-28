@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how many small, medium, large, dish and wardrobe cartons your home needs, plus tape, paper and bubble wrap.",
   icon: "boxes",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Docker bridge, host, none, container and macvlan network modes and see exactly how your container is reached.",
   icon: "network",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

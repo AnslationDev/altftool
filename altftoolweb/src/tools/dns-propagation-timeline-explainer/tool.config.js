@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how record TTL, negative caching and client-side caches determine when a DNS change actually takes effect.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

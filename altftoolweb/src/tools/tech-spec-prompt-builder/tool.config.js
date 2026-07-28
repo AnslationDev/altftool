@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a design-doc prompt with goals, non-goals and alternatives, plus a section word budget, reading time and completeness score.",
   icon: "file-code-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

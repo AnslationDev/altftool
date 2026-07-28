@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "French TVA calculator for the 20%, 10%, 5.5% and 2.1% rates, switching between HT and TTC with a franchise en base check.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

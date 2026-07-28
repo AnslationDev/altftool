@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a 60-30-10 room palette from the mood you want and the direction your window faces, with LRV and contrast checks.",
   icon: "palette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

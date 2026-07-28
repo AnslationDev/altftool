@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a prioritised Vietnam etiquette briefing for pagodas, street food, markets and traffic, with the legal red lines flagged.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

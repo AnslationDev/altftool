@@ -740,8 +740,16 @@ export default function EditBlog() {
   const altOk          = altLen >= 5 && altLen <= 125;
   const requestedQuickAction = searchParams.get("refreshAction") || searchParams.get("action") || "";
 
-  /* ── Dirty detection vs the last saved snapshot ── */
-  const dirty = useMemo(() => {
+  /* ── Dirty detection vs the last saved snapshot ──
+     Split in two: `fieldsDirty` covers everything persistDraft() actually
+     writes, and `dirty` additionally covers a pending image file, which it
+     does not. Autosave below intentionally watches `fieldsDirty`, not
+     `dirty` — a pending imageFile is never cleared by persistDraft() (an
+     upload has to go through the explicit Save/publish flow), so wiring
+     autosave to the imageFile-inclusive `dirty` re-armed its timer forever:
+     save → still "dirty" because of the untouched imageFile → save again,
+     writing to Firestore every ~1.5s for as long as the editor sat idle. */
+  const fieldsDirty = useMemo(() => {
     const o = originalSnapshot;
     if (!o) return false;
     return (
@@ -758,10 +766,10 @@ export default function EditBlog() {
       formData.editorialNote !== o.editorialNote ||
       formData.sourcesText !== o.sourcesText ||
       formData.sourceNotes !== o.sourceNotes ||
-      imageAlt !== (o.imageAlt || "") ||
-      Boolean(imageFile)
+      imageAlt !== (o.imageAlt || "")
     );
-  }, [formData, imageAlt, imageFile, originalSnapshot]);
+  }, [formData, imageAlt, originalSnapshot]);
+  const dirty = fieldsDirty || Boolean(imageFile);
 
   /* ── Auto-save (drafts only; never silently mutates a live post) ── */
   const persistDraft = useCallback(async () => {
@@ -794,7 +802,7 @@ export default function EditBlog() {
   const autosave = useAutosave({ formData, imageAlt }, persistDraft, {
     delay: 1500,
     enabled: formData.status !== "published",
-    isDirty: () => dirty,
+    isDirty: () => fieldsDirty,
   });
 
   useUnsavedGuard(dirty);

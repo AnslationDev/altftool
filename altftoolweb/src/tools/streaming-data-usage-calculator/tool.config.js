@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the mobile data an hour of audio or video streaming uses, and how long a data allowance will last at that quality.",
   icon: "wifi",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick a child's wheel size from their inseam, then set saddle height and standover clearance and see how long the bike will fit.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

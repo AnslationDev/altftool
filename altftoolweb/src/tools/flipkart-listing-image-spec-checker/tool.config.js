@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check Flipkart catalogue images for the 500 px minimum, 1500 px zoom recommendation, white background, frame fill and margin rules.",
   icon: "shopping-bag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

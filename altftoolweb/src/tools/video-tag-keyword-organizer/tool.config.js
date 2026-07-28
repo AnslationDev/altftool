@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Group keyword sets once and reuse them across a channel, with de-duplication and a live count against the 500-character tag limit.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

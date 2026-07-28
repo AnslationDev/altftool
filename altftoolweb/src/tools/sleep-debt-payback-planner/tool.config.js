@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up your weekly sleep shortfall and spread the recovery across several nights instead of one long weekend lie-in.",
   icon: "bed-double",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up weekly worked hours from daily clock in and out times, with break deduction and overtime split.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

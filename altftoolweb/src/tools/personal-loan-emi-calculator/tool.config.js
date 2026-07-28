@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Personal loan EMI, total interest and true cost including processing fee, GST and the effective annual rate.",
   icon: "wallet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lint a .env file before deployment — syntax, quoting, duplicates, multiline values and parser-compatibility pitfalls.",
   icon: "file-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

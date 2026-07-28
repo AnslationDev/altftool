@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Section 111A short term capital gains tax on listed equity, with STT context, deductible charges and the basic exemption adjustment.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

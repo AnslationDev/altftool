@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn rough review notes into a structured prompt, scoring each note for measurable evidence, timeframe and a concrete action.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

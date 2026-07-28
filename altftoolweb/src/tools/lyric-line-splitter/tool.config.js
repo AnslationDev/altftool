@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split pasted lyrics into karaoke-friendly lines with a character-per-line limit, stanza breaks and minimum on-screen time.",
   icon: "scissors",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

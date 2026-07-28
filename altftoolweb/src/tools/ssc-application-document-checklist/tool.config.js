@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Every document and detail needed before filling an SSC form — OTR details, uploads, certificates, fee — plus an age-eligibility check.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

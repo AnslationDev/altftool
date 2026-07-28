@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a home compost bin in litres from daily kitchen waste, browns ratio and how often you turn the heap.",
   icon: "recycle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

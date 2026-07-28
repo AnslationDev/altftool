@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert SPPU CGPA to percentage, turn course marks into grade points and build a credit-weighted CGPA.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

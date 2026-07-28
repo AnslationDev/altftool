@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute the chimney suction in cubic metres per hour your kitchen needs from its volume, air changes, burners and duct run.",
   icon: "air-vent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

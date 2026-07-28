@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track caption and transcript coverage across your course by lesson and by runtime, with an estimate of the work left.",
   icon: "captions",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

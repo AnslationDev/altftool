@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compares running and starting watts for common power tools and checks whether your generator, inverter or battery bank can actually run them.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

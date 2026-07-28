@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pomodoro focus timer with gentle tone cues at every phase change, custom focus and break lengths, and a full session plan.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

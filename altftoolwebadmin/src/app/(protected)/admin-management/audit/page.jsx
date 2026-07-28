@@ -215,7 +215,14 @@ export default function AdminAuditLogPage() {
     });
   }, [pageIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Apply date filter
+  // Apply date filter.
+  //
+  // setPageIndex(0) below is a no-op (and fires no effect) when the operator
+  // is already on page 1 — the "when pageIndex changes" effect further up
+  // only runs on an actual change. So a direct fetchPage() here is required
+  // for that case, but firing it unconditionally meant that filtering from
+  // page 2+ triggered TWO identical requests: this one, plus the one the
+  // pageIndex effect fires because 0 !== the previous page index.
   const applyFilters = () => {
     const s = fromInputDate(stagedStart, false) ?? defaultStart;
     const e = fromInputDate(stagedEnd, true) ?? now;
@@ -223,22 +230,28 @@ export default function AdminAuditLogPage() {
       emitAlert({ type: "error", message: "Start date must be before end date." });
       return;
     }
+    const alreadyOnFirstPage = pageIndex === 0;
     setStartDateMs(s);
     setEndDateMs(e);
     // Reset pagination
     setCursorStack([null]);
     setPageIndex(0);
-    fetchPage({ start: s, end: e, cursor: null });
+    if (alreadyOnFirstPage) {
+      fetchPage({ start: s, end: e, cursor: null });
+    }
   };
 
   const resetFilters = () => {
+    const alreadyOnFirstPage = pageIndex === 0;
     setStagedStart(toInputDate(defaultStart));
     setStagedEnd(toInputDate(now));
     setStartDateMs(defaultStart);
     setEndDateMs(now);
     setCursorStack([null]);
     setPageIndex(0);
-    fetchPage({ start: defaultStart, end: now, cursor: null });
+    if (alreadyOnFirstPage) {
+      fetchPage({ start: defaultStart, end: now, cursor: null });
+    }
   };
 
   const reloadCurrentPage = useCallback(

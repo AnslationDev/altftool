@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators"],
   description: "Estimate trip fuel cost from distance, mileage and fuel price, then split it per person.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

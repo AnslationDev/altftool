@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Define a metric by numerator and denominator, check its 95% margin of error and sample size, then build the AI prompt that documents it.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

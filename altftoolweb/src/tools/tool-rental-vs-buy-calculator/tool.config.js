@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decide whether to rent or buy a tool from how often you use it, with the break-even number of usage days and total cost of each option.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

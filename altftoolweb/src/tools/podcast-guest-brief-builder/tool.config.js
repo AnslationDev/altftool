@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a podcast guest prep pack with a timed rundown, segment questions and a pre-record tech checklist.",
   icon: "mic",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

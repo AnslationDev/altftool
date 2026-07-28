@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split an assignment word budget across sections by weight and track how many words each section still needs.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

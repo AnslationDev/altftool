@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Scores your text with Flesch Reading Ease, then builds a rewrite prompt targeting a chosen tone and reading level.",
   icon: "wand-sparkles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Solve aperture, distance or guide number from GN = f-number × distance, adjusted for ISO and flash power fraction.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

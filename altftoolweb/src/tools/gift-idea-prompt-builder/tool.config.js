@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a gift budget across recipients, check the delivery lead time, and build a focused AI prompt for genuinely relevant gift ideas.",
   icon: "gift",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

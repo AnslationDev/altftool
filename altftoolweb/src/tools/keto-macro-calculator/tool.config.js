@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Daily fat, protein and net carb targets for a ketogenic diet, from Mifflin-St Jeor BMR, your activity level and your weight goal.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

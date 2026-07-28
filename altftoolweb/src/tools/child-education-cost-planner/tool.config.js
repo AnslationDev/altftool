@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project the future cost of your child's education after education inflation and the monthly SIP needed to fund it.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

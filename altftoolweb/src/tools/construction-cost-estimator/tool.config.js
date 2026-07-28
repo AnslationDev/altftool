@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Approximate house construction cost from built-up area, quality of construction and city, with a work-head and material breakdown.",
   icon: "hammer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

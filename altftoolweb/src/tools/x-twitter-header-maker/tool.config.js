@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lay out a 1500x500 X header with the avatar overlap and mobile top bar mapped, and export an SVG safe-zone guide.",
   icon: "twitter",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

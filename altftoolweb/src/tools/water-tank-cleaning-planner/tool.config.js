@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set the right cleaning interval for your overhead tank or sump, estimate the cost, and get the bleaching-powder dose for disinfection.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

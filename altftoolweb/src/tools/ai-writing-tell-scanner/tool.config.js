@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Highlight over-used AI phrases like delve, tapestry and testament in your draft, with a plainer replacement suggested for each.",
   icon: "scan-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

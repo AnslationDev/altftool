@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare the GST registration threshold, composition scheme tax and regular scheme net liability for a small trading, manufacturing or restaurant business.",
   icon: "store",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

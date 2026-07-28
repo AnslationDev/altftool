@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Informational feng shui layout and element guide for each room, with bagua area, five-element cycle and colour split.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

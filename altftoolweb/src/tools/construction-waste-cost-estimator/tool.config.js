@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate debris removal cost from volume, bulking, truck trips, haul distance, tipping fees and loading labour.",
   icon: "truck",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

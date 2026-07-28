@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert between gross margin and markup percentages and see the cost, selling price, profit and multiplier behind them.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

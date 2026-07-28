@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create CRT scan line, aperture grille and RGB mask overlays as transparent SVG or PNG with copyable CSS.",
   icon: "scan-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

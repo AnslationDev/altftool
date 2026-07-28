@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

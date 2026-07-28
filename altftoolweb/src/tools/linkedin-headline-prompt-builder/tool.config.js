@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Budget your 220-character LinkedIn headline across positioning segments and generate headline and About-section prompts for any AI model.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

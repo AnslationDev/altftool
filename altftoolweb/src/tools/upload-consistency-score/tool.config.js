@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score publishing consistency from your upload dates using gap adherence, coefficient of variation and pace, and list every silence.",
   icon: "calendar-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Search HTTP request and response headers with meaning, direction, category and real example values.",
   icon: "file-search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

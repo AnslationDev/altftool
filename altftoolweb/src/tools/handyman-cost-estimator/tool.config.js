@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price common electrical, plumbing, carpentry and painting jobs by billable hours, materials, visit charge, urgency and GST.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

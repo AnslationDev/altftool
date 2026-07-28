@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Chart how compounding pulls away from simple interest over decades, with yearly balances, contributions and the interest-on-interest gap.",
   icon: "chart-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

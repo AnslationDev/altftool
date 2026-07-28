@@ -4,7 +4,7 @@ const toolConfig = {
   category: "Developer",
   description: "Convert simple cURL commands into fetch, Axios, or Python requests.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

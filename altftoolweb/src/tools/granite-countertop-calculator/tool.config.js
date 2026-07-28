@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out granite square feet, running feet and cost for a kitchen platform with backsplash, cutouts and edge profiles.",
   icon: "gem",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

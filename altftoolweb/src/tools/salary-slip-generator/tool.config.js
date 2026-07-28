@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Generators"],
   description: "Create a formatted salary slip with earnings, deductions, net pay and amount in words.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

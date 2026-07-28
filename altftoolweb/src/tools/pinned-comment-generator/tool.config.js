@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a pinned comment with links, timestamps, a correction note and a community prompt, checked against each platform's comment character limit.",
   icon: "pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

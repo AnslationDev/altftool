@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a valid composer.json with PSR-4 autoload, require and require-dev constraints, scripts, config and platform requirements.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

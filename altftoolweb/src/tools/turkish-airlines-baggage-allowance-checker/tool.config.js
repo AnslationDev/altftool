@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bags against Turkish Airlines weight allowances, the 8 kg cabin rule and Americas piece-concept routes.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

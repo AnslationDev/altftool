@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate RD maturity value and interest with quarterly compounding for any monthly instalment and tenure.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

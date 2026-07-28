@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Insured Declared Value from ex-showroom price and vehicle age using the motor tariff depreciation slabs, plus under-insurance impact.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare material, laying and whole-life cost of vitrified versus ceramic tiles over the years you plan to keep them.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

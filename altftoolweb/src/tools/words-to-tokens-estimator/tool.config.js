@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate LLM token usage from a word count before you write, with content-type ratios and a safety margin.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

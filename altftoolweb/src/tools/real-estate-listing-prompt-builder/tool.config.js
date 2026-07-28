@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn property facts into a listing prompt with carpet-area rate, loading factor and RERA advertising notes built in.",
   icon: "home",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

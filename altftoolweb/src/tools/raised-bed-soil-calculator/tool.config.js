@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out soil, compost, cocopeat and perlite volume to fill raised garden beds, with settling allowance and block counts.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

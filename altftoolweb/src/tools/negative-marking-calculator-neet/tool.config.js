@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Model your NEET UG score under the +4 / -1 marking scheme and compare what blind and educated guessing actually add.",
   icon: "stethoscope",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

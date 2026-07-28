@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI prompt that generates a weighted grading rubric with named criteria, performance levels and exact point bands.",
   icon: "table-properties",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

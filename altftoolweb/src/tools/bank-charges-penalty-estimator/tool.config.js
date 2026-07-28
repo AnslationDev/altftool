@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a year of minimum balance penalties, excess ATM fees, return charges and GST on an Indian savings account.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

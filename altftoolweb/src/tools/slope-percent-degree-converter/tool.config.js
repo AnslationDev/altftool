@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert slope between percent grade, degrees, 1-in-X ratio, inches per foot and roof pitch for ramps, drains and roofs.",
   icon: "triangle-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

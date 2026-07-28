@@ -4,7 +4,7 @@ const toolConfig = {
   name: "Random Joke Generator",
   description: "Get a random, funny joke instantly to brighten your day.",
   icon: "smile",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
   category: "Fun",
   isNew: true,
   isPremium: false,

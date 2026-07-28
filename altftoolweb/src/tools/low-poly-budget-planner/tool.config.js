@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn GPU triangle throughput and a target frame rate into per-asset triangle budgets, LOD chains and buffer memory.",
   icon: "triangle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

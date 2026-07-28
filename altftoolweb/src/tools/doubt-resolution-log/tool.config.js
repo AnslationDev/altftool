@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log every study doubt, who resolved it and whether you retested yourself, with resolution-time and retest-rate stats.",
   icon: "message-circle-question",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

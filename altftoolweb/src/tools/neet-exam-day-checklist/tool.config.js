@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "NEET dress code, allowed items and document checklist you can tick off, with a reporting plan built on the entry closing time.",
   icon: "stethoscope",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

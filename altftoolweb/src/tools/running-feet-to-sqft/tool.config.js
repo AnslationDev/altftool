@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn carpentry running feet quotes into square feet, compare per-rft and per-sqft rates, and total a kitchen or wardrobe job.",
   icon: "sofa",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

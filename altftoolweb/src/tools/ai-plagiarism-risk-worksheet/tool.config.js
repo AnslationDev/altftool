@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Assess how derivative an AI-assisted draft is and get a 0-100 risk score with the specific rewrites and citations needed.",
   icon: "scan-search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

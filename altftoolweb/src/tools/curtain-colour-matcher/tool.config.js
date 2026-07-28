@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find curtain colours that complement wall paint and upholstery, with LRV gaps, hue distance and fade risk for each.",
   icon: "blinds",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

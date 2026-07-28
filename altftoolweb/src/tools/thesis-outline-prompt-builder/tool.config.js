@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Splits a thesis word count across the standard six chapters and writes an outline prompt with research questions and scope built in.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

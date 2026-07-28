@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a Türkiye e-Visa cover letter with itinerary, the 90/180 rule and the 60-days-beyond-stay passport check.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

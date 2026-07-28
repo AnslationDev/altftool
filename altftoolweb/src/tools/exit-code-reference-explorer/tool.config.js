@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Look up what a shell or process exit code means, including 128+N signal deaths, sysexits.h codes and Docker OOM kills.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log morning resting heart rate and see rolling averages, baseline deviation and a weekly trend line.",
   icon: "activity",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

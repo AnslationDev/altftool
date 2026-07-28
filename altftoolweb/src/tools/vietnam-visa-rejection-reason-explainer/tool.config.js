@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Education & Science"],
   description: "Find why a Vietnam e-Visa was rejected - photo, scan, data mismatch or record - and what to correct before reapplying.",
   icon: "plane-takeoff",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

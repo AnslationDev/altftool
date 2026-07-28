@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Hook, script, title and repurposing prompts with a word budget worked out from your target runtime and speaking pace.",
   icon: "mic-vocal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

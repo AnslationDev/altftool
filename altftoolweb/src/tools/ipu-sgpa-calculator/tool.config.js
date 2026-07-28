@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute GGSIPU semester GPA from credit-weighted grade points, roll it into CGPA and see each subject's impact.",
   icon: "award",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a design-to-development handoff checklist for your platform and features, then score how ready the handoff really is.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

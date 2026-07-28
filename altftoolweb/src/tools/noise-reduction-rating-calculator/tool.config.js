@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn an NRR or SNR label into an estimated protected level using the OSHA, OSHA 50% and NIOSH derating methods, including dual protection.",
   icon: "ear-off",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

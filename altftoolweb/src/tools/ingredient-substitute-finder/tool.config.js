@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Lifestyle"],
   description: "Find instant ingredient replacements with precise ratios and dietary filters.",
   icon: "chef-hat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

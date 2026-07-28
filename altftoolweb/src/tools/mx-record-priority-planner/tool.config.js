@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan MX record preference values for single-provider, primary-plus-backup and provider-migration setups.",
   icon: "mail",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

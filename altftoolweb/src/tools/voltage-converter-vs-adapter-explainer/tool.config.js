@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Reads your appliance label against the destination mains to say whether a plug adapter is enough or you need a real converter.",
   icon: "plug-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

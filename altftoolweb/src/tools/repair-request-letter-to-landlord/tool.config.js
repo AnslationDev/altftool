@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log pending repairs, split them between landlord and tenant duties, set a deadline and generate a documented request letter.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

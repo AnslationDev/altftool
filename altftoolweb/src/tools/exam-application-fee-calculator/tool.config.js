@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total your exam application fees across SSC, UPSC, RRB, IBPS, SBI and CTET with category concessions and refundable amounts applied.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

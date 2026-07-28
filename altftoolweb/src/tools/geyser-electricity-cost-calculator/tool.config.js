@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Water heater running cost from litres used, temperature rise and BEE star standing loss, per day, month and year.",
   icon: "shower-head",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

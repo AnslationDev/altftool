@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Section 194A TDS on deposit and loan interest with bank, non-bank and senior citizen thresholds and the no-PAN rate.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

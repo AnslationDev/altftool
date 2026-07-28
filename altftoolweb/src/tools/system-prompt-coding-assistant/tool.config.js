@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a system prompt for a coding assistant: stack, style guide, test policy, review checklist and refusal rules, with a token estimate.",
   icon: "code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Splits take-home pay by the 50/30/20 rule and writes an AI budgeting prompt with your real numbers and goals built in.",
   icon: "wallet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

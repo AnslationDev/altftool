@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bags against Singapore Airlines weight-concept and Americas piece-concept allowances and the 115 cm cabin rule.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

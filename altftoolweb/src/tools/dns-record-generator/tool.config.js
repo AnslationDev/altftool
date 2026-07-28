@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate correctly formatted A, AAAA, CNAME, TXT, SRV and ALIAS zone-file records with full syntax validation.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

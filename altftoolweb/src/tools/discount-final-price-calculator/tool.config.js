@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Apply single or stacked percentage and flat discounts, add GST, and see the true saving and equivalent single discount.",
   icon: "tag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

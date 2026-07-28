@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Practise spotting synthetic media and misleading AI claims, with scored questions on provenance, detectors and verification.",
   icon: "scan-eye",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

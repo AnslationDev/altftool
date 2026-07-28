@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build and validate a crontab line, read it back in plain English, preview the next run times and wrap it with logging and a flock guard.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

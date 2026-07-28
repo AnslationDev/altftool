@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out skirting running length, number of pieces, corners, fixings and cost from room size minus doorways.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

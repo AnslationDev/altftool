@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI tutor prompt that guides with questions and a graded hint ladder instead of handing over the answer.",
   icon: "message-circle-question",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

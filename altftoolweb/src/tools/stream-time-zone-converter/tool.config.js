@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert one stream start time into local times across your audience time zones, with day shifts and prime-time flags.",
   icon: "globe-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

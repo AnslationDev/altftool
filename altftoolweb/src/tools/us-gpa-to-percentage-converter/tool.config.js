@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a US 4.0-scale GPA back into an approximate percentage and letter grade using the standard US grading bands.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Look up the MIME type for a file extension, or every extension for a MIME type, with charset and compression guidance.",
   icon: "file-type",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

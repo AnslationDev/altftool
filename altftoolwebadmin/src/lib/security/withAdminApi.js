@@ -23,6 +23,21 @@ import { buildSecurityContext } from "./store";
 
 const MUTATING = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
+// verifyActiveAdmin/verifySuperAdminRequest throw distinct errors for distinct
+// situations — a missing/invalid token ("Unauthorized" or a Firebase `auth/*`
+// code) is genuinely 401, but "Forbidden" (no admin doc) and "Inactive admin"
+// are 403s, and anything else (a Firestore/Auth infra fault) is a 500. This
+// previously collapsed all three into a flat 401 across every route wrapped
+// by withAdminApi (security/audit, security/events, security/session/*,
+// security/sessions*, security/settings, security/consent, ...).
+function classifyAuthError(err) {
+  if (err?.message === "Forbidden" || err?.message === "Inactive admin") return 403;
+  if (err?.message === "Unauthorized") return 401;
+  const code = err?.code || err?.errorInfo?.code || "";
+  if (typeof code === "string" && code.startsWith("auth/")) return 401;
+  return 500;
+}
+
 export function withAdminApi(handler, options = {}) {
   const {
     requireSuperAdmin = false,
@@ -71,8 +86,13 @@ export function withAdminApi(handler, options = {}) {
           return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
       }
-    } catch {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    } catch (err) {
+      const status = classifyAuthError(err);
+      if (status === 500) console.error("withAdminApi auth error", err);
+      return NextResponse.json(
+        { error: status === 403 ? "Forbidden" : status === 401 ? "Unauthorized" : "Internal error" },
+        { status },
+      );
     }
 
     // 3. Security context

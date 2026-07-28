@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Map your current skills onto a target role, score the overlap and gaps, and build an AI prompt that turns them into a switch plan.",
   icon: "route",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

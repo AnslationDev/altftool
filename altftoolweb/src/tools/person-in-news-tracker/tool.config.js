@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track appointments and personalities in the news with role, organisation and date in a searchable exam-ready table.",
   icon: "user-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

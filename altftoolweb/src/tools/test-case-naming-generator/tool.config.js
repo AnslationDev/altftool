@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a scenario into consistent test names using given-when-then, should or unit_state_expected, with runnable suite scaffolding.",
   icon: "flask-conical",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

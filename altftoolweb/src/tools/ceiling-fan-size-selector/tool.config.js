@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick ceiling fan sweep, fan count and downrod length from your room size, ceiling height and required air delivery.",
   icon: "fan",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

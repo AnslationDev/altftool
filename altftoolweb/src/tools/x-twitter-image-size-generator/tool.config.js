@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Export header, post and card images at exact X dimensions with crop, bar and upscale checks before you upload.",
   icon: "twitter",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

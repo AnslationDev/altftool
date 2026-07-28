@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Count words, sentences, paragraphs and syllables, then score readability grade for any text.",
   icon: "bar-chart-3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Flatten nested JSON into dot-notation keys and rebuild the nested structure, with bracket or dot array styles.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

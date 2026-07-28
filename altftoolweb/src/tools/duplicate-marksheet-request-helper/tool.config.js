@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a duplicate marksheet application with a reason-specific affidavit and document checklist for lost, stolen or damaged marksheets.",
   icon: "file-warning",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

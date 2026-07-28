@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert your class rank and class size into the top-percent figure and percentile that college applications ask for.",
   icon: "trophy",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

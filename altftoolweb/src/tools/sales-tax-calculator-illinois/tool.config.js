@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Illinois sales tax: 6.25% general merchandise rate plus local tax, with the 1% low rate for drugs and medical appliances.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

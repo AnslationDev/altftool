@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Search well-known and registered TCP/UDP ports by number, service name or protocol, with IANA range classification.",
   icon: "network",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

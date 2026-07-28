@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Write a Keep a Changelog style API release note with Added, Changed, Deprecated, Removed and a SemVer version bump.",
   icon: "file-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

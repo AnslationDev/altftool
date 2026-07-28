@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate stamp duty, registration fee, cess, scanning and franking charges on a property transfer, with the section 194-IA TDS check.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

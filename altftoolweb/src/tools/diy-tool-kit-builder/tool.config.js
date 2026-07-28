@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turns the jobs you plan to do into a phased tool list and budget, with a buy-or-hire test on every expensive item.",
   icon: "boxes",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

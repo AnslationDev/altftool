@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a structured Canva AI design prompt with the exact canvas size, aspect ratio, brand slots and a legibility-checked copy budget.",
   icon: "palette",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

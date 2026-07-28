@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Match a car body type to your seat count, child seats, luggage volume and the longest car your parking allows.",
   icon: "car",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Class 10 and 12 board exam countdown with a subject-wise datesheet, free study days between papers and marks-needed maths.",
   icon: "school",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

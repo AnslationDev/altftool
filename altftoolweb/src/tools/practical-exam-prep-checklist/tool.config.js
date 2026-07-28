@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Tick through records, apparatus, viva and exam-day items for a lab practical exam and see your readiness percentage per section.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a baby's first-year cost from delivery to childcare, with diaper counts, the immunisation schedule and a monthly saving plan.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

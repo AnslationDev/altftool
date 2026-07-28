@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate network, broadcast, usable host range, subnet mask and wildcard mask from any IPv4 CIDR block.",
   icon: "network",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

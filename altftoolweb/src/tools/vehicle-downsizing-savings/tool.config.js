@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate yearly savings from moving to a smaller car or a single-vehicle household, including fuel, insurance, depreciation and payback.",
   icon: "arrow-down-wide-narrow",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

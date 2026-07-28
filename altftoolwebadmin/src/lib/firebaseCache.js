@@ -6,10 +6,6 @@ const readCache = createTtlCache({ ttlMs: 30000, maxEntries: 80 });
 const subscriptions = createSharedSubscriptionRegistry({ keepAliveMs: 15000, maxEntries: 36 });
 const STALE_READ_MS = Number(process.env.NEXT_PUBLIC_ALTFT_ADMIN_FIREBASE_STALE_READ_MS || 2 * 60 * 1000);
 
-export function snapshotDocs(snapshot, mapper = (doc) => ({ id: doc.id, ...doc.data() })) {
-  return snapshot.docs.map(mapper);
-}
-
 export function subscribeCached(key, start, callback, onError) {
   return subscriptions.subscribe(key, start, callback, onError);
 }
@@ -31,11 +27,4 @@ export function clearFirebaseCache(key) {
 
   readCache.clear();
   subscriptions.clear();
-}
-
-export function getFirebaseCacheStats() {
-  return {
-    reads: readCache.stats(),
-    subscriptions: subscriptions.stats(),
-  };
 }

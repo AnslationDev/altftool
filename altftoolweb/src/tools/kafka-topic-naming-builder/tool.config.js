@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a consistent Kafka topic naming convention from domain, entity, event type and version, with legality and collision checks.",
   icon: "git-branch",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

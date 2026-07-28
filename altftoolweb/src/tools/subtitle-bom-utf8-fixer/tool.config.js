@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add or strip the UTF-8 byte order mark on SRT and WebVTT subtitles, fix line endings and spot mojibake before upload.",
   icon: "subtitles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Five-year National Savings Recurring Deposit maturity with quarterly compounding, default fees, advance rebate and premature closure.",
   icon: "mailbox",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

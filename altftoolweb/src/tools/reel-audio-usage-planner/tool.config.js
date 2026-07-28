@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan the audio for every reel or short, check whether each track clears organic and paid use, and track licence records.",
   icon: "music",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

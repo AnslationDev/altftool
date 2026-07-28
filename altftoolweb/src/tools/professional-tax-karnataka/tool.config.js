@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Karnataka professional tax deduction by monthly salary, using the Rs 25,000 exemption threshold and Rs 200 flat rate.",
   icon: "building-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

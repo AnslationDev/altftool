@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set bike saddle height and setback from your inseam using the LeMond 0.883 and Hamley 109% fit methods, with crank length guidance.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

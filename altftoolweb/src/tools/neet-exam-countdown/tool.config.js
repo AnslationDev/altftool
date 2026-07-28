@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "NEET UG countdown with a chapter-wise pace indicator per subject and a daily question target split by the 45-45-90 paper pattern.",
   icon: "stethoscope",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a Rule 55 delivery challan for job work, branch transfers and goods moved without a supply, with GSTIN checks, tax split and e-way bill flag.",
   icon: "truck",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

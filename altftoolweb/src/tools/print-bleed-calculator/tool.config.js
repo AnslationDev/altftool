@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out bleed, trim, safe margin and slug sizes for any print job in mm, inches, points and pixels at your chosen DPI.",
   icon: "crop",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

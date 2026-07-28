@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build bold number-led stat cards for carousels and reports, with correct percent versus percentage-point change.",
   icon: "chart-column",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

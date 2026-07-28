@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan polls, images and text posts between uploads with an evenly spaced schedule, content mix and effort estimate.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

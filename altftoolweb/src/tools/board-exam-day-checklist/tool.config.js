@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work back from your paper start time to a wake-up and gate-closing clock, then pack the right documents, stationery and permitted items.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

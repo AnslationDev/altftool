@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create a technical design doc template with goals, non-goals, alternatives, risks and rollout, in the format your team needs.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

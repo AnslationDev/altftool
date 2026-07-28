@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rank JSON, Protocol Buffers, Avro, MessagePack and CBOR against your own requirements and see why each wins or loses.",
   icon: "git-compare-arrows",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

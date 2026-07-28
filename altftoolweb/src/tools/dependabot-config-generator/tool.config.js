@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a valid .github/dependabot.yml with package ecosystems, update schedules, grouped PRs and ignore rules.",
   icon: "bot",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

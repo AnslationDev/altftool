@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a correctly formed copyright notice for websites, software, print, video and sound recordings.",
   icon: "copyright",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

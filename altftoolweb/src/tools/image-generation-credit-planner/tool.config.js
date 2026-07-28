@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan how many images a credit pack yields, how long it lasts at your volume, and the real cost per image.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

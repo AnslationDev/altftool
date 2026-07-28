@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turns today's ringgit-to-rupee rate into rounding shortcuts you can do at a till, with the error of each rule and a printable price ladder.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

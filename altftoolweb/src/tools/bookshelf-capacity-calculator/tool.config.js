@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Count how many books a shelf holds, the load in kilograms, and the maximum span before the shelf sags.",
   icon: "library",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

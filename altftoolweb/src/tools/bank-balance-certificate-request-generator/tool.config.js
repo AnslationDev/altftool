@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the funds a visa application needs and draft the letter asking your bank for a balance certificate in the right format.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

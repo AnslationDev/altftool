@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See the units and rupees saved for every degree you raise the AC thermostat, with a full setpoint table from 18 to 30 °C.",
   icon: "thermometer-snowflake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Magazine-style Google Font pairings with a modular type scale, measured line length and leading you can copy as CSS.",
   icon: "newspaper",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a total gain percentage into an annualised (CAGR) rate and back again for any holding period in years, months or days.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

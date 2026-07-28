@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate humid-weather hydration needs from body size, heat exposure, workout duration and sweat-risk factors.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

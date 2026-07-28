@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See why Section 115BBH blocks crypto losses from offsetting any gain, and what the no-set-off rule costs you in tax.",
   icon: "bitcoin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

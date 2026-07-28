@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find your helmet size from head circumference, flag borderline fits and identify your head shape from the cephalic index.",
   icon: "hard-hat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

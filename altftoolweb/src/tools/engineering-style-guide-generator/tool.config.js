@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn your team's conventions into a coding standards document plus a matching .editorconfig, per language.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

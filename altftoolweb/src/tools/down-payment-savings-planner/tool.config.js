@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the monthly saving needed for a house down payment, including stamp duty, price growth and the RBI loan-to-value cap.",
   icon: "house",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

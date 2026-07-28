@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate the Insured Declared Value of a car or bike using the India Motor Tariff GR.8 depreciation slabs.",
   icon: "car",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

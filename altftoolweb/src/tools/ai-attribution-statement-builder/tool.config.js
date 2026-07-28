@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a citation-style attribution for AI assistance in APA 7, MLA 9 or Chicago format, plus an acknowledgement statement.",
   icon: "quote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

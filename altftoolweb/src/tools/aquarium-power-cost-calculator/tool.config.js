@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Monthly electricity cost of an aquarium's filter, air pump, light and heater, with the heater load worked out from heat loss.",
   icon: "fish",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

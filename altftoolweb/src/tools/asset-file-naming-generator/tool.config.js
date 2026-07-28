@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build consistent, sortable, cross-platform safe file names from project tokens, ISO dates and padded sequence numbers.",
   icon: "file-type",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

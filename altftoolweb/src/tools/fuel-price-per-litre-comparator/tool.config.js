@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Normalise fuel prices quoted per litre or per gallon in different currencies to one price per litre and rank them.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

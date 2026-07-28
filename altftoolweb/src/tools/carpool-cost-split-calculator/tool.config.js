@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split carpool fuel, tolls, parking and running cost between riders by the distance each person actually travels.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

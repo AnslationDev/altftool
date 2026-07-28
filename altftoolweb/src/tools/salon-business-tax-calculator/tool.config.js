@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Chair-level salon revenue, consumables and commission costs, break-even clients, GST thresholds and income tax on the profit.",
   icon: "scissors",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

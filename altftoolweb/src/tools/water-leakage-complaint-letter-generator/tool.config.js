@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a seepage or water leakage complaint to your society or neighbour, with the responsible party and a dated repair deadline.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

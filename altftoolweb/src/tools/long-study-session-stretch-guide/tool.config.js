@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Desk stretches scheduled across a long study day — rotating neck, shoulder, wrist and back sets with timing cues.",
   icon: "stretch-horizontal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add or remove New Zealand GST at 15%, using the 3/23 inclusive fraction, with the $60,000 registration threshold check.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

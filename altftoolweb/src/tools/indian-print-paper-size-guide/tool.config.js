@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Look up A-series, legal, foolscap, SRA and Indian trade sheet sizes in mm, inches, points and pixels, with an ups-per-sheet check.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

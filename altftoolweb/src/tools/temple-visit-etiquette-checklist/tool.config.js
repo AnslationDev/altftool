@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Footwear, dress, photography and offering etiquette for Buddhist, Hindu, Sikh, Jain and Shinto sites, scored by consequence.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

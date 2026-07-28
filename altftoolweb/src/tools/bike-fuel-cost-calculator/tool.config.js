@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Motorcycle and scooter fuel cost per trip, per month and per year, plus tank range, full-tank cost and refills needed.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

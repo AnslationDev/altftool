@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a code review checklist tuned to your language, change type and risk level, ready to paste into a pull request.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

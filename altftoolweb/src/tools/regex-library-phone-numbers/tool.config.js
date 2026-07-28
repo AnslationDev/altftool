@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Phone number regex patterns for E.164, India, US, UK and a loose international format, each with live testing and limitation notes.",
   icon: "phone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

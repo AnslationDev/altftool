@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Aggregate family income the way EWS, OBC non-creamy-layer and state income certificate applications actually require, with the asset tests.",
   icon: "file-badge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

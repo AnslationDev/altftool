@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a water heater in litres for bucket baths or showers, with the mixing maths, reheat time and energy per heating cycle.",
   icon: "shower-head",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

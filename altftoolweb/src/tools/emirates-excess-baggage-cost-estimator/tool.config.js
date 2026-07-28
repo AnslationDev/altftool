@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price Emirates excess baggage on weight-concept and piece-concept routes, comparing prepaid online weight with airport rates.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

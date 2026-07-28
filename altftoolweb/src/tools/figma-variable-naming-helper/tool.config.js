@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design a consistent variable and style naming scheme, generate a starter token set from it, and lint existing names against the rules.",
   icon: "tags",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

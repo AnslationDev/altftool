@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out backsplash tile quantity, boxes and cost for the band between the counter and the overhead cabinets.",
   icon: "square-stack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

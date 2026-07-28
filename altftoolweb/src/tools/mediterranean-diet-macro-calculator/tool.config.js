@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Mediterranean-style calories, protein, fat and carbs with a daily olive-oil portion in tablespoons and the PREDIMED nut serving.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

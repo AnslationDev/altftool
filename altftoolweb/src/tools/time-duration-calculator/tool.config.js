@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the duration between two times in hours, minutes and decimal hours, with break deduction.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

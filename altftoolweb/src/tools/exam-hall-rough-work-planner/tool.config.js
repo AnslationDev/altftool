@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a numbered zone layout for your rough sheets so every calculation is findable and nothing is recomputed.",
   icon: "layout-grid",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

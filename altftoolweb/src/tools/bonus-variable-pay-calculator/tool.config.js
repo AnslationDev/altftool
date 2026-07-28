@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate your bonus payout from target variable pay, performance rating multipliers, company payout factor and proration.",
   icon: "gift",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

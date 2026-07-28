@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check a quoted souvenir price against the local prices you recorded, with markup, counter-offer and walk-away figures.",
   icon: "tag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

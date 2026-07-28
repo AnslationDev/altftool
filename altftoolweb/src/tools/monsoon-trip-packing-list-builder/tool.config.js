@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a monsoon packing list from drying time and the IMD rainfall band, so you pack for clothes that will not dry overnight.",
   icon: "cloud-rain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

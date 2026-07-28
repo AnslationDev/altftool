@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split wall paint between an upper and a lower band at any dado height, with doors and windows deducted from the right band.",
   icon: "square-stack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

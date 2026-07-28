@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Lay out printable storyboard sheets at your shooting ratio, with notes columns, page fit checks and an SVG you can print.",
   icon: "layout-grid",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

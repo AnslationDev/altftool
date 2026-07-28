@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

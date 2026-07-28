@@ -14,7 +14,7 @@ import {
   fsPath,
 } from "./constants";
 import { generateJson } from "./openaiClient";
-import { countProducedToday, finishRun, startRun, sumCostToday } from "./runLog";
+import { finishRun, getTodayUsage, startRun } from "./runLog";
 import {
   BLOG_JSON_SCHEMA,
   assembleBlogDoc,
@@ -242,12 +242,11 @@ async function generateOneBlog({ topic, categories, settings, existingSlugs = []
 export async function runBlogLane({ settings, trigger = "cron", startedBy = "", maxCount = 0 }) {
   if (!settings.blog.enabled) return { skipped: true, reason: "blog lane disabled in settings" };
 
-  const producedToday = await countProducedToday("blog");
+  const { produced: producedToday, totalCost: costToday } = await getTodayUsage("blog");
   const remaining = Math.max(0, settings.blog.dailyLimit - producedToday);
   const batch = Math.min(remaining, maxCount > 0 ? maxCount : settings.blog.perRun);
   if (batch === 0) return { skipped: true, reason: `daily limit reached (${producedToday}/${settings.blog.dailyLimit})` };
 
-  const costToday = await sumCostToday();
   const costCap = Number(settings.limits?.dailyCostCapUsd) || 0;
   if (costCap > 0 && costToday >= costCap) {
     return { skipped: true, reason: `daily cost cap reached ($${costToday.toFixed(2)}/$${costCap})` };

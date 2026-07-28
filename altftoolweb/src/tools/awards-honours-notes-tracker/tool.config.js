@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log awards, recipients, fields and years in a searchable, sortable exam-ready table you can export as CSV.",
   icon: "award",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

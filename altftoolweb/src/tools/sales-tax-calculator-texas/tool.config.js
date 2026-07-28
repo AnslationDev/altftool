@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Texas sales tax: 6.25% state rate plus local tax capped at 2%, with taxable delivery, exempt groceries and reverse mode.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

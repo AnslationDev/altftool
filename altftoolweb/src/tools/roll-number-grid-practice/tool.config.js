@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Practise bubbling roll number digit grids like a real OMR sheet — blanks, wrong digits and double marks are graded instantly.",
   icon: "grid-3x3",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

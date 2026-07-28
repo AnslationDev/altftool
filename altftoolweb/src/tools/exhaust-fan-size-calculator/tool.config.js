@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a kitchen or bathroom exhaust fan from room volume and air changes per hour, with duct diameter and fan body size.",
   icon: "fan",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

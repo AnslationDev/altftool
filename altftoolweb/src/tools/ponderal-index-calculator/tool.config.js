@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Ponderal index divides weight by height cubed, so it stays fair for very tall or very short adults, plus a newborn mode.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

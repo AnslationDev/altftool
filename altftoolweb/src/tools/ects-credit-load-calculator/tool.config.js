@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan how many ECTS credits you need per semester to finish your degree, with workload hours from the ECTS Users' Guide.",
   icon: "calendar-range",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

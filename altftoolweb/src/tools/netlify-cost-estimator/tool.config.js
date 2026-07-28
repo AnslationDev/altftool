@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro.",
   icon: "rocket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

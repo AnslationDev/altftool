@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how far you can still drive from the fuel gauge reading, tank size, mileage and the reserve you want to keep.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check the gaps between your levothyroxine dose and coffee, breakfast, calcium, iron and antacids.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

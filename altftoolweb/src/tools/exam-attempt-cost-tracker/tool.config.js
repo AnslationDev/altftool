@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Total what each exam attempt really cost — form fees, coaching, test series, books, travel and stay — across all attempts.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

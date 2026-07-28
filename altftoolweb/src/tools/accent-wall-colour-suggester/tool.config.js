@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Suggest accent wall shades that pair with your existing wall colour, with LRV, contrast and trim advice for each.",
   icon: "paint-roller",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

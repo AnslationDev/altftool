@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add or remove 5% UAE VAT on any amount, with inclusive and exclusive pricing, zero-rated supplies and registration thresholds.",
   icon: "receipt-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

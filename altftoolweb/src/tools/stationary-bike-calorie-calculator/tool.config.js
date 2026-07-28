@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calories burned on an exercise bike from watts, or from resistance level and cadence, using the ACSM cycling equation.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

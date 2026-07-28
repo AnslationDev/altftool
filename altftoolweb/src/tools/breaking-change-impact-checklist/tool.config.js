@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a consumer impact checklist and risk score before shipping an API or library breaking change.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

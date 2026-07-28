@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log practice minutes and metronome tempos per exercise, then see totals, streaks, tempo gains and a next-session ladder.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Warm menu-ready font pairs with leader-dot price alignment and a minimum print size for dim dining rooms.",
   icon: "utensils",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

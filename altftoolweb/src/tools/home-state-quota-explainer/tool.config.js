@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether you get Home State, Other State or All India quota at NITs, IITs, NEET UG and state CET counselling.",
   icon: "map-pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

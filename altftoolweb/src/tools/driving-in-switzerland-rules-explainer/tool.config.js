@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Swiss road rules for visitors: speed limits, the motorway vignette, blood-alcohol limits and the Raser threshold that turns speeding into a crime.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

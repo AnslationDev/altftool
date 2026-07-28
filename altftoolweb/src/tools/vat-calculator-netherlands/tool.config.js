@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Dutch BTW calculator at 21% and 9% with reverse calculation, a KOR threshold check and a net BTW payable line.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

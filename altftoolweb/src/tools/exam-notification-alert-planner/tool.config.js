@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan reminder dates for the expected notification months of every exam you follow, sorted by urgency.",
   icon: "bell-ring",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

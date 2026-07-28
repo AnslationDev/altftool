@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Judge realistic AI-written messages as scam or genuine and get scored on recall, false alarms and balanced accuracy.",
   icon: "shield-alert",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

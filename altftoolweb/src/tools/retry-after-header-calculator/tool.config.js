@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a spec-correct Retry-After header in delay-seconds or IMF-fixdate form, with an exponential backoff schedule for 429 and 503 responses.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

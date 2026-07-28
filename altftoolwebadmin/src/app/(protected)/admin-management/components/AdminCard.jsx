@@ -80,8 +80,7 @@ export default function AdminCard({
   });
 };
 
-// Usage
-const joinedDate = formatDate(admin.createdAt);
+  const joinedDate = formatDate(admin.createdAt);
   return (
     <div
       onClick={() => onEdit(admin)}

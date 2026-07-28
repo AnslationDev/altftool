@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Explore Linux signals with default actions, catchability, matching exit codes and how they behave as PID 1 in containers.",
   icon: "radio-tower",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

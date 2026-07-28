@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn your daily office commute into monthly and yearly fuel, toll and parking spend using your real mileage and fuel price.",
   icon: "route",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

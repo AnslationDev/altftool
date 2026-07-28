@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Frame timber running length and cft, shutter size and area, hinges and holdfasts for any door opening.",
   icon: "door-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

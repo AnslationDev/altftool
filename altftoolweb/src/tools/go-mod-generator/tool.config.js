@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a valid go.mod with module path, go and toolchain directives, require, replace, exclude and retract blocks.",
   icon: "file-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

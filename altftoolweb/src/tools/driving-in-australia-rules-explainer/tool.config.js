@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Australian road rules for visitors: which side to drive on, state speed limits in km/h and mph, alcohol limits and licence requirements.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

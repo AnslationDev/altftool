@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compose a custom nginx log_format from real variables, preview a sample log line and copy the directive.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

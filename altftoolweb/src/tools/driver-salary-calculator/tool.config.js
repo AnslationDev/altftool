@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out a driver's monthly pay with overtime at twice the ordinary rate, night duty, outstation days, PF and ESI.",
   icon: "car-taxi-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

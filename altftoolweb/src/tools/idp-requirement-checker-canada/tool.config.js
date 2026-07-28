@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether an international driving permit is expected with your licence in Canada, and how many days each province gives before you must switch.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

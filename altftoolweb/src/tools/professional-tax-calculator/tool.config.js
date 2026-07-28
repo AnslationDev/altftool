@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find your state-wise monthly and annual professional tax deduction from current salary slabs across Indian states.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

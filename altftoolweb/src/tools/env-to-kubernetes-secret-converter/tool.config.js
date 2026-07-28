@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a .env file into a Kubernetes Secret manifest with base64-encoded data or plain stringData, validated against k8s naming rules.",
   icon: "container",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

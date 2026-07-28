@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Design a birthday invitation with date, venue and RSVP details, then download it as a 300 dpi A5 print or a square/story image.",
   icon: "cake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

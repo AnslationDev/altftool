@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether Japan accepts your international driving permit, which permits it refuses, and when the one-year window from your entry date closes.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

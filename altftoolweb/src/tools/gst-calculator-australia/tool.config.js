@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add or remove Australia's 10% GST using the divide-by-11 rule, with a BAS summary and the $75,000 registration check.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

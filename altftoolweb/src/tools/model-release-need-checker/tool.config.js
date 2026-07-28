@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your shoot typically needs a model or property release, based on use, recognisability and location.",
   icon: "file-signature",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

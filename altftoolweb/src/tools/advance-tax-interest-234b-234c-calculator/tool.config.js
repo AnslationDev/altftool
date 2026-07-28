@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Interest payable under Sections 234B and 234C for shortfall and deferment of advance tax instalments.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift.",
   icon: "subtitles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

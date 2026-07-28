@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out melamine, PU or NC polish litres for doors and furniture, split into base, hardener and thinner.",
   icon: "brush",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

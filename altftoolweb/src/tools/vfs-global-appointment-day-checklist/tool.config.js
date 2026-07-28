@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a personalised carry, wear and leave-behind checklist for a VFS Global visa application centre appointment, with a leave-home time.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

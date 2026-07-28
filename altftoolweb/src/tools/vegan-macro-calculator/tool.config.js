@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plant-based protein, fat and carb targets with a digestibility adjustment, a fibre goal and complementary protein pairings.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

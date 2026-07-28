@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price a voiceover job from script length, media usage, territory, licence term and exclusivity, split into session fee and usage fee.",
   icon: "mic",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

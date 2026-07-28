@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Gross margin, net profit and income tax for a small retail shop, with the 44AD presumptive and GST composition options.",
   icon: "store",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

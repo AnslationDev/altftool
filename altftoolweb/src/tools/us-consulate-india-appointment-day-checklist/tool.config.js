@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Carry, wear and leave-behind checklist for a US visa OFC biometrics, interview or dropbox appointment in India, with arrival timing.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

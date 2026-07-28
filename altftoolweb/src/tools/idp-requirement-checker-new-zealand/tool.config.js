@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether New Zealand expects an international driving permit or English translation with your licence, and when the 12-month visitor window ends.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

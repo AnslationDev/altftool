@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See which appliance is driving your electricity bill, from wattage and hours of use, with duty, fixed charges and carbon output.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Guided box, 4-7-8 or extended-exhale breathing with a paced on-screen timer to steady nerves before entering the exam hall.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

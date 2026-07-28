@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Monthly SIP needed to reach a target corpus by a target date, with lumpsum, annual step-up and inflation adjustment.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

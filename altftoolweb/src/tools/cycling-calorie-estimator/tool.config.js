@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate calories burned cycling from distance, speed, rider weight, terrain, gradient and headwind, using a physics power model.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

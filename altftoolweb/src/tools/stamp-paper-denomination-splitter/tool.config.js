@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the fewest non-judicial stamp papers that add up to a required stamp duty amount, plus any unavoidable excess.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

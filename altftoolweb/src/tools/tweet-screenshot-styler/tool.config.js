@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn your own post text into a clean branded quote graphic sized for square, portrait, story and link-card placements.",
   icon: "message-square-quote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

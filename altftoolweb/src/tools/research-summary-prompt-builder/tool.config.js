@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build an AI prompt that summarises a research paper into structured sections with word budgets, including method and limitations.",
   icon: "file-search",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

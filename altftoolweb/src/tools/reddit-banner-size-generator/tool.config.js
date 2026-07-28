@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size subreddit banners and community icons for the new Reddit header, the old Reddit 500x100 logo and small icon slots.",
   icon: "frame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

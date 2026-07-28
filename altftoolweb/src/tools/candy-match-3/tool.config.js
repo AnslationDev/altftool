@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Game", "Lifestyle"],
   description: "Play Candy Match 3 free online — a sweet match-3 puzzle game. Swap candies, trigger combos, beat level targets, and chase your high score.",
   icon: "gift",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert forecast highs and lows between Fahrenheit and Celsius, with feels-like figures and a packing hint for each range.",
   icon: "thermometer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

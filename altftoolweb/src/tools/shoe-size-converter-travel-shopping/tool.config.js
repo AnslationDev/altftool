@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert shoe sizes between UK, India, US men's, US women's, EU and Japanese sizing from a size or a foot measurement.",
   icon: "footprints",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

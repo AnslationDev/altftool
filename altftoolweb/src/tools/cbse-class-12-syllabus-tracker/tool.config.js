@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track CBSE Class 12 chapter completion subject by subject and see the weekly pace needed to finish before the boards.",
   icon: "book-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

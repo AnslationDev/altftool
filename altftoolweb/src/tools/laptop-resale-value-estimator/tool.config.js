@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a laptop's resale price from purchase price, age, condition, battery health and remaining warranty.",
   icon: "laptop",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

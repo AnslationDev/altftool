@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build the RRB application file — form fields, photo and signature upload specs, certificates — and work out the fee after the CBT-1 refund.",
   icon: "train-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

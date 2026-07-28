@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate pnpm-workspace.yaml with package globs, exclusions and catalog dependency versions, plus the catalog: usage snippet.",
   icon: "package",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

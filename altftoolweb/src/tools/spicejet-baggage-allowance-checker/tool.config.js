@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check bag weights and sizes against typical SpiceJet cabin and check-in allowances, and price any excess per kilogram.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

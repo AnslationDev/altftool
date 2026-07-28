@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Ready prompts for salon offers, reminders and before-after captions, with SMS segment and channel character limits.",
   icon: "scissors",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

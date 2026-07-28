@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break an Istanbul trip into flights, stay, food, Istanbulkart rides and sights in lira and rupees, with lira inflation drift.",
   icon: "moon-star",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Every record to update after relocating in India — Aadhaar, voter roll, RC, bank KYC, utilities — with the statutory deadlines dated.",
   icon: "map-pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

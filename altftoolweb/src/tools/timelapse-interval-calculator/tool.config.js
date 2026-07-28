@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out timelapse shooting interval, frame count, finished clip length and the card space a sequence will need.",
   icon: "camera",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

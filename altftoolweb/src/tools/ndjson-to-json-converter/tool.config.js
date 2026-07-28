@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert newline-delimited JSON (NDJSON/JSON Lines) to a JSON array and back, with per-line error reporting.",
   icon: "file-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

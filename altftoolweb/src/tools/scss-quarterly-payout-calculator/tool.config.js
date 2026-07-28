@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "SCSS quarterly interest payout, five-year total interest, TDS threshold check and premature closure deductions.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

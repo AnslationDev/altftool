@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate daily fluid needs in cold, dry air from respiratory water loss, sweat under layers and cold-induced diuresis.",
   icon: "snowflake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

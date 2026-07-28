@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Classify a business as micro, small or medium under the MSMED Act composite investment and turnover test for Udyam registration.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

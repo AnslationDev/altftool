@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build SSC practice and explanation prompts for reasoning, maths, English and GK, with each exam's real marking, pacing and attempt maths.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

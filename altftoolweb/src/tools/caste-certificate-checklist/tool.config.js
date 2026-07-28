@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build the SC, ST or OBC caste certificate document list, check the religion and migration bars, and test the creamy layer income limit.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

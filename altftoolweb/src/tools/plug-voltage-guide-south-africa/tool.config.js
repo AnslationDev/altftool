@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "South Africa runs 230 V at 50 Hz on the old type M and the new SANS 164-2 type N socket — see which outlet takes your plug.",
   icon: "plug",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

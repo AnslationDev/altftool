@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Crop one square source into circle-safe profile pictures at each platform's recommended upload size, entirely in your browser.",
   icon: "circle-user-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

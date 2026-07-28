@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Write a subclass 600 visitor visa statement covering purpose, itinerary, funds, the genuine visitor test and condition 8558.",
   icon: "compass",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

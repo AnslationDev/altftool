@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate speech-to-text plus AI summarisation cost per audio minute, per hour and per file.",
   icon: "mic",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

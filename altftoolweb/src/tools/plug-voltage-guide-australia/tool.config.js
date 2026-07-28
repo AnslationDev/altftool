@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Australia runs 230 V at 50 Hz on the AS/NZS 3112 type I socket — check your plug, the 10/15/20 A pin ladder and converter need.",
   icon: "plug",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

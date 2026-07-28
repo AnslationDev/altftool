@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate energy, money and bulb-replacement savings from switching a whole home from CFL, halogen or incandescent to LED.",
   icon: "lightbulb",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

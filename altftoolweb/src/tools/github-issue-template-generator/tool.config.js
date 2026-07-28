@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create GitHub issue form YAML for bug reports, feature requests and support questions with validated fields and labels.",
   icon: "circle-dot",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

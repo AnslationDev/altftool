@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a C-3 short-term visit cover letter with itinerary, the 90-day sojourn limit, visa validity and fee totals.",
   icon: "flag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

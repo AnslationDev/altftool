@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up your furniture, appliances and cartons to get the packed volume and the smallest tempo or truck that will hold it.",
   icon: "truck",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

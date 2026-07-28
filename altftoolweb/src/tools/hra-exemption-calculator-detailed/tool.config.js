@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Least-of-three HRA exemption with metro and non-metro rules and monthly breakdown.",
   icon: "house",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

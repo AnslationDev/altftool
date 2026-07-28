@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score a brand name for distinctiveness and get a jurisdiction-specific clearance checklist before you commit.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

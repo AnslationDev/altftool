@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check eligibility for central pre-matric scholarships — SC, ST, OBC/EBC/DNT, minority and hazardous-occupation schemes.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

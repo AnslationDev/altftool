@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Soft botanical palettes of cream, sage, moss and berry held under a saturation ceiling, with WCAG-safe variants.",
   icon: "flower-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

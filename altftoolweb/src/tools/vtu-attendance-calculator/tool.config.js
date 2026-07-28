@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute VTU subject-wise attendance, eligibility against the 85% rule and how many classes you can still miss.",
   icon: "clipboard-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

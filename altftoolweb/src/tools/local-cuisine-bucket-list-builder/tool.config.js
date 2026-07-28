@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a must-eat list for a destination, check it against the eating slots your trip actually has, and tick dishes off as you go.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

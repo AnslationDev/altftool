@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check a favicon on light and dark browser tabs, measure WCAG contrast against each tab colour and spot pinned-tab problems.",
   icon: "app-window",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

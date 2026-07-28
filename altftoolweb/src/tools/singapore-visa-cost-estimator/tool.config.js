@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split Singapore's non-refundable processing fee from the on-approval issuance fee and total the whole trip in rupees.",
   icon: "ship",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

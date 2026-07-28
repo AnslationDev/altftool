@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Daily water target for children from the Holliday-Segar weight rule and EFSA age-based adequate intakes, plus sport top-ups.",
   icon: "baby",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

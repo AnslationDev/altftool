@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate real e-scooter range from battery Wh, rider weight, speed, gradient and traffic using road-load physics.",
   icon: "battery-charging",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

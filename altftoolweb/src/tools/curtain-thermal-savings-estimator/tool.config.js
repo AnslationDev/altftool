@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Cooling saved by blackout or thermal curtains, from window area, glazing SHGC, U-value and the curtain's attenuation coefficient.",
   icon: "blinds",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

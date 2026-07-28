@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check ad creative width, height, aspect ratio, file size and text density against Meta feed, story and right-column placements.",
   icon: "megaphone",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

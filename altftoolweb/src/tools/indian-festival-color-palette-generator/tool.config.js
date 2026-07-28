@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Palettes for Diwali, Holi, Onam, Pongal and Durga Puja creatives with tint ramps and WCAG contrast checks.",
   icon: "flame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

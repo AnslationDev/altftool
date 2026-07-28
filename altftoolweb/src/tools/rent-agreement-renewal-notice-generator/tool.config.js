@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a tenancy renewal intimation with revised rent, deposit, new term dates and a written response deadline.",
   icon: "file-signature",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

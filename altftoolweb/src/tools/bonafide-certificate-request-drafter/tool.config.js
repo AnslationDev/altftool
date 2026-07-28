@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a formal bonafide certificate request letter to your school or college with the purpose, roll number and details filled in.",
   icon: "file-badge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

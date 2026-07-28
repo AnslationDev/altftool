@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Break a Bangkok trip into flights, stay, food, transport and activities in baht and rupees, with forex markup and VAT refund.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

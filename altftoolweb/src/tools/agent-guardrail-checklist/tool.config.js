@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score your AI agent's guardrails — permissions, spend caps, confirmation gates, injection defences — before you ship it.",
   icon: "shield-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

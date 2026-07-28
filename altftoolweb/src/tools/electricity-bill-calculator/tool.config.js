@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate your monthly electricity bill from appliance wattage, daily usage hours and your per-unit tariff.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

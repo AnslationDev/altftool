@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether an advance attracts GST, split the CGST, SGST or IGST, and see which voucher and return line it belongs in.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

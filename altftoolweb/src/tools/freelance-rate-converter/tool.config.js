@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert a freelance rate between hourly, daily, weekly, monthly, annual and fixed-project figures using your real billable capacity.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

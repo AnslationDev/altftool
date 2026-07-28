@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Combined Section 80C principal and Section 24(b) interest tax savings on a home loan, year by year.",
   icon: "house",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

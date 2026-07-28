@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the best bedtimes or wake-up times based on 90-minute sleep cycles and how long you take to fall asleep.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

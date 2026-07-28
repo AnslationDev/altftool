@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Protein target for low-activity desk lifestyles with a per-meal split, using step bands for energy and evidence-based protein ranges.",
   icon: "briefcase",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

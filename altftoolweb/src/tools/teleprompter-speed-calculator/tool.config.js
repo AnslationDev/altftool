@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set teleprompter scroll speed in pixels per second and lines per minute from your script length and target runtime.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

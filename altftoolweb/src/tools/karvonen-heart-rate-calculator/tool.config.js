@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Training zones from the Karvonen heart rate reserve method using your resting and maximum heart rate.",
   icon: "heart-pulse",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

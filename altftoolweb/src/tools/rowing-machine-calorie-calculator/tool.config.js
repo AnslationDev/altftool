@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rowing calories, watts and 500 m split from distance, time and stroke rate using the Concept2 power formula.",
   icon: "sailboat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

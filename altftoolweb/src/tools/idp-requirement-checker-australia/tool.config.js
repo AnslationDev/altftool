@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See whether Australia expects an international driving permit or English translation with your licence, and how long each state gives a new resident.",
   icon: "id-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

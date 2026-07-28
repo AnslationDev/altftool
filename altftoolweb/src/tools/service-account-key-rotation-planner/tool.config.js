@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan rotation cadence and a safe cutover schedule for cloud service account keys, with due, overlap, disable and delete dates.",
   icon: "key-round",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

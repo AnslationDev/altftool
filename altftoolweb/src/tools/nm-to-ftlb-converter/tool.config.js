@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert torque between newton metres, foot-pounds, inch-pounds and kgf-m, with a torque wrench extension correction.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

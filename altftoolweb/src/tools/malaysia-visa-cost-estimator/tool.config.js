@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether visa-free entry covers your stay, then total the eVISA fee, agent charges and extras in rupees.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

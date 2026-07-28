@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Five-question rMEQ chronotype quiz scoring you as a morning, intermediate or evening type, with your natural sleep window.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

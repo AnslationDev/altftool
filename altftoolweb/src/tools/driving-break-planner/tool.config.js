@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan rest stops, fuel halts and a realistic arrival time for a long drive using the 15-minute break every two hours rule.",
   icon: "coffee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

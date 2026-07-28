@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn a yen price into rupees in your head, plus Japan's 10% and reduced 8% consumption tax.",
   icon: "japanese-yen",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

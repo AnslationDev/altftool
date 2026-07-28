@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert clothing sizes between US, UK, EU, France, Italy, Japan and India, from a label or from your body measurements.",
   icon: "shirt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

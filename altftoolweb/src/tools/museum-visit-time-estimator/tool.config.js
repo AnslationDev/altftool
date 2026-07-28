@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate how long a museum really takes from its size and your viewing pace, using measured per-object viewing times and museum-fatigue breaks.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

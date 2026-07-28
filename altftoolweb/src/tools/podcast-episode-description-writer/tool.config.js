@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft a podcast episode description from your notes, then check it against platform character limits, chapter rules and keyword placement.",
   icon: "podcast",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

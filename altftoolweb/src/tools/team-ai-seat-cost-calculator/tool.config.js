@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare per-seat AI subscriptions against real team usage and against pay-as-you-go API pricing, with a break-even point.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

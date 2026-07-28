@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert mutable image tags into pinned @sha256 digest references and scan Dockerfiles or manifests for unpinned images.",
   icon: "pin",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

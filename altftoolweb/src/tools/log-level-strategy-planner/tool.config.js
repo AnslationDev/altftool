@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decide whether an event belongs at trace, debug, info, warn, error or fatal, plus per-environment minimum levels.",
   icon: "scroll-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

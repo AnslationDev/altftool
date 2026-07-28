@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Log avoidable errors from each mock test by category and watch the count and marks lost fall (or not) across attempts.",
   icon: "circle-alert",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

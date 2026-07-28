@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators"],
   description: "Compound interest at any frequency, with deposits and a year-by-year growth table.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a rupee household budget across rent, EMI, groceries and savings, with 50/30/20 and FOIR ratio checks.",
   icon: "wallet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

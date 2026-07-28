@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Client-side dashboard for device, browser, privacy, GPU, storage, and web API capability analysis.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

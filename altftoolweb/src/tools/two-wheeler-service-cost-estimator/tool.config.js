@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate a bike or scooter periodic service bill from engine oil, wear parts due at that odometer reading, labour and GST.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

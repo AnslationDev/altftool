@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check which everyday hand gestures change meaning or turn offensive across countries, with a safer alternative for each.",
   icon: "hand",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

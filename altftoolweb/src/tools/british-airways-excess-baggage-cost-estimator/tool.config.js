@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price extra, heavy and oversize bags on a British Airways booking, prepaid against airport rates, and spot repacking savings.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

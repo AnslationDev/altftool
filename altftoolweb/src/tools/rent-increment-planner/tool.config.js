@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project rent year by year at an agreed escalation, total the outgo, compare a second scenario and see the cost in today's money.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

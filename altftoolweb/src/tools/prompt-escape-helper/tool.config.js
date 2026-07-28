@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Escape a prompt for JavaScript, JSON, Python, shell, SQL, YAML, CSV, HTML or URL embedding, with braces and backslashes handled.",
   icon: "braces",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

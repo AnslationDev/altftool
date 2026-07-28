@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Net GST payable in cash after setting off input tax credit across IGST, CGST and SGST under the Rule 88A utilisation order.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Searchable plain-English glossary of AI and machine learning terms, with examples, related terms and a self-test quiz.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

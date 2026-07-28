@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate Dockerfile HEALTHCHECK and compose healthcheck blocks with tuned interval, timeout, retries and start period.",
   icon: "heart-pulse",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

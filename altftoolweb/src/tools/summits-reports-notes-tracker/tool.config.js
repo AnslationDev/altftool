@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track international summits, indices and reports with host, publisher, year and India's rank in one exam-ready table.",
   icon: "globe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

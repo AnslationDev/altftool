@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Write consistent podcast intros and outros with per-section word counts and read-time estimates at your speaking rate.",
   icon: "audio-lines",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Palettes drawn from Indian dyes, pigments and craft traditions, each with its material source, a contrast audit and a block-print greyscale check.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

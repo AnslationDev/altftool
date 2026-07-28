@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a ruler measurement into chain elongation percentage and tell you whether the chain, cassette or chainrings need replacing.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

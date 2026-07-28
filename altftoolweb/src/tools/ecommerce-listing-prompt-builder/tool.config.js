@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a structured product listing prompt with attributes, benefits and keyword slots inside real field limits.",
   icon: "shopping-bag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

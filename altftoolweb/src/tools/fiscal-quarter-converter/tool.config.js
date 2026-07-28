@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert any date between calendar and fiscal quarters for any fiscal year start month, with both year-labelling conventions.",
   icon: "calendar-range",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

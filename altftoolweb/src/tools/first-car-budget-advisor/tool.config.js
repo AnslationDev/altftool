@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set a safe first-car budget from income, savings and running costs using the 20/4/10 rule — down payment, EMI and on-road price.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

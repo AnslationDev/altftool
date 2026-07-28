@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn three width and height measurements into an exact blind order size for inside or outside mount, with depth, squareness and bracket checks.",
   icon: "blinds",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

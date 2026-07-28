@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track scholarship application windows and document deadlines — see days left, what is closing soon and what has already shut.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

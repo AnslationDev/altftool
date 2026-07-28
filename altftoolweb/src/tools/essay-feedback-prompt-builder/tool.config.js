@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create an AI feedback prompt focused on structure, evidence and clarity, with a comment budget scaled to essay length.",
   icon: "file-pen-line",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

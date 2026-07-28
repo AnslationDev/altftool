@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Decode a Base64 string or data URL back into a PDF, preview it, and check its version, page objects, encryption and trailer.",
   icon: "file-down",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Date every electricity, water, gas, broadband and DTH action for a move, using the statutory new-connection timelines.",
   icon: "plug-zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

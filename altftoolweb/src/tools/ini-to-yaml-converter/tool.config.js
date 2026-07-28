@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert INI configuration files to structured YAML with dotted sections nested and value types inferred.",
   icon: "list-tree",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

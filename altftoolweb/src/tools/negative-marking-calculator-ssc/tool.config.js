@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See exactly how many marks wrong answers cost in SSC CGL, CHSL and CPO — 0.5 penalty maths, break-even accuracy and net score.",
   icon: "minus-circle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

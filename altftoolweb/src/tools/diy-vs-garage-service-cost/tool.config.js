@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare doing a basic car service yourself against workshop charges, including parts markup, labour, GST and tool payback.",
   icon: "wrench",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

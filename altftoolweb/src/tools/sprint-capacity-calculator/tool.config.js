@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute real sprint capacity in person-days and hours from headcount, leaves, holidays and ceremony or support overhead.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

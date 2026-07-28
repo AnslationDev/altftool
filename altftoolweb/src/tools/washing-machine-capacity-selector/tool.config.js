@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Size a washing machine in kg from your household's weekly laundry weight, bed linen and how many washes you run.",
   icon: "washing-machine",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

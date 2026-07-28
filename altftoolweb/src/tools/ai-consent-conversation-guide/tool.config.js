@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how much AI disclosure a piece of work needs and get a ready-to-send script for clients or colleagues.",
   icon: "handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

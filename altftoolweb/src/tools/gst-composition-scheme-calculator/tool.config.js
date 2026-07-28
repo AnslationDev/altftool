@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate GST composition levy for traders, manufacturers and restaurants from taxable turnover and selected rate.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

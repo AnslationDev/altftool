@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate terraform required_providers and provider blocks with version constraints and alias configurations.",
   icon: "blocks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Finance Calculators"],
   description: "Customary UAE tipping ranges for restaurants, taxis, hotels, valets and guides, with the 10% service charge and municipality fee stripped out.",
   icon: "hand-coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

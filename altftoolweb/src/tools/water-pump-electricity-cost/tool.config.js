@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Monthly cost of running a home water pump from its horsepower, motor efficiency, tank size and daily fills.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

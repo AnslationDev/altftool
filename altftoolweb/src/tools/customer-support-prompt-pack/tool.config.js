@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build support-reply prompts for macro rewrites, tone softening and escalation summaries, with a Flesch readability check on your draft.",
   icon: "headset",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check Anna University attendance percentage, the condonation band and how many classes it takes to reach 75%.",
   icon: "calendar-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

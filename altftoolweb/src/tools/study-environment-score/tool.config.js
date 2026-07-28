@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rate noise, lighting, desk setup, phone placement and more to get a weighted 0-100 score for your study environment.",
   icon: "lamp-desk",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

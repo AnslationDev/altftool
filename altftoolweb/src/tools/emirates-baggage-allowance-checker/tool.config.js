@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check cabin and check-in bags against Emirates weight-concept and Americas piece-concept allowances, including the 300 cm size cap.",
   icon: "luggage",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

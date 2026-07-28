@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the interest saved and tenure cut when you make a lump-sum prepayment or pay extra with every EMI.",
   icon: "house",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

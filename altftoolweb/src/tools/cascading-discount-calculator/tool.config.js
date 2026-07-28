@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Stack successive discounts, a flat coupon and tax to get the true effective discount, final price and total saved.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

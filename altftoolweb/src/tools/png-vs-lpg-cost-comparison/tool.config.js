@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare piped natural gas and cylinder LPG on equal energy, with monthly cost, cost per usable kWh and payback on the PNG connection fee.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

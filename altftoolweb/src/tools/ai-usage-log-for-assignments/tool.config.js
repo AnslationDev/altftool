@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Record which AI tools helped with which parts of an assignment and export a clean usage log for submission.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

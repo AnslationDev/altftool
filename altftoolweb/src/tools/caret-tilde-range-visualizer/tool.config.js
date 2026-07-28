@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See the allowed version window for ^ and ~ semver ranges on a number line, with allowed and blocked neighbours.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

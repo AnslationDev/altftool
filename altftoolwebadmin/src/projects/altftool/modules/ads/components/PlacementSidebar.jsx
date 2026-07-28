@@ -51,20 +51,20 @@ export default function PlacementSidebar({ nav, placements, activeView, onSelect
 
                       return (
                         <button key={childKey} onClick={() => onSelect({ type: "placement", key: childKey })}
-                          className={`group relative w-full text-left px-3 py-2.5 rounded-xl transition-all ${isActive ? "bg-gray-900 text-white shadow-sm" : "hover:bg-[var(--surface-soft)] text-[var(--muted)]"}`}>
+                          className={`group relative w-full text-left px-3 py-2.5 rounded-xl transition-all ${isActive ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm" : "hover:bg-[var(--surface-soft)] text-[var(--muted)]"}`}>
                           <div className="flex items-center justify-between gap-2">
                             <div className="min-w-0">
-                              <p className={`text-sm font-medium truncate ${isActive ? "text-white" : "text-[var(--foreground)]"}`}>
+                              <p className={`text-sm font-medium truncate ${isActive ? "text-[var(--primary-foreground)]" : "text-[var(--foreground)]"}`}>
                                 {placement?.label || childKey.replaceAll("_", " ")}
                               </p>
                               {placement?.description && (
-                                <p className={`text-[11px] mt-0.5 truncate ${isActive ? "text-gray-300" : "text-[var(--muted)]"}`}>
+                                <p className={`text-[11px] mt-0.5 truncate ${isActive ? "text-[var(--primary-foreground)]/70" : "text-[var(--muted)]"}`}>
                                   {placement.description}
                                 </p>
                               )}
                             </div>
                             {typeof count === "number" && (
-                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold shrink-0 ${isActive ? "bg-white/20 text-white" : "bg-[var(--surface-soft)] text-[var(--muted)]"}`}>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold shrink-0 ${isActive ? "bg-[var(--primary-foreground)]/20 text-[var(--primary-foreground)]" : "bg-[var(--surface-soft)] text-[var(--muted)]"}`}>
                                 {count}
                               </span>
                             )}
@@ -87,15 +87,15 @@ export default function PlacementSidebar({ nav, placements, activeView, onSelect
           return (
             <button key={item.key}
               onClick={() => onSelect(isOverview ? { type: "overview" } : { type: "placement", key: item.key })}
-              className={`group w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-center gap-3 ${isActive ? "bg-gray-900 text-white shadow-sm" : "hover:bg-[var(--surface-soft)]"}`}>
+              className={`group w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-center gap-3 ${isActive ? "bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm" : "hover:bg-[var(--surface-soft)]"}`}>
               {isOverview && (
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isActive ? "bg-white/20" : "bg-[var(--surface-soft)]"}`}>
-                  <LayoutDashboard className={`w-3.5 h-3.5 ${isActive ? "text-white" : "text-[var(--muted)]"}`} />
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isActive ? "bg-[var(--primary-foreground)]/20" : "bg-[var(--surface-soft)]"}`}>
+                  <LayoutDashboard className={`w-3.5 h-3.5 ${isActive ? "text-[var(--primary-foreground)]" : "text-[var(--muted)]"}`} />
                 </div>
               )}
               <div className="min-w-0">
-                <p className={`text-sm font-semibold ${isActive ? "text-white" : "text-[var(--foreground)]"}`}>{item.label}</p>
-                {isOverview && <p className={`text-[11px] ${isActive ? "text-gray-300" : "text-[var(--muted)]"}`}>View overall performance</p>}
+                <p className={`text-sm font-semibold ${isActive ? "text-[var(--primary-foreground)]" : "text-[var(--foreground)]"}`}>{item.label}</p>
+                {isOverview && <p className={`text-[11px] ${isActive ? "text-[var(--primary-foreground)]/70" : "text-[var(--muted)]"}`}>View overall performance</p>}
               </div>
             </button>
           );

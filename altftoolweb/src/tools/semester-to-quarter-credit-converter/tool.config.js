@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert college credits between semester and quarter systems with the standard 1 semester = 1.5 quarter unit ratio.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

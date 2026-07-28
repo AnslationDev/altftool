@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Stack your printed travel documents in the exact order airports, borders and hotels ask for them, with passport validity checked.",
   icon: "folder-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

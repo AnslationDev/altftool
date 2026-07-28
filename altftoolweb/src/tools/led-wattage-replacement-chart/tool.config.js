@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert incandescent, halogen and CFL wattages into the equivalent LED wattage by lumens, with the energy and cost saved per bulb.",
   icon: "lightbulb",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -20,13 +20,12 @@ export async function GET(request) {
     const path = url.searchParams.get("path") || "";
 
     const children = getWorkspaceChildren(path);
-    const counts = await Promise.all(
-      children.map((c) =>
-        adminDb.collection(ROLLUPS).doc(rollupDocId(c.hierarchyPath)).get()
-          .then((s) => (s.exists ? s.data()?.count || 0 : 0))
-          .catch(() => 0),
-      ),
-    );
+    // One batched RPC (adminDb.getAll) instead of one .get() per sibling —
+    // Promise.all already ran these in parallel, but each was still a
+    // separate round trip, scaling with workspace size on every tree expand.
+    const refs = children.map((c) => adminDb.collection(ROLLUPS).doc(rollupDocId(c.hierarchyPath)));
+    const snaps = refs.length ? await adminDb.getAll(...refs) : [];
+    const counts = snaps.map((s) => (s.exists ? s.data()?.count || 0 : 0));
 
     return NextResponse.json({
       path,

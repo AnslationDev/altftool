@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert roof pitch between rise-in-12, degrees, percent and ratio, with slope factor, rafter length and material suitability.",
   icon: "triangle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

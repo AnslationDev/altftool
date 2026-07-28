@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how many months of expenses your emergency fund should hold based on job stability, dependants and cover.",
   icon: "shield",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

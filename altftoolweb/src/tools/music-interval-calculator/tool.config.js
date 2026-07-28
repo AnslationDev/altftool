@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Name the interval between any two notes, with semitone distance, cents, inversion and the just-intonation ratio.",
   icon: "music",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

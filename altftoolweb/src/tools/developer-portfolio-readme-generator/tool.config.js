@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a GitHub profile README with skill badges, project cards, stats widgets and contact links.",
   icon: "github",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

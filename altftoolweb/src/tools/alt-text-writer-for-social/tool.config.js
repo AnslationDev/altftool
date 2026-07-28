@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Draft and score alt text for social images against platform character limits and the 125-character screen reader guideline.",
   icon: "accessibility",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert JNTUH, JNTUK or JNTUA CGPA to percentage with the (CGPA − 0.75) × 10 rule and see the class band your figure earns.",
   icon: "calculator",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

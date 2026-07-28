@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out stretch percentage, new clip length and the pitch shift in semitones and cents when you move audio from one tempo to another.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

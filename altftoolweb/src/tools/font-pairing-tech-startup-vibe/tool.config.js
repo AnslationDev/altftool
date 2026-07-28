@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Geometric sans pairings with a grid-snapped UI type scale, mono face for numbers and a slide legibility check.",
   icon: "rocket",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track practical and lab attendance separately from theory, weight lab sessions by contact hours and see the experiments still pending.",
   icon: "flask-conical",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Neon-on-dark palettes with an elevation ramp, status colours and every accent tuned to a WCAG contrast target.",
   icon: "zap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

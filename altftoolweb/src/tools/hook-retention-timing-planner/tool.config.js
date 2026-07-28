@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn a short video length into a frame-accurate hook beat sheet built around each platform's view, skip and completion thresholds.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

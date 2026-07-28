@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Project a JEE Main raw score from MCQ and numerical-value attempts under the +4 / -1 scheme, including the cost of blind guesses.",
   icon: "sigma",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

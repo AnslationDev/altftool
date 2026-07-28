@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate.",
   icon: "arrow-left-right",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Enter a binary confusion matrix and get precision, recall, F1, F-beta, specificity, MCC and Cohen's kappa.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

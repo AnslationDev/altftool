@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan lesson lengths across a video course, see total runtime by module, and flag lessons long enough to lose the viewer.",
   icon: "clapperboard",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

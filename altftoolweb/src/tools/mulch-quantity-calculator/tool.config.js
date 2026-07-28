@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out mulch volume, bags and bulk loads for garden beds at your chosen depth, in cubic feet, cubic yards or litres.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

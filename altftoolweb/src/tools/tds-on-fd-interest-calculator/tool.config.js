@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "TDS deducted on fixed deposit interest under Section 194A, with Form 15G and 15H eligibility checks and net payout.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

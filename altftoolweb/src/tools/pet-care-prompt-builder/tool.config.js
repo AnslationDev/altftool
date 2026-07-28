@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build training, routine and behaviour prompts from your pet's species, age, life stage and daily time budget.",
   icon: "paw-print",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

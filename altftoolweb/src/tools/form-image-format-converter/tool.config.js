@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert photos and signatures between JPG, JPEG and PNG in the browser, with the exact extension and size portals demand.",
   icon: "file-image",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

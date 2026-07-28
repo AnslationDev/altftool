@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Print areas and placement measurements for hoodies — chest, back, sleeve and hood — with the kangaroo pocket seam accounted for.",
   icon: "frame",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

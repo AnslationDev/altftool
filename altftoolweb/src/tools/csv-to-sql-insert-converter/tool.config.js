@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert CSV rows into INSERT statements with RFC 4180 parsing, type inference, dialect quoting and batched multi-row VALUES.",
   icon: "file-spreadsheet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

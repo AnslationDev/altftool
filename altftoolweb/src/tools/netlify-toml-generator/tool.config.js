@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a netlify.toml with build settings, redirects, security headers, functions and edge function routes.",
   icon: "file-code-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare roaming per-minute, local SIM, VoIP-over-data and calling-pack pricing for calls home during a trip.",
   icon: "phone-call",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

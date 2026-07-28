@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check your Philippines visa-free allowance, the eTravel registration window, passport validity beyond the stay and the extension you will need.",
   icon: "palmtree",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

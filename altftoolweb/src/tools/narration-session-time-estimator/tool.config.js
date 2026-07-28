@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate booth time from script length, including punch-and-roll retakes, vocal rest breaks and setup for each session.",
   icon: "timer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Strip Markdown from a prompt — headings, emphasis, links, code fences, tables — when the target expects plain text.",
   icon: "align-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

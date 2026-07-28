@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Classify BMI against the lower WHO Asia-Pacific thresholds (overweight 23, obese 25) and compare with the standard WHO bands.",
   icon: "globe",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

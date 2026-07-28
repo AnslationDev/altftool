@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Answer eight questions about code sharing, tooling, releases and access control to get a scored monorepo-vs-polyrepo recommendation.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

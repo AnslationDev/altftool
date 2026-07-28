@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate video edit hours from raw footage length, cut density, graphics, grade, mix and revision rounds.",
   icon: "film",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Before, during and after fluid plan for heated yoga, from a measured weigh-in sweat rate or your room temperature and class style.",
   icon: "droplets",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

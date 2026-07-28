@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Exact venv creation, activation and dependency commands for your OS, shell, Python version and package manager.",
   icon: "terminal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

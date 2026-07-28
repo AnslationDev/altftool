@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Monthly and annual Maharashtra professional tax by salary slab, including the February top-up and the women's exemption.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

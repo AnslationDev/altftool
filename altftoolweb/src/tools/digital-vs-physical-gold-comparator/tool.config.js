@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price making charges, GST, storage and buy-sell spread across jewellery, coins, digital gold and ETFs.",
   icon: "gem",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

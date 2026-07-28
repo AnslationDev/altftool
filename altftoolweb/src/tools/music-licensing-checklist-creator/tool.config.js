@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Create a practical checklist for music usage rights, sync licensing, platform rules, credits and approval evidence.",
   icon: "music",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

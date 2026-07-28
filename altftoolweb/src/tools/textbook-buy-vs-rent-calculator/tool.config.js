@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare buying a textbook (with expected resale) against renting it per term over your course — including the break-even point.",
   icon: "book-open",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Long-term capital gains tax on property with CII indexation, the 12.5% vs 20% comparison and Section 54/54EC exemptions.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

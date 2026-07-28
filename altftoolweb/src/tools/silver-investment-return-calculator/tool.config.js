@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Track silver purchase cost, GST, buyback discount and post-tax return with an annualised figure.",
   icon: "coins",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Room-by-room end-of-tenancy cleaning list with time estimates and what the remaining work would cost against your deposit.",
   icon: "spray-can",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

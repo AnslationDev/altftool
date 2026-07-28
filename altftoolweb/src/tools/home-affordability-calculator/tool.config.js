@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the maximum property price you can afford from your income, EMI capacity, down payment, LTV cap and registration costs.",
   icon: "home",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

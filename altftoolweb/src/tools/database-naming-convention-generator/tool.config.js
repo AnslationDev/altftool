@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Define table, column, index and constraint naming rules with worked examples and per-DBMS identifier length checks.",
   icon: "table-properties",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Assemble a reusable YouTube description with validated chapters, links, hashtags and disclosures inside the 5,000 character limit.",
   icon: "youtube",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

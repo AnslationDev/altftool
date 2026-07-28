@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Test your Qatar entry route and permitted stay, price the compulsory visitor health insurance, and build the document checklist for arrival.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

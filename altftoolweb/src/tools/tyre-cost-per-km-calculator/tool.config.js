@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare two tyre brands on true cost per kilometre using fitted price, expected life, fuel efficiency and break-even mileage.",
   icon: "circle-dollar-sign",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Measure title length against the 100 character limit and check that thumbnail text adds a new idea instead of repeating the title.",
   icon: "proportions",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

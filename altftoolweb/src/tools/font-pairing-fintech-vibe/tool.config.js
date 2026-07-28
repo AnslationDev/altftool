@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Trust-building type pairs with tabular figure settings and exact column widths for Indian and international number formats.",
   icon: "banknote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

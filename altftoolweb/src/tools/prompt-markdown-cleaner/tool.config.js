@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Strip stray markdown, smart quotes and invisible characters from text before pasting it into an AI model.",
   icon: "eraser",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

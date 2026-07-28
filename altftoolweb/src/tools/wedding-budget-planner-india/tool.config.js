@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Split a wedding budget across venue, catering, jewellery and travel, with a per-plate ceiling.",
   icon: "heart-handshake",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

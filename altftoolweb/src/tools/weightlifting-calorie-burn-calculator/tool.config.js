@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calories burned lifting weights, counting working sets and rest between sets separately using Compendium MET values.",
   icon: "dumbbell",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

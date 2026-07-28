@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price a Thai e-Visa, extension of stay or visa exemption trip in rupees, including the capped overstay fine.",
   icon: "sun",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

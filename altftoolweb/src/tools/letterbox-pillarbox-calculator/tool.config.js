@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out exact letterbox or pillarbox bar sizes when fitting one aspect ratio inside another frame, in pixels and percent.",
   icon: "ratio",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

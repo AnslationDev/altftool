@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Rounding shortcuts that turn a dirham price into rupees in your head, plus UAE hotel service, municipality fee and VAT.",
   icon: "banknote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

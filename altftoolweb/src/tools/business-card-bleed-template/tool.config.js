@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a press-ready business card template with bleed, trim, safe zone and crop marks, sized in real millimetres.",
   icon: "credit-card",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

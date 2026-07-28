@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate an Express router with validation, an async wrapper, correct status codes and four-argument error middleware.",
   icon: "route",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

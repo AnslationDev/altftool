@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare savings and deposit interest deduction limits under Section 80TTA and 80TTB for regular and senior taxpayers.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

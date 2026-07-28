@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "URL, domain, IP-host and optional-protocol regex patterns with port, query and fragment handling, live testing and limitation notes.",
   icon: "link",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

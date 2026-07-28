@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pick a nap length and alarm time that avoids sleep inertia, fits before your next commitment and protects tonight's sleep.",
   icon: "alarm-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

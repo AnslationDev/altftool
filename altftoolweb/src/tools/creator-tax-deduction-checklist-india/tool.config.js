@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Informational checklist of creator business expense categories in India, with business-use apportionment, depreciation and compliance flags.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

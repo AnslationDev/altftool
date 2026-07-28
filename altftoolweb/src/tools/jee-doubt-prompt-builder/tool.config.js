@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Frame physics, chemistry and maths doubts so AI explains step by step, with JEE Main time and negative-marking maths built in.",
   icon: "atom",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

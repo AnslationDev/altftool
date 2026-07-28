@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

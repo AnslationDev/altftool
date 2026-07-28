@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check rider, pillion and luggage weight against your bike's gross vehicle weight, payload and rear tyre load index.",
   icon: "scale",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

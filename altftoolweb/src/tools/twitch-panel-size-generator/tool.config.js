@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate channel panels, sub badges, emotes and offline art at exact Twitch pixel sizes and file limits.",
   icon: "twitch",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

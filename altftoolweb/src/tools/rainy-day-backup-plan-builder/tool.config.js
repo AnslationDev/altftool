@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the real chance of losing an outdoor day to rain, then assign indoor alternatives and suggest day swaps that cut the risk.",
   icon: "cloud-rain",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

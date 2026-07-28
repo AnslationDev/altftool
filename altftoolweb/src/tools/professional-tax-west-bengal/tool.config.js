@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "West Bengal professional tax by monthly salary slab, with the employer's month-by-month deposit schedule.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

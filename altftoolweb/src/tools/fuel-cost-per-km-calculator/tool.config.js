@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the true cost of a kilometre from fuel price and mileage, add running costs, and find the break-even for a CNG kit or EV switch.",
   icon: "fuel",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

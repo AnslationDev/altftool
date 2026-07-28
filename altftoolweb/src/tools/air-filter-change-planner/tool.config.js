@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set engine air filter and cabin AC filter change intervals from your dust exposure, driving pattern and kilometres run.",
   icon: "wind",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

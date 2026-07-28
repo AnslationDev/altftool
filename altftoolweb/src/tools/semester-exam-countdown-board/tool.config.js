@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See days left to each semester paper on one board, with per-subject readiness bars and at-risk flags for weak subjects close to their date.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

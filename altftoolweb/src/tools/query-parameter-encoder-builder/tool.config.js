@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a correctly percent-encoded query string from JSON, choosing how arrays, nested objects, spaces and unicode are serialised.",
   icon: "braces",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

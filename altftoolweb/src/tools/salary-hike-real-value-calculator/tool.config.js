@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See what an appraisal is really worth after marginal tax, cess, surcharge and inflation.",
   icon: "trending-up",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

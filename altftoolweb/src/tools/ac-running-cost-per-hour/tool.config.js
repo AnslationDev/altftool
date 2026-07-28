@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute air conditioner electricity cost per hour, day and month from tonnage, ISEER star rating and your unit tariff.",
   icon: "air-vent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

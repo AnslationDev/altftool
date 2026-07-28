@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score every 15-minute upload slot against your audience's timezones and find the publish time that lands in the most local prime windows.",
   icon: "clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

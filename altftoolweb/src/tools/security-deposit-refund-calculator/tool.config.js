@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out the rental deposit due back after unpaid rent, damages, utilities and notice shortfall, with the Model Tenancy Act cap.",
   icon: "piggy-bank",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generates thread prompts with post count, hook style and CTA — 280-character budgets and t.co link costs computed per post.",
   icon: "twitter",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

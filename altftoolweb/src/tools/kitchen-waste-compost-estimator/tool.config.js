@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate finished compost yield, the browns needed to balance the C:N ratio and the waste you divert from landfill each year.",
   icon: "sprout",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

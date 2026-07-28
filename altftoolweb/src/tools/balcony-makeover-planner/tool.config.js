@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan balcony flooring, planters, seating and lighting by size — with a budget and an added-load check.",
   icon: "flower-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

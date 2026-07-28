@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Developer", "Converters"],
   description: "Decode Base64 into hexadecimal byte output locally.",
   icon: "hash",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

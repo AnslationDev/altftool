@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compute mean time to repair, mean time between failures, failure rate and resulting availability from real incident data.",
   icon: "timer-reset",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

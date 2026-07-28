@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate spoken runtime from a script or word count, including punctuation pauses, and see the pace or word count needed to hit a target length.",
   icon: "mic",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

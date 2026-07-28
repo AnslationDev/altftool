@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a printable family agreement on when, how and how long children may use AI tools, with age-based rules.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

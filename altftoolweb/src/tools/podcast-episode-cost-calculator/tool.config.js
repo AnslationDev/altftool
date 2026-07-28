@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up editing, hosting, artwork and gear costs per podcast episode, then see cost per minute and the sponsor CPM you need to break even.",
   icon: "podcast",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

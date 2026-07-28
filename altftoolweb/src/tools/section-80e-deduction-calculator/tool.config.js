@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate the education loan interest you can deduct under Section 80E and track the 8-year eligibility window.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

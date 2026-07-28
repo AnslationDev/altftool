@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare AAY, Priority Household and non-NFSA ration cards — monthly grain entitlement, issue prices and what the ration is worth.",
   icon: "wheat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

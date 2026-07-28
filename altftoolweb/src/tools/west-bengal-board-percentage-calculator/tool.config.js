@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Madhyamik and Higher Secondary percentage from subject marks, with WBBSE letter grades and the best-five rule applied.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

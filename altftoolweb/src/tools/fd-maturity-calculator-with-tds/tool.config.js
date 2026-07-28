@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Fixed deposit maturity value with quarterly compounding, year-wise interest accrual, section 194A TDS and your post-tax return.",
   icon: "landmark",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

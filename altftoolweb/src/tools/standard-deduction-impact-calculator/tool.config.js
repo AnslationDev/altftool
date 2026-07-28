@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how the salaried standard deduction lowers your taxable income and final tax in the old and new regimes.",
   icon: "receipt-indian-rupee",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

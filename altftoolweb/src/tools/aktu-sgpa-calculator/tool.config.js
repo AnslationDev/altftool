@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate AKTU SGPA from credit-weighted grade points, roll semesters into CGPA and convert to percentage.",
   icon: "graduation-cap",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

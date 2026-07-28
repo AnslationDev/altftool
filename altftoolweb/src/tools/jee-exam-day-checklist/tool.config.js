@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "JEE Main centre-day checklist — admit card, self-declaration, photo ID, dress rules — plus a reporting-time plan built on the gate-closing rule.",
   icon: "atom",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

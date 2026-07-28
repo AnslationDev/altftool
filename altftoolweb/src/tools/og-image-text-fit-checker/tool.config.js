@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Wrap share-card headlines with real Helvetica metrics, check they fit the safe area and stay legible at feed thumbnail size.",
   icon: "scan-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

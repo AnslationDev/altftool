@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Play calming brown noise, rain, surf or fan hum that holds steady then fades to silence on a timer as you fall asleep.",
   icon: "moon",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

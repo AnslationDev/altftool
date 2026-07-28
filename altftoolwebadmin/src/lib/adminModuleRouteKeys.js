@@ -43,6 +43,7 @@ export const ADMIN_MODULE_ROUTE_KEYS = {
       "bulk",
       "technical",
       "gsc",
+      "search-console",
     ],
   },
 

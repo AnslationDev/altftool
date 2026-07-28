@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist.",
   icon: "pyramid",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

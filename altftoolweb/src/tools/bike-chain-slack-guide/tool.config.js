@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Set correct chain slack, measure chain stretch across 20 links against the 2% service limit and time your next lube.",
   icon: "link",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

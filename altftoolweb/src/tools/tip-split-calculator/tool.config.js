@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Calculators"],
   description: "Work out the tip and each person's share of a bill, with flexible rounding options.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

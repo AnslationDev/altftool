@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare IELTS, TOEFL iBT, PTE Academic and the Duolingo English Test on cost, format, speed and acceptance for your destination.",
   icon: "languages",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

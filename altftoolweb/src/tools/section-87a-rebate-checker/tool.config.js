@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check whether your taxable income qualifies for the Section 87A rebate and how much tax it wipes out.",
   icon: "badge-check",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

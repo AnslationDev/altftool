@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Price a Korean single, double or multiple entry visa in rupees and see whether a multiple entry pays for itself.",
   icon: "stamp",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

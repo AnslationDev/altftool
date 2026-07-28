@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert horsepower, brake horsepower, metric PS, kilowatts and BTU/h, with drivetrain loss and power-to-weight.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate laminate planks, packs, underlay rolls and beading lengths for a room, with a wastage allowance.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

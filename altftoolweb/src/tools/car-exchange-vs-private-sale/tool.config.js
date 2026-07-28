@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare a dealer exchange offer plus bonus against the true net proceeds of a private sale after costs, waiting time and money's time value.",
   icon: "car-front",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

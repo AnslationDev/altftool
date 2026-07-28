@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Scan an AI draft for tell-tale phrasing and uniform sentences, then work a weighted checklist of edits that restore your own voice.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

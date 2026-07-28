@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate per-language license header comments with year, copyright holder and SPDX identifier for 9 common licenses.",
   icon: "file-code-2",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

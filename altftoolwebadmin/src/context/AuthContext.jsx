@@ -11,6 +11,7 @@ import {
   isLocalAdminLoginEnabled,
   startLocalAdminSession,
 } from "@/lib/localAdminSession";
+import { clearSecurityCache } from "@/lib/security/pageCache";
 
 const AuthContext = createContext(null);
 // Safety fallback for ending the initial loading state. This is ONLY used to
@@ -377,6 +378,9 @@ export function AuthProvider({ children }) {
       /* ignore — never block sign-out on this */
     }
     clearLocalAdminSession();
+    // A different admin signing in on the same tab (without a hard refresh)
+    // must not see the previous admin's cached sessions/audit/events/settings.
+    clearSecurityCache();
     await signOut(auth).catch(() => {});
     if (!mountedRef.current) return;
     setUser(null);

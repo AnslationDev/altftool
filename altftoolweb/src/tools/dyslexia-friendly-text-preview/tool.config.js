@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Preview line height, letter and word spacing and measure against WCAG 1.4.12 and British Dyslexia Association guidance.",
   icon: "book-open-text",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a .prettierrc with every core formatting option, a live sample preview and per-file overrides.",
   icon: "braces",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Loopable white, pink and brown noise generated in your browser, with a session timer and a gradual volume ramp.",
   icon: "waves",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Average, best and worst annualised returns across every overlapping window in a NAV or index series.",
   icon: "repeat",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

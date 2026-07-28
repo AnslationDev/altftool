@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build a cruise packing list from formal nights, port days and sea days, including the cabin items that get confiscated at embarkation.",
   icon: "ship",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

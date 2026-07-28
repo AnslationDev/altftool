@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how many years a 5-star AC takes to pay back its price premium over a 3-star model, with tariff escalation.",
   icon: "star",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

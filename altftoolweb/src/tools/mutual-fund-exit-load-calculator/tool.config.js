@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Exit load, STT and net proceeds when you redeem mutual fund units inside the scheme holding period, including the 10% free-exit allowance.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

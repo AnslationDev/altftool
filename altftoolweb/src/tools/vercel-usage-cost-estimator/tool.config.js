@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Estimate your Vercel Pro bill from seats, bandwidth, edge requests, function invocations, duration and build minutes.",
   icon: "triangle",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

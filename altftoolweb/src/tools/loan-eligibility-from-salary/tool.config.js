@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Maximum loan you can get from take-home salary using common FOIR bands, plus the RBI loan-to-value ceiling on housing loans.",
   icon: "wallet",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

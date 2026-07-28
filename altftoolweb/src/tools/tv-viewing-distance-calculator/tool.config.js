@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the right TV size, seating distance and wall-mount height using SMPTE and THX viewing angles plus pixel acuity limits.",
   icon: "tv",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

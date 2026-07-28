@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan a video series across weeks: pick publish days, set a cadence, and map topics and formats onto dated episode slots.",
   icon: "calendar-days",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

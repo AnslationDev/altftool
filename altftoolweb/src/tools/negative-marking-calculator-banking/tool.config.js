@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out your IBPS or SBI net score section by section under the one-fourth penalty for wrong answers.",
   icon: "banknote",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

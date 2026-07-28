@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Measure your text's Flesch-Kincaid grade and build a rewrite prompt targeting a specific grade or reading level.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

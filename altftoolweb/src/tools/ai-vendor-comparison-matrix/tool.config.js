@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Score AI vendors on cost, control, support and compliance with a weighted decision matrix and get a ranked shortlist.",
   icon: "table-properties",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

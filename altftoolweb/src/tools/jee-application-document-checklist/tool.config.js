@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Checklist of NTA JEE Main form fields, uploads and certificates to prepare in advance, with the fee for your category and gender.",
   icon: "clipboard-list",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

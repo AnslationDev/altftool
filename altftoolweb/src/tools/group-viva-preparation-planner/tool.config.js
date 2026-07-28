@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan group viva practice with a round-robin rotation so every member asks and answers the same number of questions.",
   icon: "users",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "See how much a mutual fund expense ratio quietly eats from your long-term corpus, and what a direct plan saves.",
   icon: "percent",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

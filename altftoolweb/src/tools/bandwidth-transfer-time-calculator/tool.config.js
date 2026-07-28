@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Calculate how long a file or dataset takes to transfer at a given link speed, with protocol overhead and unit conversions handled.",
   icon: "gauge",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

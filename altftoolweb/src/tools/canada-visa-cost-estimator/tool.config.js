@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Add up the IRCC application fee, biometrics with its family cap, VFS charges and courier into one rupee total.",
   icon: "leaf",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

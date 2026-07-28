@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Builds the grit sequence from stripping to final finish for your material, with FEPA to CAMI conversion, sheet counts and sanding time.",
   icon: "layers",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

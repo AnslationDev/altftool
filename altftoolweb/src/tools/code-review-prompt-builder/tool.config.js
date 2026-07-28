@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Builds an AI code-review prompt focused on correctness, security, performance or style, with severity labels and a review-size check.",
   icon: "search-code",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

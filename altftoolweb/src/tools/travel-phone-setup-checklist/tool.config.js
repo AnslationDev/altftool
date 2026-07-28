@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Pre-flight phone setup checklist: backups, offline files, roaming toggles, battery rules and safety contacts.",
   icon: "list-checks",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

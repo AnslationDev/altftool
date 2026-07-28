@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Check your Sri Lanka ETA route, passport validity, permitted stay and visa cost, then build the document checklist for your trip.",
   icon: "plane",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

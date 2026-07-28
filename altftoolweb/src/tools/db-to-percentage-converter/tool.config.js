@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert decibels to linear amplitude, power and percentage in both directions, with the 20·log10 and 10·log10 rules shown.",
   icon: "sliders-horizontal",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

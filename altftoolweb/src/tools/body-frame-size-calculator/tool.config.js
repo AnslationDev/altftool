@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find whether you have a small, medium or large body frame from your wrist circumference and height, with a frame-adjusted ideal weight.",
   icon: "ruler",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

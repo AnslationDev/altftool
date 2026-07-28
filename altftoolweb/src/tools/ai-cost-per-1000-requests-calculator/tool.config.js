@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Turn per-million-token pricing into cost per request, per 1,000 and per million, with retries, caching and a tier comparison.",
   icon: "receipt",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

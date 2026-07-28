@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Work out how many NCERT pages to read per day — with days off and a revision buffer — to finish before your target date.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

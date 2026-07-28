@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Find the true monthly cost of NAT gateways — hourly charges, per-GB data processing and the internet egress on top.",
   icon: "router",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

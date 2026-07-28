@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Convert web hex colours to CMYK percentages and check total ink coverage against common press limits.",
   icon: "printer",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

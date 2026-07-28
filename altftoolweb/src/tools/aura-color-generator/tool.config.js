@@ -4,7 +4,7 @@ const toolConfig = {
   category: "Fun",
   description: "Upload a photo and discover your fictional aura color with playful descriptions!",
   icon: "sparkles",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

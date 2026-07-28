@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "True cost of a forex transaction after exchange rate markup, card fees and GST, with the effective rate you actually pay.",
   icon: "arrow-right-left",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

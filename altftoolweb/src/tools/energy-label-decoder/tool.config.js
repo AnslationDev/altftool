@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Read a BEE star label properly: turn the kWh per year or ISEER figure into running cost, savings and payback between two models.",
   icon: "tag",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

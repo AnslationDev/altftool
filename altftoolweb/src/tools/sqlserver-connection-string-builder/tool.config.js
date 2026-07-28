@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build ADO.NET and JDBC SQL Server connection strings with instance names, encryption, timeouts and correct value escaping.",
   icon: "server-cog",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

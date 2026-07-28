@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "A-Z dictionary of LLM terms — tokens, temperature, top-p, RAG, LoRA — with examples, typical values and a context budget check.",
   icon: "book-marked",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

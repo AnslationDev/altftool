@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Generate a packing and car-prep checklist with real quantities, tailored to trip length, travellers, season and terrain.",
   icon: "backpack",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

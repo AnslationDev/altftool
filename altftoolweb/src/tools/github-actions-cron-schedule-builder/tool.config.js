@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Build on.schedule cron entries in UTC from your local time and preview when the workflow runs for teammates around the world.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

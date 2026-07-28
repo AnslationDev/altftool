@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Compare Istio, Linkerd, Consul and Cilium on features, resource overhead and operational cost, weighted by your priorities.",
   icon: "git-compare",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

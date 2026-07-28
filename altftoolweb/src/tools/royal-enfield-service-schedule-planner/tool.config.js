@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan Royal Enfield service due dates, oil-change intervals and touring prep from your odometer, riding rate and last service.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

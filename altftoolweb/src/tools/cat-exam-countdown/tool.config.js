@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "CAT countdown with a phased mock schedule, sectional prep pace for VARC, DILR and QA, and attempts needed for a target score.",
   icon: "target",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

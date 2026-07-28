@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Bike and scooter loan EMI from on-road price, down payment and tenure, with loan-to-value and affordability checks.",
   icon: "bike",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

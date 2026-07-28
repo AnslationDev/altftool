@@ -5,7 +5,7 @@ const toolConfig = {
   description:
     "Plan announce, warn, brownout and removal dates for a deprecation, with ready-to-send comms templates.",
   icon: "calendar-clock",
-  iconColor: "text-(--primary)",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;
