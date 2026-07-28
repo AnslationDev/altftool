@@ -3,6 +3,23 @@ import { generatedToolSeo } from "./generated/toolSeoMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
 
+// ---------------------------------------------------------------------------
+// Integrity note — claims this file is allowed to make
+//
+// The tool corpus has no per-tool "processing happens on your device" flag, and
+// it would be wrong to invent one: ~61 tools call a network API from their own
+// runtime directory (LanguageTool for the spelling/grammar checkers, an image
+// service for pixar-style-generator, /api/tools/* for the AI tools…) and a
+// further ~68 render the shared AdvancedWorkbench, which posts the user's query
+// and optional geolocation to /api/tools/live-utility. So the templated copy
+// below states only what is true of EVERY tool page and is already asserted by
+// the SoftwareApplication JSON-LD in createToolJsonLd(): free (`isAccessible
+// ForFree`, `Offer price 0`), browser-based (`operatingSystem: "Web"`,
+// `browserRequirements`), and no account. Locality of processing is claimed
+// only where a human wrote it for that specific tool (src/tools/<slug>/seo.js
+// or toolContentOverrides), never from a shared template.
+// ---------------------------------------------------------------------------
+
 const workflowTemplates = {
   developer: {
     examples: [
@@ -30,7 +47,7 @@ const workflowTemplates = {
   },
   media: {
     examples: [
-      ["Edit without uploading", "Process images, audio, video, and documents directly in your browser — files never leave your device."],
+      ["Edit without desktop software", "Open images, audio, video, or documents in the page and make the change you need without installing an editor."],
       ["Preview every change", "See the result before you export, so the final file is exactly what you expect."],
       ["Export production-ready files", "Download output that's ready for your website, presentation, or client hand-off."],
     ],
@@ -38,9 +55,9 @@ const workflowTemplates = {
   },
   ai: {
     examples: [
-      ["Get AI-powered results instantly", "Run the analysis or generation right in your browser and see results within seconds."],
+      ["Get a result in seconds", "Hand over an image, some text, or a few numbers and read the analysis or generated output straight away."],
       ["Experiment freely", "Try different inputs and settings, compare the outcomes, and keep the one that fits best."],
-      ["Stay private by design", "Processing happens on your device wherever possible — your data isn't shipped to a server."],
+      ["No account, no credits", "There is nothing to sign up for and no per-use quota to watch — open the page and run it again as often as you need."],
     ],
     steps: ["Provide your input — an image, text, or data.", "Let the tool analyze or generate the result.", "Review, refine, and reuse the output wherever you need it."],
   },
@@ -69,6 +86,11 @@ function cleanText(value = "") {
 function getCategories(tool) {
   if (!tool?.category) return [];
   return (Array.isArray(tool.category) ? tool.category : [tool.category]).map((item) => cleanText(item)).filter(Boolean);
+}
+
+function getTopics(tool) {
+  if (!tool?.topics) return [];
+  return (Array.isArray(tool.topics) ? tool.topics : [tool.topics]).map((item) => cleanText(item)).filter(Boolean);
 }
 
 function chooseTemplate(categories, slug = "", name = "") {
@@ -142,7 +164,7 @@ function buildMetaDescription(name, description) {
 
   if (!base) {
     return trimAtClause(
-      `${name} runs entirely in your browser on AltFTool — no signup, no install, and nothing to upload`,
+      `${name} is a free online tool on AltFTool — it opens in your browser with no signup and nothing to install`,
       META_DESCRIPTION_MAX,
     );
   }
@@ -153,21 +175,205 @@ function buildMetaDescription(name, description) {
     : base;
 }
 
+// ---------------------------------------------------------------------------
+// Answer-first lead sentence
+//
+// Answer engines quote sentences that stand on their own. The registry gives
+// every tool a name, one or more categories and a one-line description, but the
+// description alone is a fragment ("Merge tiles to reach 2048…") that never
+// names the thing it describes — lifted out of the page it is unattributable.
+// The lead sentence below welds the tool's OWN fields into a single sentence
+// that names the entity, says what kind of tool it is, where it lives and what
+// it does, so the first prose after the H1 is quotable as-is.
+// ---------------------------------------------------------------------------
+
+/** Head noun a reader would use for a tool in this category. */
+const CATEGORY_TYPE_NOUNS = {
+  "AI Tools": "AI tool",
+  Business: "business tool",
+  Calculators: "calculator",
+  Converters: "converter",
+  "Design & Color": "design tool",
+  Developer: "developer tool",
+  "Education & Science": "science and education tool",
+  "Finance Calculators": "finance calculator",
+  Fun: "tool",
+  Games: "browser game",
+  Generators: "generator",
+  "Health & Fitness": "health and fitness tool",
+  "Health Calculators": "health calculator",
+  "Image & Photo": "image tool",
+  Lifestyle: "everyday tool",
+  "Marketing & Social": "marketing tool",
+  Other: "tool",
+  "PDF & Documents": "PDF and document tool",
+  Productivity: "productivity tool",
+  "Security & Privacy": "privacy and security tool",
+  "Text & Writing": "text tool",
+  "Video & Audio": "audio and video tool",
+};
+
+/** Singular/plural tolerant word test, so "Games" blocks a second "game". */
+function nameHasWord(name, word) {
+  const escaped = String(word).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`\\b${escaped}(?:e?s)?\\b`, "i").test(name);
+}
+
+/**
+ * "free online developer tool", "free browser game", … — the noun phrase that
+ * classifies the tool. Modifiers the name already carries are dropped so a tool
+ * called "Free QR Generator" never reads "is a free free online generator".
+ */
+function toolTypeNoun(categories) {
+  return (
+    categories.map((category) => CATEGORY_TYPE_NOUNS[category]).find(Boolean) ||
+    "tool"
+  );
+}
+
+function describeToolType(name, noun) {
+  // "browser game" already says where it runs; anything else gets "online".
+  const modifiers = /browser/.test(noun) ? ["free"] : ["free", "online"];
+  return [...modifiers.filter((word) => !nameHasWord(name, word)), noun].join(" ");
+}
+
+// Part of the catalogue is written in transliterated Hindi ("… aur inverted
+// normals detect kare"). Those descriptions are real content and still render
+// verbatim, but they must never be spliced into an English relative clause —
+// the result would be a sentence this builder invented and cannot defend.
+const TRANSLITERATED_MARKERS =
+  /\b(?:aur|kare|karein|karke|karta|karne|karna|kijiye|karega|dikhaye|dikhaega|banaye|banaen|bataye|nikale|dhoonde|badle|jaaye|hain|mein|saath|liye|wala|wale|rahe|kaise)\b/i;
+
+// First words that read as an instruction to the reader, i.e. the description
+// can be spliced after "…that lets you". Derived from the actual first-word
+// distribution of the 1,451 registry descriptions; anything not listed falls
+// back to the safe two-sentence form.
+const IMPERATIVE_VERBS = new Set([
+  "add", "adjust", "analyse", "analyze", "annotate", "answer", "apply", "archive",
+  "ask", "assess", "audit", "beautify", "boost", "break", "brighten", "browse",
+  "build", "calculate", "capture", "catch", "challenge", "change", "check",
+  "choose", "clean", "classify", "clip", "collapse", "compare", "compress",
+  "compute", "configure", "contact", "convert", "copy", "count", "cover",
+  "create", "crop", "cut", "decode", "delete", "design", "detect", "discover",
+  "download", "draw", "drop", "edit", "embed", "encode", "enhance", "enter",
+  "escape", "estimate", "evaluate", "expand", "experience", "explain", "explore",
+  "export", "expose", "extract", "filter", "find", "fit", "flag", "flip",
+  "follow", "forecast", "format", "freeze", "gamify", "generate", "get", "group",
+  "guess", "hash", "hide", "highlight", "identify", "import", "improve",
+  "inspect", "join", "keep", "learn", "lint", "log", "look", "lookup",
+  "maintain", "manage", "map", "mark", "mask", "master", "measure", "merge",
+  "mix", "monitor", "open", "optimise", "optimize", "organise", "organize",
+  "parse", "paste", "pause", "perform", "pick", "plan", "play", "practice",
+  "practise", "predict", "prepare", "preview", "print", "prioritise",
+  "prioritize", "project", "query", "rank", "reach", "read", "rearrange",
+  "record", "reduce", "reject", "remove", "render", "repeat", "replace",
+  "resize", "reverse", "review", "rewrite", "roll", "rotate", "run", "save",
+  "scale", "scan", "schedule", "score", "screen", "scrub", "search", "see",
+  "segment", "select", "send", "set", "share", "sharpen", "shift", "shrink",
+  "simplify", "simulate", "size", "smash", "solve", "sort", "spin", "split",
+  "stop", "store", "summarise", "summarize", "swap", "sync", "tag", "take",
+  "tap", "test", "trace", "track", "train", "transform", "translate", "trim",
+  "try", "tune", "turn", "uncover", "understand", "upload", "validate",
+  "view", "visualise", "visualize", "watch", "whack", "work", "write", "zoom",
+]);
+
+// Above this, "… that lets you <description>" becomes a 250-character sentence
+// nobody would quote; those descriptions get their own sentence instead.
+const PREDICATE_MAX_LENGTH = 170;
+
+/**
+ * Turn an imperative description into a clause that can follow "that lets you",
+ * or return null when the description is not shaped for it.
+ */
+function toPredicateClause(description) {
+  const text = cleanText(description).replace(/\s*[.!?]+$/, "");
+  if (!text || text.length > PREDICATE_MAX_LENGTH) return null;
+  if (TRANSLITERATED_MARKERS.test(text)) return null;
+
+  const firstWord = (text.split(/\s+/)[0] || "")
+    .replace(/[^A-Za-z-]/g, "")
+    .toLowerCase();
+  if (!IMPERATIVE_VERBS.has(firstWord)) return null;
+
+  return text.charAt(0).toLowerCase() + text.slice(1);
+}
+
+/**
+ * The self-contained sentence that opens the page. One sentence when the
+ * description splices cleanly; otherwise two, the first of which still names
+ * the tool, its type and where it lives, so neither half needs prior context.
+ */
+function buildAnswerSentence({ name, typePhrase, description }) {
+  const subject = `${name} is a ${typePhrase} on AltFTool`;
+  const clause = toPredicateClause(description);
+  if (clause) return `${subject} that lets you ${clause}.`;
+
+  const detail = endSentence(description);
+  return detail ? `${subject}. ${detail}` : `${subject}.`;
+}
+
+// A handful of hand-written intros open on a demonstrative with no antecedent
+// ("This calculator converts an absolute return into…"). Read on the page that
+// is fine; retrieved as a standalone chunk it names nothing. Swapping in the
+// tool's own name costs nothing and makes the paragraph self-describing.
+const GENERIC_TOOL_NOUNS =
+  "tool|calculator|converter|generator|checker|estimator|planner|page|utility|app|widget|tracker|analyzer|analyser|formatter|editor|viewer|game|simulator|solver|tester|scanner|builder|finder|counter|explorer|inspector|visualizer|visualiser|dashboard|maker|helper|workspace";
+const LEADING_DEMONSTRATIVE = new RegExp(
+  `^(?:This|The)\\s+(?:${GENERIC_TOOL_NOUNS})\\b(?!\\s+of\\b)`,
+);
+
+function anchorIntro(intro, name) {
+  const text = cleanText(intro);
+  if (!text || !name) return text;
+  if (LEADING_DEMONSTRATIVE.test(text)) return text.replace(LEADING_DEMONSTRATIVE, name);
+  if (/^It\s/.test(text)) return text.replace(/^It\s/, `${name} `);
+  return text;
+}
+
+/**
+ * The at-a-glance table. Every row is either the tool's own registry metadata
+ * or a fact that holds for every page in the corpus and is already asserted by
+ * the SoftwareApplication JSON-LD. Nothing here is inferred per tool.
+ */
+function buildFacts(categories, topics) {
+  const facts = [];
+  if (categories.length) {
+    facts.push({ label: "Tool type", value: categories.join(" · ") });
+  }
+  if (topics.length) {
+    facts.push({ label: "Made for", value: topics.join(" · ") });
+  }
+  facts.push({
+    label: "Price",
+    value: "Free — no account, no trial limit and no paid tier.",
+  });
+  facts.push({
+    label: "What you need",
+    value:
+      "A modern web browser with JavaScript enabled, on desktop, tablet or mobile.",
+  });
+  facts.push({
+    label: "Not required",
+    value: "No download, no install and no sign-up.",
+  });
+  return facts;
+}
+
 export function buildToolSeoContent(slug, tool = {}) {
   const name = cleanText(tool.name) || cleanText(slug).replace(/[-_]/g, " ");
   const description = cleanText(tool.description);
   const categories = getCategories(tool);
-  const primaryCategory = categories[0] || "online";
+  const topics = getTopics(tool);
+  const primaryCategory = categories[0] || "";
   const template = chooseTemplate(categories, slug, name);
   const summary = buildMetaDescription(name, description);
 
-  // Keep short acronym categories (AI, SEO, CSS…) uppercase in prose;
-  // longer labels read naturally in lowercase.
-  const categoryLabel = primaryCategory
-    ? primaryCategory.length <= 3
-      ? primaryCategory.toUpperCase()
-      : primaryCategory.toLowerCase()
-    : "online";
+  // The head noun for this category, e.g. "developer tool", "AI tool",
+  // "browser game". Prose uses this rather than the raw category label, which
+  // lowercases into nonsense ("a free ai tools tool", "a free pdf & documents
+  // tool"); the raw label is kept only where it is quoted as a section name.
+  const typeNoun = toolTypeNoun(categories);
+  const typeNounPlural = `${typeNoun}s`;
   // Per-tool src/tools/<slug>/seo.js wins over the legacy shared map: newer
   // tools ship their own file, older ones still live in toolContentOverrides.
   const override = generatedToolSeo[slug] || toolContentOverrides[slug] || null;
@@ -175,13 +381,18 @@ export function buildToolSeoContent(slug, tool = {}) {
   // Empty/disabled => {} so behavior is identical to before.
   const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);
 
-  // Keep the intro complementary to the description shown in the section
-  // header — never restate the raw description (it used to appear 3× on the
-  // page: header, intro and summary).
-  const intro =
+  const typePhrase = describeToolType(name, typeNoun);
+  const answer = buildAnswerSentence({ name, typePhrase, description });
+
+  // Keep the intro complementary to the answer sentence above it — never
+  // restate the raw description (it used to appear 3× on the page: header,
+  // intro and summary).
+  const intro = anchorIntro(
     central.intro ||
-    override?.intro ||
-    `${name} is a free ${categoryLabel} tool that runs entirely in your browser — nothing to install, no account to create, and your data never leaves your device. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
+      override?.intro ||
+      `${name} is one of the free ${typeNounPlural} on AltFTool: open the page, add your input, and copy or download the result. There is no account to create and nothing to install — it is a web page, so it works the same on desktop, tablet and mobile.`,
+    name,
+  );
 
   // Examples (benefits): central admin override > hand-written code override >
   // category template (with the tool name injected so copy stays unique).
@@ -196,23 +407,29 @@ export function buildToolSeoContent(slug, tool = {}) {
     : override?.faqs?.length
     ? override.faqs.map(([question, answer]) => ({ question, answer }))
     : [
+        // Fallback Q&As only. Each answer states something verifiable for every
+        // tool in the corpus — no claim about where a given tool processes your
+        // input, because the registry carries no such signal (see the integrity
+        // note at the top of this file).
         {
-          question: `Is ${name} free to use?`,
-          answer: `Yes — ${name} is completely free on AltFTool, with no signup, no trial limits, and no hidden costs.`,
+          question: `What is ${name}?`,
+          answer: primaryCategory
+            ? `${answer} It sits in the ${primaryCategory} section of the AltFTool library.`
+            : answer,
         },
         {
-          question: `Is my data private when I use ${name}?`,
-          answer: `Yes. ${name} runs in your browser, so what you enter or upload stays on your device instead of being sent to a server.`,
+          question: `Is ${name} free to use?`,
+          answer: `Yes — ${name} is free on AltFTool. There is no account to create, no trial limit and no paid tier.`,
+        },
+        {
+          question: `Do I need to install anything to use ${name}?`,
+          answer: `No. ${name} is a web page, so it opens in any modern browser on desktop, tablet or mobile with nothing to download and no extension to add.`,
         },
         {
           question: `What can I use ${name} for?`,
           answer: description
-            ? `${description.replace(/\.$/, "")}. It's built for quick, everyday ${categoryLabel} tasks with results you can copy or download straight away.`
-            : `${name} is built for quick, everyday ${categoryLabel} tasks with results you can copy or download straight away.`,
-        },
-        {
-          question: `Does ${name} work on mobile?`,
-          answer: `Yes — ${name} works in any modern browser, on desktop, tablet, and mobile, with the same features everywhere.`,
+            ? `${endSentence(description)} It is one of the free ${typeNounPlural} on AltFTool, so the result is ready to copy or download straight away.`
+            : `${name} is one of the free ${typeNounPlural} on AltFTool, built for quick everyday jobs with results you can copy or download straight away.`,
         },
       ];
 
@@ -231,8 +448,25 @@ export function buildToolSeoContent(slug, tool = {}) {
     h1: central.h1 || name,
     heading: `${name} workflows`,
     summary,
+    // The self-contained opening sentence. Rendered as the first prose after
+    // the H1 and reused as the "What is …?" fallback answer.
+    answer,
     intro,
     metaDescription: summary,
+    facts: buildFacts(categories, topics),
+    // Entity-anchored, question-form section headings. A retrieval chunk that
+    // starts at any of these headings identifies its own subject. `howTo` is
+    // also the name any HowTo JSON-LD for this page must carry, so the markup
+    // and the visible heading stay identical.
+    headings: {
+      facts: `${name} at a glance`,
+      howTo: `How do I use ${name}?`,
+      why: `Why use ${name}?`,
+      useCases: `What can I do with ${name}?`,
+      faq: `Frequently asked questions about ${name}`,
+      related: `Tools related to ${name}`,
+      embed: `How do I embed ${name} on my site?`,
+    },
     hasCuratedFaqs,
     hasCuratedSteps,
     useCases: central.useCases?.length ? central.useCases : override?.useCases || [],

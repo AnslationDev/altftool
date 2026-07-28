@@ -3,7 +3,7 @@ import { ArrowRight, BookOpenText, ListChecks, MessageCircleQuestion, Wrench } f
 function getFlowItems({ hasTools, hasFaqs, hasRelatedPosts }) {
   return [
     {
-      href: "#article-summary",
+      href: "#article-overview",
       label: "Summary",
       detail: "Start with the key points",
       icon: ListChecks,

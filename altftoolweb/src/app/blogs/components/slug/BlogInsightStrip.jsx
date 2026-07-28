@@ -58,7 +58,12 @@ export default function BlogInsightStrip({
   const freshness = getBlogFreshness(blog);
   const sourceCount = getSourceCount(blog);
   const faqCount = faqItems.length;
-  const updatedLabel = formatDate(blog.reviewedAt || blog.updatedAt || blog.date || blog.createdAt);
+  // A post with no stored review/update timestamp has never been updated, so
+  // the metric reports its publication date under a "Published" label instead
+  // of implying a revision that did not happen.
+  const revisionDate = blog.reviewedAt || blog.updatedAt;
+  const dateLabel = revisionDate ? "Updated" : "Published";
+  const dateValue = formatDate(revisionDate || blog.date || blog.createdAt);
   const primaryTool = relatedTools[0];
   const nextPost = relatedPosts[0];
   const authorName = blog.author || "AltFTool Editorial";
@@ -75,9 +80,9 @@ export default function BlogInsightStrip({
           />
           <InsightMetric
             icon={CalendarClock}
-            label="Updated"
-            value={updatedLabel}
-            detail={freshness.detail}
+            label={dateLabel}
+            value={dateValue}
+            detail={revisionDate ? freshness.detail : undefined}
           />
           <InsightMetric
             icon={BookOpenCheck}
@@ -88,8 +93,8 @@ export default function BlogInsightStrip({
           <InsightMetric
             icon={MessageCircleQuestion}
             label="FAQ"
-            value={faqCount ? `${faqCount} answers` : "Auto summary"}
-            detail={faqCount ? "Reader questions covered" : "Generated from article context"}
+            value={faqCount ? `${faqCount} answers` : "Not added"}
+            detail={faqCount ? "Reader questions covered" : undefined}
           />
         </div>
 

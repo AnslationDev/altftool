@@ -712,6 +712,10 @@ async function buildSitemapEntries({
 
   for (const deal of getDeals() || []) {
     if (!deal?.slug) continue;
+    // Every deal slug is also a tool slug, and the deal page canonicalises to
+    // /tools/all/<slug>. Submitting both just asks Google to pick between two
+    // of our own URLs for the same head term.
+    if (Object.hasOwn(toolMetaMap, deal.slug)) continue;
     pushUnique(entries, seen, `/deals/${deal.slug}`, {
       priority: 0.7,
       changeFrequency: "weekly",
@@ -817,7 +821,9 @@ async function buildSitemapEntries({
 
   // Altf Love PDF tool pages (/altflovepdf/[toolSlug])
   for (const tool of altPdfTools || []) {
-    if (tool?.slug) {
+    // Same rule as deals: a slug that also exists in the tool registry
+    // canonicalises to /tools/all/<slug>, so only that one is submitted.
+    if (tool?.slug && !Object.hasOwn(toolMetaMap, tool.slug)) {
       pushUnique(entries, seen, `/altflovepdf/${tool.slug}`, {
         priority: 0.62,
         changeFrequency: "monthly",
@@ -827,7 +833,9 @@ async function buildSitemapEntries({
 
   // AltF Calculators tool pages (/altfcalculators/[toolSlug])
   for (const tool of altCalculators || []) {
-    if (tool?.slug) {
+    // 41 of the 103 calculators also live at /tools/all/<slug>; those pages
+    // now canonicalise there, so submit only the canonical URL.
+    if (tool?.slug && !Object.hasOwn(toolMetaMap, tool.slug)) {
       pushUnique(entries, seen, `/altfcalculators/${tool.slug}`, {
         priority: 0.68,
         changeFrequency: "monthly",

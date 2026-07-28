@@ -1,5 +1,6 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import JsonLd from "@/platform/seo/JsonLd";
 import { TOOLS } from "../toolsData";
 import { buildToolJsonLd } from "../seo";
@@ -35,6 +36,24 @@ const DESCRIPTION_SUFFIX = {
 
 function getToolLabel(tool) {
   return tool.name.replace(/→/g, "to").replace(/\s+/g, " ").trim();
+}
+
+// Two of the 38 suite slugs — image-resizer and meme-generator, both in the
+// "Image Tools" tab — also exist in the tool corpus, so /altflovepdf/<slug>
+// and /tools/all/<slug> were both indexable, both self-canonical and shared an
+// H1. /tools/all/<slug> is the platform's single canonical home for a tool
+// entity (the /tools/<category>/<slug> route already canonicalises there, the
+// sitemap submits only that corpus URL, and createToolJsonLd anchors the
+// SoftwareApplication @id at `…/tools/all/<slug>#software`), so the twin
+// points at it. "meme-generator" also has a /deals twin, which makes
+// /tools/all the only consistent target for it.
+//
+// Nothing redirects: users still open these panels from the AltF Love PDF
+// workspace. The other 36 slugs have no twin and stay self-canonical.
+function resolveCanonicalPath(toolSlug) {
+  return Object.hasOwn(toolMetaMap, toolSlug)
+    ? `/tools/all/${toolSlug}`
+    : `/altflovepdf/${toolSlug}`;
 }
 
 function buildKeywords(tool) {
@@ -77,6 +96,7 @@ export async function generateMetadata({ params }) {
     description: `${tool.desc} ${DESCRIPTION_SUFFIX[tool.sidebarCategory] || DESCRIPTION_SUFFIX.Advanced}`,
     keywords: buildKeywords(tool),
     path,
+    canonical: resolveCanonicalPath(toolSlug),
   });
 }
 
@@ -100,10 +120,23 @@ export default async function Page(props) {
       })
     : [];
 
+  // On a corpus twin this page canonicalises to /tools/all/<slug>, where
+  // createToolJsonLd already publishes the SoftwareApplication entity as
+  // `…/tools/all/<slug>#software`. Emitting a second software node with a
+  // different @id would describe one tool as two entities, so the twin keeps
+  // only its BreadcrumbList; every other tool page is unchanged.
+  const isCorpusTwin =
+    Boolean(tool) && resolveCanonicalPath(toolSlug) !== `/altflovepdf/${toolSlug}`;
+  const toolJsonLd = tool
+    ? buildToolJsonLd(tool).filter(
+        (node) => !isCorpusTwin || !String(node?.["@id"] || "").endsWith("#software"),
+      )
+    : [];
+
   return (
     <>
-      {tool && (
-        <JsonLd id={`altflovepdf-${toolSlug}-jsonld`} data={buildToolJsonLd(tool)} />
+      {toolJsonLd.length > 0 && (
+        <JsonLd id={`altflovepdf-${toolSlug}-jsonld`} data={toolJsonLd} />
       )}
       <PageView {...props} />
       {tool && <ToolFacts slug={toolSlug} name={getToolLabel(tool)} />}

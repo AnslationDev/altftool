@@ -21,6 +21,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 
 import DealCard from "../components/DealCard";
 import GemRating from "../components/GemRating";
@@ -43,6 +44,22 @@ export function generateStaticParams() {
   return getDeals().map((deal) => ({ slug: deal.slug }));
 }
 
+// Every deal slug IS a tool slug — getDealToolHref() sends the only CTA on the
+// page to /tools/all/<slug>, and 12 of the 16 deal pages carry exactly the same
+// H1 as that tool page ("Image Compressor", "Meme Generator", …). Two of our
+// own indexable, self-canonical URLs were therefore competing for the same
+// product query, with the deal page holding no tool of its own.
+//
+// The tool page wins: it is where the product actually lives, it is the URL
+// this page itself links to, and createToolJsonLd already anchors the
+// SoftwareApplication entity at `…/tools/all/<slug>#software`. The deal page
+// stays reachable and useful from the /deals hub — only the canonical moves,
+// so no navigation path breaks. A deal whose slug has no tool in the registry
+// would stay self-canonical (none today).
+function resolveCanonicalPath(slug) {
+  return Object.hasOwn(toolMetaMap, slug) ? `/tools/all/${slug}` : `/deals/${slug}`;
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const deal = getDeal(slug);
@@ -53,6 +70,7 @@ export async function generateMetadata({ params }) {
     title: `${deal.name} — Free Lifetime Deal | AltF Deals`,
     description: `${deal.tagline}. Normally you'd pay ~$${deal.originalPrice}/yr for a tool like this — on AltF Deals it's 100% free, forever. ${deal.priceNote}.`,
     path: `/deals/${slug}`,
+    canonical: resolveCanonicalPath(slug),
     keywords: [deal.name, ...(deal.alternativeTo || []).map((alt) => `free ${alt} alternative`)],
   });
 }

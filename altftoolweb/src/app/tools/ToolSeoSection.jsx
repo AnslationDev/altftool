@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, Code2, HelpCircle, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Code2, HelpCircle, Info, LayoutGrid, ListChecks, Plus, Sparkles } from "lucide-react";
 import { buildToolSeoContent } from "./toolSeoContent";
 import { getRelatedTools, getToolCategories } from "./toolRouteUtils";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
@@ -15,6 +15,16 @@ import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
  * not indexed". This component renders the unique per-tool content
  * (heading, intro, how-to, benefits, FAQ, related tools) on the SERVER so the
  * raw page source contains real, indexable content.
+ *
+ * GEO: the first prose after the H1 is `seo.answer` — one self-contained
+ * sentence built from the tool's own registry fields that names the tool, says
+ * what kind of tool it is and what it does. Answer engines quote sentences that
+ * stand alone; the raw registry description used to sit there instead, and it
+ * never names its own subject ("Merge tiles to reach 2048…"). Section headings
+ * are entity-anchored and question-form so a retrieval chunk starting at any
+ * heading identifies what it is about. `seo.headings.howTo` is also the name
+ * any HowTo JSON-LD for this page must carry, so markup and visible heading
+ * never disagree.
  *
  * Presentation: the premium "app theme" (intentionally hardcoded product
  * decision — indigo/violet gradient accents, white cards, soft lavender
@@ -95,19 +105,54 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
         <h1 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl" style={{ color: T.ink }}>
           {seo.h1}
         </h1>
-        {tool?.description ? (
-          <p className="mt-2 max-w-3xl text-sm font-medium" style={{ color: T.muted }}>
-            {tool.description}
-          </p>
-        ) : null}
-        <p className="mt-4 max-w-3xl text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
+        {/* Answer-first: one self-contained sentence, quotable without the rest
+            of the page. Carries the tool's own description, so the raw
+            description is no longer repeated as a separate paragraph. */}
+        <p className="mt-3 max-w-3xl text-[15px] font-medium leading-relaxed sm:text-base" style={{ color: T.ink }}>
+          {seo.answer}
+        </p>
+        <p className="mt-3 max-w-3xl text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
           {seo.intro}
         </p>
       </div>
 
+      {/* At a glance — every row is registry metadata or a fact that holds for
+          the whole corpus and is already asserted by the SoftwareApplication
+          JSON-LD (free, browser-based, no account). Nothing inferred. */}
+      <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
+        <SectionHeading icon={Info}>{seo.headings.facts}</SectionHeading>
+        {/* Real <table>: the most extractable shape for a fact block, and it
+            stays readable down to ~280px because the cells wrap rather than
+            forcing a min-width. overflow-x-auto is only a safety net. */}
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full border-collapse text-left text-sm">
+            <caption className="sr-only">Key facts about {seo.name}</caption>
+            <tbody>
+              {seo.facts.map((fact, index) => (
+                <tr
+                  key={fact.label}
+                  className={index > 0 ? "border-t border-(--sc-border)" : undefined}
+                >
+                  <th
+                    scope="row"
+                    className="w-28 py-2.5 pr-4 align-top font-bold sm:w-40"
+                    style={{ color: T.ink }}
+                  >
+                    {fact.label}
+                  </th>
+                  <td className="py-2.5 align-top font-medium leading-relaxed" style={{ color: T.ink }}>
+                    {fact.value}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* How to use — numbered step cards */}
       <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-        <SectionHeading icon={ListChecks}>How to use {seo.name}</SectionHeading>
+        <SectionHeading icon={ListChecks}>{seo.headings.howTo}</SectionHeading>
         <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {seo.steps.map((step, index) => (
             <li key={step} className="rounded-2xl p-4" style={{ backgroundColor: T.tile }}>
@@ -127,7 +172,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
 
       {/* Why use — benefit cards */}
       <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-        <SectionHeading icon={Sparkles}>Why use {seo.name}</SectionHeading>
+        <SectionHeading icon={Sparkles}>{seo.headings.why}</SectionHeading>
         <ul className="mt-5 grid gap-3 sm:grid-cols-3">
           {seo.examples.map((example) => (
             <li key={example.title} className="rounded-2xl p-4" style={{ backgroundColor: T.tile }}>
@@ -145,7 +190,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
       {/* Common use cases (only when curated content exists) */}
       {seo.useCases?.length > 0 && (
         <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-          <SectionHeading icon={BookOpen}>Common use cases</SectionHeading>
+          <SectionHeading icon={BookOpen}>{seo.headings.useCases}</SectionHeading>
           <ul className="mt-5 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
             {seo.useCases.map((useCase) => (
               <li
@@ -167,7 +212,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
 
       {/* FAQ — native <details>, no client JS, crawlable content */}
       <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-        <SectionHeading icon={HelpCircle}>Frequently asked questions</SectionHeading>
+        <SectionHeading icon={HelpCircle}>{seo.headings.faq}</SectionHeading>
         <div className="mt-3 space-y-2">
           {seo.faqs.map((faq, index) => (
             <details
@@ -196,8 +241,8 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
 
       {/* Related tools */}
       {related.length > 0 && (
-        <nav aria-label="Related tools" className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-          <SectionHeading icon={LayoutGrid}>Related tools</SectionHeading>
+        <nav aria-label={seo.headings.related} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
+          <SectionHeading icon={LayoutGrid}>{seo.headings.related}</SectionHeading>
           <ul className="mt-4 flex flex-wrap gap-2">
             {related.map((item) => (
               <li key={item.slug}>
@@ -217,11 +262,12 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
 
       {/* Embed-on-your-site snippet (allowlisted widget categories only) */}
       {isEmbeddable(slug) && (
-        <section aria-label={`Embed ${tool?.name || seo.name}`} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
-          <SectionHeading icon={Code2}>Embed this tool on your site</SectionHeading>
+        <section aria-label={seo.headings.embed} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
+          <SectionHeading icon={Code2}>{seo.headings.embed}</SectionHeading>
           <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: T.muted }}>
-            Add the {tool?.name || seo.name} widget to your blog or website — free, responsive,
-            no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
+            Copy the snippet below into your blog or website to embed the{" "}
+            {tool?.name || seo.name} widget — free, responsive, no signup. Just keep the
+            &ldquo;Widget by AltFTool&rdquo; credit link visible.
           </p>
           <div className="mt-4">
             <EmbedCodeCopy

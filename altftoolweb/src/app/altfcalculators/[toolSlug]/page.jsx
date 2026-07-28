@@ -7,6 +7,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import JsonLd from "@/platform/seo/JsonLd";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { CALCULATORS } from "../toolsData";
 import { getToolInfo } from "../toolInfo";
 import PageView from "./PageView";
@@ -29,6 +30,34 @@ export function generateStaticParams() {
 // <any string> minted an indexable page for a calculator that does not exist.
 function findCalculator(toolSlug) {
   return CALCULATORS.find((item) => item.slug === toolSlug) || null;
+}
+
+// 41 of the 103 calculator slugs also exist in the tool corpus, so
+// /altfcalculators/<slug> and /tools/all/<slug> were BOTH indexable, BOTH
+// self-canonical and carried the same H1 — two of our own URLs splitting the
+// signal for head terms (bmi, sip, mortgage, emi…).
+//
+// /tools/all/<slug> is the platform's single canonical home for a tool entity
+// and therefore wins:
+//   • /tools/<category>/<slug> already canonicalises there (buildToolMetadata
+//     always passes path `/tools/all/<slug>`), and the sitemap deliberately
+//     submits only that URL out of the corpus routes;
+//   • createToolJsonLd anchors the SoftwareApplication node at
+//     `…/tools/all/<slug>#software` with a matching mainEntityOfPage, so the
+//     entity already claims that URL as its page;
+//   • it is the URL the rest of the site links to (the /tools directory, every
+//     /tools/<category> listing, the homepage trending rail and the global
+//     nav), and it is the only family that contains EVERY colliding slug —
+//     "meme-generator", for instance, is a twin of both /altflovepdf and
+//     /deals, so no suite could be a consistent target.
+//
+// Users still reach this suite from its own hub, so nothing is redirected —
+// only the canonical is consolidated. Calculators with no twin (62 of 103)
+// stay self-canonical and are untouched.
+function resolveCanonicalPath(toolSlug) {
+  return Object.hasOwn(toolMetaMap, toolSlug)
+    ? `/tools/all/${toolSlug}`
+    : `/altfcalculators/${toolSlug}`;
 }
 
 export async function generateMetadata({ params }) {
@@ -58,6 +87,7 @@ export async function generateMetadata({ params }) {
       tool.desc ||
       `Use the free ${tool.name} online. Fast, accurate and 100% private — it runs entirely in your browser.`,
     path: `/altfcalculators/${toolSlug}`,
+    canonical: resolveCanonicalPath(toolSlug),
   });
 }
 

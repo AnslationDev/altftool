@@ -30,6 +30,43 @@ Object.values(toolMetaMap ?? {}).forEach((tool) => {
   });
 });
 
+// Host canonicalisation. Every page is reachable on more than one host (the
+// apex, and the Amplify default *.amplifyapp.com domain), and each extra host
+// serves a byte-identical copy of the whole site. Search engines treat those as
+// separate sites and split the ranking signals between them, so anything that
+// is not the canonical host gets a permanent redirect onto it.
+const CANONICAL_HOST = "www.altftool.com";
+
+// Dev hosts, which must never be redirected to production.
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "0.0.0.0", "::1", "[::1]"]);
+
+function normalizeHostname(hostname = "") {
+  // Trailing dot: "www.altftool.com." is the same host to DNS, and crawlers do
+  // occasionally request it.
+  return String(hostname).toLowerCase().replace(/\.$/, "");
+}
+
+function isLocalHostname(hostname) {
+  return LOCAL_HOSTNAMES.has(normalizeHostname(hostname));
+}
+
+// Deliberately an allow-list of hosts we know are ours, not "everything that is
+// not www". This proxy runs on every request, and Amplify's SSR origin is known
+// to present an unusual URL (see the port handling below), so a blanket
+// "redirect any unexpected host to www" would turn one wrong Host header into a
+// site-wide redirect loop. It would also break device testing over a LAN IP or
+// a tunnel host by bouncing the tester to production. Unknown hosts are left
+// alone; the hosts that actually cause duplicate indexing are all listed here.
+function isNonCanonicalHost(hostname = "") {
+  const host = normalizeHostname(hostname);
+  if (!host || host === CANONICAL_HOST || LOCAL_HOSTNAMES.has(host)) return false;
+  if (host === "altftool.com" || host.endsWith(".altftool.com")) return true;
+  // Amplify's build-in domain (e.g. main.d1234.amplifyapp.com) serves the whole
+  // site and is crawlable unless it is redirected away.
+  if (host.endsWith(".amplifyapp.com")) return true;
+  return false;
+}
+
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
   "/about": "/policypages/about",
@@ -51,11 +88,25 @@ const REDIRECTS_MAP = {
 
 export async function proxy(request) {
   const url = request.nextUrl.clone();
+  const requestUrl = new URL(request.url);
+
+  // 1. Host first, before any path work. A path redirect issued on the wrong
+  //    host keeps the user (and the crawler) on the wrong host, so host and
+  //    path have to be fixed in that order — one 301 to the canonical host,
+  //    path and query untouched, then the path rules run on the next request.
+  if (isNonCanonicalHost(requestUrl.hostname)) {
+    requestUrl.protocol = "https:";
+    requestUrl.hostname = CANONICAL_HOST;
+    // Amplify forwards SSR requests through an internal :3000 origin.
+    requestUrl.port = "";
+    return NextResponse.redirect(requestUrl, 301);
+  }
+
   let pathname = url.pathname;
   let changed = false;
   let statusCode = 301;
 
-  // 1a. ALTF Engine central redirects (admin-managed, no deploy).
+  // 2a. ALTF Engine central redirects (admin-managed, no deploy).
   //     Inert when the engine is off: getActiveRedirects() returns [] instantly.
   const central = resolveRedirect(await getActiveRedirects(), pathname);
   if (central && central.destination) {
@@ -67,7 +118,7 @@ export async function proxy(request) {
     changed = true;
     statusCode = central.statusCode;
   } else if (REDIRECTS_MAP[pathname]) {
-    // 1b. Static path mapping to resolve redirect chains in 1 hop
+    // 2b. Static path mapping to resolve redirect chains in 1 hop
     pathname = REDIRECTS_MAP[pathname];
     changed = true;
   } else if (pathname.startsWith("/news/topic/")) {
@@ -103,10 +154,11 @@ export async function proxy(request) {
 
   if (changed) {
     const targetUrl = new URL(request.url);
-    const isLocalhost =
-      targetUrl.hostname === "localhost" || targetUrl.hostname === "127.0.0.1";
-
-    if (!isLocalhost) {
+    // Kept after the host guard above: a request only reaches here on the
+    // canonical host, a dev host, or a host the guard deliberately does not
+    // recognise (an unexpected Amplify origin). For that last case, pinning the
+    // redirect target to the canonical host is still the right answer.
+    if (!isLocalHostname(targetUrl.hostname)) {
       targetUrl.protocol = "https:";
       targetUrl.hostname = "www.altftool.com";
       // Amplify forwards SSR requests through an internal :3000 origin.

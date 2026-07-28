@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, ChevronRight, Clock3, Home, RefreshCw, UserRound } from "lucide-react";
+import { CalendarDays, ChevronRight, Clock3, Home, RefreshCw } from "lucide-react";
 import { blogTaxonomySlug, getBlogFreshness } from "../../data";
+import { resolveBlogLede } from "./blogAnswerFirst";
 
 function formatDate(date) {
   if (!date) return "Recently updated";
@@ -13,9 +14,15 @@ function formatDate(date) {
   }).format(new Date(date));
 }
 
-export default function BlogHeader({ blog }) {
+export default function BlogHeader({ blog, summary }) {
   const authorName = blog.author || "AltFTool Editorial";
   const freshness = getBlogFreshness(blog);
+  // Answer-first lede: the first prose after the H1 has to stand on its own,
+  // because that is the sentence answer engines lift. `resolveBlogLede`
+  // returns "" when the post only has boilerplate or a repeat of its own
+  // opening line, in which case the article body's first paragraph is already
+  // the better answer and nothing is added here.
+  const lede = typeof summary === "string" ? summary : resolveBlogLede(blog);
 
   const authorInitial = (authorName.match(/\b\w/g) || ["A"]).slice(0, 2).join("").toUpperCase();
 
@@ -83,9 +90,13 @@ export default function BlogHeader({ blog }) {
             {blog.heading}
           </h1>
 
-          {blog.excerpt ? (
-            <p className="mt-4 line-clamp-3 max-w-3xl text-sm leading-relaxed text-white/80 sm:mt-5 sm:line-clamp-none sm:text-base">
-              {blog.excerpt}
+          {lede ? (
+            <p
+              id="article-summary"
+              data-article-summary="true"
+              className="mt-4 max-w-3xl text-sm leading-relaxed text-white sm:mt-5 sm:text-base"
+            >
+              {lede}
             </p>
           ) : null}
 

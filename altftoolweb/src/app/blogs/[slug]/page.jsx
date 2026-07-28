@@ -28,12 +28,20 @@ import {
   createItemListJsonLd,
   createPageMetadata,
   compactBrandedTitle,
+  getSiteUrl,
+  siteConfig,
 } from "@/platform/seo/generateMetadata";
 import {
   deriveBlogFaqItems,
   deriveBlogHowToSteps,
   getBlogDescription,
 } from "../utils/blogFaq";
+import {
+  getVisibleFaqItems,
+  getVisibleHowToSteps,
+  isGeneratedDescription,
+  resolveBlogLede,
+} from "../components/slug/blogAnswerFirst";
 import BlogHeader from "../components/slug/BlogHeader";
 import BlogContent from "../components/slug/BlogContent";
 import BlogAds from "../components/slug/BlogAds";
@@ -104,7 +112,14 @@ export async function generateMetadata({ params }) {
   const title = compactBrandedTitle(
     blog.seoTitle || `${blog.heading} - AltFTool Blog`,
   );
-  const description = getBlogDescription(blog);
+  // Prefer the post's own summary over the synthesised fallback sentence: the
+  // fallback is worded identically on every post that lacks a description, and
+  // near-duplicate meta descriptions across the archive suppress snippets.
+  const storedDescription = getBlogDescription(blog);
+  const lede = resolveBlogLede(blog);
+  const description = isGeneratedDescription(storedDescription) && lede
+    ? lede
+    : storedDescription;
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
   const metadata = await createPageMetadata({
     title,
@@ -171,6 +186,49 @@ function toReaderCompanionBlog(blog) {
   };
 }
 
+// The blog data layer stamps every post that has no stored author with an
+// editorial label, which the shared BlogPosting builder then types as a Person
+// with a personal-profile URL. No such person exists, so an organisation-shaped
+// byline is re-typed as an Organization here.
+const ORGANIZATION_BYLINE = /^altftool\b|\b(editorial|team|staff|newsroom)\b/i;
+
+/**
+ * Keeps the article node limited to claims the page can back up: a real author
+ * entity, `speakable` only when the summary element is rendered, and reviewer
+ * fields only when the post stores a genuine review or update date.
+ */
+function refineArticleJsonLd(node, { summary, hasRevisionDate }) {
+  if (!node) return null;
+
+  const refined = { ...node };
+  const authorName = refined.author?.name;
+  const hasSummary = Boolean(summary);
+
+  // Keep the described summary identical to the one on the page instead of the
+  // synthesised fallback sentence shared by every description-less post.
+  if (hasSummary && isGeneratedDescription(refined.description)) {
+    refined.description = summary;
+    refined.abstract = summary;
+  }
+
+  if (!authorName || ORGANIZATION_BYLINE.test(authorName)) {
+    refined.author = {
+      "@type": "Organization",
+      name: authorName || siteConfig.name,
+      url: getSiteUrl(),
+    };
+  }
+
+  if (!hasSummary) delete refined.speakable;
+
+  if (!hasRevisionDate) {
+    delete refined.reviewedBy;
+    delete refined.editor;
+  }
+
+  return refined;
+}
+
 function toFeedbackBlog(blog) {
   return {
     id: typeof blog.id === "string" ? blog.id : "",
@@ -193,15 +251,31 @@ export default async function BlogDetailPage({ params }) {
 
   const initialRelated = await getInitialRelatedBlogs(initialBlog, slug);
   const initialRelatedTools = getRelatedToolsForBlog(initialBlog, 6);
-  const initialFaqs = deriveBlogFaqItems(initialBlog);
-  const initialHowToSteps = deriveBlogHowToSteps(initialBlog, initialRelatedTools);
+  const articleContent = initialBlog.description || initialBlog.content || "";
+  // Structured data has to describe what the reader actually sees. Derived FAQ
+  // and HowTo entries are filtered down to the ones rendered on the page, so a
+  // post with no authored questions or steps simply emits no FAQPage/HowTo
+  // instead of schema for text that only exists in a template.
+  const initialFaqs = getVisibleFaqItems({
+    content: articleContent,
+    items: deriveBlogFaqItems(initialBlog),
+  });
+  const initialHowToSteps = getVisibleHowToSteps({
+    content: articleContent,
+    steps: deriveBlogHowToSteps(initialBlog, initialRelatedTools),
+  });
+  const articleLede = resolveBlogLede(initialBlog);
+  const articleJsonLd = refineArticleJsonLd(createBlogPostingJsonLd(initialBlog), {
+    summary: articleLede,
+    hasRevisionDate: Boolean(initialBlog.reviewedAt || initialBlog.updatedAt),
+  });
 
   return (
     <>
       <JsonLd
         id={`blog-schema-${slug}`}
         data={[
-          createBlogPostingJsonLd(initialBlog),
+          articleJsonLd,
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Blog", path: "/blogs" },
@@ -247,7 +321,7 @@ export default async function BlogDetailPage({ params }) {
             </Link>
           </div>
 
-          <BlogHeader blog={initialBlog} />
+          <BlogHeader blog={initialBlog} summary={articleLede} />
 
           <BlogEngagementProvider blog={toEngagementBlog(initialBlog)}>
             <BlogEngagementActions />
