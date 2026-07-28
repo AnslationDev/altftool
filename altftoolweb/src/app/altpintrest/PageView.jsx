@@ -475,11 +475,10 @@ export default function AltPinterest({ defaultView }) {
                   setSelectedItem(null);
                   setActiveFilter("All");
                 }}
-                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${
-                  activeTab === "discover"
-                    ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
-                    : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
-                }`}
+                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${activeTab === "discover"
+                  ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
+                  : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
+                  }`}
               >
                 Explore
               </button>
@@ -488,11 +487,10 @@ export default function AltPinterest({ defaultView }) {
                   setActiveTab("saved");
                   setSelectedItem(null);
                 }}
-                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${
-                  activeTab === "saved"
-                    ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
-                    : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
-                }`}
+                className={`px-4 py-2 rounded-full font-bold transition-colors cursor-pointer ${activeTab === "saved"
+                  ? "bg-black dark:bg-white text-white dark:text-black shadow-xs"
+                  : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200"
+                  }`}
               >
                 Saved Ideas ({savedItems.size})
               </button>
@@ -714,11 +712,10 @@ export default function AltPinterest({ defaultView }) {
                           ...prev,
                           image: getImageUrl(prev.originalData?.image || prev.originalData?.img || prev.originalData?.logo || prev.originalData?.url) || FALLBACK_PIN_IMAGE
                         }))}
-                        className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${
-                          selectedItem.image === (getImageUrl(selectedItem.originalData?.image || selectedItem.originalData?.img || selectedItem.originalData?.logo || selectedItem.originalData?.url) || FALLBACK_PIN_IMAGE)
-                            ? 'border-[#2563EB]'
-                            : 'border-transparent hover:border-gray-300'
-                        }`}
+                        className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${selectedItem.image === (getImageUrl(selectedItem.originalData?.image || selectedItem.originalData?.img || selectedItem.originalData?.logo || selectedItem.originalData?.url) || FALLBACK_PIN_IMAGE)
+                          ? 'border-[#2563EB]'
+                          : 'border-transparent hover:border-gray-300'
+                          }`}
                       >
                         <img
                           src={getImageUrl(selectedItem.originalData?.image || selectedItem.originalData?.img || selectedItem.originalData?.logo || selectedItem.originalData?.url) || FALLBACK_PIN_IMAGE}
@@ -731,11 +728,10 @@ export default function AltPinterest({ defaultView }) {
                         <button
                           key={idx}
                           onClick={() => setSelectedItem(prev => ({ ...prev, image: imgUrl }))}
-                          className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${
-                            selectedItem.image === imgUrl
-                              ? 'border-[#2563EB]'
-                              : 'border-transparent hover:border-gray-300'
-                          }`}
+                          className={`h-14 w-14 overflow-hidden rounded-lg border-2 shrink-0 transition ${selectedItem.image === imgUrl
+                            ? 'border-[#2563EB]'
+                            : 'border-transparent hover:border-gray-300'
+                            }`}
                         >
                           <img
                             src={imgUrl}

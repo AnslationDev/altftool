@@ -9,9 +9,9 @@ export default function ExploreFooter({ onExplore }) {
 
         {/* Brand info */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#E60023] flex items-center justify-center text-white font-black text-lg shadow-sm">
+          {/* <div className="w-8 h-8 rounded-full bg-[#E60023] flex items-center justify-center text-white font-black text-lg shadow-sm">
             P
-          </div>
+          </div> */}
           <span className="font-bold text-gray-900 dark:text-white text-base">AltPinterest Ideas</span>
           <span className="hidden sm:inline">•</span>
           <span className="text-xs">Visual Discovery & Inspiration Board</span>

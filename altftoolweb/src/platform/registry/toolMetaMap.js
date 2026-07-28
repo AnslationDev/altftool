@@ -270,6 +270,13 @@ export const toolMetaMap = {
     "icon": "text-cursor-input",
     "iconColor": "text-teal-500"
   },
+  "acrostic-poem-builder": {
+    "name": "Acrostic Poem Builder",
+    "description": "Turn any name, word, or phrase into a clean acrostic poem outline with line prompts and tone guidance.",
+    "category": "Text & Writing",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
   "act-composite-score-calculator": {
     "name": "ACT Composite Score Calculator",
     "description": "Average ACT section scores into the official 1-36 Composite with ACT's half-up rounding, for classic and enhanced 2025 formats.",
@@ -1138,6 +1145,13 @@ export const toolMetaMap = {
     "icon": "accessibility",
     "iconColor": "text-[var(--primary)]"
   },
+  "alternate-nostril-breathing-guide": {
+    "name": "Alternate Nostril Breathing Guide",
+    "description": "Step-by-step nadi shodhana pacing: which nostril, which finger and how long, with ratio presets and round counting.",
+    "category": "Health & Fitness",
+    "icon": "waves",
+    "iconColor": "text-[var(--primary)]"
+  },
   "amazon-listing-image-spec-checker": {
     "name": "Amazon Listing Image Spec Checker",
     "description": "Check an Amazon product photo against the white-background, 85% frame fill, 500 px minimum and 1000 px zoom rules before you upload.",
@@ -1164,6 +1178,13 @@ export const toolMetaMap = {
     "description": "Work out amp-img dimensions, retina source sizes and estimated file weight against the 200 KB AMP for Email limit.",
     "category": "Marketing & Social",
     "icon": "image-down",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "amrap-workout-timer": {
+    "name": "AMRAP Workout Timer",
+    "description": "As-many-rounds-as-possible countdown with a round tap counter, live pace projection and a rounds-plus-reps score.",
+    "category": "Health & Fitness",
+    "icon": "repeat",
     "iconColor": "text-[var(--primary)]"
   },
   "amsterdam-ams-airport-arrival-buffer-calculator": {
@@ -1474,6 +1495,13 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-primary"
   },
+  "aqi-exercise-safety-advisor": {
+    "name": "AQI Exercise Safety Advisor",
+    "description": "Enter today's AQI to get an outdoor training verdict, the PM2.5 you would inhale and a safer session length.",
+    "category": "Health & Fitness",
+    "icon": "wind",
+    "iconColor": "text-[var(--primary)]"
+  },
   "aqi-live-dashboard": {
     "name": "AQI Live Dashboard",
     "description": "Current AQI aur pollutant-wise breakdown dikhaye.",
@@ -1511,6 +1539,13 @@ export const toolMetaMap = {
     "description": "Browse 16 art movements with their real hallmarks, blend up to three, and build an image prompt that fits the 75-token CLIP window.",
     "category": "Design & Color",
     "icon": "palette",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "asana-hold-timer": {
+    "name": "Asana Hold Timer",
+    "description": "Sequence timer for yoga holds that counts breaths per pose, handles both sides and totals your practice time.",
+    "category": "Health & Fitness",
+    "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
   "ascii-explorer": {
@@ -2025,6 +2060,13 @@ export const toolMetaMap = {
     "icon": "plane",
     "iconColor": "text-[var(--primary)]"
   },
+  "bank-account-closure-request-generator": {
+    "name": "Bank Account Closure Request Generator",
+    "description": "Check whether an account closure charge applies, work out the balance you will actually receive, and draft the closure letter to your branch.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
   "bank-account-masking-tool": {
     "name": "Bank Account Number Masking Tool",
     "description": "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document.",
@@ -2085,6 +2127,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "barbell-plate-loading-calculator": {
+    "name": "Barbell Plate Loading Calculator",
+    "description": "Work out exactly which plates to load per side for any target weight, bar type and collar setup, in kilograms or pounds.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
   },
   "barcode-generator": {
     "name": "Barcode Generator",
@@ -2370,6 +2419,13 @@ export const toolMetaMap = {
     "icon": "brain-circuit",
     "iconColor": "text-primary"
   },
+  "bcaa-eaa-dose-calculator": {
+    "name": "BCAA and EAA Dose Calculator",
+    "description": "Work out BCAA and EAA doses from a leucine target, check them against WHO amino acid requirements, and see whole-food equivalents.",
+    "category": "Health Calculators",
+    "icon": "beaker",
+    "iconColor": "text-[var(--primary)]"
+  },
   "beach-day-timing-planner": {
     "name": "Beach Day Tide and Timing Planner",
     "description": "Find the best hours on the beach by scoring every half-hour against UV, heat lag, crowds and the tide using the rule of twelfths.",
@@ -2509,6 +2565,13 @@ export const toolMetaMap = {
     "description": "Work out when to leave home for Bengaluru BLR using drive time, traffic, check-in cut-off, security and gate-closing buffers.",
     "category": "Calculators",
     "icon": "plane-takeoff",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "beta-tester-nda-generator": {
+    "name": "Beta Tester NDA Generator",
+    "description": "Generate a beta program NDA covering screenshots, crash telemetry, feedback ownership and a good-faith security research safe harbour.",
+    "category": "Business",
+    "icon": "bug",
     "iconColor": "text-[var(--primary)]"
   },
   "bg-remover": {
@@ -2726,6 +2789,13 @@ export const toolMetaMap = {
     "icon": "cake",
     "iconColor": "text-[var(--primary)]"
   },
+  "birthday-poem-generator": {
+    "name": "Birthday Poem Generator",
+    "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes.",
+    "category": "Text & Writing",
+    "icon": "gift",
+    "iconColor": "text-[var(--primary)]"
+  },
   "black-scholes-options-pricer": {
     "name": "Black-Scholes Options Pricer",
     "description": "European call/put value aur five Greeks calculate kare.",
@@ -2781,6 +2851,20 @@ export const toolMetaMap = {
     ],
     "icon": "lightbulb",
     "iconColor": "text-amber-500"
+  },
+  "blog-privacy-policy-generator": {
+    "name": "Blog Privacy Policy Generator",
+    "description": "Build a blog privacy policy for analytics, comments and newsletter signups, with lawful bases, cookie-consent and CCPA threshold checks.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "blog-terms-and-conditions-generator": {
+    "name": "Blog Terms and Conditions Generator",
+    "description": "Create website terms with content ownership, comment moderation, DMCA notice-and-counter-notice windows and grievance deadlines.",
+    "category": "Business",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
   },
   "blog-title-generator": {
     "name": "Blog Title Generator",
@@ -3352,6 +3436,13 @@ export const toolMetaMap = {
     "icon": "brick-wall",
     "iconColor": "text-[var(--primary)]"
   },
+  "brisk-walk-intensity-checker": {
+    "name": "Brisk Walk Intensity Checker",
+    "description": "Check whether your walk counts as brisk using cadence, heart-rate zones, the talk test and Borg RPE together.",
+    "category": "Health & Fitness",
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
   "british-airways-baggage-allowance-checker": {
     "name": "British Airways Baggage Allowance Checker",
     "description": "Check hand and checked bags against British Airways piece allowances, the 90 x 75 x 43 cm size rule and heavy-bag limits.",
@@ -3526,6 +3617,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "burnout-self-check": {
+    "name": "Burnout Self-Check",
+    "description": "Score work exhaustion, cynicism and professional efficacy on a 0-6 frequency scale, get a burnout profile, and log the trend over time.",
+    "category": "Health & Fitness",
+    "icon": "flame",
+    "iconColor": "text-[var(--primary)]"
   },
   "business-card": {
     "name": "Business Card",
@@ -4168,6 +4266,13 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-[var(--primary)]"
   },
+  "case-brief-template-generator": {
+    "name": "Case Brief Template Generator",
+    "description": "Build a structured case brief — facts, issue, rule, holding, reasoning and disposition — in IRAC, FIRAC or CREAC order with a formatted citation.",
+    "category": "Education & Science",
+    "icon": "gavel",
+    "iconColor": "text-[var(--primary)]"
+  },
   "case-study-prompt-builder": {
     "name": "Case Study Prompt Builder",
     "description": "Build a structured AI prompt for a business case study with problem, approach and measurable results baked in.",
@@ -4253,6 +4358,13 @@ export const toolMetaMap = {
     "description": "Build CBSE-aligned lesson plan prompts by class, subject and period length, with 5E or Herbartian time splits and the real internal-assessment scheme.",
     "category": "Education & Science",
     "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "cease-desist-noise-nuisance": {
+    "name": "Cease & Desist Noise Nuisance Letter",
+    "description": "Draft a calm notice for repeated noise nuisance with dates, impact notes, requested remedy and evidence checklist.",
+    "category": "PDF & Documents",
+    "icon": "file-text",
     "iconColor": "text-[var(--primary)]"
   },
   "ceiling-fan-electricity-cost": {
@@ -4349,6 +4461,13 @@ export const toolMetaMap = {
     "name": "Chair Height Calculator",
     "description": "Seat height, seat depth, matching desk height and footrest size from your lower-leg measurement.",
     "category": "Health Calculators",
+    "icon": "armchair",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "chair-yoga-desk-routine": {
+    "name": "Chair Yoga Desk Routine",
+    "description": "Build a timed seated stretch routine for neck, shoulders, wrists, spine, hips and eyes that fits your desk break.",
+    "category": "Health & Fitness",
     "icon": "armchair",
     "iconColor": "text-[var(--primary)]"
   },
@@ -4516,6 +4635,13 @@ export const toolMetaMap = {
     "description": "Project the future cost of your child's education after education inflation and the monthly SIP needed to fund it.",
     "category": "Finance Calculators",
     "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "child-fever-log": {
+    "name": "Child Fever Log",
+    "description": "Log a child's temperature, timing, fluids and medicine doses, then get a shareable summary with fluid targets and red-flag prompts.",
+    "category": "Health & Fitness",
+    "icon": "thermometer",
     "iconColor": "text-[var(--primary)]"
   },
   "child-height-predictor": {
@@ -5013,6 +5139,20 @@ export const toolMetaMap = {
     "icon": "send",
     "iconColor": "text-[var(--primary)]"
   },
+  "cold-vs-flu-symptom-comparator": {
+    "name": "Cold vs Flu Symptom Comparator",
+    "description": "Compare your symptom pattern against the typical common cold and influenza profiles, with onset speed, fever and the 48-hour antiviral window.",
+    "category": "Health & Fitness",
+    "icon": "thermometer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "cold-weather-workout-layering-guide": {
+    "name": "Cold Weather Workout Layering Guide",
+    "description": "Wind chill, frostbite exposure time and a layer-by-layer kit list for training in the cold at your planned intensity.",
+    "category": "Health & Fitness",
+    "icon": "snowflake",
+    "iconColor": "text-[var(--primary)]"
+  },
   "collab-brief-builder-creator": {
     "name": "Creator Collab Brief Builder",
     "description": "Build a creator collab brief with deliverables, usage rights, a dated timeline and a fee breakdown including 18% GST and TDS.",
@@ -5450,6 +5590,27 @@ export const toolMetaMap = {
     "icon": "file-warning",
     "iconColor": "text-primary"
   },
+  "consumer-complaint-ecommerce-order": {
+    "name": "Consumer Complaint Letter for Ecommerce Order",
+    "description": "Draft a notice and complaint for a missing, damaged, wrong or undelivered online order, with the right consumer forum and the limitation date.",
+    "category": "Business",
+    "icon": "shopping-cart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "consumer-complaint-electricity-billing": {
+    "name": "Consumer Complaint Letter for Electricity Billing",
+    "description": "Build a complaint for an inflated or estimated electricity bill, with meter readings, the overcharge worked out and the CGRF escalation path.",
+    "category": "Business",
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "consumer-complaint-food-delivery": {
+    "name": "Consumer Complaint Letter for Food Delivery",
+    "description": "Work out the refund you are owed on a spoiled, missing or wrongly charged food order and draft the complaint to the platform and its grievance officer.",
+    "category": "Business",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
   "contact-lens-wear-tracker": {
     "name": "Contact Lens Wear Tracker",
     "description": "Track daily wear hours, replacement dates and lens case changes for daily, fortnightly, monthly, quarterly or yearly contact lenses.",
@@ -5845,12 +6006,26 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
+  "cpr-compression-rate-metronome": {
+    "name": "CPR Compression Rate Metronome",
+    "description": "A 100 to 120 beats per minute practice metronome with 30:2 cycle timing, rescuer switch prompts and depth reminders.",
+    "category": "Health & Fitness",
+    "icon": "heart-pulse",
+    "iconColor": "text-[var(--primary)]"
+  },
   "crc32-calculator": {
     "name": "CRC32 Calculator",
     "description": "Compute the CRC32 checksum of text as a hex value.",
     "category": "Developer",
     "icon": "hash",
     "iconColor": "text-orange-600"
+  },
+  "creatine-loading-calculator": {
+    "name": "Creatine Loading Calculator",
+    "description": "Creatine monohydrate loading and maintenance doses from your bodyweight, split per serving, with a dated day-by-day schedule.",
+    "category": "Health Calculators",
+    "icon": "flask-conical",
+    "iconColor": "text-[var(--primary)]"
   },
   "creatinine-unit-converter": {
     "name": "Creatinine Unit Converter",
@@ -6426,6 +6601,13 @@ export const toolMetaMap = {
     "icon": "bike",
     "iconColor": "text-[var(--primary)]"
   },
+  "cycling-power-to-weight-calculator": {
+    "name": "Cycling Power to Weight Calculator",
+    "description": "Watts per kilogram from your FTP and body mass, with rider category bands, climbing VAM and a target-watts breakdown.",
+    "category": "Health Calculators",
+    "icon": "bike",
+    "iconColor": "text-[var(--primary)]"
+  },
   "cyclist-hydration-calculator": {
     "name": "Cyclist Hydration Calculator",
     "description": "Bottles per hour, refill stops, carbs and sodium for a ride, from your weight, duration, heat, humidity and riding intensity.",
@@ -6526,6 +6708,13 @@ export const toolMetaMap = {
     "icon": "whole-word",
     "iconColor": "text-teal-600"
   },
+  "dal-protein-calculator": {
+    "name": "Dal Protein Calculator",
+    "description": "Protein and calories per katori for toor, moong, masoor, chana, urad and mixed dals, against your daily target.",
+    "category": "Health Calculators",
+    "icon": "bean",
+    "iconColor": "text-[var(--primary)]"
+  },
   "dark-circle-detector": {
     "name": "Dark Circle Detector",
     "description": "Detect and analyze dark circles under your eyes with AI-powered color analysis. Assess severity, pigmentation levels, and get personalized skincare insights.",
@@ -6559,6 +6748,13 @@ export const toolMetaMap = {
     "icon": "layout-dashboard",
     "iconColor": "text-[var(--primary)]"
   },
+  "data-access-request-letter-generator": {
+    "name": "Data Access Request Letter Generator",
+    "description": "Draft a subject access request under GDPR, UK GDPR, India's DPDP Act or the CCPA, with the correct response deadline.",
+    "category": "Security & Privacy",
+    "icon": "file-search",
+    "iconColor": "text-[var(--primary)]"
+  },
   "data-deletion-proof-log": {
     "name": "Data Deletion Proof Log",
     "description": "Deletion requests aur system-wise completion evidence record kare.",
@@ -6568,6 +6764,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-check-2",
     "iconColor": "text-primary"
+  },
+  "data-deletion-request-letter-generator": {
+    "name": "Data Deletion Request Letter Generator",
+    "description": "Create a privacy-focused request asking an organisation to delete personal data and confirm completion.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "data-lens": {
     "name": "Data Lens",
@@ -6916,6 +7119,13 @@ export const toolMetaMap = {
     "icon": "box",
     "iconColor": "text-cyan-600"
   },
+  "dentist-visit-reminder-planner": {
+    "name": "Dentist Visit Reminder Planner",
+    "description": "Work out a dental recall interval from your risk factors within the 3-24 month evidence-based range, and export a calendar reminder.",
+    "category": "Health & Fitness",
+    "icon": "calendar-clock",
+    "iconColor": "text-[var(--primary)]"
+  },
   "dependabot-config-generator": {
     "name": "Dependabot Config Generator",
     "description": "Generate a valid .github/dependabot.yml with package ecosystems, update schedules, grouped PRs and ignore rules.",
@@ -7120,6 +7330,13 @@ export const toolMetaMap = {
     ],
     "icon": "wrench",
     "iconColor": "text-muted-foreground"
+  },
+  "diabetic-foot-check-reminder": {
+    "name": "Diabetic Foot Check Reminder",
+    "description": "Daily diabetic foot inspection checklist with zone notes, red-flag alerts and a risk-based professional review date.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
   },
   "dice-roller": {
     "name": "Dice Roller",
@@ -7448,6 +7665,13 @@ export const toolMetaMap = {
     "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
+  "diwali-wishes-generator": {
+    "name": "Diwali Wishes Generator",
+    "description": "Create warm Diwali greetings for family, friends, customers, teams, captions, cards and WhatsApp messages.",
+    "category": "Text & Writing",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
   "diy-tool-kit-builder": {
     "name": "DIY Tool Kit Builder",
     "description": "Turns the jobs you plan to do into a phased tool list and budget, with a buy-or-hire test on every expensive item.",
@@ -7584,6 +7808,13 @@ export const toolMetaMap = {
     "description": "Create a .dockerignore tailored to your stack to shrink the build context and speed up docker build.",
     "category": "Developer",
     "icon": "file-x",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "doctor-visit-question-builder": {
+    "name": "Doctor Visit Question Builder",
+    "description": "Turn a messy list of worries into a SOCRATES symptom summary and a prioritised question list that actually fits the appointment.",
+    "category": "Health & Fitness",
+    "icon": "stethoscope",
     "iconColor": "text-[var(--primary)]"
   },
   "document-attestation-tracker": {
@@ -7724,6 +7955,13 @@ export const toolMetaMap = {
     "icon": "grid-3x3",
     "iconColor": "text-[var(--primary)]"
   },
+  "dots-score-calculator": {
+    "name": "DOTS Score Calculator",
+    "description": "Turn a powerlifting total into a DOTS score, the modern bodyweight-adjusted coefficient that replaced Wilks in many federations.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
   "double-pendulum-chaos-simulator": {
     "name": "Double Pendulum Chaos Simulator",
     "description": "Real-time chaos theory visualization with interactive double pendulum physics and glowing motion trails.",
@@ -7775,6 +8013,13 @@ export const toolMetaMap = {
     ],
     "icon": "scan-search",
     "iconColor": "text-primary"
+  },
+  "dpdp-grievance-officer-page-generator": {
+    "name": "DPDP Grievance Officer Page Generator",
+    "description": "Generate the grievance redressal contact block Indian websites must publish, with statutory acknowledgement and disposal timelines.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "dpia-starter-wizard": {
     "name": "DPIA Starter Wizard",
@@ -7987,6 +8232,13 @@ export const toolMetaMap = {
     "icon": "building-2",
     "iconColor": "text-[var(--primary)]"
   },
+  "dumbbell-to-barbell-load-converter": {
+    "name": "Dumbbell to Barbell Load Converter",
+    "description": "Estimate equivalent dumbbell and barbell loads per exercise, with a realistic range and rounding to the dumbbells you own.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
   "duolingo-english-test-score-converter": {
     "name": "Duolingo English Test Converter",
     "description": "Map Duolingo English Test scores (10-160) to IELTS bands, CEFR levels and derived TOEFL iBT ranges using published concordances.",
@@ -8188,6 +8440,13 @@ export const toolMetaMap = {
     "description": "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist.",
     "category": "Productivity",
     "icon": "pyramid",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "eighteen-six-fasting-window-planner": {
+    "name": "18:6 Fasting Window Planner",
+    "description": "Plan a two-meal 6-hour eating window with an 18-hour fast, plus a drink-by-drink hydration schedule and sweat sodium estimates.",
+    "category": "Health & Fitness",
+    "icon": "glass-water",
     "iconColor": "text-[var(--primary)]"
   },
   "eisenhower-matrix-tool": {
@@ -8429,6 +8688,13 @@ export const toolMetaMap = {
     "icon": "battery-charging",
     "iconColor": "text-[var(--primary)]"
   },
+  "emergency-medical-card-builder": {
+    "name": "Emergency Medical Card Builder",
+    "description": "Build a printable wallet-size emergency medical card with conditions, medicines, allergies, blood group and ICE contacts.",
+    "category": "Health & Fitness",
+    "icon": "id-card",
+    "iconColor": "text-[var(--primary)]"
+  },
   "emi-affordability-checker": {
     "name": "EMI Affordability Checker",
     "description": "Check a proposed EMI against your FOIR, your monthly surplus and a rate-rise stress test before you sign the loan.",
@@ -8512,6 +8778,13 @@ export const toolMetaMap = {
     "icon": "smile-plus",
     "iconColor": "text-yellow-500"
   },
+  "emom-workout-timer": {
+    "name": "EMOM Workout Timer",
+    "description": "Every-minute-on-the-minute timer with prep countdown, round and rep tracking, and a work-to-rest breakdown for each interval.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
   "emotion-detector": {
     "name": "Emotion Detector",
     "description": "Identify and analyze human facial expressions and emotions in real-time or from uploaded photos using AI.",
@@ -8535,6 +8808,13 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-indigo-500"
+  },
+  "employee-handover-document-generator": {
+    "name": "Employee Handover Document Generator",
+    "description": "Track systems, recurring tasks, contacts and pending items into a weighted readiness score and a ready-to-send handover document.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
   },
   "empty-state-copy-generator": {
     "name": "Empty State Copy Generator",
@@ -8898,6 +9178,13 @@ export const toolMetaMap = {
     "icon": "calendar-clock",
     "iconColor": "text-[var(--primary)]"
   },
+  "event-refund-policy-generator": {
+    "name": "Event Refund Policy Generator",
+    "description": "Build a tiered event cancellation and refund policy by days before the event, and price any single cancellation against it.",
+    "category": "Business",
+    "icon": "ticket",
+    "iconColor": "text-[var(--primary)]"
+  },
   "event-tool": {
     "name": "Event Planner",
     "description": "Turn a guest list into floor space, tables, staff, catering quantities and a costed budget with contingency.",
@@ -9182,6 +9469,13 @@ export const toolMetaMap = {
     "icon": "terminal",
     "iconColor": "text-[var(--primary)]"
   },
+  "exit-interview-response-planner": {
+    "name": "Exit Interview Response Planner",
+    "description": "Rank your real reasons for leaving, pick how candid to be, and get measured answers to the standard exit interview questions.",
+    "category": "Business",
+    "icon": "message-square",
+    "iconColor": "text-[var(--primary)]"
+  },
   "expanse-tacker": {
     "name": "Expanse Tracker",
     "description": "Provides information about Expanse game",
@@ -9201,6 +9495,13 @@ export const toolMetaMap = {
     "description": "Build a claimable expense report with category totals, GST input credit, advance settlement and cash-limit checks.",
     "category": "Business",
     "icon": "receipt",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "experience-letter-format-generator": {
+    "name": "Experience Letter Format Generator",
+    "description": "Produce an employer experience certificate with tenure computed per designation, gaps and overlaps flagged, and a verification-ready summary line.",
+    "category": "Business",
+    "icon": "award",
     "iconColor": "text-[var(--primary)]"
   },
   "exposure-triangle-guide": {
@@ -9397,6 +9698,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
+  },
+  "fall-prevention-home-checklist": {
+    "name": "Fall Prevention Home Checklist",
+    "description": "Room-by-room home fall hazard checklist with a safety score, personal risk questions and the remaining fixes ranked by impact and effort.",
+    "category": "Health & Fitness",
+    "icon": "house",
+    "iconColor": "text-[var(--primary)]"
   },
   "family-car-size-selector": {
     "name": "Family Car Size Selector",
@@ -9827,6 +10135,13 @@ export const toolMetaMap = {
     "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
+  "first-aid-kit-builder": {
+    "name": "First Aid Kit Builder",
+    "description": "Build a first aid kit list with quantities for home, car, office or trek, scaled by group size, trip length and distance from help.",
+    "category": "Health & Fitness",
+    "icon": "briefcase-medical",
+    "iconColor": "text-[var(--primary)]"
+  },
   "first-car-budget-advisor": {
     "name": "First Car Budget Advisor",
     "description": "Set a safe first-car budget from income, savings and running costs using the 20/4/10 rule — down payment, EMI and on-road price.",
@@ -9838,6 +10153,20 @@ export const toolMetaMap = {
     "name": "Quarter and Fiscal Period Converter",
     "description": "Convert any date between calendar and fiscal quarters for any fiscal year start month, with both year-labelling conventions.",
     "category": "Converters",
+    "icon": "calendar-range",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "five-k-race-time-predictor": {
+    "name": "5K Race Time Predictor",
+    "description": "Predict your 5K finish time from any recent race using the Riegel formula, with target pace and kilometre splits.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "five-two-fasting-week-planner": {
+    "name": "5:2 Fasting Week Planner",
+    "description": "Pick two non-consecutive 500-600 kcal days, see the whole week's calories, and get the weekly deficit and expected rate of loss.",
+    "category": "Health & Fitness",
     "icon": "calendar-range",
     "iconColor": "text-[var(--primary)]"
   },
@@ -9927,6 +10256,13 @@ export const toolMetaMap = {
     "description": "Calculate floor tiles, boxes, adhesive and grout for any room area including a wastage allowance.",
     "category": "Calculators",
     "icon": "grid-2x2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "flossing-habit-tracker": {
+    "name": "Flossing Habit Tracker",
+    "description": "Log daily interdental cleaning, see current and longest streaks, 7 and 30 day adherence, and track whether gum bleeding is settling.",
+    "category": "Health & Fitness",
+    "icon": "calendar-check",
     "iconColor": "text-[var(--primary)]"
   },
   "flow-chart-maker": {
@@ -10237,6 +10573,13 @@ export const toolMetaMap = {
     "icon": "circle",
     "iconColor": "text-blue-600"
   },
+  "four-seven-eight-breathing-timer": {
+    "name": "4-7-8 Breathing Timer",
+    "description": "Guided 4-7-8 breathing: inhale 4, hold 7, exhale 8, with a visual pacer, optional tones and a full session countdown.",
+    "category": "Health & Fitness",
+    "icon": "wind",
+    "iconColor": "text-[var(--primary)]"
+  },
   "fractal-explorer": {
     "name": "Fractal Explorer",
     "description": "Explore Mandelbrot and Julia fractals with interactive zoom, color controls, and export tools",
@@ -10332,6 +10675,13 @@ export const toolMetaMap = {
     "icon": "plane-takeoff",
     "iconColor": "text-[var(--primary)]"
   },
+  "free-look-cancellation-letter-generator": {
+    "name": "Free Look Cancellation Letter Generator",
+    "description": "Check your 30-day IRDAI free look deadline, estimate the refund after deductions and draft the cancellation letter to the insurer.",
+    "category": "Finance Calculators",
+    "icon": "shield-off",
+    "iconColor": "text-[var(--primary)]"
+  },
   "freelance-hourly-rate-calculator": {
     "name": "Freelance Hourly Rate Calculator",
     "description": "Work out the freelance hourly rate you need from target income, billable hours, expenses and tax.",
@@ -10372,6 +10722,13 @@ export const toolMetaMap = {
     "icon": "arrow-left-right",
     "iconColor": "text-[var(--primary)]"
   },
+  "freelance-writing-contract-generator": {
+    "name": "Freelance Writing Contract Generator",
+    "description": "Build a content writing agreement with per-word pricing, revision rounds, kill fee, byline terms and statutory late-payment maths.",
+    "category": "Business",
+    "icon": "pen-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "freelancer-advance-tax-planner": {
     "name": "Freelancer Advance Tax Planner",
     "description": "Plan quarterly advance tax instalments and due dates on freelance and professional income.",
@@ -10384,6 +10741,13 @@ export const toolMetaMap = {
     "description": "Track deductible freelance expenses head by head, flag cash and TDS disallowances, and compare actual expenses against Section 44ADA.",
     "category": "Productivity",
     "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "freelancer-nda-generator": {
+    "name": "Freelancer NDA Generator",
+    "description": "Generate a contractor NDA for short projects covering deliverable confidentiality, IP assignment, portfolio rights and data handling.",
+    "category": "Business",
+    "icon": "file-signature",
     "iconColor": "text-[var(--primary)]"
   },
   "freelancer-prompt-pack": {
@@ -10432,6 +10796,13 @@ export const toolMetaMap = {
     "description": "Find whether you need FSSAI basic registration, a state licence or a central licence, from turnover, production capacity and activity.",
     "category": "Business",
     "icon": "utensils-crossed",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "ftp-training-zones-calculator": {
+    "name": "FTP Training Zones Calculator",
+    "description": "Seven Coggan cycling power zones in watts from your FTP, with a 20-minute test estimator and a polarised week split.",
+    "category": "Health & Fitness",
+    "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
   "fuel-cost-per-km-calculator": {
@@ -11267,6 +11638,13 @@ export const toolMetaMap = {
     "icon": "gem",
     "iconColor": "text-[var(--primary)]"
   },
+  "gratitude-journal-builder": {
+    "name": "Gratitude Journal Builder",
+    "description": "Daily three-good-things prompts with a why line, current and longest streaks, and a monthly review of what you wrote.",
+    "category": "Health & Fitness",
+    "icon": "notebook-pen",
+    "iconColor": "text-[var(--primary)]"
+  },
   "gratuity-calculator": {
     "name": "Gratuity Calculator",
     "description": "Estimate your gratuity payout under the Payment of Gratuity Act, with rounding rules, eligibility, and tax-free limits.",
@@ -11307,6 +11685,13 @@ export const toolMetaMap = {
     "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting.",
     "category": "Developer",
     "icon": "terminal",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "grip-strength-benchmark-tool": {
+    "name": "Grip Strength Benchmark Tool",
+    "description": "Compare a hand dynamometer reading against sarcopenia cut-offs and typical grip strength for your age and sex.",
+    "category": "Health Calculators",
+    "icon": "hand",
     "iconColor": "text-[var(--primary)]"
   },
   "grocery-list-builder": {
@@ -11538,11 +11923,25 @@ export const toolMetaMap = {
     "icon": "map",
     "iconColor": "text-[var(--primary)]"
   },
+  "gym-cost-per-visit-calculator": {
+    "name": "Gym Cost Per Visit Calculator",
+    "description": "Work out what each gym session really costs once joining fees, add-ons and your actual attendance are counted.",
+    "category": "Health Calculators",
+    "icon": "indian-rupee",
+    "iconColor": "text-[var(--primary)]"
+  },
   "gym-marketing-prompt-pack": {
     "name": "Gym Marketing Prompt Pack",
     "description": "Build ready-to-paste AI prompts for gym membership offers, class descriptions, check-ins and win-back messages.",
     "category": "Business",
     "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "gym-rest-timer": {
+    "name": "Gym Rest Timer",
+    "description": "Per-exercise rest countdowns that auto-advance through your sets, with rest presets for strength, hypertrophy and endurance.",
+    "category": "Health & Fitness",
+    "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
   "gzip-encryption": {
@@ -11572,6 +11971,13 @@ export const toolMetaMap = {
     "icon": "droplets",
     "iconColor": "text-[var(--primary)]"
   },
+  "haiku-syllable-checker": {
+    "name": "Haiku Syllable Checker",
+    "description": "Check a three-line haiku draft against the 5-7-5 pattern and collect rewrite notes.",
+    "category": "Text & Writing",
+    "icon": "pen-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "hair-care-tool": {
     "name": "Hair Care Guide",
     "description": "Get personalized hair care routines.",
@@ -11596,6 +12002,20 @@ export const toolMetaMap = {
     ],
     "icon": "sparkle",
     "iconColor": "text-teal-500"
+  },
+  "hair-fall-count-log": {
+    "name": "Hair Fall Count Log",
+    "description": "Log daily shed hair counts, separate wash-day spikes from real shedding, and compare your average against the typical 50-100 a day range.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "hair-growth-progress-tracker": {
+    "name": "Hair Growth Progress Tracker",
+    "description": "Log dated hair length measurements, get your real growth rate in cm per month after trims, and project when you will reach a target length.",
+    "category": "Health & Fitness",
+    "icon": "scissors",
+    "iconColor": "text-[var(--primary)]"
   },
   "hairstyle-preview": {
     "name": "Hair Style Preview",
@@ -11690,6 +12110,13 @@ export const toolMetaMap = {
     "category": "Marketing & Social",
     "icon": "hash",
     "iconColor": "text-blue-500"
+  },
+  "hba1c-goal-progress-tracker": {
+    "name": "HbA1c Goal Progress Tracker",
+    "description": "Chart HbA1c results over time against your agreed target, convert between % and mmol/mol, and see estimated average glucose.",
+    "category": "Health & Fitness",
+    "icon": "line-chart",
+    "iconColor": "text-[var(--primary)]"
   },
   "hba1c-to-average-glucose-converter": {
     "name": "HbA1c to Average Glucose Converter",
@@ -11858,6 +12285,13 @@ export const toolMetaMap = {
     "icon": "thermometer-sun",
     "iconColor": "text-primary"
   },
+  "heat-stroke-response-checklist": {
+    "name": "Heat Stroke Response Checklist",
+    "description": "Tick the signs, get an ordered cooling protocol, estimated cooling time and the NWS heat index for the conditions.",
+    "category": "Health & Fitness",
+    "icon": "thermometer-sun",
+    "iconColor": "text-[var(--primary)]"
+  },
   "hedge-spacing-calculator": {
     "name": "Hedge Spacing Calculator",
     "description": "Work out how many hedging plants a run needs from its length, the species spacing and single or double staggered rows.",
@@ -12021,6 +12455,13 @@ export const toolMetaMap = {
     "description": "Calories for a hip hop session, counting full-out run-throughs separately from the marking and learning time in between.",
     "category": "Health Calculators",
     "icon": "boom-box",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "holi-wishes-generator": {
+    "name": "Holi Wishes Generator",
+    "description": "Generate cheerful Holi greetings for WhatsApp, cards, customers, teams, captions and family messages.",
+    "category": "Text & Writing",
+    "icon": "palette",
     "iconColor": "text-[var(--primary)]"
   },
   "home-affordability-calculator": {
@@ -12521,6 +12962,13 @@ export const toolMetaMap = {
     "description": "Fluid plan for humid Indian monsoon weather using heat index, sweat evaporation efficiency and safe drinking-water volumes.",
     "category": "Health & Fitness",
     "icon": "cloud-rain",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "hypothermia-response-checklist": {
+    "name": "Hypothermia Response Checklist",
+    "description": "Stage hypothermia on the Swiss HT I-IV scale, get the right rewarming steps, wind chill and frostbite times, plus what never to do.",
+    "category": "Health & Fitness",
+    "icon": "thermometer-snowflake",
     "iconColor": "text-[var(--primary)]"
   },
   "ibuprofen-dose-interval-timer": {
@@ -13177,6 +13625,13 @@ export const toolMetaMap = {
     "icon": "shirt",
     "iconColor": "text-[var(--primary)]"
   },
+  "indoor-humidity-comfort-guide": {
+    "name": "Indoor Humidity Comfort Guide",
+    "description": "Find your target indoor humidity range, dew point, mould and condensation risk, and the water to add or remove.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
+    "iconColor": "text-[var(--primary)]"
+  },
   "induction-vs-lpg-cost-calculator": {
     "name": "Induction vs LPG Cost Calculator",
     "description": "Compare cooking cost on an induction hob against an LPG cylinder per month, with the break-even electricity tariff.",
@@ -13221,6 +13676,13 @@ export const toolMetaMap = {
     "description": "Convert a rupee amount between any two years using India's official CPI inflation series, with the purchasing power lost in between.",
     "category": "Education & Science",
     "icon": "history",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "influencer-campaign-nda-generator": {
+    "name": "Influencer Campaign NDA Generator",
+    "description": "Draft a creator NDA for unreleased products with embargo dates, DTSA immunity notice and clauses that never block required ad disclosure.",
+    "category": "Business",
+    "icon": "file-lock",
     "iconColor": "text-[var(--primary)]"
   },
   "influencer-engagement-rate-calculator": {
@@ -13458,6 +13920,13 @@ export const toolMetaMap = {
     ],
     "icon": "music",
     "iconColor": "text-blue-600"
+  },
+  "interview-candidate-nda-generator": {
+    "name": "Interview Candidate NDA Generator",
+    "description": "Build a short, fair NDA for job candidates who will see internal systems, code or roadmaps during an interview or take-home exercise.",
+    "category": "Business",
+    "icon": "user-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "interview-consent-form-builder": {
     "name": "Interview Consent Form Builder",
@@ -14336,6 +14805,20 @@ export const toolMetaMap = {
     "icon": "baby",
     "iconColor": "text-[var(--primary)]"
   },
+  "kids-brushing-timer": {
+    "name": "Kids Brushing Timer",
+    "description": "Two-minute toothbrushing timer that prompts each mouth quadrant in turn, awards stars per session and tracks a daily brushing streak.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-daily-step-goal-planner": {
+    "name": "Kids Daily Step Goal Planner",
+    "description": "Age and sex appropriate daily step targets for children, with WHO active-minute goals and playful progress levels to close the gap.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
+  },
   "kids-milestone-vaccine-vault": {
     "name": "Kids Milestone & Vaccine Vault",
     "description": "Securely track child milestones and vaccination records.",
@@ -14770,6 +15253,13 @@ export const toolMetaMap = {
     "description": "Build a numbered revision history for a contract or pleading with reviewers, dates, turnaround gaps and a paste-ready log.",
     "category": "Productivity",
     "icon": "file-clock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "legal-glossary-flashcard-builder": {
+    "name": "Legal Glossary Flashcard Builder",
+    "description": "Turn legal terms into simple flashcards with plain-English meaning, example usage and revision prompts.",
+    "category": "PDF & Documents",
+    "icon": "book-open",
     "iconColor": "text-[var(--primary)]"
   },
   "legal-heir-certificate-checklist": {
@@ -15460,6 +15950,13 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-500"
   },
+  "love-poem-generator": {
+    "name": "Love Poem Generator",
+    "description": "Draft a romantic poem from relationship notes, memories, tone, occasion and message length.",
+    "category": "Text & Writing",
+    "icon": "heart",
+    "iconColor": "text-[var(--primary)]"
+  },
   "low-poly-budget-planner": {
     "name": "Low Poly Budget Planner",
     "description": "Turn GPU triangle throughput and a target frame rate into per-asset triangle budgets, LOD chains and buffer memory.",
@@ -15707,6 +16204,20 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-[var(--primary)]"
   },
+  "male-body-fat-estimator": {
+    "name": "Male Body Fat Estimator",
+    "description": "Estimate male body fat from US Navy tape measurements or Jackson-Pollock 3-site skinfolds, with ACE category bands.",
+    "category": "Health Calculators",
+    "icon": "ruler",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "male-fertility-lifestyle-checklist": {
+    "name": "Male Fertility Lifestyle Checklist",
+    "description": "Score nineteen heat, substance, sleep, nutrition and timing habits linked to sperm quality, and get a review date.",
+    "category": "Health & Fitness",
+    "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
+  },
   "mandi-bhav": {
     "name": "Mandi Bhav",
     "description": "Check live daily crop and vegetable market rates from AGMARKNET for all Indian states.",
@@ -15835,6 +16346,13 @@ export const toolMetaMap = {
     "description": "Convert marla, kanal, sarsai, killa and murabba to square feet, square yards and square metres, with plot pricing.",
     "category": "Converters",
     "icon": "grid-2x2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "maternity-leave-date-calculator": {
+    "name": "Maternity Leave Date Calculator",
+    "description": "Work out maternity leave start, end and rejoining dates from the expected due date under the Maternity Benefit Act rules.",
+    "category": "Calculators",
+    "icon": "baby",
     "iconColor": "text-[var(--primary)]"
   },
   "math-speed-challenge": {
@@ -16085,6 +16603,13 @@ export const toolMetaMap = {
     "icon": "clipboard-list",
     "iconColor": "text-violet-600"
   },
+  "membership-refund-policy-generator": {
+    "name": "Membership Refund Policy Generator",
+    "description": "Draft a gym or club membership refund, freeze and transfer policy and price a pro-rata cancellation against it.",
+    "category": "Business",
+    "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
   "meme-generator": {
     "name": "Meme Generator",
     "description": "Create funny memes easily",
@@ -16271,6 +16796,13 @@ export const toolMetaMap = {
     "icon": "microwave",
     "iconColor": "text-[var(--primary)]"
   },
+  "migration-certificate-request-generator": {
+    "name": "Migration Certificate Request Generator",
+    "description": "Draft a migration certificate request to a university or board, with the document checklist, fee total and expected issue date.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "mileage-reimbursement-calculator": {
     "name": "Mileage Reimbursement Calculator",
     "description": "Work out travel reimbursement from distance and a per-kilometre or per-mile rate, including two-tier rates and tolls.",
@@ -16290,6 +16822,13 @@ export const toolMetaMap = {
     "description": "Look up the MIME type for a file extension, or every extension for a MIME type, with charset and compression guidance.",
     "category": "Developer",
     "icon": "file-type",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "mindfulness-bell-timer": {
+    "name": "Mindfulness Bell Timer",
+    "description": "Chime at fixed intervals or at random gaps through a session, with start and end bells, to prompt brief awareness pauses.",
+    "category": "Health & Fitness",
+    "icon": "bell",
     "iconColor": "text-[var(--primary)]"
   },
   "minesweeper": {
@@ -16352,6 +16891,13 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "vote",
     "iconColor": "text-teal-600"
+  },
+  "mobility-aid-selection-guide": {
+    "name": "Mobility Aid Selection Guide",
+    "description": "Match a cane, crutches, walker, rollator or wheelchair to your support, balance, stamina and grip needs, with correct fitting height.",
+    "category": "Health & Fitness",
+    "icon": "accessibility",
+    "iconColor": "text-[var(--primary)]"
   },
   "mocktail-mixer": {
     "name": "Mocktail & Drink Mixer",
@@ -16666,6 +17212,13 @@ export const toolMetaMap = {
     "icon": "mountain",
     "iconColor": "text-stone-700"
   },
+  "mouthguard-care-checklist": {
+    "name": "Mouthguard Care Checklist",
+    "description": "Cleaning, drying and storage routine plus a replacement date for sports mouthguards and night guards, adjusted for how hard you use them.",
+    "category": "Health & Fitness",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "move-out-cleaning-checklist": {
     "name": "Move Out Cleaning Checklist",
     "description": "Room-by-room end-of-tenancy cleaning list with time estimates and what the remaining work would cost against your deposit.",
@@ -16882,6 +17435,13 @@ export const toolMetaMap = {
     "description": "Convert Mumbai University CGPA to percentage with the CBCGS formula, or work the percentage out from raw semester marks.",
     "category": "Calculators",
     "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "muscle-gain-calorie-calculator": {
+    "name": "Muscle Gain Calorie Calculator",
+    "description": "Lean bulk calories from Mifflin-St Jeor maintenance, a training-level gain rate and protein, fat and carb targets.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
     "iconColor": "text-[var(--primary)]"
   },
   "museum-visit-time-estimator": {
@@ -17234,11 +17794,25 @@ export const toolMetaMap = {
     "icon": "mail-open",
     "iconColor": "text-[var(--primary)]"
   },
+  "newsletter-privacy-policy-generator": {
+    "name": "Newsletter Privacy Policy Generator",
+    "description": "Create a mailing list privacy policy with consent records, tracking pixel disclosure and CAN-SPAM and CASL opt-out deadlines worked out.",
+    "category": "Security & Privacy",
+    "icon": "mail-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "newsletter-prompt-builder": {
     "name": "Newsletter Prompt Builder",
     "description": "Drafts a newsletter prompt with segment, cadence and CTA guidance — subject-line limits and a per-item word budget built in.",
     "category": "Marketing & Social",
     "icon": "mail",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "newsletter-terms-generator": {
+    "name": "Newsletter Terms Generator",
+    "description": "Draft subscription terms for paid and free newsletter tiers, with withdrawal rights, renewal reminders and prorated refunds calculated.",
+    "category": "Business",
+    "icon": "newspaper",
     "iconColor": "text-[var(--primary)]"
   },
   "nginx-cache-header-planner": {
@@ -17322,6 +17896,13 @@ export const toolMetaMap = {
     "icon": "grid-3x3",
     "iconColor": "text-sky-600"
   },
+  "nonprofit-privacy-policy-generator": {
+    "name": "Nonprofit Privacy Policy Generator",
+    "description": "Generate an NGO privacy policy for donors, volunteers and grant reporting, with IRS receipt thresholds and record retention worked out.",
+    "category": "Security & Privacy",
+    "icon": "hand-heart",
+    "iconColor": "text-[var(--primary)]"
+  },
   "normalization-formula-explainer": {
     "name": "Normalization Formula Explainer",
     "description": "Walk through the SSC, Z-score, NTA percentile and min-max normalization formulas step by step with your own numbers.",
@@ -17373,6 +17954,13 @@ export const toolMetaMap = {
     "description": "Calculate the rent you still owe when you vacate before the notice period or lock-in ends, and what is left of the deposit.",
     "category": "Finance Calculators",
     "icon": "calendar-clock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "notice-period-shortfall-letter": {
+    "name": "Notice Period Shortfall Negotiation Letter",
+    "description": "Price the notice-period shortfall, offset it against leave encashment, and draft a reasoned request to waive, reduce or buy out the remaining days.",
+    "category": "Business",
+    "icon": "handshake",
     "iconColor": "text-[var(--primary)]"
   },
   "notion-ai-prompt-builder": {
@@ -17513,6 +18101,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-indigo-600"
+  },
+  "nursery-rhyme-maker": {
+    "name": "Nursery Rhyme Maker",
+    "description": "Create a simple child-friendly rhyme from a theme, character, rhythm and learning goal.",
+    "category": "Text & Writing",
+    "icon": "music",
+    "iconColor": "text-[var(--primary)]"
   },
   "nutrition-quality-score": {
     "name": "Nutrition Quality Score",
@@ -17715,6 +18310,13 @@ export const toolMetaMap = {
     "icon": "dumbbell",
     "iconColor": "text-red-600"
   },
+  "one-way-nda-generator": {
+    "name": "One-Way NDA Generator",
+    "description": "Draft a unilateral non-disclosure agreement where only one party discloses, with configurable term, survival period and governing law.",
+    "category": "Business",
+    "icon": "file-lock",
+    "iconColor": "text-[var(--primary)]"
+  },
   "online-compiler": {
     "name": "Online Code Compiler",
     "description": "Write HTML, CSS, and JavaScript in a powerful Monaco editor and preview the result live in a sandboxed iframe. Templates, projects, console, and more.",
@@ -17751,6 +18353,27 @@ export const toolMetaMap = {
     "description": "Answer a few questions to pick between MIT, Apache-2.0, MPL-2.0, LGPL, GPL, AGPL and public-domain licenses.",
     "category": "Business",
     "icon": "scale",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "open-water-swim-safety-checklist": {
+    "name": "Open Water Swim Safety Checklist",
+    "description": "Score your pre-swim checks on water temperature, tow float, buddy and exit plan before an open water swim.",
+    "category": "Health & Fitness",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "oral-hygiene-score-tool": {
+    "name": "Oral Hygiene Score Tool",
+    "description": "Score your daily oral care habits out of 100 against dental guidance and get ranked, informational tips on what to fix first.",
+    "category": "Health & Fitness",
+    "icon": "smile",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "organ-donation-information-checklist": {
+    "name": "Organ Donation Information Checklist",
+    "description": "Work through registration steps and the family conversation for organ donation, with the opt-in or opt-out rule that applies where you live.",
+    "category": "Health & Fitness",
+    "icon": "heart-handshake",
     "iconColor": "text-[var(--primary)]"
   },
   "ors-mixing-guide-calculator": {
@@ -18037,6 +18660,13 @@ export const toolMetaMap = {
     "icon": "check-circle",
     "iconColor": "text-teal-500"
   },
+  "panic-breathing-pacer": {
+    "name": "Panic Breathing Pacer",
+    "description": "Extended-exhale breathing pacer for acute anxiety: matches your current breathing rate, then slows it towards 6 breaths a minute.",
+    "category": "Health & Fitness",
+    "icon": "heart-pulse",
+    "iconColor": "text-[var(--primary)]"
+  },
   "pantry-expiry-tracker": {
     "name": "Pantry Expiry Tracker",
     "description": "Track what is in your fridge, freezer and cupboard, see what expires first, and put a number on the food value at risk this week.",
@@ -18156,6 +18786,20 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-teal-600"
+  },
+  "patch-test-timer": {
+    "name": "Patch Test Timer",
+    "description": "Work out the exact 48 and 96 hour patch test reading times from when you applied, and log each reading on the standard ICDRG scale.",
+    "category": "Health & Fitness",
+    "icon": "flask-conical",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "paternity-leave-planner": {
+    "name": "Paternity Leave Planner",
+    "description": "Plan split paternity leave blocks against your policy's day limit, minimum block size and the window around the birth date.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "payment-gateway-fee-calculator": {
     "name": "Payment Gateway Fee Calculator",
@@ -18818,6 +19462,13 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-[var(--primary)]"
   },
+  "physio-rep-hold-timer": {
+    "name": "Physio Rep and Hold Timer",
+    "description": "Guided rep counting and isometric hold timing for prescribed rehab exercises, with tempo, rest and time-under-tension totals.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
   "pickup-line-generator": {
     "name": "Pickup Line Generator",
     "description": "Generate smooth, cheesy, or funny pickup lines for any situation. Choose from categories like romantic, nerdy, or witty.",
@@ -19114,11 +19765,25 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-[var(--primary)]"
   },
+  "poetry-prompt-generator": {
+    "name": "Poetry Prompt Generator",
+    "description": "Generate poetry prompts from theme, form, mood, image, constraint and difficulty notes.",
+    "category": "Text & Writing",
+    "icon": "pen-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "poetry-vs-pip-planner": {
     "name": "Poetry vs Pip Planner",
     "description": "Answer a few questions about your Python project and get a ranked recommendation across poetry, pip-tools, uv and conda.",
     "category": "Developer",
     "icon": "package-search",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "poisoning-information-checklist": {
+    "name": "Poisoning Information Checklist",
+    "description": "Gather every detail a poison centre asks for, get route-specific first aid, and build a ready-to-read call script.",
+    "category": "Health & Fitness",
+    "icon": "siren",
     "iconColor": "text-[var(--primary)]"
   },
   "police-exam-answer-key-scorer": {
@@ -19168,6 +19833,13 @@ export const toolMetaMap = {
     "description": "Ponderal index divides weight by height cubed, so it stays fair for very tall or very short adults, plus a newborn mode.",
     "category": "Health Calculators",
     "icon": "ruler",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "pool-laps-to-distance-converter": {
+    "name": "Pool Laps to Distance Converter",
+    "description": "Convert pool laps or lengths into metres, kilometres, yards and miles for any pool size, with pace per 100 m.",
+    "category": "Health Calculators",
+    "icon": "waves",
     "iconColor": "text-[var(--primary)]"
   },
   "port-number-reference-explorer": {
@@ -19236,6 +19908,13 @@ export const toolMetaMap = {
     "icon": "scaling",
     "iconColor": "text-[var(--primary)]"
   },
+  "possession-certificate-request-generator": {
+    "name": "Possession Certificate Request Generator",
+    "description": "Draft a RERA-referenced letter asking a builder for possession, the occupancy certificate and the full handover document set, with delay interest.",
+    "category": "Business",
+    "icon": "key-round",
+    "iconColor": "text-[var(--primary)]"
+  },
   "post-office-mis-calculator": {
     "name": "Post Office MIS Calculator",
     "description": "Calculate the monthly income from a Post Office Monthly Income Scheme deposit, with single and joint account limits and total interest.",
@@ -19288,6 +19967,13 @@ export const toolMetaMap = {
     "description": "Informational recovery protein and energy estimate using ESPEN surgical guideline g/kg bands and adjusted body weight.",
     "category": "Health Calculators",
     "icon": "bandage",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "post-workout-recovery-meal-planner": {
+    "name": "Post-Workout Recovery Meal Planner",
+    "description": "Protein, carbohydrate, fluid and sodium targets for the recovery window after training, with real food portions to hit them.",
+    "category": "Health & Fitness",
+    "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
   "postcss-config-generator": {
@@ -19387,6 +20073,13 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-[var(--primary)]"
   },
+  "powerlifting-total-tracker": {
+    "name": "Powerlifting Total Tracker",
+    "description": "Log squat, bench and deadlift bests over time and see your competition total, lift balance and bodyweight multiples.",
+    "category": "Health & Fitness",
+    "icon": "trophy",
+    "iconColor": "text-[var(--primary)]"
+  },
   "ppf-calculator": {
     "name": "PPF Calculator",
     "description": "Project your Public Provident Fund maturity with year-wise growth, loan and withdrawal limits, and tax-free returns.",
@@ -19412,6 +20105,13 @@ export const toolMetaMap = {
     "icon": "clipboard-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "pranayama-practice-timer": {
+    "name": "Pranayama Practice Timer",
+    "description": "Guided inhale, hold and exhale pacing for box breathing, nadi shodhana, 4-7-8 and the classic 1:4:2 ratio.",
+    "category": "Health & Fitness",
+    "icon": "wind",
+    "iconColor": "text-[var(--primary)]"
+  },
   "prayer-times-qibla": {
     "name": "Prayer Times & Qibla Direction",
     "description": "Get accurate daily prayer times and the Qibla bearing for any city, computed offline on your own device.",
@@ -19434,6 +20134,13 @@ export const toolMetaMap = {
     "description": "Check eligibility for central pre-matric scholarships — SC, ST, OBC/EBC/DNT, minority and hazardous-occupation schemes.",
     "category": "Education & Science",
     "icon": "badge-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "prediabetes-risk-self-check": {
+    "name": "Prediabetes Risk Self-Check",
+    "description": "Score your type 2 diabetes risk with the ADA/CDC risk test and the Indian Diabetes Risk Score, with lifestyle actions.",
+    "category": "Health Calculators",
+    "icon": "activity",
     "iconColor": "text-[var(--primary)]"
   },
   "pregnancy-belly-measurement-tracker": {
@@ -19468,6 +20175,13 @@ export const toolMetaMap = {
     "description": "Trimester-adjusted protein target from the IOM reference intakes, with extra energy for the stage and the published weight-gain range.",
     "category": "Health Calculators",
     "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "prescription-abbreviation-decoder": {
+    "name": "Prescription Abbreviation Decoder",
+    "description": "Decode BD, TDS, HS, PRN and other prescription shorthand, work out doses per day and total quantity, and spot unsafe abbreviations.",
+    "category": "Health & Fitness",
+    "icon": "pill",
     "iconColor": "text-[var(--primary)]"
   },
   "prescription-refill-reminder-builder": {
@@ -19652,6 +20366,13 @@ export const toolMetaMap = {
     "name": "Probation And Bond Explainer",
     "description": "Understand probation periods and service bonds before accepting a post, and calculate what leaving early would cost.",
     "category": "Education & Science",
+    "icon": "file-signature",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "probation-extension-letter-generator": {
+    "name": "Probation Extension Letter Generator",
+    "description": "Draft a probation extension letter with recorded reasons, a calculated revised end date and a booked review meeting.",
+    "category": "Business",
     "icon": "file-signature",
     "iconColor": "text-[var(--primary)]"
   },
@@ -19956,6 +20677,13 @@ export const toolMetaMap = {
     "icon": "list",
     "iconColor": "text-[var(--primary)]"
   },
+  "prostate-screening-reminder-planner": {
+    "name": "Prostate Screening Reminder Planner",
+    "description": "Work out the age to start the PSA discussion from your risk factors and when the next conversation is due.",
+    "category": "Health & Fitness",
+    "icon": "calendar-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "protein-requirement-calculator": {
     "name": "Protein Requirement Calculator",
     "description": "Work out your daily protein target in grams from body weight, activity level and training goal, with a per-meal breakdown.",
@@ -19975,6 +20703,13 @@ export const toolMetaMap = {
     "description": "Convert tyre and system pressure between psi, bar, kPa, kgf/cm2 and atm, with a cold-to-hot tyre temperature correction.",
     "category": "Converters",
     "icon": "gauge",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "puberty-stage-timeline-guide": {
+    "name": "Puberty Stage Timeline Guide",
+    "description": "Informational Tanner stage timeline showing typical age ranges for each pubertal change in girls and boys, with early and delayed flags.",
+    "category": "Health & Fitness",
+    "icon": "calendar-range",
     "iconColor": "text-[var(--primary)]"
   },
   "pubsub-vs-queue-decision-helper": {
@@ -20027,6 +20762,13 @@ export const toolMetaMap = {
     "description": "Build a printable purchase order with line items, GST, freight, delivery and payment terms.",
     "category": "Generators",
     "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "pushup-standard-benchmark": {
+    "name": "Pushup Standard Benchmark",
+    "description": "Rank your max push-up count against published age and sex fitness norms, and see how many reps reach the next band.",
+    "category": "Health & Fitness",
+    "icon": "dumbbell",
     "iconColor": "text-[var(--primary)]"
   },
   "python-venv-setup-builder": {
@@ -20690,6 +21432,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-[var(--primary)]"
   },
+  "refeed-day-calculator": {
+    "name": "Refeed Day Calculator",
+    "description": "Work out calorie, protein, fat and carbohydrate targets for a planned refeed day, plus what it costs your weekly deficit.",
+    "category": "Health Calculators",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
   "refinance-savings-calculator": {
     "name": "Refinance Savings Calculator",
     "description": "Compare current loan versus refinance offers with new EMI, interest savings, closing costs, break-even month, and cash-flow impact.",
@@ -20833,6 +21582,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "relieving-letter-request-generator": {
+    "name": "Relieving Letter Request Generator",
+    "description": "Draft a formal follow-up for your relieving letter, experience certificate and full and final settlement, with tenure and statutory deadlines worked out.",
+    "category": "Business",
+    "icon": "file-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "remove-duplicate-lines": {
     "name": "Remove Duplicate Lines",
@@ -21028,6 +21784,13 @@ export const toolMetaMap = {
     "icon": "piggy-bank",
     "iconColor": "text-[var(--primary)]"
   },
+  "resignation-letter-notice-period-generator": {
+    "name": "Resignation Letter Generator by Notice Period",
+    "description": "Work out your last working day from the notice period, leave adjustment and buyout days, then generate a resignation letter with a dated handover plan.",
+    "category": "Business",
+    "icon": "log-out",
+    "iconColor": "text-[var(--primary)]"
+  },
   "restaurant-bill-splitter": {
     "name": "Restaurant Bill Splitter",
     "description": "Split a restaurant bill by item, share GST and tip proportionally, and get per-person totals that add up to the exact bill.",
@@ -21047,6 +21810,13 @@ export const toolMetaMap = {
     "description": "Generate menu description prompts with cuisine, pricing tone and an allergen check against EU, US or Codex declaration lists.",
     "category": "Business",
     "icon": "utensils-crossed",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "restaurant-refund-policy-generator": {
+    "name": "Restaurant Refund Policy Generator",
+    "description": "Draft a food order refund policy for missing, wrong, late or unsafe items, with reporting windows and refund amounts.",
+    "category": "Business",
+    "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
   "resting-heart-rate-trend-tracker": {
@@ -21170,6 +21940,13 @@ export const toolMetaMap = {
     "description": "Convert RGPV CGPA to percentage with the (CGPA - 0.75) x 10 formula, reverse it, and read the grade point scale.",
     "category": "Calculators",
     "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "rice-protocol-timer": {
+    "name": "RICE Protocol Timer",
+    "description": "Time ice-on and ice-off cycles for a fresh soft-tissue injury, with a dated application schedule and compression and elevation checks.",
+    "category": "Health & Fitness",
+    "icon": "snowflake",
     "iconColor": "text-[var(--primary)]"
   },
   "rice-water-ratio": {
@@ -21447,6 +22224,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "roommate-agreement-generator": {
+    "name": "Roommate Agreement Generator",
+    "description": "Split rent, utilities and deposit between flatmates and generate a written roommate agreement with chores, guest and exit rules.",
+    "category": "Business",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
+  },
   "ropa-builder": {
     "name": "ROPA Builder",
     "description": "Personal-data processing activities ka structured register banaye.",
@@ -21466,6 +22250,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-green-800"
+  },
+  "roti-vs-rice-swap-calculator": {
+    "name": "Roti vs Rice Swap Calculator",
+    "description": "Find the equivalent rice portion for your rotis (or the reverse) and compare calories, protein, carbs and fibre.",
+    "category": "Health Calculators",
+    "icon": "wheat",
+    "iconColor": "text-[var(--primary)]"
   },
   "rowing-machine-calorie-calculator": {
     "name": "Rowing Machine Calorie Calculator",
@@ -21494,6 +22285,27 @@ export const toolMetaMap = {
     "icon": "git-branch",
     "iconColor": "text-primary"
   },
+  "rti-application-electricity-board": {
+    "name": "RTI Application Draft for Electricity Board",
+    "description": "Draft an RTI to a state electricity distribution licensee on connection delay, billing disputes or meter records, with statutory deadlines worked out.",
+    "category": "Productivity",
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "rti-application-passport-status": {
+    "name": "RTI Application Draft for Passport Status",
+    "description": "Draft an RTI to the Regional Passport Office asking for file movement, police verification status and reasons for pendency, with reply and appeal dates.",
+    "category": "Productivity",
+    "icon": "plane",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "rti-application-scholarship-status": {
+    "name": "RTI Application Draft for Scholarship Status",
+    "description": "Draft an RTI seeking scholarship verification stages, sanction and DBT disbursal details, and the recorded reason for a rejection.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "rti-draft-template-builder": {
     "name": "RTI Draft Template Builder",
     "description": "Create clean RTI application drafts with applicant details, PIO address, information points, fee mode, checklist, copy, and TXT export.",
@@ -21505,6 +22317,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-600"
+  },
+  "rti-fee-and-timeline-calculator": {
+    "name": "RTI Fee and Timeline Calculator",
+    "description": "Work out RTI application and copying fees, BPL exemption, and the exact reply and appeal deadlines under the RTI Act 2005.",
+    "category": "Productivity",
+    "icon": "calculator",
+    "iconColor": "text-[var(--primary)]"
   },
   "rto-mock-test": {
     "name": "RTO Driving Licence Mock Test",
@@ -21566,6 +22385,13 @@ export const toolMetaMap = {
     "icon": "hourglass",
     "iconColor": "text-[var(--primary)]"
   },
+  "run-streak-tracker": {
+    "name": "Run Streak Tracker",
+    "description": "Log daily runs, see your current and longest streak against the 1-mile-a-day rule, plus consistency and milestone stats.",
+    "category": "Health & Fitness",
+    "icon": "flame",
+    "iconColor": "text-[var(--primary)]"
+  },
   "runbook-template-generator": {
     "name": "Runbook Template Generator",
     "description": "Generate an operational runbook in Markdown with alert symptoms, diagnostic checks, remediation steps and an escalation ladder.",
@@ -21589,6 +22415,13 @@ export const toolMetaMap = {
     ],
     "icon": "timer",
     "iconColor": "text-indigo-600"
+  },
+  "running-shoe-mileage-tracker": {
+    "name": "Running Shoe Mileage Tracker",
+    "description": "Track mileage on every pair of running shoes, see percentage of life used and get replacement alerts before they wear out.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
   },
   "runtime-sum-calculator": {
     "name": "Runtime Sum Calculator",
@@ -21978,6 +22811,13 @@ export const toolMetaMap = {
     "icon": "school",
     "iconColor": "text-[var(--primary)]"
   },
+  "school-bag-weight-checker": {
+    "name": "School Bag Weight Checker",
+    "description": "Check a school bag against the 10% of body weight rule and the class-wise weight limits in India's School Bag Policy 2020.",
+    "category": "Health Calculators",
+    "icon": "backpack",
+    "iconColor": "text-[var(--primary)]"
+  },
   "scientific-calculator": {
     "name": "Scientific Calculator",
     "description": "Advanced scientific calculator. Features algebraic entry, trigonometrics (sin, cos, tan), logarithms (log, ln), brackets, powers, and logs.",
@@ -22328,6 +23168,13 @@ export const toolMetaMap = {
     "icon": "package-search",
     "iconColor": "text-[var(--primary)]"
   },
+  "senior-calorie-needs-calculator": {
+    "name": "Senior Calorie Needs Calculator",
+    "description": "Daily calorie needs for adults over 50 using the Mifflin-St Jeor equation, with activity factors, a safe intake floor and senior protein targets.",
+    "category": "Health Calculators",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
   "senior-citizen-fd-calculator": {
     "name": "Senior Citizen FD Extra Rate Calculator",
     "description": "What the extra senior citizen deposit rate is worth, with the ₹1 lakh TDS threshold and the section 80TTB interest deduction.",
@@ -22366,11 +23213,32 @@ export const toolMetaMap = {
     "icon": "droplets",
     "iconColor": "text-[var(--primary)]"
   },
+  "senior-hydration-target-calculator": {
+    "name": "Senior Hydration Target Calculator",
+    "description": "Daily fluid target for older adults from the 30 mL/kg rule with a 1,500 mL floor, adjusted for fever, heat and activity, plus medication cautions.",
+    "category": "Health Calculators",
+    "icon": "droplets",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "senior-protein-distribution-planner": {
+    "name": "Senior Protein Distribution Planner",
+    "description": "Spread an older adult's daily protein target evenly across meals using the PROT-AGE and ESPEN g/kg bands and the per-meal muscle-synthesis threshold.",
+    "category": "Health & Fitness",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
   "senior-protein-intake-calculator": {
     "name": "Senior Protein Intake Calculator",
     "description": "Daily protein target for adults over 60 using the PROT-AGE and ESPEN bands, with the per-meal dose ageing muscle needs.",
     "category": "Health Calculators",
     "icon": "heart-pulse",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "senior-sleep-routine-planner": {
+    "name": "Senior Sleep Routine Planner",
+    "description": "Build a bedtime, wind-down, caffeine cut-off and nap schedule backwards from your wake time, sized for age-related sleep changes.",
+    "category": "Health & Fitness",
+    "icon": "moon",
     "iconColor": "text-[var(--primary)]"
   },
   "sentence-correction-practice": {
@@ -22518,6 +23386,13 @@ export const toolMetaMap = {
     ],
     "icon": "users-round",
     "iconColor": "text-primary"
+  },
+  "shipping-and-delivery-policy-generator": {
+    "name": "Shipping and Delivery Policy Generator",
+    "description": "Generate a shipping policy with zone-wise timelines, cut-off logic, COD rules and damaged-parcel steps, with a working-day ETA calculator.",
+    "category": "Business",
+    "icon": "truck",
+    "iconColor": "text-[var(--primary)]"
   },
   "shoe-size-converter": {
     "name": "Shoe Size Converter",
@@ -22680,6 +23555,13 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-[var(--primary)]"
   },
+  "sinclair-coefficient-calculator": {
+    "name": "Sinclair Coefficient Calculator",
+    "description": "Convert an Olympic weightlifting total into a Sinclair total using the official IWF bodyweight coefficient formula.",
+    "category": "Health Calculators",
+    "icon": "weight",
+    "iconColor": "text-[var(--primary)]"
+  },
   "singapore-airlines-baggage-allowance-checker": {
     "name": "Singapore Airlines Baggage Allowance Checker",
     "description": "Check cabin and check-in bags against Singapore Airlines weight-concept and Americas piece-concept allowances and the 115 cm cabin rule.",
@@ -22771,9 +23653,23 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-[var(--primary)]"
   },
+  "sit-and-reach-flexibility-test": {
+    "name": "Sit and Reach Flexibility Test",
+    "description": "Score a sit-and-reach box reading against age and sex flexibility norms, in cm or inches, and track change between tests.",
+    "category": "Health & Fitness",
+    "icon": "ruler",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sit-stand-ratio-planner": {
     "name": "Sit-Stand Ratio Planner",
     "description": "Turn your workday and seated meeting hours into a clock-timed sitting and standing rotation with posture-change warnings.",
+    "category": "Health & Fitness",
+    "icon": "armchair",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sit-to-stand-test-tracker": {
+    "name": "Sit to Stand Test Tracker",
+    "description": "Score a 30-second chair stand test against the Senior Fitness Test normal range for your age and sex, and log the change.",
     "category": "Health & Fitness",
     "icon": "armchair",
     "iconColor": "text-[var(--primary)]"
@@ -22784,6 +23680,20 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "network",
     "iconColor": "text-teal-500"
+  },
+  "situp-standard-benchmark": {
+    "name": "Situp Standard Benchmark",
+    "description": "Score a one-minute sit-up test against age and sex fitness bands, with any test length normalised to 60 seconds.",
+    "category": "Health & Fitness",
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sixteen-eight-fasting-window-planner": {
+    "name": "16:8 Fasting Window Planner",
+    "description": "Place your 8-hour eating window and 16-hour fast around work, training and bedtime, with meal times and sleep-overlap checks.",
+    "category": "Health & Fitness",
+    "icon": "clock",
+    "iconColor": "text-[var(--primary)]"
   },
   "skating-calorie-burn-calculator": {
     "name": "Skating Calorie Burn Calculator",
@@ -22914,6 +23824,13 @@ export const toolMetaMap = {
     "description": "Turn a night's sleep diary into sleep efficiency, total sleep time and the time-in-bed window used in sleep restriction therapy.",
     "category": "Health Calculators",
     "icon": "bed-double",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sleep-hygiene-checklist": {
+    "name": "Sleep Hygiene Checklist",
+    "description": "Score your bedroom, daily habits and bedtime routine against sleep hygiene basics, with impact-ranked fixes and cut-off times.",
+    "category": "Health & Fitness",
+    "icon": "moon",
     "iconColor": "text-[var(--primary)]"
   },
   "sleep-sound-fade-timer": {
@@ -23099,6 +24016,13 @@ export const toolMetaMap = {
     "icon": "ghost",
     "iconColor": "text-[var(--primary)]"
   },
+  "snoring-frequency-log": {
+    "name": "Snoring Frequency Log",
+    "description": "Log snoring nights, sleep position and triggers, then see weekly snoring rate, average severity and which triggers track with louder nights.",
+    "category": "Health & Fitness",
+    "icon": "moon",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sobriety-recovery-journal": {
     "name": "Sobriety Recovery Journal",
     "description": "Sober days, urges, triggers aur coping wins privately track kare.",
@@ -23111,6 +24035,13 @@ export const toolMetaMap = {
     ],
     "icon": "calendar-heart",
     "iconColor": "text-primary"
+  },
+  "social-battery-tracker": {
+    "name": "Social Battery Tracker",
+    "description": "Log social events and alone time for the week, see the battery level left, the heaviest day and the recovery hours you still owe yourself.",
+    "category": "Health & Fitness",
+    "icon": "battery-medium",
+    "iconColor": "text-[var(--primary)]"
   },
   "social-media-simulator": {
     "name": "Social Media Simulator",
@@ -23289,6 +24220,13 @@ export const toolMetaMap = {
     "description": "Compare webpack devtool source map types on build speed, rebuild speed, debug accuracy and production safety.",
     "category": "Developer",
     "icon": "map",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "south-indian-breakfast-calorie-tool": {
+    "name": "South Indian Breakfast Calorie Tool",
+    "description": "Add up calories and macros for idli, dosa, vada, upma, pongal, sambar, chutney and filter coffee.",
+    "category": "Health Calculators",
+    "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
   "south-korea-dress-code-planner": {
@@ -23650,6 +24588,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-cyan-600"
   },
+  "stair-climbing-tracker": {
+    "name": "Stair Climbing Tracker",
+    "description": "Log stair steps climbed and get elevation gain, Fitbit-style floor count and calorie burn from vertical work.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
+  },
   "stair-running-calorie-calculator": {
     "name": "Stair Running Calorie Calculator",
     "description": "Calories from flights climbed, step height and body weight, with a vertical-work cross-check and descent time included.",
@@ -23819,6 +24764,13 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-teal-600"
   },
+  "step-goal-by-age-calculator": {
+    "name": "Step Goal By Age Calculator",
+    "description": "Set a daily step target from the evidence bands for your age and goal, with a 10%-a-week ramp from the steps you take now.",
+    "category": "Health Calculators",
+    "icon": "target",
+    "iconColor": "text-[var(--primary)]"
+  },
   "step-up-sip-calculator": {
     "name": "Step-Up SIP Calculator",
     "description": "See how raising your SIP a little every year grows your corpus — exact month-by-month math against a flat SIP.",
@@ -23829,6 +24781,13 @@ export const toolMetaMap = {
     ],
     "icon": "trending-up",
     "iconColor": "text-teal-600"
+  },
+  "steps-to-kilometres-converter": {
+    "name": "Steps to Kilometres Converter",
+    "description": "Convert steps to kilometres and miles using a step length from your height, your own measurement, or a known stride.",
+    "category": "Health Calculators",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
   },
   "stock-average-calculator": {
     "name": "Stock Average Price Calculator",
@@ -23985,6 +24944,20 @@ export const toolMetaMap = {
     "description": "Plan a trip food budget across street stalls, cafés, snacks and splurge meals, and see how many nice meals your budget really allows.",
     "category": "Lifestyle",
     "icon": "utensils-crossed",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "stress-level-self-check": {
+    "name": "Stress Level Self-Check",
+    "description": "Ten-question perceived stress self-check scored 0-40 with low, moderate and high bands plus practical next steps. Informational only.",
+    "category": "Health & Fitness",
+    "icon": "brain",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "stride-length-calculator": {
+    "name": "Stride Length Calculator",
+    "description": "Work out running step and stride length from cadence and pace, or from a step count over a known distance.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
     "iconColor": "text-[var(--primary)]"
   },
   "strikethrough-text-generator": {
@@ -24144,6 +25117,13 @@ export const toolMetaMap = {
     "icon": "radar",
     "iconColor": "text-[var(--primary)]"
   },
+  "subprocessor-list-page-generator": {
+    "name": "Subprocessor List Page Generator",
+    "description": "Build a public subprocessor page with vendor, purpose, data, location and GDPR Chapter V transfer mechanism columns.",
+    "category": "Security & Privacy",
+    "icon": "server",
+    "iconColor": "text-[var(--primary)]"
+  },
   "subresource-integrity-generator": {
     "name": "Subresource Integrity Generator",
     "description": "Generate SHA-256, SHA-384 and SHA-512 integrity attributes for scripts and stylesheets, hashed locally in your browser.",
@@ -24225,6 +25205,13 @@ export const toolMetaMap = {
     "icon": "brain-circuit",
     "iconColor": "text-teal-600"
   },
+  "sugar-swap-calculator": {
+    "name": "Sugar Swap Calculator",
+    "description": "Convert any sweetener to an equally sweet amount of another, with calories saved, glycaemic index, ADI use and baking notes.",
+    "category": "Health Calculators",
+    "icon": "candy-off",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sukanya-samriddhi-calculator": {
     "name": "Sukanya Samriddhi Yojana Calculator",
     "description": "Project your daughter's Sukanya Samriddhi maturity with real scheme rules — 15 years of deposits, 21-year maturity, year-wise growth.",
@@ -24264,6 +25251,20 @@ export const toolMetaMap = {
     "icon": "sun",
     "iconColor": "text-[var(--primary)]"
   },
+  "sunscreen-reapplication-calculator": {
+    "name": "Sunscreen Reapplication Calculator",
+    "description": "How much sunscreen to apply by body area and when to reapply, from the UV index, your skin type and water resistance.",
+    "category": "Health Calculators",
+    "icon": "sun",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sunscreen-reapply-timer": {
+    "name": "Sunscreen Reapply Timer",
+    "description": "Build a clock-time sunscreen reapplication schedule sized to your activity, sweat and water exposure, plus how much to use each time.",
+    "category": "Health & Fitness",
+    "icon": "sun",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sunset-viewpoint-timing-planner": {
     "name": "Sunset Viewpoint Timing Planner",
     "description": "Work out when to leave to reach a viewpoint before golden hour, using NOAA solar equations for the light and Naismith's rule for the climb.",
@@ -24299,6 +25300,13 @@ export const toolMetaMap = {
     "icon": "superscript",
     "iconColor": "text-orange-600"
   },
+  "supplement-cost-per-serving-tool": {
+    "name": "Supplement Cost Per Serving Tool",
+    "description": "Compare supplement tubs and brands on true cost per effective serving of the active ingredient, not on sticker price.",
+    "category": "Health Calculators",
+    "icon": "receipt",
+    "iconColor": "text-[var(--primary)]"
+  },
   "surface-vibration-recorder": {
     "name": "Surface Vibration Recorder",
     "description": "Accelerometer readings ka vibration timeline banaye.",
@@ -24323,6 +25331,13 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "list-checks",
     "iconColor": "text-purple-600"
+  },
+  "surya-namaskar-counter": {
+    "name": "Surya Namaskar Counter",
+    "description": "Count Surya Namaskar rounds with breath pacing, session time, MET-based calories and a daily practice streak.",
+    "category": "Health & Fitness",
+    "icon": "sunrise",
+    "iconColor": "text-[var(--primary)]"
   },
   "suspension-wear-checklist": {
     "name": "Suspension Wear Checklist",
@@ -24380,6 +25395,20 @@ export const toolMetaMap = {
     "icon": "brush",
     "iconColor": "text-[var(--primary)]"
   },
+  "swim-pace-calculator": {
+    "name": "Swim Pace Calculator",
+    "description": "Pace per 100 from any swim distance and time, plus predicted times for standard pool and triathlon distances.",
+    "category": "Health & Fitness",
+    "icon": "waves",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "swim-stroke-count-tracker": {
+    "name": "Swim Stroke Count Tracker",
+    "description": "Log strokes per length and see average, spread, distance per stroke and how much your count drifts as you tire.",
+    "category": "Health & Fitness",
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
   "swimming-calorie-burn-calculator": {
     "name": "Swimming Calorie Burn Calculator",
     "description": "Calories burned swimming by stroke, effort and time, with pool distance, pace per 100 m and calories per length.",
@@ -24410,6 +25439,13 @@ export const toolMetaMap = {
     "icon": "accessibility",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "swolf-score-calculator": {
+    "name": "SWOLF Score Calculator",
+    "description": "Add length time and stroke count into a SWOLF efficiency score, normalised per 25 m, with the speed and stroke trade-off.",
+    "category": "Health Calculators",
+    "icon": "waves",
+    "iconColor": "text-[var(--primary)]"
   },
   "swp-calculator": {
     "name": "SWP Calculator",
@@ -24508,6 +25544,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
+  "tabata-interval-timer": {
+    "name": "Tabata Interval Timer",
+    "description": "Classic 20-second work, 10-second rest Tabata timer with custom rounds, multiple sets and a prep countdown.",
+    "category": "Health & Fitness",
+    "icon": "timer-reset",
+    "iconColor": "text-[var(--primary)]"
+  },
   "table-tennis-calorie-calculator": {
     "name": "Table Tennis Calorie Calculator",
     "description": "Estimate calories burned playing table tennis from body weight, games played, minutes per game and break time.",
@@ -24541,6 +25584,13 @@ export const toolMetaMap = {
     "description": "Validate the 4 letters, 5 digits, 1 letter structure of a TAN offline, decode its location code and catch typos.",
     "category": "Developer",
     "icon": "badge-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tanka-syllable-builder": {
+    "name": "Tanka Syllable Builder",
+    "description": "Plan a five-line tanka draft around the 5-7-5-7-7 pattern with theme and image prompts.",
+    "category": "Text & Writing",
+    "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
   },
   "tap-glider": {
@@ -24778,6 +25828,20 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
+  "ten-k-race-time-predictor": {
+    "name": "10K Race Time Predictor",
+    "description": "Estimate your 10K finish time from a recent race with the Riegel formula, plus kilometre and mile target splits.",
+    "category": "Health & Fitness",
+    "icon": "flag",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "ten-thousand-steps-time-estimator": {
+    "name": "10000 Steps Time Estimator",
+    "description": "Estimate how long 10,000 steps takes at your cadence, the distance covered and how to split it across the day.",
+    "category": "Health Calculators",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
   "tenant-notice-to-vacate-generator": {
     "name": "Tenant Notice to Vacate Generator",
     "description": "Draft a tenant's notice to vacate with the handover date, notice-period check, final rent and security deposit settlement.",
@@ -24846,6 +25910,13 @@ export const toolMetaMap = {
     "description": "Design testimonial cards with an initials avatar, star rating and consistent branding at exact social pixel sizes.",
     "category": "Marketing & Social",
     "icon": "message-square-quote",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "testosterone-lifestyle-checklist": {
+    "name": "Testosterone Lifestyle Checklist",
+    "description": "Score seventeen evidence-linked sleep, body-composition, training, nutrition and substance habits and see your biggest gaps.",
+    "category": "Health & Fitness",
+    "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
   "tet-exam-countdown": {
@@ -25522,6 +26593,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-[var(--primary)]"
   },
+  "toothbrushing-timer": {
+    "name": "Toothbrushing Timer",
+    "description": "Two-minute brushing timer split into quadrants or sextants, with modified Bass technique cues and fluoride guidance by age.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
   "tote-bag-artwork-placement-guide": {
     "name": "Tote Bag Artwork Placement Guide",
     "description": "Safe print area and exact placement offsets for tote bags, allowing for side seams, handle stitching and the gusset that folds under the base.",
@@ -25899,6 +26977,13 @@ export const toolMetaMap = {
     "description": "Generates thread prompts with post count, hook style and CTA — 280-character budgets and t.co link costs computed per post.",
     "category": "Marketing & Social",
     "icon": "twitter",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-line-shayari-composer": {
+    "name": "Two-Line Shayari Composer",
+    "description": "Create a two-line shayari draft from mood, theme, language mix, rhyme and audience notes.",
+    "category": "Text & Writing",
+    "icon": "heart",
     "iconColor": "text-[var(--primary)]"
   },
   "two-round-attempt-planner": {
@@ -27265,6 +28350,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
+  "walking-pace-calculator": {
+    "name": "Walking Pace Calculator",
+    "description": "Convert distance and time into minutes per kilometre and mile, with speed, MET intensity band and split times.",
+    "category": "Health Calculators",
+    "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
+  },
   "wall-art-hanging-calculator": {
     "name": "Wall Art Hanging Calculator",
     "description": "Work out nail height, frame spacing and hook rating for single pictures and gallery walls using the 145 cm gallery centre line.",
@@ -27284,6 +28376,13 @@ export const toolMetaMap = {
     "description": "Compute wall tile count, boxes and cost from wall run, height and the door and window openings deducted.",
     "category": "Calculators",
     "icon": "layout-grid",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "warm-up-set-calculator": {
+    "name": "Warm-Up Set Calculator",
+    "description": "Build a warm-up ramp of sets, reps and loadable weights leading up to your top working set or heavy single.",
+    "category": "Health & Fitness",
+    "icon": "trending-up",
     "iconColor": "text-[var(--primary)]"
   },
   "warranty-receipt-vault": {
@@ -27382,6 +28481,13 @@ export const toolMetaMap = {
     "description": "Work out how many water tankers your home needs each month, the monthly spend and the true cost per litre and per kilolitre.",
     "category": "Calculators",
     "icon": "truck",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "water-weight-fluctuation-explainer": {
+    "name": "Water Weight Fluctuation Explainer",
+    "description": "Break an overnight scale swing into its causes — sodium, glycogen, alcohol, training, cycle and travel — plus the fat-equivalent it would need.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
     "iconColor": "text-[var(--primary)]"
   },
   "watercolor-game": {
@@ -27607,11 +28713,25 @@ export const toolMetaMap = {
     "icon": "layout-dashboard",
     "iconColor": "text-cyan-500"
   },
+  "weigh-in-rolling-average-tool": {
+    "name": "Weigh-In Rolling Average Tool",
+    "description": "Smooth daily weigh-ins into a 7-day moving average and an exponential trend line, with the weekly rate and implied calorie balance.",
+    "category": "Health Calculators",
+    "icon": "trending-down",
+    "iconColor": "text-[var(--primary)]"
+  },
   "weight-based-dose-converter": {
     "name": "Weight-Based Dose Converter",
     "description": "Turn a mg-per-kg instruction into a total daily dose, a per-dose amount and a syrup volume, with optional maximum-dose caps.",
     "category": "Health Calculators",
     "icon": "syringe",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "weight-goal-date-predictor": {
+    "name": "Weight Goal Date Predictor",
+    "description": "Project the date you reach a target weight from your calorie intake, using Mifflin-St Jeor TDEE that is recalculated as your weight changes.",
+    "category": "Health Calculators",
+    "icon": "scale",
     "iconColor": "text-[var(--primary)]"
   },
   "weight-loss-protein-calculator": {
@@ -27653,6 +28773,13 @@ export const toolMetaMap = {
     "description": "Calories burned lifting weights, counting working sets and rest between sets separately using Compendium MET values.",
     "category": "Health Calculators",
     "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "wellness-journaling-prompt-generator": {
+    "name": "Wellness Journaling Prompt Generator",
+    "description": "Draw fresh reflective journaling prompts by theme, set a session length and build a repeatable daily writing practice.",
+    "category": "Health & Fitness",
+    "icon": "notebook-pen",
     "iconColor": "text-[var(--primary)]"
   },
   "west-bengal-board-percentage-calculator": {
@@ -27758,6 +28885,13 @@ export const toolMetaMap = {
     "icon": "link",
     "iconColor": "text-teal-600"
   },
+  "whey-scoop-protein-calculator": {
+    "name": "Whey Scoop Protein Calculator",
+    "description": "Turn scoops into grams of protein, check the purity of your whey against the label and compare tubs on cost per 25 g of protein.",
+    "category": "Health Calculators",
+    "icon": "milk",
+    "iconColor": "text-[var(--primary)]"
+  },
   "which-animal-are-you": {
     "name": "Which Animal Are You? - Spirit Animal Quiz",
     "description": "Discover which animal matches your personality with this fun quiz. Find your spirit animal based on your traits and instincts instantly.",
@@ -27848,6 +28982,20 @@ export const toolMetaMap = {
     ],
     "icon": "wifi",
     "iconColor": "text-teal-600"
+  },
+  "wildfire-smoke-mask-selector": {
+    "name": "Wildfire Smoke Mask Selector",
+    "description": "Pick the right respirator for the smoke level using OSHA protection factors, and see how long you can safely stay out.",
+    "category": "Health & Fitness",
+    "icon": "cloud-fog",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "wilks-score-calculator": {
+    "name": "Wilks Score Calculator",
+    "description": "Convert a squat, bench and deadlift total into a Wilks score so lifters of different bodyweights can be compared.",
+    "category": "Health Calculators",
+    "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
   },
   "windfall-allocation-planner": {
     "name": "Windfall Allocation Planner",
@@ -27996,6 +29144,13 @@ export const toolMetaMap = {
     "icon": "brain-circuit",
     "iconColor": "text-fuchsia-600"
   },
+  "workout-caffeine-dose-calculator": {
+    "name": "Workout Caffeine Dose Calculator",
+    "description": "Performance caffeine dose from bodyweight at 3-6 mg/kg, when to take it before training, and how much is still in you at bedtime.",
+    "category": "Health Calculators",
+    "icon": "coffee",
+    "iconColor": "text-[var(--primary)]"
+  },
   "workout-planner": {
     "name": "Workout Planner",
     "description": "Plan workout tasks with organized inputs, timelines, and clear next steps.",
@@ -28116,6 +29271,13 @@ export const toolMetaMap = {
     ],
     "icon": "crystal-ball",
     "iconColor": "text-violet-600"
+  },
+  "yoga-session-calorie-estimator": {
+    "name": "Yoga Session Calorie Estimator",
+    "description": "Estimate calories burned in a yoga session by style and body weight using published MET values and the ACSM formula.",
+    "category": "Health Calculators",
+    "icon": "flame",
+    "iconColor": "text-[var(--primary)]"
   },
   "younger-version-generator": {
     "name": "Younger Version Generator",

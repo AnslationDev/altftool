@@ -1,0 +1,44 @@
+const seo = {
+  intro:
+    "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. The exhale is always longer than the inhale, because heart rate falls during exhalation, and the instructions ask for small, quiet breaths rather than deep ones.",
+  useCases: [
+    "Slow a racing breath during a panic attack without being told to 'just breathe deeply'.",
+    "Wind down after an adrenaline spike — a near miss in traffic, bad news, a confrontation.",
+    "Practise the 4:6 shape when calm so the pattern is familiar when it is actually needed.",
+    "Give someone else a visible pacer to follow when they cannot process spoken instructions.",
+  ],
+  benefits: [
+    [
+      "Pace-matched start",
+      "Begins at your current rate and slows gradually, which is how breathing retraining for panic is normally taught.",
+    ],
+    [
+      "Exhale-weighted by design",
+      "Every pattern gives the exhale the larger share of the breath, the part linked to parasympathetic activation.",
+    ],
+    [
+      "Small breaths, not deep ones",
+      "The prompts explicitly discourage over-breathing, which lowers CO2 and produces the tingling and dizziness of panic.",
+    ],
+  ],
+  faqs: [
+    [
+      "What is the fastest way to stop a panic attack?",
+      "Slowing the breath and lengthening the exhale is the most reliable self-help step: aim for the out-breath to be longer than the in-breath, and let the rate fall gradually rather than all at once. Panic attacks peak within about 10 minutes and then subside on their own — the breathing shortens the peak, it does not have to end the episode instantly.",
+    ],
+    [
+      "Why should the exhale be longer than the inhale?",
+      "Heart rate rises during inhalation and falls during exhalation, an effect called respiratory sinus arrhythmia. Spending more of each breath exhaling therefore increases vagal, parasympathetic influence, which is why 4-in/6-out and 4-in/8-out are common calming patterns.",
+    ],
+    [
+      "Should I take deep breaths during a panic attack?",
+      "No — deep, fast breathing is usually the problem rather than the fix. Over-breathing lowers arterial carbon dioxide, and that hypocapnia is what causes the tingling in the hands and lips, light-headedness and chest tightness. The aim is slower and smaller breaths, ideally through the nose.",
+    ],
+    [
+      "What is 6 breaths a minute and why that number?",
+      "Six breaths a minute is roughly 0.1 Hz, the rate at which heart-rate variability peaks for most adults — the so-called resonance frequency, usually somewhere between 4.5 and 6.5 breaths a minute. It is the target used in heart-rate-variability biofeedback training, which is why the pacer ramps towards it rather than towards a normal resting 12 to 20.",
+    ],
+  ],
+};
+
+export default seo;

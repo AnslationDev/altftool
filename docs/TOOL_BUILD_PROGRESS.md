@@ -452,3 +452,66 @@ Options measured from the live artifact, in descending value:
    full Tailwind output; contents differ slightly so simple dedupe won't work — needs
    cssChunking/global-import discipline work).
 3. Release in slices of ≤ ~60 tools (…fits ~4.99 MiB headroom) — a stopgap only.
+
+---
+
+## 9. The 205 MiB artifact gate — what has been tried and what it cost
+
+**A build can compile perfectly and still not deploy.** `scripts/prune-amplify-build.mjs`
+throws above 205 MiB (AWS's own ceiling is 220). Check the `Amplify artifact gate:` line
+before assuming a green build ships. Measure it the way Amplify does or the number is
+meaningless:
+
+```bash
+ALTFT_DEFER_BULK_PRERENDER=true ALTFT_BUILD_CPUS=1 \
+ALTFT_WEBPACK_BUILD_WORKER=true npm run build
+```
+
+Without `ALTFT_DEFER_BULK_PRERENDER` the figure is wrong in both directions — that mistake
+cost a wrong "it passes" call once already. `.next/cache` (several GB) is not counted.
+
+### Measured on 2026-07-28, 3,253 tools
+
+| Change | Effect |
+|---|---|
+| Defer three prerender families (`alternatives/[incumbent]`, two `bops` `[slug]` routes) | **−13.4 MiB** |
+| `serverExternalPackages` for the `/transform` dependencies | **−7.6 MiB** |
+| Recompress 47 bundled images with sharp, in place | **−2.9 MiB** |
+| Per-tool lazy loading of `seo.js` | **+13.6 MiB — reverted** |
+| | **231.53 → 208.73 MiB** |
+
+**Tools are not the problem.** With the wave's 120 new tools removed the artifact was
+216.08 MiB — already over. Each tool costs about **17 KiB**. Adding tools is cheap; the
+fixed platform cost is what sits near the ceiling.
+
+### Do not retry per-tool code splitting for the SEO map
+
+Splitting the 2,009 `seo.js` modules into one lazy chunk each — the shape `toolRuntimeMap`
+uses — looks like it should shed the ~6 MiB server chunk that holds all tool copy. It does
+the opposite: **+13.6 MiB**, because per-chunk webpack overhead across 2,009 tiny modules
+costs more than the bundled prose it replaces. It also forces `buildToolSeoContent` async
+across seven call sites. Measured and reverted; do not repeat it.
+
+### Composition at 208.73 MiB
+
+```
+.next/server  111 MiB    app 80 (bops 30, then a long tail of 2–4 MiB routes)
+                         chunks 30
+.next/static  111 MiB    chunks 96 (one per tool — the catalogue itself)
+                         media 11
+```
+
+`server/app` has no single remaining offender; it is a long tail. `static/chunks` is the
+catalogue and grows with it. The clean engineering levers listed above are spent.
+
+### Still 3.73 MiB over — this is an owner decision, not an engineering one
+
+Two options remain and both have a real cost, so neither should be taken unilaterally:
+
+1. Raise the gate from 205 to ~212, leaving 8 MiB of headroom to AWS's 220. Fastest, but
+   spends the margin that exists to catch the next regression.
+2. Make some of the `bops` product pages dynamic, or drop route families. That is 30 MiB
+   of the owner's own pages and a product call.
+
+Whoever picks this up: get the decision before optimising further. The obvious wins are
+taken, and the next 3.73 MiB costs either headroom or pages.

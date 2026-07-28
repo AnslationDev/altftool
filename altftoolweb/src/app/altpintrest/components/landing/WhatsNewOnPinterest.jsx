@@ -176,11 +176,10 @@ export default function WhatsNewOnPinterest({ onExplorePin }) {
                 <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
                   <button
                     onClick={(e) => toggleSave(e, pin.id)}
-                    className={`px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer ${
-                      isSaved
-                        ? 'bg-black text-white hover:bg-zinc-800'
-                        : 'bg-[#E60023] text-white hover:bg-red-700'
-                    }`}
+                    className={`px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer ${isSaved
+                      ? 'bg-black text-white hover:bg-zinc-800'
+                      : 'bg-[#E60023] text-white hover:bg-red-700'
+                      }`}
                   >
                     {isSaved ? 'Saved' : 'Save'}
                   </button>
