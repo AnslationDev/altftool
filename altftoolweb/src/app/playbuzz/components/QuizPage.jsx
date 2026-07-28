@@ -83,7 +83,6 @@ const QuizPage = () => {
     return {
       title: 'Only Highly Gifted People Can Read Backwards. Can You?',
       image: 'https://picsum.photos/seed/forest-path/1200/600',
-      plays: '2.4M plays',
       category: 'Trivia',
       questions: FALLBACK_QUESTIONS,
     };

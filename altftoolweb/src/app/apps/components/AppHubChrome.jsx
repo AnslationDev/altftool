@@ -23,8 +23,9 @@ export function AppHubHeader() {
   const navItems = [
     { label: "Home", href: "/apps#apphub-home" },
     { label: "Categories", href: "/apps#categories" },
-    { label: "Featured Apps", href: "/apps#featured-apps" },
-    { label: "All Apps", href: "/apps#all-apps" },
+    // "Featured" and "All Apps" were two links to two sections rendering the
+    // same seven apps; there is one list now, so there is one link.
+    { label: "All Apps", href: "/apps#featured-apps" },
   ];
 
   return (

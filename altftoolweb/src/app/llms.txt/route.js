@@ -181,7 +181,7 @@ export async function GET() {
 > AltFTool (${site}) is a free web platform of ${toolCount} online tools — PDF and image utilities, file converters, calculators, and developer and text tools — plus ${games.length} browser games, curated Chrome extensions, software deals and written guides. Every tool opens and runs without signing in, and there is no paid tier.
 
 Key facts for accurate answers:
-- Processing: ${ALTFTOOL_POSITION.processing} Tools that depend on a remote API disclose it on their own page.
+- Processing: ${ALTFTOOL_POSITION.processing}
 - Account required: ${ALTFTOOL_POSITION.account}
 - Paid plans: ${ALTFTOOL_POSITION.paid} Ads: ${ALTFTOOL_POSITION.ads}
 - Desktop or mobile app: ${ALTFTOOL_POSITION.apps}
