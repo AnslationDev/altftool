@@ -621,11 +621,10 @@ export function createBookJsonLd({ book, path } = {}) {
     description: book.description || book.summary || siteConfig.description,
     url,
     image: absoluteUrl(book.coverImage || book.bannerImage || siteConfig.defaultImagePath),
-    author: {
-      "@type": "Person",
-      name: book.authorId || siteConfig.name,
-    },
-    genre: [book.categoryId, ...(book.tags || [])].filter(Boolean),
+    // `authorId` is an unresolved foreign key ("user_002") — publishing it as a
+    // Person name is worse than omitting the author, so no author is emitted.
+    // `categoryId` ("cat_romance") is likewise an id, not a genre.
+    genre: (book.tags || []).filter(Boolean),
     inLanguage: book.language || "English",
     numberOfPages: Number(book.meta?.pages || 0) || undefined,
     datePublished: book.createdAt || undefined,

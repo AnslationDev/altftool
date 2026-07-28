@@ -83,7 +83,6 @@ const QuizPage = () => {
       title: 'Only Highly Gifted People Can Read Backwards. Can You?',
       author: 'Terry Stein',
       image: 'https://picsum.photos/seed/forest-path/1200/600',
-      plays: '2.4M plays',
       category: 'Trivia',
       questions: FALLBACK_QUESTIONS,
     };

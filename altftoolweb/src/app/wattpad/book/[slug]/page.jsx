@@ -38,13 +38,21 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // 7 of the 8 books have no chapters at all, so the page is a dead end: no
+  // "Start reading", an empty Parts tab, nothing to read. Those must not be
+  // indexed (the sitemap skips them on the same condition).
+  const hasChapters = chapters.some((chapter) => chapter.bookId === book.id);
+
   const storyDescription = book.description || book.summary || "";
   return createPageMetadata({
     title: `${book.title} - Wattpad-Style Story`,
-    description: `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`,
+    description: hasChapters
+      ? `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`
+      : `${storyDescription} No parts of ${book.title} have been published yet.`,
     path: `/wattpad/book/${book.slug}`,
     image: book.coverImage || book.bannerImage,
     type: "book",
+    noindex: !hasChapters,
   });
 }
 
@@ -100,22 +108,9 @@ export default async function BookDetailPage({ params }) {
                   {book.title}
                 </h1>
 
-                <div className="flex items-center gap-3 mt-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden relative bg-(--muted)">
-                    <Image
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                      fill
-                      alt="author"
-                      sizes="40px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-medium text-base text-(--foreground)">
-                      {book.authorId}
-                    </p>
-                  </div>
-                </div>
+                {/* `authorId` is a raw foreign key ("user_002") with no authors
+                    table behind it, so it was rendering as the byline. There is
+                    no real author to name — show none rather than an id. */}
 
                 <div className="flex flex-wrap items-center gap-5 mt-6 text-sm text-(--muted-foreground)">
                   <div className="flex items-center gap-1.5">
@@ -170,7 +165,6 @@ export default async function BookDetailPage({ params }) {
                           <h3 className="wp-related-title">
                             <span className="wp-related-number">{index + 1}.</span> {item.title}
                           </h3>
-                          <p className="wp-related-author">{item.authorId}</p>
                           <div className="wp-related-stats">
                             <span className="flex items-center gap-1">
                               <Eye size={16} />{item.stats.views}

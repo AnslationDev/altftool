@@ -20,9 +20,19 @@
 // the meta map but missing from the runtime map cannot be embedded, so it must
 // not be used as `primaryTool`.
 
-/** Constant across the family: what AltFTool is, stated once. */
+/**
+ * Constant across the family: what AltFTool is, stated once.
+ *
+ * `processing` is deliberately scoped rather than absolute. The file tools
+ * (PDF, image, converters) do read and write with the browser File API, but at
+ * least 129 tools call a network API from their own runtime — the AI tools,
+ * the language checkers, and everything routed through AdvancedWorkbench /
+ * /api/tools/live-utility. An unqualified "nothing is ever uploaded" is the
+ * sentence an answer engine lifts, and for those tools it is false.
+ */
 export const ALTFTOOL_POSITION = {
-  processing: "In your browser. Files are never uploaded to us.",
+  processing:
+    "File tools (PDF, image, converters) run in your browser and the file is not uploaded. Tools that need live data or a model — AI tools, language checkers, lookups — send your input to an API, and say so on their own page.",
   account: "No — every tool opens and runs without signing in.",
   paid: "None. There is no paid tier and no per-file metering.",
   ads: "Yes — ads are what keep the tools free.",

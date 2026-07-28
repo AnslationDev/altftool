@@ -808,7 +808,12 @@ async function buildSitemapEntries({
   }
 
   for (const book of wattpadBooks) {
-    if (book?.slug) {
+    // A book with no chapters has nothing to read — the page is noindex, so it
+    // must not be submitted either.
+    const bookHasChapters = wattpadChapters.some(
+      (chapter) => chapter.bookId === book?.id,
+    );
+    if (book?.slug && bookHasChapters) {
       pushUnique(entries, seen, `/wattpad/book/${book.slug}`, {
         lastModified: book.createdAt ? new Date(book.createdAt) : undefined,
         priority: 0.56,
