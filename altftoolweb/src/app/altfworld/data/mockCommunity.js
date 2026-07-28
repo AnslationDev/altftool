@@ -123,7 +123,7 @@ const categories = categorySeed.map(([name, description], index) => {
     subcategories: ["General conversation", "Playbooks & field notes", "Questions & feedback"].map((label, subIndex) => ({
       slug: `${slug}-${["general", "playbooks", "questions"][subIndex]}`,
       name: `${name} · ${label}`,
-      description: `${label} from the ${name} community.`, 
+      description: `${label} from the ${name} community.`,
       threads: 120 + ((index * 31 + subIndex * 57) % 320)
     }))
   };
@@ -222,4 +222,3 @@ const community = {
 };
 
 export default community;
-
