@@ -24,383 +24,383 @@ import s19 from "@/tools/aed-cash-budget-planner/seo";
 import s20 from "@/tools/aerobics-calorie-burn-calculator/seo";
 import s21 from "@/tools/afterimage-generator/seo";
 import s22 from "@/tools/age-difference-calculator/seo";
-import s23 from "@/tools/age-on-exam-cutoff-date-calculator/seo";
-import s24 from "@/tools/agent-guardrail-checklist/seo";
-import s25 from "@/tools/agent-observability-checklist/seo";
-import s26 from "@/tools/ahmedabad-airport-transfer-time-planner/seo";
-import s27 from "@/tools/ai-academic-integrity-checklist/seo";
-import s28 from "@/tools/ai-adoption-readiness-quiz/seo";
-import s29 from "@/tools/ai-art-style-reference-sheet/seo";
-import s30 from "@/tools/ai-attribution-statement-builder/seo";
-import s31 from "@/tools/ai-certification-study-planner/seo";
-import s32 from "@/tools/ai-companion-usage-reflection/seo";
-import s33 from "@/tools/ai-consent-conversation-guide/seo";
-import s34 from "@/tools/ai-content-disclosure-generator/seo";
-import s35 from "@/tools/ai-content-disclosure-statement-generator/seo";
-import s36 from "@/tools/ai-cost-per-1000-requests-calculator/seo";
-import s37 from "@/tools/ai-dependency-self-check/seo";
-import s38 from "@/tools/ai-glossary-explorer/seo";
-import s39 from "@/tools/ai-humanizer-checklist/seo";
-import s40 from "@/tools/ai-image-cost-calculator/seo";
-import s41 from "@/tools/ai-image-disclosure-label-generator/seo";
-import s42 from "@/tools/ai-image-licensing-checklist/seo";
-import s43 from "@/tools/ai-incident-response-checklist/seo";
-import s44 from "@/tools/ai-jd-analyzer-tool/seo";
-import s45 from "@/tools/ai-learning-roadmap-builder/seo";
-import s46 from "@/tools/ai-media-literacy-quiz/seo";
-import s47 from "@/tools/ai-passport-photo-maker/seo";
-import s48 from "@/tools/ai-pilot-success-criteria-builder/seo";
-import s49 from "@/tools/ai-plagiarism-risk-worksheet/seo";
-import s50 from "@/tools/ai-policy-one-pager-generator/seo";
-import s51 from "@/tools/ai-policy-quiz/seo";
-import s52 from "@/tools/ai-productivity-time-saved-calculator/seo";
-import s53 from "@/tools/ai-project-scoping-worksheet/seo";
-import s54 from "@/tools/ai-resume-prompt-builder/seo";
-import s55 from "@/tools/ai-roi-calculator/seo";
-import s56 from "@/tools/ai-scam-message-awareness-quiz/seo";
-import s57 from "@/tools/ai-social-caption-detector/seo";
-import s58 from "@/tools/ai-spend-alert-planner/seo";
-import s59 from "@/tools/ai-subscription-vs-api-calculator/seo";
-import s60 from "@/tools/ai-text-tone-rewriter-prompt/seo";
-import s61 from "@/tools/ai-training-plan-builder/seo";
-import s62 from "@/tools/ai-usage-journal/seo";
-import s63 from "@/tools/ai-usage-log-for-assignments/seo";
-import s64 from "@/tools/ai-vendor-comparison-matrix/seo";
-import s65 from "@/tools/ai-vendor-due-diligence-checklist/seo";
-import s66 from "@/tools/ai-writing-tell-scanner/seo";
-import s67 from "@/tools/air-cooler-vs-ac-cost/seo";
-import s68 from "@/tools/air-filter-change-planner/seo";
-import s69 from "@/tools/air-fryer-vs-oven-cost/seo";
-import s70 from "@/tools/akasa-air-baggage-allowance-checker/seo";
-import s71 from "@/tools/akasa-air-excess-baggage-cost-estimator/seo";
-import s72 from "@/tools/aktu-attendance-calculator/seo";
-import s73 from "@/tools/aktu-cgpa-percentage-converter/seo";
-import s74 from "@/tools/aktu-sgpa-calculator/seo";
-import s75 from "@/tools/allen-key-size-finder/seo";
-import s76 from "@/tools/alloy-vs-steel-wheel-comparison/seo";
-import s77 from "@/tools/alt-text-writer-for-social/seo";
-import s78 from "@/tools/alternate-nostril-breathing-guide/seo";
-import s79 from "@/tools/amazon-listing-image-spec-checker/seo";
-import s80 from "@/tools/amazon-listing-prompt-builder/seo";
-import s81 from "@/tools/ambiguous-figure-viewer/seo";
-import s82 from "@/tools/amp-email-image-size-guide/seo";
-import s83 from "@/tools/amrap-workout-timer/seo";
-import s84 from "@/tools/amsterdam-ams-airport-arrival-buffer-calculator/seo";
-import s85 from "@/tools/anna-university-attendance-calculator/seo";
-import s86 from "@/tools/anna-university-cgpa-percentage-converter/seo";
-import s87 from "@/tools/anna-university-gpa-calculator/seo";
-import s88 from "@/tools/announcement-graphic-generator/seo";
-import s89 from "@/tools/annual-financial-checklist/seo";
-import s90 from "@/tools/ansible-inventory-file-builder/seo";
-import s91 from "@/tools/ansible-vault-usage-planner/seo";
-import s92 from "@/tools/anxiety-check-questionnaire/seo";
-import s93 from "@/tools/apdex-score-calculator/seo";
-import s94 from "@/tools/apgar-score-calculator/seo";
-import s95 from "@/tools/api-changelog-generator/seo";
-import s96 from "@/tools/api-doc-prompt-builder/seo";
-import s97 from "@/tools/api-key-rotation-planner/seo";
-import s98 from "@/tools/api-key-vs-oauth-decision-helper/seo";
-import s99 from "@/tools/api-rate-limit-header-designer/seo";
-import s100 from "@/tools/api-stress-estimator/seo";
-import s101 from "@/tools/api-versioning-strategy-chooser/seo";
-import s102 from "@/tools/appliance-electricity-cost-estimator/seo";
-import s103 from "@/tools/appliance-resale-value-estimator/seo";
-import s104 from "@/tools/appliance-upgrade-payback-calculator/seo";
-import s105 from "@/tools/appliance-warranty-tracker/seo";
-import s106 from "@/tools/aqi-exercise-safety-advisor/seo";
-import s107 from "@/tools/aquarium-power-cost-calculator/seo";
-import s108 from "@/tools/art-style-prompt-explorer/seo";
-import s109 from "@/tools/asana-hold-timer/seo";
-import s110 from "@/tools/asian-bmi-cutoff-calculator/seo";
-import s111 from "@/tools/asset-file-naming-generator/seo";
-import s112 from "@/tools/assignment-word-count-planner/seo";
-import s113 from "@/tools/atal-pension-yojana-calculator/seo";
-import s114 from "@/tools/athlete-bmi-interpretation-tool/seo";
-import s115 from "@/tools/atkins-phase-macro-calculator/seo";
-import s116 from "@/tools/attendance-percentage-calculator/seo";
-import s117 from "@/tools/audio-bit-depth-size-calculator/seo";
-import s118 from "@/tools/audio-deliverables-checklist-builder/seo";
-import s119 from "@/tools/audio-file-size-calculator/seo";
-import s120 from "@/tools/audio-note-duration-budgeter/seo";
-import s121 from "@/tools/audio-to-base64/seo";
-import s122 from "@/tools/audiobook-reading-rate-calculator/seo";
-import s123 from "@/tools/aura-color-generator/seo";
-import s124 from "@/tools/australia-visa-cost-estimator/seo";
-import s125 from "@/tools/australia-visa-cover-letter-builder/seo";
-import s126 from "@/tools/australia-visa-rejection-reason-explainer/seo";
-import s127 from "@/tools/awards-honours-notes-tracker/seo";
-import s128 from "@/tools/aws-ebs-cost-calculator/seo";
-import s129 from "@/tools/aws-lambda-cost-calculator/seo";
-import s130 from "@/tools/aws-nat-gateway-cost-calculator/seo";
-import s131 from "@/tools/azerbaijan-entry-requirement-checklist/seo";
-import s132 from "@/tools/azure-functions-cost-calculator/seo";
-import s133 from "@/tools/baby-first-year-cost-calculator/seo";
-import s134 from "@/tools/baby-size-by-week-visualizer/seo";
-import s135 from "@/tools/backpacking-packing-list-builder/seo";
-import s136 from "@/tools/backup-3-2-1-planner-creator/seo";
-import s137 from "@/tools/badminton-calorie-burn-calculator/seo";
-import s138 from "@/tools/bajaj-service-schedule-planner/seo";
-import s139 from "@/tools/balance-transfer-savings-calculator/seo";
-import s140 from "@/tools/balcony-grill-cost-calculator/seo";
-import s141 from "@/tools/balcony-makeover-planner/seo";
-import s142 from "@/tools/balcony-solar-kit-estimator/seo";
-import s143 from "@/tools/ballet-calorie-burn-calculator/seo";
-import s144 from "@/tools/bandwidth-transfer-time-calculator/seo";
-import s145 from "@/tools/bangalore-university-cgpa-converter/seo";
-import s146 from "@/tools/bangkok-trip-budget-breakdown/seo";
-import s147 from "@/tools/bank-account-closure-request-generator/seo";
-import s148 from "@/tools/bank-account-masking-tool/seo";
-import s149 from "@/tools/bank-balance-certificate-request-generator/seo";
-import s150 from "@/tools/bank-charges-penalty-estimator/seo";
-import s151 from "@/tools/bank-exam-application-checklist/seo";
-import s152 from "@/tools/bank-exam-countdown/seo";
-import s153 from "@/tools/bank-exam-day-checklist/seo";
-import s154 from "@/tools/bank-locker-cost-estimator/seo";
-import s155 from "@/tools/barbell-plate-loading-calculator/seo";
-import s156 from "@/tools/base-converter/seo";
-import s157 from "@/tools/base-url-path-joiner/seo";
-import s158 from "@/tools/base64-audio-converter/seo";
-import s159 from "@/tools/base64-to-file/seo";
-import s160 from "@/tools/base64-to-hex/seo";
-import s161 from "@/tools/base64-to-image/seo";
-import s162 from "@/tools/base64-to-pdf/seo";
-import s163 from "@/tools/base64-to-text/seo";
-import s164 from "@/tools/base64-to-video/seo";
-import s165 from "@/tools/base64-url-converter/seo";
-import s166 from "@/tools/base64-url-encoder/seo";
-import s167 from "@/tools/bash-script-scaffold-generator/seo";
-import s168 from "@/tools/basketball-calorie-burn-calculator/seo";
-import s169 from "@/tools/batch-api-savings-calculator/seo";
-import s170 from "@/tools/battle-ropes-calorie-calculator/seo";
-import s171 from "@/tools/bcaa-eaa-dose-calculator/seo";
-import s172 from "@/tools/beach-day-timing-planner/seo";
-import s173 from "@/tools/beach-holiday-packing-list-builder/seo";
-import s174 from "@/tools/beautify-code-tool/seo";
-import s175 from "@/tools/bed-admission-merit-calculator/seo";
-import s176 from "@/tools/bed-size-comparison-chart/seo";
-import s177 from "@/tools/bedroom-ac-tonnage-calculator/seo";
-import s178 from "@/tools/belated-return-late-fee-calculator/seo";
-import s179 from "@/tools/belly-dance-calorie-calculator/seo";
-import s180 from "@/tools/bengaluru-airport-transfer-time-planner/seo";
-import s181 from "@/tools/bengaluru-blr-airport-arrival-buffer-calculator/seo";
-import s182 from "@/tools/beta-tester-nda-generator/seo";
-import s183 from "@/tools/bhangra-calorie-burn-calculator/seo";
-import s184 from "@/tools/bharatanatyam-calorie-calculator/seo";
-import s185 from "@/tools/bhutan-entry-requirement-checklist/seo";
-import s186 from "@/tools/bicycle-chain-wear-checker/seo";
-import s187 from "@/tools/bicycle-frame-size-calculator/seo";
-import s188 from "@/tools/bicycle-maintenance-planner/seo";
-import s189 from "@/tools/bihar-board-percentage-calculator/seo";
-import s190 from "@/tools/bike-chain-slack-guide/seo";
-import s191 from "@/tools/bike-fuel-cost-calculator/seo";
-import s192 from "@/tools/bike-loan-emi-calculator/seo";
-import s193 from "@/tools/bike-mileage-tracker/seo";
-import s194 from "@/tools/bilirubin-unit-converter/seo";
-import s195 from "@/tools/bill-of-supply-generator/seo";
-import s196 from "@/tools/birthday-invitation-maker/seo";
-import s197 from "@/tools/birthday-poem-generator/seo";
-import s198 from "@/tools/blister-pack-refill-tracker/seo";
-import s199 from "@/tools/blog-outline-prompt-builder/seo";
-import s200 from "@/tools/blog-privacy-policy-generator/seo";
-import s201 from "@/tools/blog-terms-and-conditions-generator/seo";
-import s202 from "@/tools/blood-glucose-unit-converter/seo";
-import s203 from "@/tools/blood-pressure-unit-converter/seo";
-import s204 from "@/tools/bls-international-appointment-day-checklist/seo";
-import s205 from "@/tools/blue-green-deployment-checklist/seo";
-import s206 from "@/tools/blue-light-curfew-calculator/seo";
-import s207 from "@/tools/bmi-prime-calculator/seo";
-import s208 from "@/tools/board-exam-countdown/seo";
-import s209 from "@/tools/board-exam-day-checklist/seo";
-import s210 from "@/tools/board-foot-calculator/seo";
-import s211 from "@/tools/body-fat-percentage-calculator/seo";
-import s212 from "@/tools/body-frame-size-calculator/seo";
-import s213 from "@/tools/bodybuilder-protein-calculator/seo";
-import s214 from "@/tools/bonafide-certificate-request-drafter/seo";
-import s215 from "@/tools/bonus-variable-pay-calculator/seo";
-import s216 from "@/tools/book-page-bookmark-organizer/seo";
-import s217 from "@/tools/books-of-accounts-requirement-checker/seo";
-import s218 from "@/tools/bookshelf-capacity-calculator/seo";
-import s219 from "@/tools/bpm-to-milliseconds-delay-calculator/seo";
-import s220 from "@/tools/brand-asset-naming-convention-builder/seo";
-import s221 from "@/tools/brand-color-palette-locker/seo";
-import s222 from "@/tools/brand-kit-manager/seo";
-import s223 from "@/tools/brand-social-avatar-kit-generator/seo";
-import s224 from "@/tools/brand-voice-guideline-generator/seo";
-import s225 from "@/tools/brass-to-cft-converter/seo";
-import s226 from "@/tools/break-even-accuracy-calculator/seo";
-import s227 from "@/tools/break-even-point-calculator/seo";
-import s228 from "@/tools/breaking-change-impact-checklist/seo";
-import s229 from "@/tools/breast-self-exam-reminder/seo";
-import s230 from "@/tools/breastfeeding-hydration-calculator/seo";
-import s231 from "@/tools/breastfeeding-session-log/seo";
-import s232 from "@/tools/breathing-pacer-tones/seo";
-import s233 from "@/tools/brick-quantity-calculator/seo";
-import s234 from "@/tools/brisk-walk-intensity-checker/seo";
-import s235 from "@/tools/british-airways-baggage-allowance-checker/seo";
-import s236 from "@/tools/british-airways-excess-baggage-cost-estimator/seo";
-import s237 from "@/tools/brokerage-charges-calculator/seo";
-import s238 from "@/tools/browser-fingerprint-visualizer/seo";
-import s239 from "@/tools/browser-session-analyzer/seo";
-import s240 from "@/tools/btu-to-ton-converter/seo";
-import s241 from "@/tools/budget-prompt-builder/seo";
-import s242 from "@/tools/bulk-find-replace/seo";
-import s243 from "@/tools/bulk-order-discount-calculator/seo";
-import s244 from "@/tools/bullet-to-prose-prompt/seo";
-import s245 from "@/tools/burnout-self-check/seo";
-import s246 from "@/tools/button-min-size-spec-generator/seo";
-import s247 from "@/tools/byte-converter/seo";
-import s248 from "@/tools/caa-record-generator/seo";
-import s249 from "@/tools/cache-hit-ratio-calculator/seo";
-import s250 from "@/tools/cad-cash-budget-planner/seo";
-import s251 from "@/tools/caddyfile-generator/seo";
-import s252 from "@/tools/cafe-working-posture-routine/seo";
-import s253 from "@/tools/caffeine-cutoff-time-calculator/seo";
-import s254 from "@/tools/cagr-calculator-detailed/seo";
-import s255 from "@/tools/cagr-calculator-tool/seo";
-import s256 from "@/tools/calcium-intake-calculator-for-women/seo";
-import s257 from "@/tools/calicut-university-cgpa-converter/seo";
-import s258 from "@/tools/calver-version-generator/seo";
-import s259 from "@/tools/canada-visa-cost-estimator/seo";
-import s260 from "@/tools/canada-visa-cover-letter-builder/seo";
-import s261 from "@/tools/canada-visa-rejection-reason-explainer/seo";
-import s262 from "@/tools/canva-ai-prompt-builder/seo";
-import s263 from "@/tools/canvas-wrap-bleed-calculator/seo";
-import s264 from "@/tools/caption-emoji-density-checker/seo";
-import s265 from "@/tools/caption-length-optimizer-per-platform/seo";
-import s266 from "@/tools/car-ac-fuel-cost-impact/seo";
-import s267 from "@/tools/car-ac-gas-refill-cost/seo";
-import s268 from "@/tools/car-battery-replacement-planner/seo";
-import s269 from "@/tools/car-depreciation-calculator/seo";
-import s270 from "@/tools/car-detailing-cost-calculator/seo";
-import s271 from "@/tools/car-exchange-vs-private-sale/seo";
-import s272 from "@/tools/car-loan-emi-calculator/seo";
-import s273 from "@/tools/car-ownership-cost-analyzer/seo";
-import s274 from "@/tools/car-purchase-savings-planner/seo";
-import s275 from "@/tools/car-rental-cost-comparison/seo";
-import s276 from "@/tools/car-storage-checklist/seo";
-import s277 from "@/tools/car-washing-calorie-calculator/seo";
-import s278 from "@/tools/career-switch-prompt-builder/seo";
-import s279 from "@/tools/caret-tilde-range-visualizer/seo";
-import s280 from "@/tools/carnivore-diet-macro-calculator/seo";
-import s281 from "@/tools/carousel-copy-splitter/seo";
-import s282 from "@/tools/carpet-roll-quantity-calculator/seo";
-import s283 from "@/tools/carpool-cost-split-calculator/seo";
-import s284 from "@/tools/carry-on-only-trip-planner/seo";
-import s285 from "@/tools/cart-bill-splitter/seo";
-import s286 from "@/tools/cascading-discount-calculator/seo";
-import s287 from "@/tools/case-brief-template-generator/seo";
-import s288 from "@/tools/case-study-prompt-builder/seo";
-import s289 from "@/tools/cash-denomination-calculator/seo";
-import s290 from "@/tools/cash-deposit-reporting-checker/seo";
-import s291 from "@/tools/caste-certificate-checklist/seo";
-import s292 from "@/tools/cat-exam-countdown/seo";
-import s293 from "@/tools/cat-exam-day-checklist/seo";
-import s294 from "@/tools/cbse-best-of-five-calculator/seo";
-import s295 from "@/tools/cbse-class-10-percentage-calculator/seo";
-import s296 from "@/tools/cbse-class-10-syllabus-tracker/seo";
-import s297 from "@/tools/cbse-class-12-syllabus-tracker/seo";
-import s298 from "@/tools/cbse-lesson-plan-prompt-builder/seo";
-import s299 from "@/tools/cease-desist-noise-nuisance/seo";
-import s300 from "@/tools/ceiling-fan-electricity-cost/seo";
-import s301 from "@/tools/ceiling-fan-size-selector/seo";
-import s302 from "@/tools/ceiling-paint-coverage-calculator/seo";
-import s303 from "@/tools/cent-to-sqft-converter/seo";
-import s304 from "@/tools/certificate-expiry-tracker/seo";
-import s305 from "@/tools/cft-to-cubic-meter-converter/seo";
-import s306 from "@/tools/cgpa-to-percentage-converter/seo";
-import s307 from "@/tools/cgst-sgst-igst-split-calculator/seo";
-import s308 from "@/tools/chair-height-calculator/seo";
-import s309 from "@/tools/chair-yoga-desk-routine/seo";
-import s310 from "@/tools/change-freeze-calendar-planner/seo";
-import s311 from "@/tools/changelog-prompt-builder/seo";
-import s312 from "@/tools/changesets-config-generator/seo";
-import s313 from "@/tools/character-limit-checker/seo";
-import s314 from "@/tools/chatbot-analytics-metric-planner/seo";
-import s315 from "@/tools/chatbot-escalation-rules-planner/seo";
-import s316 from "@/tools/chatbot-monthly-cost-estimator/seo";
-import s317 from "@/tools/chennai-airport-transfer-time-planner/seo";
-import s318 from "@/tools/chennai-auto-cab-fare-estimator/seo";
-import s319 from "@/tools/chennai-maa-airport-arrival-buffer-calculator/seo";
-import s320 from "@/tools/cheque-amount-to-words-indian/seo";
-import s321 from "@/tools/child-education-corpus-planner/seo";
-import s322 from "@/tools/child-education-cost-planner/seo";
-import s323 from "@/tools/child-fever-log/seo";
-import s324 from "@/tools/child-safety-home-checklist/seo";
-import s325 from "@/tools/child-screen-time-planner/seo";
-import s326 from "@/tools/childcare-calorie-burn-calculator/seo";
-import s327 from "@/tools/chimney-cleaning-planner/seo";
-import s328 from "@/tools/chmod-permission-calculator/seo";
-import s329 from "@/tools/cholesterol-unit-converter/seo";
-import s330 from "@/tools/chronotype-finder-quiz/seo";
-import s331 from "@/tools/ci-build-matrix-explosion-estimator/seo";
-import s332 from "@/tools/cidr-subnet-calculator/seo";
-import s333 from "@/tools/cidr-to-ip-range-converter/seo";
-import s334 from "@/tools/class-rank-percentile-calculator/seo";
-import s335 from "@/tools/class-wise-ncert-coverage-map/seo";
-import s336 from "@/tools/clat-exam-countdown/seo";
-import s337 from "@/tools/clat-syllabus-tracker/seo";
-import s338 from "@/tools/claude-api-cost-calculator/seo";
-import s339 from "@/tools/client-video-revision-tracker/seo";
-import s340 from "@/tools/clinic-front-desk-prompt-pack/seo";
-import s341 from "@/tools/clinical-height-converter/seo";
-import s342 from "@/tools/clinical-weight-converter/seo";
-import s343 from "@/tools/clothing-shoe-size-converter/seo";
-import s344 from "@/tools/clothing-size-converter-abroad/seo";
-import s345 from "@/tools/cloud-budget-alert-planner/seo";
-import s346 from "@/tools/cloud-certification-path-planner/seo";
-import s347 from "@/tools/cloud-egress-fee-comparison/seo";
-import s348 from "@/tools/cloud-tagging-policy-generator/seo";
-import s349 from "@/tools/cloudflare-workers-cost-calculator/seo";
-import s350 from "@/tools/coaching-fee-vs-self-study-cost/seo";
-import s351 from "@/tools/coaching-institute-prompt-pack/seo";
-import s352 from "@/tools/code-comment-prompt-builder/seo";
-import s353 from "@/tools/code-complexity-analyzer/seo";
-import s354 from "@/tools/code-review-checklist-generator/seo";
-import s355 from "@/tools/code-review-prompt-builder/seo";
-import s356 from "@/tools/codeowners-file-generator/seo";
-import s357 from "@/tools/coder-eye-break-timer/seo";
-import s358 from "@/tools/coding-model-picker/seo";
-import s359 from "@/tools/coffee-shop-work-spot-rater/seo";
-import s360 from "@/tools/cold-email-prompt-builder/seo";
-import s361 from "@/tools/cold-vs-flu-symptom-comparator/seo";
-import s362 from "@/tools/cold-weather-workout-layering-guide/seo";
-import s363 from "@/tools/collab-brief-builder-creator/seo";
-import s364 from "@/tools/college-admission-form-checklist/seo";
-import s365 from "@/tools/college-fee-instalment-planner/seo";
-import s366 from "@/tools/colombo-trip-budget-breakdown/seo";
-import s367 from "@/tools/color-blindness-simulator/seo";
-import s368 from "@/tools/color-memory-precision-test/seo";
-import s369 from "@/tools/color-name-finder/seo";
-import s370 from "@/tools/color-psychology-analyzer/seo";
-import s371 from "@/tools/colorblind-brand-logo-checker/seo";
-import s372 from "@/tools/commit-message-prompt-builder/seo";
-import s373 from "@/tools/community-post-planner/seo";
-import s374 from "@/tools/commute-study-micro-planner/seo";
-import s375 from "@/tools/company-social-media-policy-generator/seo";
-import s376 from "@/tools/composer-json-generator/seo";
-import s377 from "@/tools/compost-bin-size-calculator/seo";
-import s378 from "@/tools/compound-interest-calculator-detailed/seo";
-import s379 from "@/tools/compound-interest-visualiser/seo";
-import s380 from "@/tools/concert-ear-protection-guide/seo";
-import s381 from "@/tools/concrete-volume-calculator/seo";
-import s382 from "@/tools/concurrency-vs-rps-calculator/seo";
-import s383 from "@/tools/construction-cost-estimator/seo";
-import s384 from "@/tools/construction-waste-cost-estimator/seo";
-import s385 from "@/tools/consumer-complaint-ecommerce-order/seo";
-import s386 from "@/tools/consumer-complaint-electricity-billing/seo";
-import s387 from "@/tools/consumer-complaint-food-delivery/seo";
-import s388 from "@/tools/contact-lens-wear-tracker/seo";
-import s389 from "@/tools/container-base-image-chooser/seo";
-import s390 from "@/tools/container-image-digest-pinning-helper/seo";
-import s391 from "@/tools/content-creator-prompt-pack/seo";
-import s392 from "@/tools/content-repurposing-matrix/seo";
-import s393 from "@/tools/contraction-timer/seo";
-import s394 from "@/tools/cooking-calorie-burn-calculator/seo";
-import s395 from "@/tools/coolant-mix-ratio-calculator/seo";
-import s396 from "@/tools/cooper-test-vo2-max-calculator/seo";
-import s397 from "@/tools/copyright-notice-generator/seo";
-import s398 from "@/tools/cosine-similarity-calculator/seo";
-import s399 from "@/tools/cost-inflation-index-calculator/seo";
+import s23 from "@/tools/age-gender-detector/seo";
+import s24 from "@/tools/age-on-exam-cutoff-date-calculator/seo";
+import s25 from "@/tools/agent-guardrail-checklist/seo";
+import s26 from "@/tools/agent-observability-checklist/seo";
+import s27 from "@/tools/ahmedabad-airport-transfer-time-planner/seo";
+import s28 from "@/tools/ai-academic-integrity-checklist/seo";
+import s29 from "@/tools/ai-adoption-readiness-quiz/seo";
+import s30 from "@/tools/ai-art-style-reference-sheet/seo";
+import s31 from "@/tools/ai-attribution-statement-builder/seo";
+import s32 from "@/tools/ai-certification-study-planner/seo";
+import s33 from "@/tools/ai-companion-usage-reflection/seo";
+import s34 from "@/tools/ai-consent-conversation-guide/seo";
+import s35 from "@/tools/ai-content-disclosure-generator/seo";
+import s36 from "@/tools/ai-content-disclosure-statement-generator/seo";
+import s37 from "@/tools/ai-cost-per-1000-requests-calculator/seo";
+import s38 from "@/tools/ai-dependency-self-check/seo";
+import s39 from "@/tools/ai-glossary-explorer/seo";
+import s40 from "@/tools/ai-humanizer-checklist/seo";
+import s41 from "@/tools/ai-image-cost-calculator/seo";
+import s42 from "@/tools/ai-image-disclosure-label-generator/seo";
+import s43 from "@/tools/ai-image-licensing-checklist/seo";
+import s44 from "@/tools/ai-incident-response-checklist/seo";
+import s45 from "@/tools/ai-jd-analyzer-tool/seo";
+import s46 from "@/tools/ai-learning-roadmap-builder/seo";
+import s47 from "@/tools/ai-media-literacy-quiz/seo";
+import s48 from "@/tools/ai-passport-photo-maker/seo";
+import s49 from "@/tools/ai-pilot-success-criteria-builder/seo";
+import s50 from "@/tools/ai-plagiarism-risk-worksheet/seo";
+import s51 from "@/tools/ai-policy-one-pager-generator/seo";
+import s52 from "@/tools/ai-policy-quiz/seo";
+import s53 from "@/tools/ai-productivity-time-saved-calculator/seo";
+import s54 from "@/tools/ai-project-scoping-worksheet/seo";
+import s55 from "@/tools/ai-resume-prompt-builder/seo";
+import s56 from "@/tools/ai-roi-calculator/seo";
+import s57 from "@/tools/ai-scam-message-awareness-quiz/seo";
+import s58 from "@/tools/ai-social-caption-detector/seo";
+import s59 from "@/tools/ai-spend-alert-planner/seo";
+import s60 from "@/tools/ai-subscription-vs-api-calculator/seo";
+import s61 from "@/tools/ai-text-tone-rewriter-prompt/seo";
+import s62 from "@/tools/ai-training-plan-builder/seo";
+import s63 from "@/tools/ai-usage-journal/seo";
+import s64 from "@/tools/ai-usage-log-for-assignments/seo";
+import s65 from "@/tools/ai-vendor-comparison-matrix/seo";
+import s66 from "@/tools/ai-vendor-due-diligence-checklist/seo";
+import s67 from "@/tools/ai-writing-tell-scanner/seo";
+import s68 from "@/tools/air-cooler-vs-ac-cost/seo";
+import s69 from "@/tools/air-filter-change-planner/seo";
+import s70 from "@/tools/air-fryer-vs-oven-cost/seo";
+import s71 from "@/tools/akasa-air-baggage-allowance-checker/seo";
+import s72 from "@/tools/akasa-air-excess-baggage-cost-estimator/seo";
+import s73 from "@/tools/aktu-attendance-calculator/seo";
+import s74 from "@/tools/aktu-cgpa-percentage-converter/seo";
+import s75 from "@/tools/aktu-sgpa-calculator/seo";
+import s76 from "@/tools/allen-key-size-finder/seo";
+import s77 from "@/tools/alloy-vs-steel-wheel-comparison/seo";
+import s78 from "@/tools/alt-text-writer-for-social/seo";
+import s79 from "@/tools/alternate-nostril-breathing-guide/seo";
+import s80 from "@/tools/amazon-listing-image-spec-checker/seo";
+import s81 from "@/tools/amazon-listing-prompt-builder/seo";
+import s82 from "@/tools/ambiguous-figure-viewer/seo";
+import s83 from "@/tools/amp-email-image-size-guide/seo";
+import s84 from "@/tools/amrap-workout-timer/seo";
+import s85 from "@/tools/amsterdam-ams-airport-arrival-buffer-calculator/seo";
+import s86 from "@/tools/anna-university-attendance-calculator/seo";
+import s87 from "@/tools/anna-university-cgpa-percentage-converter/seo";
+import s88 from "@/tools/anna-university-gpa-calculator/seo";
+import s89 from "@/tools/announcement-graphic-generator/seo";
+import s90 from "@/tools/annual-financial-checklist/seo";
+import s91 from "@/tools/ansible-inventory-file-builder/seo";
+import s92 from "@/tools/ansible-vault-usage-planner/seo";
+import s93 from "@/tools/anxiety-check-questionnaire/seo";
+import s94 from "@/tools/apdex-score-calculator/seo";
+import s95 from "@/tools/apgar-score-calculator/seo";
+import s96 from "@/tools/api-changelog-generator/seo";
+import s97 from "@/tools/api-doc-prompt-builder/seo";
+import s98 from "@/tools/api-key-rotation-planner/seo";
+import s99 from "@/tools/api-key-vs-oauth-decision-helper/seo";
+import s100 from "@/tools/api-rate-limit-header-designer/seo";
+import s101 from "@/tools/api-stress-estimator/seo";
+import s102 from "@/tools/api-versioning-strategy-chooser/seo";
+import s103 from "@/tools/app-finder/seo";
+import s104 from "@/tools/appliance-electricity-cost-estimator/seo";
+import s105 from "@/tools/appliance-resale-value-estimator/seo";
+import s106 from "@/tools/appliance-upgrade-payback-calculator/seo";
+import s107 from "@/tools/appliance-warranty-tracker/seo";
+import s108 from "@/tools/aqi-exercise-safety-advisor/seo";
+import s109 from "@/tools/aquarium-power-cost-calculator/seo";
+import s110 from "@/tools/art-style-prompt-explorer/seo";
+import s111 from "@/tools/asana-hold-timer/seo";
+import s112 from "@/tools/asian-bmi-cutoff-calculator/seo";
+import s113 from "@/tools/aspect-ratio-calculator/seo";
+import s114 from "@/tools/asset-file-naming-generator/seo";
+import s115 from "@/tools/assignment-word-count-planner/seo";
+import s116 from "@/tools/atal-pension-yojana-calculator/seo";
+import s117 from "@/tools/athlete-bmi-interpretation-tool/seo";
+import s118 from "@/tools/atkins-phase-macro-calculator/seo";
+import s119 from "@/tools/attendance-percentage-calculator/seo";
+import s120 from "@/tools/audio-bit-depth-size-calculator/seo";
+import s121 from "@/tools/audio-deliverables-checklist-builder/seo";
+import s122 from "@/tools/audio-file-size-calculator/seo";
+import s123 from "@/tools/audio-note-duration-budgeter/seo";
+import s124 from "@/tools/audio-to-base64/seo";
+import s125 from "@/tools/audiobook-reading-rate-calculator/seo";
+import s126 from "@/tools/aura-color-generator/seo";
+import s127 from "@/tools/australia-visa-cost-estimator/seo";
+import s128 from "@/tools/australia-visa-cover-letter-builder/seo";
+import s129 from "@/tools/australia-visa-rejection-reason-explainer/seo";
+import s130 from "@/tools/awards-honours-notes-tracker/seo";
+import s131 from "@/tools/aws-ebs-cost-calculator/seo";
+import s132 from "@/tools/aws-lambda-cost-calculator/seo";
+import s133 from "@/tools/aws-nat-gateway-cost-calculator/seo";
+import s134 from "@/tools/azerbaijan-entry-requirement-checklist/seo";
+import s135 from "@/tools/azure-functions-cost-calculator/seo";
+import s136 from "@/tools/baby-first-year-cost-calculator/seo";
+import s137 from "@/tools/baby-size-by-week-visualizer/seo";
+import s138 from "@/tools/backpacking-packing-list-builder/seo";
+import s139 from "@/tools/backup-3-2-1-planner-creator/seo";
+import s140 from "@/tools/badminton-calorie-burn-calculator/seo";
+import s141 from "@/tools/bajaj-service-schedule-planner/seo";
+import s142 from "@/tools/balance-transfer-savings-calculator/seo";
+import s143 from "@/tools/balcony-grill-cost-calculator/seo";
+import s144 from "@/tools/balcony-makeover-planner/seo";
+import s145 from "@/tools/balcony-solar-kit-estimator/seo";
+import s146 from "@/tools/ballet-calorie-burn-calculator/seo";
+import s147 from "@/tools/bandwidth-transfer-time-calculator/seo";
+import s148 from "@/tools/bangalore-university-cgpa-converter/seo";
+import s149 from "@/tools/bangkok-trip-budget-breakdown/seo";
+import s150 from "@/tools/bank-account-closure-request-generator/seo";
+import s151 from "@/tools/bank-account-masking-tool/seo";
+import s152 from "@/tools/bank-balance-certificate-request-generator/seo";
+import s153 from "@/tools/bank-charges-penalty-estimator/seo";
+import s154 from "@/tools/bank-exam-application-checklist/seo";
+import s155 from "@/tools/bank-exam-countdown/seo";
+import s156 from "@/tools/bank-exam-day-checklist/seo";
+import s157 from "@/tools/bank-locker-cost-estimator/seo";
+import s158 from "@/tools/barbell-plate-loading-calculator/seo";
+import s159 from "@/tools/base-converter/seo";
+import s160 from "@/tools/base-url-path-joiner/seo";
+import s161 from "@/tools/base64-audio-converter/seo";
+import s162 from "@/tools/base64-to-file/seo";
+import s163 from "@/tools/base64-to-hex/seo";
+import s164 from "@/tools/base64-to-image/seo";
+import s165 from "@/tools/base64-to-pdf/seo";
+import s166 from "@/tools/base64-to-text/seo";
+import s167 from "@/tools/base64-to-video/seo";
+import s168 from "@/tools/base64-url-converter/seo";
+import s169 from "@/tools/base64-url-encoder/seo";
+import s170 from "@/tools/bash-script-scaffold-generator/seo";
+import s171 from "@/tools/basketball-calorie-burn-calculator/seo";
+import s172 from "@/tools/batch-api-savings-calculator/seo";
+import s173 from "@/tools/battle-ropes-calorie-calculator/seo";
+import s174 from "@/tools/bcaa-eaa-dose-calculator/seo";
+import s175 from "@/tools/beach-day-timing-planner/seo";
+import s176 from "@/tools/beach-holiday-packing-list-builder/seo";
+import s177 from "@/tools/beautify-code-tool/seo";
+import s178 from "@/tools/bed-admission-merit-calculator/seo";
+import s179 from "@/tools/bed-size-comparison-chart/seo";
+import s180 from "@/tools/bedroom-ac-tonnage-calculator/seo";
+import s181 from "@/tools/belated-return-late-fee-calculator/seo";
+import s182 from "@/tools/belly-dance-calorie-calculator/seo";
+import s183 from "@/tools/bengaluru-airport-transfer-time-planner/seo";
+import s184 from "@/tools/bengaluru-blr-airport-arrival-buffer-calculator/seo";
+import s185 from "@/tools/beta-tester-nda-generator/seo";
+import s186 from "@/tools/bhangra-calorie-burn-calculator/seo";
+import s187 from "@/tools/bharatanatyam-calorie-calculator/seo";
+import s188 from "@/tools/bhutan-entry-requirement-checklist/seo";
+import s189 from "@/tools/bicycle-chain-wear-checker/seo";
+import s190 from "@/tools/bicycle-frame-size-calculator/seo";
+import s191 from "@/tools/bicycle-maintenance-planner/seo";
+import s192 from "@/tools/bihar-board-percentage-calculator/seo";
+import s193 from "@/tools/bike-chain-slack-guide/seo";
+import s194 from "@/tools/bike-fuel-cost-calculator/seo";
+import s195 from "@/tools/bike-loan-emi-calculator/seo";
+import s196 from "@/tools/bike-mileage-tracker/seo";
+import s197 from "@/tools/bilirubin-unit-converter/seo";
+import s198 from "@/tools/bill-of-supply-generator/seo";
+import s199 from "@/tools/birthday-invitation-maker/seo";
+import s200 from "@/tools/birthday-poem-generator/seo";
+import s201 from "@/tools/blister-pack-refill-tracker/seo";
+import s202 from "@/tools/blog-outline-prompt-builder/seo";
+import s203 from "@/tools/blog-privacy-policy-generator/seo";
+import s204 from "@/tools/blog-terms-and-conditions-generator/seo";
+import s205 from "@/tools/blood-glucose-unit-converter/seo";
+import s206 from "@/tools/blood-pressure-unit-converter/seo";
+import s207 from "@/tools/bls-international-appointment-day-checklist/seo";
+import s208 from "@/tools/blue-green-deployment-checklist/seo";
+import s209 from "@/tools/blue-light-curfew-calculator/seo";
+import s210 from "@/tools/bmi-prime-calculator/seo";
+import s211 from "@/tools/board-exam-countdown/seo";
+import s212 from "@/tools/board-exam-day-checklist/seo";
+import s213 from "@/tools/board-foot-calculator/seo";
+import s214 from "@/tools/body-fat-percentage-calculator/seo";
+import s215 from "@/tools/body-frame-size-calculator/seo";
+import s216 from "@/tools/bodybuilder-protein-calculator/seo";
+import s217 from "@/tools/bonafide-certificate-request-drafter/seo";
+import s218 from "@/tools/bonus-variable-pay-calculator/seo";
+import s219 from "@/tools/book-page-bookmark-organizer/seo";
+import s220 from "@/tools/books-of-accounts-requirement-checker/seo";
+import s221 from "@/tools/bookshelf-capacity-calculator/seo";
+import s222 from "@/tools/bpm-to-milliseconds-delay-calculator/seo";
+import s223 from "@/tools/brand-asset-naming-convention-builder/seo";
+import s224 from "@/tools/brand-color-palette-locker/seo";
+import s225 from "@/tools/brand-kit-manager/seo";
+import s226 from "@/tools/brand-social-avatar-kit-generator/seo";
+import s227 from "@/tools/brand-voice-guideline-generator/seo";
+import s228 from "@/tools/brass-to-cft-converter/seo";
+import s229 from "@/tools/break-even-accuracy-calculator/seo";
+import s230 from "@/tools/break-even-point-calculator/seo";
+import s231 from "@/tools/breaking-change-impact-checklist/seo";
+import s232 from "@/tools/breast-self-exam-reminder/seo";
+import s233 from "@/tools/breastfeeding-hydration-calculator/seo";
+import s234 from "@/tools/breastfeeding-session-log/seo";
+import s235 from "@/tools/breathing-pacer-tones/seo";
+import s236 from "@/tools/brick-quantity-calculator/seo";
+import s237 from "@/tools/brisk-walk-intensity-checker/seo";
+import s238 from "@/tools/british-airways-baggage-allowance-checker/seo";
+import s239 from "@/tools/british-airways-excess-baggage-cost-estimator/seo";
+import s240 from "@/tools/brokerage-charges-calculator/seo";
+import s241 from "@/tools/browser-fingerprint-visualizer/seo";
+import s242 from "@/tools/browser-session-analyzer/seo";
+import s243 from "@/tools/btu-to-ton-converter/seo";
+import s244 from "@/tools/budget-prompt-builder/seo";
+import s245 from "@/tools/bulk-find-replace/seo";
+import s246 from "@/tools/bulk-order-discount-calculator/seo";
+import s247 from "@/tools/bulk-url-opener/seo";
+import s248 from "@/tools/bullet-to-prose-prompt/seo";
+import s249 from "@/tools/burnout-self-check/seo";
+import s250 from "@/tools/button-min-size-spec-generator/seo";
+import s251 from "@/tools/byte-converter/seo";
+import s252 from "@/tools/caa-record-generator/seo";
+import s253 from "@/tools/cache-hit-ratio-calculator/seo";
+import s254 from "@/tools/cad-cash-budget-planner/seo";
+import s255 from "@/tools/caddyfile-generator/seo";
+import s256 from "@/tools/cafe-working-posture-routine/seo";
+import s257 from "@/tools/caffeine-cutoff-time-calculator/seo";
+import s258 from "@/tools/cagr-calculator-detailed/seo";
+import s259 from "@/tools/cagr-calculator-tool/seo";
+import s260 from "@/tools/calcium-intake-calculator-for-women/seo";
+import s261 from "@/tools/calicut-university-cgpa-converter/seo";
+import s262 from "@/tools/calver-version-generator/seo";
+import s263 from "@/tools/canada-visa-cost-estimator/seo";
+import s264 from "@/tools/canada-visa-cover-letter-builder/seo";
+import s265 from "@/tools/canada-visa-rejection-reason-explainer/seo";
+import s266 from "@/tools/canva-ai-prompt-builder/seo";
+import s267 from "@/tools/canvas-wrap-bleed-calculator/seo";
+import s268 from "@/tools/caption-emoji-density-checker/seo";
+import s269 from "@/tools/caption-length-optimizer-per-platform/seo";
+import s270 from "@/tools/car-ac-fuel-cost-impact/seo";
+import s271 from "@/tools/car-ac-gas-refill-cost/seo";
+import s272 from "@/tools/car-battery-replacement-planner/seo";
+import s273 from "@/tools/car-depreciation-calculator/seo";
+import s274 from "@/tools/car-detailing-cost-calculator/seo";
+import s275 from "@/tools/car-exchange-vs-private-sale/seo";
+import s276 from "@/tools/car-loan-emi-calculator/seo";
+import s277 from "@/tools/car-ownership-cost-analyzer/seo";
+import s278 from "@/tools/car-purchase-savings-planner/seo";
+import s279 from "@/tools/car-rental-cost-comparison/seo";
+import s280 from "@/tools/car-storage-checklist/seo";
+import s281 from "@/tools/car-washing-calorie-calculator/seo";
+import s282 from "@/tools/career-switch-prompt-builder/seo";
+import s283 from "@/tools/caret-tilde-range-visualizer/seo";
+import s284 from "@/tools/carnivore-diet-macro-calculator/seo";
+import s285 from "@/tools/carousel-copy-splitter/seo";
+import s286 from "@/tools/carpet-roll-quantity-calculator/seo";
+import s287 from "@/tools/carpool-cost-split-calculator/seo";
+import s288 from "@/tools/carry-on-only-trip-planner/seo";
+import s289 from "@/tools/cart-bill-splitter/seo";
+import s290 from "@/tools/cascading-discount-calculator/seo";
+import s291 from "@/tools/case-brief-template-generator/seo";
+import s292 from "@/tools/case-study-prompt-builder/seo";
+import s293 from "@/tools/cash-denomination-calculator/seo";
+import s294 from "@/tools/cash-deposit-reporting-checker/seo";
+import s295 from "@/tools/caste-certificate-checklist/seo";
+import s296 from "@/tools/cat-exam-countdown/seo";
+import s297 from "@/tools/cat-exam-day-checklist/seo";
+import s298 from "@/tools/cbse-best-of-five-calculator/seo";
+import s299 from "@/tools/cbse-class-10-percentage-calculator/seo";
+import s300 from "@/tools/cbse-class-10-syllabus-tracker/seo";
+import s301 from "@/tools/cbse-class-12-syllabus-tracker/seo";
+import s302 from "@/tools/cbse-lesson-plan-prompt-builder/seo";
+import s303 from "@/tools/cease-desist-noise-nuisance/seo";
+import s304 from "@/tools/ceiling-fan-electricity-cost/seo";
+import s305 from "@/tools/ceiling-fan-size-selector/seo";
+import s306 from "@/tools/ceiling-paint-coverage-calculator/seo";
+import s307 from "@/tools/cent-to-sqft-converter/seo";
+import s308 from "@/tools/certificate-expiry-tracker/seo";
+import s309 from "@/tools/cft-to-cubic-meter-converter/seo";
+import s310 from "@/tools/cgpa-to-percentage-converter/seo";
+import s311 from "@/tools/cgst-sgst-igst-split-calculator/seo";
+import s312 from "@/tools/chair-height-calculator/seo";
+import s313 from "@/tools/chair-yoga-desk-routine/seo";
+import s314 from "@/tools/change-freeze-calendar-planner/seo";
+import s315 from "@/tools/changelog-prompt-builder/seo";
+import s316 from "@/tools/changesets-config-generator/seo";
+import s317 from "@/tools/character-limit-checker/seo";
+import s318 from "@/tools/chatbot-analytics-metric-planner/seo";
+import s319 from "@/tools/chatbot-escalation-rules-planner/seo";
+import s320 from "@/tools/chatbot-monthly-cost-estimator/seo";
+import s321 from "@/tools/chennai-airport-transfer-time-planner/seo";
+import s322 from "@/tools/chennai-auto-cab-fare-estimator/seo";
+import s323 from "@/tools/chennai-maa-airport-arrival-buffer-calculator/seo";
+import s324 from "@/tools/cheque-amount-to-words-indian/seo";
+import s325 from "@/tools/child-education-corpus-planner/seo";
+import s326 from "@/tools/child-education-cost-planner/seo";
+import s327 from "@/tools/child-fever-log/seo";
+import s328 from "@/tools/child-safety-home-checklist/seo";
+import s329 from "@/tools/child-screen-time-planner/seo";
+import s330 from "@/tools/childcare-calorie-burn-calculator/seo";
+import s331 from "@/tools/chimney-cleaning-planner/seo";
+import s332 from "@/tools/chmod-permission-calculator/seo";
+import s333 from "@/tools/cholesterol-unit-converter/seo";
+import s334 from "@/tools/chronotype-finder-quiz/seo";
+import s335 from "@/tools/ci-build-matrix-explosion-estimator/seo";
+import s336 from "@/tools/cidr-subnet-calculator/seo";
+import s337 from "@/tools/cidr-to-ip-range-converter/seo";
+import s338 from "@/tools/class-rank-percentile-calculator/seo";
+import s339 from "@/tools/class-wise-ncert-coverage-map/seo";
+import s340 from "@/tools/clat-exam-countdown/seo";
+import s341 from "@/tools/clat-syllabus-tracker/seo";
+import s342 from "@/tools/claude-api-cost-calculator/seo";
+import s343 from "@/tools/client-video-revision-tracker/seo";
+import s344 from "@/tools/clinic-front-desk-prompt-pack/seo";
+import s345 from "@/tools/clinical-height-converter/seo";
+import s346 from "@/tools/clinical-weight-converter/seo";
+import s347 from "@/tools/clothing-shoe-size-converter/seo";
+import s348 from "@/tools/clothing-size-converter-abroad/seo";
+import s349 from "@/tools/cloud-budget-alert-planner/seo";
+import s350 from "@/tools/cloud-certification-path-planner/seo";
+import s351 from "@/tools/cloud-egress-fee-comparison/seo";
+import s352 from "@/tools/cloud-tagging-policy-generator/seo";
+import s353 from "@/tools/cloudflare-workers-cost-calculator/seo";
+import s354 from "@/tools/coaching-fee-vs-self-study-cost/seo";
+import s355 from "@/tools/coaching-institute-prompt-pack/seo";
+import s356 from "@/tools/code-comment-prompt-builder/seo";
+import s357 from "@/tools/code-complexity-analyzer/seo";
+import s358 from "@/tools/code-review-checklist-generator/seo";
+import s359 from "@/tools/code-review-prompt-builder/seo";
+import s360 from "@/tools/codeowners-file-generator/seo";
+import s361 from "@/tools/coder-eye-break-timer/seo";
+import s362 from "@/tools/coding-model-picker/seo";
+import s363 from "@/tools/coffee-shop-work-spot-rater/seo";
+import s364 from "@/tools/cold-email-prompt-builder/seo";
+import s365 from "@/tools/cold-vs-flu-symptom-comparator/seo";
+import s366 from "@/tools/cold-weather-workout-layering-guide/seo";
+import s367 from "@/tools/collab-brief-builder-creator/seo";
+import s368 from "@/tools/college-admission-form-checklist/seo";
+import s369 from "@/tools/college-fee-instalment-planner/seo";
+import s370 from "@/tools/colombo-trip-budget-breakdown/seo";
+import s371 from "@/tools/color-blindness-simulator/seo";
+import s372 from "@/tools/color-memory-precision-test/seo";
+import s373 from "@/tools/color-name-finder/seo";
+import s374 from "@/tools/color-psychology-analyzer/seo";
+import s375 from "@/tools/colorblind-brand-logo-checker/seo";
+import s376 from "@/tools/commit-message-prompt-builder/seo";
+import s377 from "@/tools/community-post-planner/seo";
+import s378 from "@/tools/commute-study-micro-planner/seo";
+import s379 from "@/tools/company-social-media-policy-generator/seo";
+import s380 from "@/tools/composer-json-generator/seo";
+import s381 from "@/tools/compost-bin-size-calculator/seo";
+import s382 from "@/tools/compound-interest-calculator-detailed/seo";
+import s383 from "@/tools/compound-interest-visualiser/seo";
+import s384 from "@/tools/concert-ear-protection-guide/seo";
+import s385 from "@/tools/concrete-volume-calculator/seo";
+import s386 from "@/tools/concurrency-vs-rps-calculator/seo";
+import s387 from "@/tools/construction-cost-estimator/seo";
+import s388 from "@/tools/construction-waste-cost-estimator/seo";
+import s389 from "@/tools/consumer-complaint-ecommerce-order/seo";
+import s390 from "@/tools/consumer-complaint-electricity-billing/seo";
+import s391 from "@/tools/consumer-complaint-food-delivery/seo";
+import s392 from "@/tools/contact-lens-wear-tracker/seo";
+import s393 from "@/tools/container-base-image-chooser/seo";
+import s394 from "@/tools/container-image-digest-pinning-helper/seo";
+import s395 from "@/tools/content-creator-prompt-pack/seo";
+import s396 from "@/tools/content-repurposing-matrix/seo";
+import s397 from "@/tools/contraction-timer/seo";
+import s398 from "@/tools/cooking-calorie-burn-calculator/seo";
+import s399 from "@/tools/coolant-mix-ratio-calculator/seo";
 
 export default {
   "80tta-vs-80ttb-calculator": s0,
@@ -426,381 +426,381 @@ export default {
   "aerobics-calorie-burn-calculator": s20,
   "afterimage-generator": s21,
   "age-difference-calculator": s22,
-  "age-on-exam-cutoff-date-calculator": s23,
-  "agent-guardrail-checklist": s24,
-  "agent-observability-checklist": s25,
-  "ahmedabad-airport-transfer-time-planner": s26,
-  "ai-academic-integrity-checklist": s27,
-  "ai-adoption-readiness-quiz": s28,
-  "ai-art-style-reference-sheet": s29,
-  "ai-attribution-statement-builder": s30,
-  "ai-certification-study-planner": s31,
-  "ai-companion-usage-reflection": s32,
-  "ai-consent-conversation-guide": s33,
-  "ai-content-disclosure-generator": s34,
-  "ai-content-disclosure-statement-generator": s35,
-  "ai-cost-per-1000-requests-calculator": s36,
-  "ai-dependency-self-check": s37,
-  "ai-glossary-explorer": s38,
-  "ai-humanizer-checklist": s39,
-  "ai-image-cost-calculator": s40,
-  "ai-image-disclosure-label-generator": s41,
-  "ai-image-licensing-checklist": s42,
-  "ai-incident-response-checklist": s43,
-  "ai-jd-analyzer-tool": s44,
-  "ai-learning-roadmap-builder": s45,
-  "ai-media-literacy-quiz": s46,
-  "ai-passport-photo-maker": s47,
-  "ai-pilot-success-criteria-builder": s48,
-  "ai-plagiarism-risk-worksheet": s49,
-  "ai-policy-one-pager-generator": s50,
-  "ai-policy-quiz": s51,
-  "ai-productivity-time-saved-calculator": s52,
-  "ai-project-scoping-worksheet": s53,
-  "ai-resume-prompt-builder": s54,
-  "ai-roi-calculator": s55,
-  "ai-scam-message-awareness-quiz": s56,
-  "ai-social-caption-detector": s57,
-  "ai-spend-alert-planner": s58,
-  "ai-subscription-vs-api-calculator": s59,
-  "ai-text-tone-rewriter-prompt": s60,
-  "ai-training-plan-builder": s61,
-  "ai-usage-journal": s62,
-  "ai-usage-log-for-assignments": s63,
-  "ai-vendor-comparison-matrix": s64,
-  "ai-vendor-due-diligence-checklist": s65,
-  "ai-writing-tell-scanner": s66,
-  "air-cooler-vs-ac-cost": s67,
-  "air-filter-change-planner": s68,
-  "air-fryer-vs-oven-cost": s69,
-  "akasa-air-baggage-allowance-checker": s70,
-  "akasa-air-excess-baggage-cost-estimator": s71,
-  "aktu-attendance-calculator": s72,
-  "aktu-cgpa-percentage-converter": s73,
-  "aktu-sgpa-calculator": s74,
-  "allen-key-size-finder": s75,
-  "alloy-vs-steel-wheel-comparison": s76,
-  "alt-text-writer-for-social": s77,
-  "alternate-nostril-breathing-guide": s78,
-  "amazon-listing-image-spec-checker": s79,
-  "amazon-listing-prompt-builder": s80,
-  "ambiguous-figure-viewer": s81,
-  "amp-email-image-size-guide": s82,
-  "amrap-workout-timer": s83,
-  "amsterdam-ams-airport-arrival-buffer-calculator": s84,
-  "anna-university-attendance-calculator": s85,
-  "anna-university-cgpa-percentage-converter": s86,
-  "anna-university-gpa-calculator": s87,
-  "announcement-graphic-generator": s88,
-  "annual-financial-checklist": s89,
-  "ansible-inventory-file-builder": s90,
-  "ansible-vault-usage-planner": s91,
-  "anxiety-check-questionnaire": s92,
-  "apdex-score-calculator": s93,
-  "apgar-score-calculator": s94,
-  "api-changelog-generator": s95,
-  "api-doc-prompt-builder": s96,
-  "api-key-rotation-planner": s97,
-  "api-key-vs-oauth-decision-helper": s98,
-  "api-rate-limit-header-designer": s99,
-  "api-stress-estimator": s100,
-  "api-versioning-strategy-chooser": s101,
-  "appliance-electricity-cost-estimator": s102,
-  "appliance-resale-value-estimator": s103,
-  "appliance-upgrade-payback-calculator": s104,
-  "appliance-warranty-tracker": s105,
-  "aqi-exercise-safety-advisor": s106,
-  "aquarium-power-cost-calculator": s107,
-  "art-style-prompt-explorer": s108,
-  "asana-hold-timer": s109,
-  "asian-bmi-cutoff-calculator": s110,
-  "asset-file-naming-generator": s111,
-  "assignment-word-count-planner": s112,
-  "atal-pension-yojana-calculator": s113,
-  "athlete-bmi-interpretation-tool": s114,
-  "atkins-phase-macro-calculator": s115,
-  "attendance-percentage-calculator": s116,
-  "audio-bit-depth-size-calculator": s117,
-  "audio-deliverables-checklist-builder": s118,
-  "audio-file-size-calculator": s119,
-  "audio-note-duration-budgeter": s120,
-  "audio-to-base64": s121,
-  "audiobook-reading-rate-calculator": s122,
-  "aura-color-generator": s123,
-  "australia-visa-cost-estimator": s124,
-  "australia-visa-cover-letter-builder": s125,
-  "australia-visa-rejection-reason-explainer": s126,
-  "awards-honours-notes-tracker": s127,
-  "aws-ebs-cost-calculator": s128,
-  "aws-lambda-cost-calculator": s129,
-  "aws-nat-gateway-cost-calculator": s130,
-  "azerbaijan-entry-requirement-checklist": s131,
-  "azure-functions-cost-calculator": s132,
-  "baby-first-year-cost-calculator": s133,
-  "baby-size-by-week-visualizer": s134,
-  "backpacking-packing-list-builder": s135,
-  "backup-3-2-1-planner-creator": s136,
-  "badminton-calorie-burn-calculator": s137,
-  "bajaj-service-schedule-planner": s138,
-  "balance-transfer-savings-calculator": s139,
-  "balcony-grill-cost-calculator": s140,
-  "balcony-makeover-planner": s141,
-  "balcony-solar-kit-estimator": s142,
-  "ballet-calorie-burn-calculator": s143,
-  "bandwidth-transfer-time-calculator": s144,
-  "bangalore-university-cgpa-converter": s145,
-  "bangkok-trip-budget-breakdown": s146,
-  "bank-account-closure-request-generator": s147,
-  "bank-account-masking-tool": s148,
-  "bank-balance-certificate-request-generator": s149,
-  "bank-charges-penalty-estimator": s150,
-  "bank-exam-application-checklist": s151,
-  "bank-exam-countdown": s152,
-  "bank-exam-day-checklist": s153,
-  "bank-locker-cost-estimator": s154,
-  "barbell-plate-loading-calculator": s155,
-  "base-converter": s156,
-  "base-url-path-joiner": s157,
-  "base64-audio-converter": s158,
-  "base64-to-file": s159,
-  "base64-to-hex": s160,
-  "base64-to-image": s161,
-  "base64-to-pdf": s162,
-  "base64-to-text": s163,
-  "base64-to-video": s164,
-  "base64-url-converter": s165,
-  "base64-url-encoder": s166,
-  "bash-script-scaffold-generator": s167,
-  "basketball-calorie-burn-calculator": s168,
-  "batch-api-savings-calculator": s169,
-  "battle-ropes-calorie-calculator": s170,
-  "bcaa-eaa-dose-calculator": s171,
-  "beach-day-timing-planner": s172,
-  "beach-holiday-packing-list-builder": s173,
-  "beautify-code-tool": s174,
-  "bed-admission-merit-calculator": s175,
-  "bed-size-comparison-chart": s176,
-  "bedroom-ac-tonnage-calculator": s177,
-  "belated-return-late-fee-calculator": s178,
-  "belly-dance-calorie-calculator": s179,
-  "bengaluru-airport-transfer-time-planner": s180,
-  "bengaluru-blr-airport-arrival-buffer-calculator": s181,
-  "beta-tester-nda-generator": s182,
-  "bhangra-calorie-burn-calculator": s183,
-  "bharatanatyam-calorie-calculator": s184,
-  "bhutan-entry-requirement-checklist": s185,
-  "bicycle-chain-wear-checker": s186,
-  "bicycle-frame-size-calculator": s187,
-  "bicycle-maintenance-planner": s188,
-  "bihar-board-percentage-calculator": s189,
-  "bike-chain-slack-guide": s190,
-  "bike-fuel-cost-calculator": s191,
-  "bike-loan-emi-calculator": s192,
-  "bike-mileage-tracker": s193,
-  "bilirubin-unit-converter": s194,
-  "bill-of-supply-generator": s195,
-  "birthday-invitation-maker": s196,
-  "birthday-poem-generator": s197,
-  "blister-pack-refill-tracker": s198,
-  "blog-outline-prompt-builder": s199,
-  "blog-privacy-policy-generator": s200,
-  "blog-terms-and-conditions-generator": s201,
-  "blood-glucose-unit-converter": s202,
-  "blood-pressure-unit-converter": s203,
-  "bls-international-appointment-day-checklist": s204,
-  "blue-green-deployment-checklist": s205,
-  "blue-light-curfew-calculator": s206,
-  "bmi-prime-calculator": s207,
-  "board-exam-countdown": s208,
-  "board-exam-day-checklist": s209,
-  "board-foot-calculator": s210,
-  "body-fat-percentage-calculator": s211,
-  "body-frame-size-calculator": s212,
-  "bodybuilder-protein-calculator": s213,
-  "bonafide-certificate-request-drafter": s214,
-  "bonus-variable-pay-calculator": s215,
-  "book-page-bookmark-organizer": s216,
-  "books-of-accounts-requirement-checker": s217,
-  "bookshelf-capacity-calculator": s218,
-  "bpm-to-milliseconds-delay-calculator": s219,
-  "brand-asset-naming-convention-builder": s220,
-  "brand-color-palette-locker": s221,
-  "brand-kit-manager": s222,
-  "brand-social-avatar-kit-generator": s223,
-  "brand-voice-guideline-generator": s224,
-  "brass-to-cft-converter": s225,
-  "break-even-accuracy-calculator": s226,
-  "break-even-point-calculator": s227,
-  "breaking-change-impact-checklist": s228,
-  "breast-self-exam-reminder": s229,
-  "breastfeeding-hydration-calculator": s230,
-  "breastfeeding-session-log": s231,
-  "breathing-pacer-tones": s232,
-  "brick-quantity-calculator": s233,
-  "brisk-walk-intensity-checker": s234,
-  "british-airways-baggage-allowance-checker": s235,
-  "british-airways-excess-baggage-cost-estimator": s236,
-  "brokerage-charges-calculator": s237,
-  "browser-fingerprint-visualizer": s238,
-  "browser-session-analyzer": s239,
-  "btu-to-ton-converter": s240,
-  "budget-prompt-builder": s241,
-  "bulk-find-replace": s242,
-  "bulk-order-discount-calculator": s243,
-  "bullet-to-prose-prompt": s244,
-  "burnout-self-check": s245,
-  "button-min-size-spec-generator": s246,
-  "byte-converter": s247,
-  "caa-record-generator": s248,
-  "cache-hit-ratio-calculator": s249,
-  "cad-cash-budget-planner": s250,
-  "caddyfile-generator": s251,
-  "cafe-working-posture-routine": s252,
-  "caffeine-cutoff-time-calculator": s253,
-  "cagr-calculator-detailed": s254,
-  "cagr-calculator-tool": s255,
-  "calcium-intake-calculator-for-women": s256,
-  "calicut-university-cgpa-converter": s257,
-  "calver-version-generator": s258,
-  "canada-visa-cost-estimator": s259,
-  "canada-visa-cover-letter-builder": s260,
-  "canada-visa-rejection-reason-explainer": s261,
-  "canva-ai-prompt-builder": s262,
-  "canvas-wrap-bleed-calculator": s263,
-  "caption-emoji-density-checker": s264,
-  "caption-length-optimizer-per-platform": s265,
-  "car-ac-fuel-cost-impact": s266,
-  "car-ac-gas-refill-cost": s267,
-  "car-battery-replacement-planner": s268,
-  "car-depreciation-calculator": s269,
-  "car-detailing-cost-calculator": s270,
-  "car-exchange-vs-private-sale": s271,
-  "car-loan-emi-calculator": s272,
-  "car-ownership-cost-analyzer": s273,
-  "car-purchase-savings-planner": s274,
-  "car-rental-cost-comparison": s275,
-  "car-storage-checklist": s276,
-  "car-washing-calorie-calculator": s277,
-  "career-switch-prompt-builder": s278,
-  "caret-tilde-range-visualizer": s279,
-  "carnivore-diet-macro-calculator": s280,
-  "carousel-copy-splitter": s281,
-  "carpet-roll-quantity-calculator": s282,
-  "carpool-cost-split-calculator": s283,
-  "carry-on-only-trip-planner": s284,
-  "cart-bill-splitter": s285,
-  "cascading-discount-calculator": s286,
-  "case-brief-template-generator": s287,
-  "case-study-prompt-builder": s288,
-  "cash-denomination-calculator": s289,
-  "cash-deposit-reporting-checker": s290,
-  "caste-certificate-checklist": s291,
-  "cat-exam-countdown": s292,
-  "cat-exam-day-checklist": s293,
-  "cbse-best-of-five-calculator": s294,
-  "cbse-class-10-percentage-calculator": s295,
-  "cbse-class-10-syllabus-tracker": s296,
-  "cbse-class-12-syllabus-tracker": s297,
-  "cbse-lesson-plan-prompt-builder": s298,
-  "cease-desist-noise-nuisance": s299,
-  "ceiling-fan-electricity-cost": s300,
-  "ceiling-fan-size-selector": s301,
-  "ceiling-paint-coverage-calculator": s302,
-  "cent-to-sqft-converter": s303,
-  "certificate-expiry-tracker": s304,
-  "cft-to-cubic-meter-converter": s305,
-  "cgpa-to-percentage-converter": s306,
-  "cgst-sgst-igst-split-calculator": s307,
-  "chair-height-calculator": s308,
-  "chair-yoga-desk-routine": s309,
-  "change-freeze-calendar-planner": s310,
-  "changelog-prompt-builder": s311,
-  "changesets-config-generator": s312,
-  "character-limit-checker": s313,
-  "chatbot-analytics-metric-planner": s314,
-  "chatbot-escalation-rules-planner": s315,
-  "chatbot-monthly-cost-estimator": s316,
-  "chennai-airport-transfer-time-planner": s317,
-  "chennai-auto-cab-fare-estimator": s318,
-  "chennai-maa-airport-arrival-buffer-calculator": s319,
-  "cheque-amount-to-words-indian": s320,
-  "child-education-corpus-planner": s321,
-  "child-education-cost-planner": s322,
-  "child-fever-log": s323,
-  "child-safety-home-checklist": s324,
-  "child-screen-time-planner": s325,
-  "childcare-calorie-burn-calculator": s326,
-  "chimney-cleaning-planner": s327,
-  "chmod-permission-calculator": s328,
-  "cholesterol-unit-converter": s329,
-  "chronotype-finder-quiz": s330,
-  "ci-build-matrix-explosion-estimator": s331,
-  "cidr-subnet-calculator": s332,
-  "cidr-to-ip-range-converter": s333,
-  "class-rank-percentile-calculator": s334,
-  "class-wise-ncert-coverage-map": s335,
-  "clat-exam-countdown": s336,
-  "clat-syllabus-tracker": s337,
-  "claude-api-cost-calculator": s338,
-  "client-video-revision-tracker": s339,
-  "clinic-front-desk-prompt-pack": s340,
-  "clinical-height-converter": s341,
-  "clinical-weight-converter": s342,
-  "clothing-shoe-size-converter": s343,
-  "clothing-size-converter-abroad": s344,
-  "cloud-budget-alert-planner": s345,
-  "cloud-certification-path-planner": s346,
-  "cloud-egress-fee-comparison": s347,
-  "cloud-tagging-policy-generator": s348,
-  "cloudflare-workers-cost-calculator": s349,
-  "coaching-fee-vs-self-study-cost": s350,
-  "coaching-institute-prompt-pack": s351,
-  "code-comment-prompt-builder": s352,
-  "code-complexity-analyzer": s353,
-  "code-review-checklist-generator": s354,
-  "code-review-prompt-builder": s355,
-  "codeowners-file-generator": s356,
-  "coder-eye-break-timer": s357,
-  "coding-model-picker": s358,
-  "coffee-shop-work-spot-rater": s359,
-  "cold-email-prompt-builder": s360,
-  "cold-vs-flu-symptom-comparator": s361,
-  "cold-weather-workout-layering-guide": s362,
-  "collab-brief-builder-creator": s363,
-  "college-admission-form-checklist": s364,
-  "college-fee-instalment-planner": s365,
-  "colombo-trip-budget-breakdown": s366,
-  "color-blindness-simulator": s367,
-  "color-memory-precision-test": s368,
-  "color-name-finder": s369,
-  "color-psychology-analyzer": s370,
-  "colorblind-brand-logo-checker": s371,
-  "commit-message-prompt-builder": s372,
-  "community-post-planner": s373,
-  "commute-study-micro-planner": s374,
-  "company-social-media-policy-generator": s375,
-  "composer-json-generator": s376,
-  "compost-bin-size-calculator": s377,
-  "compound-interest-calculator-detailed": s378,
-  "compound-interest-visualiser": s379,
-  "concert-ear-protection-guide": s380,
-  "concrete-volume-calculator": s381,
-  "concurrency-vs-rps-calculator": s382,
-  "construction-cost-estimator": s383,
-  "construction-waste-cost-estimator": s384,
-  "consumer-complaint-ecommerce-order": s385,
-  "consumer-complaint-electricity-billing": s386,
-  "consumer-complaint-food-delivery": s387,
-  "contact-lens-wear-tracker": s388,
-  "container-base-image-chooser": s389,
-  "container-image-digest-pinning-helper": s390,
-  "content-creator-prompt-pack": s391,
-  "content-repurposing-matrix": s392,
-  "contraction-timer": s393,
-  "cooking-calorie-burn-calculator": s394,
-  "coolant-mix-ratio-calculator": s395,
-  "cooper-test-vo2-max-calculator": s396,
-  "copyright-notice-generator": s397,
-  "cosine-similarity-calculator": s398,
-  "cost-inflation-index-calculator": s399,
+  "age-gender-detector": s23,
+  "age-on-exam-cutoff-date-calculator": s24,
+  "agent-guardrail-checklist": s25,
+  "agent-observability-checklist": s26,
+  "ahmedabad-airport-transfer-time-planner": s27,
+  "ai-academic-integrity-checklist": s28,
+  "ai-adoption-readiness-quiz": s29,
+  "ai-art-style-reference-sheet": s30,
+  "ai-attribution-statement-builder": s31,
+  "ai-certification-study-planner": s32,
+  "ai-companion-usage-reflection": s33,
+  "ai-consent-conversation-guide": s34,
+  "ai-content-disclosure-generator": s35,
+  "ai-content-disclosure-statement-generator": s36,
+  "ai-cost-per-1000-requests-calculator": s37,
+  "ai-dependency-self-check": s38,
+  "ai-glossary-explorer": s39,
+  "ai-humanizer-checklist": s40,
+  "ai-image-cost-calculator": s41,
+  "ai-image-disclosure-label-generator": s42,
+  "ai-image-licensing-checklist": s43,
+  "ai-incident-response-checklist": s44,
+  "ai-jd-analyzer-tool": s45,
+  "ai-learning-roadmap-builder": s46,
+  "ai-media-literacy-quiz": s47,
+  "ai-passport-photo-maker": s48,
+  "ai-pilot-success-criteria-builder": s49,
+  "ai-plagiarism-risk-worksheet": s50,
+  "ai-policy-one-pager-generator": s51,
+  "ai-policy-quiz": s52,
+  "ai-productivity-time-saved-calculator": s53,
+  "ai-project-scoping-worksheet": s54,
+  "ai-resume-prompt-builder": s55,
+  "ai-roi-calculator": s56,
+  "ai-scam-message-awareness-quiz": s57,
+  "ai-social-caption-detector": s58,
+  "ai-spend-alert-planner": s59,
+  "ai-subscription-vs-api-calculator": s60,
+  "ai-text-tone-rewriter-prompt": s61,
+  "ai-training-plan-builder": s62,
+  "ai-usage-journal": s63,
+  "ai-usage-log-for-assignments": s64,
+  "ai-vendor-comparison-matrix": s65,
+  "ai-vendor-due-diligence-checklist": s66,
+  "ai-writing-tell-scanner": s67,
+  "air-cooler-vs-ac-cost": s68,
+  "air-filter-change-planner": s69,
+  "air-fryer-vs-oven-cost": s70,
+  "akasa-air-baggage-allowance-checker": s71,
+  "akasa-air-excess-baggage-cost-estimator": s72,
+  "aktu-attendance-calculator": s73,
+  "aktu-cgpa-percentage-converter": s74,
+  "aktu-sgpa-calculator": s75,
+  "allen-key-size-finder": s76,
+  "alloy-vs-steel-wheel-comparison": s77,
+  "alt-text-writer-for-social": s78,
+  "alternate-nostril-breathing-guide": s79,
+  "amazon-listing-image-spec-checker": s80,
+  "amazon-listing-prompt-builder": s81,
+  "ambiguous-figure-viewer": s82,
+  "amp-email-image-size-guide": s83,
+  "amrap-workout-timer": s84,
+  "amsterdam-ams-airport-arrival-buffer-calculator": s85,
+  "anna-university-attendance-calculator": s86,
+  "anna-university-cgpa-percentage-converter": s87,
+  "anna-university-gpa-calculator": s88,
+  "announcement-graphic-generator": s89,
+  "annual-financial-checklist": s90,
+  "ansible-inventory-file-builder": s91,
+  "ansible-vault-usage-planner": s92,
+  "anxiety-check-questionnaire": s93,
+  "apdex-score-calculator": s94,
+  "apgar-score-calculator": s95,
+  "api-changelog-generator": s96,
+  "api-doc-prompt-builder": s97,
+  "api-key-rotation-planner": s98,
+  "api-key-vs-oauth-decision-helper": s99,
+  "api-rate-limit-header-designer": s100,
+  "api-stress-estimator": s101,
+  "api-versioning-strategy-chooser": s102,
+  "app-finder": s103,
+  "appliance-electricity-cost-estimator": s104,
+  "appliance-resale-value-estimator": s105,
+  "appliance-upgrade-payback-calculator": s106,
+  "appliance-warranty-tracker": s107,
+  "aqi-exercise-safety-advisor": s108,
+  "aquarium-power-cost-calculator": s109,
+  "art-style-prompt-explorer": s110,
+  "asana-hold-timer": s111,
+  "asian-bmi-cutoff-calculator": s112,
+  "aspect-ratio-calculator": s113,
+  "asset-file-naming-generator": s114,
+  "assignment-word-count-planner": s115,
+  "atal-pension-yojana-calculator": s116,
+  "athlete-bmi-interpretation-tool": s117,
+  "atkins-phase-macro-calculator": s118,
+  "attendance-percentage-calculator": s119,
+  "audio-bit-depth-size-calculator": s120,
+  "audio-deliverables-checklist-builder": s121,
+  "audio-file-size-calculator": s122,
+  "audio-note-duration-budgeter": s123,
+  "audio-to-base64": s124,
+  "audiobook-reading-rate-calculator": s125,
+  "aura-color-generator": s126,
+  "australia-visa-cost-estimator": s127,
+  "australia-visa-cover-letter-builder": s128,
+  "australia-visa-rejection-reason-explainer": s129,
+  "awards-honours-notes-tracker": s130,
+  "aws-ebs-cost-calculator": s131,
+  "aws-lambda-cost-calculator": s132,
+  "aws-nat-gateway-cost-calculator": s133,
+  "azerbaijan-entry-requirement-checklist": s134,
+  "azure-functions-cost-calculator": s135,
+  "baby-first-year-cost-calculator": s136,
+  "baby-size-by-week-visualizer": s137,
+  "backpacking-packing-list-builder": s138,
+  "backup-3-2-1-planner-creator": s139,
+  "badminton-calorie-burn-calculator": s140,
+  "bajaj-service-schedule-planner": s141,
+  "balance-transfer-savings-calculator": s142,
+  "balcony-grill-cost-calculator": s143,
+  "balcony-makeover-planner": s144,
+  "balcony-solar-kit-estimator": s145,
+  "ballet-calorie-burn-calculator": s146,
+  "bandwidth-transfer-time-calculator": s147,
+  "bangalore-university-cgpa-converter": s148,
+  "bangkok-trip-budget-breakdown": s149,
+  "bank-account-closure-request-generator": s150,
+  "bank-account-masking-tool": s151,
+  "bank-balance-certificate-request-generator": s152,
+  "bank-charges-penalty-estimator": s153,
+  "bank-exam-application-checklist": s154,
+  "bank-exam-countdown": s155,
+  "bank-exam-day-checklist": s156,
+  "bank-locker-cost-estimator": s157,
+  "barbell-plate-loading-calculator": s158,
+  "base-converter": s159,
+  "base-url-path-joiner": s160,
+  "base64-audio-converter": s161,
+  "base64-to-file": s162,
+  "base64-to-hex": s163,
+  "base64-to-image": s164,
+  "base64-to-pdf": s165,
+  "base64-to-text": s166,
+  "base64-to-video": s167,
+  "base64-url-converter": s168,
+  "base64-url-encoder": s169,
+  "bash-script-scaffold-generator": s170,
+  "basketball-calorie-burn-calculator": s171,
+  "batch-api-savings-calculator": s172,
+  "battle-ropes-calorie-calculator": s173,
+  "bcaa-eaa-dose-calculator": s174,
+  "beach-day-timing-planner": s175,
+  "beach-holiday-packing-list-builder": s176,
+  "beautify-code-tool": s177,
+  "bed-admission-merit-calculator": s178,
+  "bed-size-comparison-chart": s179,
+  "bedroom-ac-tonnage-calculator": s180,
+  "belated-return-late-fee-calculator": s181,
+  "belly-dance-calorie-calculator": s182,
+  "bengaluru-airport-transfer-time-planner": s183,
+  "bengaluru-blr-airport-arrival-buffer-calculator": s184,
+  "beta-tester-nda-generator": s185,
+  "bhangra-calorie-burn-calculator": s186,
+  "bharatanatyam-calorie-calculator": s187,
+  "bhutan-entry-requirement-checklist": s188,
+  "bicycle-chain-wear-checker": s189,
+  "bicycle-frame-size-calculator": s190,
+  "bicycle-maintenance-planner": s191,
+  "bihar-board-percentage-calculator": s192,
+  "bike-chain-slack-guide": s193,
+  "bike-fuel-cost-calculator": s194,
+  "bike-loan-emi-calculator": s195,
+  "bike-mileage-tracker": s196,
+  "bilirubin-unit-converter": s197,
+  "bill-of-supply-generator": s198,
+  "birthday-invitation-maker": s199,
+  "birthday-poem-generator": s200,
+  "blister-pack-refill-tracker": s201,
+  "blog-outline-prompt-builder": s202,
+  "blog-privacy-policy-generator": s203,
+  "blog-terms-and-conditions-generator": s204,
+  "blood-glucose-unit-converter": s205,
+  "blood-pressure-unit-converter": s206,
+  "bls-international-appointment-day-checklist": s207,
+  "blue-green-deployment-checklist": s208,
+  "blue-light-curfew-calculator": s209,
+  "bmi-prime-calculator": s210,
+  "board-exam-countdown": s211,
+  "board-exam-day-checklist": s212,
+  "board-foot-calculator": s213,
+  "body-fat-percentage-calculator": s214,
+  "body-frame-size-calculator": s215,
+  "bodybuilder-protein-calculator": s216,
+  "bonafide-certificate-request-drafter": s217,
+  "bonus-variable-pay-calculator": s218,
+  "book-page-bookmark-organizer": s219,
+  "books-of-accounts-requirement-checker": s220,
+  "bookshelf-capacity-calculator": s221,
+  "bpm-to-milliseconds-delay-calculator": s222,
+  "brand-asset-naming-convention-builder": s223,
+  "brand-color-palette-locker": s224,
+  "brand-kit-manager": s225,
+  "brand-social-avatar-kit-generator": s226,
+  "brand-voice-guideline-generator": s227,
+  "brass-to-cft-converter": s228,
+  "break-even-accuracy-calculator": s229,
+  "break-even-point-calculator": s230,
+  "breaking-change-impact-checklist": s231,
+  "breast-self-exam-reminder": s232,
+  "breastfeeding-hydration-calculator": s233,
+  "breastfeeding-session-log": s234,
+  "breathing-pacer-tones": s235,
+  "brick-quantity-calculator": s236,
+  "brisk-walk-intensity-checker": s237,
+  "british-airways-baggage-allowance-checker": s238,
+  "british-airways-excess-baggage-cost-estimator": s239,
+  "brokerage-charges-calculator": s240,
+  "browser-fingerprint-visualizer": s241,
+  "browser-session-analyzer": s242,
+  "btu-to-ton-converter": s243,
+  "budget-prompt-builder": s244,
+  "bulk-find-replace": s245,
+  "bulk-order-discount-calculator": s246,
+  "bulk-url-opener": s247,
+  "bullet-to-prose-prompt": s248,
+  "burnout-self-check": s249,
+  "button-min-size-spec-generator": s250,
+  "byte-converter": s251,
+  "caa-record-generator": s252,
+  "cache-hit-ratio-calculator": s253,
+  "cad-cash-budget-planner": s254,
+  "caddyfile-generator": s255,
+  "cafe-working-posture-routine": s256,
+  "caffeine-cutoff-time-calculator": s257,
+  "cagr-calculator-detailed": s258,
+  "cagr-calculator-tool": s259,
+  "calcium-intake-calculator-for-women": s260,
+  "calicut-university-cgpa-converter": s261,
+  "calver-version-generator": s262,
+  "canada-visa-cost-estimator": s263,
+  "canada-visa-cover-letter-builder": s264,
+  "canada-visa-rejection-reason-explainer": s265,
+  "canva-ai-prompt-builder": s266,
+  "canvas-wrap-bleed-calculator": s267,
+  "caption-emoji-density-checker": s268,
+  "caption-length-optimizer-per-platform": s269,
+  "car-ac-fuel-cost-impact": s270,
+  "car-ac-gas-refill-cost": s271,
+  "car-battery-replacement-planner": s272,
+  "car-depreciation-calculator": s273,
+  "car-detailing-cost-calculator": s274,
+  "car-exchange-vs-private-sale": s275,
+  "car-loan-emi-calculator": s276,
+  "car-ownership-cost-analyzer": s277,
+  "car-purchase-savings-planner": s278,
+  "car-rental-cost-comparison": s279,
+  "car-storage-checklist": s280,
+  "car-washing-calorie-calculator": s281,
+  "career-switch-prompt-builder": s282,
+  "caret-tilde-range-visualizer": s283,
+  "carnivore-diet-macro-calculator": s284,
+  "carousel-copy-splitter": s285,
+  "carpet-roll-quantity-calculator": s286,
+  "carpool-cost-split-calculator": s287,
+  "carry-on-only-trip-planner": s288,
+  "cart-bill-splitter": s289,
+  "cascading-discount-calculator": s290,
+  "case-brief-template-generator": s291,
+  "case-study-prompt-builder": s292,
+  "cash-denomination-calculator": s293,
+  "cash-deposit-reporting-checker": s294,
+  "caste-certificate-checklist": s295,
+  "cat-exam-countdown": s296,
+  "cat-exam-day-checklist": s297,
+  "cbse-best-of-five-calculator": s298,
+  "cbse-class-10-percentage-calculator": s299,
+  "cbse-class-10-syllabus-tracker": s300,
+  "cbse-class-12-syllabus-tracker": s301,
+  "cbse-lesson-plan-prompt-builder": s302,
+  "cease-desist-noise-nuisance": s303,
+  "ceiling-fan-electricity-cost": s304,
+  "ceiling-fan-size-selector": s305,
+  "ceiling-paint-coverage-calculator": s306,
+  "cent-to-sqft-converter": s307,
+  "certificate-expiry-tracker": s308,
+  "cft-to-cubic-meter-converter": s309,
+  "cgpa-to-percentage-converter": s310,
+  "cgst-sgst-igst-split-calculator": s311,
+  "chair-height-calculator": s312,
+  "chair-yoga-desk-routine": s313,
+  "change-freeze-calendar-planner": s314,
+  "changelog-prompt-builder": s315,
+  "changesets-config-generator": s316,
+  "character-limit-checker": s317,
+  "chatbot-analytics-metric-planner": s318,
+  "chatbot-escalation-rules-planner": s319,
+  "chatbot-monthly-cost-estimator": s320,
+  "chennai-airport-transfer-time-planner": s321,
+  "chennai-auto-cab-fare-estimator": s322,
+  "chennai-maa-airport-arrival-buffer-calculator": s323,
+  "cheque-amount-to-words-indian": s324,
+  "child-education-corpus-planner": s325,
+  "child-education-cost-planner": s326,
+  "child-fever-log": s327,
+  "child-safety-home-checklist": s328,
+  "child-screen-time-planner": s329,
+  "childcare-calorie-burn-calculator": s330,
+  "chimney-cleaning-planner": s331,
+  "chmod-permission-calculator": s332,
+  "cholesterol-unit-converter": s333,
+  "chronotype-finder-quiz": s334,
+  "ci-build-matrix-explosion-estimator": s335,
+  "cidr-subnet-calculator": s336,
+  "cidr-to-ip-range-converter": s337,
+  "class-rank-percentile-calculator": s338,
+  "class-wise-ncert-coverage-map": s339,
+  "clat-exam-countdown": s340,
+  "clat-syllabus-tracker": s341,
+  "claude-api-cost-calculator": s342,
+  "client-video-revision-tracker": s343,
+  "clinic-front-desk-prompt-pack": s344,
+  "clinical-height-converter": s345,
+  "clinical-weight-converter": s346,
+  "clothing-shoe-size-converter": s347,
+  "clothing-size-converter-abroad": s348,
+  "cloud-budget-alert-planner": s349,
+  "cloud-certification-path-planner": s350,
+  "cloud-egress-fee-comparison": s351,
+  "cloud-tagging-policy-generator": s352,
+  "cloudflare-workers-cost-calculator": s353,
+  "coaching-fee-vs-self-study-cost": s354,
+  "coaching-institute-prompt-pack": s355,
+  "code-comment-prompt-builder": s356,
+  "code-complexity-analyzer": s357,
+  "code-review-checklist-generator": s358,
+  "code-review-prompt-builder": s359,
+  "codeowners-file-generator": s360,
+  "coder-eye-break-timer": s361,
+  "coding-model-picker": s362,
+  "coffee-shop-work-spot-rater": s363,
+  "cold-email-prompt-builder": s364,
+  "cold-vs-flu-symptom-comparator": s365,
+  "cold-weather-workout-layering-guide": s366,
+  "collab-brief-builder-creator": s367,
+  "college-admission-form-checklist": s368,
+  "college-fee-instalment-planner": s369,
+  "colombo-trip-budget-breakdown": s370,
+  "color-blindness-simulator": s371,
+  "color-memory-precision-test": s372,
+  "color-name-finder": s373,
+  "color-psychology-analyzer": s374,
+  "colorblind-brand-logo-checker": s375,
+  "commit-message-prompt-builder": s376,
+  "community-post-planner": s377,
+  "commute-study-micro-planner": s378,
+  "company-social-media-policy-generator": s379,
+  "composer-json-generator": s380,
+  "compost-bin-size-calculator": s381,
+  "compound-interest-calculator-detailed": s382,
+  "compound-interest-visualiser": s383,
+  "concert-ear-protection-guide": s384,
+  "concrete-volume-calculator": s385,
+  "concurrency-vs-rps-calculator": s386,
+  "construction-cost-estimator": s387,
+  "construction-waste-cost-estimator": s388,
+  "consumer-complaint-ecommerce-order": s389,
+  "consumer-complaint-electricity-billing": s390,
+  "consumer-complaint-food-delivery": s391,
+  "contact-lens-wear-tracker": s392,
+  "container-base-image-chooser": s393,
+  "container-image-digest-pinning-helper": s394,
+  "content-creator-prompt-pack": s395,
+  "content-repurposing-matrix": s396,
+  "contraction-timer": s397,
+  "cooking-calorie-burn-calculator": s398,
+  "coolant-mix-ratio-calculator": s399,
 };

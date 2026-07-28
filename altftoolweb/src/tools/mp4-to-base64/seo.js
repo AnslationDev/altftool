@@ -1,4 +1,7 @@
 const seo = {
+  title: "MP4 to Base64 Converter — Free, Runs in Your Browser",
+  metaDescription:
+    "Convert MP4, WebM, MOV, or OGV to a Base64 data URL entirely in your browser — nothing uploaded. Free, with an exact output-size preview.",
   intro:
     "This converter turns a local video file into a Base64 data URL — the data:video/mp4;base64,… string defined by RFC 2397, with the payload encoded per RFC 4648. Because Base64 writes every three bytes as four characters, the output is always exactly one third larger than the source file. It is built for developers who need to inline a short clip in HTML, CSS, JSON or a test fixture without hosting it.",
   useCases: [

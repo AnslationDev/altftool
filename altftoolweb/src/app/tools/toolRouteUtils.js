@@ -185,7 +185,7 @@ export async function buildToolMetadata(slug) {
   const seoContent = buildToolSeoContent(slug, tool);
 
   return createPageMetadata({
-    title: `${tool.name} - Free Online Tool`,
+    title: seoContent.title || `${tool.name} - Free Online Tool`,
     description: seoContent.metaDescription,
     path: `/tools/all/${slug}`,
   });

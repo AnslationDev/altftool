@@ -1,4 +1,7 @@
 const seo = {
+  title: "Afterimage Illusion Generator — Free Colour Tool",
+  metaDescription:
+    "Stare, then see the exact complementary colour appear — computed two ways (RGB inverse and HSL hue rotation), with a contrast check. Free.",
   intro:
     "A negative afterimage is the complementary colour that appears when you stare at a saturated patch and then look at a blank white field, and this generator computes that complement two ways before you try it: the sRGB inverse (255 minus each channel) and a 180-degree hue rotation in HSL. Stare at pure red #FF0000 for twenty seconds and the afterimage is cyan #00FFFF, because the red-sensitive side of the red-green opponent channel adapts while the other side does not. It is built for students, designers and anyone curious about how opponent-process colour vision works.",
   useCases: [

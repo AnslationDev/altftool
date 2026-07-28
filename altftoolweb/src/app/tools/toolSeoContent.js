@@ -97,7 +97,6 @@ export function buildToolSeoContent(slug, tool = {}) {
   const categories = getCategories(tool);
   const primaryCategory = categories[0] || "online";
   const template = chooseTemplate(categories, slug, name);
-  const summary = buildMetaDescription(name, description, primaryCategory);
 
   // Keep short acronym categories (AI, SEO, CSS…) uppercase in prose;
   // longer labels read naturally in lowercase.
@@ -112,6 +111,13 @@ export function buildToolSeoContent(slug, tool = {}) {
   // ALTF Engine: admin-managed per-page content override (highest precedence).
   // Empty/disabled => {} so behavior is identical to before.
   const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);
+  // Hand-written meta descriptions win over the generic "X is a free Y tool…
+  // Use X online for Z tasks…" formula, which reads as boilerplate in search
+  // snippets and depresses CTR even at a strong ranking position.
+  const summary =
+    central.metaDescription ||
+    override?.metaDescription ||
+    buildMetaDescription(name, description, primaryCategory);
 
   // Keep the intro complementary to the description shown in the section
   // header — never restate the raw description (it used to appear 3× on the
@@ -166,7 +172,8 @@ export function buildToolSeoContent(slug, tool = {}) {
 
   return {
     name,
-    h1: central.h1 || name,
+    title: central.title || override?.title || null,
+    h1: central.h1 || override?.h1 || name,
     heading: `${name} workflows`,
     summary,
     intro,
