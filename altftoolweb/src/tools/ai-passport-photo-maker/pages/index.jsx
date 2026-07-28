@@ -292,7 +292,10 @@ export default function ToolHome() {
           <IdCard className="h-4 w-4" aria-hidden="true" />
           Passport &amp; visa photos
         </div>
-        <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">Passport Photo Maker</h1>
+        <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">AI Passport Photo Maker</h1>
+        <h2 className="mt-1 text-lg font-semibold text-[var(--muted-foreground)]">
+          Passport Photo Maker
+        </h2>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Crop a photo to an official size, line the head up against the published chin-to-crown
           band, and lay out a print sheet. Your photo is processed in the browser and never

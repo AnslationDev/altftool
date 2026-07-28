@@ -1270,6 +1270,14 @@ export const TOOL_CATALOG = [
     "description": "Build a personalised year-end money checklist with real statutory deadlines, from tax-saving proofs to nominee updates."
   },
   {
+    "slug": "ansi-escape-reference",
+    "name": "ANSI Escape Code Reference & Log Decoder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Paste a log full of ESC[0;32m garbage and see it rendered, every escape sequence named, and a stripped plain-text copy — plus the full SGR, cursor, erase and OS"
+  },
+  {
     "slug": "ansible-inventory-file-builder",
     "name": "Ansible Inventory File Builder",
     "categories": [
@@ -6544,6 +6552,14 @@ export const TOOL_CATALOG = [
     "description": "Compress, minify, and shrink messy CSS code to reduce bundle size, showing detailed savings statistics."
   },
   {
+    "slug": "css-specificity-referee",
+    "name": "CSS Specificity Referee",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Put two CSS selectors against each other and see which one wins, which cascade criterion decided it, and the smallest change that flips the result — layers and "
+  },
+  {
     "slug": "css-tools",
     "name": "CSS Tools",
     "categories": [
@@ -8467,6 +8483,14 @@ export const TOOL_CATALOG = [
     "description": "Find which MCA, income tax, GST, DGFT and e-tender filings need a Class 3 digital signature certificate, and which allow EVC instead."
   },
   {
+    "slug": "dst-clock-changes",
+    "name": "Clock Changes & DST Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "The next clock change in any time zone to the exact instant, a full year of changes, and the dates a recurring meeting's time gap silently moves."
+  },
+  {
     "slug": "dubai-dxb-airport-arrival-buffer-calculator",
     "name": "Dubai DXB Airport Arrival Buffer Calculator",
     "categories": [
@@ -8678,6 +8702,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying."
+  },
+  {
+    "slug": "effective-apr-comparator",
+    "name": "Effective APR Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare two or more loan offers on their true effective APR — the IRR of the actual cash flows after processing fees, GST, bundled insurance and foreclosure pen"
   },
   {
     "slug": "eggetarian-macro-calculator",
@@ -11665,6 +11697,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Inspect a pasted unified Git diff locally for added secret-like values, private-key material, contact PII, and sensitive filenames with redacted findings."
+  },
+  {
+    "slug": "git-error-decoder",
+    "name": "Git Error Message Decoder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Paste a git error and get what actually happened in git's model, the commands that resolve it, and a blast radius badge on every command: SAFE, REWRITES HISTORY"
   },
   {
     "slug": "git-lfs-storage-estimator",
@@ -14760,6 +14800,14 @@ export const TOOL_CATALOG = [
     "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions."
   },
   {
+    "slug": "itr-u-eligibility-cost",
+    "name": "ITR-U Eligibility Gate & Cost Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check the section 139(8A) bars that block an updated return, then price it: the deadline, the section 140B additional tax slab and the total rupee cost."
+  },
+  {
     "slug": "ivf-due-date-calculator",
     "name": "IVF Due Date Calculator",
     "categories": [
@@ -16970,6 +17018,14 @@ export const TOOL_CATALOG = [
     "description": "Build the proofs, photos and witness list for marriage registration, with Special Marriage Act notice dates worked out."
   },
   {
+    "slug": "maternity-benefit-entitlement",
+    "name": "Maternity Benefit Entitlement Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Checks the Maternity Benefit Act section 5(2) eighty-day condition, gives the date it will be met, and dates the 26 or 12 week leave, rejoining and nursing-brea"
+  },
+  {
     "slug": "maternity-leave-date-calculator",
     "name": "Maternity Leave Date Calculator",
     "categories": [
@@ -17932,6 +17988,14 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions."
+  },
+  {
+    "slug": "msme-45-day-payment-calculator",
+    "name": "MSME 45-Day Payment & 43B(h) Cost Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out the MSMED Act section 15 due date, section 16 compound interest at three times the RBI bank rate, and what a section 43B(h) deferred deduction costs wh"
   },
   {
     "slug": "msp-realisation-calculator",
@@ -23116,6 +23180,14 @@ export const TOOL_CATALOG = [
     "description": "Create standard robots.txt files for search engines with interactive forms to configure crawling rules, delays, and sitemaps."
   },
   {
+    "slug": "roc-filing-calendar",
+    "name": "MCA / ROC Filing Calendar & Penalty Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Derive AGM, AOC-4, MGT-7/7A, ADT-1, DIR-3 KYC and LLP Form 11/Form 8 due dates from your incorporation date, and the per-form MCA additional fee accrued on anyt"
+  },
+  {
     "slug": "rock-climbing-calorie-calculator",
     "name": "Rock Climbing Calorie Calculator",
     "categories": [
@@ -25695,6 +25767,14 @@ export const TOOL_CATALOG = [
     "description": "Format SQL queries with readable line breaks, configurable indentation and keyword case — entirely in your browser."
   },
   {
+    "slug": "sql-join-fanout-debugger",
+    "name": "SQL JOIN Fan-Out Debugger",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Find out why your SUM is too high after a join: describe each table's grain and key cardinality to get the row-multiplication factor, which aggregates are infla"
+  },
+  {
     "slug": "sql-where-builder",
     "name": "SQL WHERE Builder",
     "categories": [
@@ -28143,6 +28223,14 @@ export const TOOL_CATALOG = [
     "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks."
   },
   {
+    "slug": "topup-vs-super-topup-simulator",
+    "name": "Top-up vs Super Top-up Deductible Simulator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Run a year of hospital claims through a per-claim deductible and a policy-year aggregate deductible side by side, claim by claim."
+  },
+  {
     "slug": "tote-bag-artwork-placement-guide",
     "name": "Tote Bag Artwork Placement Guide",
     "categories": [
@@ -29102,6 +29190,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Score publishing consistency from your upload dates using gap adherence, coefficient of variation and pace, and list every silence."
+  },
+  {
+    "slug": "ups-vs-nps-comparator",
+    "name": "UPS vs NPS Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Model the UPS assured payout against an NPS annuity and get the annual NPS return needed to match it."
   },
   {
     "slug": "upsc-admit-card-day-checklist",

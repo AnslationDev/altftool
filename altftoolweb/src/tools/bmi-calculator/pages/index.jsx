@@ -242,7 +242,7 @@ Stay Healthy, Stay Fit!
       
       {/* Heading (same CSS) */}
       <h1 className="heading flex justify-center gap-2 animate-fade-up mb-2">
-        BMI Health Calculator
+        BMI Calculator
       </h1>
 
       {/* Subheading (same CSS) */}

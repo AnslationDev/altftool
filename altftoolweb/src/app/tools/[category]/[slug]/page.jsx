@@ -77,8 +77,16 @@ export default async function ToolPage({ params }) {
           }),
         ]}
       />
-      <ToolClient slug={slug} category={category} />
-      <ToolSeoSection slug={slug} tool={tool} category={category} />
+      {/* ToolSeoSection must be nested, not a sibling: ToolDetailChrome wraps
+          only the widget and ad rails in <main>, so as a sibling the H1, intro,
+          How-to and FAQ all rendered OUTSIDE the landmark. Answer-engine
+          fetchers and Readability-style extractors take <main> first, which on
+          a tool page holds an ssr:false skeleton and ad wrappers — the quotable
+          content was being discarded. ToolClient already forwards children to
+          seoContent, which renders inside <main>. */}
+      <ToolClient slug={slug} category={category}>
+        <ToolSeoSection slug={slug} tool={tool} category={category} />
+      </ToolClient>
     </>
   );
 }

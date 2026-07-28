@@ -1,27 +1,27 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T19:38:02.557Z",
+  "generatedAt": "2026-07-28T20:56:14.553Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-    "total": 3816,
+    "total": 3828,
     "score": 94,
     "counts": {
-      "working": 3735,
-      "api-required": 67,
+      "working": 3746,
+      "api-required": 68,
       "partial": 14,
       "broken": 0
     },
     "automatedTests": 158,
     "automatedCoverage": 4,
-    "networkDependent": 67,
+    "networkDependent": 68,
     "envDependent": 4,
     "api": {
-      "tools": 68,
+      "tools": 69,
       "counts": {
         "configured": 1,
         "missing-config": 2,
-        "runtime-check": 65
+        "runtime-check": 66
       },
       "providerCount": 19,
       "requiredEnvKeys": [
@@ -39,7 +39,7 @@
       "providers": [
         {
           "name": "Runtime-provided endpoint",
-          "tools": 53,
+          "tools": 54,
           "requiredEnvKeys": [],
           "missingEnvKeys": [],
           "statuses": [
@@ -4346,7 +4346,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 34,
-        "sourceBytes": 206609,
+        "sourceBytes": 206740,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -6872,6 +6872,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 31256,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "ansi-escape-reference",
+      "name": "ANSI Escape Code Reference & Log Decoder",
+      "category": "Developer",
+      "route": "/tools/all/ansi-escape-reference",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 100919,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -32201,6 +32240,45 @@
       ]
     },
     {
+      "slug": "css-specificity-referee",
+      "name": "CSS Specificity Referee",
+      "category": "Developer",
+      "route": "/tools/all/css-specificity-referee",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 73840,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "css-tools",
       "name": "CSS Tools",
       "category": "Developer",
@@ -41465,6 +41543,45 @@
       ]
     },
     {
+      "slug": "dst-clock-changes",
+      "name": "Clock Changes & DST Tracker",
+      "category": "Productivity",
+      "route": "/tools/all/dst-clock-changes",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 71132,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "dubai-dxb-airport-arrival-buffer-calculator",
       "name": "Dubai DXB Airport Arrival Buffer Calculator",
       "category": "Calculators",
@@ -42452,6 +42569,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 20063,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "effective-apr-comparator",
+      "name": "Effective APR Comparator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/effective-apr-comparator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 77489,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -56871,6 +57027,72 @@
       },
       "issues": [],
       "recommendations": []
+    },
+    {
+      "slug": "git-error-decoder",
+      "name": "Git Error Message Decoder",
+      "category": "Developer",
+      "route": "/tools/all/git-error-decoder",
+      "status": "api-required",
+      "score": 80,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 90620,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": true,
+        "envKeys": [],
+        "networkSignals": [
+          {
+            "transport": "fetch",
+            "kind": "dynamic",
+            "provider": "Runtime-provided endpoint",
+            "target": "Runtime-provided endpoint",
+            "envKey": null
+          }
+        ],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": true,
+        "status": "runtime-check",
+        "providers": [
+          {
+            "name": "Runtime-provided endpoint",
+            "kinds": [
+              "dynamic"
+            ],
+            "requiredEnvKeys": [],
+            "configured": null,
+            "status": "runtime-check"
+          }
+        ],
+        "endpoints": [
+          {
+            "transport": "fetch",
+            "kind": "dynamic",
+            "provider": "Runtime-provided endpoint",
+            "target": "Runtime-provided endpoint",
+            "envKey": null
+          }
+        ],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Verify provider latency, timeout, fallback, and error states at runtime.",
+        "Add one deterministic functional or unit regression test."
+      ]
     },
     {
       "slug": "git-lfs-storage-estimator",
@@ -72002,6 +72224,45 @@
       ]
     },
     {
+      "slug": "itr-u-eligibility-cost",
+      "name": "ITR-U Eligibility Gate & Cost Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/itr-u-eligibility-cost",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 50371,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "ivf-due-date-calculator",
       "name": "IVF Due Date Calculator",
       "category": "Health Calculators",
@@ -82305,7 +82566,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 23532,
+        "sourceBytes": 23538,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -82692,6 +82953,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 38628,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "maternity-benefit-entitlement",
+      "name": "Maternity Benefit Entitlement Calculator",
+      "category": "Business",
+      "route": "/tools/all/maternity-benefit-entitlement",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 55372,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -87234,6 +87534,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 17247,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "msme-45-day-payment-calculator",
+      "name": "MSME 45-Day Payment & 43B(h) Cost Calculator",
+      "category": "Business",
+      "route": "/tools/all/msme-45-day-payment-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 56178,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -96702,7 +97041,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 33957,
+        "sourceBytes": 33889,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -105920,7 +106259,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 7,
-        "sourceBytes": 26792,
+        "sourceBytes": 26798,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -112077,6 +112416,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 17252,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "roc-filing-calendar",
+      "name": "MCA / ROC Filing Calendar & Penalty Calculator",
+      "category": "Business",
+      "route": "/tools/all/roc-filing-calendar",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 70840,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -124470,6 +124848,45 @@
       ]
     },
     {
+      "slug": "sql-join-fanout-debugger",
+      "name": "SQL JOIN Fan-Out Debugger",
+      "category": "Developer",
+      "route": "/tools/all/sql-join-fanout-debugger",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 93512,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "sql-where-builder",
       "name": "SQL WHERE Builder",
       "category": "Developer",
@@ -136261,6 +136678,45 @@
       ]
     },
     {
+      "slug": "topup-vs-super-topup-simulator",
+      "name": "Top-up vs Super Top-up Deductible Simulator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/topup-vs-super-topup-simulator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 39958,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "tote-bag-artwork-placement-guide",
       "name": "Tote Bag Artwork Placement Guide",
       "category": "Design & Color",
@@ -140808,6 +141264,45 @@
       ]
     },
     {
+      "slug": "ups-vs-nps-comparator",
+      "name": "UPS vs NPS Comparator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/ups-vs-nps-comparator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 59524,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "upsc-admit-card-day-checklist",
       "name": "UPSC Admit Card Day Checklist",
       "category": "Productivity",
@@ -142026,7 +142521,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 17767,
+        "sourceBytes": 17635,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,

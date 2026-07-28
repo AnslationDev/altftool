@@ -2,6 +2,168 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "exam-tie-breaker-rule-explainer": {
+  "intro": "A tie-breaker rule is the ordered list of criteria an examining body applies when two candidates finish on identical marks, and it is applied strictly in sequence — the first criterion on which they differ fixes the rank and nothing after it is consulted. This explainer runs the published order for NEET UG, JEE Main, UPSC Civil Services, SSC and IBPS or SBI recruitment against two candidates and shows exactly which criterion decided the result. Each rule set is presented with the body that issued it, because these lists are revised: NEET dropped both the age criterion and the draw of lots within three years.",
+  "useCases": [
+    "Working out why two NEET candidates on 640 marks received different All India Ranks.",
+    "Checking whether a JEE Main tie would be settled on Mathematics before Physics, or go all the way to date of birth.",
+    "Explaining to a study group why SSC ends its tie-break with alphabetical order while NTA lets identical candidates share a rank."
+  ],
+  "benefits": [
+    [
+      "Rules applied in the real order",
+      "Criteria are evaluated in sequence and later ones are visibly marked as never reached."
+    ],
+    [
+      "Five bodies in one place",
+      "NTA, UPSC, SSC and the bank recruitment boards each use a different logic, shown side by side."
+    ],
+    [
+      "Worked example for each exam",
+      "Every rule set ships with a realistic pair of candidates that demonstrates the sequence."
+    ]
+  ],
+  "faqs": [
+    [
+      "How are NEET UG ties broken?",
+      "In order: higher marks in Biology (Botany plus Zoology), then Chemistry, then Physics, then the lower ratio of incorrect to correct answers across all subjects, then the same ratio within Biology, Chemistry and Physics. NTA removed the age criterion and the computerised draw of lots from 2024, so candidates identical on every criterion now share a rank."
+    ],
+    [
+      "What is the tie-breaking rule in JEE Main?",
+      "Higher NTA score in Mathematics comes first, then Physics, then Chemistry, then the lower ratio of wrong to correct answers, then the older candidate. Candidates still level after all five are given the same rank."
+    ],
+    [
+      "How does SSC break a tie in CGL?",
+      "By total marks in the final stage, then marks in the earlier tier, then date of birth with the older candidate placed higher, then alphabetical order of the first name. Because the last criterion can always separate two people, SSC results do not have shared ranks."
+    ],
+    [
+      "Does age help or hurt in a tie?",
+      "Where age is used, being older helps. UPSC, SSC and the bank recruitment boards all place the senior candidate higher, and JEE Main does the same at its fifth criterion. NEET UG no longer uses age at all."
+    ]
+  ]
+},
+  "exam-to-job-mapping-explorer": {
+  "intro": "This explorer maps India's major recruitment exams — UPSC CSE, SSC CGL and CHSL, RRB NTPC and Group D, IBPS PO and Clerk, RBI Grade B, UPSC CAPF and NDA — to the actual posts they lead to, showing each post's 7th Central Pay Commission pay level, entry basic pay and a one-line job profile. It is built for aspirants choosing which exam to prepare for, or filling post-preference forms, who want to compare what the jobs actually are before committing a year of preparation.",
+  "useCases": [
+    "A graduate torn between SSC CGL and banking exams comparing what an Assistant Section Officer and a bank PO actually do day to day",
+    "An SSC CGL candidate filling the post-preference form and checking which posts sit at Level 7 versus Level 4 or 5",
+    "A railway aspirant comparing Station Master (Level 6) against Goods Train Manager (Level 5) before choosing NTPC preferences"
+  ],
+  "benefits": [
+    [
+      "Pay levels made concrete",
+      "Every CPC-scale post shows its 7th CPC level and the entry basic pay behind it, from Rs 18,000 at Level 1 to Rs 56,100 at Level 10."
+    ],
+    [
+      "Job profiles, not just titles",
+      "Each post carries a one-line description of the actual work — desk, field, shift or command."
+    ],
+    [
+      "Cross-exam comparison",
+      "Search by post name or sector to see every exam that leads to that kind of job in one view."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which posts can I get through SSC CGL?",
+      "SSC CGL fills Group B and C posts across central ministries and departments: Assistant Section Officer, Inspector of Income Tax, Inspector of Central GST & Excise and CBI Sub-Inspector at Pay Level 7 (entry basic Rs 44,900), Auditor at Level 5 (Rs 29,200), and Tax Assistant at Level 4 (Rs 25,500), among others. The exact post list and vacancies change with every year's notification."
+    ],
+    [
+      "What is the starting salary at Pay Level 7 of the 7th CPC?",
+      "Entry basic pay at Level 7 is Rs 44,900 per month. Gross salary adds dearness allowance, house rent allowance and other admissible allowances on top, so in-hand pay varies by posting city and current DA rate."
+    ],
+    [
+      "Do bank PO salaries follow the 7th Pay Commission?",
+      "No. Public sector bank pay is set by bipartite settlements between banks and unions (and RBI has its own scale), not by the Central Pay Commission. That is why bank and RBI posts in this explorer show their own scale instead of a CPC level."
+    ],
+    [
+      "Which exam leads to becoming an IAS officer?",
+      "Only the UPSC Civil Services Examination recruits to the Indian Administrative Service. New entrants join at Junior Time Scale, Pay Level 10 of the pay matrix (entry basic Rs 56,100), and the same exam also fills IPS, IFS, IRS and around twenty other Group A services based on rank and preference."
+    ]
+  ]
+},
+  "excel-copilot-prompt-builder": {
+  "intro": "Excel Copilot Prompt Builder assembles a spreadsheet-assistant prompt that names the exact worksheet, the A1 range, the header row and every column letter, so Copilot works on the cells you meant rather than guessing. The range you type is validated against the .xlsx worksheet grid — 1,048,576 rows and 16,384 columns ending at XFD — and the tool counts rows, data rows and total cells before it writes the prompt. It is for anyone whose Copilot answers keep referencing columns that do not exist or silently skipping part of the data.",
+  "useCases": [
+    "Turn a vague request like 'find the outliers' into a prompt that specifies Sheet 'Sales', range A1:F250, header row 1 and all six column names.",
+    "Get a PivotTable design prompt that uses only your real field names, so Copilot stops inventing a 'Category' column your sheet never had.",
+    "Check before you paste whether the range you selected is 400 cells or 800,000 — and narrow it if a single request is covering too much.",
+    "Hand a colleague a reusable prompt for the monthly cleanup pass instead of re-explaining the sheet layout every time."
+  ],
+  "benefits": [
+    [
+      "Grid limits checked",
+      "Rejects ranges past column XFD or row 1,048,576 before you waste a Copilot turn on them."
+    ],
+    [
+      "Real column map",
+      "Pairs each header you list with the column letter it sits in, so references cannot drift."
+    ],
+    [
+      "Nothing leaves the browser",
+      "The prompt is assembled locally; no cell values are typed in or sent anywhere."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I write a good Excel Copilot prompt?",
+      "Name the worksheet, give the range in A1 notation, say which row holds the headers, list the column names, and state one specific outcome. Copilot has no reliable way to infer which of several tables on a sheet you mean, so an unnamed range is the single most common cause of an answer that looks right but reads the wrong cells."
+    ],
+    [
+      "Why does Copilot say my data needs to be in a table?",
+      "Several Copilot analysis features in Excel require the data to be formatted as an Excel table, which you create by selecting the range and pressing Ctrl+T. A table gives the range a name and stable structured references such as SalesData[Revenue], so formulas keep pointing at the right column when rows are added."
+    ],
+    [
+      "What are Excel's row and column limits?",
+      "A worksheet in the .xlsx format holds 1,048,576 rows and 16,384 columns, the last column being XFD, and a single formula is capped at 8,192 characters. Worksheet names are limited to 31 characters and cannot contain : \\ / ? * [ or ]."
+    ],
+    [
+      "Does this tool send my spreadsheet anywhere?",
+      "No. You type a sheet name, a range and your column headers — never the cell values — and the prompt is built entirely in your browser. Copy the result and paste it into Copilot yourself, which also means you can review the wording before anything touches your workbook."
+    ]
+  ]
+},
+  "excess-charges-refund-request-generator": {
+  "intro": "The Excess Charges Refund Request Generator totals the bank or credit card fees that were debited without a valid basis, adds the 18% GST that banks levy on service charges, and drafts a formal refund letter addressed to the branch manager or nodal grievance officer. It fills in the two dates that decide your next move: the 30-day reply window a bank gets before an RBI Ombudsman complaint becomes maintainable, and the one-year outer limit for filing that complaint under the Reserve Bank - Integrated Ombudsman Scheme, 2021. Use it for minimum-balance penalties, annual fees on a card sold as lifetime free, duplicate debits, or insurance premiums taken without consent.",
+  "useCases": [
+    "Claim back six months of non-maintenance charges on a salary account that was supposed to be zero-balance.",
+    "Ask a card issuer to reverse a joining fee and the interest that accrued on it after the card was mis-sold as lifetime free.",
+    "Dispute a duplicate debit where the same ATM or cheque-return fee was charged twice in one statement cycle.",
+    "Recover an insurance or add-on product premium that was auto-debited from the account without written consent."
+  ],
+  "benefits": [
+    [
+      "GST handled correctly",
+      "Adds 18% GST on the fee, or strips it out when you paste the GST-inclusive statement figure."
+    ],
+    [
+      "Escalation dates pre-filled",
+      "Shows the 30-day bank reply deadline and the Ombudsman filing cut-off derived from your letter date."
+    ],
+    [
+      "Itemised annexure",
+      "Each disputed debit is listed with date, description, base amount, GST and total so the branch can trace it."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I get a refund of wrongly charged bank fees?",
+      "Write to the branch manager or the bank's nodal grievance officer with a dated, itemised list of the debits and ask for reversal in writing. Banks are expected to register the complaint and give it a reference number; if there is no reply in 30 days or the reply is unsatisfactory, you can escalate to the RBI Ombudsman."
+    ],
+    [
+      "How long does a bank get to reply before I can go to the RBI Ombudsman?",
+      "Thirty days. Under clause 10 of the Reserve Bank - Integrated Ombudsman Scheme, 2021, a complaint to the Ombudsman is maintainable only after the bank has been given 30 days to respond or has rejected the complaint, and it must be filed within one year of that reply or of the day the 30-day window expired."
+    ],
+    [
+      "Is GST charged on bank fees, and is it refundable?",
+      "Yes. Banking and financial services attract 18% GST, so a INR 500 charge is debited as INR 590. When a bank reverses a wrongly levied fee it normally reverses the tax component with it, which is why the letter claims both figures separately."
+    ],
+    [
+      "What proof should I attach to a refund request?",
+      "Attach the statement page with the disputed entries highlighted, plus anything that supports the claim - the welcome kit for a lifetime-free card, an SMS confirming a timely payment, or the account opening form showing a zero-balance product. This is an informational template; for a large or contested amount consult a lawyer or a consumer forum adviser."
+    ]
+  ]
+},
   "exhaust-fan-size-calculator": {
   "intro": "This calculator sizes a bathroom or kitchen extractor fan using the air-change method — airflow equals room volume multiplied by the air changes per hour required for that room type — and then checks the answer against the Home Ventilating Institute rules and the ASHRAE 62.2 local-exhaust minimums of 50 CFM for a bathroom and 100 CFM for a vented range hood. It adds a duct-resistance allowance of about 2% per metre of run and 5% per 90-degree bend, then returns the fan rating, fan body size and round duct diameter at a 4.5 m/s design velocity. Useful for anyone specifying an extractor for a renovation and choosing between a 100 mm and a 150 mm unit.",
   "useCases": [
@@ -6412,6 +6574,51 @@ export default {
     [
       "How do I mark a breaking change in a commit message?",
       "Two spec-compliant ways: append ! after the type or scope (feat(api)!: remove v1 endpoints), or add a footer starting with BREAKING CHANGE: followed by a description. BREAKING-CHANGE with a hyphen is defined as synonymous. Either form signals a MAJOR version bump to semantic-release and similar tooling."
+    ]
+  ]
+},
+  "git-error-decoder": {
+  "intro": "This decoder takes a git error message — pasted verbatim or picked from a list of 20 — and returns three things: what actually happened inside git's object and ref model, the commands that resolve it, and a blast radius grade on every one of those commands. The grades are fixed: SAFE means local only and reversible, REWRITES HISTORY means commits get new object ids or a published ref moves so other clones diverge, and DESTRUCTIVE means work no reflog can return — uncommitted edits, untracked files, or commits that existed only on the remote you overwrote. Every behavioural claim is quoted from the git 2.50.1 manual pages (git-merge, git-push, git-reset, git-reflog, git-gc, git-config, git-submodule), read 2026-07-29. It is for the moment when a command has failed, the terminal is red, and the real question is not which command to run but which command is safe to run.",
+  "useCases": [
+    "Deciding whether the Stack Overflow answer telling you to run git reset --hard will lose the file you have been editing for two hours",
+    "Working out why 'Updates were rejected' appeared and what merge, rebase and force-with-lease each do to the commits on the server",
+    "Finding commits after an amend, a bad rebase or a detached HEAD, using the reflog window of 90 days for reachable entries and 30 for unreachable",
+    "Sending a teammate a direct link to one specific error — every entry has a stable anchor id"
+  ],
+  "benefits": [
+    [
+      "Every command is graded",
+      "SAFE, REWRITES HISTORY or DESTRUCTIVE on each suggested command, with one sentence saying exactly what it would cost."
+    ],
+    [
+      "The model, not just the fix",
+      "Each entry explains the ref, index or object state git is actually in — why HEAD holds a raw object id, why a merge conflict is three index stages, why index.lock exists at all."
+    ],
+    [
+      "Quoted from the manual",
+      "Claims are quoted from the git 2.50.1 man pages and stamped with the date they were read, not paraphrased from memory."
+    ],
+    [
+      "Recovery first",
+      "A reflog section spells out what the reflog can bring back (commits) and what it cannot (uncommitted working-tree edits) before you run anything."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which git commands are actually destructive?",
+      "The ones that touch content that was never a commit: git reset --hard, git checkout -- <file>, git restore <file>, git clean -fd, git checkout --ours/--theirs during a conflict, and git submodule update --force. Man git-reset states it plainly for --hard: \"Any changes to tracked files in the working tree since <commit> are discarded.\" The reflog is a journal of commits, so it cannot help with any of these. Rebase, commit --amend and push --force-with-lease are a different category — they rewrite history and break other people's clones, but your own reflog can still undo them."
+    ],
+    [
+      "Can I get my commits back after git reset --hard?",
+      "Yes for the commits, no for uncommitted edits. The commits are still in the object database and listed in git reflog; git branch rescue HEAD@{1} gives them a name again without moving anything you have checked out. Default retention comes from man git-gc: gc.reflogExpire \"defaults to 90 days\" for entries reachable from the current tip and gc.reflogExpireUnreachable \"defaults to 30 days\" for entries that are not. Anything that was only ever a modified file on disk was never an object and cannot be recovered."
+    ],
+    [
+      "What does 'Updates were rejected because the remote contains work that you do not have locally' mean?",
+      "It means your push was not a fast-forward: the branch on the server has commits that are not ancestors of what you are sending, so completing the push would make them unreachable. Man git-push puts it as \"Usually, 'git push' refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.\" git fetch then git merge origin/main is the SAFE resolution, git pull --rebase REWRITES HISTORY, and git push --force-with-lease is DESTRUCTIVE because it discards the server's commits."
+    ],
+    [
+      "Why does git say 'fatal: refusing to merge unrelated histories'?",
+      "Because the two branches have no commit in common, so there is no merge base for a three-way merge — man git-merge: \"By default, git merge command refuses to merge histories that do not share a common ancestor.\" It nearly always means you ran git init and committed locally against a hosted repo that was created with its own initial README or LICENSE commit. Adding --allow-unrelated-histories to the merge or pull joins them with one merge commit and is SAFE; nothing is discarded."
     ]
   ]
 },
@@ -16440,265 +16647,6 @@ export default {
     [
       "Does a connection fee per call really matter?",
       "It matters most for people who make many short calls. Ten one-minute calls a day for a week at a $0.50 connection fee adds $35 regardless of the per-minute rate, which can make a pack or VoIP the better choice even when the headline per-minute rate looks fine."
-    ]
-  ]
-},
-  "internet-speed-test": {
-  "title": "Internet Speed Test — Test Your Speed Online Free",
-  "h1": "Internet Speed Test",
-  "metaDescription": "Test your internet speed online free — four parallel downloads, a 1 MB upload test and a latency check return download, upload and ping in one run.",
-  "intro": "The Internet Speed Test measures your connection from inside the browser using the Fetch API and performance.now(), with no app to install and no account. Download speed is measured by opening four parallel streams to picsum.photos with caching disabled, counting bytes as they arrive through the response's ReadableStream reader, then dividing total bits by elapsed seconds. Upload is measured by generating 1 MiB of random bytes locally and POSTing them as multipart form data to httpbin.org, timed the same way. Latency is a single cache-busting request timed round-trip, and the whole run — ping, then download, then upload — can be cancelled mid-test with an AbortController.",
-  "useCases": [
-    "Checking whether your connection is actually delivering the download speed your broadband plan advertises",
-    "Confirming you have enough upload headroom before a video call, a live stream, or sending a large file",
-    "Comparing Wi-Fi in different rooms, or before and after moving a router, switching bands, or changing ISP"
-  ],
-  "benefits": [
-    [
-      "Download, upload and ping in one run",
-      "One button returns all three numbers — receive speed in Mbps, send speed in Mbps, and round-trip latency in milliseconds — instead of only a headline download figure."
-    ],
-    [
-      "Four parallel streams, not one",
-      "A single connection under-reports on fast links because of TCP slow start, so the download test opens four simultaneous requests to push the connection harder before timing it."
-    ],
-    [
-      "Nothing to install, no account",
-      "It is plain JavaScript on the page you are already on — no signup, no app, no extension, and no result history: the numbers live in the page and clear when you reload."
-    ],
-    [
-      "Stoppable mid-test",
-      "The Stop button aborts every in-flight request immediately through an AbortController, so a test on a slow or metered connection never has to run to completion."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I test my internet speed online for free?",
-      "Press Start Test — that is the whole process. The tool measures latency first, then downloads four 2000×2000 images in parallel with caching disabled to measure download speed, pauses half a second, then uploads 1 MiB of generated data to measure upload speed. There is no signup, no payment, and nothing to install."
-    ],
-    [
-      "Why is my speed lower here than on other speed tests?",
-      "Mostly three reasons. First, the result is calculated by dividing by 1024×1024 rather than 1,000,000, which makes the displayed figure about 5% lower than the decimal megabits ISPs quote. Second, it is a short burst of four downloads, so TCP slow start and the TLS handshake are counted inside the elapsed time and drag the average down on fast links. Third, the ceiling is whichever is slower — your connection or the image CDN the test pulls from."
-    ],
-    [
-      "What does the ping number actually measure?",
-      "It is the round-trip time in milliseconds of one cache-busting HTTP request, measured with performance.now() and rounded to a whole millisecond. Browsers cannot send ICMP packets, so this is HTTP latency rather than a true ping, and it usually reads a little higher than the ping command in a terminal because DNS lookup and connection setup are included."
-    ],
-    [
-      "Does this speed test upload any of my files or data?",
-      "No files and no personal data. The upload test creates 1 MiB (1,048,576 bytes) of random values with Math.random inside your browser and posts that throwaway payload — nothing from your device is read or sent. Results are not saved to an account or a server; they exist only in the open page and disappear when you reload it."
-    ],
-    [
-      "What is a good download speed?",
-      "It depends on what you are doing, not on a single number. HD streaming and video calls generally need only a few Mbps, 4K streaming is typically quoted around 15–25 Mbps, and a household with several simultaneous streams wants considerably more. As a visual reference, the download gauge on this tool fills completely at 100 Mbps."
-    ],
-    [
-      "Can I use this to test my Wi-Fi speed?",
-      "Yes — it measures the whole path from your device to the internet, so Wi-Fi is included in whatever you see. To tell Wi-Fi apart from your broadband line, run the test once over Wi-Fi and once on an Ethernet cable, or once beside the router and once in the far room; the gap between the readings is the wireless part."
-    ],
-    [
-      "Why is my upload speed much lower than my download speed?",
-      "Two things are usually at play. Most consumer broadband is asymmetric by design, so the upload line is genuinely slower than the download line. On top of that, the upload test sends only 1 MiB, and a transfer that short spends a large share of its time in connection setup and TCP ramp-up — which means a very fast upload link will be under-reported here."
-    ],
-    [
-      "The result looks wrong or the test did not seem to run — what happened?",
-      "Check whether an ad blocker, corporate firewall, VPN, or an offline connection is blocking the test's requests. When a request cannot complete, the reading you see will not reflect your real connection, so allow the domains the test calls and run it again. You can also press Stop Test at any point to cancel a run in progress."
-    ]
-  ],
-  "steps": [
-    "Press \"Start Test\" — there is nothing to install, sign up for, or configure first.",
-    "The tool measures latency, runs four parallel downloads with caching disabled, pauses briefly, then uploads 1 MiB of locally generated random data.",
-    "Read download and upload in Mbps and ping in ms on the summary card, then press \"Test Again\" to rerun — or \"Stop Test\" to cancel mid-run."
-  ]
-},
-  "internship-request-letter-builder": {
-  "intro": "The Internship Request Letter Builder composes a ready-to-send internship application email from your course, skills, free dates and the employer you are targeting. It follows the standard business-letter order — subject line, salutation, statement of purpose, evidence of fit, availability window, call to action, sign-off — and scores the draft against seven checks such as naming a real recipient and keeping the body between 90 and 200 words. Built for students and fresh graduates sending cold applications where nobody has posted a vacancy.",
-  "useCases": [
-    "Send a cold email to a startup founder who has not advertised an internship but might create one.",
-    "Apply for a mandatory 8-week summer training placement that your college requires before the seventh semester.",
-    "Follow up on a careers-page form with a direct email to the team lead you actually want to work with.",
-    "Rewrite the same application for five different companies by swapping the employer-specific line each time."
-  ],
-  "benefits": [
-    [
-      "Exact availability dates",
-      "Your start date and duration are converted into a written from-to window, so nobody has to do the arithmetic."
-    ],
-    [
-      "Length kept in the readable band",
-      "A live word count flags drafts under 90 or over 200 words, the range a cold email can survive."
-    ],
-    [
-      "Evidence, not adjectives",
-      "The checklist rewards a named recipient, listed tools and a portfolio link instead of generic enthusiasm."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I write an email asking for an internship?",
-      "State the role and company in the first sentence, then give one paragraph of evidence — the tools you use and something specific about the employer — followed by your exact availability dates and a small ask such as a 15-minute call. Keep the body under about 200 words and address a named person wherever you can find one."
-    ],
-    [
-      "What should the subject line of an internship request be?",
-      "Use the pattern 'Internship application — [role] — [your name]', optionally with the team in brackets. It tells a recruiter what the mail is and who sent it before they open it, and it stays readable in the roughly 60 characters most inboxes show on mobile."
-    ],
-    [
-      "Should an internship request letter be formal or casual?",
-      "Match the employer. Government offices, PSUs, law firms and academic labs expect 'Respected Sir/Madam' and 'Yours sincerely'; most companies and startups read better with 'Dear [Name]' and 'Best regards'. Casual openings like 'Hi' work only when you are writing to a small team directly."
-    ],
-    [
-      "Do I need to attach a resume with the internship request?",
-      "Yes — attach a one-page PDF and name the file with your own name, but the email must stand on its own because many recruiters read it before opening anything. Repeat the two or three most relevant skills in the body rather than writing 'please see attached'."
-    ]
-  ]
-},
-  "interval-ear-trainer": {
-  "title": "Interval Ear Trainer — Free Online Ear Training Quiz",
-  "h1": "Interval Ear Trainer — Melodic and Harmonic Ear Training",
-  "metaDescription": "Free interval ear training quiz — identify all 12 intervals, minor 2nd to octave, melodic or harmonic. Web Audio tones, no signup, runs in-browser.",
-  "intro": "The Interval Ear Trainer plays two notes and asks you to name the distance between them. Every tone is synthesised live by the Web Audio API — one triangle-wave OscillatorNode per note, shaped by a GainNode envelope with a 20 ms attack and a 0.8-second total length — driven by a built-in equal-temperament frequency table running from C4 (261.63 Hz) to A5 (880 Hz), with A4 at 440 Hz. It covers all 12 chromatic intervals from the minor 2nd to the octave, in melodic mode (root, then the top note 0.9 s later) or harmonic mode (both notes struck together). Nothing is uploaded, recorded, or downloaded: the audio engine, the quiz logic, and the scoring all run inside your browser tab.",
-  "useCases": [
-    "Music students drilling for an aural skills or grade exam, isolating the intervals they keep missing — tritone versus perfect 5th, minor 6th versus major 6th — instead of running the full 12 every round.",
-    "Singers and instrumentalists warming up pitch recognition before a rehearsal, using harmonic mode to train the tuning-sensitive simultaneous intervals and melodic mode for line-reading.",
-    "Producers, arrangers and transcribers building the reflex to name a leap by ear, so a melody or bassline can be written down without hunting for it on a keyboard."
-  ],
-  "benefits": [
-    [
-      "All 12 chromatic intervals, individually switchable",
-      "The trainer knows every interval from the minor 2nd (1 semitone) through the octave (12 semitones). Open the Intervals panel and toggle off whatever you already own — the quiz only draws from the ones left on, so you can drill a two-interval pair until it sticks. At least one interval always stays active."
-    ],
-    [
-      "Melodic and harmonic playback",
-      "Melodic mode plays the root, then the upper note 0.9 seconds later, which is how intervals appear in a line. Harmonic mode sounds both notes at the same instant, which is the harder ear and the one that matters for tuning and chord recognition. Switch modes mid-session without losing your score."
-    ],
-    [
-      "Live scoring, streaks and a mistake log",
-      "Accuracy, correct count, total, current streak and best streak update after every answer. A Recent History panel keeps your last 10 questions and, when you miss, records what you guessed instead — so the confusion pattern shows itself rather than disappearing."
-    ],
-    [
-      "No account, no install, nothing uploaded",
-      "The page is free and requires no signup. Tones are generated on your device by the browser's own audio engine, and the tool makes no network requests while you practise — no microphone, no recordings, no files leaving your machine."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is interval ear training?",
-      "It's the practice of naming the pitch distance between two notes purely by listening. An interval is measured in semitones — a perfect 5th is 7, an octave is 12 — and this trainer plays a random pair from its C4-to-A5 range, then asks you to pick the right name from m2 through P8. Repetition builds the reflex that lets you transcribe a melody or spot a chord tone without an instrument."
-    ],
-    [
-      "What's the difference between melodic and harmonic mode?",
-      "Timing. Melodic mode plays the lower note first and the upper note 0.9 seconds later, so you hear the leap as a movement. Harmonic mode starts both notes at exactly the same moment, so they fuse into one sound and you have to identify the interval from its colour and beating. Harmonic is generally the harder of the two — most people start on melodic."
-    ],
-    [
-      "Which intervals does this ear trainer cover?",
-      "All 12 chromatic intervals within an octave: minor 2nd (1 semitone), major 2nd (2), minor 3rd (3), major 3rd (4), perfect 4th (5), tritone (6), perfect 5th (7), minor 6th (8), major 6th (9), minor 7th (10), major 7th (11) and the octave (12). Compound intervals beyond the octave are not included."
-    ],
-    [
-      "How do I practise only certain intervals, like thirds and fifths?",
-      "Click the Intervals button to open the selection panel, then switch off everything you don't want. The quiz draws its questions only from the intervals still enabled, and the answer grid shrinks to match, so a two-interval drill really is a two-way choice. The counter beside the toolbar shows how many of the 12 are active; the tool won't let you disable the last one."
-    ],
-    [
-      "Is this interval ear trainer free, and do I need an account?",
-      "Yes, it's free, and no account or download is needed. The whole trainer is client-side JavaScript — the notes are synthesised by your browser's Web Audio engine, and no audio or answer data is sent anywhere while you practise."
-    ],
-    [
-      "Why can't I hear any sound?",
-      "Almost always because the browser hasn't unlocked audio yet. Browsers create the AudioContext in a suspended state and only resume it after a user gesture, so the first click on Start Session is what turns the sound on — if you loaded the page and heard nothing, press Start (or Replay) once. After that, check your system and tab volume; the tool plays at a fixed gain of 0.32, well below full scale."
-    ],
-    [
-      "Does the trainer save my score between sessions?",
-      "No. Accuracy, streak, best streak and the 10-question history live in the page's memory only. Reloading the tab or pressing Reset clears them, and nothing is written to your device or to a server. Note your accuracy down before you leave if you want to track progress over weeks."
-    ],
-    [
-      "What note range and tuning does it use?",
-      "A 22-note chromatic range from C4 (261.63 Hz) up to A5 (880 Hz), in 12-tone equal temperament with A4 = 440 Hz. Each question picks a random root low enough that the upper note still fits inside that range, so an octave question never starts above A4. Timbre is a triangle wave — brighter than a sine, cleaner than a saw — which keeps the upper partials audible without masking the interval."
-    ]
-  ],
-  "steps": [
-    "Press Start Session. That first click both unlocks browser audio and plays your first randomly chosen interval — optionally set melodic or harmonic mode, and open the Intervals panel first if you want to drill a subset.",
-    "Listen, hitting Replay as many times as you need, then click the interval you think you heard from the answer grid. Each button shows the abbreviation, the full name and its semitone count.",
-    "Read the instant feedback — a miss tells you the correct interval and logs what you guessed — then press Next Interval. Accuracy, streak, best streak and the last 10 answers update as you go; Reset clears the session."
-  ]
-},
-  "interview-candidate-nda-generator": {
-  "intro": "A candidate NDA covers the narrow window in which someone outside the company is shown internal code, roadmaps, metrics or systems during a hiring process. It works best when it is short, scoped to what the candidate will genuinely see, and unmistakably not a non-compete. This generator builds that document from the materials you tick, sets the confidentiality period and deletion deadline from the interview date, keeps ownership of any take-home exercise with the candidate, and preserves the right to report unlawful conduct to a regulator.",
-  "useCases": [
-    "Give an engineering candidate repository access for a pairing session without leaving the code unprotected.",
-    "Cover a design candidate who will be shown unreleased brand work and prototypes.",
-    "Set out clearly that a take-home submission stays the candidate's property and will not ship without a separate paid agreement.",
-    "Stop interview questions and exercises from being posted to public forums."
-  ],
-  "benefits": [
-    [
-      "Scoped to what is really shown",
-      "The confidentiality definition lists the specific materials you tick, rather than an open-ended catch-all a candidate is asked to sign blind."
-    ],
-    [
-      "Fair by construction",
-      "States expressly that it is not an offer, creates no employment relationship, and does not restrict where the candidate may work."
-    ],
-    [
-      "Length is a stated metric",
-      "Reports word count and reading time and warns past 900 words, the point at which candidate NDAs stop being read."
-    ]
-  ],
-  "faqs": [
-    [
-      "Should job candidates sign an NDA?",
-      "Only when they will genuinely see non-public material — source code, unreleased products, real metrics or internal systems. Asking every applicant to sign one before a first conversation is a common complaint and costs candidates. Scope it to the stage where confidential access actually begins."
-    ],
-    [
-      "Who owns a take-home coding exercise?",
-      "The candidate does, as the author, unless they assign it in writing. A fair candidate NDA says the company may use the submission only to evaluate the candidate, and not in a product or client deliverable without a separate written agreement and payment."
-    ],
-    [
-      "Can an interview NDA stop me joining a competitor?",
-      "It should not, and a well-drafted one says so expressly. A confidentiality agreement protects information; a non-compete restricts employment and is a different instrument. Section 27 of the Indian Contract Act, 1872 voids agreements in restraint of trade, and California Business and Professions Code section 16600 voids non-competes outright, with related sections restricting even offering one to an applicant."
-    ],
-    [
-      "How long should a candidate NDA last?",
-      "One to three years is typical, since the commercial sensitivity of a roadmap or metric fades quickly. Trade secrets are usually carved out and protected for as long as they stay secret. Anything longer is hard to justify for someone who spent a few hours in a hiring process."
-    ]
-  ]
-},
-  "interview-consent-form-builder": {
-  "intro": "An interview consent form records, in writing, that the person you are recording understands what the recording is for, how it may be used, how long you keep it and how to change their mind. This builder assembles that page from your answers and scores it against the elements GDPR Article 7 and Article 13 expect — a named controller, a specific purpose, listed uses, a retention period, a withdrawal route and a signature block — then checks the wording with the Flesch-Kincaid reading grade. Aimed at journalists, podcasters, documentary teams, HR and UX researchers who need a defensible release without a bespoke legal draft.",
-  "useCases": [
-    "Send a one-page release to a podcast guest before recording, listing audio publication and archive deposit as the permitted uses.",
-    "Give UX research participants a form that offers role-only attribution instead of naming them.",
-    "Set a 14-day withdrawal window for a documentary interview so contributors can pull out before the edit locks.",
-    "Produce a version that names one country only when the footage will not be distributed worldwide."
-  ],
-  "benefits": [
-    [
-      "Written to be understood",
-      "Flesch-Kincaid grading flags wording that has drifted above a grade 9 reading level."
-    ],
-    [
-      "Nothing quietly missing",
-      "Each required element is checked off against the article of the GDPR that asks for it."
-    ],
-    [
-      "Scope you actually chose",
-      "Permitted uses, territory, attribution and retention are stated explicitly rather than left as blanket consent."
-    ]
-  ],
-  "faqs": [
-    [
-      "What has to be in an interview consent form?",
-      "At minimum: who is recording, what the project is, why the recording is being made, how it may be used and where, whether the person is named, how long it is kept, how to withdraw consent, a contact point and a signature and date. Those map to GDPR Articles 13(1)(a)-(e), 13(2)(a) and 7(1)-(3)."
-    ],
-    [
-      "Can someone withdraw consent after an interview is published?",
-      "Yes — GDPR Article 7(3) says consent can be withdrawn at any time and withdrawal must be as easy as giving it, though withdrawal is not retroactive, so material already lawfully published does not have to be unpublished. In practice most producers set a window, commonly 7 to 30 days, in which they will remove contributions from anything not yet released."
-    ],
-    [
-      "Do I need written consent to record a phone or video interview?",
-      "It depends where you and the interviewee are. Some jurisdictions, including several US states, require all parties to consent to recording a call, while others require only one; in the EU and UK, recording an identifiable person also processes personal data, so you need a lawful basis and must give the Article 13 information. Written consent is the simplest way to evidence both — check the rule for your jurisdiction."
-    ],
-    [
-      "Is a generated consent form legally binding?",
-      "It is a draft, not legal advice. A signed form is good evidence that consent was informed and freely given, but enforceability depends on local contract, publicity and data-protection law, and extra safeguards apply for children, patients and vulnerable adults. Have a qualified adviser review the wording before you use it publicly."
     ]
   ]
 },

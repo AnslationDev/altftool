@@ -4,7 +4,7 @@ const toolConfig = {
   category:'Developer',
   description:"Preview Markdown files",
   icon: "edit",
-  iconColor: "text-blue-500",
+  iconColor: "text-[var(--primary)]",
 }
 
 export default toolConfig;

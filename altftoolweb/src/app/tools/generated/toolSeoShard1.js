@@ -2,6 +2,46 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "child-education-cost-planner": {
+  "intro": "Child Education Cost Planner projects what a course costing today's fees will actually cost when your child enrols, inflating every academic year separately at your education inflation rate. It then works out the corpus you need on admission day and the monthly SIP — or one-time lumpsum — that closes the gap after your existing savings grow. Built for parents planning school, undergraduate or overseas education goals.",
+  "useCases": [
+    "Work out the SIP needed today to fund a four-year engineering degree twelve years from now.",
+    "Compare the funding gap for a domestic course versus an overseas masters at different inflation rates.",
+    "Check whether the money already set aside for your child covers the goal or leaves a shortfall."
+  ],
+  "benefits": [
+    [
+      "Year-by-year fee schedule",
+      "Every academic year is inflated to the year it is actually paid, not just the first."
+    ],
+    [
+      "SIP and lumpsum both",
+      "See the monthly investment and the equivalent one-time amount side by side."
+    ],
+    [
+      "Counts existing savings",
+      "Money already earmarked is grown at your expected return and netted off the target."
+    ]
+  ],
+  "faqs": [
+    [
+      "What education inflation rate should I assume?",
+      "Education costs in India have historically risen faster than general CPI, so many planners use 8-10% a year against a 6% general inflation assumption. Run both ends of that range to see the spread."
+    ],
+    [
+      "Why is the corpus needed less than the total fees?",
+      "You do not need every rupee on day one. Money for the second, third and later academic years stays invested and keeps earning, so it is discounted back to admission day at your expected return."
+    ],
+    [
+      "Should I use a 12% return for this goal?",
+      "Equity-oriented returns like 12% suit goals more than seven to ten years away. For a goal within three years, use a conservative debt-like rate, since equity can be down when the fee is due."
+    ],
+    [
+      "Does this include hostel, travel and living costs?",
+      "Only if you include them in the annual fee you enter. For overseas education especially, add living expenses and a buffer for currency movement to the annual figure."
+    ]
+  ]
+},
   "child-fever-log": {
   "intro": "The Child Fever Log records each temperature reading with the time, the measurement site, the fluids your child drank and any medicine given, then converts every reading to a core-equivalent temperature so the numbers are comparable. It uses the standard fever definition of 38.0 °C (100.4 °F) core, adds the usual site corrections of about 0.5 °C for armpit and 0.4 °C for oral readings, and estimates daily fluid needs with the Holliday-Segar 100/50/20 mL/kg maintenance rule plus roughly 12% extra per degree of fever. The output is a plain summary you can read out at a clinic or paste into a message.",
   "useCases": [
@@ -5262,6 +5302,51 @@ export default {
     [
       "Is crypto received as a gift or airdrop taxable?",
       "Yes. A virtual digital asset received without consideration is taxed in the recipient's hands, and a later sale is taxed again at 30% on the gain over that value. Gifts from specified relatives are exempt."
+    ]
+  ]
+},
+  "css-specificity-referee": {
+  "intro": "This page referees a CSS fight: give it the selector that is currently winning and the one you want to win, and it returns each selector's (a, b, c) specificity per Selectors Level 4 §15, the cascade criterion that actually decided the contest per CSS Cascade Level 5 §6.1, and the smallest edit that reverses the result. It is for anyone staring at a style that will not apply — because specificity is only the fifth of six sorting criteria, and importance, style attributes and @layer are all settled before the browser ever counts your classes.",
+  "useCases": [
+    "Work out why `.btn.primary` (0,2,0) loses to `#sidebar .btn` (1,1,0) and what the wanted selector would have to score to win",
+    "Paste the Chrome DevTools Styles pane, with its `element.style` block and struck-out rules, and get the one declaration that survived the cascade",
+    "Check a whole stylesheet for every rule that sets `color` on `button#save.btn.primary`, ranked from winner to loser with the layer each rule sits in",
+    "Confirm the modern-cascade surprise: an unlayered normal declaration beats a layered one, while an unlayered `!important` declaration loses to a layered one"
+  ],
+  "benefits": [
+    [
+      "Selectors Level 4 arithmetic, not the 1996 version",
+      ":is(), :not() and :has() take the specificity of their most specific argument, :where() always contributes 0,0,0, and :nth-child(-n+3 of .noted) counts as one pseudo-class plus .noted — 0,1,0 plus the type selector."
+    ],
+    [
+      "Layers resolved before specificity",
+      "Cascade layers are criterion 4 and specificity is criterion 5, so a layered rule can lose to a weaker unlayered one. The page names which criterion decided instead of only printing triples."
+    ],
+    [
+      "The flip is spelled out as arithmetic",
+      "When specificity decides, the page states the exact triple the losing selector must exceed and how many ID, class-level or type-level units reach it."
+    ],
+    [
+      "Three ways in",
+      "Two-selector duel, a DevTools Styles-pane paste, or a full stylesheet plus an element description like button#save.btn.primary."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why is my CSS not applying even though my selector is more specific?",
+      "Because specificity is only the fifth of the six cascade criteria in CSS Cascade Level 5 §6.1. Sorted before it are importance (an `!important` declaration beats any normal one), context, element-attached styles (a `style` attribute beats every style rule of the same importance), and cascade layers. A 0,1,0 unlayered `.btn` beats a 1,1,0 `#app .btn` that sits inside `@layer components`, because the layer test finishes before either triple is counted."
+    ],
+    [
+      "How is specificity actually calculated?",
+      "As the triple (a, b, c) from Selectors Level 4 §15: a counts ID selectors, b counts class selectors, attribute selectors and pseudo-classes, and c counts type selectors and pseudo-elements. They are compared column by column, not added up — 1,0,0 beats 0,99,0. The universal selector `*` and every combinator (space, >, +, ~) contribute nothing, so `#nav .list li a:hover` is 1,2,2."
+    ],
+    [
+      "What do :is(), :where(), :not() and :has() do to specificity?",
+      ":is(), :not() and :has() contribute the specificity of the most specific complex selector in their argument list and nothing of their own, so `:is(p, #fakeId)` is 1,0,0 and `p:not(.a, #b)` is 1,0,1. `:where()` is the exception: it contributes 0,0,0 no matter what is inside it, which is why `:where(#a, .b) p` scores only 0,0,1."
+    ],
+    [
+      "Does !important reverse the cascade layer order?",
+      "Yes. For normal declarations the last-declared layer wins and unlayered styles sit in an implicit final layer, so unlayered beats layered. For `!important` declarations CSS Cascade Level 5 inverts it: the first-declared layer wins, and that same implicit final layer now puts unlayered `!important` at the bottom, losing to every layered `!important`. So `@layer base { .btn { color: navy !important } }` beats an unlayered `#app .btn { color: olive !important }`."
     ]
   ]
 },
@@ -11616,6 +11701,51 @@ export default {
     ]
   ]
 },
+  "dst-clock-changes": {
+  "intro": "This tracker reads the IANA time zone database bundled with the page and reports, for any zone, the exact UTC instant of its next clock change, the local wall-clock reading before and after the jump, the size and direction of the shift and the resulting UTC offset — plus the dates on which a recurring meeting's gap between two or three zones silently moves. It is built for anyone running a standing call across borders, and for developers scheduling cron jobs and calendar invites, because the underlying rules do not line up: the United States switches on the second Sunday of March and the first Sunday of November under the Energy Policy Act of 2005 §110, while the European Union switches on the last Sundays of March and October at 01:00 UTC under Directive 2000/84/EC, leaving three weeks each spring and one week each autumn in which the usual offset between them is simply wrong.",
+  "useCases": [
+    "Checking why a weekly New York–London call moves an hour for exactly 21 days from 8 March 2026 to 29 March 2026, and getting the two dates to warn attendees about",
+    "Confirming that a nightly job scheduled at 02:30 local in America/New_York has no instant to run on 8 March 2026, because the clock jumps straight from 02:00 EST to 03:00 EDT",
+    "Deciding which UTC instant a 01:30 timestamp in Europe/London means on 25 October 2026, when 01:30 happens once on BST and again an hour later on GMT",
+    "Answering whether a partner in São Paulo, Mexico City or Istanbul will shift with you in March — none of them have moved their clocks since 2019, 2022 and 2016 respectively"
+  ],
+  "benefits": [
+    [
+      "The exact instant, not the date",
+      "Each change is reported as a UTC timestamp plus the local reading either side, so 2026-03-08T07:00:00Z is shown as 02:00 EST becoming 03:00 EDT."
+    ],
+    [
+      "Meeting gaps over time, not today's offset",
+      "The safety check walks every weekly occurrence and lists only the dates where the gap to another zone actually changes, with the old and new local start times."
+    ],
+    [
+      "Skipped and repeated hours handled",
+      "A local time inside a spring-forward gap is reported as never happening; one inside an autumn overlap is reported with both UTC instants it maps to."
+    ],
+    [
+      "Data that maintains itself",
+      "Every figure comes from the IANA tz database shipped with the site, so a new tzdb release — Egypt restarting summer time in 2023, Iran dropping it in 2022 — updates the page with no hand-edited table to go stale."
+    ]
+  ],
+  "faqs": [
+    [
+      "When do the clocks change in 2026?",
+      "In the United States clocks go forward one hour at 02:00 local on Sunday 8 March 2026 (07:00 UTC for Eastern time) and back one hour at 02:00 local on Sunday 1 November 2026 (06:00 UTC). In the United Kingdom and the European Union clocks go forward at 01:00 UTC on Sunday 29 March 2026 and back at 01:00 UTC on Sunday 25 October 2026. Australia's south-eastern states go back at 03:00 local on Sunday 5 April 2026 and forward at 02:00 local on Sunday 4 October 2026."
+    ],
+    [
+      "Why is New York only 4 hours behind London for part of March?",
+      "Because the two regions switch on different weekends. New York moves to UTC-4 on 8 March 2026 while London stays on UTC+0 until 29 March 2026, so for those 21 days the gap is 4 hours instead of the usual 5. The same thing happens in reverse for 7 days in autumn: London returns to UTC+0 on 25 October 2026 but New York stays on UTC-4 until 1 November 2026."
+    ],
+    [
+      "What happens to a meeting set for 02:30 on the morning the clocks go forward?",
+      "It has no instant at all. In America/New_York on 8 March 2026 the clock reads 01:59:59 EST and the next second reads 03:00:00 EDT, so every local time from 02:00 up to 02:59 is skipped — this tool reports such a reading as never happening and gives you the instant the clocks jump to, 2026-03-08T07:00:00Z. Calendar apps and cron implementations each pick their own fallback, which is why the invite and the job can disagree."
+    ],
+    [
+      "Which countries have stopped changing their clocks?",
+      "Going by the last clock change recorded in the IANA database: Brazil last moved in 2019, Mexico and Iran in 2022, Türkiye in 2016 and Russia in 2014, while India last moved in 1945, China in 1991, Japan in 1951 and the Australian state of Queensland in 1992. The traffic is not one way — Egypt restarted summer time in 2023 after last changing its clocks in 2014, so the tool reads the current database rather than a fixed list."
+    ]
+  ]
+},
   "dubai-dxb-airport-arrival-buffer-calculator": {
   "intro": "This calculator turns a Dubai DXB departure time into the single time you need to leave home, working backwards through the boarding-gate close, passport control, security, bag drop and the drive itself. It applies the larger of three deadlines - the three-hour arrival that Dubai Airports advises, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Concourse A departures need extra time because the train ride and pier walk come after passport control.",
   "useCases": [
@@ -12407,6 +12537,51 @@ export default {
     [
       "Can I claim tax deduction on an education loan?",
       "Section 80E of the Income Tax Act allows a deduction on the interest paid on an education loan taken for higher studies, for up to 8 years from when repayment starts, with no upper limit on the amount and no deduction on principal. This is general information, not tax advice — confirm eligibility with a qualified professional."
+    ]
+  ]
+},
+  "effective-apr-comparator": {
+  "intro": "The effective APR of a loan is the internal rate of return of its actual cash flows — the money that reaches your bank account on day one, and every rupee you pay back afterwards — and it is almost never the rate on the sanction letter. This comparator builds that cash-flow series for two to six offers: it deducts the processing fee, 18% GST on fees, documentation and legal charges and any bundled insurance premium from the sanctioned amount to get the net disbursed figure, then solves for the monthly IRR by bisection and annualises it. That is exactly the method the Reserve Bank of India prescribes in its Key Facts Statement circular (RBI/2024-25/18, DOR.STR.REC.13/13.03.00/2024-25, 15 April 2024), whose Annex B footnote 10 requires the APR to be \"computed on net disbursed amount using IRR approach and reducing balance method\". It restates any flat-rate quote as its reducing-balance equivalent, and it re-runs the whole comparison at a repayment horizon you choose, so an offer that is cheapest over the full tenure but carries a foreclosure penalty can be shown losing to a dearer one when you close in year three.",
+  "useCases": [
+    "Checking whether a 10.25% personal loan with 0.5% processing fee and a 12,000 bundled insurance premium is really cheaper than an 11.75% offer with almost no fees",
+    "Converting a two-wheeler or consumer-durable quote of \"6.75% flat\" into the reducing-balance rate that is comparable with a bank's quoted rate",
+    "Working out which of two home-improvement or personal loan offers costs less if the loan is cleared in year 3 of a 5-year tenure rather than run to term",
+    "Reading a lender's Key Facts Statement and reproducing the APR line to confirm the fees disclosed there account for the whole gap from the quoted rate"
+  ],
+  "benefits": [
+    [
+      "IRR on real cash flows, not a rate restatement",
+      "Bisection on a bracketed interval to a monthly-rate tolerance of 1e-12; it reproduces the RBI's own Annex B illustration of 17.07% to the decimal."
+    ],
+    [
+      "The flat-versus-reducing gap made explicit",
+      "A 6.75% flat quote over 60 months is 12.09% reducing — a multiple of 1.79, which is where most mis-selling lives."
+    ],
+    [
+      "Foreclosure priced in, not ignored",
+      "Penalty on the outstanding principal plus 18% GST on that penalty enters the cash-flow series at the exit month, and the ranking is recomputed."
+    ],
+    [
+      "Bundled insurance treated as cost of credit",
+      "RBI's KFS circular para 7 puts third-party charges routed through the lender, insurance included, inside the APR; a toggle shows what changes if it is excluded."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why is my APR higher than the interest rate the bank quoted me?",
+      "Because the quoted rate ignores everything you paid to get the money. The RBI's own worked example makes the gap concrete: a 20,000 loan at a quoted 15% over 24 monthly instalments of 970, with 400 of fees, disburses only 19,600 net — and its APR is 17.07%, over two percentage points above the quoted rate. Add 18% GST on the processing fee and a financed insurance premium and the gap widens further, because every one of those rupees is money you never received but are paying interest on."
+    ],
+    [
+      "What is a 10% flat rate in reducing-balance terms?",
+      "About 17.9% on a three-year loan. On 1,00,000 at 10% flat for 36 months the total interest is 30,000, the EMI is 3,611, and the IRR of that repayment stream is 17.92% a year — a multiple of 1.79. The multiple depends on the tenure and lands roughly between 1.8 and 1.9 for typical retail tenures: a 6.75% flat quote over 60 months works out to 12.09% reducing. The old shortcut of flat multiplied by 2n/(n+1) gives 1.95 for a 36-month loan, which overstates the true IRR because it ignores payment timing."
+    ],
+    [
+      "Can a cheaper loan become the more expensive one if I repay early?",
+      "Yes, and that is the single most common way a comparison goes wrong. Take a 5,00,000 loan over 60 months: Offer A at 10.25% with a 12,000 financed insurance premium and a 5% foreclosure penalty has an APR of 11.81%, against 12.12% for Offer B at 11.75% with almost no fees — A is cheaper over the full term. Close both in month 36 and A costs 13.07% against B's 12.18%, because the penalty on the outstanding balance plus 18% GST on it lands in a single month and the upfront fees are spread over 36 months instead of 60. The ranking inverts."
+    ],
+    [
+      "Are foreclosure charges still allowed in India?",
+      "Not on floating rate loans to individuals for non-business purposes. Under the RBI (Pre-payment Charges on Loans) Directions, 2025, issued 2 July 2025 and applicable to all loans sanctioned or renewed on or after 1 January 2026, a regulated entity may not levy pre-payment or foreclosure charges on such loans — whatever the amount, whether there is a co-obligant, whether the repayment is full or partial, and whatever the source of the funds — and may not impose a lock-in period on them. Fixed rate loans sit outside that bar and may carry pre-payment charges under the lender's board-approved policy, and where a charge is payable it is a taxable supply under SAC heading 9971 carrying 18% GST, unlike loan interest, which is exempt."
     ]
   ]
 },
@@ -16489,168 +16664,6 @@ export default {
     [
       "Is this a substitute for counselling if my exam anxiety is severe?",
       "No. These prompts are a self-help aid for ordinary exam pressure. If anxiety is disrupting your sleep or eating, causing panic attacks, or bringing thoughts of self-harm, speak to a counsellor, doctor or trusted adult — in India the government's Tele-MANAS helpline (14416) is free and available 24x7."
-    ]
-  ]
-},
-  "exam-tie-breaker-rule-explainer": {
-  "intro": "A tie-breaker rule is the ordered list of criteria an examining body applies when two candidates finish on identical marks, and it is applied strictly in sequence — the first criterion on which they differ fixes the rank and nothing after it is consulted. This explainer runs the published order for NEET UG, JEE Main, UPSC Civil Services, SSC and IBPS or SBI recruitment against two candidates and shows exactly which criterion decided the result. Each rule set is presented with the body that issued it, because these lists are revised: NEET dropped both the age criterion and the draw of lots within three years.",
-  "useCases": [
-    "Working out why two NEET candidates on 640 marks received different All India Ranks.",
-    "Checking whether a JEE Main tie would be settled on Mathematics before Physics, or go all the way to date of birth.",
-    "Explaining to a study group why SSC ends its tie-break with alphabetical order while NTA lets identical candidates share a rank."
-  ],
-  "benefits": [
-    [
-      "Rules applied in the real order",
-      "Criteria are evaluated in sequence and later ones are visibly marked as never reached."
-    ],
-    [
-      "Five bodies in one place",
-      "NTA, UPSC, SSC and the bank recruitment boards each use a different logic, shown side by side."
-    ],
-    [
-      "Worked example for each exam",
-      "Every rule set ships with a realistic pair of candidates that demonstrates the sequence."
-    ]
-  ],
-  "faqs": [
-    [
-      "How are NEET UG ties broken?",
-      "In order: higher marks in Biology (Botany plus Zoology), then Chemistry, then Physics, then the lower ratio of incorrect to correct answers across all subjects, then the same ratio within Biology, Chemistry and Physics. NTA removed the age criterion and the computerised draw of lots from 2024, so candidates identical on every criterion now share a rank."
-    ],
-    [
-      "What is the tie-breaking rule in JEE Main?",
-      "Higher NTA score in Mathematics comes first, then Physics, then Chemistry, then the lower ratio of wrong to correct answers, then the older candidate. Candidates still level after all five are given the same rank."
-    ],
-    [
-      "How does SSC break a tie in CGL?",
-      "By total marks in the final stage, then marks in the earlier tier, then date of birth with the older candidate placed higher, then alphabetical order of the first name. Because the last criterion can always separate two people, SSC results do not have shared ranks."
-    ],
-    [
-      "Does age help or hurt in a tie?",
-      "Where age is used, being older helps. UPSC, SSC and the bank recruitment boards all place the senior candidate higher, and JEE Main does the same at its fifth criterion. NEET UG no longer uses age at all."
-    ]
-  ]
-},
-  "exam-to-job-mapping-explorer": {
-  "intro": "This explorer maps India's major recruitment exams — UPSC CSE, SSC CGL and CHSL, RRB NTPC and Group D, IBPS PO and Clerk, RBI Grade B, UPSC CAPF and NDA — to the actual posts they lead to, showing each post's 7th Central Pay Commission pay level, entry basic pay and a one-line job profile. It is built for aspirants choosing which exam to prepare for, or filling post-preference forms, who want to compare what the jobs actually are before committing a year of preparation.",
-  "useCases": [
-    "A graduate torn between SSC CGL and banking exams comparing what an Assistant Section Officer and a bank PO actually do day to day",
-    "An SSC CGL candidate filling the post-preference form and checking which posts sit at Level 7 versus Level 4 or 5",
-    "A railway aspirant comparing Station Master (Level 6) against Goods Train Manager (Level 5) before choosing NTPC preferences"
-  ],
-  "benefits": [
-    [
-      "Pay levels made concrete",
-      "Every CPC-scale post shows its 7th CPC level and the entry basic pay behind it, from Rs 18,000 at Level 1 to Rs 56,100 at Level 10."
-    ],
-    [
-      "Job profiles, not just titles",
-      "Each post carries a one-line description of the actual work — desk, field, shift or command."
-    ],
-    [
-      "Cross-exam comparison",
-      "Search by post name or sector to see every exam that leads to that kind of job in one view."
-    ]
-  ],
-  "faqs": [
-    [
-      "Which posts can I get through SSC CGL?",
-      "SSC CGL fills Group B and C posts across central ministries and departments: Assistant Section Officer, Inspector of Income Tax, Inspector of Central GST & Excise and CBI Sub-Inspector at Pay Level 7 (entry basic Rs 44,900), Auditor at Level 5 (Rs 29,200), and Tax Assistant at Level 4 (Rs 25,500), among others. The exact post list and vacancies change with every year's notification."
-    ],
-    [
-      "What is the starting salary at Pay Level 7 of the 7th CPC?",
-      "Entry basic pay at Level 7 is Rs 44,900 per month. Gross salary adds dearness allowance, house rent allowance and other admissible allowances on top, so in-hand pay varies by posting city and current DA rate."
-    ],
-    [
-      "Do bank PO salaries follow the 7th Pay Commission?",
-      "No. Public sector bank pay is set by bipartite settlements between banks and unions (and RBI has its own scale), not by the Central Pay Commission. That is why bank and RBI posts in this explorer show their own scale instead of a CPC level."
-    ],
-    [
-      "Which exam leads to becoming an IAS officer?",
-      "Only the UPSC Civil Services Examination recruits to the Indian Administrative Service. New entrants join at Junior Time Scale, Pay Level 10 of the pay matrix (entry basic Rs 56,100), and the same exam also fills IPS, IFS, IRS and around twenty other Group A services based on rank and preference."
-    ]
-  ]
-},
-  "excel-copilot-prompt-builder": {
-  "intro": "Excel Copilot Prompt Builder assembles a spreadsheet-assistant prompt that names the exact worksheet, the A1 range, the header row and every column letter, so Copilot works on the cells you meant rather than guessing. The range you type is validated against the .xlsx worksheet grid — 1,048,576 rows and 16,384 columns ending at XFD — and the tool counts rows, data rows and total cells before it writes the prompt. It is for anyone whose Copilot answers keep referencing columns that do not exist or silently skipping part of the data.",
-  "useCases": [
-    "Turn a vague request like 'find the outliers' into a prompt that specifies Sheet 'Sales', range A1:F250, header row 1 and all six column names.",
-    "Get a PivotTable design prompt that uses only your real field names, so Copilot stops inventing a 'Category' column your sheet never had.",
-    "Check before you paste whether the range you selected is 400 cells or 800,000 — and narrow it if a single request is covering too much.",
-    "Hand a colleague a reusable prompt for the monthly cleanup pass instead of re-explaining the sheet layout every time."
-  ],
-  "benefits": [
-    [
-      "Grid limits checked",
-      "Rejects ranges past column XFD or row 1,048,576 before you waste a Copilot turn on them."
-    ],
-    [
-      "Real column map",
-      "Pairs each header you list with the column letter it sits in, so references cannot drift."
-    ],
-    [
-      "Nothing leaves the browser",
-      "The prompt is assembled locally; no cell values are typed in or sent anywhere."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I write a good Excel Copilot prompt?",
-      "Name the worksheet, give the range in A1 notation, say which row holds the headers, list the column names, and state one specific outcome. Copilot has no reliable way to infer which of several tables on a sheet you mean, so an unnamed range is the single most common cause of an answer that looks right but reads the wrong cells."
-    ],
-    [
-      "Why does Copilot say my data needs to be in a table?",
-      "Several Copilot analysis features in Excel require the data to be formatted as an Excel table, which you create by selecting the range and pressing Ctrl+T. A table gives the range a name and stable structured references such as SalesData[Revenue], so formulas keep pointing at the right column when rows are added."
-    ],
-    [
-      "What are Excel's row and column limits?",
-      "A worksheet in the .xlsx format holds 1,048,576 rows and 16,384 columns, the last column being XFD, and a single formula is capped at 8,192 characters. Worksheet names are limited to 31 characters and cannot contain : \\ / ? * [ or ]."
-    ],
-    [
-      "Does this tool send my spreadsheet anywhere?",
-      "No. You type a sheet name, a range and your column headers — never the cell values — and the prompt is built entirely in your browser. Copy the result and paste it into Copilot yourself, which also means you can review the wording before anything touches your workbook."
-    ]
-  ]
-},
-  "excess-charges-refund-request-generator": {
-  "intro": "The Excess Charges Refund Request Generator totals the bank or credit card fees that were debited without a valid basis, adds the 18% GST that banks levy on service charges, and drafts a formal refund letter addressed to the branch manager or nodal grievance officer. It fills in the two dates that decide your next move: the 30-day reply window a bank gets before an RBI Ombudsman complaint becomes maintainable, and the one-year outer limit for filing that complaint under the Reserve Bank - Integrated Ombudsman Scheme, 2021. Use it for minimum-balance penalties, annual fees on a card sold as lifetime free, duplicate debits, or insurance premiums taken without consent.",
-  "useCases": [
-    "Claim back six months of non-maintenance charges on a salary account that was supposed to be zero-balance.",
-    "Ask a card issuer to reverse a joining fee and the interest that accrued on it after the card was mis-sold as lifetime free.",
-    "Dispute a duplicate debit where the same ATM or cheque-return fee was charged twice in one statement cycle.",
-    "Recover an insurance or add-on product premium that was auto-debited from the account without written consent."
-  ],
-  "benefits": [
-    [
-      "GST handled correctly",
-      "Adds 18% GST on the fee, or strips it out when you paste the GST-inclusive statement figure."
-    ],
-    [
-      "Escalation dates pre-filled",
-      "Shows the 30-day bank reply deadline and the Ombudsman filing cut-off derived from your letter date."
-    ],
-    [
-      "Itemised annexure",
-      "Each disputed debit is listed with date, description, base amount, GST and total so the branch can trace it."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I get a refund of wrongly charged bank fees?",
-      "Write to the branch manager or the bank's nodal grievance officer with a dated, itemised list of the debits and ask for reversal in writing. Banks are expected to register the complaint and give it a reference number; if there is no reply in 30 days or the reply is unsatisfactory, you can escalate to the RBI Ombudsman."
-    ],
-    [
-      "How long does a bank get to reply before I can go to the RBI Ombudsman?",
-      "Thirty days. Under clause 10 of the Reserve Bank - Integrated Ombudsman Scheme, 2021, a complaint to the Ombudsman is maintainable only after the bank has been given 30 days to respond or has rejected the complaint, and it must be filed within one year of that reply or of the day the 30-day window expired."
-    ],
-    [
-      "Is GST charged on bank fees, and is it refundable?",
-      "Yes. Banking and financial services attract 18% GST, so a INR 500 charge is debited as INR 590. When a bank reverses a wrongly levied fee it normally reverses the tax component with it, which is why the letter claims both figures separately."
-    ],
-    [
-      "What proof should I attach to a refund request?",
-      "Attach the statement page with the disputed entries highlighted, plus anything that supports the claim - the welcome kit for a lifetime-free card, an SMS confirming a timely payment, or the account opening form showing a zero-balance product. This is an informational template; for a large or contested amount consult a lawyer or a consumer forum adviser."
     ]
   ]
 },

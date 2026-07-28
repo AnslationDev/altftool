@@ -1360,6 +1360,14 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
+  "ansi-escape-reference": {
+    "name": "ANSI Escape Code Reference & Log Decoder",
+    "description": "Paste a log full of ESC[0;32m garbage and see it rendered, every escape sequence named, and a stripped plain-text copy — plus the full SGR, cursor, erase and OSC reference and a sequence builder.",
+    "category": "Developer",
+    "icon": "terminal",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
   "ansible-inventory-file-builder": {
     "name": "Ansible Inventory File Builder",
     "description": "Build Ansible INI and YAML inventories with groups, children and host variables from one simple spec, validated as you type.",
@@ -3345,7 +3353,7 @@ export const toolMetaMap = {
       "Fitness"
     ],
     "icon": "activity",
-    "iconColor": "text-green-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "bmi-prime-calculator": {
     "name": "BMI Prime Calculator",
@@ -6838,6 +6846,13 @@ export const toolMetaMap = {
     "icon": "minimize",
     "iconColor": "text-teal-500"
   },
+  "css-specificity-referee": {
+    "name": "CSS Specificity Referee",
+    "description": "Put two CSS selectors against each other and see which one wins, which cascade criterion decided it, and the smallest change that flips the result — layers and !important included.",
+    "category": "Developer",
+    "icon": "gavel",
+    "iconColor": "text-(--primary)"
+  },
   "css-tools": {
     "name": "CSS Tools",
     "description": "Format and minify CSS quickly in the browser.",
@@ -8841,6 +8856,13 @@ export const toolMetaMap = {
     "icon": "file-signature",
     "iconColor": "text-[var(--primary)]"
   },
+  "dst-clock-changes": {
+    "name": "Clock Changes & DST Tracker",
+    "description": "The next clock change in any time zone to the exact instant, a full year of changes, and the dates a recurring meeting's time gap silently moves.",
+    "category": "Productivity",
+    "icon": "alarm-clock",
+    "iconColor": "text-primary"
+  },
   "dubai-dxb-airport-arrival-buffer-calculator": {
     "name": "Dubai DXB Airport Arrival Buffer Calculator",
     "description": "Work out when to leave home for Dubai DXB using drive time, traffic, check-in cut-off, passport control and gate-closing buffers.",
@@ -9064,6 +9086,13 @@ export const toolMetaMap = {
     "category": "Finance Calculators",
     "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
+  },
+  "effective-apr-comparator": {
+    "name": "Effective APR Comparator",
+    "description": "Compare two or more loan offers on their true effective APR — the IRR of the actual cash flows after processing fees, GST, bundled insurance and foreclosure penalties — and see the ranking invert when you plan to close the loan early.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
   },
   "eggetarian-macro-calculator": {
     "name": "Eggetarian Macro Calculator",
@@ -12117,6 +12146,13 @@ export const toolMetaMap = {
     "icon": "git-compare",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "git-error-decoder": {
+    "name": "Git Error Message Decoder",
+    "description": "Paste a git error and get what actually happened in git's model, the commands that resolve it, and a blast radius badge on every command: SAFE, REWRITES HISTORY or DESTRUCTIVE.",
+    "category": "Developer",
+    "icon": "triangle-alert",
+    "iconColor": "text-(--primary)"
   },
   "git-lfs-storage-estimator": {
     "name": "Git LFS Storage Estimator",
@@ -15336,6 +15372,13 @@ export const toolMetaMap = {
     "icon": "clipboard-list",
     "iconColor": "text-[var(--primary)]"
   },
+  "itr-u-eligibility-cost": {
+    "name": "ITR-U Eligibility Gate & Cost Calculator",
+    "description": "Check the section 139(8A) bars that block an updated return, then price it: the deadline, the section 140B additional tax slab and the total rupee cost.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "ivf-due-date-calculator": {
     "name": "IVF Due Date Calculator",
     "description": "Due date from an IVF embryo transfer or egg retrieval date, with the day-3, day-5 and day-6 transfer offsets and a milestone timeline.",
@@ -17513,7 +17556,7 @@ export const toolMetaMap = {
     "description": "Preview Markdown files",
     "category": "Developer",
     "icon": "edit",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "market-bargaining-practice-simulator": {
     "name": "Bargaining Practice Simulator",
@@ -17599,6 +17642,13 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
+  },
+  "maternity-benefit-entitlement": {
+    "name": "Maternity Benefit Entitlement Calculator",
+    "description": "Checks the Maternity Benefit Act section 5(2) eighty-day condition, gives the date it will be met, and dates the 26 or 12 week leave, rejoining and nursing-break timeline.",
+    "category": "Business",
+    "icon": "baby",
+    "iconColor": "text-(--primary)"
   },
   "maternity-leave-date-calculator": {
     "name": "Maternity Leave Date Calculator",
@@ -18650,6 +18700,13 @@ export const toolMetaMap = {
     "category": "Converters",
     "icon": "arrow-left-right",
     "iconColor": "text-[var(--primary)]"
+  },
+  "msme-45-day-payment-calculator": {
+    "name": "MSME 45-Day Payment & 43B(h) Cost Calculator",
+    "description": "Work out the MSMED Act section 15 due date, section 16 compound interest at three times the RBI bank rate, and what a section 43B(h) deferred deduction costs when payment slips past 31 March.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "msp-realisation-calculator": {
     "name": "MSP Realisation Calculator",
@@ -20684,7 +20741,7 @@ export const toolMetaMap = {
       "Web"
     ],
     "icon": "file-lock",
-    "iconColor": "text-red-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "peak-traffic-headroom-calculator": {
     "name": "Peak Traffic Headroom Calculator",
@@ -22619,7 +22676,7 @@ export const toolMetaMap = {
       "Web"
     ],
     "icon": "qr-code",
-    "iconColor": "text-black-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "qsofa-score-calculator": {
     "name": "qSOFA Score Calculator",
@@ -23978,6 +24035,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "file-text",
     "iconColor": "text-teal-500"
+  },
+  "roc-filing-calendar": {
+    "name": "MCA / ROC Filing Calendar & Penalty Calculator",
+    "description": "Derive AGM, AOC-4, MGT-7/7A, ADT-1, DIR-3 KYC and LLP Form 11/Form 8 due dates from your incorporation date, and the per-form MCA additional fee accrued on anything late.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-(--primary)"
   },
   "rock-climbing-calorie-calculator": {
     "name": "Rock Climbing Calorie Calculator",
@@ -26612,6 +26676,13 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-cyan-700"
   },
+  "sql-join-fanout-debugger": {
+    "name": "SQL JOIN Fan-Out Debugger",
+    "description": "Find out why your SUM is too high after a join: describe each table's grain and key cardinality to get the row-multiplication factor, which aggregates are inflated, and the corrected SQL.",
+    "category": "Developer",
+    "icon": "git-merge",
+    "iconColor": "text-(--primary)"
+  },
   "sql-where-builder": {
     "name": "SQL WHERE Builder",
     "description": "Build a SQL WHERE clause from plain conditions with correct identifier quoting, string escaping and parameter placeholders for MySQL, PostgreSQL, SQL Server, SQLite and Oracle.",
@@ -29012,6 +29083,13 @@ export const toolMetaMap = {
     "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
   },
+  "topup-vs-super-topup-simulator": {
+    "name": "Top-up vs Super Top-up Deductible Simulator",
+    "description": "Run a year of hospital claims through a per-claim deductible and a policy-year aggregate deductible side by side, claim by claim.",
+    "category": "Finance Calculators",
+    "icon": "layers",
+    "iconColor": "text-(--primary)"
+  },
   "tote-bag-artwork-placement-guide": {
     "name": "Tote Bag Artwork Placement Guide",
     "description": "Safe print area and exact placement offsets for tote bags, allowing for side seams, handle stitching and the gusset that folds under the base.",
@@ -29965,6 +30043,13 @@ export const toolMetaMap = {
     "icon": "calendar-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "ups-vs-nps-comparator": {
+    "name": "UPS vs NPS Comparator",
+    "description": "Model the UPS assured payout against an NPS annuity and get the annual NPS return needed to match it.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-(--primary)"
+  },
   "upsc-admit-card-day-checklist": {
     "name": "UPSC Admit Card Day Checklist",
     "description": "Printable UPSC exam-day checklist covering admit card, photo ID and allowed items, with a reporting plan built on the 10-minute gate rule.",
@@ -30214,7 +30299,7 @@ export const toolMetaMap = {
     "description": "Generate secure unique UUIDs instantly for any application.",
     "category": "Developer",
     "icon": "fingerprint",
-    "iconColor": "text-purple-700"
+    "iconColor": "text-[var(--primary)]"
   },
   "uv-safety-window": {
     "name": "UV Safety Window",

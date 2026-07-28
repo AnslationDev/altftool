@@ -2,6 +2,456 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "token-per-word-ratio-calculator": {
+  "intro": "This calculator measures your text's tokens-per-word ratio — the number LLM billing actually depends on — from a pasted sample, using the published rule of thumb that 1 token equals about 4 characters or three-quarters of an English word. Writers, prompt engineers and developers use the ratio to convert word counts into token budgets for models like GPT and Claude. If you already have an exact count from tiktoken or a provider's token counter, enter it to get the true ratio for your writing style.",
+  "useCases": [
+    "A prompt engineer measuring whether their system prompts tokenize heavier than plain English before setting max-token limits",
+    "A content team converting a 2,000-word article brief into a realistic token budget for an AI drafting workflow",
+    "A developer comparing the ratio of code snippets versus prose to explain why code-heavy prompts cost more"
+  ],
+  "benefits": [
+    [
+      "Real ratio, not a guess",
+      "Enter an actual tokenizer count for your sample and get the exact tokens-per-word figure for your own writing."
+    ],
+    [
+      "Baseline comparison",
+      "Shows how far your text sits above or below the ~1.33 tokens-per-word English baseline, as a percentage."
+    ],
+    [
+      "Budget-ready output",
+      "Reports tokens per 1,000 words so any word-count brief converts straight to a token budget."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many tokens is one word?",
+      "About 1.33 tokens per word for common English text — OpenAI's tokenizer documentation puts it at roughly 1 token per 4 characters, or three-quarters of a word per token. Technical vocabulary, source code and non-Latin scripts run higher, often 1.5 to 3 tokens per word, which is why measuring your own text beats using the average."
+    ],
+    [
+      "Why is my tokens-per-word ratio higher than 1.33?",
+      "Because BPE tokenizers split uncommon words, punctuation runs, markup and non-English characters into multiple tokens. Code and JSON commonly land between 1.5 and 3 tokens per word, and languages like Hindi or Japanese can be several times heavier than English on older tokenizers."
+    ],
+    [
+      "How do I convert a word count into a token budget?",
+      "Multiply the word count by your tokens-per-word ratio. Using the English baseline, 1,000 words is about 1,330 tokens; if this tool measures your text at 1.6 tokens per word, budget 1,600 tokens per 1,000 words instead. Add headroom for the model's reply, which is billed separately as output tokens."
+    ],
+    [
+      "Is the character-based token estimate accurate?",
+      "It is a rule-of-thumb estimate, typically within about 10–15% for plain English prose, and less accurate for code or non-English text. For exact numbers, run the sample through the model's real tokenizer (such as OpenAI's tiktoken or a provider's count-tokens endpoint) and paste the result into this tool's actual-token field."
+    ]
+  ]
+},
+  "tokens-per-second-benchmark-sheet": {
+  "intro": "Tokens Per Second Benchmark Sheet turns the raw timings a local LLM runner prints into decode throughput, prefill throughput and time to first token, and compares them against the memory-bandwidth ceiling for that model. Weight footprint is calculated from parameter count and the effective bits per weight of the quantisation format — 4.83 bpw for Q4_K_M, 5.69 for Q5_K_M, 8.5 for Q8_0 — and the ceiling is simply memory bandwidth divided by that footprint, because single-stream decoding must read every weight once per token. It is for anyone comparing the same model across machines, or the same machine across quantisations.",
+  "useCases": [
+    "Checking whether 40 tokens a second on a 200 GB/s machine is close to the hardware limit or leaving performance on the table.",
+    "Comparing Q4_K_M against Q5_K_M on the same GPU to see exactly what the extra quality costs in speed and memory.",
+    "Recording the same model on a laptop, a desktop and a server and pasting the comparison table into a README.",
+    "Separating a slow prompt-eval phase from a slow generation phase when a long-context run feels sluggish."
+  ],
+  "benefits": [
+    [
+      "Prefill and decode split",
+      "The two phases have completely different bottlenecks and are reported separately."
+    ],
+    [
+      "Real bits per weight",
+      "Uses the published effective bpw of each llama.cpp format, not a rounded 4 or 5 bits."
+    ],
+    [
+      "Hardware ceiling",
+      "Shows the bandwidth-limited maximum so you know whether tuning will help at all."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a good tokens per second for a local LLM?",
+      "It depends almost entirely on model size and memory bandwidth, not on the model's name. Divide your memory bandwidth in GB/s by the model's size in GB for the ceiling: a 4.2 GB Q4_K_M 7B model on 200 GB/s hardware tops out near 47 tokens a second, so 40 measured is an excellent result and 12 means something is wrong."
+    ],
+    [
+      "Why is prompt processing so much faster than generation?",
+      "Prefill processes all prompt tokens in parallel, so it is compute-bound and can reach thousands of tokens a second. Generation produces one token at a time and must re-read every weight from memory for each one, which makes it memory-bandwidth-bound and one to two orders of magnitude slower."
+    ],
+    [
+      "How much memory does a quantised model need?",
+      "Multiply the parameter count in billions by the format's effective bits per weight, then divide by 8, for gigabytes of weights: an 8B model at Q4_K_M is about 4.8 GB. Add roughly 20 percent for KV cache, activations and runtime, and considerably more for long contexts, since KV cache grows linearly with context length."
+    ],
+    [
+      "What does Q4_K_M actually mean?",
+      "It is a llama.cpp k-quant format that stores most weights in 4 bits but keeps some tensors at higher precision, giving an effective 4.83 bits per weight overall. The K means k-quant blocks with per-block scales, and the M is the medium variant — S and L trade size against quality in the same family."
+    ]
+  ]
+},
+  "tokens-to-words-converter": {
+  "intro": "This converter turns an LLM token budget into an approximate word count, page count and reading time, based on the documented rule of thumb that 1 token equals about three-quarters of an English word (4 characters). It helps writers, students and developers answer the practical question behind every context window and max-token setting: how much actual text does this budget hold? Presets adjust the ratio for technical writing, non-English languages and source code, which all tokenize more heavily than plain prose.",
+  "useCases": [
+    "A writer checking whether a 4,096-token output limit is enough for a 3,000-word article draft",
+    "A developer explaining to stakeholders how much documentation fits in a 128k-token context window",
+    "A student converting a model's max-token setting into single-spaced or double-spaced page equivalents for an assignment"
+  ],
+  "benefits": [
+    [
+      "Content-aware ratios",
+      "Separate presets for prose, technical text, European languages and code, since each yields fewer words per token."
+    ],
+    [
+      "Pages and reading time",
+      "Converts to ~500-words single-spaced or ~250-words double-spaced pages, plus minutes at an average 238 wpm reading speed."
+    ],
+    [
+      "Instant budget presets",
+      "One-tap buttons for common budgets: 1,024, 4,096, 8,192, 32,768 and 128,000 tokens."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many words is 4,096 tokens?",
+      "About 3,072 words of plain English text, using the rule of thumb that 1 token is roughly three-quarters of a word. For technical writing expect closer to 2,450 words, and for source code as little as 1,600, because both tokenize more heavily than everyday prose."
+    ],
+    [
+      "How many pages is 128,000 tokens?",
+      "Roughly 96,000 English words, which is about 192 single-spaced pages (at ~500 words per page) or 384 double-spaced pages — approximately the length of a full novel. That is why 128k-context models can hold entire books or large codebases in a single prompt."
+    ],
+    [
+      "How many words is one token?",
+      "About 0.75 English words per token — equivalently, 1,000 tokens is roughly 750 words — per OpenAI's tokenizer documentation. The figure drops for other content: non-English European languages often land near 0.55 words per token and source code near 0.4, since punctuation and rare strings split into more tokens."
+    ],
+    [
+      "Does a token budget cover both my prompt and the model's answer?",
+      "Input and output are counted separately by every major provider, and most price output tokens higher than input tokens. A model's context window limits input plus output together, while a max-tokens setting usually caps only the generated output — so convert the two budgets separately."
+    ]
+  ]
+},
+  "toml-to-json-converter": {
+  "intro": "This converter parses TOML v1.0.0 — tables, arrays of tables, dotted keys, inline tables, multi-line strings and RFC 3339 date-times — and emits clean RFC 8259 JSON, entirely in your browser. Duplicate keys and redefined tables are rejected exactly as the TOML spec demands, so a file that converts here is a file a strict parser will accept. It is built for developers who need Cargo.toml, pyproject.toml, netlify.toml or any app config as JSON for scripts, APIs or schema validation.",
+  "useCases": [
+    "Turning pyproject.toml or Cargo.toml into JSON to query dependencies with jq or a script",
+    "Converting [[workflow]] style arrays of tables into JSON arrays a web dashboard can consume",
+    "Validating that a hand-edited TOML config parses cleanly before deploying it"
+  ],
+  "benefits": [
+    [
+      "Spec-strict parsing",
+      "Duplicate keys, redefined tables and invalid escapes fail with the line number, per TOML v1.0.0."
+    ],
+    [
+      "Full syntax coverage",
+      "Dotted keys, inline tables, hex/octal/binary integers, underscored numbers and multi-line strings all convert."
+    ],
+    [
+      "Honest JSON output",
+      "Date-times become strings and inf/nan become null, with a note for every substitution JSON forces."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does a TOML array of tables convert to JSON?",
+      "Each [[name]] header appends one object to a JSON array under that key, so two [[products]] blocks become \"products\": [ {...}, {...} ]. Sub-tables declared between the headers, such as [products.details], attach to the most recent element, and this converter follows that TOML v1.0.0 rule."
+    ],
+    [
+      "What happens to TOML dates and times in JSON?",
+      "They become plain strings, because JSON has no date type. TOML's four RFC 3339 shapes — offset date-time, local date-time, local date and local time — are all preserved character-for-character (for example 1979-05-27T07:32:00Z), and the tool reports how many were converted."
+    ],
+    [
+      "Why does the converter say my key is defined twice?",
+      "Because the TOML specification makes redefining a key or table a hard error, not a warning — the second definition does not silently win as it does in some INI parsers. Check the reported line: the same key may be set once as a dotted key and again inside a [table] header covering the same path."
+    ],
+    [
+      "Can TOML integers like 0xFF or 1_000_000 be converted?",
+      "Yes. Hexadecimal (0x), octal (0o) and binary (0b) integers and underscore-separated numbers are parsed to their numeric values, so 0xFF becomes 255 and 1_000_000 becomes 1000000 in the JSON output. Decimal integers with leading zeros are rejected, as the spec requires."
+    ]
+  ]
+},
+  "tone-consistency-rubric": {
+  "intro": "A tone consistency rubric scores a piece of writing against a defined brand voice on six anchored 1-5 scales — formality, warmth, directness, energy, jargon density and humour — and returns a weighted 0-100 alignment score plus the direction of every miss. It uses a behaviourally anchored rating scale, so each level carries a concrete description instead of a vague label, and each dimension is normalised by the worst possible miss for its own target. Useful for content leads, editors and anyone reviewing AI-generated copy at volume.",
+  "useCases": [
+    "Reviewing AI-drafted support replies before they go out, to catch copy that has drifted formal or cold",
+    "Onboarding a new writer or agency by scoring their first drafts against the same anchors the team uses",
+    "Auditing a sample of published pages to find which channel has drifted furthest from the voice guide",
+    "Checking that two editors agree on what the voice guide means before rolling a rubric out to a team"
+  ],
+  "benefits": [
+    [
+      "Concrete anchors",
+      "Every 1-5 level has a written description, so scores are repeatable across raters."
+    ],
+    [
+      "Weighted to your priorities",
+      "Set weights per dimension; a dimension weighted zero drops out of the score entirely."
+    ],
+    [
+      "Names the fix",
+      "Reports which dimension costs the most points and in which direction it drifted."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you measure brand tone of voice consistency?",
+      "Define a target level on each voice dimension, rate the sample on the same scale, then score alignment as the weighted average of one minus the miss divided by the worst possible miss for that target. A target of 3 can only be missed by 2 points while a target of 1 can be missed by 4, so normalising per dimension stops extreme targets from dominating the score."
+    ],
+    [
+      "What are the dimensions of a brand voice?",
+      "The six used here cover most published voice guides: formality, warmth, directness, energy, jargon density and humour. Nielsen Norman Group's tone-of-voice work uses four similar dimensions (funny to serious, formal to casual, respectful to irreverent, enthusiastic to matter-of-fact); the extra scales here separate jargon and directness because those are where AI-generated copy drifts first."
+    ],
+    [
+      "What counts as a good tone consistency score?",
+      "90 and above reads as on voice — the remaining difference is inside normal rater noise. 75 to 89 is minor drift fixable with a couple of edits, 60 to 74 is drift a regular reader would feel, and below 60 the piece effectively reads as a different brand and is faster to rewrite than to patch."
+    ],
+    [
+      "How do I know two reviewers are using the rubric the same way?",
+      "Have both score the same sample and compare exact agreement and adjacent agreement (within one scale point). Adjacent agreement below roughly 80% almost always means an anchor is ambiguous rather than that a rater is wrong — rewrite the anchor for the dimension with the biggest gap and re-test."
+    ]
+  ]
+},
+  "tool-rental-vs-buy-calculator": {
+  "intro": "This calculator answers the rent-or-buy question with a break-even figure: the number of usage days at which owning a tool becomes cheaper than hiring it. Renting is costed as a pure variable — day rate multiplied by usage days, plus the cost of each collection and return trip. Owning is costed as its fixed side: purchase price, annual servicing and storage, the capital tied up, less the resale value at the end of your horizon. Setting the two equal gives break-even days = net cost of owning divided by the effective cost of a rented day.",
+  "useCases": [
+    "Work out whether a rotary hammer used for two weekend jobs a year is worth owning, or better hired.",
+    "Justify a purchase for a small contractor by showing the usage days at which hire charges overtake the tool's price.",
+    "Compare a cheap tool bought outright against a professional-grade one hired only when a job demands it."
+  ],
+  "benefits": [
+    [
+      "A break-even you can act on",
+      "Turns the decision into one number: the usage days that tip it towards buying."
+    ],
+    [
+      "Trip costs counted",
+      "Each collection and return is charged, which is often what makes short hires expensive."
+    ],
+    [
+      "Resale and capital included",
+      "Owning is netted of what the tool sells for and charged for the money it locks up."
+    ]
+  ],
+  "faqs": [
+    [
+      "When is it cheaper to buy a tool than rent it?",
+      "When your expected usage days exceed the break-even, which is the net cost of owning divided by the effective cost of a rented day. A tool costing ₹12,000 that resells for 40% and needs ₹500 a year of upkeep works out near ₹10,000 net over three years; against a ₹400 day rate plus a ₹150 trip, that is about 21 usage days. Below that, hiring wins."
+    ],
+    [
+      "What costs do people forget when buying a tool?",
+      "Storage space, annual servicing, the consumables it needs, and the money tied up in it. The largest forgotten item is usually the opposite one: resale value. A working power tool sold second-hand recovers a real share of the price, and ignoring that makes ownership look worse than it is."
+    ],
+    [
+      "Is a weekly tool hire cheaper than seven daily hires?",
+      "Almost always. Hire companies quote tiered rates where a week typically costs the equivalent of three to four days and a month a fraction more again, because their handling cost per hire is fixed. If you plan a hire of a week or longer, take the effective per-day figure from the weekly rate rather than multiplying the daily one."
+    ],
+    [
+      "Does the calculator account for the tool wearing out?",
+      "Indirectly, through the resale percentage and the annual upkeep you enter. Set a lower resale figure and a higher upkeep for a tool you expect to work hard. For a specialised tool used a handful of days a year, the practical limit is often obsolescence and battery degradation rather than mechanical wear."
+    ]
+  ]
+},
+  "toothbrushing-timer": {
+  "intro": "The standard recommendation is two minutes of brushing, twice a day, with fluoride toothpaste — and the reason a timer helps is that most people stop at around 45 seconds while believing they brushed for two minutes. This timer divides the 120 seconds evenly across the mouth (30 seconds per quadrant, or 20 per sextant), cues the modified Bass technique zone by zone, and shows the right amount and fluoride strength of toothpaste for the age of the person brushing.",
+  "useCases": [
+    "Get a child through a full two minutes by giving each quadrant its own countdown instead of one long wait.",
+    "Match a powered brush that pulses every 30 seconds, so the on-screen zones and the brush agree.",
+    "Check the correct toothpaste amount and fluoride strength for a toddler versus an adult.",
+    "Track when the current brush head passes the three-month mark and needs replacing."
+  ],
+  "benefits": [
+    [
+      "Even coverage",
+      "Time is split across zones, so the side you always rush gets the same seconds as the side you do first."
+    ],
+    [
+      "Technique, not just time",
+      "Each zone carries a modified Bass cue — 45° to the gum line, short strokes, light pressure."
+    ],
+    [
+      "Age-correct fluoride",
+      "Amount and ppm follow the published bands for under-3s, 3 to 6 year olds and everyone older."
+    ]
+  ],
+  "faqs": [
+    [
+      "How long should you brush your teeth?",
+      "Two minutes, twice a day, with fluoride toothpaste. Splitting that into four 30-second quadrants — upper right, upper left, lower left, lower right — is the usual way to make sure the whole mouth gets equal time, because unaided brushing tends to stop well short of two minutes and to favour one side."
+    ],
+    [
+      "How much toothpaste should a child use?",
+      "A smear no bigger than a grain of rice for children under three, using a paste with at least 1000 ppm fluoride, and a pea-sized amount from age three upwards with 1350–1500 ppm. An adult should brush for or supervise a child until around age seven, and children should be discouraged from swallowing the paste."
+    ],
+    [
+      "Should you rinse your mouth after brushing?",
+      "No — spit out the excess paste and leave it. Rinsing with water or mouthwash immediately after brushing washes the concentrated fluoride off the enamel before it can work. If you want to use a fluoride mouthwash, use it at a different time of day."
+    ],
+    [
+      "How often should a toothbrush be replaced?",
+      "Every three to four months, or sooner if the bristles splay or bend, because worn bristles clean far less effectively. Replace it after an illness too. A brush with visibly flattened bristles is past its useful life regardless of the date."
+    ]
+  ]
+},
+  "topic-sentence-generator": {
+  "intro": "A topic sentence generator builds the opening sentence of a body paragraph from its two obligatory parts: the subject the paragraph is about, and the controlling idea — the arguable claim the rest of the paragraph will prove. Give it both and it produces the standard composition patterns, from claim-first to the concessive although-pivot, and adapts the wording to whether this is the first, middle or last body paragraph. A separate checker scores a sentence you have already written against seven things markers look for, including length, single-sentence form, and whether the sentence announces the paragraph instead of making a claim.",
+  "useCases": [
+    "Turn a bullet point from an essay plan into an opening sentence that actually commits to a position.",
+    "Fix a paragraph that starts with 'In this paragraph I will discuss…' by moving straight to the claim.",
+    "Vary the sentence shape across four body paragraphs so they do not all open the same way.",
+    "Check a sentence before submission for the usual faults: two sentences fused together, a citation crowding the claim, or filler like 'many aspects'."
+  ],
+  "benefits": [
+    [
+      "Subject plus controlling idea",
+      "Forces the two parts a topic sentence must have, so it cannot come out as a bare topic."
+    ],
+    [
+      "Position-aware wording",
+      "Middle paragraphs get a linking opener; the last one gets an emphatic shape."
+    ],
+    [
+      "Seven-point checker",
+      "Scores your own sentence on length, form, filler, evidence placement and announcement phrasing."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a topic sentence?",
+      "It is the sentence that states a paragraph's single main idea, and it has two parts: a subject and a controlling idea. \"School uniforms\" is a subject; \"school uniforms hide income differences without removing them\" adds the controlling idea and gives the paragraph something to prove."
+    ],
+    [
+      "How long should a topic sentence be?",
+      "Roughly 8 to 30 words. Shorter than eight and it rarely carries both a subject and a claim; longer than thirty and it has begun doing the evidence's work, which belongs in the sentences that follow."
+    ],
+    [
+      "Should a topic sentence contain a quotation or citation?",
+      "No. The topic sentence makes the claim in your own words, and the quotation, data or citation that supports it comes in the next sentences. A quotation in the opening line makes the paragraph look like it is reporting a source rather than arguing a point."
+    ],
+    [
+      "Does a topic sentence always go first in a paragraph?",
+      "Usually, and always in timed or exam writing, because it tells the marker immediately what the paragraph is doing. Experienced writers sometimes delay it for effect, but a delayed topic sentence only works when the paragraph is short enough for the reader to hold the evidence until the claim arrives."
+    ]
+  ]
+},
+  "topup-vs-super-topup-simulator": {
+  "intro": "A top-up vs super top-up deductible simulator runs one policy year of hospital claims through the same rupee deductible measured two different ways, and shows claim by claim who pays what. The only structural difference between the products is the basis of measurement: a top-up applies the deductible to EACH claim separately, so a claim smaller than the deductible pays nothing no matter how many such claims occur, while a super top-up applies it to the AGGREGATE of all admissible claims in the policy year, so everything above the deductible line is payable once cumulative claims cross it. Both readings come from the same standard clause — IRDAI's standard definition of Deductible (Guidelines on Standardisation in Health Insurance, Ref. IRDA/HLT/REG/CIR/146/07/2016, 29 July 2016) says the insurer is not liable for a specified rupee amount before benefits are payable, and that the deductible does not reduce the sum insured; whether that amount is per claim or per year is stated on your policy schedule. It is for anyone holding a base policy plus an upper layer who wants to see, in rupees, what a year of mid-sized hospitalisations does under each basis.",
+  "useCases": [
+    "Read the deductible line on an upper-layer schedule and see what 'Rs 5,00,000 per claim' does to a year of Rs 3,00,000 hospitalisations versus 'Rs 5,00,000 aggregate'",
+    "Model a chronic year — four or five mid-sized admissions rather than one large one — which is exactly the pattern the two bases treat differently",
+    "Check which claim in the year the running total first crosses an aggregate deductible on, and how much of that claim becomes payable",
+    "See what happens when the upper layer's own sum insured runs out mid-year, and how much of the bill that leaves unpaid"
+  ],
+  "benefits": [
+    [
+      "The distinction stated the right way round",
+      "Per claim for a top-up, policy-year aggregate for a super top-up — the same deductible, two bases of measurement, shown as two columns on the same claims."
+    ],
+    [
+      "A claim-by-claim waterfall, not a total",
+      "Every claim shows what the base policy paid, what fell below the deductible line, what the upper layer paid on each basis, and what was left out of pocket."
+    ],
+    [
+      "The case where a top-up pays nothing",
+      "When no single claim clears the deductible, the per-claim column is zero for the whole year while the aggregate column pays from the crossing claim onward — the page flags it explicitly."
+    ],
+    [
+      "Sums insured deplete like real annual cover",
+      "The base policy and the upper layer both run down across the year, and the deductible never eats the upper layer's sum insured, matching the standard definition."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the actual difference between a top-up and a super top-up?",
+      "The deductible basis, nothing else. A top-up applies the deductible to each claim on its own, so with a Rs 5,00,000 deductible four claims of Rs 3,00,000 each pay zero — every claim is below the line. A super top-up applies the same Rs 5,00,000 to the year's running total, so those same four claims (Rs 12,00,000 in total) trigger payment of Rs 7,00,000 once cumulative claims pass Rs 5,00,000."
+    ],
+    [
+      "Does the deductible come out of the top-up sum insured?",
+      "No. IRDAI's standard definition of Deductible states that a deductible does not reduce the sum insured, so a Rs 20,00,000 layer with a Rs 5,00,000 deductible can still pay up to Rs 20,00,000 — it just pays only above the Rs 5,00,000 line. That is why the layer's sum insured and its deductible are two separate figures on the schedule."
+    ],
+    [
+      "Do claims paid by my base policy count toward the aggregate deductible?",
+      "On the standard aggregate wording, yes — admissible claims in the policy year count toward the deductible whether the base policy met them or the insured did. That is the reason the commonest retail pairing sets the deductible equal to the base sum insured: a Rs 5,00,000 base policy is expected to absorb a Rs 5,00,000 aggregate deductible. This page models it that way, and lets the base sum insured be set to zero if there is no base policy."
+    ],
+    [
+      "What is not included in these figures?",
+      "Copays, room rent caps and proportionate deductions, disease sub-limits, waiting periods, non-payable consumables and any restore or refill benefit are all outside this calculation. Enter each claim as the admissible amount left after those, because the deductible is applied to the admissible claim, not to the printed hospital bill."
+    ]
+  ]
+},
+  "tote-bag-artwork-placement-guide": {
+  "intro": "The safe print area on a tote is the flat panel minus three things: a clearance from each side seam, the handle stitching at the top, and roughly half the gusset depth at the bottom, because on a box-bottom bag that portion folds under to form the base. This guide works out the usable width and height for common tote blanks, fits your artwork inside without distorting it, and gives the offsets from the top and left edges so you can mark the bag with a ruler. Aimed at print-on-demand sellers, screen printers and anyone sending tote artwork to a decorator for the first time.",
+  "useCases": [
+    "Find out that a 15 x 16 inch shopper with a 3 inch gusset only leaves about 13 x 8.5 inches of usable print area.",
+    "Position a square logo centred in the safe band and get the exact measurement down from the top edge.",
+    "Compare a flat mini tote against a deep grocery tote before choosing which blank to sell.",
+    "Check the pixel size to export so a print at 8.5 inches wide is a genuine 300 DPI."
+  ],
+  "benefits": [
+    [
+      "Accounts for the gusset fold",
+      "Half the gusset depth is reserved at the base, the mistake that puts logos on the bottom of the bag."
+    ],
+    [
+      "Handle stitching respected",
+      "Artwork starts below the webbing stitch line so the platen can lie flat."
+    ],
+    [
+      "Ruler-ready offsets",
+      "Distances from the top and left edge, not vague guidance to centre it."
+    ]
+  ],
+  "faqs": [
+    [
+      "What size should artwork be on a tote bag?",
+      "On a classic 15 x 16 inch shopper, keeping an inch clear of each side seam, 4 inches clear at the top for handles and 3.5 inches at the base for the gusset fold leaves about 13 x 8.5 inches. Most designs sit comfortably at 8 to 10 inches wide."
+    ],
+    [
+      "Why does the gusset reduce the print area?",
+      "On a box-bottom bag, roughly the lowest half of the gusset depth on the flat front panel wraps under to form the base. With a 3 inch gusset that is about 1.5 inches, so anything printed there ends up on the bottom of the bag where nobody sees it."
+    ],
+    [
+      "How far down from the top of a tote should the print start?",
+      "Below the handle stitching, which usually ends around 3 inches from the top edge, plus about an inch of breathing room — so roughly 4 inches down. Printing across the webbing stitch is not possible on a flat platen and will distort."
+    ],
+    [
+      "What resolution do tote bag prints need?",
+      "Export at 300 DPI at the final print size, so an 8.5 inch wide print needs about 2,550 pixels of width. Canvas and heavy cotton hide a little softness, but below roughly 150 DPI the edges of type visibly break up."
+    ]
+  ]
+},
+  "tour-guide-driver-tip-planner": {
+  "intro": "This planner totals the cash a multi-day tour needs for tips, applying the per-person-per-day and per-group-per-day rates tour operators publish in their pre-departure notes to a trip of a given length and party size. Tour tipping is not a percentage of the fare — it is a daily rate per role, so a tour director at $8 per person per day and a coach driver at $5 come to $260 on a ten-day trip for two before local guides and porters. It covers escorted coach tours, private guide-and-driver arrangements, trekking crews, safari camps and independent day tours, and works out how many notes to withdraw.",
+  "useCases": [
+    "Work out the cash envelope for a ten-day escorted coach tour before leaving home, when ATMs en route are unreliable.",
+    "Split a Kilimanjaro crew tip fairly between lead guide, assistant guides, cook and porters using the published per-day rates.",
+    "Check what a safari lodge's communal staff box and driver-guide tip add up to across a five-night stay."
+  ],
+  "benefits": [
+    [
+      "Per-role, per-day arithmetic",
+      "Applies each role's own basis — per person or per group, per day or per event — instead of one blanket percentage."
+    ],
+    [
+      "Trip styles built in",
+      "Escorted coach, private car, trekking crew, safari and day tours each come with their own roles and published ranges."
+    ],
+    [
+      "Tells you what to withdraw",
+      "Converts the total into whole notes so you land with the right cash rather than an awkward remainder."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much should you tip a tour guide per day?",
+      "Operators typically suggest $5-12 per person per day for a tour director who stays with the group for the whole trip, and $2-5 per person for a local guide who joins for a single city or site. A private guide working for your party alone is usually tipped per group instead, around $20-50 a day depending on the destination."
+    ],
+    [
+      "How much do you tip a coach driver on a tour?",
+      "Around $3-8 per person per day, roughly half to two-thirds of what the tour director receives, handed over at the end of the trip rather than daily. Drivers on a single airport or intercity transfer are tipped per journey instead, commonly $5-20 for the whole vehicle."
+    ],
+    [
+      "How much do you tip a trekking crew?",
+      "Trekking tips are pooled and paid per group per day, not per client: roughly $20-25 a day for the lead guide, $15-20 for each assistant, $12-15 for the cook, and $8-12 per porter per day. Because porters usually outnumber clients several times over, they often account for the largest single line in the budget."
+    ],
+    [
+      "Are tips included in tour prices?",
+      "Sometimes. A growing number of operators now build crew gratuities into the fare and say so explicitly in the booking conditions, while others state a suggested per-day amount and leave it to you. Check your pre-departure notes first — paying twice is a common and expensive mistake on escorted tours."
+    ]
+  ]
+},
   "tournament-bracket-maker": {
   "intro": "The Tournament Bracket Maker turns a list of players or teams into a complete single-elimination draw, with rounds, match numbers and automatic byes. It pads the field to the next power of two and uses standard snake seeding — the rule that pairs seed 1 with the lowest seed and keeps seeds 1 and 2 apart until the final. It suits club organisers, teachers and anyone running an office or gaming tournament who wants a printable bracket in seconds.",
   "useCases": [
@@ -3692,6 +4142,51 @@ export default {
     [
       "Does missing one upload really matter?",
       "One missed slot barely moves the score; a repeated pattern of long silences does, because it is dispersion rather than a single gap that makes a schedule unpredictable. The gap-by-gap table shows which category yours falls into."
+    ]
+  ]
+},
+  "ups-vs-nps-comparator": {
+  "intro": "UPS vs NPS Comparator computes the annual NPS return at which a National Pension System annuity would pay exactly as much per month as the Unified Pension Scheme assured payout, on the same basic pay, service length and DA assumptions. It applies the UPS rules notified by the Department of Financial Services in F. No. FX-1/3/2024-PR dated 24 January 2025 and operative from 1 April 2025 — 50% of the average basic pay of the last twelve months at 25 years of qualifying service, proportionate below that, an assured minimum of Rs 10,000 a month at 10 years, Dearness Relief on top, a family payout of 60%, and a lump sum of one-tenth of monthly emoluments per completed six months — and sets them against an NPS corpus annuitised under the PFRDA (Exits and Withdrawals) Regulations, 2015, where at least 40% must buy an annuity and up to 60% may be commuted. It is built for Central Government employees who hold the one-time election between the two schemes and want the break-even return and the bequest difference stated in rupees rather than described in adjectives.",
+  "useCases": [
+    "Find the annual NPS return your corpus would have to earn for the annuity to match a UPS payout of 50% of your last twelve months' average basic pay plus Dearness Relief.",
+    "See what 33 years of qualifying service produces under the UPS proportionate rule versus 24 years, where the payout drops to 24/25ths of the full 50% rate.",
+    "Price the estate difference: the 60% commuted NPS lump sum plus any returned annuity purchase price, against the UPS lump sum of one-tenth of emoluments per completed six-month block.",
+    "Test how a lower annuity rate — 5.7% instead of 6.4% for a return-of-purchase-price annuity — moves the break-even return you would need from NPS."
+  ],
+  "benefits": [
+    [
+      "Both schemes on one pay history",
+      "The same basic pay, increment rate, DA level and DA growth drive the UPS payout and the NPS contributions, so nothing is compared across mismatched assumptions."
+    ],
+    [
+      "One break-even number",
+      "Instead of two projections to eyeball, it solves for the annual NPS return that makes the annuity equal the UPS payout, and reports it both with and without Dearness Relief."
+    ],
+    [
+      "Every assumption is visible and editable",
+      "Return, annuity rate, annuity share, basic pay growth, DA level, DA growth, contribution rates and the retirement horizon are all inputs on the page — none of them are baked in."
+    ],
+    [
+      "The bequest side is priced too",
+      "It shows the NPS estate at superannuation next to the UPS lump sum and the 60% family payout, so the inheritance the assured payout replaces is stated in rupees."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much pension does UPS actually assure?",
+      "50% of the average basic pay drawn over the last twelve months before superannuation, payable after 25 years of qualifying service. Below 25 years the payout is proportionate — 20 years of service gives 20/25ths, or 40% of average basic pay — and below 10 years no assured payout is admissible. Where service is 10 years or more, an assured minimum of Rs 10,000 a month applies, and Dearness Relief is added on top on the same basis as DA for serving employees. Source: DFS notification F. No. FX-1/3/2024-PR dated 24 January 2025."
+    ],
+    [
+      "What return would NPS have to earn to beat UPS?",
+      "There is no single figure — it depends on your corpus, your remaining service and the annuity rate — which is exactly what this page solves for. On the page's default case (basic pay Rs 56,100, 25 years still to serve, 33 years total service, Rs 15 lakh already in NPS, 10% + 14% of basic plus DA contributed monthly, 3% annual increment, DA at 60% rising 4 points a year, 40% annuitised at 6%), NPS needs 10.92% a year to match the UPS payout of Rs 1,45,971 a month including Dearness Relief, and only 5.29% a year to match the bare 50% assured payout of Rs 57,020. The page reports both figures because the gap between them is entirely Dearness Relief."
+    ],
+    [
+      "What lump sum does UPS pay, and how does it compare with the NPS 60%?",
+      "The UPS lump sum is one-tenth of monthly emoluments — basic pay plus DA — for every completed six months of qualifying service, and it does not reduce the assured payout. Thirty years of service is 60 completed six-month blocks, so the lump sum is six times monthly emoluments. Under NPS, up to 60% of the corpus can be commuted and is exempt under Section 10(12A), and if the annuity carries return of purchase price the annuitised 40% comes back to the nominee. That commuted balance is usually much larger than the UPS lump sum, which is the estate the assured payout is traded against."
+    ],
+    [
+      "Is any of my NPS corpus locked up, and can I change my mind later?",
+      "At superannuation the PFRDA (Exits and Withdrawals) Regulations, 2015 require at least 40% of the accumulated pension wealth to buy an annuity from an IRDAI-registered provider, with up to 60% withdrawable; if the total corpus is Rs 5 lakh or less the whole amount may be withdrawn. On the scheme election itself, the UPS notification treats the choice between UPS and NPS as a one-time option that is final once exercised, so this page computes and stops rather than recommending. Confirm the option window and your qualifying service with your Head of Office."
     ]
   ]
 },

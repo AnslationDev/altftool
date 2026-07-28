@@ -65,8 +65,16 @@ export default async function ToolPage({ params }) {
           }),
         ]}
       />
-      <ToolClient slug={slug} category="all" />
-      <ToolSeoSection slug={slug} tool={tool} category="all" />
+      {/* Nested, not a sibling — see the same change in
+          tools/[category]/[slug]/page.jsx. ToolDetailChrome wraps only the
+          widget and ad rails in <main>, so as a sibling the H1, intro, How-to
+          and FAQ rendered outside the landmark that answer-engine fetchers
+          read first. ToolClient forwards children to seoContent, which renders
+          inside <main>. This route serves /tools/all/<slug> and is the one
+          most tool URLs actually hit. */}
+      <ToolClient slug={slug} category="all">
+        <ToolSeoSection slug={slug} tool={tool} category="all" />
+      </ToolClient>
     </>
   );
 }

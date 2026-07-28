@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T19:38:02.557Z",
+  "generatedAt": "2026-07-28T20:56:14.553Z",
   "tools": {
-    "total": 3816,
-    "healthy": 3816,
+    "total": 3828,
+    "healthy": 3828,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 22,
-    "directories": 3817,
+    "directories": 3829,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -19,24 +19,24 @@
     "readiness": {
       "methodology": "static-readiness-v2",
       "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-      "total": 3816,
+      "total": 3828,
       "score": 94,
       "counts": {
-        "working": 3735,
-        "api-required": 67,
+        "working": 3746,
+        "api-required": 68,
         "partial": 14,
         "broken": 0
       },
       "automatedTests": 158,
       "automatedCoverage": 4,
-      "networkDependent": 67,
+      "networkDependent": 68,
       "envDependent": 4,
       "api": {
-        "tools": 68,
+        "tools": 69,
         "counts": {
           "configured": 1,
           "missing-config": 2,
-          "runtime-check": 65
+          "runtime-check": 66
         },
         "providerCount": 19,
         "requiredEnvKeys": [
@@ -54,7 +54,7 @@
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 53,
+            "tools": 54,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [

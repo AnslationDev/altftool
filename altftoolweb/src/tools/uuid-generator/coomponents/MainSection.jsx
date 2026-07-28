@@ -77,10 +77,7 @@ export default function MainSection() {
         </div>
 
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-(--primary) mb-6">
-          Generate Unique <br />
-          <span className="text-(--foreground) text-3xl sm:text-4xl md:text-6xl  ">
-            UUIDs Instantly
-          </span>
+          UUID Generator
         </h1>
 
         <p className="text-(--muted-foreground) text-lg max-w-2xl mx-auto">

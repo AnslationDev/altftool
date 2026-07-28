@@ -4,7 +4,7 @@ const toolConfig = {
   category:"Fitness",
   description:"Calculate your Body Mass Index",
   icon: "activity",
-  iconColor: "text-green-600",
+  iconColor: "text-[var(--primary)]",
 }
 
 export default toolConfig;

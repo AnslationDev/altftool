@@ -603,3 +603,44 @@ measured zero (above).
    some of those pages dynamic, or dropping route families, is a product decision.
 
 Do not raise the gate a third time without deciding which of these is the actual plan.
+
+---
+
+## 10. Deploys stopped firing on 2026-07-27 — check this before debugging code
+
+`e23cf5b33` (2,749 tools) has been the live commit since **2026-07-27 19:50**. Thirteen
+release commits have landed on `canonical-web/main` since, carrying roughly 950 tools.
+None of them reached production.
+
+**The code is not the problem.** The entire `amplify.yml` sequence reproduces locally and
+passes, run with Amplify's own environment variables:
+
+```bash
+ALTFT_RELEASE_COMMIT=<sha> ALTFT_RELEASE_BRANCH=main \
+AWS_APP_ID=d3o0ra1ab3rxzf AWS_BRANCH=main AWS_COMMIT_ID=<sha> \
+ALTFT_DEFER_BULK_PRERENDER=true ALTFT_BUILD_CPUS=1 \
+ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240 ALTFT_WEBPACK_BUILD_WORKER=true \
+npm ci && npm run build
+```
+
+Everything green: `npm ci` (1,870 packages, lock in sync), engines (node 24.8.0 / npm 11.6.0
+against `>=24 <25` / `>=11`), `write-amplify-runtime-env.mjs`, `assert-no-server-tool-loader.mjs`,
+compile, **artifact gate 213.82 / 215.00 MiB**, prerender size gate.
+
+An empty `chore: trigger Amplify release` commit (`c56740484`) produced no change in the live
+commit either. On its own that is not conclusive — a real build takes longer than the 12
+minutes it was watched for — but combined with 13 pushes over more than a day with the live
+SHA frozen, the auto-build trigger looks stale rather than failing.
+
+**What to check in the console** — this needs an operator; the `nbucket-n1` IAM user cannot
+call `amplify:ListJobs`, so it cannot be diagnosed from here:
+
+1. `knaltftoolweb → main` — is the newest job's commit still `e23cf5b33`? Then no build is
+   being *started*: reconnect the GitHub webhook (App settings → Repository), or hit
+   "Redeploy this version" to push the backlog through in one go.
+2. If jobs *are* running and failing, take the first error from the build log. It will be
+   environment-specific — memory, timeout or build image — because the same commit builds
+   clean locally.
+
+**Do not spend time re-checking the build for this.** It has been reproduced end to end. The
+next person should start at the console, not the code.

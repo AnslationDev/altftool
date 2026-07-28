@@ -79,9 +79,13 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
   });
 
   return (
+    // No horizontal padding here: this renders inside ToolDetailChrome's
+    // <main>, whose outer container already applies px-4 sm:px-6 lg:px-8.
+    // Repeating it would inset the section twice and misalign it with the
+    // widget above.
     <section
       aria-label={`About ${seo.name}`}
-      className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-14 pt-2 sm:px-6 lg:px-8"
+      className="mx-auto w-full max-w-6xl space-y-5 pb-14 pt-2"
       style={{ color: T.ink }}
     >
       {/* About */}

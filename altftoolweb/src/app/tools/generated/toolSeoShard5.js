@@ -2,6 +2,368 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "sales-tax-calculator-florida": {
+  "intro": "This calculator applies Florida's 6% state sales tax under Fla. Stat. § 212.05 together with the county discretionary sales surtax under § 212.055, and — unlike a flat combined-rate calculator — it enforces the rule that trips most people up: the surtax applies only to the first $5,000 of the sales price of any single item of tangible personal property, per § 212.054(2)(b)1. The 6% state tax has no ceiling, so on a $20,000 machine you pay 6% on the whole price but surtax on just $5,000. Retailers, equipment dealers and buyers comparing quotes get the state and surtax bases separated.",
+  "useCases": [
+    "An equipment dealer quoting a $20,000 machine in Miami-Dade, where the surtax stops at $5,000 and the invoice rate is nowhere near a flat 7%.",
+    "A retailer with a mixed basket of taxable goods, exempt groceries and a freight charge, working out which parts land in each tax base.",
+    "A buyer comparing two counties, checking how much the different surtax rate actually changes the total once the per-item cap is applied."
+  ],
+  "benefits": [
+    [
+      "$5,000 cap applied per item",
+      "Tests the ceiling item by item as the statute does, so two $4,000 items are treated differently from one $8,000 item."
+    ],
+    [
+      "Shows the surtax the cap saves",
+      "Puts a dollar figure on the difference between a naive combined rate and the correct calculation."
+    ],
+    [
+      "Freight handled by rule",
+      "Taxable freight is folded into the item's sales price, which is what pushes some invoices over the cap."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the sales tax rate in Florida?",
+      "The state rate is 6%. Counties add a discretionary sales surtax of 0.5% to 1.5% in most cases, so combined rates run from 6% in counties with no surtax to about 7.5% in Hillsborough, Duval and Leon. County rates are republished each January in form DR-15DSS."
+    ],
+    [
+      "Does Florida cap sales tax on expensive items?",
+      "The county surtax is capped, not the state tax. Surtax applies only to the first $5,000 of the sales price of a single item of tangible personal property, so a $20,000 boat in a 1% county carries $1,200 state tax but only $50 of surtax. The cap does not apply to services, commercial rent or admissions."
+    ],
+    [
+      "Is shipping taxable in Florida?",
+      "Usually yes. Delivery and freight are part of the taxable sales price unless the charge is stated separately on the invoice and the buyer had the option to avoid it by picking the item up — Rule 12A-1.045. When taxable, freight counts toward the item's sales price for the $5,000 surtax cap."
+    ],
+    [
+      "Is food taxed in Florida?",
+      "Groceries — food products for human consumption sold for off-premises use — are exempt under Fla. Stat. § 212.08(1), and so are prescription medicines. Prepared meals, hot food, soft drinks and candy are taxable at the full combined rate. Check with the Department of Revenue for edge cases like bakery items sold for on-site eating."
+    ]
+  ]
+},
+  "sales-tax-calculator-illinois": {
+  "intro": "This calculator combines the 6.25% Illinois general merchandise rate under the Retailers' Occupation Tax Act (35 ILCS 120) with the local home rule, county, transit and business district taxes that stack on top, and prices qualifying drugs, medical appliances and food at their reduced rate on the same receipt. It also shows how the 6.25% is split by statute — 5.00% to the state, 1.00% to municipalities and 0.25% to counties — which is why the 'state' rate already contains a local element. Retailers, remote sellers shipping into Illinois and shoppers checking a Chicago receipt all get the same layered breakdown.",
+  "useCases": [
+    "A Chicago retailer confirming the 10.25% combined rate and separating the state, city, county and RTA components for the ST-1 return.",
+    "A pharmacy ringing up a basket with prescription items at the reduced rate alongside general merchandise at the full rate.",
+    "A remote seller destination-sourcing an order and needing the correct local rate for the customer's town rather than its own."
+  ],
+  "benefits": [
+    [
+      "Two rates on one receipt",
+      "Handles general merchandise and reduced-rate food, drugs and medical appliances together, the way a real basket looks."
+    ],
+    [
+      "Statutory split shown",
+      "Breaks the 6.25% into its 5.00% / 1.00% / 0.25% shares so the distribution is visible."
+    ],
+    [
+      "Delivery rule respected",
+      "Lets you mark delivery non-taxable when it was separately contracted for and avoidable, per 86 Ill. Adm. Code 130.415."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the sales tax rate in Chicago?",
+      "10.25% on general merchandise — the highest combined rate among large US cities. It is the 6.25% Illinois state rate plus 1.25% City of Chicago, 1.75% Cook County and 1.00% Regional Transportation Authority."
+    ],
+    [
+      "What is the Illinois state sales tax rate?",
+      "6.25% on general merchandise. That headline figure is itself divided by statute: 5.00% stays with the state, 1.00% is distributed to municipalities and 0.25% to counties, before any additional local tax is added on top."
+    ],
+    [
+      "Is there still a grocery tax in Illinois?",
+      "The 1% state grocery tax was repealed with effect from 1 January 2026 under Public Act 103-0781, but the same law lets municipalities impose their own 1% grocery tax without a referendum. Whether you pay 0% or 1% on food therefore depends on your town — check its ordinance or the MyTax Illinois Tax Rate Finder."
+    ],
+    [
+      "Is shipping taxable in Illinois?",
+      "It depends on whether delivery was separately contracted for. If the delivery charge is an inseparable part of the sale, it is taxable; if the buyer had a genuine choice — for example the option to collect the goods — and the charge is stated separately, it is not. The rule is at 86 Ill. Adm. Code 130.415; ask a tax professional if your invoices are borderline."
+    ]
+  ]
+},
+  "sales-tax-calculator-new-york": {
+  "intro": "This calculator assembles New York sales tax from its three layers: the 4% state rate under Tax Law § 1105, the county or city rate under article 29, and the 0.375% Metropolitan Commuter Transportation District surcharge that applies in the five boroughs and seven suburban counties. It also applies the clothing rule in § 1115(a)(30) correctly — items under $110 each escape the state rate and the MCTD surcharge, and escape local tax only where the jurisdiction has elected the same exemption, as New York City has. Retailers, e-commerce sellers shipping into New York and shoppers checking a receipt get the same layer-by-layer split.",
+  "useCases": [
+    "A clothing retailer ringing up a mixed basket in Manhattan, where a $95 shirt is untaxed but a $150 coat carries the full 8.875%.",
+    "An out-of-state seller shipping to a Nassau County address, checking that the MCTD surcharge is added to the county rate.",
+    "A bookkeeper splitting a month of receipts into state, local and MCTD components to complete the ST-100 quarterly return."
+  ],
+  "benefits": [
+    [
+      "Per-item clothing test",
+      "Applies the $110 threshold item by item, the way the statute does, instead of to the basket total."
+    ],
+    [
+      "MCTD surcharge handled",
+      "Adds the 0.375% surcharge only inside the district, so suburban and upstate rates come out right."
+    ],
+    [
+      "Three-layer breakdown",
+      "Separates state, local and MCTD tax, matching how the ST-100 return is filed."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the sales tax rate in New York City?",
+      "8.875%, made up of the 4% New York State rate, the 4.5% New York City rate and the 0.375% MCTD surcharge. It is the highest combined rate in the state; most upstate counties land between 7% and 8.75%."
+    ],
+    [
+      "Is clothing taxed in New York?",
+      "Clothing and footwear priced under $110 per item are exempt from the 4% state tax and the 0.375% MCTD surcharge. Local tax still applies unless the county or city has elected the exemption — New York City has, so a $95 pair of shoes is completely untaxed there but taxed at the county rate in most of the state."
+    ],
+    [
+      "What happens if a clothing item costs exactly $110?",
+      "It is fully taxable. The exemption only covers items sold for less than $110, and once an item reaches that price the entire price is taxed, not just the amount above $110. Each item is tested on its own, so two $80 shirts on one receipt are both exempt."
+    ],
+    [
+      "Is shipping taxable in New York?",
+      "Yes, when the goods being shipped are taxable. Delivery, shipping and handling charges are part of the taxable receipt under Tax Bulletin ST-838. If a shipment contains both taxable and exempt goods, the delivery charge is allocated between them; ask a tax professional if the split is significant."
+    ]
+  ]
+},
+  "sales-tax-calculator-texas": {
+  "intro": "This calculator adds the 6.25% Texas state sales tax under Tax Code § 151.051 to the local city, county, transit and special-district rate at your location, which the statute caps at 2% combined — so the maximum rate anywhere in Texas is 8.25%. It treats delivery and handling charges as part of the taxable sales price when the item shipped is taxable (Comptroller Rule 3.303), keeps groceries and prescription drugs out of the base, and can reverse tax out of a tax-inclusive total. A separate panel handles motor vehicles, which are taxed under Tax Code chapter 152 instead.",
+  "useCases": [
+    "A Houston retailer confirming the 8.25% combined rate and splitting the state and local shares for the monthly return.",
+    "An out-of-state seller weighing whether to track every Texas jurisdiction or elect the single local use tax rate.",
+    "A car buyer comparing a dealer quote, checking the 6.25% motor vehicle tax on the price after a trade-in allowance."
+  ],
+  "benefits": [
+    [
+      "2% cap enforced",
+      "Rejects a local rate above the statutory ceiling, catching the common mistake of typing the combined rate."
+    ],
+    [
+      "Shipping handled by rule",
+      "Delivery charges follow the taxability of the goods, exactly as Rule 3.303 requires."
+    ],
+    [
+      "Vehicle tax kept separate",
+      "Shows the chapter 152 vehicle tax with its trade-in deduction rather than mixing it into general sales tax."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the sales tax rate in Texas?",
+      "The state rate is 6.25%. Local jurisdictions can add up to 2% more, so the combined rate ranges from 6.25% in areas with no local tax to a maximum of 8.25%. Houston, Dallas, San Antonio, Austin and Fort Worth all sit at the 8.25% ceiling."
+    ],
+    [
+      "Is shipping taxable in Texas?",
+      "Yes, when the item being shipped is taxable. Delivery, shipping, handling and transportation charges are part of the taxable sales price under Comptroller Rule 3.303, even if listed separately. If the goods are exempt, the delivery charge attached to them is exempt too."
+    ],
+    [
+      "Is food taxed in Texas?",
+      "Food products for home consumption are exempt under Tax Code § 151.314 — bread, milk, produce, meat and similar groceries. Prepared food sold ready to eat, candy, soft drinks and dietary supplements are taxable at the full combined rate."
+    ],
+    [
+      "How is sales tax on a car calculated in Texas?",
+      "Vehicles are taxed at 6.25% under Tax Code chapter 152, not under the general sales tax, and there is no local add-on. The tax is charged on the sales price less any trade-in allowance, so a $30,000 car with a $10,000 trade-in is taxed on $20,000, giving $1,250. Confirm with the county tax office at titling."
+    ]
+  ]
+},
+  "sales-tax-calculator-washington": {
+  "intro": "This calculator works out Washington retail sales tax by adding the 6.5% state rate under RCW 82.08.020 to the local city, county and transit rate that applies where the buyer takes delivery, which is the destination-based sourcing rule in RCW 82.32.730. It handles taxable shipping, a like-kind trade-in deduction and the extra 0.3% state tax on motor vehicle sales, and it can back the tax out of a price that already includes it. Sellers, online merchants shipping into Washington and buyers checking a quote all get the same state, local and total split.",
+  "useCases": [
+    "An out-of-state online seller shipping an order to a Seattle address, working out which combined rate to charge and how much of it is the local share.",
+    "A car buyer comparing an offer with a trade-in, checking the taxable price after the trade-in allowance and the additional 0.3% motor vehicle tax.",
+    "A market stall or service business that quotes tax-inclusive prices, backing out the tax to report the correct taxable gross on its excise tax return."
+  ],
+  "benefits": [
+    [
+      "State and local split",
+      "Separates the 6.5% state share from the local share so filing by location code is straightforward."
+    ],
+    [
+      "Destination sourcing built in",
+      "Uses the buyer's delivery location rate, which is how Washington sources retail sales."
+    ],
+    [
+      "Trade-in and shipping handled",
+      "Deducts a like-kind trade-in and lets you mark shipping taxable or not before the tax is computed."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the sales tax rate in Washington State?",
+      "The state portion is 6.5%, and local jurisdictions add their own rate on top, so the combined rate typically lands between about 7.0% and 10.6% depending on the address. Seattle sits near the top of that range and some unincorporated areas near the bottom."
+    ],
+    [
+      "Do I charge sales tax based on my location or the customer's?",
+      "The customer's. Washington is a destination-based state under RCW 82.32.730, so retail sales are sourced to the place where the buyer receives the goods — the delivery address for shipped orders, or the store counter for over-the-counter sales."
+    ],
+    [
+      "Is shipping taxable in Washington?",
+      "Yes, when the goods being shipped are taxable. Delivery, shipping and handling charges are part of the selling price under RCW 82.08.010(1), so tax applies to them at the same rate; if the goods are exempt, the related delivery charge is not taxed."
+    ],
+    [
+      "Why is car sales tax higher in Washington?",
+      "Retail sales and leases of motor vehicles carry an additional 0.3% state tax under RCW 82.08.020(3) on top of the 6.5% state rate and the local rate, and buyers in the Sound Transit district also pay a separate regional transit authority motor vehicle excise tax at registration. Confirm the total with a licensing office or a tax professional."
+    ]
+  ]
+},
+  "salon-business-tax-calculator": {
+  "intro": "A salon's profit is decided at the chair: service revenue is chairs multiplied by clients per chair per day, open days and average ticket, and what survives consumables, stylist commission, retail cost and rent is the taxable profit. This calculator builds that chain, works out contribution per client and the number of clients per chair per day needed to break even, then taxes the profit under both FY 2025-26 regimes and shows the section 44AD presumptive alternative at 6% of digital and 8% of cash turnover. GST registration at 20 lakh of service turnover and the 6% composition option up to 50 lakh are checked from the same numbers.",
+  "useCases": [
+    "A four-chair unisex salon wants to know how many clients per chair per day simply cover the rent and fixed salaries.",
+    "An owner paying 20% stylist commission is deciding whether raising the average ticket or adding a chair improves profit more.",
+    "A beauty parlour approaching 20 lakh of billings needs to know when GST registration becomes compulsory and what the 6% composition levy would cost."
+  ],
+  "benefits": [
+    [
+      "Chair economics, not guesswork",
+      "Revenue is derived from real capacity, so occupancy and ticket size can be tested separately."
+    ],
+    [
+      "Break-even in clients, not rupees",
+      "The answer is expressed as clients per chair per day, which is a number a salon manager can actually act on."
+    ],
+    [
+      "44AD and both regimes computed",
+      "Presumptive income sits next to real profit, each taxed with slabs, the 87A rebate, surcharge and cess."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you calculate break-even for a salon?",
+      "Divide the fixed costs the salon must cover by the contribution each client leaves behind. Contribution per client is the average ticket minus consumables and commission — at a 700 ticket with 12% consumables and 20% commission that is 476. Against 22.8 lakh of annual fixed cost, less retail gross profit, the salon needs roughly 4,450 clients a year, about 3.7 per chair per day on four chairs."
+    ],
+    [
+      "Is GST applicable on salon services in India?",
+      "Yes, once aggregate turnover crosses 20 lakh in a financial year — 10 lakh in the special category states. Beauty and physical well-being services were moved to 5% without input tax credit by the 56th GST Council with effect from 22 September 2025, so a registered salon charges that rate on services while retail cosmetics it resells carry their own goods rate. Confirm the current rate for your services before you invoice."
+    ],
+    [
+      "Can a salon owner file under section 44AD?",
+      "Yes. A salon is a business, not one of the professions listed in section 44AA(1), so section 44AD applies rather than 44ADA. Declare at least 6% of turnover received through banking or electronic modes and 8% of cash turnover, while turnover stays within 2 crore — 3 crore where cash receipts are at most 5%."
+    ],
+    [
+      "What is the composition scheme for a salon and is it worth taking?",
+      "Section 10(2A) of the CGST Act lets a service provider with aggregate turnover up to 50 lakh pay 6% of turnover — 3% CGST plus 3% SGST — with quarterly payment and one annual return. You cannot collect GST from clients or claim input tax credit on products and equipment, so it usually suits a small salon with few taxable purchases. Compare both options with a GST practitioner before opting in, since the choice is made for a whole financial year."
+    ]
+  ]
+},
+  "salsa-dance-calorie-calculator": {
+  "intro": "The Salsa Dance Calorie Calculator works out the energy cost of a class or social by counting the songs you actually danced rather than the hours you were in the room. Dancing minutes are priced at the Compendium of Physical Activities MET value for your style — 3.0 for slow bachata up to 7.8 for fast performance work — and the remaining time at 1.6 MET for standing and talking, using kcal/min = MET x 3.5 x kg / 200.",
+  "useCases": [
+    "Log a three-hour Friday social honestly when you only danced about a third of the songs.",
+    "Compare a non-stop rueda hour against the same hour of slow bachata for the same body weight.",
+    "Work out the calorie cost of a six-week performance rehearsal block before a showcase.",
+    "Decide whether a weekly salsa night meets the vigorous-activity share of your exercise target."
+  ],
+  "benefits": [
+    [
+      "Songs, not hours",
+      "Off-the-floor time is priced separately so the total is not inflated two or three times over."
+    ],
+    [
+      "Style-specific intensity",
+      "Bachata, class drills, social on1/on2, rueda and performance work each use their own MET value."
+    ],
+    [
+      "Per-song figure",
+      "Shows what a single track is worth, which is easier to sanity-check than a session total."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many calories does an hour of salsa dancing burn?",
+      "About 393 kcal for a 68 kg adult dancing continuously at social club tempo (5.5 MET), rising to roughly 500 kcal for fast rueda at 7.0 MET and 557 kcal for performance-level work at 7.8 MET. Continuous is the key word — a typical social night includes far more standing than dancing."
+    ],
+    [
+      "How long is a salsa song?",
+      "Most salsa tracks run 4 to 6 minutes, noticeably longer than the roughly 3-minute pop average, and DJs often mix two together. Using 4.5 minutes as the average song length is a reasonable default for a social."
+    ],
+    [
+      "Does salsa count as exercise?",
+      "Fast salsa does — anything at or above 6 MET is vigorous intensity, so rueda and performance rehearsal count toward the 75 minutes of vigorous activity per week in the WHO guidelines. Social salsa at 5.5 MET and beginner classes at 4.5 MET fall in the moderate band and count toward the 150-minute moderate target."
+    ],
+    [
+      "Why is my calorie number lower than other salsa calculators?",
+      "Most calculators multiply your whole night by a dance MET value, which assumes you never left the floor. Counting songs separately typically halves the figure for a social, and that lower number is the realistic one."
+    ]
+  ]
+},
+  "sandpaper-grit-selector": {
+  "intro": "Generates the grit progression for a sanding job from the state of the surface to the finish going on top of it. The sequence is built from abrasive particle size rather than habit: each step drops the average particle diameter by no more than 1.65 times and skips at most one grade, which is what produces the familiar 80-120-180-220 run. It also converts between the FEPA (P-prefixed) and CAMI grit standards, which agree up to about 220 and diverge badly after it.",
+  "useCases": [
+    "Refinishing a hardwood table for an oil finish and needing to know where to stop",
+    "Preparing veneered board without going through a face ply that may be under 0.6 mm thick",
+    "Working out whether an imported 400 grit sheet is the same thing as the P400 already in the workshop"
+  ],
+  "benefits": [
+    [
+      "Derived, not copied",
+      "Sequences come from particle sizes, so they hold for any start and stop point."
+    ],
+    [
+      "Stops at the right place",
+      "The finish decides the final grit — paint needs a key, oil hides nothing."
+    ],
+    [
+      "Material floors enforced",
+      "Veneer, clear coat and thin ply will not be sent a grit that cuts through them."
+    ]
+  ],
+  "faqs": [
+    [
+      "What grit should I finish at before staining wood?",
+      "P150 on softwood and P180 on hardwood. Going finer burnishes the surface and closes the pores, which makes the stain sit on top rather than soaking in, and any burnished patch shows as a pale blotch. For a clear film finish like polyurethane, P220 is the sensible stopping point."
+    ],
+    [
+      "Can I skip grits when sanding?",
+      "One grade at most, and only where the particle sizes are close. The job of each grit is to remove the scratch pattern of the previous one, so if the jump is too large the finer paper only polishes the ridges and leaves the valleys. As a rule the particle size should not drop by more than about 1.65 times between steps."
+    ],
+    [
+      "Is 400 grit sandpaper the same as P400?",
+      "No. CAMI 400 has an average particle size around 23.6 microns, while P400 is about 35 microns — CAMI 400 is closer to P800. The two standards track each other up to roughly 220 and separate above it, so a fine-grit sheet from a different market can behave quite differently from the number on the back."
+    ],
+    [
+      "What grit removes paint?",
+      "Start at P60 for stripping paint or varnish, and P40 only for levelling genuine damage. Coarser than that gouges the substrate, and on anything painted before the late 1970s do not dry-sand at all — the paint may contain lead, which needs chemical stripping or professional removal instead."
+    ]
+  ]
+},
+  "sanskrit-word-of-the-day-builder": {
+  "intro": "A Sanskrit word-of-the-day deck of 30 terms, each given with its Devanagari form, IAST transliteration, the verbal root (dhātu) it derives from, and a line from a classical source — the Upaniṣads, the Bhagavad Gītā, the Yoga Sūtra or a well-known subhāṣita — where the word actually appears. The card is fixed by the calendar date, so the same date always shows the same word.",
+  "useCases": [
+    "Learn the vocabulary that recurs across yoga, philosophy and devotional texts, with the root that explains the meaning.",
+    "See where a familiar term such as dharma, śraddhā or vairāgya is actually used in a primary text.",
+    "Build a base of Sanskrit roots that also unlocks vocabulary in Hindi, Marathi, Bengali, Kannada and Telugu.",
+    "Use one card a day as an opening reading for a class or a personal practice."
+  ],
+  "benefits": [
+    [
+      "Root, not just a gloss",
+      "Every card names the dhātu the word is built from, which is what makes the meaning stick."
+    ],
+    [
+      "Cited, not invented",
+      "Each example is an actual line from a classical text, attributed to the work it comes from."
+    ],
+    [
+      "IAST throughout",
+      "Transliteration follows IAST, the standard used in scholarly editions and dictionaries."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a dhātu in Sanskrit?",
+      "A dhātu is a verbal root — the minimal element from which a family of words is built using prefixes and suffixes. Traditional grammar lists roughly 2,000 of them, and knowing the root is often enough to unpack an unfamiliar word: from √dhṛ, 'to hold', comes dharma, that which holds things together."
+    ],
+    [
+      "Is Sanskrit still a spoken language?",
+      "It survives as a liturgical and scholarly language and is taught in schools and universities across India, with a small number of people reporting it as a mother tongue in the census. Most learners study it in order to read texts rather than to converse."
+    ],
+    [
+      "What is IAST transliteration?",
+      "IAST, the International Alphabet of Sanskrit Transliteration, is the standard romanisation used in dictionaries and academic editions. It marks long vowels with a macron (ā, ī, ū), retroflex consonants with a dot below (ṭ, ḍ, ṇ) and distinguishes the three sibilants s, ś and ṣ."
+    ],
+    [
+      "Are the quoted lines accurate?",
+      "Each example is a line from a named classical source, cited with its work and, where it is standard to do so, its chapter and verse. Editions and recensions differ in small ways, so check a critical edition before quoting one in academic work."
+    ]
+  ]
+},
   "sauna-fluid-loss-estimator": {
   "intro": "The Sauna Fluid Loss Estimator calculates how much sweat a sauna session cost you and how much to drink back. In measured mode it uses the standard sweat-rate equation — sweat equals body-mass change plus fluid drunk minus urine passed, with one kilogram of body mass treated as one litre of water. In estimate mode it models sweat rate from how far the room sits above skin temperature and how much the humidity blocks evaporation. Replacement follows the ACSM guidance of drinking 125-150% of the deficit, because some of what you drink leaves again as urine before rehydration finishes.",
   "useCases": [
@@ -6548,6 +6910,51 @@ export default {
     [
       "Why is AND on a new line but BETWEEN … AND kept inline?",
       "A leading AND at the start of a line makes the conditions in a WHERE clause countable at a glance. The AND that belongs to BETWEEN is part of a single predicate, not a new condition, so the formatter tracks it and keeps it on the same line as its BETWEEN."
+    ]
+  ]
+},
+  "sql-join-fanout-debugger": {
+  "intro": "This debugger computes the row-multiplication factor of a join and tells you exactly which aggregates it corrupts: describe each table's grain and its join key cardinality, and it returns the fan-out factor for every table, marks each SUM, COUNT, AVG, MIN and MAX as inflated, distorted or safe, and emits the corrected SQL. The rule it applies is the definition of a joined table in ISO/IEC 9075-2 §7.10 — a join is a filtered cross product, so one parent row matching m child rows becomes m result rows, and two fanning children of the same parent multiply to m1 x m2. It is for analysts and engineers whose total went up after adding a join and who need to know the exact factor before trusting the number.",
+  "useCases": [
+    "A revenue query joining orders to order_items and payments returns 3x the real revenue — finding that each order's 3 item rows repeat the order_total three times, and that SUM(o.order_total) is the only broken column",
+    "Deciding between the two standard fixes: pre-aggregating each child into a derived table grouped by the join key, or de-duplicating the fanned-out rows with ROW_NUMBER and a CASE, and seeing which totals each one returns",
+    "Explaining why COUNT(DISTINCT order_id) still says 12,400 orders while COUNT(*) says 74,400 rows in the same query",
+    "Checking whether a total is too high from fan-out, too low from an inner join dropping unmatched rows, or both at once"
+  ],
+  "benefits": [
+    [
+      "The factor, not a hunch",
+      "Each table gets its own duplication factor: total multiplicity divided by the multiplicity on the path from the base table, so a child that fans 3x can still leave its own SUM only 2x too high."
+    ],
+    [
+      "Per-aggregate verdicts",
+      "SUM and COUNT scale with the fan-out, MIN, MAX and COUNT(DISTINCT) survive it exactly, AVG survives only uniform fan-out, and SUM(DISTINCT) is never a fix because it de-duplicates values rather than rows."
+    ],
+    [
+      "Two corrected queries, not advice",
+      "Both the pre-aggregated subquery form and the ROW_NUMBER window form are emitted against your own table names, aliases and keys, with the aggregates that cannot compose through a pre-aggregate marked in the SQL."
+    ],
+    [
+      "Editable worked example",
+      "Three small tables you can change in place: 3 orders totalling 1,300 report 3,900 through the naive join, and both fixes bring it back to 1,300."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why is my SUM too high after a JOIN?",
+      "Because the join duplicated the rows the SUM reads. A join is a filtered cross product (ISO/IEC 9075-2 §7.10), so an order that has 3 line items appears on 3 result rows and its order_total is added 3 times. The factor is exact: if the base table's rows are each repeated d times, SUM is d times the true value. Join a second 1:many table with 2 matches per order and the factor becomes 3 x 2 = 6."
+    ],
+    [
+      "Does SELECT DISTINCT or SUM(DISTINCT col) fix a double-counted SUM?",
+      "No. SUM(DISTINCT col) removes duplicate values, not duplicate rows — two different orders that both total 500 collapse into a single 500, so a true total of 1,300 comes back as 800. COUNT(DISTINCT id) does survive fan-out, because DISTINCT reduces the duplicated rows to a set of ids before counting. The two working fixes are pre-aggregating each fanning table to one row per join key, or keeping the wide rowset and using ROW_NUMBER() OVER (PARTITION BY the table's own primary key) with SUM(CASE WHEN rn = 1 THEN col END)."
+    ],
+    [
+      "Why does my LEFT JOIN drop rows anyway?",
+      "Because a WHERE predicate on the right table turns it back into an INNER JOIN. WHERE is evaluated after the from clause (ISO/IEC 9075-2 §7.4), so the null-extended rows the LEFT JOIN just created make the predicate UNKNOWN, and only rows evaluating to True are kept. Moving the condition into the ON clause — or writing it as (p.status = 'captured' OR p.order_id IS NULL) — keeps the join outer."
+    ],
+    [
+      "Why do rows with a NULL join key disappear?",
+      "Because NULL = NULL is Unknown, not true (ISO/IEC 9075-2 §8.2), and a join keeps only rows whose condition evaluates to True. A row whose key is NULL therefore matches nothing at all, not even another NULL key, and an INNER JOIN discards it silently. Counting rows WHERE key IS NULL on both sides before joining shows how many are at stake."
     ]
   ]
 },
@@ -16097,411 +16504,6 @@ export default {
     [
       "What do the TOEFL performance levels like Advanced mean?",
       "ETS divides each section into proficiency bands on the score report — for Reading and Writing, Advanced is 24–30 and High-Intermediate is 18–23 and 17–23 respectively; for Listening, Advanced is 22–30; for Speaking, Advanced is 25–30. They summarise what a scorer at that range can typically do rather than changing the numeric score."
-    ]
-  ]
-},
-  "token-per-word-ratio-calculator": {
-  "intro": "This calculator measures your text's tokens-per-word ratio — the number LLM billing actually depends on — from a pasted sample, using the published rule of thumb that 1 token equals about 4 characters or three-quarters of an English word. Writers, prompt engineers and developers use the ratio to convert word counts into token budgets for models like GPT and Claude. If you already have an exact count from tiktoken or a provider's token counter, enter it to get the true ratio for your writing style.",
-  "useCases": [
-    "A prompt engineer measuring whether their system prompts tokenize heavier than plain English before setting max-token limits",
-    "A content team converting a 2,000-word article brief into a realistic token budget for an AI drafting workflow",
-    "A developer comparing the ratio of code snippets versus prose to explain why code-heavy prompts cost more"
-  ],
-  "benefits": [
-    [
-      "Real ratio, not a guess",
-      "Enter an actual tokenizer count for your sample and get the exact tokens-per-word figure for your own writing."
-    ],
-    [
-      "Baseline comparison",
-      "Shows how far your text sits above or below the ~1.33 tokens-per-word English baseline, as a percentage."
-    ],
-    [
-      "Budget-ready output",
-      "Reports tokens per 1,000 words so any word-count brief converts straight to a token budget."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many tokens is one word?",
-      "About 1.33 tokens per word for common English text — OpenAI's tokenizer documentation puts it at roughly 1 token per 4 characters, or three-quarters of a word per token. Technical vocabulary, source code and non-Latin scripts run higher, often 1.5 to 3 tokens per word, which is why measuring your own text beats using the average."
-    ],
-    [
-      "Why is my tokens-per-word ratio higher than 1.33?",
-      "Because BPE tokenizers split uncommon words, punctuation runs, markup and non-English characters into multiple tokens. Code and JSON commonly land between 1.5 and 3 tokens per word, and languages like Hindi or Japanese can be several times heavier than English on older tokenizers."
-    ],
-    [
-      "How do I convert a word count into a token budget?",
-      "Multiply the word count by your tokens-per-word ratio. Using the English baseline, 1,000 words is about 1,330 tokens; if this tool measures your text at 1.6 tokens per word, budget 1,600 tokens per 1,000 words instead. Add headroom for the model's reply, which is billed separately as output tokens."
-    ],
-    [
-      "Is the character-based token estimate accurate?",
-      "It is a rule-of-thumb estimate, typically within about 10–15% for plain English prose, and less accurate for code or non-English text. For exact numbers, run the sample through the model's real tokenizer (such as OpenAI's tiktoken or a provider's count-tokens endpoint) and paste the result into this tool's actual-token field."
-    ]
-  ]
-},
-  "tokens-per-second-benchmark-sheet": {
-  "intro": "Tokens Per Second Benchmark Sheet turns the raw timings a local LLM runner prints into decode throughput, prefill throughput and time to first token, and compares them against the memory-bandwidth ceiling for that model. Weight footprint is calculated from parameter count and the effective bits per weight of the quantisation format — 4.83 bpw for Q4_K_M, 5.69 for Q5_K_M, 8.5 for Q8_0 — and the ceiling is simply memory bandwidth divided by that footprint, because single-stream decoding must read every weight once per token. It is for anyone comparing the same model across machines, or the same machine across quantisations.",
-  "useCases": [
-    "Checking whether 40 tokens a second on a 200 GB/s machine is close to the hardware limit or leaving performance on the table.",
-    "Comparing Q4_K_M against Q5_K_M on the same GPU to see exactly what the extra quality costs in speed and memory.",
-    "Recording the same model on a laptop, a desktop and a server and pasting the comparison table into a README.",
-    "Separating a slow prompt-eval phase from a slow generation phase when a long-context run feels sluggish."
-  ],
-  "benefits": [
-    [
-      "Prefill and decode split",
-      "The two phases have completely different bottlenecks and are reported separately."
-    ],
-    [
-      "Real bits per weight",
-      "Uses the published effective bpw of each llama.cpp format, not a rounded 4 or 5 bits."
-    ],
-    [
-      "Hardware ceiling",
-      "Shows the bandwidth-limited maximum so you know whether tuning will help at all."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is a good tokens per second for a local LLM?",
-      "It depends almost entirely on model size and memory bandwidth, not on the model's name. Divide your memory bandwidth in GB/s by the model's size in GB for the ceiling: a 4.2 GB Q4_K_M 7B model on 200 GB/s hardware tops out near 47 tokens a second, so 40 measured is an excellent result and 12 means something is wrong."
-    ],
-    [
-      "Why is prompt processing so much faster than generation?",
-      "Prefill processes all prompt tokens in parallel, so it is compute-bound and can reach thousands of tokens a second. Generation produces one token at a time and must re-read every weight from memory for each one, which makes it memory-bandwidth-bound and one to two orders of magnitude slower."
-    ],
-    [
-      "How much memory does a quantised model need?",
-      "Multiply the parameter count in billions by the format's effective bits per weight, then divide by 8, for gigabytes of weights: an 8B model at Q4_K_M is about 4.8 GB. Add roughly 20 percent for KV cache, activations and runtime, and considerably more for long contexts, since KV cache grows linearly with context length."
-    ],
-    [
-      "What does Q4_K_M actually mean?",
-      "It is a llama.cpp k-quant format that stores most weights in 4 bits but keeps some tensors at higher precision, giving an effective 4.83 bits per weight overall. The K means k-quant blocks with per-block scales, and the M is the medium variant — S and L trade size against quality in the same family."
-    ]
-  ]
-},
-  "tokens-to-words-converter": {
-  "intro": "This converter turns an LLM token budget into an approximate word count, page count and reading time, based on the documented rule of thumb that 1 token equals about three-quarters of an English word (4 characters). It helps writers, students and developers answer the practical question behind every context window and max-token setting: how much actual text does this budget hold? Presets adjust the ratio for technical writing, non-English languages and source code, which all tokenize more heavily than plain prose.",
-  "useCases": [
-    "A writer checking whether a 4,096-token output limit is enough for a 3,000-word article draft",
-    "A developer explaining to stakeholders how much documentation fits in a 128k-token context window",
-    "A student converting a model's max-token setting into single-spaced or double-spaced page equivalents for an assignment"
-  ],
-  "benefits": [
-    [
-      "Content-aware ratios",
-      "Separate presets for prose, technical text, European languages and code, since each yields fewer words per token."
-    ],
-    [
-      "Pages and reading time",
-      "Converts to ~500-words single-spaced or ~250-words double-spaced pages, plus minutes at an average 238 wpm reading speed."
-    ],
-    [
-      "Instant budget presets",
-      "One-tap buttons for common budgets: 1,024, 4,096, 8,192, 32,768 and 128,000 tokens."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many words is 4,096 tokens?",
-      "About 3,072 words of plain English text, using the rule of thumb that 1 token is roughly three-quarters of a word. For technical writing expect closer to 2,450 words, and for source code as little as 1,600, because both tokenize more heavily than everyday prose."
-    ],
-    [
-      "How many pages is 128,000 tokens?",
-      "Roughly 96,000 English words, which is about 192 single-spaced pages (at ~500 words per page) or 384 double-spaced pages — approximately the length of a full novel. That is why 128k-context models can hold entire books or large codebases in a single prompt."
-    ],
-    [
-      "How many words is one token?",
-      "About 0.75 English words per token — equivalently, 1,000 tokens is roughly 750 words — per OpenAI's tokenizer documentation. The figure drops for other content: non-English European languages often land near 0.55 words per token and source code near 0.4, since punctuation and rare strings split into more tokens."
-    ],
-    [
-      "Does a token budget cover both my prompt and the model's answer?",
-      "Input and output are counted separately by every major provider, and most price output tokens higher than input tokens. A model's context window limits input plus output together, while a max-tokens setting usually caps only the generated output — so convert the two budgets separately."
-    ]
-  ]
-},
-  "toml-to-json-converter": {
-  "intro": "This converter parses TOML v1.0.0 — tables, arrays of tables, dotted keys, inline tables, multi-line strings and RFC 3339 date-times — and emits clean RFC 8259 JSON, entirely in your browser. Duplicate keys and redefined tables are rejected exactly as the TOML spec demands, so a file that converts here is a file a strict parser will accept. It is built for developers who need Cargo.toml, pyproject.toml, netlify.toml or any app config as JSON for scripts, APIs or schema validation.",
-  "useCases": [
-    "Turning pyproject.toml or Cargo.toml into JSON to query dependencies with jq or a script",
-    "Converting [[workflow]] style arrays of tables into JSON arrays a web dashboard can consume",
-    "Validating that a hand-edited TOML config parses cleanly before deploying it"
-  ],
-  "benefits": [
-    [
-      "Spec-strict parsing",
-      "Duplicate keys, redefined tables and invalid escapes fail with the line number, per TOML v1.0.0."
-    ],
-    [
-      "Full syntax coverage",
-      "Dotted keys, inline tables, hex/octal/binary integers, underscored numbers and multi-line strings all convert."
-    ],
-    [
-      "Honest JSON output",
-      "Date-times become strings and inf/nan become null, with a note for every substitution JSON forces."
-    ]
-  ],
-  "faqs": [
-    [
-      "How does a TOML array of tables convert to JSON?",
-      "Each [[name]] header appends one object to a JSON array under that key, so two [[products]] blocks become \"products\": [ {...}, {...} ]. Sub-tables declared between the headers, such as [products.details], attach to the most recent element, and this converter follows that TOML v1.0.0 rule."
-    ],
-    [
-      "What happens to TOML dates and times in JSON?",
-      "They become plain strings, because JSON has no date type. TOML's four RFC 3339 shapes — offset date-time, local date-time, local date and local time — are all preserved character-for-character (for example 1979-05-27T07:32:00Z), and the tool reports how many were converted."
-    ],
-    [
-      "Why does the converter say my key is defined twice?",
-      "Because the TOML specification makes redefining a key or table a hard error, not a warning — the second definition does not silently win as it does in some INI parsers. Check the reported line: the same key may be set once as a dotted key and again inside a [table] header covering the same path."
-    ],
-    [
-      "Can TOML integers like 0xFF or 1_000_000 be converted?",
-      "Yes. Hexadecimal (0x), octal (0o) and binary (0b) integers and underscore-separated numbers are parsed to their numeric values, so 0xFF becomes 255 and 1_000_000 becomes 1000000 in the JSON output. Decimal integers with leading zeros are rejected, as the spec requires."
-    ]
-  ]
-},
-  "tone-consistency-rubric": {
-  "intro": "A tone consistency rubric scores a piece of writing against a defined brand voice on six anchored 1-5 scales — formality, warmth, directness, energy, jargon density and humour — and returns a weighted 0-100 alignment score plus the direction of every miss. It uses a behaviourally anchored rating scale, so each level carries a concrete description instead of a vague label, and each dimension is normalised by the worst possible miss for its own target. Useful for content leads, editors and anyone reviewing AI-generated copy at volume.",
-  "useCases": [
-    "Reviewing AI-drafted support replies before they go out, to catch copy that has drifted formal or cold",
-    "Onboarding a new writer or agency by scoring their first drafts against the same anchors the team uses",
-    "Auditing a sample of published pages to find which channel has drifted furthest from the voice guide",
-    "Checking that two editors agree on what the voice guide means before rolling a rubric out to a team"
-  ],
-  "benefits": [
-    [
-      "Concrete anchors",
-      "Every 1-5 level has a written description, so scores are repeatable across raters."
-    ],
-    [
-      "Weighted to your priorities",
-      "Set weights per dimension; a dimension weighted zero drops out of the score entirely."
-    ],
-    [
-      "Names the fix",
-      "Reports which dimension costs the most points and in which direction it drifted."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you measure brand tone of voice consistency?",
-      "Define a target level on each voice dimension, rate the sample on the same scale, then score alignment as the weighted average of one minus the miss divided by the worst possible miss for that target. A target of 3 can only be missed by 2 points while a target of 1 can be missed by 4, so normalising per dimension stops extreme targets from dominating the score."
-    ],
-    [
-      "What are the dimensions of a brand voice?",
-      "The six used here cover most published voice guides: formality, warmth, directness, energy, jargon density and humour. Nielsen Norman Group's tone-of-voice work uses four similar dimensions (funny to serious, formal to casual, respectful to irreverent, enthusiastic to matter-of-fact); the extra scales here separate jargon and directness because those are where AI-generated copy drifts first."
-    ],
-    [
-      "What counts as a good tone consistency score?",
-      "90 and above reads as on voice — the remaining difference is inside normal rater noise. 75 to 89 is minor drift fixable with a couple of edits, 60 to 74 is drift a regular reader would feel, and below 60 the piece effectively reads as a different brand and is faster to rewrite than to patch."
-    ],
-    [
-      "How do I know two reviewers are using the rubric the same way?",
-      "Have both score the same sample and compare exact agreement and adjacent agreement (within one scale point). Adjacent agreement below roughly 80% almost always means an anchor is ambiguous rather than that a rater is wrong — rewrite the anchor for the dimension with the biggest gap and re-test."
-    ]
-  ]
-},
-  "tool-rental-vs-buy-calculator": {
-  "intro": "This calculator answers the rent-or-buy question with a break-even figure: the number of usage days at which owning a tool becomes cheaper than hiring it. Renting is costed as a pure variable — day rate multiplied by usage days, plus the cost of each collection and return trip. Owning is costed as its fixed side: purchase price, annual servicing and storage, the capital tied up, less the resale value at the end of your horizon. Setting the two equal gives break-even days = net cost of owning divided by the effective cost of a rented day.",
-  "useCases": [
-    "Work out whether a rotary hammer used for two weekend jobs a year is worth owning, or better hired.",
-    "Justify a purchase for a small contractor by showing the usage days at which hire charges overtake the tool's price.",
-    "Compare a cheap tool bought outright against a professional-grade one hired only when a job demands it."
-  ],
-  "benefits": [
-    [
-      "A break-even you can act on",
-      "Turns the decision into one number: the usage days that tip it towards buying."
-    ],
-    [
-      "Trip costs counted",
-      "Each collection and return is charged, which is often what makes short hires expensive."
-    ],
-    [
-      "Resale and capital included",
-      "Owning is netted of what the tool sells for and charged for the money it locks up."
-    ]
-  ],
-  "faqs": [
-    [
-      "When is it cheaper to buy a tool than rent it?",
-      "When your expected usage days exceed the break-even, which is the net cost of owning divided by the effective cost of a rented day. A tool costing ₹12,000 that resells for 40% and needs ₹500 a year of upkeep works out near ₹10,000 net over three years; against a ₹400 day rate plus a ₹150 trip, that is about 21 usage days. Below that, hiring wins."
-    ],
-    [
-      "What costs do people forget when buying a tool?",
-      "Storage space, annual servicing, the consumables it needs, and the money tied up in it. The largest forgotten item is usually the opposite one: resale value. A working power tool sold second-hand recovers a real share of the price, and ignoring that makes ownership look worse than it is."
-    ],
-    [
-      "Is a weekly tool hire cheaper than seven daily hires?",
-      "Almost always. Hire companies quote tiered rates where a week typically costs the equivalent of three to four days and a month a fraction more again, because their handling cost per hire is fixed. If you plan a hire of a week or longer, take the effective per-day figure from the weekly rate rather than multiplying the daily one."
-    ],
-    [
-      "Does the calculator account for the tool wearing out?",
-      "Indirectly, through the resale percentage and the annual upkeep you enter. Set a lower resale figure and a higher upkeep for a tool you expect to work hard. For a specialised tool used a handful of days a year, the practical limit is often obsolescence and battery degradation rather than mechanical wear."
-    ]
-  ]
-},
-  "toothbrushing-timer": {
-  "intro": "The standard recommendation is two minutes of brushing, twice a day, with fluoride toothpaste — and the reason a timer helps is that most people stop at around 45 seconds while believing they brushed for two minutes. This timer divides the 120 seconds evenly across the mouth (30 seconds per quadrant, or 20 per sextant), cues the modified Bass technique zone by zone, and shows the right amount and fluoride strength of toothpaste for the age of the person brushing.",
-  "useCases": [
-    "Get a child through a full two minutes by giving each quadrant its own countdown instead of one long wait.",
-    "Match a powered brush that pulses every 30 seconds, so the on-screen zones and the brush agree.",
-    "Check the correct toothpaste amount and fluoride strength for a toddler versus an adult.",
-    "Track when the current brush head passes the three-month mark and needs replacing."
-  ],
-  "benefits": [
-    [
-      "Even coverage",
-      "Time is split across zones, so the side you always rush gets the same seconds as the side you do first."
-    ],
-    [
-      "Technique, not just time",
-      "Each zone carries a modified Bass cue — 45° to the gum line, short strokes, light pressure."
-    ],
-    [
-      "Age-correct fluoride",
-      "Amount and ppm follow the published bands for under-3s, 3 to 6 year olds and everyone older."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long should you brush your teeth?",
-      "Two minutes, twice a day, with fluoride toothpaste. Splitting that into four 30-second quadrants — upper right, upper left, lower left, lower right — is the usual way to make sure the whole mouth gets equal time, because unaided brushing tends to stop well short of two minutes and to favour one side."
-    ],
-    [
-      "How much toothpaste should a child use?",
-      "A smear no bigger than a grain of rice for children under three, using a paste with at least 1000 ppm fluoride, and a pea-sized amount from age three upwards with 1350–1500 ppm. An adult should brush for or supervise a child until around age seven, and children should be discouraged from swallowing the paste."
-    ],
-    [
-      "Should you rinse your mouth after brushing?",
-      "No — spit out the excess paste and leave it. Rinsing with water or mouthwash immediately after brushing washes the concentrated fluoride off the enamel before it can work. If you want to use a fluoride mouthwash, use it at a different time of day."
-    ],
-    [
-      "How often should a toothbrush be replaced?",
-      "Every three to four months, or sooner if the bristles splay or bend, because worn bristles clean far less effectively. Replace it after an illness too. A brush with visibly flattened bristles is past its useful life regardless of the date."
-    ]
-  ]
-},
-  "topic-sentence-generator": {
-  "intro": "A topic sentence generator builds the opening sentence of a body paragraph from its two obligatory parts: the subject the paragraph is about, and the controlling idea — the arguable claim the rest of the paragraph will prove. Give it both and it produces the standard composition patterns, from claim-first to the concessive although-pivot, and adapts the wording to whether this is the first, middle or last body paragraph. A separate checker scores a sentence you have already written against seven things markers look for, including length, single-sentence form, and whether the sentence announces the paragraph instead of making a claim.",
-  "useCases": [
-    "Turn a bullet point from an essay plan into an opening sentence that actually commits to a position.",
-    "Fix a paragraph that starts with 'In this paragraph I will discuss…' by moving straight to the claim.",
-    "Vary the sentence shape across four body paragraphs so they do not all open the same way.",
-    "Check a sentence before submission for the usual faults: two sentences fused together, a citation crowding the claim, or filler like 'many aspects'."
-  ],
-  "benefits": [
-    [
-      "Subject plus controlling idea",
-      "Forces the two parts a topic sentence must have, so it cannot come out as a bare topic."
-    ],
-    [
-      "Position-aware wording",
-      "Middle paragraphs get a linking opener; the last one gets an emphatic shape."
-    ],
-    [
-      "Seven-point checker",
-      "Scores your own sentence on length, form, filler, evidence placement and announcement phrasing."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is a topic sentence?",
-      "It is the sentence that states a paragraph's single main idea, and it has two parts: a subject and a controlling idea. \"School uniforms\" is a subject; \"school uniforms hide income differences without removing them\" adds the controlling idea and gives the paragraph something to prove."
-    ],
-    [
-      "How long should a topic sentence be?",
-      "Roughly 8 to 30 words. Shorter than eight and it rarely carries both a subject and a claim; longer than thirty and it has begun doing the evidence's work, which belongs in the sentences that follow."
-    ],
-    [
-      "Should a topic sentence contain a quotation or citation?",
-      "No. The topic sentence makes the claim in your own words, and the quotation, data or citation that supports it comes in the next sentences. A quotation in the opening line makes the paragraph look like it is reporting a source rather than arguing a point."
-    ],
-    [
-      "Does a topic sentence always go first in a paragraph?",
-      "Usually, and always in timed or exam writing, because it tells the marker immediately what the paragraph is doing. Experienced writers sometimes delay it for effect, but a delayed topic sentence only works when the paragraph is short enough for the reader to hold the evidence until the claim arrives."
-    ]
-  ]
-},
-  "tote-bag-artwork-placement-guide": {
-  "intro": "The safe print area on a tote is the flat panel minus three things: a clearance from each side seam, the handle stitching at the top, and roughly half the gusset depth at the bottom, because on a box-bottom bag that portion folds under to form the base. This guide works out the usable width and height for common tote blanks, fits your artwork inside without distorting it, and gives the offsets from the top and left edges so you can mark the bag with a ruler. Aimed at print-on-demand sellers, screen printers and anyone sending tote artwork to a decorator for the first time.",
-  "useCases": [
-    "Find out that a 15 x 16 inch shopper with a 3 inch gusset only leaves about 13 x 8.5 inches of usable print area.",
-    "Position a square logo centred in the safe band and get the exact measurement down from the top edge.",
-    "Compare a flat mini tote against a deep grocery tote before choosing which blank to sell.",
-    "Check the pixel size to export so a print at 8.5 inches wide is a genuine 300 DPI."
-  ],
-  "benefits": [
-    [
-      "Accounts for the gusset fold",
-      "Half the gusset depth is reserved at the base, the mistake that puts logos on the bottom of the bag."
-    ],
-    [
-      "Handle stitching respected",
-      "Artwork starts below the webbing stitch line so the platen can lie flat."
-    ],
-    [
-      "Ruler-ready offsets",
-      "Distances from the top and left edge, not vague guidance to centre it."
-    ]
-  ],
-  "faqs": [
-    [
-      "What size should artwork be on a tote bag?",
-      "On a classic 15 x 16 inch shopper, keeping an inch clear of each side seam, 4 inches clear at the top for handles and 3.5 inches at the base for the gusset fold leaves about 13 x 8.5 inches. Most designs sit comfortably at 8 to 10 inches wide."
-    ],
-    [
-      "Why does the gusset reduce the print area?",
-      "On a box-bottom bag, roughly the lowest half of the gusset depth on the flat front panel wraps under to form the base. With a 3 inch gusset that is about 1.5 inches, so anything printed there ends up on the bottom of the bag where nobody sees it."
-    ],
-    [
-      "How far down from the top of a tote should the print start?",
-      "Below the handle stitching, which usually ends around 3 inches from the top edge, plus about an inch of breathing room — so roughly 4 inches down. Printing across the webbing stitch is not possible on a flat platen and will distort."
-    ],
-    [
-      "What resolution do tote bag prints need?",
-      "Export at 300 DPI at the final print size, so an 8.5 inch wide print needs about 2,550 pixels of width. Canvas and heavy cotton hide a little softness, but below roughly 150 DPI the edges of type visibly break up."
-    ]
-  ]
-},
-  "tour-guide-driver-tip-planner": {
-  "intro": "This planner totals the cash a multi-day tour needs for tips, applying the per-person-per-day and per-group-per-day rates tour operators publish in their pre-departure notes to a trip of a given length and party size. Tour tipping is not a percentage of the fare — it is a daily rate per role, so a tour director at $8 per person per day and a coach driver at $5 come to $260 on a ten-day trip for two before local guides and porters. It covers escorted coach tours, private guide-and-driver arrangements, trekking crews, safari camps and independent day tours, and works out how many notes to withdraw.",
-  "useCases": [
-    "Work out the cash envelope for a ten-day escorted coach tour before leaving home, when ATMs en route are unreliable.",
-    "Split a Kilimanjaro crew tip fairly between lead guide, assistant guides, cook and porters using the published per-day rates.",
-    "Check what a safari lodge's communal staff box and driver-guide tip add up to across a five-night stay."
-  ],
-  "benefits": [
-    [
-      "Per-role, per-day arithmetic",
-      "Applies each role's own basis — per person or per group, per day or per event — instead of one blanket percentage."
-    ],
-    [
-      "Trip styles built in",
-      "Escorted coach, private car, trekking crew, safari and day tours each come with their own roles and published ranges."
-    ],
-    [
-      "Tells you what to withdraw",
-      "Converts the total into whole notes so you land with the right cash rather than an awkward remainder."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much should you tip a tour guide per day?",
-      "Operators typically suggest $5-12 per person per day for a tour director who stays with the group for the whole trip, and $2-5 per person for a local guide who joins for a single city or site. A private guide working for your party alone is usually tipped per group instead, around $20-50 a day depending on the destination."
-    ],
-    [
-      "How much do you tip a coach driver on a tour?",
-      "Around $3-8 per person per day, roughly half to two-thirds of what the tour director receives, handed over at the end of the trip rather than daily. Drivers on a single airport or intercity transfer are tipped per journey instead, commonly $5-20 for the whole vehicle."
-    ],
-    [
-      "How much do you tip a trekking crew?",
-      "Trekking tips are pooled and paid per group per day, not per client: roughly $20-25 a day for the lead guide, $15-20 for each assistant, $12-15 for the cook, and $8-12 per porter per day. Because porters usually outnumber clients several times over, they often account for the largest single line in the budget."
-    ],
-    [
-      "Are tips included in tour prices?",
-      "Sometimes. A growing number of operators now build crew gratuities into the fare and say so explicitly in the booking conditions, while others state a suggested per-day amount and leave it to you. Check your pre-departure notes first — paying twice is a common and expensive mistake on escorted tours."
     ]
   ]
 },

@@ -2,6 +2,265 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "internet-speed-test": {
+  "title": "Internet Speed Test — Test Your Speed Online Free",
+  "h1": "Internet Speed Test",
+  "metaDescription": "Test your internet speed online free — four parallel downloads, a 1 MB upload test and a latency check return download, upload and ping in one run.",
+  "intro": "The Internet Speed Test measures your connection from inside the browser using the Fetch API and performance.now(), with no app to install and no account. Download speed is measured by opening four parallel streams to picsum.photos with caching disabled, counting bytes as they arrive through the response's ReadableStream reader, then dividing total bits by elapsed seconds. Upload is measured by generating 1 MiB of random bytes locally and POSTing them as multipart form data to httpbin.org, timed the same way. Latency is a single cache-busting request timed round-trip, and the whole run — ping, then download, then upload — can be cancelled mid-test with an AbortController.",
+  "useCases": [
+    "Checking whether your connection is actually delivering the download speed your broadband plan advertises",
+    "Confirming you have enough upload headroom before a video call, a live stream, or sending a large file",
+    "Comparing Wi-Fi in different rooms, or before and after moving a router, switching bands, or changing ISP"
+  ],
+  "benefits": [
+    [
+      "Download, upload and ping in one run",
+      "One button returns all three numbers — receive speed in Mbps, send speed in Mbps, and round-trip latency in milliseconds — instead of only a headline download figure."
+    ],
+    [
+      "Four parallel streams, not one",
+      "A single connection under-reports on fast links because of TCP slow start, so the download test opens four simultaneous requests to push the connection harder before timing it."
+    ],
+    [
+      "Nothing to install, no account",
+      "It is plain JavaScript on the page you are already on — no signup, no app, no extension, and no result history: the numbers live in the page and clear when you reload."
+    ],
+    [
+      "Stoppable mid-test",
+      "The Stop button aborts every in-flight request immediately through an AbortController, so a test on a slow or metered connection never has to run to completion."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I test my internet speed online for free?",
+      "Press Start Test — that is the whole process. The tool measures latency first, then downloads four 2000×2000 images in parallel with caching disabled to measure download speed, pauses half a second, then uploads 1 MiB of generated data to measure upload speed. There is no signup, no payment, and nothing to install."
+    ],
+    [
+      "Why is my speed lower here than on other speed tests?",
+      "Mostly three reasons. First, the result is calculated by dividing by 1024×1024 rather than 1,000,000, which makes the displayed figure about 5% lower than the decimal megabits ISPs quote. Second, it is a short burst of four downloads, so TCP slow start and the TLS handshake are counted inside the elapsed time and drag the average down on fast links. Third, the ceiling is whichever is slower — your connection or the image CDN the test pulls from."
+    ],
+    [
+      "What does the ping number actually measure?",
+      "It is the round-trip time in milliseconds of one cache-busting HTTP request, measured with performance.now() and rounded to a whole millisecond. Browsers cannot send ICMP packets, so this is HTTP latency rather than a true ping, and it usually reads a little higher than the ping command in a terminal because DNS lookup and connection setup are included."
+    ],
+    [
+      "Does this speed test upload any of my files or data?",
+      "No files and no personal data. The upload test creates 1 MiB (1,048,576 bytes) of random values with Math.random inside your browser and posts that throwaway payload — nothing from your device is read or sent. Results are not saved to an account or a server; they exist only in the open page and disappear when you reload it."
+    ],
+    [
+      "What is a good download speed?",
+      "It depends on what you are doing, not on a single number. HD streaming and video calls generally need only a few Mbps, 4K streaming is typically quoted around 15–25 Mbps, and a household with several simultaneous streams wants considerably more. As a visual reference, the download gauge on this tool fills completely at 100 Mbps."
+    ],
+    [
+      "Can I use this to test my Wi-Fi speed?",
+      "Yes — it measures the whole path from your device to the internet, so Wi-Fi is included in whatever you see. To tell Wi-Fi apart from your broadband line, run the test once over Wi-Fi and once on an Ethernet cable, or once beside the router and once in the far room; the gap between the readings is the wireless part."
+    ],
+    [
+      "Why is my upload speed much lower than my download speed?",
+      "Two things are usually at play. Most consumer broadband is asymmetric by design, so the upload line is genuinely slower than the download line. On top of that, the upload test sends only 1 MiB, and a transfer that short spends a large share of its time in connection setup and TCP ramp-up — which means a very fast upload link will be under-reported here."
+    ],
+    [
+      "The result looks wrong or the test did not seem to run — what happened?",
+      "Check whether an ad blocker, corporate firewall, VPN, or an offline connection is blocking the test's requests. When a request cannot complete, the reading you see will not reflect your real connection, so allow the domains the test calls and run it again. You can also press Stop Test at any point to cancel a run in progress."
+    ]
+  ],
+  "steps": [
+    "Press \"Start Test\" — there is nothing to install, sign up for, or configure first.",
+    "The tool measures latency, runs four parallel downloads with caching disabled, pauses briefly, then uploads 1 MiB of locally generated random data.",
+    "Read download and upload in Mbps and ping in ms on the summary card, then press \"Test Again\" to rerun — or \"Stop Test\" to cancel mid-run."
+  ]
+},
+  "internship-request-letter-builder": {
+  "intro": "The Internship Request Letter Builder composes a ready-to-send internship application email from your course, skills, free dates and the employer you are targeting. It follows the standard business-letter order — subject line, salutation, statement of purpose, evidence of fit, availability window, call to action, sign-off — and scores the draft against seven checks such as naming a real recipient and keeping the body between 90 and 200 words. Built for students and fresh graduates sending cold applications where nobody has posted a vacancy.",
+  "useCases": [
+    "Send a cold email to a startup founder who has not advertised an internship but might create one.",
+    "Apply for a mandatory 8-week summer training placement that your college requires before the seventh semester.",
+    "Follow up on a careers-page form with a direct email to the team lead you actually want to work with.",
+    "Rewrite the same application for five different companies by swapping the employer-specific line each time."
+  ],
+  "benefits": [
+    [
+      "Exact availability dates",
+      "Your start date and duration are converted into a written from-to window, so nobody has to do the arithmetic."
+    ],
+    [
+      "Length kept in the readable band",
+      "A live word count flags drafts under 90 or over 200 words, the range a cold email can survive."
+    ],
+    [
+      "Evidence, not adjectives",
+      "The checklist rewards a named recipient, listed tools and a portfolio link instead of generic enthusiasm."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I write an email asking for an internship?",
+      "State the role and company in the first sentence, then give one paragraph of evidence — the tools you use and something specific about the employer — followed by your exact availability dates and a small ask such as a 15-minute call. Keep the body under about 200 words and address a named person wherever you can find one."
+    ],
+    [
+      "What should the subject line of an internship request be?",
+      "Use the pattern 'Internship application — [role] — [your name]', optionally with the team in brackets. It tells a recruiter what the mail is and who sent it before they open it, and it stays readable in the roughly 60 characters most inboxes show on mobile."
+    ],
+    [
+      "Should an internship request letter be formal or casual?",
+      "Match the employer. Government offices, PSUs, law firms and academic labs expect 'Respected Sir/Madam' and 'Yours sincerely'; most companies and startups read better with 'Dear [Name]' and 'Best regards'. Casual openings like 'Hi' work only when you are writing to a small team directly."
+    ],
+    [
+      "Do I need to attach a resume with the internship request?",
+      "Yes — attach a one-page PDF and name the file with your own name, but the email must stand on its own because many recruiters read it before opening anything. Repeat the two or three most relevant skills in the body rather than writing 'please see attached'."
+    ]
+  ]
+},
+  "interval-ear-trainer": {
+  "title": "Interval Ear Trainer — Free Online Ear Training Quiz",
+  "h1": "Interval Ear Trainer — Melodic and Harmonic Ear Training",
+  "metaDescription": "Free interval ear training quiz — identify all 12 intervals, minor 2nd to octave, melodic or harmonic. Web Audio tones, no signup, runs in-browser.",
+  "intro": "The Interval Ear Trainer plays two notes and asks you to name the distance between them. Every tone is synthesised live by the Web Audio API — one triangle-wave OscillatorNode per note, shaped by a GainNode envelope with a 20 ms attack and a 0.8-second total length — driven by a built-in equal-temperament frequency table running from C4 (261.63 Hz) to A5 (880 Hz), with A4 at 440 Hz. It covers all 12 chromatic intervals from the minor 2nd to the octave, in melodic mode (root, then the top note 0.9 s later) or harmonic mode (both notes struck together). Nothing is uploaded, recorded, or downloaded: the audio engine, the quiz logic, and the scoring all run inside your browser tab.",
+  "useCases": [
+    "Music students drilling for an aural skills or grade exam, isolating the intervals they keep missing — tritone versus perfect 5th, minor 6th versus major 6th — instead of running the full 12 every round.",
+    "Singers and instrumentalists warming up pitch recognition before a rehearsal, using harmonic mode to train the tuning-sensitive simultaneous intervals and melodic mode for line-reading.",
+    "Producers, arrangers and transcribers building the reflex to name a leap by ear, so a melody or bassline can be written down without hunting for it on a keyboard."
+  ],
+  "benefits": [
+    [
+      "All 12 chromatic intervals, individually switchable",
+      "The trainer knows every interval from the minor 2nd (1 semitone) through the octave (12 semitones). Open the Intervals panel and toggle off whatever you already own — the quiz only draws from the ones left on, so you can drill a two-interval pair until it sticks. At least one interval always stays active."
+    ],
+    [
+      "Melodic and harmonic playback",
+      "Melodic mode plays the root, then the upper note 0.9 seconds later, which is how intervals appear in a line. Harmonic mode sounds both notes at the same instant, which is the harder ear and the one that matters for tuning and chord recognition. Switch modes mid-session without losing your score."
+    ],
+    [
+      "Live scoring, streaks and a mistake log",
+      "Accuracy, correct count, total, current streak and best streak update after every answer. A Recent History panel keeps your last 10 questions and, when you miss, records what you guessed instead — so the confusion pattern shows itself rather than disappearing."
+    ],
+    [
+      "No account, no install, nothing uploaded",
+      "The page is free and requires no signup. Tones are generated on your device by the browser's own audio engine, and the tool makes no network requests while you practise — no microphone, no recordings, no files leaving your machine."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is interval ear training?",
+      "It's the practice of naming the pitch distance between two notes purely by listening. An interval is measured in semitones — a perfect 5th is 7, an octave is 12 — and this trainer plays a random pair from its C4-to-A5 range, then asks you to pick the right name from m2 through P8. Repetition builds the reflex that lets you transcribe a melody or spot a chord tone without an instrument."
+    ],
+    [
+      "What's the difference between melodic and harmonic mode?",
+      "Timing. Melodic mode plays the lower note first and the upper note 0.9 seconds later, so you hear the leap as a movement. Harmonic mode starts both notes at exactly the same moment, so they fuse into one sound and you have to identify the interval from its colour and beating. Harmonic is generally the harder of the two — most people start on melodic."
+    ],
+    [
+      "Which intervals does this ear trainer cover?",
+      "All 12 chromatic intervals within an octave: minor 2nd (1 semitone), major 2nd (2), minor 3rd (3), major 3rd (4), perfect 4th (5), tritone (6), perfect 5th (7), minor 6th (8), major 6th (9), minor 7th (10), major 7th (11) and the octave (12). Compound intervals beyond the octave are not included."
+    ],
+    [
+      "How do I practise only certain intervals, like thirds and fifths?",
+      "Click the Intervals button to open the selection panel, then switch off everything you don't want. The quiz draws its questions only from the intervals still enabled, and the answer grid shrinks to match, so a two-interval drill really is a two-way choice. The counter beside the toolbar shows how many of the 12 are active; the tool won't let you disable the last one."
+    ],
+    [
+      "Is this interval ear trainer free, and do I need an account?",
+      "Yes, it's free, and no account or download is needed. The whole trainer is client-side JavaScript — the notes are synthesised by your browser's Web Audio engine, and no audio or answer data is sent anywhere while you practise."
+    ],
+    [
+      "Why can't I hear any sound?",
+      "Almost always because the browser hasn't unlocked audio yet. Browsers create the AudioContext in a suspended state and only resume it after a user gesture, so the first click on Start Session is what turns the sound on — if you loaded the page and heard nothing, press Start (or Replay) once. After that, check your system and tab volume; the tool plays at a fixed gain of 0.32, well below full scale."
+    ],
+    [
+      "Does the trainer save my score between sessions?",
+      "No. Accuracy, streak, best streak and the 10-question history live in the page's memory only. Reloading the tab or pressing Reset clears them, and nothing is written to your device or to a server. Note your accuracy down before you leave if you want to track progress over weeks."
+    ],
+    [
+      "What note range and tuning does it use?",
+      "A 22-note chromatic range from C4 (261.63 Hz) up to A5 (880 Hz), in 12-tone equal temperament with A4 = 440 Hz. Each question picks a random root low enough that the upper note still fits inside that range, so an octave question never starts above A4. Timbre is a triangle wave — brighter than a sine, cleaner than a saw — which keeps the upper partials audible without masking the interval."
+    ]
+  ],
+  "steps": [
+    "Press Start Session. That first click both unlocks browser audio and plays your first randomly chosen interval — optionally set melodic or harmonic mode, and open the Intervals panel first if you want to drill a subset.",
+    "Listen, hitting Replay as many times as you need, then click the interval you think you heard from the answer grid. Each button shows the abbreviation, the full name and its semitone count.",
+    "Read the instant feedback — a miss tells you the correct interval and logs what you guessed — then press Next Interval. Accuracy, streak, best streak and the last 10 answers update as you go; Reset clears the session."
+  ]
+},
+  "interview-candidate-nda-generator": {
+  "intro": "A candidate NDA covers the narrow window in which someone outside the company is shown internal code, roadmaps, metrics or systems during a hiring process. It works best when it is short, scoped to what the candidate will genuinely see, and unmistakably not a non-compete. This generator builds that document from the materials you tick, sets the confidentiality period and deletion deadline from the interview date, keeps ownership of any take-home exercise with the candidate, and preserves the right to report unlawful conduct to a regulator.",
+  "useCases": [
+    "Give an engineering candidate repository access for a pairing session without leaving the code unprotected.",
+    "Cover a design candidate who will be shown unreleased brand work and prototypes.",
+    "Set out clearly that a take-home submission stays the candidate's property and will not ship without a separate paid agreement.",
+    "Stop interview questions and exercises from being posted to public forums."
+  ],
+  "benefits": [
+    [
+      "Scoped to what is really shown",
+      "The confidentiality definition lists the specific materials you tick, rather than an open-ended catch-all a candidate is asked to sign blind."
+    ],
+    [
+      "Fair by construction",
+      "States expressly that it is not an offer, creates no employment relationship, and does not restrict where the candidate may work."
+    ],
+    [
+      "Length is a stated metric",
+      "Reports word count and reading time and warns past 900 words, the point at which candidate NDAs stop being read."
+    ]
+  ],
+  "faqs": [
+    [
+      "Should job candidates sign an NDA?",
+      "Only when they will genuinely see non-public material — source code, unreleased products, real metrics or internal systems. Asking every applicant to sign one before a first conversation is a common complaint and costs candidates. Scope it to the stage where confidential access actually begins."
+    ],
+    [
+      "Who owns a take-home coding exercise?",
+      "The candidate does, as the author, unless they assign it in writing. A fair candidate NDA says the company may use the submission only to evaluate the candidate, and not in a product or client deliverable without a separate written agreement and payment."
+    ],
+    [
+      "Can an interview NDA stop me joining a competitor?",
+      "It should not, and a well-drafted one says so expressly. A confidentiality agreement protects information; a non-compete restricts employment and is a different instrument. Section 27 of the Indian Contract Act, 1872 voids agreements in restraint of trade, and California Business and Professions Code section 16600 voids non-competes outright, with related sections restricting even offering one to an applicant."
+    ],
+    [
+      "How long should a candidate NDA last?",
+      "One to three years is typical, since the commercial sensitivity of a roadmap or metric fades quickly. Trade secrets are usually carved out and protected for as long as they stay secret. Anything longer is hard to justify for someone who spent a few hours in a hiring process."
+    ]
+  ]
+},
+  "interview-consent-form-builder": {
+  "intro": "An interview consent form records, in writing, that the person you are recording understands what the recording is for, how it may be used, how long you keep it and how to change their mind. This builder assembles that page from your answers and scores it against the elements GDPR Article 7 and Article 13 expect — a named controller, a specific purpose, listed uses, a retention period, a withdrawal route and a signature block — then checks the wording with the Flesch-Kincaid reading grade. Aimed at journalists, podcasters, documentary teams, HR and UX researchers who need a defensible release without a bespoke legal draft.",
+  "useCases": [
+    "Send a one-page release to a podcast guest before recording, listing audio publication and archive deposit as the permitted uses.",
+    "Give UX research participants a form that offers role-only attribution instead of naming them.",
+    "Set a 14-day withdrawal window for a documentary interview so contributors can pull out before the edit locks.",
+    "Produce a version that names one country only when the footage will not be distributed worldwide."
+  ],
+  "benefits": [
+    [
+      "Written to be understood",
+      "Flesch-Kincaid grading flags wording that has drifted above a grade 9 reading level."
+    ],
+    [
+      "Nothing quietly missing",
+      "Each required element is checked off against the article of the GDPR that asks for it."
+    ],
+    [
+      "Scope you actually chose",
+      "Permitted uses, territory, attribution and retention are stated explicitly rather than left as blanket consent."
+    ]
+  ],
+  "faqs": [
+    [
+      "What has to be in an interview consent form?",
+      "At minimum: who is recording, what the project is, why the recording is being made, how it may be used and where, whether the person is named, how long it is kept, how to withdraw consent, a contact point and a signature and date. Those map to GDPR Articles 13(1)(a)-(e), 13(2)(a) and 7(1)-(3)."
+    ],
+    [
+      "Can someone withdraw consent after an interview is published?",
+      "Yes — GDPR Article 7(3) says consent can be withdrawn at any time and withdrawal must be as easy as giving it, though withdrawal is not retroactive, so material already lawfully published does not have to be unpublished. In practice most producers set a window, commonly 7 to 30 days, in which they will remove contributions from anything not yet released."
+    ],
+    [
+      "Do I need written consent to record a phone or video interview?",
+      "It depends where you and the interviewee are. Some jurisdictions, including several US states, require all parties to consent to recording a call, while others require only one; in the EU and UK, recording an identifiable person also processes personal data, so you need a lawful basis and must give the Article 13 information. Written consent is the simplest way to evidence both — check the rule for your jurisdiction."
+    ],
+    [
+      "Is a generated consent form legally binding?",
+      "It is a draft, not legal advice. A signed form is good evidence that consent was informed and freely given, but enforceability depends on local contract, publicity and data-protection law, and extra safeguards apply for children, patients and vulnerable adults. Have a qualified adviser review the wording before you use it publicly."
+    ]
+  ]
+},
   "interview-day-document-checklist": {
   "intro": "This checklist builds the exact set of originals and photocopies to carry to an interview or document verification, then works out what that means in practice: pages per set, total copies, the number of signatures self-attestation demands, and the photocopy bill. It follows the rules the panels actually apply — the date of birth is taken only from the Matriculation certificate, a central post needs the category certificate in the central format rather than the state's, an OBC non-creamy-layer certificate must be current as on the closing date in the notice, and a serving government employee has to produce a No Objection Certificate at the interview.",
   "useCases": [
@@ -1231,6 +1490,46 @@ export default {
     [
       "Why should I check the AIS before filing?",
       "The Annual Information Statement reports interest, dividends, share and property transactions and large cash deposits that the department already knows about. Filing figures that contradict the AIS is a common trigger for a mismatch notice, so reconcile it with Form 26AS and your own records first."
+    ]
+  ]
+},
+  "itr-u-eligibility-cost": {
+  "intro": "This page answers two questions about an updated Indian income tax return: whether section 139(8A) lets you file ITR-U for a given assessment year at all, and what section 140B makes it cost. It runs the statutory bars first, because for a large share of people the honest answer is no — an updated return cannot reduce the tax already determined, cannot create or increase a refund, cannot be a return of a loss, and cannot be filed where a search under section 132, a survey under section 133A, a pending or completed assessment, or Chapter XXII prosecution touches that year. If nothing bars you, it names which form of section 139(8A) governs the year (the 24-month window as enacted by the Finance Act 2022, or the 48-month window substituted by the Finance Act 2025 with effect from 1 April 2025), gives the exact deadline date, and adds up the tax, the section 234A and 234B interest at 1% per month or part month, the section 234C interest you enter, the section 234F fee and the section 140B(3) additional tax of 25%, 50%, 60% or 70%. It is built for people who missed income on an old return and for the accountants who have to price the fix.",
+  "useCases": [
+    "Someone who forgot to report ₹4 lakh of freelance income in FY 2022-23 wants the exact rupee figure that has to be paid before an ITR-U for AY 2023-24 can be furnished.",
+    "A taxpayer who overpaid and hopes an updated return will bring a refund needs to see the first proviso to section 139(8A) close that door before spending time on the form.",
+    "An accountant checking an AY 2020-21 file wants confirmation that the year stayed on the pre-Finance-Act-2025 24-month rule and shut on 31 March 2023, rather than gaining the 48-month extension."
+  ],
+  "benefits": [
+    [
+      "The bars come first",
+      "Twelve statutory bars from the provisos to section 139(8A), each labelled with the exact proviso that produces it, checked before any arithmetic runs."
+    ],
+    [
+      "Says which window applies",
+      "Names whether the assessment year sits in the 24-month window as enacted by the Finance Act 2022 or the 48-month window substituted by the Finance Act 2025, and gives the deadline date."
+    ],
+    [
+      "Full section 140B bill",
+      "Tax, 234A and 234B interest at 1% a month, 234C as entered, the 234F fee and the 25% / 50% / 60% / 70% additional tax, itemised and totalled."
+    ]
+  ],
+  "faqs": [
+    [
+      "Can I file ITR-U to claim a refund or reduce my tax?",
+      "No. The first proviso to section 139(8A) bars an updated return in three cases: where it is a return of a loss, where it has the effect of decreasing the total tax liability determined on the return already filed under section 139(1), 139(4) or 139(5), and where it results in a refund or increases the refund due on that return. An updated return can only move the tax figure upward."
+    ],
+    [
+      "How many years back can ITR-U be filed?",
+      "Forty-eight months from the end of the relevant assessment year. The Finance Act 2025 substituted forty-eight months for twenty-four in section 139(8A) with effect from 1 April 2025, so AY 2021-22 runs to 31 March 2026, AY 2022-23 to 31 March 2027 and AY 2023-24 to 31 March 2028. AY 2020-21 is the exception: its 48-month period would have ended on 31 March 2025, one day before the amendment took effect, so it stayed on the old 24-month rule and closed on 31 March 2023."
+    ],
+    [
+      "How much extra tax does an ITR-U cost?",
+      "Section 140B(3) charges additional income-tax on the aggregate of tax and interest payable: 25% if the return is furnished within 12 months of the end of the assessment year, 50% within 24 months, 60% within 36 months and 70% within 48 months, the last two tiers having been added by the Finance Act 2025. On ₹50,000 of tax plus ₹38,000 of section 234A and 234B interest, furnished 28 months after the end of the assessment year, that is 60% of ₹88,000, or ₹52,800 — with the ₹5,000 section 234F fee on top, giving ₹1,45,800 in all."
+    ],
+    [
+      "Does a search or survey stop me from filing an updated return?",
+      "Yes. Under the second proviso to section 139(8A), an updated return cannot be furnished where a search was initiated under section 132, books or assets were requisitioned under section 132A, or a survey was conducted under section 133A other than a section 133A(2A) TDS survey. The bar covers the assessment year relevant to the previous year in which that action happened and every assessment year before it. The third proviso adds further bars, including a pending or completed assessment, reassessment, recomputation or revision, and prosecution proceedings under Chapter XXII."
     ]
   ]
 },
@@ -9103,6 +9402,46 @@ export default {
     ]
   ]
 },
+  "maternity-benefit-entitlement": {
+  "intro": "This calculator answers the question the Maternity Benefit Act, 1961 asks first: on what date will a woman have actually worked eighty days for her employer inside the twelve months immediately preceding her expected date of delivery, which is the section 5(2) condition without which no maternity benefit is payable at all. From there it dates the whole entitlement — 26 weeks under section 5(3), of which not more than eight may precede the expected date of delivery, or 12 weeks with not more than six preceding it for a woman who already has two or more surviving children — and prints the earliest permissible leave start, the leave end and the rejoining date. It is built for HR and payroll teams applying the Act as amended by the Maternity Benefit (Amendment) Act, 2017, and for women who need to see whether the eighty-day clock lands before or after their leave begins.",
+  "useCases": [
+    "An HR manager processing a maternity notice from someone who joined four months ago, needing the exact date the eighty days of actual work under section 5(2) will be completed and whether that date falls before her intended leave start.",
+    "A payroll executive dating a 26-week block that starts eight weeks before the expected delivery date, and checking the rejoining date against the section 4(2) bar on employing a woman during the six weeks immediately following delivery.",
+    "A compliance officer working out the 12-week block for a commissioning mother under section 5(4), the six weeks after a medical termination under section 9, or the two weeks after a tubectomy under section 9A."
+  ],
+  "benefits": [
+    [
+      "The qualification date, not just a yes or no",
+      "When the eighty days are not yet complete, the page gives the calendar date the eightieth day of actual work falls on, and says whether that date is still inside the twelve-month window preceding the expected delivery date."
+    ],
+    [
+      "Every figure carries its section",
+      "80 days from section 5(2), 26 or 12 weeks from section 5(3), 8 or 6 pre-natal weeks from the same sub-section, 12 weeks from section 5(4), 6 from section 9, 2 from section 9A, 15 months of nursing breaks from section 11 and the 50-employee creche line from section 11A."
+    ],
+    [
+      "Flags the collisions the Act creates",
+      "A 12-week block begun at the full six weeks before the expected delivery date ends one day inside the section 4(2) six-week post-delivery employment bar — the page names that clash instead of printing a clean date."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many days must I have worked to get maternity leave in India?",
+      "Eighty days of actual work with the employer you are claiming from, inside the twelve months immediately preceding your expected date of delivery. That is section 5(2) of the Maternity Benefit Act, 1961. The Explanation to that sub-section counts days you were laid off and days declared as holidays with wages as days actually worked, and the proviso removes the eighty-day condition for a woman who immigrated into the State of Assam while pregnant."
+    ],
+    [
+      "Is maternity leave in India 26 weeks or 12 weeks?",
+      "26 weeks, unless you already have two or more surviving children, in which case section 5(3) caps it at 12 weeks. Of the 26 weeks not more than 8 may fall before the expected date of delivery; of the 12 weeks not more than 6 may. An adopting mother of a child under three months and a commissioning mother get 12 weeks from the date the child is handed over, under section 5(4)."
+    ],
+    [
+      "How much leave is allowed for a miscarriage or a tubectomy?",
+      "Six weeks immediately following the day of a miscarriage or medical termination of pregnancy under section 9, and two weeks immediately following the day of a tubectomy operation under section 9A, both with wages at the rate of maternity benefit. Section 10 adds up to one further month of leave for illness arising out of pregnancy, delivery, premature birth, miscarriage, medical termination or tubectomy."
+    ],
+    [
+      "What does the employer owe after I return to work?",
+      "Two nursing breaks a day in addition to the rest interval, until the child is fifteen months old, under section 11. An establishment with fifty or more employees must have a creche and must allow four visits a day to it under section 11A. Section 12 makes discharge or dismissal during, or on account of, that absence void, and section 27 lets any award, agreement or contract give more than the Act — never less."
+    ]
+  ]
+},
   "maternity-leave-date-calculator": {
   "intro": "This calculator converts an expected date of delivery into the three dates an employee and an HR team actually need: the day maternity leave starts, the last day of paid leave, and the day the employee is due back at work. It applies the entitlement rules in the Maternity Benefit Act, 1961 as amended in 2017 — 26 weeks with a maximum of 8 weeks before delivery for a woman with fewer than two surviving children, 12 weeks (6 before) from the third child onwards, and the separate periods for adoption, miscarriage and tubectomy. It also flags the 80-day qualifying-service test and the date nursing breaks stop.",
   "useCases": [
@@ -12241,6 +12580,51 @@ export default {
     [
       "Which unit is best for comparing running cost?",
       "Litres per 100 km scales linearly with fuel spend, so a 1 l/100 km improvement is worth the same money whether the car is thirsty or frugal. With mpg or km/l the same numerical gain matters far more at the low end — going from 10 to 12 km/l saves much more fuel than going from 20 to 22."
+    ]
+  ]
+},
+  "msme-45-day-payment-calculator": {
+  "intro": "This calculator works out what paying an MSME supplier late actually costs a buyer in rupees, by applying three rules together: the statutory due date under section 15 of the MSMED Act 2006 (15 days where there is no agreement in writing, and whatever the contract says up to a hard ceiling of 45 days where there is one), the section 16 charge of compound interest with monthly rests at three times the bank rate notified by the Reserve Bank, and section 43B(h) of the Income-tax Act 1961, under which a sum owed to a micro or small enterprise and paid beyond the section 15 limit is deductible only in the year it is actually paid. It is built for the buyer's accounts and finance team, and it opens by settling the question people get wrong most often: section 43B(h) reaches micro and small suppliers only, because section 2(n) of the MSMED Act defines a \"supplier\" as a micro or small enterprise and leaves medium enterprises out entirely.",
+  "useCases": [
+    "Pricing the cost of holding back a supplier payment until after 31 March, when the deduction moves a whole financial year",
+    "Checking whether a 60-day or 90-day purchase order term survives the 45-day ceiling in the proviso to section 15",
+    "Working out the section 16 interest already accrued on an overdue payable before a year-end audit or an MSME Samadhaan claim",
+    "Confirming that a medium-enterprise or trader supplier does not trigger a section 43B(h) disallowance"
+  ],
+  "benefits": [
+    [
+      "The micro/small gate is answered first",
+      "Section 2(n) of the MSMED Act covers only micro and small enterprises, so a medium supplier attracts neither section 16 interest nor a 43B(h) disallowance — the page says so before it shows a single number."
+    ],
+    [
+      "Monthly rests, shown rest by rest",
+      "Section 16 requires compound interest with monthly rests at three times the RBI bank rate. The schedule shows each rest date, opening balance and interest so the figure can be checked line by line."
+    ],
+    [
+      "The 31 March cliff is priced",
+      "Paying one day either side of the financial year end changes the deduction year. The calculator shows the extra tax carried in the accrual year and what a year of deferral costs at your own cost of funds."
+    ],
+    [
+      "Interest is treated as a post-tax cost",
+      "Section 23 of the MSMED Act blocks any income-tax deduction for section 16 interest, so the tool also shows the pre-tax earnings needed to fund it."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is it 45 days or 15 days to pay an MSME supplier?",
+      "It is 15 days unless there is an agreement in writing. Section 2(b) of the MSMED Act 2006 fixes the appointed day as the day following the expiry of fifteen days from acceptance, and section 15 requires payment before that day. Where a payment term is agreed in writing that term applies instead, but the proviso to section 15 says the agreed period shall not exceed forty-five days from the day of acceptance or deemed acceptance — so a 60-day or 90-day purchase order term is cut down to 45 days."
+    ],
+    [
+      "Does section 43B(h) apply to medium enterprises?",
+      "No. Section 43B(h) is drafted for a sum payable to a micro or small enterprise, and section 2(n) of the MSMED Act defines \"supplier\" as a micro or small enterprise that has filed a memorandum, which leaves medium enterprises outside the delayed-payment chapter altogether. A payable owed to a medium enterprise is deductible on the normal accrual basis however late it is paid, and no section 16 interest arises either. Ministry of MSME Office Memoranda also restrict retail and wholesale traders holding Udyam registration to priority-sector-lending benefits, excluding the delayed-payment provisions."
+    ],
+    [
+      "What interest rate applies to a delayed MSME payment?",
+      "Three times the bank rate notified by the Reserve Bank, compounded with monthly rests, under section 16 of the MSMED Act 2006. With the RBI Bank Rate at 5.50% as published on rbi.org.in and read on 29 July 2026, that is 16.5% a year with monthly rests — about 1.375% added to the balance each month. On 10 lakh rupees paid 141 days late that works out to roughly 65,216 rupees. Section 23 of the same Act says this interest is not allowed as a deduction when computing income under the Income-tax Act 1961."
+    ],
+    [
+      "Can I still claim the deduction if I pay before filing my return?",
+      "Not under clause (h). The proviso to section 43B that allows a deduction where payment is made on or before the return due date under section 139(1) applies to the other clauses of section 43B but not to clause (h). For a micro or small supplier, payment beyond the section 15 limit is deductible only in the previous year in which it is actually paid. Section 43B(h) was inserted by the Finance Act 2023 and applies from FY 2023-24 (AY 2024-25) onwards; note that a payment made late but still inside the same financial year is not deferred, because that year is the year of actual payment."
     ]
   ]
 },
@@ -16383,324 +16767,6 @@ export default {
     [
       "What is the difference between npm-run-all and concurrently?",
       "npm-run-all covers both directions: run-s runs scripts sequentially and run-p in parallel, with glob support like run-p watch:*. concurrently focuses on parallel execution with better output labelling, colouring and kill-others behaviour for long-running dev processes. Many projects use run-s for builds and concurrently for dev servers."
-    ]
-  ]
-},
-  "nps-80ccd1b-calculator": {
-  "intro": "Section 80CCD(1B) of the Income-tax Act, 1961 allows an extra deduction of up to Rs 50,000 for your own contribution to an NPS Tier-I account, and this calculator shows how much of that extra Rs 50,000 you actually get. It splits your contribution between 80CCD(1) — which shares the Rs 1,50,000 aggregate ceiling of section 80CCE with 80C and 80CCC, and is separately capped at 10% of salary or 20% of gross total income — and 80CCD(1B), which sits outside both limits. Built for salaried and self-employed taxpayers on the old regime who want to know whether topping up NPS is worth it.",
-  "useCases": [
-    "Checking that a Rs 50,000 NPS Tier-I top-up still gives a full deduction when EPF and PPF have already used the entire Rs 1,50,000 of section 80CCE.",
-    "Seeing how much of a Rs 2,00,000 NPS contribution a self-employed professional can actually deduct when the 80CCD(1) ceiling is 20% of gross total income.",
-    "Deciding whether staying on the old regime is worth it, by putting a rupee value on the 80CCD(1B) deduction you would forfeit under section 115BAC."
-  ],
-  "benefits": [
-    [
-      "Separates the two NPS sections",
-      "Shows what falls under 80CCD(1) inside the Rs 1.5 lakh cap and what qualifies for the extra Rs 50,000."
-    ],
-    [
-      "Applies the real salary ceiling",
-      "Uses 10% of basic plus DA for salaried filers and 20% of gross total income for everyone else."
-    ],
-    [
-      "Prices the benefit",
-      "Converts the extra deduction into rupees of tax saved at your slab rate, including the 4% health and education cess."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is the Rs 50,000 under 80CCD(1B) over and above the Rs 1.5 lakh limit?",
-      "Yes. The proviso to section 80CCE keeps 80CCD(1B) outside the Rs 1,50,000 aggregate ceiling, so a taxpayer who has already exhausted 80C can still deduct up to Rs 50,000 more for NPS Tier-I. The combined maximum is therefore Rs 2,00,000 from these sections."
-    ],
-    [
-      "Can I claim 80CCD(1B) under the new tax regime?",
-      "No. Section 115BAC removes almost all Chapter VI-A deductions, and 80CCD(1B) is one of them; only the employer's NPS contribution under 80CCD(2) and a few others such as 80CCH and 80JJAA remain. You have to be on the old regime to claim the extra Rs 50,000."
-    ],
-    [
-      "Does the 10% of salary limit apply to the extra Rs 50,000?",
-      "No. The 10% of salary (basic plus dearness allowance) restriction — 20% of gross total income for the self-employed — applies only to section 80CCD(1). Amounts not claimed under 80CCD(1) can be claimed under 80CCD(1B) up to Rs 50,000 regardless of that percentage cap."
-    ],
-    [
-      "Does an NPS Tier-II account qualify for 80CCD(1B)?",
-      "No. Only Tier-I contributions qualify. Tier-II is a voluntary withdrawable account with no lock-in and no deduction, except for the separate Tier-II Tax Saver scheme available to central government employees with a three-year lock-in. This is general information, not tax advice — check your own facts with a tax professional."
-    ]
-  ]
-},
-  "nps-tier-1-corpus-calculator": {
-  "intro": "NPS Tier 1 Corpus Calculator projects what your National Pension System retirement account could be worth at exit, using your monthly contribution, an optional annual step-up, the years left to retirement and an expected market-linked return. It then splits that corpus the way the scheme actually requires — at least 40% must buy an annuity, up to 60% can be taken as a tax-free lump sum — and converts the annuity portion into an expected monthly pension. It is built for salaried and self-employed subscribers who want a realistic picture of both the lump sum and the income NPS will produce.",
-  "useCases": [
-    "Check whether a Rs 10,000 monthly NPS contribution started at 30 will fund the pension you want at 60.",
-    "Compare a flat contribution against a 10% annual step-up tied to your yearly salary hike.",
-    "See how choosing a 40%, 60% or 100% annuity share changes the lump sum versus the monthly pension you receive."
-  ],
-  "benefits": [
-    [
-      "Follows real NPS exit rules",
-      "Enforces the 40% minimum annuity share and shows the withdrawable balance separately."
-    ],
-    [
-      "Step-up aware",
-      "Grows your contribution every 12 months so the projection matches how salaries actually rise."
-    ],
-    [
-      "Pension, not just corpus",
-      "Converts the annuity portion into an expected monthly and annual pension at your chosen annuity rate."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much of my NPS corpus must go into an annuity?",
-      "On exit at superannuation, at least 40% of the Tier 1 corpus must be used to buy an annuity from an IRDAI-registered provider. If the total corpus is Rs 5 lakh or less, you may withdraw the entire amount instead."
-    ],
-    [
-      "Is the NPS lump sum taxable?",
-      "The lump sum of up to 60% withdrawn at superannuation is exempt under Section 10(12A). The annuity income you receive later is taxed as income in the year of receipt. This is informational — confirm with a tax adviser for your case."
-    ],
-    [
-      "What return should I assume for NPS?",
-      "NPS is market-linked with no guaranteed return. Long-run blended returns have commonly been modelled in the 8% to 11% range depending on your equity (Scheme E) allocation, so try a conservative and an optimistic figure."
-    ],
-    [
-      "What tax deduction do NPS contributions get?",
-      "Under the old regime, employee contributions count towards the Rs 1.5 lakh limit via Section 80CCD(1), with an additional Rs 50,000 available under Section 80CCD(1B). Employer contributions are deductible under 80CCD(2) in both regimes, subject to the prescribed salary limits."
-    ]
-  ]
-},
-  "nre-vs-nro-account-comparator": {
-  "intro": "This comparator shows what the same deposit at the same interest rate is worth in an NRE account versus an NRO account, once Indian tax is applied. NRE interest is exempt under Section 10(4)(ii) of the Income-tax Act and carries no TDS, while NRO interest is taxable and withheld under Section 195 at 30% plus surcharge and 4% cess, so an NRO balance compounds net of tax. It also sets out the repatriation difference: NRE funds move out freely, NRO balances up to USD 1 million per financial year.",
-  "useCases": [
-    "Deciding which account should hold a fixed deposit after moving abroad",
-    "Estimating the TDS a bank will withhold on NRO interest before it hits the statement",
-    "Checking whether a DTAA rate claimed with Form 10F is worth the paperwork"
-  ],
-  "benefits": [
-    [
-      "Post-tax, not headline",
-      "Compares maturity values after withholding, not just the quoted rate."
-    ],
-    [
-      "Treaty aware",
-      "Swaps the 31.2% domestic rate for a lower DTAA rate on interest."
-    ],
-    [
-      "Repatriation limits",
-      "Flags when an NRO balance exceeds the USD 1 million yearly ceiling."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is NRE interest tax free in India?",
-      "Yes. Interest on an NRE account is exempt under Section 10(4)(ii) of the Income-tax Act for as long as you are a person resident outside India under FEMA, and no TDS is deducted. The exemption is Indian only, so the interest may still be taxable where you live."
-    ],
-    [
-      "What is the TDS rate on NRO interest?",
-      "Interest paid to a non-resident is withheld under Section 195 at 30%, plus surcharge where the payment crosses Rs 50 lakh and 4% health and education cess, giving 31.2% in the ordinary case. A Double Taxation Avoidance Agreement can bring the rate down, often to 10% or 15%."
-    ],
-    [
-      "How much money can be sent abroad from an NRO account?",
-      "Balances in an NRO account are repatriable up to USD 1 million per financial year under the FEMA remittance facility, supported by Forms 15CA and 15CB from a chartered accountant. NRE principal and interest have no such ceiling."
-    ],
-    [
-      "Which account should salary or rent from India be paid into?",
-      "Income arising in India, such as rent, dividends, pension or the proceeds of an Indian asset sale, must go into an NRO account; an NRE account may only be credited with funds earned outside India. Many NRIs hold both, and a cross-border tax adviser can confirm the right split for your situation."
-    ]
-  ]
-},
-  "nuget-package-reference-builder": {
-  "intro": "This builder writes the PackageReference items a .NET project file uses to declare NuGet dependencies, and translates each version range into the interval it really matches. NuGet's interval notation is easy to misread: 1.0 is a minimum, [1.0] is exact, [1.0,2.0) means at least 1.0 and below 2.0, and a square bracket is inclusive while a round bracket is exclusive. It also emits a Directory.Packages.props file when you switch on Central Package Management.",
-  "useCases": [
-    "Adding an analyzer package with PrivateAssets=\"all\" so it never flows to consumers of your own NuGet package",
-    "Migrating a solution to Central Package Management by moving every version into Directory.Packages.props and stripping the Version attribute from project files",
-    "Checking whether [8.0.0,9.0.0) is the constraint you meant before committing a dependency bump"
-  ],
-  "benefits": [
-    [
-      "Range notation decoded",
-      "Every bracketed range is restated as a plain >= and < interval."
-    ],
-    [
-      "Invalid ranges rejected",
-      "Catches (,), a lower bound above the upper bound, and ranges that can never match."
-    ],
-    [
-      "Asset flags validated",
-      "Only real NuGet asset groups are accepted, and all cannot be mixed with others."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the difference between [1.0] and 1.0 in a NuGet version?",
-      "1.0 is a minimum version — NuGet may resolve 1.0 or anything higher — whereas [1.0] pins the reference to exactly 1.0 and restore fails if that version is unavailable. Square brackets are inclusive bounds and round brackets are exclusive, so [1.0,2.0) means at least 1.0 and strictly below 2.0."
-    ],
-    [
-      "What does PrivateAssets=\"all\" do?",
-      "It stops the dependency flowing to projects and packages that consume yours: the reference is used while you build, but it is not written into your package's dependency list. It is the standard setting for analyzers, source generators and build-only tooling such as StyleCop.Analyzers."
-    ],
-    [
-      "How does Central Package Management work?",
-      "Set ManagePackageVersionsCentrally to true in a Directory.Packages.props file at the repository root, declare each version once with a PackageVersion item, and remove the Version attribute from every PackageReference. Every project below that directory then resolves the same version, and floating versions are not allowed."
-    ],
-    [
-      "Should I use floating versions like 6.0.*?",
-      "Only when you actively want the newest patch on every restore, and only with a committed lock file, because otherwise two machines can resolve different versions from the same source. For reproducible CI builds pin an explicit version or a bounded range instead."
-    ]
-  ]
-},
-  "number-plate-format-validator": {
-  "intro": "This validator parses an Indian vehicle registration number and tells you whether it is well formed, which family it belongs to, and what each block means. It covers the standard state series (two-letter state code, RTO office code, letter series and four-digit serial), the Bharat BH series introduced by GSR 594(E) in 2021, diplomatic CD, CC and UN plates, and Ministry of Defence plates. The regular expression behind each format is shown so you can drop the same rule into your own form validation.",
-  "useCases": [
-    "Validating a registration field on a booking, insurance or parking form before it is submitted",
-    "Cleaning a spreadsheet of registration numbers and finding the rows with a bad state code or a five-digit serial",
-    "Checking whether a BH-series number a seller quoted is even a legal shape"
-  ],
-  "benefits": [
-    [
-      "Four formats, one check",
-      "Standard, BH, diplomatic and defence plates are all recognised and labelled."
-    ],
-    [
-      "Explains the failure",
-      "Tells you the state code is unknown or that I and O are not allowed, rather than just rejecting."
-    ],
-    [
-      "Regex you can reuse",
-      "Every pattern is printed so the same rule can go straight into your own code."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the format of an Indian number plate?",
-      "Two letters for the state or union territory, one or two digits for the RTO office, up to three letters of series, and a four-digit serial — for example MH 12 AB 1234. The serial is padded with leading zeros, so number 7 appears as 0007."
-    ],
-    [
-      "What does a BH series number look like?",
-      "Two digits for the year of first registration, the letters BH, a four-digit number and a one or two letter series — for example 22 BH 1234 AA. The letter block runs from AA to ZZ but leaves out I and O so they are not read as 1 and 0. BH numbers were introduced in 2021 and move with the owner between states without re-registration."
-    ],
-    [
-      "Why is my valid-looking number rejected?",
-      "Most often the state code is not on the official list, the serial has five digits instead of four, or the RTO code has three digits. The tool names the exact reason, and legacy codes such as OR for Odisha and UA for Uttarakhand are accepted but marked as legacy."
-    ],
-    [
-      "Does a valid format mean the vehicle is registered?",
-      "No. This is a syntax check done entirely in your browser with no lookup against any database, so a well-formed number may belong to no vehicle at all. Use the government's Parivahan or mParivahan service to confirm that a registration exists and to see its details."
-    ]
-  ]
-},
-  "number-tracing-worksheet-maker": {
-  "intro": "Number Tracing Worksheet Maker lays out printable digit-tracing sheets by millimetre geometry: you set the digit height, paper size and margin, and it calculates how many digits fit a line, how many numbers fit a page and how many sheets you must print. Digits render in Latin numerals (0-9) or Devanagari numerals (०-९), with the English or Hindi number word above each block. It is aimed at preschool and Class 1 teachers, therapists working on pencil control, and parents who want the same sheet reprinted at a consistent size.",
-  "useCases": [
-    "Print 1 to 10 at 20 mm digit height on A4 for a nursery class, with two tracing rows per number.",
-    "Make a Devanagari counting sheet (० to ९) for a Hindi-medium kindergarten alongside the Latin version.",
-    "Step a child down from 25 mm digits to 12 mm digits over a term as their pencil control improves.",
-    "Work out before printing how many sheets a 1 to 100 practice book will take at the size you want."
-  ],
-  "benefits": [
-    [
-      "True millimetre sizing",
-      "Digit height is set in mm against real A4 or Letter dimensions, not an arbitrary font size."
-    ],
-    [
-      "Page count before you print",
-      "Numbers are packed so a block never splits across a page break, and the sheet total is shown up front."
-    ],
-    [
-      "Latin and Devanagari",
-      "The same layout engine renders 0-9 or ०-९, with matching English or Hindi number words."
-    ]
-  ],
-  "faqs": [
-    [
-      "What size should numbers be on a tracing worksheet?",
-      "Around 20-25 mm tall for ages 3-4, 15-20 mm for ages 5-6, and 10-12 mm once a child moves to ruled notebooks. Larger digits need bigger arm movements and fewer fit per line, which is the point early on — this tool accepts anything from 8 mm to 45 mm."
-    ],
-    [
-      "How many numbers fit on one A4 page?",
-      "With 20 mm digits, a 15 mm margin and two rows per number, three numbers fit an A4 page and each row holds eight digits. Raising the digit height or the rows per number reduces that count, and the tool recalculates the page total as you change any setting."
-    ],
-    [
-      "Why do my printed digits come out smaller than the size I chose?",
-      "Almost always because the print dialog is set to 'fit to page' or 'shrink oversized pages', which rescales the sheet. Choose 100% or 'actual size' scaling and pick the same paper size you selected here."
-    ],
-    [
-      "Can I make Hindi number tracing sheets?",
-      "Yes — switch the script to Devanagari and the digits render as ० १ २ ३ ४ ५ ६ ७ ८ ९ (Unicode U+0966 to U+096F), with the Hindi word such as पाँच or दस printed above the tracing rows where the spelling is standard."
-    ]
-  ]
-},
-  "nursery-rhyme-maker": {
-  "intro": "Nursery Rhyme Maker helps draft simple, child-friendly rhymes around a theme, character, sound pattern or learning goal. Use it for classroom prompts, bedtime fun or early-language activities.",
-  "useCases": [
-    "Create a rhyme about animals, colours, numbers or daily routines.",
-    "Draft a short bedtime rhyme with a gentle tone.",
-    "Make a classroom chant for a topic or activity."
-  ],
-  "benefits": [
-    [
-      "Child-friendly",
-      "Keeps wording simple and rhythmic."
-    ],
-    [
-      "Theme-based",
-      "Adapts to animals, seasons, habits, letters or numbers."
-    ],
-    [
-      "Editable draft",
-      "Gives parents and teachers a fast starting point."
-    ]
-  ],
-  "faqs": [
-    [
-      "Can I specify age?",
-      "Yes. Add the child's age or reading level in the input."
-    ],
-    [
-      "Can it teach a concept?",
-      "Yes, mention the learning goal such as counting, colours or manners."
-    ],
-    [
-      "Should adults review it?",
-      "Yes. Review for suitability before using with children."
-    ]
-  ]
-},
-  "obs-scene-checklist-builder": {
-  "intro": "This builder produces a pre-live checklist for an OBS-style setup — scenes, audio, sources, encoder, alerts and privacy — and sizes the stream at the same time. It applies each platform's published H.264 live-encoding range for your resolution and frame rate, adds the audio bitrate, and checks your measured upload against a 1.5x headroom margin so a stream does not start dropping frames ten minutes in. Sections adapt to what you actually run: guests, gameplay capture, music, alerts, chat overlay and local recording each add their own items.",
-  "useCases": [
-    "Confirm a 1080p60 stream fits on your connection before you announce a go-live time.",
-    "Run the same 30-point check every stream so the recurring mistakes stop recurring.",
-    "Add the guest-audio and monitoring items only on the days you actually have a co-host.",
-    "Hand a repeatable pre-flight list to whoever runs the stream when you are not there."
-  ],
-  "benefits": [
-    [
-      "Real bitrate ranges",
-      "Uses each platform's published ranges instead of one number copied from a forum."
-    ],
-    [
-      "Headroom, not just bitrate",
-      "Checks upload against a 1.5x margin, which is what stops mid-stream frame drops."
-    ],
-    [
-      "Only the items you need",
-      "Guests, music, alerts and capture cards add their own checks and nothing else."
-    ]
-  ],
-  "faqs": [
-    [
-      "What bitrate should I stream at?",
-      "For 1080p60, Twitch recommends up to 6000 kbps and YouTube publishes a 4500-9000 kbps range; for 720p30 both sit around 3000 kbps. Pick a number your upload can hold continuously rather than the highest you can briefly reach, because a stream that saturates the line drops frames."
-    ],
-    [
-      "How much upload speed do I need to stream?",
-      "About 1.5 times your total bitrate. A 6000 kbps video stream plus 160 kbps audio is 6160 kbps, so plan for roughly 9.2 Mbps of stable upload — and remember everything else in the house shares that pipe."
-    ],
-    [
-      "What keyframe interval should OBS use?",
-      "Two seconds. Both Twitch and YouTube specify a 2-second keyframe interval for H.264 ingest, and leaving it on 'auto' is one of the commonest reasons a stream fails to transcode into lower-quality options for viewers."
-    ],
-    [
-      "Why does my stream drop frames even though my internet is fast?",
-      "Dropped frames in the OBS stats dock almost always mean network congestion rather than raw speed: another device saturating the upload, Wi-Fi interference, or a bitrate set too close to your actual ceiling. Test on a wired connection at a lower bitrate first, then raise it until the drops start."
     ]
   ]
 },

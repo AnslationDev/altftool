@@ -2,6 +2,324 @@
 // Source of truth: src/tools/<slug>/seo.js
 
 export default {
+  "nps-80ccd1b-calculator": {
+  "intro": "Section 80CCD(1B) of the Income-tax Act, 1961 allows an extra deduction of up to Rs 50,000 for your own contribution to an NPS Tier-I account, and this calculator shows how much of that extra Rs 50,000 you actually get. It splits your contribution between 80CCD(1) — which shares the Rs 1,50,000 aggregate ceiling of section 80CCE with 80C and 80CCC, and is separately capped at 10% of salary or 20% of gross total income — and 80CCD(1B), which sits outside both limits. Built for salaried and self-employed taxpayers on the old regime who want to know whether topping up NPS is worth it.",
+  "useCases": [
+    "Checking that a Rs 50,000 NPS Tier-I top-up still gives a full deduction when EPF and PPF have already used the entire Rs 1,50,000 of section 80CCE.",
+    "Seeing how much of a Rs 2,00,000 NPS contribution a self-employed professional can actually deduct when the 80CCD(1) ceiling is 20% of gross total income.",
+    "Deciding whether staying on the old regime is worth it, by putting a rupee value on the 80CCD(1B) deduction you would forfeit under section 115BAC."
+  ],
+  "benefits": [
+    [
+      "Separates the two NPS sections",
+      "Shows what falls under 80CCD(1) inside the Rs 1.5 lakh cap and what qualifies for the extra Rs 50,000."
+    ],
+    [
+      "Applies the real salary ceiling",
+      "Uses 10% of basic plus DA for salaried filers and 20% of gross total income for everyone else."
+    ],
+    [
+      "Prices the benefit",
+      "Converts the extra deduction into rupees of tax saved at your slab rate, including the 4% health and education cess."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is the Rs 50,000 under 80CCD(1B) over and above the Rs 1.5 lakh limit?",
+      "Yes. The proviso to section 80CCE keeps 80CCD(1B) outside the Rs 1,50,000 aggregate ceiling, so a taxpayer who has already exhausted 80C can still deduct up to Rs 50,000 more for NPS Tier-I. The combined maximum is therefore Rs 2,00,000 from these sections."
+    ],
+    [
+      "Can I claim 80CCD(1B) under the new tax regime?",
+      "No. Section 115BAC removes almost all Chapter VI-A deductions, and 80CCD(1B) is one of them; only the employer's NPS contribution under 80CCD(2) and a few others such as 80CCH and 80JJAA remain. You have to be on the old regime to claim the extra Rs 50,000."
+    ],
+    [
+      "Does the 10% of salary limit apply to the extra Rs 50,000?",
+      "No. The 10% of salary (basic plus dearness allowance) restriction — 20% of gross total income for the self-employed — applies only to section 80CCD(1). Amounts not claimed under 80CCD(1) can be claimed under 80CCD(1B) up to Rs 50,000 regardless of that percentage cap."
+    ],
+    [
+      "Does an NPS Tier-II account qualify for 80CCD(1B)?",
+      "No. Only Tier-I contributions qualify. Tier-II is a voluntary withdrawable account with no lock-in and no deduction, except for the separate Tier-II Tax Saver scheme available to central government employees with a three-year lock-in. This is general information, not tax advice — check your own facts with a tax professional."
+    ]
+  ]
+},
+  "nps-tier-1-corpus-calculator": {
+  "intro": "NPS Tier 1 Corpus Calculator projects what your National Pension System retirement account could be worth at exit, using your monthly contribution, an optional annual step-up, the years left to retirement and an expected market-linked return. It then splits that corpus the way the scheme actually requires — at least 40% must buy an annuity, up to 60% can be taken as a tax-free lump sum — and converts the annuity portion into an expected monthly pension. It is built for salaried and self-employed subscribers who want a realistic picture of both the lump sum and the income NPS will produce.",
+  "useCases": [
+    "Check whether a Rs 10,000 monthly NPS contribution started at 30 will fund the pension you want at 60.",
+    "Compare a flat contribution against a 10% annual step-up tied to your yearly salary hike.",
+    "See how choosing a 40%, 60% or 100% annuity share changes the lump sum versus the monthly pension you receive."
+  ],
+  "benefits": [
+    [
+      "Follows real NPS exit rules",
+      "Enforces the 40% minimum annuity share and shows the withdrawable balance separately."
+    ],
+    [
+      "Step-up aware",
+      "Grows your contribution every 12 months so the projection matches how salaries actually rise."
+    ],
+    [
+      "Pension, not just corpus",
+      "Converts the annuity portion into an expected monthly and annual pension at your chosen annuity rate."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much of my NPS corpus must go into an annuity?",
+      "On exit at superannuation, at least 40% of the Tier 1 corpus must be used to buy an annuity from an IRDAI-registered provider. If the total corpus is Rs 5 lakh or less, you may withdraw the entire amount instead."
+    ],
+    [
+      "Is the NPS lump sum taxable?",
+      "The lump sum of up to 60% withdrawn at superannuation is exempt under Section 10(12A). The annuity income you receive later is taxed as income in the year of receipt. This is informational — confirm with a tax adviser for your case."
+    ],
+    [
+      "What return should I assume for NPS?",
+      "NPS is market-linked with no guaranteed return. Long-run blended returns have commonly been modelled in the 8% to 11% range depending on your equity (Scheme E) allocation, so try a conservative and an optimistic figure."
+    ],
+    [
+      "What tax deduction do NPS contributions get?",
+      "Under the old regime, employee contributions count towards the Rs 1.5 lakh limit via Section 80CCD(1), with an additional Rs 50,000 available under Section 80CCD(1B). Employer contributions are deductible under 80CCD(2) in both regimes, subject to the prescribed salary limits."
+    ]
+  ]
+},
+  "nre-vs-nro-account-comparator": {
+  "intro": "This comparator shows what the same deposit at the same interest rate is worth in an NRE account versus an NRO account, once Indian tax is applied. NRE interest is exempt under Section 10(4)(ii) of the Income-tax Act and carries no TDS, while NRO interest is taxable and withheld under Section 195 at 30% plus surcharge and 4% cess, so an NRO balance compounds net of tax. It also sets out the repatriation difference: NRE funds move out freely, NRO balances up to USD 1 million per financial year.",
+  "useCases": [
+    "Deciding which account should hold a fixed deposit after moving abroad",
+    "Estimating the TDS a bank will withhold on NRO interest before it hits the statement",
+    "Checking whether a DTAA rate claimed with Form 10F is worth the paperwork"
+  ],
+  "benefits": [
+    [
+      "Post-tax, not headline",
+      "Compares maturity values after withholding, not just the quoted rate."
+    ],
+    [
+      "Treaty aware",
+      "Swaps the 31.2% domestic rate for a lower DTAA rate on interest."
+    ],
+    [
+      "Repatriation limits",
+      "Flags when an NRO balance exceeds the USD 1 million yearly ceiling."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is NRE interest tax free in India?",
+      "Yes. Interest on an NRE account is exempt under Section 10(4)(ii) of the Income-tax Act for as long as you are a person resident outside India under FEMA, and no TDS is deducted. The exemption is Indian only, so the interest may still be taxable where you live."
+    ],
+    [
+      "What is the TDS rate on NRO interest?",
+      "Interest paid to a non-resident is withheld under Section 195 at 30%, plus surcharge where the payment crosses Rs 50 lakh and 4% health and education cess, giving 31.2% in the ordinary case. A Double Taxation Avoidance Agreement can bring the rate down, often to 10% or 15%."
+    ],
+    [
+      "How much money can be sent abroad from an NRO account?",
+      "Balances in an NRO account are repatriable up to USD 1 million per financial year under the FEMA remittance facility, supported by Forms 15CA and 15CB from a chartered accountant. NRE principal and interest have no such ceiling."
+    ],
+    [
+      "Which account should salary or rent from India be paid into?",
+      "Income arising in India, such as rent, dividends, pension or the proceeds of an Indian asset sale, must go into an NRO account; an NRE account may only be credited with funds earned outside India. Many NRIs hold both, and a cross-border tax adviser can confirm the right split for your situation."
+    ]
+  ]
+},
+  "nuget-package-reference-builder": {
+  "intro": "This builder writes the PackageReference items a .NET project file uses to declare NuGet dependencies, and translates each version range into the interval it really matches. NuGet's interval notation is easy to misread: 1.0 is a minimum, [1.0] is exact, [1.0,2.0) means at least 1.0 and below 2.0, and a square bracket is inclusive while a round bracket is exclusive. It also emits a Directory.Packages.props file when you switch on Central Package Management.",
+  "useCases": [
+    "Adding an analyzer package with PrivateAssets=\"all\" so it never flows to consumers of your own NuGet package",
+    "Migrating a solution to Central Package Management by moving every version into Directory.Packages.props and stripping the Version attribute from project files",
+    "Checking whether [8.0.0,9.0.0) is the constraint you meant before committing a dependency bump"
+  ],
+  "benefits": [
+    [
+      "Range notation decoded",
+      "Every bracketed range is restated as a plain >= and < interval."
+    ],
+    [
+      "Invalid ranges rejected",
+      "Catches (,), a lower bound above the upper bound, and ranges that can never match."
+    ],
+    [
+      "Asset flags validated",
+      "Only real NuGet asset groups are accepted, and all cannot be mixed with others."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the difference between [1.0] and 1.0 in a NuGet version?",
+      "1.0 is a minimum version — NuGet may resolve 1.0 or anything higher — whereas [1.0] pins the reference to exactly 1.0 and restore fails if that version is unavailable. Square brackets are inclusive bounds and round brackets are exclusive, so [1.0,2.0) means at least 1.0 and strictly below 2.0."
+    ],
+    [
+      "What does PrivateAssets=\"all\" do?",
+      "It stops the dependency flowing to projects and packages that consume yours: the reference is used while you build, but it is not written into your package's dependency list. It is the standard setting for analyzers, source generators and build-only tooling such as StyleCop.Analyzers."
+    ],
+    [
+      "How does Central Package Management work?",
+      "Set ManagePackageVersionsCentrally to true in a Directory.Packages.props file at the repository root, declare each version once with a PackageVersion item, and remove the Version attribute from every PackageReference. Every project below that directory then resolves the same version, and floating versions are not allowed."
+    ],
+    [
+      "Should I use floating versions like 6.0.*?",
+      "Only when you actively want the newest patch on every restore, and only with a committed lock file, because otherwise two machines can resolve different versions from the same source. For reproducible CI builds pin an explicit version or a bounded range instead."
+    ]
+  ]
+},
+  "number-plate-format-validator": {
+  "intro": "This validator parses an Indian vehicle registration number and tells you whether it is well formed, which family it belongs to, and what each block means. It covers the standard state series (two-letter state code, RTO office code, letter series and four-digit serial), the Bharat BH series introduced by GSR 594(E) in 2021, diplomatic CD, CC and UN plates, and Ministry of Defence plates. The regular expression behind each format is shown so you can drop the same rule into your own form validation.",
+  "useCases": [
+    "Validating a registration field on a booking, insurance or parking form before it is submitted",
+    "Cleaning a spreadsheet of registration numbers and finding the rows with a bad state code or a five-digit serial",
+    "Checking whether a BH-series number a seller quoted is even a legal shape"
+  ],
+  "benefits": [
+    [
+      "Four formats, one check",
+      "Standard, BH, diplomatic and defence plates are all recognised and labelled."
+    ],
+    [
+      "Explains the failure",
+      "Tells you the state code is unknown or that I and O are not allowed, rather than just rejecting."
+    ],
+    [
+      "Regex you can reuse",
+      "Every pattern is printed so the same rule can go straight into your own code."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the format of an Indian number plate?",
+      "Two letters for the state or union territory, one or two digits for the RTO office, up to three letters of series, and a four-digit serial — for example MH 12 AB 1234. The serial is padded with leading zeros, so number 7 appears as 0007."
+    ],
+    [
+      "What does a BH series number look like?",
+      "Two digits for the year of first registration, the letters BH, a four-digit number and a one or two letter series — for example 22 BH 1234 AA. The letter block runs from AA to ZZ but leaves out I and O so they are not read as 1 and 0. BH numbers were introduced in 2021 and move with the owner between states without re-registration."
+    ],
+    [
+      "Why is my valid-looking number rejected?",
+      "Most often the state code is not on the official list, the serial has five digits instead of four, or the RTO code has three digits. The tool names the exact reason, and legacy codes such as OR for Odisha and UA for Uttarakhand are accepted but marked as legacy."
+    ],
+    [
+      "Does a valid format mean the vehicle is registered?",
+      "No. This is a syntax check done entirely in your browser with no lookup against any database, so a well-formed number may belong to no vehicle at all. Use the government's Parivahan or mParivahan service to confirm that a registration exists and to see its details."
+    ]
+  ]
+},
+  "number-tracing-worksheet-maker": {
+  "intro": "Number Tracing Worksheet Maker lays out printable digit-tracing sheets by millimetre geometry: you set the digit height, paper size and margin, and it calculates how many digits fit a line, how many numbers fit a page and how many sheets you must print. Digits render in Latin numerals (0-9) or Devanagari numerals (०-९), with the English or Hindi number word above each block. It is aimed at preschool and Class 1 teachers, therapists working on pencil control, and parents who want the same sheet reprinted at a consistent size.",
+  "useCases": [
+    "Print 1 to 10 at 20 mm digit height on A4 for a nursery class, with two tracing rows per number.",
+    "Make a Devanagari counting sheet (० to ९) for a Hindi-medium kindergarten alongside the Latin version.",
+    "Step a child down from 25 mm digits to 12 mm digits over a term as their pencil control improves.",
+    "Work out before printing how many sheets a 1 to 100 practice book will take at the size you want."
+  ],
+  "benefits": [
+    [
+      "True millimetre sizing",
+      "Digit height is set in mm against real A4 or Letter dimensions, not an arbitrary font size."
+    ],
+    [
+      "Page count before you print",
+      "Numbers are packed so a block never splits across a page break, and the sheet total is shown up front."
+    ],
+    [
+      "Latin and Devanagari",
+      "The same layout engine renders 0-9 or ०-९, with matching English or Hindi number words."
+    ]
+  ],
+  "faqs": [
+    [
+      "What size should numbers be on a tracing worksheet?",
+      "Around 20-25 mm tall for ages 3-4, 15-20 mm for ages 5-6, and 10-12 mm once a child moves to ruled notebooks. Larger digits need bigger arm movements and fewer fit per line, which is the point early on — this tool accepts anything from 8 mm to 45 mm."
+    ],
+    [
+      "How many numbers fit on one A4 page?",
+      "With 20 mm digits, a 15 mm margin and two rows per number, three numbers fit an A4 page and each row holds eight digits. Raising the digit height or the rows per number reduces that count, and the tool recalculates the page total as you change any setting."
+    ],
+    [
+      "Why do my printed digits come out smaller than the size I chose?",
+      "Almost always because the print dialog is set to 'fit to page' or 'shrink oversized pages', which rescales the sheet. Choose 100% or 'actual size' scaling and pick the same paper size you selected here."
+    ],
+    [
+      "Can I make Hindi number tracing sheets?",
+      "Yes — switch the script to Devanagari and the digits render as ० १ २ ३ ४ ५ ६ ७ ८ ९ (Unicode U+0966 to U+096F), with the Hindi word such as पाँच or दस printed above the tracing rows where the spelling is standard."
+    ]
+  ]
+},
+  "nursery-rhyme-maker": {
+  "intro": "Nursery Rhyme Maker helps draft simple, child-friendly rhymes around a theme, character, sound pattern or learning goal. Use it for classroom prompts, bedtime fun or early-language activities.",
+  "useCases": [
+    "Create a rhyme about animals, colours, numbers or daily routines.",
+    "Draft a short bedtime rhyme with a gentle tone.",
+    "Make a classroom chant for a topic or activity."
+  ],
+  "benefits": [
+    [
+      "Child-friendly",
+      "Keeps wording simple and rhythmic."
+    ],
+    [
+      "Theme-based",
+      "Adapts to animals, seasons, habits, letters or numbers."
+    ],
+    [
+      "Editable draft",
+      "Gives parents and teachers a fast starting point."
+    ]
+  ],
+  "faqs": [
+    [
+      "Can I specify age?",
+      "Yes. Add the child's age or reading level in the input."
+    ],
+    [
+      "Can it teach a concept?",
+      "Yes, mention the learning goal such as counting, colours or manners."
+    ],
+    [
+      "Should adults review it?",
+      "Yes. Review for suitability before using with children."
+    ]
+  ]
+},
+  "obs-scene-checklist-builder": {
+  "intro": "This builder produces a pre-live checklist for an OBS-style setup — scenes, audio, sources, encoder, alerts and privacy — and sizes the stream at the same time. It applies each platform's published H.264 live-encoding range for your resolution and frame rate, adds the audio bitrate, and checks your measured upload against a 1.5x headroom margin so a stream does not start dropping frames ten minutes in. Sections adapt to what you actually run: guests, gameplay capture, music, alerts, chat overlay and local recording each add their own items.",
+  "useCases": [
+    "Confirm a 1080p60 stream fits on your connection before you announce a go-live time.",
+    "Run the same 30-point check every stream so the recurring mistakes stop recurring.",
+    "Add the guest-audio and monitoring items only on the days you actually have a co-host.",
+    "Hand a repeatable pre-flight list to whoever runs the stream when you are not there."
+  ],
+  "benefits": [
+    [
+      "Real bitrate ranges",
+      "Uses each platform's published ranges instead of one number copied from a forum."
+    ],
+    [
+      "Headroom, not just bitrate",
+      "Checks upload against a 1.5x margin, which is what stops mid-stream frame drops."
+    ],
+    [
+      "Only the items you need",
+      "Guests, music, alerts and capture cards add their own checks and nothing else."
+    ]
+  ],
+  "faqs": [
+    [
+      "What bitrate should I stream at?",
+      "For 1080p60, Twitch recommends up to 6000 kbps and YouTube publishes a 4500-9000 kbps range; for 720p30 both sit around 3000 kbps. Pick a number your upload can hold continuously rather than the highest you can briefly reach, because a stream that saturates the line drops frames."
+    ],
+    [
+      "How much upload speed do I need to stream?",
+      "About 1.5 times your total bitrate. A 6000 kbps video stream plus 160 kbps audio is 6160 kbps, so plan for roughly 9.2 Mbps of stable upload — and remember everything else in the house shares that pipe."
+    ],
+    [
+      "What keyframe interval should OBS use?",
+      "Two seconds. Both Twitch and YouTube specify a 2-second keyframe interval for H.264 ingest, and leaving it on 'auto' is one of the commonest reasons a stream fails to transcode into lower-quality options for viewers."
+    ],
+    [
+      "Why does my stream drop frames even though my internet is fast?",
+      "Dropped frames in the OBS stats dock almost always mean network congestion rather than raw speed: another device saturating the upload, Wi-Fi interference, or a bitrate set too close to your actual ceiling. Test on a wired connection at a lower bitrate first, then raise it until the drops start."
+    ]
+  ]
+},
   "obsidian-ai-prompt-pack": {
   "intro": "Obsidian AI Prompt Pack is a set of twelve ready prompts for the work a vault actually needs — surfacing links you have not made, splitting overgrown notes into atomic ones, consolidating duplicate tags, and reviewing a week of daily notes honestly. Each prompt carries its own constraints, and the page includes a live checker for Obsidian's real syntax rules: the characters forbidden in file names, wikilink forms such as [[Note#Heading]] and [[Note#^blockId|Alias]], tag rules, and daily note date tokens like YYYY-MM-DD. It is for people whose vault has quietly become a folder of orphaned notes.",
   "useCases": [
@@ -14123,6 +14441,51 @@ export default {
     ]
   ]
 },
+  "roc-filing-calendar": {
+  "intro": "The MCA / ROC Filing Calendar & Penalty Calculator derives your annual Registrar of Companies deadlines from a single input — the date of incorporation — and then prices the additional fee that has accrued on anything already late. It works backwards from Companies Act 2013 section 96(1): the first AGM falls within 9 months of the close of the first financial year, every later AGM within 6 months of the year end and never more than 15 months after the previous one. AOC-4 then follows within 30 days of that AGM under section 137(1), MGT-7 or MGT-7A within 60 days under section 92(4), and ADT-1 within 15 days of the appointment meeting under section 139(1). An OPC, which section 96 excludes from holding an AGM at all, files AOC-4 within 180 days of the year end instead. An LLP files Form 11 within 60 days of 31 March and Form 8 within 30 days of the six-month point, so 30 May and 30 October. It is built for company secretaries, practising CAs and founders who need the exact date and the exact rupee figure, with the section that produced each one printed beside it.",
+  "useCases": [
+    "A private limited company incorporated in August 2025 working out that its first AGM runs to 31 December 2026, not 30 September 2026, and that AOC-4 therefore falls on 30 January 2027.",
+    "A CS pricing a delayed MGT-7 for a client: 47 days past 29 November means Rs 4,700 of additional fee on top of the normal fee, because MGT-7 carries a flat Rs 100 a day and not a multiplier.",
+    "A small LLP with Rs 5,00,000 contribution checking that a Form 11 filed 361 days after 30 May costs 15 times the Rs 100 normal fee plus Rs 10 for the one day past 360.",
+    "An OPC confirming that its AOC-4 is due 27 September, 180 days after the 31 March year end, while its MGT-7A is due 29 November, 60 days after the deemed AGM date."
+  ],
+  "benefits": [
+    [
+      "Per-form penalties, not one flat counter",
+      "AOC-4 and MGT-7 run at a flat Rs 100 a day with no cap. ADT-1 uses the 1x / 2x / 4x / 6x / 10x / 12x slab table. LLP Form 8 and Form 11 use their own slabs that halve for a small LLP. DIR-3 KYC is a flat Rs 5,000. All four engines run side by side."
+    ],
+    [
+      "AGM derived, not assumed",
+      "The first AGM uses the 9-month proviso, later AGMs the 6-month rule, and if you enter the previous AGM date the 15-month gap limit in section 96(1) is applied and the tool names which of the two limbs bound the date."
+    ],
+    [
+      "The rule sits next to every figure",
+      "Each due date carries its section or rule number and each fee carries the amendment that set it, including the LLP fee slabs in force from 1 April 2022 and the DIR-3 KYC fee notified on 21 April 2026."
+    ],
+    [
+      "Accrual to a date you choose",
+      "Unfiled forms accrue additional fee up to whatever date you set, so you can price the position today or the position on a planned filing date."
+    ]
+  ],
+  "faqs": [
+    [
+      "When is the first AGM of a newly incorporated company due?",
+      "Within 9 months of the close of the first financial year, under the first proviso to section 96(1). A company incorporated on 10 August 2025 closes its first financial year on 31 March 2026 under section 2(41), so its first AGM runs to 31 December 2026. Every later AGM is due within 6 months of the year end, i.e. 30 September, and no more than 15 months after the previous AGM."
+    ],
+    [
+      "What is the penalty for filing AOC-4 or MGT-7 late?",
+      "A flat Rs 100 for every day of delay, with no upper cap, on top of the normal filing fee. That rate came from the note inserted in the Table of Fees by the Companies (Registration Offices and Fees) Second Amendment Rules, 2018, in force from 1 July 2018. AOC-4 due 30 October and filed 77 days later therefore costs Rs 7,700 of additional fee plus the normal fee, which is Rs 400 for a company with paid-up capital between Rs 5 lakh and Rs 25 lakh."
+    ],
+    [
+      "Is DIR-3 KYC still due every year by 30 September?",
+      "No. Rule 12A of the Companies (Appointment and Qualification of Directors) Rules, 2014 was substituted by G.S.R. 943(E) dated 31 December 2025 with effect from 31 March 2026, making DIR-3 KYC Web triennial and due on or before 30 June. A DIN holder whose KYC is current through FY 2025-26 next files by 30 June 2028. Filing after the due date or reactivating a DIN costs a flat Rs 5,000 per DIN under G.S.R. 300(E) dated 21 April 2026, and Rs 500 applies to a later filing that only updates KYC particulars."
+    ],
+    [
+      "How much does a late LLP Form 11 or Form 8 cost?",
+      "It depends on the delay and on whether the LLP is a small LLP under section 2(1)(ta), which needs contribution up to Rs 25 lakh and turnover up to Rs 40 lakh. Under the LLP Rules, 2009 Annexure A as substituted from 1 April 2022, a small LLP pays 1x, 2x, 4x, 6x, 10x and 15x the normal fee across the up-to-15-day, 30-day, 60-day, 90-day, 180-day and 360-day bands, and 15x plus Rs 10 a day beyond 360 days. Any other LLP pays 1x, 4x, 8x, 12x, 20x and 30x, and 30x plus Rs 20 a day beyond 360 days. The normal fee itself runs from Rs 50 for contribution up to Rs 1 lakh to Rs 600 above Rs 1 crore."
+    ]
+  ]
+},
   "rock-climbing-calorie-calculator": {
   "intro": "The Rock Climbing Calorie Calculator estimates a bouldering or roped session by separating minutes actually on the wall from minutes spent belaying, brushing and resting. Wall time uses the rock climbing codes from the Compendium of Physical Activities — 5.8 MET for low-to-moderate difficulty, 7.5 MET for hard ascent — converted with kcal/min = MET x 3.5 x kg / 200, and rest is priced at 2.0 MET. It also reports the pure lifting work, mass times gravity times height, as an independent physical cross-check.",
   "useCases": [
@@ -16321,368 +16684,6 @@ export default {
     [
       "Does a trade-in reduce sales tax on a car in California?",
       "No. Unlike many states, California taxes the full selling price of the vehicle with no deduction for a trade-in allowance, so a $30,000 car with a $10,000 trade-in is still taxed on $30,000. Use tax is then collected by the DMV at registration; check with the DMV or a tax professional for your situation."
-    ]
-  ]
-},
-  "sales-tax-calculator-florida": {
-  "intro": "This calculator applies Florida's 6% state sales tax under Fla. Stat. § 212.05 together with the county discretionary sales surtax under § 212.055, and — unlike a flat combined-rate calculator — it enforces the rule that trips most people up: the surtax applies only to the first $5,000 of the sales price of any single item of tangible personal property, per § 212.054(2)(b)1. The 6% state tax has no ceiling, so on a $20,000 machine you pay 6% on the whole price but surtax on just $5,000. Retailers, equipment dealers and buyers comparing quotes get the state and surtax bases separated.",
-  "useCases": [
-    "An equipment dealer quoting a $20,000 machine in Miami-Dade, where the surtax stops at $5,000 and the invoice rate is nowhere near a flat 7%.",
-    "A retailer with a mixed basket of taxable goods, exempt groceries and a freight charge, working out which parts land in each tax base.",
-    "A buyer comparing two counties, checking how much the different surtax rate actually changes the total once the per-item cap is applied."
-  ],
-  "benefits": [
-    [
-      "$5,000 cap applied per item",
-      "Tests the ceiling item by item as the statute does, so two $4,000 items are treated differently from one $8,000 item."
-    ],
-    [
-      "Shows the surtax the cap saves",
-      "Puts a dollar figure on the difference between a naive combined rate and the correct calculation."
-    ],
-    [
-      "Freight handled by rule",
-      "Taxable freight is folded into the item's sales price, which is what pushes some invoices over the cap."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the sales tax rate in Florida?",
-      "The state rate is 6%. Counties add a discretionary sales surtax of 0.5% to 1.5% in most cases, so combined rates run from 6% in counties with no surtax to about 7.5% in Hillsborough, Duval and Leon. County rates are republished each January in form DR-15DSS."
-    ],
-    [
-      "Does Florida cap sales tax on expensive items?",
-      "The county surtax is capped, not the state tax. Surtax applies only to the first $5,000 of the sales price of a single item of tangible personal property, so a $20,000 boat in a 1% county carries $1,200 state tax but only $50 of surtax. The cap does not apply to services, commercial rent or admissions."
-    ],
-    [
-      "Is shipping taxable in Florida?",
-      "Usually yes. Delivery and freight are part of the taxable sales price unless the charge is stated separately on the invoice and the buyer had the option to avoid it by picking the item up — Rule 12A-1.045. When taxable, freight counts toward the item's sales price for the $5,000 surtax cap."
-    ],
-    [
-      "Is food taxed in Florida?",
-      "Groceries — food products for human consumption sold for off-premises use — are exempt under Fla. Stat. § 212.08(1), and so are prescription medicines. Prepared meals, hot food, soft drinks and candy are taxable at the full combined rate. Check with the Department of Revenue for edge cases like bakery items sold for on-site eating."
-    ]
-  ]
-},
-  "sales-tax-calculator-illinois": {
-  "intro": "This calculator combines the 6.25% Illinois general merchandise rate under the Retailers' Occupation Tax Act (35 ILCS 120) with the local home rule, county, transit and business district taxes that stack on top, and prices qualifying drugs, medical appliances and food at their reduced rate on the same receipt. It also shows how the 6.25% is split by statute — 5.00% to the state, 1.00% to municipalities and 0.25% to counties — which is why the 'state' rate already contains a local element. Retailers, remote sellers shipping into Illinois and shoppers checking a Chicago receipt all get the same layered breakdown.",
-  "useCases": [
-    "A Chicago retailer confirming the 10.25% combined rate and separating the state, city, county and RTA components for the ST-1 return.",
-    "A pharmacy ringing up a basket with prescription items at the reduced rate alongside general merchandise at the full rate.",
-    "A remote seller destination-sourcing an order and needing the correct local rate for the customer's town rather than its own."
-  ],
-  "benefits": [
-    [
-      "Two rates on one receipt",
-      "Handles general merchandise and reduced-rate food, drugs and medical appliances together, the way a real basket looks."
-    ],
-    [
-      "Statutory split shown",
-      "Breaks the 6.25% into its 5.00% / 1.00% / 0.25% shares so the distribution is visible."
-    ],
-    [
-      "Delivery rule respected",
-      "Lets you mark delivery non-taxable when it was separately contracted for and avoidable, per 86 Ill. Adm. Code 130.415."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the sales tax rate in Chicago?",
-      "10.25% on general merchandise — the highest combined rate among large US cities. It is the 6.25% Illinois state rate plus 1.25% City of Chicago, 1.75% Cook County and 1.00% Regional Transportation Authority."
-    ],
-    [
-      "What is the Illinois state sales tax rate?",
-      "6.25% on general merchandise. That headline figure is itself divided by statute: 5.00% stays with the state, 1.00% is distributed to municipalities and 0.25% to counties, before any additional local tax is added on top."
-    ],
-    [
-      "Is there still a grocery tax in Illinois?",
-      "The 1% state grocery tax was repealed with effect from 1 January 2026 under Public Act 103-0781, but the same law lets municipalities impose their own 1% grocery tax without a referendum. Whether you pay 0% or 1% on food therefore depends on your town — check its ordinance or the MyTax Illinois Tax Rate Finder."
-    ],
-    [
-      "Is shipping taxable in Illinois?",
-      "It depends on whether delivery was separately contracted for. If the delivery charge is an inseparable part of the sale, it is taxable; if the buyer had a genuine choice — for example the option to collect the goods — and the charge is stated separately, it is not. The rule is at 86 Ill. Adm. Code 130.415; ask a tax professional if your invoices are borderline."
-    ]
-  ]
-},
-  "sales-tax-calculator-new-york": {
-  "intro": "This calculator assembles New York sales tax from its three layers: the 4% state rate under Tax Law § 1105, the county or city rate under article 29, and the 0.375% Metropolitan Commuter Transportation District surcharge that applies in the five boroughs and seven suburban counties. It also applies the clothing rule in § 1115(a)(30) correctly — items under $110 each escape the state rate and the MCTD surcharge, and escape local tax only where the jurisdiction has elected the same exemption, as New York City has. Retailers, e-commerce sellers shipping into New York and shoppers checking a receipt get the same layer-by-layer split.",
-  "useCases": [
-    "A clothing retailer ringing up a mixed basket in Manhattan, where a $95 shirt is untaxed but a $150 coat carries the full 8.875%.",
-    "An out-of-state seller shipping to a Nassau County address, checking that the MCTD surcharge is added to the county rate.",
-    "A bookkeeper splitting a month of receipts into state, local and MCTD components to complete the ST-100 quarterly return."
-  ],
-  "benefits": [
-    [
-      "Per-item clothing test",
-      "Applies the $110 threshold item by item, the way the statute does, instead of to the basket total."
-    ],
-    [
-      "MCTD surcharge handled",
-      "Adds the 0.375% surcharge only inside the district, so suburban and upstate rates come out right."
-    ],
-    [
-      "Three-layer breakdown",
-      "Separates state, local and MCTD tax, matching how the ST-100 return is filed."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the sales tax rate in New York City?",
-      "8.875%, made up of the 4% New York State rate, the 4.5% New York City rate and the 0.375% MCTD surcharge. It is the highest combined rate in the state; most upstate counties land between 7% and 8.75%."
-    ],
-    [
-      "Is clothing taxed in New York?",
-      "Clothing and footwear priced under $110 per item are exempt from the 4% state tax and the 0.375% MCTD surcharge. Local tax still applies unless the county or city has elected the exemption — New York City has, so a $95 pair of shoes is completely untaxed there but taxed at the county rate in most of the state."
-    ],
-    [
-      "What happens if a clothing item costs exactly $110?",
-      "It is fully taxable. The exemption only covers items sold for less than $110, and once an item reaches that price the entire price is taxed, not just the amount above $110. Each item is tested on its own, so two $80 shirts on one receipt are both exempt."
-    ],
-    [
-      "Is shipping taxable in New York?",
-      "Yes, when the goods being shipped are taxable. Delivery, shipping and handling charges are part of the taxable receipt under Tax Bulletin ST-838. If a shipment contains both taxable and exempt goods, the delivery charge is allocated between them; ask a tax professional if the split is significant."
-    ]
-  ]
-},
-  "sales-tax-calculator-texas": {
-  "intro": "This calculator adds the 6.25% Texas state sales tax under Tax Code § 151.051 to the local city, county, transit and special-district rate at your location, which the statute caps at 2% combined — so the maximum rate anywhere in Texas is 8.25%. It treats delivery and handling charges as part of the taxable sales price when the item shipped is taxable (Comptroller Rule 3.303), keeps groceries and prescription drugs out of the base, and can reverse tax out of a tax-inclusive total. A separate panel handles motor vehicles, which are taxed under Tax Code chapter 152 instead.",
-  "useCases": [
-    "A Houston retailer confirming the 8.25% combined rate and splitting the state and local shares for the monthly return.",
-    "An out-of-state seller weighing whether to track every Texas jurisdiction or elect the single local use tax rate.",
-    "A car buyer comparing a dealer quote, checking the 6.25% motor vehicle tax on the price after a trade-in allowance."
-  ],
-  "benefits": [
-    [
-      "2% cap enforced",
-      "Rejects a local rate above the statutory ceiling, catching the common mistake of typing the combined rate."
-    ],
-    [
-      "Shipping handled by rule",
-      "Delivery charges follow the taxability of the goods, exactly as Rule 3.303 requires."
-    ],
-    [
-      "Vehicle tax kept separate",
-      "Shows the chapter 152 vehicle tax with its trade-in deduction rather than mixing it into general sales tax."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the sales tax rate in Texas?",
-      "The state rate is 6.25%. Local jurisdictions can add up to 2% more, so the combined rate ranges from 6.25% in areas with no local tax to a maximum of 8.25%. Houston, Dallas, San Antonio, Austin and Fort Worth all sit at the 8.25% ceiling."
-    ],
-    [
-      "Is shipping taxable in Texas?",
-      "Yes, when the item being shipped is taxable. Delivery, shipping, handling and transportation charges are part of the taxable sales price under Comptroller Rule 3.303, even if listed separately. If the goods are exempt, the delivery charge attached to them is exempt too."
-    ],
-    [
-      "Is food taxed in Texas?",
-      "Food products for home consumption are exempt under Tax Code § 151.314 — bread, milk, produce, meat and similar groceries. Prepared food sold ready to eat, candy, soft drinks and dietary supplements are taxable at the full combined rate."
-    ],
-    [
-      "How is sales tax on a car calculated in Texas?",
-      "Vehicles are taxed at 6.25% under Tax Code chapter 152, not under the general sales tax, and there is no local add-on. The tax is charged on the sales price less any trade-in allowance, so a $30,000 car with a $10,000 trade-in is taxed on $20,000, giving $1,250. Confirm with the county tax office at titling."
-    ]
-  ]
-},
-  "sales-tax-calculator-washington": {
-  "intro": "This calculator works out Washington retail sales tax by adding the 6.5% state rate under RCW 82.08.020 to the local city, county and transit rate that applies where the buyer takes delivery, which is the destination-based sourcing rule in RCW 82.32.730. It handles taxable shipping, a like-kind trade-in deduction and the extra 0.3% state tax on motor vehicle sales, and it can back the tax out of a price that already includes it. Sellers, online merchants shipping into Washington and buyers checking a quote all get the same state, local and total split.",
-  "useCases": [
-    "An out-of-state online seller shipping an order to a Seattle address, working out which combined rate to charge and how much of it is the local share.",
-    "A car buyer comparing an offer with a trade-in, checking the taxable price after the trade-in allowance and the additional 0.3% motor vehicle tax.",
-    "A market stall or service business that quotes tax-inclusive prices, backing out the tax to report the correct taxable gross on its excise tax return."
-  ],
-  "benefits": [
-    [
-      "State and local split",
-      "Separates the 6.5% state share from the local share so filing by location code is straightforward."
-    ],
-    [
-      "Destination sourcing built in",
-      "Uses the buyer's delivery location rate, which is how Washington sources retail sales."
-    ],
-    [
-      "Trade-in and shipping handled",
-      "Deducts a like-kind trade-in and lets you mark shipping taxable or not before the tax is computed."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the sales tax rate in Washington State?",
-      "The state portion is 6.5%, and local jurisdictions add their own rate on top, so the combined rate typically lands between about 7.0% and 10.6% depending on the address. Seattle sits near the top of that range and some unincorporated areas near the bottom."
-    ],
-    [
-      "Do I charge sales tax based on my location or the customer's?",
-      "The customer's. Washington is a destination-based state under RCW 82.32.730, so retail sales are sourced to the place where the buyer receives the goods — the delivery address for shipped orders, or the store counter for over-the-counter sales."
-    ],
-    [
-      "Is shipping taxable in Washington?",
-      "Yes, when the goods being shipped are taxable. Delivery, shipping and handling charges are part of the selling price under RCW 82.08.010(1), so tax applies to them at the same rate; if the goods are exempt, the related delivery charge is not taxed."
-    ],
-    [
-      "Why is car sales tax higher in Washington?",
-      "Retail sales and leases of motor vehicles carry an additional 0.3% state tax under RCW 82.08.020(3) on top of the 6.5% state rate and the local rate, and buyers in the Sound Transit district also pay a separate regional transit authority motor vehicle excise tax at registration. Confirm the total with a licensing office or a tax professional."
-    ]
-  ]
-},
-  "salon-business-tax-calculator": {
-  "intro": "A salon's profit is decided at the chair: service revenue is chairs multiplied by clients per chair per day, open days and average ticket, and what survives consumables, stylist commission, retail cost and rent is the taxable profit. This calculator builds that chain, works out contribution per client and the number of clients per chair per day needed to break even, then taxes the profit under both FY 2025-26 regimes and shows the section 44AD presumptive alternative at 6% of digital and 8% of cash turnover. GST registration at 20 lakh of service turnover and the 6% composition option up to 50 lakh are checked from the same numbers.",
-  "useCases": [
-    "A four-chair unisex salon wants to know how many clients per chair per day simply cover the rent and fixed salaries.",
-    "An owner paying 20% stylist commission is deciding whether raising the average ticket or adding a chair improves profit more.",
-    "A beauty parlour approaching 20 lakh of billings needs to know when GST registration becomes compulsory and what the 6% composition levy would cost."
-  ],
-  "benefits": [
-    [
-      "Chair economics, not guesswork",
-      "Revenue is derived from real capacity, so occupancy and ticket size can be tested separately."
-    ],
-    [
-      "Break-even in clients, not rupees",
-      "The answer is expressed as clients per chair per day, which is a number a salon manager can actually act on."
-    ],
-    [
-      "44AD and both regimes computed",
-      "Presumptive income sits next to real profit, each taxed with slabs, the 87A rebate, surcharge and cess."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you calculate break-even for a salon?",
-      "Divide the fixed costs the salon must cover by the contribution each client leaves behind. Contribution per client is the average ticket minus consumables and commission — at a 700 ticket with 12% consumables and 20% commission that is 476. Against 22.8 lakh of annual fixed cost, less retail gross profit, the salon needs roughly 4,450 clients a year, about 3.7 per chair per day on four chairs."
-    ],
-    [
-      "Is GST applicable on salon services in India?",
-      "Yes, once aggregate turnover crosses 20 lakh in a financial year — 10 lakh in the special category states. Beauty and physical well-being services were moved to 5% without input tax credit by the 56th GST Council with effect from 22 September 2025, so a registered salon charges that rate on services while retail cosmetics it resells carry their own goods rate. Confirm the current rate for your services before you invoice."
-    ],
-    [
-      "Can a salon owner file under section 44AD?",
-      "Yes. A salon is a business, not one of the professions listed in section 44AA(1), so section 44AD applies rather than 44ADA. Declare at least 6% of turnover received through banking or electronic modes and 8% of cash turnover, while turnover stays within 2 crore — 3 crore where cash receipts are at most 5%."
-    ],
-    [
-      "What is the composition scheme for a salon and is it worth taking?",
-      "Section 10(2A) of the CGST Act lets a service provider with aggregate turnover up to 50 lakh pay 6% of turnover — 3% CGST plus 3% SGST — with quarterly payment and one annual return. You cannot collect GST from clients or claim input tax credit on products and equipment, so it usually suits a small salon with few taxable purchases. Compare both options with a GST practitioner before opting in, since the choice is made for a whole financial year."
-    ]
-  ]
-},
-  "salsa-dance-calorie-calculator": {
-  "intro": "The Salsa Dance Calorie Calculator works out the energy cost of a class or social by counting the songs you actually danced rather than the hours you were in the room. Dancing minutes are priced at the Compendium of Physical Activities MET value for your style — 3.0 for slow bachata up to 7.8 for fast performance work — and the remaining time at 1.6 MET for standing and talking, using kcal/min = MET x 3.5 x kg / 200.",
-  "useCases": [
-    "Log a three-hour Friday social honestly when you only danced about a third of the songs.",
-    "Compare a non-stop rueda hour against the same hour of slow bachata for the same body weight.",
-    "Work out the calorie cost of a six-week performance rehearsal block before a showcase.",
-    "Decide whether a weekly salsa night meets the vigorous-activity share of your exercise target."
-  ],
-  "benefits": [
-    [
-      "Songs, not hours",
-      "Off-the-floor time is priced separately so the total is not inflated two or three times over."
-    ],
-    [
-      "Style-specific intensity",
-      "Bachata, class drills, social on1/on2, rueda and performance work each use their own MET value."
-    ],
-    [
-      "Per-song figure",
-      "Shows what a single track is worth, which is easier to sanity-check than a session total."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many calories does an hour of salsa dancing burn?",
-      "About 393 kcal for a 68 kg adult dancing continuously at social club tempo (5.5 MET), rising to roughly 500 kcal for fast rueda at 7.0 MET and 557 kcal for performance-level work at 7.8 MET. Continuous is the key word — a typical social night includes far more standing than dancing."
-    ],
-    [
-      "How long is a salsa song?",
-      "Most salsa tracks run 4 to 6 minutes, noticeably longer than the roughly 3-minute pop average, and DJs often mix two together. Using 4.5 minutes as the average song length is a reasonable default for a social."
-    ],
-    [
-      "Does salsa count as exercise?",
-      "Fast salsa does — anything at or above 6 MET is vigorous intensity, so rueda and performance rehearsal count toward the 75 minutes of vigorous activity per week in the WHO guidelines. Social salsa at 5.5 MET and beginner classes at 4.5 MET fall in the moderate band and count toward the 150-minute moderate target."
-    ],
-    [
-      "Why is my calorie number lower than other salsa calculators?",
-      "Most calculators multiply your whole night by a dance MET value, which assumes you never left the floor. Counting songs separately typically halves the figure for a social, and that lower number is the realistic one."
-    ]
-  ]
-},
-  "sandpaper-grit-selector": {
-  "intro": "Generates the grit progression for a sanding job from the state of the surface to the finish going on top of it. The sequence is built from abrasive particle size rather than habit: each step drops the average particle diameter by no more than 1.65 times and skips at most one grade, which is what produces the familiar 80-120-180-220 run. It also converts between the FEPA (P-prefixed) and CAMI grit standards, which agree up to about 220 and diverge badly after it.",
-  "useCases": [
-    "Refinishing a hardwood table for an oil finish and needing to know where to stop",
-    "Preparing veneered board without going through a face ply that may be under 0.6 mm thick",
-    "Working out whether an imported 400 grit sheet is the same thing as the P400 already in the workshop"
-  ],
-  "benefits": [
-    [
-      "Derived, not copied",
-      "Sequences come from particle sizes, so they hold for any start and stop point."
-    ],
-    [
-      "Stops at the right place",
-      "The finish decides the final grit — paint needs a key, oil hides nothing."
-    ],
-    [
-      "Material floors enforced",
-      "Veneer, clear coat and thin ply will not be sent a grit that cuts through them."
-    ]
-  ],
-  "faqs": [
-    [
-      "What grit should I finish at before staining wood?",
-      "P150 on softwood and P180 on hardwood. Going finer burnishes the surface and closes the pores, which makes the stain sit on top rather than soaking in, and any burnished patch shows as a pale blotch. For a clear film finish like polyurethane, P220 is the sensible stopping point."
-    ],
-    [
-      "Can I skip grits when sanding?",
-      "One grade at most, and only where the particle sizes are close. The job of each grit is to remove the scratch pattern of the previous one, so if the jump is too large the finer paper only polishes the ridges and leaves the valleys. As a rule the particle size should not drop by more than about 1.65 times between steps."
-    ],
-    [
-      "Is 400 grit sandpaper the same as P400?",
-      "No. CAMI 400 has an average particle size around 23.6 microns, while P400 is about 35 microns — CAMI 400 is closer to P800. The two standards track each other up to roughly 220 and separate above it, so a fine-grit sheet from a different market can behave quite differently from the number on the back."
-    ],
-    [
-      "What grit removes paint?",
-      "Start at P60 for stripping paint or varnish, and P40 only for levelling genuine damage. Coarser than that gouges the substrate, and on anything painted before the late 1970s do not dry-sand at all — the paint may contain lead, which needs chemical stripping or professional removal instead."
-    ]
-  ]
-},
-  "sanskrit-word-of-the-day-builder": {
-  "intro": "A Sanskrit word-of-the-day deck of 30 terms, each given with its Devanagari form, IAST transliteration, the verbal root (dhātu) it derives from, and a line from a classical source — the Upaniṣads, the Bhagavad Gītā, the Yoga Sūtra or a well-known subhāṣita — where the word actually appears. The card is fixed by the calendar date, so the same date always shows the same word.",
-  "useCases": [
-    "Learn the vocabulary that recurs across yoga, philosophy and devotional texts, with the root that explains the meaning.",
-    "See where a familiar term such as dharma, śraddhā or vairāgya is actually used in a primary text.",
-    "Build a base of Sanskrit roots that also unlocks vocabulary in Hindi, Marathi, Bengali, Kannada and Telugu.",
-    "Use one card a day as an opening reading for a class or a personal practice."
-  ],
-  "benefits": [
-    [
-      "Root, not just a gloss",
-      "Every card names the dhātu the word is built from, which is what makes the meaning stick."
-    ],
-    [
-      "Cited, not invented",
-      "Each example is an actual line from a classical text, attributed to the work it comes from."
-    ],
-    [
-      "IAST throughout",
-      "Transliteration follows IAST, the standard used in scholarly editions and dictionaries."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is a dhātu in Sanskrit?",
-      "A dhātu is a verbal root — the minimal element from which a family of words is built using prefixes and suffixes. Traditional grammar lists roughly 2,000 of them, and knowing the root is often enough to unpack an unfamiliar word: from √dhṛ, 'to hold', comes dharma, that which holds things together."
-    ],
-    [
-      "Is Sanskrit still a spoken language?",
-      "It survives as a liturgical and scholarly language and is taught in schools and universities across India, with a small number of people reporting it as a mother tongue in the census. Most learners study it in order to read texts rather than to converse."
-    ],
-    [
-      "What is IAST transliteration?",
-      "IAST, the International Alphabet of Sanskrit Transliteration, is the standard romanisation used in dictionaries and academic editions. It marks long vowels with a macron (ā, ī, ū), retroflex consonants with a dot below (ṭ, ḍ, ṇ) and distinguishes the three sibilants s, ś and ṣ."
-    ],
-    [
-      "Are the quoted lines accurate?",
-      "Each example is a line from a named classical source, cited with its work and, where it is standard to do so, its chapter and verse. Editions and recensions differ in small ways, so check a critical edition before quoting one in academic work."
     ]
   ]
 },

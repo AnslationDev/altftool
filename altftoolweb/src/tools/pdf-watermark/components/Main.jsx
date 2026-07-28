@@ -372,9 +372,7 @@ export default function Main() {
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--primary)", display: "inline-block" }} />
             PDF Watermark Tool
           </div>
-          <h1 className="heading mb-3">
-            Protect Your <span className="text-gradient-hero">Documents</span>
-          </h1>
+          <h1 className="heading mb-3">PDF Watermark</h1>
           <p className="description mx-auto" style={{ maxWidth: 440 }}>
             Add professional watermarks to any PDF — instantly, privately, 100% in your browser.
           </p>
