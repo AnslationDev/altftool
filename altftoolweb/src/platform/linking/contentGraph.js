@@ -23,7 +23,7 @@ import {
   getTop9Category,
 } from "@/app/top9/data/getTop9Items";
 import top11CategoryData from "@/app/top11/data/categoryData";
-import { getDeals } from "@/app/deals/data/deals";
+import { getDeals, getDealPaidProducts } from "@/app/deals/data/deals";
 import { apps as appCatalog } from "@/app/apps/data/apps";
 import { getAllWorkflows } from "@/app/n8n/data/service";
 import { GAMES } from "@/app/altfgame/_data/games";
@@ -42,7 +42,7 @@ export const SECTION_LABELS = {
   blogs: "Guide",
   top9: "Top 9",
   top11: "Top 11",
-  deals: "Deal",
+  deals: "Price comparison",
   apps: "App",
   products: "Product",
   experiences: "Experience",
@@ -120,7 +120,7 @@ const HUB_ITEMS = [
   { href: "/altfcalculators", title: "Calculators", description: "Finance, health, math, and everyday calculators.", tags: ["calculators", "finance", "health"] },
   { href: "/tools/games", title: "Free games", description: "Browser games — no install, no sign-up.", tags: ["games", "fun"] },
   { href: "/labs", title: "Labs & experiences", description: "Interactive experiments, creative spaces, and focus tools.", tags: ["labs", "experiences", "creative"] },
-  { href: "/deals", title: "Deals", description: "Curated savings on tools and services.", tags: ["deals", "shopping", "savings"] },
+  { href: "/deals", title: "Paid tool prices vs free alternatives", description: "Verified entry prices and free-tier limits for the paid tools people buy, mapped to the free page that does the same job.", tags: ["pricing", "alternatives", "comparison", "free tools"] },
   { href: "/news", title: "News", description: "Current headlines and topic pages.", tags: ["news", "headlines"] },
   { href: "/academy", title: "Academy", description: "Compare learning platforms and build skills.", tags: ["academy", "learning", "education"] },
   { href: "/site-map", title: "Site map", description: "Every AltFTool destination in one organized directory.", tags: ["sitemap", "directory"] },
@@ -191,14 +191,24 @@ function buildGraph() {
     });
   });
 
+  // /deals is a price-comparison family, not a product listing: each page maps
+  // one job to the paid products that charge for it. The paid product names are
+  // the strongest tag signal — a reader on the Photoshop comparison should be
+  // able to reach the image-editor one.
   getDeals().forEach((deal) => {
     if (!deal?.slug) return;
     pushItem(items, seen, {
       href: `/deals/${deal.slug}`,
-      title: deal.name,
-      description: deal.tagline,
+      title: `${deal.name} vs the paid alternatives`,
+      description: `${deal.job} — what the paid tools charge, what their free tiers cap, and what the free one gives up.`,
       section: "deals",
-      tags: [deal.category, deal.alternativeTo, deal.bestFor],
+      tags: [
+        deal.category,
+        deal.job,
+        "pricing",
+        "alternative",
+        getDealPaidProducts(deal).map((product) => product.name),
+      ],
     });
   });
 

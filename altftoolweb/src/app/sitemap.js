@@ -730,11 +730,17 @@ async function buildSitemapEntries({
     }
   }
 
+  // /deals/<slug> pages are submitted again. They used to be skipped because
+  // they duplicated /tools/all/<slug> and canonicalised there; they are now
+  // dated price comparisons against named paid products, which the tool page
+  // does not carry, and the canonical override in the deals route has been
+  // removed so each page is self-canonical. Both changes must stay together: a
+  // page that canonicalises away must never be submitted.
   for (const deal of getDeals() || []) {
     if (!deal?.slug) continue;
     pushUnique(entries, seen, `/deals/${deal.slug}`, {
       priority: 0.7,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
     });
   }
 
