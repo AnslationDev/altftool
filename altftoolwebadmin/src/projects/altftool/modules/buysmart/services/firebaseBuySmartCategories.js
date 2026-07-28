@@ -296,8 +296,14 @@ export const firebaseBuySmartCategoriesSource = {
   },
 
   // 🔹 BULK DELETE
-  async bulkDelete(ids = [], banner = []) {
-    const filtered = banner.filter((item) => !ids.includes(item.id));
+  async bulkDelete(ids = []) {
+    const snap = await getDoc(CATEGORY_REF);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    const currentBanner = data?.banner || [];
+
+    const filtered = currentBanner.filter((item) => !ids.includes(item.id));
 
     await updateDoc(CATEGORY_REF, {
       banner: filtered,

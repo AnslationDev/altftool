@@ -1126,7 +1126,7 @@ export default function AddBlog() {
                     </button>
                   )}
                   <button type="submit" disabled={submitting || step === "done"}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-primary hover:bg-primary text-white rounded-xl transition shadow-sm disabled:opacity-50">
+                    className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold bg-primary hover:bg-primary text-primary-foreground rounded-xl transition shadow-sm disabled:opacity-50">
                     {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
                     {submitting ? (step === "uploading" ? `Uploading image… ${uploadProgress}%` : step === "saving" ? "Saving to database…" : "Publishing…") : "Publish Blog"}
                   </button>
@@ -1200,7 +1200,7 @@ export default function AddBlog() {
                       <img src={imagePreview} alt={imageAlt || "Blog featured image"} className="w-full max-h-44 object-cover bg-surface-soft" />
                       <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                         <button type="button" onClick={removeImage}
-                          className="flex items-center gap-1 bg-danger hover:bg-danger text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                          className="flex items-center gap-1 bg-danger hover:bg-danger text-danger-foreground text-xs font-semibold px-3 py-1.5 rounded-lg transition">
                           <Trash2 className="w-3 h-3" />Remove
                         </button>
                       </div>

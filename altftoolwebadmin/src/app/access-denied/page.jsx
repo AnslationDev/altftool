@@ -21,6 +21,10 @@ export default function AccessDeniedPage() {
   const [loading, setLoading] = useState(false);
   const hasRedirectedRef = useRef(false);
 
+  useEffect(() => {
+    document.title = "Access denied · AltFTools Admin";
+  }, []);
+
   /* ── Recovery: this page must not be a dead end ── */
   useEffect(() => {
     if (authLoading) return;

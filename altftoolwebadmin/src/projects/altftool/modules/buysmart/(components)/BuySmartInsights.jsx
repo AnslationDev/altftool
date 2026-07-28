@@ -662,11 +662,11 @@ function filterQualityRows(rows = [], filters = {}) {
 
 function StatCard({ caption, icon: Icon, label, tone = "slate", value }) {
   const tones = {
-    amber: "border-amber-200 bg-amber-50 text-amber-700",
-    blue: "border-blue-200 bg-blue-50 text-blue-700",
-    green: "border-green-200 bg-green-50 text-green-700",
-    red: "border-red-200 bg-red-50 text-red-700",
-    slate: "border-gray-200 bg-white text-gray-800",
+    amber: "border-[var(--warning)] bg-[var(--warning-soft)] text-[var(--warning-text)]",
+    blue: "border-[var(--info)] bg-[var(--info-soft)] text-[var(--info)]",
+    green: "border-[var(--success)] bg-[var(--success-soft)] text-[var(--success-text)]",
+    red: "border-[var(--danger)] bg-[var(--danger-soft)] text-[var(--danger-text)]",
+    slate: "border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)]",
   };
 
   return (
@@ -706,16 +706,16 @@ function AnalyticsDashboard({ data }) {
 
   return (
     <div className="space-y-5">
-      <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      <section className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-gray-600" />
-              <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+              <Filter className="h-4 w-4 text-[var(--muted)]" />
+              <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">
                 Analytics filters
               </p>
             </div>
-            <h3 className="mt-1 text-base font-semibold text-gray-950">
+            <h3 className="mt-1 text-base font-semibold text-[var(--foreground)]">
               Slice BuySmart events by date, event, or store
             </h3>
           </div>
@@ -724,7 +724,7 @@ function AnalyticsDashboard({ data }) {
             <select
               value={dateRange}
               onChange={(event) => setDateRange(event.target.value)}
-              className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-gray-400"
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
               aria-label="Analytics date range"
             >
               {DATE_FILTERS.map((filter) => (
@@ -737,7 +737,7 @@ function AnalyticsDashboard({ data }) {
             <select
               value={eventType}
               onChange={(event) => setEventType(event.target.value)}
-              className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-gray-400"
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
               aria-label="Analytics event type"
             >
               {EVENT_FILTERS.map((filter) => (
@@ -748,18 +748,18 @@ function AnalyticsDashboard({ data }) {
             </select>
 
             <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search store, slug, category..."
-                className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-9 text-sm text-gray-800 outline-none focus:border-gray-400"
+                className="h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-9 pr-9 text-sm text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
               />
               {search ? (
                 <button
                   type="button"
                   onClick={() => setSearch("")}
-                  className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+                  className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
                   aria-label="Clear analytics search"
                 >
                   <X className="h-3.5 w-3.5" />
@@ -773,8 +773,8 @@ function AnalyticsDashboard({ data }) {
               aria-pressed={lowTrustOnly}
               className={`inline-flex h-10 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-bold transition ${
                 lowTrustOnly
-                  ? "border-amber-300 bg-amber-50 text-amber-700"
-                  : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                  ? "border-[var(--warning)] bg-[var(--warning-soft)] text-[var(--warning-text)]"
+                  : "border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
               }`}
             >
               <ShieldAlert className="h-4 w-4" />
@@ -784,7 +784,7 @@ function AnalyticsDashboard({ data }) {
         </div>
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[var(--muted)]">
             Showing {formatNumber(insights.rows.length)} stores and {formatNumber(insights.events.length)} events.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -792,7 +792,7 @@ function AnalyticsDashboard({ data }) {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
+                className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
               >
                 <X className="h-3.5 w-3.5" />
                 Reset
@@ -802,7 +802,7 @@ function AnalyticsDashboard({ data }) {
               type="button"
               onClick={() => exportCsv(`buysmart-analytics-${reportDateStamp()}.csv`, analyticsRowsForCsv(insights.rows))}
               disabled={!insights.rows.length}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Download className="h-3.5 w-3.5" />
               Export analytics
@@ -811,7 +811,7 @@ function AnalyticsDashboard({ data }) {
               type="button"
               onClick={() => exportCsv(`buysmart-events-${reportDateStamp()}.csv`, eventsForCsv(insights.events))}
               disabled={!insights.events.length}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Download className="h-3.5 w-3.5" />
               Export events
@@ -820,7 +820,7 @@ function AnalyticsDashboard({ data }) {
               type="button"
               onClick={() => exportCsv(`buysmart-low-trust-${reportDateStamp()}.csv`, analyticsRowsForCsv(failedRows))}
               disabled={!failedRows.length}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 text-xs font-bold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] px-3 text-xs font-bold text-[var(--warning-text)] transition hover:bg-[color-mix(in_srgb,var(--warning-soft)_65%,var(--warning))] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Download className="h-3.5 w-3.5" />
               Export low trust
@@ -838,32 +838,32 @@ function AnalyticsDashboard({ data }) {
       </div>
 
       <section className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="border-b border-gray-200 p-4">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+          <div className="border-b border-[var(--border)] p-4">
             <div className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-gray-700" />
+              <BarChart3 className="h-5 w-5 text-[var(--foreground)]" />
               <div>
-                <h3 className="text-base font-semibold text-gray-950">Top BuySmart intent</h3>
-                <p className="text-sm text-gray-500">Sorted by reveal, copy, visit, and worked feedback.</p>
+                <h3 className="text-base font-semibold text-[var(--foreground)]">Top BuySmart intent</h3>
+                <p className="text-sm text-[var(--muted)]">Sorted by reveal, copy, visit, and worked feedback.</p>
               </div>
             </div>
           </div>
 
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-[var(--border)]">
             {insights.rows.length ? (
               insights.rows.slice(0, 8).map((row) => (
                 <div key={row.slug} className="grid gap-3 p-4 md:grid-cols-[1fr_auto] md:items-center">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="truncate text-sm font-bold capitalize text-gray-950">{row.title}</h4>
+                      <h4 className="truncate text-sm font-bold capitalize text-[var(--foreground)]">{row.title}</h4>
                       {row.counter.failed > row.counter.worked && row.counter.failed > 0 ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warning-soft)] px-2 py-0.5 text-xs font-bold text-[var(--warning-text)]">
                           <AlertTriangle className="h-3 w-3" />
                           Review
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs text-[var(--muted)]">
                       {formatNumber(row.highIntent)} high-intent actions - {formatPercent(row.visitRate)} visit rate
                     </p>
                   </div>
@@ -875,49 +875,49 @@ function AnalyticsDashboard({ data }) {
                       ["Worked", row.counter.worked],
                       ["Failed", row.counter.failed],
                     ].map(([label, value]) => (
-                      <div key={label} className="rounded-lg bg-gray-50 px-2 py-2">
-                        <p className="font-bold text-gray-950">{formatNumber(value)}</p>
-                        <p className="mt-0.5 text-gray-500">{label}</p>
+                      <div key={label} className="rounded-lg bg-[var(--surface-soft)] px-2 py-2">
+                        <p className="font-bold text-[var(--foreground)]">{formatNumber(value)}</p>
+                        <p className="mt-0.5 text-[var(--muted)]">{label}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               ))
             ) : (
-              <div className="p-6 text-sm text-gray-500">
+              <div className="p-6 text-sm text-[var(--muted)]">
                 No BuySmart analytics yet. Reveal, copy, store visit, worked, and failed events will appear here.
               </div>
             )}
           </div>
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <div className="flex items-center gap-2">
-            <Activity className="h-5 w-5 text-gray-700" />
+            <Activity className="h-5 w-5 text-[var(--foreground)]" />
             <div>
-              <h3 className="text-base font-semibold text-gray-950">Recent activity</h3>
-              <p className="text-sm text-gray-500">Last tracked BuySmart events.</p>
+              <h3 className="text-base font-semibold text-[var(--foreground)]">Recent activity</h3>
+              <p className="text-sm text-[var(--muted)]">Last tracked BuySmart events.</p>
             </div>
           </div>
           <div className="mt-4 space-y-3">
             {insights.events.length ? (
               insights.events.slice(-8).reverse().map((event) => (
-                <div key={event.id || `${event.brandSlug}-${event.ts}`} className="rounded-lg border border-gray-100 bg-gray-50 p-3">
+                <div key={event.id || `${event.brandSlug}-${event.ts}`} className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-3">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="truncate text-sm font-bold capitalize text-gray-900">
+                    <p className="truncate text-sm font-bold capitalize text-[var(--foreground)]">
                       {event.brandTitle || event.brandSlug}
                     </p>
-                    <span className="rounded-full bg-white px-2 py-0.5 text-xs font-bold capitalize text-gray-600">
+                    <span className="rounded-full bg-[var(--surface)] px-2 py-0.5 text-xs font-bold capitalize text-[var(--muted)]">
                       {event.eventType}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-[var(--muted)]">
                     {event.ts ? new Date(event.ts).toLocaleString() : "Timestamp unavailable"}
                   </p>
                 </div>
               ))
             ) : (
-              <p className="rounded-lg border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+              <p className="rounded-lg border border-dashed border-[var(--border)] p-4 text-sm text-[var(--muted)]">
                 No recent events yet.
               </p>
             )}
@@ -931,10 +931,10 @@ function AnalyticsDashboard({ data }) {
 function QualityPill({ status, score }) {
   const style =
     status === "ready"
-      ? "border-green-200 bg-green-50 text-green-700"
+      ? "border-[var(--success)] bg-[var(--success-soft)] text-[var(--success-text)]"
       : status === "fix"
-        ? "border-red-200 bg-red-50 text-red-700"
-        : "border-amber-200 bg-amber-50 text-amber-700";
+        ? "border-[var(--danger)] bg-[var(--danger-soft)] text-[var(--danger-text)]"
+        : "border-[var(--warning)] bg-[var(--warning-soft)] text-[var(--warning-text)]";
 
   return (
     <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-bold ${style}`}>
@@ -984,28 +984,28 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
       <button
         type="button"
         aria-label="Close quality issue drawer"
-        className="absolute inset-0 bg-gray-950/30 backdrop-blur-[1px]"
+        className="absolute inset-0 bg-[var(--overlay)] backdrop-blur-[1px]"
         onClick={onClose}
       />
-      <aside className="absolute right-0 top-0 flex h-full w-full max-w-xl flex-col overflow-hidden border-l border-gray-200 bg-white shadow-2xl">
-        <div className="border-b border-gray-200 p-5">
+      <aside className="absolute right-0 top-0 flex h-full w-full max-w-xl flex-col overflow-hidden border-l border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+        <div className="border-b border-[var(--border)] p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <QualityPill status={row.quality.status} score={row.quality.score} />
-                <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase text-gray-600">
+                <span className="rounded-full bg-[var(--surface-soft)] px-2 py-0.5 text-xs font-bold uppercase text-[var(--muted)]">
                   {row.kind}
                 </span>
               </div>
-              <h3 className="mt-3 text-xl font-semibold text-gray-950">{row.label}</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <h3 className="mt-3 text-xl font-semibold text-[var(--foreground)]">{row.label}</h3>
+              <p className="mt-1 text-sm text-[var(--muted)]">
                 {row.subtitle} - {row.saving} - {row.status}
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-gray-200 text-gray-500 transition hover:bg-gray-50 hover:text-gray-900"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
               aria-label="Close drawer"
             >
               <X className="h-4 w-4" />
@@ -1014,73 +1014,73 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
         </div>
 
         <div className="flex-1 overflow-y-auto p-5">
-          <section className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Issue details</p>
+          <section className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Issue details</p>
             <div className="mt-3 space-y-2">
               {row.quality.issues.length ? (
                 row.quality.issues.map((issue) => (
-                  <div key={issue.key} className="flex items-start gap-3 rounded-lg border border-gray-200 bg-white p-3">
-                    <AlertTriangle className={`mt-0.5 h-4 w-4 ${issue.severity === "critical" ? "text-red-500" : "text-amber-500"}`} />
+                  <div key={issue.key} className="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3">
+                    <AlertTriangle className={`mt-0.5 h-4 w-4 ${issue.severity === "critical" ? "text-[var(--danger)]" : "text-[var(--warning)]"}`} />
                     <div>
-                      <p className="text-sm font-bold text-gray-900">{issue.label}</p>
-                      <p className="mt-1 text-xs capitalize text-gray-500">{issue.severity} issue</p>
+                      <p className="text-sm font-bold text-[var(--foreground)]">{issue.label}</p>
+                      <p className="mt-1 text-xs capitalize text-[var(--muted)]">{issue.severity} issue</p>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="rounded-lg border border-dashed border-gray-200 bg-white p-3 text-sm text-gray-500">
+                <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface)] p-3 text-sm text-[var(--muted)]">
                   No blocking issues found for this row.
                 </p>
               )}
             </div>
           </section>
 
-          <section className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Quick fix</p>
+          <section className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Quick fix</p>
             <div className="mt-3 grid gap-3">
-              <label className="grid gap-1 text-sm font-semibold text-gray-700">
+              <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                 Title
                 <input
                   value={form.title}
                   onChange={(event) => updateField("title", event.target.value)}
-                  className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                  className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 />
               </label>
 
-              <label className="grid gap-1 text-sm font-semibold text-gray-700">
+              <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                 Merchant URL
                 <input
                   value={form.link}
                   onChange={(event) => updateField("link", event.target.value)}
-                  className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                  className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 />
               </label>
 
-              <label className="grid gap-1 text-sm font-semibold text-gray-700">
+              <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                 Image URL
                 <input
                   value={form.image}
                   onChange={(event) => updateField("image", event.target.value)}
-                  className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                  className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 />
               </label>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                   {row.kind === "offer" ? "Category" : "Country"}
                   <input
                     value={form.category}
                     onChange={(event) => updateField("category", event.target.value)}
-                    className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                    className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                   />
                 </label>
 
-                <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                   Status
                   <select
                     value={form.status}
                     onChange={(event) => updateField("status", event.target.value)}
-                    className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                    className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                   >
                     <option value="active">Active</option>
                     <option value="paused">Paused</option>
@@ -1090,22 +1090,22 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                   {row.kind === "offer" ? "Saving copy" : "Highlight"}
                   <input
                     value={form.saving}
                     onChange={(event) => updateField("saving", event.target.value)}
-                    className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                    className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                   />
                 </label>
 
                 {row.kind === "offer" ? (
-                  <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                  <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                     Code
                     <input
                       value={form.code}
                       onChange={(event) => updateField("code", event.target.value)}
-                      className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                      className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                     />
                   </label>
                 ) : null}
@@ -1113,21 +1113,21 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
 
               {row.kind === "offer" ? (
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                  <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                     Expires
                     <input
                       value={form.expiresAt}
                       onChange={(event) => updateField("expiresAt", event.target.value)}
-                      className="h-10 rounded-lg border border-gray-200 px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                      className="h-10 rounded-lg border border-[var(--border)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                     />
                   </label>
 
-                  <label className="grid gap-1 text-sm font-semibold text-gray-700">
+                  <label className="grid gap-1 text-sm font-semibold text-[var(--foreground)]">
                     Verification
                     <select
                       value={form.verificationStatus}
                       onChange={(event) => updateField("verificationStatus", event.target.value)}
-                      className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-normal text-gray-900 outline-none focus:border-gray-400"
+                      className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-normal text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                     >
                       <option value="verified">Verified</option>
                       <option value="pending">Pending</option>
@@ -1140,39 +1140,39 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
             </div>
           </section>
 
-          <section className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
-            <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Publishing signals</p>
+          <section className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+            <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Publishing signals</p>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-lg bg-gray-50 p-3">
-                <dt className="text-xs font-bold uppercase text-gray-500">Status</dt>
-                <dd className="mt-1 font-semibold capitalize text-gray-900">{row.status || "unknown"}</dd>
+              <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+                <dt className="text-xs font-bold uppercase text-[var(--muted)]">Status</dt>
+                <dd className="mt-1 font-semibold capitalize text-[var(--foreground)]">{row.status || "unknown"}</dd>
               </div>
-              <div className="rounded-lg bg-gray-50 p-3">
-                <dt className="text-xs font-bold uppercase text-gray-500">Score</dt>
-                <dd className="mt-1 font-semibold text-gray-900">{row.quality.score}/100</dd>
+              <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+                <dt className="text-xs font-bold uppercase text-[var(--muted)]">Score</dt>
+                <dd className="mt-1 font-semibold text-[var(--foreground)]">{row.quality.score}/100</dd>
               </div>
-              <div className="rounded-lg bg-gray-50 p-3">
-                <dt className="text-xs font-bold uppercase text-gray-500">Saving</dt>
-                <dd className="mt-1 truncate font-semibold text-gray-900">{row.saving || "Not set"}</dd>
+              <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+                <dt className="text-xs font-bold uppercase text-[var(--muted)]">Saving</dt>
+                <dd className="mt-1 truncate font-semibold text-[var(--foreground)]">{row.saving || "Not set"}</dd>
               </div>
-              <div className="rounded-lg bg-gray-50 p-3">
-                <dt className="text-xs font-bold uppercase text-gray-500">Link</dt>
-                <dd className="mt-1 truncate font-semibold text-gray-900">{row.link || "Missing"}</dd>
+              <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+                <dt className="text-xs font-bold uppercase text-[var(--muted)]">Link</dt>
+                <dd className="mt-1 truncate font-semibold text-[var(--foreground)]">{row.link || "Missing"}</dd>
               </div>
             </dl>
           </section>
         </div>
 
-        <div className="border-t border-gray-200 p-4">
+        <div className="border-t border-[var(--border)] p-4">
           <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs font-bold uppercase tracking-wide text-gray-500">
+            <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">
               {dirty ? "Unsaved quick fix changes" : "Quick fix synced"}
             </p>
             <button
               type="button"
               disabled={!row.id || !dirty || busyAction === saveKey}
               onClick={() => onSave(row, form)}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 text-sm font-bold text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 text-sm font-bold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-hover)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {busyAction === saveKey ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
               Save changes
@@ -1185,7 +1185,7 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
                 type="button"
                 disabled={!row.id || busyAction === verifyKey}
                 onClick={() => onAction(row, "verify")}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 text-sm font-bold text-green-700 transition hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--success)] bg-[var(--success-soft)] px-3 text-sm font-bold text-[var(--success-text)] transition hover:bg-[color-mix(in_srgb,var(--success-soft)_65%,var(--success))] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {busyAction === verifyKey ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                 Verify offer
@@ -1195,7 +1195,7 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
               type="button"
               disabled={!row.id || busyAction === activateKey}
               onClick={() => onAction(row, "activate")}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 transition hover:border-green-300 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-bold text-[var(--foreground)] transition hover:border-[var(--success)] hover:bg-[var(--success-soft)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {busyAction === activateKey ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
               Activate
@@ -1204,7 +1204,7 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
               type="button"
               disabled={!row.id || busyAction === pauseKey}
               onClick={() => onAction(row, "pause")}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 text-sm font-bold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] px-3 text-sm font-bold text-[var(--warning-text)] transition hover:bg-[color-mix(in_srgb,var(--warning-soft)_65%,var(--warning))] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {busyAction === pauseKey ? <Loader2 className="h-4 w-4 animate-spin" /> : <PauseCircle className="h-4 w-4" />}
               Pause
@@ -1213,7 +1213,7 @@ function QualityIssueDrawer({ busyAction, onAction, onClose, onSave, row }) {
               href={row.path}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-bold text-gray-700 transition hover:bg-gray-50"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
             >
               Preview
               <ExternalLink className="h-4 w-4" />
@@ -1374,24 +1374,24 @@ function QualityQueue({ data }) {
         <StatCard icon={Store} label="Store Fix" value={formatNumber(quality.storeStats.fix)} caption={`${quality.storesTotal} store rows`} tone={quality.storeStats.fix ? "red" : "slate"} />
       </div>
 
-      <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="flex flex-col gap-2 border-b border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <section className="rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+        <div className="flex flex-col gap-2 border-b border-[var(--border)] p-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-base font-semibold text-gray-950">Auto quality queue</h3>
-            <p className="text-sm text-gray-500">Rows with missing links, expired offers, duplicates, low trust, or paused status appear first.</p>
+            <h3 className="text-base font-semibold text-[var(--foreground)]">Auto quality queue</h3>
+            <p className="text-sm text-[var(--muted)]">Rows with missing links, expired offers, duplicates, low trust, or paused status appear first.</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-700">
+            <span className="rounded-full bg-[var(--surface-soft)] px-3 py-1 text-xs font-bold text-[var(--foreground)]">
               {filteredQueue.length}/{quality.queue.length} visible
             </span>
-            <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+            <span className="rounded-full bg-[var(--info-soft)] px-3 py-1 text-xs font-bold text-[var(--info)]">
               Audit trail on
             </span>
             <button
               type="button"
               onClick={() => exportCsv(`buysmart-quality-queue-${reportDateStamp()}.csv`, qualityRowsForCsv(filteredQueue))}
               disabled={!filteredQueue.length}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Download className="h-3.5 w-3.5" />
               Export visible
@@ -1400,16 +1400,16 @@ function QualityQueue({ data }) {
         </div>
 
         {quality.queue.length ? (
-          <div className="border-b border-gray-100 bg-white px-4 py-3">
+          <div className="border-b border-[var(--border)] bg-[var(--surface)] px-4 py-3">
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-gray-500" />
-              <p className="text-xs font-bold uppercase tracking-wide text-gray-500">Queue filters</p>
+              <Filter className="h-4 w-4 text-[var(--muted)]" />
+              <p className="text-xs font-bold uppercase tracking-wide text-[var(--muted)]">Queue filters</p>
             </div>
             <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-[150px_150px_190px_minmax(240px,1fr)_auto]">
               <select
                 value={kindFilter}
                 onChange={(event) => setKindFilter(event.target.value)}
-                className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-gray-400"
+                className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 aria-label="Quality row type"
               >
                 {QUALITY_KIND_FILTERS.map((filter) => (
@@ -1422,7 +1422,7 @@ function QualityQueue({ data }) {
               <select
                 value={statusFilter}
                 onChange={(event) => setStatusFilter(event.target.value)}
-                className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-gray-400"
+                className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 aria-label="Quality status"
               >
                 {QUALITY_STATUS_FILTERS.map((filter) => (
@@ -1435,7 +1435,7 @@ function QualityQueue({ data }) {
               <select
                 value={issueFilter}
                 onChange={(event) => setIssueFilter(event.target.value)}
-                className="h-10 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 outline-none focus:border-gray-400"
+                className="h-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 aria-label="Quality issue"
               >
                 {QUALITY_ISSUE_FILTERS.map((filter) => (
@@ -1446,18 +1446,18 @@ function QualityQueue({ data }) {
               </select>
 
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
                 <input
                   value={queueSearch}
                   onChange={(event) => setQueueSearch(event.target.value)}
                   placeholder="Search title, issue, status, link..."
-                  className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-9 text-sm text-gray-800 outline-none focus:border-gray-400"
+                  className="h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-9 pr-9 text-sm text-[var(--foreground)] outline-none focus:border-[var(--border-strong)]"
                 />
                 {queueSearch ? (
                   <button
                     type="button"
                     onClick={() => setQueueSearch("")}
-                    className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+                    className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
                     aria-label="Clear queue search"
                   >
                     <X className="h-3.5 w-3.5" />
@@ -1469,7 +1469,7 @@ function QualityQueue({ data }) {
                 <button
                   type="button"
                   onClick={resetQueueFilters}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
                 >
                   <X className="h-3.5 w-3.5" />
                   Reset
@@ -1480,26 +1480,26 @@ function QualityQueue({ data }) {
         ) : null}
 
         {quality.queue.length ? (
-          <div className="border-b border-gray-100 bg-gray-50 px-4 py-3">
+          <div className="border-b border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   type="button"
                   onClick={toggleVisibleRows}
                   disabled={!filteredQueue.length}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
                 >
-                  {allVisibleSelected ? <CheckSquare className="h-3.5 w-3.5 text-blue-600" /> : <Square className="h-3.5 w-3.5" />}
+                  {allVisibleSelected ? <CheckSquare className="h-3.5 w-3.5 text-[var(--primary)]" /> : <Square className="h-3.5 w-3.5" />}
                   {allVisibleSelected ? "Clear visible" : "Select visible"}
                 </button>
-                <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-gray-700">
+                <span className="rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold text-[var(--foreground)]">
                   {selectedRows.length} selected
                 </span>
                 <button
                   type="button"
                   onClick={() => selectRows(filteredQueue.filter((row) => row.quality.status === "fix"))}
                   disabled={!filteredQueue.some((row) => row.quality.status === "fix")}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-100 bg-white px-3 text-xs font-bold text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--danger)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--danger-text)] transition hover:bg-[var(--danger-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Select fix only
                 </button>
@@ -1507,7 +1507,7 @@ function QualityQueue({ data }) {
                   type="button"
                   onClick={() => selectRows(filteredQueue.filter((row) => row.kind === "offer"))}
                   disabled={!filteredQueue.some((row) => row.kind === "offer")}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Select offers
                 </button>
@@ -1515,7 +1515,7 @@ function QualityQueue({ data }) {
                   type="button"
                   onClick={() => selectRows(filteredQueue.filter((row) => row.kind === "store"))}
                   disabled={!filteredQueue.some((row) => row.kind === "store")}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Select stores
                 </button>
@@ -1523,18 +1523,18 @@ function QualityQueue({ data }) {
                   <button
                     type="button"
                     onClick={() => setSelectedKeys([])}
-                    className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
+                    className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
                   >
                     Clear selected
                   </button>
                 ) : null}
                 {actionSuccess ? (
-                  <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                  <span className="rounded-full bg-[var(--success-soft)] px-3 py-1 text-xs font-bold text-[var(--success-text)]">
                     {actionSuccess}
                   </span>
                 ) : null}
                 {actionError ? (
-                  <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700">
+                  <span className="rounded-full bg-[var(--danger-soft)] px-3 py-1 text-xs font-bold text-[var(--danger-text)]">
                     {actionError}
                   </span>
                 ) : null}
@@ -1545,7 +1545,7 @@ function QualityQueue({ data }) {
                   type="button"
                   onClick={() => runBulkAction("verify")}
                   disabled={!selectedRows.length || bulkBusy}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 text-xs font-bold text-green-700 transition hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--success)] bg-[var(--success-soft)] px-3 text-xs font-bold text-[var(--success-text)] transition hover:bg-[color-mix(in_srgb,var(--success-soft)_65%,var(--success))] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {busyAction === "bulk:verify" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ShieldCheck className="h-3.5 w-3.5" />}
                   Verify selected
@@ -1554,7 +1554,7 @@ function QualityQueue({ data }) {
                   type="button"
                   onClick={() => runBulkAction("activate")}
                   disabled={!selectedRows.length || bulkBusy}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-green-300 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:border-[var(--success)] hover:bg-[var(--success-soft)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {busyAction === "bulk:activate" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
                   Activate selected
@@ -1563,7 +1563,7 @@ function QualityQueue({ data }) {
                   type="button"
                   onClick={() => runBulkAction("pause")}
                   disabled={!selectedRows.length || bulkBusy}
-                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 text-xs font-bold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] px-3 text-xs font-bold text-[var(--warning-text)] transition hover:bg-[color-mix(in_srgb,var(--warning-soft)_65%,var(--warning))] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {busyAction === "bulk:pause" ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <PauseCircle className="h-3.5 w-3.5" />}
                   Pause selected
@@ -1573,7 +1573,7 @@ function QualityQueue({ data }) {
           </div>
         ) : null}
 
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-[var(--border)]">
           {filteredQueue.length ? (
             filteredQueue.map((row) => {
               const rowKey = getQueueRowKey(row);
@@ -1583,26 +1583,26 @@ function QualityQueue({ data }) {
               const verifyKey = `${row.kind}:${row.id}:verify`;
 
               return (
-                <article key={rowKey} className={`grid gap-4 p-4 lg:grid-cols-[auto_1fr_auto] lg:items-center ${selected ? "bg-blue-50/60" : ""}`}>
+                <article key={rowKey} className={`grid gap-4 p-4 lg:grid-cols-[auto_1fr_auto] lg:items-center ${selected ? "bg-[var(--primary-soft)]" : ""}`}>
                   <button
                     type="button"
                     onClick={() => toggleRow(row)}
                     aria-label={selected ? `Deselect ${row.label}` : `Select ${row.label}`}
-                    className="grid h-10 w-10 place-items-center rounded-lg border border-gray-200 bg-white text-gray-500 transition hover:border-blue-300 hover:text-blue-600"
+                    className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
                   >
-                    {selected ? <CheckSquare className="h-4 w-4 text-blue-600" /> : <Square className="h-4 w-4" />}
+                    {selected ? <CheckSquare className="h-4 w-4 text-[var(--primary)]" /> : <Square className="h-4 w-4" />}
                   </button>
 
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <QualityPill status={row.quality.status} score={row.quality.score} />
-                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase text-gray-600">
+                      <span className="rounded-full bg-[var(--surface-soft)] px-2 py-0.5 text-xs font-bold uppercase text-[var(--muted)]">
                         {row.kind}
                       </span>
-                      <h4 className="truncate text-sm font-bold text-gray-950">{row.label}</h4>
+                      <h4 className="truncate text-sm font-bold text-[var(--foreground)]">{row.label}</h4>
                     </div>
-                    <p className="mt-2 text-sm text-gray-600">{row.issueText || "Ready"}</p>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-2 text-sm text-[var(--muted)]">{row.issueText || "Ready"}</p>
+                    <p className="mt-1 text-xs text-[var(--muted)]">
                       {row.subtitle} - {row.saving} - {row.status}
                     </p>
                   </div>
@@ -1611,7 +1611,7 @@ function QualityQueue({ data }) {
                     <button
                       type="button"
                       onClick={() => setDetailRowKey(rowKey)}
-                      className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-blue-200 hover:bg-blue-50"
+                      className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:border-[var(--primary)] hover:bg-[var(--primary-soft)]"
                     >
                       <PanelRightOpen className="h-3.5 w-3.5" />
                       Details
@@ -1622,7 +1622,7 @@ function QualityQueue({ data }) {
                         type="button"
                         disabled={!row.id || busyAction === verifyKey}
                         onClick={() => runAction(row, "verify")}
-                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-green-300 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:border-[var(--success)] hover:bg-[var(--success-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {busyAction === verifyKey ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ShieldCheck className="h-3.5 w-3.5" />}
                         Verify
@@ -1634,7 +1634,7 @@ function QualityQueue({ data }) {
                         type="button"
                         disabled={!row.id || busyAction === pauseKey}
                         onClick={() => runAction(row, "pause")}
-                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-amber-300 hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:border-[var(--warning)] hover:bg-[var(--warning-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {busyAction === pauseKey ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <PauseCircle className="h-3.5 w-3.5" />}
                         Pause
@@ -1644,7 +1644,7 @@ function QualityQueue({ data }) {
                         type="button"
                         disabled={!row.id || busyAction === activateKey}
                         onClick={() => runAction(row, "activate")}
-                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:border-green-300 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:border-[var(--success)] hover:bg-[var(--success-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {busyAction === activateKey ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
                         Activate
@@ -1655,7 +1655,7 @@ function QualityQueue({ data }) {
                       href={row.path}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-9 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
+                      className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-xs font-bold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
                     >
                       Preview
                       <ExternalLink className="h-3.5 w-3.5" />
@@ -1665,7 +1665,7 @@ function QualityQueue({ data }) {
               );
             })
           ) : (
-            <div className="p-6 text-sm text-gray-500">
+            <div className="p-6 text-sm text-[var(--muted)]">
               {quality.queue.length
                 ? "No queue rows match the current filters."
                 : "No queue items. BuySmart content is clean enough for publishing."}

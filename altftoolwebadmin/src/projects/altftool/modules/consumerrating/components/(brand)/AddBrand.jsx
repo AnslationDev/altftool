@@ -424,7 +424,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
 
                         setActive(false);
                     }}
-                    className=" px-2 py-2 border rounded-sm cursor-pointer hover:bg-red-700 hover:text-white transition"
+                    className=" px-2 py-2 border rounded-sm cursor-pointer hover:bg-[var(--danger)] hover:text-[var(--danger-foreground)] transition"
                 >
                     Cancel
                 </button>
@@ -481,10 +481,10 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                             className="border p-4 bg-surface-soft w-full rounded space-y-2"
                         >
                             <div className="flex justify-between" >
-                             <div className="text-blue-600 text-xl" >#Brand {index+1}</div>
+                             <div className="text-[var(--primary)] text-xl" >#Brand {index+1}</div>
                              <div
                             onClick={() => removeBrand(index)}
-                             className="cursor-pointer text-red-500" >Delete</div>
+                             className="cursor-pointer text-[var(--danger)]" >Delete</div>
                             </div>
                             
 
@@ -628,7 +628,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
 
                             <div className="mt-4">
                                 <label className="block text-sm font-semibold mb-2">
-                                    Country <span className="text-red-600">*</span>
+                                    Country <span className="text-[var(--danger)]">*</span>
                                 </label>
 
                                 <Select
@@ -653,7 +653,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                                     ))}
                                     <div className="flex justify-end" >
                                     <button
-                                        className="rounded-sm px-5 py-2 cursor-pointer bg-blue-600 text-white"
+                                        className="rounded-sm px-5 py-2 cursor-pointer bg-[var(--primary)] text-[var(--primary-foreground)]"
                                         onClick={() => addSpecification(index)}>+ Add</button>
                                     </div>
                                    
@@ -667,8 +667,8 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                                 {brand.additionalBenifit.map((b, bi) => (
                                     <div key={b.id} className=" border p-2">
                                         <div className="flex my-4 justify-between" >
-                                            <div className="text-xl text-blue-600" ># Benifit {bi +1}</div>
-                                            <div className="text-red-500" >Delete</div>
+                                            <div className="text-xl text-[var(--primary)]" ># Benifit {bi +1}</div>
+                                            <div className="text-[var(--danger)]" >Delete</div>
                                         </div>
                                         <div>
                                             <input
@@ -691,7 +691,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                                 ))}
                                 <div className="flex justify-end">
                                 <button
-                                    className="rounded-sm border cursor-pointer my-3 p-3 bg-blue-600 text-white"
+                                    className="rounded-sm border cursor-pointer my-3 p-3 bg-[var(--primary)] text-[var(--primary-foreground)]"
                                     onClick={() => addBenefit(index)}>+ Add Benefit</button>
                                 </div>
                                 
@@ -703,8 +703,8 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                                 {brand.feature.map((f, fi) => (
                                     <div key={f.id} className="border p-2 mb-2">
                                          <div className="flex my-4 justify-between" >
-                                            <div className="text-xl text-blue-600" ># Feature {fi +1}</div>
-                                            <div className="text-red-500" >Delete</div>
+                                            <div className="text-xl text-[var(--primary)]" ># Feature {fi +1}</div>
+                                            <div className="text-[var(--danger)]" >Delete</div>
                                         </div>
 
                                         <input
@@ -734,7 +734,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                                 ))}
                                 <div className="flex justify-end " >
                                 <button
-                                    className="rounded-sm border cursor-pointer  p-3 bg-blue-600 text-white"
+                                    className="rounded-sm border cursor-pointer  p-3 bg-[var(--primary)] text-[var(--primary-foreground)]"
                                     onClick={() => addFeature(index)}>+ Add Feature</button>
                                 </div>
                               
@@ -745,7 +745,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
 
                     <button
                         onClick={addBrandField}
-                        className="bg-blue-600 rounded-sm text-white px-4 py-2"
+                        className="bg-[var(--primary)] rounded-sm text-[var(--primary-foreground)] px-4 py-2"
                     >
                         + Add More Brand
                     </button>
@@ -761,7 +761,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
 
                         setActive(false);
                     }}
-                    className=" px-2 py-2 border rounded-sm cursor-pointer hover:bg-red-700 hover:text-white transition"
+                    className=" px-2 py-2 border rounded-sm cursor-pointer hover:bg-[var(--danger)] hover:text-[var(--danger-foreground)] transition"
                 >
                     Cancel
                 </button>
@@ -770,7 +770,7 @@ function AddBrand({ setActive, editBrand, setEditBrand }) {
                 <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="bg-black cursor-pointer rounded-sm text-white px-6 py-2"
+                className="bg-[var(--foreground)] cursor-pointer rounded-sm text-[var(--background)] px-6 py-2"
             >
                 {loading ? "Saving..." : "Save Brands"}
             </button>

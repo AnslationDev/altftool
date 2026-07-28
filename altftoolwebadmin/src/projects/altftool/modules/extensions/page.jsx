@@ -7,6 +7,7 @@ import { extensionMap } from "@/data/extensions";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
 import { deleteExtension } from "./services/extensions.service";
+import { LoadingState } from "@/ansets";
 
 import ExtensionsHeader from "./components/ExtensionsHeader";
 import ExtensionsFilters from "./components/ExtensionsFilters";
@@ -174,7 +175,7 @@ const confirmDelete = async () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 py-7 space-y-5">
 
         <ExtensionsHeader
@@ -196,12 +197,7 @@ const confirmDelete = async () => {
         />
 
         {loading ? (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-16 flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3 text-gray-400">
-              <div className="w-8 h-8 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
-              <span className="text-sm">Loading extensions…</span>
-            </div>
-          </div>
+          <LoadingState variant="table" rows={6} />
         ) : (
           <ExtensionsTable
             extensions={paginated}
@@ -215,13 +211,13 @@ const confirmDelete = async () => {
 
         {/* ── Pagination ── */}
         {!loading && totalPages > 1 && (
-          <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 bg-white rounded-2xl border border-gray-100 shadow-sm">
-            <p className="text-xs text-gray-500">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm">
+            <p className="text-xs text-[var(--muted)]">
               Showing {Math.min((page - 1) * PAGE_SIZE + 1, filtered.length)}–{Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length} extension{filtered.length !== 1 ? "s" : ""}
             </p>
             <div className="flex items-center gap-1">
-              <button onClick={() => setPage(1)} disabled={page === 1} className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition"><ChevronsLeft className="w-4 h-4 text-gray-600" /></button>
-              <button onClick={() => setPage((p) => p - 1)} disabled={page === 1} className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition"><ChevronLeft className="w-4 h-4 text-gray-600" /></button>
+              <button onClick={() => setPage(1)} disabled={page === 1} className="p-1 rounded hover:bg-[var(--surface-soft)] disabled:opacity-30 transition"><ChevronsLeft className="w-4 h-4 text-[var(--muted)]" /></button>
+              <button onClick={() => setPage((p) => p - 1)} disabled={page === 1} className="p-1 rounded hover:bg-[var(--surface-soft)] disabled:opacity-30 transition"><ChevronLeft className="w-4 h-4 text-[var(--muted)]" /></button>
               <div className="flex items-center gap-1 px-1">
                 {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
@@ -232,17 +228,17 @@ const confirmDelete = async () => {
                   }, [])
                   .map((p, i) =>
                     p === "..." ? (
-                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-gray-400">…</span>
+                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-[var(--muted)]">…</span>
                     ) : (
                       <button key={p} onClick={() => setPage(p)}
-                        className={`w-7 h-7 rounded-lg text-xs font-semibold transition ${p === page ? "bg-gray-900 text-white" : "text-gray-600 hover:bg-gray-100"}`}>
+                        className={`w-7 h-7 rounded-lg text-xs font-semibold transition ${p === page ? "bg-[var(--primary)] text-[var(--primary-foreground)]" : "text-[var(--muted)] hover:bg-[var(--surface-soft)]"}`}>
                         {p}
                       </button>
                     )
                   )}
               </div>
-              <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages} className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition"><ChevronRight className="w-4 h-4 text-gray-600" /></button>
-              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition"><ChevronsRight className="w-4 h-4 text-gray-600" /></button>
+              <button onClick={() => setPage((p) => p + 1)} disabled={page === totalPages} className="p-1 rounded hover:bg-[var(--surface-soft)] disabled:opacity-30 transition"><ChevronRight className="w-4 h-4 text-[var(--muted)]" /></button>
+              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="p-1 rounded hover:bg-[var(--surface-soft)] disabled:opacity-30 transition"><ChevronsRight className="w-4 h-4 text-[var(--muted)]" /></button>
             </div>
           </div>
         )}
@@ -257,21 +253,21 @@ const confirmDelete = async () => {
       )}
 
       {isDeleteModalOpen && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-xl w-80 shadow-xl">
-      <h2 className="text-lg font-semibold mb-4">
+  <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50">
+    <div className="bg-[var(--surface)] p-6 rounded-xl w-80 shadow-xl">
+      <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">
         Are you sure you want to delete this extension?
       </h2>
       <div className="flex justify-end gap-3">
         <button
           onClick={() => setIsDeleteModalOpen(false)}
-          className="border px-4 py-2 rounded"
+          className="border border-[var(--border)] px-4 py-2 rounded text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
         >
           Cancel
         </button>
         <button
           onClick={confirmDelete}
-          className="bg-red-600 text-white px-4 py-2 rounded"
+          className="bg-[var(--danger)] text-[var(--danger-foreground)] px-4 py-2 rounded hover:opacity-90 transition"
         >
           Delete
         </button>
@@ -281,22 +277,22 @@ const confirmDelete = async () => {
 )}
 
 {isBulkDeleteModalOpen && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-xl w-96 shadow-xl">
-      <h2 className="text-lg font-semibold mb-4">
+  <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50">
+    <div className="bg-[var(--surface)] p-6 rounded-xl w-96 shadow-xl">
+      <h2 className="text-lg font-semibold text-[var(--foreground)] mb-4">
         Delete {bulkIds.length} selected extension
         {bulkIds.length > 1 ? "s" : ""}?
       </h2>
       <div className="flex justify-end gap-3">
         <button
           onClick={() => setIsBulkDeleteModalOpen(false)}
-          className="border px-4 py-2 rounded"
+          className="border border-[var(--border)] px-4 py-2 rounded text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
         >
           Cancel
         </button>
         <button
           onClick={confirmBulkDelete}
-          className="bg-red-600 text-white px-4 py-2 rounded"
+          className="bg-[var(--danger)] text-[var(--danger-foreground)] px-4 py-2 rounded hover:opacity-90 transition"
         >
           Delete All
         </button>

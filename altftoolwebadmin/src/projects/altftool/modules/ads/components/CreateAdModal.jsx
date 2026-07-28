@@ -434,6 +434,15 @@ export default function CreateAdModal({
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  // Revoke the current blob URL on unmount (e.g. closing the modal via the
+  // header X or Cancel button while a local file preview is still active),
+  // so an abandoned upload doesn't leak a blob URL for the page's lifetime.
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
   const clearImageUrl = () => {
     setImageUrl("");
     setImageUrlValid(null);

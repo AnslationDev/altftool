@@ -10,7 +10,7 @@ function Store() {
    const [active, setActive] = useState(null);
    const[editStore , setEditStore] = useState(null)
      const [filter , setFilter] = useState({
-         Search:"",
+         search:"",
          status: "all",
      })
   
@@ -23,8 +23,8 @@ function Store() {
     <div className="space-y-6">
 
       {!active &&
-         <div className="flex items-center justify-end" >
-        
+         <div className="flex items-center justify-between" >
+        <FilterSection filter={filter} setFilter={setFilter} />
         <div
         onClick={handleComponent}
         className=' h-12  flex justify-center'

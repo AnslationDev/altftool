@@ -30,30 +30,30 @@ export default function DealsControl() {
   const ActiveIcon = activeItem.icon;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl space-y-5 px-4 py-5 sm:px-6">
-        <header className="border-b border-gray-200 pb-5">
+        <header className="border-b border-border pb-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted">
                 Deals Control
               </p>
-              <h1 className="mt-2 text-2xl font-semibold text-gray-900">
+              <h1 className="mt-2 text-2xl font-semibold text-foreground">
                 Manage Deal Surfaces
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
                 Keep coupons, brand offers, trending deals, upcoming campaigns, and saving guides in one clean workflow.
               </p>
             </div>
 
-            <div className="rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-500">Sections</p>
-              <p className="mt-1 text-2xl font-semibold tabular-nums text-gray-900">{MENU_ITEMS.length}</p>
+            <div className="rounded-xl border border-border bg-surface px-4 py-3 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted">Sections</p>
+              <p className="mt-1 text-2xl font-semibold tabular-nums text-foreground">{MENU_ITEMS.length}</p>
             </div>
           </div>
         </header>
 
-        <div className="sticky top-0 z-20 border-y border-gray-200 bg-white/95 py-3 backdrop-blur">
+        <div className="sticky top-0 z-20 border-y border-border bg-surface/95 py-3 backdrop-blur">
           <div
             role="tablist"
             aria-label="Deals sections"
@@ -73,16 +73,16 @@ export default function DealsControl() {
                   onClick={() => setActiveSection(item.key)}
                   className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                     active
-                      ? "border-gray-900 bg-gray-900 text-white shadow-sm"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                      : "border-border bg-surface text-muted hover:border-primary hover:bg-surface-soft"
                   }`}
                 >
-                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-md ${active ? "bg-white/10" : "bg-gray-100"}`}>
+                  <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-md ${active ? "bg-primary-foreground/10" : "bg-surface-soft"}`}>
                     <Icon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-semibold">{item.label}</span>
-                    <span className={`block truncate text-xs ${active ? "text-gray-300" : "text-gray-500"}`}>
+                    <span className={`block truncate text-xs ${active ? "text-primary-foreground/80" : "text-muted"}`}>
                       {item.description}
                     </span>
                   </span>
@@ -99,12 +99,12 @@ export default function DealsControl() {
           className="min-w-0 space-y-4"
         >
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg border border-gray-200 bg-white text-gray-700 shadow-sm">
+            <div className="grid h-10 w-10 place-items-center rounded-lg border border-border bg-surface text-muted shadow-sm">
               <ActiveIcon className="h-4 w-4" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">{activeItem.label}</h2>
-              <p className="text-sm text-gray-500">{activeItem.description}</p>
+              <h2 className="text-lg font-semibold text-foreground">{activeItem.label}</h2>
+              <p className="text-sm text-muted">{activeItem.description}</p>
             </div>
           </div>
 

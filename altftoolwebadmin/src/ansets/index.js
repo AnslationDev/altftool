@@ -22,6 +22,7 @@ export { SectionCard } from "./layout/SectionCard";
 export { StatGrid, StatTile } from "./data/StatGrid";
 export { DataTable } from "./data/DataTable";
 export { FilterBar } from "./data/FilterBar";
+export { BulkActionsBar } from "./data/BulkActionsBar";
 
 // States
 export { EmptyState, ErrorState, LoadingState, DataState, Bone } from "./states/States";

@@ -7,6 +7,7 @@ import DataTable from "./components/DataTable";
 import DataModal from "./components/DataModal";
 import { fetchDynamicRoute } from "./service/dynamic.service";
 import { fetchData } from "./service/data.service";
+import { LoadingState } from "@/ansets";
 
 export default function Page() {
   // ── Original: dynamic config modal ──
@@ -42,7 +43,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       <div className="max-w-7xl mx-auto px-6 py-7 space-y-5">
 
         <TopBar
@@ -61,9 +62,7 @@ export default function Page() {
 
         {/* New: data items table */}
         {loadingItems ? (
-          <div className="flex items-center justify-center py-20 text-gray-400 text-sm">
-            Loading…
-          </div>
+          <LoadingState variant="table" />
         ) : (
           <DataTable
             items={items}

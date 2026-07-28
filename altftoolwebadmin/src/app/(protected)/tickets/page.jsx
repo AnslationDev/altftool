@@ -1,13 +1,16 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
+import { emitAlert } from "@/lib/alertBus";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 import { Badge, Button } from "@altftool/ui";
 import {
+  BulkActionsBar,
   DataTable,
   EmptyState,
   FilterBar,
@@ -23,6 +26,8 @@ import {
   AlertCircle,
   CheckCircle2,
   Circle,
+  Download,
+  Loader2,
 } from "lucide-react";
 
 // ── Status + priority vocabulary ──────────────────────────────────────────────
@@ -132,6 +137,8 @@ export default function SupportManagementPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  const [selectedIds, setSelectedIds] = useState(() => new Set());
+  const [bulkClosing, setBulkClosing] = useState(false);
 
   const {
     search,
@@ -197,6 +204,77 @@ export default function SupportManagementPage() {
     setFilter("status", "");
     setFilter("priority", "");
   };
+
+  const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+
+  const exportCsv = useCallback((rowsToExport) => {
+    const header = ["Title", "Type", "Priority", "Status", "Assigned", "Created"];
+    const lines = [header.map(csvCell).join(",")];
+    for (const t of rowsToExport) {
+      lines.push(
+        [
+          t.title,
+          TYPE_LABEL[t.type] ?? t.type,
+          PRIORITY_CONFIG[t.priority]?.label ?? t.priority,
+          STATUS_CONFIG[t.status]?.label ?? t.status,
+          t.assignedTo ? "Yes" : "No",
+          t.createdAt ? new Date(t.createdAt).toISOString() : "",
+        ]
+          .map(csvCell)
+          .join(","),
+      );
+    }
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `tickets-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  const bulkCloseSelected = useCallback(async () => {
+    const ids = [...selectedIds];
+    if (!ids.length) return;
+    if (
+      !window.confirm(
+        `Close ${ids.length} ticket${ids.length === 1 ? "" : "s"}? This can be reopened later from each ticket.`,
+      )
+    ) {
+      return;
+    }
+    setBulkClosing(true);
+    try {
+      const token = await getAdminIdToken(true);
+      if (!token) {
+        emitAlert({ type: "error", message: "Session expired. Please log in again." });
+        return;
+      }
+      const results = await Promise.allSettled(
+        ids.map((ticketId) =>
+          fetch("/api/support/update-status", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ ticketId, status: "closed" }),
+          }).then((res) => {
+            if (!res.ok) throw new Error(`Failed for ${ticketId}`);
+          }),
+        ),
+      );
+      const failed = results.filter((r) => r.status === "rejected").length;
+      if (failed) {
+        emitAlert({
+          type: "warning",
+          message: `Closed ${ids.length - failed} of ${ids.length} tickets. ${failed} failed — try again for those.`,
+        });
+      } else {
+        emitAlert({ type: "success", message: `Closed ${ids.length} ticket${ids.length === 1 ? "" : "s"}.` });
+      }
+      setSelectedIds(new Set());
+    } finally {
+      setBulkClosing(false);
+    }
+  }, [selectedIds]);
 
   const headerDescription = loading
     ? "Loading…"
@@ -333,18 +411,44 @@ export default function SupportManagementPage() {
           ]}
           count={countLabel}
           actions={
-            hasFilters ? (
-              <Button variant="ghost" size="sm" onClick={clearFilters}>
-                Clear
-              </Button>
-            ) : null
+            <>
+              {visibleTickets.length ? (
+                <Button variant="ghost" size="sm" onClick={() => exportCsv(visibleTickets)}>
+                  <Download className="h-3.5 w-3.5" aria-hidden="true" />
+                  Export CSV
+                </Button>
+              ) : null}
+              {hasFilters ? (
+                <Button variant="ghost" size="sm" onClick={clearFilters}>
+                  Clear
+                </Button>
+              ) : null}
+            </>
           }
         />
+
+        <BulkActionsBar count={selectedIds.size} onClear={() => setSelectedIds(new Set())} noun="ticket">
+          <Button variant="secondary" size="sm" onClick={bulkCloseSelected} disabled={bulkClosing}>
+            {bulkClosing ? <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" /> : null}
+            {bulkClosing ? "Closing…" : "Close selected"}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => exportCsv(tickets.filter((t) => selectedIds.has(t.id)))}
+          >
+            <Download className="h-3.5 w-3.5" aria-hidden="true" />
+            Export selected
+          </Button>
+        </BulkActionsBar>
 
         <DataTable
           columns={columns}
           rows={visibleTickets}
           getRowKey={(t) => t.id}
+          selectable
+          selectedKeys={selectedIds}
+          onSelectionChange={setSelectedIds}
           loading={loading}
           error={loadError || null}
           onRetry={() => setReloadKey((k) => k + 1)}

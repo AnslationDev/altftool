@@ -3,7 +3,7 @@
 import { Fragment, useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { getAuth } from "firebase/auth";
-import { updateAd, deleteAd } from "../services/ads.service";
+import { updateAd, deleteAd, deleteAdsBulk } from "../services/ads.service";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
 import { getErrorMessage } from "@/lib/apiClient";
@@ -251,7 +251,7 @@ export default function AdsTable({ ads }) {
     if (!selected.length) return;
     setLoadingId("bulk");
     try {
-      await Promise.all(selected.map((id) => deleteById("ads", id)));
+      await deleteAdsBulk(selected);
       emitAlert({ type: "success", message: `${selected.length} ads deleted` });
       logAuditEvent({
         module: "ads",

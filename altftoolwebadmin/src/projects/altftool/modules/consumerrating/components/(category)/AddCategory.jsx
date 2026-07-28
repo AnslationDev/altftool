@@ -135,7 +135,7 @@ function AddCategory({ setActive , editData , setEditData }) {
   };
 
   return (
-    <div className="p-6 space-y-6 bg-white rounded-xl shadow">
+    <div className="p-6 space-y-6 bg-[var(--surface)] rounded-xl shadow">
 
       {/* HEADER */}
       <div className="flex justify-between">
@@ -173,7 +173,7 @@ function AddCategory({ setActive , editData , setEditData }) {
               onChange={(e) => setNewCategory(e.target.value)}
               className="border p-2 w-full"
             />
-            <button onClick={handleAddCategory} className="bg-black text-white px-4">
+            <button onClick={handleAddCategory} className="bg-[var(--primary)] text-[var(--primary-foreground)] px-4">
               Add
             </button>
           </div>
@@ -217,7 +217,7 @@ function AddCategory({ setActive , editData , setEditData }) {
 />
               {/* <SvgIconField value={subIcon} onChange={setSubIcon} /> */}
 
-              <button onClick={handleAddSubCategory} className="bg-black text-white px-4 py-2">
+              <button onClick={handleAddSubCategory} className="bg-[var(--primary)] text-[var(--primary-foreground)] px-4 py-2">
                 Add Subcategory
               </button>
 
@@ -252,7 +252,7 @@ function AddCategory({ setActive , editData , setEditData }) {
 
           <button
             onClick={editingFaqId ? handleUpdateFaq : handleAddFaq}
-            className="bg-blue-600 text-white px-4 py-2"
+            className="bg-[var(--primary)] text-[var(--primary-foreground)] px-4 py-2"
           >
             {editingFaqId ? "Update FAQ" : "Add FAQ"}
           </button>
@@ -262,19 +262,19 @@ function AddCategory({ setActive , editData , setEditData }) {
             {faqs.map(faq => (
               <div key={faq.id} className="border p-3 rounded">
                 <p className="font-semibold">{faq.question}</p>
-                <p className="text-sm text-gray-600">{faq.answer}</p>
+                <p className="text-sm text-[var(--muted)]">{faq.answer}</p>
 
                 <div className="flex gap-3 mt-2">
                   <button
                     onClick={() => handleEditFaq(faq)}
-                    className="text-blue-600"
+                    className="text-[var(--primary)]"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => handleDeleteFaq(faq.id)}
-                    className="text-red-600"
+                    className="text-[var(--danger)]"
                   >
                     Delete
                   </button>

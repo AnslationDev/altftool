@@ -23,8 +23,8 @@ import {
   X,
 } from "lucide-react";
 import { fetchAllBlogs } from "../services/blogsService";
-import { getBlogContentQuality, parseBlogTags } from "../components/BlogSeoChecklist";
-import { getBlogSchemaHealth, stripBlogHtml } from "../components/blogSeoHealth";
+import { buildBlogAudit } from "../components/blogQualityAudit";
+import { EmptyState } from "@/ansets";
 
 const ACTIONS = [
   {
@@ -94,131 +94,6 @@ const GAP_LABELS = {
   body: "Depth",
 };
 
-const GAP_WEIGHTS = {
-  "rich-result": 30,
-  quality: 22,
-  citations: 18,
-  faq: 16,
-  trust: 14,
-  "internal-links": 14,
-  image: 12,
-  "review-date": 10,
-  body: 8,
-};
-
-function toDate(value) {
-  if (!value) return null;
-  if (typeof value?.toDate === "function") {
-    const date = value.toDate();
-    return Number.isNaN(date.getTime()) ? null : date;
-  }
-  if (typeof value?.seconds === "number") {
-    const date = new Date(value.seconds * 1000);
-    return Number.isNaN(date.getTime()) ? null : date;
-  }
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
-
-function getDaysSince(value, fallback) {
-  const date = toDate(value || fallback);
-  if (!date) return null;
-  return Math.max(0, Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24)));
-}
-
-function getBlogTitle(blog = {}) {
-  return blog.heading || blog.title || "Untitled blog";
-}
-
-function getBlogExcerpt(blog = {}) {
-  return (
-    blog.seoDescription ||
-    blog.excerpt ||
-    stripBlogHtml(blog.description || blog.content || blog.body || "").slice(0, 150) ||
-    "No excerpt available"
-  );
-}
-
-function getCategory(blog = {}) {
-  return String(blog.category || blog.categoryName || "Uncategorized").trim() || "Uncategorized";
-}
-
-function normalizeStatus(value = "") {
-  return String(value || "draft").toLowerCase() === "published" ? "published" : "draft";
-}
-
-function getGapList({ blog, quality, schemaHealth, daysSinceUpdate }) {
-  const gaps = [];
-  const addGap = (key, detail) => gaps.push({ key, label: GAP_LABELS[key], detail, weight: GAP_WEIGHTS[key] || 8 });
-
-  if (!schemaHealth.richResultReady) addGap("rich-result", "Article, FAQ, and citation inputs are incomplete.");
-  if (quality.score < 75) addGap("quality", `SEO quality is ${quality.score}%.`);
-  if (!schemaHealth.flags.hasFaq) addGap("faq", "Authored FAQ source is missing.");
-  if (schemaHealth.flags.sourceCount < 1) addGap("citations", "No cited source is attached.");
-  if (!schemaHealth.flags.hasInternalLink) addGap("internal-links", "No contextual AltFTool link found.");
-  if (!schemaHealth.flags.hasTrustSignal || !String(blog.author || "").trim()) {
-    addGap("trust", "Author, reviewer, or editorial context is incomplete.");
-  }
-  if (!schemaHealth.flags.hasHeroImage || !schemaHealth.flags.hasHeroAlt) {
-    addGap("image", schemaHealth.flags.hasHeroImage ? "Featured image alt text needs work." : "Featured image is missing.");
-  }
-  if (!schemaHealth.flags.hasReviewDate || (daysSinceUpdate !== null && daysSinceUpdate >= 90)) {
-    addGap("review-date", daysSinceUpdate !== null ? `${daysSinceUpdate} days since last update.` : "Review date is missing.");
-  }
-  if (schemaHealth.flags.wordCount < 250) addGap("body", `${schemaHealth.flags.wordCount} words in body.`);
-
-  return gaps;
-}
-
-function getRecommendedAction(gaps = []) {
-  if (gaps.some((gap) => gap.key === "citations" || gap.key === "trust")) return "sources";
-  if (gaps.some((gap) => gap.key === "faq")) return "faq";
-  if (gaps.some((gap) => gap.key === "internal-links")) return "links";
-  if (gaps.some((gap) => gap.key === "image" || gap.key === "review-date")) return "review";
-  return "seo";
-}
-
-function buildBlogAudit(blog = {}) {
-  const formData = {
-    ...blog,
-    heading: blog.heading || blog.title || "",
-    description: blog.description || blog.content || blog.body || "",
-    tags: blog.tags || "",
-  };
-  const schemaHealth = getBlogSchemaHealth(formData);
-  const quality = getBlogContentQuality({
-    formData,
-    imageAlt: blog.imageAlt || "",
-    hasImage: Boolean(blog.image),
-  });
-  const tags = parseBlogTags(blog.tags);
-  const daysSinceUpdate = getDaysSince(blog.reviewedAt || blog.updatedAt, blog.date || blog.createdAt);
-  const gaps = getGapList({ blog: formData, quality, schemaHealth, daysSinceUpdate });
-  const refreshScore = Math.min(
-    100,
-    gaps.reduce((total, gap) => total + gap.weight, 0) +
-      (normalizeStatus(blog.status) === "published" ? 8 : 0) +
-      (Number(blog.views || 0) > 500 ? 6 : 0),
-  );
-
-  return {
-    ...blog,
-    title: getBlogTitle(blog),
-    excerpt: getBlogExcerpt(blog),
-    category: getCategory(blog),
-    status: normalizeStatus(blog.status),
-    qualityScore: quality.score,
-    schemaScore: schemaHealth.score,
-    schemaHealth,
-    tags,
-    daysSinceUpdate,
-    gaps,
-    refreshScore,
-    recommendedAction: getRecommendedAction(gaps),
-    richResultReady: schemaHealth.richResultReady,
-  };
-}
-
 function toneClasses(tone = "slate", active = false) {
   const map = {
     blue: active ? "border-primary bg-primary-soft text-primary" : "border-primary bg-surface text-primary hover:bg-primary-soft",
@@ -232,7 +107,7 @@ function toneClasses(tone = "slate", active = false) {
       ? "border-secondary bg-secondary-soft text-secondary"
       : "border-secondary bg-surface text-secondary hover:bg-secondary-soft",
     slate: active
-      ? "border-border bg-primary text-white"
+      ? "border-border bg-primary text-primary-foreground"
       : "border-border bg-surface text-foreground hover:bg-surface-soft",
   };
   return map[tone] || map.slate;
@@ -242,27 +117,6 @@ function priorityTone(score = 0) {
   if (score >= 70) return "bg-danger-soft text-danger";
   if (score >= 42) return "bg-warning-soft text-warning";
   return "bg-success-soft text-success";
-}
-
-function EmptyState({ onReset }) {
-  return (
-    <div className="rounded-2xl border border-dashed border-border bg-surface px-6 py-12 text-center">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-soft text-muted">
-        <Filter className="h-5 w-5" />
-      </div>
-      <h2 className="mt-4 text-base font-black text-foreground">No matching posts</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted">
-        Adjust filters or search to bring more blogs into this refresh queue.
-      </p>
-      <button
-        type="button"
-        onClick={onReset}
-        className="mt-5 inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
-      >
-        Reset filters
-      </button>
-    </div>
-  );
 }
 
 function StatCard({ icon: Icon, label, value, caption, tone = "blue" }) {
@@ -299,7 +153,7 @@ function BlogRow({ blog, selected, actionMode, onToggle, onOpen }) {
           type="button"
           onClick={() => onToggle(blog.id)}
           className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition ${
-            selected ? "border-primary bg-primary text-white" : "border-border bg-surface text-muted hover:bg-surface-soft"
+            selected ? "border-primary bg-primary text-primary-foreground" : "border-border bg-surface text-muted hover:bg-surface-soft"
           }`}
           aria-label={selected ? "Remove blog from queue" : "Add blog to queue"}
         >
@@ -362,7 +216,7 @@ function BlogRow({ blog, selected, actionMode, onToggle, onOpen }) {
             <button
               type="button"
               onClick={() => onOpen(blog, actionMode || blog.recommendedAction)}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-primary-foreground transition hover:bg-primary"
             >
               <WandSparkles className="h-3.5 w-3.5" />
               Open {ACTIONS.find((item) => item.key === (actionMode || blog.recommendedAction))?.label || "Refresh"}
@@ -561,7 +415,7 @@ export default function BulkBlogRefreshPage() {
             type="button"
             onClick={startFirstSelected}
             disabled={!selectedBlogs.length && !filteredBlogs.length}
-            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
           >
             <WandSparkles className="h-4 w-4" />
             Start queue
@@ -698,7 +552,21 @@ export default function BulkBlogRefreshPage() {
               />
             ))
           ) : (
-            <EmptyState onReset={resetFilters} />
+            <EmptyState
+              icon={Filter}
+              title="No matching posts"
+              description="Adjust filters or search to bring more blogs into this refresh queue."
+              action={
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
+                >
+                  Reset filters
+                </button>
+              }
+              className="rounded-2xl border border-dashed border-border bg-surface"
+            />
           )}
         </section>
 
@@ -718,7 +586,7 @@ export default function BulkBlogRefreshPage() {
               type="button"
               onClick={startFirstSelected}
               disabled={!selectedBlogs.length && !filteredBlogs.length}
-              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               <WandSparkles className="h-4 w-4" />
               Open first item

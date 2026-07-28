@@ -151,7 +151,7 @@ export function ListEditor({ title, items, onChange, renderItem, makeEmpty, item
                 type="button"
                 onClick={() => removeItem(index)}
                 title="Remove"
-                className="inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--muted)] transition hover:bg-red-500/10 hover:text-red-500"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--muted)] transition hover:bg-[var(--danger-soft)] hover:text-[var(--danger)]"
               >
                 <Trash2 size={15} />
               </button>

@@ -9,12 +9,7 @@ import SalesTable from "./components/SalesTable";
 import { logAuditEvent } from "@/lib/auditClient";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import { deleteSale } from "./services/sales.service";
-
-/* ── tiny in-page alert helper (swap with your toast lib if you have one) ── */
-function emitAlert({ type, message }) {
-  console[type === "error" ? "error" : "log"](`[${type}] ${message}`);
-  // Replace with: toast.success(message) / toast.error(message) etc.
-}
+import { emitAlert } from "@/lib/alertBus";
 
 /* ════════════════════════════════════════
    Constants

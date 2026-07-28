@@ -47,15 +47,15 @@ export const smartSavingService = {
 
   
   async remove(id) {
-    return await deleteDoc(getDocRef("heroBanners", id));
+    return await deleteDoc(getDocRef("smartSaving", id));
   },
 
-  
+
   async bulkDelete(ids = []) {
-    const batch = writeBatch(getCollectionRef("heroBanners").firestore);
+    const batch = writeBatch(getCollectionRef("smartSaving").firestore);
 
     ids.forEach(id => {
-      batch.delete(getDocRef("heroBanners", id));
+      batch.delete(getDocRef("smartSaving", id));
     });
 
     await batch.commit();

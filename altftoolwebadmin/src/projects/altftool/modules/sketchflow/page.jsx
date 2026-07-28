@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Check, Loader2, RotateCcw, Save } from "lucide-react";
 
+import { LoadingState } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { ALL_TOOLS, DEFAULT_HOME_CONTENT, fetchHome, saveHome } from "./service/sketchflow.service";
 import { Field, Grid, IconSelect, ImageField, ListEditor, TextArea } from "./components/fields";
@@ -89,11 +90,7 @@ export default function SketchFlowModule() {
   };
 
   if (loading || !content) {
-    return (
-      <div className="flex items-center gap-2.5 p-10 text-sm text-[var(--muted)]">
-        <Loader2 size={18} className="animate-spin" /> Loading SketchFlow content…
-      </div>
-    );
+    return <LoadingState variant="detail" />;
   }
 
   return (
@@ -225,7 +222,7 @@ function ToolsTab({ content, set }) {
                   className="flex items-center"
                   aria-label={isEnabled ? `Disable ${tool.label}` : `Enable ${tool.label}`}
                 >
-                  <div className={`flex h-5 w-5 items-center justify-center rounded-[6px] border transition-all ${isEnabled ? "border-[var(--primary)] bg-[var(--primary)] text-white" : "border-[var(--border)] bg-[var(--surface)] group-hover:border-gray-400"}`}>
+                  <div className={`flex h-5 w-5 items-center justify-center rounded-[6px] border transition-all ${isEnabled ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]" : "border-[var(--border)] bg-[var(--surface)] group-hover:border-[var(--border-strong)]"}`}>
                     {isEnabled && <Check className="h-3.5 w-3.5" />}
                   </div>
                 </button>

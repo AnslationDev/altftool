@@ -29,14 +29,13 @@ import {
         highestDiscount: data.highestDiscount,
         categoryId: data.categoryId,
         categoryName: data.categoryName,
-        categoryName: data.categoryName, 
         offers: data.offers || [],
         status: "active",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
     },
-  
+
     async update(id, data) {
       return await updateDoc(getDocRef("upcomingdeal", id), {
         ...data,

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Loader2, RotateCcw, Save, ZoomIn } from "lucide-react";
 
+import { LoadingState } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { DEFAULT_PRANX_CONTENT, fetchPranxHome, savePranxHome } from "./service/pranx.service";
 import { Field, Grid, ImageField, ListEditor, TextArea, ToggleField, getImageUrl, GENERAL_ASSETS, SLIDER_BACKGROUNDS, THUMBNAILS, ImageLightbox, extractImagesFromContent, getPrankDefaultImage } from "./components/fields";
@@ -91,11 +92,7 @@ export default function PranxModule() {
   };
 
   if (loading || !content) {
-    return (
-      <div className="flex items-center gap-2.5 p-10 text-sm text-[var(--muted)]">
-        <Loader2 size={18} className="animate-spin" /> Loading Pranx Studio content…
-      </div>
-    );
+    return <LoadingState variant="detail" />;
   }
 
   return (
@@ -467,7 +464,7 @@ function AudioPreview({ label, src }) {
         type="button"
         onClick={toggle}
         className={`rounded-lg px-4 py-2 text-xs font-bold transition whitespace-nowrap ${playing
-          ? "bg-red-500 text-white hover:bg-red-650"
+          ? "bg-[var(--danger)] text-[var(--danger-foreground)] hover:opacity-90"
           : "bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90"
           }`}
       >
@@ -491,6 +488,40 @@ function SynthPreview({ label, kind }) {
       >
         Play Preview
       </button>
+    </div>
+  );
+}
+
+function AssetTile({ img, onSelect }) {
+  return (
+    <div
+      onClick={() => onSelect(img.path)}
+      className="group flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden cursor-zoom-in hover:border-[var(--primary)] transition hover:shadow-md text-left"
+    >
+      <div className="relative aspect-[4/3] w-full bg-slate-900 overflow-hidden border-b border-[var(--border)]">
+        <img
+          src={getImageUrl(img.path)}
+          alt={img.name}
+          className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+          <ZoomIn className="h-6 w-6 text-white" />
+        </div>
+      </div>
+      <div className="p-2.5">
+        <p className="truncate text-xs font-bold text-[var(--foreground)]">{img.name}</p>
+        <p className="truncate text-[10px] text-[var(--muted)] mt-0.5" title={img.path}>{img.path}</p>
+      </div>
+    </div>
+  );
+}
+
+function AssetGrid({ items, onSelect }) {
+  return (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      {items.map((img) => (
+        <AssetTile key={img.path} img={img} onSelect={onSelect} />
+      ))}
     </div>
   );
 }
@@ -524,118 +555,24 @@ function MediaTab({ content }) {
 
   const renderImages = () => {
     if (activeSubTab === "active-site") {
-      return (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {dynamicImages.map((img) => (
-            <div
-              key={img.path}
-              onClick={() => setLightboxSrc(img.path)}
-              className="group flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden cursor-zoom-in hover:border-[var(--primary)] transition hover:shadow-md text-left"
-            >
-              <div className="relative aspect-[4/3] w-full bg-slate-900 overflow-hidden border-b border-[var(--border)]">
-                <img
-                  src={getImageUrl(img.path)}
-                  alt={img.name}
-                  className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <ZoomIn className="h-6 w-6 text-white" />
-                </div>
-              </div>
-              <div className="p-2.5">
-                <p className="truncate text-xs font-bold text-[var(--foreground)]">{img.name}</p>
-                <p className="truncate text-[10px] text-[var(--muted)] mt-0.5" title={img.path}>{img.path}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      );
+      return <AssetGrid items={dynamicImages} onSelect={setLightboxSrc} />;
     }
 
     return (
       <div className="space-y-6">
         <div>
           <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--muted)] mb-3">General Brand Assets</h4>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {GENERAL_ASSETS.map((img) => (
-              <div
-                key={img.path}
-                onClick={() => setLightboxSrc(img.path)}
-                className="group flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden cursor-zoom-in hover:border-[var(--primary)] transition hover:shadow-md text-left"
-              >
-                <div className="relative aspect-[4/3] w-full bg-slate-900 overflow-hidden border-b border-[var(--border)]">
-                  <img
-                    src={getImageUrl(img.path)}
-                    alt={img.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <ZoomIn className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div className="p-2.5">
-                  <p className="truncate text-xs font-bold text-[var(--foreground)]">{img.name}</p>
-                  <p className="truncate text-[10px] text-[var(--muted)] mt-0.5" title={img.path}>{img.path}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <AssetGrid items={GENERAL_ASSETS} onSelect={setLightboxSrc} />
         </div>
 
         <div>
           <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--muted)] mb-3">Slider Carousel Backgrounds</h4>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {SLIDER_BACKGROUNDS.map((img) => (
-              <div
-                key={img.path}
-                onClick={() => setLightboxSrc(img.path)}
-                className="group flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden cursor-zoom-in hover:border-[var(--primary)] transition hover:shadow-md text-left"
-              >
-                <div className="relative aspect-[4/3] w-full bg-slate-900 overflow-hidden border-b border-[var(--border)]">
-                  <img
-                    src={getImageUrl(img.path)}
-                    alt={img.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <ZoomIn className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div className="p-2.5">
-                  <p className="truncate text-xs font-bold text-[var(--foreground)]">{img.name}</p>
-                  <p className="truncate text-[10px] text-[var(--muted)] mt-0.5" title={img.path}>{img.path}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <AssetGrid items={SLIDER_BACKGROUNDS} onSelect={setLightboxSrc} />
         </div>
 
         <div>
           <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--muted)] mb-3">Simulator Gallery Thumbnails</h4>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {THUMBNAILS.map((img) => (
-              <div
-                key={img.path}
-                onClick={() => setLightboxSrc(img.path)}
-                className="group flex flex-col rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden cursor-zoom-in hover:border-[var(--primary)] transition hover:shadow-md text-left"
-              >
-                <div className="relative aspect-[4/3] w-full bg-slate-900 overflow-hidden border-b border-[var(--border)]">
-                  <img
-                    src={getImageUrl(img.path)}
-                    alt={img.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <ZoomIn className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-                <div className="p-2.5">
-                  <p className="truncate text-xs font-bold text-[var(--foreground)]">{img.name}</p>
-                  <p className="truncate text-[10px] text-[var(--muted)] mt-0.5" title={img.path}>{img.path}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <AssetGrid items={THUMBNAILS} onSelect={setLightboxSrc} />
         </div>
       </div>
     );

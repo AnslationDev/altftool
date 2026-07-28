@@ -11,7 +11,10 @@ import { OPEN_GLOBAL_ROUTE_KEYS, resolveProjectModule } from "@/config/adminRout
 import { auth } from "@/lib/firebaseAuth";
 import { emitAlert } from "@/lib/alertBus";
 import { usePushNotifications } from "@/lib/usePushNotifications";
+import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { LockKeyhole, RefreshCw, ShieldAlert } from "lucide-react";
+
+const BASE_TITLE = "AltFTools Admin";
 
 // Local-development escape hatch only. The NODE_ENV guard matches the other
 // bypasses in this app (localAdminSession.js, adminAccess.js) and is evaluated
@@ -168,6 +171,17 @@ export default function AdminLayout({ children }) {
 
   useEffect(() => {
     setMobileSidebarOpen(false);
+  }, [pathname]);
+
+  // Every protected page shared the same static "AltFTools Admin" tab title —
+  // indistinguishable in a taskbar with several admin tabs open. Reuse the
+  // same route-label resolution that already powers the header breadcrumbs
+  // (registry labels like "RBAC Foundation", not a raw URL-segment guess) so
+  // the tab title and the breadcrumb always agree.
+  useEffect(() => {
+    const crumbs = buildAdminBreadcrumbs(getAdminRouteInfo(pathname));
+    const current = crumbs[crumbs.length - 1];
+    document.title = current?.label ? `${current.label} · ${BASE_TITLE}` : BASE_TITLE;
   }, [pathname]);
 
   useEffect(() => {

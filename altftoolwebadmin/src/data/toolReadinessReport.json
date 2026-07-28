@@ -1,19 +1,19 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T06:08:32.861Z",
+  "generatedAt": "2026-07-28T07:31:17.558Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-    "total": 3420,
+    "total": 3554,
     "score": 94,
     "counts": {
-      "working": 3342,
+      "working": 3476,
       "api-required": 64,
       "partial": 14,
       "broken": 0
     },
     "automatedTests": 158,
-    "automatedCoverage": 5,
+    "automatedCoverage": 4,
     "networkDependent": 64,
     "envDependent": 4,
     "api": {
@@ -2449,7 +2449,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 8,
-        "sourceBytes": 101142,
+        "sourceBytes": 101372,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -2565,8 +2565,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 17,
-        "sourceBytes": 56300,
+        "sourceFiles": 18,
+        "sourceBytes": 60789,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -5693,6 +5693,45 @@
       ]
     },
     {
+      "slug": "alliteration-word-finder",
+      "name": "Alliteration Word Finder",
+      "category": "Text & Writing",
+      "route": "/tools/all/alliteration-word-finder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31399,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "alloy-vs-steel-wheel-comparison",
       "name": "Alloy vs Steel Wheel Comparison",
       "category": "Calculators",
@@ -5744,6 +5783,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 78754,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "alt-text-policy-generator",
+      "name": "Alt Text Policy Generator",
+      "category": "Design & Color",
+      "route": "/tools/all/alt-text-policy-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37229,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -6549,6 +6627,45 @@
       ]
     },
     {
+      "slug": "anniversary-wishes-generator",
+      "name": "Anniversary Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/anniversary-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33853,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "announcement-graphic-generator",
       "name": "Announcement Graphic Generator",
       "category": "Marketing & Social",
@@ -7310,6 +7427,45 @@
       ]
     },
     {
+      "slug": "apology-message-composer",
+      "name": "Apology Message Composer",
+      "category": "Text & Writing",
+      "route": "/tools/all/apology-message-composer",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27723,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "app-finder",
       "name": "App Finder",
       "category": "Business",
@@ -7320,8 +7476,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 9,
-        "sourceBytes": 19675,
+        "sourceFiles": 10,
+        "sourceBytes": 22147,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -8047,8 +8203,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 3,
-        "sourceBytes": 4591,
+        "sourceFiles": 4,
+        "sourceBytes": 7207,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -8361,6 +8517,84 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 18480,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "attendance-register-format-generator",
+      "name": "Attendance Register Format Generator",
+      "category": "Business",
+      "route": "/tools/all/attendance-register-format-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30193,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "attendance-shortage-condonation-request",
+      "name": "Attendance Shortage Condonation Request",
+      "category": "Education & Science",
+      "route": "/tools/all/attendance-shortage-condonation-request",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 42096,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -9478,6 +9712,45 @@
       ]
     },
     {
+      "slug": "baby-name-by-first-letter-filter",
+      "name": "Baby Name by First Letter",
+      "category": "Lifestyle",
+      "route": "/tools/all/baby-name-by-first-letter-filter",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27346,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "baby-name-generator",
       "name": "Baby Name Generator",
       "category": "Lifestyle, Fun",
@@ -9490,6 +9763,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 11548,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "baby-shower-invitation-wording",
+      "name": "Baby Shower Invitation Wording",
+      "category": "Generators",
+      "route": "/tools/all/baby-shower-invitation-wording",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 43979,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -9726,6 +10038,45 @@
         "sourceBytes": 19729,
         "unresolvedImports": [],
         "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "baisakhi-wishes-generator",
+      "name": "Baisakhi Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/baisakhi-wishes-generator",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 8380,
+        "unresolvedImports": [],
+        "interactive": false,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -10231,6 +10582,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 28536,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "bank-account-opening-checklist",
+      "name": "Bank Account Opening Checklist",
+      "category": "Finance Calculators",
+      "route": "/tools/all/bank-account-opening-checklist",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 41006,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -12776,6 +13166,45 @@
       ]
     },
     {
+      "slug": "bihu-wishes-generator",
+      "name": "Bihu Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/bihu-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37517,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "bike-chain-slack-guide",
       "name": "Bike Chain Slack Guide",
       "category": "Education & Science",
@@ -13336,6 +13765,474 @@
         "sourceBytes": 1724,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-bengali",
+      "name": "Bengali Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-bengali",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35286,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-gujarati",
+      "name": "Gujarati Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-gujarati",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 19857,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-hindi",
+      "name": "Hindi Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-hindi",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37389,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-kannada",
+      "name": "Kannada Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-kannada",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 965,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-malayalam",
+      "name": "Malayalam Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-malayalam",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 979,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-marathi",
+      "name": "Marathi Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-marathi",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 36950,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-nepali",
+      "name": "Nepali Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-nepali",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28704,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-odia",
+      "name": "Odia Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-odia",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 26767,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-punjabi",
+      "name": "Punjabi Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-punjabi",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28760,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-tamil",
+      "name": "Tamil Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-tamil",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 38664,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-telugu",
+      "name": "Telugu Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-telugu",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37294,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "birthday-wishes-urdu",
+      "name": "Urdu Birthday Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/birthday-wishes-urdu",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27658,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -14697,6 +15594,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 23572,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "bonafide-certificate-request-generator",
+      "name": "Bonafide Certificate Request Generator",
+      "category": "Education & Science",
+      "route": "/tools/all/bonafide-certificate-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40606,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -16838,8 +17774,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 6,
-        "sourceBytes": 14559,
+        "sourceFiles": 7,
+        "sourceBytes": 17240,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -18267,6 +19203,45 @@
         "config": true,
         "sourceFiles": 6,
         "sourceBytes": 37060,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "canada-vac-india-appointment-day-checklist",
+      "name": "Canada VAC India Appointment Day Checklist",
+      "category": "Productivity",
+      "route": "/tools/all/canada-vac-india-appointment-day-checklist",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31563,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -20827,6 +21802,45 @@
       ]
     },
     {
+      "slug": "chai-coffee-sugar-tracker",
+      "name": "Chai and Coffee Sugar Tracker",
+      "category": "Health Calculators",
+      "route": "/tools/all/chai-coffee-sugar-tracker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 23418,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "chair-height-calculator",
       "name": "Chair Height Calculator",
       "category": "Health Calculators",
@@ -21530,6 +22544,45 @@
       ]
     },
     {
+      "slug": "cheque-stop-payment-request-generator",
+      "name": "Cheque Stop Payment Request Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/cheque-stop-payment-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40978,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "chess-multiplayer",
       "name": "Chess Multiplayer",
       "category": "Games",
@@ -21581,6 +22634,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 37314,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "chhath-puja-wishes-generator",
+      "name": "Chhath Puja Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/chhath-puja-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33152,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -21799,6 +22891,45 @@
       },
       "issues": [],
       "recommendations": []
+    },
+    {
+      "slug": "child-protein-intake-calculator",
+      "name": "Child Protein Intake Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/child-protein-intake-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 24708,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
     },
     {
       "slug": "child-safety-home-checklist",
@@ -22205,6 +23336,84 @@
         "sourceBytes": 1970,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "christian-baby-name-finder",
+      "name": "Christian Baby Name Finder",
+      "category": "Lifestyle",
+      "route": "/tools/all/christian-baby-name-finder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 27255,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "christmas-wishes-generator",
+      "name": "Christmas Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/christmas-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35100,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -25091,6 +26300,45 @@
       ]
     },
     {
+      "slug": "compliance-calendar-sole-proprietorship",
+      "name": "Compliance Calendar for Sole Proprietorship",
+      "category": "Business",
+      "route": "/tools/all/compliance-calendar-sole-proprietorship",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35081,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "compliment-generator",
       "name": "Compliment Generator",
       "category": "Fun, Lifestyle",
@@ -25532,6 +26780,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 18568,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "condolence-message-generator",
+      "name": "Condolence Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/condolence-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 52861,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -26066,6 +27353,45 @@
       ]
     },
     {
+      "slug": "consumer-complaint-telecom-billing",
+      "name": "Consumer Complaint Letter for Telecom Billing",
+      "category": "Business",
+      "route": "/tools/all/consumer-complaint-telecom-billing",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 39130,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "contact-lens-wear-tracker",
       "name": "Contact Lens Wear Tracker",
       "category": "Health & Fitness",
@@ -26546,6 +27872,45 @@
         "config": true,
         "sourceFiles": 8,
         "sourceBytes": 22338,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "cookie-consent-banner-text-generator",
+      "name": "Cookie Consent Banner Text Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/cookie-consent-banner-text-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33524,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -28367,6 +29732,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 27572,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "credit-card-closure-confirmation-request",
+      "name": "Credit Card Closure Confirmation Request",
+      "category": "Finance Calculators",
+      "route": "/tools/all/credit-card-closure-confirmation-request",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29534,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -31379,6 +32783,45 @@
       ]
     },
     {
+      "slug": "data-correction-request-letter-generator",
+      "name": "Data Correction Request Letter Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/data-correction-request-letter-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33721,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "data-deletion-proof-log",
       "name": "Data Deletion Proof Log",
       "category": "Security & Privacy, Productivity",
@@ -31469,6 +32912,45 @@
         "config": true,
         "sourceFiles": 21,
         "sourceBytes": 97759,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "data-portability-request-generator",
+      "name": "Data Portability Request Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/data-portability-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34318,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -32910,6 +34392,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 2915,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "delivery-challan-format-generator",
+      "name": "Delivery Challan Format Generator",
+      "category": "Business",
+      "route": "/tools/all/delivery-challan-format-generator",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 732,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -34554,6 +36075,45 @@
       ]
     },
     {
+      "slug": "digital-product-refund-policy-generator",
+      "name": "Digital Product Refund Policy Generator",
+      "category": "Business",
+      "route": "/tools/all/digital-product-refund-policy-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37341,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "digital-vs-physical-gold-comparator",
       "name": "Digital Gold vs Physical Gold Cost Comparator",
       "category": "Finance Calculators",
@@ -35839,6 +37399,45 @@
       ]
     },
     {
+      "slug": "do-not-sell-link-text-generator",
+      "name": "Do Not Sell Link Text Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/do-not-sell-link-text-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31067,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "docker-healthcheck-generator",
       "name": "Docker Healthcheck Generator",
       "category": "Developer",
@@ -36227,6 +37826,45 @@
       ]
     },
     {
+      "slug": "document-expiry-reminder-board",
+      "name": "Document Expiry Reminder Board",
+      "category": "Productivity",
+      "route": "/tools/all/document-expiry-reminder-board",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37040,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "document-expiry-tracker",
       "name": "Document Expiry Tracker",
       "category": "Security & Privacy, Productivity",
@@ -36394,7 +38032,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 31,
-        "sourceBytes": 166166,
+        "sourceBytes": 166165,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -36654,6 +38292,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 36499,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "donation-receipt-format-generator",
+      "name": "Donation Receipt Format Generator",
+      "category": "Business",
+      "route": "/tools/all/donation-receipt-format-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 42825,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -38748,6 +40425,45 @@
       ]
     },
     {
+      "slug": "ecommerce-refund-policy-generator",
+      "name": "Ecommerce Refund Policy Generator",
+      "category": "Business",
+      "route": "/tools/all/ecommerce-refund-policy-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40404,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "ects-credit-load-calculator",
       "name": "ECTS Credit Load Calculator",
       "category": "Calculators",
@@ -38994,6 +40710,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 40308,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "eid-mubarak-wishes-generator",
+      "name": "Eid Mubarak Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/eid-mubarak-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34951,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -41013,6 +42768,45 @@
       ]
     },
     {
+      "slug": "engagement-invitation-wording-tool",
+      "name": "Engagement Invitation Wording Tool",
+      "category": "Generators",
+      "route": "/tools/all/engagement-invitation-wording-tool",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29196,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "engine-displacement-calculator",
       "name": "Engine Displacement Calculator",
       "category": "Calculators",
@@ -42486,6 +44280,45 @@
       ]
     },
     {
+      "slug": "event-photography-consent-notice-generator",
+      "name": "Event Photography Consent Notice Generator",
+      "category": "Marketing & Social",
+      "route": "/tools/all/event-photography-consent-notice-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 37477,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "event-planning-prompt-builder",
       "name": "Event Planning Prompt Builder",
       "category": "Business",
@@ -42901,6 +44734,45 @@
       ]
     },
     {
+      "slug": "exam-best-wishes-generator",
+      "name": "Exam Best Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/exam-best-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 44095,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "exam-burnout-self-check",
       "name": "Exam Burnout Self Check",
       "category": "Health & Fitness",
@@ -43264,6 +45136,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 24283,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "exam-revaluation-application-generator",
+      "name": "Exam Revaluation Application Generator",
+      "category": "Education & Science",
+      "route": "/tools/all/exam-revaluation-application-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 45002,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -43693,6 +45604,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 12816,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "excess-charges-refund-request-generator",
+      "name": "Excess Charges Refund Request Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/excess-charges-refund-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34544,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -44472,7 +46422,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 3,
-        "sourceBytes": 62292,
+        "sourceBytes": 62073,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -45829,6 +47779,45 @@
       ]
     },
     {
+      "slug": "festival-sweet-calorie-calculator",
+      "name": "Festival Sweet Calorie Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/festival-sweet-calorie-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 26582,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "fetal-kick-counter",
       "name": "Fetal Kick Counter",
       "category": "Health & Fitness",
@@ -45997,6 +47986,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 19872,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "field-trip-permission-slip-generator",
+      "name": "Field Trip Permission Slip Generator",
+      "category": "Education & Science",
+      "route": "/tools/all/field-trip-permission-slip-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 41832,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -50882,6 +52910,45 @@
       ]
     },
     {
+      "slug": "ganesh-chaturthi-wishes-generator",
+      "name": "Ganesh Chaturthi Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/ganesh-chaturthi-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32035,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "gap-certificate-explainer",
       "name": "Gap Certificate Explainer",
       "category": "Education & Science",
@@ -50894,6 +52961,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 24278,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "gap-year-affidavit-generator",
+      "name": "Gap Year Affidavit Generator",
+      "category": "Education & Science",
+      "route": "/tools/all/gap-year-affidavit-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 36113,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -51311,6 +53417,45 @@
       ]
     },
     {
+      "slug": "gdpr-checklist-blog",
+      "name": "GDPR Compliance Checklist for Blogs",
+      "category": "Security & Privacy",
+      "route": "/tools/all/gdpr-checklist-blog",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33726,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "gear-packing-list-creator",
       "name": "Creator Gear Packing List",
       "category": "Productivity",
@@ -51584,6 +53729,45 @@
       ]
     },
     {
+      "slug": "get-well-soon-message-generator",
+      "name": "Get Well Soon Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/get-well-soon-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 41703,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "geyser-capacity-selector",
       "name": "Geyser Capacity Selector",
       "category": "Calculators",
@@ -51635,6 +53819,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 30363,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "ghee-intake-calculator",
+      "name": "Ghee Intake Calculator",
+      "category": "Health Calculators",
+      "route": "/tools/all/ghee-intake-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 21469,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -53342,8 +55565,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 7,
-        "sourceBytes": 28348,
+        "sourceFiles": 8,
+        "sourceBytes": 31782,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -54110,6 +56333,84 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 25361,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "grievance-officer-details-block-generator",
+      "name": "Grievance Officer Details Block Generator",
+      "category": "Business",
+      "route": "/tools/all/grievance-officer-details-block-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35895,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "griha-pravesh-invitation-wording",
+      "name": "Griha Pravesh Invitation Wording",
+      "category": "Generators",
+      "route": "/tools/all/griha-pravesh-invitation-wording",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33590,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -57563,6 +59864,45 @@
       ]
     },
     {
+      "slug": "hindu-baby-name-finder",
+      "name": "Hindu Baby Name Finder",
+      "category": "Lifestyle",
+      "route": "/tools/all/hindu-baby-name-finder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32223,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "hinglish-coding-tool",
       "name": "Hinglish Coding Dictionary",
       "category": "Developer",
@@ -58248,6 +60588,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 29789,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "home-service-entry-consent-form-generator",
+      "name": "Home Service Entry Consent Form Generator",
+      "category": "Lifestyle",
+      "route": "/tools/all/home-service-entry-consent-form-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 46660,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -61352,8 +63731,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 14,
-        "sourceBytes": 67284,
+        "sourceFiles": 15,
+        "sourceBytes": 69994,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -62429,6 +64808,45 @@
       ]
     },
     {
+      "slug": "independence-day-message-generator",
+      "name": "Independence Day Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/independence-day-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31114,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "india-hosting-cost-comparison",
       "name": "India Hosting Cost Comparison",
       "category": "Calculators",
@@ -62831,6 +65249,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 33385,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "indian-street-food-calorie-guide",
+      "name": "Indian Street Food Calorie Guide",
+      "category": "Health Calculators",
+      "route": "/tools/all/indian-street-food-calorie-guide",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27908,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -63297,6 +65754,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 44424,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "influencer-disclosure-label-generator",
+      "name": "Influencer Disclosure Label Generator",
+      "category": "Marketing & Social",
+      "route": "/tools/all/influencer-disclosure-label-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33946,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -64143,6 +66639,45 @@
       ]
     },
     {
+      "slug": "insurance-nominee-change-request-generator",
+      "name": "Insurance Nominee Change Request Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/insurance-nominee-change-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 44442,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "insurance-policy-comparator",
       "name": "Insurance Policy Comparator",
       "category": "Finance Calculators, Lifestyle",
@@ -64157,6 +66692,45 @@
         "sourceBytes": 3426,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "insurance-policy-renewal-tracker",
+      "name": "Insurance Policy Renewal Tracker",
+      "category": "Finance Calculators",
+      "route": "/tools/all/insurance-policy-renewal-tracker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 38719,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -65203,6 +67777,45 @@
         "sourceBytes": 3279,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "iou-letter-generator",
+      "name": "IOU Letter Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/iou-letter-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 36798,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -68046,6 +70659,45 @@
       ]
     },
     {
+      "slug": "karwa-chauth-message-generator",
+      "name": "Karwa Chauth Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/karwa-chauth-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28631,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "kathak-calorie-burn-calculator",
       "name": "Kathak Calorie Burn Calculator",
       "category": "Health Calculators",
@@ -68746,6 +71398,45 @@
       ]
     },
     {
+      "slug": "kids-hydration-reminder",
+      "name": "Kids Hydration Reminder",
+      "category": "Health & Fitness",
+      "route": "/tools/all/kids-hydration-reminder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28456,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "kids-milestone-vaccine-vault",
       "name": "Kids Milestone & Vaccine Vault",
       "category": "Security & Privacy, Productivity",
@@ -68760,6 +71451,45 @@
         "sourceBytes": 701,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "kids-screen-time-limit-planner",
+      "name": "Kids Screen Time Limit Planner",
+      "category": "Health & Fitness",
+      "route": "/tools/all/kids-screen-time-limit-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31561,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -70338,6 +73068,45 @@
       ]
     },
     {
+      "slug": "latin-legal-maxims-reference",
+      "name": "Latin Legal Maxims Reference",
+      "category": "Education & Science",
+      "route": "/tools/all/latin-legal-maxims-reference",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 41322,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "laundry-calorie-burn-calculator",
       "name": "Laundry Calorie Burn Calculator",
       "category": "Health Calculators",
@@ -70937,6 +73706,84 @@
         "sourceBytes": 54484,
         "unresolvedImports": [],
         "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "legal-notice-cost-estimator",
+      "name": "Legal Notice Cost Estimator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/legal-notice-cost-estimator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27353,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "legal-notice-dispatch-tracker",
+      "name": "Legal Notice Dispatch Tracker",
+      "category": "Productivity",
+      "route": "/tools/all/legal-notice-dispatch-tracker",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 12473,
+        "unresolvedImports": [],
+        "interactive": false,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -71701,8 +74548,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 4,
-        "sourceBytes": 13582,
+        "sourceFiles": 5,
+        "sourceBytes": 16067,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -72866,6 +75713,45 @@
       ]
     },
     {
+      "slug": "loan-foreclosure-request-generator",
+      "name": "Loan Foreclosure Request Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/loan-foreclosure-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 38337,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "loan-foreclosure-savings-calculator",
       "name": "Loan Foreclosure Savings Calculator",
       "category": "Finance Calculators",
@@ -73679,6 +76565,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 23559,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "lohri-wishes-generator",
+      "name": "Lohri Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/lohri-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32034,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -74911,6 +77836,45 @@
       ]
     },
     {
+      "slug": "maintenance-charge-split-calculator",
+      "name": "Maintenance Charge Split Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/maintenance-charge-split-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29576,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "maintenance-window-announcement-generator",
       "name": "Maintenance Window Announcement Generator",
       "category": "Productivity",
@@ -75597,6 +78561,84 @@
       ]
     },
     {
+      "slug": "marketing-consent-checkbox-copy-generator",
+      "name": "Marketing Consent Checkbox Copy Generator",
+      "category": "Marketing & Social",
+      "route": "/tools/all/marketing-consent-checkbox-copy-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32081,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "marketing-opt-out-request-generator",
+      "name": "Marketing Opt-Out Request Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/marketing-opt-out-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32344,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "marketplace-scam-checker",
       "name": "Marketplace Scam Checker",
       "category": "Security & Privacy, Lifestyle, Finance Calculators",
@@ -75763,6 +78805,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 22279,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "marriage-registration-document-checklist",
+      "name": "Marriage Registration Document Checklist",
+      "category": "Lifestyle",
+      "route": "/tools/all/marriage-registration-document-checklist",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 38628,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -77391,8 +80472,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 3,
-        "sourceBytes": 19420,
+        "sourceFiles": 4,
+        "sourceBytes": 22507,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -77510,6 +80591,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 21371,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "mid-upper-arm-circumference-tool",
+      "name": "Mid-Upper Arm Circumference Tool",
+      "category": "Health Calculators",
+      "route": "/tools/all/mid-upper-arm-circumference-tool",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 24451,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -79719,7 +82839,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 19221,
+        "sourceBytes": 19454,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -80412,6 +83532,45 @@
       ]
     },
     {
+      "slug": "mundan-ceremony-invitation-wording",
+      "name": "Mundan Ceremony Invitation Wording",
+      "category": "Generators",
+      "route": "/tools/all/mundan-ceremony-invitation-wording",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 714,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "muscle-gain-calorie-calculator",
       "name": "Muscle Gain Calorie Calculator",
       "category": "Health Calculators",
@@ -80543,6 +83702,45 @@
         "sourceBytes": 22214,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "muslim-baby-name-finder",
+      "name": "Muslim Baby Name Finder",
+      "category": "Lifestyle",
+      "route": "/tools/all/muslim-baby-name-finder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 31046,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -80958,6 +84156,84 @@
       ]
     },
     {
+      "slug": "name-meaning-lookup-multilingual",
+      "name": "Multilingual Name Meaning Lookup",
+      "category": "Lifestyle",
+      "route": "/tools/all/name-meaning-lookup-multilingual",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 728,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "naming-ceremony-invitation-wording",
+      "name": "Naming Ceremony Invitation Wording",
+      "category": "Generators",
+      "route": "/tools/all/naming-ceremony-invitation-wording",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 36056,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "narration-session-time-estimator",
       "name": "Narration Session Time Estimator",
       "category": "Calculators",
@@ -80970,6 +84246,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 26053,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "navratri-wishes-generator",
+      "name": "Navratri Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/navratri-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 38945,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -81738,6 +85053,45 @@
       ]
     },
     {
+      "slug": "negative-split-planner",
+      "name": "Negative Split Planner",
+      "category": "Health & Fitness",
+      "route": "/tools/all/negative-split-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27294,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "neighbourhood-walkability-scorer",
       "name": "Neighbourhood Walkability Scorer",
       "category": "Lifestyle",
@@ -82089,6 +85443,513 @@
       ]
     },
     {
+      "slug": "new-year-wishes-assamese",
+      "name": "Assamese New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-assamese",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29210,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-bengali",
+      "name": "Bengali New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-bengali",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30766,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-french",
+      "name": "French New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-french",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34096,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-gujarati",
+      "name": "Gujarati New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-gujarati",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30001,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-hindi",
+      "name": "Hindi New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-hindi",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 11604,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-japanese",
+      "name": "Japanese New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-japanese",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 43856,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-kannada",
+      "name": "Kannada New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-kannada",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29836,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-malayalam",
+      "name": "Malayalam New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-malayalam",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30389,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-marathi",
+      "name": "Marathi New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-marathi",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30916,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-odia",
+      "name": "Odia New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-odia",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29066,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-punjabi",
+      "name": "Punjabi New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-punjabi",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 30425,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-spanish",
+      "name": "Spanish New Year Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-spanish",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 13299,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "new-year-wishes-urdu",
+      "name": "Urdu New Year Wishes",
+      "category": "Generators",
+      "route": "/tools/all/new-year-wishes-urdu",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28090,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "newborn-feeding-volume-calculator",
       "name": "Newborn Feeding Volume Calculator",
       "category": "Health Calculators",
@@ -82101,6 +85962,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 23753,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "newsletter-double-optin-copy-generator",
+      "name": "Newsletter Double Opt-In Copy Generator",
+      "category": "Marketing & Social",
+      "route": "/tools/all/newsletter-double-optin-copy-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35845,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -82674,6 +86574,45 @@
       ]
     },
     {
+      "slug": "no-dues-certificate-generator",
+      "name": "No Dues Certificate Generator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/no-dues-certificate-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40353,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "noise-reduction-rating-calculator",
       "name": "Noise Reduction Rating Calculator",
       "category": "Calculators",
@@ -83076,6 +87015,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 36761,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "notice-to-vacate-date-calculator",
+      "name": "Notice to Vacate Date Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/notice-to-vacate-date-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 36023,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -84386,6 +88364,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 20589,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "onam-wishes-generator",
+      "name": "Onam Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/onam-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32436,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -86132,6 +90149,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 24909,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "paneer-vs-tofu-comparator",
+      "name": "Paneer vs Tofu Comparator",
+      "category": "Health Calculators",
+      "route": "/tools/all/paneer-vs-tofu-comparator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 23897,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -88845,6 +92901,45 @@
       ]
     },
     {
+      "slug": "pet-boarding-consent-form-generator",
+      "name": "Pet Boarding Consent Form Generator",
+      "category": "Lifestyle",
+      "route": "/tools/all/pet-boarding-consent-form-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 44505,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "pet-calming-sound-player",
       "name": "Pet Calming Sound Player",
       "category": "Lifestyle",
@@ -91356,6 +95451,45 @@
       ]
     },
     {
+      "slug": "pongal-wishes-generator",
+      "name": "Pongal Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/pongal-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33410,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "pool-laps-to-distance-converter",
       "name": "Pool Laps to Distance Converter",
       "category": "Health Calculators",
@@ -92680,6 +96814,45 @@
       ]
     },
     {
+      "slug": "prayer-meet-invitation-wording",
+      "name": "Prayer Meet Invitation Wording",
+      "category": "Generators",
+      "route": "/tools/all/prayer-meet-invitation-wording",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 49032,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "prayer-times-qibla",
       "name": "Prayer Times & Qibla Direction",
       "category": "Lifestyle",
@@ -93766,6 +97939,45 @@
       ]
     },
     {
+      "slug": "probation-confirmation-date-calculator",
+      "name": "Probation Confirmation Date Calculator",
+      "category": "Calculators",
+      "route": "/tools/all/probation-confirmation-date-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28231,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "probation-extension-letter-generator",
       "name": "Probation Extension Letter Generator",
       "category": "Business",
@@ -94729,6 +98941,45 @@
       ]
     },
     {
+      "slug": "promotion-congratulations-generator",
+      "name": "Promotion Congratulations Generator",
+      "category": "Generators",
+      "route": "/tools/all/promotion-congratulations-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 42884,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "prompt-emoji-stripper",
       "name": "Prompt Emoji Stripper",
       "category": "Text & Writing",
@@ -95131,6 +99382,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 17797,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "proportionate-rent-calculator",
+      "name": "Proportionate Rent Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/proportionate-rent-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27128,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -96724,6 +101014,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 27534,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "raksha-bandhan-wishes-generator",
+      "name": "Raksha Bandhan Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/raksha-bandhan-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35406,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -99678,6 +104007,45 @@
       ]
     },
     {
+      "slug": "rent-escalation-schedule-calculator",
+      "name": "Rent Escalation Schedule Calculator",
+      "category": "Finance Calculators",
+      "route": "/tools/all/rent-escalation-schedule-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 25024,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "rent-increase-notice-generator",
       "name": "Rent Increase Notice Generator",
       "category": "Business",
@@ -100119,6 +104487,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 36189,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "republic-day-message-generator",
+      "name": "Republic Day Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/republic-day-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27666,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -100690,6 +105097,45 @@
       ]
     },
     {
+      "slug": "retirement-wishes-generator",
+      "name": "Retirement Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/retirement-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 43674,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "retry-after-header-calculator",
       "name": "Retry-After Header Calculator",
       "category": "Developer",
@@ -100743,6 +105189,45 @@
         "sourceBytes": 63541,
         "unresolvedImports": [],
         "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "return-window-policy-calculator",
+      "name": "Return Window Policy Calculator",
+      "category": "Business",
+      "route": "/tools/all/return-window-policy-calculator",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 15055,
+        "unresolvedImports": [],
+        "interactive": false,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -103030,6 +107515,45 @@
       ]
     },
     {
+      "slug": "running-cadence-calculator",
+      "name": "Running Cadence Calculator",
+      "category": "Health & Fitness",
+      "route": "/tools/all/running-cadence-calculator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 25536,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "running-feet-to-sqft",
       "name": "Running Feet to Sqft",
       "category": "Converters",
@@ -104896,6 +109420,45 @@
       ]
     },
     {
+      "slug": "school-admission-document-checklist",
+      "name": "School Admission Document Checklist",
+      "category": "Education & Science",
+      "route": "/tools/all/school-admission-document-checklist",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32540,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "school-attendance-percentage-tracker",
       "name": "School Attendance Percentage Tracker",
       "category": "Calculators",
@@ -106329,6 +110892,45 @@
         "sourceBytes": 610,
         "unresolvedImports": [],
         "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "seller-details-disclosure-generator",
+      "name": "Seller Details Disclosure Generator",
+      "category": "Business",
+      "route": "/tools/all/seller-details-disclosure-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34478,
+        "unresolvedImports": [],
+        "interactive": true,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -107967,6 +112569,45 @@
         "sourceBytes": 63506,
         "unresolvedImports": [],
         "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "sikh-baby-name-finder",
+      "name": "Sikh Baby Name Finder",
+      "category": "Lifestyle",
+      "route": "/tools/all/sikh-baby-name-finder",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 4,
+        "sourceBytes": 11405,
+        "unresolvedImports": [],
+        "interactive": false,
         "output": true,
         "automatedTest": false,
         "localTest": false,
@@ -113746,6 +118387,45 @@
       ]
     },
     {
+      "slug": "standing-instruction-cancellation-letter",
+      "name": "Standing Instruction Cancellation Letter",
+      "category": "Finance Calculators",
+      "route": "/tools/all/standing-instruction-cancellation-letter",
+      "status": "working",
+      "score": 92,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 3,
+        "sourceBytes": 754,
+        "unresolvedImports": [],
+        "interactive": false,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "star-life-cycle-explorer",
       "name": "Star Life Cycle Explorer",
       "category": "Education & Science",
@@ -114146,8 +118826,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 22,
-        "sourceBytes": 176494,
+        "sourceFiles": 23,
+        "sourceBytes": 180682,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -115979,6 +120659,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 21304,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "sublet-permission-request-generator",
+      "name": "Sublet Permission Request Generator",
+      "category": "Business",
+      "route": "/tools/all/sublet-permission-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 34938,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -119285,6 +124004,45 @@
       ]
     },
     {
+      "slug": "teething-timeline-tracker",
+      "name": "Teething Timeline Tracker",
+      "category": "Health & Fitness",
+      "route": "/tools/all/teething-timeline-tracker",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 26970,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "teleprompter-speed-calculator",
       "name": "Teleprompter Speed Calculator",
       "category": "Calculators",
@@ -121234,6 +125992,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 35259,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "thank-you-note-generator",
+      "name": "Thank You Note Generator",
+      "category": "Generators",
+      "route": "/tools/all/thank-you-note-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 29010,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -123324,6 +128121,84 @@
       ]
     },
     {
+      "slug": "tracking-pixel-disclosure-generator",
+      "name": "Tracking Pixel Disclosure Generator",
+      "category": "Security & Privacy",
+      "route": "/tools/all/tracking-pixel-disclosure-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 35294,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "trade-licence-renewal-reminder-builder",
+      "name": "Trade Licence Renewal Reminder Builder",
+      "category": "Business",
+      "route": "/tools/all/trade-licence-renewal-reminder-builder",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 33864,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "trademark-name-availability-checklist",
       "name": "Trademark Name Availability Checklist",
       "category": "Business",
@@ -123414,6 +128289,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 26633,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "transfer-certificate-request-generator",
+      "name": "Transfer Certificate Request Generator",
+      "category": "Education & Science",
+      "route": "/tools/all/transfer-certificate-request-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40877,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -123999,6 +128913,45 @@
         "config": true,
         "sourceFiles": 5,
         "sourceBytes": 23231,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "treadmill-pace-converter",
+      "name": "Treadmill Pace Converter",
+      "category": "Health & Fitness",
+      "route": "/tools/all/treadmill-pace-converter",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 22956,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -125660,6 +130613,45 @@
       ]
     },
     {
+      "slug": "ugadi-gudi-padwa-wishes-generator",
+      "name": "Ugadi and Gudi Padwa Wishes Generator",
+      "category": "Generators",
+      "route": "/tools/all/ugadi-gudi-padwa-wishes-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 32110,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "ugc-brief-generator",
       "name": "UGC Brief Generator",
       "category": "Business",
@@ -125711,6 +130703,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 4583,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "uk-vac-india-appointment-day-checklist",
+      "name": "UK VAC India Appointment Day Checklist",
+      "category": "Productivity",
+      "route": "/tools/all/uk-vac-india-appointment-day-checklist",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28472,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -129778,6 +134809,45 @@
       ]
     },
     {
+      "slug": "video-testimonial-consent-form-generator",
+      "name": "Video Testimonial Consent Form Generator",
+      "category": "Marketing & Social",
+      "route": "/tools/all/video-testimonial-consent-form-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40567,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "video-to-audio-converter",
       "name": "Video to Audio Converter",
       "category": "Converters, Video & Audio",
@@ -131041,6 +136111,45 @@
       ]
     },
     {
+      "slug": "volunteer-agreement-generator",
+      "name": "Volunteer Agreement Generator",
+      "category": "Business",
+      "route": "/tools/all/volunteer-agreement-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 46232,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "voronoi-art-generator",
       "name": "Voronoi Art Generator",
       "category": "Design & Color",
@@ -131275,6 +136384,45 @@
       ]
     },
     {
+      "slug": "w9-information-worksheet",
+      "name": "W-9 Information Worksheet",
+      "category": "Business",
+      "route": "/tools/all/w9-information-worksheet",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 40521,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
       "slug": "wacc-calculator",
       "name": "WACC Calculator",
       "category": "Finance Calculators",
@@ -131365,6 +136513,45 @@
         "config": true,
         "sourceFiles": 4,
         "sourceBytes": 18982,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "walk-run-interval-planner",
+      "name": "Walk Run Interval Planner",
+      "category": "Health & Fitness",
+      "route": "/tools/all/walk-run-interval-planner",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 27835,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -133749,8 +138936,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 16,
-        "sourceBytes": 62291,
+        "sourceFiles": 17,
+        "sourceBytes": 66326,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -134422,6 +139609,45 @@
         "config": true,
         "sourceFiles": 3,
         "sourceBytes": 10281,
+        "unresolvedImports": [],
+        "interactive": true,
+        "output": true,
+        "automatedTest": false,
+        "localTest": false,
+        "functionalTest": false,
+        "networkDependent": false,
+        "envKeys": [],
+        "networkSignals": [],
+        "placeholderSignals": []
+      },
+      "apiReadiness": {
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
+        "environment": [],
+        "requiredEnvKeys": [],
+        "missingEnvKeys": [],
+        "browserLocalOperations": 0
+      },
+      "issues": [],
+      "recommendations": [
+        "Add one deterministic functional or unit regression test."
+      ]
+    },
+    {
+      "slug": "womens-day-message-generator",
+      "name": "Womens Day Message Generator",
+      "category": "Generators",
+      "route": "/tools/all/womens-day-message-generator",
+      "status": "working",
+      "score": 94,
+      "priority": false,
+      "evidence": {
+        "entry": true,
+        "config": true,
+        "sourceFiles": 5,
+        "sourceBytes": 28876,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,

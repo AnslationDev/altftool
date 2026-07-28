@@ -1,5 +1,4 @@
 import React from "react";
-import SaleData from "../data/salesData.json";
 
 const TabBar = ({ tabs, activeTab, setActiveTab }) => {
   return (

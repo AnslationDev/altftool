@@ -16,13 +16,14 @@ function GetCategory({ setActive, setEditData }) {
   // ================= FETCH =================
   useEffect(() => {
     const unsubCat = categoryService.subscribe(setCategories);
-    const unsubSub = subCategoryService.subscribeAll(setSubCategories);
+    const unsubSub = subCategoryService.subscribeAll((res) => {
+      setSubCategories(res);
+      setLoading(false);
+    });
 
     const unsubFaq = faqService.subscribeAll
       ? faqService.subscribeAll(setFaqs)
       : () => {};
-
-    setLoading(false);
 
     return () => {
       unsubCat();

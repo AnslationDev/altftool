@@ -77,7 +77,7 @@ function AddProductImage({ setActive, editData, setEditData }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow space-y-5">
+    <div className="bg-[var(--surface)] p-6 rounded-lg shadow space-y-5">
 
       <div className="flex justify-between">
         <h2 className="text-lg font-semibold">
@@ -109,10 +109,10 @@ function AddProductImage({ setActive, editData, setEditData }) {
         type="file"
         accept="image/*"
         onChange={handleImageChange}
-        className="border p-3 w-full rounded bg-gray-50"
+        className="border p-3 w-full rounded bg-[var(--surface-soft)]"
       />
 
-      {uploading && <p className="text-blue-500">Uploading...</p>}
+      {uploading && <p className="text-[var(--primary)]">Uploading...</p>}
 
       {/* PREVIEW */}
       {form.image && (
@@ -136,7 +136,7 @@ function AddProductImage({ setActive, editData, setEditData }) {
       <button
         onClick={handleSubmit}
         disabled={loading || uploading}
-        className="bg-blue-600 text-white w-full py-3 rounded"
+        className="bg-[var(--primary)] text-[var(--primary-foreground)] w-full py-3 rounded"
       >
         {loading
           ? "Saving..."

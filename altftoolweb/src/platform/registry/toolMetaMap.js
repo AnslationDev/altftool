@@ -1105,6 +1105,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-[var(--primary)]"
   },
+  "alliteration-word-finder": {
+    "name": "Alliteration Word Finder",
+    "description": "Find words that share a starting sound, not just a starting letter, and build alliterative lines from them.",
+    "category": "Text & Writing",
+    "icon": "type",
+    "iconColor": "text-[var(--primary)]"
+  },
   "alloy-vs-steel-wheel-comparison": {
     "name": "Alloy vs Steel Wheel Comparison",
     "description": "Compare alloy and steel wheels on unsprung weight, price premium, fuel economy gain and payback period.",
@@ -1125,6 +1132,13 @@ export const toolMetaMap = {
     ],
     "icon": "book-a",
     "iconColor": "text-teal-600"
+  },
+  "alt-text-policy-generator": {
+    "name": "Alt Text Policy Generator",
+    "description": "Generate an internal alt text policy with a rule per content type, WCAG references, character limits and a QA checklist.",
+    "category": "Design & Color",
+    "icon": "accessibility",
+    "iconColor": "text-[var(--primary)]"
   },
   "alt-text-quality-assistant": {
     "name": "Alt-Text Quality Assistant",
@@ -1297,6 +1311,13 @@ export const toolMetaMap = {
     "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
   },
+  "anniversary-wishes-generator": {
+    "name": "Anniversary Wishes Generator",
+    "description": "Create anniversary messages by years, relationship and language, with the traditional gift symbol and jubilee name.",
+    "category": "Generators",
+    "icon": "heart-handshake",
+    "iconColor": "text-[var(--primary)]"
+  },
   "announcement-graphic-generator": {
     "name": "Announcement Graphic Generator",
     "description": "Create launch, event and update announcement graphics from templates, with a modular type scale and a countdown line.",
@@ -1414,6 +1435,13 @@ export const toolMetaMap = {
     "description": "Compare URL path, query parameter, custom header and media type API versioning — weighted scoring plus migration cost for each.",
     "category": "Developer",
     "icon": "signpost",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "apology-message-composer": {
+    "name": "Apology Message Composer",
+    "description": "Draft an apology using the six research-backed components, and catch non-apology phrasing like 'sorry if you were offended'.",
+    "category": "Text & Writing",
+    "icon": "handshake",
     "iconColor": "text-[var(--primary)]"
   },
   "app-finder": {
@@ -1658,6 +1686,20 @@ export const toolMetaMap = {
       "Calculators",
       "Education & Science"
     ],
+    "icon": "calendar-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "attendance-register-format-generator": {
+    "name": "Attendance Register Format Generator",
+    "description": "Build a printable Form D style attendance register with day columns, weekly offs, holidays and attendance codes.",
+    "category": "Business",
+    "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "attendance-shortage-condonation-request": {
+    "name": "Attendance Shortage Condonation Request",
+    "description": "Work out your attendance percentage and shortfall, then draft a condonation request with grounds, evidence and a catch-up plan.",
+    "category": "Education & Science",
     "icon": "calendar-check",
     "iconColor": "text-[var(--primary)]"
   },
@@ -1921,6 +1963,13 @@ export const toolMetaMap = {
     "icon": "baby",
     "iconColor": "text-pink-500"
   },
+  "baby-name-by-first-letter-filter": {
+    "name": "Baby Name by First Letter",
+    "description": "Filter a curated list of baby names by starting letter, gender, name length, origin and meaning keyword.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "baby-name-generator": {
     "name": "Baby Name Generator",
     "description": "Discover unique, meaningful baby names with origins, meanings, and popularity trends for boys, girls, and gender-neutral options.",
@@ -1930,6 +1979,13 @@ export const toolMetaMap = {
     ],
     "icon": "baby",
     "iconColor": "text-teal-500"
+  },
+  "baby-shower-invitation-wording": {
+    "name": "Baby Shower Invitation Wording",
+    "description": "Compose godh bharai, valaikappu and baby shower invitation wording in 7 languages with date, venue and RSVP lines.",
+    "category": "Generators",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
   },
   "baby-size-by-week-visualizer": {
     "name": "Baby Size By Week Visualizer",
@@ -1975,6 +2031,13 @@ export const toolMetaMap = {
     "description": "Estimate calories burned playing badminton singles or doubles from your body weight, rally time and break time.",
     "category": "Health Calculators",
     "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "baisakhi-wishes-generator": {
+    "name": "Baisakhi Wishes Generator",
+    "description": "Write Baisakhi greetings in Punjabi Gurmukhi, Roman and English, with the Khalsa anniversary year and SMS length check.",
+    "category": "Generators",
+    "icon": "wheat",
     "iconColor": "text-[var(--primary)]"
   },
   "bajaj-service-schedule-planner": {
@@ -2072,6 +2135,13 @@ export const toolMetaMap = {
     "description": "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document.",
     "category": "Security & Privacy",
     "icon": "eye-off",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "bank-account-opening-checklist": {
+    "name": "Bank Account Opening Checklist",
+    "description": "The exact KYC papers each Indian account type needs — resident, minor, senior, proprietorship, NRE, NRO and FCNR — with readiness scoring.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
   "bank-balance-certificate-request-generator": {
@@ -2647,6 +2717,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
+  "bihu-wishes-generator": {
+    "name": "Bihu Wishes Generator",
+    "description": "Bihu greetings for Rongali, Bhogali and Kongali Bihu in Assamese script, Roman Assamese, English and Hindi.",
+    "category": "Generators",
+    "icon": "drum",
+    "iconColor": "text-[var(--primary)]"
+  },
   "bike-chain-slack-guide": {
     "name": "Bike Chain Slack Guide",
     "description": "Set correct chain slack, measure chain stretch across 20 links against the 2% service limit and time your next lube.",
@@ -2794,6 +2871,90 @@ export const toolMetaMap = {
     "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes.",
     "category": "Text & Writing",
     "icon": "gift",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-bengali": {
+    "name": "Bengali Birthday Wishes Generator",
+    "description": "Write Bengali birthday messages with poetic or simple phrasing, correct tumi or apni forms and romanisation.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-gujarati": {
+    "name": "Gujarati Birthday Wishes Generator",
+    "description": "Generate Gujarati birthday greetings for friends, family and colleagues in Gujarati script or Roman transliteration.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-hindi": {
+    "name": "Hindi Birthday Wishes Generator",
+    "description": "Write Hindi birthday messages tuned to relationship and tone, with correct aap or tum forms, romanisation and SMS length.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-kannada": {
+    "name": "Kannada Birthday Wishes Generator",
+    "description": "Generate Kannada birthday greetings for friends, family and colleagues in Kannada script or Roman transliteration.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-malayalam": {
+    "name": "Malayalam Birthday Wishes Generator",
+    "description": "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-marathi": {
+    "name": "Marathi Birthday Wishes Generator",
+    "description": "Generate Marathi birthday greetings for family, friends and colleagues with correct tu or tumhi forms and romanisation.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-nepali": {
+    "name": "Nepali Birthday Wishes Generator",
+    "description": "Generate Nepali birthday messages with formal tapai and casual timi tone, in Devanagari or Roman.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-odia": {
+    "name": "Odia Birthday Wishes Generator",
+    "description": "Create Odia birthday greetings for friends and family in Odia script or Roman transliteration.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-punjabi": {
+    "name": "Punjabi Birthday Wishes Generator",
+    "description": "Write Punjabi birthday messages in Gurmukhi or Roman script, by relationship, tone and age.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-tamil": {
+    "name": "Tamil Birthday Wishes Generator",
+    "description": "Create Tamil birthday wishes with name and relationship personalisation, correct nee or neengal forms and romanisation.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-telugu": {
+    "name": "Telugu Birthday Wishes Generator",
+    "description": "Generate Telugu birthday greetings in formal or affectionate tone, with correct nuvvu or meeru forms and romanisation.",
+    "category": "Generators",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "birthday-wishes-urdu": {
+    "name": "Urdu Birthday Wishes Generator",
+    "description": "Generate Urdu birthday greetings with shayari, dua and formal styles in Urdu script or Roman Urdu.",
+    "category": "Generators",
+    "icon": "cake",
     "iconColor": "text-[var(--primary)]"
   },
   "black-scholes-options-pricer": {
@@ -3109,6 +3270,13 @@ export const toolMetaMap = {
     "description": "Draft a formal bonafide certificate request letter to your school or college with the purpose, roll number and details filled in.",
     "category": "Text & Writing",
     "icon": "file-badge",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "bonafide-certificate-request-generator": {
+    "name": "Bonafide Certificate Request Generator",
+    "description": "Draft a bonafide certificate request for visa, bank, passport or scholarship use, with copies, fee and freshness dates.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
   },
   "bond-duration-convexity-calculator": {
@@ -3933,6 +4101,13 @@ export const toolMetaMap = {
     "icon": "pie-chart",
     "iconColor": "text-rose-500"
   },
+  "canada-vac-india-appointment-day-checklist": {
+    "name": "Canada VAC India Appointment Day Checklist",
+    "description": "Plan a Canada visa centre appointment in India: leave-home time, biometric fee and deadline, and what to carry, wear and leave behind.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
+  },
   "canada-visa-cost-estimator": {
     "name": "Canada Visa Cost Estimator",
     "description": "Add up the IRCC application fee, biometrics with its family cap, VFS charges and courier into one rupee total.",
@@ -4457,6 +4632,13 @@ export const toolMetaMap = {
     "icon": "split",
     "iconColor": "text-[var(--primary)]"
   },
+  "chai-coffee-sugar-tracker": {
+    "name": "Chai and Coffee Sugar Tracker",
+    "description": "Count the added sugar and calories in your daily tea and coffee habit, and see the yearly total against WHO free-sugar limits.",
+    "category": "Health Calculators",
+    "icon": "coffee",
+    "iconColor": "text-[var(--primary)]"
+  },
   "chair-height-calculator": {
     "name": "Chair Height Calculator",
     "description": "Seat height, seat depth, matching desk height and footrest size from your lower-leg measurement.",
@@ -4603,6 +4785,13 @@ export const toolMetaMap = {
     "icon": "spell-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "cheque-stop-payment-request-generator": {
+    "name": "Cheque Stop Payment Request Generator",
+    "description": "Draft a stop payment instruction to your bank with cheque number checks, the 3-month validity clock and the total fee payable.",
+    "category": "Finance Calculators",
+    "icon": "ban",
+    "iconColor": "text-[var(--primary)]"
+  },
   "chess-multiplayer": {
     "name": "Chess Multiplayer",
     "description": "Play a full multiplayer chess match locally with legal-move validation, timers, move history, captured pieces, draw offers and resign.",
@@ -4621,6 +4810,13 @@ export const toolMetaMap = {
       "Game"
     ],
     "icon": "between-vertical-start",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "chhath-puja-wishes-generator": {
+    "name": "Chhath Puja Wishes Generator",
+    "description": "Day-wise Chhath greetings for Nahay Khay, Kharna, Sandhya Arghya and Usha Arghya in Bhojpuri, Maithili, Hindi and English.",
+    "category": "Generators",
+    "icon": "sun",
     "iconColor": "text-[var(--primary)]"
   },
   "child-education-corpus-planner": {
@@ -4664,6 +4860,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "child-protein-intake-calculator": {
+    "name": "Child Protein Intake Calculator",
+    "description": "Daily protein target for children by age, weight and activity, using the DRI protein RDAs and the protein AMDR.",
+    "category": "Health Calculators",
+    "icon": "egg",
+    "iconColor": "text-[var(--primary)]"
   },
   "child-safety-home-checklist": {
     "name": "Child Safety Home Checklist",
@@ -4757,6 +4960,20 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "list-checks",
     "iconColor": "text-teal-600"
+  },
+  "christian-baby-name-finder": {
+    "name": "Christian Baby Name Finder",
+    "description": "Browse Christian and biblical baby names with their Hebrew, Greek, Latin or Aramaic origin, meaning and scriptural figure.",
+    "category": "Lifestyle",
+    "icon": "cross",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "christmas-wishes-generator": {
+    "name": "Christmas Wishes Generator",
+    "description": "Write Christmas greetings in thirty languages in a formal, warm or short tone, with transliteration and SMS length check.",
+    "category": "Generators",
+    "icon": "gift",
+    "iconColor": "text-[var(--primary)]"
   },
   "chromatic-instrument-tuner": {
     "name": "Chromatic Instrument Tuner",
@@ -5380,6 +5597,13 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-purple-600"
   },
+  "compliance-calendar-sole-proprietorship": {
+    "name": "Compliance Calendar for Sole Proprietorship",
+    "description": "Build a dated GST, TDS, advance tax and ITR filing calendar for an Indian proprietorship from your own registrations.",
+    "category": "Business",
+    "icon": "calendar-days",
+    "iconColor": "text-[var(--primary)]"
+  },
   "compliment-generator": {
     "name": "Compliment Generator",
     "description": "Brighten someone's day with a random compliment. Choose from categories like personality, appearance, or talent.",
@@ -5487,6 +5711,13 @@ export const toolMetaMap = {
     "description": "Convert between concurrent users, requests per second and response time using Little's Law, with think-time support.",
     "category": "Calculators",
     "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "condolence-message-generator": {
+    "name": "Condolence Message Generator",
+    "description": "Write respectful condolence messages in six languages, matched to your relationship and the family's faith tradition.",
+    "category": "Generators",
+    "icon": "heart-handshake",
     "iconColor": "text-[var(--primary)]"
   },
   "condorcet-election-judge": {
@@ -5611,6 +5842,13 @@ export const toolMetaMap = {
     "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
+  "consumer-complaint-telecom-billing": {
+    "name": "Consumer Complaint Letter for Telecom Billing",
+    "description": "Generate a telecom overbilling or network complaint with TRAI escalation dates for the Appellate Authority and consumer commission.",
+    "category": "Business",
+    "icon": "phone-call",
+    "iconColor": "text-[var(--primary)]"
+  },
   "contact-lens-wear-tracker": {
     "name": "Contact Lens Wear Tracker",
     "description": "Track daily wear hours, replacement dates and lens case changes for daily, fortnightly, monthly, quarterly or yearly contact lenses.",
@@ -5720,6 +5958,13 @@ export const toolMetaMap = {
       "Science"
     ],
     "icon": "layers",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "cookie-consent-banner-text-generator": {
+    "name": "Cookie Consent Banner Text Generator",
+    "description": "Generate cookie banner copy with accept, reject and preferences wording tuned to GDPR, UK PECR, India's DPDP Act or CPRA.",
+    "category": "Security & Privacy",
+    "icon": "cookie",
     "iconColor": "text-[var(--primary)]"
   },
   "cookie-gpc-behavior-auditor": {
@@ -6097,6 +6342,13 @@ export const toolMetaMap = {
     "description": "Informational checklist of creator business expense categories in India, with business-use apportionment, depreciation and compliance flags.",
     "category": "Business",
     "icon": "receipt",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "credit-card-closure-confirmation-request": {
+    "name": "Credit Card Closure Confirmation Request",
+    "description": "Draft a credit card closure request with the 7-working-day RBI deadline, delay penalty at Rs 500 a day and bureau update ask.",
+    "category": "Finance Calculators",
+    "icon": "credit-card",
     "iconColor": "text-[var(--primary)]"
   },
   "credit-card-interest-calculator": {
@@ -6755,6 +7007,13 @@ export const toolMetaMap = {
     "icon": "file-search",
     "iconColor": "text-[var(--primary)]"
   },
+  "data-correction-request-letter-generator": {
+    "name": "Data Correction Request Letter Generator",
+    "description": "Build a rectification request listing each incorrect field, the correct value and the evidence, with the statutory response deadline calculated.",
+    "category": "Security & Privacy",
+    "icon": "pencil-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "data-deletion-proof-log": {
     "name": "Data Deletion Proof Log",
     "description": "Deletion requests aur system-wise completion evidence record kare.",
@@ -6785,6 +7044,13 @@ export const toolMetaMap = {
     ],
     "icon": "chart-bar",
     "iconColor": "text-blue-600"
+  },
+  "data-portability-request-generator": {
+    "name": "Data Portability Request Generator",
+    "description": "Draft a GDPR Article 20 request for a machine-readable export of your personal data, with an eligibility check and the reply deadline.",
+    "category": "Security & Privacy",
+    "icon": "file-down",
+    "iconColor": "text-[var(--primary)]"
   },
   "data-rate-bitrate-converter": {
     "name": "Data Rate Bitrate Converter",
@@ -7101,6 +7367,13 @@ export const toolMetaMap = {
     ],
     "icon": "history",
     "iconColor": "text-primary"
+  },
+  "delivery-challan-format-generator": {
+    "name": "Delivery Challan Format Generator",
+    "description": "Build a Rule 55 delivery challan for goods moved without a sale, with consignment value, e-way bill check and job work return dates.",
+    "category": "Business",
+    "icon": "truck",
+    "iconColor": "text-[var(--primary)]"
   },
   "demat-account-cost-comparator": {
     "name": "Demat Account Cost Comparator",
@@ -7466,6 +7739,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "digital-product-refund-policy-generator": {
+    "name": "Digital Product Refund Policy Generator",
+    "description": "Draft a no-return digital goods policy with a checkout waiver clause and clearly listed refund exceptions.",
+    "category": "Business",
+    "icon": "download",
+    "iconColor": "text-[var(--primary)]"
+  },
   "digital-vs-physical-gold-comparator": {
     "name": "Digital Gold vs Physical Gold Cost Comparator",
     "description": "Price making charges, GST, storage and buy-sell spread across jewellery, coins, digital gold and ETFs.",
@@ -7753,6 +8033,13 @@ export const toolMetaMap = {
     "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
+  "do-not-sell-link-text-generator": {
+    "name": "Do Not Sell Link Text Generator",
+    "description": "Generate the statutory opt-out link label, footer wording and landing page copy required by the CCPA as amended by the CPRA.",
+    "category": "Security & Privacy",
+    "icon": "shield-off",
+    "iconColor": "text-[var(--primary)]"
+  },
   "docker-healthcheck-generator": {
     "name": "Docker Healthcheck Generator",
     "description": "Generate Dockerfile HEALTHCHECK and compose healthcheck blocks with tuned interval, timeout, retries and start period.",
@@ -7836,6 +8123,13 @@ export const toolMetaMap = {
     ],
     "icon": "list-checks",
     "iconColor": "text-blue-600"
+  },
+  "document-expiry-reminder-board": {
+    "name": "Document Expiry Reminder Board",
+    "description": "Track passports, licences, visas, certificates and warranties on one board, with a reminder ladder and renewal windows.",
+    "category": "Productivity",
+    "icon": "bell-ring",
+    "iconColor": "text-[var(--primary)]"
   },
   "document-expiry-tracker": {
     "name": "Document Expiry Tracker",
@@ -7939,6 +8233,13 @@ export const toolMetaMap = {
     "description": "Build the document checklist for a domicile or residence certificate, test the continuous residence period and track how ready your file is.",
     "category": "Productivity",
     "icon": "map-pin-house",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "donation-receipt-format-generator": {
+    "name": "Donation Receipt Format Generator",
+    "description": "Generate an 80G-ready donation receipt with donor details, amount in words, registration numbers and the deduction worked out.",
+    "category": "Business",
+    "icon": "receipt",
     "iconColor": "text-[var(--primary)]"
   },
   "door-frame-material-calculator": {
@@ -8393,6 +8694,13 @@ export const toolMetaMap = {
     "icon": "shopping-bag",
     "iconColor": "text-[var(--primary)]"
   },
+  "ecommerce-refund-policy-generator": {
+    "name": "Ecommerce Refund Policy Generator",
+    "description": "Build a return and refund policy with windows, condition rules, restocking fees and shipping costs, checked against statutory minimums.",
+    "category": "Business",
+    "icon": "package",
+    "iconColor": "text-[var(--primary)]"
+  },
   "ects-credit-load-calculator": {
     "name": "ECTS Credit Load Calculator",
     "description": "Plan how many ECTS credits you need per semester to finish your degree, with workload hours from the ECTS Users' Guide.",
@@ -8440,6 +8748,13 @@ export const toolMetaMap = {
     "description": "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist.",
     "category": "Productivity",
     "icon": "pyramid",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "eid-mubarak-wishes-generator": {
+    "name": "Eid Mubarak Wishes Generator",
+    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and nine Indian languages, with transliteration and SMS length check.",
+    "category": "Generators",
+    "icon": "moon-star",
     "iconColor": "text-[var(--primary)]"
   },
   "eighteen-six-fasting-window-planner": {
@@ -8873,6 +9188,13 @@ export const toolMetaMap = {
     "icon": "tag",
     "iconColor": "text-[var(--primary)]"
   },
+  "engagement-invitation-wording-tool": {
+    "name": "Engagement Invitation Wording Tool",
+    "description": "Generate engagement, roka, sagai and tilak invitation wording with family names, date, muhurat time and venue.",
+    "category": "Generators",
+    "icon": "mail-open",
+    "iconColor": "text-[var(--primary)]"
+  },
   "engine-displacement-calculator": {
     "name": "Engine Displacement Calculator",
     "description": "Work out engine cc from bore, stroke and cylinder count, with litres, cubic inches and bore-stroke ratio.",
@@ -9171,6 +9493,13 @@ export const toolMetaMap = {
     "icon": "camera",
     "iconColor": "text-[var(--primary)]"
   },
+  "event-photography-consent-notice-generator": {
+    "name": "Event Photography Consent Notice Generator",
+    "description": "Write entrance signage, ticket terms, PA and registration copy telling attendees an event is being filmed, with legible sign sizing.",
+    "category": "Marketing & Social",
+    "icon": "camera",
+    "iconColor": "text-[var(--primary)]"
+  },
   "event-planning-prompt-builder": {
     "name": "Event Planning Prompt Builder",
     "description": "Build a timed run of show, floor area, staffing and catering-line figures for any headcount, then copy them as one logistics prompt.",
@@ -9249,6 +9578,13 @@ export const toolMetaMap = {
     "icon": "receipt",
     "iconColor": "text-[var(--primary)]"
   },
+  "exam-best-wishes-generator": {
+    "name": "Exam Best Wishes Generator",
+    "description": "Write exam good luck messages in seven Indian languages, with the days left and revision hours per subject worked out.",
+    "category": "Generators",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "exam-burnout-self-check": {
     "name": "Exam Burnout Self Check",
     "description": "Informational 12-question self-check for study burnout across exhaustion, cynicism and efficacy, with recovery suggestions.",
@@ -9317,6 +9653,13 @@ export const toolMetaMap = {
     "description": "Plan result day before it arrives — who to have around, how to check the score, and a first move for every outcome.",
     "category": "Lifestyle",
     "icon": "heart-handshake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "exam-revaluation-application-generator": {
+    "name": "Exam Revaluation Application Generator",
+    "description": "Draft a rechecking or re-evaluation application with subject marks, fee totals, window deadlines and the projected new percentage.",
+    "category": "Education & Science",
+    "icon": "clipboard-check",
     "iconColor": "text-[var(--primary)]"
   },
   "exam-score-analyzer": {
@@ -9423,6 +9766,13 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-red-600"
+  },
+  "excess-charges-refund-request-generator": {
+    "name": "Excess Charges Refund Request Generator",
+    "description": "Total up wrongly levied bank or card charges with GST and draft a formal refund request with RBI escalation dates.",
+    "category": "Finance Calculators",
+    "icon": "banknote",
+    "iconColor": "text-[var(--primary)]"
   },
   "excuse-generator": {
     "name": "Excuse Generator",
@@ -9892,6 +10242,13 @@ export const toolMetaMap = {
     "icon": "sparkles",
     "iconColor": "text-[var(--primary)]"
   },
+  "festival-sweet-calorie-calculator": {
+    "name": "Festival Sweet Calorie Calculator",
+    "description": "Calories and added sugar per piece for laddoo, barfi, gulab jamun, halwa and more, checked against the WHO free-sugar limit.",
+    "category": "Health Calculators",
+    "icon": "cake-slice",
+    "iconColor": "text-[var(--primary)]"
+  },
   "fetal-kick-counter": {
     "name": "Fetal Kick Counter",
     "description": "Tap to count fetal movements and see how long ten took, using the count-to-ten method with session timing and history.",
@@ -9925,6 +10282,13 @@ export const toolMetaMap = {
     "description": "Estimate calories burned in field hockey across drills, halves and full matches from your body weight and minutes played.",
     "category": "Health Calculators",
     "icon": "flag-triangle-right",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "field-trip-permission-slip-generator": {
+    "name": "Field Trip Permission Slip Generator",
+    "description": "Build a school trip permission slip with supervision ratio, adults needed, per-student cost, medical notes and emergency contacts.",
+    "category": "Education & Science",
+    "icon": "bus",
     "iconColor": "text-[var(--primary)]"
   },
   "fifty-thirty-twenty-budget-calculator": {
@@ -11006,11 +11370,25 @@ export const toolMetaMap = {
     "icon": "cpu",
     "iconColor": "text-[var(--primary)]"
   },
+  "ganesh-chaturthi-wishes-generator": {
+    "name": "Ganesh Chaturthi Wishes Generator",
+    "description": "Ready-to-send Ganesh Chaturthi greetings in Marathi, Hindi, English, Gujarati, Kannada and Telugu with name and signature.",
+    "category": "Generators",
+    "icon": "flower-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "gap-certificate-explainer": {
     "name": "Gap Certificate Explainer",
     "description": "Check whether your study gap needs a gap certificate or affidavit, what it must contain, and get a ready draft for the notary.",
     "category": "Education & Science",
     "icon": "calendar-range",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "gap-year-affidavit-generator": {
+    "name": "Gap Year Affidavit Generator",
+    "description": "Build an education gap declaration affidavit for admissions, with the gap period calculated and a notarisation checklist.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
   },
   "gap-year-eligibility-explainer": {
@@ -11083,6 +11461,13 @@ export const toolMetaMap = {
     "icon": "container",
     "iconColor": "text-[var(--primary)]"
   },
+  "gdpr-checklist-blog": {
+    "name": "GDPR Compliance Checklist for Blogs",
+    "description": "A GDPR checklist scoped to your blog's actual features — analytics, ads, newsletter, comments — with the article behind each item.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "gear-packing-list-creator": {
     "name": "Creator Gear Packing List",
     "description": "Build a shoot-specific gear list with calculated battery counts, card capacity, backup storage and total pack weight.",
@@ -11139,6 +11524,13 @@ export const toolMetaMap = {
     "icon": "scale",
     "iconColor": "text-[var(--primary)]"
   },
+  "get-well-soon-message-generator": {
+    "name": "Get Well Soon Message Generator",
+    "description": "Write get well soon messages tuned to the illness, your relationship and the language, in six Indian languages.",
+    "category": "Generators",
+    "icon": "stethoscope",
+    "iconColor": "text-[var(--primary)]"
+  },
   "geyser-capacity-selector": {
     "name": "Geyser Capacity Selector",
     "description": "Size a water heater in litres for bucket baths or showers, with the mixing maths, reheat time and energy per heating cycle.",
@@ -11151,6 +11543,13 @@ export const toolMetaMap = {
     "description": "Water heater running cost from litres used, temperature rise and BEE star standing loss, per day, month and year.",
     "category": "Calculators",
     "icon": "shower-head",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "ghee-intake-calculator": {
+    "name": "Ghee Intake Calculator",
+    "description": "Daily ghee allowance in teaspoons that still fits inside your total fat and saturated fat budget for a given calorie target.",
+    "category": "Health Calculators",
+    "icon": "droplet",
     "iconColor": "text-[var(--primary)]"
   },
   "gif-palette-optimizer": {
@@ -11685,6 +12084,20 @@ export const toolMetaMap = {
     "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting.",
     "category": "Developer",
     "icon": "terminal",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "grievance-officer-details-block-generator": {
+    "name": "Grievance Officer Details Block Generator",
+    "description": "Publish grievance officer name, designation and contact details with the statutory acknowledgement and redressal deadlines.",
+    "category": "Business",
+    "icon": "shield-alert",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "griha-pravesh-invitation-wording": {
+    "name": "Griha Pravesh Invitation Wording",
+    "description": "Create housewarming invite wording with muhurat window, puja type and address in English, Hindi, Marathi or Gujarati.",
+    "category": "Generators",
+    "icon": "house",
     "iconColor": "text-[var(--primary)]"
   },
   "grip-strength-benchmark-tool": {
@@ -12443,6 +12856,13 @@ export const toolMetaMap = {
     "icon": "book-open",
     "iconColor": "text-rose-700"
   },
+  "hindu-baby-name-finder": {
+    "name": "Hindu Baby Name Finder",
+    "description": "Browse Hindu baby names with Sanskrit roots, meanings and associated deities, or filter by nakshatra pada syllable.",
+    "category": "Lifestyle",
+    "icon": "star",
+    "iconColor": "text-[var(--primary)]"
+  },
   "hinglish-coding-tool": {
     "name": "Hinglish Coding Dictionary",
     "description": "Learn 40 core coding concepts explained three ways: precise English, everyday Hinglish, and an analogy — with a quiz.",
@@ -12582,6 +13002,13 @@ export const toolMetaMap = {
     "description": "Build a room-by-room renovation budget with a quality tier, professional fees, GST on works contracts and a contingency buffer.",
     "category": "Finance Calculators",
     "icon": "hammer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "home-service-entry-consent-form-generator": {
+    "name": "Home Service Entry Consent Form Generator",
+    "description": "Draft an entry consent form for technicians: arrival window, access method, off-limits areas, liability terms and a costed quote.",
+    "category": "Lifestyle",
+    "icon": "wrench",
     "iconColor": "text-[var(--primary)]"
   },
   "home-state-quota-explainer": {
@@ -13494,6 +13921,13 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-[var(--primary)]"
   },
+  "independence-day-message-generator": {
+    "name": "Independence Day Message Generator",
+    "description": "Generate 15 August Independence Day wishes in eleven Indian languages, plus sourced freedom-movement slogans with meanings.",
+    "category": "Generators",
+    "icon": "flag",
+    "iconColor": "text-[var(--primary)]"
+  },
   "india-hosting-cost-comparison": {
     "name": "India Hosting Cost Comparison",
     "description": "Compare VPS, cloud and managed hosting for one workload in rupees, with 730-hour billing, egress charges, GST and 3-year TCO.",
@@ -13583,6 +14017,13 @@ export const toolMetaMap = {
     "description": "Draft pitch deck and investor update prompts for Indian founders, with runway, post-money valuation and slide-by-slide timing worked out.",
     "category": "Business",
     "icon": "presentation",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "indian-street-food-calorie-guide": {
+    "name": "Indian Street Food Calorie Guide",
+    "description": "Calorie and macro estimates for pani puri, vada pav, chaat, rolls and momos, with plate totals and share of your daily target.",
+    "category": "Health Calculators",
+    "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
   "indian-vegetarian-macro-calculator": {
@@ -13683,6 +14124,13 @@ export const toolMetaMap = {
     "description": "Draft a creator NDA for unreleased products with embargo dates, DTSA immunity notice and clauses that never block required ad disclosure.",
     "category": "Business",
     "icon": "file-lock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "influencer-disclosure-label-generator": {
+    "name": "Influencer Disclosure Label Generator",
+    "description": "Build a compliant paid-partnership disclosure for each platform and content type, with placement rules and on-screen duration.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
     "iconColor": "text-[var(--primary)]"
   },
   "influencer-engagement-rate-calculator": {
@@ -13849,6 +14297,13 @@ export const toolMetaMap = {
     "icon": "clipboard-list",
     "iconColor": "text-[var(--primary)]"
   },
+  "insurance-nominee-change-request-generator": {
+    "name": "Insurance Nominee Change Request Generator",
+    "description": "Draft a nomination change letter to your insurer with share percentages that add to 100, minor appointee and payout split.",
+    "category": "Finance Calculators",
+    "icon": "user-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "insurance-policy-comparator": {
     "name": "Insurance Policy Comparator",
     "description": "Coverage, exclusions, waiting periods aur limits compare kare.",
@@ -13861,6 +14316,13 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-primary"
+  },
+  "insurance-policy-renewal-tracker": {
+    "name": "Insurance Policy Renewal Tracker",
+    "description": "Track every policy number, sum insured and renewal date in one place, with annualised premium, grace period and lapse dates.",
+    "category": "Finance Calculators",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "interior-design-prompt-generator": {
     "name": "Interior Design Prompt Generator",
@@ -14088,6 +14550,13 @@ export const toolMetaMap = {
     ],
     "icon": "clock-3",
     "iconColor": "text-primary"
+  },
+  "iou-letter-generator": {
+    "name": "IOU Letter Generator",
+    "description": "Draft an acknowledgement of debt with the amount in words, simple interest to the due date and the limitation expiry.",
+    "category": "Finance Calculators",
+    "icon": "banknote",
+    "iconColor": "text-[var(--primary)]"
   },
   "ip-address-checker": {
     "name": "IP Address Checker",
@@ -14686,6 +15155,13 @@ export const toolMetaMap = {
     "icon": "heart-pulse",
     "iconColor": "text-[var(--primary)]"
   },
+  "karwa-chauth-message-generator": {
+    "name": "Karwa Chauth Message Generator",
+    "description": "Generate Karwa Chauth wishes and captions in Hindi, Punjabi and English, with the full sargi-to-moonrise ritual order.",
+    "category": "Generators",
+    "icon": "moon",
+    "iconColor": "text-[var(--primary)]"
+  },
   "kathak-calorie-burn-calculator": {
     "name": "Kathak Calorie Burn Calculator",
     "description": "Segment-by-segment calorie estimate for Kathak riyaz — abhinaya, tatkar at each laya and chakkars, with ghungroo load included.",
@@ -14819,6 +15295,13 @@ export const toolMetaMap = {
     "icon": "footprints",
     "iconColor": "text-[var(--primary)]"
   },
+  "kids-hydration-reminder": {
+    "name": "Kids Hydration Reminder",
+    "description": "School-day water schedule sized to age, weather and activity, using EFSA water intake values and AAP activity guidance.",
+    "category": "Health & Fitness",
+    "icon": "droplets",
+    "iconColor": "text-[var(--primary)]"
+  },
   "kids-milestone-vaccine-vault": {
     "name": "Kids Milestone & Vaccine Vault",
     "description": "Securely track child milestones and vaccination records.",
@@ -14829,6 +15312,13 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "kids-screen-time-limit-planner": {
+    "name": "Kids Screen Time Limit Planner",
+    "description": "Age-based daily screen budget split by purpose, with sleep, activity and wind-down checks from WHO and AAP guidance.",
+    "category": "Health & Fitness",
+    "icon": "monitor",
+    "iconColor": "text-[var(--primary)]"
   },
   "kids-water-intake-calculator": {
     "name": "Kids Water Intake Calculator",
@@ -15147,6 +15637,13 @@ export const toolMetaMap = {
     "icon": "move-up-right",
     "iconColor": "text-[var(--primary)]"
   },
+  "latin-legal-maxims-reference": {
+    "name": "Latin Legal Maxims Reference",
+    "description": "Search common Latin legal maxims by phrase or meaning, with literal translation, plain-language sense and a worked example.",
+    "category": "Education & Science",
+    "icon": "scale",
+    "iconColor": "text-[var(--primary)]"
+  },
   "laundry-calorie-burn-calculator": {
     "name": "Laundry Calorie Burn Calculator",
     "description": "Hand-wash versus machine-load calorie estimates for laundry day, priced stage by stage with compendium MET values.",
@@ -15267,6 +15764,20 @@ export const toolMetaMap = {
     "description": "Work out whether you need a legal heir certificate, succession certificate or probate, with Class I heir shares and the document list.",
     "category": "Productivity",
     "icon": "users-round",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "legal-notice-cost-estimator": {
+    "name": "Legal Notice Cost Estimator",
+    "description": "Estimate the full cost of sending a legal notice: drafting fee, GST, stamp paper, notarisation, printing, dispatch and follow-up reminders.",
+    "category": "Finance Calculators",
+    "icon": "scale",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "legal-notice-dispatch-tracker": {
+    "name": "Legal Notice Dispatch Tracker",
+    "description": "Track notice dispatch mode, tracking IDs and delivery dates, and get the reply deadline and next-step date for each notice.",
+    "category": "Productivity",
+    "icon": "clipboard-list",
     "iconColor": "text-[var(--primary)]"
   },
   "leh-ladakh-trip-budget-breakdown": {
@@ -15674,6 +16185,13 @@ export const toolMetaMap = {
     "icon": "scan-text",
     "iconColor": "text-primary"
   },
+  "loan-foreclosure-request-generator": {
+    "name": "Loan Foreclosure Request Generator",
+    "description": "Estimate the full foreclosure amount with charges and GST, check the RBI floating-rate exemption, and draft the request.",
+    "category": "Finance Calculators",
+    "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
   "loan-foreclosure-savings-calculator": {
     "name": "Loan Foreclosure Savings Calculator",
     "description": "Compare the cost of closing a loan early with the interest still left on it to see your real net savings.",
@@ -15874,6 +16392,13 @@ export const toolMetaMap = {
     "description": "Generate a logrotate rule with rotation frequency, retention, compression, create modes and postrotate hooks — with conflict warnings.",
     "category": "Generators",
     "icon": "file-clock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "lohri-wishes-generator": {
+    "name": "Lohri Wishes Generator",
+    "description": "Lohri greetings in Gurmukhi, Roman Punjabi, Hindi and English, including first-Lohri wishes for a baby or newlyweds.",
+    "category": "Generators",
+    "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
   "long-study-session-stretch-guide": {
@@ -16157,6 +16682,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
+  "maintenance-charge-split-calculator": {
+    "name": "Maintenance Charge Split Calculator",
+    "description": "Split society maintenance head-by-head between landlord and tenant, with the 10% non-occupancy charge cap checked.",
+    "category": "Finance Calculators",
+    "icon": "split",
+    "iconColor": "text-[var(--primary)]"
+  },
   "maintenance-window-announcement-generator": {
     "name": "Maintenance Window Announcement Generator",
     "description": "Draft a clear scheduled-maintenance notice with UTC and local start times, expected impact and a rollback statement.",
@@ -16298,6 +16830,20 @@ export const toolMetaMap = {
     "icon": "megaphone",
     "iconColor": "text-[var(--primary)]"
   },
+  "marketing-consent-checkbox-copy-generator": {
+    "name": "Marketing Consent Checkbox Copy Generator",
+    "description": "Write unbundled, non-prechecked marketing consent checkbox wording for signup forms, with per-channel labels and frequency promises.",
+    "category": "Marketing & Social",
+    "icon": "square-check-big",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "marketing-opt-out-request-generator": {
+    "name": "Marketing Opt-Out Request Generator",
+    "description": "Create an objection to direct marketing across email, SMS and calls, with the per-channel deadline each law gives the sender.",
+    "category": "Security & Privacy",
+    "icon": "mail-x",
+    "iconColor": "text-[var(--primary)]"
+  },
   "marketplace-scam-checker": {
     "name": "Marketplace Scam Checker",
     "description": "Review marketplace messages locally for off-platform payment, fake escrow, overpayment, OTP, remote-access, shipping, fee, and account-takeover signals.",
@@ -16346,6 +16892,13 @@ export const toolMetaMap = {
     "description": "Convert marla, kanal, sarsai, killa and murabba to square feet, square yards and square metres, with plot pricing.",
     "category": "Converters",
     "icon": "grid-2x2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "marriage-registration-document-checklist": {
+    "name": "Marriage Registration Document Checklist",
+    "description": "Build the proofs, photos and witness list for marriage registration, with Special Marriage Act notice dates worked out.",
+    "category": "Lifestyle",
+    "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
   "maternity-leave-date-calculator": {
@@ -16794,6 +17347,13 @@ export const toolMetaMap = {
     "description": "Pick microwave litres and the right type — solo, grill or convection — from family size, cooking needs and your largest dish.",
     "category": "Calculators",
     "icon": "microwave",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "mid-upper-arm-circumference-tool": {
+    "name": "Mid-Upper Arm Circumference Tool",
+    "description": "Read a MUAC tape measurement against the WHO colour bands used to screen children aged 6-59 months (informational only).",
+    "category": "Health Calculators",
+    "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
   "migration-certificate-request-generator": {
@@ -17437,6 +17997,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
+  "mundan-ceremony-invitation-wording": {
+    "name": "Mundan Ceremony Invitation Wording",
+    "description": "Create mundan ceremony invitation text with venue, ritual timings and the child's age on the ceremony day.",
+    "category": "Generators",
+    "icon": "scissors",
+    "iconColor": "text-[var(--primary)]"
+  },
   "muscle-gain-calorie-calculator": {
     "name": "Muscle Gain Calorie Calculator",
     "description": "Lean bulk calories from Mifflin-St Jeor maintenance, a training-level gain rate and protein, fat and carb targets.",
@@ -17463,6 +18030,13 @@ export const toolMetaMap = {
     "description": "Create a practical checklist for music usage rights, sync licensing, platform rules, credits and approval evidence.",
     "category": "Video & Audio",
     "icon": "music",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "muslim-baby-name-finder": {
+    "name": "Muslim Baby Name Finder",
+    "description": "Browse Muslim baby names with Arabic meanings, Arabic and Urdu spellings, and a check on Abd- compound names.",
+    "category": "Lifestyle",
+    "icon": "moon",
     "iconColor": "text-[var(--primary)]"
   },
   "mutual-fund-exit-load-calculator": {
@@ -17541,11 +18115,32 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-rose-600"
   },
+  "name-meaning-lookup-multilingual": {
+    "name": "Multilingual Name Meaning Lookup",
+    "description": "Look up a given name's documented meaning, root word and cognate forms across Sanskrit, Arabic, Hebrew, Greek, Latin and more.",
+    "category": "Lifestyle",
+    "icon": "languages",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "naming-ceremony-invitation-wording": {
+    "name": "Naming Ceremony Invitation Wording",
+    "description": "Generate namkaran, christening, aqiqah and cradle ceremony invitation wording with the day count from birth.",
+    "category": "Generators",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "narration-session-time-estimator": {
     "name": "Narration Session Time Estimator",
     "description": "Estimate booth time from script length, including punch-and-roll retakes, vocal rest breaks and setup for each session.",
     "category": "Calculators",
     "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "navratri-wishes-generator": {
+    "name": "Navratri Wishes Generator",
+    "description": "Day-wise Navratri greetings with the goddess, colour and bhog for each of the nine nights, in five languages.",
+    "category": "Generators",
+    "icon": "flower",
     "iconColor": "text-[var(--primary)]"
   },
   "navy-body-fat-calculator": {
@@ -17681,6 +18276,13 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
+  "negative-split-planner": {
+    "name": "Negative Split Planner",
+    "description": "Build first-half and second-half target paces for a negative split race, with a segment-by-segment split table.",
+    "category": "Health & Fitness",
+    "icon": "trending-down",
+    "iconColor": "text-[var(--primary)]"
+  },
   "neighbourhood-walkability-scorer": {
     "name": "Neighbourhood Walkability Scorer",
     "description": "Score any address 0-100 for walking access to shops, parks, schools and transit using the Walk Score distance-decay model.",
@@ -17773,11 +18375,109 @@ export const toolMetaMap = {
     "icon": "hand",
     "iconColor": "text-pink-600"
   },
+  "new-year-wishes-assamese": {
+    "name": "Assamese New Year Wishes",
+    "description": "Create Bohag Bihu and January new year greetings in Assamese with Roman transliteration, meaning and SMS length.",
+    "category": "Generators",
+    "icon": "star",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-bengali": {
+    "name": "Bengali New Year Wishes",
+    "description": "Create Poila Boishakh and January new year greetings in Bengali with Roman transliteration, English meaning and SMS length.",
+    "category": "Generators",
+    "icon": "flower-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-french": {
+    "name": "French New Year Wishes",
+    "description": "Write French bonne annee messages with correct tu and vous forms, before or after 1 January, with English translations.",
+    "category": "Generators",
+    "icon": "party-popper",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-gujarati": {
+    "name": "Gujarati New Year Wishes",
+    "description": "Create Gujarati New Year and Bestu Varas wishes with Gujarati script, Roman transliteration and SMS length checks.",
+    "category": "Generators",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-hindi": {
+    "name": "Hindi New Year Wishes",
+    "description": "Hindi new year messages for 1 January and for Hindu Nav Varsh, with the matching Vikram and Shaka Samvat years.",
+    "category": "Generators",
+    "icon": "party-popper",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-japanese": {
+    "name": "Japanese New Year Wishes",
+    "description": "Build nengajo New Year greetings in keigo, polite or casual Japanese, with romaji, English and matsunouchi timing.",
+    "category": "Generators",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-kannada": {
+    "name": "Kannada New Year Wishes",
+    "description": "Create Yugadi and January new year greetings in Kannada with Roman transliteration, English meaning and SMS length.",
+    "category": "Generators",
+    "icon": "flower",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-malayalam": {
+    "name": "Malayalam New Year Wishes",
+    "description": "Generate Vishu, Chingam 1 and January new year greetings in Malayalam with Roman transliteration and SMS length.",
+    "category": "Generators",
+    "icon": "sun",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-marathi": {
+    "name": "Marathi New Year Wishes",
+    "description": "Generate Gudhi Padwa and January new year greetings in Marathi with Roman transliteration, English meaning and SMS length.",
+    "category": "Generators",
+    "icon": "sunrise",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-odia": {
+    "name": "Odia New Year Wishes",
+    "description": "Generate Pana Sankranti and January new year greetings in Odia with Roman transliteration, meaning and SMS length.",
+    "category": "Generators",
+    "icon": "calendar-heart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-punjabi": {
+    "name": "Punjabi New Year Wishes",
+    "description": "Generate Vaisakhi, Nanakshahi and January new year greetings in Gurmukhi with Roman transliteration and SMS length.",
+    "category": "Generators",
+    "icon": "wheat",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-spanish": {
+    "name": "Spanish New Year Wishes Generator",
+    "description": "Create Spanish New Year greetings with accents, SMS-safe variants, English meaning and message length checks.",
+    "category": "Generators",
+    "icon": "party-popper",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-urdu": {
+    "name": "Urdu New Year Wishes",
+    "description": "Create January and Hijri new year messages in Urdu script and Roman Urdu, with English meaning and SMS length.",
+    "category": "Generators",
+    "icon": "moon-star",
+    "iconColor": "text-[var(--primary)]"
+  },
   "newborn-feeding-volume-calculator": {
     "name": "Newborn Feeding Volume Calculator",
     "description": "Estimate a newborn's daily and per-feed millilitres from weight, day of life and feeds per day using standard mL/kg/day guidance.",
     "category": "Health Calculators",
     "icon": "milk",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "newsletter-double-optin-copy-generator": {
+    "name": "Newsletter Double Opt-In Copy Generator",
+    "description": "Write the signup line, confirmation email and welcome email for double opt-in, with subject-length checks and a consent audit log.",
+    "category": "Marketing & Social",
+    "icon": "mail-check",
     "iconColor": "text-[var(--primary)]"
   },
   "newsletter-header-image-planner": {
@@ -17878,6 +18578,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "no-dues-certificate-generator": {
+    "name": "No Dues Certificate Generator",
+    "description": "Draft a no-dues certificate or NOC request and track the RBI 30-day document release deadline and delay compensation.",
+    "category": "Finance Calculators",
+    "icon": "file-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "noise-reduction-rating-calculator": {
     "name": "Noise Reduction Rating Calculator",
     "description": "Turn an NRR or SNR label into an estimated protected level using the OSHA, OSHA 50% and NIOSH derating methods, including dual protection.",
@@ -17961,6 +18668,13 @@ export const toolMetaMap = {
     "description": "Price the notice-period shortfall, offset it against leave encashment, and draft a reasoned request to waive, reduce or buy out the remaining days.",
     "category": "Business",
     "icon": "handshake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "notice-to-vacate-date-calculator": {
+    "name": "Notice to Vacate Date Calculator",
+    "description": "Work out the exact vacate and possession date from the notice length, the mode of service and the date of receipt.",
+    "category": "Calculators",
+    "icon": "calendar-clock",
     "iconColor": "text-[var(--primary)]"
   },
   "notion-ai-prompt-builder": {
@@ -18272,6 +18986,13 @@ export const toolMetaMap = {
     "description": "Plan how many exam minutes to reserve for transferring answers to the OMR sheet, with batch strategies and a stop-solving clock mark.",
     "category": "Education & Science",
     "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "onam-wishes-generator": {
+    "name": "Onam Wishes Generator",
+    "description": "Write Malayalam Onam greetings for family, friends, colleagues and clients, with transliteration and the ten-day Onam schedule.",
+    "category": "Generators",
+    "icon": "flower",
     "iconColor": "text-[var(--primary)]"
   },
   "onboarding-doc-prompt-builder": {
@@ -18645,6 +19366,13 @@ export const toolMetaMap = {
     ],
     "icon": "id-card",
     "iconColor": "text-blue-600"
+  },
+  "paneer-vs-tofu-comparator": {
+    "name": "Paneer vs Tofu Comparator",
+    "description": "Side-by-side protein, fat, calcium, iron and calorie comparison of paneer and tofu for any portion size.",
+    "category": "Health Calculators",
+    "icon": "scale",
+    "iconColor": "text-[var(--primary)]"
   },
   "pangram-checker": {
     "name": "Pangram Checker",
@@ -19330,6 +20058,13 @@ export const toolMetaMap = {
     "icon": "paw-print",
     "iconColor": "text-teal-600"
   },
+  "pet-boarding-consent-form-generator": {
+    "name": "Pet Boarding Consent Form Generator",
+    "description": "Build a boarding consent form with vet treatment authority, a spend cap, and food portions worked out from your pet's weight.",
+    "category": "Lifestyle",
+    "icon": "paw-print",
+    "iconColor": "text-[var(--primary)]"
+  },
   "pet-calming-sound-player": {
     "name": "Pet Calming Sound Player",
     "description": "Play low-stimulation noise loops for anxious pets and size the level so fireworks are masked without unsafe volume.",
@@ -19835,6 +20570,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
+  "pongal-wishes-generator": {
+    "name": "Pongal Wishes Generator",
+    "description": "Write Tamil Pongal greetings for Bhogi, Thai Pongal, Maattu Pongal and Kaanum Pongal, with transliteration and name insert.",
+    "category": "Generators",
+    "icon": "sun",
+    "iconColor": "text-[var(--primary)]"
+  },
   "pool-laps-to-distance-converter": {
     "name": "Pool Laps to Distance Converter",
     "description": "Convert pool laps or lengths into metres, kilometres, yards and miles for any pool size, with pace per 100 m.",
@@ -20112,6 +20854,13 @@ export const toolMetaMap = {
     "icon": "wind",
     "iconColor": "text-[var(--primary)]"
   },
+  "prayer-meet-invitation-wording": {
+    "name": "Prayer Meet Invitation Wording",
+    "description": "Write shok sabha, uthala, tehravin, antim ardas and memorial service invitations, with the observance day worked out for you.",
+    "category": "Generators",
+    "icon": "flower-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "prayer-times-qibla": {
     "name": "Prayer Times & Qibla Direction",
     "description": "Get accurate daily prayer times and the Qibla bearing for any city, computed offline on your own device.",
@@ -20369,6 +21118,13 @@ export const toolMetaMap = {
     "icon": "file-signature",
     "iconColor": "text-[var(--primary)]"
   },
+  "probation-confirmation-date-calculator": {
+    "name": "Probation Confirmation Date Calculator",
+    "description": "Work out the exact confirmation date from a joining date, probation length, extensions and days of leave without pay.",
+    "category": "Calculators",
+    "icon": "calendar-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "probation-extension-letter-generator": {
     "name": "Probation Extension Letter Generator",
     "description": "Draft a probation extension letter with recorded reasons, a calculated revised end date and a booked review meeting.",
@@ -20577,6 +21333,13 @@ export const toolMetaMap = {
     "icon": "move-up-right",
     "iconColor": "text-teal-500"
   },
+  "promotion-congratulations-generator": {
+    "name": "Promotion Congratulations Generator",
+    "description": "Write promotion and new-job congratulations in six languages, sized for LinkedIn, X, WhatsApp or SMS.",
+    "category": "Generators",
+    "icon": "trending-up",
+    "iconColor": "text-[var(--primary)]"
+  },
   "prompt-emoji-stripper": {
     "name": "Prompt Emoji Stripper",
     "description": "Remove emoji, decorative symbols and invisible zero-width characters that quietly consume prompt tokens.",
@@ -20668,6 +21431,13 @@ export const toolMetaMap = {
     "description": "Solve a/b = c/d for any missing value with full cross multiplication steps.",
     "category": "Calculators",
     "icon": "divide",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "proportionate-rent-calculator": {
+    "name": "Proportionate Rent Calculator",
+    "description": "Work out pro-rata rent for a part month on move-in or move-out, using actual days, a 30-day month or a 365-day year.",
+    "category": "Finance Calculators",
+    "icon": "calendar-days",
     "iconColor": "text-[var(--primary)]"
   },
   "prose-to-bullet-prompt": {
@@ -20999,6 +21769,13 @@ export const toolMetaMap = {
     "description": "RBSE class 10 and 12 percentage, division and the 33% pass check, plus the marks needed for the next division.",
     "category": "Calculators",
     "icon": "calculator",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "raksha-bandhan-wishes-generator": {
+    "name": "Raksha Bandhan Wishes Generator",
+    "description": "Rakhi messages for brothers, sisters, cousins and long-distance siblings in Hindi, English, Marathi, Gujarati, Punjabi and Bengali.",
+    "category": "Generators",
+    "icon": "gift",
     "iconColor": "text-[var(--primary)]"
   },
   "random-business-idea": {
@@ -21645,6 +22422,13 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-[var(--primary)]"
   },
+  "rent-escalation-schedule-calculator": {
+    "name": "Rent Escalation Schedule Calculator",
+    "description": "Project year-wise rent with a fixed or percentage escalation over the lease term, with total outgo, average rent and the effective annual rise.",
+    "category": "Finance Calculators",
+    "icon": "trending-up",
+    "iconColor": "text-[var(--primary)]"
+  },
   "rent-increase-notice-generator": {
     "name": "Rent Increase Notice Generator",
     "description": "Draft a landlord rent revision notice with the new rent, effective date, deposit top-up and a three-month notice-period check.",
@@ -21754,6 +22538,13 @@ export const toolMetaMap = {
     "description": "Log pending repairs, split them between landlord and tenant duties, set a deadline and generate a documented request letter.",
     "category": "Business",
     "icon": "wrench",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "republic-day-message-generator": {
+    "name": "Republic Day Message Generator",
+    "description": "Generate Republic Day greetings, social captions and school speech openers for 26 January, with the correct Republic Day number.",
+    "category": "Generators",
+    "icon": "flag",
     "iconColor": "text-[var(--primary)]"
   },
   "requirements-txt-generator": {
@@ -21880,6 +22671,13 @@ export const toolMetaMap = {
     "icon": "umbrella",
     "iconColor": "text-blue-500"
   },
+  "retirement-wishes-generator": {
+    "name": "Retirement Wishes Generator",
+    "description": "Write retirement messages for colleagues, bosses and family, with years of service and the FR 56(a) superannuation date worked out.",
+    "category": "Generators",
+    "icon": "award",
+    "iconColor": "text-[var(--primary)]"
+  },
   "retry-after-header-calculator": {
     "name": "Retry-After Header Calculator",
     "description": "Build a spec-correct Retry-After header in delay-seconds or IMF-fixdate form, with an exponential backoff schedule for 429 and 503 responses.",
@@ -21893,6 +22691,13 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "package-check",
     "iconColor": "text-blue-500"
+  },
+  "return-window-policy-calculator": {
+    "name": "Return Window Policy Calculator",
+    "description": "Set return windows by product category and compute the return, pickup and refund deadline dates for any order.",
+    "category": "Business",
+    "icon": "package-check",
+    "iconColor": "text-[var(--primary)]"
   },
   "revaluation-decision-helper": {
     "name": "Revaluation Decision Helper",
@@ -22399,6 +23204,13 @@ export const toolMetaMap = {
     "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
   },
+  "running-cadence-calculator": {
+    "name": "Running Cadence Calculator",
+    "description": "Work out your running cadence from a step count, see your step and stride length, and set a safe 5-10% progression target.",
+    "category": "Health & Fitness",
+    "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
   "running-feet-to-sqft": {
     "name": "Running Feet to Sqft",
     "description": "Turn carpentry running feet quotes into square feet, compare per-rft and per-sqft rates, and total a kitchen or wardrobe job.",
@@ -22804,6 +23616,13 @@ export const toolMetaMap = {
     "icon": "file-badge",
     "iconColor": "text-[var(--primary)]"
   },
+  "school-admission-document-checklist": {
+    "name": "School Admission Document Checklist",
+    "description": "Build a school admission document list by board, class and transfer scenario, with an RTE-aligned age eligibility check.",
+    "category": "Education & Science",
+    "icon": "school",
+    "iconColor": "text-[var(--primary)]"
+  },
   "school-attendance-percentage-tracker": {
     "name": "School Attendance Percentage Tracker",
     "description": "Track school attendance across the session against the 75% board exam eligibility rule, with a leave budget and end-of-year projection.",
@@ -23139,6 +23958,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "seller-details-disclosure-generator": {
+    "name": "Seller Details Disclosure Generator",
+    "description": "Build the legal entity, address and contact block e-commerce rules require, with GSTIN, PAN and CIN validated.",
+    "category": "Business",
+    "icon": "store",
+    "iconColor": "text-[var(--primary)]"
   },
   "semester-exam-countdown-board": {
     "name": "Semester Exam Countdown Board",
@@ -23480,6 +24306,13 @@ export const toolMetaMap = {
     ],
     "icon": "hand",
     "iconColor": "text-teal-500"
+  },
+  "sikh-baby-name-finder": {
+    "name": "Sikh Baby Name Finder",
+    "description": "Find Sikh baby names by Gurmukhi first letter from the Hukamnama, with meanings and the Singh or Kaur form.",
+    "category": "Lifestyle",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
   },
   "silence-filler-word-cutter": {
     "name": "Silence & Filler-Word Cutter",
@@ -24675,6 +25508,13 @@ export const toolMetaMap = {
     "icon": "person-standing",
     "iconColor": "text-[var(--primary)]"
   },
+  "standing-instruction-cancellation-letter": {
+    "name": "Standing Instruction Cancellation Letter",
+    "description": "Draft a mandate or auto-debit cancellation letter and check you are lodging it enough working days before the next debit.",
+    "category": "Finance Calculators",
+    "icon": "repeat",
+    "iconColor": "text-[var(--primary)]"
+  },
   "star-life-cycle-explorer": {
     "name": "Star Life Cycle Explorer",
     "description": "Interactive stellar evolution explorer charting stellar birth, main sequence hydrostatic equilibrium, nucleosynthesis, and stellar remnants.",
@@ -25115,6 +25955,13 @@ export const toolMetaMap = {
     "description": "Turn subject-wise marks into a radar chart with strongest and weakest subjects and a balance score across all of them.",
     "category": "Education & Science",
     "icon": "radar",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sublet-permission-request-generator": {
+    "name": "Sublet Permission Request Generator",
+    "description": "Draft a written request to your landlord for consent to sub-let, with the statutory references and a reply deadline.",
+    "category": "Business",
+    "icon": "key-round",
     "iconColor": "text-[var(--primary)]"
   },
   "subprocessor-list-page-generator": {
@@ -25797,6 +26644,13 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
+  "teething-timeline-tracker": {
+    "name": "Teething Timeline Tracker",
+    "description": "Expected eruption dates for all 20 baby teeth from a date of birth, using the standard primary tooth eruption chart.",
+    "category": "Health & Fitness",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "teleprompter-speed-calculator": {
     "name": "Teleprompter Speed Calculator",
     "description": "Set teleprompter scroll speed in pixels per second and lines per minute from your script length and target runtime.",
@@ -26224,6 +27078,13 @@ export const toolMetaMap = {
     "icon": "plane",
     "iconColor": "text-[var(--primary)]"
   },
+  "thank-you-note-generator": {
+    "name": "Thank You Note Generator",
+    "description": "Write a structured thank you note for a gift, a favour, an interview or hospitality, with the right length for a card, email or message.",
+    "category": "Generators",
+    "icon": "mail",
+    "iconColor": "text-[var(--primary)]"
+  },
   "thb-cash-budget-planner": {
     "name": "THB Cash Budget Planner",
     "description": "Plan how much Thai baht to carry as notes versus card spend, costing the changer markup, GST, TCS and the flat Thai ATM fee.",
@@ -26635,6 +27496,20 @@ export const toolMetaMap = {
     "icon": "users-round",
     "iconColor": "text-primary"
   },
+  "tracking-pixel-disclosure-generator": {
+    "name": "Tracking Pixel Disclosure Generator",
+    "description": "Draft the disclosure text for advertising and analytics pixels on your site, listing vendor, purpose, cookies set and how to opt out.",
+    "category": "Security & Privacy",
+    "icon": "eye",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "trade-licence-renewal-reminder-builder": {
+    "name": "Trade Licence Renewal Reminder Builder",
+    "description": "Keep every business licence number, validity and renewal lead time on one board, with the date you must start each renewal.",
+    "category": "Business",
+    "icon": "badge-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "trademark-name-availability-checklist": {
     "name": "Trademark Name Availability Checklist",
     "description": "Score a brand name for distinctiveness and get a jurisdiction-specific clearance checklist before you commit.",
@@ -26654,6 +27529,13 @@ export const toolMetaMap = {
     "description": "Draft a university transcript request letter with enrolment details, copies needed, delivery mode and an enclosure checklist.",
     "category": "Text & Writing",
     "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "transfer-certificate-request-generator": {
+    "name": "Transfer Certificate Request Generator",
+    "description": "Draft a school transfer certificate request with student, class and reason details, dues summary and a follow-up date.",
+    "category": "Education & Science",
+    "icon": "file-text",
     "iconColor": "text-[var(--primary)]"
   },
   "transitive-dependency-risk-explainer": {
@@ -26778,6 +27660,13 @@ export const toolMetaMap = {
     "description": "Calories burned on a treadmill from speed, incline, body weight and duration using the ACSM metabolic equations.",
     "category": "Health Calculators",
     "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "treadmill-pace-converter": {
+    "name": "Treadmill Pace Converter",
+    "description": "Convert treadmill speed to min/km and min/mile pace, and find the effort-equivalent flat and outdoor pace for any incline.",
+    "category": "Health & Fitness",
+    "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
   "trimester-symptom-guide": {
@@ -27111,6 +28000,13 @@ export const toolMetaMap = {
     "icon": "shield-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "ugadi-gudi-padwa-wishes-generator": {
+    "name": "Ugadi and Gudi Padwa Wishes Generator",
+    "description": "New year greetings for Chaitra Shukla Pratipada in Telugu, Kannada, Marathi, Hindi and English, with pachadi and gudi notes.",
+    "category": "Generators",
+    "icon": "sunrise",
+    "iconColor": "text-[var(--primary)]"
+  },
   "ugc-brief-generator": {
     "name": "UGC Brief Generator",
     "description": "Generate a UGC creator brief with a timed shot list, per-scene word budgets, delivery specs and clear dos and don'ts.",
@@ -27130,6 +28026,13 @@ export const toolMetaMap = {
     ],
     "icon": "ruler",
     "iconColor": "text-primary"
+  },
+  "uk-vac-india-appointment-day-checklist": {
+    "name": "UK VAC India Appointment Day Checklist",
+    "description": "Work out when to leave home and get a route-specific list of what to carry, wear and leave behind at a UK visa centre in India.",
+    "category": "Productivity",
+    "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
   },
   "ulid-generator": {
     "name": "ULID Generator",
@@ -27988,6 +28891,13 @@ export const toolMetaMap = {
     "icon": "tags",
     "iconColor": "text-[var(--primary)]"
   },
+  "video-testimonial-consent-form-generator": {
+    "name": "Video Testimonial Consent Form Generator",
+    "description": "Build a video testimonial release with named channels, territory, licence term, editing rights and a withdrawal clause.",
+    "category": "Marketing & Social",
+    "icon": "video",
+    "iconColor": "text-[var(--primary)]"
+  },
   "video-to-audio-converter": {
     "name": "Video to Audio Converter",
     "description": "Extract, trim, edit, and export audio from video files directly in your browser.",
@@ -28270,6 +29180,13 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
+  "volunteer-agreement-generator": {
+    "name": "Volunteer Agreement Generator",
+    "description": "Draft a volunteer agreement with role, hours, conduct, confidentiality and reimbursement terms that stay clear of an employment relationship.",
+    "category": "Business",
+    "icon": "handshake",
+    "iconColor": "text-[var(--primary)]"
+  },
   "voronoi-art-generator": {
     "name": "Voronoi Art Generator",
     "description": "Generate stunning Voronoi diagrams and abstract art with customizable colors and patterns",
@@ -28322,6 +29239,13 @@ export const toolMetaMap = {
     "icon": "calculator",
     "iconColor": "text-[var(--primary)]"
   },
+  "w9-information-worksheet": {
+    "name": "W-9 Information Worksheet",
+    "description": "Work out exactly what goes on each line of a US Form W-9 — name, entity classification, TIN type and exemptions — before you sign it.",
+    "category": "Business",
+    "icon": "file-text",
+    "iconColor": "text-[var(--primary)]"
+  },
   "wacc-calculator": {
     "name": "WACC Calculator",
     "description": "Equity, debt aur tax inputs se weighted capital cost calculate kare.",
@@ -28348,6 +29272,13 @@ export const toolMetaMap = {
     "description": "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape.",
     "category": "Health Calculators",
     "icon": "ruler",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "walk-run-interval-planner": {
+    "name": "Walk Run Interval Planner",
+    "description": "Plan run-walk intervals by fitness level and target distance, with cycle count, finish time and average pace.",
+    "category": "Health & Fitness",
+    "icon": "footprints",
     "iconColor": "text-[var(--primary)]"
   },
   "walking-pace-calculator": {
@@ -29027,6 +29958,13 @@ export const toolMetaMap = {
     ],
     "icon": "wand-2",
     "iconColor": "text-indigo-600"
+  },
+  "womens-day-message-generator": {
+    "name": "Womens Day Message Generator",
+    "description": "Generate International Women's Day messages for family, friends and colleagues by tone, length and audience.",
+    "category": "Generators",
+    "icon": "venus",
+    "iconColor": "text-[var(--primary)]"
   },
   "wong-baker-pain-scale-tracker": {
     "name": "Wong-Baker Pain Scale Tracker",

@@ -1,0 +1,35 @@
+const seo = {
+  intro:
+    "This board tracks the expiry date of every document you own and turns each one into a reminder ladder — typically 90, 30 and 7 days out — instead of a single alarm that arrives too late to be useful. It also dates the day each renewal window opens, using the real rules: an Indian passport may be re-issued from a year before expiry, and a driving licence may be renewed from 30 days before it under section 15 of the Motor Vehicles Act. Add a travel date and it checks passports and visas against the six-month validity rule most destinations apply on entry.",
+  useCases: [
+    "Find out whether a passport expiring in November is valid enough for a trip in August under the six-month rule.",
+    "Get the date a driving licence renewal can first be filed, rather than discovering the window after it closed.",
+    "Keep a household's passports, PUC certificates, insurance and warranties on one printable page.",
+    "Set three graded reminders for a professional certification that needs continuing-education credits collected months in advance.",
+  ],
+  benefits: [
+    ["A ladder, not one alarm", "Each document gets several reminders, so there is time to start and time to chase."],
+    ["Renewal windows dated", "It shows the earliest date each authority will accept an application, not just the deadline."],
+    ["Travel validity check", "Passports and visas are tested against the six-month and Schengen three-month rules."],
+  ],
+  faqs: [
+    [
+      "How early can I renew an Indian passport?",
+      "Up to one year before it expires, and a re-issue application is still accepted for up to three years after expiry at the normal fee. Applying earlier than a year out is generally not accepted, so a year before expiry is the practical first reminder.",
+    ],
+    [
+      "What is the six-month passport rule?",
+      "Many countries require a passport to remain valid for at least six months beyond the date you enter. The Schengen area applies a different test — validity of at least three months beyond your intended departure, with the passport issued within the previous ten years. Airlines enforce these at check-in, so a technically valid passport can still stop you boarding.",
+    ],
+    [
+      "When can a driving licence be renewed in India?",
+      "From 30 days before expiry, under section 15 of the Motor Vehicles Act, 1988. Renewing more than 30 days after expiry attracts a late fee, and if more than five years have passed since expiry you have to take the driving test again.",
+    ],
+    [
+      "How long is a PUC certificate valid?",
+      "Six months for a vehicle in normal use, and one year from the date of registration for a new vehicle. Driving without a valid Pollution Under Control certificate is a fineable offence, and insurers can ask to see one at renewal.",
+    ],
+  ],
+};
+
+export default seo;

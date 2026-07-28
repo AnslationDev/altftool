@@ -218,7 +218,7 @@ export function toneClasses(tone = "slate", active = false) {
       ? "border-secondary bg-secondary-soft text-secondary"
       : "border-secondary bg-surface text-secondary hover:bg-secondary-soft",
     slate: active
-      ? "border-border bg-primary text-white"
+      ? "border-border bg-primary text-primary-foreground"
       : "border-border bg-surface text-foreground hover:bg-surface-soft",
   };
   return map[tone] || map.slate;

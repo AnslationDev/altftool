@@ -38,10 +38,21 @@ function AddHeroBanner({ setActive, editHero, setEditHero }) {
   const [imageSize, setImageSize] = useState(null);
   const [imageError, setImageError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(form.image);
 
-  const previewImage = imageFile
-    ? URL.createObjectURL(imageFile)
-    : form.image;
+  useEffect(() => {
+    if (!imageFile) {
+      setPreviewImage(form.image);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(imageFile);
+    setPreviewImage(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [imageFile, form.image]);
 
   function handleChange(e) {
     const { name, value } = e.target;

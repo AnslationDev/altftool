@@ -125,7 +125,7 @@ export function ImageField({ label, value, onChange }) {
               <button
                 type="button"
                 onClick={handleRemove}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-500/20"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--danger)] transition hover:bg-[var(--danger)]/20"
               >
                 <Trash2 size={14} />
                 Remove image
@@ -176,7 +176,7 @@ export function ListEditor({ title, items, onChange, renderItem, makeEmpty, item
                 type="button"
                 onClick={() => removeItem(index)}
                 title="Remove"
-                className="inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--muted)] transition hover:bg-red-500/10 hover:text-red-500"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-md text-[var(--muted)] transition hover:bg-[var(--danger-soft)] hover:text-[var(--danger)]"
               >
                 <Trash2 size={15} />
               </button>

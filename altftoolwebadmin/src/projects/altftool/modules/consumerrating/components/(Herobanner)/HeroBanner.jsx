@@ -6,7 +6,7 @@ import GetHeroBanner from './GetHeroBanner';
 
 
 
-function Category() {
+function HeroBanner() {
    const [active, setActive] = useState(null);
    const [editData, setEditData] = useState(null);
   
@@ -51,4 +51,4 @@ function Category() {
   )
 }
 
-export default Category
+export default HeroBanner

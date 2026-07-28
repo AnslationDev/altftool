@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2, RotateCcw, Save } from "lucide-react";
 
+import { LoadingState } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { DEFAULT_HOME_CONTENT, fetchHome, saveHome } from "./service/home.service";
 import { Field, Grid, IconSelect, ImageField, ListEditor, TextArea } from "./components/fields";
@@ -88,11 +89,7 @@ export default function TripFindBoxModule() {
   };
 
   if (loading || !content) {
-    return (
-      <div className="flex items-center gap-2.5 p-10 text-sm text-[var(--muted)]">
-        <Loader2 size={18} className="animate-spin" /> Loading TripFindBox content…
-      </div>
-    );
+    return <LoadingState variant="detail" />;
   }
 
   return (

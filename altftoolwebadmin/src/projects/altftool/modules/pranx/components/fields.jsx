@@ -85,7 +85,7 @@ export function ImageLightbox({ src, onClose }) {
           alt="Full size preview"
           className="max-h-[85vh] max-w-[85vw] object-contain mx-auto block p-2"
         />
-        <div className="absolute bottom-4 left-0 right-0 text-center text-xs font-semibold text-slate-350 bg-black/45 py-1 px-3 w-fit mx-auto rounded-full text-slate-200">
+        <div className="absolute bottom-4 left-0 right-0 text-center text-xs font-semibold bg-black/45 py-1 px-3 w-fit mx-auto rounded-full text-slate-200">
           {src}
         </div>
       </div>
@@ -272,7 +272,7 @@ export function ToggleField({ label, value, onChange, desc }) {
       <button
         type="button"
         onClick={() => onChange(!value)}
-        className={`h-8 w-16 shrink-0 rounded-full p-1 transition ${value ? "bg-[var(--primary)]" : "bg-slate-300"
+        className={`h-8 w-16 shrink-0 rounded-full p-1 transition ${value ? "bg-[var(--primary)]" : "bg-[var(--border-strong)]"
           }`}
       >
         <span
@@ -325,7 +325,7 @@ export function ImageField({ label, value, onChange, content, fallbackUrl }) {
               <ZoomIn className="h-5 w-5 text-white" />
             </div>
             {!value && fallbackUrl && (
-              <div className="absolute bottom-1 left-1 bg-blue-500/90 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase leading-none scale-90 origin-bottom-left z-10">
+              <div className="absolute bottom-1 left-1 bg-[var(--primary)]/90 text-[var(--primary-foreground)] text-[8px] font-black px-1.5 py-0.5 rounded uppercase leading-none scale-90 origin-bottom-left z-10">
                 Default
               </div>
             )}
@@ -366,7 +366,7 @@ export function ImageField({ label, value, onChange, content, fallbackUrl }) {
           <button
             type="button"
             onClick={() => onChange("")}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-red-300 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--danger)]/30 bg-[var(--danger-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--danger-text)] transition hover:opacity-90"
           >
             <Trash2 size={14} /> Remove
           </button>

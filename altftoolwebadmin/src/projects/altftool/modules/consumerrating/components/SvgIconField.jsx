@@ -34,7 +34,7 @@ function SvgIconField({ label, value, onChange }) {
       <div className="flex justify-between" >
         <div> <label className="font-medium">{label}</label></div>
         <div>
-          <Link href={"https://lucide.dev/icons/"} className="text-blue-500" >Icon Picker</Link>
+          <Link href={"https://lucide.dev/icons/"} className="text-[var(--primary)] hover:underline" >Icon Picker</Link>
         </div>
       </div>
      
@@ -50,7 +50,7 @@ function SvgIconField({ label, value, onChange }) {
       <button
         type="button"
         onClick={handleApply}
-        className="bg-black text-white px-4 py-2 rounded"
+        className="btn btn-primary"
       >
         Apply Icon
       </button>

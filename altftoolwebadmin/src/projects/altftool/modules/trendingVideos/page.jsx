@@ -12,7 +12,7 @@ import {
   deleteVideos,
   toggleVideoPlay,
 } from "./service/trendingVideos.service";
-import { Loader2 } from "lucide-react";
+import { LoadingState } from "@/ansets";
 
 export default function Page() {
   const [videos, setVideos]               = useState([]);
@@ -215,10 +215,7 @@ export default function Page() {
       />
 
       {loading ? (
-        <div className="flex items-center justify-center py-32 gap-3 text-gray-400">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="text-sm font-medium">Loading videos…</span>
-        </div>
+        <LoadingState variant="table" />
       ) : (
         <TrendingVideosTable
           videos={videos}

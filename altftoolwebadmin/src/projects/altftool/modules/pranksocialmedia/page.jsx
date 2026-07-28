@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2, RotateCcw, Save, Check } from "lucide-react";
 
+import { LoadingState } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { DEFAULT_MOCKLY_CONTENT, fetchMocklyHome, saveMocklyHome, ALL_TEMPLATES } from "./service/mockly.service";
 import { Field, Grid, IconSelect, ImageField, ListEditor, TextArea } from "./components/fields";
@@ -91,11 +92,7 @@ export default function PrankSocialMediaModule() {
   };
 
   if (loading || !content) {
-    return (
-      <div className="flex items-center gap-2.5 p-10 text-sm text-[var(--muted)]">
-        <Loader2 size={18} className="animate-spin" /> Loading Prank Social Media content…
-      </div>
-    );
+    return <LoadingState variant="detail" />;
   }
 
   return (
@@ -206,7 +203,7 @@ function TemplateVisibilityTab({ content, set }) {
                 className="flex items-center"
                 aria-label={isEnabled ? `Disable ${t.name}` : `Enable ${t.name}`}
               >
-                <div className={`w-5 h-5 rounded-[6px] border flex items-center justify-center transition-all ${isEnabled ? "bg-[var(--primary)] border-[var(--primary)] text-white" : "border-[var(--border)] group-hover:border-gray-400 bg-[var(--surface)]"}`}>
+                <div className={`w-5 h-5 rounded-[6px] border flex items-center justify-center transition-all ${isEnabled ? "bg-[var(--primary)] border-[var(--primary)] text-[var(--primary-foreground)]" : "border-[var(--border)] group-hover:border-[var(--border-strong)] bg-[var(--surface)]"}`}>
                   {isEnabled && <Check className="w-3.5 h-3.5" />}
                 </div>
               </button>

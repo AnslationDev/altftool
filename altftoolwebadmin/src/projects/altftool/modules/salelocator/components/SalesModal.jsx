@@ -28,15 +28,15 @@ import {
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+        {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
-        {required && <span className="text-red-400 font-bold">*</span>}
+        {required && <span className="text-[var(--danger)] font-bold">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />
           {error}
         </p>
@@ -49,14 +49,14 @@ function Input({ error, className = "", ...props }) {
   return (
     <input
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition
         ${
           error
-            ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-            : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"
+            ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+            : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"
         }
-        ${props.readOnly || props.disabled ? "bg-gray-50 text-gray-500 cursor-not-allowed" : ""}
+        ${props.readOnly || props.disabled ? "bg-[var(--surface-soft)] text-[var(--muted)] cursor-not-allowed" : ""}
         ${className}`}
     />
   );
@@ -66,12 +66,12 @@ function Textarea({ error, ...props }) {
   return (
     <textarea
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition resize-none
         ${
           error
-            ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-            : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"
+            ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+            : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"
         }`}
     />
   );
@@ -81,10 +81,10 @@ function Section({ title, children }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] whitespace-nowrap">
+        <span className="text-[10px] font-black text-[var(--muted)] uppercase tracking-[0.15em] whitespace-nowrap">
           {title}
         </span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <div className="flex-1 h-px bg-[var(--border)]" />
       </div>
       {children}
     </div>
@@ -150,7 +150,7 @@ function ImageUploader({
             removeImage();
           }}
           className={`px-3 py-1 rounded-lg text-xs transition ${
-            imageType === "url" ? "bg-black text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            imageType === "url" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--border)]"
           }`}
         >
           URL
@@ -162,7 +162,7 @@ function ImageUploader({
             setImageUrl("");
           }}
           className={`px-3 py-1 rounded-lg text-xs transition ${
-            imageType === "upload" ? "bg-black text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            imageType === "upload" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--border)]"
           }`}
         >
           Upload
@@ -183,7 +183,7 @@ function ImageUploader({
             error={errors[fieldKey]}
           />
           {imageUrl && (
-            <div className="relative rounded-xl overflow-hidden border border-gray-200 bg-gray-50 aspect-video w-full max-w-xs">
+            <div className="relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-soft)] aspect-video w-full max-w-xs">
               <img
                 src={imageUrl}
                 alt="Preview"
@@ -199,7 +199,7 @@ function ImageUploader({
                   setImageUrl("");
                   setImagePreview(null);
                 }}
-                className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1 transition"
+                className="absolute top-2 right-2 bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] rounded-full p-1 transition"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -219,62 +219,62 @@ function ImageUploader({
               className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-3 cursor-pointer transition
                 ${
                   errors[fieldKey]
-                    ? "border-red-300 bg-red-50/30"
-                    : "border-gray-200 hover:border-blue-300 bg-gray-50/50 hover:bg-blue-50/20"
+                    ? "border-[var(--danger)]/40 bg-[var(--danger-soft)]/30"
+                    : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface-soft)]/50 hover:bg-[var(--primary-soft)]/20"
                 }`}
             >
               <div
                 className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  errors[fieldKey] ? "bg-red-100" : "bg-gray-100"
+                  errors[fieldKey] ? "bg-[var(--danger-soft)]" : "bg-[var(--surface-soft)]"
                 }`}
               >
                 <ImageIcon
-                  className={`w-5 h-5 ${errors[fieldKey] ? "text-red-400" : "text-gray-400"}`}
+                  className={`w-5 h-5 ${errors[fieldKey] ? "text-[var(--danger)]" : "text-[var(--muted)]"}`}
                 />
               </div>
               <div className="text-center">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-[var(--muted)]">
                   Drop image here or{" "}
-                  <span className="text-blue-500 font-medium">browse</span>
+                  <span className="text-[var(--primary)] font-medium">browse</span>
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">JPG, PNG, WebP · Max 2MB</p>
+                <p className="text-xs text-[var(--muted)] mt-0.5">JPG, PNG, WebP · Max 2MB</p>
               </div>
               {errors[fieldKey] && (
-                <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+                <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
                   <AlertCircle className="w-3 h-3 shrink-0" />
                   {errors[fieldKey]}
                 </p>
               )}
             </div>
           ) : (
-            <div className="rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
+            <div className="rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)]">
               <div className="relative group aspect-video w-full max-w-xs">
                 <img
                   src={imagePreview}
                   alt="Preview"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-[var(--overlay)]/0 group-hover:bg-[var(--overlay)]/40 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                   <button
                     type="button"
                     onClick={removeImage}
-                    className="bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg shadow"
+                    className="bg-[var(--danger)] text-[var(--danger-foreground)] text-xs px-3 py-1.5 rounded-lg shadow"
                   >
                     Remove
                   </button>
                 </div>
               </div>
               {imageFile && (
-                <div className="flex items-center justify-between px-4 py-2.5 border-t bg-white">
+                <div className="flex items-center justify-between px-4 py-2.5 border-t border-[var(--border)] bg-[var(--surface)]">
                   <div>
-                    <p className="text-xs font-medium text-gray-700 truncate max-w-[180px]">
+                    <p className="text-xs font-medium text-[var(--foreground)] truncate max-w-[180px]">
                       {imageFile.name}
                     </p>
-                    <p className="text-[10px] text-gray-400">
+                    <p className="text-[10px] text-[var(--muted)]">
                       {(imageFile.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>
-                  <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
                 </div>
               )}
             </div>
@@ -648,16 +648,16 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
   }[step];
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
+      <div className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">
+            <h2 className="text-base font-bold text-[var(--foreground)]">
               {isEdit ? "Edit Sale" : "New Sale"}
             </h2>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-[var(--muted)] mt-0.5">
               {isEdit
                 ? "Update the sale details below."
                 : "Configure sale type, content and media."}
@@ -666,7 +666,7 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
           <button
             onClick={onClose}
             disabled={loading}
-            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition disabled:opacity-40"
+            className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>
@@ -685,8 +685,8 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
                   onClick={() => handleTypeSwitch(t)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
                     type === t
-                      ? "bg-gray-900 text-white shadow-sm"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      ? "bg-[var(--foreground)] text-[var(--background)] shadow-sm"
+                      : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--border)]"
                   }`}
                 >
                   {TYPE_CONFIG[t].label}
@@ -900,13 +900,13 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
 
           {/* Saving indicator */}
           {step === "saving" && (
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />
+            <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--primary)]" />
               Saving to database…
             </div>
           )}
           {step === "done" && (
-            <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+            <div className="flex items-center gap-2 text-xs text-[var(--success-text)] font-medium">
               <CheckCircle2 className="w-4 h-4" />
               {isEdit ? "Sale updated!" : "Sale created!"}
             </div>
@@ -914,13 +914,13 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
         </div>
 
         {/* ── Footer ── */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
+          <p className="text-xs text-[var(--muted)]">
             {isEdit ? (
               "Changes will update the sale immediately."
             ) : (
               <>
-                <span className="font-semibold text-gray-600">Add</span> a{" "}
+                <span className="font-semibold text-[var(--foreground)]">Add</span> a{" "}
                 {TYPE_CONFIG[type].label} to the homepage.
               </>
             )}
@@ -929,14 +929,14 @@ export default function SaleModal({ sales = [], onClose, onSave, initialData }) 
             <button
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40"
+              className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] hover:bg-[var(--surface)] transition disabled:opacity-40"
             >
               Cancel
             </button>
             <button
               onClick={saveSale}
               disabled={loading || step === "done"}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm"
+              className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--foreground)] hover:opacity-90 disabled:opacity-60 text-[var(--background)] font-semibold rounded-xl transition shadow-sm"
             >
               {loading && step !== "done" && (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />

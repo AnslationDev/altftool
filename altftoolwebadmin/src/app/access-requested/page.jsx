@@ -31,6 +31,10 @@ export default function AccessRequestedPage() {
   const hasRedirectedRef = useRef(false);
 
   useEffect(() => {
+    document.title = "Access pending · AltFTools Admin";
+  }, []);
+
+  useEffect(() => {
     if (syncFailed) {
       setStatusUnavailable(true);
       return;

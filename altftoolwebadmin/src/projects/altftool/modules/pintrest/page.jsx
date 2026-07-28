@@ -40,6 +40,8 @@ import {
 import AdminDataState from "@/components/admin/AdminDataState";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
 import BulkUploadModal from "./components/BulkUploadModal";
+import { EmptyState } from "@/ansets";
+import { emitAlert } from "@/lib/alertBus";
 
 export default function PinterestAdmin() {
   const [activeTab, setActiveTab] = useState("pins"); // "pins", "categories", "insights"
@@ -84,8 +86,15 @@ export default function PinterestAdmin() {
   // Delete Modals
   const [deleteTarget, setDeleteTarget] = useState(null); // { type: 'pin'|'category', id, name }
 
-  // Status Alerts
-  const [alert, setAlert] = useState(null); // { type: 'success'|'error', message }
+  const getPublicBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      const hostname = window.location.hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
+        return "http://localhost:3002";
+      }
+    }
+    return "https://altftool.com";
+  };
 
   // Subscribe to real-time updates
   useEffect(() => {
@@ -124,18 +133,6 @@ export default function PinterestAdmin() {
       unsubPins && unsubPins();
     };
   }, []);
-
-  // Alert auto-dismissal
-  useEffect(() => {
-    if (alert) {
-      const timer = setTimeout(() => setAlert(null), 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [alert]);
-
-  const showNotification = (type, message) => {
-    setAlert({ type, message });
-  };
 
   // Memoized insights/stats
   const stats = useMemo(() => {
@@ -289,7 +286,7 @@ export default function PinterestAdmin() {
           category: pinForm.category,
           likes: Number(pinForm.likes) || 0,
         });
-        showNotification("success", "Pin updated successfully!");
+        emitAlert({ type: "success", message: "Pin updated successfully!" });
       } else {
         await addPin({
           title: pinForm.title.trim(),
@@ -297,7 +294,7 @@ export default function PinterestAdmin() {
           category: pinForm.category,
           likes: Number(pinForm.likes) || 0,
         });
-        showNotification("success", "New pin added successfully!");
+        emitAlert({ type: "success", message: "New pin added successfully!" });
       }
       setIsPinModalOpen(false);
     } catch (err) {
@@ -320,17 +317,17 @@ export default function PinterestAdmin() {
         (c) => c.name.toLowerCase() === newCatName.trim().toLowerCase()
       );
       if (isDuplicate) {
-        showNotification("error", "Category already exists!");
+        emitAlert({ type: "error", message: "Category already exists!" });
         setSavingCategory(false);
         return;
       }
 
       await addCategory(newCatName.trim());
       setNewCatName("");
-      showNotification("success", "Category created successfully!");
+      emitAlert({ type: "success", message: "Category created successfully!" });
     } catch (err) {
       console.error(err);
-      showNotification("error", "Could not create category.");
+      emitAlert({ type: "error", message: "Could not create category." });
     } finally {
       setSavingCategory(false);
     }
@@ -354,10 +351,10 @@ export default function PinterestAdmin() {
       await updateCategory(id, editingCatName.trim());
       setEditingCatId(null);
       setEditingCatName("");
-      showNotification("success", "Category updated successfully!");
+      emitAlert({ type: "success", message: "Category updated successfully!" });
     } catch (err) {
       console.error(err);
-      showNotification("error", "Could not update category.");
+      emitAlert({ type: "error", message: "Could not update category." });
     } finally {
       setSavingCategory(false);
     }
@@ -370,14 +367,14 @@ export default function PinterestAdmin() {
     try {
       if (deleteTarget.type === "pin") {
         await deletePin(deleteTarget.id);
-        showNotification("success", "Pin deleted successfully.");
+        emitAlert({ type: "success", message: "Pin deleted successfully." });
       } else if (deleteTarget.type === "category") {
         await deleteCategory(deleteTarget.id);
-        showNotification("success", "Category deleted successfully.");
+        emitAlert({ type: "success", message: "Category deleted successfully." });
       }
     } catch (err) {
       console.error(err);
-      showNotification("error", `Could not delete ${deleteTarget.type}.`);
+      emitAlert({ type: "error", message: `Could not delete ${deleteTarget.type}.` });
     } finally {
       setDeleteTarget(null);
     }
@@ -385,13 +382,13 @@ export default function PinterestAdmin() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
+      <div className="min-h-screen bg-[var(--background)] p-6">
         <AdminDataState
           title="Loading Pinterest board data"
           message="Subscribing to real-time pins and category feeds from Firestore."
         >
           <div className="mt-6 flex justify-center py-12">
-            <Loader2 className="h-10 w-10 animate-spin text-gray-400" />
+            <Loader2 className="h-10 w-10 animate-spin text-[var(--muted)]" />
           </div>
         </AdminDataState>
       </div>
@@ -400,7 +397,7 @@ export default function PinterestAdmin() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
+      <div className="min-h-screen bg-[var(--background)] p-6">
         <AdminDataState
           type="error"
           title="Pinterest Board connection error"
@@ -411,67 +408,43 @@ export default function PinterestAdmin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 space-y-6">
-        
-        {/* Toast Alert Notification */}
-        {alert && (
-          <div
-            className={`fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-xl px-5 py-4 shadow-lg transition-transform duration-300 border ${
-              alert.type === "success"
-                ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                : "bg-amber-50 text-amber-800 border-amber-200"
-            }`}
-          >
-            <span
-              className={`h-2 w-2 rounded-full ${
-                alert.type === "success" ? "bg-emerald-500" : "bg-amber-500"
-              }`}
-            />
-            <p className="text-sm font-semibold">{alert.message}</p>
-            <button
-              onClick={() => setAlert(null)}
-              className="text-gray-400 hover:text-gray-600 ml-2"
-            >
-              <X size={16} />
-            </button>
-          </div>
-        )}
 
         {/* Dashboard Header */}
-        <header className="border-b border-gray-200 pb-5">
+        <header className="border-b border-[var(--border)] pb-5">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <p className="text-xs font-semibold uppercase tracking-widest text-indigo-500">
+                <p className="text-xs font-semibold uppercase tracking-widest text-[var(--primary)]">
                   Altftool Board
                 </p>
-                <span className="flex items-center gap-1 text-[10px] bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                <span className="flex items-center gap-1 text-[10px] bg-[var(--primary-soft)] text-[var(--primary)] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                   <Sparkles size={8} /> Realtime
                 </span>
               </div>
-              <h1 className="mt-2 text-2xl font-semibold text-gray-900">
+              <h1 className="mt-2 text-2xl font-semibold text-[var(--foreground)]">
                 Manage Pinterest Pins & Board
               </h1>
-              <p className="mt-1.5 text-sm text-gray-500">
+              <p className="mt-1.5 text-sm text-[var(--muted)]">
                 Create new pins, organize categories, and track engagement numbers for /altpintrest.
               </p>
             </div>
-            
+
             {/* Quick Metrics Header Cards */}
             <div className="flex gap-4">
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm text-center min-w-[90px]">
-                <p className="text-[10px] font-semibold text-gray-400 uppercase">Pins</p>
-                <p className="mt-0.5 text-xl font-bold text-gray-900">{stats.totalPins}</p>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 shadow-sm text-center min-w-[90px]">
+                <p className="text-[10px] font-semibold text-[var(--muted)] uppercase">Pins</p>
+                <p className="mt-0.5 text-xl font-bold text-[var(--foreground)]">{stats.totalPins}</p>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm text-center min-w-[90px]">
-                <p className="text-[10px] font-semibold text-gray-400 uppercase">Categories</p>
-                <p className="mt-0.5 text-xl font-bold text-gray-900">{stats.totalCategories}</p>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 shadow-sm text-center min-w-[90px]">
+                <p className="text-[10px] font-semibold text-[var(--muted)] uppercase">Categories</p>
+                <p className="mt-0.5 text-xl font-bold text-[var(--foreground)]">{stats.totalCategories}</p>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm text-center min-w-[90px]">
-                <p className="text-[10px] font-semibold text-gray-400 uppercase">Total Likes</p>
-                <p className="mt-0.5 text-xl font-bold text-gray-900 flex items-center justify-center gap-1">
-                  <Heart size={14} className="fill-indigo-500 text-indigo-500" />
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 shadow-sm text-center min-w-[90px]">
+                <p className="text-[10px] font-semibold text-[var(--muted)] uppercase">Total Likes</p>
+                <p className="mt-0.5 text-xl font-bold text-[var(--foreground)] flex items-center justify-center gap-1">
+                  <Heart size={14} className="fill-[var(--primary)] text-[var(--primary)]" />
                   {stats.totalLikes}
                 </p>
               </div>
@@ -480,14 +453,14 @@ export default function PinterestAdmin() {
         </header>
 
         {/* Tab Selection */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-[var(--border)]">
           <nav className="flex space-x-6" aria-label="Tabs">
             <button
               onClick={() => setActiveTab("pins")}
               className={`flex items-center gap-2 border-b-2 py-3 px-1 text-sm font-semibold transition ${
                 activeTab === "pins"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[var(--primary)] text-[var(--primary)]"
+                  : "border-transparent text-[var(--muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
               }`}
             >
               <ImageIcon size={16} />
@@ -498,8 +471,8 @@ export default function PinterestAdmin() {
               onClick={() => setActiveTab("categories")}
               className={`flex items-center gap-2 border-b-2 py-3 px-1 text-sm font-semibold transition ${
                 activeTab === "categories"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[var(--primary)] text-[var(--primary)]"
+                  : "border-transparent text-[var(--muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
               }`}
             >
               <Tag size={16} />
@@ -510,8 +483,8 @@ export default function PinterestAdmin() {
               onClick={() => setActiveTab("insights")}
               className={`flex items-center gap-2 border-b-2 py-3 px-1 text-sm font-semibold transition ${
                 activeTab === "insights"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[var(--primary)] text-[var(--primary)]"
+                  : "border-transparent text-[var(--muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
               }`}
             >
               <BarChart3 size={16} />
@@ -531,17 +504,17 @@ export default function PinterestAdmin() {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 {/* Search and filter inputs */}
                 <div className="flex flex-col sm:flex-row gap-2.5 flex-1 max-w-xl">
-                  <div className="relative flex-1 bg-white rounded-lg border border-gray-300 focus-within:ring-1 focus-within:ring-indigo-500 shadow-sm flex items-center px-3">
-                    <Search size={16} className="text-gray-400 mr-2 shrink-0" />
+                  <div className="relative flex-1 bg-[var(--surface)] rounded-lg border border-[var(--border)] focus-within:[box-shadow:var(--focus-ring)] focus-within:border-[var(--primary)] shadow-sm flex items-center px-3">
+                    <Search size={16} className="text-[var(--muted)] mr-2 shrink-0" />
                     <input
                       type="text"
                       placeholder="Search pins title, categories..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="py-2.5 w-full bg-transparent border-none outline-none text-sm text-gray-700 placeholder-gray-400"
+                      className="py-2.5 w-full bg-transparent border-none outline-none text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]"
                     />
                     {searchQuery && (
-                      <button onClick={() => setSearchQuery("")} className="text-gray-400 hover:text-gray-600 ml-2">
+                      <button onClick={() => setSearchQuery("")} className="text-[var(--muted)] hover:text-[var(--foreground)] ml-2">
                         <X size={14} />
                       </button>
                     )}
@@ -550,7 +523,7 @@ export default function PinterestAdmin() {
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 shadow-sm"
+                    className="bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--foreground)] focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--primary)] shadow-sm"
                   >
                     <option value="All">All Categories</option>
                     {categories.map((cat) => (
@@ -566,7 +539,7 @@ export default function PinterestAdmin() {
                   <button
                     type="button"
                     onClick={() => setIsBulkOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 shadow-sm hover:bg-indigo-100 transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-[var(--primary)]/30 bg-[var(--primary-soft)] px-4 py-2.5 text-sm font-semibold text-[var(--primary)] shadow-sm hover:bg-[var(--primary-soft)] transition"
                   >
                     <UploadCloud size={16} />
                     Bulk Upload
@@ -574,7 +547,7 @@ export default function PinterestAdmin() {
                   <button
                     type="button"
                     onClick={openAddPinModal}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] shadow-sm hover:bg-[var(--primary-hover)] transition"
                   >
                     <Plus size={16} />
                     Add New Pin
@@ -584,28 +557,32 @@ export default function PinterestAdmin() {
 
               {/* Pins Table / Grid */}
               {filteredPins.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-gray-300 bg-white py-16 text-center">
-                  <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-4 text-sm font-semibold text-gray-900">No pins found</h3>
-                  <p className="mt-1 text-xs text-gray-500">
-                    {pins.length === 0
-                      ? "Create your first Pinterest pin to display it on the public site."
-                      : "Try adjusting your search criteria or category filter."}
-                  </p>
-                  {pins.length === 0 && (
-                    <button
-                      onClick={openAddPinModal}
-                      className="mt-4 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-semibold text-white hover:bg-indigo-500"
-                    >
-                      <Plus size={14} /> Add Pin
-                    </button>
-                  )}
+                <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface)]">
+                  <EmptyState
+                    icon={ImageIcon}
+                    title="No pins found"
+                    description={
+                      pins.length === 0
+                        ? "Create your first Pinterest pin to display it on the public site."
+                        : "Try adjusting your search criteria or category filter."
+                    }
+                    action={
+                      pins.length === 0 ? (
+                        <button
+                          onClick={openAddPinModal}
+                          className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-3 py-2 text-xs font-semibold text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)]"
+                        >
+                          <Plus size={14} /> Add Pin
+                        </button>
+                      ) : null
+                    }
+                  />
                 </div>
               ) : (
-                <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse text-left text-sm">
-                      <thead className="bg-gray-50 border-b border-gray-200 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                      <thead className="bg-[var(--surface-soft)] border-b border-[var(--border)] text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
                         <tr>
                           <th className="px-6 py-4">Pin Preview</th>
                           <th className="px-6 py-4">Pin Details</th>
@@ -614,11 +591,11 @@ export default function PinterestAdmin() {
                           <th className="px-6 py-4 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-200">
+                      <tbody className="divide-y divide-[var(--border)]">
                         {filteredPins.map((pin) => (
-                          <tr key={pin.id} className="hover:bg-gray-50/50 transition">
+                          <tr key={pin.id} className="hover:bg-[var(--surface-soft)] transition">
                             <td className="whitespace-nowrap px-6 py-4">
-                              <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-gray-200 bg-gray-100 shadow-sm shrink-0">
+                              <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] shadow-sm shrink-0">
                                 <img
                                   src={pin.image || "/placeholder.png"}
                                   alt={pin.title}
@@ -630,20 +607,20 @@ export default function PinterestAdmin() {
                               </div>
                             </td>
                             <td className="px-6 py-4">
-                              <p className="font-semibold text-gray-950 line-clamp-1">{pin.title}</p>
-                              <p className="mt-1 text-[11px] text-gray-400 font-mono select-all truncate max-w-xs">
+                              <p className="font-semibold text-[var(--foreground)] line-clamp-1">{pin.title}</p>
+                              <p className="mt-1 text-[11px] text-[var(--muted)] font-mono select-all truncate max-w-xs">
                                 {pin.image}
                               </p>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
-                              <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary-soft)] px-2.5 py-1 text-xs font-medium text-[var(--primary)]">
                                 <Tag size={10} />
                                 {pin.category || "Other"}
                               </span>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4">
-                              <div className="flex items-center gap-1.5 text-gray-700 font-medium">
-                                <Heart size={14} className="fill-rose-500 text-rose-500" />
+                              <div className="flex items-center gap-1.5 text-[var(--foreground)] font-medium">
+                                <Heart size={14} className="fill-[var(--danger)] text-[var(--danger)]" />
                                 {pin.likes || 0}
                               </div>
                             </td>
@@ -653,7 +630,7 @@ export default function PinterestAdmin() {
                                   href={pin.image}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition"
+                                  className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition"
                                   title="Open Original Image"
                                 >
                                   <ExternalLink size={14} />
@@ -661,7 +638,7 @@ export default function PinterestAdmin() {
                                 <button
                                   type="button"
                                   onClick={() => openEditPinModal(pin)}
-                                  className="p-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 transition"
+                                  className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--primary-soft)] hover:text-[var(--primary)] transition"
                                   title="Edit Pin"
                                 >
                                   <Edit size={14} />
@@ -675,7 +652,7 @@ export default function PinterestAdmin() {
                                       name: pin.title,
                                     })
                                   }
-                                  className="p-1.5 rounded-lg border border-gray-200 bg-white text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition"
+                                  className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--danger)] hover:bg-[var(--danger-soft)] hover:text-[var(--danger-text)] transition"
                                   title="Delete Pin"
                                 >
                                   <Trash2 size={14} />
@@ -698,11 +675,11 @@ export default function PinterestAdmin() {
           {activeTab === "categories" && (
             <div className="grid gap-6 md:grid-cols-3">
               {/* Category creation pane */}
-              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm space-y-4 self-start">
-                <h3 className="text-sm font-semibold text-gray-900">Add New Category</h3>
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm space-y-4 self-start">
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">Add New Category</h3>
                 <form onSubmit={handleAddCategory} className="space-y-3">
                   <div>
-                    <label htmlFor="cat-name" className="block text-xs font-medium text-gray-500 mb-1.5">
+                    <label htmlFor="cat-name" className="block text-xs font-medium text-[var(--muted)] mb-1.5">
                       Category Name
                     </label>
                     <input
@@ -711,13 +688,13 @@ export default function PinterestAdmin() {
                       placeholder="e.g. Design, UI Image, Prompts"
                       value={newCatName}
                       onChange={(e) => setNewCatName(e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="w-full rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm focus:border-[var(--primary)] focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={savingCategory || !newCatName.trim()}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition disabled:opacity-50"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] shadow-sm hover:bg-[var(--primary-hover)] transition disabled:opacity-50"
                   >
                     {savingCategory ? (
                       <Loader2 size={16} className="animate-spin" />
@@ -730,18 +707,18 @@ export default function PinterestAdmin() {
               </div>
 
               {/* Categories list */}
-              <div className="md:col-span-2 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-                <div className="bg-gray-50 border-b border-gray-200 px-5 py-4">
-                  <h3 className="text-sm font-semibold text-gray-900">Active Pinterest Board Categories</h3>
+              <div className="md:col-span-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm overflow-hidden">
+                <div className="bg-[var(--surface-soft)] border-b border-[var(--border)] px-5 py-4">
+                  <h3 className="text-sm font-semibold text-[var(--foreground)]">Active Pinterest Board Categories</h3>
                 </div>
-                <div className="divide-y divide-gray-200">
+                <div className="divide-y divide-[var(--border)]">
                   {categories.length === 0 ? (
-                    <div className="py-12 text-center text-gray-400 text-sm">No categories registered yet.</div>
+                    <EmptyState icon={Tag} title="No categories registered yet." />
                   ) : (
                     categories.map((cat) => (
                       <div
                         key={cat.id}
-                        className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition"
+                        className="flex items-center justify-between px-5 py-4 hover:bg-[var(--surface-soft)] transition"
                       >
                         {editingCatId === cat.id ? (
                           <div className="flex gap-2 w-full">
@@ -749,20 +726,20 @@ export default function PinterestAdmin() {
                               type="text"
                               value={editingCatName}
                               onChange={(e) => setEditingCatName(e.target.value)}
-                              className="flex-1 rounded-lg border border-indigo-500 px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                              className="flex-1 rounded-lg border border-[var(--primary)] px-3 py-1.5 text-sm focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                             />
                             <button
                               type="button"
                               onClick={() => handleUpdateCategory(cat.id)}
                               disabled={savingCategory || !editingCatName.trim()}
-                              className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500"
+                              className="rounded-lg bg-[var(--primary)] px-3 py-1.5 text-xs font-semibold text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)]"
                             >
                               Save
                             </button>
                             <button
                               type="button"
                               onClick={handleCancelEditCategory}
-                              className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                              className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--foreground)] hover:bg-[var(--surface-soft)]"
                             >
                               Cancel
                             </button>
@@ -770,12 +747,12 @@ export default function PinterestAdmin() {
                         ) : (
                           <>
                             <div className="flex items-center gap-3">
-                              <span className="grid h-8 w-8 place-items-center rounded-lg bg-indigo-50 text-indigo-700">
+                              <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--primary-soft)] text-[var(--primary)]">
                                 <Tag size={14} />
                               </span>
                               <div>
-                                <p className="font-semibold text-gray-950">{cat.name}</p>
-                                <p className="text-[11px] text-gray-400 mt-0.5">
+                                <p className="font-semibold text-[var(--foreground)]">{cat.name}</p>
+                                <p className="text-[11px] text-[var(--muted)] mt-0.5">
                                   {stats.pinsPerCat[cat.name] || 0} pins associated
                                 </p>
                               </div>
@@ -784,7 +761,7 @@ export default function PinterestAdmin() {
                               <button
                                 type="button"
                                 onClick={() => handleStartEditCategory(cat)}
-                                className="p-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition"
+                                className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface-soft)] transition"
                                 title="Rename Category"
                               >
                                 <Edit size={14} />
@@ -798,7 +775,7 @@ export default function PinterestAdmin() {
                                     name: cat.name,
                                   })
                                 }
-                                className="p-1.5 rounded-lg border border-gray-200 bg-white text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition"
+                                className="p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--danger)] hover:bg-[var(--danger-soft)] hover:text-[var(--danger-text)] transition"
                                 title="Delete Category"
                               >
                                 <Trash2 size={14} />
@@ -821,16 +798,16 @@ export default function PinterestAdmin() {
             <div className="space-y-6">
               {/* Stat grid widgets */}
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Average Pins Engagement</p>
-                  <p className="mt-2 text-3xl font-bold text-indigo-600">{stats.avgLikes}</p>
-                  <p className="mt-1.5 text-[11px] text-gray-400">Average likes count per pin</p>
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+                  <p className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Average Pins Engagement</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--primary)]">{stats.avgLikes}</p>
+                  <p className="mt-1.5 text-[11px] text-[var(--muted)]">Average likes count per pin</p>
                 </div>
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Most Liked Pin</p>
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+                  <p className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Most Liked Pin</p>
                   {stats.mostLikedPin ? (
                     <div className="mt-2 flex items-center gap-3">
-                      <div className="h-10 w-10 overflow-hidden rounded-md border border-gray-200 shrink-0 bg-gray-100">
+                      <div className="h-10 w-10 overflow-hidden rounded-md border border-[var(--border)] shrink-0 bg-[var(--surface-soft)]">
                         <img
                           src={stats.mostLikedPin.image}
                           alt=""
@@ -838,59 +815,59 @@ export default function PinterestAdmin() {
                         />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-gray-900 truncate max-w-[150px]">
+                        <p className="text-sm font-bold text-[var(--foreground)] truncate max-w-[150px]">
                           {stats.mostLikedPin.title}
                         </p>
-                        <p className="text-xs text-rose-600 flex items-center gap-1 mt-0.5">
-                          <Heart size={10} className="fill-rose-500 text-rose-500" />
+                        <p className="text-xs text-[var(--danger)] flex items-center gap-1 mt-0.5">
+                          <Heart size={10} className="fill-[var(--danger)] text-[var(--danger)]" />
                           {stats.mostLikedPin.likes} likes
                         </p>
                       </div>
                     </div>
                   ) : (
-                    <p className="mt-2 text-sm text-gray-400 italic">No pins found</p>
+                    <p className="mt-2 text-sm text-[var(--muted)] italic">No pins found</p>
                   )}
                 </div>
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Uncategorized Pins</p>
-                  <p className="mt-2 text-3xl font-bold text-gray-900">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+                  <p className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Uncategorized Pins</p>
+                  <p className="mt-2 text-3xl font-bold text-[var(--foreground)]">
                     {stats.pinsPerCat["Other"] || stats.pinsPerCat["uncategorized"] || 0}
                   </p>
-                  <p className="mt-1.5 text-[11px] text-gray-400">Pins without active categories</p>
+                  <p className="mt-1.5 text-[11px] text-[var(--muted)]">Pins without active categories</p>
                 </div>
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Board Health Status</p>
-                  <p className="mt-2 text-lg font-bold text-emerald-600 flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+                  <p className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Board Health Status</p>
+                  <p className="mt-2 text-lg font-bold text-[var(--success-text)] flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-[var(--success)] animate-ping" />
                     Operational
                   </p>
-                  <p className="mt-2 text-[11px] text-gray-400">Firebase feeds connected successfully</p>
+                  <p className="mt-2 text-[11px] text-[var(--muted)]">Firebase feeds connected successfully</p>
                 </div>
               </div>
 
               {/* Graphical distribution */}
               <div className="grid gap-5 md:grid-cols-2">
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-                  <h3 className="text-sm font-bold text-gray-900 mb-4">Pins Distribution By Category</h3>
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+                  <h3 className="text-sm font-bold text-[var(--foreground)] mb-4">Pins Distribution By Category</h3>
                   <div className="space-y-3">
                     {categories.length === 0 ? (
-                      <p className="text-gray-400 text-sm italic">No categories loaded.</p>
+                      <p className="text-[var(--muted)] text-sm italic">No categories loaded.</p>
                     ) : (
                       categories.map((cat) => {
                         const count = stats.pinsPerCat[cat.name] || 0;
                         const pct = stats.totalPins > 0 ? (count / stats.totalPins) * 100 : 0;
                         return (
                           <div key={cat.id} className="space-y-1">
-                            <div className="flex justify-between text-xs font-semibold text-gray-600">
+                            <div className="flex justify-between text-xs font-semibold text-[var(--muted)]">
                               <span>{cat.name}</span>
                               <span className="tabular-nums">
                                 {count} pins ({pct.toFixed(0)}%)
                               </span>
                             </div>
-                            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div className="h-2 w-full bg-[var(--surface-soft)] rounded-full overflow-hidden">
                               <div
                                 style={{ width: `${pct}%` }}
-                                className="h-full bg-indigo-600 rounded-full transition-all duration-500"
+                                className="h-full bg-[var(--primary)] rounded-full transition-all duration-500"
                               />
                             </div>
                           </div>
@@ -900,35 +877,35 @@ export default function PinterestAdmin() {
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm flex flex-col justify-between">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm flex flex-col justify-between">
                   <div>
-                    <h3 className="text-sm font-bold text-gray-900">Pinterest Integration Notes</h3>
-                    <p className="mt-2.5 text-xs leading-5 text-gray-500">
+                    <h3 className="text-sm font-bold text-[var(--foreground)]">Pinterest Integration Notes</h3>
+                    <p className="mt-2.5 text-xs leading-5 text-[var(--muted)]">
                       The public web client fetches these pins in real time via Firebase sub-contracts. Any modifications
                       you apply in this admin console will immediately propagate to live users viewing `/altpintrest` in their
                       browser.
                     </p>
-                    <div className="mt-4 border-t border-gray-100 pt-4 space-y-2">
-                      <div className="flex justify-between text-xs text-gray-500">
+                    <div className="mt-4 border-t border-[var(--border)] pt-4 space-y-2">
+                      <div className="flex justify-between text-xs text-[var(--muted)]">
                         <span>Database Node Path</span>
-                        <span className="font-mono text-gray-600 bg-gray-50 px-1.5 py-0.5 rounded">
+                        <span className="font-mono text-[var(--muted)] bg-[var(--surface-soft)] px-1.5 py-0.5 rounded">
                           projects/altftool/pintrest
                         </span>
                       </div>
-                      <div className="flex justify-between text-xs text-gray-500">
+                      <div className="flex justify-between text-xs text-[var(--muted)]">
                         <span>Database Rules Match</span>
-                        <span className="font-mono text-gray-600 bg-gray-50 px-1.5 py-0.5 rounded">
+                        <span className="font-mono text-[var(--muted)] bg-[var(--surface-soft)] px-1.5 py-0.5 rounded">
                           /projects/altftool/*
                         </span>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 pt-4 border-t border-gray-100">
+                  <div className="mt-6 pt-4 border-t border-[var(--border)]">
                     <a
-                      href="http://localhost:3002/altpintrest"
+                      href={`${getPublicBaseUrl()}/altpintrest`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50 transition"
+                      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-bold text-[var(--foreground)] shadow-sm hover:bg-[var(--surface-soft)] transition"
                     >
                       View Public Pinterest Board
                       <ExternalLink size={12} />
@@ -945,15 +922,15 @@ export default function PinterestAdmin() {
       {/* PIN CREATION / EDITING MODAL                                   */}
       {/* ============================================================== */}
       {isPinModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-950/60 backdrop-blur-xs">
-          <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-              <h3 className="text-base font-bold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--overlay)] backdrop-blur-xs">
+          <div className="w-full max-w-xl rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+              <h3 className="text-base font-bold text-[var(--foreground)]">
                 {editingPin ? `Edit Pinterest Pin: ${editingPin.title}` : "Add New Pinterest Pin"}
               </h3>
               <button
                 onClick={() => setIsPinModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition"
+                className="text-[var(--muted)] hover:text-[var(--foreground)] rounded-lg p-1 transition"
               >
                 <X size={18} />
               </button>
@@ -961,14 +938,14 @@ export default function PinterestAdmin() {
 
             <form onSubmit={handleSavePin} className="space-y-4">
               {pinFormError && (
-                <div className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800 border border-amber-200">
+                <div className="rounded-lg bg-[var(--warning-soft)] p-3 text-xs text-[var(--warning-text)] border border-[var(--warning)]/30">
                   {pinFormError}
                 </div>
               )}
 
               {/* Title input */}
               <div className="space-y-1.5">
-                <label htmlFor="pin-title" className="block text-xs font-semibold text-gray-600">
+                <label htmlFor="pin-title" className="block text-xs font-semibold text-[var(--muted)]">
                   Pin Title
                 </label>
                 <input
@@ -977,7 +954,7 @@ export default function PinterestAdmin() {
                   placeholder="Enter descriptive title for this pin..."
                   value={pinForm.title}
                   onChange={(e) => setPinForm({ ...pinForm, title: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm focus:border-[var(--primary)] focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                   required
                 />
               </div>
@@ -985,8 +962,8 @@ export default function PinterestAdmin() {
               {/* Pin Image — upload to Storage OR paste a URL */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-semibold text-gray-600">Pin Image</label>
-                  <div className="flex gap-1 p-0.5 bg-gray-100 rounded-lg">
+                  <label className="block text-xs font-semibold text-[var(--muted)]">Pin Image</label>
+                  <div className="flex gap-1 p-0.5 bg-[var(--surface-soft)] rounded-lg">
                     {[
                       { id: "upload", label: "Upload File", icon: UploadCloud },
                       { id: "url", label: "Paste URL", icon: Globe },
@@ -999,7 +976,7 @@ export default function PinterestAdmin() {
                           onClick={() => setImageMode(m.id)}
                           disabled={uploading}
                           className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold transition ${
-                            imageMode === m.id ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
+                            imageMode === m.id ? "bg-[var(--surface)] text-[var(--foreground)] shadow-sm" : "text-[var(--muted)] hover:text-[var(--foreground)]"
                           } disabled:opacity-50`}
                         >
                           <MIcon size={13} /> {m.label}
@@ -1018,46 +995,46 @@ export default function PinterestAdmin() {
                         onDragLeave={() => setDragOver(false)}
                         onDrop={(e) => { e.preventDefault(); setDragOver(false); uploadImageFile(e.dataTransfer.files[0]); }}
                         className={`flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed p-6 text-center transition ${
-                          dragOver ? "border-indigo-400 bg-indigo-50" : "border-gray-200 hover:border-indigo-300 hover:bg-gray-50"
+                          dragOver ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--border)] hover:border-[var(--primary)]/40 hover:bg-[var(--surface-soft)]"
                         }`}
                       >
-                        <div className={`grid h-11 w-11 place-items-center rounded-xl transition ${dragOver ? "bg-indigo-100" : "bg-gray-100"}`}>
-                          <UploadCloud size={20} className={dragOver ? "text-indigo-500" : "text-gray-400"} />
+                        <div className={`grid h-11 w-11 place-items-center rounded-xl transition ${dragOver ? "bg-[var(--primary-soft)]" : "bg-[var(--surface-soft)]"}`}>
+                          <UploadCloud size={20} className={dragOver ? "text-[var(--primary)]" : "text-[var(--muted)]"} />
                         </div>
-                        <p className="text-sm font-medium text-gray-700">
-                          Drop image here or <span className="text-indigo-600">browse</span>
+                        <p className="text-sm font-medium text-[var(--foreground)]">
+                          Drop image here or <span className="text-[var(--primary)]">browse</span>
                         </p>
-                        <p className="text-[11px] text-gray-400">JPG, PNG, WebP, GIF · max 10MB</p>
+                        <p className="text-[11px] text-[var(--muted)]">JPG, PNG, WebP, GIF · max 10MB</p>
                       </div>
                     )}
 
                     {uploading && (
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
-                        <div className="flex justify-between text-xs font-semibold text-indigo-600">
+                      <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 space-y-2">
+                        <div className="flex justify-between text-xs font-semibold text-[var(--primary)]">
                           <span className="flex items-center gap-2 truncate">
                             <Loader2 size={12} className="animate-spin shrink-0" /> Uploading {uploadedName}
                           </span>
                           <span>{uploadProgress}%</span>
                         </div>
-                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
-                          <div className="h-full rounded-full bg-indigo-500 transition-all duration-200" style={{ width: `${uploadProgress}%` }} />
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--border)]">
+                          <div className="h-full rounded-full bg-[var(--primary)] transition-all duration-200" style={{ width: `${uploadProgress}%` }} />
                         </div>
                       </div>
                     )}
 
                     {pinForm.image && !uploading && (
-                      <div className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-                        <div className="relative h-40 bg-gray-100">
+                      <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-soft)]">
+                        <div className="relative h-40 bg-[var(--surface-soft)]">
                           <img src={pinForm.image} alt="Preview" className="h-full w-full object-contain" onError={(e) => { e.target.style.opacity = "0.3"; }} />
                         </div>
-                        <div className="flex items-center justify-between gap-2 border-t border-gray-200 bg-white px-3 py-2">
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                        <div className="flex items-center justify-between gap-2 border-t border-[var(--border)] bg-[var(--surface)] px-3 py-2">
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-[var(--success-text)]">
                             <CheckCircle2 size={14} /> Image ready
                           </span>
                           <button
                             type="button"
                             onClick={() => { setPinForm((p) => ({ ...p, image: "" })); resetUploadState(); fileInputRef.current?.click(); }}
-                            className="rounded-lg border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                            className="rounded-lg border border-[var(--border)] px-2.5 py-1 text-xs font-semibold text-[var(--muted)] hover:bg-[var(--surface-soft)]"
                           >
                             Replace
                           </button>
@@ -1082,17 +1059,17 @@ export default function PinterestAdmin() {
                         placeholder="https://example.com/image.jpg"
                         value={pinForm.image}
                         onChange={(e) => setPinForm({ ...pinForm, image: e.target.value })}
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="w-full rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm focus:border-[var(--primary)] focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                       />
-                      <p className="text-[10px] text-gray-400 leading-normal">
+                      <p className="text-[10px] text-[var(--muted)] leading-normal">
                         Paste a direct image URL. Local paths like `/altpintrest-images/...` also work.
                       </p>
                     </div>
-                    <div className="flex h-28 items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 p-2">
+                    <div className="flex h-28 items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--surface-soft)] p-2">
                       {pinForm.image ? (
                         <img src={pinForm.image} alt="Preview" className="h-full w-full object-contain rounded" onError={(e) => { e.target.style.display = "none"; }} />
                       ) : (
-                        <div className="text-center text-gray-400">
+                        <div className="text-center text-[var(--muted)]">
                           <ImageIcon size={20} className="mx-auto" />
                           <span className="mt-1 block text-[10px]">Live Preview</span>
                         </div>
@@ -1105,14 +1082,14 @@ export default function PinterestAdmin() {
               {/* Category & Likes inputs */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label htmlFor="pin-category" className="block text-xs font-semibold text-gray-600">
+                  <label htmlFor="pin-category" className="block text-xs font-semibold text-[var(--muted)]">
                     Category Segment
                   </label>
                   <select
                     id="pin-category"
                     value={pinForm.category}
                     onChange={(e) => setPinForm({ ...pinForm, category: e.target.value })}
-                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2.5 text-sm text-[var(--foreground)] focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                   >
                     {categories.length === 0 && <option value="Other">Other</option>}
                     {categories.map((cat) => (
@@ -1124,7 +1101,7 @@ export default function PinterestAdmin() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="pin-likes" className="block text-xs font-semibold text-gray-600">
+                  <label htmlFor="pin-likes" className="block text-xs font-semibold text-[var(--muted)]">
                     Likes Engagement
                   </label>
                   <input
@@ -1133,24 +1110,24 @@ export default function PinterestAdmin() {
                     min="0"
                     value={pinForm.likes}
                     onChange={(e) => setPinForm({ ...pinForm, likes: Number(e.target.value) || 0 })}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full rounded-lg border border-[var(--border)] px-3 py-2.5 text-sm focus:border-[var(--primary)] focus:outline-none focus:[box-shadow:var(--focus-ring)]"
                   />
                 </div>
               </div>
 
               {/* Actions footer */}
-              <div className="flex justify-end gap-2.5 border-t border-gray-100 pt-4 mt-2">
+              <div className="flex justify-end gap-2.5 border-t border-[var(--border)] pt-4 mt-2">
                 <button
                   type="button"
                   onClick={() => setIsPinModalOpen(false)}
-                  className="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition"
+                  className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-semibold text-[var(--foreground)] hover:bg-[var(--surface-soft)] transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={savingPin || uploading}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 transition disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[var(--primary)] px-4 py-2.5 text-sm font-semibold text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)] transition disabled:opacity-50"
                 >
                   {(savingPin || uploading) && <Loader2 size={14} className="animate-spin" />}
                   {uploading ? "Uploading…" : "Save Pin Data"}
@@ -1170,7 +1147,7 @@ export default function PinterestAdmin() {
           defaultCategory={selectedCategory !== "All" ? selectedCategory : undefined}
           onClose={() => setIsBulkOpen(false)}
           onUploaded={(count) =>
-            showNotification("success", `${count} image${count > 1 ? "s" : ""} uploaded as pins.`)
+            emitAlert({ type: "success", message: `${count} image${count > 1 ? "s" : ""} uploaded as pins.` })
           }
         />
       )}

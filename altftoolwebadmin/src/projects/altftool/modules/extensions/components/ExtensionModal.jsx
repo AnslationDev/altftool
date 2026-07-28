@@ -20,15 +20,15 @@ import {
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+        {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
-        {required && <span className="text-red-400 font-bold">*</span>}
+        {required && <span className="text-[var(--danger)] font-bold">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />{error}
         </p>
       )}
@@ -41,12 +41,12 @@ function Input({ error, className = "", ...props }) {
   return (
     <input
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition
         ${error
-          ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-          : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}
-        ${props.readOnly ? "bg-gray-50 text-gray-500 cursor-not-allowed" : ""}
+          ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+          : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}
+        ${props.readOnly ? "bg-[var(--surface-soft)] text-[var(--muted)] cursor-not-allowed" : ""}
         ${className}`}
     />
   );
@@ -57,11 +57,11 @@ function Textarea({ error, ...props }) {
   return (
     <textarea
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition resize-none
         ${error
-          ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-          : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`}
+          ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+          : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}`}
     />
   );
 }
@@ -81,7 +81,7 @@ function RatingPicker({ value, onChange, error }) {
               onMouseLeave={() => setHovered(null)}
               onClick={() => onChange(star)}
               className="p-0.5 transition-transform hover:scale-110">
-              <svg viewBox="0 0 24 24" className={`w-6 h-6 transition-colors ${display >= star ? "text-yellow-400" : "text-gray-200"}`}
+              <svg viewBox="0 0 24 24" className={`w-6 h-6 transition-colors ${display >= star ? "text-[var(--warning)]" : "text-[var(--border-strong)]"}`}
                 fill="currentColor">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
@@ -98,14 +98,14 @@ function RatingPicker({ value, onChange, error }) {
           />
           {value > 0 && (
             <button type="button" onClick={() => onChange("")}
-              className="text-xs text-gray-400 hover:text-gray-600 transition">
+              className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition">
               Clear
             </button>
           )}
         </div>
       </div>
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />{error}
         </p>
       )}
@@ -116,8 +116,8 @@ function RatingPicker({ value, onChange, error }) {
 /* ── Progress bar ── */
 function ProgressBar({ value }) {
   return (
-    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-      <div className="h-full bg-blue-500 rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
+    <div className="h-1.5 w-full bg-[var(--surface-soft)] rounded-full overflow-hidden">
+      <div className="h-full bg-[var(--primary)] rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
     </div>
   );
 }
@@ -127,8 +127,8 @@ function Section({ title, children }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-[10px] font-black text-[var(--muted)] uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
+        <div className="flex-1 h-px bg-[var(--border)]" />
       </div>
       {children}
     </div>
@@ -281,23 +281,23 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
   const stepLabel = { idle: isEdit ? "Update Extension" : "Create Extension", uploading: `Uploading… ${uploadProgress}%`, saving: "Saving…", done: "Done!" }[step];
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
+      <div className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">
+            <h2 className="text-base font-bold text-[var(--foreground)]">
               {isEdit ? "Edit Extension" : "New Extension"}
             </h2>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-[var(--muted)] mt-0.5">
               {isEdit
-                ? <>Editing <span className="font-semibold text-gray-700">{extension.name}</span></>
+                ? <>Editing <span className="font-semibold text-[var(--foreground)]">{extension.name}</span></>
                 : "Configure extension details, features, and preview image."}
             </p>
           </div>
-          <button onClick={onClose} disabled={loading}
-            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition disabled:opacity-40">
+          <button onClick={onClose} disabled={loading} aria-label="Close"
+            className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -321,7 +321,7 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
                   <Input value={slug}
                     onChange={(e) => { setSlug(e.target.value); setErrors((p) => ({ ...p, slug: undefined })); }}
                     readOnly={isEdit} error={errors.slug} disabled={loading} />
-                  {isEdit && <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-300" />}
+                  {isEdit && <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--border-strong)]" />}
                 </div>
               </Field>
             </div>
@@ -371,7 +371,7 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
             <div className="space-y-2">
               {features.map((f, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <div className="text-gray-300 cursor-grab shrink-0">
+                  <div className="text-[var(--border-strong)] cursor-grab shrink-0">
                     <GripVertical className="w-4 h-4" />
                   </div>
                   <div className="flex-1 relative">
@@ -382,18 +382,18 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
                       disabled={loading} />
                   </div>
                   <button type="button" onClick={() => removeFeature(i)} disabled={features.length === 1 || loading}
-                    className="p-1.5 rounded-lg text-gray-300 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-30 shrink-0">
+                    className="p-1.5 rounded-lg text-[var(--border-strong)] hover:text-[var(--danger-text)] hover:bg-[var(--danger-soft)] transition disabled:opacity-30 shrink-0">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
               ))}
               {errors.features && (
-                <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+                <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
                   <AlertCircle className="w-3 h-3" />{errors.features}
                 </p>
               )}
               <button type="button" onClick={addFeature} disabled={loading}
-                className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition disabled:opacity-40">
+                className="flex items-center gap-1.5 text-xs font-semibold text-[var(--primary)] hover:text-[var(--primary-hover)] bg-[var(--primary-soft)] hover:opacity-90 px-3 py-1.5 rounded-lg transition disabled:opacity-40">
                 <Plus className="w-3.5 h-3.5" />Add Feature
               </button>
             </div>
@@ -408,45 +408,45 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
                 onDrop={handleDrop}
                 onClick={() => !loading && fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center gap-3 transition-all cursor-pointer
-                  ${dragOver ? "border-blue-400 bg-blue-50 scale-[1.01]" : errors.image ? "border-red-300 bg-red-50/30" : "border-gray-200 hover:border-blue-300 hover:bg-gray-50"}
+                  ${dragOver ? "border-[var(--primary)] bg-[var(--primary-soft)] scale-[1.01]" : errors.image ? "border-[var(--danger)]/40 bg-[var(--danger-soft)]" : "border-[var(--border)] hover:border-[var(--primary)]/40 hover:bg-[var(--surface-soft)]"}
                   ${loading ? "pointer-events-none opacity-50" : ""}`}
               >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${dragOver ? "bg-blue-100" : "bg-gray-100"}`}>
-                  <UploadCloud className={`w-6 h-6 transition-colors ${dragOver ? "text-blue-500" : "text-gray-400"}`} />
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${dragOver ? "bg-[var(--primary-soft)]" : "bg-[var(--surface-soft)]"}`}>
+                  <UploadCloud className={`w-6 h-6 transition-colors ${dragOver ? "text-[var(--primary)]" : "text-[var(--muted)]"}`} />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-700">Drop image here or <span className="text-blue-500">browse</span></p>
-                  <p className="text-xs text-gray-400 mt-1">JPG, PNG, WebP · Max 2MB</p>
+                  <p className="text-sm font-medium text-[var(--foreground)]">Drop image here or <span className="text-[var(--primary)]">browse</span></p>
+                  <p className="text-xs text-[var(--muted)] mt-1">JPG, PNG, WebP · Max 2MB</p>
                 </div>
                 {errors.image && (
-                  <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+                  <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
                     <AlertCircle className="w-3 h-3" />{errors.image}
                   </p>
                 )}
               </div>
             ) : (
-              <div className="rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
+              <div className="rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)]">
                 <div className="relative group">
-                  <img src={preview} alt="Preview" className="w-full max-h-52 object-contain bg-white" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <img src={preview} alt="Preview" className="w-full max-h-52 object-contain bg-[var(--surface-soft)]" />
+                  <div className="absolute inset-0 bg-[var(--overlay)]/0 group-hover:bg-[var(--overlay)]/40 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
                     <button onClick={removeImage} disabled={loading}
-                      className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                      className="flex items-center gap-1.5 bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] text-xs font-semibold px-3 py-1.5 rounded-lg transition">
                       <Trash2 className="w-3.5 h-3.5" />Remove
                     </button>
                   </div>
                 </div>
                 {file && (
-                  <div className="flex items-center justify-between px-4 py-2.5 border-t border-gray-200 bg-white">
+                  <div className="flex items-center justify-between px-4 py-2.5 border-t border-[var(--border)] bg-[var(--surface)]">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                        <UploadCloud className="w-3.5 h-3.5 text-indigo-500" />
+                      <div className="w-7 h-7 rounded-lg bg-[var(--primary-soft)] flex items-center justify-center shrink-0">
+                        <UploadCloud className="w-3.5 h-3.5 text-[var(--primary)]" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-medium text-gray-700 truncate">{file.name}</p>
-                        <p className="text-[10px] text-gray-400">{fmtSize(file.size)}</p>
+                        <p className="text-xs font-medium text-[var(--foreground)] truncate">{file.name}</p>
+                        <p className="text-[10px] text-[var(--muted)]">{fmtSize(file.size)}</p>
                       </div>
                     </div>
-                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
                   </div>
                 )}
               </div>
@@ -457,7 +457,7 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
           {/* Upload progress */}
           {step === "uploading" && (
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-[var(--muted)]">
                 <span>Uploading image…</span>
                 <span className="font-semibold tabular-nums">{uploadProgress}%</span>
               </div>
@@ -465,12 +465,12 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
             </div>
           )}
           {step === "saving" && (
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />Saving to database…
+            <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--primary)]" />Saving to database…
             </div>
           )}
           {step === "done" && (
-            <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+            <div className="flex items-center gap-2 text-xs text-[var(--success-text)] font-medium">
               <CheckCircle2 className="w-4 h-4" />{isEdit ? "Extension updated!" : "Extension created!"}
             </div>
           )}
@@ -478,19 +478,19 @@ export default function ExtensionModal({ extension, onClose, refresh }) {
         </div>
 
         {/* ── Footer ── */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
+          <p className="text-xs text-[var(--muted)]">
             {isEdit
               ? "Changes will update the extension immediately."
-              : <><span className="font-semibold text-gray-600">hasChromeStore</span> is set automatically from the Chrome URL.</>}
+              : <><span className="font-semibold text-[var(--foreground)]">hasChromeStore</span> is set automatically from the Chrome URL.</>}
           </p>
           <div className="flex items-center gap-2 shrink-0">
             <button onClick={onClose} disabled={loading}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40">
+              className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] hover:bg-[var(--surface)] transition disabled:opacity-40">
               Cancel
             </button>
             <button onClick={saveExtension} disabled={loading || step === "done"}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
+              className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--foreground)] hover:opacity-90 disabled:opacity-60 text-[var(--background)] font-semibold rounded-xl transition shadow-sm">
               {loading && step !== "done" && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
               {stepLabel}

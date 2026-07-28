@@ -21,17 +21,17 @@ export default function ConsumerRating() {
 
 
   return (
-    <div className="flex overflow-hidden min-h-screen bg-gray-50">
+    <div className="flex overflow-hidden min-h-screen bg-[var(--background)]">
 
       {/* LEFT SIDEBAR */}
-      <div className="w-[20%] bg-white border-r border-gray-200 shadow-sm">
+      <div className="w-[20%] bg-[var(--surface)] border-r border-[var(--border)] shadow-sm">
 
         {/* Header */}
-        <div className="px-4 py-5 border-b border-gray-100">
-          <h2 className="text-xs font-semibold text-gray-700 uppercase tracking-widest">
+        <div className="px-4 py-5 border-b border-[var(--border)]">
+          <h2 className="text-xs font-semibold text-[var(--foreground)] uppercase tracking-widest">
             BuySmart Control
           </h2>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-[var(--muted)] mt-1">
             Manage Banners Across BuySmart
           </p>
         </div>
@@ -45,8 +45,8 @@ export default function ConsumerRating() {
               className={`px-3 py-2.5 cursor-pointer text-sm font-medium rounded-sm transition-all duration-150
               ${
                 activeSection === item.key
-                  ? "text-white bg-black border border-blue-100"
-                  : "text-gray-600 hover:bg-gray-100"
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)] border border-[var(--primary)]"
+                  : "text-[var(--muted)] hover:bg-[var(--surface-soft)]"
               }`}
             >
               {item.label}

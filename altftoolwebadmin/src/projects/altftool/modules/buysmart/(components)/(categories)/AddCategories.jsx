@@ -323,7 +323,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryTitle" className="block text-sm font-medium mb-1">
             Banner Title
           </label>
           <div className="relative">
@@ -332,6 +332,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
             <input
+              id="categoryTitle"
               name="title"
               placeholder="Anslation || Google || Microsoft"
               value={form.title}
@@ -347,11 +348,12 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         <div>
 
-          <label className="block text-sm font-semibold">
+          <label htmlFor="categorySelect" className="block text-sm font-semibold">
             Category
           </label>
 
           <select
+            id="categorySelect"
             name="category"
             value={form.category}
             onChange={(e) => {
@@ -407,7 +409,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         {/* discount */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryDiscount" className="block text-sm font-medium mb-1">
             Banner Discount
           </label>
           <div className="relative">
@@ -416,6 +418,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
             <input
+              id="categoryDiscount"
               name="discount"
               placeholder="Big Sale – Up to 50% Off || Optional"
               value={form.discount}
@@ -429,7 +432,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         {/* description */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryDisc" className="block text-sm font-medium mb-1">
             Banner description
           </label>
           <div className="relative">
@@ -438,6 +441,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
             <input
+              id="categoryDisc"
               name="disc"
               placeholder="brand description"
               value={form.disc}
@@ -452,10 +456,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-sm font-semibold text-gray-700">
+            <label htmlFor="categoryOfferType" className="block text-sm font-semibold text-gray-700">
               Offer Type
             </label>
             <select
+              id="categoryOfferType"
               name="offerType"
               value={form.offerType}
               onChange={handleChange}
@@ -471,10 +476,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryCouponCode" className="block text-sm font-medium mb-1">
               Coupon / Promo Code
             </label>
             <input
+              id="categoryCouponCode"
               name="couponCode"
               placeholder="SAVE20"
               value={form.couponCode}
@@ -484,10 +490,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryCashback" className="block text-sm font-medium mb-1">
               Cash Back
             </label>
             <input
+              id="categoryCashback"
               name="cashback"
               placeholder="5% cash back"
               value={form.cashback}
@@ -497,10 +504,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryPoints" className="block text-sm font-medium mb-1">
               Reward Points
             </label>
             <input
+              id="categoryPoints"
               name="points"
               placeholder="Earn 500 points"
               value={form.points}
@@ -510,10 +518,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryAudience" className="block text-sm font-medium mb-1">
               Audience
             </label>
             <input
+              id="categoryAudience"
               name="audience"
               placeholder="Students, creators, all shoppers"
               value={form.audience}
@@ -523,10 +532,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryExpiresAt" className="block text-sm font-medium mb-1">
               Expires At
             </label>
             <input
+              id="categoryExpiresAt"
               type="date"
               name="expiresAt"
               value={form.expiresAt}
@@ -536,10 +546,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryPriority" className="block text-sm font-medium mb-1">
               Priority
             </label>
             <input
+              id="categoryPriority"
               type="number"
               min="0"
               name="priority"
@@ -550,10 +561,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="categoryTerms" className="block text-sm font-medium mb-1">
               Terms
             </label>
             <input
+              id="categoryTerms"
               name="terms"
               placeholder="Minimum order, region, tracking rule"
               value={form.terms}
@@ -570,10 +582,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="block text-sm font-semibold text-gray-700">
+              <label htmlFor="categoryVerificationStatus" className="block text-sm font-semibold text-gray-700">
                 Verification Status
               </label>
               <select
+                id="categoryVerificationStatus"
                 name="verificationStatus"
                 value={form.verificationStatus}
                 onChange={handleChange}
@@ -588,10 +601,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label htmlFor="categorySuccessRate" className="block text-sm font-medium mb-1">
                 Success Rate
               </label>
               <input
+                id="categorySuccessRate"
                 type="number"
                 min="0"
                 max="100"
@@ -603,10 +617,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label htmlFor="categoryLastVerifiedAt" className="block text-sm font-medium mb-1">
                 Last Verified At
               </label>
               <input
+                id="categoryLastVerifiedAt"
                 type="date"
                 name="lastVerifiedAt"
                 value={form.lastVerifiedAt}
@@ -616,10 +631,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label htmlFor="categoryWorkingVotes" className="block text-sm font-medium mb-1">
                 Working Votes
               </label>
               <input
+                id="categoryWorkingVotes"
                 type="number"
                 min="0"
                 name="workingVotes"
@@ -630,10 +646,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label htmlFor="categoryFailedVotes" className="block text-sm font-medium mb-1">
                 Failed Votes
               </label>
               <input
+                id="categoryFailedVotes"
                 type="number"
                 min="0"
                 name="failedVotes"
@@ -644,10 +661,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label htmlFor="categoryReviewNote" className="block text-sm font-medium mb-1">
                 Review Note
               </label>
               <input
+                id="categoryReviewNote"
                 name="reviewNote"
                 placeholder="Checked checkout page, student terms, region..."
                 value={form.reviewNote}
@@ -678,11 +696,12 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryImageFile" className="block text-sm font-medium mb-1">
             Brand Image Logo
           </label>
 
           <input
+            id="categoryImageFile"
             type="file"
             accept="image/*"
             onChange={handleImageChange}
@@ -692,11 +711,12 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryImageUrl" className="block text-sm font-medium mb-1">
             Image URL (Optional if file selected)
           </label>
 
           <input
+            id="categoryImageUrl"
             type="text"
             name="img"
             placeholder="https://example.com/image.jpg"
@@ -711,7 +731,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
 
         {/* CTA Link */}
         <div>
-          <label className="block text-sm font-medium mb-1">
+          <label htmlFor="categoryLink" className="block text-sm font-medium mb-1">
             CTA Link
           </label>
           <div className="relative">
@@ -720,6 +740,7 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
             <input
+              id="categoryLink"
               name="link"
               placeholder="https://buysmart.com/deals"
               value={form.link}
@@ -735,10 +756,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
         {/* button  country  */}
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700">
+          <label htmlFor="categoryStatus" className="block text-sm font-semibold text-gray-700">
             Campaign Status
           </label>
           <select
+            id="categoryStatus"
             name="status"
             value={form.status}
             onChange={handleChange}
@@ -748,10 +770,11 @@ function AddCategories({ setActive, setEditCategories, editCategories, active })
             <option value="paused">Paused</option>
           </select>
           <div className="mt-4" >
-            <label className="block text-sm font-semibold mb-2">
+            <label htmlFor="categoryCountry" className="block text-sm font-semibold mb-2">
               Country <span className="text-red-600">*</span>
             </label>
             <Select
+              inputId="categoryCountry"
               options={countryOptions}
               value={selectedCountry}
               onChange={handleCountryChange}

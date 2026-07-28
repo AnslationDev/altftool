@@ -117,7 +117,7 @@ function GetBrand({ setActive, setEditBrand }) {
           <a
             href={row.original.link}
             target="_blank"
-            className="text-blue-600 underline"
+            className="text-[var(--primary)] underline"
           >
             Visit
           </a>

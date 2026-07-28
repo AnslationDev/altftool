@@ -40,14 +40,14 @@ function getRowLabel(row) {
 export function SafeTableImage({
   src,
   alt = "Preview",
-  className = "h-12 w-20 rounded border border-gray-200 object-cover",
-  fallbackClassName = "h-12 w-20 rounded border border-dashed border-gray-300 bg-gray-50",
+  className = "h-12 w-20 rounded border border-[var(--border)] object-cover",
+  fallbackClassName = "h-12 w-20 rounded border border-dashed border-[var(--border-strong)] bg-[var(--surface-soft)]",
 }) {
   const [failed, setFailed] = useState(false);
 
   if (!src || failed) {
     return (
-      <div className={`grid place-items-center text-xs font-medium text-gray-500 ${fallbackClassName}`}>
+      <div className={`grid place-items-center text-xs font-medium text-[var(--muted)] ${fallbackClassName}`}>
         <span className="inline-flex items-center gap-2">
           <ImageOff className="h-4 w-4" />
           <span className="sr-only">Image unavailable</span>
@@ -74,7 +74,7 @@ function StatusButton({ item, rowId, updatingStatusId, onStatusChange, setUpdati
 
   if (!onStatusChange) {
     return (
-      <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ${isActive ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"}`}>
+      <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold ${isActive ? "bg-[var(--success-soft)] text-[var(--success-text)]" : "bg-[var(--surface-soft)] text-[var(--muted)]"}`}>
         {isActive ? "Active" : "Paused"}
       </span>
     );
@@ -92,7 +92,7 @@ function StatusButton({ item, rowId, updatingStatusId, onStatusChange, setUpdati
           setUpdatingStatusId(null);
         }
       }}
-      className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${isActive ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-200 text-gray-600 hover:bg-gray-300"}`}
+      className={`inline-flex rounded-full px-3 py-1.5 text-xs font-semibold transition hover:opacity-80 disabled:opacity-60 ${isActive ? "bg-[var(--success-soft)] text-[var(--success-text)]" : "bg-[var(--surface-soft)] text-[var(--muted)]"}`}
     >
       {isUpdating ? "Updating..." : isActive ? "Active" : "Paused"}
     </button>
@@ -106,7 +106,7 @@ function RowActions({ item, onEdit, onDeleteSingle, onPreview, deleting = false 
         type="button"
         title="View"
         onClick={() => onPreview(item)}
-        className="rounded-md p-1.5 text-blue-600 transition hover:bg-blue-50"
+        className="rounded-md p-1.5 text-[var(--primary)] transition hover:bg-[var(--primary-soft)]"
       >
         <ExternalLink size={16} />
       </button>
@@ -117,7 +117,7 @@ function RowActions({ item, onEdit, onDeleteSingle, onPreview, deleting = false 
           title="Edit"
           disabled={deleting}
           onClick={() => onEdit(item)}
-          className="rounded-md p-1.5 text-amber-500 transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md p-1.5 text-[var(--warning)] transition hover:bg-[var(--warning-soft)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Pencil size={16} />
         </button>
@@ -129,7 +129,7 @@ function RowActions({ item, onEdit, onDeleteSingle, onPreview, deleting = false 
           title={deleting ? "Deleting" : "Delete"}
           disabled={deleting}
           onClick={() => onDeleteSingle(item)}
-          className="rounded-md p-1.5 text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md p-1.5 text-[var(--danger)] transition hover:bg-[var(--danger-soft)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
         </button>
@@ -148,15 +148,15 @@ function DeleteConfirmDialog({ pendingDelete, busy, onCancel, onConfirm }) {
     : getRowLabel(pendingDelete.row);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-5 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--overlay)] p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-2xl">
         <div className="flex items-start gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-red-50 text-red-600">
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[var(--danger-soft)] text-[var(--danger)]">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-gray-900">{title}</h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <h2 className="text-base font-semibold text-[var(--foreground)]">{title}</h2>
+            <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
               This will permanently delete {target}. This action cannot be undone.
             </p>
           </div>
@@ -167,7 +167,7 @@ function DeleteConfirmDialog({ pendingDelete, busy, onCancel, onConfirm }) {
             type="button"
             onClick={onCancel}
             disabled={busy}
-            className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             Cancel
           </button>
@@ -175,7 +175,7 @@ function DeleteConfirmDialog({ pendingDelete, busy, onCancel, onConfirm }) {
             type="button"
             onClick={onConfirm}
             disabled={busy}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-red-600 px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[var(--danger)] px-4 text-sm font-semibold text-[var(--danger-foreground)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
             {busy ? "Deleting..." : "Delete"}
@@ -462,30 +462,30 @@ function ReusableTable({
   }
 
   return (
-    <div className="max-w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div className="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="max-w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-sm">
+      <div className="flex flex-col gap-3 border-b border-[var(--border)] p-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="relative w-full lg:max-w-sm">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search rows"
-            className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-3 text-sm outline-none transition focus:border-gray-400"
+            className="h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] pl-9 pr-3 text-sm outline-none transition focus:border-[var(--primary)]"
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--muted)]">
           <span>
             {filteredData.length} row{filteredData.length === 1 ? "" : "s"}
           </span>
           {filteredData.length > 0 ? (
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+            <span className="rounded-full bg-[var(--surface-soft)] px-3 py-1 text-xs font-semibold text-[var(--foreground)]">
               Showing {firstVisibleRow}-{lastVisibleRow}
             </span>
           ) : null}
           {selectedIds.length > 0 ? (
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+            <span className="rounded-full bg-[var(--surface-soft)] px-3 py-1 text-xs font-semibold text-[var(--foreground)]">
               {selectedIds.length} selected
             </span>
           ) : null}
@@ -494,7 +494,7 @@ function ReusableTable({
               type="button"
               onClick={() => setRowSelection({})}
               disabled={bulkDeleting}
-              className="inline-flex h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               Clear selection
             </button>
@@ -504,7 +504,7 @@ function ReusableTable({
               type="button"
               onClick={requestBulkDelete}
               disabled={bulkDeleting}
-              className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-600 px-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-10 items-center gap-2 rounded-lg bg-[var(--danger)] px-3 text-sm font-semibold text-[var(--danger-foreground)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {bulkDeleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
               {bulkDeleting ? "Deleting..." : `Delete selected (${selectedIds.length})`}
@@ -514,7 +514,7 @@ function ReusableTable({
       </div>
 
       {actionError ? (
-        <div className="mx-4 mb-4 flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+        <div className="mx-4 mb-4 flex items-start gap-2 rounded-lg border border-[var(--warning)]/30 bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
           <span>{actionError}</span>
         </div>
@@ -531,11 +531,11 @@ function ReusableTable({
               .slice(0, 5);
 
             return (
-              <article key={rowId || rowIndex} className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+              <article key={rowId || rowIndex} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="break-words text-sm font-bold text-gray-950">{getRowLabel(row)}</p>
-                    <p className="mt-1 text-xs font-semibold text-gray-500">Row {pageIndex * pageSize + rowIndex + 1}</p>
+                    <p className="break-words text-sm font-bold text-[var(--foreground)]">{getRowLabel(row)}</p>
+                    <p className="mt-1 text-xs font-semibold text-[var(--muted)]">Row {pageIndex * pageSize + rowIndex + 1}</p>
                   </div>
                   {canSelectRows ? (
                     <input
@@ -549,7 +549,7 @@ function ReusableTable({
                           return next;
                         })
                       }
-                      className="h-4 w-4 rounded border-gray-300"
+                      className="h-4 w-4 rounded border-[var(--border)]"
                       aria-label={`Select ${getRowLabel(row)}`}
                     />
                   ) : null}
@@ -557,11 +557,11 @@ function ReusableTable({
 
                 <dl className="mt-4 grid gap-3">
                   {cardColumns.map((column, columnIndex) => (
-                    <div key={`${rowId}-${column.id || column.accessorKey || column.header || columnIndex}`} className="rounded-lg bg-gray-50 p-3">
-                      <dt className="text-[11px] font-bold uppercase tracking-wide text-gray-500">
+                    <div key={`${rowId}-${column.id || column.accessorKey || column.header || columnIndex}`} className="rounded-lg bg-[var(--surface-soft)] p-3">
+                      <dt className="text-[11px] font-bold uppercase tracking-wide text-[var(--muted)]">
                         {column.header || column.accessorKey || "Value"}
                       </dt>
-                      <dd className="mt-1 break-words text-sm font-semibold text-gray-800">
+                      <dd className="mt-1 break-words text-sm font-semibold text-[var(--foreground)]">
                         {renderCell(row, column, rowIndex)}
                       </dd>
                     </div>
@@ -569,7 +569,7 @@ function ReusableTable({
                 </dl>
 
                 {actionColumn ? (
-                  <div className="mt-4 flex justify-end border-t border-gray-100 pt-3">
+                  <div className="mt-4 flex justify-end border-t border-[var(--border)] pt-3">
                     {renderCell(row, actionColumn, rowIndex)}
                   </div>
                 ) : null}
@@ -591,8 +591,8 @@ function ReusableTable({
       </div>
 
       <div className="hidden max-w-full overflow-x-auto md:block">
-        <table className="min-w-[720px] w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
+        <table className="min-w-[720px] w-full divide-y divide-[var(--border)] text-sm">
+          <thead className="bg-[var(--surface-soft)] text-left text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
             <tr>
               {canSelectRows ? (
                 <th className="w-12 px-4 py-3">
@@ -600,7 +600,7 @@ function ReusableTable({
                     type="checkbox"
                     checked={allVisibleSelected}
                     onChange={toggleAllVisible}
-                    className="h-4 w-4 rounded border-gray-300"
+                    className="h-4 w-4 rounded border-[var(--border)]"
                     aria-label="Select visible rows"
                   />
                 </th>
@@ -616,12 +616,12 @@ function ReusableTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 bg-white text-gray-700">
+          <tbody className="divide-y divide-[var(--border)] bg-[var(--surface)] text-[var(--foreground)]">
             {visibleRows.length > 0 ? (
               visibleRows.map((row, rowIndex) => {
                 const rowId = String(getRowId(row));
                 return (
-                  <tr key={rowId || rowIndex} className="transition hover:bg-gray-50">
+                  <tr key={rowId || rowIndex} className="transition hover:bg-[var(--surface-soft)]">
                     {canSelectRows ? (
                       <td className="px-4 py-3">
                         <input
@@ -635,7 +635,7 @@ function ReusableTable({
                               return next;
                             })
                           }
-                          className="h-4 w-4 rounded border-gray-300"
+                          className="h-4 w-4 rounded border-[var(--border)]"
                           aria-label={`Select row ${rowIndex + 1}`}
                         />
                       </td>
@@ -653,7 +653,7 @@ function ReusableTable({
               })
             ) : (
               <tr>
-                <td colSpan={columns.length + (canSelectRows ? 1 : 0)} className="px-4 py-10 text-center font-medium text-gray-500">
+                <td colSpan={columns.length + (canSelectRows ? 1 : 0)} className="px-4 py-10 text-center font-medium text-[var(--muted)]">
                   <AdminDataState
                     type="empty"
                     compact
@@ -668,13 +668,13 @@ function ReusableTable({
         </table>
       </div>
 
-      <div className="flex flex-col gap-3 border-t border-gray-200 p-4 sm:flex-row sm:items-center sm:justify-between">
-        <label className="flex items-center gap-2 text-sm text-gray-500">
+      <div className="flex flex-col gap-3 border-t border-[var(--border)] p-4 sm:flex-row sm:items-center sm:justify-between">
+        <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
           Rows per page
           <select
             value={pageSize}
             onChange={(event) => setPageSize(Number(event.target.value))}
-            className="h-9 rounded-lg border border-gray-200 bg-white px-2 text-sm text-gray-700"
+            className="h-9 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 text-sm text-[var(--foreground)]"
           >
             {PAGE_SIZES.map((size) => (
               <option key={size} value={size}>
@@ -684,7 +684,7 @@ function ReusableTable({
           </select>
         </label>
 
-        <div className="flex items-center gap-2 text-sm text-gray-500">
+        <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
           <span>
             Page {pageIndex + 1} of {pageCount}
           </span>
@@ -692,7 +692,7 @@ function ReusableTable({
             type="button"
             onClick={() => setPageIndex((value) => Math.max(0, value - 1))}
             disabled={pageIndex === 0}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-gray-200 text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Previous page"
           >
             <ChevronLeft size={16} />
@@ -701,7 +701,7 @@ function ReusableTable({
             type="button"
             onClick={() => setPageIndex((value) => Math.min(pageCount - 1, value + 1))}
             disabled={pageIndex >= pageCount - 1}
-            className="grid h-9 w-9 place-items-center rounded-lg border border-gray-200 text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--surface-soft)] disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Next page"
           >
             <ChevronRight size={16} />
@@ -717,30 +717,30 @@ function ReusableTable({
       />
 
       {previewModal && selectedRow ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--overlay)] p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-3xl overflow-hidden rounded-2xl bg-[var(--surface)] shadow-2xl">
             <button
               type="button"
               onClick={closePreviewModal}
-              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-500 shadow-md transition hover:bg-gray-100 hover:text-black"
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] shadow-md transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)]"
             >
               <X size={18} />
             </button>
 
-            <div className="border-b border-gray-200 bg-gradient-to-r from-slate-50 to-blue-50 px-6 py-5">
-              <h2 className="text-2xl font-bold text-gray-800">Preview Details</h2>
-              <p className="mt-1 text-sm text-gray-500">View complete information for this row</p>
+            <div className="border-b border-[var(--border)] bg-gradient-to-r from-[var(--primary-soft)] to-[var(--accent-soft)] px-6 py-5">
+              <h2 className="text-2xl font-bold text-[var(--foreground)]">Preview Details</h2>
+              <p className="mt-1 text-sm text-[var(--muted)]">View complete information for this row</p>
             </div>
 
             <div className="max-h-[85vh] overflow-y-auto px-6 py-6">
               <div className="space-y-5">
                 {(selectedRow.image || selectedRow.img) && (
-                  <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
+                  <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]">
                     <SafeTableImage
                       src={selectedRow.image || selectedRow.img}
                       alt={selectedRow.title || "Preview"}
                       className="h-72 w-full object-contain"
-                      fallbackClassName="h-72 w-full rounded-lg border border-dashed border-gray-300 bg-gray-50"
+                      fallbackClassName="h-72 w-full rounded-lg border border-dashed border-[var(--border-strong)] bg-[var(--surface-soft)]"
                     />
                   </div>
                 )}
@@ -748,17 +748,17 @@ function ReusableTable({
                 <div className="grid gap-4 sm:grid-cols-2">
                   {["category", "title", "country", "offerType"].map((key) =>
                     selectedRow[key] ? (
-                      <div key={key} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="mb-1 text-sm font-medium capitalize text-gray-500">{key.replace(/([A-Z])/g, " $1")}</p>
-                        <p className="text-base font-semibold text-gray-800">{selectedRow[key]}</p>
+                      <div key={key} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                        <p className="mb-1 text-sm font-medium capitalize text-[var(--muted)]">{key.replace(/([A-Z])/g, " $1")}</p>
+                        <p className="text-base font-semibold text-[var(--foreground)]">{selectedRow[key]}</p>
                       </div>
                     ) : null,
                   )}
 
                   {(selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code) ? (
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Saving</p>
-                      <p className="text-base font-semibold text-gray-800">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                      <p className="mb-1 text-sm font-medium text-[var(--muted)]">Saving</p>
+                      <p className="text-base font-semibold text-[var(--foreground)]">
                         {selectedRow.discount || selectedRow.cashback || selectedRow.points || selectedRow.code}
                       </p>
                     </div>
@@ -766,13 +766,13 @@ function ReusableTable({
                 </div>
 
                 {selectedRow.link ? (
-                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                    <p className="mb-1 text-sm font-medium text-gray-500">Link</p>
+                  <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                    <p className="mb-1 text-sm font-medium text-[var(--muted)]">Link</p>
                     <a
                       href={selectedRow.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+                      className="break-all text-sm font-medium text-[var(--primary)] underline underline-offset-4 hover:text-[var(--primary-hover)]"
                     >
                       {selectedRow.link}
                     </a>
@@ -781,60 +781,60 @@ function ReusableTable({
 
                 {(selectedRow.verificationStatus || selectedRow.successRate !== undefined) ? (
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Verification</p>
-                      <p className="text-base font-semibold capitalize text-gray-800">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                      <p className="mb-1 text-sm font-medium text-[var(--muted)]">Verification</p>
+                      <p className="text-base font-semibold capitalize text-[var(--foreground)]">
                         {selectedRow.verificationStatus || "pending"}
                       </p>
                     </div>
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Success Rate</p>
-                      <p className="text-base font-semibold text-gray-800">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                      <p className="mb-1 text-sm font-medium text-[var(--muted)]">Success Rate</p>
+                      <p className="text-base font-semibold text-[var(--foreground)]">
                         {Math.round(Number(selectedRow.successRate) || 0)}%
                       </p>
                     </div>
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Votes</p>
-                      <p className="text-base font-semibold text-gray-800">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                      <p className="mb-1 text-sm font-medium text-[var(--muted)]">Votes</p>
+                      <p className="text-base font-semibold text-[var(--foreground)]">
                         {Number(selectedRow.workingVotes) || 0} working / {Number(selectedRow.failedVotes) || 0} failed
                       </p>
                     </div>
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                      <p className="mb-1 text-sm font-medium text-gray-500">Last Verified</p>
-                      <p className="text-base font-semibold text-gray-800">{selectedRow.lastVerifiedAt || "-"}</p>
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                      <p className="mb-1 text-sm font-medium text-[var(--muted)]">Last Verified</p>
+                      <p className="text-base font-semibold text-[var(--foreground)]">{selectedRow.lastVerifiedAt || "-"}</p>
                     </div>
                     {selectedRow.reviewNote ? (
-                      <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 sm:col-span-2">
-                        <p className="mb-1 text-sm font-medium text-gray-500">Review Note</p>
-                        <p className="text-base font-semibold text-gray-800">{selectedRow.reviewNote}</p>
+                      <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 sm:col-span-2">
+                        <p className="mb-1 text-sm font-medium text-[var(--muted)]">Review Note</p>
+                        <p className="text-base font-semibold text-[var(--foreground)]">{selectedRow.reviewNote}</p>
                       </div>
                     ) : null}
                   </div>
                 ) : null}
 
                 {selectedRow?.BrandDetail?.length > 0 ? (
-                  <div className="rounded-2xl border border-gray-200 bg-slate-50 p-4">
-                    <h3 className="mb-4 text-lg font-bold text-gray-800">Brand Details</h3>
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Brand Details</h3>
                     <div className="space-y-4">
                       {selectedRow.BrandDetail.map((item, index) => (
-                        <div key={index} className="space-y-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                        <div key={index} className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
                           {(item.image || selectedRow.img) ? (
-                            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
+                            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)]">
                               <SafeTableImage
                                 src={item.image || selectedRow.img}
                                 alt={item.title || "Preview"}
                                 className="h-72 w-full object-contain"
-                                fallbackClassName="h-72 w-full rounded-lg border border-dashed border-gray-300 bg-gray-50"
+                                fallbackClassName="h-72 w-full rounded-lg border border-dashed border-[var(--border-strong)] bg-[var(--surface-soft)]"
                               />
                             </div>
                           ) : null}
-                          <p className="font-semibold text-gray-800">{item.title}</p>
+                          <p className="font-semibold text-[var(--foreground)]">{item.title}</p>
                           {item.link ? (
                             <a
                               href={item.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="break-all text-sm font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+                              className="break-all text-sm font-medium text-[var(--primary)] underline underline-offset-4 hover:text-[var(--primary-hover)]"
                             >
                               {item.link}
                             </a>

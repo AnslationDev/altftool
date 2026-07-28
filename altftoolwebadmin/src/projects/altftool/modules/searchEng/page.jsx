@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AlertCircle, Loader2 } from "lucide-react";
 import TopBar from "./components/TopBar";
 import DataTable from "./components/GlobalSearchTable";
 import DataModal from "./components/GlobalSearchModel";
 import CategoryModel from "./components/CategoryModel";
 import { subscribeGlobalSearch, subscribeCategories } from "./service/data.service";
+import { LoadingState, ErrorState } from "@/ansets";
 
 export default function Page() {
   // ── Global Search items (realtime) ──
@@ -59,10 +59,7 @@ export default function Page() {
         />
 
         {loadError && (
-          <div className="flex items-start gap-2 rounded-lg border border-danger bg-danger-soft px-4 py-3 text-sm text-danger" role="alert">
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>{loadError}</span>
-          </div>
+          <ErrorState title="Couldn't load the directory" message={loadError} />
         )}
 
         {/* Category create modal */}
@@ -75,10 +72,7 @@ export default function Page() {
 
         {/* Global Search items table */}
         {loadingItems ? (
-          <div className="flex items-center justify-center gap-2 rounded-lg border border-border bg-surface py-20 text-sm text-muted" role="status">
-            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-            Loading directory...
-          </div>
+          <LoadingState variant="table" />
         ) : (
           <DataTable
             items={items}

@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { fetchRegistrySummary } from "../services/seoService";
 import { getErrorMessage } from "@/lib/apiClient";
 import SeoNav from "../components/SeoNav";
+import { LoadingState } from "@/ansets";
 import { 
   Globe, 
   ShieldAlert, 
@@ -464,22 +465,8 @@ export default function SeoDashboardPage() {
       ) : (
         /* Skeleton loaders while registry is building */
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-card border border-border p-6 rounded-xl space-y-4">
-                <div className="flex justify-between items-start">
-                  <div className="h-3 w-20 bg-surface-soft animate-pulse rounded" />
-                  <div className="w-8 h-8 bg-surface-soft animate-pulse rounded-lg" />
-                </div>
-                <div className="h-8 w-16 bg-surface-soft animate-pulse rounded" />
-                <div className="h-2 w-full bg-surface-soft animate-pulse rounded-full" />
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-card border border-border p-6 rounded-xl h-[240px] animate-pulse" />
-            <div className="bg-card border border-border p-6 rounded-xl h-[240px] animate-pulse" />
-          </div>
+          <LoadingState variant="stats" />
+          <LoadingState variant="cards" rows={2} />
         </div>
       )}
     </div>

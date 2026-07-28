@@ -21,7 +21,7 @@ export default function PlacementPreviewModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50"
       role="dialog"
       aria-modal="true"
       aria-labelledby="placement-preview-title"
@@ -34,7 +34,7 @@ export default function PlacementPreviewModal({
             <h2 id="placement-preview-title" className="text-xl font-semibold">
               Placement Preview
             </h2>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-[var(--muted)]">
               How ads appear for <b>{placement.label}</b>
             </p>
           </div>
@@ -43,7 +43,7 @@ export default function PlacementPreviewModal({
             ref={closeButtonRef}
             onClick={onClose}
             aria-label="Close"
-            className="text-sm text-muted hover:text-foreground"
+            className="text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -63,20 +63,20 @@ export default function PlacementPreviewModal({
 
         {/* Description */}
         {placement.description && (
-          <div className="text-sm text-muted">
+          <div className="text-sm text-[var(--muted)]">
             {placement.description}
           </div>
         )}
 
         {/* Preview */}
         <div className="space-y-3">
-          <div className="text-xs uppercase tracking-wide text-muted">
+          <div className="text-xs uppercase tracking-wide text-[var(--muted)]">
             Visual Preview (Approximate)
           </div>
 
           <div className="flex justify-center">
             <div
-              className="relative bg-gray-100 border rounded-lg flex items-center justify-center text-xs text-muted"
+              className="relative bg-[var(--surface-soft)] border rounded-lg flex items-center justify-center text-xs text-[var(--muted)]"
               style={{
                 width: placement.recommended?.width
                   ? Math.min(placement.recommended.width, 600)
@@ -89,17 +89,17 @@ export default function PlacementPreviewModal({
             </div>
           </div>
 
-          <p className="text-xs text-muted-soft text-center">
+          <p className="text-xs text-[var(--muted-soft)] text-center">
             Actual appearance may vary slightly based on screen size.
           </p>
         </div>
 
         {/* Notes */}
-        <div className="rounded-lg border bg-surface-soft p-4 text-sm space-y-1">
-          <div className="font-medium text-foreground">
+        <div className="rounded-lg border bg-[var(--surface-soft)] p-4 text-sm space-y-1">
+          <div className="font-medium text-[var(--foreground)]">
             Guidelines
           </div>
-          <ul className="list-disc list-inside text-muted">
+          <ul className="list-disc list-inside text-[var(--muted)]">
             <li>Keep important text centered</li>
             <li>Avoid small fonts near edges</li>
             <li>Use high contrast for better visibility</li>
@@ -124,10 +124,10 @@ export default function PlacementPreviewModal({
 function Meta({ label, value }) {
   return (
     <div className="space-y-1">
-      <div className="text-xs uppercase tracking-wide text-muted-soft">
+      <div className="text-xs uppercase tracking-wide text-[var(--muted-soft)]">
         {label}
       </div>
-      <div className="font-medium text-foreground">
+      <div className="font-medium text-[var(--foreground)]">
         {value}
       </div>
     </div>

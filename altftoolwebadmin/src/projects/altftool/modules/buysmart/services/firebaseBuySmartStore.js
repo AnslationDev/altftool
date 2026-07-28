@@ -225,8 +225,13 @@ export const firebaseBuySmartStoreSource = {
   },
 
   // 🔹 BULK DELETE
-  async bulkDelete(ids = [], banner = []) {
-    const filtered = banner.filter(
+  async bulkDelete(ids = []) {
+    const snap = await getDoc(STORE_REF);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    const filtered = (data.banner || []).filter(
       (item) => !ids.includes(item.id)
     );
 

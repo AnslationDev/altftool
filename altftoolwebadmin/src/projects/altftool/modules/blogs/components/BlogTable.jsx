@@ -24,7 +24,7 @@ import {
   Maximize2, Minimize2, Columns3, Search, X, SearchCheck,
   Filter, Tag, Users,
 } from "lucide-react";
-import AdminDataState from "@/components/admin/AdminDataState";
+import { EmptyState, LoadingState } from "@/ansets";
 
 const BLOG_TABLE_PREFS_KEY = "altftool-admin:blog-table:v2";
 const EDIT_ROUTE = (id) => `/altftool/blogs/edit-blog/${id}`;
@@ -389,6 +389,13 @@ export default function BlogTable({
 
   const statusOptions = [["all", "All status"], ["published", "Published"], ["draft", "Draft"]];
 
+  const clearFiltersAction = hasActiveFilters ? (
+    <button type="button" onClick={onClearFilters}
+      className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-soft px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-surface">
+      <X className="w-3.5 h-3.5" />Clear filters
+    </button>
+  ) : undefined;
+
   const wrapperClass = isFullscreen
     ? "fixed inset-0 z-50 bg-surface flex flex-col"
     : "bg-surface rounded-2xl shadow-sm border border-border overflow-hidden flex flex-col";
@@ -472,7 +479,7 @@ export default function BlogTable({
         <div className="flex items-center justify-between px-4 py-3 bg-danger-soft border-b border-border shrink-0 sm:px-5">
           <span className="text-sm font-medium text-danger">{selectedBlogs.length} blog{selectedBlogs.length > 1 ? "s" : ""} selected</span>
           <button onClick={openBulkDeleteModal}
-            className="flex items-center gap-1.5 bg-danger text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition hover:opacity-90">
+            className="flex items-center gap-1.5 bg-danger text-danger-foreground text-sm font-semibold px-4 py-1.5 rounded-lg transition hover:opacity-90">
             <Trash2 className="w-3.5 h-3.5" />Delete Selected
           </button>
         </div>
@@ -501,23 +508,19 @@ export default function BlogTable({
 
           <tbody className="divide-y divide-border">
             {loading ? (
-              Array.from({ length: 8 }).map((_, i) => (
-                <tr key={i} className="animate-pulse">
-                  {columns.map((_, j) => (
-                    <td key={j} className="px-4 py-3.5"><div className="h-4 bg-surface-soft rounded w-3/4" /></td>
-                  ))}
-                </tr>
-              ))
+              <tr>
+                <td colSpan={columns.length} className="p-4">
+                  <LoadingState variant="table" rows={8} />
+                </td>
+              </tr>
             ) : pageRows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-16 text-center">
-                  <AdminDataState
-                    type="empty"
-                    compact
-                    title={hasActiveFilters ? "No matching blogs" : "No blogs found"}
-                    message={hasActiveFilters ? "No blogs match your search or filters. Clear them to see everything." : "Create a draft or refresh data to populate this view."}
+                <td colSpan={columns.length}>
+                  <EmptyState
                     icon={SearchCheck}
-                    actions={hasActiveFilters ? [{ label: "Clear filters", onClick: onClearFilters, icon: X }] : []}
+                    title={hasActiveFilters ? "No matching blogs" : "No blogs found"}
+                    description={hasActiveFilters ? "No blogs match your search or filters. Clear them to see everything." : "Create a draft or refresh data to populate this view."}
+                    action={clearFiltersAction}
                   />
                 </td>
               </tr>
@@ -548,23 +551,14 @@ export default function BlogTable({
       {/* ── Mobile cards ── */}
       <div className="md:hidden flex-1 overflow-auto divide-y divide-border">
         {loading ? (
-          Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="animate-pulse p-4 space-y-2">
-              <div className="h-4 w-2/3 rounded bg-surface-soft" />
-              <div className="h-3 w-1/3 rounded bg-surface-soft" />
-            </div>
-          ))
+          <div className="p-4"><LoadingState variant="table" rows={5} /></div>
         ) : pageRows.length === 0 ? (
-          <div className="p-10">
-            <AdminDataState
-              type="empty"
-              compact
-              title={hasActiveFilters ? "No matching blogs" : "No blogs found"}
-              message={hasActiveFilters ? "No blogs match your search or filters." : "Create a draft to populate this view."}
-              icon={SearchCheck}
-              actions={hasActiveFilters ? [{ label: "Clear filters", onClick: onClearFilters, icon: X }] : []}
-            />
-          </div>
+          <EmptyState
+            icon={SearchCheck}
+            title={hasActiveFilters ? "No matching blogs" : "No blogs found"}
+            description={hasActiveFilters ? "No blogs match your search or filters." : "Create a draft to populate this view."}
+            action={clearFiltersAction}
+          />
         ) : (
           pageRows.map((row) => {
             const blog = row.original;

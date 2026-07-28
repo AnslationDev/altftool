@@ -1016,6 +1016,14 @@ export const TOOL_CATALOG = [
     "description": "Matches metric and imperial hex key sizes, shows which swaps are safe and which round the socket, and prints a true-scale gauge."
   },
   {
+    "slug": "alliteration-word-finder",
+    "name": "Alliteration Word Finder",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Find words that share a starting sound, not just a starting letter, and build alliterative lines from them."
+  },
+  {
     "slug": "alloy-vs-steel-wheel-comparison",
     "name": "Alloy vs Steel Wheel Comparison",
     "categories": [
@@ -1031,6 +1039,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Browse writing systems from around the world — Latin, Greek, Cyrillic, Arabic, Hebrew, Devanagari, Japanese, Korean, Thai, Bengali, and more — with character na"
+  },
+  {
+    "slug": "alt-text-policy-generator",
+    "name": "Alt Text Policy Generator",
+    "categories": [
+      "Design & Color"
+    ],
+    "description": "Generate an internal alt text policy with a rule per content type, WCAG references, character limits and a QA checklist."
   },
   {
     "slug": "alt-text-quality-assistant",
@@ -1198,6 +1214,14 @@ export const TOOL_CATALOG = [
     "description": "Compute your Anna University semester GPA from letter grades and course credits using the official Σ(Ci×GPi)/ΣCi formula."
   },
   {
+    "slug": "anniversary-wishes-generator",
+    "name": "Anniversary Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create anniversary messages by years, relationship and language, with the traditional gift symbol and jubilee name."
+  },
+  {
     "slug": "announcement-graphic-generator",
     "name": "Announcement Graphic Generator",
     "categories": [
@@ -1332,6 +1356,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Compare URL path, query parameter, custom header and media type API versioning — weighted scoring plus migration cost for each."
+  },
+  {
+    "slug": "apology-message-composer",
+    "name": "Apology Message Composer",
+    "categories": [
+      "Text & Writing"
+    ],
+    "description": "Draft an apology using the six research-backed components, and catch non-apology phrasing like 'sorry if you were offended'."
   },
   {
     "slug": "app-finder",
@@ -1556,6 +1588,22 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Check your current attendance percent and how many classes you must attend or can skip."
+  },
+  {
+    "slug": "attendance-register-format-generator",
+    "name": "Attendance Register Format Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a printable Form D style attendance register with day columns, weekly offs, holidays and attendance codes."
+  },
+  {
+    "slug": "attendance-shortage-condonation-request",
+    "name": "Attendance Shortage Condonation Request",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Work out your attendance percentage and shortfall, then draft a condonation request with grounds, evidence and a catch-up plan."
   },
   {
     "slug": "attention-span-test",
@@ -1793,6 +1841,14 @@ export const TOOL_CATALOG = [
     "description": "A rough weight-for-age percentile estimate for babies 0–24 months."
   },
   {
+    "slug": "baby-name-by-first-letter-filter",
+    "name": "Baby Name by First Letter",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Filter a curated list of baby names by starting letter, gender, name length, origin and meaning keyword."
+  },
+  {
     "slug": "baby-name-generator",
     "name": "Baby Name Generator",
     "categories": [
@@ -1800,6 +1856,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Discover unique, meaningful baby names with origins, meanings, and popularity trends for boys, girls, and gender-neutral options."
+  },
+  {
+    "slug": "baby-shower-invitation-wording",
+    "name": "Baby Shower Invitation Wording",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Compose godh bharai, valaikappu and baby shower invitation wording in 7 languages with date, venue and RSVP lines."
   },
   {
     "slug": "baby-size-by-week-visualizer",
@@ -1849,6 +1913,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Estimate calories burned playing badminton singles or doubles from your body weight, rally time and break time."
+  },
+  {
+    "slug": "baisakhi-wishes-generator",
+    "name": "Baisakhi Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Baisakhi greetings in Punjabi Gurmukhi, Roman and English, with the Khalsa anniversary year and SMS length check."
   },
   {
     "slug": "bajaj-service-schedule-planner",
@@ -1954,6 +2026,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Mask account, card and Aadhaar numbers to PCI DSS and UIDAI display rules before sharing a screenshot or document."
+  },
+  {
+    "slug": "bank-account-opening-checklist",
+    "name": "Bank Account Opening Checklist",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "The exact KYC papers each Indian account type needs — resident, minor, senior, proprietorship, NRE, NRO and FCNR — with readiness scoring."
   },
   {
     "slug": "bank-balance-certificate-request-generator",
@@ -2485,6 +2565,14 @@ export const TOOL_CATALOG = [
     "description": "Compute BSEB Matric or Inter percentage on the 500-mark aggregate with pass status and First, Second or Third Division."
   },
   {
+    "slug": "bihu-wishes-generator",
+    "name": "Bihu Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Bihu greetings for Rongali, Bhogali and Kongali Bihu in Assamese script, Roman Assamese, English and Hindi."
+  },
+  {
     "slug": "bike-chain-slack-guide",
     "name": "Bike Chain Slack Guide",
     "categories": [
@@ -2611,6 +2699,102 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes."
+  },
+  {
+    "slug": "birthday-wishes-bengali",
+    "name": "Bengali Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Bengali birthday messages with poetic or simple phrasing, correct tumi or apni forms and romanisation."
+  },
+  {
+    "slug": "birthday-wishes-gujarati",
+    "name": "Gujarati Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Gujarati birthday greetings for friends, family and colleagues in Gujarati script or Roman transliteration."
+  },
+  {
+    "slug": "birthday-wishes-hindi",
+    "name": "Hindi Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Hindi birthday messages tuned to relationship and tone, with correct aap or tum forms, romanisation and SMS length."
+  },
+  {
+    "slug": "birthday-wishes-kannada",
+    "name": "Kannada Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Kannada birthday greetings for friends, family and colleagues in Kannada script or Roman transliteration."
+  },
+  {
+    "slug": "birthday-wishes-malayalam",
+    "name": "Malayalam Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration."
+  },
+  {
+    "slug": "birthday-wishes-marathi",
+    "name": "Marathi Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Marathi birthday greetings for family, friends and colleagues with correct tu or tumhi forms and romanisation."
+  },
+  {
+    "slug": "birthday-wishes-nepali",
+    "name": "Nepali Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Nepali birthday messages with formal tapai and casual timi tone, in Devanagari or Roman."
+  },
+  {
+    "slug": "birthday-wishes-odia",
+    "name": "Odia Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Odia birthday greetings for friends and family in Odia script or Roman transliteration."
+  },
+  {
+    "slug": "birthday-wishes-punjabi",
+    "name": "Punjabi Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Punjabi birthday messages in Gurmukhi or Roman script, by relationship, tone and age."
+  },
+  {
+    "slug": "birthday-wishes-tamil",
+    "name": "Tamil Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Tamil birthday wishes with name and relationship personalisation, correct nee or neengal forms and romanisation."
+  },
+  {
+    "slug": "birthday-wishes-telugu",
+    "name": "Telugu Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Telugu birthday greetings in formal or affectionate tone, with correct nuvvu or meeru forms and romanisation."
+  },
+  {
+    "slug": "birthday-wishes-urdu",
+    "name": "Urdu Birthday Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Urdu birthday greetings with shayari, dua and formal styles in Urdu script or Roman Urdu."
   },
   {
     "slug": "black-scholes-options-pricer",
@@ -2894,6 +3078,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Draft a formal bonafide certificate request letter to your school or college with the purpose, roll number and details filled in."
+  },
+  {
+    "slug": "bonafide-certificate-request-generator",
+    "name": "Bonafide Certificate Request Generator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Draft a bonafide certificate request for visa, bank, passport or scholarship use, with copies, fee and freshness dates."
   },
   {
     "slug": "bond-duration-convexity-calculator",
@@ -3650,6 +3842,14 @@ export const TOOL_CATALOG = [
     "description": "Plan campaign budget tasks with organized inputs, timelines, and clear next steps."
   },
   {
+    "slug": "canada-vac-india-appointment-day-checklist",
+    "name": "Canada VAC India Appointment Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Plan a Canada visa centre appointment in India: leave-home time, biometric fee and deadline, and what to carry, wear and leave behind."
+  },
+  {
     "slug": "canada-visa-cost-estimator",
     "name": "Canada Visa Cost Estimator",
     "categories": [
@@ -4178,6 +4378,14 @@ export const TOOL_CATALOG = [
     "description": "Enter supplier and place-of-supply state codes to see whether GST splits into CGST and SGST or is charged as IGST, with the amounts."
   },
   {
+    "slug": "chai-coffee-sugar-tracker",
+    "name": "Chai and Coffee Sugar Tracker",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Count the added sugar and calories in your daily tea and coffee habit, and see the yearly total against WHO free-sugar limits."
+  },
+  {
     "slug": "chair-height-calculator",
     "name": "Chair Height Calculator",
     "categories": [
@@ -4325,6 +4533,14 @@ export const TOOL_CATALOG = [
     "description": "Turn a rupee amount into cheque-ready words using the Indian lakh and crore system, with paise and digit grouping."
   },
   {
+    "slug": "cheque-stop-payment-request-generator",
+    "name": "Cheque Stop Payment Request Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft a stop payment instruction to your bank with cheque number checks, the 3-month validity clock and the total fee payable."
+  },
+  {
     "slug": "chess-multiplayer",
     "name": "Chess Multiplayer",
     "categories": [
@@ -4339,6 +4555,14 @@ export const TOOL_CATALOG = [
       "Games"
     ],
     "description": "Sharpen your tactical skills with curated chess puzzles — forks, pins, skewers, discovered attacks, checkmates and endgames across multiple difficulty levels."
+  },
+  {
+    "slug": "chhath-puja-wishes-generator",
+    "name": "Chhath Puja Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Day-wise Chhath greetings for Nahay Khay, Kharna, Sandhya Arghya and Usha Arghya in Bhojpuri, Maithili, Hindi and English."
   },
   {
     "slug": "child-education-corpus-planner",
@@ -4380,6 +4604,14 @@ export const TOOL_CATALOG = [
       "Image & Photo"
     ],
     "description": "Manually review and mask privacy-sensitive details in a photo you own, then export a flattened copy with metadata removed locally."
+  },
+  {
+    "slug": "child-protein-intake-calculator",
+    "name": "Child Protein Intake Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily protein target for children by age, weight and activity, using the DRI protein RDAs and the protein AMDR."
   },
   {
     "slug": "child-safety-home-checklist",
@@ -4470,6 +4702,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Fairly assign a list of chores across people, round-robin."
+  },
+  {
+    "slug": "christian-baby-name-finder",
+    "name": "Christian Baby Name Finder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Browse Christian and biblical baby names with their Hebrew, Greek, Latin or Aramaic origin, meaning and scriptural figure."
+  },
+  {
+    "slug": "christmas-wishes-generator",
+    "name": "Christmas Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Christmas greetings in thirty languages in a formal, warm or short tone, with transliteration and SMS length check."
   },
   {
     "slug": "chromatic-instrument-tuner",
@@ -5066,6 +5314,14 @@ export const TOOL_CATALOG = [
     "description": "Take interactive quizzes to measure compatibility across multiple categories with dynamic scoring and attractive results."
   },
   {
+    "slug": "compliance-calendar-sole-proprietorship",
+    "name": "Compliance Calendar for Sole Proprietorship",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a dated GST, TDS, advance tax and ITR filing calendar for an Indian proprietorship from your own registrations."
+  },
+  {
     "slug": "compliment-generator",
     "name": "Compliment Generator",
     "categories": [
@@ -5165,6 +5421,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Convert between concurrent users, requests per second and response time using Little's Law, with think-time support."
+  },
+  {
+    "slug": "condolence-message-generator",
+    "name": "Condolence Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write respectful condolence messages in six languages, matched to your relationship and the family's faith tradition."
   },
   {
     "slug": "condorcet-election-judge",
@@ -5278,6 +5542,14 @@ export const TOOL_CATALOG = [
     "description": "Work out the refund you are owed on a spoiled, missing or wrongly charged food order and draft the complaint to the platform and its grievance officer."
   },
   {
+    "slug": "consumer-complaint-telecom-billing",
+    "name": "Consumer Complaint Letter for Telecom Billing",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate a telecom overbilling or network complaint with TRAI escalation dates for the Appellate Authority and consumer commission."
+  },
+  {
     "slug": "contact-lens-wear-tracker",
     "name": "Contact Lens Wear Tracker",
     "categories": [
@@ -5382,6 +5654,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "An interactive simulator for Conway's Game of Life, a cellular automaton where users can create initial configurations and watch how they evolve over time based"
+  },
+  {
+    "slug": "cookie-consent-banner-text-generator",
+    "name": "Cookie Consent Banner Text Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate cookie banner copy with accept, reject and preferences wording tuned to GDPR, UK PECR, India's DPDP Act or CPRA."
   },
   {
     "slug": "cookie-gpc-behavior-auditor",
@@ -5759,6 +6039,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Informational checklist of creator business expense categories in India, with business-use apportionment, depreciation and compliance flags."
+  },
+  {
+    "slug": "credit-card-closure-confirmation-request",
+    "name": "Credit Card Closure Confirmation Request",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft a credit card closure request with the 7-working-day RBI deadline, delay penalty at Rs 500 a day and bureau update ask."
   },
   {
     "slug": "credit-card-interest-calculator",
@@ -6376,6 +6664,14 @@ export const TOOL_CATALOG = [
     "description": "Draft a subject access request under GDPR, UK GDPR, India's DPDP Act or the CCPA, with the correct response deadline."
   },
   {
+    "slug": "data-correction-request-letter-generator",
+    "name": "Data Correction Request Letter Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build a rectification request listing each incorrect field, the correct value and the evidence, with the statutory response deadline calculated."
+  },
+  {
     "slug": "data-deletion-proof-log",
     "name": "Data Deletion Proof Log",
     "categories": [
@@ -6400,6 +6696,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Upload CSV files to analyze columns, clean data, detect patterns, and generate smart visual insights."
+  },
+  {
+    "slug": "data-portability-request-generator",
+    "name": "Data Portability Request Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Draft a GDPR Article 20 request for a machine-readable export of your personal data, with an eligibility check and the reply deadline."
   },
   {
     "slug": "data-rate-bitrate-converter",
@@ -6705,6 +7009,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Versions, feedback, approvals aur included revision count record kare."
+  },
+  {
+    "slug": "delivery-challan-format-generator",
+    "name": "Delivery Challan Format Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a Rule 55 delivery challan for goods moved without a sale, with consignment value, e-way bill check and job work return dates."
   },
   {
     "slug": "demat-account-cost-comparator",
@@ -7033,6 +7345,14 @@ export const TOOL_CATALOG = [
     "description": "Supported orientation sensor se tilt aur slope measure kare."
   },
   {
+    "slug": "digital-product-refund-policy-generator",
+    "name": "Digital Product Refund Policy Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a no-return digital goods policy with a checkout waiver clause and clearly listed refund exceptions."
+  },
+  {
     "slug": "digital-vs-physical-gold-comparator",
     "name": "Digital Gold vs Physical Gold Cost Comparator",
     "categories": [
@@ -7305,6 +7625,14 @@ export const TOOL_CATALOG = [
     "description": "Pick steady-state TTLs per record type and get a timed lower-cutover-restore plan for zero-surprise DNS migrations."
   },
   {
+    "slug": "do-not-sell-link-text-generator",
+    "name": "Do Not Sell Link Text Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate the statutory opt-out link label, footer wording and landing page copy required by the CCPA as amended by the CPRA."
+  },
+  {
     "slug": "docker-healthcheck-generator",
     "name": "Docker Healthcheck Generator",
     "categories": [
@@ -7385,6 +7713,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Generate ready-to-use document checklists for visa, job, loan, rental, admission, KYC, and business workflows."
+  },
+  {
+    "slug": "document-expiry-reminder-board",
+    "name": "Document Expiry Reminder Board",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track passports, licences, visas, certificates and warranties on one board, with a reminder ladder and renewal windows."
   },
   {
     "slug": "document-expiry-tracker",
@@ -7479,6 +7815,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Build the document checklist for a domicile or residence certificate, test the continuous residence period and track how ready your file is."
+  },
+  {
+    "slug": "donation-receipt-format-generator",
+    "name": "Donation Receipt Format Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Generate an 80G-ready donation receipt with donor details, amount in words, registration numbers and the deduction worked out."
   },
   {
     "slug": "door-frame-material-calculator",
@@ -7918,6 +8262,14 @@ export const TOOL_CATALOG = [
     "description": "Build a structured product listing prompt with attributes, benefits and keyword slots inside real field limits."
   },
   {
+    "slug": "ecommerce-refund-policy-generator",
+    "name": "Ecommerce Refund Policy Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build a return and refund policy with windows, condition rules, restocking fees and shipping costs, checked against statutory minimums."
+  },
+  {
     "slug": "ects-credit-load-calculator",
     "name": "ECTS Credit Load Calculator",
     "categories": [
@@ -7972,6 +8324,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Compare Egypt's visa on arrival, e-visa and free Sinai permit, test passport validity and stay limits, and build the arrival checklist."
+  },
+  {
+    "slug": "eid-mubarak-wishes-generator",
+    "name": "Eid Mubarak Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and nine Indian languages, with transliteration and SMS length check."
   },
   {
     "slug": "eighteen-six-fasting-window-planner",
@@ -8375,6 +8735,14 @@ export const TOOL_CATALOG = [
     "description": "Read a BEE star label properly: turn the kWh per year or ISEER figure into running cost, savings and payback between two models."
   },
   {
+    "slug": "engagement-invitation-wording-tool",
+    "name": "Engagement Invitation Wording Tool",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate engagement, roka, sagai and tilak invitation wording with family names, date, muhurat time and venue."
+  },
+  {
     "slug": "engine-displacement-calculator",
     "name": "Engine Displacement Calculator",
     "categories": [
@@ -8677,6 +9045,14 @@ export const TOOL_CATALOG = [
     "description": "Fill-in-the-blank AI prompts for shot lists, client emails and gallery copy, plus a card, storage and edit-time planner."
   },
   {
+    "slug": "event-photography-consent-notice-generator",
+    "name": "Event Photography Consent Notice Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Write entrance signage, ticket terms, PA and registration copy telling attendees an event is being filmed, with legible sign sizing."
+  },
+  {
     "slug": "event-planning-prompt-builder",
     "name": "Event Planning Prompt Builder",
     "categories": [
@@ -8759,6 +9135,14 @@ export const TOOL_CATALOG = [
     "description": "Total what each exam attempt really cost — form fees, coaching, test series, books, travel and stay — across all attempts."
   },
   {
+    "slug": "exam-best-wishes-generator",
+    "name": "Exam Best Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write exam good luck messages in seven Indian languages, with the days left and revision hours per subject worked out."
+  },
+  {
     "slug": "exam-burnout-self-check",
     "name": "Exam Burnout Self Check",
     "categories": [
@@ -8837,6 +9221,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Plan result day before it arrives — who to have around, how to check the score, and a first move for every outcome."
+  },
+  {
+    "slug": "exam-revaluation-application-generator",
+    "name": "Exam Revaluation Application Generator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Draft a rechecking or re-evaluation application with subject marks, fee totals, window deadlines and the projected new percentage."
   },
   {
     "slug": "exam-score-analyzer",
@@ -8929,6 +9321,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Convert Excel spreadsheets into structured PDF documents. This utility parses multiple sheets and renders them seamlessly without any watermarks."
+  },
+  {
+    "slug": "excess-charges-refund-request-generator",
+    "name": "Excess Charges Refund Request Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Total up wrongly levied bank or card charges with GST and draft a formal refund request with RBI escalation dates."
   },
   {
     "slug": "excuse-generator",
@@ -9378,6 +9778,14 @@ export const TOOL_CATALOG = [
     "description": "Make Diwali, Eid, Pongal, Onam and other festival cards with regional motifs and greetings in 11 Indian languages."
   },
   {
+    "slug": "festival-sweet-calorie-calculator",
+    "name": "Festival Sweet Calorie Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calories and added sugar per piece for laddoo, barfi, gulab jamun, halwa and more, checked against the WHO free-sugar limit."
+  },
+  {
     "slug": "fetal-kick-counter",
     "name": "Fetal Kick Counter",
     "categories": [
@@ -9416,6 +9824,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Estimate calories burned in field hockey across drills, halves and full matches from your body weight and minutes played."
+  },
+  {
+    "slug": "field-trip-permission-slip-generator",
+    "name": "Field Trip Permission Slip Generator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a school trip permission slip with supervision ratio, adults needed, per-student cost, medical notes and emergency contacts."
   },
   {
     "slug": "fifty-thirty-twenty-budget-calculator",
@@ -10435,12 +10851,28 @@ export const TOOL_CATALOG = [
     "description": "Work out gaming rig wall-socket power draw, monthly electricity cost and the PSU wattage your GPU and CPU actually need."
   },
   {
+    "slug": "ganesh-chaturthi-wishes-generator",
+    "name": "Ganesh Chaturthi Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Ready-to-send Ganesh Chaturthi greetings in Marathi, Hindi, English, Gujarati, Kannada and Telugu with name and signature."
+  },
+  {
     "slug": "gap-certificate-explainer",
     "name": "Gap Certificate Explainer",
     "categories": [
       "Education & Science"
     ],
     "description": "Check whether your study gap needs a gap certificate or affidavit, what it must contain, and get a ready draft for the notary."
+  },
+  {
+    "slug": "gap-year-affidavit-generator",
+    "name": "Gap Year Affidavit Generator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build an education gap declaration affidavit for admissions, with the gap period calculated and a notarisation checklist."
   },
   {
     "slug": "gap-year-eligibility-explainer",
@@ -10523,6 +10955,14 @@ export const TOOL_CATALOG = [
     "description": "Compute Google Cloud Run cost from requests, CPU, memory, concurrency and min instances — free tier and idle rates included."
   },
   {
+    "slug": "gdpr-checklist-blog",
+    "name": "GDPR Compliance Checklist for Blogs",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A GDPR checklist scoped to your blog's actual features — analytics, ads, newsletter, comments — with the article behind each item."
+  },
+  {
     "slug": "gear-packing-list-creator",
     "name": "Creator Gear Packing List",
     "categories": [
@@ -10580,6 +11020,14 @@ export const TOOL_CATALOG = [
     "description": "Total and weekly pregnancy weight gain ranges from your pre-pregnancy BMI, using the IOM guideline bands for singletons and twins."
   },
   {
+    "slug": "get-well-soon-message-generator",
+    "name": "Get Well Soon Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write get well soon messages tuned to the illness, your relationship and the language, in six Indian languages."
+  },
+  {
     "slug": "geyser-capacity-selector",
     "name": "Geyser Capacity Selector",
     "categories": [
@@ -10594,6 +11042,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Water heater running cost from litres used, temperature rise and BEE star standing loss, per day, month and year."
+  },
+  {
+    "slug": "ghee-intake-calculator",
+    "name": "Ghee Intake Calculator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Daily ghee allowance in teaspoons that still fits inside your total fat and saturated fat budget for a given calorie target."
   },
   {
     "slug": "gif-palette-optimizer",
@@ -11097,6 +11553,22 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting."
+  },
+  {
+    "slug": "grievance-officer-details-block-generator",
+    "name": "Grievance Officer Details Block Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Publish grievance officer name, designation and contact details with the statutory acknowledgement and redressal deadlines."
+  },
+  {
+    "slug": "griha-pravesh-invitation-wording",
+    "name": "Griha Pravesh Invitation Wording",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create housewarming invite wording with muhurat window, puja type and address in English, Hindi, Marathi or Gujarati."
   },
   {
     "slug": "grip-strength-benchmark-tool",
@@ -11824,6 +12296,14 @@ export const TOOL_CATALOG = [
     "description": "Learn Hindi Varnamala interactively with visuals and pronunciation."
   },
   {
+    "slug": "hindu-baby-name-finder",
+    "name": "Hindu Baby Name Finder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Browse Hindu baby names with Sanskrit roots, meanings and associated deities, or filter by nakshatra pada syllable."
+  },
+  {
     "slug": "hinglish-coding-tool",
     "name": "Hinglish Coding Dictionary",
     "categories": [
@@ -11962,6 +12442,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Build a room-by-room renovation budget with a quality tier, professional fees, GST on works contracts and a contingency buffer."
+  },
+  {
+    "slug": "home-service-entry-consent-form-generator",
+    "name": "Home Service Entry Consent Form Generator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Draft an entry consent form for technicians: arrival window, access method, off-limits areas, liability terms and a costed quote."
   },
   {
     "slug": "home-state-quota-explainer",
@@ -12814,6 +13302,14 @@ export const TOOL_CATALOG = [
     "description": "See exactly how much tax each slab contributes to your total bill, old regime vs new regime, with surcharge and cess."
   },
   {
+    "slug": "independence-day-message-generator",
+    "name": "Independence Day Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate 15 August Independence Day wishes in eleven Indian languages, plus sourced freedom-movement slogans with meanings."
+  },
+  {
     "slug": "india-hosting-cost-comparison",
     "name": "India Hosting Cost Comparison",
     "categories": [
@@ -12902,6 +13398,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Draft pitch deck and investor update prompts for Indian founders, with runway, post-money valuation and slide-by-slide timing worked out."
+  },
+  {
+    "slug": "indian-street-food-calorie-guide",
+    "name": "Indian Street Food Calorie Guide",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Calorie and macro estimates for pani puri, vada pav, chaat, rolls and momos, with plate totals and share of your daily target."
   },
   {
     "slug": "indian-vegetarian-macro-calculator",
@@ -13001,6 +13505,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Draft a creator NDA for unreleased products with embargo dates, DTSA immunity notice and clauses that never block required ad disclosure."
+  },
+  {
+    "slug": "influencer-disclosure-label-generator",
+    "name": "Influencer Disclosure Label Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build a compliant paid-partnership disclosure for each platform and content type, with placement rules and on-screen duration."
   },
   {
     "slug": "influencer-engagement-rate-calculator",
@@ -13174,6 +13686,14 @@ export const TOOL_CATALOG = [
     "description": "Build the exact document list for a health, motor or life insurance claim and see the IRDAI settlement deadline for your case."
   },
   {
+    "slug": "insurance-nominee-change-request-generator",
+    "name": "Insurance Nominee Change Request Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft a nomination change letter to your insurer with share percentages that add to 100, minor appointee and payout split."
+  },
+  {
     "slug": "insurance-policy-comparator",
     "name": "Insurance Policy Comparator",
     "categories": [
@@ -13181,6 +13701,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Coverage, exclusions, waiting periods aur limits compare kare."
+  },
+  {
+    "slug": "insurance-policy-renewal-tracker",
+    "name": "Insurance Policy Renewal Tracker",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Track every policy number, sum insured and renewal date in one place, with annualised premium, grace period and lapse dates."
   },
   {
     "slug": "interior-design-prompt-generator",
@@ -13388,6 +13916,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Billable hours aur invoice line items ke mismatches dikhaye."
+  },
+  {
+    "slug": "iou-letter-generator",
+    "name": "IOU Letter Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft an acknowledgement of debt with the amount in words, simple interest to the due date and the limitation expiry."
   },
   {
     "slug": "ip-address-checker",
@@ -13949,6 +14485,14 @@ export const TOOL_CATALOG = [
     "description": "Training zones from the Karvonen heart rate reserve method using your resting and maximum heart rate."
   },
   {
+    "slug": "karwa-chauth-message-generator",
+    "name": "Karwa Chauth Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Karwa Chauth wishes and captions in Hindi, Punjabi and English, with the full sargi-to-moonrise ritual order."
+  },
+  {
     "slug": "kathak-calorie-burn-calculator",
     "name": "Kathak Calorie Burn Calculator",
     "categories": [
@@ -14093,6 +14637,14 @@ export const TOOL_CATALOG = [
     "description": "Age and sex appropriate daily step targets for children, with WHO active-minute goals and playful progress levels to close the gap."
   },
   {
+    "slug": "kids-hydration-reminder",
+    "name": "Kids Hydration Reminder",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "School-day water schedule sized to age, weather and activity, using EFSA water intake values and AAP activity guidance."
+  },
+  {
     "slug": "kids-milestone-vaccine-vault",
     "name": "Kids Milestone & Vaccine Vault",
     "categories": [
@@ -14100,6 +14652,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Securely track child milestones and vaccination records."
+  },
+  {
+    "slug": "kids-screen-time-limit-planner",
+    "name": "Kids Screen Time Limit Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Age-based daily screen budget split by purpose, with sleep, activity and wind-down checks from WHO and AAP guidance."
   },
   {
     "slug": "kids-water-intake-calculator",
@@ -14418,6 +14978,14 @@ export const TOOL_CATALOG = [
     "description": "Compute lateral entry (diploma to B.Tech) merit from diploma percentage and LEET/ECET score with the AICTE 45% check."
   },
   {
+    "slug": "latin-legal-maxims-reference",
+    "name": "Latin Legal Maxims Reference",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Search common Latin legal maxims by phrase or meaning, with literal translation, plain-language sense and a worked example."
+  },
+  {
     "slug": "laundry-calorie-burn-calculator",
     "name": "Laundry Calorie Burn Calculator",
     "categories": [
@@ -14546,6 +15114,22 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Work out whether you need a legal heir certificate, succession certificate or probate, with Class I heir shares and the document list."
+  },
+  {
+    "slug": "legal-notice-cost-estimator",
+    "name": "Legal Notice Cost Estimator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the full cost of sending a legal notice: drafting fee, GST, stamp paper, notarisation, printing, dispatch and follow-up reminders."
+  },
+  {
+    "slug": "legal-notice-dispatch-tracker",
+    "name": "Legal Notice Dispatch Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Track notice dispatch mode, tracking IDs and delivery dates, and get the reply deadline and next-step date for each notice."
   },
   {
     "slug": "leh-ladakh-trip-budget-breakdown",
@@ -14933,6 +15517,14 @@ export const TOOL_CATALOG = [
     "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare."
   },
   {
+    "slug": "loan-foreclosure-request-generator",
+    "name": "Loan Foreclosure Request Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Estimate the full foreclosure amount with charges and GST, check the RBI floating-rate exemption, and draft the request."
+  },
+  {
     "slug": "loan-foreclosure-savings-calculator",
     "name": "Loan Foreclosure Savings Calculator",
     "categories": [
@@ -15109,6 +15701,14 @@ export const TOOL_CATALOG = [
       "Generators"
     ],
     "description": "Generate a logrotate rule with rotation frequency, retention, compression, create modes and postrotate hooks — with conflict warnings."
+  },
+  {
+    "slug": "lohri-wishes-generator",
+    "name": "Lohri Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Lohri greetings in Gurmukhi, Roman Punjabi, Hindi and English, including first-Lohri wishes for a baby or newlyweds."
   },
   {
     "slug": "long-study-session-stretch-guide",
@@ -15370,6 +15970,14 @@ export const TOOL_CATALOG = [
     "description": "MSSC maturity value at 7.5% compounded quarterly, the 40% partial withdrawal limit and premature closure at the reduced rate."
   },
   {
+    "slug": "maintenance-charge-split-calculator",
+    "name": "Maintenance Charge Split Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Split society maintenance head-by-head between landlord and tenant, with the 10% non-occupancy charge cap checked."
+  },
+  {
     "slug": "maintenance-window-announcement-generator",
     "name": "Maintenance Window Announcement Generator",
     "categories": [
@@ -15507,6 +16115,22 @@ export const TOOL_CATALOG = [
     "description": "Fill-in-the-blank AI prompts for every funnel stage — positioning, ads, email, landing pages and campaign analysis."
   },
   {
+    "slug": "marketing-consent-checkbox-copy-generator",
+    "name": "Marketing Consent Checkbox Copy Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Write unbundled, non-prechecked marketing consent checkbox wording for signup forms, with per-channel labels and frequency promises."
+  },
+  {
+    "slug": "marketing-opt-out-request-generator",
+    "name": "Marketing Opt-Out Request Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Create an objection to direct marketing across email, SMS and calls, with the per-channel deadline each law gives the sender."
+  },
+  {
     "slug": "marketplace-scam-checker",
     "name": "Marketplace Scam Checker",
     "categories": [
@@ -15548,6 +16172,14 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert marla, kanal, sarsai, killa and murabba to square feet, square yards and square metres, with plot pricing."
+  },
+  {
+    "slug": "marriage-registration-document-checklist",
+    "name": "Marriage Registration Document Checklist",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build the proofs, photos and witness list for marriage registration, with Special Marriage Act notice dates worked out."
   },
   {
     "slug": "maternity-leave-date-calculator",
@@ -15928,6 +16560,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Pick microwave litres and the right type — solo, grill or convection — from family size, cooking needs and your largest dish."
+  },
+  {
+    "slug": "mid-upper-arm-circumference-tool",
+    "name": "Mid-Upper Arm Circumference Tool",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Read a MUAC tape measurement against the WHO colour bands used to screen children aged 6-59 months (informational only)."
   },
   {
     "slug": "migration-certificate-request-generator",
@@ -16527,6 +17167,14 @@ export const TOOL_CATALOG = [
     "description": "Convert Mumbai University CGPA to percentage with the CBCGS formula, or work the percentage out from raw semester marks."
   },
   {
+    "slug": "mundan-ceremony-invitation-wording",
+    "name": "Mundan Ceremony Invitation Wording",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create mundan ceremony invitation text with venue, ritual timings and the child's age on the ceremony day."
+  },
+  {
     "slug": "muscle-gain-calorie-calculator",
     "name": "Muscle Gain Calorie Calculator",
     "categories": [
@@ -16557,6 +17205,14 @@ export const TOOL_CATALOG = [
       "Video & Audio"
     ],
     "description": "Create a practical checklist for music usage rights, sync licensing, platform rules, credits and approval evidence."
+  },
+  {
+    "slug": "muslim-baby-name-finder",
+    "name": "Muslim Baby Name Finder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Browse Muslim baby names with Arabic meanings, Arabic and Urdu spellings, and a check on Abd- compound names."
   },
   {
     "slug": "mutual-fund-exit-load-calculator",
@@ -16640,12 +17296,36 @@ export const TOOL_CATALOG = [
     "description": "Check the compatibility between two names with detailed love, friendship, and soulmate analysis."
   },
   {
+    "slug": "name-meaning-lookup-multilingual",
+    "name": "Multilingual Name Meaning Lookup",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Look up a given name's documented meaning, root word and cognate forms across Sanskrit, Arabic, Hebrew, Greek, Latin and more."
+  },
+  {
+    "slug": "naming-ceremony-invitation-wording",
+    "name": "Naming Ceremony Invitation Wording",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate namkaran, christening, aqiqah and cradle ceremony invitation wording with the day count from birth."
+  },
+  {
     "slug": "narration-session-time-estimator",
     "name": "Narration Session Time Estimator",
     "categories": [
       "Calculators"
     ],
     "description": "Estimate booth time from script length, including punch-and-roll retakes, vocal rest breaks and setup for each session."
+  },
+  {
+    "slug": "navratri-wishes-generator",
+    "name": "Navratri Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Day-wise Navratri greetings with the goddess, colour and bhog for each of the nine nights, in five languages."
   },
   {
     "slug": "navy-body-fat-calculator",
@@ -16800,6 +17480,14 @@ export const TOOL_CATALOG = [
     "description": "Apply the UPSC prelims one-third penalty to your attempt plan and find the attempt count that maximises expected marks."
   },
   {
+    "slug": "negative-split-planner",
+    "name": "Negative Split Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Build first-half and second-half target paces for a negative split race, with a segment-by-segment split table."
+  },
+  {
     "slug": "neighbourhood-walkability-scorer",
     "name": "Neighbourhood Walkability Scorer",
     "categories": [
@@ -16876,12 +17564,124 @@ export const TOOL_CATALOG = [
     "description": "Hundreds of unique prompts with category selection, difficulty filters, and random mode for the ultimate party game."
   },
   {
+    "slug": "new-year-wishes-assamese",
+    "name": "Assamese New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Bohag Bihu and January new year greetings in Assamese with Roman transliteration, meaning and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-bengali",
+    "name": "Bengali New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Poila Boishakh and January new year greetings in Bengali with Roman transliteration, English meaning and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-french",
+    "name": "French New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write French bonne annee messages with correct tu and vous forms, before or after 1 January, with English translations."
+  },
+  {
+    "slug": "new-year-wishes-gujarati",
+    "name": "Gujarati New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Gujarati New Year and Bestu Varas wishes with Gujarati script, Roman transliteration and SMS length checks."
+  },
+  {
+    "slug": "new-year-wishes-hindi",
+    "name": "Hindi New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Hindi new year messages for 1 January and for Hindu Nav Varsh, with the matching Vikram and Shaka Samvat years."
+  },
+  {
+    "slug": "new-year-wishes-japanese",
+    "name": "Japanese New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Build nengajo New Year greetings in keigo, polite or casual Japanese, with romaji, English and matsunouchi timing."
+  },
+  {
+    "slug": "new-year-wishes-kannada",
+    "name": "Kannada New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Yugadi and January new year greetings in Kannada with Roman transliteration, English meaning and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-malayalam",
+    "name": "Malayalam New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Vishu, Chingam 1 and January new year greetings in Malayalam with Roman transliteration and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-marathi",
+    "name": "Marathi New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Gudhi Padwa and January new year greetings in Marathi with Roman transliteration, English meaning and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-odia",
+    "name": "Odia New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Pana Sankranti and January new year greetings in Odia with Roman transliteration, meaning and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-punjabi",
+    "name": "Punjabi New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Vaisakhi, Nanakshahi and January new year greetings in Gurmukhi with Roman transliteration and SMS length."
+  },
+  {
+    "slug": "new-year-wishes-spanish",
+    "name": "Spanish New Year Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create Spanish New Year greetings with accents, SMS-safe variants, English meaning and message length checks."
+  },
+  {
+    "slug": "new-year-wishes-urdu",
+    "name": "Urdu New Year Wishes",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Create January and Hijri new year messages in Urdu script and Roman Urdu, with English meaning and SMS length."
+  },
+  {
     "slug": "newborn-feeding-volume-calculator",
     "name": "Newborn Feeding Volume Calculator",
     "categories": [
       "Health Calculators"
     ],
     "description": "Estimate a newborn's daily and per-feed millilitres from weight, day of life and feeds per day using standard mL/kg/day guidance."
+  },
+  {
+    "slug": "newsletter-double-optin-copy-generator",
+    "name": "Newsletter Double Opt-In Copy Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Write the signup line, confirmation email and welcome email for double opt-in, with subject-length checks and a consent audit log."
   },
   {
     "slug": "newsletter-header-image-planner",
@@ -16996,6 +17796,14 @@ export const TOOL_CATALOG = [
     "description": "Track motor insurance NCB growth across the 20-25-35-45-50 percent slabs and see what one claim really costs you."
   },
   {
+    "slug": "no-dues-certificate-generator",
+    "name": "No Dues Certificate Generator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft a no-dues certificate or NOC request and track the RBI 30-day document release deadline and delay compensation."
+  },
+  {
     "slug": "noise-reduction-rating-calculator",
     "name": "Noise Reduction Rating Calculator",
     "categories": [
@@ -17082,6 +17890,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Price the notice-period shortfall, offset it against leave encashment, and draft a reasoned request to waive, reduce or buy out the remaining days."
+  },
+  {
+    "slug": "notice-to-vacate-date-calculator",
+    "name": "Notice to Vacate Date Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the exact vacate and possession date from the notice length, the mode of service and the date of receipt."
   },
   {
     "slug": "notion-ai-prompt-builder",
@@ -17358,6 +18174,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Plan how many exam minutes to reserve for transferring answers to the OMR sheet, with batch strategies and a stop-solving clock mark."
+  },
+  {
+    "slug": "onam-wishes-generator",
+    "name": "Onam Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Malayalam Onam greetings for family, friends, colleagues and clients, with transliteration and the ten-day Onam schedule."
   },
   {
     "slug": "onboarding-doc-prompt-builder",
@@ -17717,6 +18541,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Validate Indian PAN number format, normalize entries, identify holder type, mask output, and check bulk PAN lists locally."
+  },
+  {
+    "slug": "paneer-vs-tofu-comparator",
+    "name": "Paneer vs Tofu Comparator",
+    "categories": [
+      "Health Calculators"
+    ],
+    "description": "Side-by-side protein, fat, calcium, iron and calorie comparison of paneer and tofu for any portion size."
   },
   {
     "slug": "pangram-checker",
@@ -18301,6 +19133,14 @@ export const TOOL_CATALOG = [
     "description": "See your dog or cat's age in human years with vet-style size-based math, life stages, and lifespan progress."
   },
   {
+    "slug": "pet-boarding-consent-form-generator",
+    "name": "Pet Boarding Consent Form Generator",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Build a boarding consent form with vet treatment authority, a spend cap, and food portions worked out from your pet's weight."
+  },
+  {
     "slug": "pet-calming-sound-player",
     "name": "Pet Calming Sound Player",
     "categories": [
@@ -18813,6 +19653,14 @@ export const TOOL_CATALOG = [
     "description": "Ponderal index divides weight by height cubed, so it stays fair for very tall or very short adults, plus a newborn mode."
   },
   {
+    "slug": "pongal-wishes-generator",
+    "name": "Pongal Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write Tamil Pongal greetings for Bhogi, Thai Pongal, Maattu Pongal and Kaanum Pongal, with transliteration and name insert."
+  },
+  {
     "slug": "pool-laps-to-distance-converter",
     "name": "Pool Laps to Distance Converter",
     "categories": [
@@ -19089,6 +19937,14 @@ export const TOOL_CATALOG = [
     "description": "Guided inhale, hold and exhale pacing for box breathing, nadi shodhana, 4-7-8 and the classic 1:4:2 ratio."
   },
   {
+    "slug": "prayer-meet-invitation-wording",
+    "name": "Prayer Meet Invitation Wording",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write shok sabha, uthala, tehravin, antim ardas and memorial service invitations, with the observance day worked out for you."
+  },
+  {
     "slug": "prayer-times-qibla",
     "name": "Prayer Times & Qibla Direction",
     "categories": [
@@ -19325,6 +20181,14 @@ export const TOOL_CATALOG = [
     "description": "Understand probation periods and service bonds before accepting a post, and calculate what leaving early would cost."
   },
   {
+    "slug": "probation-confirmation-date-calculator",
+    "name": "Probation Confirmation Date Calculator",
+    "categories": [
+      "Calculators"
+    ],
+    "description": "Work out the exact confirmation date from a joining date, probation length, extensions and days of leave without pay."
+  },
+  {
     "slug": "probation-extension-letter-generator",
     "name": "Probation Extension Letter Generator",
     "categories": [
@@ -19524,6 +20388,14 @@ export const TOOL_CATALOG = [
     "description": "Interactive physics simulator for projectile trajectories with real-time vectors, gravity presets, air resistance, and trajectory analytics."
   },
   {
+    "slug": "promotion-congratulations-generator",
+    "name": "Promotion Congratulations Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write promotion and new-job congratulations in six languages, sized for LinkedIn, X, WhatsApp or SMS."
+  },
+  {
     "slug": "prompt-emoji-stripper",
     "name": "Prompt Emoji Stripper",
     "categories": [
@@ -19613,6 +20485,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "Solve a/b = c/d for any missing value with full cross multiplication steps."
+  },
+  {
+    "slug": "proportionate-rent-calculator",
+    "name": "Proportionate Rent Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Work out pro-rata rent for a part month on move-in or move-out, using actual days, a 30-day month or a 365-day year."
   },
   {
     "slug": "prose-to-bullet-prompt",
@@ -19949,6 +20829,14 @@ export const TOOL_CATALOG = [
       "Calculators"
     ],
     "description": "RBSE class 10 and 12 percentage, division and the 33% pass check, plus the marks needed for the next division."
+  },
+  {
+    "slug": "raksha-bandhan-wishes-generator",
+    "name": "Raksha Bandhan Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Rakhi messages for brothers, sisters, cousins and long-distance siblings in Hindi, English, Marathi, Gujarati, Punjabi and Bengali."
   },
   {
     "slug": "random-business-idea",
@@ -20555,6 +21443,14 @@ export const TOOL_CATALOG = [
     "description": "Project rent across a lease term with periodic escalation, and see the total outgo, final rent and true annual rate."
   },
   {
+    "slug": "rent-escalation-schedule-calculator",
+    "name": "Rent Escalation Schedule Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Project year-wise rent with a fixed or percentage escalation over the lease term, with total outgo, average rent and the effective annual rise."
+  },
+  {
     "slug": "rent-increase-notice-generator",
     "name": "Rent Increase Notice Generator",
     "categories": [
@@ -20653,6 +21549,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Log pending repairs, split them between landlord and tenant duties, set a deadline and generate a documented request letter."
+  },
+  {
+    "slug": "republic-day-message-generator",
+    "name": "Republic Day Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate Republic Day greetings, social captions and school speech openers for 26 January, with the correct Republic Day number."
   },
   {
     "slug": "requirements-txt-generator",
@@ -20771,6 +21675,14 @@ export const TOOL_CATALOG = [
     "description": "Plan your retirement corpus with inflation-adjusted goals, monthly savings targets, and year-by-year withdrawal projections."
   },
   {
+    "slug": "retirement-wishes-generator",
+    "name": "Retirement Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write retirement messages for colleagues, bosses and family, with years of service and the FR 56(a) superannuation date worked out."
+  },
+  {
     "slug": "retry-after-header-calculator",
     "name": "Retry-After Header Calculator",
     "categories": [
@@ -20785,6 +21697,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Track shopping return windows, refund status, and deadlines with futuristic precision."
+  },
+  {
+    "slug": "return-window-policy-calculator",
+    "name": "Return Window Policy Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Set return windows by product category and compute the return, pickup and refund deadline dates for any order."
   },
   {
     "slug": "revaluation-decision-helper",
@@ -21263,6 +22183,14 @@ export const TOOL_CATALOG = [
     "description": "Generate an operational runbook in Markdown with alert symptoms, diagnostic checks, remediation steps and an escalation ladder."
   },
   {
+    "slug": "running-cadence-calculator",
+    "name": "Running Cadence Calculator",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Work out your running cadence from a step count, see your step and stride length, and set a safe 5-10% progression target."
+  },
+  {
     "slug": "running-feet-to-sqft",
     "name": "Running Feet to Sqft",
     "categories": [
@@ -21657,6 +22585,14 @@ export const TOOL_CATALOG = [
     "description": "Total your family's annual income the way income certificates require and check it against common scholarship income ceilings."
   },
   {
+    "slug": "school-admission-document-checklist",
+    "name": "School Admission Document Checklist",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Build a school admission document list by board, class and transfer scenario, with an RTE-aligned age eligibility check."
+  },
+  {
     "slug": "school-attendance-percentage-tracker",
     "name": "School Attendance Percentage Tracker",
     "categories": [
@@ -21964,6 +22900,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Review pasted response headers for missing defensive controls."
+  },
+  {
+    "slug": "seller-details-disclosure-generator",
+    "name": "Seller Details Disclosure Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Build the legal entity, address and contact block e-commerce rules require, with GSTIN, PAN and CIN validated."
   },
   {
     "slug": "semester-exam-countdown-board",
@@ -22308,6 +23252,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Learn American Sign Language (ASL) alphabet with interactive cards, quizzes, and progress tracking"
+  },
+  {
+    "slug": "sikh-baby-name-finder",
+    "name": "Sikh Baby Name Finder",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Find Sikh baby names by Gurmukhi first letter from the Hukamnama, with meanings and the Singh or Kaur form."
   },
   {
     "slug": "silence-filler-word-cutter",
@@ -23488,6 +24440,14 @@ export const TOOL_CATALOG = [
     "description": "Build a sit-stand rotation with micro-movement breaks and get your standing desk and monitor heights from your body height."
   },
   {
+    "slug": "standing-instruction-cancellation-letter",
+    "name": "Standing Instruction Cancellation Letter",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Draft a mandate or auto-debit cancellation letter and check you are lodging it enough working days before the next debit."
+  },
+  {
     "slug": "star-life-cycle-explorer",
     "name": "Star Life Cycle Explorer",
     "categories": [
@@ -23951,6 +24911,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Turn subject-wise marks into a radar chart with strongest and weakest subjects and a balance score across all of them."
+  },
+  {
+    "slug": "sublet-permission-request-generator",
+    "name": "Sublet Permission Request Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a written request to your landlord for consent to sub-let, with the statutory references and a reply deadline."
   },
   {
     "slug": "subprocessor-list-page-generator",
@@ -24637,6 +25605,14 @@ export const TOOL_CATALOG = [
     "description": "Age and activity based protein target for 9 to 18 year olds, using the IOM reference intakes and the published athlete range."
   },
   {
+    "slug": "teething-timeline-tracker",
+    "name": "Teething Timeline Tracker",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Expected eruption dates for all 20 baby teeth from a date of birth, using the standard primary tooth eruption chart."
+  },
+  {
     "slug": "teleprompter-speed-calculator",
     "name": "Teleprompter Speed Calculator",
     "categories": [
@@ -25041,6 +26017,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Turn a one-line Thai e-Visa rejection into the requirement behind it, with the real funds benchmarks and ban lengths."
+  },
+  {
+    "slug": "thank-you-note-generator",
+    "name": "Thank You Note Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Write a structured thank you note for a gift, a favour, an interview or hospitality, with the right length for a card, email or message."
   },
   {
     "slug": "thb-cash-budget-planner",
@@ -25475,6 +26459,22 @@ export const TOOL_CATALOG = [
     "description": "Single/double elimination brackets aur byes generate kare."
   },
   {
+    "slug": "tracking-pixel-disclosure-generator",
+    "name": "Tracking Pixel Disclosure Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Draft the disclosure text for advertising and analytics pixels on your site, listing vendor, purpose, cookies set and how to opt out."
+  },
+  {
+    "slug": "trade-licence-renewal-reminder-builder",
+    "name": "Trade Licence Renewal Reminder Builder",
+    "categories": [
+      "Business"
+    ],
+    "description": "Keep every business licence number, validity and renewal lead time on one board, with the date you must start each renewal."
+  },
+  {
     "slug": "trademark-name-availability-checklist",
     "name": "Trademark Name Availability Checklist",
     "categories": [
@@ -25497,6 +26497,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Draft a university transcript request letter with enrolment details, copies needed, delivery mode and an enclosure checklist."
+  },
+  {
+    "slug": "transfer-certificate-request-generator",
+    "name": "Transfer Certificate Request Generator",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Draft a school transfer certificate request with student, class and reason details, dues summary and a follow-up date."
   },
   {
     "slug": "transitive-dependency-risk-explainer",
@@ -25620,6 +26628,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Calories burned on a treadmill from speed, incline, body weight and duration using the ACSM metabolic equations."
+  },
+  {
+    "slug": "treadmill-pace-converter",
+    "name": "Treadmill Pace Converter",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Convert treadmill speed to min/km and min/mile pace, and find the effort-equivalent flat and outdoor pace for any incline."
   },
   {
     "slug": "trimester-symptom-guide",
@@ -25962,6 +26978,14 @@ export const TOOL_CATALOG = [
     "description": "Generate valid ufw allow, deny, reject and limit rules for ports, ranges, source networks and app profiles, plus a safe enable order."
   },
   {
+    "slug": "ugadi-gudi-padwa-wishes-generator",
+    "name": "Ugadi and Gudi Padwa Wishes Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "New year greetings for Chaitra Shukla Pratipada in Telugu, Kannada, Marathi, Hindi and English, with pachadi and gudi notes."
+  },
+  {
     "slug": "ugc-brief-generator",
     "name": "UGC Brief Generator",
     "categories": [
@@ -25977,6 +27001,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Audit Tailwind spacing classes and pixel values against a consistent 4px design-system rhythm."
+  },
+  {
+    "slug": "uk-vac-india-appointment-day-checklist",
+    "name": "UK VAC India Appointment Day Checklist",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Work out when to leave home and get a route-specific list of what to carry, wear and leave behind at a UK visa centre in India."
   },
   {
     "slug": "ulid-generator",
@@ -26831,6 +27863,14 @@ export const TOOL_CATALOG = [
     "description": "Group keyword sets once and reuse them across a channel, with de-duplication and a live count against the 500-character tag limit."
   },
   {
+    "slug": "video-testimonial-consent-form-generator",
+    "name": "Video Testimonial Consent Form Generator",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "Build a video testimonial release with named channels, territory, licence term, editing rights and a withdrawal clause."
+  },
+  {
     "slug": "video-to-audio-converter",
     "name": "Video to Audio Converter",
     "categories": [
@@ -27086,6 +28126,14 @@ export const TOOL_CATALOG = [
     "description": "Size a voltage stabilizer in kVA and pick the right working range for an AC, fridge or TV from its wattage and your site voltage swing."
   },
   {
+    "slug": "volunteer-agreement-generator",
+    "name": "Volunteer Agreement Generator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Draft a volunteer agreement with role, hours, conduct, confidentiality and reimbursement terms that stay clear of an employment relationship."
+  },
+  {
     "slug": "voronoi-art-generator",
     "name": "Voronoi Art Generator",
     "categories": [
@@ -27135,6 +28183,14 @@ export const TOOL_CATALOG = [
     "description": "Compute VTU SGPA from CIE and SEE marks per subject — grading, pass rules and the Σ(Ci×Gi)/ΣCi formula of the 2021/2022 scheme."
   },
   {
+    "slug": "w9-information-worksheet",
+    "name": "W-9 Information Worksheet",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out exactly what goes on each line of a US Form W-9 — name, entity classification, TIN type and exemptions — before you sign it."
+  },
+  {
     "slug": "wacc-calculator",
     "name": "WACC Calculator",
     "categories": [
@@ -27157,6 +28213,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Calculate your waist-to-hip ratio and see the WHO health risk band for men and women, plus body shape."
+  },
+  {
+    "slug": "walk-run-interval-planner",
+    "name": "Walk Run Interval Planner",
+    "categories": [
+      "Health & Fitness"
+    ],
+    "description": "Plan run-walk intervals by fitness level and target distance, with cycle count, finish time and average pace."
   },
   {
     "slug": "walking-pace-calculator",
@@ -27781,6 +28845,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Generate mystical wizard names with magic schools, staff types, and enchanted quotes. Discover your fantasy wizard identity for RPGs and stories."
+  },
+  {
+    "slug": "womens-day-message-generator",
+    "name": "Womens Day Message Generator",
+    "categories": [
+      "Generators"
+    ],
+    "description": "Generate International Women's Day messages for family, friends and colleagues by tone, length and audience."
   },
   {
     "slug": "wong-baker-pain-scale-tracker",

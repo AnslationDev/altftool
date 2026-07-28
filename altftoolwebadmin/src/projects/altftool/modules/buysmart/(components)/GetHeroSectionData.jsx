@@ -352,17 +352,6 @@ function GetHeroSectionData({ setActive, setEditHero, filter }) {
   );
 
 
-  if (!loading && !heroes.length) {
-    return (
-      <div className="text-center py-12 border border-dashed rounded-lg">
-        <p className="text-lg font-semibold">No Hero Banners</p>
-        <p className="text-gray-500 text-sm mt-1">
-          Add a hero banner to display on BuySmart
-        </p>
-      </div>
-    );
-  }
-
   return (
     <ReusableTable
       data={heroes}
@@ -373,6 +362,7 @@ function GetHeroSectionData({ setActive, setEditHero, filter }) {
       onBulkDelete={handleBulkDelete}
       onStatusChange={handleStatusChanged}
       confirmDeletes
+      emptyMessage="No Hero Banners"
     />
   );
 }

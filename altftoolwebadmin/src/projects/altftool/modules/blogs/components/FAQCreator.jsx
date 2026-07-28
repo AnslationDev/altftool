@@ -75,7 +75,7 @@ function CopyButton({ html, size = "default" }) {
       : "text-xs px-3 py-1.5";
   const style = copied
     ? "bg-success-soft text-success border border-success"
-    : "bg-primary text-white hover:bg-primary";
+    : "bg-primary text-primary-foreground hover:bg-primary";
 
   return (
     <button onClick={handleCopy} type="button" className={`${base} ${sizes} ${style}`}>
@@ -221,7 +221,7 @@ function IconStyleToggle({ value, onChange }) {
           onClick={() => onChange(s.id)}
           className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition ${
             value === s.id
-              ? "bg-primary text-white border-border"
+              ? "bg-primary text-primary-foreground border-border"
               : "bg-surface text-muted border-border hover:border-border hover:text-foreground"
           }`}
         >
@@ -318,8 +318,7 @@ export default function FAQPicker({ trigger, onInsert }) {
       {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm"
           onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
         >
           <div className="bg-surface rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
@@ -397,7 +396,7 @@ export default function FAQPicker({ trigger, onInsert }) {
                         onClick={() => setAccordionMode(m.id)}
                         className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition ${
                           accordionMode === m.id
-                            ? "bg-primary text-white border-border"
+                            ? "bg-primary text-primary-foreground border-border"
                             : "bg-surface text-muted border-border hover:border-border hover:text-foreground"
                         }`}
                       >
@@ -503,7 +502,7 @@ export default function FAQPicker({ trigger, onInsert }) {
                   <button
                     type="button"
                     onClick={handleInsert}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition hover:bg-primary"
                   >
                     <Plus className="h-3 w-3" />
                     Insert into content

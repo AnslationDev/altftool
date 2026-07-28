@@ -14,6 +14,7 @@ import PageStatusCard from "../../components/PageStatusCard";
 import PageInfoCards from "../../components/PageInfoCards";
 import HistoryList from "../../components/HistoryList";
 import { getAdminRouteId } from "@/lib/adminRouteParams";
+import { LoadingState, EmptyState } from "@/ansets";
 
 const toMs = (v) => (v?.toMillis ? v.toMillis() : typeof v === "number" ? v : null);
 
@@ -138,13 +139,18 @@ export default function EditLanderPage() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center gap-2 py-24 text-sm text-[var(--muted)]"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</div>;
+    return <LoadingState variant="detail" />;
   }
   if (!lander) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <p className="text-sm text-[var(--muted)]">{error || "Not found."}</p>
-        <button onClick={() => router.push("/altftool/landing")} className="mt-4 inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] px-4 text-sm font-bold text-[var(--foreground)]"><ArrowLeft className="h-4 w-4" /> Back to list</button>
+      <div className="mx-auto max-w-3xl px-4">
+        <EmptyState
+          title="Landing page not found"
+          description={error || "This page may have been deleted."}
+          action={
+            <button onClick={() => router.push("/altftool/landing")} className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] px-4 text-sm font-bold text-[var(--foreground)]"><ArrowLeft className="h-4 w-4" /> Back to list</button>
+          }
+        />
       </div>
     );
   }

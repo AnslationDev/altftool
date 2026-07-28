@@ -8,6 +8,7 @@ import AcademyModal from "./components/AcademyModal";
 import { fetchAcademies, deleteAcademy } from "./service/academyService";
 import { emitAlert } from "@/lib/alertBus";
 import DeleteConfirmModal from "@/components/ui/DeleteConfirmModal";
+import { ErrorState } from "@/ansets";
 
 function AcademyManagement() {
   const [search, setSearch] = useState("");
@@ -19,6 +20,7 @@ function AcademyManagement() {
   const [editingAcademy, setEditingAcademy] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
 const [deleteLoading, setDeleteLoading] = useState(false);
+  const [loadError, setLoadError] = useState(null);
 
   const categories = [...new Set(academies.map(a => a.category))];
 
@@ -26,9 +28,11 @@ const [deleteLoading, setDeleteLoading] = useState(false);
   try {
     const data = await fetchAcademies();
     setAcademies(data);
+    setLoadError(null);
   } catch (err) {
     console.error("Failed to load academies", err);
     setAcademies([]);
+    setLoadError("Couldn't load academies. Check your connection and try again.");
   }
 };
 
@@ -140,9 +144,21 @@ const handleDelete = async () => {
     }
   };
 
+  if (loadError) {
+    return (
+      <div className="m-10">
+        <ErrorState
+          title="Couldn't load academies"
+          message={loadError}
+          onRetry={loadAcademies}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="m-10">
-      <AcademyTopBar 
+      <AcademyTopBar
         academies={academies}
         total={total}
         avgPrice={avgPrice}

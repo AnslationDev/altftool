@@ -16,15 +16,15 @@ import {
 function Field({ label, hint, error, icon, required, children }) {
   return (
     <div className="space-y-1.5">
-      <label className="flex items-center gap-1.5 text-xs font-bold text-gray-600 uppercase tracking-wider">
-        {icon && <span className="text-gray-400">{icon}</span>}
+      <label className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-wider">
+        {icon && <span className="text-[var(--muted)]">{icon}</span>}
         {label}
-        {required && <span className="text-red-400 font-bold">*</span>}
+        {required && <span className="text-[var(--danger)] font-bold">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && !error && <p className="text-xs text-[var(--muted)]">{hint}</p>}
       {error && (
-        <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+        <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
           <AlertCircle className="w-3 h-3 shrink-0" />{error}
         </p>
       )}
@@ -37,12 +37,12 @@ function Input({ error, className = "", ...props }) {
   return (
     <input
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition
         ${error
-          ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-          : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}
-        ${props.readOnly ? "bg-gray-50 text-gray-500 cursor-not-allowed" : ""}
+          ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+          : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}
+        ${props.readOnly ? "bg-[var(--surface-soft)] text-[var(--muted)] cursor-not-allowed" : ""}
         ${className}`}
     />
   );
@@ -53,11 +53,11 @@ function Textarea({ error, ...props }) {
   return (
     <textarea
       {...props}
-      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-white placeholder:text-gray-400
+      className={`w-full text-sm px-3 py-2.5 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
         focus:outline-none focus:ring-2 transition resize-none
         ${error
-          ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-          : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}`}
+          ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+          : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}`}
     />
   );
 }
@@ -66,8 +66,8 @@ function Textarea({ error, ...props }) {
 /* ── Progress bar ── */
 function ProgressBar({ value }) {
   return (
-    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-      <div className="h-full bg-blue-500 rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
+    <div className="h-1.5 w-full bg-[var(--surface-soft)] rounded-full overflow-hidden">
+      <div className="h-full bg-[var(--primary)] rounded-full transition-all duration-200" style={{ width: `${value}%` }} />
     </div>
   );
 }
@@ -77,8 +77,8 @@ function Section({ title, children }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
-        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-[10px] font-black text-[var(--muted)] uppercase tracking-[0.15em] whitespace-nowrap">{title}</span>
+        <div className="flex-1 h-px bg-[var(--border)]" />
       </div>
       {children}
     </div>
@@ -127,18 +127,18 @@ function ComboBox({ value, onChange, options = [], placeholder, disabled, error,
           placeholder={placeholder}
           disabled={disabled}
           autoComplete="off"
-          className={`w-full text-sm px-3 py-2.5 pr-8 rounded-xl border bg-white placeholder:text-gray-400
+          className={`w-full text-sm px-3 py-2.5 pr-8 rounded-xl border bg-[var(--surface)] placeholder:text-[var(--muted)]
             focus:outline-none focus:ring-2 transition
-            ${error ? "border-red-300 focus:ring-red-400/30 focus:border-red-400"
-                    : "border-gray-200 focus:ring-blue-400/30 focus:border-blue-400"}
-            ${disabled ? "bg-gray-50 text-gray-400 cursor-not-allowed" : "cursor-text"}`}
+            ${error ? "border-[var(--danger)]/40 focus:ring-[var(--danger)]/30 focus:border-[var(--danger)]"
+                    : "border-[var(--border)] focus:ring-[var(--primary)]/30 focus:border-[var(--primary)]"}
+            ${disabled ? "bg-[var(--surface-soft)] text-[var(--muted)] cursor-not-allowed" : "cursor-text"}`}
         />
         <button
           type="button"
           tabIndex={-1}
           disabled={disabled}
           onClick={() => !disabled && setOpen((p) => !p)}
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 disabled:opacity-40 transition"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] disabled:opacity-40 transition"
         >
           <svg viewBox="0 0 24 24" className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`}
             fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -148,15 +148,15 @@ function ComboBox({ value, onChange, options = [], placeholder, disabled, error,
       </div>
 
       {open && !disabled && (
-        <div className="absolute z-50 top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden max-h-52 overflow-y-auto">
+        <div className="absolute z-50 top-full mt-1 w-full bg-[var(--surface)] border border-[var(--border)] rounded-xl shadow-lg overflow-hidden max-h-52 overflow-y-auto">
           {filtered.length === 0 ? (
-            <div className="px-3 py-2.5 text-xs text-gray-400 italic">
+            <div className="px-3 py-2.5 text-xs text-[var(--muted)] italic">
               {query ? `Press Enter to add "${query}"` : "No options"}
             </div>
           ) : (
             <>
               {options.length > 0 && (
-                <div className="px-3 pt-2 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                <div className="px-3 pt-2 pb-1 text-[10px] font-bold text-[var(--muted)] uppercase tracking-wider">
                   Suggestions
                 </div>
               )}
@@ -166,8 +166,8 @@ function ComboBox({ value, onChange, options = [], placeholder, disabled, error,
                   type="button"
                   onMouseDown={(e) => { e.preventDefault(); handleSelect(opt); }}
                   className={`w-full text-left px-3 py-2 text-sm transition flex items-center gap-2
-                    hover:bg-blue-50 hover:text-blue-700
-                    ${value === opt ? "text-blue-600 font-semibold bg-blue-50/60" : "text-gray-700"}`}
+                    hover:bg-[var(--primary-soft)] hover:text-[var(--primary)]
+                    ${value === opt ? "text-[var(--primary)] font-semibold bg-[var(--primary-soft)]" : "text-[var(--foreground)]"}`}
                 >
                   {value === opt && (
                     <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="3">
@@ -223,14 +223,14 @@ function ThumbnailUploader({ thumbnailType, setThumbnailType, thumbnailUrl, setT
         <button
           type="button"
           onClick={() => { setThumbnailType("url"); removeThumb(); }}
-          className={`px-3 py-1 rounded-lg text-xs transition ${thumbnailType === "url" ? "bg-black text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+          className={`px-3 py-1 rounded-lg text-xs transition ${thumbnailType === "url" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--border)]"}`}
         >
           URL
         </button>
         <button
           type="button"
           onClick={() => { setThumbnailType("upload"); setThumbnailUrl(""); }}
-          className={`px-3 py-1 rounded-lg text-xs transition ${thumbnailType === "upload" ? "bg-black text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+          className={`px-3 py-1 rounded-lg text-xs transition ${thumbnailType === "upload" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--muted)] hover:bg-[var(--border)]"}`}
         >
           Upload
         </button>
@@ -251,7 +251,7 @@ function ThumbnailUploader({ thumbnailType, setThumbnailType, thumbnailUrl, setT
           />
           {/* Live URL preview */}
           {thumbnailUrl && (
-            <div className="relative rounded-xl overflow-hidden border border-gray-200 bg-gray-50 aspect-video w-full max-w-xs">
+            <div className="relative rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-soft)] aspect-video w-full max-w-xs">
               <img
                 src={thumbnailUrl}
                 alt="Thumbnail preview"
@@ -262,7 +262,7 @@ function ThumbnailUploader({ thumbnailType, setThumbnailType, thumbnailUrl, setT
               <button
                 type="button"
                 onClick={() => { setThumbnailUrl(""); setThumbnailPreview(null); }}
-                className="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full p-1 transition"
+                className="absolute top-2 right-2 bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] rounded-full p-1 transition"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -277,50 +277,50 @@ function ThumbnailUploader({ thumbnailType, setThumbnailType, thumbnailUrl, setT
               onDrop={(e) => { e.preventDefault(); processThumbFile(e.dataTransfer.files[0]); }}
               onClick={() => thumbInputRef.current?.click()}
               className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-3 cursor-pointer transition
-                ${errors.thumbnail ? "border-red-300 bg-red-50/30" : "border-gray-200 hover:border-blue-300 bg-gray-50/50 hover:bg-blue-50/20"}`}
+                ${errors.thumbnail ? "border-[var(--danger)]/40 bg-[var(--danger-soft)]" : "border-[var(--border)] hover:border-[var(--primary)]/40 bg-[var(--surface-soft)] hover:bg-[var(--primary-soft)]"}`}
             >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${errors.thumbnail ? "bg-red-100" : "bg-gray-100"}`}>
-                <ImageIcon className={`w-5 h-5 ${errors.thumbnail ? "text-red-400" : "text-gray-400"}`} />
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${errors.thumbnail ? "bg-[var(--danger-soft)]" : "bg-[var(--surface-soft)]"}`}>
+                <ImageIcon className={`w-5 h-5 ${errors.thumbnail ? "text-[var(--danger)]" : "text-[var(--muted)]"}`} />
               </div>
               <div className="text-center">
-                <p className="text-sm text-gray-600">
-                  Drop image here or <span className="text-blue-500 font-medium">browse</span>
+                <p className="text-sm text-[var(--foreground)]">
+                  Drop image here or <span className="text-[var(--primary)] font-medium">browse</span>
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">JPG, PNG · Max 2MB</p>
+                <p className="text-xs text-[var(--muted)] mt-0.5">JPG, PNG · Max 2MB</p>
               </div>
               {errors.thumbnail && (
-                <p className="flex items-center gap-1 text-xs text-red-500 font-medium">
+                <p className="flex items-center gap-1 text-xs text-[var(--danger-text)] font-medium">
                   <AlertCircle className="w-3 h-3 shrink-0" />{errors.thumbnail}
                 </p>
               )}
             </div>
           ) : (
-            <div className="rounded-xl border border-gray-200 overflow-hidden bg-gray-50">
+            <div className="rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)]">
               <div className="relative group aspect-video w-full max-w-xs">
                 <img
                   src={thumbnailPreview}
                   alt="Thumbnail preview"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <div className="absolute inset-0 bg-[var(--overlay)]/0 group-hover:bg-[var(--overlay)]/40 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                   <button
                     type="button"
                     onClick={removeThumb}
-                    className="bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg shadow"
+                    className="bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] text-xs px-3 py-1.5 rounded-lg shadow"
                   >
                     Remove
                   </button>
                 </div>
               </div>
               {thumbnailFile && (
-                <div className="flex items-center justify-between px-4 py-2.5 border-t bg-white">
+                <div className="flex items-center justify-between px-4 py-2.5 border-t border-[var(--border)] bg-[var(--surface)]">
                   <div>
-                    <p className="text-xs font-medium text-gray-700 truncate max-w-[180px]">{thumbnailFile.name}</p>
-                    <p className="text-[10px] text-gray-400">
+                    <p className="text-xs font-medium text-[var(--foreground)] truncate max-w-[180px]">{thumbnailFile.name}</p>
+                    <p className="text-[10px] text-[var(--muted)]">
                       {(thumbnailFile.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>
-                  <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
                 </div>
               )}
             </div>
@@ -400,9 +400,6 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
   const [name, setName] = useState(video?.name || "");
   const [description, setDescription] = useState(video?.description || "");
   const [videoUrl, setVideoUrl] = useState(video?.videoUrl || "");
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(video?.image || null);
-  const [dragOver, setDragOver] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -479,10 +476,9 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
 
   useEffect(() => {
     return () => {
-      if (preview && file) URL.revokeObjectURL(preview);
       if (thumbnailPreview && thumbnailFile) URL.revokeObjectURL(thumbnailPreview);
     };
-  }, []);
+  }, [thumbnailPreview, thumbnailFile]);
 
   /* ── YouTube autofill effect ──
      Fires whenever videoUrl changes (in URL mode).
@@ -678,23 +674,23 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
   }[step];
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
+      <div className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* ── Header ── */}
-        <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-start justify-between px-6 py-5 border-b border-[var(--border)] shrink-0">
           <div>
-            <h2 className="text-base font-bold text-gray-900">
+            <h2 className="text-base font-bold text-[var(--foreground)]">
               {isEdit ? "Edit Video" : "New Video"}
             </h2>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-[var(--muted)] mt-0.5">
               {isEdit
                 ? <></>
                 : "Configure video details, thumbnail and source."}
             </p>
           </div>
           <button onClick={onClose} disabled={loading}
-            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition disabled:opacity-40">
+            className="p-1.5 rounded-lg text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] transition disabled:opacity-40">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -709,7 +705,7 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                   key={t}
                   type="button"
                   onClick={() => setType(t)}
-                  className={`px-3 py-1 rounded-lg text-xs capitalize ${type === t ? "bg-blue-600 text-white" : "bg-gray-100"}`}
+                  className={`px-3 py-1 rounded-lg text-xs capitalize ${type === t ? "bg-[var(--primary)] text-[var(--primary-foreground)]" : "bg-[var(--surface-soft)] text-[var(--foreground)]"}`}
                 >
                   {t}
                 </button>
@@ -727,7 +723,7 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                     onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: undefined })); }}
                     error={errors.name} disabled={loading} />
                   {ytFetching && (
-                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 animate-spin text-blue-400" />
+                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 animate-spin text-[var(--primary)]" />
                   )}
                 </div>
               </Field>
@@ -752,7 +748,7 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                     error={errors.duration}
                     disabled={loading}
                   />
-                  {isEdit && <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-300" />}
+                  {isEdit && <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--border-strong)]" />}
                 </div>
               </Field>
               <Field label="Date" required error={errors.date}>
@@ -815,14 +811,14 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                 <button
                   type="button"
                   onClick={() => setVideoType("url")}
-                  className={`px-3 py-1 rounded-lg text-xs ${videoType === "url" ? "bg-black text-white" : "bg-gray-100"}`}
+                  className={`px-3 py-1 rounded-lg text-xs ${videoType === "url" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--foreground)]"}`}
                 >
                   URL
                 </button>
                 <button
                   type="button"
                   onClick={() => setVideoType("upload")}
-                  className={`px-3 py-1 rounded-lg text-xs ${videoType === "upload" ? "bg-black text-white" : "bg-gray-100"}`}
+                  className={`px-3 py-1 rounded-lg text-xs ${videoType === "upload" ? "bg-[var(--foreground)] text-[var(--background)]" : "bg-[var(--surface-soft)] text-[var(--foreground)]"}`}
                 >
                   Upload
                 </button>
@@ -838,8 +834,8 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                 />
                 {ytFetching && (
                   <div className="flex items-center gap-1.5 mt-1.5">
-                    <Loader2 className="w-3 h-3 animate-spin text-blue-400" />
-                    <span className="text-[11px] text-blue-400">Fetching YouTube metadata…</span>
+                    <Loader2 className="w-3 h-3 animate-spin text-[var(--primary)]" />
+                    <span className="text-[11px] text-[var(--primary)]">Fetching YouTube metadata…</span>
                   </div>
                 )}
               </div>
@@ -850,35 +846,35 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => { e.preventDefault(); handleVideoFile(e.dataTransfer.files[0]); }}
                     onClick={() => videoFileInputRef.current?.click()}
-                    className="border-2 border-dashed border-gray-200 hover:border-blue-300 rounded-xl p-8 flex flex-col items-center gap-3 cursor-pointer transition"
+                    className="border-2 border-dashed border-[var(--border)] hover:border-[var(--primary)]/40 rounded-xl p-8 flex flex-col items-center gap-3 cursor-pointer transition"
                   >
-                    <UploadCloud className="w-6 h-6 text-gray-400" />
-                    <p className="text-sm text-gray-600">
-                      Drop video here or <span className="text-blue-500">browse</span>
+                    <UploadCloud className="w-6 h-6 text-[var(--muted)]" />
+                    <p className="text-sm text-[var(--foreground)]">
+                      Drop video here or <span className="text-[var(--primary)]">browse</span>
                     </p>
-                    <p className="text-xs text-gray-400">MP4, WebM · Max 500MB</p>
-                    {errors.video && <p className="text-xs text-red-500">{errors.video}</p>}
+                    <p className="text-xs text-[var(--muted)]">MP4, WebM · Max 500MB</p>
+                    {errors.video && <p className="text-xs text-[var(--danger-text)]">{errors.video}</p>}
                   </div>
                 ) : (
-                  <div className="rounded-xl border overflow-hidden bg-gray-50">
+                  <div className="rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--surface-soft)]">
                     <div className="relative group">
                       <video src={videoPreview} controls className="w-full max-h-52 object-contain bg-black" />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <div className="absolute inset-0 bg-[var(--overlay)]/0 group-hover:bg-[var(--overlay)]/40 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
                         <button
                           onClick={() => { setVideoFile(null); setVideoPreview(null); }}
-                          className="bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg"
+                          className="bg-[var(--danger)] hover:opacity-90 text-[var(--danger-foreground)] text-xs px-3 py-1.5 rounded-lg"
                         >
                           Remove
                         </button>
                       </div>
                     </div>
                     {videoFile && (
-                      <div className="flex justify-between px-4 py-2 border-t bg-white">
+                      <div className="flex justify-between px-4 py-2 border-t border-[var(--border)] bg-[var(--surface)]">
                         <div>
                           <p className="text-xs font-medium truncate">{videoFile.name}</p>
-                          <p className="text-[10px] text-gray-400">{(videoFile.size / (1024 * 1024)).toFixed(1)} MB</p>
+                          <p className="text-[10px] text-[var(--muted)]">{(videoFile.size / (1024 * 1024)).toFixed(1)} MB</p>
                         </div>
-                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        <CheckCircle2 className="w-4 h-4 text-[var(--success)]" />
                       </div>
                     )}
                   </div>
@@ -897,7 +893,7 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
           {/* Upload progress */}
           {step === "uploading" && (
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs text-gray-500">
+              <div className="flex justify-between text-xs text-[var(--muted)]">
                 <span>Uploading…</span>
                 <span className="font-semibold tabular-nums">{uploadProgress}%</span>
               </div>
@@ -905,31 +901,31 @@ export default function VideoModal({ video, videos = [], onClose, onSave }) {
             </div>
           )}
           {step === "saving" && (
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />Saving to database…
+            <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--primary)]" />Saving to database…
             </div>
           )}
           {step === "done" && (
-            <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+            <div className="flex items-center gap-2 text-xs text-[var(--success-text)] font-medium">
               <CheckCircle2 className="w-4 h-4" />{isEdit ? "Video updated!" : "Video created!"}
             </div>
           )}
         </div>
 
         {/* ── Footer ── */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-3 shrink-0 bg-gray-50">
-          <p className="text-xs text-gray-400">
+        <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
+          <p className="text-xs text-[var(--muted)]">
             {isEdit
               ? "Changes will update the video immediately."
-              : <><span className="font-semibold text-gray-600">Add</span> your video and benefit millions</>}
+              : <><span className="font-semibold text-[var(--foreground)]">Add</span> your video and benefit millions</>}
           </p>
           <div className="flex items-center gap-2 shrink-0">
             <button onClick={onClose} disabled={loading}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-white transition disabled:opacity-40">
+              className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] hover:bg-[var(--surface)] transition disabled:opacity-40">
               Cancel
             </button>
             <button onClick={saveVideo} disabled={loading || step === "done"}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-gray-900 hover:bg-gray-700 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-sm">
+              className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--foreground)] hover:opacity-90 disabled:opacity-60 text-[var(--background)] font-semibold rounded-xl transition shadow-sm">
               {loading && step !== "done" && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}
               {stepLabel}

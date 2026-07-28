@@ -45,6 +45,10 @@ export default function AccountInactivePage() {
   const hasRedirectedRef = useRef(false);
 
   useEffect(() => {
+    document.title = "Account deactivated · AltFTools Admin";
+  }, []);
+
+  useEffect(() => {
     if (syncFailed) {
       setStatusUnavailable(true);
       return;

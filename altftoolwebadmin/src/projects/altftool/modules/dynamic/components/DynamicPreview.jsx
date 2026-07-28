@@ -4,22 +4,22 @@ import { Eye, Layout, Image as ImageIcon, Type } from "lucide-react";
 
 function PlaceholderBanner() {
   return (
-    <div className="w-full h-52 bg-gradient-to-br from-slate-100 via-slate-50 to-gray-100 flex flex-col items-center justify-center gap-2 border-b border-slate-100">
-      <div className="w-10 h-10 rounded-2xl bg-slate-200/80 flex items-center justify-center">
-        <ImageIcon className="w-5 h-5 text-slate-400" />
+    <div className="w-full h-52 bg-[var(--surface-soft)] flex flex-col items-center justify-center gap-2 border-b border-[var(--border)]">
+      <div className="w-10 h-10 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center">
+        <ImageIcon className="w-5 h-5 text-[var(--muted)]" />
       </div>
-      <p className="text-xs text-slate-400 font-medium">Hero banner not set</p>
+      <p className="text-xs text-[var(--muted)] font-medium">Hero banner not set</p>
     </div>
   );
 }
 
 function PlaceholderSectionImage() {
   return (
-    <div className="w-full h-36 bg-gradient-to-br from-slate-50 to-gray-100 flex flex-col items-center justify-center gap-1.5">
-      <div className="w-8 h-8 rounded-xl bg-slate-200/80 flex items-center justify-center">
-        <ImageIcon className="w-4 h-4 text-slate-300" />
+    <div className="w-full h-36 bg-[var(--surface-soft)] flex flex-col items-center justify-center gap-1.5">
+      <div className="w-8 h-8 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center">
+        <ImageIcon className="w-4 h-4 text-[var(--muted-soft)]" />
       </div>
-      <p className="text-[10px] text-slate-300 font-medium tracking-wide uppercase">No image</p>
+      <p className="text-[10px] text-[var(--muted-soft)] font-medium tracking-wide uppercase">No image</p>
     </div>
   );
 }
@@ -32,15 +32,15 @@ export default function DynamicPreview({ hero, sections }) {
     <div className="space-y-3">
       {/* Preview label */}
       <div className="flex items-center gap-2 px-1">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-widest">
+        <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--muted)] uppercase tracking-widest">
           <Eye className="w-3.5 h-3.5" />
           Live Preview
         </div>
-        <div className="flex-1 h-px bg-slate-200" />
+        <div className="flex-1 h-px bg-[var(--border)]" />
         <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
           hasAnyContent
-            ? "bg-emerald-100 text-emerald-600"
-            : "bg-slate-100 text-slate-400"
+            ? "bg-[var(--success-soft)] text-[var(--success-text)]"
+            : "bg-[var(--surface-soft)] text-[var(--muted)]"
         }`}>
           {hasAnyContent ? "Has content" : "Empty"}
         </span>
@@ -50,21 +50,21 @@ export default function DynamicPreview({ hero, sections }) {
       <div className="rounded-2xl overflow-hidden border border-[var(--border)] shadow-sm bg-[var(--surface)]">
 
         {/* Browser chrome */}
-        <div className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 border-b border-slate-100">
+        <div className="flex items-center gap-2 px-3 py-2.5 bg-[var(--surface-soft)] border-b border-[var(--border)]">
           <div className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-300" />
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-300" />
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-300" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[var(--danger)]/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[var(--warning)]/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[var(--success)]/70" />
           </div>
           <div className="flex-1 mx-2">
-            <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-2 py-1 max-w-[200px] mx-auto">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-              <span className="text-[10px] text-slate-400 truncate font-mono">
+            <div className="flex items-center gap-1.5 bg-[var(--surface)] border border-[var(--border)] rounded-md px-2 py-1 max-w-[200px] mx-auto">
+              <div className="w-2 h-2 rounded-full bg-[var(--success)] shrink-0" />
+              <span className="text-[10px] text-[var(--muted)] truncate font-mono">
                 altftool.com/{hero?.slug || "page"}
               </span>
             </div>
           </div>
-          <Layout className="w-3 h-3 text-slate-300" />
+          <Layout className="w-3 h-3 text-[var(--muted-soft)]" />
         </div>
 
         {/* HERO */}
@@ -104,14 +104,14 @@ export default function DynamicPreview({ hero, sections }) {
 
           {/* If no banner, show title below */}
           {!hero?.banner && hero?.title && (
-            <div className="px-5 py-3 border-b border-slate-100">
-              <h1 className="text-slate-800 text-base font-bold">{hero.title}</h1>
+            <div className="px-5 py-3 border-b border-[var(--border)]">
+              <h1 className="text-[var(--foreground)] text-base font-bold">{hero.title}</h1>
             </div>
           )}
         </div>
 
         {/* SECTIONS */}
-        <div className="divide-y divide-slate-50">
+        <div className="divide-y divide-[var(--border)]">
           {sections?.map((sec, i) => (
             <div key={i} className="group">
               <div className="flex gap-0 overflow-hidden">
@@ -129,34 +129,34 @@ export default function DynamicPreview({ hero, sections }) {
                 </div>
 
                 {/* Content column */}
-                <div className="flex-1 p-4 flex flex-col justify-center gap-1.5 bg-white">
+                <div className="flex-1 p-4 flex flex-col justify-center gap-1.5 bg-[var(--surface)]">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
+                    <span className="text-[9px] font-black text-[var(--muted-soft)] uppercase tracking-widest">
                       Section {i + 1}
                     </span>
                     {sec.title && (
-                      <span className="w-1 h-1 rounded-full bg-slate-200" />
+                      <span className="w-1 h-1 rounded-full bg-[var(--border-strong)]" />
                     )}
                   </div>
 
                   {sec.title ? (
-                    <h3 className="text-sm font-bold text-slate-800 leading-snug">
+                    <h3 className="text-sm font-bold text-[var(--foreground)] leading-snug">
                       {sec.title}
                     </h3>
                   ) : (
                     <div className="flex items-center gap-1.5">
-                      <div className="h-3 bg-slate-100 rounded w-24" />
+                      <div className="h-3 bg-[var(--surface-soft)] rounded w-24" />
                     </div>
                   )}
 
                   {sec.tagline ? (
-                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
+                    <p className="text-xs text-[var(--muted)] leading-relaxed line-clamp-2">
                       {sec.tagline}
                     </p>
                   ) : (
                     <div className="space-y-1.5">
-                      <div className="h-2.5 bg-slate-50 rounded w-full" />
-                      <div className="h-2.5 bg-slate-50 rounded w-3/4" />
+                      <div className="h-2.5 bg-[var(--surface-soft)] rounded w-full" />
+                      <div className="h-2.5 bg-[var(--surface-soft)] rounded w-3/4" />
                     </div>
                   )}
                 </div>
@@ -167,8 +167,8 @@ export default function DynamicPreview({ hero, sections }) {
 
         {/* Empty state */}
         {!hasAnyContent && (
-          <div className="py-8 px-5 text-center space-y-2 border-t border-slate-50">
-            <p className="text-xs text-slate-400">Fill in the form to see a live preview</p>
+          <div className="py-8 px-5 text-center space-y-2 border-t border-[var(--border)]">
+            <p className="text-xs text-[var(--muted)]">Fill in the form to see a live preview</p>
           </div>
         )}
       </div>
@@ -176,12 +176,12 @@ export default function DynamicPreview({ hero, sections }) {
       {/* Legend */}
       <div className="flex items-center gap-4 px-1">
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-slate-200" />
-          <span className="text-[10px] text-slate-400">Placeholder</span>
+          <div className="w-2 h-2 rounded-sm bg-[var(--border-strong)]" />
+          <span className="text-[10px] text-[var(--muted)]">Placeholder</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-sm bg-emerald-400" />
-          <span className="text-[10px] text-slate-400">Live content</span>
+          <div className="w-2 h-2 rounded-sm bg-[var(--success)]" />
+          <span className="text-[10px] text-[var(--muted)]">Live content</span>
         </div>
       </div>
     </div>

@@ -48,6 +48,10 @@ export default function Login() {
   const [noModules, setNoModules] = useState(false);
   const [retrying, setRetrying] = useState(false);
 
+  useEffect(() => {
+    document.title = "Sign in · AltFTools Admin";
+  }, []);
+
   /* ── Redirect once auth state is resolved ── */
   useEffect(() => {
     if (loading) return;

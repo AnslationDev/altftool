@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Button, Tabs } from "@altftool/ui";
 import {
+  Download,
+  Loader2,
   Pencil,
   Plus,
   RefreshCw,
@@ -28,6 +30,7 @@ import {
 } from "@/services/adminUsersService";
 import { PROJECTS } from "@/projects";
 import {
+  BulkActionsBar,
   DataState,
   DataTable,
   EmptyState,
@@ -247,6 +250,8 @@ export default function AdminManagement() {
   // (onSnapshot tears the listener down after an error).
   const [loadError, setLoadError] = useState(null);
   const [subscriptionKey, setSubscriptionKey] = useState(0);
+  const [selectedIds, setSelectedIds] = useState(() => new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
   // From context, not getAuth().currentUser directly: the local-admin dev
   // session has no Firebase user at all, so reading Firebase raw left both the
   // token calls below AND this self-identity check permanently broken in that
@@ -361,6 +366,87 @@ export default function AdminManagement() {
       setTogglingId(null);
     }
   };
+
+  const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+
+  const exportCsv = useCallback((rowsToExport) => {
+    const header = ["Name", "Email", "Role", "Team", "Status"];
+    const lines = [header.map(csvCell).join(",")];
+    for (const a of rowsToExport) {
+      lines.push(
+        [
+          a.fullName || [a.firstName, a.lastName].filter(Boolean).join(" "),
+          a.email,
+          a.roleType === "superadmin" ? "Super Admin" : "Admin",
+          a.team || "",
+          a.isActive ? "Active" : "Inactive",
+        ]
+          .map(csvCell)
+          .join(","),
+      );
+    }
+    const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `admins-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  const bulkSetActive = useCallback(
+    async (nextActive) => {
+      // The server independently rejects a self-toggle, but filtering it out
+      // up front means a bulk action a super admin ran on themselves plus
+      // others reports as a clean success for everyone it actually applied
+      // to, instead of a confusing "1 failed" for an operation the UI itself
+      // should never have attempted.
+      const ids = [...selectedIds].filter((id) => id !== currentUid);
+      const skippedSelf = selectedIds.has(currentUid);
+      if (!ids.length) {
+        if (skippedSelf) {
+          emitAlert({ type: "warning", message: "You cannot change your own active status." });
+        }
+        return;
+      }
+      const verb = nextActive ? "Activate" : "Deactivate";
+      if (!window.confirm(`${verb} ${ids.length} admin${ids.length === 1 ? "" : "s"}?`)) return;
+
+      setBulkBusy(true);
+      try {
+        const token = await getAdminIdToken(true);
+        if (!token) {
+          emitAlert({ type: "error", message: "Session expired. Please log in again." });
+          return;
+        }
+        const results = await Promise.allSettled(
+          ids.map((adminId) =>
+            fetch("/api/admin/toggle-status", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ adminId, isActive: nextActive }),
+            }).then((res) => {
+              if (!res.ok) throw new Error(`Failed for ${adminId}`);
+            }),
+          ),
+        );
+        const failed = results.filter((r) => r.status === "rejected").length;
+        if (failed) {
+          emitAlert({
+            type: "warning",
+            message: `${verb}d ${ids.length - failed} of ${ids.length}. ${failed} failed — try again for those.`,
+          });
+        } else {
+          emitAlert({ type: "success", message: `${verb}d ${ids.length} admin${ids.length === 1 ? "" : "s"}.` });
+        }
+        setSelectedIds(new Set());
+        fetchAdmins(true);
+      } finally {
+        setBulkBusy(false);
+      }
+    },
+    [selectedIds, currentUid, fetchAdmins],
+  );
 
   // Search (name + email), role/status filters and sorting for both tabs.
   const controls = useTableControls(admins, {
@@ -617,13 +703,43 @@ export default function AdminManagement() {
                   },
                 ]}
                 count={`${controls.matched} of ${controls.total} admins`}
+                actions={
+                  visibleAdmins.length ? (
+                    <Button variant="ghost" size="sm" onClick={() => exportCsv(visibleAdmins)}>
+                      <Download className="h-3.5 w-3.5" aria-hidden="true" />
+                      Export CSV
+                    </Button>
+                  ) : null
+                }
               />
+
+              <BulkActionsBar count={selectedIds.size} onClear={() => setSelectedIds(new Set())} noun="admin">
+                <Button variant="secondary" size="sm" onClick={() => bulkSetActive(true)} disabled={bulkBusy}>
+                  {bulkBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" /> : null}
+                  Activate
+                </Button>
+                <Button variant="secondary" size="sm" onClick={() => bulkSetActive(false)} disabled={bulkBusy}>
+                  {bulkBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" /> : null}
+                  Deactivate
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => exportCsv(admins.filter((a) => selectedIds.has(a.id)))}
+                >
+                  <Download className="h-3.5 w-3.5" aria-hidden="true" />
+                  Export selected
+                </Button>
+              </BulkActionsBar>
 
               <DataTable
                 caption="Administrators"
                 columns={columns}
                 rows={visibleAdmins}
                 getRowKey={(admin) => admin.id}
+                selectable
+                selectedKeys={selectedIds}
+                onSelectionChange={setSelectedIds}
                 sort={controls.sort}
                 onSortChange={controls.setSort}
                 loading={loading}

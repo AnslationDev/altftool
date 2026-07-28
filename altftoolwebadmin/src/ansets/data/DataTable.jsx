@@ -1,8 +1,28 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-react";
 import { cn } from "@altftool/ui";
 import { DataState } from "../states/States";
+
+/** Header checkbox needs a real DOM node to set `.indeterminate` — a plain
+ *  `checked` prop has no way to express "some but not all" selected. */
+function HeaderCheckbox({ checked, indeterminate, onChange, label }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (ref.current) ref.current.indeterminate = indeterminate;
+  }, [indeterminate]);
+  return (
+    <input
+      ref={ref}
+      type="checkbox"
+      checked={checked}
+      onChange={onChange}
+      aria-label={label}
+      className="h-4 w-4 cursor-pointer accent-[var(--primary)]"
+    />
+  );
+}
 
 /**
  * The admin table.
@@ -24,6 +44,12 @@ import { DataState } from "../states/States";
  * use them to keep a screen-specific failure message ("Couldn't load audit
  * logs") instead of the generic default, or to add a secondary action beside
  * Try again.
+ *
+ * `selectable` turns on a checkbox column (header checkbox selects/clears
+ * every row currently visible in `rows` — not the whole unfiltered dataset).
+ * The caller owns the selection Set; this component only reads it and reports
+ * changes via `onSelectionChange`, so a caller building a bulk-actions toolbar
+ * doesn't have to fork this table to get one.
  */
 export function DataTable({
   columns = [],
@@ -41,7 +67,33 @@ export function DataTable({
   rowActions,
   onRowClick,
   className,
+  selectable = false,
+  selectedKeys,
+  onSelectionChange,
 }) {
+  const keyOf = (row, index) => (getRowKey ? getRowKey(row, index) : (row.id ?? index));
+  const visibleKeys = rows.map(keyOf);
+  const selectedVisibleCount = selectable
+    ? visibleKeys.filter((k) => selectedKeys?.has(k)).length
+    : 0;
+  const allVisibleSelected = selectable && rows.length > 0 && selectedVisibleCount === rows.length;
+  const someVisibleSelected = selectable && selectedVisibleCount > 0 && !allVisibleSelected;
+
+  const toggleRow = (key) => {
+    if (!onSelectionChange) return;
+    const next = new Set(selectedKeys);
+    if (next.has(key)) next.delete(key);
+    else next.add(key);
+    onSelectionChange(next);
+  };
+
+  const toggleAllVisible = () => {
+    if (!onSelectionChange) return;
+    const next = new Set(selectedKeys);
+    if (allVisibleSelected) visibleKeys.forEach((k) => next.delete(k));
+    else visibleKeys.forEach((k) => next.add(k));
+    onSelectionChange(next);
+  };
   const hideClass = {
     sm: "hidden sm:table-cell",
     md: "hidden md:table-cell",
@@ -79,6 +131,16 @@ export function DataTable({
 
           <thead>
             <tr className="border-b border-[var(--border)] bg-[var(--surface-soft)]">
+              {selectable ? (
+                <th scope="col" className="w-10 px-4 py-3">
+                  <HeaderCheckbox
+                    checked={allVisibleSelected}
+                    indeterminate={someVisibleSelected}
+                    onChange={toggleAllVisible}
+                    label={allVisibleSelected ? "Deselect all rows" : "Select all rows"}
+                  />
+                </th>
+              ) : null}
               {columns.map((col) => {
                 const active = sort?.key === col.key;
                 return (
@@ -127,16 +189,30 @@ export function DataTable({
           </thead>
 
           <tbody className="divide-y divide-[var(--border)]">
-            {rows.map((row, index) => (
+            {rows.map((row, index) => {
+              const key = keyOf(row, index);
+              const isSelected = selectable && Boolean(selectedKeys?.has(key));
+              return (
               <tr
-                key={getRowKey ? getRowKey(row, index) : (row.id ?? index)}
+                key={key}
                 onClick={onRowClick ? () => onRowClick(row) : undefined}
                 className={cn(
                   "transition-colors",
                   onRowClick && "cursor-pointer",
-                  "hover:bg-[var(--surface-soft)]",
+                  isSelected ? "bg-[var(--primary-soft)] hover:bg-[color-mix(in_srgb,var(--primary-soft)_65%,var(--primary))]" : "hover:bg-[var(--surface-soft)]",
                 )}
               >
+                {selectable ? (
+                  <td className="px-4 py-3.5" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleRow(key)}
+                      aria-label={isSelected ? "Deselect row" : "Select row"}
+                      className="h-4 w-4 cursor-pointer accent-[var(--primary)]"
+                    />
+                  </td>
+                ) : null}
                 {columns.map((col) => (
                   <td
                     key={col.key}
@@ -155,7 +231,8 @@ export function DataTable({
                   </td>
                 ) : null}
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

@@ -82,7 +82,7 @@ function AddHeroBanner({ setActive, editData, setEditData }) {
   };
 
   return (
-    <div className="border rounded-lg p-6 bg-white shadow-md space-y-5">
+    <div className="border border-[var(--border)] rounded-lg p-6 bg-[var(--surface)] shadow-md space-y-5">
 
       {/* HEADER */}
       <div className="flex justify-between items-center">
@@ -95,7 +95,7 @@ function AddHeroBanner({ setActive, editData, setEditData }) {
             setActive(false);
             setEditData(null);
           }}
-          className="px-3 py-1 border rounded hover:bg-red-500 hover:text-white"
+          className="px-3 py-1 border border-[var(--border)] rounded hover:bg-[var(--danger)] hover:text-[var(--danger-foreground)]"
         >
           Cancel
         </button>
@@ -109,7 +109,7 @@ function AddHeroBanner({ setActive, editData, setEditData }) {
           value={form.title}
           onChange={handleChange}
           placeholder="Enter banner title"
-          className="mt-1 border p-3 w-full rounded focus:ring-2 focus:ring-blue-500"
+          className="mt-1 border border-[var(--border)] bg-[var(--surface)] p-3 w-full rounded focus:outline-none focus:[box-shadow:var(--focus-ring)] focus:border-[var(--primary)]"
         />
       </div>
 
@@ -121,11 +121,11 @@ function AddHeroBanner({ setActive, editData, setEditData }) {
           type="file"
           accept="image/*"
           onChange={handleImageChange}
-          className="mt-1 w-full border p-3 rounded bg-gray-50"
+          className="mt-1 w-full border border-[var(--border)] p-3 rounded bg-[var(--surface-soft)]"
         />
 
         {uploading && (
-          <p className="text-sm text-blue-600 mt-1">Uploading image...</p>
+          <p className="text-sm text-[var(--primary)] mt-1">Uploading image...</p>
         )}
       </div>
 
@@ -159,7 +159,7 @@ function AddHeroBanner({ setActive, editData, setEditData }) {
       <button
         onClick={handleSubmit}
         disabled={loading || uploading}
-        className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition"
+        className="w-full bg-[var(--primary)] text-[var(--primary-foreground)] py-3 rounded hover:bg-[var(--primary-hover)] transition"
       >
         {loading
           ? "Saving..."

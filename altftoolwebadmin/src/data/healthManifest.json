@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T06:08:32.861Z",
+  "generatedAt": "2026-07-28T07:31:17.558Z",
   "tools": {
-    "total": 3420,
-    "healthy": 3420,
+    "total": 3554,
+    "healthy": 3554,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 22,
-    "directories": 3421,
+    "directories": 3555,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -19,16 +19,16 @@
     "readiness": {
       "methodology": "static-readiness-v2",
       "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-      "total": 3420,
+      "total": 3554,
       "score": 94,
       "counts": {
-        "working": 3342,
+        "working": 3476,
         "api-required": 64,
         "partial": 14,
         "broken": 0
       },
       "automatedTests": 158,
-      "automatedCoverage": 5,
+      "automatedCoverage": 4,
       "networkDependent": 64,
       "envDependent": 4,
       "api": {

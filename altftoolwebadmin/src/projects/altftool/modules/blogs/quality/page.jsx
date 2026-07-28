@@ -25,6 +25,7 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
+import { Bone, EmptyState, LoadingState } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { logAuditEvent } from "@/lib/auditClient";
 import {
@@ -163,27 +164,6 @@ function ScorePill({ label, score }) {
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-soft">
         <div className={`h-full rounded-full ${barTone(score)}`} style={{ width: `${Math.max(4, score)}%` }} />
       </div>
-    </div>
-  );
-}
-
-function EmptyState({ onReset }) {
-  return (
-    <div className="rounded-2xl border border-dashed border-border bg-surface px-6 py-12 text-center">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-soft text-muted">
-        <Filter className="h-5 w-5" />
-      </div>
-      <h2 className="mt-4 text-base font-black text-foreground">No posts in this queue</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted">
-        Clear one or two filters to review the full blog quality list.
-      </p>
-      <button
-        type="button"
-        onClick={onReset}
-        className="mt-5 inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
-      >
-        Reset filters
-      </button>
     </div>
   );
 }
@@ -349,7 +329,7 @@ function QualityRow({ blog, linkNode, selected, onToggle, onEdit }) {
               <button
                 type="button"
                 onClick={() => onEdit(blog, blog.recommendedAction)}
-                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary"
+                className="inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-primary-foreground transition hover:opacity-90"
               >
                 <WandSparkles className="h-3.5 w-3.5" />
                 Fix
@@ -636,7 +616,7 @@ function LinkFixPreviewModal({ applying = false, onClose, onConfirm, preview }) 
               type="button"
               onClick={onConfirm}
               disabled={applying || !candidates.length}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
               {applying ? "Applying..." : `Apply ${fixCount} fix${fixCount === 1 ? "" : "es"}`}
@@ -744,7 +724,7 @@ function InternalLinkPlanPreviewModal({ applying = false, onClose, onConfirm, pr
               type="button"
               onClick={onConfirm}
               disabled={applying || !candidates.length}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {applying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Link2 className="h-4 w-4" />}
               {applying ? "Applying..." : `Apply ${fixCount} link${fixCount === 1 ? "" : "s"}`}
@@ -1396,15 +1376,11 @@ export default function BlogQualityCenterPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl space-y-5 px-4 py-8">
-        <div className="h-9 w-72 animate-pulse rounded-xl bg-surface-soft" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {[1, 2, 3, 4, 5].map((item) => (
-            <div key={item} className="h-28 animate-pulse rounded-2xl bg-surface-soft" />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="h-96 animate-pulse rounded-2xl bg-surface-soft" />
-          <div className="h-96 animate-pulse rounded-2xl bg-surface-soft" />
+        <Bone className="h-9 w-72 rounded-xl" />
+        <LoadingState variant="stats" />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_340px]" aria-hidden="true">
+          <Bone className="h-96 rounded-2xl" />
+          <Bone className="h-96 rounded-2xl" />
         </div>
       </div>
     );
@@ -1449,7 +1425,7 @@ export default function BlogQualityCenterPage() {
           <button
             type="button"
             onClick={() => router.push("/altftool/blogs/add-blogs")}
-            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary"
+            className="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
           >
             <PlusCircle className="h-4 w-4" />
             Add blog
@@ -1605,7 +1581,7 @@ export default function BlogQualityCenterPage() {
               type="button"
               onClick={startTopIssue}
               disabled={!filteredBlogs.length}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-3 text-xs font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               <WandSparkles className="h-3.5 w-3.5" />
               Start top issue
@@ -1628,7 +1604,21 @@ export default function BlogQualityCenterPage() {
               />
             ))
           ) : (
-            <EmptyState onReset={resetFilters} />
+            <EmptyState
+              icon={Filter}
+              title="No posts in this queue"
+              description="Clear one or two filters to review the full blog quality list."
+              className="rounded-2xl border border-dashed border-border bg-surface"
+              action={
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-surface px-4 text-sm font-semibold text-foreground transition hover:bg-surface-soft"
+                >
+                  Reset filters
+                </button>
+              }
+            />
           )}
         </section>
 
@@ -1728,7 +1718,7 @@ export default function BlogQualityCenterPage() {
               type="button"
               onClick={applyBulkAction}
               disabled={!selectedBlogs.length || bulkApplying}
-              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:bg-surface-soft"
+              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-surface-soft"
             >
               {bulkApplying ? <RefreshCw className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
               {bulkApplying ? "Applying..." : `Apply ${getActionConfig(bulkAction).shortLabel}`}
