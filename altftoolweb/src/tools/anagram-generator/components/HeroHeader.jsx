@@ -9,7 +9,11 @@ export default function HeroHeader() {
     <div className="relative overflow-hidden rounded-[28px] border border-white/20 dark:border-teal-500/30 p-8 sm:p-12 lg:p-16 shadow-[0_25px_70px_rgba(15,23,42,0.25)] text-center group">
       {/* Real High-Resolution Anagram Word Tiles Background Image */}
       <div
-        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center scale-105 group-hover:scale-100 transition-transform duration-1000 opacity-90"
+        className="absolute inset-0 bg-cover bg-center scale-105 group-hover:scale-100 transition-transform duration-1000 opacity-90"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1600&auto=format&fit=crop')",
+        }}
       />
 
       {/* Subtle Soft Gradient Overlay for Readability */}

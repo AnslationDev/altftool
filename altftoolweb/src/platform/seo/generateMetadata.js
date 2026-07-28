@@ -425,6 +425,50 @@ export function createWebsiteJsonLd() {
     description: siteConfig.description,
     url: getSiteUrl(),
     inLanguage: "en",
+    keywords: siteConfig.keywords.join(", "),
+    about: siteConfig.knowsAbout.map((name) => ({
+      "@type": "Thing",
+      name,
+    })),
+    audience: [
+      { "@type": "Audience", audienceType: "Developers" },
+      { "@type": "Audience", audienceType: "Creators" },
+      { "@type": "Audience", audienceType: "Students" },
+      { "@type": "Audience", audienceType: "Small business owners" },
+      { "@type": "Audience", audienceType: "Privacy-conscious users" },
+    ],
+    hasPart: [
+      {
+        "@type": "CollectionPage",
+        "@id": `${getSiteUrl()}/tools/all#collection`,
+        name: "All AltFTool tools",
+        url: `${getSiteUrl()}/tools/all`,
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${getSiteUrl()}/tools/security-privacy#collection`,
+        name: "Security and privacy tools",
+        url: `${getSiteUrl()}/tools/security-privacy`,
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${getSiteUrl()}/altflovepdf#collection`,
+        name: "AltFLovePDF tools",
+        url: `${getSiteUrl()}/altflovepdf`,
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${getSiteUrl()}/altfloveimg#collection`,
+        name: "AltFLoveIMG tools",
+        url: `${getSiteUrl()}/altfloveimg`,
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": `${getSiteUrl()}/llms.txt#llm-manifest`,
+        name: "AltFTool LLM manifest",
+        url: `${getSiteUrl()}/llms.txt`,
+      },
+    ],
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },
@@ -464,6 +508,9 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
   const categories = Array.isArray(tool.category)
     ? tool.category
     : [tool.category].filter(Boolean);
+  const topics = Array.isArray(tool.topics)
+    ? tool.topics
+    : [tool.topics].filter(Boolean);
 
   const url = absoluteUrl(`/tools/${category || "all"}/${slug}`);
   const isGame = categories.some((value) => /^games?$/i.test(String(value).trim()));
@@ -484,6 +531,15 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
     isAccessibleForFree: true,
     inLanguage: "en",
     image: absoluteUrl(siteConfig.defaultImagePath),
+    featureList: [
+      tool.description,
+      "Free browser-based workflow",
+      "No installation required",
+      categories.length ? `Category: ${categories.join(", ")}` : null,
+    ].filter(Boolean),
+    keywords: [...new Set([...categories, ...topics])]
+      .filter(Boolean)
+      .join(", "),
     offers: {
       "@type": "Offer",
       price: "0",

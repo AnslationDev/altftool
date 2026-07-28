@@ -1,4 +1,5 @@
 import { getSiteUrl } from "@/platform/seo/generateMetadata";
+import { ANSWER_ENGINE_CRAWLERS } from "@/platform/seo/answerEngineManifest";
 import { loadSeoConfig } from "@/platform/seo/seoConfigSource";
 import { resolveCrawl } from "@altftool/core/seo/resolver";
 
@@ -22,20 +23,7 @@ export default async function robots() {
   // already covered by "*", but explicit rules survive future "*" tightening
   // and signal intent. Content stays available for AI citation/recommendation.
   const aiCrawlerRule = {
-    userAgent: [
-      "GPTBot",
-      "OAI-SearchBot",
-      "ChatGPT-User",
-      "ClaudeBot",
-      "Claude-Web",
-      "anthropic-ai",
-      "PerplexityBot",
-      "Google-Extended",
-      "Applebot-Extended",
-      "cohere-ai",
-      "Bytespider",
-      "CCBot",
-    ],
+    userAgent: ANSWER_ENGINE_CRAWLERS,
     allow: "/",
     disallow: ["/api/"],
   };

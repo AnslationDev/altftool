@@ -1,9 +1,15 @@
 import ForumsPageView from "./PageView";
+import { buildAltfWorldMetadata } from "../seo";
+import { absoluteUrl, getSiteUrl } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Forums — AltfWorld",
-  description: "Browse a large mock catalog of thoughtful community conversations.",
-};
+export function generateMetadata() {
+  return buildAltfWorldMetadata({
+    title: "Forums — AltfWorld",
+    description: "Browse thoughtful AltfWorld community conversations by builder topic, resource type, and digital-tool workflow.",
+    path: "/altfworld/forums",
+    keywords: ["AltfWorld forums", "community discussions", "builder forums"],
+  });
+}
 
 export default function ForumsPage() {
   const jsonLd = {
@@ -11,6 +17,8 @@ export default function ForumsPage() {
     "@type": "CollectionPage",
     name: "AltfWorld Forums",
     description: "A frontend-only mock community forum catalog.",
+    url: absoluteUrl("/altfworld/forums"),
+    isPartOf: { "@id": `${getSiteUrl()}/#website` },
     numberOfItems: 30000,
   };
 

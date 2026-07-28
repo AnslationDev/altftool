@@ -251,7 +251,13 @@ export default function ChessGame({ isPreview = false }) {
         <div ref={containerRef} className={`relative w-full h-full ${THEME.ui.bg} rounded-xl overflow-hidden font-sans select-none border border-slate-800 shadow-2xl flex flex-col`}>
 
             {/* Background Texture */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay pointer-events-none" />
+            <div
+                className="absolute inset-0 opacity-5 mix-blend-overlay pointer-events-none"
+                style={{
+                    backgroundImage:
+                        "url('https://grainy-gradients.vercel.app/noise.svg')",
+                }}
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950/90 pointer-events-none" />
 
             {/* --- HEADER --- */}

@@ -1,18 +1,17 @@
 {
-  "generatedAt": "2026-05-20T19:08:16.735Z",
+  "generatedAt": "2026-07-28T10:12:06.302Z",
   "status": "ready-with-warnings",
   "strict": false,
   "offline": false,
-  "durationMs": 7698,
+  "durationMs": 11181,
   "summary": {
     "counts": {
-      "pass": 8,
-      "warn": 2,
+      "pass": 9,
+      "warn": 1,
       "block": 0
     },
     "blockingChecks": [],
     "warningChecks": [
-      "Firebase Admin SDK",
       "Vercel web/admin readiness"
     ]
   },
@@ -22,14 +21,14 @@
       "label": "Tool, SEO, content, and automation manifest",
       "status": "pass",
       "score": 100,
-      "detail": "231/231 tools healthy, 40/40 priority routes covered.",
+      "detail": "3554/3554 tools healthy, 51/51 priority routes covered.",
       "nextAction": "",
       "command": "npm run health:manifest",
-      "durationMs": 0,
+      "durationMs": 1,
       "meta": {
-        "generatedAt": "2026-05-17T11:18:45.634Z",
-        "tools": 231,
-        "priorityTools": 40
+        "generatedAt": "2026-07-28T07:31:17.558Z",
+        "tools": 3554,
+        "priorityTools": 51
       }
     },
     {
@@ -64,12 +63,12 @@
     {
       "key": "firebase-admin",
       "label": "Firebase Admin SDK",
-      "status": "warn",
-      "score": 90,
-      "detail": "Firebase Admin probe skipped by --no-firebase-admin.",
-      "nextAction": "Run without --no-firebase-admin before release.",
+      "status": "pass",
+      "score": 100,
+      "detail": "Admin SDK credentials can read Firestore.",
+      "nextAction": "",
       "command": "npm run firebase:admin-write-check",
-      "durationMs": 0,
+      "durationMs": 1919,
       "meta": {}
     },
     {
@@ -80,7 +79,7 @@
       "detail": "19/19 live Firestore checks passing.",
       "nextAction": "",
       "command": "npm run firebase:live-check",
-      "durationMs": 2326,
+      "durationMs": 1915,
       "meta": {
         "projectId": "altftool-bca36",
         "failures": []
@@ -94,7 +93,7 @@
       "detail": "20/20 sampled content checks passing; 0 failures, 0 warnings.",
       "nextAction": "",
       "command": "npm run firebase:integrity:strict",
-      "durationMs": 2265,
+      "durationMs": 2613,
       "meta": {
         "projectId": "altftool-bca36",
         "sampleLimit": 10,
@@ -107,22 +106,24 @@
       "label": "Performance budget",
       "status": "pass",
       "score": 100,
-      "detail": "390 public images, 231 lazy tool imports, 0 eager tool imports.",
+      "detail": "743 public images, 3554 lazy tool imports, 0 eager tool imports.",
       "nextAction": "",
       "command": "npm run performance:budget:strict",
       "durationMs": 1,
       "meta": {
-        "generatedAt": "2026-05-20T18:59:02.687Z",
+        "generatedAt": "2026-07-28T10:11:18.456Z",
         "failures": [],
         "warnings": [],
         "totals": {
           "failures": 0,
           "warnings": 0,
-          "notices": 1,
+          "notices": 0,
           "apps": 2,
-          "publicImages": 390,
-          "dynamicToolImports": 231,
-          "directToolImportFiles": 0
+          "publicImages": 743,
+          "dynamicToolImports": 3554,
+          "directToolImportFiles": 0,
+          "missingPriorityToolRuntimes": 0,
+          "priorityToolRuntimeCoverage": "51/51"
         }
       }
     },
@@ -152,15 +153,15 @@
       "label": "Production links and images",
       "status": "pass",
       "score": 100,
-      "detail": "12 pages, 192 links, 36 images checked.",
+      "detail": "12 pages, 192 links, 16 images checked.",
       "nextAction": "",
       "command": "npm run monitor:links:strict",
-      "durationMs": 2702,
+      "durationMs": 4678,
       "meta": {
-        "baseUrl": "https://altftool.com",
+        "baseUrl": "https://www.altftool.com",
         "failures": [],
         "warnings": [],
-        "notices": 24
+        "notices": 26
       }
     },
     {
@@ -171,10 +172,10 @@
       "detail": "Public health 200; status healthy; score 100.",
       "nextAction": "",
       "command": "npm run monitor:production",
-      "durationMs": 400,
+      "durationMs": 51,
       "meta": {
-        "healthUrl": "https://altftool.com/api/health",
-        "commit": "06968107"
+        "healthUrl": "https://www.altftool.com/api/health",
+        "commit": "e23cf5b3"
       }
     }
   ]

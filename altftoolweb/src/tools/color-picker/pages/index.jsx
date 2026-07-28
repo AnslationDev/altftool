@@ -317,7 +317,14 @@ export default function ToolHome() {
               className="rounded-lg border border-[var(--border)] bg-[var(--card)] shadow-[var(--anslation-ds-shadow-sm)] min-h-[250px] relative overflow-hidden transition-colors duration-300 flex items-center justify-center p-8"
               style={{ backgroundColor: `rgba(${rgbObj.r}, ${rgbObj.g}, ${rgbObj.b}, ${alpha})` }}
             >
-               <div className="absolute inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjY2NjIi8+CjxyZWN0IHg9IjQiIHk9IjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNjY2MiLz4KPC9zdmc+')] opacity-20" style={{ zIndex: -1 }}></div>
+               <div
+                 className="absolute inset-0 z-0 opacity-20"
+                 style={{
+                   zIndex: -1,
+                   backgroundImage:
+                     "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjY2NjIi8+CjxyZWN0IHg9IjQiIHk9IjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNjY2MiLz4KPC9zdmc+')",
+                 }}
+               ></div>
                
                <div className="bg-white/90 dark:bg-black/80 backdrop-blur-md rounded-xl p-6 text-center max-w-sm w-full shadow-lg z-10 border border-[var(--border)]">
                   <h2 className="text-4xl font-bold tracking-wider mb-2 font-mono" style={{ color: `rgba(${rgbObj.r}, ${rgbObj.g}, ${rgbObj.b}, 1)` }}>{hex.toUpperCase()}</h2>

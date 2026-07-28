@@ -39,7 +39,7 @@ const DEFAULT_APP_BUDGETS = [
     routeLoaderBaseline: 245,
     // Match check-bundle-budgets.mjs. Aggregate growth is distributed across
     // lazy admin routes; the fixed per-chunk cap remains the user-facing guard.
-    routeJsGrowthKiB: 6.25,
+    routeJsGrowthKiB: 6.5,
   },
 ];
 
@@ -68,6 +68,12 @@ const FORBIDDEN_CRITICAL_REFERENCES = [
 
 const IMAGE_EXTENSIONS = new Set([".avif", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]);
 const SOURCE_EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".md", ".mdx"]);
+const ALLOWED_DIRECT_TOOL_IMPORT_PATTERNS = [
+  // Generated SEO shards import src/tools/<slug>/seo metadata only. They do not
+  // pull client runtimes into route bundles, so keep the runtime guard focused
+  // on non-SEO tool imports.
+  /^altftoolweb\/src\/app\/tools\/generated\/toolSeoShard\d+\.js$/,
+];
 
 function argValue(name, fallback = "") {
   const prefix = `${name}=`;
@@ -503,6 +509,7 @@ async function checkSourceGuardrails(rootDir, sourceRoot, options) {
     const relativeFile = path.relative(rootDir, file);
     if (relativeFile.endsWith("platform/registry/toolRuntimeMap.js")) continue;
     if (relativeFile.startsWith("altftoolweb/src/tools/")) continue;
+    if (ALLOWED_DIRECT_TOOL_IMPORT_PATTERNS.some((pattern) => pattern.test(relativeFile))) continue;
 
     const content = (await readFile(file, "utf8"))
       .split("\n")

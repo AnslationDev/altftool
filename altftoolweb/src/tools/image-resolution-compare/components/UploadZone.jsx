@@ -32,7 +32,13 @@ export default function UploadZone({ id, label, imageData, onUpload, onClear }) 
         <div className="relative rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-inner group flex-1 min-h-[250px] flex flex-col justify-between">
           <div className="flex-1 relative flex items-center justify-center p-4">
             {/* Checkerboard background for transparency */}
-            <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYB8g8+kM2KrgEExjIoxagCDDAwAEtQEw2y42zMAAAAASUVORK5CYII=')] opacity-20"></div>
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage:
+                  "url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYB8g8+kM2KrgEExjIoxagCDDAwAEtQEw2y42zMAAAAASUVORK5CYII=')",
+              }}
+            ></div>
             <img 
               src={imageData.url} 
               alt={`Image ${id}`} 

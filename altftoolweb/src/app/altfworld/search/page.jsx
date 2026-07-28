@@ -1,9 +1,14 @@
 import { SearchView } from "../components/community/Views";
+import { buildAltfWorldMetadata } from "../seo";
 
-export const metadata = {
-  title: "Search Discussions — AltfWorld",
-  description: "Search community discussions, guides, and tools.",
-};
+export function generateMetadata() {
+  return buildAltfWorldMetadata({
+    title: "Search Discussions — AltfWorld",
+    description: "Search AltfWorld community discussions, guides, tools, and builder resources.",
+    path: "/altfworld/search",
+    keywords: ["community search", "discussion search", "AltfWorld search"],
+  });
+}
 
 export default function SearchPage() {
   return <SearchView />;
