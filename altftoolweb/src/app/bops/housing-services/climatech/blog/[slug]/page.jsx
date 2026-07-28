@@ -4,8 +4,13 @@ import Footer from "../../components/Footer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export async function generateStaticParams() {
+  // Each prerendered URL costs ~650 KB of the Amplify artifact gate.
+  // Defer with the rest of the bulk families; ISR still caches on first
+  // request, and unknown slugs still 404 via notFound() below.
+  if (shouldDeferBulkPrerendering()) return [];
   return blogArticles.map((article) => ({
     slug: article.slug,
   }));

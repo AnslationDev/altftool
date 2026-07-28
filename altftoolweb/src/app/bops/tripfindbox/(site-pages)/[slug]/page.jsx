@@ -8,11 +8,15 @@ import { getTripFindBoxContactInfo, telHref } from "@/app/bops/tripfindbox/lib/c
 import { getSitemapPage, sitemapPages } from "@/app/bops/tripfindbox/lib/sitemapPages";
 import { tfbPath } from "@/app/bops/tripfindbox/lib/tfbLink";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export const revalidate = 300;
-export const dynamicParams = false;
+// When bulk prerendering is deferred the static param list is empty, so this
+// route must allow on-demand rendering or every URL in this family would 404.
+// Unknown slugs still 404 correctly via notFound() below.
+export const dynamicParams = true;
 
 function cleanRouteName(title) {
   return title.replace(/\s+Flights$/i, "").replace(/^Flights to\s+/i, "");
@@ -1207,6 +1211,10 @@ function MobileDealSupportHero({ title, contact }) {
 }
 
 export function generateStaticParams() {
+  // Each prerendered URL costs ~650 KB of the Amplify artifact gate.
+  // Defer with the rest of the bulk families; ISR still caches on first
+  // request (dynamicParams is flipped to true above to allow that).
+  if (shouldDeferBulkPrerendering()) return [];
   return sitemapPages.map((page) => ({ slug: page.slug }));
 }
 
