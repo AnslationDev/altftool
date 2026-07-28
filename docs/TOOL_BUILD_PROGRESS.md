@@ -515,3 +515,56 @@ Two options remain and both have a real cost, so neither should be taken unilate
 
 Whoever picks this up: get the decision before optimising further. The obvious wins are
 taken, and the next 3.73 MiB costs either headroom or pages.
+
+### RESOLVED 2026-07-28 — 244.37 → 213.04 MiB, gate now 215
+
+The "levers are spent" conclusion above was wrong, because two of the fixes it credits had
+silently come undone. Sequence of a single session, all measured the Amplify way
+(`ALTFT_DEFER_BULK_PRERENDER=true ALTFT_BUILD_CPUS=1 ALTFT_WEBPACK_BUILD_WORKER=true`):
+
+| Change | Artifact |
+|---|---|
+| Starting point (canonical-web `257b66485`, 3,554 tools) | **244.37 MiB** |
+| Restore the reverted bulk-prerender deferral on 3 route families | **230.86 MiB** (−13.5) |
+| `serverExternalPackages` for the 17 `/transform` code-gen libraries | **213.04 MiB** (−17.8) |
+
+Gate raised 205 → **215** (owner-approved). 5 MiB of headroom to AWS's 220 remains.
+
+**1. The prerender deferral regressed via a release sync.** `e59f75ba0` added
+`if (shouldDeferBulkPrerendering()) return []` to `alternatives/[incumbent]` and two `bops`
+`[slug]` routes. `1eb2d844c` ("release: sync latest AltFTool web") copied those three files
+from `origin/main`, which never carried the fix, and silently reverted it. `/alternatives`
+alone went back to 15 MiB of prerendered HTML; restoring the guard drops it to 1 MiB.
+
+> **This is the failure mode to watch.** The dev monorepo and `canonical-web` have diverged
+> deliberately (§8), and some optimisations live *only* on the production side. A release
+> that copies a file wholesale from `origin/main` will revert them without any conflict.
+> Before a release, diff the perf-sensitive files against the previous canonical commit —
+> `git diff <prev-canonical> HEAD -- '*/page.jsx' | grep -c shouldDeferBulkPrerendering`
+> should never *decrease*.
+
+**2. `dynamicParams = false` + a deferral that returns `[]` = every URL 404s.**
+`bops/tripfindbox/(site-pages)/[slug]` sets `dynamicParams = false`. With an empty static
+param list, Next.js 404s the whole family. `e59f75ba0` shipped exactly that combination —
+it was never caught only because that build failed the size gate and never deployed. The
+route now sets `dynamicParams = true`; unknown slugs still 404 through the component's
+existing `notFound()`, so the only change is that the 404 is decided per-request.
+
+**Segment config must be a static literal.** `export const dynamicParams =
+shouldDeferBulkPrerendering()` fails the build with "Invalid segment configuration export
+detected" — Next.js statically analyses these exports and will not evaluate a call.
+
+**3. `serverExternalPackages` was documented as a −7.6 MiB win but was never in
+`next.config.mjs`** (neither repo). Applied to the 17 `/transform` libraries it is worth
+**−17.8 MiB**, because bundling re-emits them into every server chunk that reaches the
+transformer registry. Safe to externalise: nothing outside `src/app/transform` imports any
+of them, `_lib` has no `"use client"`, and the packages stay in each route's `.nft.json`
+so they still ship for runtime.
+
+**Not a lever any more: CSS source scoping.** 12 of the 19 `@import "tailwindcss"`
+stylesheets already carry `source(...)`, and all emitted CSS totals ~5 MiB, so the 11.7 MiB
+figure recorded above is stale. Scoping the remaining 7 per-tool sheets is worth a couple
+of MiB at most, against a real risk of dropping classes the tool actually renders.
+
+**The kill-list deletions were not needed.** Both fixes here are pure engineering; no
+product surface was removed.

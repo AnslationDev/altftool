@@ -37,6 +37,33 @@ const nextConfig = {
   transpilePackages: ["@altftool/ui"],
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  // The /transform code-generation libraries are heavy, server-only and used
+  // by that route alone. Bundling them re-emits the same megabytes into every
+  // server chunk that touches the transformer registry; leaving them external
+  // keeps one copy in node_modules instead. Measured 2026-07-28: −17.8 MiB of
+  // the Amplify artifact. Verified transform-only — nothing outside
+  // src/app/transform imports any of these, and _lib has no "use client",
+  // so externalising cannot affect a client bundle.
+  serverExternalPackages: [
+    "@khanacademy/flow-to-ts",
+    "typescript",
+    "quicktype-core",
+    "ts-json-schema-generator",
+    "ts-to-zod",
+    "json-schema-to-typescript",
+    "json-schema-to-zod",
+    "json-to-zod",
+    "@openapi-contrib/json-schema-to-openapi-schema",
+    "to-json-schema",
+    "jsonld",
+    "mobx-state-tree",
+    "node-html-parser",
+    "html2pug",
+    "xml-js",
+    "io-ts",
+    "@iarna/toml",
+  ],
+
 
 
 
