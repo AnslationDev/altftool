@@ -2,6 +2,7 @@ import {
   Activity,
   BarChart3,
   Bell,
+  ClipboardList,
   FolderKanban,
   Headset,
   Layers,
@@ -28,7 +29,7 @@ export const ADMIN_HOME_ROUTE = "/";
  * so an admin only ever sees the sections they can actually use.
  */
 export const GLOBAL_MODULE_GROUPS = [
-  { key: "overview", label: "Overview", order: ["super-admin", "analytics", "health"] },
+  { key: "overview", label: "Overview", order: ["super-admin", "analytics", "health", "workspace"] },
   {
     key: "access",
     label: "Access & Security",
@@ -40,7 +41,7 @@ export const GLOBAL_MODULE_GROUPS = [
   {
     key: "content",
     label: "Content & Catalog",
-    order: ["tool-catalog", "workspace", "newsletter", "notification-broadcast"],
+    order: ["tool-catalog", "newsletter", "notification-broadcast"],
   },
   { key: "support", label: "Support", order: ["tickets", "support"] },
   { key: "platform", label: "Platform", order: ["design-system"] },
@@ -52,7 +53,7 @@ const DEFAULT_MODULE_GROUP = "platform";
 export const GLOBAL_ADMIN_MODULES = {
   "super-admin": {
     group: "overview",
-    label: "Project",
+    label: "Projects",
     icon: FolderKanban,
     path: "/super-admin",
     superadminOnly: true,
@@ -64,7 +65,7 @@ export const GLOBAL_ADMIN_MODULES = {
     path: "/admin-management",
     children: [
       { label: "Admins", path: "/admin-management" },
-      { label: "Audit Log", path: "/admin-management/audit" },
+      { label: "Full Audit Log", path: "/admin-management/audit" },
     ],
     superadminOnly: true,
   },
@@ -104,21 +105,14 @@ export const GLOBAL_ADMIN_MODULES = {
     children: [
       { label: "Overview", path: "/security?tab=overview" },
       { label: "Sessions & Devices", path: "/security?tab=sessions" },
-      { label: "Audit Logs", path: "/security?tab=audit" },
+      { label: "Recent Security Actions", path: "/security?tab=audit" },
       { label: "Security Events", path: "/security?tab=events" },
       { label: "Settings", path: "/security?tab=settings" },
     ],
     superadminOnly: true,
   },
-  "audit-logs": {
-    group: "access",
-    label: "Audit Logs",
-    icon: ShieldAlert,
-    path: "/audit-logs",
-    superadminOnly: true,
-  },
   workspace: {
-    group: "content",
+    group: "overview",
     label: "Workspace",
     icon: Layers,
     path: "/workspace",
@@ -129,6 +123,20 @@ export const GLOBAL_ADMIN_MODULES = {
     label: "RBAC Foundation",
     icon: SlidersHorizontal,
     path: "/rbac",
+    superadminOnly: true,
+  },
+  "audit-logs": {
+    group: "access",
+    label: "Audit Logs",
+    icon: ClipboardList,
+    path: "/audit-logs",
+    // This module entry was accidentally dropped from the registry while
+    // disambiguating this app's other two audit surfaces (Security's
+    // "Recent Security Actions" tab and Admin Management's "Full Audit
+    // Log"). Losing it here silently removed /audit-logs from
+    // SUPERADMIN_ONLY_GLOBAL_MODULES (it's derived from this registry) even
+    // though the route itself was still live — restoring the hard
+    // superadmin-only gate, not just the nav entry.
     superadminOnly: true,
   },
   "tool-catalog": {
@@ -204,6 +212,7 @@ export const FLAT_ADMIN_ROUTE_KEYS = new Set([
   ...Object.keys(GLOBAL_ADMIN_MODULES),
   "access-denied",
   "access-requested",
+  "account-inactive",
   "admin",
   "login",
 ]);

@@ -188,7 +188,12 @@ const TRACKING_QUERY_PARAMETERS = new Set([
 ]);
 
 function slugify(value = "") {
-  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function uniqueRoutes(entries) {

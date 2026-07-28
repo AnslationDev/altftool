@@ -45,7 +45,7 @@ const PROJECT_META = {
     icon: Wrench,
   },
   anternet: {
-    description: "Manage d Anternet project modules, pages, and website content.",
+    description: "Manage Anternet project modules, pages, and website content.",
     accent: "var(--secondary)",
     icon: Globe2,
   },

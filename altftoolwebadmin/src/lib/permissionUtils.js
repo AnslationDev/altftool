@@ -1,17 +1,14 @@
 import { PROJECTS } from "@/projects";
-import { getProjectModuleRoute } from "@/config/adminRoutes";
+import { GLOBAL_ADMIN_MODULES, getProjectModuleRoute } from "@/config/adminRoutes";
 import { RBAC_ACTION_ALIASES } from "@/lib/rbacPaths";
 
-export const SUPERADMIN_ONLY_GLOBAL_MODULES = new Set([
-  "super-admin",
-  "admin-management",
-  "audit-logs",
-  "analytics",
-  "notification-broadcast",
-  "rbac",
-  "tickets",
-  "workspace",
-]);
+// Derived from the registry's own `superadminOnly` flag so this can never
+// drift out of sync with adminRoutes.js the way the old hardcoded list did.
+export const SUPERADMIN_ONLY_GLOBAL_MODULES = new Set(
+  Object.entries(GLOBAL_ADMIN_MODULES)
+    .filter(([, config]) => config.superadminOnly)
+    .map(([key]) => key),
+);
 
 /**
  * Check if an admin has access to a specific action on a module.

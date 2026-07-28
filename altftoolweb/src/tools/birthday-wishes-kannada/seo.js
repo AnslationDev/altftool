@@ -1,4 +1,4 @@
-import toolConfig from "./tool.config";
+import toolConfig from "./tool.config.js";
 
 const seo = {
   title: `${toolConfig.name} - ALTFTool`,

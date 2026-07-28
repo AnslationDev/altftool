@@ -307,7 +307,7 @@ export default function Blogs() {
               </button>
               <button
                 onClick={confirmDelete}
-                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-danger-foreground transition hover:opacity-90"
+                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-[var(--danger-foreground)] transition hover:opacity-90"
               >
                 Delete
               </button>
@@ -336,7 +336,7 @@ export default function Blogs() {
               </button>
               <button
                 onClick={confirmBulkDelete}
-                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-danger-foreground transition hover:opacity-90"
+                className="rounded-lg bg-danger px-4 py-2 text-sm font-semibold text-[var(--danger-foreground)] transition hover:opacity-90"
               >
                 Delete All
               </button>

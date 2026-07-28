@@ -79,6 +79,30 @@ async function saveToken(token, getIdToken) {
   }
 }
 
+// Best-effort deregistration, mirroring the session-revoke call in
+// AuthContext's logout(). Fired from this hook's own cleanup (see below)
+// since logout happens outside this file; keepalive lets the request
+// survive the unmount that logout/navigation triggers.
+async function deleteToken(token, getIdToken) {
+  try {
+    const idToken = await getIdToken();
+    const res = await fetch("/api/notifications/save-token", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({ token }),
+      keepalive: true,
+    });
+    if (!res.ok) {
+      console.warn("[push] delete-token responded:", res.status);
+    }
+  } catch (err) {
+    console.warn("[push] deleteToken failed:", err.message);
+  }
+}
+
 // ── Hook ───────────────────────────────────────────────────────────────────
 
 export function usePushNotifications(user) {
@@ -89,6 +113,7 @@ export function usePushNotifications(user) {
     if (!user || initialised.current) return;
 
     let unsubscribeForeground = null;
+    let registeredToken = null;
 
     async function setup() {
       const swReg = await registerServiceWorker();
@@ -111,6 +136,7 @@ export function usePushNotifications(user) {
       if (!token) return;
 
       await saveToken(token, () => user.getIdToken());
+      registeredToken = token;
       initialised.current = true;
 
       // ── Foreground: emit to custom toast card ──────────────────────────
@@ -133,6 +159,14 @@ export function usePushNotifications(user) {
 
     return () => {
       unsubscribeForeground?.();
+      // Runs when `user` flips to null (logout) or on unmount — deregister
+      // this device's token so it stops receiving pushes for a signed-out
+      // admin, and reset `initialised` so a later sign-in on the same tab
+      // can register a fresh token for the next admin.
+      if (registeredToken) {
+        deleteToken(registeredToken, () => user.getIdToken());
+        initialised.current = false;
+      }
     };
   }, [user]);
 }

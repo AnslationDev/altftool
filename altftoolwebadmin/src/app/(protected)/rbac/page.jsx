@@ -39,6 +39,11 @@ const FIRESTORE_PATHS = [
   "super_admin_dashboard/main/admin_settings/main",
 ];
 
+// Raw Firestore collection paths are internal schema detail, not something an
+// operator acts on. Gate them the same way AdminLayout.jsx gates its dev
+// bypass so this admin screen doesn't read as an engineering status page.
+const SHOW_FIRESTORE_PATHS = process.env.NODE_ENV !== "production";
+
 const IMPLEMENTATION_STATUS = [
   ["New RBAC Firestore paths", "Ready"],
   ["Login profile resolver with legacy fallback", "Ready"],
@@ -192,27 +197,29 @@ export default function RbacFoundationPage() {
           </div>
         </DataState>
 
-        <div className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
-          <SectionCard
-            title={
-              <span className="flex items-center gap-2">
-                <Database className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
-                Firestore Structure
-              </span>
-            }
-            description="New paths added without changing project content data."
-          >
-            <ul className="space-y-2">
-              {FIRESTORE_PATHS.map((path) => (
-                <li
-                  key={path}
-                  className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-xs text-[var(--foreground)]"
-                >
-                  {path}
-                </li>
-              ))}
-            </ul>
-          </SectionCard>
+        <div className={`grid gap-5 ${SHOW_FIRESTORE_PATHS ? "xl:grid-cols-[0.95fr_1.05fr]" : ""}`}>
+          {SHOW_FIRESTORE_PATHS ? (
+            <SectionCard
+              title={
+                <span className="flex items-center gap-2">
+                  <Database className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+                  Firestore Structure
+                </span>
+              }
+              description="New paths added without changing project content data."
+            >
+              <ul className="space-y-2">
+                {FIRESTORE_PATHS.map((path) => (
+                  <li
+                    key={path}
+                    className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 font-mono text-xs text-[var(--foreground)]"
+                  >
+                    {path}
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          ) : null}
 
           <SectionCard
             title={

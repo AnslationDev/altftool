@@ -1,4 +1,5 @@
 import JSON5 from "json5";
+import { extractLiteral } from "./_js.js";
 import { ok, err, isBlank } from "../types.js";
 
 function kebab(key) {
@@ -21,7 +22,7 @@ function render(obj, depth) {
   return lines.join("\n");
 }
 
-export const sample = `{
+export const sample = `const styles = {
   backgroundColor: '#2563eb',
   borderRadius: '8px',
   padding: '8px 16px',
@@ -29,16 +30,19 @@ export const sample = `{
   '&:hover': {
     backgroundColor: '#1d4ed8',
   },
-}`;
+};`;
 
 /** @type {import("../types.js").Transformer} */
 export function transform(input) {
   if (isBlank(input)) return err("Paste a JavaScript style object to convert.");
   let obj;
   try {
-    obj = JSON5.parse(input);
+    obj = JSON5.parse(extractLiteral(input));
   } catch (e) {
-    return err(`Could not parse style object: ${e.message}`);
+    return err(
+      `Could not parse style object: ${e.message}. Provide a plain object of styles ` +
+        "(optionally as `const styles = { ... }`).",
+    );
   }
   if (!obj || typeof obj !== "object" || Array.isArray(obj)) {
     return err("Provide a JavaScript object of styles.");

@@ -1,4 +1,4 @@
-import { getAuth } from "firebase/auth";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 /**
  * Client-side helper: logs audit events via the server endpoint.
@@ -11,9 +11,13 @@ import { getAuth } from "firebase/auth";
  */
 export async function logAuditEvent(event) {
   try {
-    const user = getAuth().currentUser;
-    if (!user) return;
-    const token = await user.getIdToken(true);
+    // getAdminIdToken() (not a forced getIdToken(true)) — this function is
+    // called from essentially every save/update/delete flow in the app
+    // (100+ call sites), so a forced refresh added an extra Firebase Auth
+    // round trip to nearly every write. It also works under a local-admin
+    // dev session, which getAuth().currentUser is always null for.
+    const token = await getAdminIdToken();
+    if (!token) return;
 
     const payload = { ...(event || {}) };
     if (!payload.route && typeof window !== "undefined" && window.location?.pathname) {

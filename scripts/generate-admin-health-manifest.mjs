@@ -56,7 +56,12 @@ function clampScore(score) {
 }
 
 function slugify(value = "") {
-  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 async function fileExists(filePath) {

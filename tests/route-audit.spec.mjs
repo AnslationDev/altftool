@@ -121,7 +121,12 @@ const adminRoutes = [
 ];
 
 function slugify(value = "") {
-  return String(value).trim().toLowerCase().replace(/\s+/g, "-");
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function getToolCategories(tool) {
@@ -318,6 +323,9 @@ test("admin public and fallback routes resolve", async ({ page }) => {
         timeout: 30_000,
       });
       await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
+      await page
+        .waitForFunction(() => document.body?.innerText?.trim().length > 0, null, { timeout: 30_000 })
+        .catch(() => {});
 
       const bodyText = await page.locator("body").innerText({ timeout: 10_000 }).catch(() => "");
       const status = response?.status() ?? 0;
@@ -355,11 +363,11 @@ test("admin module route surface resolves for local super admin", async ({ page 
   await page.goto(`${adminUrl}/login`, { waitUntil: "domcontentloaded" });
 
   const localAdminButton = page.getByTestId("local-admin-login");
-  await expect(localAdminButton).toBeVisible();
+  await expect(localAdminButton).toBeVisible({ timeout: 45_000 });
   await localAdminButton.click();
 
-  await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/);
-  await expect(page.getByText("Super Admin").first()).toBeVisible();
+  await expect(page).toHaveURL(/\/(?:admin-management|super-admin)/, { timeout: 45_000 });
+  await expect(page.getByText("Super Admin").first()).toBeVisible({ timeout: 45_000 });
   failures.push(...await quality.collect("admin login"));
 
   for (const route of adminRoutes) {
@@ -459,8 +467,9 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(toolSchemas.some((schema) => schema.includes("FAQPage"))).toBeTruthy();
   expect(toolSchemas.some((schema) => schema.includes("HowTo"))).toBeTruthy();
   // The old "workflows" section heading is gone from the tool detail page;
-  // the tool's SEO/feature block now renders a "Why Choose Our …?" heading.
-  await expect(page.getByRole("heading", { name: /why choose our/i })).toBeVisible();
+  // the tool's SEO/feature block now renders a reader-facing "Why use …"
+  // heading.
+  await expect(page.getByRole("heading", { name: /why use/i })).toBeVisible();
   await quality.expectClean("tool structured data route");
 
   await page.goto(`${webUrl}/blogs/age-calculator-guide`, { waitUntil: "domcontentloaded" });

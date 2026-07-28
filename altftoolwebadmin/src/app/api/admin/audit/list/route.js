@@ -64,25 +64,30 @@ export async function GET(request) {
       ? Number(url.searchParams.get("cursor"))
       : null;
 
-    let query = adminDb
-      .collection("admin_audit_logs")
-      .where("createdAt", ">=", startDate)
-      .where("createdAt", "<=", endDate)
-      .orderBy("createdAt", "desc")
-      .limit(pageSize + 1); // fetch one extra to determine hasMore
+    // Server-side "filter by admin" — actorUid/targetUid scope the query to a
+    // single admin's full history within the date range, instead of forcing
+    // callers to page through everything and filter client-side.
+    const actorUidParam = url.searchParams.get("actorUid");
+    const targetUidParam = url.searchParams.get("targetUid");
+
+    const buildQuery = (endBound) => {
+      let q = adminDb
+        .collection("admin_audit_logs")
+        .where("createdAt", ">=", startDate)
+        .where("createdAt", "<=", endBound);
+      if (actorUidParam) q = q.where("actorUid", "==", actorUidParam);
+      if (targetUidParam) q = q.where("targetUid", "==", targetUidParam);
+      return q.orderBy("createdAt", "desc").limit(pageSize + 1); // fetch one extra to determine hasMore
+    };
+
+    let query = buildQuery(endDate);
 
     // If cursor provided, fetch the cursor document first then use startAfter
     if (cursorMs) {
-      const cursorDate = new Date(cursorMs);
       // Use a timestamp-based cursor via startAfter on the createdAt field
       // We add 1ms offset to avoid re-fetching the boundary doc
       const cursorTs = new Date(cursorMs - 1); // slightly before so startAfter works correctly
-      query = adminDb
-        .collection("admin_audit_logs")
-        .where("createdAt", ">=", startDate)
-        .where("createdAt", "<=", cursorTs)
-        .orderBy("createdAt", "desc")
-        .limit(pageSize + 1);
+      query = buildQuery(cursorTs);
     }
 
     const snap = await query.get();

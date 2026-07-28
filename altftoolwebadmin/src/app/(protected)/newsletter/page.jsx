@@ -4,10 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { collection, onSnapshot, orderBy, query as fsQuery } from "firebase/firestore";
 import { CalendarDays, Download, Inbox, Mail, TrendingUp } from "lucide-react";
 import { Button } from "@altftool/ui";
+import { useAuth } from "@/context/AuthContext";
 import { db } from "@/lib/firebaseFirestore";
 import {
   DataTable,
   EmptyState,
+  ErrorState,
   FilterBar,
   LoadingState,
   PageHeader,
@@ -70,6 +72,11 @@ const COLUMNS = [
 ];
 
 export default function NewsletterSubscribersPage() {
+  // This route is nav-gated as superadminOnly (config/adminRoutes.js), but the
+  // Firestore rule for newsletter_subscribers only requires isActiveAdmin() —
+  // any active admin who lands here directly bypasses the nav gate entirely.
+  // Check the role in-component instead of trusting nav placement + rules alone.
+  const { isSuperAdmin, loading: authLoading } = useAuth();
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -78,6 +85,10 @@ export default function NewsletterSubscribersPage() {
   const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
+    // Skip subscribing entirely for a non-superadmin — they'll hit the
+    // access-denied render below, so there's no reason to pull subscriber
+    // data over the wire just to discard it.
+    if (!isSuperAdmin) return undefined;
     const unsubscribe = onSnapshot(
       fsQuery(collection(db, "newsletter_subscribers"), orderBy("createdAt", "desc")),
       (snapshot) => {
@@ -91,7 +102,7 @@ export default function NewsletterSubscribersPage() {
       },
     );
     return unsubscribe;
-  }, [reloadKey]);
+  }, [reloadKey, isSuperAdmin]);
 
   const stats = useMemo(() => {
     const now = Date.now();
@@ -150,6 +161,25 @@ export default function NewsletterSubscribersPage() {
     setLoadError("");
     setReloadKey((key) => key + 1);
   };
+
+  if (authLoading) {
+    return (
+      <div className="mx-auto max-w-6xl p-6">
+        <LoadingState variant="detail" />
+      </div>
+    );
+  }
+
+  if (!isSuperAdmin) {
+    return (
+      <div className="mx-auto max-w-6xl p-6">
+        <ErrorState
+          title="Super Admin only"
+          message="Newsletter subscribers are restricted to Super Admins."
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-6xl p-6">

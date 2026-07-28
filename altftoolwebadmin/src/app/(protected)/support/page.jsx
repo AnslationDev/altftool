@@ -419,7 +419,7 @@ export default function SupportPage() {
       <PageHeader
         icon={LifeBuoy}
         title="Support"
-        description="Get help, browse FAQs, or raise a support ticket."
+        description="Get help or raise a support ticket."
       />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

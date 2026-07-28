@@ -8,6 +8,7 @@ import {
   createToolJsonLd,
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
+import ToolSeoSection from "../../ToolSeoSection";
 
 export async function generateMetadata() {
   return buildToolMetadata("api-stress-estimator");
@@ -46,8 +47,8 @@ export default function Page() {
           ]),
         ]}
       />
-      <h1 className="sr-only">API Stress Estimator</h1>
       <ApiStressToolClient category="all" />
+      <ToolSeoSection slug={slug} tool={tool} category="all" />
     </>
   );
 }

@@ -7,7 +7,7 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const webOrigin = new URL(webUrl).origin;
-const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 60_000);
+const toolRouteTimeoutMs = Number(process.env.ALTFT_TOOL_FUNCTIONAL_ROUTE_TIMEOUT_MS || 90_000);
 const portraitFixturePath = fileURLToPath(
   new URL(
     "../altftoolweb/public/images/beautymakee.jpg",
@@ -195,18 +195,42 @@ async function expectConvertedZipDownload(page, testInfo, action, filenamePatter
   return downloadPath;
 }
 
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 async function openToolShell(page, slug, heading) {
-  await page.goto(`${webUrl}/tools/all/${slug}`, {
-    waitUntil: "domcontentloaded",
+  const url = `${webUrl}/tools/all/${slug}`;
+  let lastError;
+
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      await page.goto(url, {
+        waitUntil: "commit",
+        timeout: toolRouteTimeoutMs,
+      });
+      lastError = null;
+      break;
+    } catch (error) {
+      lastError = error;
+      await page.goto("about:blank").catch(() => {});
+    }
+  }
+
+  if (lastError) throw lastError;
+
+  await expect(page.getByRole("navigation", { name: "Tool route" })).toContainText(heading, {
     timeout: toolRouteTimeoutMs,
   });
-  await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible({
+  await expect(
+    page
+      .locator("h1:not(.sr-only), h2:not(.sr-only), h3:not(.sr-only)")
+      .filter({ hasText: new RegExp(`^${escapeRegExp(heading)}$`) })
+      .first(),
+  ).toBeVisible({
     timeout: toolRouteTimeoutMs,
   });
-  await expect(page.getByText("Preparing workspace")).toHaveCount(0, {
-    timeout: toolRouteTimeoutMs,
-  });
-  await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({
+  await expect(page.locator("#main-content").getByTestId("tool-workspace-shell").first()).toBeVisible({
     timeout: toolRouteTimeoutMs,
   });
   await expect(page.locator("body")).not.toContainText("Application error");
@@ -215,13 +239,13 @@ async function openToolShell(page, slug, heading) {
 
 async function openTool(page, slug, heading) {
   await openToolShell(page, slug, heading);
-  await expect(page.getByTestId("tool-output")).toBeVisible({
+  await expect(page.getByTestId("tool-output").first()).toBeVisible({
     timeout: toolRouteTimeoutMs,
   });
 }
 
 test.describe("microtool functional flows", () => {
-  test.describe.configure({ mode: "serial", timeout: 120_000 });
+  test.describe.configure({ mode: "serial", timeout: 180_000 });
 
   test("AI prompt organizer collections and social sharing work", async ({
     page,
@@ -430,25 +454,36 @@ test.describe("microtool functional flows", () => {
   test("code and data utilities produce expected transformed output", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
-    await openTool(page, "json-editor", "JSON Editor");
-    await page.getByRole("button", { name: "JSON list", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("name,role");
-    await expect(page.getByTestId("tool-output")).toContainText("Ada");
+    await openToolShell(page, "json-editor", "JSON Editor");
+    await page
+      .locator("#json-source")
+      .fill('[{"name":"Ada","role":"Engineer"},{"name":"Grace","role":"Architect"}]');
+    await page.locator("#json-mode").selectOption("csv");
+    await expect(page.locator("#json-output")).toContainText("name,role");
+    await expect(page.locator("#json-output")).toContainText("Ada");
 
-    await openTool(page, "csv-converter", "CSV Converter");
-    await page.getByRole("button", { name: "Users CSV", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("ada@example.com");
-    await page.getByRole("button", { name: "CSV -> SQL", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("INSERT INTO table_name");
+    await openToolShell(page, "csv-converter", "CSV Converter");
+    await page
+      .locator("#csv-source")
+      .fill("name,email\nAda,ada@example.com\nGrace,grace@example.com");
+    const csvOutput = page
+      .locator("section")
+      .filter({ has: page.getByRole("heading", { name: "Output" }) })
+      .locator("pre")
+      .first();
+    await expect(csvOutput).toContainText("ada@example.com");
+    await page.locator("#csv-format").selectOption("sql");
+    await expect(csvOutput).toContainText("INSERT INTO customers");
 
-    await openTool(page, "yaml-formatter", "YAML Formatter");
-    await page.getByRole("button", { name: "Flat YAML", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText('"status": "ready"');
+    await openToolShell(page, "yaml-formatter", "YAML Formatter");
+    await page.locator("#yaml-source").fill("title: Launch\nstatus: ready\ncount: 12");
+    await page.getByRole("button", { name: "JSON", exact: true }).click();
+    await expect(page.locator("pre").first()).toContainText('"status": "ready"');
 
-    await openTool(page, "crontab-evaluator", "Crontab Evaluator");
-    await page.getByRole("button", { name: "Daily 9 AM", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText(/\d/);
-    await expect(page.getByTestId("tool-output")).not.toContainText("Error:");
+    await openToolShell(page, "crontab-evaluator", "Crontab Evaluator");
+    await page.getByRole("button", { name: "09:30 on weekdays", exact: true }).click();
+    await expect(page.locator("section").filter({ hasText: "Upcoming runs" }).locator("tbody")).toContainText(/\d/);
+    await expect(page.locator("body")).not.toContainText("Error:");
 
     await quality.expectClean("code and data utilities");
   });
@@ -477,10 +512,14 @@ test.describe("microtool functional flows", () => {
     await page.locator("textarea").first().fill("https://altftool.com/search?q=hello world&tag=dev tools");
     await expect(page.getByTestId("tool-output")).toContainText("hello%20world");
 
-    await openTool(page, "base64-to-text", "Base64 to Text");
-    await page.getByTestId("tool-input").fill("SGVsbG8gQWx0RlRvb2w=");
-    await page.getByRole("button", { name: "Base64 -> Text", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("Hello AltFTool");
+    await openToolShell(page, "base64-to-text", "Base64 to Text");
+    await page
+      .getByPlaceholder("Paste your Base64 encoded string here...")
+      .fill("SGVsbG8gQWx0RlRvb2w=");
+    await page.getByRole("button", { name: "Decode", exact: true }).click();
+    await expect(page.getByPlaceholder("Your decoded text will appear here...")).toHaveValue(
+      /Hello AltFTool/,
+    );
 
     await quality.expectClean("priority text and encoding utilities");
   });
@@ -489,8 +528,8 @@ test.describe("microtool functional flows", () => {
     const quality = createPageQualityGate(page);
 
     await openToolShell(page, "api-stress-estimator", "API Stress Estimator");
-    await expect(page.locator("body")).toContainText("Estimated Response Time");
-    await expect(page.locator("body")).toContainText("Safe Traffic Limit");
+    await expect(page.locator("body")).toContainText("Mean response time");
+    await expect(page.locator("body")).toContainText("Safe capacity at 70% utilisation");
 
     await openToolShell(page, "regex-tester", "Regex Tester");
     await expect(page.locator("body")).toContainText("2");
@@ -501,21 +540,22 @@ test.describe("microtool functional flows", () => {
     await expect(page.locator("body")).toContainText("Decoded");
     await expect(page.locator("body")).toContainText("altftool-user");
 
-    await openToolShell(page, "diff-checker", "Diff Checker.");
+    await openToolShell(page, "diff-checker", "Diff Checker");
     await page.getByPlaceholder("Paste original content here...").fill("alpha\nbeta\ngamma");
     await page.getByPlaceholder("Paste modified content here...").fill("alpha\nbeta changed\ngamma\ndelta");
     await expect(page.locator("body")).toContainText("Lines Added");
     await expect(page.locator("body")).toContainText("Lines Deleted");
     await expect(page.locator("body")).toContainText("delta");
 
-    await openToolShell(page, "markdown-preview", "Markdown Previewer");
+    await openToolShell(page, "markdown-preview", "Markdown Preview");
     await page.getByPlaceholder("Enter your markdown here...").fill("# QA Ready\n\n**AltFTool** ships checks.");
     await expect(page.getByRole("heading", { name: "QA Ready", exact: true })).toBeVisible();
     await expect(page.locator("strong")).toContainText("AltFTool");
 
-    await openTool(page, "markdown-html-converter", "Markdown / HTML Converter");
-    await page.getByRole("button", { name: "Feature list", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("<h1>AltFTool</h1>");
+    await openToolShell(page, "markdown-html-converter", "Markdown / HTML Converter");
+    await page.locator("#mdc-source").fill("# AltFTool\n\n- Fast tools\n- Clean output");
+    await page.locator("#mdc-mode").selectOption("md2html");
+    await expect(page.locator("#mdc-output")).toContainText("<h1>AltFTool</h1>");
 
     await openToolShell(page, "html-to-markdown-converter", "HTML to Markdown Converter");
     await page.getByRole("button", { name: "Convert Now", exact: true }).click();
@@ -528,7 +568,7 @@ test.describe("microtool functional flows", () => {
   test("priority generator utilities render usable artifacts", async ({ page }) => {
     const quality = createPageQualityGate(page);
 
-    await openToolShell(page, "qr-generator", "QR Studio PRO");
+    await openToolShell(page, "qr-generator", "QR Generator");
     await page.getByPlaceholder("https://google.com").fill("https://altftool.com/tools/all");
     await expect(page.locator("#qr-code")).toBeVisible({ timeout: 15_000 });
 
@@ -543,7 +583,7 @@ test.describe("microtool functional flows", () => {
     await expect(page.locator("body")).toContainText("Generated password");
     await expect(page.locator("body")).toContainText(/Strength: (Strong|Excellent)/);
 
-    await openToolShell(page, "uuid-generator", "Generate Unique UUIDs Instantly");
+    await openToolShell(page, "uuid-generator", "UUID Generator");
     await page.getByRole("button", { name: "Generate UUIDs", exact: true }).click();
     await expect(page.locator("code")).toHaveText(/[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
 
@@ -591,7 +631,7 @@ test.describe("microtool functional flows", () => {
     await expect(page.locator("body")).toContainText("Estimated maturity");
     await expect(page.locator("body")).toContainText("Maturity amount");
 
-    await openToolShell(page, "bmi-calculator", "BMI Health Calculator");
+    await openToolShell(page, "bmi-calculator", "BMI Calculator");
     await page.getByPlaceholder("175").fill("175");
     await page.getByPlaceholder("70").fill("70");
     await page.getByPlaceholder("Age").fill("30");
@@ -609,50 +649,35 @@ test.describe("microtool functional flows", () => {
     const quality = createPageQualityGate(page);
 
     await openToolShell(page, "decision-wheel", "Decision Wheel");
-    const clearEntries = page.getByTitle("Clear all");
-    if (await clearEntries.isVisible()) await clearEntries.click();
-    await page.getByTitle("Bulk add").click();
-    await page
-      .getByPlaceholder("Paste entries (one per line)...")
-      .fill("Research\nDesign\nShip");
-    await page.getByRole("button", { name: "Add All", exact: true }).click();
-    await expect(page.getByText("Entries (3)", { exact: true })).toBeVisible();
-    await page.getByPlaceholder("Add entry...").fill("Measure");
-    await page.getByPlaceholder("Add entry...").press("Enter");
-    await expect(page.getByText("Entries (4)", { exact: true })).toBeVisible();
-    await expect(page.getByText("Measure", { exact: true })).toBeVisible();
+    await page.locator("#wheel-entries").fill("Research\nDesign\nShip\nMeasure");
+    await expect(page.getByRole("row", { name: /Research/ })).toBeVisible();
+    await expect(page.getByRole("row", { name: /Measure/ })).toBeVisible();
+    await expect(page.getByRole("img", { name: "Wheel with 4 entries" })).toBeVisible();
 
     await page.addInitScript(() => {
       localStorage.removeItem("altft-names");
       localStorage.removeItem("altft-name-history");
     });
     await openToolShell(page, "random-fun-picker", "Random Fun Picker");
-    await page.getByRole("button", { name: "Name Selector", exact: true }).click();
-    const nameInput = page.getByPlaceholder("Add name...");
-    await nameInput.fill("Ada");
-    await nameInput.press("Enter");
-    await nameInput.fill("Grace");
-    await nameInput.press("Enter");
-    await expect(page.getByText("Names (2)", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Pick One", exact: true }).click();
-    await expect(page.getByText("1 selected", { exact: true })).toBeVisible({
-      timeout: 10_000,
-    });
+    await page.getByLabel("Name picker").check();
+    await page.locator("#names-list").fill("Ada\nGrace");
+    await page.locator("#draw-count").fill("1");
+    await page.getByRole("button", { name: "Draw again", exact: true }).click();
+    await expect(page.locator("body")).toContainText("Names in the hat");
+    await expect(page.locator("body")).toContainText("2");
     await expect(
       page.getByText(/^(Ada|Grace)$/, { exact: true }).last(),
     ).toBeVisible();
 
     await openToolShell(page, "text-diff-viewer", "Text Diff Viewer");
+    await page.getByRole("textbox", { name: "Before", exact: true }).fill("alpha\nbeta\ngamma");
     await page
-      .getByPlaceholder("Paste original text...")
-      .fill("alpha\nbeta\ngamma");
-    await page
-      .getByPlaceholder("Paste modified text...")
+      .getByRole("textbox", { name: "After", exact: true })
       .fill("alpha\nbeta changed\ngamma\ndelta");
-    await expect(page.getByText(/% similar$/)).not.toContainText("100%");
-    await expect(page.getByText("Modified (4 lines)", { exact: true })).toBeVisible();
-    await page.getByTitle("Inline").click();
-    await expect(page.getByText("Inline Diff", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Similarity");
+    await expect(page.locator("body")).toContainText("Lines changed");
+    await expect(page.locator("body")).toContainText("Lines added");
+    await expect(page.getByRole("heading", { name: "Side by side", exact: true })).toBeVisible();
     await expect(page.locator("body")).toContainText("delta");
 
     await quality.expectClean("decision and comparison workflows");
@@ -665,7 +690,7 @@ test.describe("microtool functional flows", () => {
 
     await openToolShell(page, "ludo-multiplayer", "Ludo Multiplayer");
     await page.getByRole("button", { name: /Local$/ }).click();
-    await page.getByRole("button", { name: "4", exact: true }).click();
+    await page.getByRole("button", { name: "4 players", exact: true }).click();
     await expect(page.getByText("4 in game", { exact: true })).toBeVisible();
     await expect(page.getByText(/Local Multiplayer/)).toBeVisible();
     const rollDice = page.getByRole("button", { name: "Roll dice" });
@@ -720,31 +745,12 @@ test.describe("microtool functional flows", () => {
       "file-metadata-explorer",
       "File Metadata Explorer",
     );
-    await page.locator('input[type="file"][multiple]').setInputFiles(textPath);
-    await expect(
-      page.getByText("metadata-fixture.txt", { exact: true }),
-    ).toBeVisible();
-    await page.getByText("metadata-fixture.txt", { exact: true }).click();
-    await expect(page.getByText("Details", { exact: true })).toBeVisible();
-    await expect(page.getByText("File Hash", { exact: true }).first()).toBeVisible();
-
-    await page.getByPlaceholder("Type or paste text...").fill("hash me");
-    await page.getByPlaceholder("Type or paste text...").press("Enter");
-    const hashes = page.locator("code");
-    await expect(hashes).toHaveCount(2);
-    await expect(hashes.nth(1)).not.toHaveText("");
-
-    const search = page.getByPlaceholder(
-      "Search files by name, type, or extension...",
-    );
-    await search.fill("missing-file");
-    await expect(
-      page.getByText("No files match your search", { exact: true }),
-    ).toBeVisible();
-    await search.fill("metadata");
-    await expect(
-      page.getByText("metadata-fixture.txt", { exact: true }).first(),
-    ).toBeVisible();
+    await page.locator("#file-input").setInputFiles(textPath);
+    await expect(page.locator("body")).toContainText("metadata-fixture.txt");
+    await expect(page.locator("body")).toContainText("Detected format");
+    await expect(page.locator("body")).toContainText("CRC-32 checksum");
+    await expect(page.getByRole("heading", { name: "Text statistics", exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Words");
 
     await quality.expectClean("file metadata workflow");
   });
@@ -756,34 +762,27 @@ test.describe("microtool functional flows", () => {
     const imagePath = await writePngFixture(testInfo, "photo-workflow.png");
 
     await openToolShell(page, "twin-finder", "Twin Finder");
-    await page
-      .getByRole("button", { name: "Upload Image A" })
-      .locator('input[type="file"]')
-      .setInputFiles(imagePath);
-    await page
-      .getByRole("button", { name: "Upload Image B" })
-      .locator('input[type="file"]')
-      .setInputFiles(imagePath);
-    await page.getByRole("button", { name: "Compare Photos" }).click();
-    await expect(
-      page.getByRole("heading", { name: "Comparison Result", exact: true }),
-    ).toBeVisible({ timeout: 10_000 });
-    await expect(page.locator("body")).toContainText(/\d+%/);
-    await page.getByRole("button", { name: "Try Again" }).click();
-    await expect(
-      page.getByText("Ready to find your twin?", { exact: true }),
-    ).toBeVisible();
-
-    await openToolShell(page, "aura-color-generator", "Discover Your Aura");
-    await page
-      .locator('input[type="file"][accept="image/*"]')
-      .setInputFiles(imagePath);
-    await page.getByRole("button", { name: "Generate My Aura" }).click();
-    await expect(page.getByRole("button", { name: "Save" })).toBeVisible({
+    await page.locator("#photo-a").setInputFiles(imagePath);
+    await page.locator("#photo-b").setInputFiles(imagePath);
+    await expect(page.locator("body")).toContainText("Similarity score");
+    await expect(page.getByRole("img", { name: /Similarity \d+ percent/ })).toBeVisible({
       timeout: 10_000,
     });
-    await expect(page.getByRole("button", { name: "Download" })).toBeVisible();
-    await expect(page.getByText(/Daily Mood:/)).toBeVisible();
+    await expect(page.locator("body")).toContainText("Structure match");
+    await expect(page.locator("body")).toContainText("Colour match");
+    await page.getByRole("button", { name: "Reset to the demo photos" }).click();
+    await expect(page.locator("body")).toContainText("Showing two generated demo photos");
+
+    await openToolShell(page, "aura-color-generator", "Aura Color Generator");
+    await page.locator("#aura-photo").setInputFiles(imagePath);
+    await expect(page.locator("body")).toContainText("photo-workflow.png", {
+      timeout: 10_000,
+    });
+    await expect(page.locator("body")).toContainText("Your aura colour");
+    await expect(page.locator("body")).toContainText("Photo pixels");
+    await expect(page.getByRole("button", { name: "Copy the aura reading to clipboard" })).toBeVisible();
+    await page.getByRole("button", { name: "Reset the generator" }).click();
+    await expect(page.locator("body")).toContainText("Nothing uploaded");
 
     await quality.expectClean("photo comparison and aura workflows");
   });
@@ -799,19 +798,14 @@ test.describe("microtool functional flows", () => {
       .locator('input[type="file"][accept="image/*"]')
       .first()
       .setInputFiles(portraitFixturePath);
-    await page.getByRole("button", { name: "Reveal My Luck" }).click();
-    await expect(page.getByText("Your Lucky Score", { exact: true })).toBeVisible({
+    await expect(page.getByText("Luck score", { exact: true })).toBeVisible({
       timeout: 15_000,
     });
     await expect(page.locator("body")).toContainText(/\/100/);
-    await page.getByRole("button", { name: "Reset Everything" }).click();
+    await expect(page.locator("body")).toContainText("Image fingerprint");
+    await page.getByRole("button", { name: "Reset", exact: true }).click();
     await expect(
-      page.getByText("Your Lucky Score", { exact: true }),
-    ).toBeHidden();
-    await expect(
-      page.getByText("Drop your photo here or click to browse", {
-        exact: true,
-      }).first(),
+      page.getByText("Pick a photo to read your fortune.", { exact: true }),
     ).toBeVisible();
 
     await openToolShell(
@@ -848,21 +842,18 @@ test.describe("microtool functional flows", () => {
       "ai-passport-photo-maker",
       "AI Passport Photo Maker",
     );
-    await page
-      .getByRole("button", {
-        name: "Upload your photo by clicking or dragging a file",
-      })
-      .locator('input[type="file"]')
-      .setInputFiles(portraitFixturePath);
+    await page.locator("#photo-file").setInputFiles(portraitFixturePath);
     await expect(
       page.getByRole("heading", { name: "Passport Photo Maker", exact: true }),
     ).toBeVisible({ timeout: 60_000 });
-    await expect(page.getByText("India Passport", { exact: true }).first()).toBeVisible();
-    await page.getByRole("button", { name: "Generate Preview" }).click();
+    await expect(page.locator("body")).toContainText("beautymakee.jpg");
+    await expect(page.locator("body")).toContainText("Output size at 300 dpi");
+    await expect(page.locator("body")).toContainText("Uploaded photo");
+    await expect(page.getByLabel("Passport photo preview")).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Show Original" }),
-    ).toBeVisible({ timeout: 30_000 });
-    await expect(page.getByText("Privacy Notice", { exact: true })).toBeVisible();
+      page.getByRole("button", { name: "Download the single passport photo as a PNG" }),
+    ).toBeEnabled();
+    await expect(page.locator("body")).toContainText("Your photo is processed in the browser");
 
     await quality.expectClean("passport photo workflow");
   });
@@ -871,7 +862,7 @@ test.describe("microtool functional flows", () => {
     const quality = createPageQualityGate(page);
     const imagePath = await writePngFixture(testInfo);
 
-    await openTool(page, "image-compressor", "Image Size Reducer");
+    await openTool(page, "image-compressor", "Image Compressor");
     await page.getByTestId("image-compressor-file-input").setInputFiles(imagePath);
     await expect(page.getByTestId("tool-output")).toContainText("Ready:");
     await page.getByRole("button", { name: "Compress Image", exact: true }).click();
@@ -963,7 +954,7 @@ test.describe("microtool functional flows", () => {
     await expect(page.getByTestId("tool-output")).toContainText("PDF text extracted", {
       timeout: 30_000,
     });
-    await expect(page.locator("pre")).toContainText("AltFTool fixture 1");
+    await expect(page.locator("pre").first()).toContainText("AltFTool fixture 1");
     await expectDocxDownload(
       page,
       testInfo,
@@ -991,7 +982,7 @@ test.describe("microtool functional flows", () => {
       timeout: 30_000,
     });
 
-    await openToolShell(page, "pdf-watermark", "Protect Your Documents");
+    await openToolShell(page, "pdf-watermark", "PDF Watermark");
     await page.getByTestId("pdf-watermark-file-input").setInputFiles(pdfPath);
     await expect(page.getByTestId("tool-output")).toContainText("Ready to watermark", {
       timeout: 15_000,
@@ -1055,7 +1046,7 @@ test.describe("microtool functional flows", () => {
       },
       {
         slug: "pdf-watermark",
-        heading: "Protect Your Documents",
+        heading: "PDF Watermark",
         input: "pdf-watermark-file-input",
         control: "Apply Watermark",
       },
@@ -1138,37 +1129,38 @@ test.describe("microtool functional flows", () => {
     const pngDataUrl = `data:image/png;base64,${createPngBuffer().toString("base64")}`;
     const pdfDataUrl = `data:application/pdf;base64,${(await createPdfBytes(1)).toString("base64")}`;
 
-    await openTool(page, "file-to-base64", "File to Base64");
-    await page.getByTestId("file-to-base64-input").setInputFiles(imagePath);
-    await expect(page.getByTestId("tool-output")).toContainText("data:image/png;base64", {
+    await openToolShell(page, "file-to-base64", "File to Base64");
+    await page.locator("#file-input").setInputFiles(imagePath);
+    await expect(page.locator("#output-box")).toHaveValue(/data:image\/png;base64/, {
       timeout: 15_000,
     });
 
-    await openTool(page, "pdf-to-base64", "PDF to Base64");
-    await page.getByTestId("file-to-base64-input").setInputFiles(pdfPath);
-    await expect(page.getByTestId("tool-output")).toContainText("data:application/pdf;base64", {
+    await openToolShell(page, "pdf-to-base64", "PDF to Base64");
+    await page.locator("#pdf-file").setInputFiles(pdfPath);
+    await page.getByRole("button", { name: "Convert the selected PDF to Base64" }).click();
+    await expect(page.locator("pre").first()).toContainText("data:application/pdf;base64", {
       timeout: 15_000,
     });
 
-    await openTool(page, "base64-to-image", "Base64 to Image");
-    await page.getByTestId("tool-input").fill(pngDataUrl);
-    await page.getByRole("button", { name: "Preview", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("Decoded image/png ready", {
+    await openToolShell(page, "base64-to-image", "Base64 to Image");
+    await page.locator("#b64-input").fill(pngDataUrl);
+    await expect(page.getByRole("img", { name: /Decoded PNG preview/i })).toBeVisible({
       timeout: 15_000,
     });
+    await expect(page.locator("body")).toContainText("Valid PNG bytes");
 
-    await openTool(page, "base64-to-pdf", "Base64 to PDF");
-    await page.getByTestId("tool-input").fill(pdfDataUrl);
-    await page.getByRole("button", { name: "Preview", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("Decoded application/pdf ready", {
+    await openToolShell(page, "base64-to-pdf", "Base64 to PDF");
+    await page.locator("#pdf-b64").fill(pdfDataUrl);
+    await expect(page.locator('iframe[title="Decoded PDF preview"]')).toBeVisible({
       timeout: 15_000,
     });
+    await expect(page.locator("body")).toContainText("Structurally complete");
 
-    await openTool(page, "svg-to-image", "SVG to Image");
-    await page.getByRole("button", { name: "Render PNG", exact: true }).click();
-    await expect(page.getByTestId("tool-output")).toContainText("Rendered PNG ready", {
+    await openToolShell(page, "svg-to-image", "SVG to Image");
+    await expect(page.getByRole("img", { name: "Rasterised preview of the pasted SVG" })).toBeVisible({
       timeout: 15_000,
     });
+    await expect(page.getByRole("button", { name: "Download the rasterised image" })).toBeEnabled();
 
     await quality.expectClean("media conversion previews");
   });

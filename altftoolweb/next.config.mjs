@@ -22,11 +22,8 @@ const parallelMinification =
   process.env.ALTFT_PARALLEL_MINIFY === "true" && buildCpuCount > 1;
 const useWebpackBuildWorker =
   process.env.ALTFT_WEBPACK_BUILD_WORKER === "true";
-const runningOnGithubActions = process.env.GITHUB_ACTIONS === "true";
 const enableSharedAsyncVendorChunks =
-  process.env.ALTFT_ENABLE_SHARED_ASYNC_VENDOR_CHUNKS === "true" ||
-  (!runningOnGithubActions &&
-    process.env.ALTFT_DISABLE_SHARED_ASYNC_VENDOR_CHUNKS !== "true");
+  process.env.ALTFT_ENABLE_SHARED_ASYNC_VENDOR_CHUNKS === "true";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -465,11 +462,9 @@ const nextConfig = {
       };
       // The all-tools runtime now exposes thousands of async tool chunks. The
       // broad "shared vendor across 4+ async chunks" pass is useful for bundle
-      // audit runs, but on the standard GitHub/Vercel runner it can push the
-      // cold webpack optimizer past the available heap before deployment. Keep
-      // the targeted face stack split everywhere, and let constrained CI
-      // builders skip only this expensive global chunk-graph analysis unless a
-      // maintainer explicitly opts it back in.
+      // audit runs, but standard GitHub/Vercel/Amplify/local builders can OOM
+      // while analysing that giant graph. Keep the targeted face stack split
+      // everywhere and make this expensive global chunk pass explicit opt-in.
       if (enableSharedAsyncVendorChunks) {
         config.optimization.splitChunks.cacheGroups.sharedAsyncVendors = {
           test: /[\\/]node_modules[\\/]/,

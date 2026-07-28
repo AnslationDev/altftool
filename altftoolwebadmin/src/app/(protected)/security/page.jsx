@@ -35,7 +35,7 @@ import { pageCache } from "@/lib/security/pageCache";
 const TABS = [
   { key: "overview", label: "Overview", icon: ShieldCheck },
   { key: "sessions", label: "Sessions & Devices", icon: Laptop },
-  { key: "audit", label: "Audit Logs", icon: ScrollText },
+  { key: "audit", label: "Recent Security Actions", icon: ScrollText },
   { key: "events", label: "Security Events", icon: Activity },
   { key: "settings", label: "Settings", icon: Clock },
 ];
@@ -620,6 +620,15 @@ function SessionsTab({ authFetch }) {
   const [busy, setBusy] = useState("");
   const [revokeErr, setRevokeErr] = useState("");
   const [failedRevokeId, setFailedRevokeId] = useState("");
+  const [myId, setMyId] = useState(null);
+
+  // So Force Logout can tell "someone else's session" from "the one you're
+  // reading this page on" — same current-session lookup MyLocationCard uses.
+  useEffect(() => {
+    authFetch("/api/security/session/current")
+      .then((d) => setMyId(d.session?.id || null))
+      .catch(() => {});
+  }, [authFetch]);
 
   const revoke = async (id) => {
     setBusy(id);
@@ -673,19 +682,26 @@ function SessionsTab({ authFetch }) {
           }
         >
           <div className="space-y-2">
-            {active.map((s) => (
-              <SessionRow
-                key={s.id}
-                s={s}
-                onRevoke={() => {
-                  const label = s.deviceLabel || `${s.browser} on ${s.os}`;
-                  if (window.confirm(`Force logout "${label}"${s.email ? ` (${s.email})` : ""}? This ends the session immediately.`)) {
-                    revoke(s.id);
-                  }
-                }}
-                busy={busy === s.id}
-              />
-            ))}
+            {active.map((s) => {
+              const isMine = Boolean(myId) && s.id === myId;
+              return (
+                <SessionRow
+                  key={s.id}
+                  s={s}
+                  isMine={isMine}
+                  onRevoke={() => {
+                    const label = s.deviceLabel || `${s.browser} on ${s.os}`;
+                    const confirmMsg = isMine
+                      ? `This is YOUR current session ("${label}"). Force logout will sign YOU out immediately — continue?`
+                      : `Force logout "${label}"${s.email ? ` (${s.email})` : ""}? This ends the session immediately.`;
+                    if (window.confirm(confirmMsg)) {
+                      revoke(s.id);
+                    }
+                  }}
+                  busy={busy === s.id}
+                />
+              );
+            })}
           </div>
         </DataState>
       </SectionCard>
@@ -705,7 +721,7 @@ function SessionsTab({ authFetch }) {
   );
 }
 
-function SessionRow({ s, onRevoke, busy, ended }) {
+function SessionRow({ s, onRevoke, busy, ended, isMine }) {
   return (
     <div className={`flex items-center justify-between gap-3 ${ROW_SHELL}`}>
       <div className="flex min-w-0 items-center gap-3">
@@ -719,6 +735,11 @@ function SessionRow({ s, onRevoke, busy, ended }) {
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-[var(--foreground)]">
             {s.deviceLabel || `${s.browser} on ${s.os}`}
+            {isMine && (
+              <span className="ml-2 rounded-full bg-[var(--primary-soft)] px-1.5 py-0.5 text-[10px] font-bold text-[var(--primary)]">
+                This device
+              </span>
+            )}
             {s.email ? <span className="ml-2 text-xs font-normal text-[var(--muted)]">{s.email}</span> : null}
           </p>
           <p className="truncate text-xs text-[var(--muted)]">

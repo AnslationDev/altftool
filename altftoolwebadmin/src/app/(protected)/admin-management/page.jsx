@@ -28,7 +28,6 @@ import {
   refreshAdminUsers,
   subscribeToAdminUsers,
 } from "@/services/adminUsersService";
-import { PROJECTS } from "@/projects";
 import {
   BulkActionsBar,
   DataState,
@@ -42,6 +41,8 @@ import {
   useTableControls,
 } from "@/ansets";
 import AdminCard from "./components/AdminCard";
+import AdminAvatar from "./components/AdminAvatar";
+import PermissionSummary from "./components/PermissionSummary";
 
 /* ── Portal Tooltip ── */
 function Tooltip({ label, children, direction = "top" }) {
@@ -98,99 +99,6 @@ function Tooltip({ label, children, direction = "top" }) {
       </div>
       {tip}
     </>
-  );
-}
-
-/* ── Avatar — photo if available, else initials ── */
-function AdminAvatar({ admin }) {
-  const initials = admin.fullName
-    ? admin.fullName
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
-    : admin.firstName
-      ? `${admin.firstName[0]}${admin.lastName?.[0] ?? ""}`.toUpperCase()
-      : (admin.email?.[0]?.toUpperCase() ?? "A");
-
-  if (admin.photoURL) {
-    return (
-      <img
-        src={admin.photoURL}
-        alt={initials}
-        className="w-8 h-8 rounded-xl object-cover border border-[var(--border)] shrink-0"
-      />
-    );
-  }
-  return (
-    <div className="w-8 h-8 rounded-xl bg-[var(--surface-soft)] flex items-center justify-center text-xs font-bold text-[var(--muted)] shrink-0">
-      {initials}
-    </div>
-  );
-}
-
-/* ── Permission summary — reads all projects from registry ── */
-function PermissionSummary({ admin }) {
-  if (admin.roleType === "superadmin") {
-    return (
-      <span className="text-xs font-bold text-[var(--success)] bg-[var(--success-soft)] px-2 py-0.5 rounded-full">
-        Full Access
-      </span>
-    );
-  }
-
-  const pills = [];
-  for (const [projectId, project] of Object.entries(PROJECTS)) {
-    const perms = admin.projectAccess?.[projectId]?.permissions ?? {};
-    for (const [mod, p] of Object.entries(perms)) {
-      if (p?.read || p?.write || p?.delete) {
-        const acts = [p.read && "R", p.write && "W", p.delete && "D"].filter(
-          Boolean,
-        );
-        const moduleLabel = project.modules[mod]?.label ?? mod;
-        pills.push({
-          key: `${projectId}/${mod}`,
-          label: moduleLabel,
-          projectName: project.name,
-          acts,
-        });
-      }
-    }
-  }
-
-  // Legacy fallback
-  if (!pills.length) {
-    for (const [mod, p] of Object.entries(admin.permissions ?? {})) {
-      if (p?.read || p?.write || p?.delete) {
-        const acts = [p.read && "R", p.write && "W", p.delete && "D"].filter(
-          Boolean,
-        );
-        pills.push({ key: mod, label: mod, projectName: null, acts });
-      }
-    }
-  }
-
-  if (!pills.length)
-    return <span className="text-xs text-[var(--muted)]">No access</span>;
-
-  return (
-    <div className="flex flex-wrap gap-1 max-w-[260px]">
-      {pills.slice(0, 3).map(({ key, label, projectName, acts }) => (
-        <span
-          key={key}
-          className="text-[10px] font-bold bg-[var(--primary-soft)] text-[var(--primary)] px-1.5 py-0.5 rounded capitalize"
-        >
-          {projectName ? `${projectName} · ${label}` : label}{" "}
-          <span className="text-[var(--primary)]/70">{acts.join("/")}</span>
-        </span>
-      ))}
-      {pills.length > 3 && (
-        <span className="text-[10px] text-[var(--muted)]">
-          +{pills.length - 3} more
-        </span>
-      )}
-    </div>
   );
 }
 
@@ -626,7 +534,7 @@ export default function AdminManagement() {
                 href="/admin-management/audit"
                 className="alt-ui-button alt-ui-button--secondary alt-ui-button--md"
               >
-                Audit Log
+                Full Audit Log
               </Link>
               {activeTab === "Admins" && (
                 <>
@@ -757,14 +665,17 @@ export default function AdminManagement() {
             <DataState
               loading={loading}
               error={loadError}
-              isEmpty={!visibleAdmins.length}
+              isEmpty={!admins.length}
               onRetry={retryAdmins}
               loadingVariant="cards"
               rows={8}
               empty={emptyAdmins}
             >
+              {/* Unfiltered on purpose — this tab is literally "All Admins" and has
+                  no filter controls of its own, so it must not silently inherit the
+                  Admins tab's search/role/status filters via `visibleAdmins`. */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {visibleAdmins.map((admin) => (
+                {admins.map((admin) => (
                   <AdminCard
                     key={admin.id}
                     admin={admin}

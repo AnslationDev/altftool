@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 import { enforceRateLimit } from "@altftool/core/http";
 
 export async function PATCH(request) {
@@ -37,19 +38,22 @@ export async function PATCH(request) {
 
     const ticket = ticketSnap.data();
 
-    // Only the creator or an admin can reopen. RBAC-aware, isActive-checked —
-    // see support/reply/route.js for why a bare `admins/{uid}` existence check
-    // is wrong here (misses RBAC-only admins, ignores deactivation).
+    // Only the creator or an admin with ticket-management access can reopen.
+    // `isAdmin` alone (any active admin, regardless of role) let ANY admin
+    // reopen ANY other admin's ticket — reply/route.js already gates on
+    // hasModuleAccess(tickets, write) for the identical reason; this route
+    // was the one place that check was missing.
     let admin = null;
     try {
       ({ admin } = await verifyActiveAdmin(request));
     } catch {
       admin = null;
     }
-    const isAdmin = Boolean(admin);
     const isCreator = ticket.createdBy === decoded.uid;
+    const canManageTicket =
+      Boolean(admin) && hasModuleAccess({ adminData: admin, moduleKey: "tickets", action: "write" });
 
-    if (!isAdmin && !isCreator) {
+    if (!canManageTicket && !isCreator) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

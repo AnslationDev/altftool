@@ -48,7 +48,7 @@ function DeleteConfirm({ onConfirm, onCancel, loading }) {
       <span className="text-xs text-danger font-medium flex-1">Delete this comment?</span>
       <button onClick={onCancel} className="text-xs text-muted hover:text-foreground px-2 py-1 rounded transition">Cancel</button>
       <button onClick={onConfirm} disabled={loading}
-        className="flex items-center gap-1 text-xs font-semibold text-danger-foreground bg-danger hover:bg-danger px-2.5 py-1 rounded-lg transition disabled:opacity-50">
+        className="flex items-center gap-1 text-xs font-semibold text-[var(--danger-foreground)] bg-danger hover:bg-danger px-2.5 py-1 rounded-lg transition disabled:opacity-50">
         {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}Delete
       </button>
     </div>

@@ -6,6 +6,8 @@ import { runTransform, getServerSample, getServerOptions } from "../../_lib/regi
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const MAX_TRANSFORM_INPUT_CHARS = 200_000;
+
 /**
  * GET /transform/api/[slug] — metadata for the shell (sample + option schema).
  */
@@ -38,6 +40,16 @@ export async function POST(request, { params }) {
   }
   const input = typeof body?.input === "string" ? body.input : "";
   const options = body && typeof body.options === "object" && body.options ? body.options : {};
+
+  if (input.length > MAX_TRANSFORM_INPUT_CHARS) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Input is too large. Please keep converter input under ${MAX_TRANSFORM_INPUT_CHARS.toLocaleString()} characters.`,
+      },
+      { status: 413 },
+    );
+  }
 
   const result = await runTransform(slug, input, options);
   return NextResponse.json(result);

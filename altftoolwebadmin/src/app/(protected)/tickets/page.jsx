@@ -8,7 +8,7 @@ import { db } from "@/lib/firebaseFirestore";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import { getAdminIdToken } from "@/lib/adminIdToken";
-import { Badge, Button } from "@altftool/ui";
+import { Badge, Button, Select } from "@altftool/ui";
 import {
   BulkActionsBar,
   DataTable,
@@ -16,6 +16,7 @@ import {
   FilterBar,
   PageHeader,
   StatTile,
+  useAdminResource,
   useTableControls,
 } from "@/ansets";
 import {
@@ -28,6 +29,7 @@ import {
   Circle,
   Download,
   Loader2,
+  RefreshCw,
 } from "lucide-react";
 
 // ── Status + priority vocabulary ──────────────────────────────────────────────
@@ -76,9 +78,16 @@ const PRIORITY_OPTIONS = [
 
 // Module scope so useTableControls' memo keeps a stable identity across renders.
 const SEARCH_FIELDS = ["title"];
+
+// Firestore doc/UID ids are never the literal string "unassigned", so it is
+// safe as a sentinel for "no assignedTo" without colliding with a real admin id.
+const UNASSIGNED_ASSIGNEE = "unassigned";
+
 const TABLE_FILTERS = {
   status: (row, value) => row.status === value,
   priority: (row, value) => row.priority === value,
+  assignedTo: (row, value) =>
+    value === UNASSIGNED_ASSIGNEE ? !row.assignedTo : row.assignedTo === value,
 };
 
 function fmtDate(ts) {
@@ -139,6 +148,15 @@ export default function SupportManagementPage() {
   const [reloadKey, setReloadKey] = useState(0);
   const [selectedIds, setSelectedIds] = useState(() => new Set());
   const [bulkClosing, setBulkClosing] = useState(false);
+  const [bulkAssigning, setBulkAssigning] = useState(false);
+  const [assignPick, setAssignPick] = useState("");
+  const [reopeningIds, setReopeningIds] = useState(() => new Set());
+
+  const { data: assignableAdmins } = useAdminResource("/api/admin/list", {
+    select: (json) =>
+      (json.admins ?? []).filter((a) => a.isActive !== false && a.roleType === "superadmin"),
+    initial: [],
+  });
 
   const {
     search,
@@ -185,7 +203,25 @@ export default function SupportManagementPage() {
 
   const statusFilter = filterValues.status ?? "";
   const priorityFilter = filterValues.priority ?? "";
-  const hasFilters = Boolean(search || statusFilter || priorityFilter);
+  const assignedToFilter = filterValues.assignedTo ?? "";
+  const hasFilters = Boolean(search || statusFilter || priorityFilter || assignedToFilter);
+
+  const assigneeOptions = useMemo(() => {
+    const opts = [
+      { value: "", label: "All assignees" },
+      { value: UNASSIGNED_ASSIGNEE, label: "Unassigned" },
+    ];
+    for (const a of assignableAdmins) {
+      opts.push({ value: a.id, label: a.fullName || a.email || "Admin" });
+    }
+    return opts;
+  }, [assignableAdmins]);
+
+  const reopeningSelected = [...selectedIds].some((id) => reopeningIds.has(id));
+  // Close / reopen / assign all PATCH the same tickets — without a shared busy
+  // flag, e.g. clicking "Close selected" then immediately "Reopen selected"
+  // fires two concurrent PATCHes at the same rows with no defined order.
+  const bulkActionBusy = bulkClosing || bulkAssigning || reopeningSelected;
 
   const counts = useMemo(() => {
     const result = { open: 0, in_progress: 0, resolved: 0, closed: 0 };
@@ -203,6 +239,7 @@ export default function SupportManagementPage() {
     onSearchChange("");
     setFilter("status", "");
     setFilter("priority", "");
+    setFilter("assignedTo", "");
   };
 
   const csvCell = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
@@ -275,6 +312,152 @@ export default function SupportManagementPage() {
       setBulkClosing(false);
     }
   }, [selectedIds]);
+
+  const bulkAssignSelected = useCallback(
+    async (adminId) => {
+      const ids = [...selectedIds];
+      if (!ids.length) return;
+      setBulkAssigning(true);
+      try {
+        const token = await getAdminIdToken(true);
+        if (!token) {
+          emitAlert({ type: "error", message: "Session expired. Please log in again." });
+          return;
+        }
+        const results = await Promise.allSettled(
+          ids.map((ticketId) =>
+            fetch("/api/support/update-status", {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ ticketId, assignedTo: adminId || null }),
+            }).then((res) => {
+              if (!res.ok) throw new Error(`Failed for ${ticketId}`);
+            }),
+          ),
+        );
+        const failed = results.filter((r) => r.status === "rejected").length;
+        const verb = adminId ? "Assigned" : "Unassigned";
+        if (failed) {
+          emitAlert({
+            type: "warning",
+            message: `${verb} ${ids.length - failed} of ${ids.length} tickets. ${failed} failed — try again for those.`,
+          });
+        } else {
+          emitAlert({
+            type: "success",
+            message: `${verb} ${ids.length} ticket${ids.length === 1 ? "" : "s"}.`,
+          });
+        }
+        setSelectedIds(new Set());
+      } finally {
+        setBulkAssigning(false);
+      }
+    },
+    [selectedIds],
+  );
+
+  // Shared by the per-row "reopen" icon (closed tickets only) and the bulk
+  // "Reopen selected" action — both PATCH the same endpoint the ticket detail
+  // page uses, so behaviour (closedAt/autoDeleteAt/isDeleted reset) stays identical.
+  const reopenTickets = useCallback(async (ids) => {
+    if (!ids.length) return;
+    setReopeningIds((prev) => new Set([...prev, ...ids]));
+    try {
+      const token = await getAdminIdToken(true);
+      if (!token) {
+        emitAlert({ type: "error", message: "Session expired. Please log in again." });
+        return;
+      }
+      const results = await Promise.allSettled(
+        ids.map((ticketId) =>
+          fetch("/api/support/reopen", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ ticketId }),
+          }).then((res) => {
+            if (!res.ok) throw new Error(`Failed for ${ticketId}`);
+          }),
+        ),
+      );
+      const failed = results.filter((r) => r.status === "rejected").length;
+      if (failed) {
+        emitAlert({
+          type: "warning",
+          message: `Reopened ${ids.length - failed} of ${ids.length} tickets. ${failed} failed — try again for those.`,
+        });
+      } else {
+        emitAlert({
+          type: "success",
+          message: `Reopened ${ids.length} ticket${ids.length === 1 ? "" : "s"}.`,
+        });
+      }
+      // Only drop the ids this call actually touched — a per-row reopen must
+      // not silently clear an unrelated multi-row selection.
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        ids.forEach((id) => next.delete(id));
+        return next;
+      });
+    } finally {
+      setReopeningIds((prev) => {
+        const next = new Set(prev);
+        ids.forEach((id) => next.delete(id));
+        return next;
+      });
+    }
+  }, []);
+
+  // The row-level reopen icon only ever renders for closed tickets (see the
+  // comment above renderRowActions), but the bulk "Reopen selected" button
+  // was calling reopenTickets() on the raw selection with no such filter and
+  // no confirmation — silently forcing any open/in-progress/resolved ticket
+  // caught in a mixed-status selection back to "open".
+  const bulkReopenSelected = useCallback(() => {
+    const closedIds = [...selectedIds].filter(
+      (id) => tickets.find((t) => t.id === id)?.status === "closed",
+    );
+    if (!closedIds.length) {
+      emitAlert({ type: "info", message: "None of the selected tickets are closed." });
+      return;
+    }
+    if (
+      !window.confirm(
+        `Reopen ${closedIds.length} closed ticket${closedIds.length === 1 ? "" : "s"}?${
+          closedIds.length < selectedIds.size
+            ? ` (${selectedIds.size - closedIds.length} selected ticket${selectedIds.size - closedIds.length === 1 ? " isn't" : "s aren't"} closed and will be skipped.)`
+            : ""
+        }`,
+      )
+    ) {
+      return;
+    }
+    reopenTickets(closedIds);
+  }, [selectedIds, tickets, reopenTickets]);
+
+  // Only closed tickets get a row action — reopening any other status makes
+  // no sense, and the endpoint already forces status back to "open" regardless
+  // of what it currently is.
+  const renderRowActions = (t) => {
+    if (t.status !== "closed") return null;
+    const reopening = reopeningIds.has(t.id);
+    return (
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          reopenTickets([t.id]);
+        }}
+        disabled={reopening}
+        aria-label={`Reopen "${t.title}"`}
+        className="rounded-md p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-30"
+      >
+        <RefreshCw
+          className={`h-3.5 w-3.5 ${reopening ? "animate-spin motion-reduce:animate-none" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+    );
+  };
 
   const headerDescription = loading
     ? "Loading…"
@@ -408,6 +591,13 @@ export default function SupportManagementPage() {
               onChange: (value) => setFilter("priority", value),
               options: PRIORITY_OPTIONS,
             },
+            {
+              key: "assignedTo",
+              label: "Filter by assignee",
+              value: assignedToFilter,
+              onChange: (value) => setFilter("assignedTo", value),
+              options: assigneeOptions,
+            },
           ]}
           count={countLabel}
           actions={
@@ -428,10 +618,48 @@ export default function SupportManagementPage() {
         />
 
         <BulkActionsBar count={selectedIds.size} onClear={() => setSelectedIds(new Set())} noun="ticket">
-          <Button variant="secondary" size="sm" onClick={bulkCloseSelected} disabled={bulkClosing}>
+          <Button variant="secondary" size="sm" onClick={bulkCloseSelected} disabled={bulkActionBusy}>
             {bulkClosing ? <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" /> : null}
             {bulkClosing ? "Closing…" : "Close selected"}
           </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={bulkReopenSelected}
+            disabled={bulkActionBusy}
+          >
+            {reopeningSelected ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+            ) : (
+              <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+            {reopeningSelected ? "Reopening…" : "Reopen selected"}
+          </Button>
+          <div className="w-44 shrink-0">
+            <Select
+              aria-label="Assign selected tickets to"
+              value={assignPick}
+              disabled={bulkActionBusy}
+              onChange={(event) => {
+                const value = event.target.value;
+                setAssignPick(value);
+                if (!value) return;
+                bulkAssignSelected(value === UNASSIGNED_ASSIGNEE ? "" : value).finally(() =>
+                  setAssignPick(""),
+                );
+              }}
+            >
+              <option value="" disabled>
+                {bulkAssigning ? "Assigning…" : "Assign to…"}
+              </option>
+              <option value={UNASSIGNED_ASSIGNEE}>Unassign</option>
+              {assignableAdmins.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.fullName || a.email || "Admin"}
+                </option>
+              ))}
+            </Select>
+          </div>
           <Button
             variant="ghost"
             size="sm"
@@ -449,6 +677,7 @@ export default function SupportManagementPage() {
           selectable
           selectedKeys={selectedIds}
           onSelectionChange={setSelectedIds}
+          rowActions={renderRowActions}
           loading={loading}
           error={loadError || null}
           onRetry={() => setReloadKey((k) => k + 1)}

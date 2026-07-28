@@ -262,6 +262,10 @@ function RouteQualitySection({ routeQuality }) {
           columns={groupColumns}
           rows={groups}
           getRowKey={(group) => group.group}
+          onRowClick={(group) => {
+            setQuery(group.group);
+            setFilter("all");
+          }}
           empty={
             <EmptyState
               icon={Route}

@@ -1,3 +1,4 @@
+import { createTtlCache } from "@altftool/core/cache";
 import { adminDb } from "@/lib/firebaseAdmin";
 import {
   RBAC_COLLECTIONS,
@@ -9,6 +10,16 @@ import {
 export function getRbacRootRef() {
   return adminDb.collection(SUPER_ADMIN_DASHBOARD_COLLECTION).doc(SUPER_ADMIN_DASHBOARD_DOC);
 }
+
+// verifyActiveAdmin() runs on essentially every admin API request (11 routes
+// directly, 17 more via withAdminApi) and re-derives this full nested tree
+// (project_access subcollection + one modules-subcollection read per project)
+// from scratch every time — the equivalent legacy-store lookup in
+// adminAccess.js has carried a 5s TTL cache since it was written; this one
+// never did. A short TTL keeps permission-revocation propagation effectively
+// real-time while cutting the dominant repeat-read cost on a page that fires
+// several admin API calls in the same second.
+const projectAccessCache = createTtlCache({ ttlMs: 5000, maxEntries: 500 });
 
 function isSuperRole(data = {}) {
   return data.isSuperAdmin === true || data.roleType === "superadmin" || data.roleId === "super_admin";
@@ -55,6 +66,10 @@ export async function getLatestRbacAccessRequest(decoded) {
 }
 
 export async function readRbacProjectAccess(uid) {
+  return projectAccessCache.getOrSet(`rbac-project-access:${uid}`, () => fetchRbacProjectAccess(uid), 5000);
+}
+
+async function fetchRbacProjectAccess(uid) {
   const accessSnap = await rootRef()
     .collection(RBAC_COLLECTIONS.adminUsers)
     .doc(uid)

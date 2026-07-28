@@ -8,10 +8,10 @@ if (!command.length) {
 }
 
 // Keep the outer workspace build aligned with the web build wrapper. The full
-// generated tool graph now exceeds 6 GiB during a cold webpack compile; when
-// the outer process injected 6144 MiB, the inner wrapper correctly preserved
-// that existing value and the release build could OOM before prerendering.
-const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "8192";
+// generated tool graph is large enough that a cold webpack compile can exceed
+// 8 GiB once the full branch/tool backlog is integrated. Use 12 GiB by default
+// while still allowing CI/deploy environments to override it explicitly.
+const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "12288";
 const existingNodeOptions = process.env.NODE_OPTIONS || "";
 const memoryOption = `--max-old-space-size=${maxOldSpaceSize}`;
 const nodeOptions = existingNodeOptions.includes("--max-old-space-size")

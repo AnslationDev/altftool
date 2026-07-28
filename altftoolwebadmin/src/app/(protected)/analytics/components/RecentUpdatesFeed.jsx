@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Clock4 } from "lucide-react";
 import { EmptyState, FilterBar, SectionCard } from "@/ansets";
+import { getProjectModuleRoute } from "@/config/adminRoutes";
 import { formatDateTime, formatRelativeTime } from "@/lib/analytics/analytics.utils";
 
 export default function RecentUpdatesFeed({ items, moduleOptions = [] }) {
@@ -11,9 +13,19 @@ export default function RecentUpdatesFeed({ items, moduleOptions = [] }) {
     return items.filter((item) => item.moduleKey === selectedModule);
   }, [items, selectedModule]);
 
+  // Keep the active module selectable even after a project-scope change drops
+  // it from moduleOptions — otherwise the <select> renders with no matching
+  // option and silently falls back to "All modules" while filteredItems above
+  // keeps filtering on the now-stale key.
   const filterOptions = useMemo(
-    () => [{ value: "all", label: "All modules" }, ...moduleOptions],
-    [moduleOptions],
+    () => [
+      { value: "all", label: "All modules" },
+      ...(selectedModule !== "all" && !moduleOptions.some((option) => option.value === selectedModule)
+        ? [{ value: selectedModule, label: selectedModule }]
+        : []),
+      ...moduleOptions,
+    ],
+    [moduleOptions, selectedModule],
   );
 
   return (
@@ -41,13 +53,16 @@ export default function RecentUpdatesFeed({ items, moduleOptions = [] }) {
       <div className="mt-4 max-h-[420px] space-y-3 overflow-y-auto pr-1">
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
-            <div
+            <Link
               key={item.id}
-              className="rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-4"
+              href={getProjectModuleRoute(item.projectId, item.moduleKey)}
+              className="group block rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-4 transition hover:border-[color-mix(in_srgb,var(--primary)_45%,var(--border))] hover:shadow-md motion-reduce:transition-none focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{item.title}</p>
+                  <p className="text-sm font-semibold text-[var(--foreground)] group-hover:text-[var(--primary)]">
+                    {item.title}
+                  </p>
                   <p className="mt-1 text-sm text-[var(--muted)]">
                     {item.projectName} · {item.moduleLabel}
                     {item.actionLabel ? ` · ${item.actionLabel}` : ""}
@@ -62,7 +77,7 @@ export default function RecentUpdatesFeed({ items, moduleOptions = [] }) {
                   </p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <EmptyState

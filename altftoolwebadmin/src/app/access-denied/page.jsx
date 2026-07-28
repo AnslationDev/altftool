@@ -7,6 +7,8 @@ import { getFirstAllowedRoute } from "@/lib/permissionUtils";
 import { LogOut } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+const POLL_INTERVAL_MS = 10000;
+
 export default function AccessDeniedPage() {
   const router = useRouter();
   const {
@@ -19,10 +21,12 @@ export default function AccessDeniedPage() {
     refreshAuth,
   } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(false);
   const hasRedirectedRef = useRef(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    document.title = "Access denied · AltFTools Admin";
+    document.title = "Access request denied · AltFTools Admin";
   }, []);
 
   /* ── Recovery: this page must not be a dead end ── */
@@ -33,6 +37,7 @@ export default function AccessDeniedPage() {
     // Access was granted after all → go straight into the console.
     if (adminData) {
       hasRedirectedRef.current = true;
+      clearInterval(intervalRef.current);
       router.replace(getFirstAllowedRoute(adminData) ?? "/profile");
       return;
     }
@@ -40,6 +45,7 @@ export default function AccessDeniedPage() {
     // A fresh request is now pending → the waiting screen owns that state.
     if (isPendingUser) {
       hasRedirectedRef.current = true;
+      clearInterval(intervalRef.current);
       router.replace("/access-requested");
       return;
     }
@@ -47,6 +53,7 @@ export default function AccessDeniedPage() {
     // Deactivated (not rejected) → the account-inactive screen owns that state.
     if (isInactive) {
       hasRedirectedRef.current = true;
+      clearInterval(intervalRef.current);
       router.replace("/account-inactive");
       return;
     }
@@ -56,9 +63,31 @@ export default function AccessDeniedPage() {
     // leaving a screen whose only button throws on a null user.
     if (!user) {
       hasRedirectedRef.current = true;
+      clearInterval(intervalRef.current);
       router.replace("/login");
     }
   }, [authLoading, adminData, isPendingUser, isInactive, user, router]);
+
+  /* ── Polling: only calls refreshAuth, never redirects ── */
+  useEffect(() => {
+    if (!user || adminData) return;
+
+    const poll = async () => {
+      if (hasRedirectedRef.current) return;
+      setChecking(true);
+      try {
+        await refreshAuth();
+      } finally {
+        setChecking(false);
+      }
+    };
+
+    // Check immediately on mount, then on interval
+    poll();
+    intervalRef.current = setInterval(poll, POLL_INTERVAL_MS);
+
+    return () => clearInterval(intervalRef.current);
+  }, [user, adminData, refreshAuth]);
 
   const handleReRequest = async () => {
     if (!user) {
@@ -132,6 +161,7 @@ export default function AccessDeniedPage() {
   };
 
   const handleSignOut = async () => {
+    clearInterval(intervalRef.current);
     // Use the context logout so the server-side security session is revoked and
     // any local-admin session is cleared — a bare signOut(auth) leaves both.
     await logout();
@@ -173,13 +203,13 @@ export default function AccessDeniedPage() {
               className="text-xl font-semibold tracking-tight mb-2"
               style={{ color: "var(--foreground)" }}
             >
-              Access denied
+              Access request denied
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
               Your access request was declined by a super admin.
             </p>
             <p className="text-xs mt-2" style={{ color: "var(--muted-soft)" }}>
-              You can submit a new request if needed.
+              {checking ? "Checking for updates…" : "Checking automatically every few seconds"}
             </p>
           </div>
 

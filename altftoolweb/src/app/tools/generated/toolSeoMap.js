@@ -7,6 +7,7 @@ import shard2 from "./toolSeoShard2";
 import shard3 from "./toolSeoShard3";
 import shard4 from "./toolSeoShard4";
 import shard5 from "./toolSeoShard5";
+import shard6 from "./toolSeoShard6";
 
 export const generatedToolSeo = {
   ...shard0,
@@ -15,6 +16,7 @@ export const generatedToolSeo = {
   ...shard3,
   ...shard4,
   ...shard5,
+  ...shard6,
 };
 
 export default generatedToolSeo;

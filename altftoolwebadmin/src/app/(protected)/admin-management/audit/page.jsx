@@ -15,6 +15,7 @@ import {
 
 import { emitAlert } from "@/lib/alertBus";
 import { getAdminIdToken } from "@/lib/adminIdToken";
+import { subscribeToAdminUsers } from "@/services/adminUsersService";
 import {
   DataTable,
   EmptyState,
@@ -68,32 +69,6 @@ function describeAuditError(status) {
   return "Couldn't load audit logs. Please try again.";
 }
 
-// ─── Admin list cache (module-level, lives for the tab session) ───────────────
-let adminCache = null;
-let adminCachePromise = null;
-
-async function getAdmins() {
-  if (adminCache) return adminCache;
-  if (!adminCachePromise) {
-    const token = await getAdminIdToken(true);
-    if (!token) return [];
-
-    adminCachePromise = Promise.resolve(token)
-      .then((token) => fetch("/api/admin/list", {
-        headers: { Authorization: `Bearer ${token}` },
-      }))
-      // Never cache a failed response as if it were an empty admin list — throw so
-      // the .catch below clears the promise and the next call retries.
-      .then((r) => {
-        if (!r.ok) throw new Error(`admin-list-${r.status}`);
-        return r.json();
-      })
-      .then((d) => { adminCache = d.admins || []; return adminCache; })
-      .catch(() => { adminCachePromise = null; return []; });
-  }
-  return adminCachePromise;
-}
-
 // ─── Main component ────────────────────────────────────────────────────────
 
 export default function AdminAuditLogPage() {
@@ -129,9 +104,15 @@ export default function AdminAuditLogPage() {
   const [actionFilter, setActionFilter] = useState("all");
   const [whoFilter, setWhoFilter] = useState("all");
 
-  // Fetch admins once (cached)
+  // Live admin directory — same Firestore source admin-management create/
+  // update/delete write to, so a newly created/edited/deleted admin shows up
+  // here (actor/target names, "Filter by admin") without a hard reload.
   useEffect(() => {
-    getAdmins().then(setAdmins);
+    const unsubscribe = subscribeToAdminUsers(
+      (adminUsers) => setAdmins(adminUsers),
+      (error) => console.warn("AUDIT_ADMINS_SUBSCRIBE_ERROR:", error?.message || error),
+    );
+    return unsubscribe;
   }, []);
 
   const adminMap = useMemo(() => {
@@ -372,10 +353,10 @@ export default function AdminAuditLogPage() {
         <PageHeader
           breadcrumbs={[
             { label: "Admin Management", href: "/admin-management" },
-            { label: "Audit Log" },
+            { label: "Full Audit Log" },
           ]}
           icon={ScrollText}
-          title="Audit Log"
+          title="Full Audit Log"
           description="Track admin-management activity (create, update, status changes, password changes)."
           actions={
             <Button

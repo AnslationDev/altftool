@@ -57,7 +57,11 @@ export default function SecurityGate() {
       },
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data?.error || `(${res.status})`);
+    if (!res.ok) {
+      const err = new Error(data?.error || `(${res.status})`);
+      err.status = res.status; // lets callers (e.g. heartbeat) distinguish a real 403 from a network blip
+      throw err;
+    }
     return data;
   }, []);
 
@@ -192,8 +196,17 @@ export default function SecurityGate() {
             startedForUidRef.current = null;
           }
         }
-      } catch {
-        /* ignore transient errors */
+      } catch (err) {
+        // withAdminApi maps both "no admin doc" and "Inactive admin" to a plain
+        // 403 {error:"Forbidden"} (see classifyAuthError in withAdminApi.js) —
+        // never the {active:false, reason:...} shape checked above. A 403 here
+        // means the server has already rejected this admin's authorization, so
+        // it must be treated as a genuine forced logout, not a transient error.
+        if (err?.status === 403) {
+          console.info("[auth] SecurityGate: heartbeat forbidden (403) → admin deactivated/removed, sign out");
+          await forceSignOut();
+        }
+        /* other errors (network blips, 5xx, etc.) are transient — ignore */
       }
     }, HEARTBEAT_MS);
     return () => clearInterval(timer);

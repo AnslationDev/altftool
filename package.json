@@ -105,7 +105,7 @@
     "test:resilient-fetch": "node --test tests/resilient-json-fetch.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:theme": "playwright test tests/theme-system.spec.mjs",
-    "test:tools:functional": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-functional.spec.mjs",
+    "test:tools:functional": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-functional.spec.mjs",
     "test:tools:api-readiness": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/api-tool-readiness.spec.mjs",
     "test:tools:priority": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
@@ -163,6 +163,7 @@
   "overrides": {
     "fast-xml-parser": "5.10.1",
     "dompurify": "3.4.12",
+    "brace-expansion@5.0.7": "5.0.8",
     "minimatch@3.1.5": {
       "brace-expansion": "1.1.16"
     },

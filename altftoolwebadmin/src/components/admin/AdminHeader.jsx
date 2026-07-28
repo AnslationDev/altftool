@@ -17,11 +17,13 @@ import {
   Shield,
   ShieldCheck,
   User,
+  X,
 } from "lucide-react";
 import { ThemeModeMenu } from "@altftool/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   collection,
+  getCountFromServer,
   limit,
   onSnapshot,
   orderBy,
@@ -29,6 +31,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebaseFirestore";
+import { emitAlert } from "@/lib/alertBus";
 import { getAdminRouteInfo, buildAdminBreadcrumbs } from "@/lib/routeUtils";
 import { useAuth } from "@/context/AuthContext";
 import { useAdminTheme } from "@/context/ThemeContext";
@@ -113,21 +116,26 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [markingRead, setMarkingRead] = useState(null);
   const [quickQuery, setQuickQuery] = useState("");
   const [quickOpen, setQuickOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const dropdownRef = useRef(null);
   const notifRef = useRef(null);
   const quickNavRef = useRef(null);
   const quickInputRef = useRef(null);
 
-  // ⌘K / Ctrl+K focuses the quick navigation search.
+  // ⌘K / Ctrl+K opens the quick navigation search. `mobileSearchOpen` makes
+  // the panel visible below xl (it's otherwise gated behind `xl:block`); the
+  // focus effect further down runs once that panel is actually in the DOM.
   useEffect(() => {
     const handleShortcut = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
-        quickInputRef.current?.focus();
+        setMobileSearchOpen(true);
         setQuickOpen(true);
       }
     };
@@ -135,6 +143,12 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
     document.addEventListener("keydown", handleShortcut);
     return () => document.removeEventListener("keydown", handleShortcut);
   }, []);
+
+  useEffect(() => {
+    if (quickOpen) {
+      quickInputRef.current?.focus();
+    }
+  }, [quickOpen]);
 
   const photoURL = adminData?.photoURL || null;
   const displayName =
@@ -163,6 +177,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
     setDropdownOpen(false);
     setNotifOpen(false);
     setQuickOpen(false);
+    setMobileSearchOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -197,6 +212,36 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
     );
   }, [user?.isLocalAdmin, user?.uid]);
 
+  // The listener above is capped at 20 docs so the dropdown stays light —
+  // the badge needs the true total, so it re-fetches an uncapped count()
+  // aggregation every time that capped snapshot changes.
+  useEffect(() => {
+    if (user?.isLocalAdmin) return undefined;
+    if (!user?.uid) return undefined;
+
+    let cancelled = false;
+    const unreadCountQuery = query(
+      collection(db, "notifications"),
+      where("userId", "==", user.uid),
+      where("read", "==", false),
+    );
+
+    getCountFromServer(unreadCountQuery)
+      .then((snapshot) => {
+        if (!cancelled) setUnreadCount(snapshot.data().count);
+      })
+      .catch((error) => {
+        console.warn(
+          "Unable to load unread notification count:",
+          error?.message || error,
+        );
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.isLocalAdmin, user?.uid, notifications]);
+
   useEffect(() => {
     const closeMenus = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -207,6 +252,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       }
       if (quickNavRef.current && !quickNavRef.current.contains(event.target)) {
         setQuickOpen(false);
+        setMobileSearchOpen(false);
       }
     };
 
@@ -215,6 +261,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       setDropdownOpen(false);
       setNotifOpen(false);
       setQuickOpen(false);
+      setMobileSearchOpen(false);
     };
 
     document.addEventListener("pointerdown", closeMenus);
@@ -226,7 +273,6 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
     };
   }, []);
 
-  const unreadCount = notifications.length;
   const quickRoutes = useMemo(
     () => createAdminQuickRoutes({ adminData, isSuperAdmin }),
     [adminData, isSuperAdmin],
@@ -259,9 +305,17 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       .slice(0, 7);
   }, [quickQuery, quickRoutes]);
 
+  // Results reshuffle whenever the query (or the open/closed state) changes,
+  // so the roving highlight always starts back at the top match.
+  useEffect(() => {
+    setHighlightedIndex(0);
+  }, [quickQuery, quickOpen]);
+
   const closeQuickNav = () => {
     setQuickOpen(false);
     setQuickQuery("");
+    setHighlightedIndex(0);
+    setMobileSearchOpen(false);
   };
 
   const openQuickRoute = (href) => {
@@ -277,9 +331,25 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       return;
     }
 
-    if (event.key === "Enter" && quickMatches[0]) {
+    if (event.key === "ArrowDown") {
       event.preventDefault();
-      openQuickRoute(quickMatches[0].href);
+      if (!quickMatches.length) return;
+      setHighlightedIndex((index) => (index + 1) % quickMatches.length);
+      return;
+    }
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (!quickMatches.length) return;
+      setHighlightedIndex(
+        (index) => (index - 1 + quickMatches.length) % quickMatches.length,
+      );
+      return;
+    }
+
+    if (event.key === "Enter" && quickMatches[highlightedIndex]) {
+      event.preventDefault();
+      openQuickRoute(quickMatches[highlightedIndex].href);
     }
   };
 
@@ -289,7 +359,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
 
     try {
       const token = await user.getIdToken();
-      await fetch("/api/notifications/mark-read", {
+      const res = await fetch("/api/notifications/mark-read", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -297,6 +367,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         },
         body: JSON.stringify({ notificationId: notification.id }),
       });
+
+      if (!res.ok) {
+        throw new Error(`Mark-read failed with status ${res.status}`);
+      }
 
       if (notification.actionUrl) {
         router.push(notification.actionUrl);
@@ -307,6 +381,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
         "Unable to mark notification as read:",
         error?.message || error,
       );
+      emitAlert({
+        type: "error",
+        message: "Couldn't mark that notification as read. Please try again.",
+      });
     } finally {
       setMarkingRead(null);
     }
@@ -354,7 +432,11 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       </div>
 
       <div
-        className="relative hidden min-w-[240px] max-w-md flex-1 xl:block"
+        className={`${
+          mobileSearchOpen
+            ? "fixed inset-x-3 top-16 z-50 mx-auto sm:inset-x-5 lg:inset-x-6"
+            : "hidden"
+        } min-w-[240px] max-w-md xl:relative xl:inset-auto xl:top-auto xl:z-auto xl:mx-0 xl:block xl:flex-1`}
         ref={quickNavRef}
       >
         <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--muted)]" />
@@ -372,30 +454,47 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           aria-label="Jump to admin module"
           aria-expanded={quickOpen}
           aria-haspopup="listbox"
+          aria-controls="admin-quick-nav-listbox"
+          aria-activedescendant={
+            quickMatches[highlightedIndex]
+              ? `quick-nav-option-${quickMatches[highlightedIndex].key}`
+              : undefined
+          }
         />
-        <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted)]">
+        <button
+          type="button"
+          onClick={closeQuickNav}
+          className="absolute right-2.5 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-md text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] xl:hidden"
+          aria-label="Close search"
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
+        <kbd className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted)] xl:block">
           ⌘K
         </kbd>
         {quickOpen ? (
           <div
+            id="admin-quick-nav-listbox"
             role="listbox"
             className="absolute left-0 right-0 top-11 z-50 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-lg)]"
           >
             {quickMatches.length ? (
               quickMatches.map((item, index) => {
                 const Icon = item.icon || Search;
-                const isEnterTarget = index === 0 && Boolean(quickQuery);
+                const isHighlighted = index === highlightedIndex;
 
                 return (
                   <button
                     key={item.key}
+                    id={`quick-nav-option-${item.key}`}
                     type="button"
                     role="option"
-                    aria-selected={isEnterTarget}
+                    aria-selected={isHighlighted}
                     onMouseDown={(event) => event.preventDefault()}
+                    onMouseEnter={() => setHighlightedIndex(index)}
                     onClick={() => openQuickRoute(item.href)}
                     className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--surface-soft)] ${
-                      isEnterTarget ? "bg-[var(--surface-soft)]" : ""
+                      isHighlighted ? "bg-[var(--surface-soft)]" : ""
                     }`}
                   >
                     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--surface-soft)] text-[var(--primary)]">
@@ -409,7 +508,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
                         {item.helper}
                       </span>
                     </span>
-                    {isEnterTarget ? (
+                    {isHighlighted ? (
                       <kbd className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted)]">
                         ↵
                       </kbd>
@@ -427,6 +526,18 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
       </div>
 
       <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <button
+          type="button"
+          onClick={() => {
+            setMobileSearchOpen(true);
+            setQuickOpen(true);
+          }}
+          className="grid h-[var(--anslation-ds-target-min)] w-[var(--anslation-ds-target-min)] place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] xl:hidden"
+          aria-label="Search admin modules"
+        >
+          <Search className="h-4 w-4" />
+        </button>
+
         <Link
           href="/health"
           className="hidden h-9 items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2.5 text-xs font-bold text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--foreground)] md:inline-flex"
@@ -480,7 +591,10 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
           </button>
 
           {notifOpen ? (
-            <div className="absolute right-0 top-11 z-50 w-80 max-w-[calc(100vw-1rem)] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+            <div
+              role="menu"
+              className="absolute right-0 top-11 z-50 w-80 max-w-[calc(100vw-1rem)] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]"
+            >
               <div className="flex items-center justify-between gap-3 border-b border-[var(--border)] px-4 py-3">
                 <p className="text-sm font-semibold text-[var(--foreground)]">
                   Notifications
@@ -503,6 +617,7 @@ export default function AdminHeader({ user, adminData, onOpenSidebar }) {
                     <button
                       key={notification.id}
                       type="button"
+                      role="menuitem"
                       onClick={() => markRead(notification)}
                       disabled={markingRead === notification.id}
                       className="group flex w-full items-start gap-3 px-4 py-3 text-left transition hover:bg-[var(--surface-soft)] disabled:opacity-60"

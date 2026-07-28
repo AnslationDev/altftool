@@ -138,15 +138,6 @@ export async function POST(request) {
       }, { merge: true });
     });
 
-    batch.set(root.collection(RBAC_COLLECTIONS.settings).doc("main"), {
-      maintenanceMode: false,
-      requireTwoFactor: false,
-      sessionTimeoutMinutes: 120,
-      allowAccessRequests: true,
-      auditLogRetentionDays: 180,
-      updatedAt: now,
-    }, { merge: true });
-
     batch.set(root.collection(RBAC_COLLECTIONS.adminUsers).doc(decoded.uid), {
       uid: decoded.uid,
       email: profile.email || decoded.email || "",

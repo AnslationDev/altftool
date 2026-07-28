@@ -94,10 +94,12 @@ export function buildAdminBreadcrumbs(routeInfo) {
 
   subPath.forEach((segment, index) => {
     const isLast = index === subPath.length - 1;
-    const href =
-      !isLast && projectId && section
+    let href = null;
+    if (!isLast && section) {
+      href = projectId
         ? getProjectModuleRoute(projectId, section, subPath.slice(0, index + 1))
-        : null;
+        : `/${section}/${subPath.slice(0, index + 1).join("/")}`;
+    }
 
     crumbs.push({ label: formatAdminSegment(segment), href });
   });

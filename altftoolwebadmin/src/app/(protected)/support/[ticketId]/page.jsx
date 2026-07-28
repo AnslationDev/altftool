@@ -138,7 +138,7 @@ function MessageBubble({ message, isMe, showTimestamp }) {
 export default function TicketDetailPage() {
   const { ticketId } = useParams();
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isSuperAdmin } = useAuth();
 
   const [ticket, setTicket] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -154,6 +154,7 @@ export default function TicketDetailPage() {
   const textareaRef = useRef(null);
 
   const retryLoad = () => setReloadKey((k) => k + 1);
+  const hasTicket = Boolean(ticket);
 
   useEffect(() => {
     if (!ticketId) return;
@@ -162,7 +163,18 @@ export default function TicketDetailPage() {
     const unsub = onSnapshot(
       doc(db, "support_tickets", ticketId),
       (snap) => {
-        if (snap.exists()) setTicket({ id: snap.id, ...snap.data() });
+        if (snap.exists()) {
+          const data = snap.data();
+          // Firestore rules grant read to any active admin; the creator/superadmin
+          // check has to happen client-side so a guessed ticketId can't be opened.
+          if (data.createdBy !== user?.uid && !isSuperAdmin) {
+            setTicket(null);
+            setLoadError("You do not have permission to view this ticket.");
+            setLoading(false);
+            return;
+          }
+          setTicket({ id: snap.id, ...data });
+        }
         setLoadError("");
         setLoading(false);
       },
@@ -176,10 +188,10 @@ export default function TicketDetailPage() {
       }
     );
     return () => unsub();
-  }, [ticketId, reloadKey]);
+  }, [ticketId, reloadKey, user?.uid, isSuperAdmin]);
 
   useEffect(() => {
-    if (!ticketId) return;
+    if (!ticketId || !hasTicket) return;
     setMessagesLoading(true);
     setMessagesError("");
     const q = query(
@@ -204,7 +216,7 @@ export default function TicketDetailPage() {
       }
     );
     return () => unsub();
-  }, [ticketId, reloadKey]);
+  }, [ticketId, reloadKey, hasTicket]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -316,18 +328,22 @@ export default function TicketDetailPage() {
             </div>
           </SectionCard>
 
-          {/* Auto-delete warning — no anset for inline callouts, kept local */}
-          {isClosed && ticket?.autoDeleteAt && (
+          {/* Auto-delete / deleted warning — no anset for inline callouts, kept local */}
+          {isClosed && (ticket?.isDeleted || ticket?.autoDeleteAt) && (
             <div className="flex items-start gap-3 rounded-xl border border-[var(--border)] bg-[var(--warning-soft)] p-4">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--surface)]">
                 <AlertTriangle className="h-4 w-4 text-[var(--warning)]" aria-hidden="true" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-[var(--warning)]">
-                  Ticket deletes in {timeUntilDelete(ticket.autoDeleteAt)}
+                  {ticket.isDeleted
+                    ? "This ticket was auto-deleted"
+                    : `Ticket deletes in ${timeUntilDelete(ticket.autoDeleteAt)}`}
                 </p>
                 <p className="mt-0.5 text-xs text-[var(--muted)]">
-                  Reopen this ticket to keep the conversation and all messages.
+                  {ticket.isDeleted
+                    ? "Reopening will restore the conversation and all messages."
+                    : "Reopen this ticket to keep the conversation and all messages."}
                 </p>
                 {isOwner && (
                   <Button

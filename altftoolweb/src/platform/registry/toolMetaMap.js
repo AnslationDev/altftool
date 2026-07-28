@@ -229,6 +229,27 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "account-security-guide-netflix": {
+    "name": "Netflix Account Security Guide",
+    "description": "Weighted 15-step checklist to sign out unknown Netflix devices, set profile PINs, fix the Household setting and spot billing phishing.",
+    "category": "Security & Privacy",
+    "icon": "tv",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "account-security-guide-paytm": {
+    "name": "Paytm Security Setup Guide",
+    "description": "Weighted 15-step Paytm hardening checklist for app lock, UPI PIN rules, automatic payments, wallet top-ups, Postpaid limits and scam patterns.",
+    "category": "Security & Privacy",
+    "icon": "wallet",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "account-security-guide-phonepe": {
+    "name": "PhonePe Security Setup Guide",
+    "description": "Weighted 15-step PhonePe hardening checklist covering app lock, UPI PIN discipline, autopay mandates, transaction limits and UPI scam patterns.",
+    "category": "Security & Privacy",
+    "icon": "indian-rupee",
+    "iconColor": "text-[var(--primary)]"
+  },
   "accountant-prompt-pack": {
     "name": "Accountant Prompt Pack",
     "description": "Fill-in-the-blank AI prompts for reconciliations, variance analysis, client emails and plain-English report notes.",
@@ -315,6 +336,13 @@ export const toolMetaMap = {
     "name": "Address Change Checklist India",
     "description": "Every record to update after relocating in India — Aadhaar, voter roll, RC, bank KYC, utilities — with the statutory deadlines dated.",
     "category": "Productivity",
+    "icon": "map-pin",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "address-change-request-letter": {
+    "name": "Address Change Request Letter",
+    "description": "Write address update letters for banks, schools, utilities and the RTO, with the right proof of address and deadline check.",
+    "category": "Text & Writing",
     "icon": "map-pin",
     "iconColor": "text-[var(--primary)]"
   },
@@ -1454,6 +1482,104 @@ export const toolMetaMap = {
     "icon": "search",
     "iconColor": "text-gray-500"
   },
+  "app-permission-audit-banking": {
+    "name": "Banking App Permission Audit",
+    "description": "Checklist of which phone permissions a banking app genuinely needs, which are optional, and which are red flags to revoke.",
+    "category": "Security & Privacy",
+    "icon": "landmark",
+    "iconColor": "text-(--primary)"
+  },
+  "app-permission-audit-dating": {
+    "name": "Dating App Permission Audit",
+    "description": "Audit location precision, contacts, photo access and profile-sharing settings in dating apps, scored for privacy against lost features.",
+    "category": "Security & Privacy",
+    "icon": "heart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-education": {
+    "name": "Education App Permission Audit",
+    "description": "Review camera, microphone, screen capture and proctoring permissions in student learning apps.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-fitness": {
+    "name": "Fitness App Permission Audit",
+    "description": "Score the sensor, location and health-data permissions a fitness tracker holds and see which ones to revoke.",
+    "category": "Security & Privacy",
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-food-delivery": {
+    "name": "Food Delivery App Permission Audit",
+    "description": "India-first audit of address, always-on location, contacts and SMS permissions in food delivery apps.",
+    "category": "Security & Privacy",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-health-records": {
+    "name": "Health Records App Permission Audit",
+    "description": "Audit sensitive-data permissions, cloud backup and default sharing settings in health record and ABHA apps.",
+    "category": "Security & Privacy",
+    "icon": "file-heart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-keyboard": {
+    "name": "Keyboard App Permission Audit",
+    "description": "Score a third-party keyboard's full-access, clipboard, contacts and network permissions and see what to switch off.",
+    "category": "Security & Privacy",
+    "icon": "keyboard",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-kids-games": {
+    "name": "Kids Game App Permission Audit",
+    "description": "Score the permissions a children's game app requests, see which are red flags and revoke them without breaking play.",
+    "category": "Security & Privacy",
+    "icon": "gamepad-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-photo-editors": {
+    "name": "Photo Editor App Permission Audit",
+    "description": "Check gallery-wide access, EXIF location, cloud upload of originals and ad tracking in photo editing apps.",
+    "category": "Security & Privacy",
+    "icon": "image",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-ride-hailing": {
+    "name": "Ride Hailing App Permission Audit",
+    "description": "Weigh cab-app safety features against background location, contacts, microphone and call log access.",
+    "category": "Security & Privacy",
+    "icon": "car-taxi-front",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-shopping": {
+    "name": "Shopping App Permission Audit",
+    "description": "Trim the location, contacts, SMS and notification permissions a shopping app collects without needing them.",
+    "category": "Security & Privacy",
+    "icon": "shopping-bag",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-social": {
+    "name": "Social Media App Permission Audit",
+    "description": "Decide which social app permissions to revoke, keep or limit — scored for privacy gained against features actually lost.",
+    "category": "Security & Privacy",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-utility-apps": {
+    "name": "Utility App Permission Audit",
+    "description": "Spot over-permissioned flashlight, cleaner and battery-saver apps by scoring what they ask for against what they do.",
+    "category": "Security & Privacy",
+    "icon": "wrench",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "app-permission-audit-wallpaper": {
+    "name": "Wallpaper App Permission Audit",
+    "description": "Identify unnecessary permissions and ad SDK risk in wallpaper and live wallpaper apps.",
+    "category": "Security & Privacy",
+    "icon": "wallpaper",
+    "iconColor": "text-[var(--primary)]"
+  },
   "apple-health-export-explorer": {
     "name": "Apple Health Export Explorer",
     "description": "Health export ko readable local charts me convert kare.",
@@ -1538,6 +1664,17 @@ export const toolMetaMap = {
       "Productivity"
     ],
     "icon": "wrench",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
+  },
+  "aqi-today": {
+    "name": "AQI Today",
+    "description": "Live air quality board for 36 Indian cities, sorted worst first, with the dominant pollutant, all six CPCB sub-indices and each city's band and advisory.",
+    "category": [
+      "Education & Science",
+      "Health & Fitness"
+    ],
+    "icon": "wind",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -1868,6 +2005,13 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-[var(--primary)]"
   },
+  "author-bio-builder": {
+    "name": "Author Bio Builder",
+    "description": "Build a micro, short and long author bio in first or third person, with live word counts against platform limits.",
+    "category": "Text & Writing",
+    "icon": "user-pen",
+    "iconColor": "text-[var(--primary)]"
+  },
   "availability-time-zone-finder": {
     "name": "Availability & Time-Zone Finder",
     "description": "Multiple schedules se common meeting windows dhoonde.",
@@ -1979,6 +2123,20 @@ export const toolMetaMap = {
     ],
     "icon": "baby",
     "iconColor": "text-teal-500"
+  },
+  "baby-name-initial-combiner": {
+    "name": "Baby Name Initial Combiner",
+    "description": "Blend two parents' names into new baby name ideas using eight syllable-splicing rules, each result scored for pronounceability and balance.",
+    "category": "Lifestyle",
+    "icon": "blend",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "baby-name-shortlist-voting-board": {
+    "name": "Baby Name Shortlist Voting Board",
+    "description": "Shortlist baby names, collect a 1-to-5 rating from each family member, and rank the list by average score, consensus and vetoes.",
+    "category": "Lifestyle",
+    "icon": "vote",
+    "iconColor": "text-[var(--primary)]"
   },
   "baby-shower-invitation-wording": {
     "name": "Baby Shower Invitation Wording",
@@ -2121,6 +2279,13 @@ export const toolMetaMap = {
     "description": "Break a Bangkok trip into flights, stay, food, transport and activities in baht and rupees, with forex markup and VAT refund.",
     "category": "Finance Calculators",
     "icon": "plane",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "bank-account-closure-letter": {
+    "name": "Bank Account Closure Letter",
+    "description": "Generate a bank account closure request letter with balance transfer details, enclosures and a closure-charge window check.",
+    "category": "Text & Writing",
+    "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
   "bank-account-closure-request-generator": {
@@ -2623,6 +2788,20 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-[var(--primary)]"
   },
+  "bengali-probad-proverb-explorer": {
+    "name": "Bengali Probad Explorer",
+    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and usage notes.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "bengali-word-of-the-day-builder": {
+    "name": "Bengali Word of the Day",
+    "description": "Learn one Bengali word a day with its script, romanisation, meaning, an example sentence and a browser-saved streak.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
+  },
   "bengaluru-airport-transfer-time-planner": {
     "name": "Bengaluru Airport Transfer Time Planner",
     "description": "Work out when to leave for Bengaluru BLR airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
@@ -2831,6 +3010,13 @@ export const toolMetaMap = {
     ],
     "icon": "link",
     "iconColor": "text-cyan-600"
+  },
+  "bio-writer-multi-length": {
+    "name": "Multi Length Bio Writer",
+    "description": "Generate 50, 100 and 250 word bios in first or third person, with character checks for X, Instagram and LinkedIn.",
+    "category": "Marketing & Social",
+    "icon": "user-round",
+    "iconColor": "text-[var(--primary)]"
   },
   "bionic-reading-converter": {
     "name": "Bionic Reading Converter",
@@ -3279,6 +3465,13 @@ export const toolMetaMap = {
     "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
   },
+  "bonafide-certificate-request-letter": {
+    "name": "Bonafide Certificate Request Letter",
+    "description": "Draft a bonafide certificate request letter to your school, college or university with purpose, copies and a lead-time check.",
+    "category": "Text & Writing",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "bond-duration-convexity-calculator": {
     "name": "Bond Duration & Convexity Calculator",
     "description": "Macaulay duration, modified duration aur convexity nikale.",
@@ -3395,6 +3588,13 @@ export const toolMetaMap = {
     "description": "Turn a tempo into delay, pre-delay and LFO times in milliseconds, hertz and samples for every straight, dotted and triplet note value.",
     "category": "Calculators",
     "icon": "timer",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "braille-dot-chart-trainer": {
+    "name": "Braille Dot Chart Trainer",
+    "description": "Learn the six-dot braille cell with a full dot-number chart, a live text-to-braille view and dot-position quizzes.",
+    "category": "Education & Science",
+    "icon": "grip",
     "iconColor": "text-[var(--primary)]"
   },
   "braille-embosser-sheet-maker": {
@@ -3703,6 +3903,13 @@ export const toolMetaMap = {
     "icon": "map-pin",
     "iconColor": "text-rose-500"
   },
+  "buddhist-baby-name-finder": {
+    "name": "Buddhist Baby Name Finder",
+    "description": "Search Buddhist baby names from Pali, Sanskrit and Tibetan sources with literal meanings and the canonical figure or term each name refers to.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "budget-planner": {
     "name": "Budget Planner",
     "description": "Create a monthly budget with income and expense categories. Track spending, set limits, and visualize your financial health.",
@@ -3832,6 +4039,13 @@ export const toolMetaMap = {
     ],
     "icon": "building-2",
     "iconColor": "text-teal-500"
+  },
+  "business-name-numerology-checker": {
+    "name": "Business Name Numerology Checker",
+    "description": "Compare shortlisted business names side by side on Chaldean and Pythagorean numbers plus domain, handle-length and readability checks.",
+    "category": "Business",
+    "icon": "building-2",
+    "iconColor": "text-[var(--primary)]"
   },
   "button-min-size-spec-generator": {
     "name": "Button Minimum Size Spec Generator",
@@ -4651,6 +4865,13 @@ export const toolMetaMap = {
     "description": "Build a timed seated stretch routine for neck, shoulders, wrists, spine, hips and eyes that fits your desk break.",
     "category": "Health & Fitness",
     "icon": "armchair",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "chaldean-numerology-calculator": {
+    "name": "Chaldean Numerology Calculator",
+    "description": "Work out Chaldean name compound and root numbers plus psychic and destiny numbers from a date of birth, with the classical 1-8 letter table.",
+    "category": "Lifestyle",
+    "icon": "calculator",
     "iconColor": "text-[var(--primary)]"
   },
   "change-freeze-calendar-planner": {
@@ -6397,6 +6618,16 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-[var(--primary)]"
   },
+  "critical-value-tables": {
+    "name": "Critical Value Tables",
+    "description": "t, z, chi-square and F critical values at any degrees of freedom, plus exact p-values from an observed statistic.",
+    "category": [
+      "Education & Science",
+      "Calculators"
+    ],
+    "icon": "sigma",
+    "iconColor": "text-primary"
+  },
   "cron-expression-explainer": {
     "name": "Cron Expression Explainer",
     "description": "Translate any 5-field cron expression into plain English with a field-by-field breakdown and the next scheduled run times.",
@@ -6887,6 +7118,13 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-amber-700"
   },
+  "cyrillic-alphabet-explorer": {
+    "name": "Cyrillic Alphabet Explorer",
+    "description": "All 33 Russian Cyrillic letters with sounds, names and false friends, plus a transliterator using the ISO 9 and ICAO passport standards.",
+    "category": "Education & Science",
+    "icon": "languages",
+    "iconColor": "text-[var(--primary)]"
+  },
   "d-d-dice-roller": {
     "name": "D&D Dice Roller",
     "description": "Roll one or more virtual D&D dice, choose the number of sides, and total every result instantly.",
@@ -6912,6 +7150,13 @@ export const toolMetaMap = {
     "description": "Turn your daily office commute into monthly and yearly fuel, toll and parking spend using your real mileage and fuel price.",
     "category": "Calculators",
     "icon": "route",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "daily-language-streak-tracker": {
+    "name": "Daily Language Streak Tracker",
+    "description": "Log daily study minutes per language and see current streak, longest streak, goal adherence and the next milestone.",
+    "category": "Education & Science",
+    "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
   "daily-panchang-calculator": {
@@ -7029,6 +7274,83 @@ export const toolMetaMap = {
     "description": "Create a privacy-focused request asking an organisation to delete personal data and confirm completion.",
     "category": "Security & Privacy",
     "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-amazon": {
+    "name": "Amazon Data Request Guide",
+    "description": "Plan an Amazon data request: pick categories including Alexa voice and ad audiences, and size the archive before you ask.",
+    "category": "Security & Privacy",
+    "icon": "shopping-cart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-apple": {
+    "name": "Apple Data Download Request Guide",
+    "description": "Plan an Apple ID privacy data request: size the archive, split files, and see which data only exports from the device.",
+    "category": "Security & Privacy",
+    "icon": "apple",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-dating-apps": {
+    "name": "Dating App Data Request Guide",
+    "description": "Plan a Tinder, Bumble or Hinge data request and see how many swipes, matches and messages the archive will contain.",
+    "category": "Security & Privacy",
+    "icon": "heart-handshake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-food-apps": {
+    "name": "Swiggy Zomato Data Request Guide",
+    "description": "Plan a food-delivery data request under Indian rules and see how many address snapshots and orders are stored about you.",
+    "category": "Security & Privacy",
+    "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-gaming": {
+    "name": "Gaming Account Data Export Guide",
+    "description": "Request your Steam, PlayStation, Xbox, Nintendo, Epic or Discord data, track the legal response deadline and audit friends, purchases and chat.",
+    "category": "Security & Privacy",
+    "icon": "gamepad-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-google": {
+    "name": "Google Data Download Request Guide",
+    "description": "Plan a Google Takeout export: pick services, estimate archive size and split files, and see what each export actually reveals.",
+    "category": "Security & Privacy",
+    "icon": "download-cloud",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-health-apps": {
+    "name": "Health App Data Export Guide",
+    "description": "Plan a fitness and health data export, count the sensor records a wearable has stored, and see the inference risk.",
+    "category": "Security & Privacy",
+    "icon": "heart-pulse",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-linkedin": {
+    "name": "LinkedIn Data Export Guide",
+    "description": "Plan a LinkedIn data export: pick files, see whether it lands in 10 minutes or 24 hours, and what each CSV exposes.",
+    "category": "Security & Privacy",
+    "icon": "linkedin",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-meta": {
+    "name": "Meta Data Download Request Guide",
+    "description": "Plan a Facebook and Instagram data download: choose scope, HTML or JSON, media quality, and see size, download time and risk.",
+    "category": "Security & Privacy",
+    "icon": "package-open",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-music-apps": {
+    "name": "Spotify and Music Data Export Guide",
+    "description": "Plan a Spotify data export across its three tiers, estimate your lifetime play count and see what listening history reveals.",
+    "category": "Security & Privacy",
+    "icon": "music",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "data-download-guide-ride-apps": {
+    "name": "Uber and Ola Data Request Guide",
+    "description": "Plan a ride-app data request and see how many GPS points your trip history holds and how easily home can be inferred.",
+    "category": "Security & Privacy",
+    "icon": "car-taxi-front",
     "iconColor": "text-[var(--primary)]"
   },
   "data-lens": {
@@ -8599,6 +8921,13 @@ export const toolMetaMap = {
     "icon": "code",
     "iconColor": "text-cyan-600"
   },
+  "durga-puja-wishes-generator": {
+    "name": "Durga Puja Wishes Generator",
+    "description": "Generate Bengali, Banglish and English Durga Puja greetings for Mahalaya through Bijoya Dashami, with name insert and SMS length check.",
+    "category": "Generators",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
   "dwell-click-keyboard": {
     "name": "Dwell-Click Keyboard",
     "description": "Pointer hover duration se clicking aur typing enable kare.",
@@ -8799,6 +9128,20 @@ export const toolMetaMap = {
     "name": "Electricity Bill Calculator",
     "description": "Estimate your monthly electricity bill from appliance wattage, daily usage hours and your per-unit tariff.",
     "category": "Calculators",
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "electricity-bill-spike-explainer": {
+    "name": "Electricity Bill Spike Explainer",
+    "description": "Compare two months of electricity bills and split the increase into slab creep, extra units, fixed charge, fuel surcharge and duty.",
+    "category": "Lifestyle",
+    "icon": "zap",
+    "iconColor": "text-amber-500"
+  },
+  "electricity-complaint-letter-builder": {
+    "name": "Electricity Complaint Letter Builder",
+    "description": "Draft billing or supply complaint letters for your electricity board, with the bill recomputed from meter readings and the right Act sections cited.",
+    "category": "Text & Writing",
     "icon": "zap",
     "iconColor": "text-[var(--primary)]"
   },
@@ -9124,6 +9467,13 @@ export const toolMetaMap = {
     "icon": "palette",
     "iconColor": "text-indigo-500"
   },
+  "employee-appreciation-note-builder": {
+    "name": "Employee Appreciation Note Builder",
+    "description": "Write specific praise using the Situation-Behaviour-Impact model, with a vague-word check and a timeliness warning.",
+    "category": "Business",
+    "icon": "award",
+    "iconColor": "text-[var(--primary)]"
+  },
   "employee-handover-document-generator": {
     "name": "Employee Handover Document Generator",
     "description": "Track systems, recurring tasks, contacts and pending items into a weighted readiness score and a ready-to-send handover document.",
@@ -9214,6 +9564,34 @@ export const toolMetaMap = {
     "description": "Turn your team's conventions into a coding standards document plus a matching .editorconfig, per language.",
     "category": "Generators",
     "icon": "file-code",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "english-alphabet-tracing-worksheet": {
+    "name": "English Alphabet Tracing Worksheet",
+    "description": "Print A to Z tracing pages in capitals, lower case or pairs, grouped by letter formation family and sized to a real x-height.",
+    "category": "Education & Science",
+    "icon": "case-upper",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "english-article-usage-drill": {
+    "name": "English Article Usage Drill",
+    "description": "Drill a, an, the and the zero article across sound rules, first mention, unique nouns and generic plurals, with the rule shown after each answer.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "english-idiom-explainer": {
+    "name": "English Idiom Explainer",
+    "description": "Look up 45 English idioms with literal image, real meaning, a natural example, register guidance and what is actually known about the origin.",
+    "category": "Education & Science",
+    "icon": "languages",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "english-preposition-drill": {
+    "name": "English Preposition Drill",
+    "description": "Practise in, on, at and other English prepositions of time, place and movement, with the governing rule shown after every answer.",
+    "category": "Education & Science",
+    "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
   "english-test-choice-helper": {
@@ -9323,6 +9701,16 @@ export const toolMetaMap = {
     "category": "Finance Calculators",
     "icon": "piggy-bank",
     "iconColor": "text-[var(--primary)]"
+  },
+  "epf-rejection-reason-decoder": {
+    "name": "EPF Claim Rejection Reason Decoder",
+    "description": "Decode any EPFO claim rejection remark into what it means, who has to fix it — member, employer or EPFO field office — and the exact correction route.",
+    "category": [
+      "Finance Calculators",
+      "Productivity"
+    ],
+    "icon": "scroll-text",
+    "iconColor": "text-teal-600"
   },
   "eps-pension-calculator": {
     "name": "EPS Pension Calculator",
@@ -9847,6 +10235,13 @@ export const toolMetaMap = {
     "icon": "receipt",
     "iconColor": "text-[var(--primary)]"
   },
+  "experience-letter-format-builder": {
+    "name": "Experience Letter Format Builder",
+    "description": "Build an experience certificate, relieving letter or service certificate with exact tenure in years, months and days.",
+    "category": "Business",
+    "icon": "award",
+    "iconColor": "text-[var(--primary)]"
+  },
   "experience-letter-format-generator": {
     "name": "Experience Letter Format Generator",
     "description": "Produce an employer experience certificate with tenure computed per designation, gaps and overlaps flagged, and a verification-ready summary line.",
@@ -10141,6 +10536,13 @@ export const toolMetaMap = {
     "icon": "credit-card",
     "iconColor": "text-[var(--primary)]"
   },
+  "fathers-day-message-generator": {
+    "name": "Fathers Day Message Generator",
+    "description": "Create Fathers Day greetings from heartfelt to humorous, for a dad, father-in-law, grandfather, stepdad or a father being remembered.",
+    "category": "Generators",
+    "icon": "user-round",
+    "iconColor": "text-[var(--primary)]"
+  },
   "favicon-dark-mode-preview": {
     "name": "Favicon Dark Mode Preview",
     "description": "Check a favicon on light and dark browser tabs, measure WCAG contrast against each tab colour and spot pinned-tab problems.",
@@ -10385,6 +10787,13 @@ export const toolMetaMap = {
     "icon": "upload",
     "iconColor": "text-indigo-700"
   },
+  "filler-word-detector": {
+    "name": "Filler Word Detector",
+    "description": "Find the intensifiers, hedges and padding phrases weakening your prose, with a per-word fix and a cleaned-up draft.",
+    "category": "Text & Writing",
+    "icon": "scissors",
+    "iconColor": "text-[var(--primary)]"
+  },
   "final-grade-calculator": {
     "name": "Final Grade Calculator",
     "description": "See exactly what you must score on the final exam to hit your target grade, with reverse and weighted-average modes.",
@@ -10527,6 +10936,13 @@ export const toolMetaMap = {
     "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
+  "five-paragraph-essay-planner": {
+    "name": "Five Paragraph Essay Planner",
+    "description": "Split an essay word target into introduction, body and conclusion budgets with sentence counts, Schaffer chunks and a writing time plan.",
+    "category": "Education & Science",
+    "icon": "file-text",
+    "iconColor": "text-[var(--primary)]"
+  },
   "five-two-fasting-week-planner": {
     "name": "5:2 Fasting Week Planner",
     "description": "Pick two non-consecutive 500-600 kcal days, see the whole week's calories, and get the weekly deficit and expected rate of loss.",
@@ -10548,6 +10964,13 @@ export const toolMetaMap = {
     ],
     "icon": "flag",
     "iconColor": "text-blue-600"
+  },
+  "flash-fiction-word-limit-trainer": {
+    "name": "Flash Fiction Word Limit Trainer",
+    "description": "Write to a strict 50, 100, 500 or 1000 word limit with live counting, over-budget warnings and a list of words to cut first.",
+    "category": "Text & Writing",
+    "icon": "target",
+    "iconColor": "text-[var(--primary)]"
   },
   "flash-guide-number-calculator": {
     "name": "Flash Guide Number Calculator",
@@ -10686,6 +11109,13 @@ export const toolMetaMap = {
     "description": "Visualize any folder as an interactive tree with icons, search, filters, breadcrumbs, zoom, pan, minimap, and statistics.",
     "category": "Developer",
     "icon": "folder-tree",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "folk-dance-of-india-explorer": {
+    "name": "Folk Dance of India Explorer",
+    "description": "Browse Indian folk dances state by state with the occasion, performers, instruments and costume behind each one.",
+    "category": "Education & Science",
+    "icon": "drum",
     "iconColor": "text-[var(--primary)]"
   },
   "font-css-style-generator": {
@@ -10909,6 +11339,13 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "formal-informal-word-swapper": {
+    "name": "Formal Informal Word Swapper",
+    "description": "Swap casual wording for formal equivalents and back again using 112 register pairs, with risky swaps kept optional.",
+    "category": "Text & Writing",
+    "icon": "arrow-left-right",
+    "iconColor": "text-[var(--primary)]"
+  },
   "fortune-cookie-generator": {
     "name": "Fortune Cookie Generator",
     "description": "Generate fun fortune cookie messages with lucky numbers, colors, and smooth card flip animations. Get your daily fortune and wisdom instantly.",
@@ -10936,6 +11373,13 @@ export const toolMetaMap = {
     ],
     "icon": "circle",
     "iconColor": "text-blue-600"
+  },
+  "four-line-notebook-sheet-generator": {
+    "name": "Four Line Notebook Sheet Generator",
+    "description": "Print four line, three line, two line or single ruled handwriting sheets at any band height, with rows-per-page worked out for you.",
+    "category": "Education & Science",
+    "icon": "notebook-pen",
+    "iconColor": "text-[var(--primary)]"
   },
   "four-seven-eight-breathing-timer": {
     "name": "4-7-8 Breathing Timer",
@@ -11487,6 +11931,13 @@ export const toolMetaMap = {
     "description": "Estimate Gemini API spend across text, cached, long-context, image and audio tokens, per request and per month.",
     "category": "Calculators",
     "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "gender-neutral-name-finder": {
+    "name": "Gender Neutral Name Finder",
+    "description": "Find unisex names used across several cultures, each scored for how well it travels between languages and flagged where its gender flips.",
+    "category": "Lifestyle",
+    "icon": "circle-dot",
     "iconColor": "text-[var(--primary)]"
   },
   "generate-random-string": {
@@ -12079,6 +12530,13 @@ export const toolMetaMap = {
     "icon": "orbit",
     "iconColor": "text-teal-500"
   },
+  "greek-alphabet-explorer": {
+    "name": "Greek Alphabet Explorer",
+    "description": "All 24 Greek letters with names, classical and modern sounds, transliteration, numeral values and where each one is used in maths and science.",
+    "category": "Education & Science",
+    "icon": "omega",
+    "iconColor": "text-[var(--primary)]"
+  },
   "grep-command-builder": {
     "name": "Grep Command Builder",
     "description": "Build correct grep and ripgrep commands with context lines, include and exclude globs, and safe shell quoting.",
@@ -12329,6 +12787,20 @@ export const toolMetaMap = {
     "icon": "clipboard-check",
     "iconColor": "text-[var(--primary)]"
   },
+  "gujarati-kahevat-explorer": {
+    "name": "Gujarati Kahevat Explorer",
+    "description": "Browse 25 Gujarati sayings with script, transliteration, the literal image, everyday usage and the matching English proverb.",
+    "category": "Education & Science",
+    "icon": "book-a",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "gujarati-word-of-the-day-builder": {
+    "name": "Gujarati Word of the Day",
+    "description": "A daily Gujarati word card with script, transliteration, meaning, an example sentence and a browser-local revision streak.",
+    "category": "Education & Science",
+    "icon": "calendar-days",
+    "iconColor": "text-[var(--primary)]"
+  },
   "guntha-to-sqft-converter": {
     "name": "Guntha to Sqft Converter",
     "description": "Convert guntha, acre, are and hectare to square feet and square metres, including 7/12 extract hectare-are-sqm entries.",
@@ -12382,6 +12854,13 @@ export const toolMetaMap = {
     "description": "Convert haemoglobin between g/dL, g/L and mmol/L, and compare the result against WHO anaemia thresholds by age and sex.",
     "category": "Health Calculators",
     "icon": "droplets",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "haiku-prompt-generator": {
+    "name": "Haiku Prompt Generator",
+    "description": "Get a real seasonal kigo, a juxtaposition to build on and a suggested cut point, plus a live 5-7-5 syllable check on your draft.",
+    "category": "Text & Writing",
+    "icon": "leaf",
     "iconColor": "text-[var(--primary)]"
   },
   "haiku-syllable-checker": {
@@ -12452,6 +12931,20 @@ export const toolMetaMap = {
     "description": "Check which everyday hand gestures change meaning or turn offensive across countries, with a safer alternative for each.",
     "category": "Education & Science",
     "icon": "hand",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "handwriting-slant-guide-generator": {
+    "name": "Handwriting Slant Guide Generator",
+    "description": "Generate printable slant-line underlays at Copperplate, Spencerian, italic or custom angles to fix inconsistent handwriting slope.",
+    "category": "Education & Science",
+    "icon": "italic",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "handwriting-speed-tracker": {
+    "name": "Handwriting Speed Tracker",
+    "description": "Time a copy task, convert it to words and letters per minute, check it against an exam word target and track the trend session by session.",
+    "category": "Education & Science",
+    "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
   "handyman-cost-estimator": {
@@ -12705,6 +13198,13 @@ export const toolMetaMap = {
     "icon": "thermometer-sun",
     "iconColor": "text-[var(--primary)]"
   },
+  "hebrew-alphabet-explorer": {
+    "name": "Hebrew Alphabet Explorer",
+    "description": "The 22 Hebrew letters with their five final forms, the niqqud vowel points, gematria values and a working Hebrew numeral converter.",
+    "category": "Education & Science",
+    "icon": "book-a",
+    "iconColor": "text-[var(--primary)]"
+  },
   "hedge-spacing-calculator": {
     "name": "Hedge Spacing Calculator",
     "description": "Work out how many hedging plants a run needs from its length, the species spacing and single or double staggered rows.",
@@ -12735,6 +13235,13 @@ export const toolMetaMap = {
     "description": "Plan a kitchen herb bed: spacing between plants, how many fit, pot depth, sun hours and which herbs to keep apart.",
     "category": "Lifestyle",
     "icon": "sprout",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "heritage-monument-explorer-india": {
+    "name": "Indian Heritage Monument Explorer",
+    "description": "Browse and filter Indian heritage monuments by state, historical era, architectural style and UNESCO World Heritage status.",
+    "category": "Education & Science",
+    "icon": "landmark",
     "iconColor": "text-[var(--primary)]"
   },
   "hero-bike-service-schedule-planner": {
@@ -12846,6 +13353,20 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-teal-600"
   },
+  "hindi-muhavare-idiom-explorer": {
+    "name": "Hindi Muhavare Explorer",
+    "description": "Browse Hindi muhavare with literal sense, real meaning, usage sentences, exam-level tags and a built-in meaning quiz.",
+    "category": "Education & Science",
+    "icon": "book-open-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "hindi-patra-lekhan-format-guide": {
+    "name": "Hindi Patra Lekhan Format Guide",
+    "description": "Interactive guide to aupcharik and anaupcharik Hindi letter formats with correct sambodhan, vishay and samapan for each type.",
+    "category": "Education & Science",
+    "icon": "languages",
+    "iconColor": "text-[var(--primary)]"
+  },
   "hindi-vernamala": {
     "name": "Hindi Varnamala",
     "description": "Learn Hindi Varnamala interactively with visuals and pronunciation.",
@@ -12855,6 +13376,13 @@ export const toolMetaMap = {
     ],
     "icon": "book-open",
     "iconColor": "text-rose-700"
+  },
+  "hindi-word-of-the-day-builder": {
+    "name": "Hindi Word of the Day",
+    "description": "Learn one Hindi word a day with its Devanagari spelling, romanisation, meaning, example sentence and a streak saved in your browser.",
+    "category": "Education & Science",
+    "icon": "languages",
+    "iconColor": "text-[var(--primary)]"
   },
   "hindu-baby-name-finder": {
     "name": "Hindu Baby Name Finder",
@@ -12869,6 +13397,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "code-xml",
     "iconColor": "text-emerald-600"
+  },
+  "hinglish-word-glossary-builder": {
+    "name": "Hinglish Glossary Builder",
+    "description": "Build a Hinglish and Indian English glossary with meanings, examples and origins, then export it as Markdown, CSV or JSON.",
+    "category": "Text & Writing",
+    "icon": "book-marked",
+    "iconColor": "text-[var(--primary)]"
   },
   "hip-hop-dance-calorie-calculator": {
     "name": "Hip Hop Dance Calorie Calculator",
@@ -13023,6 +13558,13 @@ export const toolMetaMap = {
     "description": "Generate an AI helper prompt that coaches a student through homework without writing the submittable answer for them.",
     "category": "Education & Science",
     "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "homophone-confusion-checker": {
+    "name": "Homophone Confusion Checker",
+    "description": "Scans your text for 32 high-confidence homophone errors and flags every word from 41 confusable sets for a second read.",
+    "category": "Text & Writing",
+    "icon": "spell-check",
     "iconColor": "text-[var(--primary)]"
   },
   "honda-bike-service-schedule-planner": {
@@ -13935,6 +14477,16 @@ export const toolMetaMap = {
     "icon": "server",
     "iconColor": "text-[var(--primary)]"
   },
+  "india-import-duty-calculator": {
+    "name": "India Import Duty & Landed Cost Calculator",
+    "description": "Work out the landed cost of bringing goods into India by courier or in baggage — CIF, BCD, Social Welfare Surcharge, IGST and the flat 38.5% baggage rate, line by line.",
+    "category": [
+      "Finance Calculators",
+      "Business"
+    ],
+    "icon": "package",
+    "iconColor": "text-primary"
+  },
   "india-payment-gateway-fee-comparison": {
     "name": "India Payment Gateway Fee Comparison",
     "description": "Compare Indian payment gateway charges for your own payment mix, including 18% GST, zero-MDR UPI and RuPay, and net settlement.",
@@ -14368,6 +14920,13 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-green-600"
   },
+  "internship-request-letter-builder": {
+    "name": "Internship Request Letter Builder",
+    "description": "Draft an internship request email with subject line, skills, availability dates and a clear ask, in formal or warm tone.",
+    "category": "Text & Writing",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "interval-ear-trainer": {
     "name": "Interval Ear Trainer",
     "description": "Practice melodic and harmonic intervals with an interactive browser-based ear training quiz.",
@@ -14791,6 +15350,13 @@ export const toolMetaMap = {
     "icon": "percent",
     "iconColor": "text-[var(--primary)]"
   },
+  "jain-baby-name-finder": {
+    "name": "Jain Baby Name Finder",
+    "description": "Find Jain baby names with their Prakrit and Sanskrit meanings, filtered by gender, first letter, syllables and Jain source.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "jaipur-airport-transfer-time-planner": {
     "name": "Jaipur Airport Transfer Time Planner",
     "description": "Work out when to leave for Jaipur airport (JAI) using traffic by hour of day, check-in cutoffs and terminal processing time.",
@@ -14880,6 +15446,13 @@ export const toolMetaMap = {
     "description": "Compute JNTU SGPA and CGPA from marks or grades, with regulation-specific letters, percentage and class awarded.",
     "category": "Calculators",
     "icon": "calculator",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "job-application-letter-hindi": {
+    "name": "Hindi Job Application Letter",
+    "description": "Generate a formal Hindi job application letter in correct patra format, with age on the cut-off date and relaxation checked.",
+    "category": "Text & Writing",
+    "icon": "briefcase",
     "iconColor": "text-[var(--primary)]"
   },
   "job-description-prompt-builder": {
@@ -15090,6 +15663,13 @@ export const toolMetaMap = {
     "icon": "file-code",
     "iconColor": "text-yellow-600"
   },
+  "jumbled-sentence-rearranger-drill": {
+    "name": "Jumbled Sentence Rearranger Drill",
+    "description": "Rearrange scrambled words into correct English sentences with instant checking and the grammar rule behind each answer.",
+    "category": "Education & Science",
+    "icon": "shuffle",
+    "iconColor": "text-[var(--primary)]"
+  },
   "jump-code-generator": {
     "name": "Jump Code Generator",
     "description": "Generate real anchor, smooth scroll, route navigation, button jump, and reusable navigation snippets instantly.",
@@ -15139,6 +15719,20 @@ export const toolMetaMap = {
     "description": "Build a consistent Kafka topic naming convention from domain, entity, event type and version, with legality and collision checks.",
     "category": "Generators",
     "icon": "git-branch",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kannada-gaade-proverb-explorer": {
+    "name": "Kannada Gaade Explorer",
+    "description": "Browse 25 Kannada proverbs with Kannada script, Roman transliteration, literal reading, real-world meaning and the English equivalent.",
+    "category": "Education & Science",
+    "icon": "quote",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kannada-word-of-the-day-builder": {
+    "name": "Kannada Word of the Day",
+    "description": "A new Kannada word every day with script, transliteration, meaning and an example sentence, plus a revision streak.",
+    "category": "Education & Science",
+    "icon": "calendar-days",
     "iconColor": "text-[var(--primary)]"
   },
   "karnataka-puc-percentage-calculator": {
@@ -15512,6 +16106,13 @@ export const toolMetaMap = {
     "icon": "flask-conical",
     "iconColor": "text-[var(--primary)]"
   },
+  "lab-report-structure-guide": {
+    "name": "Lab Report Structure Guide",
+    "description": "Build an IMRaD lab report skeleton with word budgets per section, a what-goes-where checklist and a percent error calculator.",
+    "category": "Education & Science",
+    "icon": "flask-conical",
+    "iconColor": "text-[var(--primary)]"
+  },
   "lab-results-history-tracker": {
     "name": "Lab Results History Tracker",
     "description": "Compare private lab measurements over time.",
@@ -15555,6 +16156,13 @@ export const toolMetaMap = {
     "icon": "land-plot",
     "iconColor": "text-teal-600"
   },
+  "landlord-notice-letter-builder": {
+    "name": "Landlord Notice Letter Builder",
+    "description": "Write a vacating notice or repair request letter to your landlord, with notice-period, deposit refund and shortfall rent worked out.",
+    "category": "Text & Writing",
+    "icon": "key-round",
+    "iconColor": "text-[var(--primary)]"
+  },
   "landlord-pan-requirement-checker": {
     "name": "Landlord PAN Requirement Checker",
     "description": "Check whether your annual rent forces landlord PAN disclosure, rent receipts or section 194-IB rent TDS.",
@@ -15577,6 +16185,13 @@ export const toolMetaMap = {
     ],
     "icon": "languages",
     "iconColor": "text-cyan-600"
+  },
+  "language-exchange-session-planner": {
+    "name": "Language Exchange Session Planner",
+    "description": "Plan a balanced tandem session: equal minutes in each language, timed blocks with clock times, and topic cards by level.",
+    "category": "Education & Science",
+    "icon": "messages-square",
+    "iconColor": "text-[var(--primary)]"
   },
   "language-learning-flashcards": {
     "name": "Language Learning Flashcards",
@@ -15682,6 +16297,13 @@ export const toolMetaMap = {
     "icon": "dumbbell",
     "iconColor": "text-[var(--primary)]"
   },
+  "leave-application-letter-generator": {
+    "name": "Leave Application Letter Generator",
+    "description": "Build a correctly formatted leave application for school, college or office, with an inclusive day count and a format checklist.",
+    "category": "Text & Writing",
+    "icon": "file-text",
+    "iconColor": "text-[var(--primary)]"
+  },
   "leave-encashment-tax-calculator": {
     "name": "Leave Encashment Tax Calculator",
     "description": "Taxable vs exempt leave encashment on retirement for private employees.",
@@ -15785,6 +16407,13 @@ export const toolMetaMap = {
     "description": "Break a Leh Ladakh trip into travel, stay, food, taxi or bike, permits and activities, per person and per day.",
     "category": "Finance Calculators",
     "icon": "mountain-snow",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "leitner-box-flashcard-planner": {
+    "name": "Leitner Box Flashcard Planner",
+    "description": "Plan a physical Leitner flashcard system: box intervals, a day-by-day review calendar, daily card load and minutes needed.",
+    "category": "Education & Science",
+    "icon": "layers",
     "iconColor": "text-[var(--primary)]"
   },
   "lens-field-of-view-calculator": {
@@ -15949,6 +16578,13 @@ export const toolMetaMap = {
     "description": "Budget your 220-character LinkedIn headline across positioning segments and generate headline and About-section prompts for any AI model.",
     "category": "Marketing & Social",
     "icon": "id-card",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "linkedin-headline-writer": {
+    "name": "LinkedIn Headline Writer",
+    "description": "Generate LinkedIn headline options combining role, value and proof, checked against the 220-character limit and search truncation.",
+    "category": "Marketing & Social",
+    "icon": "linkedin",
     "iconColor": "text-[var(--primary)]"
   },
   "linkedin-image-size-generator": {
@@ -16237,6 +16873,20 @@ export const toolMetaMap = {
     "icon": "landmark",
     "iconColor": "text-emerald-600"
   },
+  "loan-statement-request-letter-generator": {
+    "name": "Loan Statement Request Letter Generator",
+    "description": "Draft a bank letter requesting your loan account statement, interest certificate, amortisation schedule or foreclosure figure.",
+    "category": "Finance Calculators",
+    "icon": "file-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "loanword-origin-finder-indian-english": {
+    "name": "Indian English Loanword Finder",
+    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Tamil, Malayalam, Telugu and Bengali, with the route, era and how settled each etymology is.",
+    "category": "Education & Science",
+    "icon": "globe",
+    "iconColor": "text-[var(--primary)]"
+  },
   "local-ai-data-egress-monitor": {
     "name": "Local AI Data-Egress Monitor",
     "description": "Review a HAR network trace locally to see which hosts an AI app contacted and where outbound bodies, credential headers, or sensitive query names appeared.",
@@ -16401,6 +17051,13 @@ export const toolMetaMap = {
     "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
+  "lokoktiyan-vs-muhavare-quiz": {
+    "name": "Muhavara vs Lokokti Quiz",
+    "description": "Exam-style quiz on telling Hindi muhavare from lokoktiyan, with the classification rule and a reason given for every answer.",
+    "category": "Education & Science",
+    "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
+  },
   "long-study-session-stretch-guide": {
     "name": "Long Study Session Stretch Guide",
     "description": "Desk stretches scheduled across a long study day — rotating neck, shoulder, wrist and back sets with timing cues.",
@@ -16544,6 +17201,13 @@ export const toolMetaMap = {
     "icon": "clover",
     "iconColor": "text-amber-500"
   },
+  "lucky-name-alphabet-analyzer": {
+    "name": "Lucky Name Alphabet Analyzer",
+    "description": "Break a name down by letter value, vowel balance, variety and letter frequency into a transparent, entertainment-only 0-100 score.",
+    "category": "Lifestyle",
+    "icon": "clover",
+    "iconColor": "text-[var(--primary)]"
+  },
   "lucky-number-generator": {
     "name": "Lucky Number Generator",
     "description": "Generate lucky numbers by random, lottery style, numerology, horoscope, or custom ranges. Save favorites and track your history.",
@@ -16644,6 +17308,13 @@ export const toolMetaMap = {
     "icon": "pie-chart",
     "iconColor": "text-[var(--primary)]"
   },
+  "madhubani-motif-explorer": {
+    "name": "Madhubani Motif Explorer",
+    "description": "Explore Madhubani motifs and their meanings, then plan a panel layout with exact border, cell size and motif count.",
+    "category": "Design & Color",
+    "icon": "flower-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "maf-180-training-zone-calculator": {
     "name": "MAF 180 Training Zone Calculator",
     "description": "Maximum aerobic function heart rate ceiling and training zone from the Maffetone 180-minus-age method.",
@@ -16707,6 +17378,20 @@ export const toolMetaMap = {
     ],
     "icon": "palette",
     "iconColor": "text-teal-500"
+  },
+  "malayalam-pazhamchollu-explorer": {
+    "name": "Malayalam Pazhamchollu Explorer",
+    "description": "Search 23 Malayalam proverbs with script, transliteration, the literal image, everyday meaning and the closest English proverb.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "malayalam-word-of-the-day-builder": {
+    "name": "Malayalam Word of the Day",
+    "description": "One Malayalam word a day in script, with transliteration, meaning, an example sentence and a local revision streak.",
+    "category": "Education & Science",
+    "icon": "calendar-days",
+    "iconColor": "text-[var(--primary)]"
   },
   "malaysia-visa-cost-estimator": {
     "name": "Malaysia Visa Cost Estimator",
@@ -16781,6 +17466,20 @@ export const toolMetaMap = {
     ],
     "icon": "map",
     "iconColor": "text-emerald-700"
+  },
+  "marathi-mhani-proverb-explorer": {
+    "name": "Marathi Mhani Explorer",
+    "description": "Browse Marathi mhani with transliteration, literal translation, everyday meaning, a Marathi gloss and English equivalents.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "marathi-word-of-the-day-builder": {
+    "name": "Marathi Word of the Day",
+    "description": "A daily Marathi vocabulary card with Devanagari spelling, romanisation, meaning, an example sentence and a saved streak.",
+    "category": "Education & Science",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
   },
   "margin-calculator": {
     "name": "Profit Margin Calculator",
@@ -17044,6 +17743,13 @@ export const toolMetaMap = {
     "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
+  "medical-emergency-phrase-card-builder": {
+    "name": "Emergency Phrase Card Builder",
+    "description": "Build a printable travel emergency card with your medical details, local emergency numbers and key phrases in six languages.",
+    "category": "Education & Science",
+    "icon": "heart-pulse",
+    "iconColor": "text-[var(--primary)]"
+  },
   "medical-report-de-identifier": {
     "name": "Medical Report De-identifier",
     "description": "Replace common patient, clinician, and facility identifiers in pasted text, TXT, DOCX, or text-based PDF files locally in your browser.",
@@ -17138,6 +17844,13 @@ export const toolMetaMap = {
     ],
     "icon": "users",
     "iconColor": "text-violet-600"
+  },
+  "meeting-invite-wording-builder": {
+    "name": "Meeting Invite Wording Builder",
+    "description": "Write a meeting invite with objective, time-boxed agenda, pre-read and decision owner, and see whether the agenda fits the slot.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-[var(--primary)]"
   },
   "meeting-notes-prompt-builder": {
     "name": "Meeting Notes Prompt Builder",
@@ -17283,6 +17996,76 @@ export const toolMetaMap = {
     ],
     "icon": "code",
     "iconColor": "text-cyan-600"
+  },
+  "metadata-risk-explainer-attachments": {
+    "name": "Email Attachment Metadata Explainer",
+    "description": "Shows which document properties, tracked changes, hidden content and image EXIF survive when you attach a file to an email.",
+    "category": "Security & Privacy",
+    "icon": "paperclip",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-audio": {
+    "name": "What Your Audio Metadata Reveals",
+    "description": "Breaks down the recorder model, timestamps, location titles and tags hidden in shared MP3, M4A voice notes and WAV files.",
+    "category": "Security & Privacy",
+    "icon": "audio-lines",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "metadata-risk-explainer-code-repos": {
+    "name": "Code Repository Metadata Explainer",
+    "description": "Analyses pasted git log output to show how commit emails, timezone offsets and commit hours expose your identity and daily routine.",
+    "category": "Developer",
+    "icon": "git-branch",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-design-files": {
+    "name": "Design File Metadata Explainer",
+    "description": "Explains how layer names, hidden artboards, linked asset paths and XMP ancestors leak client work through exported design assets.",
+    "category": "Security & Privacy",
+    "icon": "palette",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-documents": {
+    "name": "What Your Document Metadata Reveals",
+    "description": "Shows how Word, Excel, PowerPoint and PDF metadata exposes authors, employers, local paths and edit history.",
+    "category": "Security & Privacy",
+    "icon": "file-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "metadata-risk-explainer-photos": {
+    "name": "What Your Photo Metadata Reveals",
+    "description": "Maps each EXIF, GPS, IPTC and XMP field in a photo to the real-world privacy risk it creates, and scores the exposure.",
+    "category": "Security & Privacy",
+    "icon": "image",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "metadata-risk-explainer-resume": {
+    "name": "Resume Metadata Risk Explainer",
+    "description": "Reveals what a recruiter or ATS can read from your CV's file properties, edit history, filename and hidden text.",
+    "category": "Security & Privacy",
+    "icon": "file-user",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-scans": {
+    "name": "Scanned Document Metadata Explainer",
+    "description": "Explains scanner IDs, OCR text layers, failed redactions and hidden revisions in scanned PDFs, and which clean-up step removes each one.",
+    "category": "Security & Privacy",
+    "icon": "scan-text",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-screenshots": {
+    "name": "Screenshot Metadata Risk Explainer",
+    "description": "Shows what a screenshot's filename, timestamps, status bar and leftover crop data reveal, and scores the exposure per sharing channel.",
+    "category": "Security & Privacy",
+    "icon": "monitor-smartphone",
+    "iconColor": "text-(--primary)"
+  },
+  "metadata-risk-explainer-video": {
+    "name": "What Your Video Metadata Reveals",
+    "description": "Explains the device, timezone, GPS and telemetry traces hidden in MP4 and QuickTime video containers, and scores the exposure.",
+    "category": "Security & Privacy",
+    "icon": "video",
+    "iconColor": "text-[var(--primary)]"
   },
   "metro-nonmetro-hra-impact": {
     "name": "Metro vs Non Metro HRA Impact",
@@ -17703,6 +18486,13 @@ export const toolMetaMap = {
     "icon": "grid-2x2",
     "iconColor": "text-[var(--primary)]"
   },
+  "mothers-day-message-generator": {
+    "name": "Mothers Day Message Generator",
+    "description": "Write Mothers Day messages in twenty languages with tone control - one-liner, heartfelt, full card or an understated version.",
+    "category": "Generators",
+    "icon": "heart",
+    "iconColor": "text-[var(--primary)]"
+  },
   "motion-aftereffect-illusion": {
     "name": "Motion Aftereffect Illusion",
     "description": "Watch moving patterns and experience static objects appearing to move using neuroscience-based visual illusions.",
@@ -17880,6 +18670,13 @@ export const toolMetaMap = {
     "description": "Find whether your PMMY Mudra loan falls under Shishu, Kishore, Tarun or Tarun Plus, with the limits and eligibility checks that apply.",
     "category": "Business",
     "icon": "layers",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "muhurat-terms-glossary": {
+    "name": "Muhurat Terms Glossary",
+    "description": "Plain-language glossary of Panchang and muhurat timing terms, with a calculator for Abhijit, Brahma Muhurta and Rahu Kaal windows.",
+    "category": "Education & Science",
+    "icon": "book-open",
     "iconColor": "text-[var(--primary)]"
   },
   "mulch-quantity-calculator": {
@@ -18098,6 +18895,13 @@ export const toolMetaMap = {
     "icon": "hammer",
     "iconColor": "text-[var(--primary)]"
   },
+  "nakshatra-name-letter-chart": {
+    "name": "Nakshatra Name Letter Chart",
+    "description": "All 27 nakshatras with the four pada naming syllables, degree span, rashi, navamsa and ruling planet in one searchable chart.",
+    "category": "Education & Science",
+    "icon": "star",
+    "iconColor": "text-[var(--primary)]"
+  },
   "name-change-record-update-tracker": {
     "name": "Name Change Record Update Tracker",
     "description": "Track which IDs, bank accounts and certificates still carry your old name, in the right dependency order with progress and next actions.",
@@ -18122,11 +18926,46 @@ export const toolMetaMap = {
     "icon": "languages",
     "iconColor": "text-[var(--primary)]"
   },
+  "name-pronunciation-guide-builder": {
+    "name": "Name Pronunciation Guide Builder",
+    "description": "Turn your name into a shareable pronunciation card with syllable breaks, a plain-English respelling, stress marking and NATO letter spelling.",
+    "category": "Text & Writing",
+    "icon": "volume-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "name-spelling-variant-explorer": {
+    "name": "Name Spelling Variant Explorer",
+    "description": "Generate every common Roman spelling of an Indian name from real transliteration rules, and check whether two spellings are the same name.",
+    "category": "Text & Writing",
+    "icon": "spell-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "name-to-fingerspelling-graphic": {
+    "name": "Name to Fingerspelling Graphic",
+    "description": "Turn any name into a printable fingerspelling strip using the one-handed ASL manual alphabet, with a handshape diagram and description per letter.",
+    "category": "Education & Science",
+    "icon": "hand",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "name-tracing-worksheet-generator": {
+    "name": "Name Tracing Worksheet Generator",
+    "description": "Build a printable name tracing sheet for a preschooler — four line ruling, dotted or grey letters, sized to a real x-height in millimetres.",
+    "category": "Education & Science",
+    "icon": "pencil-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "naming-ceremony-invitation-wording": {
     "name": "Naming Ceremony Invitation Wording",
     "description": "Generate namkaran, christening, aqiqah and cradle ceremony invitation wording with the day count from birth.",
     "category": "Generators",
     "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "nanowrimo-pace-calculator": {
+    "name": "NaNoWriMo Pace Calculator",
+    "description": "Check your word count against the 50,000-in-30-days par line and see the daily pace needed to finish on time.",
+    "category": "Text & Writing",
+    "icon": "calendar-clock",
     "iconColor": "text-[var(--primary)]"
   },
   "narration-session-time-estimator": {
@@ -18459,6 +19298,20 @@ export const toolMetaMap = {
     "icon": "party-popper",
     "iconColor": "text-[var(--primary)]"
   },
+  "new-year-wishes-tamil": {
+    "name": "Tamil New Year Wishes",
+    "description": "Create Puthandu and 1 January new year greetings in Tamil script, Tanglish or English with the recipient's name inserted.",
+    "category": "Generators",
+    "icon": "party-popper",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "new-year-wishes-telugu": {
+    "name": "Telugu New Year Wishes",
+    "description": "Generate Ugadi and 1 January Telugu new year greetings in Telugu script, Tenglish or English for family, friends and clients.",
+    "category": "Generators",
+    "icon": "party-popper",
+    "iconColor": "text-[var(--primary)]"
+  },
   "new-year-wishes-urdu": {
     "name": "Urdu New Year Wishes",
     "description": "Create January and Hijri new year messages in Urdu script and Roman Urdu, with English meaning and SMS length.",
@@ -18534,6 +19387,13 @@ export const toolMetaMap = {
     "description": "Compose a custom nginx log_format from real variables, preview a sample log line and copy the directive.",
     "category": "Developer",
     "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "nib-angle-practice-grid": {
+    "name": "Nib Angle Practice Grid",
+    "description": "Generate printable broad-edge calligraphy guide sheets with pen-angle hatch marks, nib-width ladders and correct x-height for each hand.",
+    "category": "Education & Science",
+    "icon": "pen-tool",
     "iconColor": "text-[var(--primary)]"
   },
   "night-driving-safety-checklist": {
@@ -18684,6 +19544,13 @@ export const toolMetaMap = {
     "icon": "notebook",
     "iconColor": "text-[var(--primary)]"
   },
+  "novel-word-count-planner": {
+    "name": "Novel Word Count Planner",
+    "description": "Turn a novel word target and deadline into a chapter-by-chapter schedule with a daily word goal and real writing-day counts.",
+    "category": "Text & Writing",
+    "icon": "book-open",
+    "iconColor": "text-[var(--primary)]"
+  },
   "npm-pnpm-yarn-comparison": {
     "name": "npm pnpm yarn Comparison",
     "description": "Compare npm, pnpm and Yarn on install strategy, disk usage, lockfiles, strictness and workspaces — with a weighted recommendation for your project.",
@@ -18816,6 +19683,13 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-indigo-600"
   },
+  "number-tracing-worksheet-maker": {
+    "name": "Number Tracing Worksheet Maker",
+    "description": "Build printable number tracing sheets in Latin or Devanagari digits, with exact glyph sizing, rows per page and page count.",
+    "category": "Education & Science",
+    "icon": "hash",
+    "iconColor": "text-[var(--primary)]"
+  },
   "nursery-rhyme-maker": {
     "name": "Nursery Rhyme Maker",
     "description": "Create a simple child-friendly rhyme from a theme, character, rhythm and learning goal.",
@@ -18871,6 +19745,13 @@ export const toolMetaMap = {
     ],
     "icon": "bell-ring",
     "iconColor": "text-indigo-600"
+  },
+  "office-leave-application-generator": {
+    "name": "Office Leave Application Generator",
+    "description": "Draft casual, earned, sick or emergency leave letters with a handover plan, notice check and running leave balance.",
+    "category": "Text & Writing",
+    "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
   },
   "office-macro-inspector": {
     "name": "Office Macro Inspector",
@@ -19038,6 +19919,13 @@ export const toolMetaMap = {
     "icon": "file-lock",
     "iconColor": "text-[var(--primary)]"
   },
+  "one-word-substitution-trainer": {
+    "name": "One Word Substitution Trainer",
+    "description": "Multiple-choice drill on 80 exam one-word substitutions, with same-family distractors and the Greek or Latin root behind every answer.",
+    "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
   "online-compiler": {
     "name": "Online Code Compiler",
     "description": "Write HTML, CSS, and JavaScript in a powerful Monaco editor and preview the result live in a sandboxed iframe. Templates, projects, console, and more.",
@@ -19109,6 +19997,13 @@ export const toolMetaMap = {
     "description": "Convert Osmania University CGPA to percentage with the (CGPA - 0.5) x 10 rule, reverse it, and build the CGPA from semester SGPAs.",
     "category": "Calculators",
     "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "out-of-office-message-generator": {
+    "name": "Out of Office Message Generator",
+    "description": "Generate an out-of-office auto-reply with exact dates, working days away, return date, backup contact and escalation path.",
+    "category": "Business",
+    "icon": "plane-takeoff",
     "iconColor": "text-[var(--primary)]"
   },
   "outdoor-time-for-eyes-planner": {
@@ -19367,6 +20262,13 @@ export const toolMetaMap = {
     "icon": "id-card",
     "iconColor": "text-blue-600"
   },
+  "panchayat-application-letter-builder": {
+    "name": "Panchayat Application Letter Builder",
+    "description": "Generate application letters to a sarpanch or gram panchayat in the local format, with statutory deadlines and escalation worked out.",
+    "category": "Text & Writing",
+    "icon": "building-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "paneer-vs-tofu-comparator": {
     "name": "Paneer vs Tofu Comparator",
     "description": "Side-by-side protein, fat, calcium, iron and calorie comparison of paneer and tofu for any portion size.",
@@ -19448,6 +20350,13 @@ export const toolMetaMap = {
     "description": "Draft a housing society parking complaint over a denied slot, encroachment, unfair allotment or illegal parking charges.",
     "category": "Business",
     "icon": "circle-parking",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "parsi-baby-name-finder": {
+    "name": "Parsi Baby Name Finder",
+    "description": "Browse Parsi and Zoroastrian baby names with their Avestan and Persian meanings, filtered by gender, first letter and source.",
+    "category": "Lifestyle",
+    "icon": "flame",
     "iconColor": "text-[var(--primary)]"
   },
   "party-food-planner": {
@@ -19782,6 +20691,13 @@ export const toolMetaMap = {
     "description": "Project peak request load for sale days and viral spikes, then size instances and headroom against a target utilization.",
     "category": "Calculators",
     "icon": "gauge",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "pencil-grip-practice-sheet": {
+    "name": "Pencil Grip Practice Sheet",
+    "description": "Print pre-writing stroke patterns in the standard developmental order, sized in millimetres, with the grasp stage typical for the child's age.",
+    "category": "Education & Science",
+    "icon": "pencil",
     "iconColor": "text-[var(--primary)]"
   },
   "per-diem-allowance-calculator": {
@@ -20296,6 +21212,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-teal-500"
+  },
+  "planet-retrograde-now": {
+    "name": "Is That Planet Retrograde Right Now",
+    "description": "Live retrograde status for all eight planets, with station-retrograde and station-direct dates plus both shadow windows, computed from the ephemeris.",
+    "category": "Education & Science",
+    "icon": "orbit",
+    "iconColor": "text-indigo-500"
   },
   "plank-hold-benchmark-tool": {
     "name": "Plank Hold Benchmark Tool",
@@ -21059,6 +21982,111 @@ export const toolMetaMap = {
     "icon": "file-diff",
     "iconColor": "text-primary"
   },
+  "privacy-settings-checklist-android": {
+    "name": "Android Privacy Settings Checklist",
+    "description": "27-point Android privacy audit: advertising ID, location precision, app permissions, backups, Nearby Share and lock screen, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-discord": {
+    "name": "Discord Privacy Settings Checklist",
+    "description": "26-point Discord privacy audit: DM filters, friend requests, server discovery, activity status, connections and 2FA, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "message-square",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-facebook": {
+    "name": "Facebook Privacy Settings Checklist",
+    "description": "30-point Facebook privacy audit — limit past posts, hide the friends list, fix tag review, off-Facebook activity, ad topics and login security.",
+    "category": "Security & Privacy",
+    "icon": "facebook",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-google": {
+    "name": "Google Account Privacy Checklist",
+    "description": "26-point Google account audit — Web & App Activity, Timeline location, YouTube history, My Ad Center, Drive link sharing and third-party app access.",
+    "category": "Security & Privacy",
+    "icon": "circle-user",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-instagram": {
+    "name": "Instagram Privacy Settings Checklist",
+    "description": "Tracked 30-point Instagram privacy audit — account privacy, tags, story audience, DM controls, ad data and login security, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "instagram",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-iphone": {
+    "name": "iPhone Privacy Settings Checklist",
+    "description": "27-point iPhone privacy audit: app tracking, precise location, iCloud sharing, lock screen leaks and Significant Locations, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "tablet-smartphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-linkedin": {
+    "name": "LinkedIn Privacy Settings Checklist",
+    "description": "29-point LinkedIn audit — stop profile-update broadcasts, hide your connections, fix Open to Work, AI data use and permitted apps.",
+    "category": "Security & Privacy",
+    "icon": "linkedin",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-reddit": {
+    "name": "Reddit Privacy Settings Checklist",
+    "description": "27-point Reddit privacy audit: username reuse, subreddit map, vote history, chat requests, ad personalisation and 2FA, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "message-circle",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-snapchat": {
+    "name": "Snapchat Privacy Settings Checklist",
+    "description": "25-point Snapchat privacy audit — Ghost Mode on Snap Map, Quick Add discovery, story audience, My Eyes Only, My AI data and two-factor.",
+    "category": "Security & Privacy",
+    "icon": "ghost",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-telegram": {
+    "name": "Telegram Privacy Settings Checklist",
+    "description": "26-point Telegram privacy audit: number visibility, group adds, call IP leaks, forward links, sessions and secret chats, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "send",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-tiktok": {
+    "name": "TikTok Privacy Settings Checklist",
+    "description": "28-point TikTok privacy audit — private account, suggestions, duet and stitch permissions, video downloads, DM controls and ad personalisation.",
+    "category": "Security & Privacy",
+    "icon": "music",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-whatsapp": {
+    "name": "WhatsApp Privacy Settings Checklist",
+    "description": "27-point WhatsApp privacy audit — last seen, profile photo, group adds, link previews, IP protection, encrypted backups and two-step verification.",
+    "category": "Security & Privacy",
+    "icon": "message-circle",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-windows": {
+    "name": "Windows 11 Privacy Settings Checklist",
+    "description": "28-point Windows 11 privacy audit: advertising ID, diagnostics, activity history, Recall, app permissions and BitLocker, scored by risk profile.",
+    "category": "Security & Privacy",
+    "icon": "monitor",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-x-twitter": {
+    "name": "X (Twitter) Privacy Settings Checklist",
+    "description": "30-point X privacy audit — phone and email discoverability, protected posts, location tags, DM requests, Grok AI training and connected apps.",
+    "category": "Security & Privacy",
+    "icon": "twitter",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-settings-checklist-youtube": {
+    "name": "YouTube Privacy Settings Checklist",
+    "description": "26-point YouTube privacy audit — private subscriptions and playlists, history retention, public comment history, ad data and channel access.",
+    "category": "Security & Privacy",
+    "icon": "youtube",
+    "iconColor": "text-[var(--primary)]"
+  },
   "private-bank-statement-analyzer": {
     "name": "Private Bank Statement Analyzer",
     "description": "Map and analyse CSV bank-statement transactions locally with deterministic categories, aggregate summaries, and cautious review signals.",
@@ -21405,6 +22433,13 @@ export const toolMetaMap = {
     "icon": "mic",
     "iconColor": "text-indigo-600"
   },
+  "pronunciation-syllable-splitter": {
+    "name": "Pronunciation Syllable Splitter",
+    "description": "Split English words into syllables and mark the stressed one using the standard suffix stress rules, for clearer speaking.",
+    "category": "Education & Science",
+    "icon": "audio-lines",
+    "iconColor": "text-[var(--primary)]"
+  },
   "property-capital-gains-tax-calculator": {
     "name": "Property Capital Gains Tax Calculator",
     "description": "Long-term capital gains tax on property with CII indexation, the 12.5% vs 20% comparison and Section 54/54EC exemptions.",
@@ -21520,11 +22555,25 @@ export const toolMetaMap = {
     "icon": "activity",
     "iconColor": "text-red-600"
   },
+  "punctuation-practice-drill": {
+    "name": "Punctuation Practice Drill",
+    "description": "Graded punctuation practice on commas, semicolons, apostrophes, colons, quotation marks and dashes, with the rule shown after each answer.",
+    "category": "Education & Science",
+    "icon": "quote",
+    "iconColor": "text-[var(--primary)]"
+  },
   "pune-airport-transfer-time-planner": {
     "name": "Pune Airport Transfer Time Planner",
     "description": "Work out when to leave for Pune PNQ airport, allowing for hour-by-hour traffic, bag-drop close and gate cut-offs.",
     "category": "Productivity",
     "icon": "plane-takeoff",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "punjabi-akhaan-proverb-explorer": {
+    "name": "Punjabi Akhaan Explorer",
+    "description": "Explore 24 Punjabi proverbs in Gurmukhi with transliteration, the literal image, everyday meaning and the English equivalent.",
+    "category": "Education & Science",
+    "icon": "book-open-text",
     "iconColor": "text-[var(--primary)]"
   },
   "purchase-order-generator": {
@@ -21539,6 +22588,13 @@ export const toolMetaMap = {
     "description": "Rank your max push-up count against published age and sex fitness norms, and see how many reps reach the next band.",
     "category": "Health & Fitness",
     "icon": "dumbbell",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "pythagorean-name-numerology": {
+    "name": "Pythagorean Name Numerology",
+    "description": "Compute expression (destiny), soul urge and personality numbers from a name using the Pythagorean A=1 to Z=8 table, with master numbers kept.",
+    "category": "Lifestyle",
+    "icon": "sigma",
     "iconColor": "text-[var(--primary)]"
   },
   "python-venv-setup-builder": {
@@ -21645,6 +22701,13 @@ export const toolMetaMap = {
     "description": "Build a ready-to-paste AI quiz generation prompt with an exact difficulty mix, question types and a formatted answer key.",
     "category": "Education & Science",
     "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "quotation-cover-letter-builder": {
+    "name": "Quotation Cover Letter Builder",
+    "description": "Write a covering note for your quotation with priced line items, GST, discount, validity date, payment terms and next steps.",
+    "category": "Business",
+    "icon": "file-signature",
     "iconColor": "text-[var(--primary)]"
   },
   "quotation-estimate-generator": {
@@ -21923,6 +22986,13 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "star",
     "iconColor": "text-purple-600"
+  },
+  "rashi-name-letter-chart": {
+    "name": "Rashi Name Letter Chart",
+    "description": "Interactive chart of the naming syllables traditionally linked to each of the twelve rashis, with the nakshatra padas each syllable comes from.",
+    "category": "Education & Science",
+    "icon": "star",
+    "iconColor": "text-[var(--primary)]"
   },
   "ratio-calculator": {
     "name": "Ratio Calculator",
@@ -22244,6 +23314,13 @@ export const toolMetaMap = {
     "icon": "refrigerator",
     "iconColor": "text-[var(--primary)]"
   },
+  "refund-request-email-builder": {
+    "name": "Refund Request Email Builder",
+    "description": "Write a firm, polite refund request with order facts, the days elapsed, a reply deadline and the escalation route.",
+    "category": "Text & Writing",
+    "icon": "receipt-text",
+    "iconColor": "text-[var(--primary)]"
+  },
   "regex-cheatsheet-builder": {
     "name": "Regex Cheatsheet Builder",
     "description": "Build a printable regex cheatsheet filtered to your flavor — JavaScript, PCRE or Python — and only the feature groups you use.",
@@ -22429,6 +23506,13 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-[var(--primary)]"
   },
+  "rent-increase-notice-drafter": {
+    "name": "Rent Increase Notice Drafter",
+    "description": "Generate a rent revision notice with the new rent, effective date, deposit top-up and a check against notice-period and rent-cap rules.",
+    "category": "Text & Writing",
+    "icon": "trending-up",
+    "iconColor": "text-[var(--primary)]"
+  },
   "rent-increase-notice-generator": {
     "name": "Rent Increase Notice Generator",
     "description": "Draft a landlord rent revision notice with the new rent, effective date, deposit top-up and a three-month notice-period check.",
@@ -22575,6 +23659,23 @@ export const toolMetaMap = {
     "icon": "piggy-bank",
     "iconColor": "text-[var(--primary)]"
   },
+  "resignation-date-optimizer": {
+    "name": "Resignation Date Optimizer",
+    "description": "Compare last working days in rupees: gratuity eligibility under the Payment of Gratuity Act 1972, notice buyout, leave encashment, bonus clawback dates and the financial year the payout lands in.",
+    "category": [
+      "Finance Calculators",
+      "Business"
+    ],
+    "icon": "calendar-clock",
+    "iconColor": "text-primary"
+  },
+  "resignation-letter-generator": {
+    "name": "Resignation Letter Generator",
+    "description": "Draft a resignation letter with the last working day calculated from your notice period, plus handover details and a notice-shortfall check.",
+    "category": "Text & Writing",
+    "icon": "log-out",
+    "iconColor": "text-[var(--primary)]"
+  },
   "resignation-letter-notice-period-generator": {
     "name": "Resignation Letter Generator by Notice Period",
     "description": "Work out your last working day from the notice period, leave adjustment and buyout days, then generate a resignation letter with a dated handover plan.",
@@ -22601,6 +23702,13 @@ export const toolMetaMap = {
     "description": "Generate menu description prompts with cuisine, pricing tone and an allergen check against EU, US or Codex declaration lists.",
     "category": "Business",
     "icon": "utensils-crossed",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "restaurant-phrasebook-generator": {
+    "name": "Restaurant Phrasebook Generator",
+    "description": "Build a restaurant phrasebook in eight languages with ordering, dietary, allergy and payment phrases, script and romanisation.",
+    "category": "Education & Science",
+    "icon": "utensils",
     "iconColor": "text-[var(--primary)]"
   },
   "restaurant-refund-policy-generator": {
@@ -23018,6 +24126,13 @@ export const toolMetaMap = {
     "icon": "paintbrush",
     "iconColor": "text-cyan-600"
   },
+  "room-rent-proportionate-deduction": {
+    "name": "Room Rent Proportionate Deduction Calculator",
+    "description": "See the rupees a health insurer deducts when the hospital room exceeds your room rent limit, and the sum insured a given room tariff needs.",
+    "category": "Finance Calculators",
+    "icon": "bed-double",
+    "iconColor": "text-(--primary)"
+  },
   "room-rt60-echo-meter": {
     "name": "Room RT60 Echo Meter",
     "description": "Clap/sweep response se room reverberation estimate kare.",
@@ -23061,6 +24176,76 @@ export const toolMetaMap = {
     "description": "Find the equivalent rice portion for your rotis (or the reverse) and compare calories, protein, carbs and fibre.",
     "category": "Health Calculators",
     "icon": "wheat",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-act-fibernet": {
+    "name": "ACT Fibernet Router Hardening",
+    "description": "Scored checklist for ACT Fibernet routers — vendor defaults, public IP exposure, cloud binding, WPS, UPnP and firmware you have to apply yourself.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-airtel-xstream": {
+    "name": "Airtel Xstream Router Hardening",
+    "description": "Scored checklist to lock down an Airtel Xstream Fibre ONT — admin login, Wi-Fi encryption, WPS, UPnP, remote management and guest SSID.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-asus": {
+    "name": "Asus Router Hardening Checklist",
+    "description": "Weighted ASUSWRT hardening audit covering admin login, AiCloud, SSH keys, DDNS, WAN access and firmware, with a live internet-exposure index.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-bsnl": {
+    "name": "BSNL Broadband Router Hardening",
+    "description": "Scored checklist for BSNL Bharat Fiber and ADSL modems — admin defaults, Telnet, TR-069 exposure, WPS, UPnP and Wi-Fi encryption.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-d-link": {
+    "name": "D-Link Router Hardening Checklist",
+    "description": "Weighted D-Link DIR hardening audit for the blank admin password, WPS, mydlink, remote management and end-of-support firmware, with a WPS PIN attack timer.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-jiofiber": {
+    "name": "JioFiber Router Hardening Checklist",
+    "description": "India-first JioFiber ONT hardening audit — sticker passwords, Wi-Fi key, WPS, guest access and what Jio controls — with a mobile-number-as-password crack timer.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-linksys": {
+    "name": "Linksys Router Hardening Checklist",
+    "description": "Scored Linksys hardening pass — router password, Smart Wi-Fi cloud account, remote management, WPS, UPnP, guest access and automatic firmware.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-netgear": {
+    "name": "Netgear Router Hardening Checklist",
+    "description": "Weighted Netgear security pass over admin login, WPA mode, WPS, remote management, UPnP, ReadySHARE and guest Wi-Fi, with a firmware-age risk check.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-tenda": {
+    "name": "Tenda Router Hardening Checklist",
+    "description": "Scored hardening pass for Tenda routers — shared admin/Wi-Fi password, firmware bugs, end-of-life models, WPS, UPnP and cloud app access.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-tp-link": {
+    "name": "TP-Link Router Hardening Checklist",
+    "description": "Weighted 21-point TP-Link hardening audit covering the admin account, WPA encryption, WPS, remote management and firmware, with a WPA2 crack-time check.",
+    "category": "Security & Privacy",
+    "icon": "router",
     "iconColor": "text-[var(--primary)]"
   },
   "rowing-machine-calorie-calculator": {
@@ -23474,6 +24659,13 @@ export const toolMetaMap = {
     "icon": "layers",
     "iconColor": "text-[var(--primary)]"
   },
+  "sanskrit-word-of-the-day-builder": {
+    "name": "Sanskrit Word of the Day",
+    "description": "A daily Sanskrit word with its verbal root, meaning, IAST transliteration and a line from a classical text where it appears.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sarcasm-generator": {
     "name": "Sarcasm Generator",
     "description": "Generate perfectly sarcastic responses for any situation. Because nothing says 'I care' like thinly veiled contempt.",
@@ -23635,6 +24827,20 @@ export const toolMetaMap = {
     "description": "Check a school bag against the 10% of body weight rule and the class-wise weight limits in India's School Bag Policy 2020.",
     "category": "Health Calculators",
     "icon": "backpack",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "school-fee-concession-request-letter": {
+    "name": "School Fee Concession Request Letter",
+    "description": "Draft a respectful fee waiver or instalment request letter, with the concession amount and a dated instalment schedule worked out.",
+    "category": "Text & Writing",
+    "icon": "school",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "school-leave-application-hindi": {
+    "name": "Hindi School Leave Application",
+    "description": "Generate a correctly formatted Hindi prarthna patra for school leave, with गा/गी gender agreement and an inclusive day count.",
+    "category": "Text & Writing",
+    "icon": "notebook-pen",
     "iconColor": "text-[var(--primary)]"
   },
   "scientific-calculator": {
@@ -24067,6 +25273,13 @@ export const toolMetaMap = {
     "icon": "moon",
     "iconColor": "text-[var(--primary)]"
   },
+  "sensory-detail-prompt-generator": {
+    "name": "Sensory Detail Prompt Generator",
+    "description": "Generate scene prompts across sight, sound, smell, taste, touch and body, then scan your draft for the senses it is missing.",
+    "category": "Text & Writing",
+    "icon": "sparkles",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sentence-correction-practice": {
     "name": "Sentence Correction Practice",
     "description": "Master English grammar by identifying and correcting errors in sentences with detailed explanations.",
@@ -24258,6 +25471,13 @@ export const toolMetaMap = {
     "icon": "store",
     "iconColor": "text-[var(--primary)]"
   },
+  "short-modern-indian-baby-names": {
+    "name": "Short Modern Indian Baby Names",
+    "description": "Browse modern Indian baby names of two to six letters with meanings, and a spelling-ease score that flags the romanisation traps in each one.",
+    "category": "Lifestyle",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
   "short-video-hook-marker": {
     "name": "Short-Video Hook Marker",
     "description": "Clip timeline par hook, beat aur review timestamps mark kare.",
@@ -24295,6 +25515,27 @@ export const toolMetaMap = {
     "description": "Convert between shutter angle and shutter speed at any frame rate, with a flicker check for 50 Hz and 60 Hz mains.",
     "category": "Calculators",
     "icon": "aperture",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sibling-name-match-finder": {
+    "name": "Sibling Name Match Finder",
+    "description": "Enter an older child's name and get ranked sibling name suggestions scored on shared origin, syllable rhythm, ending, length and distinctness.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sick-leave-email-generator": {
+    "name": "Sick Leave Email Generator",
+    "description": "Write a short, professional sick leave email with cover arrangements, a return date and a brevity check.",
+    "category": "Text & Writing",
+    "icon": "mail",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "sign-language-alphabet-poster-maker": {
+    "name": "Sign Language Alphabet Poster Maker",
+    "description": "Build a printable ASL manual alphabet and number poster with adjustable columns, descriptions, look-alike warnings and a quiz mode.",
+    "category": "Education & Science",
+    "icon": "grid-3x3",
     "iconColor": "text-[var(--primary)]"
   },
   "sign-language-alphabet-trainer": {
@@ -25139,6 +26380,13 @@ export const toolMetaMap = {
     "icon": "zap",
     "iconColor": "text-[var(--primary)]"
   },
+  "speech-timing-word-count-calculator": {
+    "name": "Speech Timing Calculator",
+    "description": "Convert a word count into speaking minutes at your delivery pace, with slide and pause overhead and a word budget for any target length.",
+    "category": "Text & Writing",
+    "icon": "mic",
+    "iconColor": "text-[var(--primary)]"
+  },
   "speed-date-rotation-planner": {
     "name": "Speed-Date Rotation Planner",
     "description": "Non-repeating round-robin meeting schedule banaye.",
@@ -25171,6 +26419,13 @@ export const toolMetaMap = {
     "description": "Convert km/h, mph, knots, m/s, ft/s and Mach, with reaction and braking distance for the same speed.",
     "category": "Converters",
     "icon": "gauge",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "spelling-british-american-converter": {
+    "name": "British American Spelling Converter",
+    "description": "Convert a whole document between British and American spelling using a curated word list plus the -our, -ise and -re suffix rules.",
+    "category": "Converters",
+    "icon": "spell-check",
     "iconColor": "text-[var(--primary)]"
   },
   "spelling-checker": {
@@ -25227,6 +26482,33 @@ export const toolMetaMap = {
     ],
     "icon": "orbit",
     "iconColor": "text-cyan-600"
+  },
+  "split-csv": {
+    "name": "Split CSV",
+    "description": "Split a CSV file into smaller CSV files by rows per file, by an equal number of files, or one file per column value — in your browser.",
+    "category": [
+      "Developer",
+      "Converters"
+    ],
+    "icon": "scissors",
+    "iconColor": "text-primary"
+  },
+  "split-excel": {
+    "name": "Split Excel",
+    "description": "Split an Excel workbook into separate files — one per worksheet, by rows per file, into equal parts, or one file per column value.",
+    "category": [
+      "Productivity",
+      "Converters"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-primary"
+  },
+  "split-pdf": {
+    "name": "Split PDF",
+    "description": "Split a PDF into separate files by page, in fixed batches, by custom page ranges, or by extracting or removing chosen pages.",
+    "category": "PDF & Documents",
+    "icon": "scissors",
+    "iconColor": "text-primary"
   },
   "split-vs-window-ac-comparison": {
     "name": "Split vs Window AC Comparison",
@@ -25329,6 +26611,13 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "database",
     "iconColor": "text-cyan-700"
+  },
+  "sql-where-builder": {
+    "name": "SQL WHERE Builder",
+    "description": "Build a SQL WHERE clause from plain conditions with correct identifier quoting, string escaping and parameter placeholders for MySQL, PostgreSQL, SQL Server, SQLite and Oracle.",
+    "category": "Developer",
+    "icon": "database",
+    "iconColor": "text-primary"
   },
   "sql-where-clause-builder": {
     "name": "SQL WHERE Clause Builder",
@@ -25442,6 +26731,13 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-[var(--primary)]"
   },
+  "staking-reward-calculator": {
+    "name": "Staking Reward Calculator",
+    "description": "Project crypto staking rewards from an APR, with validator commission deducted and rewards compounded at your payout frequency.",
+    "category": "Finance Calculators",
+    "icon": "coins",
+    "iconColor": "text-primary"
+  },
   "staking-rewards-calculator": {
     "name": "Staking Rewards Calculator",
     "description": "Calculate staking rewards values quickly with a simple, structured workflow.",
@@ -25514,6 +26810,16 @@ export const toolMetaMap = {
     "category": "Finance Calculators",
     "icon": "repeat",
     "iconColor": "text-[var(--primary)]"
+  },
+  "standup-notes-generator": {
+    "name": "Standup Notes Generator",
+    "description": "Turn rough bullets for yesterday, today and blockers into a tidy daily-scrum update formatted for Slack, Markdown, Jira or plain text.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "clipboard-list",
+    "iconColor": "text-primary"
   },
   "star-life-cycle-explorer": {
     "name": "Star Life Cycle Explorer",
@@ -25622,6 +26928,16 @@ export const toolMetaMap = {
     "icon": "trending-up",
     "iconColor": "text-teal-600"
   },
+  "steps-to-calories-converter": {
+    "name": "Steps to Calories Converter",
+    "description": "Convert steps into calories and distance using your height for step length and MET values from the Compendium of Physical Activities.",
+    "category": [
+      "Health & Fitness",
+      "Converters"
+    ],
+    "icon": "footprints",
+    "iconColor": "text-primary"
+  },
   "steps-to-kilometres-converter": {
     "name": "Steps to Kilometres Converter",
     "description": "Convert steps to kilometres and miles using a step length from your height, your own measurement, or a known stride.",
@@ -25697,6 +27013,13 @@ export const toolMetaMap = {
     "description": "Convert story points to hours from your team's own velocity, with a confidence range and sprint forecast.",
     "category": "Calculators",
     "icon": "calculator",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "story-prompt-generator-by-genre": {
+    "name": "Story Prompt Generator by Genre",
+    "description": "Generate story prompts filtered by genre, tone, setting and character type, each with a want, an obstacle, a twist and a word target.",
+    "category": "Text & Writing",
+    "icon": "feather",
     "iconColor": "text-[var(--primary)]"
   },
   "storyboard-builder": {
@@ -25849,6 +27172,13 @@ export const toolMetaMap = {
     "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
   },
+  "student-loan-calculator": {
+    "name": "Student Loan Calculator",
+    "description": "Calculate a student loan's monthly payment, capitalised interest, total cost and the savings from paying extra each month.",
+    "category": "Finance Calculators",
+    "icon": "graduation-cap",
+    "iconColor": "text-primary"
+  },
   "student-mess-bill-splitter": {
     "name": "Mess Bill Splitter For Students",
     "description": "Split mess and grocery bills fairly among roommates by days present — fixed charges shared equally, food cost by attendance.",
@@ -25957,12 +27287,26 @@ export const toolMetaMap = {
     "icon": "radar",
     "iconColor": "text-[var(--primary)]"
   },
+  "subject-verb-agreement-drill": {
+    "name": "Subject Verb Agreement Drill",
+    "description": "Drill the hard subject-verb agreement cases — intervening phrases, and/or subjects, indefinite pronouns, quantities and nouns that only look plural.",
+    "category": "Education & Science",
+    "icon": "check-check",
+    "iconColor": "text-[var(--primary)]"
+  },
   "sublet-permission-request-generator": {
     "name": "Sublet Permission Request Generator",
     "description": "Draft a written request to your landlord for consent to sub-let, with the statutory references and a reply deadline.",
     "category": "Business",
     "icon": "key-round",
     "iconColor": "text-[var(--primary)]"
+  },
+  "subnet-calculator": {
+    "name": "Subnet Calculator",
+    "description": "Works out the network address, broadcast address, usable host range and host count for any IPv4 address written in CIDR or netmask form.",
+    "category": "Developer",
+    "icon": "network",
+    "iconColor": "text-primary"
   },
   "subprocessor-list-page-generator": {
     "name": "Subprocessor List Page Generator",
@@ -26126,6 +27470,16 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-[var(--primary)]"
   },
+  "super-builtup-loading-decoder": {
+    "name": "Super Built-Up Loading Decoder",
+    "description": "Restate two flats quoted on different area bases onto one RERA carpet-area basis and compare the real price per square foot of carpet.",
+    "category": [
+      "Calculators",
+      "Business"
+    ],
+    "icon": "ruler",
+    "iconColor": "text-primary"
+  },
   "superpower-generator": {
     "name": "Superpower Generator",
     "description": "Generate your unique superhero persona, complete with a primary superpower, a funny weakness, and a dramatic origin story.",
@@ -26210,6 +27564,16 @@ export const toolMetaMap = {
     "icon": "spline",
     "iconColor": "text-teal-600"
   },
+  "svg-optimizer": {
+    "name": "SVG Optimizer",
+    "description": "Shrinks an SVG file by removing editor metadata, comments and default attributes and by rounding coordinate precision, without changing how it renders.",
+    "category": [
+      "Design & Color",
+      "Developer"
+    ],
+    "icon": "shrink",
+    "iconColor": "text-primary"
+  },
   "svg-optimizer-cleaner": {
     "name": "SVG Optimizer & Cleaner",
     "description": "Unnecessary markup, editor data aur metadata safely remove kare.",
@@ -26220,6 +27584,16 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "svg-path-editor": {
+    "name": "SVG Path Editor",
+    "description": "Parses an SVG path d attribute into editable commands, converts between relative and absolute form, moves and scales it, and previews the result live.",
+    "category": [
+      "Design & Color",
+      "Developer"
+    ],
+    "icon": "spline",
+    "iconColor": "text-primary"
   },
   "svg-to-image": {
     "name": "SVG to Image",
@@ -26294,6 +27668,16 @@ export const toolMetaMap = {
     "icon": "waves",
     "iconColor": "text-[var(--primary)]"
   },
+  "swot-analysis-maker": {
+    "name": "SWOT Analysis Maker",
+    "description": "Builds a four-quadrant SWOT grid from your own lists, checks it for balance, and derives the four TOWS strategy pairings you can copy out as Markdown.",
+    "category": [
+      "Business",
+      "Productivity"
+    ],
+    "icon": "grid-2x2",
+    "iconColor": "text-primary"
+  },
   "swp-calculator": {
     "name": "SWP Calculator",
     "description": "Plan systematic withdrawals with corpus life, step-up withdrawals, return scenarios, and tax estimates.",
@@ -26314,6 +27698,16 @@ export const toolMetaMap = {
     "category": "Finance Calculators",
     "icon": "banknote-arrow-down",
     "iconColor": "text-[var(--primary)]"
+  },
+  "syllable-counter": {
+    "name": "Syllable Counter",
+    "description": "Counts the syllables in a word, a line or a whole passage of English, and reports the per-line counts plus Flesch readability scores.",
+    "category": [
+      "Text & Writing",
+      "Education & Science"
+    ],
+    "icon": "audio-lines",
+    "iconColor": "text-primary"
   },
   "symptom-checker": {
     "name": "Symptom Checker",
@@ -26391,6 +27785,16 @@ export const toolMetaMap = {
     "icon": "ruler",
     "iconColor": "text-[var(--primary)]"
   },
+  "tab-to-spaces-converter": {
+    "name": "Tab to Spaces Converter",
+    "description": "Converts tabs to spaces and spaces back to tabs using real tab stops, so mid-line alignment survives the change.",
+    "category": [
+      "Developer",
+      "Text & Writing"
+    ],
+    "icon": "indent-increase",
+    "iconColor": "text-primary"
+  },
   "tabata-interval-timer": {
     "name": "Tabata Interval Timer",
     "description": "Classic 20-second work, 10-second rest Tabata timer with custom rounds, multiple sets and a prep countdown.",
@@ -26412,6 +27816,16 @@ export const toolMetaMap = {
     "icon": "pill",
     "iconColor": "text-[var(--primary)]"
   },
+  "tailwind-color-generator": {
+    "name": "Tailwind Color Generator",
+    "description": "Builds a full 50-950 Tailwind colour scale from one base colour using OKLCH lightness steps, with WCAG contrast for every shade and ready-to-paste CSS.",
+    "category": [
+      "Design & Color",
+      "Developer"
+    ],
+    "icon": "palette",
+    "iconColor": "text-primary"
+  },
   "taiwan-entry-requirement-checklist": {
     "name": "Taiwan Entry Requirement Checklist",
     "description": "Check your Taiwan visa-exempt allowance or Travel Authorization Certificate, passport validity, arrival card and the customs rules that carry real fines.",
@@ -26424,6 +27838,20 @@ export const toolMetaMap = {
     "description": "Work out the TNEA engineering cutoff and the medical/agriculture cutoff out of 200 from your Tamil Nadu HSC subject marks.",
     "category": "Calculators",
     "icon": "calculator",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tamil-palamozhi-proverb-explorer": {
+    "name": "Tamil Palamozhi Explorer",
+    "description": "Browse Tamil proverbs with transliteration, literal translation, figurative meaning, a Tamil gloss and English equivalents.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tamil-word-of-the-day-builder": {
+    "name": "Tamil Word of the Day",
+    "description": "Learn a Tamil word each day with its script, romanisation, meaning and a full example sentence, plus a saved streak.",
+    "category": "Education & Science",
+    "icon": "book-open",
     "iconColor": "text-[var(--primary)]"
   },
   "tan-format-validator": {
@@ -26465,11 +27893,28 @@ export const toolMetaMap = {
     "icon": "archive",
     "iconColor": "text-[var(--primary)]"
   },
+  "tax-bracket-calculator": {
+    "name": "Tax Bracket Calculator",
+    "description": "Shows which US federal income tax bracket you land in and how much tax each bracket actually collects, using the official IRS rate schedules for 2025 and 2026.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "icon": "landmark",
+    "iconColor": "text-primary"
+  },
   "tax-jargon-glossary": {
     "name": "Tax Jargon Glossary Explorer",
     "description": "Searchable plain-language glossary of Indian income tax, GST, investing and banking terms, each with the section it comes from.",
     "category": "Education & Science",
     "icon": "book-a",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tc-transfer-certificate-request-letter": {
+    "name": "Transfer Certificate Request Letter",
+    "description": "Write a TC request letter to a school or college with admission number, class, reason and the RTE rule on immediate issue.",
+    "category": "Text & Writing",
+    "icon": "file-output",
     "iconColor": "text-[var(--primary)]"
   },
   "tcs-motor-vehicle-calculator": {
@@ -26542,6 +27987,16 @@ export const toolMetaMap = {
     "icon": "briefcase",
     "iconColor": "text-[var(--primary)]"
   },
+  "tds-calculator": {
+    "name": "TDS Calculator",
+    "description": "Works out the tax to deduct at source on an Indian payment using the FY 2025-26 section rates, thresholds and the no-PAN rule under section 206AA.",
+    "category": [
+      "Finance Calculators",
+      "Calculators"
+    ],
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-primary"
+  },
   "tds-calculator-by-section": {
     "name": "TDS Calculator by Section",
     "description": "Selected section, threshold aur rate se TDS calculate kare.",
@@ -26589,6 +28044,13 @@ export const toolMetaMap = {
     "name": "Teacher Prompt Pack",
     "description": "Fill-in-the-blank AI prompts for lesson plans, rubrics, differentiation, feedback and parent emails, ready to copy.",
     "category": "Education & Science",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "teachers-day-message-generator": {
+    "name": "Teachers Day Message Generator",
+    "description": "Write Teachers Day notes, card messages, speech openers and posts in English, Hindi, Marathi, Bengali, Tamil, Telugu, Kannada or Gujarati.",
+    "category": "Generators",
     "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
   },
@@ -26656,6 +28118,20 @@ export const toolMetaMap = {
     "description": "Set teleprompter scroll speed in pixels per second and lines per minute from your script length and target runtime.",
     "category": "Calculators",
     "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "telugu-samethalu-proverb-explorer": {
+    "name": "Telugu Samethalu Explorer",
+    "description": "Explore Telugu proverbs with transliteration, literal translation, real meaning, a Telugu gloss and English equivalents.",
+    "category": "Education & Science",
+    "icon": "scroll-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "telugu-word-of-the-day-builder": {
+    "name": "Telugu Word of the Day",
+    "description": "Learn a Telugu word daily with its script, romanisation, meaning, everyday usage example and a browser-saved streak.",
+    "category": "Education & Science",
+    "icon": "book-open",
     "iconColor": "text-[var(--primary)]"
   },
   "temperature-converter": {
@@ -26766,6 +28242,13 @@ export const toolMetaMap = {
     "icon": "message-square-quote",
     "iconColor": "text-[var(--primary)]"
   },
+  "testimonial-request-message-builder": {
+    "name": "Testimonial Request Message Builder",
+    "description": "Build a testimonial request for email, WhatsApp, LinkedIn or SMS with ready-made questions, a reply deadline and channel length checks.",
+    "category": "Marketing & Social",
+    "icon": "message-square-quote",
+    "iconColor": "text-[var(--primary)]"
+  },
   "testosterone-lifestyle-checklist": {
     "name": "Testosterone Lifestyle Checklist",
     "description": "Score seventeen evidence-linked sleep, body-composition, training, nutrition and substance habits and see your biggest gaps.",
@@ -26787,6 +28270,16 @@ export const toolMetaMap = {
     "icon": "shield",
     "iconColor": "text-[var(--primary)]"
   },
+  "tetris-clone": {
+    "name": "Tetris Clone",
+    "description": "A browser Tetris game with SRS rotation and wall kicks, a 7-bag randomiser, hold, ghost piece and guideline line-clear scoring.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "blocks",
+    "iconColor": "text-primary"
+  },
   "text-behind-image": {
     "name": "Text Behind Image",
     "description": "Create poster-style image compositions with large editable text layers.",
@@ -26807,6 +28300,16 @@ export const toolMetaMap = {
     ],
     "icon": "languages",
     "iconColor": "text-indigo-600"
+  },
+  "text-column-extractor": {
+    "name": "Text Column Extractor",
+    "description": "Pulls chosen columns out of pasted CSV, TSV or fixed-width text, with RFC 4180 quote handling, ranges and negative column numbers.",
+    "category": [
+      "Text & Writing",
+      "Developer"
+    ],
+    "icon": "columns-3",
+    "iconColor": "text-primary"
   },
   "text-compare": {
     "name": "Text Compare",
@@ -26910,6 +28413,16 @@ export const toolMetaMap = {
     ],
     "icon": "file-text",
     "iconColor": "text-blue-700"
+  },
+  "text-to-ascii-art": {
+    "name": "Text to ASCII Art",
+    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing, outline and drop shadow.",
+    "category": [
+      "Fun",
+      "Text & Writing"
+    ],
+    "icon": "type",
+    "iconColor": "text-primary"
   },
   "text-to-base64": {
     "name": "Text to Base64",
@@ -27117,6 +28630,13 @@ export const toolMetaMap = {
     "icon": "shield-alert",
     "iconColor": "text-[var(--primary)]"
   },
+  "thread-ceremony-invitation-wording": {
+    "name": "Thread Ceremony Invitation Wording",
+    "description": "Generate upanayanam, janeu, munj and brahmopadesam invitation wording in regional styles, with muhurtham line and a short WhatsApp version.",
+    "category": "Generators",
+    "icon": "scroll",
+    "iconColor": "text-[var(--primary)]"
+  },
   "threads-image-size-generator": {
     "name": "Threads Image Size Generator",
     "description": "Export Threads post images and carousels at native display sizes and check the supported aspect ratio range.",
@@ -27187,6 +28707,13 @@ export const toolMetaMap = {
     "icon": "captions",
     "iconColor": "text-[var(--primary)]"
   },
+  "tile-calculator": {
+    "name": "Tile Calculator",
+    "description": "Calculates how many tiles and boxes a floor or wall needs, plus the grout and adhesive quantities, counting the grout joint in the tile module.",
+    "category": "Calculators",
+    "icon": "grid-3x3",
+    "iconColor": "text-primary"
+  },
   "tile-wastage-calculator": {
     "name": "Tile Wastage Calculator",
     "description": "Recommends a tile wastage percentage from layout pattern, room shape, tile size and cutouts, then converts it into boxes.",
@@ -27228,6 +28755,13 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "clock",
     "iconColor": "text-indigo-700"
+  },
+  "time-zone-meeting-planner": {
+    "name": "Time Zone Meeting Planner",
+    "description": "Finds the times on a chosen day that fall inside working hours for every participant's time zone, using the browser's IANA time zone data.",
+    "category": "Productivity",
+    "icon": "calendar-clock",
+    "iconColor": "text-primary"
   },
   "timecode-to-frames-converter": {
     "name": "Timecode To Frames Converter",
@@ -27393,6 +28927,16 @@ export const toolMetaMap = {
     "icon": "check-square",
     "iconColor": "text-green-700"
   },
+  "to-pdf": {
+    "name": "To PDF",
+    "description": "Convert images and plain-text files into a single PDF in your browser, with a choice of page size, orientation and margin.",
+    "category": [
+      "PDF & Documents",
+      "Converters"
+    ],
+    "icon": "file-output",
+    "iconColor": "text-primary"
+  },
   "toefl-score-converter": {
     "name": "TOEFL Score Converter",
     "description": "Sum TOEFL iBT section scores into the 0-120 total, see ETS performance levels and compare with IELTS bands via the ETS linking table.",
@@ -27461,6 +29005,13 @@ export const toolMetaMap = {
     "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
+  "topic-sentence-generator": {
+    "name": "Topic Sentence Generator",
+    "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks.",
+    "category": "Education & Science",
+    "icon": "pen-line",
+    "iconColor": "text-[var(--primary)]"
+  },
   "tote-bag-artwork-placement-guide": {
     "name": "Tote Bag Artwork Placement Guide",
     "description": "Safe print area and exact placement offsets for tote bags, allowing for side seams, handle stitching and the gusset that folds under the base.",
@@ -27495,6 +29046,27 @@ export const toolMetaMap = {
     ],
     "icon": "users-round",
     "iconColor": "text-primary"
+  },
+  "tournament-bracket-maker": {
+    "name": "Tournament Bracket Maker",
+    "description": "Build a single-elimination tournament bracket from a list of players or teams, with standard seeding, automatic byes and round-by-round match-ups.",
+    "category": [
+      "Games",
+      "Productivity"
+    ],
+    "icon": "trophy",
+    "iconColor": "text-primary"
+  },
+  "tracking-link-decoder": {
+    "name": "Tracking Link Decoder",
+    "description": "Name every tracking parameter in a URL, see who set it and what it reveals, and copy a stripped clean link.",
+    "category": [
+      "Security & Privacy",
+      "Developer"
+    ],
+    "icon": "link-2",
+    "iconColor": "text-primary",
+    "wideWorkspace": true
   },
   "tracking-pixel-disclosure-generator": {
     "name": "Tracking Pixel Disclosure Generator",
@@ -27538,6 +29110,13 @@ export const toolMetaMap = {
     "icon": "file-text",
     "iconColor": "text-[var(--primary)]"
   },
+  "transition-word-suggester": {
+    "name": "Transition Word Suggester",
+    "description": "Find transition words by relationship — contrast, cause, sequence and more — with the punctuation rule and a worked example for each.",
+    "category": "Text & Writing",
+    "icon": "waypoints",
+    "iconColor": "text-[var(--primary)]"
+  },
   "transitive-dependency-risk-explainer": {
     "name": "Transitive Dependency Risk Explainer",
     "description": "Model how a handful of direct dependencies expands into hundreds of transitive packages, and what that does to your attack surface.",
@@ -27551,6 +29130,16 @@ export const toolMetaMap = {
     "category": "Business",
     "icon": "plane",
     "iconColor": "text-[var(--primary)]"
+  },
+  "travel-budget-planner": {
+    "name": "Travel Budget Planner",
+    "description": "Plan a full trip budget from flights, rooms, daily spending and a contingency buffer, with per-person, per-day and monthly saving figures.",
+    "category": [
+      "Lifestyle",
+      "Calculators"
+    ],
+    "icon": "plane",
+    "iconColor": "text-primary"
   },
   "travel-cost-per-day": {
     "name": "Travel Cost Per Day",
@@ -27669,6 +29258,13 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
+  "trim-video": {
+    "name": "Trim Video",
+    "description": "Cut a clip out of a video file in your browser by setting a start and end time, with a fast stream-copy or a re-encoded output.",
+    "category": "Video & Audio",
+    "icon": "scissors",
+    "iconColor": "text-primary"
+  },
   "trimester-symptom-guide": {
     "name": "Trimester Symptom Guide",
     "description": "See which pregnancy symptoms and antenatal checks belong to your gestational week, with the signs that need same-day review.",
@@ -27717,6 +29313,16 @@ export const toolMetaMap = {
     ],
     "icon": "help-circle",
     "iconColor": "text-violet-600"
+  },
+  "truth-or-dare-generator": {
+    "name": "Truth Or Dare Generator",
+    "description": "Generate truth questions and dare challenges for a group, with family, party and couples levels and a repeatable round list for every player.",
+    "category": [
+      "Fun",
+      "Games"
+    ],
+    "icon": "dices",
+    "iconColor": "text-primary"
   },
   "turbo-boost-converter": {
     "name": "Turbo Boost Converter",
@@ -27833,6 +29439,13 @@ export const toolMetaMap = {
     "icon": "eye",
     "iconColor": "text-[var(--primary)]"
   },
+  "twin-baby-name-pair-finder": {
+    "name": "Twin Baby Name Pair Finder",
+    "description": "Score any two names for how well they pair as twins and browse curated twin sets matched by sound, meaning or shared theme.",
+    "category": "Lifestyle",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
+  },
   "twin-finder": {
     "name": "Twin Finder",
     "description": "Upload two photos and discover your playful similarity score with fun visual comparisons!",
@@ -27861,11 +29474,98 @@ export const toolMetaMap = {
     "icon": "image",
     "iconColor": "text-[var(--primary)]"
   },
+  "twitter-card-preview": {
+    "name": "Twitter Card Preview",
+    "description": "Preview how a link will look as an X (Twitter) card and check the meta tags against the card spec for title, description and image limits.",
+    "category": [
+      "Marketing & Social",
+      "Developer"
+    ],
+    "icon": "layout-template",
+    "iconColor": "text-primary"
+  },
   "twitter-thread-prompt-builder": {
     "name": "Twitter Thread Prompt Builder",
     "description": "Generates thread prompts with post count, hook style and CTA — 280-character budgets and t.co link costs computed per post.",
     "category": "Marketing & Social",
     "icon": "twitter",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-amazon": {
+    "name": "Amazon Account 2FA Guide",
+    "description": "Weighted 15-step checklist for Amazon two-step verification, backup methods, device deregistration, saved cards and voice-purchase locks.",
+    "category": "Security & Privacy",
+    "icon": "shopping-cart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-apple-id": {
+    "name": "Apple ID 2FA Setup Guide",
+    "description": "Weighted 15-step checklist for Apple Account two-factor auth, trusted numbers, recovery contacts, Stolen Device and Advanced Data Protection.",
+    "category": "Security & Privacy",
+    "icon": "apple",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-facebook": {
+    "name": "Facebook 2FA Setup Guide",
+    "description": "Step-by-step Facebook two-factor setup with an authenticator app or security key, recovery codes and a readiness score.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-github": {
+    "name": "GitHub 2FA Setup Guide",
+    "description": "Weighted 15-step checklist for GitHub 2FA, recovery codes, passkeys, token and SSH key hygiene, and secret-scanning push protection.",
+    "category": "Security & Privacy",
+    "icon": "github",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-gmail": {
+    "name": "Gmail 2FA Setup Guide",
+    "description": "Interactive walkthrough for turning on Google 2-Step Verification, passkeys and backup codes, with a live account-hardening score.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-instagram": {
+    "name": "Instagram 2FA Setup Guide",
+    "description": "Guided checklist for Instagram two-factor authentication, backup codes, login alerts and trusted-device cleanup, with a live hardening score.",
+    "category": "Security & Privacy",
+    "icon": "instagram",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-linkedin": {
+    "name": "LinkedIn 2FA Setup Guide",
+    "description": "Weighted 15-step checklist to enable LinkedIn two-step verification, save recovery codes, clear old sessions and lock down profile discovery.",
+    "category": "Security & Privacy",
+    "icon": "linkedin",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-microsoft": {
+    "name": "Microsoft Account 2FA Guide",
+    "description": "Weighted 15-step checklist for Microsoft account two-step verification, recovery code, passwordless sign-in, session cleanup and Outlook rule checks.",
+    "category": "Security & Privacy",
+    "icon": "user-lock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-net-banking": {
+    "name": "Net Banking 2FA Hardening Guide",
+    "description": "Weighted 15-step net banking checklist for OTP discipline, beneficiary cooling periods, transfer and card limits, alerts and RBI reporting deadlines.",
+    "category": "Security & Privacy",
+    "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-telegram": {
+    "name": "Telegram 2FA Setup Guide",
+    "description": "Weighted 15-step Telegram checklist for the two-step cloud password, recovery email, passcode lock, session cleanup and secret chat basics.",
+    "category": "Security & Privacy",
+    "icon": "send",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-factor-setup-guide-x-twitter": {
+    "name": "X (Twitter) 2FA Setup Guide",
+    "description": "Enable app-based or security-key 2FA on X, save the backup code and drop the SMS fallback, with a readiness score.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
     "iconColor": "text-[var(--primary)]"
   },
   "two-line-shayari-composer": {
@@ -27880,6 +29580,13 @@ export const toolMetaMap = {
     "description": "Plan a fast first pass and a focused second pass across a question paper, with per-question seconds for each round.",
     "category": "Education & Science",
     "icon": "repeat",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "two-step-verification-guide-whatsapp": {
+    "name": "WhatsApp Two-Step Verification Guide",
+    "description": "Walkthrough for the WhatsApp two-step PIN, email recovery, passkeys and SIM-swap resilience, with a live account-hardening score.",
+    "category": "Security & Privacy",
+    "icon": "message-circle",
     "iconColor": "text-[var(--primary)]"
   },
   "two-tone-wall-paint-calculator": {
@@ -27912,6 +29619,16 @@ export const toolMetaMap = {
     ],
     "icon": "keyboard",
     "iconColor": "text-blue-600"
+  },
+  "typing-speed-game": {
+    "name": "Typing Speed Game",
+    "description": "Time yourself typing a random word prompt and get gross WPM, net WPM, CPM and accuracy.",
+    "category": [
+      "Games",
+      "Education & Science"
+    ],
+    "icon": "keyboard",
+    "iconColor": "text-primary"
   },
   "typing-speed-test": {
     "name": "Typing Speed Test",
@@ -28085,6 +29802,13 @@ export const toolMetaMap = {
     "icon": "archive-restore",
     "iconColor": "text-[var(--primary)]"
   },
+  "unesco-heritage-site-explorer": {
+    "name": "UNESCO Heritage Site Explorer",
+    "description": "Explore UNESCO World Heritage sites by country, UNESCO region, cultural or natural category and year of inscription.",
+    "category": "Education & Science",
+    "icon": "globe",
+    "iconColor": "text-[var(--primary)]"
+  },
   "unicode-ascii-converter": {
     "name": "Unicode / ASCII Converter",
     "description": "Convert text into Unicode escapes or ASCII codes and back.",
@@ -28109,6 +29833,16 @@ export const toolMetaMap = {
     ],
     "icon": "square-sigma",
     "iconColor": "text-blue-600"
+  },
+  "unit-circle-explorer": {
+    "name": "Unit Circle Explorer",
+    "description": "Move around the unit circle to see the coordinates, quadrant, reference angle and all six trig ratios for any angle.",
+    "category": [
+      "Education & Science",
+      "Calculators"
+    ],
+    "icon": "circle-dot",
+    "iconColor": "text-primary"
   },
   "unit-converter": {
     "name": "Unit Converter",
@@ -28162,6 +29896,16 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "clock",
     "iconColor": "text-sky-600"
+  },
+  "unlock-pdf": {
+    "name": "Unlock PDF",
+    "description": "Remove the open password from a PDF you own and download an unlocked copy, entirely in your browser.",
+    "category": [
+      "PDF & Documents",
+      "Security & Privacy"
+    ],
+    "icon": "lock-open",
+    "iconColor": "text-primary"
   },
   "up-board-percentage-calculator": {
     "name": "UP Board Percentage Calculator",
@@ -28249,6 +29993,13 @@ export const toolMetaMap = {
     "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
+  "upscale-image": {
+    "name": "Upscale Image",
+    "description": "Enlarge an image in your browser using Lanczos, bicubic, bilinear or nearest-neighbour resampling with optional sharpening.",
+    "category": "Image & Photo",
+    "icon": "zoom-in",
+    "iconColor": "text-primary"
+  },
   "upside-down-text": {
     "name": "Upside Down Text",
     "description": "Flip your text upside down and backwards using mathematical Unicode character mappings for creative styling.",
@@ -28264,6 +30015,20 @@ export const toolMetaMap = {
     "description": "Work out monthly uptime monitoring cost from endpoint count, check interval, probe locations and alert volume — plus detection time.",
     "category": "Calculators",
     "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "urdu-muhavare-explorer": {
+    "name": "Urdu Muhavare Explorer",
+    "description": "Explore Urdu idioms in Nastaliq with Roman transliteration, literal sense, meaning, usage sentences and a meaning quiz.",
+    "category": "Education & Science",
+    "icon": "book-open-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "urdu-word-of-the-day-builder": {
+    "name": "Urdu Word of the Day",
+    "description": "A daily Urdu word in Nastaliq with Roman spelling, meaning, an example sentence and a browser-saved streak.",
+    "category": "Education & Science",
+    "icon": "book-open",
     "iconColor": "text-[var(--primary)]"
   },
   "urea-bun-converter": {
@@ -28366,6 +30131,13 @@ export const toolMetaMap = {
     "category": "Productivity",
     "icon": "clipboard-check",
     "iconColor": "text-[var(--primary)]"
+  },
+  "user-agent-parser": {
+    "name": "User Agent Parser",
+    "description": "Break a User-Agent string into browser, engine, operating system, device type and CPU architecture.",
+    "category": "Developer",
+    "icon": "monitor-smartphone",
+    "iconColor": "text-primary"
   },
   "user-info-finder": {
     "name": "User Info Finder",
@@ -28898,6 +30670,16 @@ export const toolMetaMap = {
     "icon": "video",
     "iconColor": "text-[var(--primary)]"
   },
+  "video-thumbnail-extractor": {
+    "name": "Video Thumbnail Extractor",
+    "description": "Pull still frames out of a video at evenly spaced or fixed-interval timestamps and download them as images.",
+    "category": [
+      "Video & Audio",
+      "Image & Photo"
+    ],
+    "icon": "film",
+    "iconColor": "text-primary"
+  },
   "video-to-audio-converter": {
     "name": "Video to Audio Converter",
     "description": "Extract, trim, edit, and export audio from video files directly in your browser.",
@@ -28925,6 +30707,26 @@ export const toolMetaMap = {
     ],
     "icon": "video",
     "iconColor": "text-teal-500"
+  },
+  "video-to-webp": {
+    "name": "Video to WebP",
+    "description": "Turn a short video clip into an animated WebP by sampling frames in your browser and muxing them into one file.",
+    "category": [
+      "Converters",
+      "Image & Photo"
+    ],
+    "icon": "image-play",
+    "iconColor": "text-primary"
+  },
+  "video-tools": {
+    "name": "Video Tools",
+    "description": "Read a video file's real specs in the browser and work out its bitrate, aspect ratio, frame count, timecode, letterbox bars and target-size transcode settings.",
+    "category": [
+      "Video & Audio",
+      "Calculators"
+    ],
+    "icon": "video",
+    "iconColor": "text-primary"
   },
   "video-trimmer": {
     "name": "Video Trimmer",
@@ -29052,6 +30854,16 @@ export const toolMetaMap = {
     "category": "Education & Science",
     "icon": "message-circle-question",
     "iconColor": "text-[var(--primary)]"
+  },
+  "vo2-max-estimator": {
+    "name": "VO2 Max Estimator",
+    "description": "Estimate your VO2 max from a Cooper run, 1.5-mile run, Rockport walk, step test or resting heart rate, and rate it against Cooper Institute norms.",
+    "category": [
+      "Health & Fitness",
+      "Calculators"
+    ],
+    "icon": "heart-pulse",
+    "iconColor": "text-primary"
   },
   "vocabulary-builder": {
     "name": "Vocabulary Builder",
@@ -29308,6 +31120,16 @@ export const toolMetaMap = {
     "category": "Calculators",
     "icon": "layout-grid",
     "iconColor": "text-[var(--primary)]"
+  },
+  "wallpaper-calculator": {
+    "name": "Wallpaper Calculator",
+    "description": "Work out how many wallpaper rolls a room needs using drop lengths, pattern repeat and roll size, with waste and cost included.",
+    "category": [
+      "Calculators",
+      "Lifestyle"
+    ],
+    "icon": "wallpaper",
+    "iconColor": "text-primary"
   },
   "warm-up-set-calculator": {
     "name": "Warm-Up Set Calculator",
@@ -29599,6 +31421,13 @@ export const toolMetaMap = {
     "icon": "heart",
     "iconColor": "text-[var(--primary)]"
   },
+  "wedding-hashtag-generator-indian": {
+    "name": "Indian Wedding Hashtag Generator",
+    "description": "Blend both partners' names into wedding hashtags — portmanteaus, shaadi puns and classic formats — each length-checked for Instagram.",
+    "category": "Marketing & Social",
+    "icon": "heart",
+    "iconColor": "text-[var(--primary)]"
+  },
   "wedding-planning-prompt-builder": {
     "name": "Wedding Planning Prompt Builder",
     "description": "Split a wedding budget by category, get cost per guest and a phase checklist, then copy a planning prompt built from those numbers.",
@@ -29636,6 +31465,13 @@ export const toolMetaMap = {
     "category": "Health & Fitness",
     "icon": "grid-3x3",
     "iconColor": "text-[var(--primary)]"
+  },
+  "weekly-planner": {
+    "name": "Weekly Planner",
+    "description": "Plan a seven-day week in time blocks, see each day's load and free hours, and get warned when two blocks clash.",
+    "category": "Productivity",
+    "icon": "calendar-days",
+    "iconColor": "text-primary"
   },
   "weekly-review-dashboard": {
     "name": "Weekly Review Dashboard",
@@ -29691,6 +31527,16 @@ export const toolMetaMap = {
     ],
     "icon": "scale",
     "iconColor": "text-[var(--primary)]"
+  },
+  "weighted-grade-calculator": {
+    "name": "Weighted Grade Calculator",
+    "description": "Work out a weighted course grade from assignment weights and scores, and find the mark you still need on the final to hit a target.",
+    "category": [
+      "Education & Science",
+      "Calculators"
+    ],
+    "icon": "graduation-cap",
+    "iconColor": "text-primary"
   },
   "weighted-vs-unweighted-gpa-calculator": {
     "name": "Weighted Vs Unweighted GPA Tool",
@@ -29789,6 +31635,13 @@ export const toolMetaMap = {
     "description": "Create square WhatsApp catalogue product tiles with grid-legible type, corner-safe insets and 500 px / 5 MB upload checks.",
     "category": "Marketing & Social",
     "icon": "shopping-bag",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "whatsapp-business-reply-templates": {
+    "name": "WhatsApp Business Reply Templates",
+    "description": "Build a reusable set of customer reply templates with valid quick-reply shortcuts and live character counts in English, Hindi or Hinglish.",
+    "category": "Business",
+    "icon": "message-square",
     "iconColor": "text-[var(--primary)]"
   },
   "whatsapp-status-size-generator": {
@@ -29893,6 +31746,16 @@ export const toolMetaMap = {
     "icon": "wallet",
     "iconColor": "text-emerald-600"
   },
+  "whois-lookup": {
+    "name": "WHOIS Lookup",
+    "description": "Look up a domain's registration record over RDAP — registrar, creation and expiry dates, nameservers, DNSSEC and plain-English status codes.",
+    "category": [
+      "Developer",
+      "Security & Privacy"
+    ],
+    "icon": "globe",
+    "iconColor": "text-primary"
+  },
   "whole30-macro-planner": {
     "name": "Whole30 Macro Planner",
     "description": "Whole30-compliant daily macros translated into meal-template portions, plus the full allowed and excluded food checklist.",
@@ -29920,6 +31783,16 @@ export const toolMetaMap = {
     "category": "Health & Fitness",
     "icon": "cloud-fog",
     "iconColor": "text-[var(--primary)]"
+  },
+  "wilks-calculator": {
+    "name": "Wilks Calculator",
+    "description": "Score a powerlifting total against bodyweight using the Wilks coefficient, plus DOTS and IPF GL points for comparison.",
+    "category": [
+      "Health & Fitness",
+      "Calculators"
+    ],
+    "icon": "dumbbell",
+    "iconColor": "text-primary"
   },
   "wilks-score-calculator": {
     "name": "Wilks Score Calculator",
@@ -30028,6 +31901,16 @@ export const toolMetaMap = {
     "icon": "files",
     "iconColor": "text-violet-600"
   },
+  "word-scramble-game": {
+    "name": "Word Scramble Game",
+    "description": "Unscramble timed word puzzles at three difficulty levels, with hints, streaks and a shareable seed that reproduces the same game.",
+    "category": [
+      "Games",
+      "Fun"
+    ],
+    "icon": "shuffle",
+    "iconColor": "text-primary"
+  },
   "word-search": {
     "name": "Word Search",
     "description": "Play word search puzzles online free — themed word lists, three grid sizes, and drag-to-select letters.",
@@ -30109,6 +31992,13 @@ export const toolMetaMap = {
     "icon": "dumbbell",
     "iconColor": "text-[var(--primary)]"
   },
+  "world-clock-dashboard": {
+    "name": "World Clock Dashboard",
+    "description": "Watch live local times, UTC offsets and shared working hours for up to twelve cities on one board.",
+    "category": "Productivity",
+    "icon": "clock",
+    "iconColor": "text-primary"
+  },
   "world-facts-explorer": {
     "name": "World Facts Explorer",
     "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries.",
@@ -30118,6 +32008,13 @@ export const toolMetaMap = {
     ],
     "icon": "sparkles",
     "iconColor": "text-pink-700"
+  },
+  "would-you-rather-generator": {
+    "name": "Would You Rather Generator",
+    "description": "Draw forced-choice would-you-rather dilemmas by category and difficulty, from a shareable seeded deck that never repeats a question.",
+    "category": "Fun",
+    "icon": "sparkles",
+    "iconColor": "text-primary"
   },
   "wrist-stretch-routine-timer": {
     "name": "Wrist Stretch Routine Timer",
@@ -30131,6 +32028,13 @@ export const toolMetaMap = {
     "description": "Rank drafting, editing and ideation options — hosted, grounded, self-hosted or local — against length, fact-checking, voice, privacy and budget.",
     "category": "Text & Writing",
     "icon": "pen-tool",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "writing-sprint-timer-tracker": {
+    "name": "Writing Sprint Timer",
+    "description": "Run Pomodoro-style writing sprints with a countdown, log words per sprint, and see your words-per-minute trend and finish time.",
+    "category": "Productivity",
+    "icon": "timer",
     "iconColor": "text-[var(--primary)]"
   },
   "x-twitter-header-maker": {
@@ -30164,6 +32068,46 @@ export const toolMetaMap = {
     "category": "Developer",
     "icon": "code",
     "iconColor": "text-orange-600"
+  },
+  "xml-to-csv": {
+    "name": "XML to CSV",
+    "description": "Convert repeating XML elements into RFC 4180 CSV rows in your browser, with attributes and nested tags flattened into columns.",
+    "category": [
+      "Converters",
+      "Developer"
+    ],
+    "icon": "table",
+    "iconColor": "text-primary"
+  },
+  "xml-to-excel": {
+    "name": "XML to Excel",
+    "description": "Convert repeating XML elements into a downloadable .xlsx, .xls or .ods worksheet with correctly typed number, boolean and text cells.",
+    "category": [
+      "Converters",
+      "Developer"
+    ],
+    "icon": "file-spreadsheet",
+    "iconColor": "text-primary"
+  },
+  "xml-to-json": {
+    "name": "XML to JSON",
+    "description": "Convert XML into clean JSON in your browser, with repeated tags turned into arrays and attributes kept under a configurable prefix.",
+    "category": [
+      "Developer",
+      "Converters"
+    ],
+    "icon": "braces",
+    "iconColor": "text-primary"
+  },
+  "xml-to-json-converter": {
+    "name": "XML to JSON Converter",
+    "description": "Convert XML to JSON in the exact output convention your parser expects — fast-xml-parser, xml2js, xml-js compact, BadgerFish or plain keys.",
+    "category": [
+      "Converters",
+      "Developer"
+    ],
+    "icon": "arrow-right-left",
+    "iconColor": "text-primary"
   },
   "yaml-formatter": {
     "name": "YAML Formatter",
@@ -30231,6 +32175,13 @@ export const toolMetaMap = {
     "icon": "undo",
     "iconColor": "text-cyan-500"
   },
+  "youtube-description-generator": {
+    "name": "YouTube Description Generator",
+    "description": "Build a structured YouTube description with chapters, links and hashtags, checked live against YouTube's 5,000-character, 60-hashtag and chapter rules.",
+    "category": "Marketing & Social",
+    "icon": "youtube",
+    "iconColor": "text-primary"
+  },
   "youtube-description-template-builder": {
     "name": "YouTube Description Template Builder",
     "description": "Assemble a reusable YouTube description with validated chapters, links, hashtags and disclosures inside the 5,000 character limit.",
@@ -30284,6 +32235,16 @@ export const toolMetaMap = {
     "icon": "split",
     "iconColor": "text-[var(--primary)]"
   },
+  "youtube-transcript-generator": {
+    "name": "YouTube Transcript Generator",
+    "description": "Turn YouTube caption text or an .srt, .vtt or .json3 caption file into a clean, paragraphed transcript with timestamps, word count and reading time.",
+    "category": [
+      "Video & Audio",
+      "Text & Writing"
+    ],
+    "icon": "captions",
+    "iconColor": "text-primary"
+  },
   "youtube-video-analyzer": {
     "name": "YouTube Video Analyzer",
     "description": "Analyze YouTube videos and extract insights instantly.",
@@ -30326,6 +32287,16 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "zodiac-compatibility-checker": {
+    "name": "Zodiac Compatibility Checker",
+    "description": "Compare two zodiac signs or birth dates and see the traditional aspect, element and modality match between them with a 0-100 compatibility score.",
+    "category": [
+      "Fun",
+      "Lifestyle"
+    ],
+    "icon": "heart-handshake",
+    "iconColor": "text-primary"
   },
   "zombie-survival-chance": {
     "name": "Zombie Survival Chance Calculator",

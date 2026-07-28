@@ -479,7 +479,7 @@ export default function BlogTable({
         <div className="flex items-center justify-between px-4 py-3 bg-danger-soft border-b border-border shrink-0 sm:px-5">
           <span className="text-sm font-medium text-danger">{selectedBlogs.length} blog{selectedBlogs.length > 1 ? "s" : ""} selected</span>
           <button onClick={openBulkDeleteModal}
-            className="flex items-center gap-1.5 bg-danger text-danger-foreground text-sm font-semibold px-4 py-1.5 rounded-lg transition hover:opacity-90">
+            className="flex items-center gap-1.5 bg-danger text-[var(--danger-foreground)] text-sm font-semibold px-4 py-1.5 rounded-lg transition hover:opacity-90">
             <Trash2 className="w-3.5 h-3.5" />Delete Selected
           </button>
         </div>

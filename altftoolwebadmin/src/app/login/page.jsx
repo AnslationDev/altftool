@@ -21,6 +21,34 @@ const googleProvider = new GoogleAuthProvider();
 // user choose their own account.
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
+// Records each login attempt so /api/security/login-event can enforce the
+// Security Settings rate limit and feed the suspicious-login risk score
+// (both read the security_login_attempts docs this writes). Pre-auth, so no
+// admin token — best-effort and must never block the login flow itself. A
+// hard timeout matters here specifically: every caller awaits this before
+// showing its error toast (it needs the `blocked` flag for the message), so
+// a hung request previously froze the button in its loading state with no
+// feedback at all.
+const REPORT_LOGIN_EVENT_TIMEOUT_MS = 5000;
+
+async function reportLoginEvent(email, success) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REPORT_LOGIN_EVENT_TIMEOUT_MS);
+  try {
+    const res = await fetch("/api/security/login-event", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, success }),
+      signal: controller.signal,
+    });
+    return await res.json();
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export default function Login() {
   const router = useRouter();
   const {
@@ -28,6 +56,7 @@ export default function Login() {
     adminData,
     loading,
     isPendingUser,
+    isDenied,
     isInactive,
     localAdminLoginEnabled,
     signInLocalAdmin,
@@ -62,6 +91,10 @@ export default function Login() {
     // right way instead: the latch keeps the form visible, and every
     // user-initiated sign-in entry point below clears it before retrying.
     if (googleError) return;
+    if (isDenied && pathname !== "/access-denied") {
+      router.replace("/access-denied");
+      return;
+    }
     if (isPendingUser && pathname !== "/access-requested") {
       router.replace("/access-requested");
       return;
@@ -92,7 +125,7 @@ export default function Login() {
           : "Login successful",
     });
     router.replace(destination);
-  }, [user, adminData, loading, isPendingUser, isInactive, googleError, pathname, router]);
+  }, [user, adminData, loading, isPendingUser, isDenied, isInactive, googleError, pathname, router]);
 
   /* ── Email / Password login ── */
   const login = async (e) => {
@@ -104,8 +137,15 @@ export default function Login() {
       // and both post-auth render branches, leaving the form up while signed in.
       setGoogleError(false);
       await signInWithEmailAndPassword(auth, email, password);
+      reportLoginEvent(email, true);
     } catch {
-      emitAlert({ type: "error", message: "Invalid email or password" });
+      const result = await reportLoginEvent(email, false);
+      emitAlert({
+        type: "error",
+        message: result?.blocked
+          ? "Too many failed attempts. Please wait a few minutes and try again."
+          : "Invalid email or password",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -123,6 +163,9 @@ export default function Login() {
     const data = await res.json().catch(() => ({}));
 
     if (data.status === "inactive") {
+      // The Google credential itself was valid (just a deactivated account),
+      // so this isn't a brute-force signal — record it as a success.
+      reportLoginEvent(currentUser.email, true);
       // Deactivated account — keep the session alive so AuthContext's own
       // /api/admin/me sync resolves `isInactive` and the account-inactive
       // screen can explain what happened, instead of signing out with only a
@@ -132,14 +175,25 @@ export default function Login() {
     }
 
     if (!res.ok) {
+      // Revoke the rejected identity's client session in parallel with — not
+      // after — reporting the attempt, so a slow /api/security/login-event
+      // call (bounded to 5s regardless, see reportLoginEvent) never delays
+      // sign-out.
+      const [result] = await Promise.all([
+        reportLoginEvent(currentUser.email, false),
+        auth.signOut(),
+      ]);
       setGoogleError(true);
       emitAlert({
         type: "error",
-        message: data.error ?? "Google login failed",
+        message: result?.blocked
+          ? "Too many failed attempts. Please wait a few minutes and try again."
+          : (data.error ?? "Google login failed"),
       });
-      await auth.signOut();
       return;
     }
+
+    reportLoginEvent(currentUser.email, true);
 
     if (data.status === "pending") {
       router.replace("/access-requested");

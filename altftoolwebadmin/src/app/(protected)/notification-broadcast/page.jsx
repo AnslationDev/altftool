@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   AlertTriangle,
   Bell,
+  Clock,
   Globe,
   Info,
   Megaphone,
@@ -14,7 +15,14 @@ import {
   X,
 } from "lucide-react";
 import { Alert, Button, Field, Input, Tabs, Textarea } from "@altftool/ui";
-import { DataState, EmptyState, PageHeader, SectionCard } from "@/ansets";
+import {
+  DataState,
+  EmptyState,
+  FilterBar,
+  PageHeader,
+  SectionCard,
+  useTableControls,
+} from "@/ansets";
 import { useAuth } from "@/context/AuthContext";
 import { emitAlert } from "@/lib/alertBus";
 import { readApiJson, getErrorMessage } from "@/lib/apiClient";
@@ -30,6 +38,13 @@ function fmtDate(ms) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+/** Formats a ms timestamp as a `datetime-local` input value, in local time. */
+function toDateTimeLocalValue(ms) {
+  const d = new Date(ms);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 /**
@@ -93,6 +108,10 @@ const TYPE_META = {
 };
 
 const TYPE_KEYS = ["announcement", "warning", "notice"];
+
+// Hoisted so useTableControls' memo isn't invalidated by a fresh array literal
+// on every render (mirrors newsletter/page.jsx's SEARCH_FIELDS).
+const BROADCAST_SEARCH_FIELDS = ["title", "body"];
 
 const STATUS_META = {
   draft: { label: "Draft", cls: "bg-[var(--surface-soft)] text-[var(--muted)]" },
@@ -163,6 +182,44 @@ function RowAction({ label, tone, onClick, disabled, children }) {
   );
 }
 
+/**
+ * Mirrors AdminHeader's NotificationIcon + this file's TypeBadge so the admin
+ * sees roughly what recipients will see before triggering a send that a plain
+ * window.confirm() summary cannot show.
+ */
+function BroadcastPreview({ title, body, type, actionUrl }) {
+  const meta = TYPE_META[type] ?? TYPE_META.notice;
+  const Icon = meta.icon;
+  const trimmedTitle = title.trim();
+  const trimmedBody = body.trim();
+  const trimmedUrl = actionUrl.trim();
+
+  return (
+    <div>
+      <p className="mb-1.5 text-xs font-semibold text-[var(--muted)]">Preview</p>
+      <div className="flex items-start gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-3">
+        <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--surface)] text-[var(--primary)]">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="mb-1 flex flex-wrap items-center gap-2">
+            <p className="truncate text-sm font-semibold text-[var(--foreground)]">
+              {trimmedTitle || "Notification title"}
+            </p>
+            <TypeBadge type={type} />
+          </div>
+          <p className="text-xs text-[var(--muted)]">
+            {trimmedBody || "Notification body will appear here."}
+          </p>
+          {trimmedUrl ? (
+            <p className="mt-1 truncate text-[11px] text-[var(--primary)]">{trimmedUrl}</p>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Create Form ─────────────────────────────────────────────────────────────
 
 function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
@@ -173,6 +230,8 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
   const urlFieldId = `${uid}-url`;
   const urlErrorId = `${uid}-url-error`;
   const userSearchId = `${uid}-user-search`;
+  const scheduledAtFieldId = `${uid}-scheduled-at`;
+  const scheduledAtErrorId = `${uid}-scheduled-at-error`;
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -181,11 +240,19 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [userSearch, setUserSearch] = useState("");
   const [actionUrl, setActionUrl] = useState("");
+  const [sendMode, setSendMode] = useState("now"); // "now" | "schedule"
+  const [scheduledAt, setScheduledAt] = useState("");
+  const [scheduledAtError, setScheduledAtError] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [urlError, setUrlError] = useState("");
 
+  // Unlike the target="all" path below, resolveTargetUsers() applies no
+  // active-status filter to an explicit userIds list — a suspended admin
+  // picked here would actually receive the notification and push. Match
+  // "All users" by never offering them as selectable.
   const filteredAdmins = adminsList.filter((a) => {
+    if (a.isActive !== true) return false;
     const q = userSearch.toLowerCase();
     return (
       a.email?.toLowerCase().includes(q) ||
@@ -215,9 +282,12 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
         : "all admins"
       : `${recipientCount} selected admin${recipientCount === 1 ? "" : "s"}`;
 
+  const minScheduledAt = toDateTimeLocalValue(Date.now() + 60000);
+
   const handleSubmit = async () => {
     setError("");
     setUrlError("");
+    setScheduledAtError("");
     if (!title.trim() || !body.trim()) {
       setError("Title and body are required.");
       return;
@@ -233,10 +303,31 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
       return;
     }
 
+    let scheduledAtMs = null;
+    if (sendMode === "schedule") {
+      if (!scheduledAt) {
+        setScheduledAtError("Pick a date and time to schedule this broadcast.");
+        return;
+      }
+      scheduledAtMs = new Date(scheduledAt).getTime();
+      if (Number.isNaN(scheduledAtMs)) {
+        setScheduledAtError("Enter a valid date and time.");
+        return;
+      }
+      if (scheduledAtMs <= Date.now()) {
+        setScheduledAtError("Choose a time in the future.");
+        return;
+      }
+    }
+
     // Sending is irreversible: it writes an in-app notification per recipient
     // AND fires device push. Deleting the broadcast afterwards removes neither.
+    // A schedule, unlike a send, can still be cancelled from the History tab
+    // right up until it fires, so the confirmation reflects that difference.
     const confirmed = window.confirm(
-      `Send “${title.trim()}” to ${audienceLabel}?\n\nThis delivers an in-app notification and a push alert immediately and cannot be undone.`,
+      sendMode === "schedule"
+        ? `Schedule “${title.trim()}” for ${audienceLabel} at ${fmtDate(scheduledAtMs)}?\n\nYou can cancel the schedule from the History tab any time before it goes out.`
+        : `Send “${title.trim()}” to ${audienceLabel}?\n\nThis delivers an in-app notification and a push alert immediately and cannot be undone.`,
     );
     if (!confirmed) return;
 
@@ -258,8 +349,8 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
             userIds: targetType === "users" ? selectedUsers : [],
           },
           actionUrl: actionUrl.trim(),
-          sendNow: true,
-          scheduledAt: null,
+          sendNow: sendMode === "now",
+          scheduledAt: sendMode === "schedule" ? scheduledAtMs : null,
         }),
       });
 
@@ -272,13 +363,22 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
       setTargetType("all");
       setSelectedUsers([]);
       setActionUrl("");
+      setSendMode("now");
+      setScheduledAt("");
 
-      const delivered =
-        typeof data?.recipientCount === "number" ? ` to ${data.recipientCount} recipient(s)` : "";
-      emitAlert({
-        type: "success",
-        message: `Broadcast sent${delivered}.${data?.broadcastId ? ` ID: ${data.broadcastId}` : ""}`,
-      });
+      if (data?.status === "scheduled") {
+        emitAlert({
+          type: "success",
+          message: `Broadcast scheduled for ${fmtDate(scheduledAtMs)}.${data?.broadcastId ? ` ID: ${data.broadcastId}` : ""}`,
+        });
+      } else {
+        const delivered =
+          typeof data?.recipientCount === "number" ? ` to ${data.recipientCount} recipient(s)` : "";
+        emitAlert({
+          type: "success",
+          message: `Broadcast sent${delivered}.${data?.broadcastId ? ` ID: ${data.broadcastId}` : ""}`,
+        });
+      }
 
       onCreated?.();
     } catch (err) {
@@ -296,14 +396,25 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
       footer={
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs leading-5 text-[var(--muted)]">
-            This will notify{" "}
-            <span className="font-semibold text-[var(--foreground)]">{audienceLabel}</span>{" "}
-            immediately. Delivered notifications and push alerts cannot be recalled.
+            {sendMode === "schedule" ? (
+              <>
+                This will notify{" "}
+                <span className="font-semibold text-[var(--foreground)]">{audienceLabel}</span>{" "}
+                {scheduledAt ? `on ${fmtDate(new Date(scheduledAt).getTime())}` : "at the scheduled time"}.
+                You can cancel the schedule from the History tab any time before it goes out.
+              </>
+            ) : (
+              <>
+                This will notify{" "}
+                <span className="font-semibold text-[var(--foreground)]">{audienceLabel}</span>{" "}
+                immediately. Delivered notifications and push alerts cannot be recalled.
+              </>
+            )}
           </p>
           <Button
             onClick={handleSubmit}
             loading={loading}
-            loadingLabel="Sending broadcast"
+            loadingLabel={sendMode === "schedule" ? "Scheduling broadcast" : "Sending broadcast"}
             // Block the send while the recipient list is unknown. This action
             // cannot be recalled, so "we could not resolve who receives this"
             // must stop it rather than quietly deliver to nobody.
@@ -315,8 +426,12 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
             }
             className="w-full sm:w-auto sm:shrink-0"
           >
-            {loading ? null : <Send className="h-3.5 w-3.5" aria-hidden="true" />}
-            Send Broadcast
+            {loading ? null : sendMode === "schedule" ? (
+              <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <Send className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+            {sendMode === "schedule" ? "Schedule Broadcast" : "Send Broadcast"}
           </Button>
         </div>
       }
@@ -461,6 +576,66 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
         )}
       </fieldset>
 
+      {/* Delivery — scheduling is fully built server-side (POST requires
+          scheduledAt when sendNow is false, and the History tab already has
+          Scheduled badges + a Cancel action) but nothing in this form could
+          ever set sendNow:false, so a schedule could never be created. */}
+      <fieldset className="min-w-0">
+        <legend className="mb-1.5 text-xs font-semibold text-[var(--muted)]">Delivery</legend>
+        <div className="flex flex-wrap gap-3">
+          {[
+            { val: "now", label: "Send now", Icon: Send },
+            { val: "schedule", label: "Schedule for later", Icon: Clock },
+          ].map(({ val, label, Icon }) => (
+            <label
+              key={val}
+              className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3.5 py-2 text-sm transition has-[:focus-visible]:[box-shadow:var(--focus-ring)] ${
+                sendMode === val
+                  ? "border-[var(--primary)] bg-[var(--surface-soft)] font-semibold text-[var(--foreground)]"
+                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--border-strong)]"
+              }`}
+            >
+              <input
+                type="radio"
+                name="broadcast-send-mode"
+                className="sr-only"
+                checked={sendMode === val}
+                onChange={() => {
+                  setSendMode(val);
+                  if (val === "now") setScheduledAtError("");
+                }}
+              />
+              <Icon size={14} aria-hidden="true" />
+              {label}
+            </label>
+          ))}
+        </div>
+
+        {sendMode === "schedule" && (
+          <div className="mt-3">
+            <Field label="Scheduled for" htmlFor={scheduledAtFieldId}>
+              <Input
+                id={scheduledAtFieldId}
+                type="datetime-local"
+                value={scheduledAt}
+                min={minScheduledAt}
+                onChange={(e) => {
+                  setScheduledAt(e.target.value);
+                  if (scheduledAtError) setScheduledAtError("");
+                }}
+                invalid={Boolean(scheduledAtError)}
+                aria-describedby={scheduledAtError ? scheduledAtErrorId : undefined}
+              />
+            </Field>
+            {scheduledAtError ? (
+              <p id={scheduledAtErrorId} className="text-xs font-medium text-[var(--danger-text)]">
+                {scheduledAtError}
+              </p>
+            ) : null}
+          </div>
+        )}
+      </fieldset>
+
       <Field label="Action URL (optional)" htmlFor={urlFieldId}>
         <Input
           id={urlFieldId}
@@ -483,6 +658,8 @@ function CreateBroadcastPanel({ adminsList, adminsError, onCreated }) {
           </p>
         ) : null}
       </Field>
+
+      <BroadcastPreview title={title} body={body} type={type} actionUrl={actionUrl} />
     </SectionCard>
   );
 }
@@ -509,6 +686,12 @@ function BroadcastList({ broadcasts, onDelete, onCancel, onResend, busyId = null
               {b.sentAt && (
                 <span>
                   <span className="font-semibold">Sent:</span> {fmtDate(b.sentAt)}
+                </span>
+              )}
+              {b.status === "sent" && typeof b.recipientCount === "number" && (
+                <span>
+                  <span className="font-semibold">Delivered to:</span> {b.recipientCount} recipient
+                  {b.recipientCount === 1 ? "" : "s"}
                 </span>
               )}
               {b.status === "scheduled" && b.scheduledAt && (
@@ -741,6 +924,19 @@ export default function NotificationBroadcastPage() {
     }
   };
 
+  const {
+    search: historySearch,
+    onSearchChange: onHistorySearchChange,
+    filterValues: historyFilterValues,
+    setFilter: setHistoryFilter,
+    rows: visibleBroadcasts,
+    matched: matchedBroadcasts,
+    total: totalBroadcasts,
+  } = useTableControls(broadcasts, {
+    searchFields: BROADCAST_SEARCH_FIELDS,
+    filters: { status: (row, value) => row.status === value },
+  });
+
   const tabItems = [
     { key: "create", label: "Create" },
     { key: "history", label: "History", count: broadcasts.length },
@@ -802,13 +998,44 @@ export default function NotificationBroadcastPage() {
               />
             }
           >
-            <BroadcastList
-              broadcasts={broadcasts}
-              onDelete={handleDelete}
-              onCancel={handleCancel}
-              onResend={handleResend}
-              busyId={busyId}
-            />
+            <div className="space-y-3">
+              <FilterBar
+                search={historySearch}
+                onSearchChange={onHistorySearchChange}
+                searchPlaceholder="Search title or body…"
+                filters={[
+                  {
+                    key: "status",
+                    value: historyFilterValues.status || "all",
+                    onChange: (value) => setHistoryFilter("status", value),
+                    label: "Filter by status",
+                    options: [
+                      { value: "all", label: "All statuses" },
+                      { value: "draft", label: "Draft" },
+                      { value: "scheduled", label: "Scheduled" },
+                      { value: "sent", label: "Sent" },
+                      { value: "failed", label: "Failed" },
+                    ],
+                  },
+                ]}
+                count={`${matchedBroadcasts} of ${totalBroadcasts} broadcast${totalBroadcasts === 1 ? "" : "s"}`}
+              />
+              {matchedBroadcasts === 0 ? (
+                <EmptyState
+                  icon={Bell}
+                  title="No matches"
+                  description="Try a different search term or status filter."
+                />
+              ) : (
+                <BroadcastList
+                  broadcasts={visibleBroadcasts}
+                  onDelete={handleDelete}
+                  onCancel={handleCancel}
+                  onResend={handleResend}
+                  busyId={busyId}
+                />
+              )}
+            </div>
           </DataState>
         )}
       </div>

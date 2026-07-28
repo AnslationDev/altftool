@@ -10,20 +10,20 @@ import { EmptyState, SectionCard } from "@/ansets";
 const TONE_MAP = {
   danger: {
     icon: Siren,
-    wrapper: "border-[var(--danger)]/40 bg-[var(--danger-soft)]",
-    iconWrap: "bg-[var(--danger)]/15 text-[var(--danger)]",
+    wrapper: "border-danger/40 bg-danger-soft",
+    iconWrap: "bg-danger/15 text-danger",
     message: "text-[var(--danger-text)]",
   },
   warning: {
     icon: TriangleAlert,
-    wrapper: "border-[var(--warning)]/40 bg-[var(--warning-soft)]",
-    iconWrap: "bg-[var(--warning)]/15 text-[var(--warning)]",
+    wrapper: "border-warning/40 bg-warning-soft",
+    iconWrap: "bg-warning/15 text-warning",
     message: "text-[var(--foreground)]",
   },
   info: {
     icon: Info,
-    wrapper: "border-[var(--info)]/40 bg-[var(--info-soft)]",
-    iconWrap: "bg-[var(--info)]/15 text-[var(--info)]",
+    wrapper: "border-info/40 bg-info-soft",
+    iconWrap: "bg-info/15 text-info",
     message: "text-[var(--foreground)]",
   },
 };

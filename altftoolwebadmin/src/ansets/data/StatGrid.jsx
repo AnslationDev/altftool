@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import { cn } from "@altftool/ui";
 
 /**
@@ -28,14 +31,35 @@ const TONE_TOKEN = {
  * @param {string}   [hint]  Optional supporting line under the value.
  * @param {"default"|"primary"|"success"|"warning"|"danger"} [tone]
  * @param {import("react").ElementType} [icon]
+ * @param {string}   [href]    Turns the tile into a drill-down link (Next Link).
+ * @param {Function} [onClick] Turns the tile into a button when there's no `href`.
  */
-export function StatTile({ label, value, hint, tone = "default", icon: Icon, className }) {
+export function StatTile({
+  label,
+  value,
+  hint,
+  tone = "default",
+  icon: Icon,
+  href,
+  onClick,
+  className,
+}) {
+  const interactive = Boolean(href || onClick);
+  // Same shell for all three cases so a page can add `href` later without a
+  // visual jump: div -> button/Link only changes the tag and adds the hover
+  // affordance, same border/radius/padding/shadow from master.md's card scale.
+  const Wrapper = href ? Link : interactive ? "button" : "div";
+  const wrapperProps = href ? { href } : interactive ? { type: "button", onClick } : {};
+
   return (
-    <div
+    <Wrapper
       className={cn(
         "rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3.5 shadow-sm",
+        interactive &&
+          "block w-full text-left transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_45%,var(--border))] hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]",
         className,
       )}
+      {...wrapperProps}
     >
       <div className="flex items-center gap-2">
         {Icon ? (
@@ -54,7 +78,7 @@ export function StatTile({ label, value, hint, tone = "default", icon: Icon, cla
       </p>
 
       {hint ? <p className="mt-0.5 text-xs leading-5 text-[var(--muted)]">{hint}</p> : null}
-    </div>
+    </Wrapper>
   );
 }
 
@@ -62,7 +86,7 @@ export function StatTile({ label, value, hint, tone = "default", icon: Icon, cla
  * Responsive KPI row. `items` is the data — the grid decides the layout, so
  * every screen's KPI strip breaks at the same points.
  *
- * @param {Array<{key?:string,label:string,value:ReactNode,hint?:string,tone?:string,icon?:any}>} items
+ * @param {Array<{key?:string,label:string,value:ReactNode,hint?:string,tone?:string,icon?:any,href?:string,onClick?:Function}>} items
  * @param {2|3|4} [columns] Columns at the widest breakpoint.
  */
 export function StatGrid({ items = [], columns = 4, className }) {

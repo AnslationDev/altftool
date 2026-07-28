@@ -153,7 +153,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
             team,
             roleType,
             isActive,
-            permissions: {},
+            permissions: admin.permissions || {},
             projectAccess: roleType === "superadmin" ? {} : projectAccess,
           },
         }),
@@ -297,18 +297,18 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
                 <label key={role.value}
                   className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition select-none ${isSelf ? "opacity-50 cursor-not-allowed" : ""} ${
                     roleType === role.value
-                      ? role.value === "superadmin" ? "border-[var(--primary)] bg-[var(--primary)]" : "border-[var(--primary)]/40 bg-[var(--primary-soft)]"
+                      ? role.value === "superadmin" ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--primary)]/40 bg-[var(--primary-soft)]"
                       : "border-[var(--border)] hover:bg-[var(--surface-soft)]"
                   }`}>
                   <input type="radio" name="roleType" value={role.value} checked={roleType === role.value}
                     onChange={() => !isSelf && setRoleType(role.value)}
                     disabled={isSelf} className="mt-0.5 accent-[var(--primary)]" />
                   <div>
-                    <div className={`flex items-center gap-1.5 text-sm font-bold ${roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]" : "text-[var(--foreground)]"}`}>
-                      <span className={roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]" : "text-[var(--muted)]"}>{role.icon}</span>
+                    <div className="flex items-center gap-1.5 text-sm font-bold text-[var(--foreground)]">
+                      <span className={roleType === role.value ? "text-[var(--primary)]" : "text-[var(--muted)]"}>{role.icon}</span>
                       {role.label}
                     </div>
-                    <p className={`text-xs mt-0.5 ${roleType === role.value && role.value === "superadmin" ? "text-[var(--primary-foreground)]/70" : "text-[var(--muted)]"}`}>{role.desc}</p>
+                    <p className={`text-xs mt-0.5 ${roleType === role.value ? "text-[var(--foreground)]/80" : "text-[var(--muted)]"}`}>{role.desc}</p>
                   </div>
                 </label>
               ))}

@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T07:31:17.558Z",
+  "generatedAt": "2026-07-28T19:38:02.557Z",
   "tools": {
-    "total": 3554,
-    "healthy": 3554,
+    "total": 3816,
+    "healthy": 3816,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 22,
-    "directories": 3555,
+    "directories": 3817,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -19,24 +19,24 @@
     "readiness": {
       "methodology": "static-readiness-v2",
       "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-      "total": 3554,
+      "total": 3816,
       "score": 94,
       "counts": {
-        "working": 3476,
-        "api-required": 64,
+        "working": 3735,
+        "api-required": 67,
         "partial": 14,
         "broken": 0
       },
       "automatedTests": 158,
       "automatedCoverage": 4,
-      "networkDependent": 64,
+      "networkDependent": 67,
       "envDependent": 4,
       "api": {
-        "tools": 65,
+        "tools": 68,
         "counts": {
           "configured": 1,
           "missing-config": 2,
-          "runtime-check": 62
+          "runtime-check": 65
         },
         "providerCount": 19,
         "requiredEnvKeys": [
@@ -54,7 +54,7 @@
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 50,
+            "tools": 53,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -866,10 +866,10 @@
           }
         },
         {
-          "slug": "barcode-scanner",
-          "name": "Barcode Scanner",
-          "category": "Developer",
-          "route": "/tools/all/barcode-scanner",
+          "slug": "aqi-today",
+          "name": "AQI Today",
+          "category": "Education & Science, Health & Fitness",
+          "route": "/tools/all/aqi-today",
           "status": "api-required",
           "score": 80,
           "priority": false,
@@ -887,8 +887,7 @@
           "apiReadiness": {
             "status": "runtime-check",
             "providers": [
-              "api.upcitemdb.com",
-              "world.openfoodfacts.org"
+              "Runtime-provided endpoint"
             ],
             "missingEnvKeys": []
           }

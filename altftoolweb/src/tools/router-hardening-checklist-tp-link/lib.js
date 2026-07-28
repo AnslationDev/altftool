@@ -1,0 +1,671 @@
+/**
+ * TP-Link Router Hardening Checklist — scoring and WPA passphrase maths.
+ *
+ * Pure module: no React, no DOM, no clock reads. Same input, same output.
+ * Every exported function is total: unusable input returns { error } instead of
+ * NaN, Infinity or a number that looks like an answer.
+ */
+
+/** Where the settings live on a current TP-Link Archer / Deco web UI. */
+export const DEVICE = {
+  vendor: "TP-Link",
+  adminUrl: "http://tplinkwifi.net",
+  gateways: ["192.168.0.1", "192.168.1.1"],
+  app: "TP-Link Tether",
+  cloudAccount: "TP-Link ID",
+  note:
+    "Archer routers answer on tplinkwifi.net and usually 192.168.0.1; Deco units are configured almost entirely from the Deco app. Older units shipped with admin/admin, newer ones force you to set a password during setup — the label on the base of the unit is authoritative.",
+};
+
+/** Exposure axes. A profile re-weights these, not individual controls. */
+export const AXES = [
+  "Admin access",
+  "Wi-Fi encryption",
+  "Internet exposure",
+  "Connected devices",
+  "Firmware upkeep",
+];
+
+export const GROUPS = [
+  "Admin account",
+  "Wi-Fi",
+  "Facing the internet",
+  "Devices on your LAN",
+  "Firmware and lifecycle",
+];
+
+/**
+ * A missing critical control leaves a hole nothing else compensates for, so the
+ * score is held at this ceiling until every critical item is done.
+ */
+export const CRITICAL_CAP_PERCENT = 60;
+
+/**
+ * The checklist.
+ *
+ * weight = share of the total points, ranked by how much real exposure the
+ * control removes on a consumer router, not by how hard it is to do.
+ */
+export const CHECKLIST = [
+  {
+    id: "admin-password",
+    group: "Admin account",
+    axis: "Admin access",
+    title: "Replace the default or installer-set admin password",
+    detail:
+      "Anyone on your Wi-Fi — a guest, a tenant, a compromised laptop — can open the admin page. If it still answers to admin/admin or the password the installer used on every house on the street, everything below can be undone in a minute.",
+    path: "tplinkwifi.net > Advanced > System Tools > Administration > Account Management",
+    risk: "A device already inside your network takes over the router, changes DNS and silently redirects your banking traffic.",
+    weight: 8,
+    critical: true,
+  },
+  {
+    id: "admin-password-unique",
+    group: "Admin account",
+    axis: "Admin access",
+    title: "Use a password not reused anywhere else",
+    detail:
+      "Router admin passwords are typed rarely and reused often. Reusing your email or Wi-Fi password means one breach dump hands over the router too.",
+    path: "Set it in a password manager, not on a sticky note under the router",
+    risk: "A password leaked from an unrelated website is tried against your router and works.",
+    weight: 3,
+    critical: false,
+  },
+  {
+    id: "tplink-id-2fa",
+    group: "Admin account",
+    axis: "Admin access",
+    title: "Secure the TP-Link ID with two-factor, or unbind it",
+    detail:
+      "A TP-Link ID is a cloud account that can reach the router from anywhere through Tether. Whoever holds that account holds the router, so it needs 2FA — or unbind it if you never manage the router remotely.",
+    path: "Tether app > Me > TP-Link ID, or web UI > Advanced > TP-Link ID",
+    risk: "A phished or credential-stuffed cloud login reconfigures your router from another country, with no need to be near your house.",
+    weight: 4,
+    critical: false,
+  },
+  {
+    id: "local-management-limit",
+    group: "Admin account",
+    axis: "Admin access",
+    title: "Restrict local management to specific devices",
+    detail:
+      "Local Management can be limited to a short list of MAC addresses, so the admin page stops answering the smart TV, the printer and every guest phone.",
+    path: "Advanced > System Tools > Administration > Local Management",
+    risk: "Any compromised device on the LAN can reach the login page and brute-force it at leisure.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "wpa-mode",
+    group: "Wi-Fi",
+    axis: "Wi-Fi encryption",
+    title: "Set security to WPA2-PSK (AES) or WPA2/WPA3 mixed",
+    detail:
+      "WEP and WPA-TKIP are broken and can be recovered from captured traffic. WPA3-Personal is strongest but breaks older devices, so WPA2/WPA3 mixed with AES is the practical setting for a mixed household.",
+    path: "Wireless (or Advanced > Wireless) > Wireless Settings > Security",
+    risk: "Someone parked outside decrypts your traffic or joins the network without ever knowing the passphrase.",
+    weight: 7,
+    critical: true,
+  },
+  {
+    id: "wifi-passphrase",
+    group: "Wi-Fi",
+    axis: "Wi-Fi encryption",
+    title: "Use a long Wi-Fi passphrase, not a phone number or a name",
+    detail:
+      "WPA2 handshakes can be captured in seconds and cracked offline at full GPU speed. Length is what defeats that: the passphrase checker below shows how long your current one survives.",
+    path: "Wireless > Wireless Settings > Password",
+    risk: "A captured handshake is cracked overnight and your network is joined at will.",
+    weight: 6,
+    critical: true,
+  },
+  {
+    id: "ssid-not-default",
+    group: "Wi-Fi",
+    axis: "Wi-Fi encryption",
+    title: "Rename the SSID away from TP-Link_XXXX",
+    detail:
+      "A default SSID announces the vendor and often the model, which tells an attacker exactly which published exploit to try. Do not put your flat number or surname in the new name either.",
+    path: "Wireless > Wireless Settings > Network Name (SSID)",
+    risk: "Your router model is advertised to the street, along with which unpatched bug applies to it.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "wps-off",
+    group: "Wi-Fi",
+    axis: "Wi-Fi encryption",
+    title: "Turn WPS off completely, PIN and button",
+    detail:
+      "The eight-digit WPS PIN is validated in two halves, which collapses the search from 100 million to about 11,000 attempts. On vulnerable chipsets the Pixie Dust attack recovers it offline in seconds.",
+    path: "Advanced > Wireless > WPS — disable the PIN and the push button",
+    risk: "Your Wi-Fi passphrase is recovered through WPS in hours regardless of how long the passphrase is.",
+    weight: 5,
+    critical: true,
+  },
+  {
+    id: "guest-network",
+    group: "Wi-Fi",
+    axis: "Connected devices",
+    title: "Give visitors the guest network with LAN access off",
+    detail:
+      "TP-Link's guest network has a separate password and a tick box for whether guests may see your local devices. Leave that unticked so a visitor's phone cannot reach your NAS, printer or cameras.",
+    path: "Advanced > Wireless > Guest Network — untick 'Allow guests to access my local network'",
+    risk: "A visitor's malware-carrying phone scans your file shares and cameras from inside the LAN.",
+    weight: 3,
+    critical: false,
+  },
+  {
+    id: "wifi-rotate",
+    group: "Wi-Fi",
+    axis: "Wi-Fi encryption",
+    title: "Rotate the Wi-Fi password after handing it out widely",
+    detail:
+      "Every guest, technician and delivery agent who ever got the password still has it, and phones keep it saved for years. Rotating annually or after a move resets that list.",
+    path: "Wireless > Wireless Settings > Password, then reconnect your own devices",
+    risk: "A former flatmate or contractor keeps silent access to your network long after they leave.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "remote-management-off",
+    group: "Facing the internet",
+    axis: "Internet exposure",
+    title: "Disable remote (WAN) management",
+    detail:
+      "Remote management publishes the admin page on the internet. This is the surface that CVE-2023-1389 on the Archer AX21 was reached through — a command-injection flaw that Mirai variants mass-exploited in 2023.",
+    path: "Advanced > System Tools > Administration > Remote Management > Disable",
+    risk: "Scanners find your login page within hours of it going live and try every published exploit for your model.",
+    weight: 7,
+    critical: true,
+  },
+  {
+    id: "upnp-off",
+    group: "Facing the internet",
+    axis: "Internet exposure",
+    title: "Turn UPnP off unless a console needs it",
+    detail:
+      "UPnP lets any program inside your network open a port to the internet without asking you. Consoles and some torrent clients want it; nothing else has a good reason to.",
+    path: "Advanced > NAT Forwarding > UPnP",
+    risk: "Malware on a laptop quietly publishes its own remote-access port through your firewall.",
+    weight: 4,
+    critical: false,
+  },
+  {
+    id: "port-forward-audit",
+    group: "Facing the internet",
+    axis: "Internet exposure",
+    title: "Clear stale port forwards and switch off DMZ",
+    detail:
+      "Forwards added years ago for a camera or a game server usually still point at a device that is no longer patched. DMZ is worse: it exposes one device completely.",
+    path: "Advanced > NAT Forwarding > Virtual Servers and DMZ",
+    risk: "An old DVR or camera on a forwarded port is taken over and used as a foothold on your network.",
+    weight: 4,
+    critical: false,
+  },
+  {
+    id: "ddns-audit",
+    group: "Facing the internet",
+    axis: "Internet exposure",
+    title: "Remove DDNS if nothing needs a permanent name",
+    detail:
+      "Dynamic DNS gives your changing home IP a fixed hostname. That is useful for remote access and equally useful to anyone who wants to keep finding you after your IP changes.",
+    path: "Advanced > Network > Dynamic DNS",
+    risk: "Your home network keeps a stable, guessable address that survives every IP change.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "usb-sharing-audit",
+    group: "Facing the internet",
+    axis: "Internet exposure",
+    title: "Lock down USB sharing, FTP and media server",
+    detail:
+      "Routers with a USB port can publish that drive over SMB, FTP and DLNA, sometimes with anonymous access on by default and sometimes reachable from the internet.",
+    path: "Advanced > USB Settings > Sharing Access / FTP Server",
+    risk: "The backup drive plugged into the router is readable by anyone on the network, or worse, off it.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "dns-explicit",
+    group: "Devices on your LAN",
+    axis: "Connected devices",
+    title: "Set the DHCP DNS servers deliberately",
+    detail:
+      "Router DNS is the first thing malware changes, because it redirects every device silently. Setting a resolver you chose gives you a known-good value to compare against later.",
+    path: "Advanced > Network > DHCP Server > Primary/Secondary DNS",
+    risk: "A tampered DNS entry sends your banking domain to a look-alike site, on every device at once.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "client-review",
+    group: "Devices on your LAN",
+    axis: "Connected devices",
+    title: "Review the connected-device list and name everything",
+    detail:
+      "Naming each client once turns the list into something you can scan in ten seconds. An unnamed device that reappears at 3am is the signal you are looking for.",
+    path: "Network Map > Clients, or Tether app home screen",
+    risk: "An unknown device sits on your network for months because nothing on the list ever looked unusual.",
+    weight: 3,
+    critical: false,
+  },
+  {
+    id: "iot-segmented",
+    group: "Devices on your LAN",
+    axis: "Connected devices",
+    title: "Move cameras, TVs and smart plugs to the guest or IoT network",
+    detail:
+      "Cheap smart devices get firmware for a year or two and then never again. Keeping them off the network that holds your laptop and NAS limits what a compromised bulb can reach.",
+    path: "Advanced > Wireless > Guest Network (or the IoT Network on Deco)",
+    risk: "An abandoned camera firmware becomes the entry point to the machine holding your documents.",
+    weight: 2,
+    critical: false,
+  },
+  {
+    id: "firmware-current",
+    group: "Firmware and lifecycle",
+    axis: "Firmware upkeep",
+    title: "Install the latest firmware and check quarterly",
+    detail:
+      "Router firmware is where the actual security fixes ship. The Archer AX21 command-injection bug, for one, was fixed only in firmware — no setting worked around it.",
+    path: "Advanced > System Tools > Firmware Upgrade > Check for upgrades",
+    risk: "A publicly documented remote-code-execution bug for your exact model stays open on your router.",
+    weight: 7,
+    critical: true,
+  },
+  {
+    id: "eol-check",
+    group: "Firmware and lifecycle",
+    axis: "Firmware upkeep",
+    title: "Check the model is still receiving firmware",
+    detail:
+      "TP-Link support pages list downloads per hardware revision. If the newest firmware is several years old, the device is effectively end-of-life and no checklist fixes that — replacement does.",
+    path: "tp-link.com support page for your exact model and hardware version (V1, V2...)",
+    risk: "You harden a router that will never be patched again for the next bug that is found.",
+    weight: 3,
+    critical: false,
+  },
+  {
+    id: "config-backup",
+    group: "Firmware and lifecycle",
+    axis: "Firmware upkeep",
+    title: "Back up the configuration once it is hardened",
+    detail:
+      "A saved config turns a factory reset — after a power surge, a failed upgrade or a break-in — from an evening of work into two minutes.",
+    path: "Advanced > System Tools > Backup & Restore",
+    risk: "A reset wipes every setting here and the router goes back to factory defaults until you redo it all.",
+    weight: 1,
+    critical: false,
+  },
+];
+
+/** Risk profiles re-weight the axes; multipliers are never negative. */
+export const PROFILES = [
+  {
+    id: "home",
+    name: "Ordinary home broadband",
+    description: "A family flat with phones, a TV and a couple of laptops. Balanced weighting.",
+    multipliers: {
+      "Admin access": 1,
+      "Wi-Fi encryption": 1,
+      "Internet exposure": 1,
+      "Connected devices": 1,
+      "Firmware upkeep": 1,
+    },
+  },
+  {
+    id: "wfh",
+    name: "Work from home",
+    description:
+      "A work laptop and company VPN share the router, so anything reachable from the internet and any weak admin path matters more.",
+    multipliers: {
+      "Admin access": 1.3,
+      "Wi-Fi encryption": 1,
+      "Internet exposure": 1.5,
+      "Connected devices": 1.2,
+      "Firmware upkeep": 1.3,
+    },
+  },
+  {
+    id: "shared",
+    name: "Shared flat, PG or hostel",
+    description:
+      "The password has been given to people who have since moved out, and unknown devices join regularly.",
+    multipliers: {
+      "Admin access": 1.2,
+      "Wi-Fi encryption": 1.5,
+      "Internet exposure": 0.8,
+      "Connected devices": 1.4,
+      "Firmware upkeep": 1,
+    },
+  },
+  {
+    id: "shop",
+    name: "Small shop or clinic",
+    description:
+      "Customer Wi-Fi, a billing machine and possibly card terminals sit behind one consumer router.",
+    multipliers: {
+      "Admin access": 1.3,
+      "Wi-Fi encryption": 1.2,
+      "Internet exposure": 1.4,
+      "Connected devices": 1.4,
+      "Firmware upkeep": 1.4,
+    },
+  },
+];
+
+export const BANDS = [
+  { id: "hardened", min: 90, label: "Hardened", hint: "Very little left to take. Recheck firmware every quarter." },
+  { id: "solid", min: 70, label: "Solid", hint: "The serious holes are closed; tidy up the rest when convenient." },
+  { id: "partial", min: 40, label: "Partly hardened", hint: "The obvious settings are done, the quiet ones are not." },
+  { id: "exposed", min: 0, label: "Exposed", hint: "Default credentials or an internet-facing admin page are the likely reason." },
+];
+
+export const TOTAL_WEIGHT = CHECKLIST.reduce((sum, item) => sum + item.weight, 0);
+
+/** Most people have at least done these, so the first paint is not all zeros. */
+export const DEFAULT_DONE = ["wpa-mode", "ssid-not-default"];
+
+const byId = new Map(CHECKLIST.map((item) => [item.id, item]));
+const profileById = new Map(PROFILES.map((item) => [item.id, item]));
+
+/** First band whose minimum the percentage reaches. Input is clamped to 0-100. */
+export function bandFor(percent) {
+  const value = Number.isFinite(percent) ? Math.min(100, Math.max(0, percent)) : 0;
+  return BANDS.find((band) => value >= band.min) || BANDS[BANDS.length - 1];
+}
+
+/** Weight of one control under one profile. Never negative, never NaN. */
+export function effectiveWeight(item, profile) {
+  const multiplier = profile && profile.multipliers ? profile.multipliers[item.axis] : 1;
+  const factor = Number.isFinite(multiplier) && multiplier >= 0 ? multiplier : 1;
+  return item.weight * factor;
+}
+
+/**
+ * Score a set of completed control ids under a risk profile.
+ *
+ * Unknown ids and duplicates are ignored so a stale saved list cannot inflate
+ * the score. An unknown profile falls back to the first one, because that is a
+ * UI bug rather than bad user input.
+ *
+ * @param {string[]} doneIds ids from CHECKLIST already applied.
+ * @param {string} [profileId] id from PROFILES.
+ * @returns {object} summary, or { error } for unusable input.
+ */
+export function scoreChecklist(doneIds, profileId) {
+  if (!Array.isArray(doneIds)) {
+    return { error: "Completed steps must be provided as a list." };
+  }
+  if (!(TOTAL_WEIGHT > 0)) {
+    return { error: "This checklist has no weighted steps to score." };
+  }
+
+  const profile = profileById.get(profileId) || PROFILES[0];
+
+  const done = new Set();
+  for (const raw of doneIds) {
+    if (typeof raw === "string" && byId.has(raw)) done.add(raw);
+  }
+
+  let earned = 0;
+  let available = 0;
+  const remaining = [];
+  const missingCritical = [];
+
+  for (const item of CHECKLIST) {
+    const weight = effectiveWeight(item, profile);
+    available += weight;
+    if (done.has(item.id)) earned += weight;
+    else {
+      remaining.push(item);
+      if (item.critical) missingCritical.push(item);
+    }
+  }
+
+  if (!(available > 0)) {
+    return { error: "This risk profile removes every step from the score." };
+  }
+
+  const rawPercent = Math.round((earned / available) * 100);
+  const capped = missingCritical.length > 0 && rawPercent > CRITICAL_CAP_PERCENT;
+  const percent = capped ? CRITICAL_CAP_PERCENT : rawPercent;
+  const band = bandFor(percent);
+
+  const axes = AXES.map((name) => {
+    const items = CHECKLIST.filter((item) => item.axis === name);
+    let axisTotal = 0;
+    let axisOpen = 0;
+    let openCount = 0;
+    for (const item of items) {
+      const weight = effectiveWeight(item, profile);
+      axisTotal += weight;
+      if (!done.has(item.id)) {
+        axisOpen += weight;
+        openCount += 1;
+      }
+    }
+    const exposure = axisTotal > 0 ? Math.round((axisOpen / axisTotal) * 100) : 0;
+    const emphasis =
+      profile.multipliers && Number.isFinite(profile.multipliers[name]) ? profile.multipliers[name] : 1;
+    return { name, exposure, closed: 100 - exposure, open: openCount, total: items.length, emphasis };
+  });
+
+  const groups = GROUPS.map((name) => {
+    const items = CHECKLIST.filter((item) => item.group === name);
+    const doneCount = items.filter((item) => done.has(item.id)).length;
+    return {
+      name,
+      done: doneCount,
+      total: items.length,
+      percent: items.length > 0 ? Math.round((doneCount / items.length) * 100) : 0,
+    };
+  });
+
+  const nextActions = remaining
+    .slice()
+    .sort(
+      (a, b) =>
+        Number(b.critical) - Number(a.critical) ||
+        effectiveWeight(b, profile) - effectiveWeight(a, profile)
+    )
+    .slice(0, 3);
+
+  const worstAxis = axes.reduce(
+    (worst, axis) => (worst === null || axis.exposure > worst.exposure ? axis : worst),
+    null
+  );
+
+  return {
+    profile,
+    earned: Math.round(earned * 100) / 100,
+    available: Math.round(available * 100) / 100,
+    rawPercent,
+    percent,
+    capped,
+    completed: done.size,
+    total: CHECKLIST.length,
+    band: band.id,
+    bandLabel: band.label,
+    bandHint: band.hint,
+    remaining,
+    missingCritical,
+    axes,
+    groups,
+    nextActions,
+    worstAxis,
+  };
+}
+
+/* ------------------------------------------------------------------ *
+ * WPA2 passphrase strength
+ *
+ * WPA2-Personal derives the PMK with PBKDF2-HMAC-SHA1 over 4096 iterations
+ * (IEEE 802.11i), which is what makes offline cracking slow but not slow
+ * enough. Published hashcat benchmarks for mode 22000 put a single current
+ * high-end consumer GPU at roughly 2 million candidate passphrases per second.
+ * Those two facts are the whole model below.
+ * ------------------------------------------------------------------ */
+
+/** PBKDF2 iteration count fixed by IEEE 802.11i for WPA/WPA2-Personal. */
+export const WPA2_PBKDF2_ITERATIONS = 4096;
+
+/** Candidate passphrases per second, one current high-end consumer GPU. */
+export const GPU_GUESSES_PER_SECOND = 2e6;
+
+/** 802.11i limits a WPA passphrase to 8-63 printable ASCII characters. */
+export const MIN_PASSPHRASE_LENGTH = 8;
+export const MAX_PASSPHRASE_LENGTH = 63;
+
+/** Character-class pool sizes across printable ASCII (33-126) plus space. */
+export const CHAR_POOLS = {
+  lower: 26,
+  upper: 26,
+  digit: 10,
+  symbol: 33,
+};
+
+/**
+ * Passphrases that appear at the top of every leaked-password list and in the
+ * default wordlists shipped with cracking tools. Entropy maths does not apply
+ * to these: they are guessed in the first few thousand attempts.
+ */
+export const GUESSABLE = [
+  "password",
+  "password1",
+  "password123",
+  "12345678",
+  "123456789",
+  "1234567890",
+  "qwertyuiop",
+  "admin123",
+  "adminadmin",
+  "tplink123",
+  "tplinkwifi",
+  "internet",
+  "wifipassword",
+  "letmein123",
+  "iloveyou",
+  "welcome123",
+  "abcd1234",
+  "asdfghjkl",
+];
+
+const SECOND = 1;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+const YEAR = 365.25 * DAY; // Julian year, so leap years do not skew long spans.
+
+/** Crack-time bands, in seconds of sustained offline attack. */
+export const CRACK_BANDS = [
+  { id: "instant", max: HOUR, label: "Cracked almost immediately" },
+  { id: "hours", max: DAY, label: "Cracked within a day" },
+  { id: "weak", max: 30 * DAY, label: "Cracked within a month" },
+  { id: "fair", max: 10 * YEAR, label: "Holds for years" },
+  { id: "strong", max: Infinity, label: "Not crackable by brute force" },
+];
+
+/** Human-readable duration. Pure formatting, no locale surprises. */
+export function humanDuration(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "unknown";
+  if (seconds < MINUTE) return `${Math.max(1, Math.round(seconds))} seconds`;
+  if (seconds < HOUR) return `${Math.round(seconds / MINUTE)} minutes`;
+  if (seconds < DAY) return `${Math.round(seconds / HOUR)} hours`;
+  if (seconds < 60 * DAY) return `${Math.round(seconds / DAY)} days`;
+  if (seconds < YEAR) return `${Math.round(seconds / (30 * DAY))} months`;
+  const years = seconds / YEAR;
+  if (years < 1000) return `${Math.round(years)} years`;
+  if (years < 1e6) return `${Math.round(years / 1000)} thousand years`;
+  if (years < 1e9) return `${Math.round(years / 1e6)} million years`;
+  if (years < 1e12) return `${Math.round(years / 1e9)} billion years`;
+  return "longer than the age of the universe";
+}
+
+/**
+ * Offline crack-time estimate for a WPA2/WPA3 passphrase.
+ *
+ * bits    = length x log2(pool size of the character classes actually used)
+ * guesses = 2^(bits-1), the average number of tries for an exhaustive search
+ * seconds = guesses / (rate x number of GPUs)
+ *
+ * The estimate assumes the attacker knows nothing about the passphrase. A
+ * passphrase built from dictionary words is found far sooner, which is why the
+ * known-guessable list short-circuits the maths.
+ *
+ * @param {string} passphrase the Wi-Fi passphrase to rate.
+ * @param {{gpus?: number}} [options] size of the attacking rig.
+ */
+export function wifiPassphraseStrength(passphrase, options) {
+  if (typeof passphrase !== "string") {
+    return { error: "Enter the Wi-Fi passphrase as text." };
+  }
+  const value = passphrase;
+  if (value.length === 0) {
+    return { error: "Enter a passphrase to rate it." };
+  }
+  if (value.length < MIN_PASSPHRASE_LENGTH) {
+    return {
+      error: `WPA2 and WPA3 require at least ${MIN_PASSPHRASE_LENGTH} characters — this one has ${value.length}.`,
+    };
+  }
+  if (value.length > MAX_PASSPHRASE_LENGTH) {
+    return {
+      error: `A WPA passphrase cannot exceed ${MAX_PASSPHRASE_LENGTH} characters — this one has ${value.length}.`,
+    };
+  }
+
+  const gpusRaw = options && options.gpus !== undefined ? Number(options.gpus) : 1;
+  if (!Number.isFinite(gpusRaw) || gpusRaw <= 0) {
+    return { error: "The number of attacking GPUs must be a positive number." };
+  }
+  const gpus = Math.min(1000, gpusRaw);
+  const rate = GPU_GUESSES_PER_SECOND * gpus;
+
+  const classes = [];
+  let pool = 0;
+  if (/[a-z]/.test(value)) {
+    pool += CHAR_POOLS.lower;
+    classes.push("lower case");
+  }
+  if (/[A-Z]/.test(value)) {
+    pool += CHAR_POOLS.upper;
+    classes.push("upper case");
+  }
+  if (/[0-9]/.test(value)) {
+    pool += CHAR_POOLS.digit;
+    classes.push("digits");
+  }
+  if (/[^a-zA-Z0-9]/.test(value)) {
+    pool += CHAR_POOLS.symbol;
+    classes.push("symbols");
+  }
+  if (pool <= 1) {
+    return { error: "That passphrase uses no recognisable characters." };
+  }
+
+  const guessable = GUESSABLE.includes(value.toLowerCase());
+  const bits = value.length * Math.log2(pool);
+  const averageGuesses = Math.pow(2, bits - 1);
+  const seconds = averageGuesses / rate;
+  const band = guessable
+    ? CRACK_BANDS[0]
+    : CRACK_BANDS.find((entry) => seconds < entry.max) || CRACK_BANDS[CRACK_BANDS.length - 1];
+
+  return {
+    length: value.length,
+    pool,
+    classes,
+    bits: Math.round(bits * 10) / 10,
+    averageGuesses,
+    seconds: guessable ? 0 : seconds,
+    human: guessable ? "seconds — it is on public wordlists" : humanDuration(seconds),
+    band: band.id,
+    bandLabel: band.label,
+    guessable,
+    gpus,
+    rate,
+  };
+}

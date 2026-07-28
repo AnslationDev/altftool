@@ -15,6 +15,7 @@ import {
   Bone,
   DataState,
   EmptyState,
+  ErrorState,
   FilterBar,
   PageHeader,
   SectionCard,
@@ -586,20 +587,11 @@ export default function AnalyticsPage() {
               ) : null}
 
               {!refreshing && error ? (
-                <div
-                  role="alert"
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--danger)]/40 bg-[var(--danger-soft)] px-4 py-3 text-sm text-[var(--danger-text)] shadow-sm"
-                >
-                  <span>{error}</span>
-                  <button
-                    type="button"
-                    onClick={handleRefresh}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
-                  >
-                    <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                    Try again
-                  </button>
-                </div>
+                <ErrorState
+                  title="Analytics refresh failed"
+                  message={error}
+                  onRetry={handleRefresh}
+                />
               ) : null}
 
               <StatGrid items={summaryTiles} columns={4} className="xl:grid-cols-5" />

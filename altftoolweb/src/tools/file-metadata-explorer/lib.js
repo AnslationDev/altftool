@@ -489,7 +489,7 @@ export function parseZip(bytes) {
 export function parseExif(bytes) {
   let tiff = -1;
   if (matchesAt(bytes, 0, [0xff, 0xd8])) {
-    const app1 = findAscii(bytes, "Exif  ");
+    const app1 = findAscii(bytes, "Exif\x00\x00");
     if (app1 < 0) return null;
     tiff = app1 + 6;
   } else if (matchesAt(bytes, 0, [0x49, 0x49, 0x2a, 0x00]) || matchesAt(bytes, 0, [0x4d, 0x4d, 0x00, 0x2a])) {
@@ -508,7 +508,7 @@ export function parseExif(bytes) {
     if (type === 2) {
       const size = count;
       const start = size > 4 ? tiff + readU32(valueOffset) : valueOffset;
-      return ascii(bytes, start, Math.max(0, size - 1)).replace(/ +$/, "").trim();
+      return ascii(bytes, start, Math.max(0, size - 1)).replace(/\x00+$/, "").trim();
     }
     if (type === 3) return readU16(valueOffset);
     if (type === 4) return readU32(valueOffset);

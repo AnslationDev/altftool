@@ -107,7 +107,12 @@ export function buildToolSeoContent(slug, tool = {}) {
     : "online";
   // Per-tool src/tools/<slug>/seo.js wins over the legacy shared map: newer
   // tools ship their own file, older ones still live in toolContentOverrides.
-  const override = generatedToolSeo[slug] || toolContentOverrides[slug] || null;
+  const generatedOverride = generatedToolSeo[slug] || null;
+  const legacyOverride = toolContentOverrides[slug] || null;
+  const override =
+    generatedOverride || legacyOverride
+      ? { ...(legacyOverride || {}), ...(generatedOverride || {}) }
+      : null;
   // ALTF Engine: admin-managed per-page content override (highest precedence).
   // Empty/disabled => {} so behavior is identical to before.
   const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);

@@ -261,7 +261,7 @@ export default function WorkspaceExplorerPage() {
                 >
                   <ActivityTimeline
                     events={filtered}
-                    hasMore={hasMore && filters.kind === "all" && !filters.search}
+                    hasMore={hasMore}
                     onLoadMore={loadMore}
                     loadingMore={loadingMore}
                     onSelectEvent={setDrawerEvent}

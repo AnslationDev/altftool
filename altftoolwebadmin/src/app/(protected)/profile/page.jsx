@@ -6,8 +6,21 @@ import { auth } from "@/lib/firebaseAuth";
 import { db } from "@/lib/firebaseFirestore";
 import { storage } from "@/lib/firebaseStorage";
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Camera, CheckCircle2, ChevronDown, ChevronUp, Shield, ShieldCheck, User } from "lucide-react";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
+import {
+  Camera,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Eye,
+  EyeOff,
+  Lock,
+  Shield,
+  ShieldCheck,
+  User,
+  X,
+} from "lucide-react";
 import { Button, Field, Input, Textarea } from "@altftool/ui";
 import { EmptyState, PageHeader, SectionCard } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
@@ -81,7 +94,13 @@ export default function ProfilePage() {
 
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [removingPhoto, setRemovingPhoto] = useState(false);
   const [expandedProject, setExpandedProject] = useState(null);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
   const fileInputRef = useRef(null);
   // Every input needs a real id so its <label for> points somewhere. The old
   // markup rendered bare <label> elements with no association at all.
@@ -210,6 +229,97 @@ export default function ProfilePage() {
     }
   };
 
+  const handleRemovePhoto = async () => {
+    const uid = auth.currentUser?.uid;
+    if (!uid) {
+      emitAlert({ type: "error", message: NO_SESSION_MESSAGE });
+      return;
+    }
+
+    setRemovingPhoto(true);
+    try {
+      const write = await resolveProfileWriter(uid);
+      // Empty string (not deleteField) mirrors how `photoURL` is already read
+      // elsewhere in this file: `adminData?.photoURL || null` treats "" the
+      // same as absent and falls back to the initials avatar.
+      await write({ photoURL: "" });
+      // storage.rules allows public read on admin-avatars/{uid}, so clearing
+      // only the Firestore pointer leaves the actual image permanently
+      // fetchable at its old URL — delete the blob too, matching how every
+      // other image-removal flow in this app (ImagesLibrary.jsx,
+      // VideosLibrary.jsx, storageUpload.js, ...) pairs the two.
+      try {
+        await deleteObject(ref(storage, `admin-avatars/${uid}`));
+      } catch (storageErr) {
+        if (storageErr?.code !== "storage/object-not-found") throw storageErr;
+      }
+      await refreshAuth();
+      emitAlert({ type: "success", message: "Profile picture removed." });
+    } catch (err) {
+      console.error(err);
+      emitAlert({
+        type: "error",
+        message:
+          err?.userMessage ||
+          (err?.code ? `Failed to remove photo (${err.code}).` : "Failed to remove photo."),
+      });
+    } finally {
+      setRemovingPhoto(false);
+    }
+  };
+
+  // Password change was previously only reachable through EditAdminModal,
+  // which is superadmin-only — a regular admin had no way to ever change
+  // their own password after account creation. This is self-service (client
+  // SDK reauthenticate + updatePassword), so it needs no new server route,
+  // and it only applies to admins who actually signed in with a password —
+  // a Google-only or local-dev-session account has none to change.
+  const hasPasswordProvider =
+    !user?.isLocalAdmin &&
+    Boolean(auth.currentUser?.providerData?.some((p) => p.providerId === "password"));
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (newPassword.length < 6) {
+      emitAlert({ type: "error", message: "New password must be at least 6 characters." });
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      emitAlert({ type: "error", message: "New passwords don't match." });
+      return;
+    }
+    const currentUser = auth.currentUser;
+    if (!currentUser?.email) {
+      emitAlert({ type: "error", message: NO_SESSION_MESSAGE });
+      return;
+    }
+    setChangingPassword(true);
+    try {
+      const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
+      await reauthenticateWithCredential(currentUser, credential);
+      await updatePassword(currentUser, newPassword);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      emitAlert({ type: "success", message: "Password changed successfully." });
+    } catch (err) {
+      console.error(err);
+      const message =
+        err?.code === "auth/wrong-password" || err?.code === "auth/invalid-credential"
+          ? "Current password is incorrect."
+          : err?.code === "auth/weak-password"
+            ? "New password is too weak."
+            : err?.code === "auth/too-many-requests"
+              ? "Too many attempts. Please wait a few minutes and try again."
+              : err?.code === "auth/requires-recent-login"
+                ? "For your security, please sign out and sign in again before changing your password."
+                : "Failed to change password.";
+      emitAlert({ type: "error", message });
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
   const projectAccessEntries = Object.entries(adminData?.projectAccess ?? {});
   const legacyPermissionEntries = Object.entries(adminData?.permissions ?? {});
   // Legacy flat permissions are only consulted when no per-project grant exists.
@@ -245,7 +355,7 @@ export default function ProfilePage() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
+                disabled={uploading || removingPhoto}
                 className="absolute -bottom-2 -right-2 flex h-7 w-7 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
                 title="Change photo"
                 aria-label="Change profile photo"
@@ -256,6 +366,22 @@ export default function ProfilePage() {
                   <Camera className="h-3.5 w-3.5 text-[var(--muted)]" aria-hidden="true" />
                 )}
               </button>
+              {photoURL && (
+                <button
+                  type="button"
+                  onClick={handleRemovePhoto}
+                  disabled={uploading || removingPhoto}
+                  className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
+                  title="Remove photo"
+                  aria-label="Remove profile photo"
+                >
+                  {removingPhoto ? (
+                    <div className="h-3 w-3 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--foreground)] motion-reduce:animate-none" />
+                  ) : (
+                    <X className="h-3 w-3 text-[var(--muted)]" aria-hidden="true" />
+                  )}
+                </button>
+              )}
               <input
                 ref={fileInputRef}
                 type="file"
@@ -357,6 +483,74 @@ export default function ProfilePage() {
             />
           </Field>
         </SectionCard>
+
+        {/* ── Change password (self-service) ── */}
+        {hasPasswordProvider && (
+          <SectionCard
+            title="Change Password"
+            description="Update the password you sign in with. You'll need your current password."
+          >
+            <form onSubmit={handleChangePassword} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Field label="Current Password" htmlFor={`${fieldId}-currentPassword`} className="sm:col-span-2">
+                <div className="relative">
+                  <Input
+                    id={`${fieldId}-currentPassword`}
+                    type={showPasswords ? "text" : "password"}
+                    autoComplete="current-password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    disabled={changingPassword}
+                    className="pr-10"
+                    required
+                  />
+                </div>
+              </Field>
+              <Field label="New Password" htmlFor={`${fieldId}-newPassword`}>
+                <Input
+                  id={`${fieldId}-newPassword`}
+                  type={showPasswords ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  disabled={changingPassword}
+                  minLength={6}
+                  required
+                />
+              </Field>
+              <Field label="Confirm New Password" htmlFor={`${fieldId}-confirmPassword`}>
+                <Input
+                  id={`${fieldId}-confirmPassword`}
+                  type={showPasswords ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={changingPassword}
+                  minLength={6}
+                  required
+                />
+              </Field>
+
+              <div className="flex items-center justify-between gap-3 sm:col-span-2">
+                <button
+                  type="button"
+                  onClick={() => setShowPasswords((v) => !v)}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--muted)] transition hover:text-[var(--foreground)]"
+                >
+                  {showPasswords ? (
+                    <EyeOff className="h-3.5 w-3.5" aria-hidden="true" />
+                  ) : (
+                    <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+                  )}
+                  {showPasswords ? "Hide passwords" : "Show passwords"}
+                </button>
+                <Button type="submit" loading={changingPassword} loadingLabel="Changing password">
+                  {changingPassword ? null : <Lock className="h-4 w-4" aria-hidden="true" />}
+                  {changingPassword ? "Changing…" : "Change Password"}
+                </Button>
+              </div>
+            </form>
+          </SectionCard>
+        )}
 
         {/* ── Permissions (read-only) ── */}
         <SectionCard

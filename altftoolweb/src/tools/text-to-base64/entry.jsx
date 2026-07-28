@@ -1,7 +1,7 @@
 "use client";
 
-import ToolHome from "./pages";
+import ToolFkUtilityTool from "../_toolfk-suite/ToolFkUtilityTool";
 
 export default function ToolEntry() {
-  return <ToolHome />;
+  return <ToolFkUtilityTool />;
 }

@@ -327,7 +327,7 @@ export default function AdminSidebar({
         .map((child) => child.label)
         .join(" ");
       const haystack = normalizeModuleQuery(
-        `${key} ${moduleConfig?.label || ""} ${childLabels} system`,
+        `${key} ${moduleConfig?.label || ""} ${childLabels}`,
       );
       return haystack.includes(normalizedModuleFilter);
     });
