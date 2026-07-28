@@ -192,7 +192,7 @@ export const INDIA_TOOL_GROUPS = Object.freeze([
     label: "PAN, Aadhaar & IFSC",
     heading: "How can I check PAN, Aadhaar, IFSC and other Indian formats?",
     answer:
-      "Nine tools validate, decode or mask Indian identifiers offline in your browser tab. They check structure and checksums — a PAN's 10-character pattern and holder type, a 12-digit Aadhaar's checksum, an 11-character IFSC's bank and branch, a six-digit PIN code's postal circle and district. (The 15-character GSTIN validator, which extracts the embedded state code and PAN, is in the GST group above.) None of them look an identity up in a government database, and none of them confirm that a real person or account exists behind the number.",
+      "Nine tools validate, decode or mask Indian identifiers. Eight of them check structure and checksums in your browser tab — a PAN's 10-character pattern and holder type, a 12-digit Aadhaar's checksum, an 11-character IFSC's bank and branch. (The 15-character GSTIN validator, which extracts the embedded state code and PAN, is in the GST group above.) The exception is the PIN code lookup, which sends the six-digit PIN through AltFTool to a postal directory to return the circle and district. None of them confirm that a real person or account exists behind a number.",
     slugs: [
       "pan-format-validator",
       "aadhaar-masking-tool",
@@ -298,7 +298,7 @@ export const INDIA_CONVENTIONS = Object.freeze([
   {
     convention: "Identifier formats",
     detail: "PAN 10 chars · Aadhaar 12 digits · GSTIN 15 chars · IFSC 11 chars · PIN 6 digits",
-    where: "Validators check structure and checksum offline in your browser.",
+    where: "The PAN, Aadhaar, GSTIN and IFSC validators check structure and checksum in your browser; the PIN lookup queries a postal directory.",
   },
   {
     convention: "Land measurement",
@@ -315,9 +315,9 @@ export const INDIA_CONVENTIONS = Object.freeze([
 export const INDIA_LIMITS = Object.freeze([
   "No tool files a return or a form. ITR, GST returns, TDS returns and tax payments are done on the Income Tax and GST portals.",
   "No tool moves money. The UPI tools build or inspect a QR or a collect-request payload; the payment itself happens in your own bank or UPI app.",
-  "No tool queries a government database. PAN, Aadhaar, GSTIN, IFSC, EPIC and licence tools check format, checksum and encoded fields only — a well-formed number is not a real or valid one.",
+  "The identity tools do not query a government database. PAN, Aadhaar, GSTIN, IFSC, EPIC and licence tools check format, checksum and encoded fields only — a well-formed number is not a real or valid one. Two tools here do reach a live source and say so on their own page: the PIN code lookup queries a postal directory, and the mandi rates tool reads the government's AGMARKNET open-data feed.",
   "No tool is tax, legal or investment advice. Every figure is an estimate for planning, and rates change with the Finance Act and with quarterly small-savings notifications.",
-  "Nothing is uploaded. The India tools are client-side: the number, salary or document you type is processed in your browser tab, and no account is created.",
+  "Almost nothing leaves your browser. The calculators and validators process the number, salary or document you type in your own tab, and no account is created. The two lookup tools named above are the exception — they have to send your query to fetch a live answer.",
 ]);
 
 /**
@@ -339,7 +339,7 @@ export const INDIA_FAQS = Object.freeze([
   {
     question: "Is my PAN or Aadhaar number sent anywhere when I use the validators?",
     answer:
-      "No. Every tool on AltFTool is a client-side component: the code runs inside your browser tab and the identifier you type is processed there. The PAN, GSTIN and Aadhaar tools also offer masked output so you can share a redacted list safely. They check format and checksum only — they cannot confirm that a number belongs to a real person or account.",
+      "No. The PAN, Aadhaar and GSTIN tools check format and checksum inside your browser tab, and they offer masked output so you can share a redacted list safely. They cannot confirm that a number belongs to a real person or account, because they never look it up anywhere. Two other India tools do send your input out to answer it — the PIN code lookup and the mandi rates feed — and each says so on its own page.",
   },
   {
     question: "Are the Indian tax rates and scheme interest rates kept current?",

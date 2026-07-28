@@ -286,7 +286,12 @@ const PREDICATE_MAX_LENGTH = 170;
  * or return null when the description is not shaped for it.
  */
 function toPredicateClause(description) {
-  const text = cleanText(description).replace(/\s*[.!?]+$/, "");
+  const raw = cleanText(description);
+  // A question or exclamation cannot become the tail of "…that lets you X." —
+  // stripping its mark turns it into an ungrammatical statement.
+  if (/[?!]\s*$/.test(raw)) return null;
+
+  const text = raw.replace(/\s*[.!?]+$/, "");
   if (!text || text.length > PREDICATE_MAX_LENGTH) return null;
   if (TRANSLITERATED_MARKERS.test(text)) return null;
 
@@ -304,9 +309,20 @@ function toPredicateClause(description) {
  * the tool, its type and where it lives, so neither half needs prior context.
  */
 function buildAnswerSentence({ name, typePhrase, description }) {
-  const subject = `${name} is a ${typePhrase} on AltFTool`;
+  // The article follows the phrase's initial sound, and that changes whenever
+  // describeToolType drops a modifier ("a free online tool" -> "an online tool"
+  // when the name already contains "free").
+  const article = /^[aeiou]/i.test(typePhrase) ? "an" : "a";
+  const subject = `${name} is ${article} ${typePhrase} on AltFTool`;
   const clause = toPredicateClause(description);
   if (clause) return `${subject} that lets you ${clause}.`;
+
+  // Do not weld on a description the builder already judged unsafe to splice —
+  // a transliterated-Hindi fragment after an English subject reads as broken in
+  // both languages, and this sentence also ships as the meta description. The
+  // raw description still renders as its own paragraph below.
+  const text = cleanText(description);
+  if (!text || TRANSLITERATED_MARKERS.test(text)) return `${subject}.`;
 
   const detail = endSentence(description);
   return detail ? `${subject}. ${detail}` : `${subject}.`;
@@ -341,7 +357,9 @@ function buildFacts(categories, topics) {
     facts.push({ label: "Tool type", value: categories.join(" · ") });
   }
   if (topics.length) {
-    facts.push({ label: "Made for", value: topics.join(" · ") });
+    // `topics` is a subject taxonomy, not an audience — labelling it "Made for"
+    // produced rows like "Made for: Web" and "Made for: Calculator".
+    facts.push({ label: "Topics", value: topics.join(" · ") });
   }
   facts.push({
     label: "Price",
@@ -387,10 +405,15 @@ export function buildToolSeoContent(slug, tool = {}) {
   // Keep the intro complementary to the answer sentence above it — never
   // restate the raw description (it used to appear 3× on the page: header,
   // intro and summary).
+  // A game has no input to add and no result to download, so it needs its own
+  // fallback rather than the utility one.
+  const isGame = /\bgames?\b/i.test(typeNoun);
+  const fallbackIntro = isGame
+    ? `${name} is one of the free ${typeNounPlural} on AltFTool: open the page and play straight away. There is no account to create and nothing to install — it is a web page, so it works the same on desktop, tablet and mobile.`
+    : `${name} is one of the free ${typeNounPlural} on AltFTool: open the page, add your input, and copy or download the result. There is no account to create and nothing to install — it is a web page, so it works the same on desktop, tablet and mobile.`;
+
   const intro = anchorIntro(
-    central.intro ||
-      override?.intro ||
-      `${name} is one of the free ${typeNounPlural} on AltFTool: open the page, add your input, and copy or download the result. There is no account to create and nothing to install — it is a web page, so it works the same on desktop, tablet and mobile.`,
+    central.intro || override?.intro || fallbackIntro,
     name,
   );
 

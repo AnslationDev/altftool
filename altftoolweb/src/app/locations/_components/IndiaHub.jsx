@@ -47,7 +47,7 @@ export function buildIndiaHubModel() {
 }
 
 export function buildIndiaAnswer(toolCount) {
-  return `AltFTool has ${toolCount} free tools built specifically for India: GST and income tax calculators, EMI and SIP planners, PPF, NPS and Sukanya Samriddhi projections, and offline validators for PAN, Aadhaar, GSTIN, IFSC and UPI payloads. All of them run inside your browser in rupees and on the Indian financial year of 1 April to 31 March, need no account and cost nothing — and none of them file a return, move money, or look a number up in a government database.`;
+  return `AltFTool has ${toolCount} free tools built specifically for India: GST and income tax calculators, EMI and SIP planners, PPF, NPS and Sukanya Samriddhi projections, and validators for PAN, Aadhaar, GSTIN, IFSC and UPI payloads. They work in rupees and on the Indian financial year of 1 April to 31 March, need no account and cost nothing. The calculators and validators run entirely in your browser; two lookup tools fetch live data and say so on their own page. None of them file a return or move money.`;
 }
 
 function SectionIcon({ children }) {

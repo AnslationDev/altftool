@@ -28,7 +28,7 @@ export const PRANK_CONTENT = {
     answer:
       "Matrix Code Rain is a browser screensaver that draws columns of falling green characters on a canvas, with sliders for speed and density, a pause button and a fullscreen mode.",
     about:
-      "The rain is generated live in the page rather than played back from a video, so it always fills the exact size of your screen. The speed slider runs from 10 to 100 and the density slider from 12 to 34 columns; pausing freezes the animation on the current frame, which is useful when you want a still backdrop for a stream or a photo.",
+      "The rain is generated live in the page rather than played back from a video, so it always fills the exact size of your screen. The speed slider runs from 10 to 100 and the density slider from 12 to 34, where that number is the width of each character cell in pixels — so a lower value packs in more columns, not fewer; pausing freezes the animation on the current frame, which is useful when you want a still backdrop for a stream or a photo.",
     steps: [
       "Set the speed and density sliders until the rain looks the way you want.",
       "Press the Fullscreen button to fill the whole display with the canvas.",
@@ -168,7 +168,7 @@ export const PRANK_CONTENT = {
     answer:
       "The Windows XP simulator is a small nostalgic desktop in your browser, with a green start button, a welcome window, a column of desktop shortcut icons and extra windows including a mini Tetris and a media player.",
     about:
-      "The welcome window walks through the intended prank: open the page on someone else's machine, go fullscreen with F11, close the intro and wait. The desktop shortcuts are named after other Pranx screens — Hacker, FBI Lock, Bios, 3D Pipes, Matrix Rain, TV Noise and more — so the desktop doubles as a launcher for the rest of the collection.",
+      "The welcome window walks through the intended prank: open the page on someone else's machine, go fullscreen with F11, close the intro and wait. Inside that window is a grid of names borrowed from other Pranx screens — Hacker, FBI Lock, Bios, 3D Pipes, Matrix Rain, TV Noise and more — which is set dressing for the era rather than a working launcher; the other pranks open from the Pranx index.",
     steps: [
       "Open the page and read the welcome window, then close it.",
       "Press the Start the Prank F11 button, or F11 itself, for fullscreen.",
