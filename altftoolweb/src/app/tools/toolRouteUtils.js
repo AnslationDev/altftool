@@ -184,6 +184,10 @@ export async function buildToolMetadata(slug) {
 
   const seoContent = buildToolSeoContent(slug, tool);
 
+  // NOTE: this module is imported by client components (ToolsClient,
+  // ToolClient, ToolDetailChrome), so it must never import a `server-only`
+  // module. The oEmbed discovery link is therefore added by the route's own
+  // generateMetadata — see /tools/all/[slug]/page.jsx.
   return createPageMetadata({
     title: seoContent.title || `${tool.name} - Free Online Tool`,
     description: seoContent.metaDescription,
