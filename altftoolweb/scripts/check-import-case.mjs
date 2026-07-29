@@ -26,12 +26,29 @@ const SPEC =
   /(?:^|[^.\w])(?:import|export)[\s\S]{0,200}?from\s*["'](\.[^"']+)["']|(?:^|[^.\w])import\s*\(\s*["'](\.[^"']+)["']|require\(\s*["'](\.[^"']+)["']/g;
 const EXTS = ["", ".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".json", ".css"];
 
-const tracked = execFileSync("git", ["ls-files", "-z", "src"], {
-  encoding: "utf8",
-  maxBuffer: 256 * 1024 * 1024,
-})
-  .split("\0")
-  .filter(Boolean);
+const lsFiles = (dir) =>
+  execFileSync("git", ["ls-files", "-z", dir], {
+    encoding: "utf8",
+    maxBuffer: 256 * 1024 * 1024,
+  })
+    .split("\0")
+    .filter(Boolean);
+
+const tracked = lsFiles("src");
+
+// public/ is served by exact path, so a wrongly-cased asset URL fails the same
+// way an import does — but silently: next/image returns an error and the page
+// still renders, so nothing turns red. Two of these were live in production
+// (a preloaded LCP image on /personality, the hero product on /sale) while
+// every local page looked correct.
+const ASSET = /\.(png|jpe?g|gif|webp|avif|svg|ico|mp[34]|wav|ogg|webm|woff2?|ttf|otf|pdf|json|txt|csv|glb|gltf|wasm)$/i;
+const publicExact = new Set();
+const publicByLower = new Map();
+for (const file of lsFiles("public")) {
+  const url = file.replace(/^public/, "");
+  publicExact.add(url);
+  publicByLower.set(url.toLowerCase(), url);
+}
 
 // dir -> Set of entry names, exactly as git records them.
 const dirs = new Map();
@@ -84,6 +101,9 @@ function findCaseMismatch(fromFile, spec) {
 }
 
 const problems = [];
+const assetProblems = [];
+const ASSET_LITERAL = /["'](\/[A-Za-z0-9._\-/@%()+ ]+)["']/g;
+
 for (const file of tracked) {
   if (!CODE.test(file)) continue;
   let src;
@@ -97,6 +117,16 @@ for (const file of tracked) {
     if (!spec) continue;
     const hit = findCaseMismatch(file, spec);
     if (hit) problems.push({ file, ...hit });
+  }
+  for (const match of src.matchAll(ASSET_LITERAL)) {
+    const url = match[1];
+    if (!ASSET.test(url)) continue;
+    // Only a casing difference is a defect here. A URL with no counterpart at
+    // all is a route, an API path or an asset built at runtime — not ours to
+    // judge, and guessing would bury the real hits in noise.
+    if (publicExact.has(url)) continue;
+    const actual = publicByLower.get(url.toLowerCase());
+    if (actual) assetProblems.push({ file, url, actual });
   }
 }
 
@@ -115,8 +145,14 @@ for (const [dir, names] of dirs) {
   }
 }
 
-if (problems.length === 0 && collisions.length === 0) {
-  console.log(`Import case guard: OK (${tracked.length} tracked files).`);
+if (
+  problems.length === 0 &&
+  collisions.length === 0 &&
+  assetProblems.length === 0
+) {
+  console.log(
+    `Import case guard: OK (${tracked.length} source files, ${publicExact.size} public assets).`,
+  );
   process.exit(0);
 }
 
@@ -129,7 +165,13 @@ for (const p of problems) {
   console.error(`\n${p.file}\n  imports "${p.spec}"`);
   console.error(`  git records "${p.segment}" as "${p.actual}" in ${p.dir}`);
 }
+for (const a of assetProblems) {
+  console.error(`\n${a.file}\n  references "${a.url}"`);
+  console.error(`  git records that asset as "${a.actual}"`);
+}
 console.error(
-  `\nImport case guard: ${problems.length} case-only import mismatch(es), ${collisions.length} collision(s). These build on macOS and fail on Linux.`,
+  `\nImport case guard: ${problems.length} case-only import mismatch(es), ` +
+    `${assetProblems.length} public-asset case mismatch(es), ` +
+    `${collisions.length} collision(s). These resolve on macOS and fail on Linux.`,
 );
 process.exit(1);

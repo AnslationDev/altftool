@@ -68,7 +68,7 @@ const FLOATING_PRODUCTS = [
   {
     id: "perfume",
     label: "Perfume",
-    file: "/sale-locator/hero-products/phone.png",
+    file: "/sale-locator/hero-products/Phone.png",
     depth: "mid",
     className: "left-[20%] top-[-28%] w-[46%] max-w-[310px]",
     float: { duration: 4.5, delay: 0.15 },

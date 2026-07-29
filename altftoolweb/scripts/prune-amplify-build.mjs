@@ -6,13 +6,22 @@ const isAmplifyBuild = process.env.ALTFT_DEFER_BULK_PRERENDER === "true";
 if (!isAmplifyBuild) process.exit(0);
 
 const nextDir = path.resolve(".next");
-// AWS's hosted-build ceiling is 220 MiB; 215 keeps ~5 MiB of packaging
-// headroom (raised from 205 on 2026-07-28 — the catalogue's fixed platform
-// cost had already used up the prior margin, see docs/TOOL_BUILD_PROGRESS.md
-// §9). Do not raise this past ~215 without re-measuring the real ceiling:
-// beyond that the adapter's packaging metadata can push the upload over 220.
+// AWS rejects a build output over 230,686,720 bytes (220.00 MiB). What it
+// measures is NOT what this script measures: on job 101 the gate read 205.68
+// MiB of .next and AWS then reported 249,551,354 bytes — 237.99 MiB — and
+// refused the upload. Amplify's packaging adds 32.31 MiB the gate never sees.
+//
+// That gap is why the deploy kept dying after a green build: every threshold
+// this file has carried (205, then 215) was measuring the wrong quantity, so
+// it passed builds AWS was always going to reject. The last upload AWS did
+// accept was job 80, which measured 165.88 MiB here.
+//
+// 185 MiB leaves ~2.7 MiB under the observed 32.31 MiB of packaging overhead.
+// Do not raise it on the argument that a build "only just" fails — that is the
+// same reasoning that produced 215. Raise it only against a fresh pair of
+// numbers: a gate reading and the byte count AWS reports for the same job.
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 215 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 185 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {
@@ -122,6 +131,32 @@ console.log(
     (removableMedia.length || buildOnlyArtifacts.length
       ? `; pruned ${removableMedia.length} unused WASM asset and ${buildOnlyArtifacts.length} build-only artifact.`
       : ".")
+);
+
+// What AWS counts is still not pinned down: on job 101 it reported 32.31 MiB
+// more than this walk found, and .next/cache (deleted), .next/standalone (never
+// produced), the pruned WASM (unlinked above) and public/ (535 MiB, far too
+// large to be the difference) are all ruled out. Printing the inventory next to
+// the gate reading means the next failure arrives with the evidence attached,
+// instead of costing another thirteen-minute build to ask the same question.
+const inventory = fs
+  .readdirSync(nextDir, { withFileTypes: true })
+  .map((entry) => {
+    const entryPath = path.join(nextDir, entry.name);
+    const size = entry.isDirectory()
+      ? directorySize(entryPath)
+      : fs.statSync(entryPath).size;
+    return { name: entry.name + (entry.isDirectory() ? "/" : ""), size };
+  })
+  .filter((entry) => entry.size > 256 * 1024)
+  .sort((a, b) => b.size - a.size);
+
+console.log(
+  "  .next inventory: " +
+    inventory
+      .map((e) => `${e.name} ${(e.size / (1024 * 1024)).toFixed(1)}`)
+      .join(", ") +
+    " (MiB)"
 );
 
 if (artifactBytes > maxArtifactBytes) {

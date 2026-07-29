@@ -11,7 +11,7 @@ const tests = [
     title: "Career Personality Test",
     desc: "Discover careers aligned with your strengths and working style.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/career.png",
+    imgSrc: "/personality/categories/Career.png",
   },
   {
     title: "Emotional Intelligence",
