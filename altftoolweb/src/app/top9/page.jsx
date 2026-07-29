@@ -9,34 +9,42 @@ import {
 import Top9Client from "./Top9Client";
 import {
   getTop9Items,
-  getTop9RankedEntries,
   getTop9Title,
+  isTop9Indexable,
 } from "./data/getTop9Items";
 
 export async function generateMetadata() {
-  const listCount = getTop9Items().length;
+  const items = getTop9Items();
+  const rankedCount = items.filter(isTop9Indexable).length;
 
+  // Both figures are counted from the list data, and they are counted
+  // separately: the description used to call all of them "ranked Top9 lists"
+  // when only a few publish a ranking. The hub matches the hero copy.
   return createPageMetadata({
     title: "Top9 Lists - Ranked Guides, Entertainment, Sports & Tools",
-    description: `${listCount} ranked Top9 lists across entertainment, sports, business, tools, lifestyle, and trending topics on AltFTool.`,
+    description: `${items.length} Top9 topic pages across entertainment, sports, business, tools, lifestyle, and trending topics on AltFTool, ${rankedCount} of them with their ranked picks published in full.`,
     path: "/top9",
   });
 }
 
 export default function Page() {
   const items = getTop9Items();
-  const rankedCount = items.filter(
-    (item) => getTop9RankedEntries(item).length > 0,
-  ).length;
-  const featuredItems = items.slice(0, 24).map((item) => ({
+  const rankedItems = items.filter(isTop9Indexable);
+  const rankedCount = rankedItems.length;
+  // The hub's ItemList points only at routes that are still in the index.
+  // Marking up a link to a noindexed URL invites a crawl of a page that can
+  // never appear, and the list is meant to advertise what can.
+  const featuredItems = rankedItems.slice(0, 24).map((item) => ({
     name: getTop9Title(item),
     path: `/top9/${item.slug}`,
   }));
-  const itemListSchema = createItemListJsonLd({
-    path: "/top9",
-    name: "Featured Top9 lists",
-    items: featuredItems,
-  });
+  const itemListSchema = featuredItems.length
+    ? createItemListJsonLd({
+        path: "/top9",
+        name: "Top9 lists with published rankings",
+        items: featuredItems,
+      })
+    : null;
 
   return (
     <main>
@@ -46,7 +54,7 @@ export default function Page() {
           createCollectionPageJsonLd({
             path: "/top9",
             name: "Top9 Lists",
-            description: `${items.length} ranked lists for entertainment, sports, lifestyle, tools, and trending topics.`,
+            description: `${items.length} Top9 topic pages for entertainment, sports, lifestyle, tools, and trending topics, ${rankedCount} of them with their ranked picks published in full.`,
           }),
           itemListSchema
             ? {

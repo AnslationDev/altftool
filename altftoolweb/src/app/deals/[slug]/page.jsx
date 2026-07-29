@@ -19,7 +19,7 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ExternalLink, ScanSearch, TriangleAlert } from "lucide-react";
+import { ArrowRight, ScanSearch, TriangleAlert } from "lucide-react";
 
 import Icon from "@/shared/ui/Icon";
 import JsonLd from "@/platform/seo/JsonLd";
@@ -30,6 +30,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
+import VendorLink from "@/app/alternatives/components/VendorLink";
 
 import PriceComparisonTable from "../components/PriceComparisonTable";
 import {
@@ -179,7 +180,7 @@ export default async function DealDetailPage({ params }) {
           </p>
         </header>
 
-        <section aria-labelledby="price-heading" className="mt-12">
+        <section aria-labelledby="price-heading" className="mt-12 scroll-mt-24">
           <h2 id="price-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {allProductsFree
               ? `${deal.job} — what the alternatives cost`
@@ -215,8 +216,11 @@ export default async function DealDetailPage({ params }) {
             </ul>
           ) : null}
 
+          {/* The new-tab cue is announced once for the whole list rather than
+              repeated on each of the source links, which is why these pass
+              newTabHint={false}. */}
           <p className="mt-4 text-xs leading-5 text-(--muted-foreground)">
-            Sources:{" "}
+            Sources <span className="sr-only">(each opens in a new tab)</span>:{" "}
             {products.map((product, productIndex) => (
               <span key={product.key}>
                 {productIndex > 0 ? " · " : ""}
@@ -224,14 +228,14 @@ export default async function DealDetailPage({ params }) {
                 {product.sources.map((source, sourceIndex) => (
                   <span key={source}>
                     {sourceIndex > 0 ? ", " : ""}
-                    <a
+                    <VendorLink
                       href={source}
-                      rel="nofollow noopener"
-                      target="_blank"
+                      showIcon={false}
+                      newTabHint={false}
                       className="underline underline-offset-2 hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                     >
                       {source.replace(/^https?:\/\//, "")}
-                    </a>
+                    </VendorLink>
                   </span>
                 ))}
               </span>
@@ -241,7 +245,7 @@ export default async function DealDetailPage({ params }) {
           </p>
         </section>
 
-        <section aria-labelledby="free-tier-heading" className="mt-12">
+        <section aria-labelledby="free-tier-heading" className="mt-12 scroll-mt-24">
           <h2 id="free-tier-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             What each free tier actually allows
           </h2>
@@ -258,15 +262,12 @@ export default async function DealDetailPage({ params }) {
                 className="rounded-[12px] border border-(--border) bg-(--surface) p-4"
               >
                 <h3 className="text-sm font-semibold text-(--foreground)">
-                  <a
+                  <VendorLink
                     href={product.homepage}
-                    rel="nofollow noopener"
-                    target="_blank"
                     className="inline-flex items-start gap-1.5 underline underline-offset-2 hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                   >
                     {product.name}
-                    <ExternalLink className="mt-1 h-3 w-3 flex-none" aria-hidden="true" />
-                  </a>
+                  </VendorLink>
                 </h3>
                 <ul className="mt-3 grid list-none gap-2 p-0">
                   {getFreeTierPoints(product).map((point) => (
@@ -285,7 +286,7 @@ export default async function DealDetailPage({ params }) {
 
         {/* Never omitted. A comparison that cannot name what the paid product
             does better is an advert, not a comparison. */}
-        <section aria-labelledby="better-heading" className="mt-12">
+        <section aria-labelledby="better-heading" className="mt-12 scroll-mt-24">
           <h2 id="better-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {allProductsFree
               ? "What the other tools still do better"
@@ -330,7 +331,7 @@ export default async function DealDetailPage({ params }) {
           </ul>
         </section>
 
-        <section aria-labelledby="tool-heading" className="mt-12">
+        <section aria-labelledby="tool-heading" className="mt-12 scroll-mt-24">
           <h2 id="tool-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {`What the free ${deal.name} does`}
           </h2>
@@ -356,7 +357,7 @@ export default async function DealDetailPage({ params }) {
         </section>
 
         {faqs.length ? (
-          <section aria-labelledby="faq-heading" className="mt-12">
+          <section aria-labelledby="faq-heading" className="mt-12 scroll-mt-24">
             <h2 id="faq-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
               Questions people actually ask
             </h2>
@@ -375,7 +376,7 @@ export default async function DealDetailPage({ params }) {
         ) : null}
 
         {related.length ? (
-          <section aria-labelledby="related-deals-heading" className="mt-12">
+          <section aria-labelledby="related-deals-heading" className="mt-12 scroll-mt-24">
             <h2
               id="related-deals-heading"
               className="text-xl font-semibold tracking-tight sm:text-2xl"

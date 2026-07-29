@@ -72,6 +72,25 @@ export function getTop9RankedEntries(item) {
 }
 
 /**
+ * Whether a Top9 detail route may be indexed and submitted.
+ *
+ * The rule is derived from the data, never from a slug list: a route earns a
+ * place in the index only when it actually publishes a ranking. 46 of the 49
+ * routes carry no `top` array at all — they render a title, a stock image and
+ * one descriptive paragraph, which is not a page that can compete for its
+ * query. If a list later gains real picks it becomes indexable, gets its
+ * schema back and re-enters the sitemap with no code change.
+ */
+export function isTop9Indexable(item) {
+  return getTop9RankedEntries(item).length > 0;
+}
+
+/** The Top9 detail routes that may be indexed and submitted in the sitemap. */
+export function getIndexableTop9Items() {
+  return getTop9Items().filter(isTop9Indexable);
+}
+
+/**
  * The list's publish date as YYYY-MM-DD, or null when the source carries none.
  * Never a build date and never a fallback.
  */

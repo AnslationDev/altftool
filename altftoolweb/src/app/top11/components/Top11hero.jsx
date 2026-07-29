@@ -1,25 +1,57 @@
-"use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import ManagedImage from "@/components/ui/ManagedImage";
+import categoryData from "../data/categoryData";
 
+/**
+ * Short grid labels. The full `title` in categoryData is a sentence ("Best VPN
+ * Services of 2026") and reads badly under a tile, so each slug gets a label
+ * here. A slug with no entry falls back to its own words, which means adding a
+ * category can never leave a tile blank.
+ */
+const GRID_LABELS = {
+  management: "Management",
+  "online-degrees": "Online Degrees",
+  vpn: "VPN",
+  crm: "CRM",
+  voip: "VOIP",
+  "web-hosting": "Web Hosting",
+  "tv-services": "TV Services",
+  "car-selling": "Car Selling",
+  "home-warranty": "Home Warranty",
+  "online-therapy": "Online Therapy",
+};
 
-const categories = [
-  { name: "Online Degrees", slug: "online-degrees", image: "/top11/top1.png" },
-  { name: "Web Hosting", slug: "web-hosting", image: "/top11/top5.png" },
-  { name: "CRM", slug: "crm", image: "/top11/top3.png" },
-  { name: "VOIP", slug: "voip", image: "/top11/top4.png" },
-  { name: "Walk-in Tubs", slug: "walk-in-tubs", image: "/top11/top9.png" },
-  { name: "Management", slug: "management", image: "/top11/top10.png" },
-  { name: "Home Warranty", slug: "home-warranty", image: "/top11/top8.png" },
-  { name: "Car Selling", slug: "car-selling", image: "/top11/top7.png" },
-  { name: "Online Therapy", slug: "online-therapy", image: "/top11/top1.png" },
-  { name: "TV Services", slug: "tv-services", image: "/top11/top6.png" },
-];
+function labelFor(slug) {
+  return (
+    GRID_LABELS[slug] ||
+    slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
+  );
+}
+
+/*
+  The grid is derived from categoryData, not from a second hand-maintained
+  array. The old copy of this list had drifted from the data in both
+  directions: it linked /top11/walk-in-tubs, which has no entry and so returned
+  a 404 from the section's primary navigation, and it omitted /top11/vpn, which
+  does exist. Deriving the list makes both states unrepresentable.
+
+  Each tile is a real <a> (via next/link) rather than a div with a router.push
+  handler. The old version was unreachable by keyboard, exposed no link
+  semantics to assistive tech, and gave crawlers nothing to follow — which
+  matters more now that the category pages rely on being followed rather than
+  indexed.
+*/
+const categories = Object.keys(categoryData).map((slug) => ({
+  slug,
+  name: labelFor(slug),
+  image: categoryData[slug].banner,
+}));
 
 export default function CompareSection() {
-      const router = useRouter();
-
   return (
     <section className="w-full py-20 bg-[var(--background)]">
       <div className="max-w-6xl mx-auto px-6 text-center">
@@ -44,17 +76,17 @@ export default function CompareSection() {
         {/* Grid */}
         <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
 
-          {categories.map((item, index) => (
-            <div
-              key={index}
-onClick={() => router.push(`/top11/${item.slug}`)}
-              className="group rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-pointer hover:-translate-y-1 "
+          {categories.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/top11/${item.slug}`}
+              className="group rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 motion-reduce:transition-none motion-reduce:transform-none motion-reduce:hover:translate-y-0"
             >
               {/* Image */}
               <div className="w-52 h-35 mb-3 flex items-center justify-center">
                 <ManagedImage
                   src={item.image}
-                  alt={item.name}
+                  alt=""
                   className="w-45 h-45 object-cover"
                 />
               </div>
@@ -63,7 +95,7 @@ onClick={() => router.push(`/top11/${item.slug}`)}
               <h3 className="text-lg font-semibold text-[var(--foreground)] text-center group-hover:text-[var(--primary)]">
                 {item.name}
               </h3>
-            </div>
+            </Link>
           ))}
 
         </div>

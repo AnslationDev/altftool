@@ -16,6 +16,7 @@ import {
   getTop9PublishedDate,
   getTop9RankedEntries,
   getTop9Title,
+  isTop9Indexable,
 } from "../data/getTop9Items";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
@@ -51,6 +52,11 @@ export async function generateMetadata({ params }) {
     path: `/top9/${slug}`,
     image: getTop9Image(item),
     type: getTop9PublishedDate(item) ? "article" : "website",
+    // A list with no ranking has nothing to rank for. Those routes stay live
+    // and stay linked, but leave the index. `follow` stays true so the links
+    // out of them still reach the pages that should rank.
+    noindex: !isTop9Indexable(item),
+    follow: true,
   });
 }
 
@@ -100,6 +106,7 @@ export default async function Page({ params }) {
     "editorial"
   );
   const rankedEntries = getTop9RankedEntries(item);
+  const indexable = isTop9Indexable(item);
   const rankingHeading = getRankingHeading(title, rankedEntries.length);
   // Schema is built from the same array the <ol> below renders, so the marked-up
   // ranking and the visible ranking can never drift apart.
@@ -116,7 +123,13 @@ export default async function Page({ params }) {
         })),
       }
     : null;
-  const primarySchema = publishedDate
+  // Rich schema is only emitted on routes that are still in the index. A
+  // noindexed page cannot win an Article or ItemList result, so marking one up
+  // buys nothing and asks a crawler to parse a claim it will never surface.
+  // The breadcrumb stays: it is navigation, and it keeps the crawl path legible.
+  const primarySchema = !indexable
+    ? null
+    : publishedDate
     ? {
         "@context": "https://schema.org",
         "@type": "Article",
@@ -232,13 +245,18 @@ export default async function Page({ params }) {
           </div>
         )}
 
+        {/*
+          The related band always renders — a noindexed page keeps its human
+          navigation and keeps passing link equity onward. Only its ItemList
+          markup is dropped when the page is out of the index.
+        */}
         <RelatedContentSection
           embedded
           className="mt-12"
           title="Keep exploring AltFTool"
           items={relatedItems}
           path={`/top9/${slug}`}
-          jsonLdName={`Related to ${title}`}
+          jsonLdName={indexable ? `Related to ${title}` : undefined}
         />
       </div>
     </section>
