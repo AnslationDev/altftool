@@ -158,35 +158,12 @@ const [showAll, setShowAll] = useState(false);
                 </ul>
               </div>
 
-              {/* RATING */}
-              <div className="xl:w-30">
-                {/* STARS */}
-                <div className="flex items-center gap-0.5 mb-2">
-                  {[1, 2, 3, 4, 5 ].map((star) => (
-                    <Star
-                      key={star}
-                      className="
-                        w-4 h-4
-                        fill-yellow-400
-                        text-yellow-400
-                      "
-                    />
-                  ))}
-                </div>
-
-                {/* SCORE */}
-                <div className="flex items-center gap-2">
-                  <span className="text-[28px] font-bold text-(--foreground)">
-                    {item.rating}
-                  </span>
-                </div>
-
-                {/* REVIEWS */}
-                <p className="mt-2 text-sm font-semibold text-(--muted-foreground)">
-                  {item.reviews}
-                </p>
-              </div>
-
+              {/*
+                A five-star row, a numeric score and a review count used to sit
+                here. None of the three came from a source — the stars were
+                always five regardless of the score, and the counts were
+                invented. Removed rather than replaced.
+              */}
               {/* BUTTON */}
               <div className="min-w-50 flex flex-col items-center">
                 <Link

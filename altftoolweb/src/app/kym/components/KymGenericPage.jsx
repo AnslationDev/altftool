@@ -13,15 +13,18 @@ import {
 } from "../data/kymData";
 import { slugifyTitle } from "../data/slug";
 
+// No `meta` field on any of these. Cards used to carry hardcoded strings such
+// as "Recently updated", "Trending entry" and "Updated 12 hours ago" that never
+// changed, advertising freshness and traction that were never measured.
 const contentGroups = [
   ...spotlightCards,
   ...freshEntries,
-  ...explainers.map((item) => ({ ...item, category: "Explainer", meta: "KYM Staff - recently" })),
-  ...episodes.map((item) => ({ ...item, category: "Episode", meta: "KYM Staff - recently" })),
+  ...explainers.map((item) => ({ ...item, category: "Explainer" })),
+  ...episodes.map((item) => ({ ...item, category: "Episode" })),
   ...editorials,
   ...latest,
-  ...topEntries.map((item) => ({ ...item, category: "Entry", meta: "KYM Staff - trending" })),
-  ...topMemes.map((item) => ({ ...item, category: "Meme", meta: "KYM Staff - trending" })),
+  ...topEntries.map((item) => ({ ...item, category: "Entry" })),
+  ...topMemes.map((item) => ({ ...item, category: "Meme" })),
 ];
 
 export function getAllKymRoutes() {
@@ -227,11 +230,9 @@ export default function KymGenericPage({ item }) {
           <h1>{item.title}</h1>
           <img className="kym-article-hero" src={item.image.src} alt="" />
           <div className="kym-article-meta">
-            <span>{item.meta || "KYM Staff - recently"}</span>
+            {/* No date line: these entries carry no publish or update date. */}
             <span>Status: {profile.status}</span>
             <span>Type: {profile.type}</span>
-            
-            
           </div>
           <p className="kym-article-lede">{profile.lede}</p>
           <div className="kym-entry-facts">

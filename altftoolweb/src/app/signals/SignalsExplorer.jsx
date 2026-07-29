@@ -17,6 +17,13 @@ import {
   SIGNAL_DATA_AS_OF,
   formatSearchVolume,
 } from "@altftool/core/signals";
+import { COVERAGE_STATES, getSignalCoverage } from "./signalCoverage";
+
+// Derived at render time from the coverage map, so the headline claim on this
+// page cannot survive a tool being shipped or a verdict being corrected.
+const COVERED_COUNT = SIGNAL_CATALOG.filter(
+  (signal) => getSignalCoverage(signal.slug)?.state === "shipped",
+).length;
 
 const MOMENTUM_OPTIONS = ["All momentum", "Surging", "Rising", "Stable demand"];
 const SORT_OPTIONS = [
@@ -34,6 +41,7 @@ function sortSignals(items, sort) {
 }
 
 function SignalCard({ signal }) {
+  const coverage = getSignalCoverage(signal.slug);
   return (
     <article className="flex min-h-full flex-col rounded-lg border border-border bg-card p-5 transition hover:border-primary/50 hover:shadow-sm">
       <div className="flex items-start justify-between gap-4">
@@ -41,6 +49,11 @@ function SignalCard({ signal }) {
           <span className="inline-flex rounded-full bg-primary-soft px-2.5 py-1 text-xs font-semibold text-primary">
             {signal.category}
           </span>
+          {coverage ? (
+            <span className="ml-2 inline-flex rounded-full border border-border bg-surface-soft px-2.5 py-1 text-xs font-medium text-muted-foreground">
+              {COVERAGE_STATES[coverage.state]}
+            </span>
+          ) : null}
           <h2 className="mt-3 text-lg font-semibold text-foreground">
             <Link className="rounded-sm hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" href={`/signals/${signal.slug}`}>
               {signal.name}
@@ -81,7 +94,7 @@ function SignalCard({ signal }) {
   );
 }
 
-export default function SignalsExplorer() {
+export default function SignalsExplorer({ answer, faqs = [] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [momentum, setMomentum] = useState("All momentum");
@@ -113,10 +126,13 @@ export default function SignalsExplorer() {
               AltF Signals
             </span>
             <h1 className="mt-3 text-3xl font-bold tracking-normal text-foreground sm:text-4xl">
-              Find useful product opportunities, then act on them
+              AltF Signals: product demand research, and what AltFTool has actually built
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Explore demand, momentum, competition, and practical product directions. Every signal connects to research and working AltFTool utilities.
+            {/* Answer-first: a self-contained sentence with counts derived from
+                the catalogue and the coverage map. */}
+            <p className="mt-4 max-w-2xl text-base leading-7 text-foreground sm:text-lg">{answer}</p>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
+              Explore demand, momentum, competition, and practical product directions. Every signal states whether a working AltFTool utility exists for it.
             </p>
           </div>
 
@@ -127,7 +143,7 @@ export default function SignalsExplorer() {
             </div>
             <div className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
               <BarChart3 className="h-5 w-5 text-primary" aria-hidden="true" />
-              <div><dt className="text-xs text-muted-foreground">Coverage</dt><dd className="font-semibold">Worldwide</dd></div>
+              <div><dt className="text-xs text-muted-foreground">AltFTool ships a tool</dt><dd className="font-semibold tabular-nums">{COVERED_COUNT} of {SIGNAL_CATALOG.length}</dd></div>
             </div>
             <div className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
               <TrendingUp className="h-5 w-5 text-primary" aria-hidden="true" />
@@ -202,6 +218,64 @@ export default function SignalsExplorer() {
             <p className="mt-1 text-sm text-muted-foreground">Try a broader search or clear the active filters.</p>
           </div>
         )}
+      </section>
+
+      {/* The whole catalogue as a real table, including the coverage verdict.
+          This is the one thing on /signals worth citing: an unfiltered list of
+          what AltFTool has and has not built for each researched category. */}
+      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8" aria-labelledby="signal-table-heading">
+        <h2 id="signal-table-heading" className="text-2xl font-bold sm:text-3xl">
+          Which researched categories does AltFTool actually have a tool for?
+        </h2>
+        <div className="mt-5 overflow-x-auto rounded-lg border border-border bg-card">
+          <table className="w-full border-collapse text-left text-sm">
+            <caption className="sr-only">Every tracked signal with its opportunity score, demand estimate and AltFTool coverage</caption>
+            <thead>
+              <tr className="border-b border-border">
+                <th scope="col" className="px-4 py-3 font-semibold">Signal</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Score</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Monthly search</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Does AltFTool have it?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortSignals(SIGNAL_CATALOG, "opportunity").map((signal) => {
+                const coverage = getSignalCoverage(signal.slug);
+                return (
+                  <tr key={signal.slug} className="border-b border-border last:border-0">
+                    <th scope="row" className="px-4 py-3 align-top font-semibold">
+                      <Link
+                        href={`/signals/${signal.slug}`}
+                        className="rounded-sm text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-primary"
+                      >
+                        {signal.name}
+                      </Link>
+                    </th>
+                    <td className="px-4 py-3 align-top tabular-nums text-muted-foreground">{signal.opportunityScore}/100</td>
+                    <td className="px-4 py-3 align-top tabular-nums text-muted-foreground">{formatSearchVolume(signal.searchVolume)}</td>
+                    <td className="px-4 py-3 align-top text-muted-foreground">
+                      {coverage ? COVERAGE_STATES[coverage.state] : "Not assessed"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {faqs.length ? (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold sm:text-3xl">Questions about AltF Signals</h2>
+            <dl className="mt-5 divide-y divide-border rounded-lg border border-border bg-card px-5">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="py-4">
+                  <dt className="text-base font-semibold text-foreground">{faq.question}</dt>
+                  <dd className="mt-2 text-sm leading-6 text-muted-foreground">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ) : null}
       </section>
     </main>
   );

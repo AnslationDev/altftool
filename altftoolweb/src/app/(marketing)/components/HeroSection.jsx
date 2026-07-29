@@ -11,15 +11,18 @@ import {
 } from "lucide-react";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
+import { ALTFTOOL_POSITION } from "@/app/alternatives/data/incumbents";
 import { CANONICAL_CATEGORIES } from "@/platform/registry/categoryTaxonomy";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import CountUpNumber from "./CountUpNumber";
 
+// Derived at render time from the registry — never hardcode this, it drifts.
+const TOOL_COUNT = Object.keys(toolMetaMap).length;
+
 const catalogFacts = [
   {
     label: "Free tools",
-    value: Object.keys(toolMetaMap).length,
-    suffix: "+",
+    value: TOOL_COUNT,
     icon: Wrench,
   },
   {
@@ -79,13 +82,19 @@ export default function HeroSection() {
             className="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary"
             aria-hidden="true"
           />
+          {/* Answer-first lede. Two self-contained sentences that fully answer
+              "what is AltFTool" without needing anything above them — this is
+              the text an answer engine lifts. The count is derived from the
+              registry; the processing and pricing claims are quoted from
+              ALTFTOOL_POSITION so they cannot drift from /alternatives. */}
           <p className="mt-3 max-w-2xl text-xl font-semibold leading-8 text-foreground sm:text-2xl">
-            Find the right tool, workflow, or practical next step.
+            AltFTool is a free website with {TOOL_COUNT.toLocaleString()} online
+            tools — converters, PDF and image editors, calculators, developer
+            utilities, generators and browser games — that open straight in a
+            browser tab with no account and no paid tier.
           </p>
           <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-            Search browser utilities, product workspaces, automations, business
-            services, guides, deals, and interactive labs from one structured
-            platform.
+            {ALTFTOOL_POSITION.processing} Ads are what keep the tools free.
           </p>
 
           <form

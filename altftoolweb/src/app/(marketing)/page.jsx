@@ -3,6 +3,7 @@ import IntentSelector from "./components/IntentSelector";
 import AiAssistantBox from "@/platform/assistant/AiAssistantBox";
 import CategoriesSection from "./components/CategoriesSection";
 import FAQSection from "./components/FAQSection";
+import PlatformFactsSection from "./components/PlatformFactsSection";
 import TrendingSection from "./components/TrendingSection";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
@@ -31,6 +32,7 @@ export default function Page() {
       <div className="border-b border-border bg-background pt-10 sm:pt-12">
         <AiAssistantBox />
       </div>
+      <PlatformFactsSection />
       <div className="render-deferred">
         <TrendingSection />
       </div>

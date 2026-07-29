@@ -1,4 +1,5 @@
 import { blogs } from "./blogs";
+import { toPublishDate } from "./publishDate";
 import { trending } from "../data2/trending";
 import {
   autoLists,
@@ -11,6 +12,8 @@ import {
 const featuredBlocks = [newList, secondList, thirdList];
 
 export function getTop9Items() {
+  const seen = new Set();
+
   return [
     ...blogs,
     ...trending,
@@ -19,11 +22,23 @@ export function getTop9Items() {
     ...(tabData?.latest || []),
     ...(autoLists || []),
     ...featuredBlocks,
-  ].filter((item) => item?.slug);
+  ].filter((item) => {
+    // `greatest-actors` and `hottest-women` each appear in two source blocks.
+    // Without this de-dupe, generateStaticParams emits duplicate params and any
+    // "N lists" figure derived from this array over-reports by two.
+    if (!item?.slug || seen.has(item.slug)) return false;
+    seen.add(item.slug);
+    return true;
+  });
 }
 
 export function getTop9Item(slug) {
   return getTop9Items().find((item) => item.slug === slug) || null;
+}
+
+/** Distinct lists in this section. Every rendered count must come from here. */
+export function getTop9Count() {
+  return getTop9Items().length;
 }
 
 export function getTop9Title(item) {
@@ -46,10 +61,20 @@ export function getTop9Category(item) {
   return item?.cat || item?.prefix || "Top 9 List";
 }
 
-export function getTop9PublishedDate(item) {
-  const value = String(item?.date || "").trim();
-  if (!value) return null;
+/**
+ * The ranked entries a list actually carries. Only three lists in this data set
+ * have any, and those carry three entries each — so no caller may hardcode
+ * "nine picks". Count what this returns instead.
+ */
+export function getTop9RankedEntries(item) {
+  if (!Array.isArray(item?.top)) return [];
+  return item.top.map((name) => String(name).trim()).filter(Boolean);
+}
 
-  const timestamp = Date.parse(value);
-  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : null;
+/**
+ * The list's publish date as YYYY-MM-DD, or null when the source carries none.
+ * Never a build date and never a fallback.
+ */
+export function getTop9PublishedDate(item) {
+  return toPublishDate(item?.date);
 }

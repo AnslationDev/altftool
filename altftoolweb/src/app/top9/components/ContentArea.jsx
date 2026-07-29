@@ -88,21 +88,41 @@ View all popular&nbsp; →
 View all latest&nbsp; →
             </Link>
           </div>
-          <div className="top9-latest-grid">
-            {news.map((x, i) => (
-              <Link
-                href={`/top9/${x.slug}`}
-                className="top9-latest-item"
-                key={`${x.slug}-${i}`}
+
+        </div>
+
+        {/* AUTO LISTS */}
+        <div>
+
+          {/*
+            Previously labelled "Auto-Updating Lists" with an "Auto Updated"
+            stamp per row. Nothing here updates automatically — these are the
+            same four static entries as every other block — so the claim and
+            the stamp are gone.
+          */}
+          <h3 className="top9-muted-text text-[14px] uppercase tracking-wider mb-5">
+            More Lists
+          </h3>
+
+          <div className="space-y-5">
+
+            {autoLists.map((item, i) => (
+
+              <div
+                key={i}
+                className="flex items-start gap-3"
               >
                 <img src={x.img} alt={x.title} />
                 <div>
-                  <strong>{latest[i]}</strong>
-                  <small>
-                    {["TRAVEL", "GAMING", "FOOD", "FITNESS"][i]} &nbsp;�&nbsp;{" "}
-                    {i * 2 + 2} hours ago
-                  </small>
-<span>👁 {842 + i * 90} views</span>
+
+                  <Link href={`/top9/${item.slug}`}>
+
+                    <p className="top9-link text-[14px] font-semibold hover:underline leading-snug">
+                      {item.title}
+                    </p>
+
+                  </Link>
+
                 </div>
               </Link>
             ))}

@@ -21,7 +21,6 @@ function PollOption({ option, onSelect, selectedId, submitted }) {
       <img src={option.image.src} alt="" />
       <span>
         <strong>{option.title}</strong>
-        <small>{option.votes}% of sample votes</small>
       </span>
     </label>
   );
@@ -41,14 +40,11 @@ function PollSidebar() {
           ))}
         </div>
       </section>
-      <section>
-        <h2>Poll Info</h2>
-        <div className="kym-poll-facts">
-          <p>Voting window: May 29 - June 5</p>
-          <p>One vote per user account</p>
-          <p>Results update after moderation review</p>
-        </div>
-      </section>
+      {/*
+        A "Poll Info" panel used to claim a voting window, one vote per user
+        account and results updating "after moderation review". There are no
+        accounts, no window and no moderation behind this poll. Removed.
+      */}
       <div className="kym-sidebar-banners" aria-label="Sponsored banner">
         <KymAdBanner src={kymBanners.sidebarTall} variant="vertical" />
       </div>
@@ -108,8 +104,14 @@ export default function KymPollPage() {
               <button disabled={submitted} onClick={handleVote} type="button">
                 {submitted ? "Submitted" : "Vote"}
               </button>
-              <a href="#">View Results</a>
             </div>
+            {/*
+              The "View Results" link went nowhere and there are no results:
+              votes are held in component state only and never leave the page.
+            */}
+            <p className="kym-poll-note">
+              This poll does not tally votes, so no results are published.
+            </p>
             {voteMessage ? (
               <p className={`kym-poll-message${submitted ? " is-success" : ""}`}>
                 {voteMessage}

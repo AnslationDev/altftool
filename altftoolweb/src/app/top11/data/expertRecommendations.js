@@ -19,8 +19,6 @@ const expertRecommendations = [
       "5,900+ servers in 60 countries",
     ],
 
-    rating: 4.8,
-    reviews: "12,650 reviews",
 
     cta: {
       text: "Visit Site",
@@ -50,8 +48,6 @@ const expertRecommendations = [
       "99.9% uptime guarantee",
     ],
 
-    rating: 4.7,
-    reviews: "8,921 reviews",
 
     cta: {
       text: "Visit Site",
@@ -81,8 +77,6 @@ const expertRecommendations = [
       "Robust analytics & reporting",
     ],
 
-    rating: 4.6,
-    reviews: "7,452 reviews",
 
     cta: {
       text: "Visit Site",
@@ -112,8 +106,6 @@ const expertRecommendations = [
       "Custom workflows",
     ],
 
-    rating: 4.7,
-    reviews: "10,143 reviews",
 
     cta: {
       text: "Visit Site",
@@ -143,8 +135,6 @@ const expertRecommendations = [
       "Powerful sales analytics",
     ],
 
-    rating: 4.8,
-    reviews: "14,231 reviews",
 
     cta: {
       text: "Visit Site",
@@ -174,8 +164,6 @@ const expertRecommendations = [
       "AI meeting summaries",
     ],
 
-    rating: 4.5,
-    reviews: "9,804 reviews",
 
     cta: {
       text: "Visit Site",
@@ -205,8 +193,6 @@ const expertRecommendations = [
       "Easy drag & drop editor",
     ],
 
-    rating: 4.9,
-    reviews: "18,420 reviews",
 
     cta: {
       text: "Visit Site",
@@ -236,8 +222,6 @@ const expertRecommendations = [
       "Customer support tools",
     ],
 
-    rating: 4.7,
-    reviews: "11,078 reviews",
 
     cta: {
       text: "Visit Site",

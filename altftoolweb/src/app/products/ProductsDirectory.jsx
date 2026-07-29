@@ -12,6 +12,11 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Badge, Button, Card, Input } from "@altftool/ui";
+import { PRODUCT_SUITE_STATUSES } from "@altftool/core/product-suites";
+
+// Suite states come from the catalogue's own label map, so the table and the
+// detail pages always print the same wording.
+const SUITE_STATUS_LABELS = PRODUCT_SUITE_STATUSES;
 
 const STATUS_TONES = {
   live: "success",
@@ -29,11 +34,21 @@ const STATUS_LABELS = {
   gated: "Security gated",
 };
 
-export default function ProductsDirectory({ phases, products, suites }) {
+export default function ProductsDirectory({ phases, products, suites, answer, faqs = [] }) {
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState("all");
   const suitePaths = useMemo(
     () => new Map(suites.map((suite) => [suite.productId, `/products/${suite.slug}`])),
+    [suites],
+  );
+  // Counted from the catalogue at render time so the headline numbers cannot
+  // drift when a suite is added or its status changes.
+  const suiteCounts = useMemo(
+    () => ({
+      working: suites.filter((suite) => suite.status === "working").length,
+      beta: suites.filter((suite) => suite.status === "beta").length,
+      gated: suites.filter((suite) => suite.status === "gated").length,
+    }),
     [suites],
   );
   const visibleProducts = useMemo(() => {
@@ -51,16 +66,19 @@ export default function ProductsDirectory({ phases, products, suites }) {
         <div className="section mx-auto py-12 sm:py-16">
           <div className="max-w-3xl">
             <Badge tone="info" className="mb-4"><Blocks className="h-4 w-4" /> Product suite</Badge>
-            <h1 className="text-3xl font-bold sm:text-4xl">One platform, focused workspaces</h1>
+            <h1 className="text-3xl font-bold sm:text-4xl">AltFTool products: one platform, focused workspaces</h1>
             <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
-            <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg">
+            {/* Answer-first: a self-contained sentence with counts derived from
+                the catalogue, so it stays true and can be quoted alone. */}
+            <p className="mt-4 text-base leading-7 text-foreground sm:text-lg">{answer}</p>
+            <p className="mt-3 text-base leading-7 text-muted-foreground">
               Start with a purpose-built workspace, then move into the exact AltFTool utility you need. Product states are shown honestly so beta and security-gated work is never mistaken for finished software.
             </p>
           </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            <Metric icon={CheckCircle2} label="Working products" value={products.filter((item) => item.status === "live").length} />
-            <Metric icon={Sparkles} label="Public betas" value={products.filter((item) => item.status === "active").length} />
-            <Metric icon={LockKeyhole} label="Security gated" value={products.filter((item) => item.status === "gated").length} />
+            <Metric icon={CheckCircle2} label="Working workspaces" value={suiteCounts.working} />
+            <Metric icon={Sparkles} label="In public beta" value={suiteCounts.beta} />
+            <Metric icon={LockKeyhole} label="Security gated" value={suiteCounts.gated} />
           </div>
         </div>
       </section>
@@ -132,6 +150,59 @@ export default function ProductsDirectory({ phases, products, suites }) {
             <Button className="mt-5" onClick={() => { setQuery(""); setPhase("all"); }}>Reset filters</Button>
           </Card>
         )}
+      </section>
+
+      {/* A real table of every workspace and its true state. This is the most
+          extractable shape for the one fact this page exists to convey, and it
+          is rendered from the catalogue rather than transcribed. */}
+      <section className="section mx-auto pb-10 sm:pb-12" aria-labelledby="workspace-table-heading">
+        <h2 id="workspace-table-heading" className="text-2xl font-bold sm:text-3xl">
+          Which AltFTool product workspaces are available?
+        </h2>
+        <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
+        <div className="mt-5 overflow-x-auto rounded-lg border border-border bg-card">
+          <table className="w-full border-collapse text-left text-sm">
+            <caption className="sr-only">Every AltFTool product workspace with its release state</caption>
+            <thead>
+              <tr className="border-b border-border">
+                <th scope="col" className="px-4 py-3 font-semibold">Workspace</th>
+                <th scope="col" className="px-4 py-3 font-semibold">State</th>
+                <th scope="col" className="px-4 py-3 font-semibold">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              {suites.map((suite) => (
+                <tr key={suite.slug} className="border-b border-border last:border-0">
+                  <th scope="row" className="px-4 py-3 align-top font-semibold">
+                    <Link
+                      href={`/products/${suite.slug}`}
+                      className="rounded-sm text-primary outline-none hover:underline focus-visible:ring-[3px] focus-visible:ring-primary/35"
+                    >
+                      {suite.name}
+                    </Link>
+                  </th>
+                  <td className="px-4 py-3 align-top text-muted-foreground">{SUITE_STATUS_LABELS[suite.status] || suite.status}</td>
+                  <td className="px-4 py-3 align-top text-muted-foreground">{suite.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {faqs.length ? (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold sm:text-3xl">Questions about AltFTool products</h2>
+            <span className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-primary to-secondary" aria-hidden="true" />
+            <dl className="mt-5 divide-y divide-border rounded-lg border border-border bg-card px-5">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="py-4">
+                  <dt className="text-base font-semibold text-foreground">{faq.question}</dt>
+                  <dd className="mt-2 text-sm leading-6 text-muted-foreground">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ) : null}
       </section>
     </main>
   );
