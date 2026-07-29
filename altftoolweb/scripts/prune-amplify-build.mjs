@@ -16,7 +16,18 @@ const nextDir = path.resolve(".next");
 // it passed builds AWS was always going to reject. The last upload AWS did
 // accept was job 80, which measured 165.88 MiB here.
 //
-// 184 MiB, bracketed by two real deploys rather than a model.
+// 181 MiB. Job 109 shipped at 180.59; job 110 added two prerendered pages
+// (+1.59 MiB, gate 182.30) and AWS refused it by 0.96 MiB. The ceiling in this
+// script's units is therefore in (180.59, 182.30] — much tighter than the
+// (184.13, 185.09] bracket read from jobs 104 and 105, because what AWS counts
+// is still not identified and its offset from this walk is not stable: 34.92
+// MiB on job 105, 38.66 on job 110, 38.55 on job 111.
+//
+// Two models have now been tried and both were wrong. A constant overhead gave
+// 187.69 and job 105 disproved it. A fixed ratio against .next/standalone fit
+// jobs 105 and 110 to a third of a percent, so job 111 cut standalone by 24.15
+// MiB — and AWS moved 0.11. standalone is not what it weighs either. Set this
+// from deploys that actually shipped, and stop extrapolating.
 //
 //   job 104   gate 184.13  ->  ACCEPTED
 //   job 105   gate 185.09  ->  AWS measured 220.01 MiB, refused at 220.00
@@ -37,7 +48,7 @@ const nextDir = path.resolve(".next");
 // accepted by AWS. A failure is the only thing that locates the ceiling, and
 // each attempt costs a red main.
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 184 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 181 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {
@@ -47,9 +58,12 @@ if (!fs.existsSync(nextDir)) {
 // @imgly/background-removal supplies explicit CDN-backed WASM paths at
 // runtime. Webpack also emits this WebGPU fallback, which none of our callers
 // use and which otherwise consumes more than 22 MiB of the Amplify artifact.
+const standaloneNext = path.join(nextDir, "standalone", ".next");
 const wasmMediaDirectories = [
   path.join(nextDir, "static", "media"),
   path.join(nextDir, "server", "chunks", "static", "media"),
+  path.join(standaloneNext, "static", "media"),
+  path.join(standaloneNext, "server", "chunks", "static", "media"),
 ];
 const removableMedia = wasmMediaDirectories.flatMap((directory) =>
   fs.existsSync(directory)
@@ -70,14 +84,15 @@ for (const filePath of removableMedia) {
 // react-loadable-manifest.json is a Pages Router artifact. This app has no
 // pages/ directory, and `react-loadable-manifest` appears nowhere in
 // next/dist — the build writes 0.75 MiB that nothing ever reads.
-const buildOnlyArtifacts = [
+const buildOnlyNames = [
   "trace",
   "trace-build",
   "types",
   "diagnostics",
   "react-loadable-manifest.json",
-]
-  .map((name) => path.join(nextDir, name))
+];
+const buildOnlyArtifacts = [nextDir, standaloneNext]
+  .flatMap((root) => buildOnlyNames.map((name) => path.join(root, name)))
   .filter((artifactPath) => fs.existsSync(artifactPath));
 
 for (const artifactPath of buildOnlyArtifacts) {
@@ -149,6 +164,32 @@ function embeddedRootOccurrences(directory) {
   }, 0);
 }
 
+// What AWS actually weighs. Three jobs pinned it down: the byte count in its
+// rejection message was 0.9334 and 0.9307 times the size of .next/standalone
+// on jobs 105 and 110 — stable to a third of a percent — while this script's
+// own walk moved the other way (185.09 -> 182.30) as AWS's number rose
+// (220.01 -> 220.96). standalone is written by `next build` and holds its own
+// copy of .next/server, so every post-build saving that skipped it shrank a
+// directory AWS never looks at. The compaction and the prunes above now cover
+// both trees; this measures the one that decides the deploy.
+//
+// 233 MiB of standalone predicts ~217 MiB at AWS, against its 220 limit.
+const standaloneDir = path.join(nextDir, "standalone");
+const hasStandalone = fs.existsSync(standaloneDir);
+const AWS_BYTES_PER_STANDALONE_BYTE = 0.932;
+const maxStandaloneBytes = Number(
+  process.env.ALTFT_AMPLIFY_STANDALONE_MAX_BYTES || 233 * 1024 * 1024
+);
+
+function plainDirectorySize(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isSymbolicLink()) return total;
+    if (entry.isDirectory()) return total + plainDirectorySize(entryPath);
+    return total + fs.statSync(entryPath).size;
+  }, 0);
+}
+
 const rawArtifactBytes = directorySize(nextDir);
 const pathInflation =
   rootLengthDelta > 0 ? embeddedRootOccurrences(nextDir) * rootLengthDelta : 0;
@@ -191,6 +232,24 @@ console.log(
       .join(", ") +
     " (MiB)"
 );
+
+if (hasStandalone) {
+  const standaloneBytes = plainDirectorySize(standaloneDir);
+  const standaloneMiB = standaloneBytes / (1024 * 1024);
+  const predictedAwsMiB =
+    (standaloneBytes * AWS_BYTES_PER_STANDALONE_BYTE) / (1024 * 1024);
+  console.log(
+    `  standalone: ${standaloneMiB.toFixed(2)} MiB / ${(maxStandaloneBytes / (1024 * 1024)).toFixed(2)} MiB` +
+      ` (predicts ~${predictedAwsMiB.toFixed(2)} MiB at AWS, limit 220.00)`
+  );
+  if (standaloneBytes > maxStandaloneBytes) {
+    throw new Error(
+      `.next/standalone is ${standaloneMiB.toFixed(2)} MiB, which predicts ` +
+        `~${predictedAwsMiB.toFixed(2)} MiB at AWS against its 220.00 MiB limit. ` +
+        `This is the measurement that decides the deploy — the .next figure above is not.`
+    );
+  }
+}
 
 if (artifactBytes > maxArtifactBytes) {
   throw new Error(

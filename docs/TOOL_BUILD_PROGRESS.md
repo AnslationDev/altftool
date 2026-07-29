@@ -798,3 +798,69 @@ continue. That is a product and infrastructure decision for the owner, not an en
 one to take unilaterally. Held in reserve: the `proxy.js` `toolMetaMap` → slug-set change,
 measured at 0.89 MiB, deliberately not shipped in the same release so that a second
 gate↔AWS data point would stay uncontaminated.
+
+---
+
+## §13 — What AWS measures is still unknown. Two models failed. (2026-07-29)
+
+Do not set the artifact gate from arithmetic. Set it from deploys that shipped.
+
+Four rejections and two acceptances, all real:
+
+| job | gate | .next/standalone | AWS reported | result |
+|---|---|---|---|---|
+| 101 | 205.68 | — | 237.99 | rejected |
+| 104 | 184.13 | — | — | **shipped** |
+| 105 | 185.09 | 235.7 | 220.01 | rejected |
+| 109 | 180.59 | — | — | **shipped** |
+| 110 | 182.30 | 237.4 | 220.96 | rejected |
+| 111 | 182.30 | 213.25 | 220.85 | rejected |
+
+**Model 1, constant overhead.** Job 101 implied 32.31 MiB between the gate's walk and
+AWS's number, so 220 − 32.31 = 187.69 looked like the bound and the gate went to 186.
+Job 105 measured 34.92 and failed at 185.09. Not constant.
+
+**Model 2, a ratio to .next/standalone.** Jobs 105 and 110 gave AWS ÷ standalone = 0.9334
+and 0.9307 — stable to a third of a percent, which reads as a law. Job 111 acted on it and
+cut standalone by 24.15 MiB; AWS moved 0.11 MiB. The ratio held only because both jobs
+happened to have near-identical standalone sizes (235.7 and 237.4).
+
+**What is actually known:** job 109 shipped at 180.59. Job 110 added exactly one thing —
+`force-static` on the homepage and /tools, two prerendered pages, +1.59 MiB — and AWS
+refused it by 0.96 MiB. The ceiling in this script's units is in (180.59, 182.30]. The gate
+is 181 for that reason and no other. Raise it only when a job reading above 181 is accepted.
+
+The offset between the two numbers is not stable: 34.92, 38.66, 38.55 MiB. Ruled out as the
+explanation: `.next/cache` (deleted before packaging), `public/` (535 MiB, far too large),
+the pruned WASM and build-only files (actually unlinked), and now `.next/standalone`.
+
+### Things that are settled
+
+- **`.nft.json` trace manifests must ship.** Pruning them saved 5.48 MiB and job 106 died
+  with `CustomerError: Server trace files are not found`. Amplify's packaging reads them.
+  They are already minified and use relative paths, so there is nothing to reclaim.
+- **`.next/standalone` holds a second copy of `.next/server`.** Post-build scripts that walk
+  only `.next/server` miss it. `compact-rsc-manifests.mjs` now covers both (700 of 824
+  manifests, standalone 237.4 → 213.25 MiB) and `prune-amplify-build.mjs` prunes both. This
+  does not move AWS's number, but it is correct and it halves an upload.
+- **`react-loadable-manifest.json` (0.75 MiB) is dead here** — a Pages Router artifact, and
+  this app has no `pages/`. The string appears nowhere in `next/dist`.
+- **Gate readings depend on checkout path length** and are normalised; run-to-run variance
+  is ~0.14 MiB, so never treat a sub-0.2 MiB difference as signal.
+
+### Route performance, shipped and measured
+
+Tool routes were dynamic and carried `no-store`, so CloudFront never held 3,753 URLs.
+`export const dynamic = "force-static"` + `revalidate` overrides the root layout's
+`await connection()`; `generateStaticParams` returns `[]` so nothing prerenders at build
+time. Live: `s-maxage=86400`, warm TTFB **205 ms → 45 ms**, with 6 JSON-LD blocks, the `h1`
+and the FAQ content unchanged in the served HTML.
+
+Do NOT remove `connection()` from the root layout to cache everything: without it the ~339
+static routes prerender at build time, roughly 237 MiB against a 181 MiB gate.
+
+Per-page client JS fell 1,551 → 525 KB raw (340 → 127 KB brotli). The cause was not the
+`toolMetaMap` imports in ToolClient/ToolDetailChrome — removing those changed nothing,
+because `toolRouteUtils` imports the catalogue on line 1 and those components pull two pure
+helpers out of it. A module is the unit webpack follows. The helpers now live in
+`toolRouteFormat.js`.

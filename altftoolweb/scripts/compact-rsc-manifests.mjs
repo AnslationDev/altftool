@@ -29,22 +29,36 @@ import path from "node:path";
 import vm from "node:vm";
 
 const nextDir = path.resolve(".next");
-const appDir = path.join(nextDir, "server", "app");
-if (!fs.existsSync(appDir)) {
+
+// Both copies. `next build` writes .next/standalone containing its own
+// .next/server/app, and that copy — not this one — is what Amplify packages:
+// across jobs 105 and 110 the byte count AWS reported was 0.933 and 0.931
+// times the size of .next/standalone, stable to a third of a percent, while
+// the walk this repo's gate performs moved in the opposite direction.
+// Compacting only .next/server/app therefore shrank a directory AWS never
+// weighs.
+const appDirs = [
+  path.join(nextDir, "server", "app"),
+  path.join(nextDir, "standalone", ".next", "server", "app"),
+].filter((dir) => fs.existsSync(dir));
+
+if (appDirs.length === 0) {
   console.log("RSC manifest compaction: no .next/server/app, skipping.");
   process.exit(0);
 }
 
 const files = [];
-(function walk(directory) {
-  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) walk(entryPath);
-    else if (entry.name.endsWith("_client-reference-manifest.js")) {
-      files.push(entryPath);
+for (const appDir of appDirs) {
+  (function walk(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) walk(entryPath);
+      else if (entry.name.endsWith("_client-reference-manifest.js")) {
+        files.push(entryPath);
+      }
     }
-  }
-})(appDir);
+  })(appDir);
+}
 
 if (files.length === 0) {
   console.log("RSC manifest compaction: no manifests found, skipping.");
