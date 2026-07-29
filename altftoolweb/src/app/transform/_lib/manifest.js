@@ -19,6 +19,10 @@ import manifest from "../_data/transform.manifest.json";
  * @property {"todo"|"done"|"blocked"} status
  * @property {string} description
  * @property {string[]} keywords
+ * @property {string[]} [uses] Packages a `lib: "custom"` converter still
+ *   depends on (json5 to parse, mongoose to model the target, …). The page
+ *   names them, so this must match the module's real imports — asserted in
+ *   scripts/assert-transform-manifest.mjs.
  * @property {string} [blocked_reason]
  */
 

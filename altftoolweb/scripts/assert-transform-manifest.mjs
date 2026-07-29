@@ -111,6 +111,27 @@ for (const tool of manifest.tools) {
     }
   }
 
+  // 1b. `uses` on a hand-written converter: the page names these packages, so
+  // the list has to be the real one. A "custom" converter that quietly imports
+  // json5 or mongoose must not render as "no third-party library".
+  if (tool.lib === "custom") {
+    const builtins = new Set(["module", "fs", "path", "os", "url"].flatMap((n) => [n, `node:${n}`]));
+    const actual = [...packages]
+      .filter((pkg) => !builtins.has(pkg))
+      .map((pkg) => (pkg.startsWith("@") ? pkg.split("/").slice(0, 2).join("/") : pkg.split("/")[0]));
+    const declared = new Set(Array.isArray(tool.uses) ? tool.uses : []);
+    const undeclared = [...new Set(actual)].filter((pkg) => !declared.has(pkg));
+    const stale = [...declared].filter((pkg) => !actual.includes(pkg));
+    if (undeclared.length) {
+      problems.push(
+        `${tool.slug}: lib is "custom" but it imports ${undeclared.join(", ")} — add them to "uses", or the page will claim it has no third-party dependency`,
+      );
+    }
+    if (stale.length) {
+      problems.push(`${tool.slug}: "uses" lists ${stale.join(", ")}, which it no longer imports`);
+    }
+  }
+
   // 2. engine vs the client loader registry, which decides if input is uploaded
   const hasClientLoader = new RegExp(`["']${tool.slug}["']\\s*:`).test(clientRegistry);
   if (tool.engine === "browser" && !hasClientLoader) {

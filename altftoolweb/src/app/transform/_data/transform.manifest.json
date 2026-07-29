@@ -181,6 +181,9 @@
         "json to io-ts",
         "io-ts codec",
         "runtime validation typescript"
+      ],
+      "uses": [
+        "io-ts"
       ]
     },
     {
@@ -261,6 +264,9 @@
         "json to mobx-state-tree",
         "mst model",
         "mobx types"
+      ],
+      "uses": [
+        "mobx-state-tree"
       ]
     },
     {
@@ -277,6 +283,9 @@
         "json to mongoose",
         "mongoose schema",
         "mongodb model"
+      ],
+      "uses": [
+        "mongoose"
       ]
     },
     {
@@ -309,6 +318,9 @@
         "json to proptypes",
         "react proptypes",
         "prop-types generator"
+      ],
+      "uses": [
+        "prop-types"
       ]
     },
     {
@@ -341,6 +353,9 @@
         "json to sarcastic",
         "runtime assert",
         "type guard generator"
+      ],
+      "uses": [
+        "sarcastic"
       ]
     },
     {
@@ -534,6 +549,9 @@
         "style object to css",
         "styled-components",
         "template literal css"
+      ],
+      "uses": [
+        "json5"
       ]
     },
     {

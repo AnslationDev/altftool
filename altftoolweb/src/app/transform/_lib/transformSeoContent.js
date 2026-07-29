@@ -100,6 +100,17 @@ function cleanText(value = "") {
 }
 
 /**
+ * "a", "a and b", "a, b and c" — used for the helper packages a hand-written
+ * converter still depends on, so the sentence reads the same at any length.
+ * @param {string[]} values
+ */
+function listPhrase(values = []) {
+  const items = values.filter(Boolean);
+  if (items.length <= 1) return items.join("");
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
+/**
  * Split a manifest title into its source and target names. Every title in the
  * manifest is exactly "<source> to <target>", which gives a far better human
  * label than the raw `from`/`to` keys ("Flow", not "JavaScript").
@@ -184,11 +195,23 @@ export function buildTransformSeoContent(tool) {
   const usesTempFile = TEMP_FILE_SLUGS.has(tool.slug);
 
   const libIsCustom = tool.lib === "custom";
+  // `uses` lists packages a hand-written converter still pulls in — json5 to
+  // parse the input, io-ts or mongoose to model the target. Six converters do,
+  // so "custom" cannot be rendered as "no third-party library": that sentence
+  // was false on exactly the pages a reader checks a supply chain from. The
+  // field is populated from each module's real import graph and asserted in
+  // scripts/assert-transform-manifest.mjs.
+  const helpers = Array.isArray(tool.uses) ? tool.uses.filter(Boolean) : [];
+  const helperList = listPhrase(helpers);
   const libPhrase = libIsCustom
-    ? "a converter written specifically for AltFTool"
+    ? helpers.length
+      ? `a converter written specifically for AltFTool, on top of ${helperList}`
+      : "a converter written specifically for AltFTool"
     : `the ${tool.lib} library`;
   const libTableValue = libIsCustom
-    ? "Purpose-built for AltFTool (no third-party library)"
+    ? helpers.length
+      ? `Written for AltFTool, using ${helperList}`
+      : "Written for AltFTool (no third-party library)"
     : tool.lib;
 
   // --- answer-first intro -------------------------------------------------
@@ -254,8 +277,10 @@ export function buildTransformSeoContent(tool) {
     {
       question: `What does ${title} use to convert ${sourceName} to ${targetName}?`,
       answer: libIsCustom
-        ? `A converter written specifically for AltFTool, with no third-party conversion dependency. It runs ${isBrowser ? "in your browser" : "on AltFTool's server"}.`
-        : `The ${tool.lib} library, running ${isBrowser ? "in your browser" : "on AltFTool's server"}. The ${targetName} you see is that library's output, not a hand-rolled approximation.`,
+        ? helpers.length
+          ? `A converter written specifically for AltFTool — no third-party library performs the conversion, though it does use ${helperList} along the way. It runs ${isBrowser ? "in your browser" : "on AltFTool's server"}.`
+          : `A converter written specifically for AltFTool, with no third-party dependency. It runs ${isBrowser ? "in your browser" : "on AltFTool's server"}.`
+        : `The ${tool.lib} library, running ${isBrowser ? "in your browser" : "on AltFTool's server"}. The ${targetName} you see is that library's output rather than an approximation written here.`,
     },
     {
       question: `Is there a limit on how much ${sourceName} I can convert?`,

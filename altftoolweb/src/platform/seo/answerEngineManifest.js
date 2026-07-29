@@ -234,6 +234,27 @@ function getClusterLines(site, { includeIntent = true, maxTools = 8 } = {}) {
 }
 
 /**
+ * The categories the manifest actually defines. Read, never written down: an
+ * earlier version of this file listed "CSV" among the formats and there has
+ * never been a CSV converter, which is precisely the sort of thing an answer
+ * engine repeats to a user.
+ */
+function transformCategoryList() {
+  const categories = [...new Set(TRANSFORM_TOOLS.map((tool) => tool.category))];
+  if (categories.length < 2) return categories.join("");
+  return `${categories.slice(0, -1).join(", ")} and ${categories[categories.length - 1]}`;
+}
+
+/**
+ * How many converter slugs are NOT {from}-to-{to}. Counted, not written down:
+ * this file used to advertise that pattern as if it held, and an engine that
+ * composes a URL from it lands on a 404 most of the time.
+ */
+function offPatternSlugCount() {
+  return TRANSFORM_TOOLS.filter((tool) => tool.slug !== `${tool.from}-to-${tool.to}`).length;
+}
+
+/**
  * One line per converter: the format pair is the fact an answer engine needs to
  * decide whether this page answers "how do I turn X into Y".
  */
@@ -252,7 +273,11 @@ function assetSizeRange(asset) {
 
 function assetDimensions(asset) {
   if (asset.pixels?.width && asset.pixels?.height) {
-    return `${asset.pixels.width}×${asset.pixels.height} px`;
+    // Some notices print a floor rather than a target — RRB NTPC's 140×60 px is
+    // a minimum. Dropping the qualifier here would have an answer engine tell a
+    // candidate to hit it exactly.
+    const floor = asset.pixelsAreMinimum ? "at least " : "";
+    return `${floor}${asset.pixels.width}×${asset.pixels.height} px`;
   }
   if (asset.physical?.width && asset.physical?.height) {
     return `${asset.physical.width}×${asset.physical.height} ${asset.physical.unit || "cm"}`;
@@ -348,7 +373,7 @@ export function buildLlmsTxt() {
 - [PDF tools](${site}/altflovepdf): browser PDF workflows including merge, split, convert, metadata, and inspection utilities.
 - [Image tools](${site}/altfloveimg): compress, resize, crop, convert, watermark, meme, and editor workflows.
 - [Developer tools](${site}/tools/developer): code, data, API, security, and debugging utilities.
-- [Transform](${site}/transform): ${TRANSFORM_TOOLS.length} format converters for developers (JSON, YAML, TOML, CSV, SVG, GraphQL, TypeScript, SQL and more), at ${site}/transform/{from}-to-{to}.
+- [Transform](${site}/transform): ${TRANSFORM_TOOLS.length} format converters for developers, grouped as ${transformCategoryList()}. Each has its own page under ${site}/transform/ — see the full list in ${site}/llms-full.txt rather than guessing a slug.
 - [Exam photo & signature sizes](${site}/exam-photo): the upload rules ${EXAM_SPECS.length} Indian recruitment and entrance bodies publish, each quoted from a named notification, plus a browser resizer that hits the spec.
 - [Security & Privacy](${site}/tools/security-privacy): privacy, scam-safety, authentication, and security inspection tools.
 - [Blog](${site}/blogs): practical guides, comparisons, and product updates.
@@ -420,7 +445,7 @@ ${categorySections.join("\n\n")}
 
 ## Transform — developer format converters (${TRANSFORM_TOOLS.length})
 
-Route pattern: ${site}/transform/{from}-to-{to}
+Every converter is listed below with its own URL. ${offPatternSlugCount()} of the ${TRANSFORM_TOOLS.length} slugs do not read {from}-to-{to}, so use the URL printed on the line rather than composing one.
 
 ${TRANSFORM_TOOLS.map((tool) => transformLine(site, tool)).join("\n")}
 
@@ -465,7 +490,7 @@ Important public routes:
 - ${site}/tools/image-photo
 - ${site}/altflovepdf
 - ${site}/altfloveimg
-- ${site}/transform (${TRANSFORM_TOOLS.length} developer format converters, at /transform/{from}-to-{to})
+- ${site}/transform (${TRANSFORM_TOOLS.length} developer format converters; individual URLs are listed in /llms-full.txt, and slugs are not reliably {from}-to-{to})
 - ${site}/exam-photo (photo and signature upload rules for ${EXAM_SPECS.length} Indian exams, each quoted from a named notification and dated ${SPECS_READ_ON})
 - ${site}/blogs
 - ${site}/docs

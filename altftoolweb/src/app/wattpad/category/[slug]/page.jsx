@@ -1,10 +1,10 @@
 import books from "@/app/wattpad/data/books.json";
 import categories from "@/app/wattpad/data/categories.json";
+import chapters from "@/app/wattpad/data/chapters.json";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
 import {
-  Eye,
   List,
 } from "lucide-react";
 
@@ -50,6 +50,13 @@ export default async function CategoryPage({ params }) {
 
   const filteredBooks = books.filter(
     (book) => book.categoryId === category.id
+  );
+  /** id -> chapters that actually exist, counted rather than read from stats. */
+  const chapterCounts = new Map(
+    filteredBooks.map((book) => [
+      book.id,
+      chapters.filter((chapter) => chapter.bookId === book.id).length,
+    ]),
   );
 
   return (
@@ -151,15 +158,24 @@ export default async function CategoryPage({ params }) {
                         <h3 className="wp-related-title">
                           <span className="wp-related-number">{index + 1}.</span> {book.title}
                         </h3>
-                        <p className="wp-related-author">{book.authorId}</p>
-                        <div className="wp-related-stats">
-                          <span className="flex items-center gap-1">
-                            <Eye size={16}/> {book.stats.views}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <List size={16} /> {book.stats.totalChapters} parts
-                          </span>
-                        </div>
+                        {/*
+                          Three things used to sit here and none of them were
+                          real. `authorId` is a raw foreign key ("user_002")
+                          with no authors table behind it, so it rendered as the
+                          byline. `stats.views` is seed data — there is no view
+                          counter in the app. `stats.totalChapters` disagrees
+                          with chapters.json, which holds parts for one of the
+                          eight titles. Only the counted figure survives, and
+                          only when it is not zero.
+                        */}
+                        {chapterCounts.get(book.id) ? (
+                          <div className="wp-related-stats">
+                            <span className="flex items-center gap-1">
+                              <List size={16} /> {chapterCounts.get(book.id)}{" "}
+                              {chapterCounts.get(book.id) === 1 ? "part" : "parts"}
+                            </span>
+                          </div>
+                        ) : null}
                         <p className="wp-related-summary">{book.summary}</p>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {book.tags?.slice(0, 4).map((tag) => (
