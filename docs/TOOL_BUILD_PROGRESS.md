@@ -644,3 +644,157 @@ call `amplify:ListJobs`, so it cannot be diagnosed from here:
 
 **Do not spend time re-checking the build for this.** It has been reproduced end to end. The
 next person should start at the console, not the code.
+
+---
+
+## 11. The catalogue has reached its artifact ceiling (2026-07-29)
+
+At **3,753 tools the artifact is 214.95 MiB against a 215 MiB gate**, with AWS's real
+ceiling at 220. This is no longer a list of fixes to apply — it is the constraint the
+roadmap has to be planned around.
+
+### What a tool costs
+
+| | |
+|---|---|
+| Code (`lib.js` + `pages/index.jsx` + config + entry) | ~17 KiB |
+| SEO content (`seo.js`, bundled) | ~3 KiB |
+| **Per tool** | **~20 KiB** |
+
+At that rate roughly **60–70 more tools fit**. The backlog holds ~6,500.
+
+### The largest single file is now SEO copy, not code
+
+`.next/server/chunks/*` contains one **9 MiB** chunk holding every tool's `seo.js`
+content. It was 6 MiB before this session's backfill of 244 files. It grows ~3 KiB per
+tool, so at the backlog's full size it alone would be ~33 MiB — a seventh of the entire
+budget, in FAQ text.
+
+**Do not try to lazy-load it per tool.** Measured: **+13.6 MiB**, because per-chunk
+webpack overhead across ~2,900 tiny modules costs more than the bundled prose it
+replaces. It also forces `buildToolSeoContent` async across seven call sites. Tried,
+measured, reverted — see §9.
+
+### Everything cheap is already taken
+
+Applied and verified this session: the three prerender deferrals, `serverExternalPackages`
+for the `/transform` codegen dependencies, image recompression, and pruning 136 dead
+`toolContentOverrides` entries (807 → 503 KiB). Together ~24 MiB.
+
+Deleting the now-unused shared shells (`_shared/assistive`, `_shared/newtasks`) changed
+the artifact by **0.00 MiB** — they were already unreachable, so webpack had never bundled
+them. That is a useful signal: there is no dead weight left to find. What remains in the
+artifact is reachable code and content.
+
+### What actually unblocks it
+
+Splitting the catalogue across deployments — the tools as their own Amplify app, so each
+app gets its own 220 MiB budget. Nothing short of that adds meaningful room, and 77
+finished tools plus the whole remaining backlog are waiting on it.
+
+The alternative is dropping large non-tool route families (`bops` alone is 30 MiB), which
+is a product decision about the owner's own pages, not an engineering one.
+
+### Two ordering traps found the hard way
+
+**Delete shared code only after the last consumer is gone, and re-check after any
+deferral.** `_shared/assistive/AssistiveTool` was deleted when all 91 rescued tools had
+replaced it — then 32 were deferred to fit the gate, their shells came back, and the build
+failed on the deleted file. Parse-checking never catches this; only a real build does.
+
+**A red main is worse than an unshipped tool.** When a release does not fit, cut its scope
+until it is green. Pushing an over-gate build would block the one deploy that could
+otherwise have gone out.
+
+---
+
+## §12 — The deploy freeze, resolved (2026-07-29)
+
+Production sat on `e23cf5b3` from 27 July through **21 consecutive failed builds** (Amplify
+jobs 81–101). §8's "a push to canonical-web/main auto-triggers a deploy" was correct all
+along; the webhook was never the problem. Builds ran, and failed.
+
+**Read the build log before theorising.** The `nik1` AWS profile has Amplify permissions
+(the default profile does not — an earlier note in this repo concluded no credentials here
+could reach Amplify, and that error cost hours):
+
+```bash
+export AWS_PROFILE=nik1 AWS_REGION=ap-south-1
+aws amplify list-jobs --app-id d3o0ra1ab3rxzf --branch-name main --max-results 5 \
+  --query 'jobSummaries[].[jobId,status,endTime]' --output text
+U=$(aws amplify get-job --app-id d3o0ra1ab3rxzf --branch-name main --job-id <N> \
+  --query 'job.steps[?stepName==`BUILD`].logUrl' --output text)
+curl -sL "$U" -o /tmp/build.log && tail -60 /tmp/build.log
+```
+
+### Cause 1 (jobs 81–100): a case-sensitive import
+
+`src/tools/event-tool/entry.jsx` imported `./Pages/index`; git tracks the directory as
+`pages`. macOS resolves it, Amplify's Linux does not. It landed at 20:21 on 27 July, minutes
+after job 80 succeeded at 19:59 — exactly when the freeze began.
+
+`scripts/check-import-case.mjs` now fails the build before webpack starts. **It reads
+`git ls-files`, not the working tree.** That distinction is the whole point: this checkout
+had drifted to `Pages/`, a rename a case-insensitive filesystem never reports, so a guard
+that checked the disk would have passed it. It also covers `public/` asset URL strings —
+that pass found two live production defects (`/personality` LCP image, `/sale` hero) which
+had never failed a build because next/image degrades silently.
+
+### Cause 2 (job 101): the upload, not the build
+
+The build completed successfully and AWS then refused it: 249,551,354 bytes against a
+230,686,720 limit. **The gate and AWS measure different quantities** — the gate read 205.68
+MiB for the same output, a 32.31 MiB difference. Its threshold is now 185 MiB, derived from
+that observed pair. Do not raise it because a build "only just" fails; that is the reasoning
+that produced 205 and then 215, both of which passed builds AWS would always reject.
+
+The gate now prints a `.next` inventory, which immediately answered what could not be
+determined locally: **`.next/standalone` exists on Amplify (230 MiB) and is never produced
+locally.** Amplify's build image injects `output: 'standalone'`, and the gate excludes that
+directory. Any purely local reasoning about artifact contents is blind to it.
+
+Also fixed: gate readings depended on checkout path length. Next writes the absolute build
+root into every RSC manifest, ~148,000 times, so one commit read 214.95 MiB from a
+47-character path and 215.21 MiB from a 116-character worktree. About 9.6 MiB of the
+"we are at the ceiling" story that parked the 81 tools in `PENDING_TOOL_RESCUES.json` was
+this, not the artifact.
+
+### The lever that fixed it: RSC manifest duplication, 24.78 MiB
+
+Next writes one client-reference manifest per app route. Across 390 routes they came to
+51.04 MiB, and **every one listed the same 429 client modules** — the manifest for
+`/altfgame/[slug]` carried 115 modules belonging to `/bops`, which it cannot render. All
+values share one shape, there are 6 distinct chunk arrays among 429 entries, and
+`ssrModuleMapping`/`rscModuleMapping` take 2 distinct values across all 390 files.
+
+Writing the shared data once and referencing it **is not possible**, and this is worth
+knowing before someone tries: Next reads these with `readFileSync` and evaluates them via
+`runInNewContext` with a context holding only `process.env.NEXT_DEPLOYMENT_ID`
+(`next/dist/esm/server/load-manifest.external.js`). No `require`, no `module`. Shipping a
+shared-module version would 500 every RSC page.
+
+`scripts/compact-rsc-manifests.mjs` instead gives each file its own copy as interned tables
+(names, chunk arrays, directory prefixes) plus a six-line expander, trailing zero fields
+dropped. Correctness is checked rather than assumed: every manifest is evaluated before and
+after and the objects compared on values **and key order**, and one mismatch aborts the
+build with the file untouched. A manifest whose source reads `process.env` is skipped, so a
+value Next resolves at load can never be frozen in at build time.
+
+  manifests  51.04 → 26.26 MiB     gate  205.61 → 183.73 MiB
+
+Green at `ca6e78336` (job 102), verified: `/api/health` reports that commit, `career.png`
+404s while `Career.png` 200s. Note the apex domain 302s to `www`, so curl without `-L`
+returns 302 for every path and looks like an outage when the site is fine.
+
+### What has not changed
+
+Two builds give the per-tool cost: job 80 was 165.88 MiB at 2,749 tools, job 101 205.68 MiB
+at 3,753. That is **40.6 KiB per tool, 19.8 MiB per 500**. At 183.73 MiB against a 185 gate,
+the next wave of 500 lands straight back on this wall, and the 81 parked tools with it.
+
+The 24.78 MiB is a reprieve, not a fix. Splitting the catalogue into its own Amplify app —
+each app getting its own budget — is what actually allows the 500-at-a-time cadence to
+continue. That is a product and infrastructure decision for the owner, not an engineering
+one to take unilaterally. Held in reserve: the `proxy.js` `toolMetaMap` → slug-set change,
+measured at 0.89 MiB, deliberately not shipped in the same release so that a second
+gate↔AWS data point would stay uncontaminated.
