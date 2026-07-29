@@ -110,7 +110,6 @@ export default function Socials() {
                 width={brand.width}
                 height={brand.height}
                 className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-all duration-300"
-                unoptimized
               />
             </div>
           ))}

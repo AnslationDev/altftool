@@ -84,7 +84,7 @@ export default async function ToolPage({ params }) {
           a tool page holds an ssr:false skeleton and ad wrappers — the quotable
           content was being discarded. ToolClient already forwards children to
           seoContent, which renders inside <main>. */}
-      <ToolClient slug={slug} category={category}>
+      <ToolClient slug={slug} tool={tool} category={category}>
         <ToolSeoSection slug={slug} tool={tool} category={category} />
       </ToolClient>
     </>

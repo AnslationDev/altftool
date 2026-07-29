@@ -8,14 +8,14 @@ import {
   slugifyCategory,
 } from "@/platform/registry/categoryTaxonomy";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+// Re-exported so existing server callers keep working; defined apart from
+// this module so client components can reach them without the catalogue.
+import { formatCategoryLabel, getToolCategories } from "./toolRouteFormat";
+
+export { formatCategoryLabel, getToolCategories };
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
-}
-
-export function getToolCategories(tool) {
-  if (!tool?.category) return [];
-  return Array.isArray(tool.category) ? tool.category : [tool.category];
 }
 
 export function slugifyRouteSegment(value = "") {
@@ -108,15 +108,6 @@ export function getInitialToolCatalog(category = "all", limit = 64) {
 
   allEntries.sort(byPriorityAndName).forEach(add);
   return Object.fromEntries(selected);
-}
-
-export function formatCategoryLabel(value = "all") {
-  if (value === "all") return "All Tools";
-  const canonical = getCanonicalCategoryBySlug(String(value).toLowerCase());
-  if (canonical) return canonical.label;
-  return String(value)
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
 export function getRelatedTools(slug, limit = 6) {

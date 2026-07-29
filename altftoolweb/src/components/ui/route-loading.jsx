@@ -1,5 +1,3 @@
-"use client";
-
 import { Loader2, Puzzle, Sparkles } from "lucide-react";
 
 function cx(...classes) {

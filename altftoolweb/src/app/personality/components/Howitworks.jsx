@@ -73,7 +73,6 @@ export default function HowItWorks() {
                       fill
 	                      sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 320px"
 	                      className="object-contain object-center transition-transform duration-500 group-hover:scale-110"
-                        unoptimized
 	                    />
                   </div>
                 </div>
@@ -86,7 +85,6 @@ export default function HowItWorks() {
                     fill
 	                    sizes="(min-width: 1280px) 360px, (min-width: 768px) 45vw, 90vw"
 	                    className="object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                      unoptimized
 	                  />
                 </div>
                 <div className="absolute inset-0 pointer-events-none z-0 bg-gradient-to-t from-black/5 to-transparent" />

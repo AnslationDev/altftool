@@ -49,7 +49,7 @@ export default function Page() {
       />
       {/* Nested so ToolDetailChrome renders it inside <main> — see
           tools/[category]/[slug]/page.jsx for why. */}
-      <ApiStressToolClient category="all">
+      <ApiStressToolClient tool={tool} category="all">
         <ToolSeoSection slug={slug} tool={tool} category="all" />
       </ApiStressToolClient>
     </>

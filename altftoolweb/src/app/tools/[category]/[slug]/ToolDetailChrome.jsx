@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { ChevronRight } from "lucide-react";
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
-import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
+import { formatCategoryLabel, getToolCategories } from "../../toolRouteFormat";
 import { useToolAds } from "@/ads/AdsProvider";
 import AdRail from "@/ads/layouts/tools/AdRail";
 import AdNativeCard from "@/ads/layouts/tools/AdNativeCard";
@@ -14,8 +13,10 @@ import RouteLazySection from "@/components/ui/RouteLazySection";
 import { rememberRecentTool } from "../../toolStorage";
 import { isWideWorkspaceTool } from "../../wideWorkspaceTools";
 
-export default function ToolDetailChrome({ slug, category = "all", seoContent, children }) {
-  const tool = toolMetaMap[slug];
+// `tool` comes from the server page, which already looked it up. Reading it
+// from the catalogue here instead put all 3,900 entries (1.0 MB raw, 210 KB
+// brotli) into the eager client bundle of every tool page.
+export default function ToolDetailChrome({ slug, tool, category = "all", seoContent, children }) {
   const toolCategories = getToolCategories(tool);
   const categoryLabel = formatCategoryLabel(category);
   const categoryHref = category === "all" ? "/tools/all" : `/tools/${category}`;
@@ -54,8 +55,8 @@ export default function ToolDetailChrome({ slug, category = "all", seoContent, c
   const showLeftRail = !wideWorkspace && Boolean(leftAd?.content);
 
   useEffect(() => {
-    rememberRecentTool(slug, toolMetaMap);
-  }, [slug]);
+    rememberRecentTool(slug, Boolean(tool));
+  }, [slug, tool]);
 
   return (
     // `@container/toolpage` lets the rail respond to the actual content area

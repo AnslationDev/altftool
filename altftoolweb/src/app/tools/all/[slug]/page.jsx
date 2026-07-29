@@ -72,7 +72,7 @@ export default async function ToolPage({ params }) {
           read first. ToolClient forwards children to seoContent, which renders
           inside <main>. This route serves /tools/all/<slug> and is the one
           most tool URLs actually hit. */}
-      <ToolClient slug={slug} category="all">
+      <ToolClient slug={slug} tool={tool} category="all">
         <ToolSeoSection slug={slug} tool={tool} category="all" />
       </ToolClient>
     </>

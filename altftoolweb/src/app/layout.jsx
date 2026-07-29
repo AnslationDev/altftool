@@ -44,10 +44,17 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+// Sora and IBM Plex Sans are declared here so their CSS variables and
+// @font-face rules stay global, but only a handful of routes actually render
+// them. Preloading both from the root layout put 73.9 KB of highest-priority
+// woff2 on the critical path of all 390 routes, ahead of a stylesheet that is
+// itself only 104 KB. `preload: false` keeps the faces available everywhere
+// and lets the routes that use them fetch on demand.
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-sora",
   display: "swap",
+  preload: false,
 });
 
 const inter = Inter({
@@ -61,6 +68,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   weight: ["400", "500"],
   variable: "--font-ibm-plex-sans",
   display: "swap",
+  preload: false,
 });
 
 const shouldLoadGoogleAds = isAdsenseProductionDeployment();

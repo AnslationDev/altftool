@@ -160,7 +160,6 @@ px-[7.5%] sm:px-[15%]
                       sizes="(max-width: 640px) 45vw, (max-width: 768px) 40vw, (max-width: 1024px) 30vw, 320px"
 	                      className="object-contain object-center"
 	                      priority={i < 2}
-                        unoptimized
 	                    />
                   </div>
                 </div>
@@ -221,7 +220,6 @@ ${i === 3 ? "group-hover:translate-x-[60px] lg:group-hover:translate-x-[80px] xl
                       sizes="300px"
 	                      className="object-contain object-center"
 	                      priority={i < 2}
-                        unoptimized
 	                    />
                   </div>
                 </div>
