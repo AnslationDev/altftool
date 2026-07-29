@@ -203,42 +203,42 @@ export const DOCS_FAQS = Object.freeze([
   {
     question: "What is AltFTool?",
     answer:
-      "AltFTool is an organized public platform for browser tools, focused product workspaces, automation templates, business-service discovery, shopping research, practical guides, and interactive experiences.",
+      "AltFTool is an organized public platform that brings browser tools, focused product workspaces, and practical guides together in one place. It also covers automation templates, business-service discovery, shopping research, and interactive experiences.",
   },
   {
     question: "Do I need an account to use AltFTool?",
     answer:
-      "Most public browsing and many browser tools can be used without an account. Features that save personal state, synchronize data, or require protected access may ask you to sign in.",
+      "No. Most public browsing and many browser tools can be used without an account or any sign-in step. Features that save personal state, synchronize data, or require protected access may ask you to sign in.",
   },
   {
     question: "Are all AltFTool tools free?",
     answer:
-      "Many utilities and public destinations are free to open. A feature may rely on a third-party service, paid provider, affiliate merchant, or usage limit; the relevant page should identify that dependency or destination.",
+      "Not every feature is free, though many utilities and public destinations are free to open. A feature may rely on a third-party service, paid provider, affiliate merchant, or usage limit; the relevant page should identify that dependency or destination.",
   },
   {
     question: "Does my file or text leave the browser?",
     answer:
-      "It depends on the feature. Local-first tools keep supported processing in the browser. Tools that require AI, live data, storage, conversion infrastructure, or external APIs may send the required input to a remote service. Check the tool or product privacy note before using sensitive data.",
+      "It depends on the feature: local-first tools keep supported processing in the browser, while tools that need remote infrastructure may send input out. Tools that require AI, live data, storage, conversion infrastructure, or external APIs may send the required input to a remote service. Check the tool or product privacy note before using sensitive data.",
   },
   {
     question: "Why can a live-data feature be unavailable?",
     answer:
-      "Some features depend on Firebase, public APIs, search providers, media services, or other third parties. Network conditions, quotas, provider incidents, configuration, and regional availability can affect them.",
+      "A live-data feature can be interrupted by network conditions, quotas, provider incidents, configuration, or regional availability. Those features depend on Firebase, public APIs, search providers, media services, or other third parties, so a change on any of them can affect the result.",
   },
   {
     question: "How do I report a broken tool or request a feature?",
     answer:
-      "Use AltFTool Support for a problem, Request a Tool for a new utility, or the public Status page to review platform health before reporting an outage.",
+      "Use AltFTool Support to report a problem, and Request a Tool to ask for a new utility. Check the public Status page first to review platform health before reporting an outage.",
   },
   {
     question: "Can I use AltFTool on mobile?",
     answer:
-      "The public platform is designed for modern mobile and desktop browsers. Complex editors and file workflows may be easier on a larger screen even when the route remains responsive.",
+      "Yes. The public platform is designed for modern mobile and desktop browsers, so a route remains responsive on a phone. Complex editors and file workflows may still be easier on a larger screen.",
   },
   {
     question: "How do light, dark, and system themes work?",
     answer:
-      "System mode follows your operating-system preference. Light and dark selections override it on the current browser until you choose another mode.",
+      "AltFTool offers three theme modes: system mode follows your operating-system preference, while light and dark are manual overrides. A light or dark selection applies on the current browser until you choose another mode.",
   },
 ]);
 
