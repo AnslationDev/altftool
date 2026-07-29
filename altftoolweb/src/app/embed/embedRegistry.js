@@ -13,9 +13,13 @@
 // embeddable widgets we have — loan-emi-calculator ("Business"),
 // bmi-calculator and the calorie set ("Health & Fitness"),
 // currency-converter ("Business") — carry categories that say nothing about
-// widget shape. AI-backed tools are excluded from rule 2: they call an API,
-// which would break the "computes in your browser, nothing is sent" promise
-// the embed program is built on.
+// widget shape. AI-backed tools are excluded: a model call is slow, metered
+// and rate-limited, which is not something to hand to an arbitrary third-party
+// page. That exclusion is a cost/abuse boundary, NOT a claim that every other
+// widget is offline-only — currency-converter, for one, fetches live rates
+// from AltFTool. Never restate the embed programme as "nothing ever leaves the
+// browser"; see ALTFTOOL_POSITION in src/app/alternatives/data/incumbents.js
+// for the accurate, scoped wording.
 
 import "server-only";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
@@ -101,4 +105,64 @@ export function buildEmbedSnippet(slug, name = "") {
     slug,
     name || toolMetaMap[slug]?.name || "AltFTool widget",
   );
+}
+
+/** Display name for a widget, without leaking a raw slug into markup. */
+export function getEmbedToolName(slug) {
+  return toolMetaMap[slug]?.name || "AltFTool widget";
+}
+
+// ---------------------------------------------------------------- oEmbed
+//
+// Hosts an oEmbed `url=` parameter may point at. An arbitrary URL must NEVER
+// be echoed back into the `html` field — that is a stored-XSS vector on every
+// site that consumes us. Everything the endpoint emits is rebuilt from a slug
+// that survived isEmbeddable(), so the request string never reaches the markup.
+
+const CANONICAL_EMBED_HOSTS = new Set(["altftool.com", "www.altftool.com"]);
+
+/** `/embed/widget/<slug>` — the iframe document itself. */
+const WIDGET_URL_PATH = /^\/embed\/widget\/([a-z0-9][a-z0-9-]*)\/?$/i;
+/** `/tools/<category>/<slug>` — the canonical tool page, `all` included. */
+const TOOL_URL_PATH = /^\/tools\/[a-z0-9][a-z0-9-]*\/([a-z0-9][a-z0-9-]*)\/?$/i;
+
+/**
+ * Resolve an incoming oEmbed `url=` to an embeddable slug, or `null`.
+ *
+ * `null` means 404: a foreign host, a path that is not a widget or tool page,
+ * or a tool that is not in the embeddable set. `extraHosts` lets a preview or
+ * local deployment resolve its own origin without widening production.
+ */
+export function resolveEmbeddableSlugFromUrl(value, { extraHosts = [] } = {}) {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+
+  let url;
+  try {
+    url = new URL(raw);
+  } catch {
+    return null;
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+
+  const host = url.hostname.toLowerCase();
+  const allowed =
+    CANONICAL_EMBED_HOSTS.has(host) ||
+    extraHosts.some((extra) => String(extra || "").toLowerCase() === host);
+  if (!allowed) return null;
+
+  // Match the raw pathname: slugs are ASCII, so an encoded path is a
+  // mismatch rather than something to decode and re-check.
+  const match = WIDGET_URL_PATH.exec(url.pathname) || TOOL_URL_PATH.exec(url.pathname);
+  const slug = (match?.[1] || "").toLowerCase();
+  if (!slug || !isEmbeddable(slug)) return null;
+
+  return slug;
+}
+
+/** Discovery href advertised by `<link rel="alternate" type="application/json+oembed">`. */
+export function getOEmbedEndpointUrl(slug) {
+  return `${PRODUCTION_SITE_URL}/api/oembed?url=${encodeURIComponent(
+    getEmbedUrl(slug),
+  )}&format=json`;
 }

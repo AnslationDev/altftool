@@ -5,24 +5,32 @@ import { EMBEDDABLE_CATEGORIES, getEmbeddableTools } from "./embedRegistry";
 import EmbedPicker from "./EmbedPicker";
 
 export async function generateMetadata() {
+  // Derived, never hardcoded: the registry decides how many widgets exist.
+  const count = getEmbeddableTools().length;
   return createPageMetadata({
     title: "Free Embeddable Widgets — Calculators & Converters",
-    description:
-      "Add free calculators and converters to your website with one copy-paste snippet. 190+ AltFTool widgets — no signup, no API key, fully responsive.",
+    description: `Add free calculators and converters to your website with one copy-paste snippet. ${count} AltFTool widgets — no signup, no API key, fully responsive.`,
     path: "/embed",
     keywords: [
       "free embeddable calculator",
       "website widgets",
       "embed calculator iframe",
       "free widgets for blog",
+      "oembed calculator widget",
     ],
   });
 }
 
 const STEPS = [
   { title: "Pick a widget", text: "Search every AltFTool calculator and converter below." },
-  { title: "Copy the snippet", text: "One iframe tag — no account, no API key, no build step." },
-  { title: "Paste it anywhere", text: "Works in WordPress, Ghost, Webflow, plain HTML — anywhere an iframe works." },
+  {
+    title: "Copy the format you need",
+    text: "Plain iframe, responsive wrapper, WordPress block, or just the URL — no account, no API key, no build step.",
+  },
+  {
+    title: "Paste it anywhere",
+    text: "Works in WordPress, Ghost, Webflow, Notion, plain HTML — anywhere an iframe works.",
+  },
 ];
 
 export default function EmbedHubPage() {
@@ -73,11 +81,49 @@ export default function EmbedHubPage() {
         </section>
 
         <section className="mt-10 max-w-2xl">
+          <h2 className="text-xl font-semibold tracking-tight">Paste the URL, skip the HTML</h2>
+          <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
+            Every widget page publishes an{" "}
+            <a
+              href="https://oembed.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="rounded-[4px] font-semibold text-(--primary-text) underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35"
+            >
+              oEmbed
+            </a>{" "}
+            endpoint, so editors that resolve oEmbed can turn a pasted widget URL straight into the
+            live widget — no HTML block, no code view. Self-hosted WordPress does this for authors
+            allowed to post unfiltered HTML; Ghost resolves it in its embed card. Discourse needs
+            an admin to allowlist{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              altftool.com
+            </code>{" "}
+            in its onebox settings first. Anywhere else, the HTML snippet still works.
+          </p>
+          <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
+            Building your own integration? Call{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              /api/oembed?url=&hellip;
+            </code>{" "}
+            with a widget or tool URL and you get back a standard JSON oEmbed response, including
+            the ready-to-inject <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">html</code>.
+            It accepts <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">maxwidth</code>{" "}
+            and <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">maxheight</code>.
+          </p>
+        </section>
+
+        <section className="mt-10 max-w-2xl">
           <h2 className="text-xl font-semibold tracking-tight">Fair use</h2>
           <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
             Widgets are free for personal and commercial sites. The attribution link inside the
-            widget (and the credit line in the snippet) must stay visible — that&rsquo;s the whole
-            deal. Widgets run in your visitor&rsquo;s browser; we never see the data they enter.
+            widget (and the credit line in the snippet) must stay visible, and stay a normal
+            followable link — that&rsquo;s the whole deal.
+          </p>
+          <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
+            Most widgets compute in your visitor&rsquo;s browser. A few need live data — the
+            currency converter fetches exchange rates from AltFTool, for example — so those make a
+            network request to get it.
           </p>
           <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
             <strong className="font-semibold text-(--foreground)">Tip:</strong> widgets follow the

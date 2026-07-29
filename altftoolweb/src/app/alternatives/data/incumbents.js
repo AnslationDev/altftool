@@ -2113,3 +2113,18 @@ export function getIncumbentsByCategory(category) {
     (entry) => entry.category === category,
   );
 }
+
+/**
+ * Oldest and newest `checkedOn` across the whole corpus.
+ *
+ * The hub quotes this as the window its figures were read in, so it is derived
+ * from the records rather than written into the page. Re-check one incumbent
+ * and the hub's date moves on its own; hardcode it and the page starts lying
+ * the first time anyone edits a record.
+ */
+export function getIncumbentCheckedOnRange() {
+  const dates = INCUMBENT_SLUGS.map((slug) => INCUMBENTS[slug].checkedOn)
+    .filter(Boolean)
+    .sort();
+  return { from: dates[0] || "", to: dates[dates.length - 1] || "" };
+}

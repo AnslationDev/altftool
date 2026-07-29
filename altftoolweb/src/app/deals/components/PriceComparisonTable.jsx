@@ -11,7 +11,7 @@
 //
 // Server component.
 
-import { ExternalLink } from "lucide-react";
+import VendorLink from "@/app/alternatives/components/VendorLink";
 
 import PriceCell from "./PriceCell";
 
@@ -100,15 +100,12 @@ export default function PriceComparisonTable({ toolName, products = [], caption 
                 style={{ width: columnWidth }}
                 className="px-4 py-3 text-sm font-semibold text-(--foreground)"
               >
-                <a
+                <VendorLink
                   href={product.homepage}
-                  rel="nofollow noopener"
-                  target="_blank"
                   className="inline-flex items-start gap-1.5 underline underline-offset-2 hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                 >
                   {product.name}
-                  <ExternalLink className="mt-1 h-3 w-3 flex-none" aria-hidden="true" />
-                </a>
+                </VendorLink>
               </th>
             ))}
           </tr>

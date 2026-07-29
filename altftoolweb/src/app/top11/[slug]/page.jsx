@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import categoryData from "@/app/top11/data/categoryData";
+import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -37,6 +38,11 @@ export async function generateMetadata({ params }) {
     } listed on AltFTool.`,
     path: `/top11/${slug}`,
     image: data.banner,
+    // See data/indexPolicy.js: the category pages carry too little of their own
+    // to rank against the vendors and review platforms on these queries, so
+    // they are out of the index. They stay live, stay linked and stay followed.
+    noindex: !isTop11Indexable(slug),
+    follow: true,
   });
 }
 
@@ -46,6 +52,7 @@ export default async function CategoryPage({ params }) {
 
   if (!data) notFound();
 
+  const indexable = isTop11Indexable(slug);
   const relatedItems = getRelatedContentForPreset(
     {
       href: `/top11/${slug}`,
@@ -65,21 +72,24 @@ export default async function CategoryPage({ params }) {
       <JsonLd
         id={`top11-schema-${slug}`}
         data={[
-          // Mirrors the rendered <ol> exactly. No Review or AggregateRating is
-          // emitted: there is no rating data behind this page.
-          {
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: data.title,
-            description: data.description,
-            numberOfItems: data.tools.length,
-            itemListOrder: "https://schema.org/ItemListOrderDescending",
-            itemListElement: data.tools.map((tool, index) => ({
-              "@type": "ListItem",
-              position: index + 1,
-              name: tool.name,
-            })),
-          },
+          // The ItemList mirrors the rendered <ol> exactly, and is emitted only
+          // while the page is in the index. No Review or AggregateRating is
+          // emitted at all: there is no rating data behind this page.
+          indexable
+            ? {
+                "@context": "https://schema.org",
+                "@type": "ItemList",
+                name: data.title,
+                description: data.description,
+                numberOfItems: data.tools.length,
+                itemListOrder: "https://schema.org/ItemListOrderDescending",
+                itemListElement: data.tools.map((tool, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: tool.name,
+                })),
+              }
+            : null,
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Top11", path: "/top11" },
@@ -202,12 +212,17 @@ export default async function CategoryPage({ params }) {
 
       </div>
 
+      {/*
+        The related band always renders: a noindexed page keeps its human
+        navigation and keeps passing link equity to the routes that can rank.
+        Only its ItemList markup drops away with the rest of the rich schema.
+      */}
       <RelatedContentSection
         className="mt-12"
         title="Keep exploring AltFTool"
         items={relatedItems}
         path={`/top11/${slug}`}
-        jsonLdName={`Related to ${data.title}`}
+        jsonLdName={indexable ? `Related to ${data.title}` : undefined}
       />
     </div>
   );

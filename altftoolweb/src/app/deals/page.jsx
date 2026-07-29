@@ -12,10 +12,11 @@
 // structured-data spam Google penalises.
 
 import Link from "next/link";
-import { ArrowRight, ExternalLink, ScanSearch } from "lucide-react";
+import { ArrowRight, ScanSearch } from "lucide-react";
 
 import JsonLd from "@/platform/seo/JsonLd";
 import {
+  absoluteUrl,
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
   createFaqJsonLd,
@@ -24,6 +25,9 @@ import {
 } from "@/platform/seo/generateMetadata";
 import RelatedContentSection from "@/platform/linking/RelatedContentSection";
 import { getRelatedContentForPreset } from "@/platform/linking/relatedContent";
+// Shared with /alternatives. It lives there because the dependency between the
+// two families already runs deals → alternatives (see ./data/paidProducts.js).
+import CitationBlock from "@/app/alternatives/components/CitationBlock";
 
 import SavingsTable from "./components/SavingsTable";
 import {
@@ -82,6 +86,13 @@ export default function DealsPage() {
   // Counted, never asserted: if a vendor introduces a paid tier and the record
   // is updated, this sentence corrects itself instead of going stale.
   const freeProductCount = rows.filter(({ product }) => isFreeProduct(product)).length;
+
+  // Provenance for the citation block. Every value is derived from the corpus
+  // on this render — the URL from the canonical helper, the window from the
+  // records' own check dates, the counts from the rows we just built — so a
+  // citing article never picks up a number this file invented.
+  const citationUrl = absoluteUrl("/deals");
+  const checkedWindow = from && from !== to ? `${from} to ${to}` : to;
 
   const related = getRelatedContentForPreset(
     {
@@ -159,8 +170,12 @@ export default function DealsPage() {
           </p>
         </header>
 
-        <section aria-labelledby="method-heading" className="mt-10">
-          <h2 id="method-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
+        {/* Section ids are part of the public surface of this page: a citing
+            article deep-links to one of them, so they are short, descriptive
+            and must not be renamed casually. scroll-mt-24 clears the sticky
+            header so the anchor lands on the heading rather than behind it. */}
+        <section aria-labelledby="how-to-read" className="mt-10 scroll-mt-24">
+          <h2 id="how-to-read" className="text-xl font-semibold tracking-tight sm:text-2xl">
             How to read this table
           </h2>
           <ul className="mt-4 grid list-none gap-3 p-0 sm:grid-cols-3">
@@ -188,8 +203,8 @@ export default function DealsPage() {
           </ul>
         </section>
 
-        <section aria-labelledby="table-heading" className="mt-12">
-          <h2 id="table-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <section aria-labelledby="price-table" className="mt-12 scroll-mt-24">
+          <h2 id="price-table" className="text-xl font-semibold tracking-tight sm:text-2xl">
             Every verified product, its entry price, and the free page that covers the job
           </h2>
           <div className="mt-5">
@@ -200,8 +215,8 @@ export default function DealsPage() {
           </div>
         </section>
 
-        <section aria-labelledby="jobs-heading" className="mt-12">
-          <h2 id="jobs-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <section aria-labelledby="jobs-by-category" className="mt-12 scroll-mt-24">
+          <h2 id="jobs-by-category" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {`The ${deals.length} jobs, by category`}
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-(--muted-foreground)">
@@ -243,8 +258,8 @@ export default function DealsPage() {
           </div>
         </section>
 
-        <section aria-labelledby="hub-faq-heading" className="mt-12">
-          <h2 id="hub-faq-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
+        <section aria-labelledby="questions" className="mt-12 scroll-mt-24">
+          <h2 id="questions" className="text-xl font-semibold tracking-tight sm:text-2xl">
             Questions about this page
           </h2>
           <dl className="mt-4 grid list-none gap-3 p-0">
@@ -255,6 +270,8 @@ export default function DealsPage() {
               </div>
             ))}
           </dl>
+          {/* Internal link: followable, no rel, and no external-link glyph —
+              that icon used to sit here and told readers this left the site. */}
           <p className="mt-5 text-sm leading-6 text-(--muted-foreground)">
             Looking for a deeper head-to-head with a specific hosted service?{" "}
             <Link
@@ -262,11 +279,24 @@ export default function DealsPage() {
               className="inline-flex items-center gap-1.5 font-semibold text-(--primary-text) underline underline-offset-2 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               The alternatives guides
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>{" "}
             cover free-tier limits, upload behaviour and migration paths in full.
           </p>
         </section>
+
+        <CitationBlock
+          url={citationUrl}
+          checkedFrom={from}
+          checkedTo={to}
+          coverage={`${rows.length} paid products across ${deals.length} jobs, each price read from the vendor's own pricing page`}
+          attribution={`AltFTool, "Paid tool prices vs free alternatives" — ${rows.length} vendor prices checked ${checkedWindow}. ${citationUrl}`}
+          anchors={[
+            { label: "The price table", fragment: "price-table" },
+            { label: "How to read it", fragment: "how-to-read" },
+          ]}
+          note="Every figure is transcribed from the vendor's own page on the date shown and is not converted between currencies, so quote the check date alongside any number you take from here — software pricing drifts. The vendor links are plain links: no affiliate tracking, no referral IDs and no paid placement."
+        />
       </div>
 
       <RelatedContentSection

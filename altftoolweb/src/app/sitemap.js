@@ -17,7 +17,8 @@ import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import { INCUMBENTS as alternativeIncumbents } from "@/app/alternatives/data/incumbents";
 import top11Categories from "@/app/top11/data/categoryData";
-import { getTop9Items } from "@/app/top9/data/getTop9Items";
+import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
+import { getIndexableTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
 import wattpadChapters from "@/app/wattpad/data/chapters.json";
@@ -59,6 +60,7 @@ import {
 } from "@/app/fact-net/data/factNetData";
 import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
 import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
+import { isKymIndexable } from "@/app/kym/data/indexPolicy";
 import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
 import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sitemapPages";
 import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
@@ -88,8 +90,10 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  { path: "/smartlink", priority: 0.65 },
-  { path: "/top11", priority: 0.7 },
+  // /top11 is deliberately absent: the hub and all ten of its categories are
+  // noindexed (see app/top11/data/indexPolicy.js), and a noindexed URL must
+  // not be submitted. The gated loop further down covers the categories; this
+  // is the hub. /kym is absent for the same reason and never appeared here.
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
   { path: "/licenses", priority: 0.3 },
@@ -784,14 +788,21 @@ async function buildSitemapEntries({
     }
   }
 
+  // A noindexed URL must never be submitted: Google reports that pairing as an
+  // error and the submission is wasted crawl either way. Both loops below ask
+  // the same predicate the pages' own metadata asks, so the sitemap and the
+  // robots directives cannot disagree.
   for (const slug of Object.keys(top11Categories)) {
+    if (!isTop11Indexable(`/top11/${slug}`)) continue;
     pushUnique(entries, seen, `/top11/${slug}`, {
       priority: 0.65,
       changeFrequency: "monthly",
     });
   }
 
-  for (const item of getTop9Items()) {
+  // Only the lists that publish a ranking. The other 46 render a title and a
+  // paragraph, are noindexed, and so are not submitted.
+  for (const item of getIndexableTop9Items()) {
     pushUnique(entries, seen, `/top9/${item.slug}`, {
       lastModified: item.date ? new Date(item.date) : undefined,
       priority: 0.58,
@@ -920,7 +931,11 @@ async function buildSitemapEntries({
     }
   }
 
+  // Same rule as above: the meme-encyclopedia entries are noindexed because 35
+  // of the 37 are assembled from eight shared templates, so none of them is
+  // submitted. /kym itself was never in this file.
   for (const path of getAllKymRoutes()) {
+    if (!isKymIndexable(path)) continue;
     pushUnique(entries, seen, path, {
       priority: 0.52,
       changeFrequency: "monthly",

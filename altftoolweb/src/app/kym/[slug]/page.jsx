@@ -3,6 +3,7 @@ import KymArticlePage from "../components/KymArticlePage";
 import KymGenericPage, { findKymItem } from "../components/KymGenericPage";
 import KymPollPage from "../components/KymPollPage";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { isKymIndexable } from "../data/indexPolicy";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 const CUSTOM_PAGES = {
@@ -23,11 +24,17 @@ export async function generateMetadata({ params }) {
   const path = `/kym/${slug}`;
   const customPage = CUSTOM_PAGES[slug];
 
+  // See ../data/indexPolicy.js: 35 of the 37 entries are assembled from eight
+  // shared templates, so the family is out of the index. `follow` stays true —
+  // these pages keep passing link equity to the routes that can rank.
+  const robots = { noindex: !isKymIndexable(path), follow: true };
+
   if (customPage) {
     return createPageMetadata({
       title: customPage.title,
       description: customPage.description,
       path,
+      ...robots,
     });
   }
 
@@ -37,6 +44,7 @@ export async function generateMetadata({ params }) {
     return createPageMetadata({
       title: "KYM Page",
       path,
+      ...robots,
     });
   }
 
@@ -44,6 +52,7 @@ export async function generateMetadata({ params }) {
     title: item.title,
     description: `Local KYM-style detail page for ${item.title}.`,
     path,
+    ...robots,
   });
 }
 
@@ -59,13 +68,18 @@ function KymRelatedBand({ slug, title, description, category }) {
     "editorial",
   );
 
+  // The band always renders: a noindexed page keeps its human navigation and
+  // keeps passing link equity onward. Only its ItemList markup is dropped,
+  // since rich schema on a page that cannot appear in results buys nothing.
   return (
     <RelatedContentSection
       eyebrow="More on AltFTool"
       title="Keep exploring AltFTool"
       items={items}
       path={`/kym/${slug}`}
-      jsonLdName="Keep exploring AltFTool"
+      jsonLdName={
+        isKymIndexable(`/kym/${slug}`) ? "Keep exploring AltFTool" : undefined
+      }
     />
   );
 }
