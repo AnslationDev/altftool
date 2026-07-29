@@ -6,7 +6,9 @@ import {
   createPageMetadata,
 } from '@/platform/seo/generateMetadata';
 import Top11 from './components/Top11hero';
-import Meetexpert from './components/MeetExpert';
+// MeetExpert was deleted: it rendered six invented testimonials (names,
+// @handles, star ratings, stock avatars) under a "Trusted by Thousands of Tool
+// Explorers" heading. None of it was real.
 import FAQ from './components/Faq';
 import FeaturedCategories from './components/FeaturedCategories';
 import ExploreCategory from './components/ExploreCategory';
@@ -51,7 +53,6 @@ export default function Page() {
    <ExpertRecommendation/>
    <ExploreCategory/>
    <WhyChooseUs/>
-   <Meetexpert/>
    <FAQ/>
    </>
   )

@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { blogs } from "@/app/top9/data/blogs";
+import { toPublishDate } from "@/app/top9/data/publishDate";
 
 const FeaturedList = () => {
   return (
@@ -81,25 +82,17 @@ const FeaturedList = () => {
               {/* Bottom */}
               <div className="space-y-4 pt-4 mt-auto">
 
-                <div className="flex items-center gap-3">
-
-                  <div className="top9-primary-action w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold">
-                    V
-                  </div>
-
-                  <div>
-
-                    <p className="text-sm font-bold text-(--foreground)">
-                      Victoria
-                    </p>
-
-                    <p className="top9-muted-text text-[11px] font-medium tracking-wide uppercase">
-                      {item.date}
-                    </p>
-
-                  </div>
-
-                </div>
+                {/*
+                  There is no author byline here on purpose: these lists have no
+                  recorded author, and the previous "Victoria" byline was
+                  invented. Only the publish date, which is real data, is shown.
+                */}
+                {toPublishDate(item.date) && (
+                  <p className="top9-muted-text text-[11px] font-medium tracking-wide uppercase">
+                    Published{" "}
+                    <time dateTime={toPublishDate(item.date)}>{item.date}</time>
+                  </p>
+                )}
 
                 <Link
                   href={`/top9/${item.slug}`}

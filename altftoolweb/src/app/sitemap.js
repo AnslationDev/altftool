@@ -37,6 +37,7 @@ import { CALCULATORS as altCalculators } from "@/app/altfcalculators/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
 import { apps } from "@/app/apps/data/apps";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
+import { isSignalIndexable } from "@/app/signals/signalCoverage";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import {
@@ -520,6 +521,9 @@ async function buildSitemapEntries({
   }
 
   for (const signal of SIGNAL_CATALOG) {
+    // Signals with no working tool behind them are noindex; submitting a
+    // noindexed URL is a contradiction Google reports as an error.
+    if (!isSignalIndexable(signal.slug)) continue;
     pushUnique(entries, seen, `/signals/${signal.slug}`, {
       priority: 0.74,
       changeFrequency: "weekly",

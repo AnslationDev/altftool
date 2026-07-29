@@ -8,8 +8,6 @@ const categoryData = {
     tools: [
       {
         name: "Monday.com",
-        rating: 9.8,
-        reviews: "3,399 reviews",
 
         features: [
           "Modern, user-friendly interface",
@@ -19,8 +17,6 @@ const categoryData = {
       },
       {
         name: "HubSpot",
-        rating: 9.1,
-        reviews: "1,080 reviews",
         features: [
           "All-in-one CRM system",
           "Trusted worldwide",
@@ -37,14 +33,10 @@ const categoryData = {
     tools: [
       {
         name: "Coursera",
-        rating: 9.6,
-        reviews: "8,400+ reviews",
         features: ["University-backed programs", "Flexible schedules", "Career certificates"],
       },
       {
         name: "edX",
-        rating: 9.3,
-        reviews: "6,900+ reviews",
         features: ["Accredited learning partners", "Professional certificates", "Self-paced tracks"],
       },
     ],
@@ -57,14 +49,10 @@ const categoryData = {
     tools: [
       {
         name: "NordVPN",
-        rating: 9.8,
-        reviews: "12,000+ reviews",
         features: ["No-logs policy", "Fast global servers", "Threat protection"],
       },
       {
         name: "ExpressVPN",
-        rating: 9.4,
-        reviews: "9,000+ reviews",
         features: ["High-speed streaming", "Trusted privacy", "Easy device setup"],
       },
     ],
@@ -77,14 +65,10 @@ const categoryData = {
     tools: [
       {
         name: "Salesforce",
-        rating: 9.7,
-        reviews: "7,452 reviews",
         features: ["Lead management", "Automation workflows", "Advanced reporting"],
       },
       {
         name: "HubSpot CRM",
-        rating: 9.2,
-        reviews: "5,100+ reviews",
         features: ["Free CRM tier", "Email tracking", "Marketing integrations"],
       },
     ],
@@ -97,14 +81,10 @@ const categoryData = {
     tools: [
       {
         name: "RingCentral",
-        rating: 9.5,
-        reviews: "4,800+ reviews",
         features: ["Cloud phone system", "Team messaging", "Call analytics"],
       },
       {
         name: "Nextiva",
-        rating: 9.1,
-        reviews: "3,700+ reviews",
         features: ["Reliable VoIP calling", "CRM integrations", "Auto attendant"],
       },
     ],
@@ -117,8 +97,6 @@ const categoryData = {
     tools: [
       {
         name: "Bluehost",
-        rating: 9.5,
-        reviews: "5,000+ reviews",
         features: ["Free domain", "24/7 support", "Fast performance"],
       },
     ],
@@ -131,14 +109,10 @@ const categoryData = {
     tools: [
       {
         name: "YouTube TV",
-        rating: 9.4,
-        reviews: "6,200+ reviews",
         features: ["Live channels", "Cloud DVR", "Family sharing"],
       },
       {
         name: "Hulu + Live TV",
-        rating: 9.0,
-        reviews: "5,500+ reviews",
         features: ["Live TV bundle", "On-demand library", "Sports coverage"],
       },
     ],
@@ -151,14 +125,10 @@ const categoryData = {
     tools: [
       {
         name: "Carvana",
-        rating: 9.3,
-        reviews: "4,300+ reviews",
         features: ["Instant offers", "Pickup options", "Fast paperwork"],
       },
       {
         name: "CarMax",
-        rating: 9.0,
-        reviews: "5,100+ reviews",
         features: ["In-store appraisal", "Nationwide locations", "Transparent pricing"],
       },
     ],
@@ -171,14 +141,10 @@ const categoryData = {
     tools: [
       {
         name: "American Home Shield",
-        rating: 9.2,
-        reviews: "3,900+ reviews",
         features: ["Broad coverage", "Flexible plans", "Large contractor network"],
       },
       {
         name: "Choice Home Warranty",
-        rating: 8.9,
-        reviews: "3,400+ reviews",
         features: ["Simple plans", "24/7 claims", "Appliance coverage"],
       },
     ],
@@ -191,14 +157,10 @@ const categoryData = {
     tools: [
       {
         name: "BetterHelp",
-        rating: 9.5,
-        reviews: "9,411 reviews",
         features: ["Licensed therapists", "Messaging and video", "Flexible matching"],
       },
       {
         name: "ReGain",
-        rating: 9.0,
-        reviews: "355 reviews",
         features: ["Couples counseling", "Private sessions", "Video and phone support"],
       },
     ],

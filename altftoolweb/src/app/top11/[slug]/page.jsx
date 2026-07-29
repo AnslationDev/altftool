@@ -4,7 +4,6 @@ import categoryData from "@/app/top11/data/categoryData";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
-  createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import ManagedImage from "@/components/ui/ManagedImage";
@@ -29,9 +28,13 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // Count comes from the data. The old copy promised "the complete ranked
+  // list" on pages that carry one or two entries.
   return createPageMetadata({
     title: data.title,
-    description: `${data.description} Compare the complete ranked list, features, and practical selection criteria on AltFTool.`,
+    description: `${data.description} ${data.tools.length} ${
+      data.tools.length === 1 ? "option" : "options"
+    } listed on AltFTool.`,
     path: `/top11/${slug}`,
     image: data.banner,
   });
@@ -58,18 +61,25 @@ export default async function CategoryPage({ params }) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#eef2ff]">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
       <JsonLd
         id={`top11-schema-${slug}`}
         data={[
-          createItemListJsonLd({
-            path: `/top11/${slug}`,
+          // Mirrors the rendered <ol> exactly. No Review or AggregateRating is
+          // emitted: there is no rating data behind this page.
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             name: data.title,
-            items: data.tools.map((tool, index) => ({
-              name: `${index + 1}. ${tool.name}`,
-              path: `/top11/${slug}`,
+            description: data.description,
+            numberOfItems: data.tools.length,
+            itemListOrder: "https://schema.org/ItemListOrderDescending",
+            itemListElement: data.tools.map((tool, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: tool.name,
             })),
-          }),
+          },
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Top11", path: "/top11" },
@@ -90,16 +100,23 @@ export default async function CategoryPage({ params }) {
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 h-full flex flex-col justify-center text-white">
-          <p className="text-sm opacity-80 mb-2">
-            Last Updated: May 2026
-          </p>
-
+          {/*
+            A hardcoded "Last Updated: May 2026" used to sit here on all ten
+            category pages. Nothing in categoryData carries a real review or
+            update date, so no date is claimed.
+          */}
           <h1 className="text-3xl md:text-5xl font-bold leading-tight">
             {data.title}
           </h1>
 
           <p className="mt-4 text-lg opacity-90 max-w-2xl">
             {data.description}
+          </p>
+
+          <p className="mt-3 text-sm opacity-90 max-w-2xl">
+            {data.tools.length}{" "}
+            {data.tools.length === 1 ? "option is" : "options are"} listed on
+            this page, in order.
           </p>
         </div>
       </div>
@@ -110,96 +127,75 @@ export default async function CategoryPage({ params }) {
         {/* LEFT SIDE */}
         <div className="md:col-span-2 space-y-6">
 
-          {data.tools.map((tool, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-2xl shadow hover:shadow-md transition border border-gray-300"
-            >
+          {/*
+            Real ordered-list markup, and no scores. Every tool used to render
+            an invented 0-10 rating labelled "Excellent" plus an invented review
+            count ("3,399 reviews"); none of those figures came from a source.
+            They are removed rather than replaced.
+          */}
+          {/* role="list" is required: Safari/VoiceOver drops list semantics
+              from any list styled `list-style: none`. */}
+          <ol role="list" className="space-y-6 list-none p-0 m-0">
+            {data.tools.map((tool, index) => (
+              <li
+                key={tool.name}
+                className="bg-[var(--card)] text-[var(--card-foreground)] p-6 rounded-2xl shadow hover:shadow-md transition border border-[var(--border)]"
+              >
 
-              {/* TOP */}
-              <div className="flex justify-between items-center">
-
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    {index === 0 && (
-                      <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
-                        #1 Best Choice
-                      </span>
-                    )}
-                  </div>
+                {/* TOP */}
+                <div className="flex items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="w-9 h-9 shrink-0 rounded-full bg-[var(--primary)] text-[var(--primary-foreground)] flex items-center justify-center font-bold"
+                  >
+                    {index + 1}
+                  </span>
 
                   <h2 className="text-xl font-bold">{tool.name}</h2>
-                  <p className="text-sm text-gray-500">{tool.reviews}</p>
                 </div>
 
-                {/* SCORE */}
-                <div className="text-right">
-                  <p className="text-3xl font-bold text-green-600">
-                    {tool.rating}
-                  </p>
-                  <p className="text-sm text-gray-500">Excellent</p>
-                </div>
-              </div>
+                {/* FEATURES */}
+                <ul className="mt-5 space-y-2">
+                  {tool.features.map((f, i) => (
+                    <li
+                      key={i}
+                      className="text-[var(--muted-foreground)] flex items-center gap-2"
+                    >
+                      <span aria-hidden="true" className="text-[var(--primary)]">
+                        ✔
+                      </span>{" "}
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
-              {/* FEATURES */}
-              <ul className="mt-5 space-y-2">
-                {tool.features.map((f, i) => (
-                  <li key={i} className="text-gray-700 flex items-center gap-2">
-                    <span className="text-green-500">✔</span> {f}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <button className="mt-6 w-full btn-primary  text-white py-3 rounded-lg font-semibold">
-                Visit Site
-              </button>
-
-            </div>
-          ))}
+              </li>
+            ))}
+          </ol>
 
         </div>
 
         {/* RIGHT SIDEBAR */}
         <div className="space-y-5">
 
-          {/* STATS */}
-          <div className="bg-white p-5 rounded-2xl shadow border border-gray-300">
-            <h3 className="font-bold text-lg mb-2">
-              Top10 Score
-            </h3>
-            <p className="text-sm text-gray-600">
-              Our rankings are based on:
+          {/*
+            This block previously carried a "Top10 Score" panel describing a
+            scoring methodology that does not exist, and a "Secure Connection"
+            panel asserting that every listed provider uses SSL to keep your
+            data safe — a blanket security claim about third parties that
+            AltFTool has not verified. Both are removed. What remains is the
+            one thing this page can actually stand behind.
+          */}
+          <div className="bg-[var(--card)] text-[var(--card-foreground)] p-5 rounded-2xl shadow border border-[var(--border)]">
+            <h2 className="font-bold text-lg mb-2">
+              How is this list ordered?
+            </h2>
+            <p className="text-sm text-[var(--muted-foreground)]">
+              These {data.tools.length}{" "}
+              {data.tools.length === 1 ? "entry is" : "entries are"} listed in a
+              fixed editorial order. AltFTool does not score, test or rate them,
+              and no ranking signal is derived from user reviews.
             </p>
-
-            <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li>✔ Popularity</li>
-              <li>✔ Brand Reputation</li>
-              <li>✔ Features & Benefits</li>
-            </ul>
-          </div>
-
-          {/* TRUST */}
-          <div className="bg-white p-5 rounded-2xl shadow border border-gray-300">
-            <h3 className="font-bold text-lg mb-2">
-              Secure Connection
-            </h3>
-            <p className="text-sm text-gray-600">
-              All providers use SSL encryption to keep your data safe.
-            </p>
-          </div>
-
-          {/* CTA */}
-          <div className="bg-blue-600 text-white p-5 rounded-2xl shadow">
-            <h3 className="font-bold text-lg">
-              Start Comparing Now
-            </h3>
-            <p className="text-sm mt-2 opacity-90">
-              Find the best tool for your needs instantly.
-            </p>
-            <button className="mt-4 bg-white text-blue-600 px-4 py-2 rounded font-semibold">
-              Get Started
-            </button>
           </div>
 
         </div>

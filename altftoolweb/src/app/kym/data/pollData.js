@@ -38,20 +38,13 @@ export const pollOptions = [
   id: index + 1,
   title,
   image,
-  votes: [18, 13, 11, 10, 9, 8, 7, 6, 5, 5, 4, 4][index],
+  // No `votes` field. Each option used to carry a hardcoded percentage
+  // ([18, 13, 11, ...]) rendered as "18% of sample votes". No vote was ever
+  // counted — the poll writes nothing to a server — so the numbers were
+  // invented. Do not reintroduce them.
 }));
 
-export const pollComments = [
-  {
-    name: "MemeArchivist",
-    text: "The image macro formats had a strong month, but the reaction edits were everywhere.",
-  },
-  {
-    name: "InternetResident",
-    text: "Voting for the one I saw quoted outside meme circles. That is usually the signal.",
-  },
-  {
-    name: "PanelEnjoyer",
-    text: "The redraw formats carried May for me. Simple premise, endless remix value.",
-  },
-];
+// pollComments removed: three invented commenters ("MemeArchivist",
+// "InternetResident", "PanelEnjoyer") with invented comment text were seeded
+// into the comment thread as if real readers had posted them.
+export const pollComments = [];

@@ -161,8 +161,14 @@ const ContentArea = () => {
         {/* AUTO LISTS */}
         <div>
 
+          {/*
+            Previously labelled "Auto-Updating Lists" with an "Auto Updated"
+            stamp per row. Nothing here updates automatically — these are the
+            same four static entries as every other block — so the claim and
+            the stamp are gone.
+          */}
           <h3 className="top9-muted-text text-[14px] uppercase tracking-wider mb-5">
-            Auto-Updating Lists
+            More Lists
           </h3>
 
           <div className="space-y-5">
@@ -193,10 +199,6 @@ const ContentArea = () => {
                     </p>
 
                   </Link>
-
-                  <p className="top9-muted-text text-[12px] mt-1">
-                    Auto Updated
-                  </p>
 
                 </div>
 

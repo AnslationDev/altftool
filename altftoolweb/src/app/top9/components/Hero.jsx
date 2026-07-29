@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 
 import { trending } from "@/app/top9/data2/trending";
 
-const Hero = () => {
+const Hero = ({ listCount = 0, rankedCount = 0 }) => {
   const scrollRef = useRef(null);
   const categoryRef = useRef(null);
 
@@ -50,9 +50,21 @@ const Hero = () => {
       <div className="w-full px-3 sm:px-6 lg:px-8">
 
         {/* Heading */}
-        <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold text-center mb-10 leading-tight">
-          <span className="top9-gradient-text">227,193 top nine lists</span> for everything under (& including) the sun.
+        <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold text-center mb-4 leading-tight">
+          <span className="top9-gradient-text">Top 9 lists</span> across
+          entertainment, sport, tech and everyday choices.
         </h1>
+
+        {/*
+          Answer-first summary. Both figures are counted from the list data at
+          render time — the previous H1 advertised "227,193 top nine lists",
+          which was never true of this data set.
+        */}
+        <p className="top9-muted-text max-w-3xl mx-auto text-center text-[15px] sm:text-base leading-7 mb-10">
+          This section holds {listCount} ranked lists. {rankedCount} of them
+          publish their ranked picks in full; the rest are topic pages with a
+          summary only.
+        </p>
 
         {/* Trending Slider (same as before) */}
         <div className="relative mb-10">

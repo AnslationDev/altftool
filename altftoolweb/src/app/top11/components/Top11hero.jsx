@@ -21,18 +21,24 @@ export default function CompareSection() {
       const router = useRouter();
 
   return (
-    <section className="w-full py-20 bg-gradient-to-r from-blue-50 to-blue-50">
+    <section className="w-full py-20 bg-[var(--background)]">
       <div className="max-w-6xl mx-auto px-6 text-center">
 
         {/* Heading */}
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          Compare the Top11 - Rated <br />
-          Products & Services
+        <h1 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] leading-tight">
+          Compare Products &amp; Services by Category
         </h1>
 
-        {/* Subtitle */}
-        <p className="mt-5 text-gray-600 max-w-xl mx-auto">
-          Our experts vet, rank, and review the best solutions for your life and business, so you don&apos;t have to.
+        {/*
+          Answer-first, and honest about the process. The old subtitle read
+          "Our experts vet, rank, and review the best solutions" — there is no
+          expert panel, no vetting and no review behind these pages, and the
+          count is now read from the category list rather than asserted.
+        */}
+        <p className="mt-5 text-[var(--muted-foreground)] max-w-2xl mx-auto">
+          {categories.length} categories, each listing a short set of options in
+          a fixed editorial order. AltFTool does not test, score or rate the
+          products listed.
         </p>
 
         {/* Grid */}
@@ -54,7 +60,7 @@ onClick={() => router.push(`/top11/${item.slug}`)}
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold text-gray-800 text-center group-hover:text-blue-600">
+              <h3 className="text-lg font-semibold text-[var(--foreground)] text-center group-hover:text-[var(--primary)]">
                 {item.name}
               </h3>
             </div>
