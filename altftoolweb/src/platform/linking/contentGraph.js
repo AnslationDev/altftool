@@ -21,8 +21,11 @@ import {
   getTop9Title,
   getTop9Description,
   getTop9Category,
+  isTop9Indexable,
 } from "@/app/top9/data/getTop9Items";
 import top11CategoryData from "@/app/top11/data/categoryData";
+import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
+import { isSignalIndexable } from "@/app/signals/signalCoverage";
 import { getDeals, getDealPaidProducts } from "@/app/deals/data/deals";
 import { apps as appCatalog } from "@/app/apps/data/apps";
 import { getAllWorkflows } from "@/app/n8n/data/service";
@@ -174,8 +177,19 @@ function buildGraph() {
     });
   });
 
+  // Only indexable routes enter the graph.
+  //
+  // The band both links to what it picks and marks the picks up as an ItemList,
+  // so a noindexed entry here does two unhelpful things at once: it spends
+  // internal link equity on a page that cannot rank, and it asks a crawler to
+  // treat as notable a URL we have asked it to drop. 46 of the 49 /top9 routes
+  // and all 10 /top11 routes are noindexed, so before this filter they were a
+  // large share of what the band had to choose from.
+  //
+  // These are the same predicates src/app/sitemap.js gates on, so the graph, the
+  // sitemap and the pages' own robots meta cannot disagree.
   getTop9Items().forEach((item) => {
-    if (!item?.slug) return;
+    if (!item?.slug || !isTop9Indexable(item)) return;
     pushItem(items, seen, {
       href: `/top9/${item.slug}`,
       title: getTop9Title(item),
@@ -186,6 +200,7 @@ function buildGraph() {
   });
 
   Object.entries(top11CategoryData || {}).forEach(([slug, category]) => {
+    if (!isTop11Indexable(`/top11/${slug}`)) return;
     pushItem(items, seen, {
       href: `/top11/${slug}`,
       title: category?.title || `Top 11 ${slug.replace(/-/g, " ")}`,
@@ -248,7 +263,7 @@ function buildGraph() {
   });
 
   SIGNAL_CATALOG.forEach((signal) => {
-    if (!signal?.slug) return;
+    if (!signal?.slug || !isSignalIndexable(signal.slug)) return;
     pushItem(items, seen, {
       href: `/signals/${signal.slug}`,
       title: signal.name || signal.title,
