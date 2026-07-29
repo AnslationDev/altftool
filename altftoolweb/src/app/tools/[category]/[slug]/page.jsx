@@ -70,7 +70,13 @@ export default async function ToolPage({ params }) {
       <JsonLd
         id={`tool-schema-${category}-${slug}`}
         data={[
-          createToolJsonLd({ slug, tool, category }),
+          // `category: "all"`, not the route's own category. This page's
+          // canonical is /tools/all/<slug>, but passing the mirror category
+          // made the entity's url and mainEntityOfPage point at
+          // /tools/<category>/<slug> — the page declared one URL canonical and
+          // then told engines its subject lived at a different one. The @id was
+          // already the /tools/all form, so the entity contradicted itself too.
+          createToolJsonLd({ slug, tool, category: "all" }),
           // Only tools with real per-tool steps/FAQs emit HowTo/FAQPage.
           // Templated fallback copy is shared across ~1,900 URLs, and Google
           // requires this markup to be unique to the page.

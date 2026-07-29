@@ -103,15 +103,39 @@ const GAME_TOOL_TWINS = {
   chess: "chess-multiplayer",
 };
 
+// The same twinning exists outside games and was never mapped: 42 calculators
+// and 4 PDF tools carry a slug that is also a /tools/all tool, so a page could
+// spend one of its few cross-site link slots recommending its own duplicate.
+// Derived from the data rather than listed, so a new twin is covered the day
+// it is added.
+const MIRRORED_SECTIONS = [
+  ["/altfcalculators", CALCULATORS],
+  ["/altflovepdf", PDF_TOOLS],
+];
+
 /** href -> twin href, both directions. */
-export const DUPLICATE_HREFS = Object.entries(GAME_TOOL_TWINS).reduce(
-  (map, [gameSlug, toolSlug]) => {
-    map[`/altfgame/${gameSlug}`] = `/tools/all/${toolSlug}`;
-    map[`/tools/all/${toolSlug}`] = `/altfgame/${gameSlug}`;
-    return map;
-  },
-  {},
-);
+export const DUPLICATE_HREFS = (() => {
+  const map = Object.entries(GAME_TOOL_TWINS).reduce((acc, [gameSlug, toolSlug]) => {
+    acc[`/altfgame/${gameSlug}`] = `/tools/all/${toolSlug}`;
+    acc[`/tools/all/${toolSlug}`] = `/altfgame/${gameSlug}`;
+    return acc;
+  }, {});
+
+  for (const [base, items] of MIRRORED_SECTIONS) {
+    for (const item of items || []) {
+      const slug = item?.slug;
+      // Only a slug the tool catalogue also serves is a duplicate; the rest of
+      // these sections are pages of their own.
+      if (!slug || !Object.hasOwn(toolMetaMap, slug)) continue;
+      const mirror = `${base}/${slug}`;
+      const canonical = `/tools/all/${slug}`;
+      if (!map[mirror]) map[mirror] = canonical;
+      if (!map[canonical]) map[canonical] = mirror;
+    }
+  }
+
+  return map;
+})();
 
 // Stable hub destinations — always available as guaranteed fallbacks.
 const HUB_ITEMS = [

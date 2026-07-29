@@ -4,6 +4,11 @@ import { ArrowLeft } from "lucide-react";
 import { getToolBySlug, getToolSlugs } from "../_lib/manifest";
 import TransformShell from "../_components/TransformShell";
 import TransformSidebar from "../_components/TransformSidebar";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 const TRANSFORM_OG_IMAGE = "/assets/og-default.png";
 
@@ -72,7 +77,34 @@ export default async function TransformToolPage({ params }) {
     lib: tool.lib,
   };
 
+  const path = `/transform/${tool.slug}`;
+
   return (
+    <>
+      {/* These pages describe software but shipped no page-level entity — only
+          the layout's Organization and WebSite — so an answer engine had
+          nothing to cite. A /tools page carries SoftwareApplication and a
+          breadcrumb; a converter should too. */}
+      <JsonLd
+        id={`transform-schema-${tool.slug}`}
+        data={[
+          createToolJsonLd({
+            slug: tool.slug,
+            path,
+            tool: {
+              name: `${tool.title} Converter`,
+              description: tool.description,
+              category: tool.category,
+              topics: tool.keywords,
+            },
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Transform", path: "/transform" },
+            { name: `${tool.title} Converter`, path },
+          ]),
+        ]}
+      />
     <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
       {/* Sidebar navigation */}
       <div className="w-full lg:w-64 shrink-0 lg:sticky lg:top-8 h-fit">
@@ -84,5 +116,6 @@ export default async function TransformToolPage({ params }) {
         <TransformShell tool={clientTool} />
       </div>
     </div>
+    </>
   );
 }

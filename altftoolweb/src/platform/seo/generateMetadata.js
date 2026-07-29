@@ -502,7 +502,13 @@ export function createBreadcrumbJsonLd(items = []) {
   };
 }
 
-export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
+// `path` lets tool-shaped routes outside /tools reuse this entity. /transform,
+// /altfcalculators, /altflovepdf and /pranx are 271 URLs that describe software
+// but emitted no page-level entity at all — only the layout's Organization and
+// WebSite — while a /tools page carries SoftwareApplication, WebApplication,
+// FAQPage, BreadcrumbList and two ItemLists. Answer engines cite what is
+// described; those families described nothing.
+export function createToolJsonLd({ slug, tool, category = "all", path } = {}) {
   if (!slug || !tool) return null;
 
   const categories = Array.isArray(tool.category)
@@ -512,7 +518,7 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
     ? tool.topics
     : [tool.topics].filter(Boolean);
 
-  const url = absoluteUrl(`/tools/${category || "all"}/${slug}`);
+  const url = absoluteUrl(path || `/tools/${category || "all"}/${slug}`);
   const isGame = categories.some((value) => /^games?$/i.test(String(value).trim()));
 
   return {
@@ -520,7 +526,7 @@ export function createToolJsonLd({ slug, tool, category = "all" } = {}) {
     // Games get the VideoGame entity (rich results + AI answer engines);
     // VideoGame is itself a SoftwareApplication subtype.
     "@type": isGame ? ["VideoGame", "WebApplication"] : ["SoftwareApplication", "WebApplication"],
-    "@id": `${absoluteUrl(`/tools/all/${slug}`)}#software`,
+    "@id": `${absoluteUrl(path || `/tools/all/${slug}`)}#software`,
     name: tool.name || slug.replace(/-/g, " "),
     description: tool.description || siteConfig.description,
     url,

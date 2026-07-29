@@ -34,15 +34,29 @@ export async function generateMetadata({ params }) {
   const item = findKymItem(slug);
 
   if (!item) {
+    // 36 of the 44 links on the /kym hub resolve to nothing and land here, so
+    // this branch is not rare. Without noindex each one is an indexable page
+    // titled "KYM Page" carrying the site's default description — a
+    // statically generated notFound() is served with a 200 on this deployment,
+    // so the robots directive is what keeps them out of the index.
     return createPageMetadata({
-      title: "KYM Page",
+      title: "Entry Not Found",
+      description: "This Know Your Meme entry does not exist.",
       path,
+      noindex: true,
     });
   }
 
+  // "Local KYM-style detail page for X." was scaffolding text, and it shipped
+  // as the meta description on every entry — the snippet a searcher reads
+  // described the page's implementation rather than the meme.
+  const category = item.category ? item.category.toLowerCase() : "internet culture";
   return createPageMetadata({
-    title: item.title,
-    description: `Local KYM-style detail page for ${item.title}.`,
+    title: `${item.title} — Meaning, Origin and Examples`,
+    description:
+      item.lede ||
+      item.about ||
+      `What ${item.title} means, where it came from and how it spread — a ${category} entry with origin, examples and related memes.`,
     path,
   });
 }

@@ -864,3 +864,70 @@ Per-page client JS fell 1,551 → 525 KB raw (340 → 127 KB brotli). The cause 
 because `toolRouteUtils` imports the catalogue on line 1 and those components pull two pure
 helpers out of it. A module is the unit webpack follows. The helpers now live in
 `toolRouteFormat.js`.
+
+---
+
+## §14 — SEO/GEO audit and what it found (2026-07-29)
+
+Seven lenses, 28 agents, every finding re-checked against the live site. 20 confirmed, and
+four rejected on inspection — the rejections matter as much as the fixes, because acting on
+any of them would have made the site worse.
+
+### Fixed and verified live
+
+| defect | scope |
+|---|---|
+| `/bops/tripfindbox/<slug>` returned HTTP 500 | 110 URLs, all now 200 |
+| `/tools/<any-string>` rendered an indexable page | crawl trap, now `noindex, follow` |
+| Four route families overrode their own layout metadata | ~120 URLs got identical titles |
+| Meta descriptions cut mid-word at 155 chars | 3,808 URLs; 98.1% now clean sentences |
+| `/site-map` variants canonicalised to bare `/site-map` | 55 pages disowned themselves |
+| `/site-map` pagination depth | worst case 14 clicks → 2 |
+| No `SoftwareApplication` entity | `/transform`, `/altfcalculators`, `/altflovepdf` |
+| Entity url/mainEntityOfPage contradicted the canonical | category mirror URLs |
+| Linking graph could recommend a page's own twin | 46 pairs |
+| Soft-404s shipped both `index, follow` and `noindex` | 3 route families |
+| Template keywords matched inside unrelated words | 22 tools |
+| KYM shipped scaffolding text as its meta description | 46 pages |
+
+### The finding worth acting on next
+
+**892 of 3,754 deployed tools (23.8%) have no `seo.js`.** They fall back to one generic
+template: same intro on every one, no use cases, no FAQs, and therefore no `FAQPage` entity —
+the thing an answer engine quotes. Found by testing the tool URLs `llms.txt` itself points
+engines at: five of six sampled had `FAQPage=0`.
+
+The content is not missing. It exists in the dev monorepo and was never released. Shipping all
+892 measures **2.71 MiB** against 0.41 MiB of headroom, so only the 51 that `llms.txt` and
+`TOP_PRIORITY_TOOL_SLUGS` name went out (0.19 MiB). The other 841 need the artifact room that
+only splitting the catalogue provides.
+
+### The two SSG routes that 500'd
+
+`generateStaticParams` returns `[]` on Amplify because `ALTFT_DEFER_BULK_PRERENDER` is set. A
+route that is SSG (`●`) with no prerendered output is served by Amplify as a bare 500 —
+`content-type: text/plain`, no Next error page — and it fails before the route's own code, so
+a bogus slug 500s too. Both of the app's `●` routes did this. The routes that work pair the
+same deferred `generateStaticParams` with `export const dynamic = "force-static"`, which
+builds them as `○` and lets an unknown param render on demand.
+
+### Rejected after checking — do not re-report
+
+- **"Every page ships its h1 and JSON-LD inside a `hidden` container."** It does not. The h1 sits
+  in ordinary markup; the 238 "hidden" matches were 481 `aria-hidden` and 236 Tailwind
+  `hidden lg:flex` classes.
+- **Anchoring every short template keyword.** It moves 54 tools and breaks five:
+  `profile-picture-maker` leaves media, `rot13-encoder-decoder` becomes a writing tool. `file`
+  in "profile" and `code` in "decoder" are accidents that land correctly. Only `ratio`, `api`
+  and `unit` are meaningless in-word and worth anchoring.
+- Two of my own measurements were wrong before they were right: a `<script type="application/
+  ld+json"` regex reported zero JSON-LD on every page including ones known to have six (the
+  real markup puts `id` first), and `sed 's|</\?loc>||g'` left the tags on, so 110 sitemap URLs
+  all reported curl code `000`. Check an extractor against a known-good case first.
+
+### Soft 404s are site-wide and not fixable per route
+
+Every unknown URL returns 200 — `/tools`, `/blogs`, `/apps`, `/alternatives` alike — because a
+statically generated `notFound()` is served with a 200 on this deployment. `noindex` on the
+not-found metadata is the mitigation; it must go through `createPageMetadata`, because a bare
+object leaves the layout's `index, follow` in place and the page then ships both directives.

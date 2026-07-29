@@ -35,13 +35,44 @@ import { buildSiteMapGroups } from "./siteMapData";
 
 export const revalidate = 3600;
 
-export const metadata = createPageMetadata({
-  title: "Site Map - Explore Every AltFTool Page",
-  description:
-    "Browse every public AltFTool route by category, including tools, products, blogs, news, deals, games, services, and support pages.",
-  path: "/site-map",
-  keywords: ["AltFTool site map", "AltFTool pages", "all online tools", "website directory"],
-});
+// A static `metadata` here gave every variant — ?category=tools&page=28 and the
+// 54 pages beside it — a canonical of bare /site-map, telling engines the whole
+// paginated series was a duplicate of one page. This is the site's only
+// complete crawl path, so disowning it disowns the route it exists to expose.
+//
+// Category and page variants now canonicalise to themselves. Free-text ?q=
+// searches do not: that is an unbounded URL space, and self-canonicalising it
+// would trade one indexation problem for a worse one.
+export async function generateMetadata({ searchParams }) {
+  const params = await searchParams;
+  const query = String(params?.q || "").trim();
+  const category = String(params?.category || "").trim();
+  const page = Number.parseInt(String(params?.page || "1"), 10) || 1;
+
+  if (query) {
+    return createPageMetadata({
+      title: "Site Map Search - AltFTool",
+      description: "Search every public AltFTool route by name.",
+      path: "/site-map",
+      noindex: true,
+    });
+  }
+
+  const search = new URLSearchParams();
+  if (category) search.set("category", category);
+  if (page > 1) search.set("page", String(page));
+  const suffix = search.toString();
+
+  const scope = category ? `${category} pages` : "every public AltFTool route";
+  return createPageMetadata({
+    title: page > 1
+      ? `Site Map - ${category || "All Pages"} (page ${page})`
+      : "Site Map - Explore Every AltFTool Page",
+    description: `Browse ${scope} by category, including tools, products, blogs, news, deals, games, services, and support pages.`,
+    path: suffix ? `/site-map?${suffix}` : "/site-map",
+    keywords: ["AltFTool site map", "AltFTool pages", "all online tools", "website directory"],
+  });
+}
 
 const PAGE_SIZE = 72;
 const CATEGORY_SAMPLE_SIZE = 6;
@@ -94,6 +125,17 @@ function paginationItems(currentPage, totalPages) {
   for (let page = currentPage - 2; page <= currentPage + 2; page += 1) {
     if (page > 0 && page <= totalPages) pages.add(page);
   }
+
+  // First, last and current±2 alone leaves the middle of a long list buried:
+  // walking from page 1 to page 28 of 55 took 14 clicks, because each page only
+  // ever exposed its immediate neighbours. This is the site's complete crawl
+  // path to every tool, so depth here is depth for the pages it links to.
+  //
+  // A coarse ladder of about a dozen rungs brings the worst case to 2 clicks at
+  // 55 pages while adding only a handful of links to the control.
+  const rung = Math.max(1, Math.ceil(totalPages / 12));
+  for (let page = 1; page <= totalPages; page += rung) pages.add(page);
+
   return [...pages].sort((left, right) => left - right);
 }
 

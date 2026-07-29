@@ -1,4 +1,9 @@
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { CALCULATORS } from "../toolsData";
 import PageView from "./PageView";
@@ -47,6 +52,31 @@ export default async function Page(props) {
 
   return (
     <>
+      {/* Without this the page carried only the layout's Organization and
+          WebSite nodes, so it described no software at all. A /tools page
+          ships a SoftwareApplication entity an answer engine can cite; a
+          calculator is the same kind of thing and had nothing. */}
+      {tool ? (
+        <JsonLd
+          id={`altfcalculators-schema-${toolSlug}`}
+          data={[
+            createToolJsonLd({
+              slug: toolSlug,
+              path: `/altfcalculators/${toolSlug}`,
+              tool: {
+                name: tool.name,
+                description: tool.desc,
+                category: tool.category,
+              },
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Calculators", path: "/altfcalculators" },
+              { name: tool.name, path: `/altfcalculators/${toolSlug}` },
+            ]),
+          ]}
+        />
+      ) : null}
       <PageView {...props} />
       <RelatedContentSection
         title="Related tools & guides"

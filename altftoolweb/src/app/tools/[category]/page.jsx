@@ -1,7 +1,7 @@
 import ToolsClient from "../ToolsClient";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -29,6 +29,27 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { category } = await params;
+
+  // The page calls notFound() for these, but a statically generated notFound()
+  // is served with a 200 on this deployment, so the robots directive is what
+  // actually keeps them out of the index. Tool slugs and legacy categories are
+  // excluded: the page redirects those rather than 404ing.
+  // Object.hasOwn, not toolMetaMap[category]: the map inherits from
+  // Object.prototype, so /tools/toString and /tools/constructor would read as
+  // real tools and slip past this guard.
+  if (
+    !getToolCategorySlugs().includes(category) &&
+    !Object.hasOwn(toolMetaMap, category) &&
+    !getLegacyCategoryRedirect(category)
+  ) {
+    return createPageMetadata({
+      title: "Category Not Found",
+      description: "This tool category does not exist.",
+      path: `/tools/${category}`,
+      noindex: true,
+    });
+  }
+
   const label = formatCategoryLabel(category);
   const isAll = category === "all";
 
@@ -85,7 +106,9 @@ function getCategoryToolItems(category) {
 export default async function Page({ params }) {
   const { category } = await params;
 
-  if (toolMetaMap[category]) {
+  // Own properties only — the map inherits from Object.prototype, so
+  // /tools/toString would otherwise redirect to /tools/all/toString.
+  if (Object.hasOwn(toolMetaMap, category)) {
     redirect(`/tools/all/${category}`);
   }
 
@@ -93,6 +116,16 @@ export default async function Page({ params }) {
   const legacyTarget = getLegacyCategoryRedirect(category);
   if (legacyTarget) {
     redirect(`/tools/${legacyTarget}`);
+  }
+
+  // Anything left that is not a real category was rendering a full, indexable,
+  // self-canonical page built from the slug itself — /tools/asdfgh served
+  // "Asdfgh Tools - Free Online Utilities" with robots index,follow. That is an
+  // unbounded crawl trap: every typo or spam link mints another indexable URL.
+  // The list is the same one generateStaticParams uses, so a slug missing from
+  // it has no tools and the page would have been empty regardless.
+  if (!getToolCategorySlugs().includes(category)) {
+    notFound();
   }
 
   const label = formatCategoryLabel(category);

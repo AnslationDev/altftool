@@ -6,6 +6,19 @@ import { notFound } from "next/navigation";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
+// Amplify serves an SSG route whose generateStaticParams returned an empty
+// list with a bare 500 — content-type text/plain, "Internal Server Error", no
+// Next error page — and it fails before the route's own code runs: a
+// deliberately bogus slug 500s too, so notFound() never gets the chance. Both
+// of the app's two SSG (●) routes did this in production, 103 of them listed
+// in sitemap.xml and linked from a live /bops/tripfindbox/site-map hub.
+//
+// The routes that work — /blogs/[slug], /tools/all/[slug] — pair the same
+// deferred generateStaticParams with `dynamic = "force-static"`, which builds
+// them as ○ rather than ● and lets an unknown param render on demand.
+export const dynamic = "force-static";
+
+
 export async function generateStaticParams() {
   // Each prerendered URL costs ~650 KB of the Amplify artifact gate.
   // Defer with the rest of the bulk families; ISR still caches on first

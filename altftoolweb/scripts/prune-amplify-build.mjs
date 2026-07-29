@@ -16,18 +16,7 @@ const nextDir = path.resolve(".next");
 // it passed builds AWS was always going to reject. The last upload AWS did
 // accept was job 80, which measured 165.88 MiB here.
 //
-// 181 MiB. Job 109 shipped at 180.59; job 110 added two prerendered pages
-// (+1.59 MiB, gate 182.30) and AWS refused it by 0.96 MiB. The ceiling in this
-// script's units is therefore in (180.59, 182.30] — much tighter than the
-// (184.13, 185.09] bracket read from jobs 104 and 105, because what AWS counts
-// is still not identified and its offset from this walk is not stable: 34.92
-// MiB on job 105, 38.66 on job 110, 38.55 on job 111.
-//
-// Two models have now been tried and both were wrong. A constant overhead gave
-// 187.69 and job 105 disproved it. A fixed ratio against .next/standalone fit
-// jobs 105 and 110 to a third of a percent, so job 111 cut standalone by 24.15
-// MiB — and AWS moved 0.11. standalone is not what it weighs either. Set this
-// from deploys that actually shipped, and stop extrapolating.
+// 184 MiB, bracketed by two real deploys rather than a model.
 //
 //   job 104   gate 184.13  ->  ACCEPTED
 //   job 105   gate 185.09  ->  AWS measured 220.01 MiB, refused at 220.00
@@ -110,12 +99,16 @@ for (const artifactPath of buildOnlyArtifacts) {
 function directorySize(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
     // Amplify strips the cache and normalizes Next's duplicate standalone
-    // staging tree before enforcing the hosted build-output limit. Keep this
-    // gate below AWS's 220 MiB ceiling because the adapter adds packaging
-    // metadata after the application build completes.
+    // staging tree before enforcing the hosted build-output limit.
+    //
+    // `dev` is excluded because it is the dev server's output, never part of a
+    // production upload — and it is easy to acquire by accident. A `next dev`
+    // run in a build tree left 190 MiB there and the gate read 369.90 MiB for
+    // an artifact that was really 180, which reads as a catastrophic
+    // regression rather than as stale local state.
     if (
       directory === nextDir &&
-      (entry.name === "cache" || entry.name === "standalone")
+      (entry.name === "cache" || entry.name === "standalone" || entry.name === "dev")
     ) {
       return total;
     }
@@ -145,7 +138,7 @@ const rootLengthDelta = buildRoot.length - AMPLIFY_ROOT_LENGTH;
 
 function embeddedRootOccurrences(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
-    if (directory === nextDir && (entry.name === "cache" || entry.name === "standalone")) {
+    if (directory === nextDir && (entry.name === "cache" || entry.name === "standalone" || entry.name === "dev")) {
       return total;
     }
     const entryPath = path.join(directory, entry.name);

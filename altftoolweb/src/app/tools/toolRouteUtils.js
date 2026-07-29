@@ -171,10 +171,27 @@ export async function buildToolMetadata(slug) {
   const tool = getTool(slug);
 
   if (!tool) {
-    return {
+    // These routes are force-static, and a statically generated notFound() is
+    // served with a 200 on this deployment rather than a 404 — every unknown
+    // slug under /tools is a soft 404. Verified live: /tools/all/not-real-xyz
+    // returns HTTP 200 with 312 KB of HTML, and so do /blogs, /apps and
+    // /alternatives, so the behaviour is the platform's, not this route's.
+    //
+    // Returning a bare object here left the robots directive to whatever the
+    // layout had already set, so the page shipped BOTH `index, follow` and the
+    // not-found boundary's `noindex`. Search engines resolve that conflict by
+    // taking the most restrictive, but nothing guarantees answer engines parse
+    // it the same way, and a page asking to be indexed is not what we mean.
+    //
+    // Declaring robots explicitly replaces the inherited directive instead of
+    // appending to it, and dropping the canonical stops these pointing at the
+    // homepage, which invited engines to treat them as duplicates of it.
+    return createPageMetadata({
       title: "Tool Not Found",
       description: "The requested tool does not exist.",
-    };
+      path: `/tools/all/${slug}`,
+      noindex: true,
+    });
   }
 
   const seoContent = buildToolSeoContent(slug, tool);
