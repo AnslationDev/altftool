@@ -70,12 +70,55 @@ function directorySize(directory) {
   }, 0);
 }
 
-const artifactBytes = directorySize(nextDir);
+// Next writes the absolute build root into every RSC client-reference manifest,
+// once per client module — about 148,000 occurrences across the artifact. The
+// raw byte count therefore depends on where the repo happens to sit on disk:
+// the same commit measured 214.95 MiB from a 47-character checkout path and
+// 215.21 MiB from a 116-character worktree. That difference is not in the
+// upload AWS receives, and reading it as real is what kept 81 finished tools
+// parked against a ceiling the build was never actually near.
+//
+// So the gate reports what Amplify will package: bytes with the build root
+// normalised to the length of its own. On Amplify the delta is zero and the
+// scan is skipped, so this costs nothing where it matters.
+const AMPLIFY_ROOT_LENGTH = "/codebuild/output/src621396274/src/knaltftoolweb"
+  .length;
+const buildRoot = process.cwd();
+const rootLengthDelta = buildRoot.length - AMPLIFY_ROOT_LENGTH;
+
+function embeddedRootOccurrences(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {
+    if (directory === nextDir && (entry.name === "cache" || entry.name === "standalone")) {
+      return total;
+    }
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isSymbolicLink()) return total;
+    if (entry.isDirectory()) return total + embeddedRootOccurrences(entryPath);
+    if (!/\.(js|json)$/.test(entry.name)) return total;
+
+    const contents = fs.readFileSync(entryPath, "utf8");
+    let count = 0;
+    let at = contents.indexOf(buildRoot);
+    while (at !== -1) {
+      count += 1;
+      at = contents.indexOf(buildRoot, at + buildRoot.length);
+    }
+    return total + count;
+  }, 0);
+}
+
+const rawArtifactBytes = directorySize(nextDir);
+const pathInflation =
+  rootLengthDelta > 0 ? embeddedRootOccurrences(nextDir) * rootLengthDelta : 0;
+const artifactBytes = rawArtifactBytes - pathInflation;
 const artifactMiB = artifactBytes / (1024 * 1024);
 const maxArtifactMiB = maxArtifactBytes / (1024 * 1024);
 
 console.log(
   `Amplify artifact gate: ${artifactMiB.toFixed(2)} MiB / ${maxArtifactMiB.toFixed(2)} MiB` +
+    (pathInflation > 0
+      ? ` (${(rawArtifactBytes / (1024 * 1024)).toFixed(2)} MiB on disk here, less ${(pathInflation / (1024 * 1024)).toFixed(2)} MiB of build-root path this checkout adds and Amplify's does not)`
+      : "") +
     (removableMedia.length || buildOnlyArtifacts.length
       ? `; pruned ${removableMedia.length} unused WASM asset and ${buildOnlyArtifacts.length} build-only artifact.`
       : ".")

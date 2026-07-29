@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import Landing from './Pages/Landing';
-import Event from './Pages/Event';
+import Landing from './pages/Landing';
+import Event from './pages/Event';
 
 const App = () => {
   // const [isDark, setIsDark] = useState(false);
