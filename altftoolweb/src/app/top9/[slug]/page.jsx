@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import JsonLd from "@/platform/seo/JsonLd";
-import "../top9.css";
 import {
   absoluteUrl,
+  compactBrandedTitle,
   createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";

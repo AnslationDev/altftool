@@ -1,5 +1,4 @@
 import JsonLd from "@/platform/seo/JsonLd";
-import "./top9.css";
 import {
   createBreadcrumbJsonLd,
   createCollectionPageJsonLd,
@@ -47,10 +46,10 @@ export default function Page() {
     : null;
 
   return (
+    // The page heading is the visible one in Hero.jsx. A screen-reader-only H1
+    // here as well gave the hub two, saying nearly the same thing twice, and a
+    // hidden heading is the weaker of the pair for both readers and crawlers.
     <main>
-      <h1 className="sr-only">
-        Top9 ranked guides for entertainment, sports, tools, lifestyle, and trending topics
-      </h1>
       <JsonLd
         id="top9-collection-schema"
         data={[
