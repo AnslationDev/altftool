@@ -28,6 +28,8 @@ import { apps as appCatalog } from "@/app/apps/data/apps";
 import { getAllWorkflows } from "@/app/n8n/data/service";
 import { GAMES } from "@/app/altfgame/_data/games";
 import { CALCULATORS } from "@/app/altfcalculators/toolsData";
+import { TOOLS as TRANSFORM_TOOLS } from "@/app/transform/_lib/manifest";
+import { EXAM_SPECS as EXAM_PHOTO_SPECS } from "@/app/exam-photo/data/examSpecs";
 import { TOOLS as PDF_TOOLS } from "@/app/altflovepdf/toolsData";
 import { TOOLS as IMAGE_TOOLS, BASE as IMAGE_BASE } from "@/app/altfloveimg/data/tools";
 import { getAllGeoLocations } from "@/platform/seo/geoLocations";
@@ -48,6 +50,8 @@ export const SECTION_LABELS = {
   experiences: "Experience",
   signals: "Signal",
   calculators: "Calculator",
+  transform: "Converter",
+  examPhoto: "Exam photo spec",
   pdfTools: "PDF tool",
   imageTools: "Image tool",
   locations: "Location",
@@ -262,6 +266,42 @@ function buildGraph() {
       description: calculator.description || calculator.desc || calculator.tagline,
       section: "calculators",
       tags: [calculator.category, calculator.sidebarCategory, calculator.slug.split("-")],
+    });
+  });
+
+  TRANSFORM_TOOLS.forEach((tool) => {
+    if (!tool?.slug) return;
+    pushItem(items, seen, {
+      href: `/transform/${tool.slug}`,
+      title: tool.title,
+      description: tool.description,
+      section: "transform",
+      // from/to carry the format pair the scorer needs to match a converter to
+      // a related converter ("json" pulls in json-to-yaml, json-to-go, …).
+      tags: [tool.category, tool.from, tool.to, tool.keywords, tool.slug.split("-")],
+    });
+  });
+
+  EXAM_PHOTO_SPECS.forEach((exam) => {
+    if (!exam?.slug) return;
+    // These records carry no blurb field, so the description is assembled from
+    // the assets the exam actually asks for. That keeps the link text tied to
+    // the sourced data instead of to a sentence someone would have to maintain.
+    const assetLabels = (exam.assets || []).map((asset) => asset.label).filter(Boolean);
+    pushItem(items, seen, {
+      href: `/exam-photo/${exam.slug}`,
+      title: `${exam.name} photo & signature size`,
+      description: assetLabels.length
+        ? `Upload sizes ${exam.body} publishes for ${exam.name}: ${assetLabels.join(", ").toLowerCase()}. Resize to the exact spec in your browser.`
+        : `Upload rules ${exam.body} publishes for ${exam.name}.`,
+      section: "examPhoto",
+      tags: [
+        "exam photo",
+        "photo resize",
+        "signature resize",
+        exam.body,
+        exam.slug.split("-"),
+      ],
     });
   });
 

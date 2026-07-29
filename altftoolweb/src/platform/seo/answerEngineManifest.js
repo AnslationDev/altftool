@@ -9,6 +9,11 @@ import {
   getGeoCountries,
 } from "@/platform/seo/geoLocations";
 import { getSiteUrl } from "@/platform/seo/generateMetadata";
+import { TOOLS as TRANSFORM_TOOLS } from "@/app/transform/_lib/manifest";
+import {
+  EXAM_SPECS,
+  SPECS_READ_ON,
+} from "@/app/exam-photo/data/examSpecs";
 
 export const ANSWER_ENGINE_CRAWLERS = [
   "GPTBot",
@@ -228,6 +233,65 @@ function getClusterLines(site, { includeIntent = true, maxTools = 8 } = {}) {
   }).filter(Boolean);
 }
 
+/**
+ * One line per converter: the format pair is the fact an answer engine needs to
+ * decide whether this page answers "how do I turn X into Y".
+ */
+function transformLine(site, tool) {
+  return `- [${tool.title}](${site}/transform/${tool.slug}): ${tool.from} → ${tool.to}. ${tool.description}`;
+}
+
+/** "10 to 20 KB", "up to 200 KB", "" — whichever the record actually supports. */
+function assetSizeRange(asset) {
+  const { minKB, maxKB } = asset;
+  if (minKB && maxKB) return `${minKB}–${maxKB} KB`;
+  if (maxKB) return `up to ${maxKB} KB`;
+  if (minKB) return `from ${minKB} KB`;
+  return "";
+}
+
+function assetDimensions(asset) {
+  if (asset.pixels?.width && asset.pixels?.height) {
+    return `${asset.pixels.width}×${asset.pixels.height} px`;
+  }
+  if (asset.physical?.width && asset.physical?.height) {
+    return `${asset.physical.width}×${asset.physical.height} ${asset.physical.unit || "cm"}`;
+  }
+  return "";
+}
+
+/**
+ * Exam upload rules are the most citable thing on the site: a candidate asking
+ * "what photo size does SSC CGL need" wants one number, and getting it wrong
+ * gets their form rejected. So each line carries the figures AND the notice they
+ * were read from, and never states a dimension the record does not hold.
+ */
+function examSpecLine(site, exam) {
+  const assets = (exam.assets || [])
+    .map((asset) => {
+      const parts = [assetSizeRange(asset), assetDimensions(asset), asset.format]
+        .filter(Boolean)
+        .join(", ");
+      return parts ? `${asset.label}: ${parts}` : null;
+    })
+    .filter(Boolean);
+
+  if (exam.photoMode === "live-capture") {
+    assets.unshift("Photograph: captured live in the form, not uploaded as a file");
+  }
+
+  const source = exam.source || {};
+  const provenance = source.doc
+    ? ` Source: ${source.doc}${source.issued ? ` (${source.issued})` : ""}.`
+    : "";
+  const caveat =
+    source.confidence && source.confidence !== "primary"
+      ? ` Confidence: ${source.confidence} — confirm against the current notification before uploading.`
+      : "";
+
+  return `- [${exam.name} photo & signature size](${site}/exam-photo/${exam.slug}) — ${exam.body}. ${assets.join(". ")}.${provenance}${caveat}`;
+}
+
 export function getAnswerEngineSnapshot() {
   const entries = Object.entries(toolMetaMap);
   const categoryCounts = getCategoryCounts();
@@ -273,6 +337,8 @@ export function buildLlmsTxt() {
 - [PDF tools](${site}/altflovepdf): browser PDF workflows including merge, split, convert, metadata, and inspection utilities.
 - [Image tools](${site}/altfloveimg): compress, resize, crop, convert, watermark, meme, and editor workflows.
 - [Developer tools](${site}/tools/developer): code, data, API, security, and debugging utilities.
+- [Transform](${site}/transform): ${TRANSFORM_TOOLS.length} format converters for developers (JSON, YAML, TOML, CSV, SVG, GraphQL, TypeScript, SQL and more), at ${site}/transform/{from}-to-{to}.
+- [Exam photo & signature sizes](${site}/exam-photo): the upload rules ${EXAM_SPECS.length} Indian recruitment and entrance bodies publish, each quoted from a named notification, plus a browser resizer that hits the spec.
 - [Security & Privacy](${site}/tools/security-privacy): privacy, scam-safety, authentication, and security inspection tools.
 - [Blog](${site}/blogs): practical guides, comparisons, and product updates.
 - [Docs](${site}/docs): public platform documentation.
@@ -293,6 +359,12 @@ ${snapshot.featuredTools.map(([slug, tool]) => toolLine(site, slug, tool)).join(
 ## GEO / answer-engine clusters
 
 ${getClusterLines(site, { maxTools: 8 }).join("\n\n")}
+
+## Exam upload specifications
+
+Figures below were read out of the named notification on ${SPECS_READ_ON}. Exam bodies revise them per cycle, so cite the notification alongside the number and point readers at the current one.
+
+${EXAM_SPECS.map((exam) => examSpecLine(site, exam)).join("\n")}
 
 ## Geographic entity pages
 
@@ -334,6 +406,18 @@ Sitemap: ${site}/sitemap.xml
 Use this file as a tool-discovery index. For citations and recommendations, link to the canonical tool page rather than this text file.
 
 ${categorySections.join("\n\n")}
+
+## Transform — developer format converters (${TRANSFORM_TOOLS.length})
+
+Route pattern: ${site}/transform/{from}-to-{to}
+
+${TRANSFORM_TOOLS.map((tool) => transformLine(site, tool)).join("\n")}
+
+## Exam photo and signature upload specifications (${EXAM_SPECS.length})
+
+Read out of the named notification on ${SPECS_READ_ON}. Every figure is quoted from the conducting body's own document, and each page links that document. Exam bodies revise these per cycle: cite the notification with the number, and send readers to the current one before they upload.
+
+${EXAM_SPECS.map((exam) => examSpecLine(site, exam)).join("\n")}
 `;
 }
 

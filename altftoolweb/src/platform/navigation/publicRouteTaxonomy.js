@@ -28,6 +28,8 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
       "/altfcalculators",
       "/altfloveimg",
       "/altflovepdf",
+      "/transform",
+      "/exam-photo",
       "/smartlink",
       "/fullscrn",
       "/search-eng",

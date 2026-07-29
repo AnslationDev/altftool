@@ -52,6 +52,7 @@ import {
   GAMES as altfNativeGames,
 } from "@/app/altfgame/_data/games";
 import { TOOLS as transformTools } from "@/app/transform/_lib/manifest";
+import { EXAM_SPECS as examPhotoSpecs } from "@/app/exam-photo/data/examSpecs";
 import { ALL_NAV_ITEMS as promptStudioItems } from "@/app/imgprompt/data/navigation";
 import { getPromptCards } from "@/app/prompts/data/service";
 import {
@@ -78,6 +79,7 @@ const staticRoutes = [
   { path: "/tools", priority: 0.95 },
   { path: "/alternatives", priority: 0.7 },
   { path: "/transform", priority: 0.7 },
+  { path: "/exam-photo", priority: 0.7 },
   { path: "/signals", priority: 0.88 },
   { path: "/products", priority: 0.9 },
   { path: "/blogs", priority: 0.9 },
@@ -123,13 +125,10 @@ const staticRoutes = [
   { path: "/supportsetting", priority: 0.45 },
   { path: "/request-a-tool", priority: 0.5 },
   { path: "/site-map", priority: 0.5 },
-  { path: "/altfworld", priority: 0.62 },
-  { path: "/altfworld/about", priority: 0.48 },
-  { path: "/altfworld/forums", priority: 0.56 },
-  { path: "/altfworld/marketplace", priority: 0.52 },
-  { path: "/altfworld/members", priority: 0.5 },
-  { path: "/altfworld/resources", priority: 0.5 },
-  { path: "/altfworld/search", priority: 0.45 },
+  // The seven /altfworld URLs are deliberately absent: the section is a
+  // display-only demo whose members, threads, listings and resources are all
+  // generated (see altfworld/data/mockCommunity.js), so every route under it is
+  // noindex via altfworld/seo.js and a noindexed URL must not be submitted.
   { path: "/imgprompt", priority: 0.76 },
   { path: "/imgprompt/studio", priority: 0.66 },
   { path: "/n8n", priority: 0.76 },
@@ -485,6 +484,18 @@ async function buildSitemapEntries({
     if (tool?.slug) {
       pushUnique(entries, seen, `/transform/${tool.slug}`, {
         priority: 0.58,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // One page per exam. These answer a narrow, high-intent question ("what photo
+  // size does SSC CGL want") from a named notification, and the figures change
+  // when the conducting body issues a new one — hence the monthly frequency.
+  for (const exam of examPhotoSpecs) {
+    if (exam?.slug) {
+      pushUnique(entries, seen, `/exam-photo/${exam.slug}`, {
+        priority: 0.66,
         changeFrequency: "monthly",
       });
     }
