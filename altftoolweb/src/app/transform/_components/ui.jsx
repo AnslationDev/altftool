@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Small shared UI atoms for the Transform shell. Styling matches the rest of
- * the developer tools (slate/blue palette, rounded, dark-mode aware).
+ * Small shared UI atoms for the Transform shell. Styling follows master.md:
+ * semantic tokens only, so light and dark come from the same class names.
  */
 
 export function GhostButton({ icon: Icon, label, onClick, disabled, title, className = "" }) {
@@ -13,7 +13,7 @@ export function GhostButton({ icon: Icon, label, onClick, disabled, title, class
       onClick={onClick}
       disabled={disabled}
       suppressHydrationWarning
-      className={`inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-45 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl border border-(--border) bg-(--card) px-3.5 py-2 text-sm font-medium text-(--foreground) shadow-sm transition hover:border-(--border-strong) hover:bg-(--muted) disabled:cursor-not-allowed disabled:opacity-45 ${className}`}
     >
       {Icon ? <Icon className="h-4 w-4" /> : null}
       {label ? <span className="whitespace-nowrap">{label}</span> : null}
@@ -28,7 +28,7 @@ export function PrimaryButton({ icon: Icon, label, onClick, disabled, className 
       onClick={onClick}
       disabled={disabled}
       suppressHydrationWarning
-      className={`inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl bg-(--primary) px-6 py-3 text-sm font-semibold text-(--primary-foreground) shadow-lg shadow-(--primary)/30 transition hover:bg-(--primary-hover) active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     >
       {Icon ? <Icon className="h-4 w-4" /> : null}
       {label ? <span className="whitespace-nowrap">{label}</span> : null}
@@ -39,7 +39,7 @@ export function PrimaryButton({ icon: Icon, label, onClick, disabled, className 
 export function Badge({ children, className = "" }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 ${className}`}
+      className={`inline-flex items-center gap-1 rounded-full border border-(--border) bg-(--muted) px-2.5 py-0.5 text-xs font-semibold text-(--muted-foreground) ${className}`}
     >
       {children}
     </span>

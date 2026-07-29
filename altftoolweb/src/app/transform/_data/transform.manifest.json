@@ -992,7 +992,7 @@
       "to": "yaml",
       "engine": "browser",
       "lib": "@iarna/toml",
-      "status": "complete",
+      "status": "done",
       "description": "Convert TOML configuration into readable YAML for infrastructure and app config workflows.",
       "keywords": [
         "toml to yaml",
@@ -1008,7 +1008,7 @@
       "to": "json",
       "engine": "browser",
       "lib": "xml-js",
-      "status": "complete",
+      "status": "done",
       "description": "Convert XML documents into compact JSON for inspection, debugging, and data pipelines.",
       "keywords": [
         "xml to json",
@@ -1024,7 +1024,7 @@
       "to": "json",
       "engine": "browser",
       "lib": "js-yaml",
-      "status": "complete",
+      "status": "done",
       "description": "Parse YAML documents into clean, portable JSON for config checks and data exchange.",
       "keywords": [
         "yaml to json",
@@ -1040,7 +1040,7 @@
       "to": "toml",
       "engine": "browser",
       "lib": "@iarna/toml",
-      "status": "complete",
+      "status": "done",
       "description": "Convert YAML configuration into readable TOML for app settings and infrastructure workflows.",
       "keywords": [
         "yaml to toml",

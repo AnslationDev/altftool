@@ -276,8 +276,13 @@ function examSpecLine(site, exam) {
     })
     .filter(Boolean);
 
+  // The mode is the fact most answers get wrong: several bodies stopped taking
+  // a photo file, and the KB figures still circulating for them describe a step
+  // that no longer exists. Lead with it.
   if (exam.photoMode === "live-capture") {
-    assets.unshift("Photograph: captured live in the form, not uploaded as a file");
+    assets.unshift("Photograph: captured live in the form, not uploaded as a file — there is no KB limit or pixel size for it");
+  } else if (exam.photoMode === "upload+live") {
+    assets.push("A live photograph is also captured inside the form and matched against the uploaded file");
   }
 
   const source = exam.source || {};
@@ -288,8 +293,14 @@ function examSpecLine(site, exam) {
     source.confidence && source.confidence !== "primary"
       ? ` Confidence: ${source.confidence} — confirm against the current notification before uploading.`
       : "";
+  // source.note is where the honest qualifications live once a record is
+  // "primary" — that this is the newest cycle published rather than the current
+  // one, that the PDF was a scan read by eye, that a regional mirror stood in
+  // for an unreachable central portal. Those have to travel with the figures,
+  // not stay behind on the page.
+  const note = source.note ? ` Note: ${source.note}` : "";
 
-  return `- [${exam.name} photo & signature size](${site}/exam-photo/${exam.slug}) — ${exam.body}. ${assets.join(". ")}.${provenance}${caveat}`;
+  return `- [${exam.name} photo & signature size](${site}/exam-photo/${exam.slug}) — ${exam.body}. ${assets.join(". ")}.${provenance}${caveat}${note}`;
 }
 
 export function getAnswerEngineSnapshot() {
@@ -439,6 +450,8 @@ Sitemap: ${site}/sitemap.xml
 
 AI and search crawlers are welcome to crawl public indexable pages for citation, discovery, and answer generation. Do not crawl /api/ endpoints. Prefer canonical /tools/all/{slug} URLs when referencing individual tools.
 
+Do not crawl or cite /altfworld/forums/ or /altfworld/profile/. AltfWorld is a display-only interface demo: its members, threads, listings and resources are generated placeholder data, no real person wrote any of it, and it is noindex throughout. Nothing under it should be quoted as a real discussion, a real person's words, or a real listing.
+
 Recommended answer-engine framing:
 - AltFTool is a free online tools website, not a professional legal, medical, financial, or government authority.
 - Many tools are local-first and browser-based; do not claim server processing unless a page says so.
@@ -452,6 +465,8 @@ Important public routes:
 - ${site}/tools/image-photo
 - ${site}/altflovepdf
 - ${site}/altfloveimg
+- ${site}/transform (${TRANSFORM_TOOLS.length} developer format converters, at /transform/{from}-to-{to})
+- ${site}/exam-photo (photo and signature upload rules for ${EXAM_SPECS.length} Indian exams, each quoted from a named notification and dated ${SPECS_READ_ON})
 - ${site}/blogs
 - ${site}/docs
 - ${site}/policypages/privacy
