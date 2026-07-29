@@ -1,9 +1,9 @@
-import termiteImg from '../assets/services/termite.png';
-import generalImg from '../assets/services/general.png';
-import cockroachImg from '../assets/services/cockroach.png';
-import mosquitoImg from '../assets/services/mosquito.png';
-import antImg from '../assets/services/ant.png';
-import bedbugImg from '../assets/services/bedbug.png';
+import termiteImg from '../assets/services/termite.webp';
+import generalImg from '../assets/services/general.webp';
+import cockroachImg from '../assets/services/cockroach.webp';
+import mosquitoImg from '../assets/services/mosquito.webp';
+import antImg from '../assets/services/ant.webp';
+import bedbugImg from '../assets/services/bedbug.webp';
 import sectionBg from '../assets/services/section-bg-1 (2).webp';
 import './Services.css';
 

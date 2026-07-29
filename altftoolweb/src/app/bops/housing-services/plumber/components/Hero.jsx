@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronDown, Star } from 'lucide-react';
-import problem1 from '../assets/images/problem-1.png';
+import problem1 from '../assets/images/problem-1.webp';
 import '../styles/Hero.css';
 
 function scrollToForm(mode) {

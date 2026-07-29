@@ -16,12 +16,28 @@ const nextDir = path.resolve(".next");
 // it passed builds AWS was always going to reject. The last upload AWS did
 // accept was job 80, which measured 165.88 MiB here.
 //
-// 185 MiB leaves ~2.7 MiB under the observed 32.31 MiB of packaging overhead.
-// Do not raise it on the argument that a build "only just" fails — that is the
-// same reasoning that produced 215. Raise it only against a fresh pair of
-// numbers: a gate reading and the byte count AWS reports for the same job.
+// 184 MiB, bracketed by two real deploys rather than a model.
+//
+//   job 104   gate 184.13  ->  ACCEPTED
+//   job 105   gate 185.09  ->  AWS measured 220.01 MiB, refused at 220.00
+//
+// So the ceiling in this script's units sits in (184.13, 185.09]. 184 is under
+// the last figure AWS actually took.
+//
+// The history here is worth keeping, because each wrong value was wrong for a
+// different reason. 205 and 215 measured a quantity AWS does not — the gate
+// read 205.68 for output AWS weighed at 237.99. That was fixed. Then 186 came
+// from extrapolating a single pair: job 101 showed 32.31 MiB of packaging
+// overhead, so 220 - 32.31 = 187.69 looked like the bound. Job 105 gave a
+// second pair and the overhead was 34.92, not 32.31. It is not a constant, and
+// two points are not enough to model it — so this value is now set by
+// observation alone, not by arithmetic on the overhead.
+//
+// Raise it only when a job whose gate reading was HIGHER than this one is
+// accepted by AWS. A failure is the only thing that locates the ceiling, and
+// each attempt costs a red main.
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 185 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 184 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {
@@ -51,13 +67,30 @@ for (const filePath of removableMedia) {
 // These files are useful while compiling or debugging a local build, but the
 // deployed Next.js server does not read them. Removing them keeps Amplify's
 // hosted artifact focused on runtime code, manifests, and public assets.
-const buildOnlyArtifacts = ["trace", "trace-build", "types", "diagnostics"]
+// react-loadable-manifest.json is a Pages Router artifact. This app has no
+// pages/ directory, and `react-loadable-manifest` appears nowhere in
+// next/dist — the build writes 0.75 MiB that nothing ever reads.
+const buildOnlyArtifacts = [
+  "trace",
+  "trace-build",
+  "types",
+  "diagnostics",
+  "react-loadable-manifest.json",
+]
   .map((name) => path.join(nextDir, name))
   .filter((artifactPath) => fs.existsSync(artifactPath));
 
 for (const artifactPath of buildOnlyArtifacts) {
   fs.rmSync(artifactPath, { force: true, recursive: true });
 }
+
+// Amplify's packaging step READS Next's *.nft.json trace files. Pruning them
+// saved 5.48 MiB and the build went green, then job 106 died at upload with
+// "Server trace files are not found in .../.next". They are inputs to Amplify's
+// own bundling, not just to `next build`, so they have to ship.
+//
+// Nor can they be shrunk: they are already minified and use paths relative to
+// .next, so unlike the RSC manifests they carry no build-root inflation.
 
 function directorySize(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).reduce((total, entry) => {

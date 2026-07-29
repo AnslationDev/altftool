@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import heroBg from '../assets/hero-bg.png';
+import heroBg from '../assets/hero-bg.webp';
 import './Hero.css';
 
 export default function Hero() {
