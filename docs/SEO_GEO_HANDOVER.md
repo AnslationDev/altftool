@@ -1,11 +1,15 @@
 # SEO / GEO work — handover
 
-Branch: `seo/integrated-2026-07-27` (26 commits, every one build-verified).
-Last build: **201.85 MiB** against the 205 MiB Amplify gate.
+Branch: `seo/geo-current` — 15 commits on top of `acf239d40`, build-verified.
+Last build: **212.18 MiB** against the 215 MiB Amplify gate, prerender gate clear.
 
-This branch was built in an isolated worktree because the deploy branch was
-being actively edited at the time. It merges cleanly and has already absorbed
-`main` and `fix/sitemap-xml-escaping`.
+Built in an isolated worktree because the deploy branch was being actively
+edited. The earlier `seo/integrated-2026-07-27` branch is superseded: its work
+was cherry-picked onto the current HEAD here, so merge this one.
+
+Two build-time guards run before `next build` and will fail the build rather
+than let a false claim ship: `scripts/assert-no-server-tool-loader.mjs` and
+`scripts/assert-transform-manifest.mjs`.
 
 ---
 
@@ -143,3 +147,74 @@ scoped. If you write this claim again, scope it.
 - `/apps` category counts are hardcoded and will drift as apps are added.
 - Seven Wattpad books now have no reason to exist — they are noindexed rather
   than deleted, because deleting content is the owner's call.
+
+---
+
+## Added 29–30 July 2026
+
+### Two new families indexed, one deindexed
+
+`/transform` (64 converters) and `/exam-photo` (12 exams) shipped as orphans —
+nothing linked to either, and `/exam-photo` was absent from the sitemap
+entirely. Both are now in the linking graph, the sitemap, `/site-map`, and
+`llms.txt` / `llms-full.txt` / `ai.txt`.
+
+`/altfworld` went the other way. It is a display-only demo generating 5,000
+members, 30,000 threads, 2,000 listings and 1,000 resources from word lists, and
+it had seven URLs in the sitemap. Every route under it is noindex/nofollow now,
+the sitemap entries are gone, and `robots.txt` disallows `/altfworld/forums/`
+and `/altfworld/profile/` — an unbounded crawl space with nothing to index.
+Restore by passing `noindex: false` from pages holding real content; do not flip
+the default in `altfworld/seo.js`, because the mock routes will still exist.
+
+### Four converters never worked
+
+Running all 64 against their own sample found `svg-to-jsx`,
+`svg-to-react-native`, `typescript-to-flow` and `flow-to-javascript` returning
+"Cannot find module" — `@svgr/plugin-jsx`, `flowgen` and `@babel/preset-flow`
+were never installed, while all four shipped a page saying they worked. Five
+packages added (MIT/ISC), plus a Babel preset-resolution fix. 64 of 64 now
+produce output.
+
+Four `lib` values also credited packages that never ran — `html-to-pug` named
+`html2pug`, which this repo has never depended on. `scripts/assert-transform-manifest.mjs`
+now checks library attribution, the `uses` list on hand-written converters, the
+`engine` flag against the client-loader registry, and that every converter still
+produces output. It is wired into `npm run build`.
+
+### `/top9` was returning 500
+
+The hub and all 49 list pages. `Top9Client.jsx` rendered three components it
+never imported, `ContentArea.jsx` and `FeaturedList.jsx` were unparseable JSX,
+and `compactBrandedTitle` was called without an import. The build passed
+throughout because the broken files were orphaned. Fixed, and `top9.css`
+deleted — 55 selectors, none referenced.
+
+### Fabrications removed
+
+- `/wattpad`: `AggregateRating` and an INR `Offer` built from seed data (all
+  eight ratings between 4.3 and 4.8, no review mechanism, no checkout). The one
+  indexable title claimed 25 chapters and has 2. Part counts are counted now.
+- `/top9`: invented view counts, ratings, "Trusted by Millions", plus title
+  arrays printed over links to different slugs.
+- `llms.txt` claimed CSV converters (there are none) and advertised
+  `/transform/{from}-to-{to}` as the route pattern (true for 19 of 64).
+- `/smartlink`'s cloaked ad-network redirect came back through a release sync
+  and was removed again. **Check this after every sync.**
+
+### Design tokens
+
+`--danger-text`, `--success-text` and `--warning-text` are used 72 times across
+38 files and resolved to nothing: `altftoolweb/packages/ui/src/tokens.css` (what
+`node_modules/@altftool/ui` symlinks to) lacked the six declarations the root
+copy has, and `globals.css` never aliased them. Measured in the browser, light
+theme: base tokens 3.54 / 2.02 / 3.10:1 (AA fail), `-text` variants 6.09 / 4.73
+/ 4.72:1 (pass). Both layers wired; the two `tokens.css` copies now match.
+
+### Open, needs your decision
+
+- Firestore-injected page code for `/imgprompt` and `/altpintrest`.
+- The Amplify apex 302 → 301 (console, not code).
+- Whether the ~39 fictional-brand `/bops/housing-services` landers are intended.
+- `/top9`: Hero's search input is decorative, and 28 live list routes have no
+  link from the hub.
