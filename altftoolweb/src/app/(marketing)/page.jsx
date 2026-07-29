@@ -6,6 +6,18 @@ import FAQSection from "./components/FAQSection";
 import TrendingSection from "./components/TrendingSection";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
+// Evergreen and free of dynamic APIs — no cookies(), headers(), searchParams
+// or fetch — so it can be served from the edge. Without this the root layout's
+// `await connection()` opts it out of caching and every view pays origin TTFB:
+// ~227 ms at the median against ~47 ms for routes CloudFront already holds.
+//
+// Scoped deliberately to this one route. Deleting the layout's connection()
+// instead would make roughly 339 static routes prerender at build time, about
+// 237 MiB of artifact against a 184 MiB gate — which is why that line exists.
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+
 export async function generateMetadata() {
   return createPageMetadata({
     title: "AltFTool - Online Tools, Workflows, Apps & Practical Guides",

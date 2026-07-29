@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { toolContentOverrides } from "./toolContentOverrides";
 import { generatedToolSeo } from "./generated/toolSeoMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
@@ -91,7 +92,10 @@ function buildMetaDescription(name, description, primaryCategory) {
   return combined.length > 158 ? `${combined.slice(0, 155).trim()}...` : combined;
 }
 
-export function buildToolSeoContent(slug, tool = {}) {
+// Memoised per request. buildToolMetadata, the page body and ToolSeoSection
+// each build the same content for one render, and each call resolves
+// overrides and the generated SEO shard for the slug.
+export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool = {}) {
   const name = cleanText(tool.name) || cleanText(slug).replace(/[-_]/g, " ");
   const description = cleanText(tool.description);
   const categories = getCategories(tool);
@@ -196,4 +200,4 @@ export function buildToolSeoContent(slug, tool = {}) {
       : [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...template.steps],
     faqs,
   };
-}
+});
