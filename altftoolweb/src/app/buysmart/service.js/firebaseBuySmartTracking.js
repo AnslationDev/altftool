@@ -1,6 +1,6 @@
 "use client";
 
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, increment, setDoc } from "firebase/firestore";
 import {
   cleanText,
   getBuySmartBrandSlug,
@@ -39,20 +39,13 @@ export async function recordBuySmartEvent(offer = {}, eventType = "reveal") {
     const snap = await getDoc(ANALYTICS_REF);
     const data = snap.exists() ? snap.data() : {};
     const existingEvents = Array.isArray(data.events) ? data.events : [];
-    const existingCounters = data.counters && typeof data.counters === "object" ? data.counters : {};
-    const brandCounters =
-      existingCounters[slug] && typeof existingCounters[slug] === "object"
-        ? existingCounters[slug]
-        : {};
 
     await setDoc(
       ANALYTICS_REF,
       {
         counters: {
-          ...existingCounters,
           [slug]: {
-            ...brandCounters,
-            [normalizedEventType]: Number(brandCounters[normalizedEventType] || 0) + 1,
+            [normalizedEventType]: increment(1),
           },
         },
         events: [...existingEvents, event].slice(-MAX_EVENTS),

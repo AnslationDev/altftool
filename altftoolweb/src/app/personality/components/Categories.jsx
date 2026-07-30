@@ -3,15 +3,15 @@
 import Image from "next/image";
 import { Users, ArrowRight, BriefcaseBusiness } from "lucide-react";
 import { useRef, useState } from "react";
-import PersonalityLoader from "./PersonalityLoader";
 import { useRouter } from "next/navigation";
+import PersonalityLoader from "./PersonalityLoader";
 
 const tests = [
   {
     title: "Career Personality Test",
     desc: "Discover careers aligned with your strengths and working style.",
     people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/career.png",
+    imgSrc: "/personality/categories/Career.png",
   },
   {
     title: "Emotional Intelligence",

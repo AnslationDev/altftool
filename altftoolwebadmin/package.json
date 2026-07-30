@@ -11,6 +11,7 @@
     "dev:admin": "npm run dev -- -p 3007",
     "build": "node scripts/generate-tool-slugs.mjs && node ../scripts/generate-admin-health-manifest.mjs && node scripts/use-patched-next-dependencies.mjs && next build --webpack",
     "start": "next start",
+    "lint": "eslint",
     "firebase:admin-write-check": "node scripts/checkFirebaseAdminWrite.mjs",
     "firebase:admin-write-check:dry-run": "FIREBASE_ADMIN_WRITE_CHECK_MODE=dry-run node scripts/checkFirebaseAdminWrite.mjs",
     "test:firebase-rules": "node ../tests/firebase-rules.test.mjs",
@@ -75,6 +76,8 @@
     "@firebase/rules-unit-testing": "^5.0.1",
     "@tailwindcss/postcss": "^4.2.1",
     "autoprefixer": "^10.4.24",
+    "eslint": "^9",
+    "eslint-config-next": "^16.2.11",
     "postcss": "^8.5.14",
     "tailwindcss": "^4.2.1"
   },

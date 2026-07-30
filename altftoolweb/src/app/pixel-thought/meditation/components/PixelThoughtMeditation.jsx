@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useMeditationSession } from '../hooks/useMeditationSession'
 import styles from '../styles/PixelThoughtMeditation.module.css'
@@ -66,6 +67,13 @@ export default function PixelThoughtMeditation() {
       translate="no"
       aria-label="A 60 second thought dissolving meditation"
     >
+      <Link
+        href="/"
+        className="absolute left-4 top-4 z-30 text-sm font-light tracking-[0.08em] text-white/50 transition hover:text-white/80 focus-visible:text-white/80 focus-visible:outline-none max-[600px]:left-3 max-[600px]:top-3"
+      >
+        AltFTool
+      </Link>
+
       <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden bg-[radial-gradient(circle_at_50%_43%,rgba(70,88,122,0.28),transparent_28%),radial-gradient(circle_at_20%_10%,rgba(57,86,126,0.22),transparent_35%),radial-gradient(circle_at_80%_90%,rgba(35,49,82,0.18),transparent_38%)]">
         {stars.map((star) => (
           <span

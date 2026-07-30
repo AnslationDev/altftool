@@ -1,8 +1,6 @@
 import { searchNearbyPlacesByTypes, PLACE_TYPES } from "./places.js";
 import { sortByDistance } from "./distance.service.js";
 
-export { isMallSearchIntent } from "./searchIntent.js";
-
 /**
  * Map a free-text search term to the OSM place categories it should search.
  * Falls back to "malls first" (matches the product spec: searching a brand

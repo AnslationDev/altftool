@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "./toolSeoContent";
@@ -8,14 +9,14 @@ import {
   slugifyCategory,
 } from "@/platform/registry/categoryTaxonomy";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+// Re-exported so existing server callers keep working; defined apart from
+// this module so client components can reach them without the catalogue.
+import { formatCategoryLabel, getToolCategories } from "./toolRouteFormat";
+
+export { formatCategoryLabel, getToolCategories };
 
 export function getTool(slug) {
   return toolMetaMap[slug] ?? null;
-}
-
-export function getToolCategories(tool) {
-  if (!tool?.category) return [];
-  return Array.isArray(tool.category) ? tool.category : [tool.category];
 }
 
 export function slugifyRouteSegment(value = "") {
@@ -110,16 +111,10 @@ export function getInitialToolCatalog(category = "all", limit = 64) {
   return Object.fromEntries(selected);
 }
 
-export function formatCategoryLabel(value = "all") {
-  if (value === "all") return "All Tools";
-  const canonical = getCanonicalCategoryBySlug(String(value).toLowerCase());
-  if (canonical) return canonical.label;
-  return String(value)
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
-}
-
-export function getRelatedTools(slug, limit = 6) {
+// Memoised per request: the tool page and ToolSeoSection each ask for the
+// same related list, and each call scans all 3,753 tools. React's cache()
+// dedupes within one render — measured at ~6.5 ms of server CPU per page.
+export const getRelatedTools = cache(function getRelatedTools(slug, limit = 6) {
   const tool = getTool(slug);
   if (!tool) return [];
 
@@ -168,7 +163,7 @@ export function getRelatedTools(slug, limit = 6) {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map(({ slug: relatedSlug, name }) => ({ slug: relatedSlug, name }));
-}
+});
 
 export async function buildToolMetadata(slug) {
   // Warm the central SEO config so per-URL admin overrides apply to tool pages.
@@ -176,10 +171,27 @@ export async function buildToolMetadata(slug) {
   const tool = getTool(slug);
 
   if (!tool) {
-    return {
+    // These routes are force-static, and a statically generated notFound() is
+    // served with a 200 on this deployment rather than a 404 — every unknown
+    // slug under /tools is a soft 404. Verified live: /tools/all/not-real-xyz
+    // returns HTTP 200 with 312 KB of HTML, and so do /blogs, /apps and
+    // /alternatives, so the behaviour is the platform's, not this route's.
+    //
+    // Returning a bare object here left the robots directive to whatever the
+    // layout had already set, so the page shipped BOTH `index, follow` and the
+    // not-found boundary's `noindex`. Search engines resolve that conflict by
+    // taking the most restrictive, but nothing guarantees answer engines parse
+    // it the same way, and a page asking to be indexed is not what we mean.
+    //
+    // Declaring robots explicitly replaces the inherited directive instead of
+    // appending to it, and dropping the canonical stops these pointing at the
+    // homepage, which invited engines to treat them as duplicates of it.
+    return createPageMetadata({
       title: "Tool Not Found",
       description: "The requested tool does not exist.",
-    };
+      path: `/tools/all/${slug}`,
+      noindex: true,
+    });
   }
 
   const seoContent = buildToolSeoContent(slug, tool);

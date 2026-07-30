@@ -70,6 +70,22 @@ const achievementsConfig = [
   { id: "comfortBreaker", name: "Comfort Breaker", desc: "Complete 3 Adventure challenges", catRequired: { cat: "adventure", count: 3 }, icon: "🏔️" },
 ];
 
+// Local calendar-day key (YYYY-MM-DD) in the user's own timezone, so a
+// completion just before midnight and one just after still count as
+// different days.
+const getDateKey = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const daysBetweenKeys = (fromKey, toKey) => {
+  const from = new Date(`${fromKey}T00:00:00`);
+  const to = new Date(`${toKey}T00:00:00`);
+  return Math.round((to - from) / (1000 * 60 * 60 * 24));
+};
+
 export default function MainComponent() {
   const [selectedCat, setSelectedCat] = useState("all");
   const [selectedDiff, setSelectedDiff] = useState("all"); // all, easy, medium, hard
@@ -91,11 +107,12 @@ export default function MainComponent() {
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
   const [categoryCounts, setCategoryCounts] = useState({});
+  const [lastCompletedDate, setLastCompletedDate] = useState(null);
 
-  // Countdown timer states
-  const [timerActive, setTimerActive] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
-  const timerRef = useRef(null);
+  // Countdown timer states — keyed by challenge id so each active
+  // challenge tracks its own { timeLeft, active, completed } independently.
+  const [timers, setTimers] = useState({});
+  const timerRefs = useRef({});
 
   // Load state on mount and register click-outside
   useEffect(() => {
@@ -104,12 +121,14 @@ export default function MainComponent() {
     const savedActive = localStorage.getItem("altft_life_active");
     const savedCompleted = localStorage.getItem("altft_life_completed");
     const savedCatCounts = localStorage.getItem("altft_life_cat_counts");
+    const savedLastCompletedDate = localStorage.getItem("altft_life_last_completed_date");
 
     if (savedXp) setXp(parseInt(savedXp));
     if (savedStreak) setStreak(parseInt(savedStreak));
     if (savedActive) setActiveChallenges(JSON.parse(savedActive));
     if (savedCompleted) setCompletedList(JSON.parse(savedCompleted));
     if (savedCatCounts) setCategoryCounts(JSON.parse(savedCatCounts));
+    if (savedLastCompletedDate) setLastCompletedDate(savedLastCompletedDate);
 
     const handleClick = (e) => {
       if (catRef.current && !catRef.current.contains(e.target)) {
@@ -123,19 +142,26 @@ export default function MainComponent() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // Save states helper
-  const saveUserData = (nextXp, nextStreak, nextActive, nextCompleted, nextCatCounts) => {
+  // Save states helper. nextLastCompletedDate is optional: omit it to leave
+  // the stored value untouched, or pass null to clear it (reset).
+  const saveUserData = (nextXp, nextStreak, nextActive, nextCompleted, nextCatCounts, nextLastCompletedDate) => {
     localStorage.setItem("altft_life_xp", nextXp);
     localStorage.setItem("altft_life_streak", nextStreak);
     localStorage.setItem("altft_life_active", JSON.stringify(nextActive));
     localStorage.setItem("altft_life_completed", JSON.stringify(nextCompleted));
     localStorage.setItem("altft_life_cat_counts", JSON.stringify(nextCatCounts));
+    if (nextLastCompletedDate !== undefined) {
+      if (nextLastCompletedDate === null) {
+        localStorage.removeItem("altft_life_last_completed_date");
+      } else {
+        localStorage.setItem("altft_life_last_completed_date", nextLastCompletedDate);
+      }
+    }
   };
 
   const handleRollChallenge = () => {
     setRolling(true);
     setRolledChallenge(null);
-    setTimerActive(false);
 
     // Filter available challenges based on inputs
     const filtered = CHALLENGES.filter((c) => {
@@ -179,10 +205,23 @@ export default function MainComponent() {
     saveUserData(xp, streak, nextActive, completedList, categoryCounts);
   };
 
+  const clearChallengeTimer = (challengeId) => {
+    if (timerRefs.current[challengeId]) {
+      clearInterval(timerRefs.current[challengeId]);
+      delete timerRefs.current[challengeId];
+    }
+    setTimers((prev) => {
+      if (!(challengeId in prev)) return prev;
+      const next = { ...prev };
+      delete next[challengeId];
+      return next;
+    });
+  };
+
   const handleCompleteChallenge = (challenge) => {
     // Remove from active
     const nextActive = activeChallenges.filter((item) => item.id !== challenge.id);
-    
+
     // Add to completed logs
     const nextCompleted = [
       ...completedList,
@@ -190,9 +229,19 @@ export default function MainComponent() {
     ];
     setCompletedList(nextCompleted);
 
-    // Update XP and Streak
+    // Update XP
     const nextXp = xp + challenge.xp;
-    const nextStreak = streak + 1;
+
+    // Real day-based streak: same calendar day keeps the streak as-is,
+    // the very next calendar day extends it, any bigger gap resets it to 1.
+    const todayKey = getDateKey(new Date());
+    let nextStreak = 1;
+    if (lastCompletedDate === todayKey) {
+      nextStreak = streak > 0 ? streak : 1;
+    } else if (lastCompletedDate) {
+      const gapDays = daysBetweenKeys(lastCompletedDate, todayKey);
+      nextStreak = gapDays === 1 ? streak + 1 : 1;
+    }
 
     // Update category counts
     const nextCatCounts = {
@@ -201,60 +250,76 @@ export default function MainComponent() {
     };
     setCategoryCounts(nextCatCounts);
 
-    // Save and reset timer
-    setTimerActive(false);
+    // Save and clear this challenge's own timer
+    clearChallengeTimer(challenge.id);
     setActiveChallenges(nextActive);
     setXp(nextXp);
     setStreak(nextStreak);
-    saveUserData(nextXp, nextStreak, nextActive, nextCompleted, nextCatCounts);
+    setLastCompletedDate(todayKey);
+    saveUserData(nextXp, nextStreak, nextActive, nextCompleted, nextCatCounts, todayKey);
   };
 
   const handleCancelChallenge = (challengeId) => {
     const nextActive = activeChallenges.filter((item) => item.id !== challengeId);
     setActiveChallenges(nextActive);
-    setTimerActive(false);
+    clearChallengeTimer(challengeId);
     saveUserData(xp, streak, nextActive, completedList, categoryCounts);
   };
 
   const handleResetProgress = () => {
     if (confirm("Are you sure you want to reset all your score, streak, and achievements progress? This cannot be undone.")) {
+      Object.values(timerRefs.current).forEach((intervalId) => clearInterval(intervalId));
+      timerRefs.current = {};
+      setTimers({});
       setXp(0);
       setStreak(0);
       setActiveChallenges([]);
       setCompletedList([]);
       setCategoryCounts({});
-      setTimerActive(false);
-      saveUserData(0, 0, [], [], {});
+      setLastCompletedDate(null);
+      saveUserData(0, 0, [], [], {}, null);
     }
   };
 
-  // Stopwatch/timer engine
+  // Clear any still-running per-challenge timers when the component unmounts
   useEffect(() => {
-    if (timerActive && timeLeft > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timerRef.current);
-            setTimerActive(false);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      Object.values(timerRefs.current).forEach((intervalId) => clearInterval(intervalId));
     };
-  }, [timerActive, timeLeft]);
+  }, []);
 
-  const handleStartTimer = (seconds) => {
-    setTimeLeft(seconds);
-    setTimerActive(true);
+  const handleStartTimer = (challengeId, seconds) => {
+    if (timerRefs.current[challengeId]) {
+      clearInterval(timerRefs.current[challengeId]);
+    }
+    setTimers((prev) => ({
+      ...prev,
+      [challengeId]: { timeLeft: seconds, active: true, completed: false },
+    }));
+    timerRefs.current[challengeId] = setInterval(() => {
+      setTimers((prev) => {
+        const current = prev[challengeId];
+        if (!current) return prev;
+        const nextTimeLeft = current.timeLeft - 1;
+        if (nextTimeLeft <= 0) {
+          clearInterval(timerRefs.current[challengeId]);
+          delete timerRefs.current[challengeId];
+          return { ...prev, [challengeId]: { timeLeft: 0, active: false, completed: true } };
+        }
+        return { ...prev, [challengeId]: { ...current, timeLeft: nextTimeLeft } };
+      });
+    }, 1000);
   };
 
-  const handleStopTimer = () => {
-    setTimerActive(false);
-    if (timerRef.current) clearInterval(timerRef.current);
+  const handleStopTimer = (challengeId) => {
+    if (timerRefs.current[challengeId]) {
+      clearInterval(timerRefs.current[challengeId]);
+      delete timerRefs.current[challengeId];
+    }
+    setTimers((prev) => ({
+      ...prev,
+      [challengeId]: { ...prev[challengeId], active: false },
+    }));
   };
 
   // Achievement unlock logic
@@ -475,6 +540,7 @@ export default function MainComponent() {
                 {activeChallenges.map((item) => {
                   const Info = categoryInfo[item.cat] || categoryInfo.all;
                   const IconComp = Info.icon;
+                  const timerState = timers[item.id];
                   return (
                     <div
                       key={item.id}
@@ -489,25 +555,25 @@ export default function MainComponent() {
                         </div>
                         <p className="text-xs sm:text-sm font-semibold text-(--foreground)">{item.text}</p>
                         
-                        {/* Built-in timer view */}
+                        {/* Built-in timer view — state is keyed by this challenge's id */}
                         {item.timeLimit > 0 && (
                           <div className="flex items-center gap-2 pt-1.5">
-                            {timerActive ? (
+                            {timerState?.active ? (
                               <button
-                                onClick={handleStopTimer}
+                                onClick={() => handleStopTimer(item.id)}
                                 className="px-2 py-1 bg-amber-500 text-white rounded text-[10px] font-bold cursor-pointer"
                               >
-                                Stop ({timeLeft}s)
+                                Stop ({timerState.timeLeft}s)
                               </button>
                             ) : (
                               <button
-                                onClick={() => handleStartTimer(item.timeLimit)}
+                                onClick={() => handleStartTimer(item.id, item.timeLimit)}
                                 className="px-2.5 py-1 bg-slate-700 hover:bg-slate-800 text-white rounded text-[10px] font-bold cursor-pointer inline-flex items-center gap-1"
                               >
                                 <Play className="h-3 w-3" /> Start {item.timeLimit}s Timer
                               </button>
                             )}
-                            {timeLeft === 0 && timerActive === false && (
+                            {timerState?.completed && (
                               <span className="text-[10px] text-emerald-500 font-bold">Timer Complete!</span>
                             )}
                           </div>

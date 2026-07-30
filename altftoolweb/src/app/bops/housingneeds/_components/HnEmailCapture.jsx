@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BadgeCheck, CheckCircle2, Lock, Mail, ShieldCheck, Star, Zap } from "lucide-react";
+import { BadgeCheck, CheckCircle2, Lock, Mail, ShieldCheck, Zap } from "lucide-react";
 import { markSubscribed } from "../_lib/leadState";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -16,15 +16,14 @@ const DEFAULT_PERKS = [
 const TRUST_BADGES = [
   { Icon: ShieldCheck, label: "Secure & encrypted" },
   { Icon: BadgeCheck, label: "No spam, ever" },
-  { Icon: Star, label: "4.9/5 rated" },
 ];
 
 /**
  * Email capture for the Housing Needs funnel — built to convert.
  *
  * Leads with the reward (a free maintenance-calendar PDF), stacks the
- * concrete perks, then reassures on privacy and shows social proof — so the
- * reader feels a clear benefit and a safe ask before typing their email.
+ * concrete perks, then reassures on privacy — so the reader feels a clear
+ * benefit and a safe ask before typing their email.
  *
  * Client-only for now: submission validates, then shows the success state.
  * When a real endpoint exists, POST { email, source } inside handleSubmit —
@@ -66,10 +65,11 @@ export default function HnEmailCapture({
       <div className={`hn-email ${compact ? "hn-email--compact" : ""} hn-email--done`}>
         <CheckCircle2 size={26} strokeWidth={2.2} aria-hidden="true" />
         <div>
-          <p className="hn-email-done-title">Check your inbox! 🎉</p>
+          <p className="hn-email-done-title">Saved on this device</p>
           <p className="hn-email-done-text">
-            Your free home maintenance calendar is on its way. Add us to your
-            contacts so it doesn&rsquo;t land in spam.
+            We&rsquo;ve saved your email locally so this offer won&rsquo;t show
+            again here — no email or maintenance calendar has actually been
+            sent, since that isn&rsquo;t connected yet.
           </p>
         </div>
       </div>
@@ -150,23 +150,6 @@ export default function HnEmailCapture({
         We never sell your email. Unsubscribe in one click.
       </p>
 
-      {!compact && (
-        <div className="hn-email-proof">
-          <span className="hn-email-avatars" aria-hidden="true">
-            {["ER", "MJ", "DS", "AL"].map((initials) => (
-              <span key={initials}>{initials}</span>
-            ))}
-          </span>
-          <span className="hn-email-proof-text">
-            <span className="hn-email-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={12} strokeWidth={0} fill="currentColor" />
-              ))}
-            </span>
-            Rated <strong>4.9/5</strong> by <strong>14,000+</strong> U.S. homeowners
-          </span>
-        </div>
-      )}
     </form>
   );
 }

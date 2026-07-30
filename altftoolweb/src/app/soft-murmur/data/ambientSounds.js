@@ -16,6 +16,7 @@ export const ambientSounds = [
     defaultVolume: 30,
     category: "nature",
     description: "Distant rolling thunder and storm vibes.",
+    available: false,
   },
   {
     id: "waves",
@@ -34,6 +35,7 @@ export const ambientSounds = [
     defaultVolume: 30,
     category: "nature",
     description: "A gentle breeze blowing through trees.",
+    available: false,
   },
   {
     id: "fire",
@@ -43,6 +45,7 @@ export const ambientSounds = [
     defaultVolume: 40,
     category: "nature",
     description: "Cozy crackling fireplace sounds.",
+    available: false,
   },
   {
     id: "birds",
@@ -61,6 +64,7 @@ export const ambientSounds = [
     defaultVolume: 25,
     category: "nature",
     description: "Night crickets for deep relaxation.",
+    available: false,
   },
   {
     id: "coffee",
@@ -70,6 +74,7 @@ export const ambientSounds = [
     defaultVolume: 30,
     category: "ambient",
     description: "Chatter and cup clinking from a busy cafe.",
+    available: false,
   },
   {
     id: "singing_bowl",
@@ -79,6 +84,7 @@ export const ambientSounds = [
     defaultVolume: 40,
     category: "meditation",
     description: "Tibetan singing bowl for mindfulness.",
+    available: false,
   },
   {
     id: "white_noise",
@@ -88,6 +94,7 @@ export const ambientSounds = [
     defaultVolume: 35,
     category: "noise",
     description: "Steady static sound to block distractions.",
+    available: false,
   },
 ];
 
@@ -95,7 +102,8 @@ export const presetMixes = [
   {
     id: "preset_focus",
     name: "Focus Mode",
-    description: "Deep concentration layout",
+    description:
+      "Deep concentration layout. Note: White Noise and Coffee Shop are currently unavailable, so this mix will only play Rain.",
     sounds: {
       rain: 45,
       white_noise: 35,
@@ -108,7 +116,8 @@ export const presetMixes = [
   {
     id: "preset_sleep",
     name: "Sleep Mode",
-    description: "Calm soundscape for drift off",
+    description:
+      "Calm soundscape for drift off. Note: Wind is currently unavailable, so this mix will only play Rain and Ocean Waves.",
     sounds: {
       rain: 50,
       waves: 35,
@@ -121,7 +130,8 @@ export const presetMixes = [
   {
     id: "preset_meditation",
     name: "Meditation Mode",
-    description: "Mindfulness and relaxation",
+    description:
+      "Mindfulness and relaxation. Note: Singing Bowl and Wind are currently unavailable, so this mix will only play Forest Birds.",
     sounds: {
       singing_bowl: 50,
       wind: 20,
@@ -134,7 +144,8 @@ export const presetMixes = [
   {
     id: "preset_cozy_night",
     name: "Cozy Night",
-    description: "Warm fireplace with night crickets",
+    description:
+      "Warm fireplace with night crickets. Note: Fire, Crickets, and Wind are all currently unavailable, so this mix has no working sounds right now.",
     sounds: {
       fire: 55,
       crickets: 35,
@@ -147,7 +158,8 @@ export const presetMixes = [
   {
     id: "preset_storm",
     name: "Storm Mood",
-    description: "Intense rainy storm vibes",
+    description:
+      "Intense rainy storm vibes. Note: Thunder and Wind are currently unavailable, so this mix will only play Rain.",
     sounds: {
       rain: 65,
       thunder: 40,

@@ -17,7 +17,6 @@ import {
   Search,
   Star,
   LayoutGrid,
-  Users,
   MessageSquare,
   GraduationCap,
   PenTool,
@@ -71,6 +70,13 @@ export default function ExtensionsPage() {
 
     return result;
   }, [selectedCategory, debouncedSearchQuery, allExtensions]);
+
+  /* ---------------- CATALOG STATS ---------------- */
+  const averageRating = useMemo(() => {
+    const rated = allExtensions.filter((e) => typeof e.rating === "number" && e.rating > 0);
+    if (!rated.length) return null;
+    return rated.reduce((sum, e) => sum + e.rating, 0) / rated.length;
+  }, [allExtensions]);
 
   /* ---------------- ADS ---------------- */
   const extensionAds = useAds({
@@ -146,19 +152,16 @@ export default function ExtensionsPage() {
                 <div className="extensions-hero-stats" aria-label="Extension catalog highlights">
                   <span className="extensions-hero-stat-item">
                     <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">Extensions</span>
+                    <span className="extensions-hero-stat-value">{allExtensions.length}+</span>
                     <span className="extensions-hero-stat-label">Curated add-ons</span>
                   </span>
-                  <span className="extensions-hero-stat-item">
-                    <Users className="extensions-hero-stat-icon" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">100K+</span>
-                    <span className="extensions-hero-stat-label">Monthly Users</span>
-                  </span>
-                  <span className="extensions-hero-stat-item">
-                    <Star className="extensions-hero-stat-icon extensions-hero-stat-icon-gold" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">4.8/5</span>
-                    <span className="extensions-hero-stat-label">Average Rating</span>
-                  </span>
+                  {averageRating ? (
+                    <span className="extensions-hero-stat-item">
+                      <Star className="extensions-hero-stat-icon extensions-hero-stat-icon-gold" aria-hidden="true" />
+                      <span className="extensions-hero-stat-value">{averageRating.toFixed(1)}/5</span>
+                      <span className="extensions-hero-stat-label">Average Rating</span>
+                    </span>
+                  ) : null}
                 </div>
               </div>
 

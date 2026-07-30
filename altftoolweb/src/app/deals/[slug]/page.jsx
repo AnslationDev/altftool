@@ -296,6 +296,9 @@ export default async function DealDetailPage({ params }) {
                 <h2 id="reviews-heading" className="text-xl font-bold text-(--foreground)">
                   Questions &amp; reviews
                 </h2>
+                <p className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-medium text-(--muted-foreground)">
+                  Sample reviews shown for illustration — not verified customer submissions
+                </p>
 
                 <div className="afd-card mt-4">
                   <div className="afd-card-body">
@@ -336,10 +339,8 @@ export default async function DealDetailPage({ params }) {
                         <div className="afd-card-body">
                           <div className="flex flex-wrap items-center justify-between gap-2">
                             <div className="flex items-center gap-2">
-                              <span className="afd-badge afd-badge-free">
-                                <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                                Verified user
-                              </span>
+                              {/* No "Verified user" badge here: deals.js reviews are seed
+                                  content, so there is no verified purchaser to attest to. */}
                               <span className="text-sm font-bold text-(--foreground)">{review.author}</span>
                               <span className="text-xs text-(--muted-foreground)">· {review.role}</span>
                             </div>

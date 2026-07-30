@@ -124,21 +124,12 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Mini trust row */}
           <div className="mt-12 flex flex-wrap items-center justify-center gap-5 text-primary-foreground/80 text-sm">
             <div className="flex items-center gap-2">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-warning text-warning" />
-                ))}
-              </div>
-              <span className="font-semibold text-primary-foreground">4.9/5</span>
-              <span>from 3,200+ reviews</span>
+              <ShieldCheck className="w-4 h-4 text-secondary" /> Storm-Ready Materials
             </div>
             <div className="h-4 w-px bg-surface/25" />
-            <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-secondary" /> BBB A+ Accredited</div>
-            <div className="h-4 w-px bg-surface/25" />
-            <div className="flex items-center gap-2"><Award className="w-4 h-4 text-secondary" /> Licensed & Insured</div>
+            <div className="flex items-center gap-2"><Award className="w-4 h-4 text-secondary" /> Free In-Home Estimates</div>
           </div>
         </motion.div>
 

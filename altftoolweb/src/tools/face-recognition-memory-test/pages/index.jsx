@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import faceHeroMain from "../assets/face-hero-main.png";
-import faceReconBg from "../assets/face-recon-bg.png";
+import faceHeroMain from "../assets/face-hero-main.webp";
+import faceReconBg from "../assets/face-recon-bg.webp";
 import {
   ScanFace,
   Eye,

@@ -4,7 +4,7 @@ export function generateMetadata() {
   return createPageMetadata({
     title: "Privacy Policy",
     description:
-      "Read the AltFTool Privacy Policy to understand what data we collect, how we use and protect it, and the choices you have across our tools, extensions, and website.",
+      "The AltFTool privacy policy: what data our website, tools and extensions collect, how we use, share and protect it, and the choices and rights you have.",
     path: "/policypages/privacy",
   });
 }

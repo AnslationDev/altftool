@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "WAV, FLAC, MP3 aur OGG formats convert kare.",
+  "description": "Converts audio files between WAV, FLAC, MP3 and OGG formats.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

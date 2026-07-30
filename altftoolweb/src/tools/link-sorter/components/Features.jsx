@@ -8,9 +8,9 @@ const Features = () => {
         "Convert long and complex links into clean, short URLs within seconds for easy sharing.",
     },
     {
-      title: "Custom Short Links",
+      title: "Recent Links Kept Listed",
       description:
-        "Create personalized short URLs with custom aliases to match your brand or campaign.",
+        "The last five links you shortened stay on screen with their originals, so you can copy or reopen any of them without redoing the work.",
     },
     {
       title: "One-Click Copy",
@@ -18,9 +18,9 @@ const Features = () => {
         "Copy your shortened link instantly and share it across social media, emails, or messages.",
     },
     {
-      title: "Secure & Reliable",
+      title: "Automatic Fallback",
       description:
-        "Generate safe and secure short links with reliable redirection for seamless user experience.",
+        "Shortening goes through cleanuri.com first; if that request fails, the tool retries through TinyURL instead of leaving you with an error.",
     },
     {
       title: "Mobile-Friendly Design",
@@ -43,7 +43,7 @@ const Features = () => {
             Why Use Our Link Shortener?
           </h2>
           <p className="text-base sm:text-lg text-(--muted-foreground) max-w-2xl mx-auto leading-relaxed">
-            Shorten, customize, and share your URLs quickly and securely
+            Shorten and share your URLs quickly and securely
           </p>
         </div>
 

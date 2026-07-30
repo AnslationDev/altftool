@@ -20,6 +20,14 @@ const CSP_DIRECTIVES = [
   "frame-src 'self' https: blob:",
   "worker-src 'self' blob: https:",
   "manifest-src 'self'",
+  // report-uri is the legacy directive Firefox/Safari still rely on;
+  // report-to points at the modern Reporting API group registered via the
+  // Reporting-Endpoints header below. Both point at the same collector so
+  // every browser's violation reports land somewhere visible instead of
+  // only a visitor's own DevTools console — the prerequisite for ever
+  // safely graduating this policy from Report-Only to enforced.
+  "report-uri /api/csp-report",
+  "report-to csp-endpoint",
 ];
 
 export function createSecurityHeaders(app = "public") {
@@ -36,6 +44,13 @@ export function createSecurityHeaders(app = "public") {
     {
       key: "Content-Security-Policy-Report-Only",
       value: CSP_DIRECTIVES.join("; "),
+    },
+    {
+      // Registers the "csp-endpoint" group the CSP's report-to directive
+      // references. Modern (Reporting API) browsers deliver batched
+      // violation reports here; older ones use report-uri directly.
+      key: "Reporting-Endpoints",
+      value: 'csp-endpoint="/api/csp-report"',
     },
     {
       key: "Permissions-Policy",

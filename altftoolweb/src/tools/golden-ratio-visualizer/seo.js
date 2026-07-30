@@ -1,59 +1,67 @@
 const seo = {
-  title: "Golden Ratio Visualizer — Free Spiral & Grid Generator",
-  h1: "Golden Ratio Visualizer",
+  title: "Free Golden Ratio & Golden Spiral Generator",
+  h1: "Golden Ratio & Golden Spiral Generator",
   metaDescription:
-    "Overlay a golden spiral, Fibonacci grid, or phi-based composition guide on your photo — adjustable, exportable as PNG, free to use.",
+    "Generate a golden spiral, Fibonacci grid, phi grid or rule-of-thirds overlay, restyle the colours and rotation, then export it as a PNG. Free.",
   intro:
-    "The Golden Ratio Visualizer draws composition guides based on the golden ratio (φ ≈ 1.618) — a Fibonacci spiral, a phi grid, and related overlays — that you can position over a photo or blank canvas and export as a PNG. It's built for checking or planning a composition against the same proportion used in classical art, architecture, and modern photography guides.",
+    "The Golden Ratio Visualizer generates phi-based composition guides on its own canvas and exports them as a PNG. Five overlays can be shown together or one at a time: a golden spiral drawn as quarter-circle arcs across nested Fibonacci rectangles, the Fibonacci rectangle grid itself, a phi grid whose lines fall at roughly 38.2% and 61.8% of the width and height (1/φ), a rule-of-thirds grid for comparison, and corner-to-corner diagonal guides. Everything about how they look is adjustable — canvas size from 480 to 1400 px square, 4 to 16 Fibonacci tiles, stroke colour and width, fill shading, a solid or two-stop gradient background, solid, dashed or dotted lines, rotation from -180° to +180°, a clockwise or counter-clockwise spiral, and an optional slow rotation animation. There is no photo upload: the guides are generated artwork you export and then place over your own image in a design or photo editor.",
   useCases: [
-    "Checking whether a photo's composition already lines up with the golden ratio, or where to crop it so it does",
-    "Planning a logo, poster, or layout around phi-based proportions before finalizing the design",
-    "Teaching or demonstrating the golden ratio and Fibonacci spiral with a live, adjustable visual",
+    "Producing a golden spiral or Fibonacci grid PNG to add as a guide layer above your own artwork in Photoshop, GIMP, Figma or Canva",
+    "Putting the phi grid and the rule-of-thirds grid on the same canvas to decide which composition system you actually want to work to",
+    "Generating a clean phi-proportioned graphic — spiral, grid, or both — for a slide, worksheet or lesson about the golden ratio",
   ],
   benefits: [
     [
-      "Multiple overlay types",
-      "Switch between the golden spiral, phi grid, and related composition guides to compare which fits your image.",
+      "Five overlays, each toggleable",
+      "Golden spiral, Fibonacci rectangle grid, phi grid, rule of thirds and diagonal guides switch on and off independently, so you can stack them or compare them one at a time on the same canvas.",
     ],
     [
-      "Adjustable and reversible",
-      "Flip the spiral direction and reposition the overlay to match your subject instead of forcing your photo to fit a fixed guide.",
+      "Styled to match the work it sits over",
+      "Stroke colour and a 0.5–8 width slider, fill shading on the Fibonacci rectangles, solid, dashed or dotted lines, a solid or two-stop gradient background, and rotation anywhere from -180° to +180°.",
     ],
     [
-      "Export-ready PNG",
-      "Download the overlay as a PNG to bring into your design or photo-editing software.",
+      "Exports up to 1400 px square",
+      "The canvas slider runs 480–1400 px and Export PNG saves exactly what is on screen, so the guide stays sharp when you scale it over a large image.",
     ],
     [
-      "Free, no signup",
-      "Use it as many times as you like with no account or watermark.",
+      "Presets, random styling and reset",
+      "Classic Spiral, Photo Composition, Blueprint and Editorial Warm set the overlays and styling in one click; Random Style shuffles the colours, rotation and line style, and Reset Layout returns everything to defaults.",
     ],
   ],
   faqs: [
     [
-      "What is the golden ratio and why is it used in design?",
-      "The golden ratio is the proportion φ ≈ 1.618, where a line divided into two parts has the same ratio between the whole and the larger part as between the larger and smaller parts. Designers and photographers use it as a composition guide because it produces proportions many people find naturally balanced — the same ratio behind the Fibonacci spiral this tool overlays.",
+      "Can I upload my own photo and put the golden spiral on top of it?",
+      "Not in this tool — it draws the guides on its own canvas rather than on an uploaded image. Export the overlay as a PNG and add it as a layer above your photo in Photoshop, GIMP, Figma or Canva. Because the export keeps the background colour or gradient you chose, it is not transparent, so set that layer's blend mode to Screen or drop its opacity to see the picture through it.",
     ],
     [
-      "How do I use the golden ratio to compose a photo?",
-      "Overlay the spiral or grid on your image and position the main subject near where the spiral's focal point or the grid's intersections fall — similar to the rule of thirds, but based on phi (1.618) instead of even thirds.",
+      "What is the golden ratio, and how do I compose with it?",
+      "It is the proportion φ = (1 + √5) / 2 ≈ 1.618: split a line so that the whole is to the longer part as the longer part is to the shorter, and you have divided it at about 61.8%. The phi grid here draws exactly those lines — near 38.2% and 61.8% of the frame's width and height — and the usual advice is to place a subject, horizon or focal point on one of them, or where two of them cross.",
     ],
     [
-      "Can I export the golden ratio overlay as an image?",
-      "Yes — export the current overlay as a PNG to bring into Photoshop, Figma, or any design or photo-editing tool.",
+      "What is the difference between the golden spiral and the Fibonacci grid?",
+      "The Fibonacci grid is the set of nested rectangles whose side lengths follow the Fibonacci sequence; the Tiles slider sets how many are drawn, from 4 to 16. The golden spiral is the curve traced through those same rectangles as a quarter-circle arc in each one. They are two views of the same construction, and each has its own checkbox, so you can show the spiral alone, the rectangles alone, or both together.",
     ],
     [
-      "Is the golden ratio visualizer free?",
-      "Yes, completely free with no signup and no limit on exports.",
+      "How is the phi grid different from the rule of thirds?",
+      "Where the lines land. A rule-of-thirds grid divides the frame at 33.3% and 66.7%; the phi grid divides it at roughly 38.2% and 61.8%, so its lines sit closer to the centre. Both grids are separate checkboxes here, which is the quickest way to see how much difference that actually makes to a given composition.",
     ],
     [
-      "What's the difference between the golden spiral and a golden ratio grid?",
-      "The spiral traces a curve built from nested golden rectangles and is best for guiding the eye toward one focal point; the grid divides the frame into phi-proportioned sections and is closer to a golden-ratio version of a rule-of-thirds grid. Toggle between both to see which suits your composition.",
+      "What size and file format is the export?",
+      "A PNG at whatever canvas size you set — anywhere from 480 to 1400 px square — downloaded as golden-ratio- followed by a timestamp. The background colour or gradient you chose is painted into the file, so the PNG is opaque rather than transparent.",
+    ],
+    [
+      "Can I flip the spiral or turn the whole composition?",
+      "Yes. Open Advanced Features: Spiral Direction switches between clockwise and counter-clockwise, and the Rotation slider turns the entire overlay from -180° to +180°, so the spiral's tightest point can end up in any corner. Animate Rotation turns that into a slow continuous spin with its own speed control, and Export PNG captures whatever frame is on screen at the time.",
+    ],
+    [
+      "Is the golden ratio generator free?",
+      "Yes — free, no signup, no watermark and no cap on exports. The whole canvas is drawn in your browser, so nothing you make is uploaded anywhere.",
     ],
   ],
   steps: [
-    "Choose an overlay — golden spiral or phi grid — and load your reference image if you have one.",
-    "Adjust the spiral direction and position until it lines up with your subject.",
-    "Export the overlay as a PNG to use in your design or photo-editing software.",
+    "Tick the overlays you want — Golden Spiral, Fibonacci Grid, Phi Grid, Rule of Thirds, Diagonal Guides — or load a preset such as Classic Spiral or Photo Composition.",
+    "Set the canvas size and tile count, then style it: stroke colour and width, fill shading, background colour or gradient, and — under Advanced Features — line style, spiral direction and rotation.",
+    "Click Export PNG, then place the downloaded file over your own image as a guide layer in your design or photo editor.",
   ],
 };
 

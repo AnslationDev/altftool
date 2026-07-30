@@ -15,7 +15,7 @@ import {
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: 'Wattpad-Style Stories - Trending Reads & Fanfiction',
+    title: 'Wattpad-Style Stories - Reads & Fanfiction',
     description:
       'Browse Wattpad-style trending stories, romance, fantasy, fanfiction, and must-read books on AltFTool.',
     path: '/wattpad',

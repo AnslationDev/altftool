@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Pencil, X } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import { saveSectionHeading, subscribeSectionHeading } from "@/projects/apexboost/modules/service/apexboost.service";
 
 export default function SectionHeadingEditor({ sectionKey, defaultHeading }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,27 +17,29 @@ export default function SectionHeadingEditor({ sectionKey, defaultHeading }) {
   });
 
   useEffect(() => {
-    if (!isOpen) return;
-    const load = async () => {
+    if (!isOpen) return undefined;
+    let unsubscribe;
+    const load = () => {
       setIsLoading(true);
-      try {
-        const res = await fetch(`/api/apexboost/data?section=${sectionKey}`);
-        const json = await res.json();
-        if (json.success && json.data) {
+      unsubscribe = subscribeSectionHeading(
+        sectionKey,
+        (data) => {
           setForm({
-            eyebrow: json.data.eyebrow ?? defaultHeading?.eyebrow ?? "",
-            title: json.data.title ?? defaultHeading?.title ?? "",
-            highlight: json.data.highlight ?? defaultHeading?.highlight ?? "",
-            subtitle: json.data.subtitle ?? defaultHeading?.subtitle ?? "",
+            eyebrow: data?.eyebrow ?? defaultHeading?.eyebrow ?? "",
+            title: data?.title ?? defaultHeading?.title ?? "",
+            highlight: data?.highlight ?? defaultHeading?.highlight ?? "",
+            subtitle: data?.subtitle ?? defaultHeading?.subtitle ?? "",
           });
-        }
-      } catch (err) {
-        console.error("Failed to load section heading", err);
-      } finally {
-        setIsLoading(false);
-      }
+          setIsLoading(false);
+        },
+        (err) => {
+          console.error("Failed to load section heading", err);
+          setIsLoading(false);
+        },
+      );
     };
     load();
+    return () => unsubscribe && unsubscribe();
   }, [isOpen, sectionKey, defaultHeading]);
 
   // Close the modal on Escape while it is open.
@@ -50,20 +53,12 @@ export default function SectionHeadingEditor({ sectionKey, defaultHeading }) {
   }, [isOpen]);
 
   const handleSave = async () => {
-    if (isSaving) return; // guard against double-submit while the PUT is in flight
+    if (isSaving) return; // guard against double-submit while the write is in flight
     setIsSaving(true);
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: sectionKey, data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "Section heading saved!" });
-        setIsOpen(false);
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save section heading." });
-      }
+      await saveSectionHeading(sectionKey, form);
+      emitAlert({ type: "success", title: "Success", message: "Section heading saved!" });
+      setIsOpen(false);
     } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Error saving section heading." });
     } finally {

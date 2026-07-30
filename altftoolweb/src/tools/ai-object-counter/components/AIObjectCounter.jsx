@@ -258,7 +258,7 @@ export default function AIObjectCounter() {
       </style></head><body>
       <h1>AI Object Counter — Report</h1>
       <p class="sub">${result.total} objects · ${result.categories.length} categories · ${result.avg}% avg confidence · ${dims.w}×${dims.h}</p>
-      <img src="${processedImage}" />
+      <img src="${processedImage}" alt="Detected objects" />
       <table><thead><tr><th>Object</th><th>Count</th><th>Share</th><th>Avg Confidence</th></tr></thead><tbody>${rows}</tbody></table>
       <scr`+`ipt>window.onload=function(){setTimeout(function(){window.print()},300)}</scr`+`ipt>
       </body></html>`,

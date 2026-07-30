@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import modal from "../(assets)/Modal.png"
+import modal from "../(assets)/Modal.webp"
 import { Copy , X , Check} from "lucide-react";
 import { createPortal } from "react-dom";
 
@@ -95,9 +95,11 @@ return createPortal(
           </div>
         </div>
 
-        <h2 className=" text-lg sm:text-2xl font-bold mb-2">You’re all set!</h2>
+        <h2 className=" text-lg sm:text-2xl font-bold mb-2">
+          {copied ? "You’re all set!" : "Coupon ready"}
+        </h2>
         <p className="font-medium text-sm mb-4">
-          Coupon Applied Successfully
+          {copied ? "Coupon Applied Successfully" : "Copy the code below to use it at checkout"}
         </p>
 
         {/* COUPON */}

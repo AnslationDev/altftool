@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Web"],
   description: "Add custom watermarks to PDF files quickly and securely.",
   icon: "file-lock",
-  iconColor: "text-red-600",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

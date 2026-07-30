@@ -144,7 +144,7 @@ export function describeSlug(slug) {
         description: `Browse support settings and guides for ${device.name}.`,
       };
     }
-    return { title: `${base} – Manage Preferences and Get Help | AltFTool`, description: baseDescription };
+    return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
   }
 
   if (activeId.startsWith("util-")) {
@@ -186,5 +186,5 @@ export function describeSlug(slug) {
     };
   }
 
-  return { title: `${base} – Manage Preferences and Get Help | AltFTool`, description: baseDescription };
+  return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
 }

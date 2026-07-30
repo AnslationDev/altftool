@@ -51,6 +51,7 @@ export function Section2({ title, tagline, image, brands }) {
               name={brand.title}
               percentage={brand.cashback ?? brand.discount}
               prefix={brand.cashback ? "" : "Up to"}
+              href={brand.redirect || "#"}
             />
           ))}
         </div>

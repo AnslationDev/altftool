@@ -161,8 +161,8 @@ export function computeGstSplit({
   return {
     supplier: supplier.name,
     supplierCode: supplier.code,
-    destination: destination ? destination.name : "Outside India",
-    destinationCode: destination ? destination.code : null,
+    destination: supplyType === "export" ? "Outside India" : destination ? destination.name : "Outside India",
+    destinationCode: supplyType === "export" ? null : destination ? destination.code : null,
     supplyType,
     reason,
     zeroRated,

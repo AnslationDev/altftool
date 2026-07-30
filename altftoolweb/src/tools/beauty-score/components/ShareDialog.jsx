@@ -133,7 +133,7 @@ Created with ALTFTool Beauty Score ✨`;
               className="w-full flex items-center gap-3 p-4 rounded-2xl border border-border hover:bg-muted/20 transition cursor-pointer group"
             >
               <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20">
-                <Image className="text-purple-400" size={20} />
+                <Image className="text-purple-400" size={20} alt="" />
               </div>
               <div className="text-left flex-1">
                 <p className="text-sm font-bold text-foreground group-hover:text-purple-400 transition-colors">

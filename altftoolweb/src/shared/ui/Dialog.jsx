@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export const Dialog = ({ open, onClose, children }) => {
+export const Dialog = ({ open, onOpenChange, children }) => {
   // Drives the motion-safe entrance: mounted at "closed", flipped to "open"
   // on the next frame so the backdrop fades and the panel scales in.
   const [entered, setEntered] = useState(false);
@@ -17,7 +17,7 @@ export const Dialog = ({ open, onClose, children }) => {
     const frame = requestAnimationFrame(() => setEntered(true));
 
     const onKeyDown = (event) => {
-      if (event.key === "Escape") onClose?.();
+      if (event.key === "Escape") onOpenChange?.(false);
     };
 
     document.body.style.overflow = "hidden";
@@ -29,7 +29,7 @@ export const Dialog = ({ open, onClose, children }) => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [onClose, open]);
+  }, [onOpenChange, open]);
 
   if (!open) return null;
 
@@ -45,7 +45,7 @@ export const Dialog = ({ open, onClose, children }) => {
           "transition-opacity duration-200 ease-out motion-reduce:transition-none",
           entered ? "opacity-100" : "opacity-0",
         ].join(" ")}
-        onClick={onClose}
+        onClick={() => onOpenChange?.(false)}
       />
 
       <div

@@ -1,0 +1,82 @@
+const seo = {
+  title: "UTM Builder — Free Campaign URL Generator",
+  h1: "UTM Builder",
+  metaDescription:
+    "Free UTM builder: paste a URL, pick a preset and copy a campaign link with utm_source, utm_medium and utm_campaign set correctly. No signup.",
+  intro:
+    "This UTM builder turns any page address into a tracked campaign URL. It appends the five standard Google Analytics campaign parameters — utm_source, utm_medium, utm_campaign, utm_term and utm_content, plus an optional utm_id — and normalises every value as you type, converting spaces to underscores and stripping characters outside A–Z, 0–9, underscore and hyphen. The destination is checked with the browser's own URL parser and only http:// or https:// is accepted, so a link that builds is a link that works. Six one-click presets fill source and medium for Google Ads, Facebook, Instagram, LinkedIn, Twitter/X and email newsletters, the preview colour-codes the five standard parameters as they are added, and the builder itself works entirely in the page — no account, and nothing you type is uploaded.",
+  useCases: [
+    "You are scheduling the same landing page across four channels this week and need four links whose source and medium will not collide in the analytics report.",
+    "Last month's report shows 'Facebook', 'facebook' and 'FB' as three separate sources, and you want the next campaign tagged consistently from the start.",
+    "You are A/B testing two versions of a newsletter button and need utm_content to tell which one drove the clicks.",
+    "You are handing a link to a partner, affiliate or creator and want the campaign name to match the one already used in your reporting.",
+    "You are tagging a paid search landing page and want utm_term to carry the keyword you are bidding on.",
+  ],
+  benefits: [
+    [
+      "Values are cleaned before they reach the URL",
+      "Spaces become underscores and stray punctuation is removed, which prevents the broken or split rows that appear when a campaign name contains a space, ampersand or emoji.",
+    ],
+    [
+      "Existing query strings survive",
+      "Parameters are written with searchParams.set on a parsed URL, so a destination that already carries its own query keeps it and any repeated UTM key is replaced rather than duplicated.",
+    ],
+    [
+      "Presets encode the convention for you",
+      "Google Ads fills source=google, medium=cpc; Instagram, LinkedIn and Twitter/X fill medium=social; the newsletter preset fills source=newsletter, medium=email — the standard pairings, applied identically every time.",
+    ],
+  ],
+  faqs: [
+    [
+      "What is a UTM parameter?",
+      "A UTM parameter is a tag added to the end of a link — ?utm_source=newsletter&utm_medium=email — that tells your analytics where the click came from. The link opens exactly the same page; the extra values exist only for the report. Anyone can type them by hand, and a UTM builder simply keeps the spelling, spacing and punctuation identical every time.",
+    ],
+    [
+      "What are the five UTM parameters and why does each one matter?",
+      "utm_source names the specific origin (google, newsletter, partner_blog) and is what separates one referrer from another. utm_medium describes the kind of traffic (cpc, email, social) and is what lets you total all paid or all email traffic at once. utm_campaign groups every link belonging to one push, so a launch reads as a single line instead of twenty. utm_term records the paid keyword behind a click. utm_content separates two links inside the same email or ad — a header button from a footer button. Source, medium and campaign are the three worth filling every time; term and content matter when you need to compare inside one campaign. The builder also offers utm_id, an optional identifier for joining a link to a campaign record.",
+    ],
+    [
+      "How do I build a UTM tracking link?",
+      "Paste the destination URL, then click the preset for where the link is going — Google Ads, Facebook, Instagram, LinkedIn, Twitter/X or Email Newsletter — which fills utm_source and utm_medium and moves the cursor to the campaign name. Type the campaign, open Optional if you also need term, content or a campaign ID, and the tagged link appears in the preview panel as you type, colour-coded by parameter. Copy Tracking Link puts it on your clipboard.",
+    ],
+    [
+      "Is this UTM builder free?",
+      "Yes — no signup, no limit on how many links you build, and nothing to install. The builder runs entirely in your browser: it sends nothing you type anywhere and stores nothing, so the URLs you tag stay on your device.",
+    ],
+    [
+      "What if my destination URL already has a query string?",
+      "It survives. Parameters are written with searchParams.set on the parsed URL, so an existing ?ref=partner stays where it is and the UTM tags are appended after it. If the URL already carries a utm_ key, the value you enter replaces it instead of adding a second copy of the same parameter.",
+    ],
+    [
+      "Which characters are stripped from my UTM values?",
+      "Spaces become underscores, and anything outside letters, numbers, underscore and hyphen is removed before it reaches the link — so “Summer Sale 2026!” is written as Summer_Sale_2026. That is what stops one campaign splitting into several report rows because of a stray ampersand, comma or emoji. Case is left exactly as you typed it.",
+    ],
+    [
+      "Should UTM values be uppercase or lowercase?",
+      "Use lowercase consistently. Google Analytics treats utm_source=Facebook and utm_source=facebook as two different sources, which splits one campaign across multiple report rows — the builder strips punctuation and spaces for you, but it does not change case, so pick one convention and stick to it.",
+    ],
+    [
+      "Why is my URL rejected?",
+      "The base URL must parse as a valid absolute URL with an http: or https: scheme. Typing example.com alone fails and prompts you to add https:// at the start; other schemes such as ftp: or mailto: are not accepted.",
+    ],
+    [
+      "Where do these tags show up in analytics?",
+      "GA4 and any tool that follows the same convention read utm_source, utm_medium and utm_campaign into their source, medium and campaign dimensions, with utm_term and utm_content reported alongside them. The values are attributed to the visit that began with the tagged click, which is why tagged links belong on ads, emails and social posts rather than on internal navigation.",
+    ],
+    [
+      "Do UTM tags slow down or hurt SEO on the destination page?",
+      "They add query parameters, which can create duplicate URLs for the same page in a crawler's view. The usual practice is to keep tagged links to campaign traffic — ads, email and social posts — rather than internal navigation, and to let the page's canonical tag point at the clean URL.",
+    ],
+    [
+      "Does the UTM builder work on a phone?",
+      "Yes. It is one responsive form in a normal mobile browser: the platform presets are tap targets, the preview updates as you type, and Copy Tracking Link uses your phone's clipboard, so you can tag a link and paste it straight into a scheduled post.",
+    ],
+  ],
+  steps: [
+    "Paste the destination URL — it has to start with http:// or https://, and the builder tells you if it does not.",
+    "Click the preset for the channel you are posting to, or type utm_source and utm_medium yourself, then name the campaign.",
+    "Check the colour-coded preview, open Optional for term, content or a campaign ID, and copy the finished tracking link.",
+  ],
+};
+
+export default seo;

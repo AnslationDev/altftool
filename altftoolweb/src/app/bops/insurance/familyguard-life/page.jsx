@@ -13,6 +13,7 @@ import {
   FileText,
   ArrowRight,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 
 const QUOTE_URL = "https://example.com/quote/familyguard-life";
 const PHONE_TEL = "tel:+18665550312";
@@ -140,6 +141,8 @@ export default function FamilyGuardLifePage() {
       </header>
 
       <main id="familyguard-top">
+        <DemoBrandNotice brand="FamilyGuard Life" />
+
         {/* Hero */}
         <section className="familyguard-hero">
           <div className="familyguard-wrap familyguard-hero-grid">

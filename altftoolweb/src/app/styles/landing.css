@@ -421,6 +421,15 @@
   transform: translateY(-2px);
 }
 
+/* Selected category card (AppsListingClient): the JSX applies a
+   border/bg Tailwind utility via isActive, but a single utility class
+   can't out-specificity this compound selector, so it silently loses the
+   cascade. aria-pressed is already set correctly by the same button. */
+.altf-home .home-premium-card[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--primary) 60%, var(--home-border));
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+
 .altf-home .home-premium-card::after {
   position: absolute;
   inset: 0;

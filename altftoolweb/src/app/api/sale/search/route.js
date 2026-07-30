@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, searchParam } from "@altftool/core/http";
 import { runLocationSearchFlow } from "@/lib/sale/searchFlow";
-import { serializeSaleError } from "@/lib/sale/errors";
+import { serializeSaleError, friendlyMessageFor } from "@/lib/sale/errors";
 
 export const runtime = "nodejs";
 
@@ -40,6 +40,7 @@ export async function GET(req) {
     return NextResponse.json(result);
   } catch (error) {
     const { message, status, code } = serializeSaleError(error);
-    return NextResponse.json({ error: message, code }, { status });
+    console.error("[sale/search] upstream failure:", message);
+    return NextResponse.json({ error: friendlyMessageFor(code), code }, { status });
   }
 }

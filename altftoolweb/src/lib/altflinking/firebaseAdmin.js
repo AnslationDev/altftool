@@ -56,6 +56,3 @@ export function initAdmin() {
   }
 }
 
-export function adminDb()   { return _db; }
-export function adminAuth() { return _auth; }
-export function isReady()   { return _ready; }

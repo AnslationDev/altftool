@@ -1,5 +1,7 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
+import AltfLauncher from "@/app/_altf/AltfLauncher";
+import "@/app/_altf/altf-brand.css";
 export async function generateMetadata() {
   return createPageMetadata({
   title: "AltPinterest - Visual Discovery Board",
@@ -10,5 +12,10 @@ export async function generateMetadata() {
 }
 
 export default function AltPinterestLayout({ children }) {
-  return children;
+  return (
+    <>
+      {children}
+      <AltfLauncher />
+    </>
+  );
 }

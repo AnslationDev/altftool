@@ -103,7 +103,7 @@ export default function NumberMemory({ onComplete, beep }) {
           <p className="text-sm text-[var(--secondary-foreground)] mt-2">Correct! Loading next level...</p>
         </div>
       )}
-      <StatsChart data={DIST} xLabel="Level (digit length) reached" title="Population Score Distribution" subtitle="How 200,000+ users scored on this test" />
+      <StatsChart data={DIST} xLabel="Level (digit length) reached" title="Population Score Distribution" subtitle="Illustrative example distribution, not measured from real users" />
       <AboutCard {...ABOUT} />
     </div>
   );

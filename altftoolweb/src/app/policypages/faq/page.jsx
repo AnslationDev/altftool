@@ -2,6 +2,8 @@ import Link from "next/link";
 import {
   ChevronRight,
 } from "lucide-react";
+import JsonLd from "@/platform/seo/JsonLd";
+import { createFaqJsonLd } from "@/platform/seo/generateMetadata";
 import "../../styles/landing.css";
 import "./faq.css";
 
@@ -68,9 +70,18 @@ const faqGroups = [
   },
 ];
 
+// Flattened from the same groups the page renders. Every answer ships inside a
+// native <details>, which is present in the server HTML regardless of open
+// state, so the markup describes copy a crawler can already read.
+const faqItems = faqGroups.flatMap((group) => group.items);
+
 export default function FaqPage() {
   return (
     <main className="altf-home altf-faq">
+      <JsonLd
+        id="policy-faq-schema"
+        data={createFaqJsonLd({ path: "/policypages/faq", questions: faqItems })}
+      />
       <section className="faq-hero-banner">
         <div className="faq-hero-overlay" aria-hidden="true" />
         <div className="faq-hero-content">

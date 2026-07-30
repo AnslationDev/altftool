@@ -41,13 +41,9 @@ export default function Footer() {
             </a>
           <div className="flex items-center gap-6">
             {["Privacy Policy", "Terms of Service", "Sitemap"].map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="text-[#6b6b6b] hover:text-[#1a1a1a] text-sm transition-colors"
-              >
+              <span key={l} className="text-[#6b6b6b] text-sm">
                 {l}
-              </a>
+              </span>
             ))}
           </div>
         </div>

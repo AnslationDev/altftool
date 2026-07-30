@@ -17,6 +17,7 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./shieldsure-auto.css";
 
 const QUOTE_URL = "https://example.com/quote/shieldsure-auto";
@@ -152,6 +153,8 @@ export default function ShieldSureAutoPage() {
       </header>
 
       <main id="shieldsure-top">
+        <DemoBrandNotice brand="ShieldSure Auto" />
+
         {/* ---------- Hero ---------- */}
         <section className="shieldsure-hero">
           <div className="shieldsure-wrap shieldsure-hero-grid">

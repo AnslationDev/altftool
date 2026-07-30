@@ -1,7 +1,5 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- previews are local blob/data URLs whose rendered dimensions match the coordinate system */
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,

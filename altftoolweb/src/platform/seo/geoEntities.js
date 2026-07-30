@@ -230,7 +230,7 @@ export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
     chain.length > 1 ? `${location.name}, ${chain[chain.length - 1].name}` : location.name;
 
   return createPageMetadata({
-    title: overrides.title || `${siteConfig.name} ${location.name} — Free Online Tools & Utilities`,
+    title: overrides.title || `${siteConfig.name} ${location.name} — Free Online Tools`,
     description:
       overrides.description ||
       `Use ${siteConfig.name} from ${context}: 100+ free browser-based tools — converters, calculators, PDF, image, developer and AI utilities. No sign-up, works on any device.`,

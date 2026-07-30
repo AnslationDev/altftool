@@ -20,6 +20,14 @@ const ContactForm = () => {
 
   const onSubmit = async (data) => {
     await new Promise(r => setTimeout(r, 700));
+    try {
+      const stored = window.localStorage.getItem('pestx_contact_messages');
+      const messages = stored ? JSON.parse(stored) : [];
+      messages.push({ ...data, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem('pestx_contact_messages', JSON.stringify(messages));
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
     setSubmitted(true);
     setTimeout(() => {
       reset();
@@ -34,7 +42,7 @@ const ContactForm = () => {
           <Send size={30} />
         </div>
         <div className="text-2xl font-semibold mb-2">Thank you!</div>
-        <p className="text-[#374151]">We've received your message and will reply within a few hours.</p>
+        <p className="text-[#374151]">Saved on this device — no message was sent. For the fastest response, please call us directly.</p>
       </div>
     );
   }

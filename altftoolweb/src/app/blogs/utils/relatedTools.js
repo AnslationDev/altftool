@@ -1,6 +1,20 @@
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 
 const DIRECT_HINTS = [
+  // Search Console, 7-day export: "utm builder"-class queries drew 2,198
+  // impressions and 0 clicks, all of them landing on
+  // /blogs/best-utm-builder-tools-to-track-marketing-campaigns (2,523 imp,
+  // 1 click, pos 21.6) while /tools/all/utm-link-builder recorded no
+  // impressions at all. The queries are tool intent, so pin the owned tool to
+  // the top of that post's rail — relatedTools[0] is what BlogArticleSnapshot
+  // promotes above the fold.
+  { terms: ["utm"], slugs: ["utm-link-builder"] },
+  // Same shape: word-count queries drew 296 impressions and 0 clicks against
+  // /blogs/the-best-real-time-word-counter-tools-you-should-try-today
+  // (484 imp, 0 clicks, pos 13.7); /tools/all/word-character-counter had no
+  // impressions of its own.
+  { terms: ["word", "counter"], slugs: ["word-character-counter"] },
+  { terms: ["word", "count"], slugs: ["word-character-counter"] },
   { terms: ["youtube", "thumbnail"], slugs: ["youtube-thumbnail-downloader", "youtube-video-analyzer"] },
   { terms: ["facebook", "video"], slugs: ["facebook-video-downloader"] },
   { terms: ["image", "resize"], slugs: ["image-resizer", "image-compressor", "image-cropper"] },

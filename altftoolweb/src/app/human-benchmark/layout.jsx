@@ -2,7 +2,7 @@ import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/li
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const metadata = createPageMetadata({
-  title: "AltF Reflex Lab | Reaction, Memory and Typing Tests",
+  title: "AltF Reflex Lab | Reaction, Memory & Typing",
   description: "Practice reaction time, memory, typing, aim, and visual sequence challenges with private local score history.",
   path: "/human-benchmark",
   keywords: ["reaction time test", "memory test", "typing test", "human benchmark"],

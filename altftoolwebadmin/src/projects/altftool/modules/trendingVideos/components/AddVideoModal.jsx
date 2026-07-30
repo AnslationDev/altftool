@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { storage } from "@/lib/firebaseStorage";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth } from "@/lib/firebaseAuth";
+import { createLocalAdminUser, hasLocalAdminSession } from "@/lib/localAdminSession";
 import { emitAlert } from "@/lib/alertBus";
 import { createVideo, updateVideo } from "../service/trendingVideos.service";
 import {
@@ -373,6 +375,14 @@ function extractYouTubeId(url) {
   return null;
 }
 
+async function getAdminToken() {
+  if (hasLocalAdminSession()) {
+    return createLocalAdminUser().getIdToken();
+  }
+
+  return auth.currentUser?.getIdToken?.(true) || "";
+}
+
 /**
  * Fetches YouTube video metadata via a backend proxy route.
  * Expects your backend to expose: GET /api/youtube/meta?videoId=VIDEO_ID
@@ -382,7 +392,9 @@ function extractYouTubeId(url) {
  */
 async function fetchYouTubeMeta(videoId) {
   try {
-    const res = await fetch(`/api/youtube/meta?videoId=${encodeURIComponent(videoId)}`);
+    const token = await getAdminToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+    const res = await fetch(`/api/youtube/meta?videoId=${encodeURIComponent(videoId)}`, { headers });
     if (!res.ok) return null;
     const data = await res.json();
     return data ?? null;

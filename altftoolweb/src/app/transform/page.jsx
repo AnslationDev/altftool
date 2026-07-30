@@ -2,6 +2,12 @@ import Link from "next/link";
 import { ArrowRight, Wand2 } from "lucide-react";
 import { SECTION, getToolsByCategory, getToolCount } from "./_lib/manifest";
 import ToolCard from "./_components/ToolCard";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 const TRANSFORM_OG_IMAGE = "/assets/og-default.png";
 
@@ -36,6 +42,35 @@ export default function TransformIndexPage() {
   const total = getToolCount();
 
   return (
+    <>
+      {/* Every /transform/<slug> page carries a SoftwareApplication and a
+          breadcrumb, but the hub that lists them all described nothing — so the
+          section had no entity tying the converters together. The ItemList is
+          the rendered grid, flattened in the same category order. */}
+      <JsonLd
+        id="transform-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/transform",
+            name: SECTION.title,
+            description: SECTION.description,
+          }),
+          createItemListJsonLd({
+            path: "/transform",
+            name: "AltFTool format & code converters",
+            items: groups.flatMap((group) =>
+              group.tools.map((tool) => ({
+                name: tool.title,
+                path: `/transform/${tool.slug}`,
+              })),
+            ),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Transform", path: "/transform" },
+          ]),
+        ]}
+      />
     <div className="[font-family:var(--font-ibm-plex-sans,inherit)]">
       {/* hero */}
       <header className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-9 dark:border-slate-800 dark:bg-slate-900">
@@ -90,6 +125,7 @@ export default function TransformIndexPage() {
         </Link>
       </footer>
     </div>
+    </>
   );
 }
 

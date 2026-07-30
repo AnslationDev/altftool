@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireServerEnv } from "@altftool/core/env";
 import { enforceRateLimit, fetchJson, jsonResponse, routeError, searchParam } from "@altftool/core/http";
 import { SERVER_ENV } from "@altftool/core/services";
+import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
 
 const VIDEO_ID_PATTERN = /^[a-zA-Z0-9_-]{6,32}$/;
 
@@ -23,6 +24,12 @@ export async function GET(request) {
       windowMs: 60000,
     });
     if (limited) return limited;
+
+    try {
+      await verifyActiveAdmin(request);
+    } catch {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const videoId = searchParam(request, "videoId");
     if (!VIDEO_ID_PATTERN.test(videoId)) {

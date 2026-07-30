@@ -129,7 +129,11 @@ export default function ToolHome() {
             </div>
           )}
 
-          <button onClick={pickColor} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-(--primary) px-6 py-4 text-lg font-bold text-white shadow-lg transition-all hover:opacity-90 active:scale-[0.98]">
+          <button
+            onClick={pickColor}
+            disabled={(mode === "mood" && !selectedMood) || (mode === "zodiac" && !selectedZodiac)}
+            className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-(--primary) px-6 py-4 text-lg font-bold text-white shadow-lg transition-all hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:opacity-50 disabled:active:scale-100"
+          >
             <RefreshCw className="h-5 w-5" /> Pick My Lucky Color
           </button>
         </div>

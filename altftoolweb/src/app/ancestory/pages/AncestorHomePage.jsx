@@ -54,7 +54,12 @@ function AncestorCuriositySection() {
               />
             </div>
             <div className="text-center">
-              <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+              <button
+                type="button"
+                disabled
+                title="Coming soon"
+                className="bg-primary/50 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md transition-all opacity-60 cursor-not-allowed"
+              >
                 Get a free trial
               </button>
             </div>
@@ -70,7 +75,12 @@ function AncestorCuriositySection() {
               />
             </div>
             <div className="text-center">
-              <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md hover:shadow-lg transition-all active:scale-95">
+              <button
+                type="button"
+                disabled
+                title="Coming soon"
+                className="bg-primary/50 text-primary-foreground font-bold px-8 py-3 rounded-full shadow-md transition-all opacity-60 cursor-not-allowed"
+              >
                 Order altfestoryDNA
               </button>
             </div>

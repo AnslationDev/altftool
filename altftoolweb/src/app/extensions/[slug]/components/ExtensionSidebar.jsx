@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Layers, Tag, CalendarClock, Monitor, Key, ShieldCheck, FileCheck2, Shield } from "lucide-react";
+import { User, Layers, Tag, CalendarClock, Monitor, Key, FileCheck2, Shield } from "lucide-react";
 
 function formatRenderableValue(val, fallback = "") {
   if (val === null || val === undefined) return fallback;
@@ -46,12 +46,12 @@ export default function ExtensionSidebar({ extension }) {
   const metadataItems = [
     {
       label: "Developer",
-      value: formatRenderableValue(extension?.developer, "AltFTool Team"),
+      value: formatRenderableValue(extension?.developer),
       icon: User,
     },
     {
       label: "Version",
-      value: formatRenderableValue(extension?.version, "v1.2.0"),
+      value: formatRenderableValue(extension?.version),
       icon: Layers,
       isMono: true,
     },
@@ -72,14 +72,14 @@ export default function ExtensionSidebar({ extension }) {
     },
     {
       label: "License",
-      value: formatRenderableValue(extension?.license, "MIT License"),
+      value: formatRenderableValue(extension?.license),
       icon: FileCheck2,
     },
-  ];
+  ].filter((item) => item.value);
 
   const permissions = extension?.permissions && Array.isArray(extension.permissions) && extension.permissions.length > 0
     ? extension.permissions
-    : ["activeTab", "storage", "contextMenus"];
+    : [];
 
   return (
     <aside className="sticky top-20 md:top-24 space-y-6">
@@ -132,19 +132,6 @@ export default function ExtensionSidebar({ extension }) {
             </div>
           </div>
         )}
-
-        {/* Security Banner */}
-        <div className="mt-6 pt-5 border-t border-[var(--border)]">
-          <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-[#0D9488] shrink-0 mt-0.5" />
-            <div>
-              <p className="text-xs font-bold text-[var(--foreground)]">Security & Privacy Verified</p>
-              <p className="text-[11px] text-[var(--muted-foreground)] mt-0.5 leading-normal">
-                Does not collect personal identifiable information or sell browsing history.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </aside>
   );

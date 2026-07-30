@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Calculator, Copy } from "lucide-react";
+import { Calculator, Copy, RotateCcw } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 /**
@@ -33,6 +33,8 @@ export default function CalcTool({ title, description, note, fields = [], comput
 
   const setField = (key, value) => setValues((prev) => ({ ...prev, [key]: value }));
 
+  const reset = () => setValues(initial);
+
   const copy = async () => {
     const summary = [
       title,
@@ -63,6 +65,17 @@ export default function CalcTool({ title, description, note, fields = [], comput
 
         <section className="mt-4 grid gap-4 md:grid-cols-[1fr_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm font-semibold">Inputs</span>
+              <button
+                type="button"
+                onClick={reset}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--muted-foreground)] hover:text-[var(--primary)]"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                Reset
+              </button>
+            </div>
             <div className="grid gap-4">
               {fields.map((f) => (
                 <label key={f.key} className="block">

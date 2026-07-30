@@ -101,7 +101,6 @@ export default function BubbleShooterGame({ isPreview = false }) {
             );
             engineRef.current = engine;
             engine.start();
-            // eslint-disable-next-line
             setGameState("PLAYING"); // Show game immediately
             return () => {
                 engine.stop();

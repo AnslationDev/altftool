@@ -81,7 +81,3 @@ export async function getActiveRedirects() {
   }
   return cache.redirects;
 }
-
-export function __resetRedirectCache() {
-  cache = { at: 0, redirects: [] };
-}

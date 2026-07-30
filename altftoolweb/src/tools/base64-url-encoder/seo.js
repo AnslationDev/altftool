@@ -1,8 +1,8 @@
 const seo = {
-  title: "Base64 URL Encoder — Free URL-Safe base64url Tool",
-  h1: "Base64 URL Encoder",
+  title: "Base64 URL Encoder — Free URL-Safe base64url",
+  h1: "Base64 URL Encoder — URL-Safe base64url",
   metaDescription:
-    "Convert text, standard Base64 or hex bytes to URL-safe base64url in your browser — padding toggle, plus URL and 4 KB cookie size checks. Free, no signup.",
+    "Encode text, a URL, standard Base64 or hex bytes to URL-safe base64url in your browser — padding toggle, plus URL and cookie size checks. Free.",
   intro:
     "Base64 URL Encoder converts plain text, standard Base64 or raw hex bytes into base64url — the URL and filename safe alphabet defined in RFC 4648 §5. Text is read as UTF-8 through the browser's own TextEncoder, the bytes are encoded with the native btoa in 32,768-byte chunks, then value 62 is rewritten from `+` to `-` and value 63 from `/` to `_`, with the trailing `=` padding dropped unless you choose to keep it. Each result is measured against the limits that actually break requests — roughly 2,000 characters for interoperable URLs, Apache's 8,190-character LimitRequestLine, and the 4,096-byte per-cookie size in RFC 6265 §6.1. The whole conversion runs on your device; nothing is uploaded.",
   useCases: [
@@ -56,6 +56,10 @@ const seo = {
     [
       "Can this tool decode base64url back to text?",
       "Not to plain text — it is an encoder. It can, however, normalise in the other direction: set \"Interpret input as\" to Standard Base64 and paste a base64url string, and it folds `-` back to `+`, `_` back to `/` and restores the `=` padding, so \"Copy standard Base64\" gives you the canonical form. For turning that back into readable text, use a Base64 decoder.",
+    ],
+    [
+      "How do I Base64-encode a URL itself?",
+      "Leave \"Interpret input as\" on Plain text (UTF-8) and paste the whole address — https://example.com/path?a=1 and all. The URL is just text, so it is read as UTF-8 bytes and encoded like any other string, and because the output is base64url it can then be dropped into a query parameter, a path segment or a filename without any percent-escaping. That is the difference from URL-encoding: percent-encoding escapes the characters a URL cannot carry, while this replaces the whole string with an alphabet a URL can carry as-is.",
     ],
     [
       "Is the Base64 URL Encoder free, and is my input uploaded anywhere?",

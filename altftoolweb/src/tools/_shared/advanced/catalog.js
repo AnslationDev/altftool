@@ -19,7 +19,7 @@ export const advancedCatalog = {
     "id": 158,
     "slug": "silence-filler-word-cutter",
     "name": "Silence & Filler-Word Cutter",
-    "description": "Long silences aur selected filler segments remove kare.",
+    "description": "Removes long silences from an audio recording using an adjustable loudness threshold.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },
@@ -27,7 +27,7 @@ export const advancedCatalog = {
     "id": 159,
     "slug": "audio-pitch-tempo-shifter",
     "name": "Audio Pitch & Tempo Shifter",
-    "description": "Pitch aur tempo independently control kare.",
+    "description": "Shifts an audio file's pitch or tempo independently, without affecting the other.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },
@@ -35,7 +35,7 @@ export const advancedCatalog = {
     "id": 160,
     "slug": "lossless-audio-transcoder",
     "name": "Lossless Audio Transcoder",
-    "description": "WAV, FLAC, MP3 aur OGG formats convert kare.",
+    "description": "Converts audio files between WAV, FLAC, MP3 and OGG formats.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },
@@ -43,7 +43,7 @@ export const advancedCatalog = {
     "id": 161,
     "slug": "wav-spectrogram-analyzer",
     "name": "WAV Spectrogram Analyzer",
-    "description": "FFT spectrogram, clipping, hum aur frequency distribution visualize kare.",
+    "description": "Renders an audio file as an FFT spectrogram to visualize clipping, hum and frequency distribution.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },
@@ -51,7 +51,7 @@ export const advancedCatalog = {
     "id": 162,
     "slug": "video-stabilizer",
     "name": "Video Stabilizer",
-    "description": "Shaky footage ko frame-motion analysis se smooth kare.",
+    "description": "Smooths shaky footage using frame-motion analysis.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },

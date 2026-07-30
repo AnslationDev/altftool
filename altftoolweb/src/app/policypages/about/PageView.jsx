@@ -25,13 +25,16 @@ import {
   UsersRound,
   Zap,
 } from "lucide-react";
+import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import "../../styles/landing.css";
 import "./about.css";
 
+const toolCount = Object.keys(toolMetaMap).length;
+
 const platformStats = [
-  { value: "100K+", label: "Monthly Users", icon: UsersRound },
-  { value: "5,000+", label: "Curated Tools", icon: Layers3 },
-  { value: "4.9/5", label: "User Rating", icon: Star },
+  { value: "Growing", label: "User Community", icon: UsersRound },
+  { value: `${toolCount.toLocaleString()}+`, label: "Curated Tools", icon: Layers3 },
+  { value: "Trusted", label: "By Our Users", icon: Star },
 ];
 
 const floatingCategories = [
@@ -265,7 +268,7 @@ export default function About() {
                   </span>
                 ))}
               </span>
-              Trusted by 100K+ users
+              Trusted by a growing community
             </div>
             {floatingCategories.map((item) => {
               const Icon = item.icon;
@@ -457,6 +460,9 @@ export default function About() {
               Community Reviews
             </div>
             <h2>What Our Community Says</h2>
+            <p className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-medium text-(--muted-foreground)">
+              Sample testimonials shown for illustration — not verified customer submissions
+            </p>
           </div>
 
           <div className="about-testimonial-slider" aria-label="Community review slider">

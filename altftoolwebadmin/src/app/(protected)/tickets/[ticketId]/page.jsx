@@ -644,8 +644,7 @@ export default function AdminTicketDetailPage() {
                     type="button"
                     onClick={() => setShowAssign((v) => !v)}
                     aria-expanded={showAssign}
-                    aria-haspopup="menu"
-                    className="flex w-full items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
+                    className="flex min-h-11 w-full items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)]"
                   >
                     <span className="flex items-center gap-1.5">
                       <UserCheck className="h-3.5 w-3.5 text-[var(--muted)]" aria-hidden="true" />
@@ -659,11 +658,13 @@ export default function AdminTicketDetailPage() {
                     />
                   </button>
 
-                  {/* Deliberately NOT role="menu": that role commits to the full
-                      menu keyboard model (arrow keys, Escape, roving tabindex,
-                      focus return). Without it a screen reader announces a menu
-                      whose keys do not behave like one — strictly worse than the
-                      plain, Tab-navigable buttons this replaced. */}
+                  {/* Deliberately NOT role="menu" (and the toggle button above
+                      deliberately has no aria-haspopup="menu" either): that role
+                      commits to the full menu keyboard model (arrow keys, Escape,
+                      roving tabindex, focus return). Without it a screen reader
+                      announces a menu whose keys do not behave like one —
+                      strictly worse than the plain, Tab-navigable buttons this
+                      replaced. */}
                   {showAssign && (
                     <div
                       className="absolute left-0 right-0 top-10 z-20 max-h-48 overflow-hidden overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-lg"

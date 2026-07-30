@@ -3,17 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, PlusCircle, Tag, LucideCreditCard, Video } from "lucide-react";
-// import CreditCardCateogryModal from "./CreditCardCateogryModal";
-// import CreditCardBenefitModal from "./CreditCardBenefitModal";
-
-// import CategoryModal from "../components/LeadTreeCateogryModal";
+import { LayoutDashboard, FileText, PlusCircle, Tag, Video } from "lucide-react";
 
 export default function ExpertVideoTopBar() {
 
   const pathname = usePathname();
-  const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [showCardBenefitModal, setCardBenefitModal] = useState(false)
   const [route, setRoute] = useState("overview");
 
   const menuItems = [
@@ -92,14 +86,6 @@ export default function ExpertVideoTopBar() {
         </div>
 
       </header>
-
-      {showCategoryModal && (
-
-        <CreditCardCateogryModal
-          onClose={() => setShowCategoryModal(false)}
-        />
-
-      )}
 
 
     </>

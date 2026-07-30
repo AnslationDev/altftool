@@ -4,6 +4,8 @@
  * PATCH /api/altflinking/admin/orders  — update any order status
  */
 
+import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
@@ -17,6 +19,13 @@ async function assertAdmin(request) {
 }
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:admin-orders",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { error } = await assertAdmin(request);
   if (error) return err(error, error === "Unauthorized" ? 401 : 403);
 
@@ -51,11 +60,18 @@ export async function GET(request) {
     return ok(orders);
   } catch (e) {
     console.error("[GET /admin/orders]", e);
-    return err("Failed to fetch orders: " + e.message, 500);
+    return err("Failed to fetch orders", 500);
   }
 }
 
 export async function PATCH(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 30,
+    scope: "altflinking:admin-orders",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await assertAdmin(request);
   if (error) return err(error, error === "Unauthorized" ? 401 : 403);
 
@@ -109,6 +125,6 @@ export async function PATCH(request) {
     return ok({ id, status, adminNotes });
   } catch (e) {
     console.error("[PATCH /admin/orders]", e);
-    return err("Failed to update order: " + e.message, 500);
+    return err("Failed to update order", 500);
   }
 }

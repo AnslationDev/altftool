@@ -3,9 +3,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 
-import t1 from "../(assets)/trusted1.png";
-import t2 from "../(assets)/privacy.png";
-import t3 from "../(assets)/reviews.png";
+import t1 from "../(assets)/trusted1.webp";
+import t2 from "../(assets)/privacy.webp";
+import t3 from "../(assets)/reviews.webp";
 import { ShieldCheck, LockKeyhole, BadgeCheck } from "lucide-react";
 
 const cards = [

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, CircleDollarSign, Star } from "lucide-react";
+import { ArrowRight, CheckCircle2, CircleDollarSign } from "lucide-react";
 import HnHeader from "./HnHeader";
 import HnTrustBar from "./HnTrustBar";
 import HnEmailCapture from "./HnEmailCapture";
@@ -384,43 +384,6 @@ export default async function HnVerticalPage({ slug }) {
             </div>
           </section>
         )}
-
-        {/* ---------- social proof ---------- */}
-        <section className="hn-section">
-          <div className="hn-wrap">
-            <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Homeowners like you</p>
-              <h2 className="hn-h2">Trusted for {name.toLowerCase()} projects across the U.S.</h2>
-            </HnReveal>
-
-            <div className="hn-testimonials">
-              {[
-                {
-                  quote: `Compared three ${name.toLowerCase()} quotes in a day and picked the one that actually explained the work. Painless.`,
-                  who: "Sarah K. — Ohio",
-                },
-                {
-                  quote: "The guide told me exactly what drives the price, so I knew the quote I got was fair before I said yes.",
-                  who: "Marcus T. — Texas",
-                },
-                {
-                  quote: "Free to use, no pushy calls, and the pro we hired showed up when they said they would.",
-                  who: "Linda R. — Florida",
-                },
-              ].map((t, index) => (
-                <HnReveal key={t.who} className="hn-testimonial" delay={index * 60}>
-                  <span className="hn-testimonial-stars" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} size={13} strokeWidth={0} fill="currentColor" />
-                    ))}
-                  </span>
-                  <p>&ldquo;{t.quote}&rdquo;</p>
-                  <footer>{t.who}</footer>
-                </HnReveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ---------- faq ---------- */}
         {faqs.length > 0 && (

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, DollarSign } from "lucide-react";
+import { emitAlert } from "@/lib/alertBus";
+import { subscribePricingPlans, createPricingPlan, updatePricingPlan, deletePricingPlan } from "../service/apexboost.service";
 
 export default function PricingPage() {
   const [pricingPlans, setPricingPlans] = useState([]);
@@ -9,13 +11,12 @@ export default function PricingPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ id: "", name: "", tagline: "", monthly: 0, yearly: 0, popular: false, features: [""], cta: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=pricing');
-    const json = await res.json();
-    if (json.success) setPricingPlans(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribePricingPlans(setPricingPlans, () => {
+      emitAlert({ type: "error", title: "Error", message: "Failed to load pricing plans." });
+    });
+    return () => unsubscribe?.();
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -25,34 +26,32 @@ export default function PricingPage() {
 
   const openEdit = (plan) => {
     setEditingItem(plan);
-    setForm({ ...plan, features: [...plan.features] });
+    setForm({ ...plan, id: plan.planSlug || "", features: [...(plan.features || [])] });
     setIsModalOpen(true);
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = pricingPlans.map(t => t.id === editingItem.id ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...pricingPlans, { ...form, id: form.id || `plan-${Date.now()}` }];
+    try {
+      if (editingItem) {
+        await updatePricingPlan(editingItem.id, { ...editingItem, ...form });
+      } else {
+        const nextOrder = pricingPlans.length ? Math.max(...pricingPlans.map(p => Number(p.order) || 0)) + 1 : 0;
+        await createPricingPlan({ ...form, id: form.id || `plan-${Date.now()}`, order: nextOrder });
+      }
+      setIsModalOpen(false);
+      emitAlert({ type: "success", title: "Success", message: "Pricing plan saved successfully!" });
+    } catch {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save pricing plan." });
     }
-    await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'pricing', data: updated }),
-    });
-    setPricingPlans(updated);
-    setIsModalOpen(false);
   };
 
   const handleDelete = async (item) => {
-    const updated = pricingPlans.filter(t => t !== item);
-    await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'pricing', data: updated }),
-    });
-    setPricingPlans(updated);
+    try {
+      await deletePricingPlan(item.id);
+      emitAlert({ type: "success", title: "Success", message: "Pricing plan deleted successfully!" });
+    } catch {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete pricing plan." });
+    }
   };
 
   const addFeature = () => setForm({...form, features: [...form.features, ""]});

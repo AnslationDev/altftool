@@ -62,22 +62,22 @@ export const windowVideos = [
     windowTitle: "Kiti's Window",
     timeLabel: "11:37",
     dateLabel: "APRIL 2026",
-    category: "Snow",
+    category: "Rain",
     description: "Cozy fall rain pattering against the pane of an attic window."
   },
   {
-    id: 6,
+    id: 7,
     url: "https://player.vimeo.com/video/1170590308?h=45269db617&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Moscow, Russia",
     contributor: "Kiti",
     windowTitle: "Snow's Window",
     timeLabel: "11:37",
     dateLabel: "APRIL 2026",
-    category: "Snow",
+    category: "Rain",
     description: "Cozy fall rain pattering against the pane of an attic window."
   },
   {
-    id: 9,
+    id: 8,
     url: "https://player.vimeo.com/video/1170169655?h=469d870b42&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Zurich, Switzerland",
     contributor: "Noah",
@@ -88,7 +88,7 @@ export const windowVideos = [
     description: "Warm fireplace hearth glow with snow visible outside the bay window."
   },
   {
-    id: 7,
+    id: 9,
     url: "https://player.vimeo.com/video/1175756132?h=c0dcd6521a&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Leesburg, VA, USA",
     contributor: "Reesie's Window",
@@ -99,7 +99,7 @@ export const windowVideos = [
     description: "Warm fireplace hearth glow with snow visible outside the bay window."
   },
   {
-    id: 8,
+    id: 10,
     url: "https://player.vimeo.com/video/1179988542?h=ed505586a5&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Munich, Germany",
     contributor: "Lukas",
@@ -110,7 +110,7 @@ export const windowVideos = [
     description: "Serene babbling brook in a quiet forest outside a rustic window."
   },
   {
-    id: 9,
+    id: 11,
     url: "https://player.vimeo.com/video/1171338566?h=9d477a1ba1&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Niagara Falls, Canada",
     contributor: "Jorj",
@@ -121,7 +121,7 @@ export const windowVideos = [
     description: "Turquoise coastal waves and dramatic cloud cover over the sea."
   },
   {
-    id: 10,
+    id: 12,
     url: "https://player.vimeo.com/video/1179847779?h=72789ffc30&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Mumbai, India",
     contributor: "Vandana",
@@ -132,7 +132,7 @@ export const windowVideos = [
     description: "Sunlight filtering through vibrant palms and lush garden leaves."
   },
   {
-    id: 11,
+    id: 13,
     url: "https://player.vimeo.com/video/1173354988?h=ed5d122a0f&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Brantford, Ontario, Canada",
     contributor: "Jorj Takacs's Window",
@@ -143,7 +143,7 @@ export const windowVideos = [
     description: "Watching quiet, gentle snowflakes blanket the trees outside."
   },
   {
-    id: 12,
+    id: 14,
     url: "https://player.vimeo.com/video/1181121486?h=61790db4d6&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Johannesburg, South Africa",
     contributor: "Vandana",
@@ -154,7 +154,7 @@ export const windowVideos = [
     description: "Sunlight filtering through vibrant palms and lush garden leaves."
   },
   {
-    id: 1,
+    id: 15,
     url: "https://player.vimeo.com/video/1180256413?h=72533930a2&muted=1&autoplay=1&autopause=0&controls=0&loop=1&app_id=122963",
     location: "Guwahati, Assam, India",
     contributor: "Arthur",

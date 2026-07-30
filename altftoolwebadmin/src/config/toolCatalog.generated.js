@@ -849,7 +849,7 @@ export const TOOL_CATALOG = [
       "AI Tools",
       "Design & Color"
     ],
-    "description": "Enhance your selfies with smart AI-driven filters, skin smoothing, lighting correction, and background tuning directly in your browser."
+    "description": "Adjust brightness, contrast, saturation, and smoothing on your selfie with one-click presets, right in your browser."
   },
   {
     "slug": "ai-social-caption-detector",
@@ -1194,7 +1194,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Small file ko sequential QR frames se nearby device par transfer kare."
+    "description": "Split a small file into numbered QR frames, loop them on screen, and rebuild the file on another device from its camera — entirely offline."
   },
   {
     "slug": "animated-webp-apng-builder",
@@ -1268,6 +1268,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Build a personalised year-end money checklist with real statutory deadlines, from tax-saving proofs to nominee updates."
+  },
+  {
+    "slug": "ansi-escape-reference",
+    "name": "ANSI Escape Code Reference & Log Decoder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Paste a log full of ESC[0;32m garbage and see it rendered, every escape sequence named, and a stripped plain-text copy — plus the full SGR, cursor, erase and OS"
   },
   {
     "slug": "ansible-inventory-file-builder",
@@ -1725,6 +1733,14 @@ export const TOOL_CATALOG = [
     "description": "Assess atrial fibrillation risk using CHARGE-AF and community-based risk factors with clinical guidance and prevention strategies."
   },
   {
+    "slug": "attachment-file-type-risk-explainer",
+    "name": "Attachment File Type Risk Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Rates any email attachment by its file extension and explains double-extension and hidden-extension disguises."
+  },
+  {
     "slug": "attendance-calculator",
     "name": "Attendance Percentage Calculator",
     "categories": [
@@ -1825,7 +1841,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Pitch aur tempo independently control kare."
+    "description": "Shifts an audio file's pitch or tempo independently, without affecting the other."
   },
   {
     "slug": "audio-to-base64",
@@ -2947,7 +2963,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Generators"
     ],
-    "description": "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration."
+    "description": "Write Malayalam birthday messages tuned to relationship and tone, with correct നീ, നിങ്ങൾ or താങ്കൾ forms, romanisation, an English meaning and SMS length."
   },
   {
     "slug": "birthday-wishes-marathi",
@@ -3443,7 +3459,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Fun"
     ],
-    "description": "Measure your visual processing speed and cognitive efficiency with a clinical symbol-to-digit substitution task."
+    "description": "Measure your visual processing speed and cognitive efficiency with a symbol-to-digit substitution task modelled on clinical tests."
   },
   {
     "slug": "brand-asset-naming-convention-builder",
@@ -3502,6 +3518,62 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert brass to cubic feet, cubic metres, tonnes and truckloads for sand, aggregate and other loose construction material."
+  },
+  {
+    "slug": "breach-exposure-checklist-address",
+    "name": "Home Address Exposure Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted response plan for a leaked or published home address: physical safety, public-source removals and identity-check fixes."
+  },
+  {
+    "slug": "breach-exposure-checklist-card",
+    "name": "Card Number Exposure Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "What to do when a card number leaks without CVV or expiry: kill the number, check pending charges for card-testing, and score how much worse it gets if more lea"
+  },
+  {
+    "slug": "breach-exposure-checklist-dob",
+    "name": "Date of Birth Exposure Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "What to change when your date of birth leaks, scored by combination risk and by the credentials and identity checks the date still unlocks."
+  },
+  {
+    "slug": "breach-exposure-checklist-email",
+    "name": "Email Data Breach Response Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted response plan for an email address caught in a data breach: password resets on every linked account, 2FA, and breach-themed phishing watch."
+  },
+  {
+    "slug": "breach-exposure-checklist-employer",
+    "name": "Employer Data Breach Employee Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build an employee response plan from the data categories in your company's breach notice, scored only against the steps that actually apply."
+  },
+  {
+    "slug": "breach-exposure-checklist-password-reuse",
+    "name": "Password Reuse Breach Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted response plan for a reused password caught in a breach: which other accounts share it, rotation order, a 2FA backstop and a password manager switch."
+  },
+  {
+    "slug": "breach-exposure-checklist-phone",
+    "name": "Phone Number Exposure Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted response plan for a leaked phone number: SIM-swap lockdown with your carrier, smishing and spam-call triage, and phone-based identity-check fixes."
   },
   {
     "slug": "breach-notification-timeline-planner",
@@ -3683,6 +3755,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Parse tab logs, bookmark exports, or URL lists and export them as clean Markdown logs, JSON dumps, or HTML links lists."
+  },
+  {
+    "slug": "browser-storage-cleanup-planner",
+    "name": "Browser Storage Cleanup Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan exactly which browser stores to clear, which to keep, and what breaks — cookies, localStorage, IndexedDB, service workers and more."
   },
   {
     "slug": "btu-to-ton-converter",
@@ -3980,7 +4060,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Lifestyle"
     ],
-    "description": "View calendar and panchang details for dates, festivals, and daily planning."
+    "description": "Compute tithi, nakshatra, yoga, karana, sunrise, sunset, Rahu Kaal and Abhijit Muhurta for any date and place, from the NOAA solar algorithm and the Meeus lunar"
   },
   {
     "slug": "calibrated-camera-ruler",
@@ -3989,7 +4069,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Reference card se approximate object dimensions estimate kare."
+    "description": "Measure an object from a photo by calibrating against something of known size — a bank card, an A4 sheet, a coin — with the error range shown."
   },
   {
     "slug": "calibration-curve-lod-loq-workbench",
@@ -5706,6 +5786,14 @@ export const TOOL_CATALOG = [
     "description": "Build a database connection URI for Postgres, MySQL, MongoDB, Redis and more — with the right scheme and default port."
   },
   {
+    "slug": "consent-banner-dark-pattern-spotter",
+    "name": "Consent Banner Dark Pattern Spotter",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score a cookie banner for the 14 manipulative design tricks regulators flag, and learn how to refuse properly."
+  },
+  {
     "slug": "consent-inventory-mapper",
     "name": "Consent Inventory Mapper",
     "categories": [
@@ -6419,6 +6507,22 @@ export const TOOL_CATALOG = [
     "description": "Evaluate your chemistry and odds with your crush by taking a fun interactive compatibility quiz."
   },
   {
+    "slug": "crypto-explainer-end-to-end",
+    "name": "End-to-End Encryption Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Trace a message hop by hop and see exactly who can read the content and the metadata, with and without end-to-end encryption."
+  },
+  {
+    "slug": "crypto-explainer-hashing-vs-encryption",
+    "name": "Hashing vs Encryption Explainer",
+    "categories": [
+      "Education & Science"
+    ],
+    "description": "Run one input through a real SHA-256 hash, a reversible cipher and Base64 side by side to see why a hash is not encryption."
+  },
+  {
     "slug": "crypto-loss-setoff-explainer",
     "name": "Crypto Loss Set Off Rules Explainer",
     "categories": [
@@ -6542,6 +6646,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Compress, minify, and shrink messy CSS code to reduce bundle size, showing detailed savings statistics."
+  },
+  {
+    "slug": "css-specificity-referee",
+    "name": "CSS Specificity Referee",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Put two CSS selectors against each other and see which one wins, which cascade criterion decided it, and the smallest change that flips the result — layers and "
   },
   {
     "slug": "css-tools",
@@ -7578,6 +7690,14 @@ export const TOOL_CATALOG = [
     "description": "Client-side dashboard for device, browser, privacy, GPU, storage, and web API capability analysis."
   },
   {
+    "slug": "device-resale-wipe-checklist-phone",
+    "name": "Old Phone Resale Wipe Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "The correct order to back up, migrate, sign out and factory reset a phone before selling it — and a warning when you tick a step too early."
+  },
+  {
     "slug": "device-sensor-calibration-checker",
     "name": "Device Sensor Calibration Checker",
     "categories": [
@@ -7863,6 +7983,14 @@ export const TOOL_CATALOG = [
     "description": "Workflow-specific calibration targets and a step-by-step checklist for web, print, Rec.709 video and HDR displays."
   },
   {
+    "slug": "disposable-email-policy-explainer",
+    "name": "Disposable Email Policy Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Scores the lockout risk of a signup and shows when a throwaway address is safe and when it will cost you the account."
+  },
+  {
     "slug": "dividend-income-tax-calculator-india",
     "name": "Dividend Income Tax Calculator India",
     "categories": [
@@ -7952,6 +8080,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Interactive 3D rotating DNA double helix model with base pairing (A-T, G-C), hydrogen bond counting, and replication mechanics."
+  },
+  {
+    "slug": "dnd-spam-call-control-guide-india",
+    "name": "DND and Spam Call Control Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build your 1909 DND preference command, classify a spam caller's number series and check whether you are still inside the TRAI complaint window."
   },
   {
     "slug": "dns-propagation-checker",
@@ -8068,6 +8204,14 @@ export const TOOL_CATALOG = [
     "description": "Track which documents are attested, by whom and when — with validity countdowns that flag expiring and expired attestations."
   },
   {
+    "slug": "document-backup-priority-ranker",
+    "name": "Document Backup Priority Ranker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "Rank which household documents to scan and back up first, by how hard each one is to replace, how fast you would need it and what it unlocks."
+  },
+  {
     "slug": "document-checklist-generator",
     "name": "Document Checklist Generator",
     "categories": [
@@ -8161,6 +8305,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "RDAP data se expiry aur renewal windows track kare."
+  },
+  {
+    "slug": "domain-expiry-renewal-planner",
+    "name": "Domain Expiry and Renewal Planner",
+    "categories": [
+      "Business"
+    ],
+    "description": "Dates every stage of the gTLD expiry lifecycle — grace, redemption, pending delete and drop — plus transfer locks and renewal risks."
   },
   {
     "slug": "domain-name-ideas-generator",
@@ -8467,6 +8619,14 @@ export const TOOL_CATALOG = [
     "description": "Find which MCA, income tax, GST, DGFT and e-tender filings need a Class 3 digital signature certificate, and which allow EVC instead."
   },
   {
+    "slug": "dst-clock-changes",
+    "name": "Clock Changes & DST Tracker",
+    "categories": [
+      "Productivity"
+    ],
+    "description": "The next clock change in any time zone to the exact instant, a full year of changes, and the dates a recurring meeting's time gap silently moves."
+  },
+  {
     "slug": "dubai-dxb-airport-arrival-buffer-calculator",
     "name": "Dubai DXB Airport Arrival Buffer Calculator",
     "categories": [
@@ -8680,6 +8840,14 @@ export const TOOL_CATALOG = [
     "description": "Education loan EMI with course moratorium, simple interest accrual and the option to service interest while studying."
   },
   {
+    "slug": "effective-apr-comparator",
+    "name": "Effective APR Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Compare two or more loan offers on their true effective APR — the IRR of the actual cash flows after processing fees, GST, bundled insurance and foreclosure pen"
+  },
+  {
     "slug": "eggetarian-macro-calculator",
     "name": "Eggetarian Macro Calculator",
     "categories": [
@@ -8799,6 +8967,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Count em dashes, smart quotes, triads and other punctuation tells in a draft, with rates per 1,000 words and rewrite suggestions."
+  },
+  {
+    "slug": "email-alias-strategy-planner",
+    "name": "Email Alias Strategy Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Design per-service email aliases so a leaked address names the company that leaked it, with RFC length checks on every address."
   },
   {
     "slug": "email-authentication-checker",
@@ -9069,6 +9245,14 @@ export const TOOL_CATALOG = [
       "Business"
     ],
     "description": "Track systems, recurring tasks, contacts and pending items into a weighted readiness score and a ready-to-send handover document."
+  },
+  {
+    "slug": "employee-monitoring-rights-explainer",
+    "name": "Employee Monitoring Rights Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See what common workplace monitoring actually captures, score how much your employer has disclosed, and draft the questions to put to HR in writing."
   },
   {
     "slug": "empty-state-copy-generator",
@@ -10040,6 +10224,22 @@ export const TOOL_CATALOG = [
     "description": "Room-by-room home fall hazard checklist with a safety score, personal risk questions and the remaining fixes ranked by impact and effort."
   },
   {
+    "slug": "family-anti-scam-agreement-builder",
+    "name": "Family Anti-Scam Agreement Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Turn household rules on OTPs, urgent money requests and safe words into a written agreement, scored against the common scam types."
+  },
+  {
+    "slug": "family-archive-redundancy-checker",
+    "name": "Family Photo Archive Redundancy Checker",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check whether your family photo archive really exists in two independent places, and score it against the 3-2-1-1-0 backup rule."
+  },
+  {
     "slug": "family-car-size-selector",
     "name": "Family Car Size Selector",
     "categories": [
@@ -10064,6 +10264,14 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Map family conditions and hereditary-history notes privately."
+  },
+  {
+    "slug": "family-password-sharing-planner",
+    "name": "Shared Family Password Plan Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Decide which household logins to share, which to keep individual and which need emergency access instead."
   },
   {
     "slug": "family-safe-word-generator",
@@ -10442,6 +10650,30 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Answer eight questions to get your FINDRISC score out of 26 and the matching 10-year type 2 diabetes risk band."
+  },
+  {
+    "slug": "fingerprint-viewer-hardware",
+    "name": "Hardware Capability Fingerprint Viewer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See the CPU count, memory bucket, touch points and input capabilities any website can read from your device."
+  },
+  {
+    "slug": "fingerprint-viewer-screen",
+    "name": "Screen and Display Fingerprint Viewer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See the resolution, pixel ratio, colour depth and window signals every website can read from your display."
+  },
+  {
+    "slug": "fingerprint-viewer-timezone-locale",
+    "name": "Timezone and Locale Fingerprint Viewer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See the timezone, UTC offset, language list and formatting hints any website can read from your browser."
   },
   {
     "slug": "fire-calculator",
@@ -11665,6 +11897,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Inspect a pasted unified Git diff locally for added secret-like values, private-key material, contact PII, and sensitive filenames with redacted findings."
+  },
+  {
+    "slug": "git-error-decoder",
+    "name": "Git Error Message Decoder",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Paste a git error and get what actually happened in git's model, the commands that resolve it, and a blast radius badge on every command: SAFE, REWRITES HISTORY"
   },
   {
     "slug": "git-lfs-storage-estimator",
@@ -13855,6 +14095,14 @@ export const TOOL_CATALOG = [
     "description": "Compute exactly how many more marks you need in remaining exams to reach a target overall percentage, and whether it is still possible."
   },
   {
+    "slug": "inactive-account-plan-google",
+    "name": "Google Inactive Account Plan Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan Google Inactive Account Manager: inactivity period, warning date, trusted contacts and the data-download deadline."
+  },
+  {
     "slug": "inattentional-blindness",
     "name": "Inattentional Blindness Test",
     "categories": [
@@ -13870,6 +14118,14 @@ export const TOOL_CATALOG = [
       "Converters"
     ],
     "description": "Convert bag dimensions between inches and centimetres and check them against a cabin or checked baggage allowance."
+  },
+  {
+    "slug": "incident-playbook-cloned-card",
+    "name": "Cloned Card Response Playbook",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Block, dispute and document an unauthorised card transaction, with your RBI limited-liability position and the bank's reversal deadlines worked out."
   },
   {
     "slug": "incident-severity-matrix-builder",
@@ -14546,6 +14802,54 @@ export const TOOL_CATALOG = [
     "description": "Billable hours aur invoice line items ke mismatches dikhaye."
   },
   {
+    "slug": "iot-privacy-guide-baby-monitor",
+    "name": "Baby Monitor Security Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 15-point hardening checklist for baby cameras, plus an exposure model showing whether the feed is reachable from the internet or only nearby."
+  },
+  {
+    "slug": "iot-privacy-guide-robot-vacuum",
+    "name": "Robot Vacuum Mapping Privacy Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 15-step guide to robot vacuum maps, obstacle photos and cloud sharing, with a footprint model of what data leaves your home."
+  },
+  {
+    "slug": "iot-privacy-guide-smart-lock",
+    "name": "Smart Lock Security Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 16-point audit of smart lock accounts, guest codes, door hardware and offline fallback, with a keypad-code guessing-time estimate."
+  },
+  {
+    "slug": "iot-privacy-guide-smart-plugs",
+    "name": "Smart Plug and Bulb Security Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 14-step guide to segmenting cheap smart plugs and bulbs, with a router-aware isolation plan and IoT subnet sizing."
+  },
+  {
+    "slug": "iot-privacy-guide-smart-speaker",
+    "name": "Smart Speaker Privacy Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Step-by-step privacy hardening for Alexa, Google and Siri speakers, with a completion score and the true scale of what auto-delete windows retain."
+  },
+  {
+    "slug": "iot-privacy-guide-video-doorbell",
+    "name": "Video Doorbell Privacy Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 15-step guide to lock down doorbell accounts, set privacy and motion zones, and see how many days of footage you keep."
+  },
+  {
     "slug": "iou-letter-generator",
     "name": "IOU Letter Generator",
     "categories": [
@@ -14760,6 +15064,14 @@ export const TOOL_CATALOG = [
     "description": "Build a personalised list of the documents you need to file your income tax return, based on your income sources and deductions."
   },
   {
+    "slug": "itr-u-eligibility-cost",
+    "name": "ITR-U Eligibility Gate & Cost Calculator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Check the section 139(8A) bars that block an updated return, then price it: the deadline, the section 140B additional tax slab and the total rupee cost."
+  },
+  {
     "slug": "ivf-due-date-calculator",
     "name": "IVF Due Date Calculator",
     "categories": [
@@ -14894,6 +15206,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Generate a formal Hindi job application letter in correct patra format, with age on the cut-off date and relaxation checked."
+  },
+  {
+    "slug": "job-board-profile-cleanup-guide",
+    "name": "Job Board Profile Cleanup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Scan pasted résumé text for personal data that should not sit on a public job portal — government IDs, phone, address, date of birth and more — get an exposure "
   },
   {
     "slug": "job-description-prompt-builder",
@@ -15303,6 +15623,94 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Age and sex appropriate daily step targets for children, with WHO active-minute goals and playful progress levels to close the gap."
+  },
+  {
+    "slug": "kids-device-setup-android",
+    "name": "Android Kids Device Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Age-aware Family Link setup plan for a child's Android phone, with install approvals, limits and a daily time budget built from sleep guidance."
+  },
+  {
+    "slug": "kids-device-setup-instagram-teen",
+    "name": "Teen Instagram Safety Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check Instagram Teen Account defaults, DM and tag limits, supervision and a sleep-mode window worked out from wake time."
+  },
+  {
+    "slug": "kids-device-setup-ipad",
+    "name": "iPad Study Device Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Turn a shared or personal iPad into a study device with Guided Access, Focus, content filters and a homework block schedule with 20-20-20 eye breaks."
+  },
+  {
+    "slug": "kids-device-setup-iphone",
+    "name": "iPhone Kids Device Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Age-aware Screen Time setup for a child's iPhone: content ratings, web filter, Ask to Buy, Communication Safety and Downtime, with the exact values to pick."
+  },
+  {
+    "slug": "kids-device-setup-minecraft",
+    "name": "Minecraft Multiplayer Safety Setup",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build a step-by-step plan for safer Minecraft multiplayer: Xbox privacy, realm invites, chat filters and spend limits."
+  },
+  {
+    "slug": "kids-device-setup-nintendo-switch",
+    "name": "Nintendo Switch Parental Setup",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan Nintendo Switch parental controls: play-time limits in 15-minute steps, age presets, eShop and chat restrictions."
+  },
+  {
+    "slug": "kids-device-setup-playstation",
+    "name": "PlayStation Family Safety Setup",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan PSN child accounts, spend caps, play-time limits and an age-rating ceiling for PS5 and PS4 family consoles."
+  },
+  {
+    "slug": "kids-device-setup-smart-tv",
+    "name": "Smart TV Kids Safety Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Lock down profiles, purchase PINs, app installs and maturity ratings on Roku, Fire TV, Google TV, Samsung, LG or Apple TV."
+  },
+  {
+    "slug": "kids-device-setup-whatsapp-teen",
+    "name": "Teen WhatsApp Safety Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A scored WhatsApp privacy checklist for teens: group invites, unknown callers, last seen, two-step PIN and blocking."
+  },
+  {
+    "slug": "kids-device-setup-windows-family",
+    "name": "Windows Family Account Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Set up a Windows child account with Microsoft Family Safety: standard-user rights, Edge-only web filtering, app limits and a weekly screen-time total."
+  },
+  {
+    "slug": "kids-first-smartphone-readiness-quiz",
+    "name": "Kids First Smartphone Readiness Quiz",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A weighted 14-question quiz that scores a child's readiness for a first phone and returns starting rules to match."
   },
   {
     "slug": "kids-hydration-reminder",
@@ -15784,6 +16192,14 @@ export const TOOL_CATALOG = [
     "description": "Tick what is left in your fridge and get real dishes you can cook tonight, plus ones you are one item away from."
   },
   {
+    "slug": "legacy-contact-setup-apple",
+    "name": "Apple Legacy Contact Setup Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check Apple legacy contact eligibility, plan the access key handover and see what the 3-year access window covers."
+  },
+  {
     "slug": "legal-deadline-countdown-board",
     "name": "Legal Deadline Countdown Board",
     "categories": [
@@ -15968,6 +16384,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Sort, reverse, shuffle and remove duplicate lines from any list, with case and blank-line options."
+  },
+  {
+    "slug": "link-anatomy-highlighter",
+    "name": "Link Anatomy Highlighter",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Colour-codes the scheme, userinfo, host, port, path and query of any URL and flags the parts phishing links abuse."
   },
   {
     "slug": "link-organizer",
@@ -16490,7 +16914,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "WAV, FLAC, MP3 aur OGG formats convert kare."
+    "description": "Converts audio files between WAV, FLAC, MP3 and OGG formats."
   },
   {
     "slug": "lost-phone-response-planner",
@@ -16660,6 +17084,14 @@ export const TOOL_CATALOG = [
       "Fun"
     ],
     "description": "Merge falling blocks of matching numbers to double their value and score high combos."
+  },
+  {
+    "slug": "mac-address-randomisation-explainer",
+    "name": "MAC Randomisation Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Reads the U/L and I/G bits of any MAC address to say whether it is a real vendor identity or a randomised private Wi-Fi address, and what that breaks."
   },
   {
     "slug": "macro-calculator",
@@ -16911,6 +17343,14 @@ export const TOOL_CATALOG = [
     "description": "Write unbundled, non-prechecked marketing consent checkbox wording for signup forms, with per-channel labels and frequency promises."
   },
   {
+    "slug": "marketing-consent-withdrawal-builder",
+    "name": "Marketing Consent Withdrawal Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Draft an opt-out message for email, SMS, calls or post with the right legal citation and the date the company must act by."
+  },
+  {
     "slug": "marketing-opt-out-request-generator",
     "name": "Marketing Opt-Out Request Generator",
     "categories": [
@@ -16968,6 +17408,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Build the proofs, photos and witness list for marriage registration, with Special Marriage Act notice dates worked out."
+  },
+  {
+    "slug": "maternity-benefit-entitlement",
+    "name": "Maternity Benefit Entitlement Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Checks the Maternity Benefit Act section 5(2) eighty-day condition, gives the date it will be met, and dates the 26 or 12 week leave, rejoining and nursing-brea"
   },
   {
     "slug": "maternity-leave-date-calculator",
@@ -17934,6 +18382,14 @@ export const TOOL_CATALOG = [
     "description": "Convert fuel economy between US mpg, imperial mpg, km/l, miles per litre and litres per 100 km using exact unit definitions."
   },
   {
+    "slug": "msme-45-day-payment-calculator",
+    "name": "MSME 45-Day Payment & 43B(h) Cost Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Work out the MSMED Act section 15 due date, section 16 compound interest at three times the RBI bank rate, and what a section 43B(h) deferred deduction costs wh"
+  },
+  {
     "slug": "msp-realisation-calculator",
     "name": "MSP Realisation Calculator",
     "categories": [
@@ -18688,6 +19144,14 @@ export const TOOL_CATALOG = [
     "description": "Draft subscription terms for paid and free newsletter tiers, with withdrawal rights, renewal reminders and prorated refunds calculated."
   },
   {
+    "slug": "newsletter-unsubscribe-safety-guide",
+    "name": "Newsletter Unsubscribe Safety Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Decide whether unsubscribing is safe or whether it just confirms your address, and see the date the sender must stop mailing."
+  },
+  {
     "slug": "nginx-cache-header-planner",
     "name": "Nginx Cache Header Planner",
     "categories": [
@@ -19130,6 +19594,14 @@ export const TOOL_CATALOG = [
     "description": "Generate objectives with measurable key results and suggested initiatives using AI-style prompts."
   },
   {
+    "slug": "old-account-deletion-tracker",
+    "name": "Old Account Deletion Tracker",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Track dormant account deletion requests with real response deadlines under GDPR and CCPA, overdue flags and proof references."
+  },
+  {
     "slug": "old-age-pension-eligibility-checker",
     "name": "Old Age Pension Scheme Eligibility Checker",
     "categories": [
@@ -19285,6 +19757,14 @@ export const TOOL_CATALOG = [
       "Health & Fitness"
     ],
     "description": "Sachet-to-water ratios, homemade sugar-salt proportions and WHO replacement volumes for oral rehydration solution."
+  },
+  {
+    "slug": "os-hardening-checklist-android",
+    "name": "Android Hardening Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A weighted Android security checklist filtered to your Android version and threat profile, with patch-level freshness and a hardening score."
   },
   {
     "slug": "osmania-university-cgpa-converter",
@@ -19695,6 +20175,46 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Generate strong random passwords with flexible character controls."
+  },
+  {
+    "slug": "password-policy-tester-banking",
+    "name": "Bank Password Policy Tester",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Test a net-banking password against typical bank rules and see exactly which constraint fails and why."
+  },
+  {
+    "slug": "password-policy-tester-corporate",
+    "name": "Corporate Password Policy Tester",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check a password against Active Directory complexity rules and NIST SP 800-63B guidance side by side."
+  },
+  {
+    "slug": "password-policy-tester-gov-portal",
+    "name": "Government Portal Password Tester",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check a password against the 8-14 character rules typical of Indian government portals, including PAN and mobile checks."
+  },
+  {
+    "slug": "password-policy-tester-school-portal",
+    "name": "School Portal Password Policy Tester",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A kid-friendly checker for school login passwords, with plain-language rules and a passphrase builder."
+  },
+  {
+    "slug": "password-reuse-self-audit-sheet",
+    "name": "Password Reuse Self Audit Sheet",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Map your accounts to password families in the browser to find reuse clusters and see which one to break first."
   },
   {
     "slug": "password-strength-checker",
@@ -20249,6 +20769,102 @@ export const TOOL_CATALOG = [
       "Productivity"
     ],
     "description": "Check your Philippines visa-free allowance, the eTravel registration window, passport validity beyond the stay and the extension you will need."
+  },
+  {
+    "slug": "phishing-anatomy-apple-id-locked",
+    "name": "Apple ID Locked Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check an Apple ID account-locked email, text or call against Apple's real domains and the things Apple never asks for."
+  },
+  {
+    "slug": "phishing-anatomy-bank-otp",
+    "name": "Bank OTP Phishing Anatomy Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Takes a fake bank OTP SMS apart line by line and scans any message you paste for the same weighted scam markers and lookalike links."
+  },
+  {
+    "slug": "phishing-anatomy-courier-delivery",
+    "name": "Courier Delivery Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Breaks down the fake parcel-on-hold redelivery-fee SMS line by line and scans any message you paste for the same weighted markers and lookalike links."
+  },
+  {
+    "slug": "phishing-anatomy-electricity-bill",
+    "name": "Electricity Bill Scam Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Explains the disconnection-tonight SMS and its remote-access endgame, with a scanner that weighs the same markers in any message you paste."
+  },
+  {
+    "slug": "phishing-anatomy-invoice-attachment",
+    "name": "Invoice Attachment Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Break down a suspicious invoice email: double extensions, macro lures, password-protected archives and lookalike sender domains."
+  },
+  {
+    "slug": "phishing-anatomy-job-offer",
+    "name": "Job Offer Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Anatomy of fraudulent offer letters, fee demands and lookalike HR domains, with a scanner that weighs the same markers in any recruiter message."
+  },
+  {
+    "slug": "phishing-anatomy-kyc-update",
+    "name": "KYC Update Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "India-first teardown of KYC-expiry scam messages, with a scanner that weighs remote-access, UPI-PIN and identity-harvest markers in anything you paste."
+  },
+  {
+    "slug": "phishing-anatomy-payroll-redirect",
+    "name": "Payroll Redirect Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Take apart a salary-account change request: lookalike domains, no-phone-calls excuses, cut-off timing and the money at risk."
+  },
+  {
+    "slug": "phishing-anatomy-sextortion-email",
+    "name": "Sextortion Email Anatomy Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Why an email quoting your old password is almost always a mass-mailed bluff, and the steps that actually reduce your risk."
+  },
+  {
+    "slug": "phishing-anatomy-streaming-billing",
+    "name": "Streaming Billing Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check a Netflix, Prime Video, Disney+ or Spotify payment-failed message against the domains each service really uses."
+  },
+  {
+    "slug": "phishing-anatomy-tax-refund",
+    "name": "Income Tax Refund Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Shows how fake refund notices imitate official domains and skip the DIN, with a scanner that weighs the same markers in any message you paste."
+  },
+  {
+    "slug": "phishing-anatomy-university-portal",
+    "name": "University Portal Phishing Anatomy",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Split a student-portal login link into its parts and see whether the registrable domain really belongs to your institution."
   },
   {
     "slug": "phishing-url-x-ray",
@@ -21298,6 +21914,54 @@ export const TOOL_CATALOG = [
     "description": "26-point YouTube privacy audit — private subscriptions and playlists, history retention, public comment history, ad data and channel access."
   },
   {
+    "slug": "privacy-starter-kit-freelancer",
+    "name": "Freelancer Privacy Starter Kit",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Separation checklist for solo professionals covering home address, client folders, invoices and contracts, with a blast-radius estimate."
+  },
+  {
+    "slug": "privacy-starter-kit-real-estate-agent",
+    "name": "Real Estate Agent Privacy Kit",
+    "categories": [
+      "Business"
+    ],
+    "description": "Retention register for client KYC documents that flags what to keep, what to delete now and what should never have been collected."
+  },
+  {
+    "slug": "privacy-starter-kit-remote-worker",
+    "name": "Remote Worker Privacy Starter Kit",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Home-office security baseline for router, devices and video calls that adapts to BYOD or company laptop and to who else lives with you."
+  },
+  {
+    "slug": "privacy-starter-kit-senior-citizen",
+    "name": "Senior Citizen Privacy Starter Kit",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Large-type scam-safety checklist covering OTPs, spoofed calls, app installs and daily transfer limits, with a money-at-risk figure."
+  },
+  {
+    "slug": "privacy-starter-kit-student",
+    "name": "Student Privacy Starter Kit",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted campus privacy checklist for shared lab devices, college Wi-Fi and student portals, with a time-boxed action plan."
+  },
+  {
+    "slug": "privacy-starter-kit-teacher",
+    "name": "Teacher Privacy Starter Kit",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A prioritised privacy plan for teachers: protect student records on school platforms and keep your own number, device and time private."
+  },
+  {
     "slug": "private-bank-statement-analyzer",
     "name": "Private Bank Statement Analyzer",
     "categories": [
@@ -22336,6 +23000,14 @@ export const TOOL_CATALOG = [
     "description": "Build a reference letter prompt with specific examples, an honest percentile claim from rank and cohort size, and a per-section word budget."
   },
   {
+    "slug": "recovery-code-storage-planner",
+    "name": "Recovery Code Storage Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan where to keep 2FA backup codes across offline, encrypted and off-site copies, and see which resilience rules your plan fails."
+  },
+  {
     "slug": "recruitment-height-weight-ratio-checker",
     "name": "Height Weight Ratio For Recruitment",
     "categories": [
@@ -22393,7 +23065,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Image & Photo"
     ],
-    "description": "Analyze facial redness with AI-powered color analysis. Detect inflammation, sensitivity, and vascular activity with precise scoring and severity assessment."
+    "description": "Measure facial redness from a photo in CIELAB a*, cheek by cheek, against the calmest skin in the same frame. Colour measurement only, run entirely in your brow"
   },
   {
     "slug": "reel-audio-usage-planner",
@@ -22442,6 +23114,14 @@ export const TOOL_CATALOG = [
       "Health Calculators"
     ],
     "description": "Work out calorie, protein, fat and carbohydrate targets for a planned refeed day, plus what it costs your weekly deficit."
+  },
+  {
+    "slug": "referrer-policy-chooser",
+    "name": "Referrer Policy Chooser",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Compare all eight Referrer-Policy values on a real URL pair and see the exact Referer header each one sends."
   },
   {
     "slug": "refinance-savings-calculator",
@@ -22976,6 +23656,14 @@ export const TOOL_CATALOG = [
     "description": "Extract the taxable value and the GST hidden inside any tax-inclusive amount, split into CGST and SGST or IGST, with optional cess."
   },
   {
+    "slug": "review-site-data-removal-guide",
+    "name": "Review Site Personal Data Removal Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build a dated, ordered plan to get your name, contact details or photos off review and rating platforms, with the right escalation route."
+  },
+  {
     "slug": "revision-limit-contract-helper",
     "name": "Revision Limit Contract Helper",
     "categories": [
@@ -23114,6 +23802,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Create standard robots.txt files for search engines with interactive forms to configure crawling rules, delays, and sitemaps."
+  },
+  {
+    "slug": "roc-filing-calendar",
+    "name": "MCA / ROC Filing Calendar & Penalty Calculator",
+    "categories": [
+      "Business"
+    ],
+    "description": "Derive AGM, AOC-4, MGT-7/7A, ADT-1, DIR-3 KYC and LLP Form 11/Form 8 due dates from your incorporation date, and the per-form MCA additional fee accrued on anyt"
   },
   {
     "slug": "rock-climbing-calorie-calculator",
@@ -23391,6 +24087,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Weighted 21-point TP-Link hardening audit covering the admin account, WPA encryption, WPS, remote management and firmware, with a WPA2 crack-time check."
+  },
+  {
+    "slug": "router-hardening-checklist-xiaomi",
+    "name": "Xiaomi Router Hardening Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Weighted 22-point Mi and Redmi router audit covering the admin password, Mi Account binding, plug-ins, WPA settings and firmware, with a passphrase crack-time c"
   },
   {
     "slug": "rowing-machine-calorie-calculator",
@@ -23870,6 +24574,86 @@ export const TOOL_CATALOG = [
     "description": "Convert YouTube SBV caption exports into standard SubRip .srt files, with speaker markers, renumbering and timing offset."
   },
   {
+    "slug": "scam-explainer-army-officer-marketplace",
+    "name": "Army Officer Marketplace Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Break down the defence-personnel advance-payment script on classifieds apps and total up what is at risk."
+  },
+  {
+    "slug": "scam-explainer-fake-customer-care",
+    "name": "Fake Customer Care Number Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Check where a helpline number came from, what the caller is asking for, and what the excess-refund trick costs."
+  },
+  {
+    "slug": "scam-explainer-fake-scholarship",
+    "name": "Fake Scholarship Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Red flags in scholarship and admission fee scams, a fee-demand tally and an offline check of whether a scholarship link is really a government domain."
+  },
+  {
+    "slug": "scam-explainer-fake-traffic-challan",
+    "name": "Fake Traffic Challan Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Spot fake e-challan SMS and APK links, validate a registration number offline and check the demanded fine against Motor Vehicles Act penalties."
+  },
+  {
+    "slug": "scam-explainer-gift-parcel-customs",
+    "name": "Gift Parcel Customs Fee Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Break down the foreign-friend gift-stuck-at-customs scam step by step, score the red flags and see what real Indian customs duty would be."
+  },
+  {
+    "slug": "scam-explainer-matrimonial-fraud",
+    "name": "Matrimonial & Dating Fraud Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score the profile, story and money warning signs in a matrimonial or dating relationship, check how much you have verified independently, and total anything alr"
+  },
+  {
+    "slug": "scam-explainer-meter-update",
+    "name": "Electricity Meter Update Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "The meter-update SMS that ends in a remote-access app or a UPI collect request, checked against the 15 clear days notice the Electricity Act requires."
+  },
+  {
+    "slug": "scam-explainer-sim-block-warning",
+    "name": "SIM Block Warning Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Break down the your-number-will-be-disconnected call, the remote-access app trap, and check your SIM count against the DoT per-person limit."
+  },
+  {
+    "slug": "scam-explainer-task-based-jobs",
+    "name": "Work From Home Task Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Model the like-and-review task scam: seed payouts, escalating deposits, and the app balance that never withdraws."
+  },
+  {
+    "slug": "scam-explainer-upi-refund",
+    "name": "UPI Refund Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See why a UPI PIN can only send money, never receive it, and check any refund request against that rule."
+  },
+  {
     "slug": "scam-message-triage",
     "name": "Scam Message Triage",
     "categories": [
@@ -24265,6 +25049,62 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Review pasted response headers for missing defensive controls."
+  },
+  {
+    "slug": "security-question-answer-generator",
+    "name": "Security Question Answer Generator",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Generate false but memorable answers to security questions so nobody can research their way into your account."
+  },
+  {
+    "slug": "self-osint-query-builder-facebook",
+    "name": "Facebook Self Exposure Query Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Builds site: and quoted-phrase searches from your own name and profile link to reveal which Facebook posts, photos and group activity are publicly indexed."
+  },
+  {
+    "slug": "self-osint-query-builder-instagram",
+    "name": "Instagram Self Exposure Query Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Builds site: and quoted-phrase searches from your own username to find indexed posts, embedded copies and reposts of your Instagram content."
+  },
+  {
+    "slug": "self-osint-query-builder-linkedin",
+    "name": "LinkedIn Self Exposure Query Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Builds site:, filetype: and quoted-phrase searches from your own name and profile URL to show how discoverable your LinkedIn presence is."
+  },
+  {
+    "slug": "self-osint-query-builder-youtube",
+    "name": "YouTube Self Exposure Query Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build the exact search-operator queries that surface videos, comments and profile pages exposing your identity or location."
+  },
+  {
+    "slug": "self-osint-reverse-image-planner",
+    "name": "Image Reverse Search Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Plan a reverse-image audit of your profile photos: which engines can answer your question, which crops to submit, how long it takes."
+  },
+  {
+    "slug": "self-signed-certificate-explainer",
+    "name": "Self Signed Certificate Risk Explainer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Scores a self-signed or private-CA TLS setup by context and trust model, and says exactly what it protects against and what it does not."
   },
   {
     "slug": "seller-details-disclosure-generator",
@@ -24673,7 +25513,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Long silences aur selected filler segments remove kare."
+    "description": "Removes long silences from an audio recording using an adjustable loudness threshold."
   },
   {
     "slug": "silly-mistake-tracker",
@@ -25207,6 +26047,70 @@ export const TOOL_CATALOG = [
     "description": "Log social events and alone time for the week, see the battery level left, the heaviest day and the recovery hours you still owe yourself."
   },
   {
+    "slug": "social-engineering-atm-skimmer-checklist",
+    "name": "ATM Skimmer Inspection Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A 16-point physical inspection routine for an unfamiliar ATM, with a stop-or-proceed verdict based on what you find."
+  },
+  {
+    "slug": "social-engineering-callback-verification-builder",
+    "name": "Callback Verification Number Builder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Build a card of official numbers you trust enough to call back on, with Indian number-format checks and a source trust rating."
+  },
+  {
+    "slug": "social-engineering-coworking-checklist",
+    "name": "Coworking Space Security Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score your screen, print, device, network and people habits in a shared workspace, with a per-category breakdown of the gaps."
+  },
+  {
+    "slug": "social-engineering-group-admin-scam",
+    "name": "WhatsApp Group Admin Scam Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score the tells behind fake group admin, fake payment and exit-scam messages, and see which fraud pattern they match."
+  },
+  {
+    "slug": "social-engineering-hotel-room-checklist",
+    "name": "Hotel Room Tech Safety Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A check-in routine for the smart TV, room safe, network kit and door hardware, ranked by what to do in the first ten minutes."
+  },
+  {
+    "slug": "social-engineering-juice-jacking-explainer",
+    "name": "Juice Jacking Risk Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Work out the real data risk of charging in public from your power source, cable, lock state and OS — and which fix actually removes it."
+  },
+  {
+    "slug": "social-engineering-public-wifi-checklist",
+    "name": "Public Wi-Fi Safety Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score your cafe, airport or hotel Wi-Fi habits against the controls that still matter, and get the gaps ranked by impact."
+  },
+  {
+    "slug": "social-engineering-tailgating-explainer",
+    "name": "Tailgating and Badge Policy Explainer",
+    "categories": [
+      "Business"
+    ],
+    "description": "Estimate unsupervised door openings per day from headcount and entry type, then get the control tier and polite challenge scripts to match."
+  },
+  {
     "slug": "social-media-simulator",
     "name": "Social Media Simulator",
     "categories": [
@@ -25693,6 +26597,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Format SQL queries with readable line breaks, configurable indentation and keyword case — entirely in your browser."
+  },
+  {
+    "slug": "sql-join-fanout-debugger",
+    "name": "SQL JOIN Fan-Out Debugger",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Find out why your SUM is too high after a join: describe each table's grain and key cardinality to get the row-multiplication factor, which aggregates are infla"
   },
   {
     "slug": "sql-where-builder",
@@ -26473,6 +27385,14 @@ export const TOOL_CATALOG = [
       "Finance Calculators"
     ],
     "description": "Normalise every recurring subscription to a yearly cost, see the true annual drain and what cancelling the dead ones saves."
+  },
+  {
+    "slug": "subscription-wind-down-planner",
+    "name": "Subscription Wind-Down Planner",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "List recurring subscriptions, project what they cost if nobody cancels, and record where each one can be stopped."
   },
   {
     "slug": "subtitle-bom-utf8-fixer",
@@ -28143,6 +29063,14 @@ export const TOOL_CATALOG = [
     "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks."
   },
   {
+    "slug": "topup-vs-super-topup-simulator",
+    "name": "Top-up vs Super Top-up Deductible Simulator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Run a year of hospital claims through a per-claim deductible and a policy-year aggregate deductible side by side, claim by claim."
+  },
+  {
     "slug": "tote-bag-artwork-placement-guide",
     "name": "Tote Bag Artwork Placement Guide",
     "categories": [
@@ -28186,6 +29114,30 @@ export const TOOL_CATALOG = [
     "description": "Build a single-elimination tournament bracket from a list of players or teams, with standard seeding, automatic byes and round-by-round match-ups."
   },
   {
+    "slug": "tracker-explainer-ad-topics",
+    "name": "Ad Topic Profile Explainer",
+    "categories": [
+      "Marketing & Social"
+    ],
+    "description": "See what interest-based ad topics are, how each platform builds them, and get a per-platform reset checklist."
+  },
+  {
+    "slug": "tracker-explainer-loyalty-programs",
+    "name": "Loyalty Program Data Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "See what supermarket and airline loyalty records infer about your household, and which inferences are special-category data."
+  },
+  {
+    "slug": "tracker-explainer-telemetry-vs-analytics",
+    "name": "Telemetry vs Analytics Explainer",
+    "categories": [
+      "Developer"
+    ],
+    "description": "Classify what your app actually measures, see whether it needs consent, and generate an honest analytics notice."
+  },
+  {
     "slug": "tracking-link-decoder",
     "name": "Tracking Link Decoder",
     "categories": [
@@ -28193,6 +29145,14 @@ export const TOOL_CATALOG = [
       "Developer"
     ],
     "description": "Name every tracking parameter in a URL, see who set it and what it reveals, and copy a stripped clean link."
+  },
+  {
+    "slug": "tracking-opt-out-priority-checklist",
+    "name": "Tracking Opt-Out Priority Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Ranks every tracking opt-out by benefit per minute, fits the best ones into your time budget, and names the ones not worth doing."
   },
   {
     "slug": "tracking-pixel-disclosure-generator",
@@ -28365,6 +29325,46 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Add up device wattages to see whether one hotel socket and travel power strip can safely run them all at your destination voltage."
+  },
+  {
+    "slug": "travel-security-airport-transit",
+    "name": "Airport and Transit Security Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score your readiness to protect devices, documents and screens through security, the lounge, the flight and the border."
+  },
+  {
+    "slug": "travel-security-backpacker",
+    "name": "Backpacker Digital Safety Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score your backpacking security across theft, devices, accounts, documents and payments, and see the cheapest kit that closes the gaps."
+  },
+  {
+    "slug": "travel-security-family-photo-sharing",
+    "name": "Family Holiday Photo Sharing Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score how much your holiday posting advertises an empty house, and see which settings and habits actually reduce it."
+  },
+  {
+    "slug": "travel-security-hotel-checklist",
+    "name": "Hotel Wi-Fi and Safe Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "A room-arrival routine for hotel Wi-Fi, the in-room safe, smart devices and door security, scored for your type of property."
+  },
+  {
+    "slug": "travel-security-roaming-privacy",
+    "name": "International Roaming Privacy Guide",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Compare home roaming, a travel eSIM, a local SIM and Wi-Fi only on identity exposure, OTP access, cost control and coverage for your trip."
   },
   {
     "slug": "travel-toiletry-quantity-estimator",
@@ -29104,6 +30104,14 @@ export const TOOL_CATALOG = [
     "description": "Score publishing consistency from your upload dates using gap adherence, coefficient of variation and pace, and list every silence."
   },
   {
+    "slug": "ups-vs-nps-comparator",
+    "name": "UPS vs NPS Comparator",
+    "categories": [
+      "Finance Calculators"
+    ],
+    "description": "Model the UPS assured payout against an NPS annuity and get the annual NPS return needed to match it."
+  },
+  {
     "slug": "upsc-admit-card-day-checklist",
     "name": "UPSC Admit Card Day Checklist",
     "categories": [
@@ -29184,6 +30192,14 @@ export const TOOL_CATALOG = [
     "description": "Convert between blood urea nitrogen and urea in mg/dL and mmol/L, with the BUN to creatinine ratio and reference intervals."
   },
   {
+    "slug": "url-embedded-base64-decoder",
+    "name": "Base64 in URL Decoder",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Find and decode base64, base64url and hex blobs hidden inside a link, including redirect targets and embedded email addresses."
+  },
+  {
     "slug": "url-encoder-decoder",
     "name": "URL Encoder Decoder Tool",
     "categories": [
@@ -29222,6 +30238,14 @@ export const TOOL_CATALOG = [
       "Text & Writing"
     ],
     "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits."
+  },
+  {
+    "slug": "url-tracking-parameter-stripper",
+    "name": "URL Tracking Parameter Stripper",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Remove utm, gclid, fbclid, mc_eid and hundreds of other tracking parameters from links, in bulk, entirely in your browser."
   },
   {
     "slug": "us-consulate-india-appointment-day-checklist",
@@ -29270,6 +30294,14 @@ export const TOOL_CATALOG = [
       "Education & Science"
     ],
     "description": "Decode the INA section on a US visa refusal slip - 214(b), 221(g) and the rest - and get a checklist of what to fix."
+  },
+  {
+    "slug": "usb-drive-hygiene-checklist",
+    "name": "USB Drive Hygiene Checklist",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Score the residual risk of a USB situation against the controls you actually have in place, and see which ones only feel safe."
   },
   {
     "slug": "usd-cash-budget-planner",
@@ -29401,7 +30433,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Weight, width aur optical-size axes visually inspect aur export kare."
+    "description": "Read the fvar table out of a .ttf or .otf: every weight, width, slant and optical-size axis with its real min, default and max, every named instance, and the @f"
   },
   {
     "slug": "variable-pay-tax-calculator",
@@ -29802,7 +30834,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Shaky footage ko frame-motion analysis se smooth kare."
+    "description": "Smooths shaky footage using frame-motion analysis."
   },
   {
     "slug": "video-tag-keyword-organizer",
@@ -30398,7 +31430,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "FFT spectrogram, clipping, hum aur frequency distribution visualize kare."
+    "description": "Renders an audio file as an FFT spectrogram to visualize clipping, hum and frequency distribution."
   },
   {
     "slug": "wave-interference-simulator",
@@ -30524,6 +31556,14 @@ export const TOOL_CATALOG = [
       "Lifestyle"
     ],
     "description": "Build a wedding trip packing list from the events you are attending, with outfit weights checked against your baggage allowance."
+  },
+  {
+    "slug": "wedding-website-privacy-cleanup",
+    "name": "Wedding Website Privacy Cleanup",
+    "categories": [
+      "Lifestyle"
+    ],
+    "description": "Audit a public wedding or event page for over-shared personal details and get a ranked cleanup plan before you send the link."
   },
   {
     "slug": "week-number-calculator",
@@ -30817,6 +31857,14 @@ export const TOOL_CATALOG = [
       "Security & Privacy"
     ],
     "description": "Look up a domain's registration record over RDAP — registrar, creation and expiry dates, nameservers, DNSSEC and plain-English status codes."
+  },
+  {
+    "slug": "whois-privacy-explainer",
+    "name": "WHOIS Privacy Explainer",
+    "categories": [
+      "Security & Privacy"
+    ],
+    "description": "Shows field by field what a public WHOIS or RDAP lookup reveals about a domain owner, scores the exposure, and lists the trade-offs of privacy."
   },
   {
     "slug": "whole30-macro-planner",
@@ -31295,7 +32343,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "AI Tools"
     ],
-    "description": "Analyze YouTube videos and extract insights instantly."
+    "description": "Break a YouTube link into its video id, start time, playlist and tracking parameters, rebuild clean and privacy-enhanced links, and audit a pasted title and des"
   },
   {
     "slug": "zakat-calculator",

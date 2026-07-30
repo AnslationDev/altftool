@@ -24,7 +24,7 @@ function HighlightText({ text, query }) {
 }
 
 // ─── SEARCH BAR COMPONENT ─────────────────────────────────────────────────────
-const BACKEND_URL = process.env.NEXT_PUBLIC_SEARCH_BACKEND_URL || 'https://eng-backend-tc06.onrender.com';
+const BACKEND_URL = (process.env.NEXT_PUBLIC_SEARCH_BACKEND_URL || '').replace(/\/$/, '');
 
 export default function SearchBar({ initialValue = "", onSearch, onImageResults, isResultPage = false, dataset = [] }) {
   const [query, setQuery] = useState(initialValue);
@@ -91,6 +91,12 @@ export default function SearchBar({ initialValue = "", onSearch, onImageResults,
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    if (!BACKEND_URL) {
+      alert('Image search is currently unavailable.');
+      e.target.value = '';
+      return;
+    }
 
     setIsImageSearching(true);
     setShowSuggestions(false);

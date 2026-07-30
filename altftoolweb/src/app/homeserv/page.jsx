@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "QuoteNest Pros – Compare Local Home Service Quotes",
+    title: "QuoteNest Pros – Compare Home Service Quotes",
     description:
       "Pick a home service, review the details, and compare quotes from trusted local professionals in minutes with QuoteNest Pros.",
     path: "/homeserv",

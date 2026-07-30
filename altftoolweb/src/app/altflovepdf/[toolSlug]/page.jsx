@@ -1,4 +1,9 @@
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { TOOLS } from "../toolsData";
 import PageView from "./PageView";
@@ -99,6 +104,30 @@ export default async function Page(props) {
 
   return (
     <>
+      {/* These pages had an ItemList from the related-content band but no
+          entity describing the tool itself, so an answer engine could see what
+          a PDF page links to and not what it does. */}
+      {tool ? (
+        <JsonLd
+          id={`altflovepdf-schema-${toolSlug}`}
+          data={[
+            createToolJsonLd({
+              slug: toolSlug,
+              path: `/altflovepdf/${toolSlug}`,
+              tool: {
+                name: getToolLabel(tool),
+                description: tool.desc,
+                category: tool.category || "PDF",
+              },
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "PDF Tools", path: "/altflovepdf" },
+              { name: getToolLabel(tool), path: `/altflovepdf/${toolSlug}` },
+            ]),
+          ]}
+        />
+      ) : null}
       <PageView {...props} />
       <RelatedContentSection
         title="Related tools & guides"

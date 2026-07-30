@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Button, Tabs } from "@altftool/ui";
 import {
@@ -43,64 +42,7 @@ import {
 import AdminCard from "./components/AdminCard";
 import AdminAvatar from "./components/AdminAvatar";
 import PermissionSummary from "./components/PermissionSummary";
-
-/* ── Portal Tooltip ── */
-function Tooltip({ label, children, direction = "top" }) {
-  const [pos, setPos] = useState(null);
-  const ref = useRef(null);
-  const show = useCallback(() => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    setPos(
-      direction === "bottom"
-        ? { top: r.bottom + 8, left: r.left + r.width / 2 }
-        : { top: r.top - 8, left: r.left + r.width / 2 },
-    );
-  }, [direction]);
-  const hide = useCallback(() => setPos(null), []);
-  const tip =
-    pos && typeof document !== "undefined"
-      ? createPortal(
-          <div
-            className="pointer-events-none fixed z-[9999] px-2 py-1 rounded-md text-[11px] font-medium whitespace-nowrap bg-[var(--foreground)] text-[var(--background)] shadow-lg"
-            style={
-              direction === "bottom"
-                ? {
-                    top: pos.top,
-                    left: pos.left,
-                    transform: "translateX(-50%)",
-                  }
-                : {
-                    top: pos.top,
-                    left: pos.left,
-                    transform: "translateX(-50%) translateY(-100%)",
-                  }
-            }
-          >
-            {label}
-            {direction === "bottom" ? (
-              <span className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-[var(--foreground)]" />
-            ) : (
-              <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--foreground)]" />
-            )}
-          </div>,
-          document.body,
-        )
-      : null;
-  return (
-    <>
-      <div
-        ref={ref}
-        className="inline-flex"
-        onMouseEnter={show}
-        onMouseLeave={hide}
-      >
-        {children}
-      </div>
-      {tip}
-    </>
-  );
-}
+import Tooltip from "./components/Tooltip";
 
 const TABS = [
   { key: "Admins", label: "Admins" },

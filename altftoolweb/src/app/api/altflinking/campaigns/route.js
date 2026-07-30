@@ -4,11 +4,20 @@
  * POST /api/altflinking/campaigns
  */
 
+import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:campaigns",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -25,11 +34,19 @@ export async function GET(request) {
     const campaigns = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
     return ok(campaigns);
   } catch (e) {
-    return err("Failed to fetch campaigns: " + e.message, 500);
+    console.error("[GET /campaigns]", e);
+    return err("Failed to fetch campaigns", 500);
   }
 }
 
 export async function POST(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 20,
+    scope: "altflinking:campaigns",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -65,6 +82,7 @@ export async function POST(request) {
     const docRef = await db.collection("campaigns").add(data);
     return ok({ id: docRef.id, ...data }, 201);
   } catch (e) {
-    return err("Failed to create campaign: " + e.message, 500);
+    console.error("[POST /campaigns]", e);
+    return err("Failed to create campaign", 500);
   }
 }

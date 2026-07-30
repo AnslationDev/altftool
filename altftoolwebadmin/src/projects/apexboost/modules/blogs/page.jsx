@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Plus, Edit, Trash2, Search, Filter, Eye, Settings } from "lucide-react";
 import SectionHeadingEditor from "../../../../components/admin/SectionHeadingEditor";
-import { blog, blogCategories } from "../../data/blog";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeBlogPosts,
+  updateBlogPost,
+  subscribeBlogCategories,
+  saveBlogCategories,
+} from "../service/apexboost.service";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
@@ -19,32 +24,26 @@ export default function BlogsPage() {
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
   useEffect(() => {
-    setBlogs(blog.filter((b) => !b.deleted));
+    return subscribeBlogPosts(
+      (data) => setBlogs(data.filter((b) => !b.deleted)),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load blogs." }),
+    );
   }, []);
 
   useEffect(() => {
     if (isCatModalOpen && !isLoadingCategories && !catText) {
-      const fetchCategories = async () => {
-        setIsLoadingCategories(true);
-        try {
-          const res = await fetch("/api/apexboost/data?section=blogCategories");
-          const json = await res.json();
-          if (json.success && Array.isArray(json.data)) {
-            setCatText(json.data.join("\n"));
-          } else {
-            setCatText(blogCategories.join("\n"));
-          }
-        } catch (err) {
-          setCatText(blogCategories.join("\n"));
-        } finally {
+      setIsLoadingCategories(true);
+      return subscribeBlogCategories(
+        (data) => {
+          setCatText(data.join("\n"));
           setIsLoadingCategories(false);
-        }
-      };
-      fetchCategories();
+        },
+        () => setIsLoadingCategories(false),
+      );
     }
   }, [isCatModalOpen]);
 
-  const categories = ["All", ...new Set(blog.map((b) => b.category))];
+  const categories = ["All", ...new Set(blogs.map((b) => b.category))];
 
   const filteredBlogs = blogs.filter((blog) => {
     const matchesSearch =
@@ -62,28 +61,19 @@ export default function BlogsPage() {
 
   const confirmDelete = useCallback(async () => {
     // Soft delete: mark as deleted instead of removing
-    const updatedBlogs = blog.map((b) => 
-      b.id === blogToDelete ? { ...b, deleted: true } : b
-    );
-    
-    // Sync to backend
+    const post = blogs.find((b) => b.id === blogToDelete);
     try {
-      const response = await fetch('/api/apexboost/blogs', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ blogId: blogToDelete })
-      });
-      
-      if (response.ok) {
-        setBlogs(updatedBlogs.filter((b) => !b.deleted));
+      if (post) {
+        await updateBlogPost(blogToDelete, { ...post, deleted: true });
       }
     } catch (error) {
       console.error('Failed to sync delete:', error);
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete blog." });
     }
-    
+
     setIsDeleteModalOpen(false);
     setBlogToDelete(null);
-  }, [blogToDelete]);
+  }, [blogToDelete, blogs]);
 
   const handleView = useCallback((blog) => {
     setBlogToView(blog);
@@ -97,38 +87,22 @@ export default function BlogsPage() {
 
   const handleSaveEdit = useCallback(async () => {
     try {
-      const updatedBlogs = blog.map(b => b.id === blogToEdit.id ? blogToEdit : b);
-      const response = await fetch('/api/apexboost/blogs', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ blogs: updatedBlogs })
-      });
-      
-      if (response.ok) {
-        setBlogs(updatedBlogs.filter((b) => !b.deleted));
-        setIsEditModalOpen(false);
-        setBlogToEdit(null);
-        emitAlert({ type: "success", title: "Success", message: "Blog updated!" });
-      }
+      await updateBlogPost(blogToEdit.id, blogToEdit);
+      setIsEditModalOpen(false);
+      setBlogToEdit(null);
+      emitAlert({ type: "success", title: "Success", message: "Blog updated!" });
     } catch (error) {
       console.error('Failed to save edit:', error);
+      emitAlert({ type: "error", title: "Error", message: "Failed to update blog." });
     }
   }, [blogToEdit]);
 
   const handleSaveCategories = useCallback(async () => {
     const updated = catText.split("\n").map(s => s.trim()).filter(Boolean);
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "blogCategories", data: updated })
-      });
-      if (res.ok) {
-        setIsCatModalOpen(false);
-        emitAlert({ type: "success", title: "Success", message: "Categories updated!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to update categories." });
-      }
+      await saveBlogCategories(updated);
+      setIsCatModalOpen(false);
+      emitAlert({ type: "success", title: "Success", message: "Categories updated!" });
     } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Error updating categories." });
     }

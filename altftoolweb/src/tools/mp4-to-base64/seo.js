@@ -1,7 +1,8 @@
 const seo = {
-  title: "MP4 to Base64 Converter — Free, Runs in Your Browser",
+  title: "MP4 to Base64 — Free Video to Base64 Converter",
+  h1: "MP4 to Base64 — Video to Base64 Converter",
   metaDescription:
-    "Convert MP4, WebM, MOV, or OGV to a Base64 data URL entirely in your browser — nothing uploaded. Free, with an exact output-size preview.",
+    "Convert MP4, WebM, MOV or OGV to a Base64 data URL in your browser — nothing uploaded, with the exact output size shown before you convert.",
   intro:
     "This converter turns a local video file into a Base64 data URL — the data:video/mp4;base64,… string defined by RFC 2397, with the payload encoded per RFC 4648. Because Base64 writes every three bytes as four characters, the output is always exactly one third larger than the source file. It is built for developers who need to inline a short clip in HTML, CSS, JSON or a test fixture without hosting it.",
   useCases: [
@@ -31,6 +32,27 @@ const seo = {
       "Why does the output end in one or two equals signs?",
       "That is RFC 4648 padding. When the file length is not a multiple of three, the last group is short and is padded with one '=' (length ≡ 2 mod 3) or two '=' (length ≡ 1 mod 3) so the output stays a multiple of four characters.",
     ],
+    [
+      "Can I convert video formats other than MP4?",
+      "Yes — four containers are accepted: MP4 (including .m4v), WebM, QuickTime .mov and Ogg .ogv. The MIME type of whichever file you pick is written into the data URL prefix, so a WebM comes back as data:video/webm;base64, and still plays in the built-in preview.",
+    ],
+    [
+      "Is my video uploaded anywhere?",
+      "No. The file is read straight from your device with the browser's own file API and encoded in the page, so the bytes never leave your machine — there is no server, no account and no upload step, which is the point of doing it in the browser.",
+    ],
+    [
+      "How do I get the converted string out?",
+      "Copy data URL puts the whole string on your clipboard, and Download .txt saves it next to your file name as <name>.base64.txt. The panel only prints the first 400 characters on screen, because rendering several million characters would lock up the tab.",
+    ],
+    [
+      "How do I check the Base64 actually decodes?",
+      "The tool feeds the generated data URL straight back into a video element below the result, so if the preview plays, the string is valid and complete. If it does not play, the browser cannot decode that codec, which is a codec problem rather than a Base64 one.",
+    ],
+  ],
+  steps: [
+    "Pick a local MP4, WebM, MOV or OGV file — anything up to 25 MiB, which is the ceiling because the Base64 text is a third larger again and has to fit in memory.",
+    "Check the size figures before converting: the tool reports the source bytes and the exact character count the Base64 output will have.",
+    "Convert, confirm the clip plays in the preview underneath, then use Copy data URL or Download .txt to take the string away.",
   ],
 };
 

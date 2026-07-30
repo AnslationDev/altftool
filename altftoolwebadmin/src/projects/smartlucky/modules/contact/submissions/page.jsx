@@ -162,7 +162,7 @@ function DetailView({ submission, onClose }) {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="truncate text-lg font-extrabold text-[var(--foreground)]">Submission Details</h1>
-            <p className="mt-0.5 text-xs text-[var(--muted)]">{submission.name} <{submission.email}></p>
+            <p className="mt-0.5 text-xs text-[var(--muted)]">{submission.name} &lt;{submission.email}&gt;</p>
           </div>
           <button onClick={onClose} className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]">
             Back to list

@@ -1,9 +1,12 @@
 "use client";
 
 /**
- * Explore More Fitness Tools — styled with the Step Counter app theme
- * (hardcoded indigo/violet palette, see StepApp.jsx) so the whole page
- * reads as one premium product.
+ * Explore More Fitness Tools — styled through ./theme.js, which now resolves to
+ * the platform's global semantic tokens rather than the tracker's scoped ones
+ * (those never reached this component; see theme.js). Card chrome, focus rings
+ * and shadows come from the design system so this section matches the rest of
+ * the site in both themes; the per-tool icon tints keep the site-wide `--sc-*`
+ * tool-accent tokens, which are global and theme-aware.
  */
 
 import Link from "next/link";
@@ -15,7 +18,7 @@ import {
   Moon,
   Scale,
 } from "lucide-react";
-import { THEME as C } from "./StepApp.jsx";
+import { THEME as C } from "./theme.js";
 
 const ACCENTS = {
   indigo: { bg: "var(--sc-soft-indigo)", fg: "var(--sc-indigo)" },
@@ -70,7 +73,7 @@ export default function ExploreFitnessTools() {
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
           <p
-            className="text-[11px] font-extrabold uppercase tracking-[0.16em]"
+            className="text-[12px] font-extrabold uppercase tracking-[0.14em]"
             style={{ color: C.indigo }}
           >
             Keep going
@@ -81,14 +84,14 @@ export default function ExploreFitnessTools() {
           >
             Explore More Fitness Tools
           </h2>
-          <p className="mt-1 text-[12px] font-medium md:text-[13px]" style={{ color: C.muted }}>
+          <p className="mt-1 text-[14px] font-medium" style={{ color: C.muted }}>
             Free tools that pair perfectly with your step goals.
           </p>
         </div>
         <Link
           href="/tools/all"
-          className="group inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full px-4 text-[12px] font-bold text-white transition active:opacity-90"
-          style={{ background: C.grad, boxShadow: "0 8px 18px rgba(124,92,246,0.30)" }}
+          className="group inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-[14px] font-bold text-white transition active:opacity-90"
+          style={{ background: C.grad, boxShadow: "var(--shadow-md)" }}
         >
           View all tools
           <ArrowRight
@@ -109,7 +112,7 @@ export default function ExploreFitnessTools() {
                   so descriptions never truncate in narrow columns */}
               <Link
                 href={`/tools/all/${tool.slug}`}
-                className="group relative flex h-full items-center gap-3 rounded-[20px] p-4 shadow-(--sc-shadow) transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:ring-4 focus-visible:ring-indigo-300 lg:flex-col lg:items-start lg:p-5"
+                className="group relative flex h-full items-center gap-3 rounded-xl border border-(--border) p-4 shadow-(--shadow-sm) transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--shadow-md) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--primary) motion-reduce:transform-none motion-reduce:transition-none lg:flex-col lg:items-start lg:p-5"
                 style={{ backgroundColor: C.card }}
               >
                 <span
@@ -121,13 +124,13 @@ export default function ExploreFitnessTools() {
                 </span>
                 <span className="min-w-0 flex-1 lg:flex-none">
                   <span
-                    className="line-clamp-2 block text-[13px] font-extrabold leading-snug lg:pr-8"
+                    className="line-clamp-2 block text-[15px] font-extrabold leading-snug lg:pr-8"
                     style={{ color: C.ink }}
                   >
                     {tool.name}
                   </span>
                   <span
-                    className="block truncate text-[11px] font-medium lg:mt-0.5 lg:line-clamp-2 lg:whitespace-normal"
+                    className="block truncate text-[14px] font-medium lg:mt-0.5 lg:line-clamp-2 lg:whitespace-normal"
                     style={{ color: C.muted }}
                   >
                     {tool.description}

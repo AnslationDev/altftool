@@ -13,7 +13,7 @@ export function AlertProvider({ children }) {
   };
 
   const showAlert = useCallback((text, variant = "success", duration = 3000) => {
-    const id = Date.now();
+    const id = crypto.randomUUID();
 
     const newAlert = { id, text, variant };
     setAlerts((prev) => [...prev, newAlert]);

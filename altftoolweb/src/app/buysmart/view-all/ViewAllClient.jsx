@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
   BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
   ExternalLink,
   Grid3X3,
   Search,
@@ -89,6 +91,27 @@ export default function ViewAllClient() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeOfferType, setActiveOfferType] = useState("all");
   const [activeLetter, setActiveLetter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  // Matches the mobile (<640px) bucket below, so the very first render
+  // already lands on a real breakpoint value instead of an orphan default
+  // that's guaranteed to shift on mount.
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+
+  useEffect(() => {
+    const updateItems = () => {
+      const width = window.innerWidth;
+
+      if (width >= 1536) setItemsPerPage(12);
+      else if (width >= 1024) setItemsPerPage(9);
+      else if (width >= 640) setItemsPerPage(6);
+      else setItemsPerPage(4);
+    };
+
+    updateItems();
+    window.addEventListener("resize", updateItems);
+
+    return () => window.removeEventListener("resize", updateItems);
+  }, []);
 
   const directoryItems = useMemo(
     () => buildDirectoryItems(offers, stores, counters),
@@ -150,6 +173,14 @@ export default function ViewAllClient() {
     });
   }, [activeCategory, activeLetter, activeOfferType, directoryItems, query]);
 
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const safeCurrentPage = Math.min(currentPage, Math.max(totalPages, 1));
+
+  const paginatedItems = useMemo(() => {
+    const start = (safeCurrentPage - 1) * itemsPerPage;
+    return filteredItems.slice(start, start + itemsPerPage);
+  }, [filteredItems, safeCurrentPage, itemsPerPage]);
+
   const featuredItems = filteredItems.filter((item) => item.featured || item.verified).slice(0, 3);
   const isLiveSynced = offersSynced || storesSynced;
   const activeFilters = [
@@ -160,10 +191,31 @@ export default function ViewAllClient() {
   ].filter(Boolean);
 
   function resetFilters() {
+    setCurrentPage(1);
     setQuery("");
     setActiveCategory("All");
     setActiveOfferType("all");
     setActiveLetter("All");
+  }
+
+  function updateQuery(value) {
+    setCurrentPage(1);
+    setQuery(value);
+  }
+
+  function updateCategory(value) {
+    setCurrentPage(1);
+    setActiveCategory(value);
+  }
+
+  function updateOfferType(value) {
+    setCurrentPage(1);
+    setActiveOfferType(value);
+  }
+
+  function updateLetter(value) {
+    setCurrentPage(1);
+    setActiveLetter(value);
   }
 
   return (
@@ -261,7 +313,7 @@ export default function ViewAllClient() {
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-(--muted-foreground)" />
                 <input
                   value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => updateQuery(event.target.value)}
                   placeholder="Search store, category, code, cashback..."
                   className="h-10 w-full rounded-[var(--anslation-ds-radius)] border border-(--border) bg-(--background) px-9 text-sm text-(--foreground) outline-none transition placeholder:text-(--input-placeholder) focus:border-(--primary) focus:ring-2 focus:ring-(--primary)"
                   aria-label="Search all BuySmart stores"
@@ -269,7 +321,7 @@ export default function ViewAllClient() {
                 {query ? (
                   <button
                     type="button"
-                    onClick={() => setQuery("")}
+                    onClick={() => updateQuery("")}
                     className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded-full text-(--muted-foreground) transition hover:bg-(--muted) hover:text-(--foreground)"
                     aria-label="Clear store search"
                   >
@@ -285,7 +337,7 @@ export default function ViewAllClient() {
                     <button
                       key={value}
                       type="button"
-                      onClick={() => setActiveOfferType(value)}
+                      onClick={() => updateOfferType(value)}
                       aria-pressed={active}
                       className={`inline-flex h-10 items-center gap-2 rounded-[var(--anslation-ds-radius)] border px-3 text-xs font-bold transition ${
                         active
@@ -304,7 +356,7 @@ export default function ViewAllClient() {
             <div className="mt-3 flex snap-x gap-2 overflow-x-auto pb-1">
               <button
                 type="button"
-                onClick={() => setActiveCategory("All")}
+                onClick={() => updateCategory("All")}
                 aria-pressed={activeCategory === "All"}
                 className={`inline-flex h-9 shrink-0 snap-start items-center rounded-[var(--anslation-ds-radius-xs)] border px-3 text-xs font-bold transition ${
                   activeCategory === "All"
@@ -318,7 +370,7 @@ export default function ViewAllClient() {
                 <button
                   key={category}
                   type="button"
-                  onClick={() => setActiveCategory(category)}
+                  onClick={() => updateCategory(category)}
                   aria-pressed={activeCategory === category}
                   className={`inline-flex h-9 shrink-0 snap-start items-center gap-1.5 rounded-[var(--anslation-ds-radius-xs)] border px-3 text-xs font-bold transition ${
                     activeCategory === category
@@ -341,7 +393,7 @@ export default function ViewAllClient() {
                   <button
                     key={letter}
                     type="button"
-                    onClick={() => setActiveLetter(letter)}
+                    onClick={() => updateLetter(letter)}
                     aria-pressed={active}
                     className={`grid h-8 min-w-8 shrink-0 snap-start place-items-center rounded-[var(--anslation-ds-radius-xs)] px-2 text-xs font-bold transition ${
                       active
@@ -357,7 +409,7 @@ export default function ViewAllClient() {
 
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
               <p className="font-semibold text-(--muted-foreground)">
-                Showing <span className="text-(--foreground)">{filteredItems.length}</span> of {directoryItems.length} stores
+                Showing <span className="text-(--foreground)">{paginatedItems.length}</span> of {filteredItems.length} stores
               </p>
               {activeFilters.length ? (
                 <button
@@ -373,11 +425,57 @@ export default function ViewAllClient() {
           </div>
 
           {filteredItems.length ? (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-              {filteredItems.map((item) => (
-                <StoreDirectoryCard key={`${item.storeSlug}-${item.title}`} item={item} counters={counters} />
-              ))}
-            </div>
+            <>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {paginatedItems.map((item) => (
+                  <StoreDirectoryCard key={`${item.storeSlug}-${item.title}`} item={item} counters={counters} />
+                ))}
+              </div>
+
+              {totalPages > 1 ? (
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                  <button
+                    type="button"
+                    disabled={safeCurrentPage === 1}
+                    onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                    className="buy-smart-page-nav flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition disabled:opacity-50 sm:h-11 sm:w-[124px] sm:px-5"
+                  >
+                    <ChevronLeft size={16} />
+                    <span className="hidden sm:inline">Previous</span>
+                  </button>
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => {
+                      if (page === 1 || page === totalPages || (page >= safeCurrentPage - 2 && page <= safeCurrentPage + 3)) {
+                        return (
+                          <button
+                            key={page}
+                            type="button"
+                            onClick={() => setCurrentPage(page)}
+                            className={`buy-smart-page-number flex h-10 min-w-10 items-center justify-center rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition ${
+                              safeCurrentPage === page ? "is-active" : ""
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        );
+                      } else if (page === safeCurrentPage - 2 || page === safeCurrentPage + 2) {
+                        return <span key={page} className="text-(--muted-foreground)">...</span>;
+                      }
+                      return null;
+                    })}
+                  </div>
+                  <button
+                    type="button"
+                    disabled={safeCurrentPage >= totalPages}
+                    onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                    className="buy-smart-page-nav flex h-10 w-auto items-center justify-center gap-2 rounded-[var(--anslation-ds-radius)] px-3 text-sm font-bold transition disabled:opacity-50 sm:h-11 sm:w-[124px] sm:px-5"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              ) : null}
+            </>
           ) : (
             <div className="rounded-[var(--anslation-ds-radius-lg)] border border-(--border) bg-(--card) p-8 text-center shadow-[var(--anslation-ds-shadow-sm)]">
               <div className="mx-auto grid h-12 w-12 place-items-center rounded-[var(--anslation-ds-radius)] bg-(--muted)">

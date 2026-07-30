@@ -9,11 +9,21 @@ export default function EstimateForm({ includeAddress = false }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const form = event.target;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(window.localStorage.getItem("kairos_leads") || "[]");
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem("kairos_leads", JSON.stringify(leads));
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
     setLoading(true);
     // Simulate a brief async action before confirming
     setTimeout(() => {
       setLoading(false);
       setSent(true);
+      form.reset();
     }, 900);
   };
 
@@ -31,7 +41,7 @@ export default function EstimateForm({ includeAddress = false }) {
         <CheckCircle2 size={32} className="kairos-success-icon" aria-hidden="true" />
         <div className="kairos-success-text">
           <h3>Thank You!</h3>
-          <p>Your request has been received. An ANSROS PEST CONTROL expert will contact you in minutes.</p>
+          <p>Saved on this device — no request was sent. For a real response, call or text ANSROS PEST CONTROL directly at (786) 400-3830.</p>
         </div>
       </div>
     );
@@ -118,7 +128,7 @@ export default function EstimateForm({ includeAddress = false }) {
         {loading ? (
           <>
             <Loader2 size={18} className="kairos-spin" aria-hidden="true" />
-            Scheduling Inspection…
+            Saving Request…
           </>
         ) : (
           <>

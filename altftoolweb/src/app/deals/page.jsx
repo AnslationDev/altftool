@@ -14,7 +14,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "AltF Deals — Free Lifetime Software Deals",
     description:
-      "AltF Deals brings you handpicked software deals at 100% off, forever. Free lifetime alternatives to paid tools like Photoshop, Acrobat, and Camtasia — no signup, no credit card.",
+      "Handpicked software deals at 100% off forever: free lifetime alternatives to paid tools such as Photoshop, Acrobat and Camtasia, with no signup or card.",
     path: "/deals",
     keywords: [
       "free software deals",

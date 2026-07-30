@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import heroBg from '../assets/hero-bg.png';
+import heroBg from '../assets/hero-bg.webp';
 import './Hero.css';
 
 export default function Hero() {
@@ -7,7 +7,16 @@ export default function Hero() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    e.target.reset();
+    const form = e.target;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(window.localStorage.getItem('pest_killer_leads') || '[]');
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem('pest_killer_leads', JSON.stringify(leads));
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
+    form.reset();
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
   }
@@ -36,10 +45,14 @@ export default function Hero() {
           <div className="hero-form-box">
             <h3>Get a Free Quote</h3>
             <form onSubmit={handleSubmit}>
-              <input type="text" placeholder="Your Name" required />
-              <input type="tel" placeholder="Phone Number" required onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')} />
-              <input type="email" placeholder="Email Address" required />
-              <textarea placeholder="Message"></textarea>
+              <label className="sr-only" htmlFor="pk-hero-name">Your Name</label>
+              <input id="pk-hero-name" name="name" type="text" placeholder="Your Name" required />
+              <label className="sr-only" htmlFor="pk-hero-phone">Phone Number</label>
+              <input id="pk-hero-phone" name="phone" type="tel" placeholder="Phone Number" required onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')} />
+              <label className="sr-only" htmlFor="pk-hero-email">Email Address</label>
+              <input id="pk-hero-email" name="email" type="email" placeholder="Email Address" required />
+              <label className="sr-only" htmlFor="pk-hero-message">Message</label>
+              <textarea id="pk-hero-message" name="message" placeholder="Message"></textarea>
               <button type="submit" className="btn-green" disabled={submitted}>
                 {submitted ? "Thank you! We will call you back soon." : "Submit Enquiry"}
               </button>

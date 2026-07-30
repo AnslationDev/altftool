@@ -22,9 +22,7 @@ export default function MainComponent() {
   const [saturation, setSaturation] = useState(100);
   const [smoothing, setSmoothing] = useState(0);
   const [preset, setPreset] = useState("normal");
-  const [isApplyingPreset, setIsApplyingPreset] = useState(false);
-  const [presetProgress, setPresetProgress] = useState(0);
-  
+
   // Before/after split slider position (0 to 100)
   const [splitOffset, setSplitOffset] = useState(50);
   const [success, setSuccess] = useState("");
@@ -168,108 +166,18 @@ export default function MainComponent() {
     "outdoor-adventure": { b: 113, c: 110, s: 108, sm: 1.5, description: "Outdoor adventure enhancement with natural ruggedness" },
     corporate: { b: 108, c: 112, s: 106, sm: 1.5, description: "Corporate boardroom enhancement with executive polish" },
     creative: { b: 110, c: 108, s: 112, sm: 1.8, description: "Creative professional enhancement with artistic expression" },
-    "style_1": { b: 111, c: 112, s: 103, sm: 1.1, description: "Unique auto-generated enhancement style 1" },
-    "style_2": { b: 110, c: 108, s: 106, sm: 0.3, description: "Unique auto-generated enhancement style 2" },
-    "style_3": { b: 107, c: 129, s: 111, sm: 1.8, description: "Unique auto-generated enhancement style 3" },
-    "style_4": { b: 97, c: 95, s: 111, sm: 1.8, description: "Unique auto-generated enhancement style 4" },
-    "style_5": { b: 126, c: 95, s: 109, sm: 1.2, description: "Unique auto-generated enhancement style 5" },
-    "style_6": { b: 100, c: 126, s: 97, sm: 2.7, description: "Unique auto-generated enhancement style 6" },
-    "style_7": { b: 95, c: 113, s: 109, sm: 1.1, description: "Unique auto-generated enhancement style 7" },
-    "style_8": { b: 129, c: 106, s: 93, sm: 0.2, description: "Unique auto-generated enhancement style 8" },
-    "style_9": { b: 94, c: 118, s: 91, sm: 0.7, description: "Unique auto-generated enhancement style 9" },
-    "style_10": { b: 91, c: 97, s: 118, sm: 1.3, description: "Unique auto-generated enhancement style 10" },
-    "style_11": { b: 93, c: 117, s: 113, sm: 0.9, description: "Unique auto-generated enhancement style 11" },
-    "style_12": { b: 97, c: 104, s: 126, sm: 0.4, description: "Unique auto-generated enhancement style 12" },
-    "style_13": { b: 127, c: 107, s: 98, sm: 1.3, description: "Unique auto-generated enhancement style 13" },
-    "style_14": { b: 91, c: 127, s: 124, sm: 1.9, description: "Unique auto-generated enhancement style 14" },
-    "style_15": { b: 105, c: 96, s: 104, sm: 1.6, description: "Unique auto-generated enhancement style 15" },
-    "style_16": { b: 109, c: 100, s: 105, sm: 2.3, description: "Unique auto-generated enhancement style 16" },
-    "style_17": { b: 114, c: 106, s: 117, sm: 1.8, description: "Unique auto-generated enhancement style 17" },
-    "style_18": { b: 125, c: 104, s: 105, sm: 1.6, description: "Unique auto-generated enhancement style 18" },
-    "style_19": { b: 128, c: 123, s: 127, sm: 2.6, description: "Unique auto-generated enhancement style 19" },
-    "style_20": { b: 125, c: 116, s: 126, sm: 0.2, description: "Unique auto-generated enhancement style 20" },
-    "style_21": { b: 110, c: 120, s: 125, sm: 0.3, description: "Unique auto-generated enhancement style 21" },
-    "style_22": { b: 126, c: 114, s: 91, sm: 2.7, description: "Unique auto-generated enhancement style 22" },
-    "style_23": { b: 127, c: 123, s: 98, sm: 2.3, description: "Unique auto-generated enhancement style 23" },
-    "style_24": { b: 118, c: 98, s: 101, sm: 0.4, description: "Unique auto-generated enhancement style 24" },
-    "style_25": { b: 106, c: 120, s: 116, sm: 0.2, description: "Unique auto-generated enhancement style 25" },
-    "style_26": { b: 103, c: 99, s: 96, sm: 1.5, description: "Unique auto-generated enhancement style 26" },
-    "style_27": { b: 96, c: 96, s: 90, sm: 1.8, description: "Unique auto-generated enhancement style 27" },
-    "style_28": { b: 106, c: 101, s: 95, sm: 0.5, description: "Unique auto-generated enhancement style 28" },
-    "style_29": { b: 112, c: 101, s: 99, sm: 2.1, description: "Unique auto-generated enhancement style 29" },
-    "style_30": { b: 94, c: 124, s: 127, sm: 0.2, description: "Unique auto-generated enhancement style 30" },
-    "style_31": { b: 121, c: 96, s: 93, sm: 1.8, description: "Unique auto-generated enhancement style 31" },
-    "style_32": { b: 118, c: 96, s: 117, sm: 2.1, description: "Unique auto-generated enhancement style 32" },
-    "style_33": { b: 121, c: 107, s: 98, sm: 1.7, description: "Unique auto-generated enhancement style 33" },
-    "style_34": { b: 126, c: 124, s: 125, sm: 2.8, description: "Unique auto-generated enhancement style 34" },
-    "style_35": { b: 114, c: 105, s: 96, sm: 2.3, description: "Unique auto-generated enhancement style 35" },
-    "style_36": { b: 128, c: 95, s: 98, sm: 0.2, description: "Unique auto-generated enhancement style 36" },
-    "style_37": { b: 102, c: 108, s: 90, sm: 2.3, description: "Unique auto-generated enhancement style 37" },
-    "style_38": { b: 117, c: 127, s: 94, sm: 2.2, description: "Unique auto-generated enhancement style 38" },
-    "style_39": { b: 106, c: 114, s: 104, sm: 0.5, description: "Unique auto-generated enhancement style 39" },
-    "style_40": { b: 126, c: 105, s: 109, sm: 2.8, description: "Unique auto-generated enhancement style 40" },
-    "style_41": { b: 125, c: 103, s: 104, sm: 0.0, description: "Unique auto-generated enhancement style 41" },
-    "style_42": { b: 99, c: 107, s: 91, sm: 1.9, description: "Unique auto-generated enhancement style 42" },
-    "style_43": { b: 91, c: 102, s: 125, sm: 0.9, description: "Unique auto-generated enhancement style 43" },
-    "style_44": { b: 111, c: 104, s: 97, sm: 2.7, description: "Unique auto-generated enhancement style 44" },
-    "style_45": { b: 90, c: 96, s: 107, sm: 0.5, description: "Unique auto-generated enhancement style 45" },
-    "style_46": { b: 119, c: 110, s: 125, sm: 2.6, description: "Unique auto-generated enhancement style 46" },
-    "style_47": { b: 100, c: 122, s: 125, sm: 1.0, description: "Unique auto-generated enhancement style 47" },
-    "style_48": { b: 95, c: 97, s: 120, sm: 2.6, description: "Unique auto-generated enhancement style 48" },
-    "style_49": { b: 103, c: 109, s: 103, sm: 1.6, description: "Unique auto-generated enhancement style 49" },
-    "style_50": { b: 119, c: 123, s: 105, sm: 1.7, description: "Unique auto-generated enhancement style 50" },
-    "style_51": { b: 103, c: 123, s: 91, sm: 1.0, description: "Unique auto-generated enhancement style 51" },
-    "style_52": { b: 122, c: 129, s: 105, sm: 1.8, description: "Unique auto-generated enhancement style 52" },
-    "style_53": { b: 122, c: 91, s: 111, sm: 1.3, description: "Unique auto-generated enhancement style 53" },
-    "style_54": { b: 105, c: 102, s: 117, sm: 2.9, description: "Unique auto-generated enhancement style 54" },
-    "style_55": { b: 99, c: 114, s: 94, sm: 1.9, description: "Unique auto-generated enhancement style 55" },
-    "style_56": { b: 106, c: 116, s: 111, sm: 2.2, description: "Unique auto-generated enhancement style 56" },
-    "style_57": { b: 111, c: 96, s: 121, sm: 0.7, description: "Unique auto-generated enhancement style 57" },
-    "style_58": { b: 129, c: 101, s: 116, sm: 0.4, description: "Unique auto-generated enhancement style 58" },
-    "style_59": { b: 114, c: 100, s: 114, sm: 2.3, description: "Unique auto-generated enhancement style 59" },
-    "style_60": { b: 106, c: 111, s: 107, sm: 1.0, description: "Unique auto-generated enhancement style 60" },
-    "style_61": { b: 93, c: 121, s: 125, sm: 0.2, description: "Unique auto-generated enhancement style 61" },
-    "style_62": { b: 117, c: 127, s: 92, sm: 0.3, description: "Unique auto-generated enhancement style 62" },
-    "style_63": { b: 102, c: 126, s: 129, sm: 2.7, description: "Unique auto-generated enhancement style 63" },
-    "style_64": { b: 124, c: 96, s: 126, sm: 1.6, description: "Unique auto-generated enhancement style 64" },
-    "style_65": { b: 112, c: 126, s: 111, sm: 1.6, description: "Unique auto-generated enhancement style 65" }
-
   };
 
   const handleApplyPreset = (key) => {
     setPreset(key);
-    setIsApplyingPreset(true);
-    setPresetProgress(0);
-    
     const p = presets[key];
-    
-    // Animate the progress bar while applying preset
-    const steps = 20;
-    const stepSize = 100 / steps;
-    let step = 0;
-    
-    const applyStep = () => {
-      if (step >= steps) {
-        setBrightness(Math.max(50, p.b));
-        setContrast(Math.max(50, p.c));
-        setSaturation(Math.max(50, p.s));
-        setSmoothing(p.sm);
-        setIsApplyingPreset(false);
-        setPresetProgress(100);
-        // Success message is intentionally omitted here to prevent showing the green banner
-        return;
-      }
-      
-      step++;
-      setPresetProgress((step * stepSize) * 0.6); // Apply 60% during pixel manipulation
-      setTimeout(applyStep, 30); // Faster animation for better UX
-    };
-    
-    applyStep();
+    setBrightness(Math.max(50, p.b));
+    setContrast(Math.max(50, p.c));
+    setSaturation(Math.max(50, p.s));
+    setSmoothing(p.sm);
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files?.[0];
+  const processFile = (file) => {
     if (!file) return;
     if (!file.type.startsWith("image/")) {
       setError("Please select a valid image file.");
@@ -281,10 +189,22 @@ export default function MainComponent() {
     const reader = new FileReader();
     reader.onload = (event) => {
       setImageSrc(event.target.result);
-      // Reset controls
       handleApplyPreset("normal");
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleFileUpload = (e) => {
+    processFile(e.target.files?.[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    processFile(e.dataTransfer.files?.[0]);
   };
 
   // Build the CSS filter string
@@ -390,6 +310,8 @@ export default function MainComponent() {
           {!imageSrc ? (
             <div
               onClick={() => fileInputRef.current?.click()}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
               className="border-2 border-dashed border-(--border) hover:border-teal-500 rounded-xl p-12 text-center cursor-pointer transition-all bg-(--page) flex flex-col items-center justify-center min-h-[350px]"
             >
               <Upload className="h-10 w-10 text-teal-500/70 mb-4 animate-bounce" />
@@ -489,30 +411,7 @@ export default function MainComponent() {
                 {Object.keys(presets).length} Presets
               </span>
             </h4>
-            
-            {/* Preset Application Progress Bar (Moved to TOP so it is always visible) */}
-            {isApplyingPreset && (
-              <div className="mb-3 space-y-2 p-3 rounded-lg border border-teal-500/20 bg-teal-500/5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-700 dark:text-slate-300 font-medium">
-                    Applying <span className="font-bold text-teal-600 dark:text-teal-400 capitalize">{preset}</span> preset...
-                  </span>
-                  <span className="text-teal-600 dark:text-teal-400 font-bold">
-                    {Math.round(presetProgress)}%
-                  </span>
-                </div>
-                <div className="w-full bg-(--page) rounded-full h-1.5 overflow-hidden">
-                  <div 
-                    className="bg-gradient-to-r from-teal-500 to-cyan-400 h-1.5 rounded-full transition-all duration-300 ease-out"
-                    style={{ width: `${presetProgress}%` }}
-                  />
-                </div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400 italic">
-                  Enhancing skin tone, lighting, and facial features...
-                </div>
-              </div>
-            )}
-            
+
             <div className="relative">
               <select
                 value={preset}
@@ -520,10 +419,12 @@ export default function MainComponent() {
                   setPreset(e.target.value);
                   if (imageSrc) handleApplyPreset(e.target.value);
                 }}
-                disabled={!imageSrc || isApplyingPreset}
+                disabled={!imageSrc}
+                aria-label="Enhancement preset"
                 className="w-full appearance-none bg-(--surface) border border-(--border) rounded-lg px-4 py-2.5 text-sm font-medium text-(--foreground) focus:outline-none focus:border-teal-500 cursor-pointer pr-10 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
               >
                 <option value="normal" className="bg-(--surface)">Normal (Default)</option>
+                <option value="custom" disabled className="bg-(--surface)">Custom</option>
                 {Object.keys(presets)
                   .filter(key => key !== "normal")
                   .map((key) => {
@@ -570,6 +471,7 @@ export default function MainComponent() {
                 max="150"
                 value={brightness}
                 disabled={!imageSrc}
+                aria-label="Brightness"
                 onChange={(e) => {
                   setBrightness(parseInt(e.target.value));
                   setPreset("custom");
@@ -590,6 +492,7 @@ export default function MainComponent() {
                 max="150"
                 value={contrast}
                 disabled={!imageSrc}
+                aria-label="Contrast"
                 onChange={(e) => {
                   setContrast(parseInt(e.target.value));
                   setPreset("custom");
@@ -610,6 +513,7 @@ export default function MainComponent() {
                 max="150"
                 value={saturation}
                 disabled={!imageSrc}
+                aria-label="Saturation"
                 onChange={(e) => {
                   setSaturation(parseInt(e.target.value));
                   setPreset("custom");
@@ -631,6 +535,7 @@ export default function MainComponent() {
                 step="0.5"
                 value={smoothing}
                 disabled={!imageSrc}
+                aria-label="Skin smoothing"
                 onChange={(e) => {
                   setSmoothing(parseFloat(e.target.value));
                   setPreset("custom");

@@ -8,8 +8,10 @@
 // Inert unless ALTFT_CONTENT_AUTOMATION_ENABLED === "true" (master.md).
 
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
-import { CRON_SECRET_ENV, LANES, isAutomationEnabled } from "@/lib/automation/constants";
+import { hasModuleAccess } from "@/lib/permissionUtils";
+import { CRON_SECRET_ENV, LANES, PROJECT_ID, isAutomationEnabled } from "@/lib/automation/constants";
 import { readAutomationSettings } from "@/lib/automation/settings";
 import { runBlogLane } from "@/lib/automation/blogLane";
 import { runSeoLane } from "@/lib/automation/seoLane";
@@ -18,6 +20,16 @@ import { runTrendingLane } from "@/lib/automation/trending";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
+
+// Same project-scoped modules the single-lane siblings (/api/blogs/generate,
+// /api/seo/generate) authorize against — trending only ever files blogTopics
+// suggestions (see TrendingPanel, which always calls this with
+// lanes:["trending"]), so it rides on the "blogs" module like the blog lane.
+const LANE_MODULES = {
+  trending: "blogs",
+  blog: "blogs",
+  seo: "seo",
+};
 
 function cronSecretOk(request) {
   // Accept AUTOMATION_CRON_SECRET and Vercel's built-in CRON_SECRET (Vercel
@@ -29,9 +41,26 @@ function cronSecretOk(request) {
   return secrets.some((secret) => header === secret || bearer === secret);
 }
 
-async function authorize(request) {
+/**
+ * Unlike the single-lane siblings, this orchestrator can run any subset of
+ * lanes in one call — so an admin token must be checked against EVERY module
+ * a requested lane touches (mirrors hasModuleAccess used by
+ * /api/blogs/generate and /api/seo/generate), not just "is any active admin".
+ */
+async function authorize(request, lanes) {
   if (cronSecretOk(request)) return { via: "cron", startedBy: "cron" };
+
   const { admin } = await verifyActiveAdmin(request);
+
+  const requiredModules = new Set(lanes.map((lane) => LANE_MODULES[lane]).filter(Boolean));
+  for (const moduleKey of requiredModules) {
+    if (!hasModuleAccess({ adminData: admin, projectId: PROJECT_ID, moduleKey, action: "write" })) {
+      const error = new Error("Forbidden");
+      error.status = 403;
+      throw error;
+    }
+  }
+
   return { via: "admin", startedBy: admin.email || admin.uid };
 }
 
@@ -54,11 +83,21 @@ async function execute({ lanes, startedBy, trigger, count = 0, paths = [] }) {
 export async function GET(request) {
   if (!isAutomationEnabled()) return NextResponse.json({ skipped: true, reason: "automation flag off" });
 
+  // Mirrors /api/blogs/generate and /api/seo/generate: every caller (cron
+  // included) is rate limited, not just admin-token requests.
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 6,
+    windowMs: 60_000,
+    scope: "automation-run",
+  });
+  if (limited) return limited;
+
   let auth;
   try {
-    auth = await authorize(request);
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    auth = await authorize(request, LANES);
+  } catch (error) {
+    const status = error?.status === 403 ? 403 : 401;
+    return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
   }
 
   try {
@@ -72,12 +111,12 @@ export async function GET(request) {
 export async function POST(request) {
   if (!isAutomationEnabled()) return NextResponse.json({ skipped: true, reason: "automation flag off" });
 
-  let auth;
-  try {
-    auth = await authorize(request);
-  } catch {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 6,
+    windowMs: 60_000,
+    scope: "automation-run",
+  });
+  if (limited) return limited;
 
   let body = {};
   try {
@@ -91,6 +130,14 @@ export async function POST(request) {
     : LANES;
   const count = Math.min(Math.max(Number(body.count) || 0, 0), 10);
   const paths = Array.isArray(body.paths) ? body.paths.slice(0, 25) : [];
+
+  let auth;
+  try {
+    auth = await authorize(request, lanes);
+  } catch (error) {
+    const status = error?.status === 403 ? 403 : 401;
+    return NextResponse.json({ error: status === 403 ? "Forbidden" : "Unauthorized" }, { status });
+  }
 
   try {
     const results = await execute({

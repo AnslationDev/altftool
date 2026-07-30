@@ -91,29 +91,38 @@ const SidebarContent = ({
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-(--muted-foreground) mb-3">Discount</p>
             <ul className="space-y-2.5">
-              {discountRanges.map((range) => (
-                <li key={range}>
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div
+              {discountRanges.map((range) => {
+                const checked = activeDiscounts.includes(range);
+                return (
+                  <li key={range}>
+                    <button
+                      type="button"
+                      role="checkbox"
+                      aria-checked={checked}
                       onClick={() => toggleDiscount(range)}
-                      className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0 ${
-                        activeDiscounts.includes(range)
-                          ? "bg-(--primary) border-(--primary)"
-                          : "border-(--border) group-hover:border-(--primary)"
-                      }`}
+                      className="w-full flex items-center gap-3 cursor-pointer group text-left"
                     >
-                      {activeDiscounts.includes(range) && (
-                        <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 10">
-                          <path d="M1.5 5l2.5 2.5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </div>
-                    <span onClick={() => toggleDiscount(range)} className="text-sm text-(--foreground) select-none">
-                      {range}
-                    </span>
-                  </label>
-                </li>
-              ))}
+                      <span
+                        aria-hidden="true"
+                        className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                          checked
+                            ? "bg-(--primary) border-(--primary)"
+                            : "border-(--border) group-hover:border-(--primary)"
+                        }`}
+                      >
+                        {checked && (
+                          <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 10">
+                            <path d="M1.5 5l2.5 2.5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </span>
+                      <span className="text-sm text-(--foreground) select-none">
+                        {range}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -121,24 +130,33 @@ const SidebarContent = ({
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-(--muted-foreground) mb-3">Users</p>
-            <ul className="space-y-2.5">
-              {[{ label: "All Users", value: "all" }, { label: "New Users", value: "new" }].map((u) => (
-                <li key={u.value}>
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <div
+            <ul className="space-y-2.5" role="radiogroup" aria-label="Users">
+              {[{ label: "All Users", value: "all" }, { label: "New Users", value: "new" }].map((u) => {
+                const checked = activeUser === u.value;
+                return (
+                  <li key={u.value}>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={checked}
                       onClick={() => setActiveUser(u.value)}
-                      className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0 ${
-                        activeUser === u.value ? "border-(--primary)" : "border-(--border) group-hover:border-(--primary)"
-                      }`}
+                      className="w-full flex items-center gap-3 cursor-pointer group text-left"
                     >
-                      {activeUser === u.value && <div className="w-2 h-2 rounded-full bg-(--primary)" />}
-                    </div>
-                    <span onClick={() => setActiveUser(u.value)} className="text-sm text-(--foreground) select-none">
-                      {u.label}
-                    </span>
-                  </label>
-                </li>
-              ))}
+                      <span
+                        aria-hidden="true"
+                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                          checked ? "border-(--primary)" : "border-(--border) group-hover:border-(--primary)"
+                        }`}
+                      >
+                        {checked && <span className="w-2 h-2 rounded-full bg-(--primary)" />}
+                      </span>
+                      <span className="text-sm text-(--foreground) select-none">
+                        {u.label}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

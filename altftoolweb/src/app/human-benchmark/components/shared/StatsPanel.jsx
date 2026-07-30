@@ -82,7 +82,7 @@ export function StatsChart({ data, xLabel, title, subtitle }) {
         ))}
       </svg>
       <p className="text-[10px] text-[var(--muted-foreground)]">
-        X-axis: {xLabel} &nbsp;·&nbsp; Aggregate population study data
+        X-axis: {xLabel} &nbsp;·&nbsp; Example distribution curve, not aggregated user data
       </p>
     </div>
   );

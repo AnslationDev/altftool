@@ -75,6 +75,15 @@ export default function ReactionTime({ onComplete, beep }) {
         ))}
       </div>
       <div onClick={handleClick}
+        role="button"
+        tabIndex={0}
+        aria-label={label}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
         className={`${bgClass} rounded-xl border border-[var(--card-border)] flex items-center justify-center cursor-pointer select-none`}
         style={{ height: 340 }}>
         <div className="text-center">
@@ -107,7 +116,7 @@ export default function ReactionTime({ onComplete, beep }) {
           </div>
         </div>
       )}
-      <StatsChart data={DIST} xLabel="Reaction time (ms)" title="Population Score Distribution" subtitle="How 200,000+ users scored on this test" />
+      <StatsChart data={DIST} xLabel="Reaction time (ms)" title="Population Score Distribution" subtitle="Illustrative example distribution, not measured from real users" />
       <AboutCard {...ABOUT} />
     </div>
   );

@@ -10,7 +10,6 @@ export default function AcademyCard({ academy }) {
   return (
     <a
       href={academy?.academyUrl || "#"}
-      id="academy-card"
       target="_blank"
       rel="noopener noreferrer"
       className="

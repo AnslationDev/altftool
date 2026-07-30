@@ -11,6 +11,28 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "../../toolSeoContent";
 import ToolSeoSection from "../../ToolSeoSection";
+import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+
+// Served from the edge instead of the origin on every hit. Before this, the
+// root layout's `await connection()` made all 3,753 tool URLs dynamic and the
+// responses carried no-store, so every view paid ~205 ms of origin TTFB;
+// /tools/developer, already force-static, answers in ~32 ms from the same PoP.
+// force-static overrides the layout's connection() — /blogs/[slug] has run this
+// exact shape in production since well before this change.
+//
+// generateStaticParams returns [] deliberately: nothing is prerendered at build
+// time (3,753 pages of HTML would not fit the artifact gate), pages are cached
+// on first request instead. The effective TTL is usually 300s rather than a
+// day — the root layout's loadSeoConfig() fetch declares revalidate 300 and
+// Next takes the minimum across a render.
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+export function generateStaticParams() {
+  if (shouldDeferBulkPrerendering()) return [];
+  return [];
+}
+
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -65,8 +87,17 @@ export default async function ToolPage({ params }) {
           }),
         ]}
       />
-      <ToolClient slug={slug} category="all" />
-      <ToolSeoSection slug={slug} tool={tool} category="all" />
+      {/*
+        Nested, not a sibling: ToolDetailChrome renders `children` of
+        ToolClient as its `seoContent`, INSIDE <main> and inside the
+        container that applies px-4 sm:px-6 lg:px-8. As a sibling it landed
+        outside that padding, so on a 390px phone every "About this tool"
+        card ran edge-to-edge while the tool above it was inset by 16px.
+        Same shape /tools/all/api-stress-estimator already ships.
+      */}
+      <ToolClient slug={slug} tool={tool} category="all">
+        <ToolSeoSection slug={slug} tool={tool} category="all" />
+      </ToolClient>
     </>
   );
 }

@@ -135,12 +135,24 @@ export default function NewsletterSubscribersPage() {
   const { search, onSearchChange, sort, setSort, rows: visibleRows, matched, total } =
     useTableControls(rows, { searchFields: SEARCH_FIELDS });
 
+  // OWASP CSV/Formula Injection mitigation: a leading =, +, -, or @ is how
+  // Excel/Google Sheets recognize a formula. `email` and `source` are
+  // attacker-controllable via the public, unauthenticated newsletter opt-in
+  // (firestore.rules only requires email to look like an email and source to
+  // be <=60 chars), so an unsanitized export could hand a Super Admin a live
+  // formula the moment they open the CSV. Prefix with a single quote so
+  // spreadsheet apps render the value as inert text.
+  function sanitizeCsvCell(value) {
+    const str = String(value);
+    return /^[=+\-@]/.test(str) ? `'${str}` : str;
+  }
+
   function exportCsv() {
     const csvRows = [
       ["email", "source", "subscribed_at"],
       ...visibleRows.map((sub) => [
-        sub.email || "",
-        sub.source || "",
+        sanitizeCsvCell(sub.email || ""),
+        sanitizeCsvCell(sub.source || ""),
         toDate(sub.createdAt)?.toISOString() || "",
       ]),
     ];

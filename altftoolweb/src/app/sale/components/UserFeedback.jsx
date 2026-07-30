@@ -106,6 +106,9 @@ const UserFeedback = ({
         <p className="section-subtitle mx-0! font-secondary">
           See How Users Are Saving With Us.
         </p>
+        <p className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-medium text-(--muted-foreground)">
+          Sample reviews shown for illustration — not verified customer submissions
+        </p>
       </div>
 
         {/* Slider */}

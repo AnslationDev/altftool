@@ -1,6 +1,7 @@
+"use client";
+
 import ToolHome from "./pages";
 
-
-export default function Toolentry(){
-  return<ToolHome/>
+export default function ToolEntry() {
+  return <ToolHome />;
 }

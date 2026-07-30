@@ -16,9 +16,14 @@ export async function generateMetadata({ params }) {
   const post = await getBlogPost(slug);
 
   if (!post) {
+    // Without noindex this page asks to be indexed, and it is reachable at any
+    // slug: these routes are statically generated, so notFound() is served with
+    // a 200 rather than a 404 (verified live across /tools, /blogs, /apps and
+    // /alternatives). Every unknown slug is therefore an indexable soft 404.
     return createPageMetadata({
       title: "Blog Not Found | TripFindBox",
       path: `/bops/tripfindbox/blogs/${slug}`,
+      noindex: true,
     });
   }
 

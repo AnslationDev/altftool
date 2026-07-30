@@ -145,6 +145,16 @@ export default function GuardNestPage() {
 
   function handleQuoteSubmit(event) {
     event.preventDefault();
+    const form = event.target;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(window.localStorage.getItem("guardnest_leads") || "[]");
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem("guardnest_leads", JSON.stringify(leads));
+    } catch {
+      // localStorage can be unavailable in private browsing; the success state still works.
+    }
+    form.reset();
     setSubmitted(true);
   }
 
@@ -422,7 +432,8 @@ export default function GuardNestPage() {
                 {submitted ? (
                   <p className="guardnest-form-thanks" role="status">
                     <Check size={18} aria-hidden="true" />
-                    Thanks! A friendly human will reach out soon.
+                    Saved on this device — no request was sent. For the fastest
+                    response, call us at {PHONE_DISPLAY}.
                   </p>
                 ) : (
                   <p className="guardnest-form-note">

@@ -151,8 +151,13 @@ export default async function CategoryPage({ params }) {
               </ul>
 
               {/* CTA */}
-              <button className="mt-6 w-full btn-primary  text-white py-3 rounded-lg font-semibold">
-                Visit Site
+              <button
+                type="button"
+                disabled
+                title="Direct links are coming soon"
+                className="mt-6 w-full btn-primary text-white py-3 rounded-lg font-semibold opacity-60 cursor-not-allowed"
+              >
+                Visit Site (Coming Soon)
               </button>
 
             </div>
@@ -197,8 +202,13 @@ export default async function CategoryPage({ params }) {
             <p className="text-sm mt-2 opacity-90">
               Find the best tool for your needs instantly.
             </p>
-            <button className="mt-4 bg-white text-blue-600 px-4 py-2 rounded font-semibold">
-              Get Started
+            <button
+              type="button"
+              disabled
+              title="Coming soon"
+              className="mt-4 bg-white text-blue-600 px-4 py-2 rounded font-semibold opacity-60 cursor-not-allowed"
+            >
+              Get Started (Coming Soon)
             </button>
           </div>
 

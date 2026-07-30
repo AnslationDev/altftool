@@ -5,11 +5,37 @@
 
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Shield, ShieldAlert, CheckCircle2, XCircle, DollarSign, Activity, FileCheck, RefreshCw } from "lucide-react";
 import { MOCK_ADMIN_METRICS } from "../../data/mockMarketplaceData";
+import * as apiClient from "../../services/apiClient";
+
+const STATUS_BADGE_CLASS = {
+  APPROVED: "altf-badge altf-badge-verified",
+  PENDING_REVIEW: "py-1 px-2.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-semibold",
+  REJECTED: "py-1 px-2.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] font-semibold",
+  SUSPENDED: "py-1 px-2.5 rounded bg-slate-500/20 text-slate-300 border border-slate-500/30 text-[11px] font-semibold",
+};
 
 export default function AdminDashboard({ websites, orders }) {
+  const [siteOverrides, setSiteOverrides] = useState({});
+  const [pendingAction, setPendingAction] = useState(null);
+
+  const handleModerate = async (siteId, action) => {
+    setPendingAction(`${siteId}:${action}`);
+    try {
+      const notes = action === "reject" ? window.prompt("Rejection reason (required):") : undefined;
+      if (action === "reject" && !notes) return;
+      await apiClient.moderateListing(siteId, action, notes ? { adminNotes: notes } : {});
+      const nextStatus = action === "approve" ? "APPROVED" : action === "reject" ? "REJECTED" : "SUSPENDED";
+      setSiteOverrides((current) => ({ ...current, [siteId]: nextStatus }));
+    } catch (e) {
+      window.alert(e.message || "Failed to update listing");
+    } finally {
+      setPendingAction(null);
+    }
+  };
+
   return (
     <div className="space-y-8 py-4">
       {/* Header */}
@@ -82,25 +108,44 @@ export default function AdminDashboard({ websites, orders }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {websites.map((site) => (
-                <tr key={site.id} className="hover:bg-white">
-                  <td className="py-3 font-bold text-white">{site.domain}</td>
-                  <td className="py-3 text-slate-600">{site.niche}</td>
-                  <td className="py-3 font-mono text-indigo-300">DR {site.dr} ({site.traffic.toLocaleString()}/mo)</td>
-                  <td className="py-3 font-mono text-emerald-400 font-bold">${site.prices.guestPost}</td>
-                  <td className="py-3">
-                    <span className="altf-badge altf-badge-verified">
-                      APPROVED
-                    </span>
-                  </td>
-                  <td className="py-3 text-right space-x-2">
-                    <button className="altf-btn-secondary py-1 px-2.5 text-[11px]">Audit</button>
-                    <button className="py-1 px-2.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px]">
-                      Re-Verify
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {websites.map((site) => {
+                const status = siteOverrides[site.id] || site.status || "PENDING_REVIEW";
+                const isApproving = pendingAction === `${site.id}:approve`;
+                const isRejecting = pendingAction === `${site.id}:reject`;
+                return (
+                  <tr key={site.id} className="hover:bg-white">
+                    <td className="py-3 font-bold text-white">{site.domain}</td>
+                    <td className="py-3 text-slate-600">{site.niche}</td>
+                    <td className="py-3 font-mono text-indigo-300">DR {site.dr} ({site.traffic.toLocaleString()}/mo)</td>
+                    <td className="py-3 font-mono text-emerald-400 font-bold">${site.prices.guestPost}</td>
+                    <td className="py-3">
+                      <span className={STATUS_BADGE_CLASS[status] || STATUS_BADGE_CLASS.PENDING_REVIEW}>
+                        {status.replace(/_/g, " ")}
+                      </span>
+                    </td>
+                    <td className="py-3 text-right space-x-2">
+                      {status !== "APPROVED" && (
+                        <button
+                          disabled={isApproving}
+                          onClick={() => handleModerate(site.id, "approve")}
+                          className="altf-btn-secondary py-1 px-2.5 text-[11px] disabled:opacity-50"
+                        >
+                          {isApproving ? "Approving…" : "Approve"}
+                        </button>
+                      )}
+                      {status !== "REJECTED" && status !== "SUSPENDED" && (
+                        <button
+                          disabled={isRejecting}
+                          onClick={() => handleModerate(site.id, status === "APPROVED" ? "suspend" : "reject")}
+                          className="py-1 px-2.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] disabled:opacity-50"
+                        >
+                          {isRejecting ? "Working…" : status === "APPROVED" ? "Suspend" : "Reject"}
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

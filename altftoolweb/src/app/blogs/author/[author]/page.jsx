@@ -59,8 +59,11 @@ export async function generateMetadata({ params }) {
   if (!author) {
     return createPageMetadata({
       title: "Blog Author - AltFTool",
-      description: "Browse AltFTool blog authors and editorial contributors.",
+      description:
+        "This AltFTool blog author profile is not available. Browse the blog to find guides and reviews from our editorial contributors.",
       path: `/blogs/author/${authorSlug}`,
+      // Thin profiles are already noindexed below; a missing one 404s outright.
+      noindex: true,
     });
   }
 

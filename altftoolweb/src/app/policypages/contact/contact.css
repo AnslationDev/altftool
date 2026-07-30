@@ -568,6 +568,10 @@
   gap: 0.75rem;
 }
 
+.altf-contact .contact-newsletter-form .contact-success {
+  grid-column: 1 / -1;
+}
+
 .altf-contact .contact-newsletter-form input {
   height: 3.25rem;
   padding-inline: 1rem;

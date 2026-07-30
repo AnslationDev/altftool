@@ -237,8 +237,8 @@ export function AncestorOriginMap({ countries = [], name = '' }) {
                 <div className="w-8 h-8 bg-primary rounded-full animate-pulse"></div>
               </div>
             </div>
-            <h4 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Analyzing Lineage</h4>
-            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Processing 2.4 million historical records for <span className="text-primary font-bold">{name}</span></p>
+            <h4 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Loading origin data</h4>
+            <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Loading origin data for <span className="text-primary font-bold">{name}</span>&hellip;</p>
           </div>
         </div>
       )}

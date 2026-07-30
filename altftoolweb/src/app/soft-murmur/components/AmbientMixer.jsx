@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useAmbientAudio } from "../hooks/useAmbientAudio";
 import { useLocalMixes } from "../hooks/useLocalMixes";
@@ -17,6 +18,7 @@ import "../soft-murmur.css";
 export default function AmbientMixer() {
   const {
     soundsState,
+    unavailableSounds,
     isPlaying,
     masterVolume,
     flowMode,
@@ -273,17 +275,30 @@ export default function AmbientMixer() {
         {/* --- DYNAMIC VISUAL ENVIRONMENT CANVAS --- */}
         <VisualEnvironment soundsState={soundsState} timeOfDay={timeOfDay} />
 
-        {/* --- SCREENSAVER TEXT OVERLAY (Inspired by Mockup) --- */}
+        {/* --- SCREENSAVER TEXT OVERLAY (Inspired by Mockup) ---
+            The H1 is static and names the page's topic; the rotating scene
+            label used to occupy it, so the only heading a crawler saw was
+            whatever mix happened to be loaded ("AMBIENT STUDIO" when empty). */}
         <div className="screensaver-overlay">
           <div className={`screensaver-icon ${themeData.color}`}>
             <IconComponent size={34} className="animate-pulse" />
           </div>
-          <h1 className="screensaver-title">{themeData.name}</h1>
+          <h1 className="screensaver-title">Ambient Sound Mixer</h1>
+          <p className="screensaver-scene">{themeData.name}</p>
           <p className="screensaver-tagline">{themeData.tagline}</p>
         </div>
 
         {/* --- FLOATING BOTTOM PLAYER CONTROLS (Inspired by Mockup) --- */}
         <div className="floating-player-bar">
+          <Link
+            href="/"
+            className="player-btn"
+            title="Back to AltFTool"
+            aria-label="Back to AltFTool home"
+          >
+            <Icons.Home size={18} />
+          </Link>
+
           <button
             onClick={() => setIsDrawerOpen(!isDrawerOpen)}
             className={`player-btn ${isDrawerOpen ? "active" : ""}`}
@@ -417,29 +432,39 @@ export default function AmbientMixer() {
               {ambientSounds.map((sound) => {
                 const state = soundsState[sound.id];
                 const SoundIcon = Icons[sound.icon] || Icons.Volume2;
+                const isUnavailable = sound.available === false || !!unavailableSounds[sound.id];
                 return (
                   <div
                     key={sound.id}
-                    className={`drawer-sound-item cursor-pointer ${state.active ? "active" : ""}`}
-                    onClick={() => toggleSound(sound.id)}
-                    title={`Click to toggle ${sound.name}`}
+                    // Anchor target for the route's ItemList schema, which
+                    // links each listed sound to the control that plays it.
+                    id={`sound-${sound.id}`}
+                    className={`drawer-sound-item ${isUnavailable ? "unavailable" : "cursor-pointer"} ${state.active ? "active" : ""}`}
+                    onClick={() => !isUnavailable && toggleSound(sound.id)}
+                    title={isUnavailable ? `${sound.name} is currently unavailable` : `Click to toggle ${sound.name}`}
                   >
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleSound(sound.id);
+                        if (!isUnavailable) toggleSound(sound.id);
                       }}
                       className="sound-item-btn"
-                      title={`Toggle ${sound.name}`}
+                      disabled={isUnavailable}
+                      aria-disabled={isUnavailable}
+                      title={isUnavailable ? `${sound.name} is currently unavailable` : `Toggle ${sound.name}`}
                     >
-                      <SoundIcon size={16} />
+                      {isUnavailable ? <Icons.VolumeX size={16} /> : <SoundIcon size={16} />}
                     </button>
-                    
+
                     <div className="sound-slider-wrap">
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold text-slate-200">{sound.name}</span>
-                        {state.active && (
-                          <span className="text-[10px] font-mono text-emerald-400">{state.volume}%</span>
+                        {isUnavailable ? (
+                          <span className="text-[10px] font-bold text-rose-400">Unavailable</span>
+                        ) : (
+                          state.active && (
+                            <span className="text-[10px] font-mono text-emerald-400">{state.volume}%</span>
+                          )
                         )}
                       </div>
                       <input
@@ -449,9 +474,9 @@ export default function AmbientMixer() {
                         value={state.volume}
                         onChange={(e) => setSoundVolume(sound.id, parseInt(e.target.value, 10))}
                         onClick={(e) => e.stopPropagation()} // Stop toggle when adjusting volume
-                        disabled={!state.active}
+                        disabled={!state.active || isUnavailable}
                         className="custom-range mt-1"
-                        aria-label={`${sound.name} volume slider`}
+                        aria-label={isUnavailable ? `${sound.name} is unavailable` : `${sound.name} volume slider`}
                       />
                     </div>
                   </div>
@@ -468,6 +493,7 @@ export default function AmbientMixer() {
                     key={preset.id}
                     onClick={() => handleLoadPreset(preset)}
                     className="px-3 py-1.5 rounded-full text-[10px] font-bold border border-white/10 bg-white/5 text-slate-300 hover:border-emerald-400 hover:text-white"
+                    title={preset.description}
                   >
                     {preset.name}
                   </button>

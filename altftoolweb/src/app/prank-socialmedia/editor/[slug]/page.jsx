@@ -17,7 +17,10 @@ export async function generateMetadata({ params }) {
   if (!t) {
     return createPageMetadata({
       title: "Editor — Mockly",
+      description:
+        "This Mockly mockup template does not exist. Pick a template from the Mockly gallery to start editing a social media mockup.",
       path: `/prank-socialmedia/editor/${slug}`,
+      noindex: true,
     });
   }
   return createPageMetadata({

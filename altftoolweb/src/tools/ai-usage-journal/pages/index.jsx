@@ -145,6 +145,9 @@ export default function ToolHome() {
   };
 
   const resetAll = () => {
+    if (!window.confirm("Reset your journal? This will replace all your saved entries with sample data and cannot be undone.")) {
+      return;
+    }
     const date = today || isoToday();
     setEntries(seedEntries(date));
     setDraft(emptyDraft(date));

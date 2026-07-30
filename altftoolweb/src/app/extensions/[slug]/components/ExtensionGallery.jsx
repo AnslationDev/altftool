@@ -5,6 +5,10 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Eye } from "lucide-react";
 
+function isLocalScreenshot(src) {
+  return typeof src === "string" && src.startsWith("/");
+}
+
 export default function ExtensionGallery({ screenshots }) {
   const galleryItems = Array.isArray(screenshots) ? screenshots : [];
 
@@ -78,7 +82,7 @@ export default function ExtensionGallery({ screenshots }) {
                   priority={index === 0}
                   loading={index === 0 ? undefined : "lazy"}
                   className="object-contain"
-                  unoptimized
+                  unoptimized={!isLocalScreenshot(src)}
                 />
               </div>
             ))}
@@ -130,7 +134,7 @@ export default function ExtensionGallery({ screenshots }) {
                 sizes="(max-width: 768px) 80px, 112px"
                 loading="lazy"
                 className="object-cover opacity-80 hover:opacity-100 transition-opacity"
-                unoptimized
+                unoptimized={!isLocalScreenshot(src)}
               />
             </button>
           );

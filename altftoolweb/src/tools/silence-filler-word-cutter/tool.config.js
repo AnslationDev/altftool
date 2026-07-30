@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Long silences aur selected filler segments remove kare.",
+  "description": "Removes long silences from an audio recording using an adjustable loudness threshold.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

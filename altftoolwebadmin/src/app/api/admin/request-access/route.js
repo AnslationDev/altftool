@@ -41,6 +41,19 @@ export async function POST(req) {
       return NextResponse.json({ error: "projectId and moduleKey required for module requests" }, { status: 400 });
     }
 
+    // Self-serve "new admin" requests are restricted to the allowed domain —
+    // same rule /api/admin/google-login enforces for the same conceptual
+    // action reached via Google sign-in. Firebase Auth is shared with the
+    // consumer site, so without this check any authenticated end user could
+    // land a pending admin-access-request via the email/password login path.
+    const ALLOWED_DOMAIN = "anslation.com";
+    if (type === "new" && !email?.endsWith(`@${ALLOWED_DOMAIN}`)) {
+      return NextResponse.json(
+        { error: "Only Anslation accounts are allowed" },
+        { status: 403 },
+      );
+    }
+
     /* ── Deduplication ── */
     let dupQuery = adminDb
       .collection("accessRequests")

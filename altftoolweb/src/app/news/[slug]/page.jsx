@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import newsData from "../../../../public/data/newsdata.json";
 import NewsArticleView from "./NewsArticleView";
@@ -8,7 +9,6 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "../lib/getNewsDataServer";
-import { getDummyNewsData } from "../lib/dummyNewsData";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const revalidate = 600;
@@ -17,13 +17,16 @@ const ALL_CATEGORIES = [
   "politics", "tech", "business", "science", "sports", "health", "world", "entertainment",
 ];
 
-const AUTHORS = [
-  { name: "Rohan Mehta", designation: "Senior Political Correspondent", avatar: "RM", bio: "Rohan Mehta covers national politics and policy with over 12 years of experience in investigative journalism." },
-  { name: "Ananya Sharma", designation: "Technology Editor", avatar: "AS", bio: "Ananya Sharma reports on emerging tech, AI, and digital innovation. Previously at TechCrunch and The Verge." },
-  { name: "James Carter", designation: "Business Analyst", avatar: "JC", bio: "James Carter specializes in global markets, economic policy, and business strategy with a decade of reporting experience." },
-  { name: "Dr. Priya Nair", designation: "Science & Health Correspondent", avatar: "PN", bio: "Dr. Priya Nair brings a PhD in molecular biology to her reporting on health, science, and medical breakthroughs." },
-  { name: "Vikram Joshi", designation: "Sports Journalist", avatar: "VJ", bio: "Vikram Joshi has covered major sporting events worldwide including the Olympics, World Cup, and Grand Slams." },
-];
+// Feed items are syndicated, so credit goes to the originating publication when
+// the feed names one and to AltFTool otherwise. Never to an individual byline —
+// we do not know who wrote a syndicated item.
+const ORGANIZATION_ATTRIBUTION = "AltFTool News";
+
+function getSourceAttribution(article) {
+  const source = typeof article.source === "string" ? article.source.trim() : "";
+  if (!source || source.toLowerCase() === "unknown") return null;
+  return source;
+}
 
 function slugify(value = "") {
   return String(value)
@@ -34,24 +37,39 @@ function slugify(value = "") {
     .replace(/(^-|-$)/g, "");
 }
 
-function pick(list) {
-  return list[Math.floor(Math.random() * list.length)];
+// Deterministic 32-bit hash so the fallback category picked for an article
+// stays stable across requests and ISR revalidations instead of re-rolling
+// with Math.random() on every server call.
+function hashString(str = "") {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash);
+}
+
+function pickSeeded(list, seed) {
+  return list[hashString(seed) % list.length];
 }
 
 function enrichArticle(article) {
-  const author = pick(AUTHORS);
-  const category = article.category || pick(ALL_CATEGORIES);
+  const seed = article.id || article.slug || article.headline || "";
+  const sourceName = getSourceAttribution(article);
+  const category = article.category || pickSeeded(ALL_CATEGORIES, seed);
   const tags = article.tags?.length
     ? article.tags
     : [category, article.source?.toLowerCase().replace(/\s+/g, ""), "trending"].filter(Boolean);
   const readingTime = article.reading_time_minutes || Math.max(3, Math.ceil((article.summary?.length || 100) / 200) * 3 + 2);
-  const content = article.content || [
-    article.summary || "Detailed coverage of this developing story continues to unfold as new information emerges from official sources and eyewitness accounts.",
-    "Authorities have confirmed that investigations are underway to determine the full circumstances surrounding the event. Multiple agencies are collaborating to ensure a thorough review of all available evidence.",
-    "Local community leaders have called for transparency and accountability, emphasizing the need for clear communication between law enforcement agencies and the public they serve.",
-    "This incident has sparked broader discussions about enforcement procedures and the importance of maintaining public trust while ensuring safety and security for all citizens.",
-    "As the story develops, updates will be provided by official channels. Residents are encouraged to stay informed through verified news sources and official statements.",
-  ];
+  const content = article.content || (
+    article.summary
+      ? [
+          article.summary,
+          article.external_url
+            ? `Read the full story from ${article.source || "the original source"}: ${article.external_url}`
+            : null,
+        ].filter(Boolean)
+      : null
+  );
 
   return {
     ...article,
@@ -59,29 +77,22 @@ function enrichArticle(article) {
     tags,
     reading_time_minutes: readingTime,
     content,
-    author,
+    attribution: sourceName || ORGANIZATION_ATTRIBUTION,
+    is_syndicated: Boolean(sourceName),
     subtitle: article.subtitle || `An in-depth look at ${article.headline?.toLowerCase() || "this developing story"}, exploring the key developments, reactions, and what comes next.`,
-    highlights: article.highlights || [
-      { label: "Key Development", description: article.summary?.slice(0, 100) || "Major developments continue to shape the narrative around this story." },
-      { label: "Official Response", description: "Authorities have issued statements acknowledging the situation and promising a thorough investigation." },
-      { label: "Community Impact", description: "Local communities are organizing response efforts and calling for greater transparency from officials." },
-      { label: "What's Next", description: "Further updates are expected as investigations proceed and more information becomes available." },
-    ],
-    author_bio: article.author_bio || author.bio,
-    author_avatar: article.author_avatar || author.avatar,
-    author_designation: article.author_designation || author.designation,
+    highlights: article.highlights || [],
     image_caption: article.image_caption || `${article.source || "News"} — A visual report on the ongoing developments.`,
   };
 }
 
-async function findArticle(slug) {
+const findArticle = cache(async (slug) => {
   let article = (newsData.news || []).find((n) => n.slug === slug);
   if (!article) {
     const remoteNews = await getNewsDataServer();
     article = (remoteNews || []).find((n) => n.slug === slug);
   }
   return article ? enrichArticle(article) : null;
-}
+});
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -90,8 +101,11 @@ export async function generateMetadata({ params }) {
   if (!article) {
     return createPageMetadata({
       title: "News Article - AltFTool News",
-      description: "Read latest technology and web tools news on AltFTool.",
+      description:
+        "This AltFTool News article is no longer available. Head to the news hub for the latest technology, business, and web tools coverage.",
       path: `/news/${slug}`,
+      // Feed items rotate out, so this slug 404s — do not index the miss.
+      noindex: true,
     });
   }
 
@@ -113,16 +127,18 @@ export default async function NewsDetailPage({ params }) {
     notFound();
   }
 
-  const allNewsData = await getNewsDataServer().catch(() => getDummyNewsData(50));
+  // No fabricated fallback: when the feed is unavailable the sidebar widget
+  // simply renders nothing.
+  const allNewsData = await getNewsDataServer().catch(() => []);
   const allArticles = Array.isArray(allNewsData) ? allNewsData : allNewsData.news || [];
 
   const relatedNews = (newsData.news || [])
     .filter((n) => n.slug !== slug)
     .slice(0, 4);
 
-  const trendingArticles = [...allArticles]
-    .sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares))
-    .slice(0, 5);
+  // getNewsDataServer already returns newest-first; we have no engagement
+  // signal to rank by, so recency is the honest ordering.
+  const trendingArticles = allArticles.filter((n) => n.slug !== slug).slice(0, 5);
 
   const relatedContentItems = getRelatedContentForPreset(
     {
@@ -146,7 +162,9 @@ export default async function NewsDetailPage({ params }) {
             description: article.summary,
             image: article.image_url,
             datePublished: article.published_at || new Date().toISOString(),
-            author: article.author?.name || article.source,
+            // Organization credit only: the originating publication when the
+            // feed names one, otherwise the site's own organization default.
+            author: article.is_syndicated ? article.attribution : undefined,
           }),
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },

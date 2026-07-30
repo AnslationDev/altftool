@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Shaky footage ko frame-motion analysis se smooth kare.",
+  "description": "Smooths shaky footage using frame-motion analysis.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

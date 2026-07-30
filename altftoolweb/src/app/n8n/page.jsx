@@ -17,7 +17,7 @@ const INITIAL_WORKFLOW_COUNT = 12;
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "n8n Workflows – Production-Ready Automation Templates",
+    title: "n8n Workflows – Ready-Made Automation Templates",
     description: DESCRIPTION,
     path: "/n8n",
   });

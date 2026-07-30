@@ -86,7 +86,10 @@ export default function CreateAdminModal({ onClose, refresh }) {
     if (!email.trim()) e.email = "Email address is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Enter a valid email address";
     if (!password) e.password = "Password is required";
-    else if (password.length < 6) e.password = "Password must be at least 6 characters";
+    else if (password.length < 8) e.password = "Password must be at least 8 characters";
+    else if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+      e.password = "Password must include at least one letter and one number";
+    }
      if (!fullName.trim()) {
     e.fullName = "Full name is required";
   }
@@ -136,7 +139,7 @@ export default function CreateAdminModal({ onClose, refresh }) {
   const stepLabel = { idle: "Create Admin", saving: "Creating…", done: "Done!" }[step];
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
       <div role="dialog" aria-modal="true" aria-labelledby="create-admin-modal-title" className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* Header */}
@@ -162,10 +165,10 @@ export default function CreateAdminModal({ onClose, refresh }) {
             </Field>
 
             <Field label="Password" htmlFor="create-admin-password" icon={<Lock className="w-3.5 h-3.5" />} required error={errors.password}
-              hint="Minimum 6 characters. Admin can change this later.">
+              hint="Minimum 8 characters, including a letter and a number. Admin can change this later.">
               <div className="relative">
                 <TextInput id="create-admin-password" type={showPassword ? "text" : "password"} name="create-admin-password"
-                  autoComplete="new-password" placeholder="Minimum 6 characters"
+                  autoComplete="new-password" placeholder="Minimum 8 characters"
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })); }}
                   error={errors.password} disabled={loading} />

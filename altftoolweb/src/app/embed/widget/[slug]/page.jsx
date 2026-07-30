@@ -1,19 +1,29 @@
 import { notFound } from "next/navigation";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { isEmbeddable, getEmbedAttributionUrl } from "../../embedRegistry";
 import EmbedToolClient from "./EmbedToolClient";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  if (!isEmbeddable(slug)) {
+    return createPageMetadata({
+      title: "AltFTool widget",
+      description: "This embeddable widget could not be found.",
+      path: `/embed/widget/${slug}`,
+      noindex: true,
+    });
+  }
+
   const tool = toolMetaMap[slug];
   return {
     // `absolute` bypasses the layout's "| AltFTool" title template.
-    title: { absolute: tool ? `${tool.name} — AltFTool widget` : "AltFTool widget" },
+    title: { absolute: `${tool.name} — AltFTool widget` },
     // Iframe shells must never compete with the canonical tool page: noindex,
     // and canonical pointing at the public tool page (overrides the inherited
     // root-layout canonical, which points at the homepage).
     robots: { index: false, follow: true },
-    ...(tool ? { alternates: { canonical: `/tools/all/${slug}` } } : {}),
+    alternates: { canonical: `/tools/all/${slug}` },
   };
 }
 

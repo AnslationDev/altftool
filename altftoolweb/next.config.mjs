@@ -343,6 +343,13 @@ const nextConfig = {
         hostname: 'avatars.githubusercontent.com',
       },
       {
+        // Generated placeholder avatars (Dicebear) used for sample/illustrative
+        // testimonials; without this next/image throws "hostname is not
+        // configured" at request time.
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
+      {
         protocol: 'https',
         hostname: "firebasestorage.googleapis.com",
       },
@@ -491,6 +498,20 @@ const nextConfig = {
             : false;
         }
       }
+    }
+
+    // The webpack runtime chunk is loaded on every one of the 390 routes and
+    // is ~92% a chunkId -> contenthash table for 4,256 async chunks — one row
+    // per tool runtime. Next's default 16-hex digest spends 4 bytes per row on
+    // entropy nothing needs: 48 bits still leaves a ~2e-6 chance of a stale
+    // truncated hash across 500 deploys, and shortening it takes the runtime
+    // chunk from 49.3 to 40.5 KB brotli site-wide. Client production only;
+    // server and edge filenames carry no contenthash.
+    //
+    // This treats the symptom. The 4,256-chunk count is the cause, and it is
+    // what actually needs reducing.
+    if (!dev && !isServer && config.output) {
+      config.output.hashDigestLength = 12;
     }
 
     return config;

@@ -105,7 +105,7 @@ function ShareSheet({ headline }) {
 function ActionBar({ article, likes, liked, setLiked, setLikes, comments, commentRef, saved, setSaved }) {
   return (
     <div className="sticky top-3 z-40 mx-auto flex max-w-max items-center gap-1 rounded-2xl border border-[var(--border)] bg-[var(--card)]/80 px-3 py-2 shadow-md backdrop-blur-md">
-      <button onClick={() => { setLiked((v) => !v); setLikes((l) => liked ? l - 1 : l + 1); }} aria-label={liked ? "Unlike" : "Like"} className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${liked ? "bg-[var(--anslation-ds-danger-soft)] text-[var(--anslation-ds-danger)]" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--anslation-ds-danger)]"}`}>
+      <button onClick={() => { setLiked((v) => !v); setLikes((l) => liked ? l - 1 : l + 1); }} aria-label={liked ? "Unlike" : "Like"} title="Local to this session — resets on refresh" className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${liked ? "bg-[var(--anslation-ds-danger-soft)] text-[var(--anslation-ds-danger)]" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--anslation-ds-danger)]"}`}>
         <Heart size={16} className={liked ? "fill-[var(--anslation-ds-danger)]" : "fill-transparent"} />
         <span className="tabular-nums">{formatCount(likes)}</span>
       </button>
@@ -114,7 +114,7 @@ function ActionBar({ article, likes, liked, setLiked, setLikes, comments, commen
         <span className="tabular-nums">{comments.length}</span>
       </button>
       <div className="mx-1 h-5 w-px bg-[var(--border)]" />
-      <button onClick={() => setSaved((v) => !v)} aria-label={saved ? "Unsave" : "Save"} className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${saved ? "bg-[var(--foreground)] text-[var(--card)]" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"}`}>
+      <button onClick={() => setSaved((v) => !v)} aria-label={saved ? "Unsave" : "Save"} title="Local to this session — resets on refresh" className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${saved ? "bg-[var(--foreground)] text-[var(--card)]" : "text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"}`}>
         <Bookmark size={16} className={saved ? "fill-current" : ""} />
         {saved ? "Saved" : "Save"}
       </button>
@@ -153,13 +153,13 @@ function RelatedNewsWidget({ articles, timeAgo }) {
   );
 }
 
-function TrendingWidget({ articles, timeAgo, formatCount }) {
+function TrendingWidget({ articles }) {
   if (!articles?.length) return null;
   return (
     <div className="rounded-2xl news-card-surface p-6">
       <div className="mb-5 flex items-center justify-between">
-        <h3 className="text-lg font-bold text-[var(--foreground)]">Trending Now</h3>
-        <Link href="/news/trending" className="text-xs font-semibold text-[var(--primary)] hover:underline">View All</Link>
+        <h3 className="text-lg font-bold text-[var(--foreground)]">Latest Stories</h3>
+        <Link href="/news/headlines" className="text-xs font-semibold text-[var(--primary)] hover:underline">View All</Link>
       </div>
       <div className="space-y-5">
         {articles.map((item, index) => {
@@ -169,7 +169,7 @@ function TrendingWidget({ articles, timeAgo, formatCount }) {
               <span className="w-8 shrink-0 text-2xl font-extrabold text-[var(--border)] tabular-nums">{String(index + 1).padStart(2, "0")}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">{item.headline}</p>
-                <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{readTime} min read &bull; {formatCount(item.likes + item.comments + item.shares)} views</span>
+                <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{readTime} min read</span>
               </div>
             </Link>
           );
@@ -192,7 +192,14 @@ function NewsletterWidget() {
     if (!validate(email)) { setError("Valid email required."); return; }
     setError("");
     setState("loading");
-    await new Promise((r) => setTimeout(r, 1000));
+    // No newsletter delivery backend exists yet, so persist locally instead
+    // of discarding the signup — matches ALTFT_NEWS_NEWSLETTER_OPTIN used by
+    // the dedicated /news/newsletter page.
+    try {
+      window.localStorage.setItem("ALTFT_NEWS_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setState("success");
   }
 
@@ -203,8 +210,8 @@ function NewsletterWidget() {
           <Check size={18} />
         </div>
         <div>
-          <p className="font-semibold text-[var(--foreground)]">You&apos;re subscribed!</p>
-          <p className="mt-1 text-sm text-[var(--muted-foreground)]">Check your inbox for the latest news.</p>
+          <p className="font-semibold text-[var(--foreground)]">You&apos;re on the list!</p>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">We&apos;ll notify you when the newsletter launches.</p>
         </div>
       </div>
     );
@@ -280,7 +287,9 @@ function CommentItem({ text, index }) {
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 export default function NewsArticleView({ article, relatedNews, trendingArticles }) {
-  const [likes, setLikes] = useState(article?.likes ?? 0);
+  // Session-local only. We store no engagement data for these articles, so the
+  // counter starts at zero rather than showing an invented total.
+  const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
@@ -295,6 +304,9 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
 
   const tags = article.tags || [];
   const highlights = article.highlights || [];
+  // Syndicated items carry no verified byline, so credit the originating
+  // publication when we have one and the site organization otherwise.
+  const attribution = article.attribution || article.source || "AltFTool News";
 
   // Wrap share/copy helpers so they see the same article
   const headline = article.headline;
@@ -345,15 +357,10 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
               </p>
             )}
 
-            {/* Author Section */}
-            <div className="mt-8 flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/10 text-sm font-bold text-[var(--primary)]">
-                {article.author_avatar || "A"}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-[var(--foreground)]">{article.author?.name || article.source}</p>
-                <p className="text-xs text-[var(--muted-foreground)]">{article.author_designation || "Staff Reporter"}</p>
-              </div>
+            {/* Source Attribution */}
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted-foreground)]">Source</span>
+              <span className="text-sm font-semibold text-[var(--foreground)]">{attribution}</span>
             </div>
 
             {/* Metadata Row */}
@@ -430,21 +437,21 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
               </div>
             )}
 
-            {/* Author Bio Card */}
-            <div className="mt-10 flex items-start gap-5 rounded-2xl news-card-surface p-6">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]/10 text-lg font-bold text-[var(--primary)]">
-                {article.author_avatar || "A"}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base font-bold text-[var(--foreground)]">{article.author?.name || article.source}</p>
-                <p className="text-sm text-[var(--muted-foreground)]">{article.author_designation || "Staff Reporter"}</p>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted-foreground)]">{article.author_bio || `${article.source} is a trusted news source covering the latest developments and in-depth stories from around the world.`}</p>
-                <div className="mt-4 flex gap-2">
-                  <a href="#" className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]" aria-label="Twitter"><Twitter size={13} /></a>
-                  <a href="#" className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]" aria-label="Facebook"><Facebook size={13} /></a>
-                  <a href="#" className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]" aria-label="LinkedIn"><Linkedin size={13} /></a>
-                </div>
-              </div>
+            {/* Source Card */}
+            <div className="mt-10 rounded-2xl news-card-surface p-6">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted-foreground)]">Source</p>
+              <p className="mt-1 text-base font-bold text-[var(--foreground)]">{attribution}</p>
+              {article.external_url && (
+                <a
+                  href={article.external_url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[var(--primary)] transition hover:underline"
+                >
+                  Read the full story at {attribution}
+                  <ChevronRight size={14} />
+                </a>
+              )}
             </div>
 
             {/* Related Articles */}
@@ -476,7 +483,7 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
               </div>
 
               <RelatedNewsWidget articles={relatedNews} timeAgo={timeAgo} />
-              <TrendingWidget articles={trendingArticles} timeAgo={timeAgo} formatCount={formatCount} />
+              <TrendingWidget articles={trendingArticles} />
               <NewsletterWidget />
               <FollowUs />
             </div>
@@ -510,7 +517,7 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
               </button>
             </div>
           </div>
-          <p className="text-[11px] text-[var(--muted-foreground)]">⌘ + Enter to post</p>
+          <p className="text-[11px] text-[var(--muted-foreground)]">⌘ + Enter to post &bull; Local to this session only — resets on refresh</p>
           {comments.length > 0 ? (
             <ul className="space-y-3">
               {comments.map((c, i) => (<CommentItem key={i} text={c} index={i} />))}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { cn } from "../lib/cn.js";
 
@@ -50,7 +50,26 @@ export function Field({
   htmlFor,
   required = false,
 }) {
+  const generatedFieldId = useId();
+  const generatedHelpId = useId();
   const supportingText = error || description || helpText;
+  const fieldId = htmlFor || generatedFieldId;
+
+  let content = children;
+  if (React.isValidElement(children) && React.Children.count(children) === 1) {
+    const childProps = {};
+    if (children.props.id === undefined) {
+      childProps.id = fieldId;
+    }
+    if (supportingText) {
+      childProps["aria-describedby"] = children.props["aria-describedby"]
+        ? `${children.props["aria-describedby"]} ${generatedHelpId}`
+        : generatedHelpId;
+    }
+    if (Object.keys(childProps).length > 0) {
+      content = React.cloneElement(children, childProps);
+    }
+  }
 
   return (
     <div
@@ -61,13 +80,16 @@ export function Field({
       )}
     >
       {label ? (
-        <Label htmlFor={htmlFor} required={required}>
+        <Label htmlFor={fieldId} required={required}>
           {label}
         </Label>
       ) : null}
-      {children}
+      {content}
       {supportingText ? (
-        <p className={cn("alt-ui-help", error && "alt-ui-help--error")}>
+        <p
+          id={generatedHelpId}
+          className={cn("alt-ui-help", error && "alt-ui-help--error")}
+        >
           {supportingText}
         </p>
       ) : null}
@@ -161,6 +183,22 @@ export const Toggle = React.forwardRef(function Toggle(
   },
   ref,
 ) {
+  const warnedMissingLabel = useRef(false);
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production" || warnedMissingLabel.current) {
+      return;
+    }
+    warnedMissingLabel.current = true;
+    if (!label && !props["aria-label"] && !props["aria-labelledby"]) {
+      console.warn(
+        "[@altftool/ui] Toggle rendered without a `label`, `aria-label`, or `aria-labelledby` prop — the switch has no accessible name.",
+      );
+    }
+    // Intentionally checked once on mount only, matching a dev-time lint
+    // rather than a live prop watcher.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const controlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked);
   const active = controlled ? checked : internalChecked;

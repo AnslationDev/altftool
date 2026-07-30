@@ -33,7 +33,10 @@
 }
 
 .alt-ui-button:focus-visible,
-.alt-ui-input:focus-visible {
+.alt-ui-input:focus-visible,
+.alt-ui-toast__close:focus-visible,
+.alt-ui-bulkbar__btn:focus-visible,
+.alt-ui-search__clear:focus-visible {
   box-shadow: var(--anslation-ds-focus-ring);
   outline: none;
 }
@@ -72,18 +75,25 @@
 }
 
 .alt-ui-button--primary {
-  background: var(--anslation-ds-primary);
+  /* White label text needs the darker brand-700 fill to clear 4.5:1 in the
+     light theme (brand-600 is only 3.74:1); brand-700/800/900 step the
+     resting/hover/active states down from there. */
+  background: var(--anslation-ds-primary-hover);
   box-shadow: var(--anslation-ds-shadow-sm);
   color: var(--anslation-ds-primary-foreground);
 }
 
 .alt-ui-button--primary:hover:not(:disabled) {
-  background: var(--anslation-ds-primary-hover);
+  background: var(--anslation-ds-primary-active);
   box-shadow: var(--anslation-ds-shadow-md);
 }
 
 .alt-ui-button--primary:active:not(:disabled) {
-  background: var(--anslation-ds-primary-active);
+  background: color-mix(
+    in srgb,
+    var(--anslation-ds-primary-active) 88%,
+    var(--anslation-ds-text)
+  );
 }
 
 .alt-ui-button--secondary {
@@ -111,31 +121,35 @@
 
 .alt-ui-button--outline {
   background: transparent;
-  border-color: var(--anslation-ds-primary);
-  color: var(--anslation-ds-primary);
+  border-color: var(--anslation-ds-primary-text);
+  color: var(--anslation-ds-primary-text);
 }
 
 .alt-ui-button--outline:hover:not(:disabled) {
   background: var(--anslation-ds-primary-soft);
-  border-color: var(--anslation-ds-primary-hover);
-  color: var(--anslation-ds-primary-hover);
+  border-color: var(--anslation-ds-primary-active);
+  color: var(--anslation-ds-primary-active);
 }
 
 .alt-ui-button--success {
-  background: var(--anslation-ds-success);
+  /* White label text needs success-text (darker than the base success tone)
+     to clear 4.5:1 in the light theme. */
+  background: var(--anslation-ds-success-text);
   color: var(--anslation-ds-status-foreground);
 }
 
 .alt-ui-button--success:hover:not(:disabled) {
   background: color-mix(
     in srgb,
-    var(--anslation-ds-success) 88%,
+    var(--anslation-ds-success-text) 88%,
     var(--anslation-ds-text)
   );
 }
 
 .alt-ui-button--danger {
-  background: var(--anslation-ds-danger);
+  /* White label text needs danger-text (darker than the base danger tone)
+     to clear 4.5:1 in the light theme. */
+  background: var(--anslation-ds-danger-text);
   box-shadow: var(--anslation-ds-shadow-sm);
   color: var(--anslation-ds-status-foreground);
 }
@@ -143,7 +157,7 @@
 .alt-ui-button--danger:hover:not(:disabled) {
   background: color-mix(
     in srgb,
-    var(--anslation-ds-danger) 88%,
+    var(--anslation-ds-danger-text) 88%,
     var(--anslation-ds-text)
   );
 }
@@ -209,7 +223,7 @@
 }
 
 .alt-ui-label__required {
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
   margin-inline-start: var(--anslation-ds-space-1);
 }
 
@@ -226,7 +240,7 @@
 }
 
 .alt-ui-help--error {
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
 }
 
 .alt-ui-card {
@@ -239,9 +253,9 @@
 .alt-ui-card--hover {
   cursor: pointer;
   transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    transform 160ms ease;
+    border-color var(--anslation-ds-motion-base) var(--anslation-ds-ease-out),
+    box-shadow var(--anslation-ds-motion-base) var(--anslation-ds-ease-out),
+    transform var(--anslation-ds-motion-base) var(--anslation-ds-ease-out);
 }
 
 .alt-ui-card--hover:hover {
@@ -269,27 +283,27 @@
 
 .alt-ui-badge--primary {
   background: var(--anslation-ds-primary-soft);
-  color: var(--anslation-ds-primary);
+  color: var(--anslation-ds-primary-text);
 }
 
 .alt-ui-badge--success {
   background: color-mix(in srgb, var(--anslation-ds-success) 12%, transparent);
-  color: var(--anslation-ds-success);
+  color: var(--anslation-ds-success-text);
 }
 
 .alt-ui-badge--danger {
   background: color-mix(in srgb, var(--anslation-ds-danger) 12%, transparent);
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
 }
 
 .alt-ui-badge--warning {
   background: color-mix(in srgb, var(--anslation-ds-warning) 14%, transparent);
-  color: var(--anslation-ds-warning);
+  color: var(--anslation-ds-warning-text);
 }
 
 .alt-ui-badge--info {
   background: color-mix(in srgb, var(--anslation-ds-info) 12%, transparent);
-  color: var(--anslation-ds-info);
+  color: var(--anslation-ds-info-text);
 }
 
 /* ─── Modal ───────────────────────────────────────────────────────────── */
@@ -496,19 +510,19 @@
 
 .alt-ui-toast--success .alt-ui-toast__icon {
   background: var(--anslation-ds-success-soft);
-  color: var(--anslation-ds-success);
+  color: var(--anslation-ds-success-text);
 }
 .alt-ui-toast--danger .alt-ui-toast__icon {
   background: var(--anslation-ds-danger-soft);
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
 }
 .alt-ui-toast--warning .alt-ui-toast__icon {
   background: var(--anslation-ds-warning-soft);
-  color: var(--anslation-ds-warning);
+  color: var(--anslation-ds-warning-text);
 }
 .alt-ui-toast--info .alt-ui-toast__icon {
   background: var(--anslation-ds-info-soft);
-  color: var(--anslation-ds-info);
+  color: var(--anslation-ds-info-text);
 }
 
 .alt-ui-toast__icon svg {
@@ -600,7 +614,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .alt-ui-toast,
-  .alt-ui-toast--leaving {
+  .alt-ui-toast--leaving,
+  .alt-ui-bulkbar {
     animation: none;
   }
 }
@@ -698,6 +713,14 @@
 @keyframes alt-ui-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Slow rather than remove: this is the only visual cue a button/page is
+     still loading, so eliminating it entirely would hide that state. */
+  .alt-ui-spinner {
+    animation-duration: 2.4s;
   }
 }
 
@@ -838,13 +861,13 @@
 .alt-ui-stat__delta--up,
 .alt-ui-stat__delta--success {
   background: var(--anslation-ds-success-soft);
-  color: var(--anslation-ds-success);
+  color: var(--anslation-ds-success-text);
 }
 
 .alt-ui-stat__delta--down,
 .alt-ui-stat__delta--danger {
   background: var(--anslation-ds-danger-soft);
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
 }
 
 .alt-ui-stat__delta--neutral {
@@ -1287,16 +1310,16 @@
 }
 
 .alt-ui-alert--info .alt-ui-alert__icon {
-  color: var(--anslation-ds-info);
+  color: var(--anslation-ds-info-text);
 }
 .alt-ui-alert--success .alt-ui-alert__icon {
-  color: var(--anslation-ds-success);
+  color: var(--anslation-ds-success-text);
 }
 .alt-ui-alert--warning .alt-ui-alert__icon {
-  color: var(--anslation-ds-warning);
+  color: var(--anslation-ds-warning-text);
 }
 .alt-ui-alert--danger .alt-ui-alert__icon {
-  color: var(--anslation-ds-danger);
+  color: var(--anslation-ds-danger-text);
 }
 
 .alt-ui-alert__icon svg {

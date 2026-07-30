@@ -1,6 +1,17 @@
 // lib/news/normalize.js
 
-import { randomInt } from "crypto";
+/**
+ * Deterministic 32-bit hash, used only to disambiguate slugs for syndicated
+ * stories that share a headline. It must never be used to synthesise data
+ * that is presented to readers as fact.
+ */
+function hashString(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash);
+}
 
 /**
  * Extract the best image URL from a raw RSS item.
@@ -99,9 +110,15 @@ export function normalizeItem(item) {
   const imageUrl = extractImage(item);
   const source = item._source || item["dc:creator"] || "Unknown";
   const category = inferCategory(headline + " " + summary, item._category || "world");
+  const id = `${slugify(headline)}-${new Date(publishedAt).getTime()}`;
+  // Syndicated wire stories often share an identical (or near-identical)
+  // headline across sources — a bare slugify(headline) collides and the
+  // second article becomes permanently unreachable behind the first's page.
+  // The suffix disambiguates without needing to change the id shape above.
+  const slugSuffix = hashString(externalUrl || id).toString(36).slice(0, 6);
 
   return {
-    id: `${slugify(headline)}-${new Date(publishedAt).getTime()}`,
+    id,
     headline,
     summary,
     image_url: imageUrl,
@@ -112,10 +129,9 @@ export function normalizeItem(item) {
     published_at: publishedAt,
     published_hours_ago: hoursAgo(publishedAt),
     location: null,
-    likes: randomInt(10, 800),
-    comments: randomInt(0, 120),
-    shares: randomInt(0, 300),
-    slug: slugify(headline),
+    // No likes/comments/shares: we have no engagement data for syndicated
+    // feed items, and inventing counts would be fabricated.
+    slug: `${slugify(headline)}-${slugSuffix}`,
     publisher_type: "media",
     tags: [],
   };

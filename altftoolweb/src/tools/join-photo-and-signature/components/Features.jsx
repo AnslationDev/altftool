@@ -49,7 +49,7 @@ export default function Features() {
 
           <div className="bg-(--surface) p-6 rounded-xl border border-(--border) shadow-sm hover:shadow-md transition-shadow">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400 mb-4">
-              <Image className="h-6 w-6" />
+              <Image className="h-6 w-6" alt="" />
             </div>
             <h3 className="text-lg font-semibold text-(--foreground) mb-2">Signature Scaling</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">

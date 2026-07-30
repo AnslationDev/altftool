@@ -189,7 +189,12 @@ export default function EventCarousel() {
                   </div>
 
                   {/* Install button */}
-                  <button className="bg-gray-300 text-black text-[10px] sm:text-xs px-3 py-1.5 rounded-md">
+                  <button
+                    type="button"
+                    disabled
+                    title="Coming soon"
+                    className="bg-gray-300 text-black text-[10px] sm:text-xs px-3 py-1.5 rounded-md opacity-60 cursor-not-allowed"
+                  >
                     Install
                   </button>
 

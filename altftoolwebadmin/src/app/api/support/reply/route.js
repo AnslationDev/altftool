@@ -9,6 +9,20 @@ import { getRbacRootRef } from "@/lib/serverRbac";
 import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
 import { enforceRateLimit } from "@altftool/core/http";
 
+const MAX_MESSAGE_LENGTH = 20000;
+
+// Distinguishes "the caller's credentials are missing/invalid" (401) from an
+// infrastructure fault raised while verifying them — mirrors create/route.js
+// and update-status/route.js so an expired/invalid token maps to 401 instead
+// of falling into the outer catch as a generic 500.
+function isAuthenticationFailure(error) {
+  // Thrown by getBearerToken() when the Authorization header is missing/malformed.
+  if (error?.message === "Unauthorized") return true;
+  // firebase-admin auth errors: auth/id-token-expired, auth/argument-error, ...
+  const code = error?.code || error?.errorInfo?.code || "";
+  return typeof code === "string" && code.startsWith("auth/");
+}
+
 // Superadmin recipients for unassigned-ticket reply notifications. Mirrors
 // resolveSuperAdminIds() in support/create/route.js (RBAC store first, legacy
 // `admins` second) — duplicated rather than imported since that helper is not
@@ -58,15 +72,42 @@ export async function POST(request) {
     }
 
     const token = authHeader.split("Bearer ")[1];
-    const decoded = await adminAuth.verifyIdToken(token);
+    let decoded;
+    try {
+      decoded = await adminAuth.verifyIdToken(token);
+    } catch (authErr) {
+      if (isAuthenticationFailure(authErr)) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+      // Anything else is a genuine backend fault: rethrow so the outer catch
+      // logs it and answers 500 instead of telling the client to re-authenticate.
+      throw authErr;
+    }
 
     const { ticketId, message } = await request.json();
 
-    if (!ticketId || !message?.trim()) {
+    // Mirrors update-status/route.js: trim once and use the trimmed value
+    // everywhere, and reject any ticketId containing '/' so it can't resolve
+    // to a nested document path under support_tickets instead of a top-level
+    // ticket.
+    if (typeof ticketId !== "string" || !ticketId.trim() || ticketId.includes("/")) {
+      return NextResponse.json({ error: "Missing or invalid ticketId" }, { status: 400 });
+    }
+
+    if (!message?.trim()) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const ticketRef = adminDb.collection("support_tickets").doc(ticketId);
+    if (message.trim().length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json(
+        { error: `Message must be ${MAX_MESSAGE_LENGTH} characters or less.` },
+        { status: 400 },
+      );
+    }
+
+    const safeTicketId = ticketId.trim();
+
+    const ticketRef = adminDb.collection("support_tickets").doc(safeTicketId);
     const ticketSnap = await ticketRef.get();
 
     if (!ticketSnap.exists) {
@@ -97,6 +138,19 @@ export async function POST(request) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // The UI only ever shows the reply box for open tickets — a closed ticket
+    // (isDeleted, once set by the auto-delete job, only ever happens after
+    // status is already "closed") must reject a reply here too, or the
+    // "reopen before replying" workflow can be bypassed by calling this
+    // endpoint directly, writing a message that never surfaces in either
+    // ticket list.
+    if (ticket.status === "closed") {
+      return NextResponse.json(
+        { error: "This ticket is closed. Reopen it before replying." },
+        { status: 409 },
+      );
+    }
+
     const now = Date.now();
 
     await ticketRef.collection("messages").add({
@@ -121,8 +175,8 @@ export async function POST(request) {
 
     if (notifyUserId && notifyUserId !== decoded.uid) {
       const notifActionUrl = isSuperAdmin
-        ? `/support/${ticketId}`
-        : `/tickets/${ticketId}`;
+        ? `/support/${safeTicketId}`
+        : `/tickets/${safeTicketId}`;
 
       const notifPayload = {
         userId: notifyUserId,
@@ -143,7 +197,7 @@ export async function POST(request) {
           userIds: [notifyUserId],
           title: notifPayload.title,
           body: notifPayload.body,
-          data: { actionUrl: notifActionUrl, ticketId },
+          data: { actionUrl: notifActionUrl, ticketId: safeTicketId },
         });
       } catch (notifyErr) {
         console.error("REPLY_NOTIFY_ERROR:", notifyErr);
@@ -159,7 +213,7 @@ export async function POST(request) {
           // /support/{id} is the ticket-creator's own view; superadmins manage
           // tickets from /tickets/{id} (Assign/Update Status controls live
           // there), same as the assigned-recipient branch above.
-          const notifActionUrl = `/tickets/${ticketId}`;
+          const notifActionUrl = `/tickets/${safeTicketId}`;
           const notifBatch = adminDb.batch();
           superAdminIds.forEach((uid) => {
             const notifRef = adminDb.collection("notifications").doc();
@@ -179,7 +233,7 @@ export async function POST(request) {
             userIds: superAdminIds,
             title: "New Reply on Ticket",
             body: `A reply was added to ticket: "${ticket.title}"`,
-            data: { actionUrl: notifActionUrl, ticketId },
+            data: { actionUrl: notifActionUrl, ticketId: safeTicketId },
           });
         }
       } catch (notifyErr) {

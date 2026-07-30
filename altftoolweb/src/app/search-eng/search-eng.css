@@ -385,6 +385,11 @@
   border-bottom-color: var(--primary);
 }
 .se-tab.active svg { opacity: 1; }
+.se-tab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.se-tab:disabled:hover { color: var(--muted-foreground); }
 
 @media (max-width: 768px) {
   .se-results-header { padding: 12px 16px 0; }
@@ -781,6 +786,19 @@
 .no-results-hint {
   color: var(--muted-foreground);
   margin-bottom: 20px;
+}
+.no-results-suggestion-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+.no-results-suggestion-link:hover {
+  text-decoration: underline;
 }
 .no-results-suggestions-label {
   margin-bottom: 10px;

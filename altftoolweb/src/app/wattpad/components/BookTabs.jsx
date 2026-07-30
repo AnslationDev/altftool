@@ -42,9 +42,13 @@ export default function BookTabs({ book, bookChapters }) {
         <div>
           <div className="py-6 border-b border-(--border)">
             <div className="flex flex-wrap items-center gap-3 text-sm">
-              <span className="font-bold text-(--foreground)">Complete</span>
-              <span className="text-(--muted-foreground)">•</span>
-              <span className="text-(--muted-foreground)">13h 13m</span>
+              <span className="font-bold text-(--foreground) capitalize">{book.status}</span>
+              {book.meta?.readingTime ? (
+                <>
+                  <span className="text-(--muted-foreground)">•</span>
+                  <span className="text-(--muted-foreground)">{book.meta.readingTime}</span>
+                </>
+              ) : null}
             </div>
           </div>
 

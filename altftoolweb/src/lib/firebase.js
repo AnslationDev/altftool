@@ -50,23 +50,10 @@ function createFirestore(appInstance) {
 
 export const db = createFirestore(app);
 
-let cachedStorage = null;
-
-export async function getFirebaseStorage() {
-  if (!cachedStorage) {
-    const { getStorage } = await import("firebase/storage");
-    cachedStorage = getStorage(app);
-  }
-  return cachedStorage;
-}
-
-export const storage = null;
-
 let cachedAuth = null;
 
-// Lazy-loaded like getFirebaseStorage() above — auth is only needed on pages
-// that gate an action behind sign-in, so it shouldn't cost anything on pages
-// that never touch it.
+// Lazy-loaded — auth is only needed on pages that gate an action behind
+// sign-in, so it shouldn't cost anything on pages that never touch it.
 export async function getFirebaseAuth() {
   if (typeof window === "undefined") return null;
   if (!isFirebaseConfigured) return null;

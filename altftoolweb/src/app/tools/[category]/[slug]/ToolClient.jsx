@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Component, createElement, useMemo } from "react";
+import { Component, createElement, useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   ArrowRight,
@@ -16,12 +16,14 @@ import {
 import { loadToolModule } from "../../toolLoaderResolver";
 import ToolDetailChrome from "./ToolDetailChrome";
 import { ToolModuleSkeleton } from "./ToolDetailSkeleton";
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import Icon from "@/shared/ui/Icon";
 import { safeCopyText } from "@/shared/utils/clipboard";
-import { formatCategoryLabel, getToolCategories } from "../../toolRouteUtils";
+import { formatCategoryLabel, getToolCategories } from "../../toolRouteFormat";
 
-function getRecoveryRelatedTools(slug, limit = 4) {
+// Only ever called from the crashed-runtime fallback, with the catalogue
+// fetched on demand — see ToolRuntimeRecoveryFallback. Keeping it as a
+// module-scope import made every healthy tool page pay for it.
+function getRecoveryRelatedTools(toolMetaMap, slug, limit = 4) {
   const tool = toolMetaMap[slug];
   if (!tool) return [];
 
@@ -113,11 +115,24 @@ function ToolRecoveryAction({ children, icon: IconComponent, onClick, href, copi
   );
 }
 
-function ToolRuntimeRecoveryFallback({ slug, category, error, retryCount, onRetry, onCopyDiagnostics, diagnosticsCopied }) {
-  const tool = toolMetaMap[slug];
+function ToolRuntimeRecoveryFallback({ slug, tool, category, error, retryCount, onRetry, onCopyDiagnostics, diagnosticsCopied }) {
   const toolName = tool?.name || formatCategoryLabel(slug);
   const categoryHref = category === "all" ? "/tools/all" : `/tools/${category}`;
-  const relatedTools = getRecoveryRelatedTools(slug);
+  // The catalogue is 1.0 MB. This screen appears only when a tool runtime
+  // has already crashed, so it can afford a round trip; every healthy page
+  // load cannot afford the bundle.
+  const [relatedTools, setRelatedTools] = useState([]);
+  useEffect(() => {
+    let active = true;
+    import("@/platform/registry/toolMetaMap")
+      .then(({ toolMetaMap }) => {
+        if (active) setRelatedTools(getRecoveryRelatedTools(toolMetaMap, slug));
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [slug]);
   const errorMessage = getErrorMessage(error);
 
   return (
@@ -286,6 +301,7 @@ class ToolRuntimeBoundary extends Component {
       return (
         <ToolRuntimeRecoveryFallback
           slug={this.props.slug}
+          tool={this.props.tool}
           category={this.props.category}
           error={this.state.error}
           retryCount={this.state.retryCount}
@@ -305,7 +321,7 @@ class ToolRuntimeBoundary extends Component {
   }
 }
 
-export default function ToolClient({ slug, category = "all", children }) {
+export default function ToolClient({ slug, tool, category = "all", children }) {
   const Tool = useMemo(
     () =>
       dynamic(() => loadToolModule(slug), {
@@ -316,8 +332,8 @@ export default function ToolClient({ slug, category = "all", children }) {
   );
 
   return (
-    <ToolDetailChrome slug={slug} category={category} seoContent={children}>
-      <ToolRuntimeBoundary slug={slug} category={category}>
+    <ToolDetailChrome slug={slug} tool={tool} category={category} seoContent={children}>
+      <ToolRuntimeBoundary slug={slug} tool={tool} category={category}>
         {createElement(Tool, { category, slug })}
       </ToolRuntimeBoundary>
     </ToolDetailChrome>

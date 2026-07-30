@@ -38,6 +38,13 @@ function playJurassicAlarm(seed = 0) {
   window.setTimeout(() => playPranxSound("glitch", seed + 42), 240);
 }
 
+const desktopIconResponses = {
+  "Dos C:\\": "C:\\JURASSIC> access denied. legacy shell disabled.",
+  Matrix: "loading dinosaur genome matrix... 62% corrupted.",
+  System: "system status: fence grid unstable.",
+  Upgrade: "upgrade rejected: insufficient access level.",
+};
+
 function FullscreenButton({ targetRef, className = "" }) {
   return (
     <button
@@ -464,11 +471,25 @@ export function JurassicConsole() {
   return (
     <main ref={shellRef} className="jp-static relative min-h-screen overflow-hidden bg-[#a8b0ad] p-4 font-mono text-white sm:p-6">
       <div className="absolute left-5 top-5 z-10 space-y-1 text-black">
-        {["CMOS", "Dos C:\\", "Matrix", "System", "Upgrade"].map((item) => (
-          <Link key={item} href={item === "CMOS" ? "/pranx/jurassic-park" : "#"} className="block w-28 border-2 border-neutral-700 bg-neutral-300 px-3 py-1 text-sm font-black italic shadow">
-            {item}
-          </Link>
-        ))}
+        {["CMOS", "Dos C:\\", "Matrix", "System", "Upgrade"].map((item) =>
+          item === "CMOS" ? (
+            <Link key={item} href="/pranx/jurassic-park" className="block w-28 border-2 border-neutral-700 bg-neutral-300 px-3 py-1 text-sm font-black italic shadow">
+              {item}
+            </Link>
+          ) : (
+            <button
+              key={item}
+              type="button"
+              onClick={() => {
+                playAccessSound(item.length);
+                setHistory((current) => [...current, `> ${item.toLowerCase()}`, desktopIconResponses[item]]);
+              }}
+              className="block w-28 border-2 border-neutral-700 bg-neutral-300 px-3 py-1 text-left text-sm font-black italic shadow"
+            >
+              {item}
+            </button>
+          )
+        )}
         <div className="mt-4 grid h-24 w-24 place-items-center border-2 border-neutral-700 bg-white text-5xl font-black text-indigo-500">JP</div>
       </div>
 

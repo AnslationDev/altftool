@@ -11,6 +11,65 @@ function getFocusableElements(container) {
   );
 }
 
+// Tracks how many open modals currently rely on hiding a given sibling, so
+// nested modals restore the exact prior state instead of clobbering it.
+const hiddenSiblingState = new WeakMap();
+
+function hideElementFromA11yTree(el) {
+  const existing = hiddenSiblingState.get(el);
+  if (existing) {
+    existing.count += 1;
+    return;
+  }
+  hiddenSiblingState.set(el, {
+    count: 1,
+    hadInert: "inert" in el ? el.inert : undefined,
+    hadAriaHidden: el.getAttribute("aria-hidden"),
+  });
+  if ("inert" in el) {
+    el.inert = true;
+  } else {
+    el.setAttribute("aria-hidden", "true");
+  }
+}
+
+function restoreElementFromA11yTree(el) {
+  const state = hiddenSiblingState.get(el);
+  if (!state) return;
+  if (state.count > 1) {
+    state.count -= 1;
+    return;
+  }
+  hiddenSiblingState.delete(el);
+  if ("inert" in el) {
+    el.inert = Boolean(state.hadInert);
+  }
+  if (state.hadAriaHidden === null) {
+    el.removeAttribute("aria-hidden");
+  } else {
+    el.setAttribute("aria-hidden", state.hadAriaHidden);
+  }
+}
+
+function hideOthersFromA11yTree(target) {
+  if (!target) return () => {};
+  const hidden = [];
+  let node = target;
+  while (node && node !== document.body) {
+    const parent = node.parentElement;
+    if (!parent) break;
+    Array.from(parent.children).forEach((sibling) => {
+      if (sibling === node) return;
+      hideElementFromA11yTree(sibling);
+      hidden.push(sibling);
+    });
+    node = parent;
+  }
+  return () => {
+    hidden.forEach(restoreElementFromA11yTree);
+  };
+}
+
 export function Modal({
   open,
   onClose,
@@ -25,6 +84,7 @@ export function Modal({
   className,
 }) {
   const dialogRef = useRef(null);
+  const overlayRef = useRef(null);
   const titleId = useId();
   const descriptionId = useId();
 
@@ -65,6 +125,10 @@ export function Modal({
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKey);
 
+    // Hide everything outside the modal from the accessibility tree so
+    // screen-reader virtual-cursor browsing can't reach it while open.
+    const restoreA11yTree = hideOthersFromA11yTree(overlayRef.current);
+
     const focusTimer = window.setTimeout(() => {
       const focusable = getFocusableElements(dialogRef.current);
       (focusable?.[0] || dialogRef.current)?.focus();
@@ -73,6 +137,7 @@ export function Modal({
     return () => {
       document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = previousOverflow;
+      restoreA11yTree();
       window.clearTimeout(focusTimer);
       previouslyFocused?.focus?.({ preventScroll: true });
     };
@@ -82,6 +147,7 @@ export function Modal({
 
   return (
     <div
+      ref={overlayRef}
       className="alt-ui-modal-overlay"
       onMouseDown={(event) => {
         if (

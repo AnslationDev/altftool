@@ -17,7 +17,9 @@ function validateUrl(raw) {
     if (!url.hostname.includes(".")) return { ok: false, reason: "Invalid hostname" };
     const internal =
       typeof window !== "undefined" &&
-      (url.hostname === window.location.hostname || url.hostname.endsWith("altftool.com"));
+      (url.hostname === window.location.hostname ||
+        url.hostname === "altftool.com" ||
+        url.hostname.endsWith(".altftool.com"));
     return { ok: true, kind: internal ? "internal" : "external", href: withProtocol };
   } catch {
     return { ok: false, reason: "Not a valid URL" };

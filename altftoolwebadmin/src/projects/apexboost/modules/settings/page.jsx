@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Save, Globe, Mail, Phone, MapPin } from "lucide-react";
+import { subscribeSiteSettings, saveSiteSettings } from "../service/apexboost.service";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -16,21 +17,18 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    fetch('/api/apexboost/data?section=settings')
-      .then(r => r.json())
-      .then(j => { if (j.success) setSettings(j.data); })
-      .catch(() => {});
+    const unsubscribe = subscribeSiteSettings(
+      (data) => setSettings(data),
+      () => {},
+    );
+    return unsubscribe;
   }, []);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'settings', data: settings }),
-      });
-      if (res.ok) alert("Settings saved successfully!");
+      await saveSiteSettings(settings);
+      alert("Settings saved successfully!");
     } catch (e) {
       alert("Failed to save settings");
     }

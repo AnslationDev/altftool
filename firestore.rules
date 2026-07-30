@@ -242,8 +242,12 @@ service cloud.firestore {
 
     // Public newsletter opt-in: create-only with strict shape validation.
     // Subscriber emails stay outside the world-readable AltFTool project tree.
+    // Read/update/delete is Super Admin only — mirrors /accessRequests/{requestId}
+    // above. The admin UI's own superadmin-only route gate (config/adminRoutes.js
+    // + newsletter/page.jsx's isSuperAdmin() check) is UI-only defense; this rule
+    // is the actual authorization boundary, so it must not be looser than that.
     match /newsletter_subscribers/{subscriberId} {
-      allow read, update, delete: if isActiveAdmin();
+      allow read, update, delete: if isSuperAdmin();
       allow create: if hasOnly(["email", "source", "createdAt"]) &&
         nonEmptyText(request.resource.data.email, 200) &&
         request.resource.data.email.matches('.+@.+[.].+') &&

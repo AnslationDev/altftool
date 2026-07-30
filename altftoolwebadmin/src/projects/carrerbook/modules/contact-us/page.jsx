@@ -293,7 +293,11 @@ export default function CareerBookContactAdminPage() {
         throw new Error(payload?.error || "Failed to send greeting email.");
       }
 
-      emitAlert({ type: "success", message: "Greeting email sent." });
+      // The API always sends to the lead's stored email and ignores any `to`
+      // the caller supplied (see api/contact/send-greeting/route.js) — echo
+      // back the address it actually used rather than the one in the form.
+      const sentTo = payload?.to || target?.email || greetingForm.to;
+      emitAlert({ type: "success", message: `Greeting email sent to ${sentTo}.` });
       setGreetingTarget(null);
       setGreetingForm({ to: "", subject: "", message: "" });
     } catch (error) {
@@ -567,9 +571,14 @@ export default function CareerBookContactAdminPage() {
               <Field label="To" error={greetingErrors.to}>
                 <input
                   value={greetingForm.to}
-                  onChange={(event) => handleGreetingField("to", event.target.value)}
-                  className={inputClass}
+                  readOnly
+                  aria-readonly="true"
+                  title="The greeting always goes to the lead's email on file and can't be redirected here."
+                  className={`${inputClass} cursor-not-allowed bg-gray-50 text-gray-500`}
                 />
+                <span className="mt-1 block text-xs text-gray-400">
+                  Always sent to the lead&apos;s email on file — this can&apos;t be redirected.
+                </span>
               </Field>
               <Field label="Subject" error={greetingErrors.subject}>
                 <input

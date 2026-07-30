@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { searchSerpApiShopping } from "@/lib/sale/serpapi";
 import { formatINR } from "@/lib/sale/formatCurrency";
-import { serializeSaleError } from "@/lib/sale/errors";
+import { serializeSaleError, friendlyMessageFor } from "@/lib/sale/errors";
 
 export const runtime = "nodejs";
 
@@ -42,12 +42,13 @@ export async function GET(req) {
     });
   } catch (error) {
     const { message, code } = serializeSaleError(error);
+    console.error("[sale/home-deals] upstream failure:", message);
 
     // The homepage feed is optional enrichment. Keep /sale usable when the
     // provider is not configured, unavailable, or out of quota.
     return NextResponse.json({
       available: false,
-      error: message,
+      error: friendlyMessageFor(code),
       code,
       trending: [],
       flash: [],

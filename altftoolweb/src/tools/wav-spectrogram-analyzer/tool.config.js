@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "FFT spectrogram, clipping, hum aur frequency distribution visualize kare.",
+  "description": "Renders an audio file as an FFT spectrogram to visualize clipping, hum and frequency distribution.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

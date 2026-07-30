@@ -11,14 +11,14 @@ import {
 
 const stats = [
   {
-    value: "500K+",
-    label: "Tests Completed",
+    value: "No signup",
+    label: "Start instantly",
     icon: Users,
   },
   {
-    value: "98%",
-    label: "User Satisfaction",
-    icon: ShieldCheck,
+    value: "Free",
+    label: "Every test, always",
+    icon: BarChart3,
   },
   {
     value: "100%",
@@ -26,8 +26,8 @@ const stats = [
     icon: Lock,
   },
   {
-    value: "150+",
-    label: "Countries",
+    value: "Client-side",
+    label: "Nothing sent to a server",
     icon: Globe,
   },
 ];
@@ -43,8 +43,8 @@ export default function Trust() {
           </h2>
 
           <p className="section-subtitle max-w-[580px] mx-auto">
-            Join thousands of users who trust our platform for accurate
-            insights and meaningful personal growth.
+            Free, private personality tests for meaningful self-reflection and
+            personal growth — no account required.
           </p>
         </div>
 

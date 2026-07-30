@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Save, RefreshCw } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeAboutContent, saveAboutContent } from "../service/apexboost.service";
 
 export default function AboutEditor() {
   const [form, setForm] = useState({
@@ -13,33 +14,27 @@ export default function AboutEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    setLoading(true);
-    const res = await fetch("/api/apexboost/data?section=aboutContent");
-    const json = await res.json();
-    if (json.success && json.data) {
-      setForm(json.data);
-    }
-    setLoading(false);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeAboutContent(
+      (data) => {
+        setForm(data);
+        setLoading(false);
+      },
+      () => {
+        emitAlert({ type: "error", title: "Error", message: "Failed to load Who We Are section." });
+        setLoading(false);
+      },
+    );
+    return unsubscribe;
+  }, []);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "aboutContent", data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "Who We Are saved successfully!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save Who We Are section." });
-      }
+      await saveAboutContent(form);
+      emitAlert({ type: "success", title: "Success", message: "Who We Are saved successfully!" });
     } catch (err) {
-      emitAlert({ type: "error", title: "Error", message: "An unexpected error occurred." });
+      emitAlert({ type: "error", title: "Error", message: "Failed to save Who We Are section." });
     } finally {
       setSaving(false);
     }

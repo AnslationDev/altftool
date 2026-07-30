@@ -6,7 +6,7 @@ import { readApiJson } from "@/lib/apiClient";
 import { getAdminIdToken } from "@/lib/adminIdToken";
 import { PROJECTS } from "@/projects";
 import {
-  X, Shield, ShieldCheck, Loader2, CheckCircle2, Info,
+  X, Shield, ShieldCheck, Loader2, CheckCircle2, Info, AlertTriangle,
 } from "lucide-react";
 
 const PROJECT_LIST = Object.values(PROJECTS);
@@ -29,6 +29,7 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
   const [activeProjectId, setActiveProjectId] = useState(PROJECT_LIST[0]?.id ?? null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState("idle");
+  const [approveError, setApproveError] = useState(null);
 
   const activeProject = PROJECTS[activeProjectId];
   const activeModules = activeProject
@@ -47,6 +48,7 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
   const handleApprove = async () => {
     setLoading(true);
     setStep("saving");
+    setApproveError(null);
     try {
       const token = await getAdminIdToken(true);
       if (!token) {
@@ -83,7 +85,23 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
       try {
         await readApiJson(approveRes, "Admin created, but request status update failed");
       } catch (error) {
-        emitAlert({ type: "warning", message: error?.message || "Admin created, but request status update failed" });
+        // The admin account already exists at this point (step 1 succeeded) —
+        // showing the normal "Done" success state / auto-close here would tell
+        // the operator everything worked while the request row stays "pending"
+        // in Firestore, inviting a second "Approve" click that would retry
+        // /api/admin/create for an email that already has an admin doc. Surface
+        // a persistent error instead so the operator knows the account exists
+        // but the request itself still needs to be marked approved (or that
+        // status corrected directly), and stop here — no done state, no toast,
+        // no auto-close, no refresh of the (unresolved) requests list.
+        const message = error?.message || "Admin created, but request status update failed";
+        setApproveError(
+          `Admin account created for ${request.email}, but the request could not be marked approved (${message}). ` +
+            "It will still show as pending — do not approve it again; the account already exists.",
+        );
+        setStep("idle");
+        emitAlert({ type: "error", message });
+        return;
       }
 
       setStep("done");
@@ -208,17 +226,31 @@ export default function ApproveRequestModal({ request, onClose, refresh }) {
               <CheckCircle2 className="w-4 h-4" />Admin account created successfully!
             </div>
           )}
+
+          {/* Persistent — does not auto-dismiss like a toast — because the
+              admin account already exists at this point; the operator needs
+              to see this until they've dealt with the still-pending request. */}
+          {approveError && (
+            <div className="flex items-start gap-2 bg-[var(--danger-soft)] border border-[var(--danger)]/30 rounded-xl px-4 py-3">
+              <AlertTriangle className="w-4 h-4 text-[var(--danger)] shrink-0 mt-0.5" />
+              <p className="text-xs text-[var(--danger-text)]">{approveError}</p>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-[var(--border)] flex items-center justify-between gap-3 shrink-0 bg-[var(--surface-soft)]">
-          <p className="text-xs text-[var(--muted-soft)]">The user will be able to log in immediately after approval.</p>
+          <p className="text-xs text-[var(--muted-soft)]">
+            {approveError
+              ? "Resolve the request status manually — approving again would try to create the admin account a second time."
+              : "The user will be able to log in immediately after approval."}
+          </p>
           <div className="flex items-center gap-2">
             <button onClick={onClose} disabled={loading}
               className="px-4 py-2 text-sm border border-[var(--border)] rounded-xl text-[var(--muted)] hover:bg-[var(--surface)] transition disabled:opacity-40">
               Cancel
             </button>
-            <button onClick={handleApprove} disabled={loading || step === "done"}
+            <button onClick={handleApprove} disabled={loading || step === "done" || Boolean(approveError)}
               className="flex items-center gap-2 px-5 py-2 text-sm bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-60 text-[var(--primary-foreground)] font-semibold rounded-xl transition shadow-sm">
               {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               {step === "done" && <CheckCircle2 className="w-3.5 h-3.5" />}

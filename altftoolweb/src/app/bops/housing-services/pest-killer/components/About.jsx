@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import about1Img from '../assets/about1.png';
-import about2Img from '../assets/about2.png';
+import about1Img from '../assets/about1.webp';
+import about2Img from '../assets/about2.webp';
 import './About.css';
 
 export default function About() {

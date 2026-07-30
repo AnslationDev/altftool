@@ -202,6 +202,21 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
+.drawer-sound-item.unavailable {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.drawer-sound-item.unavailable:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.03);
+  transform: none;
+}
+
+.drawer-sound-item.unavailable .sound-item-btn {
+  cursor: not-allowed;
+}
+
 .sound-item-btn {
   width: 36px;
   height: 36px;
@@ -271,6 +286,12 @@
   z-index: 10;
   text-align: center;
   pointer-events: none;
+  /* The static H1 is longer than the old rotating label, so constrain the
+     overlay and let it wrap instead of running past the viewport edge. */
+  width: max-content;
+  max-width: min(90vw, 46rem);
+  padding-inline: 1rem;
+  text-wrap: balance;
 }
 
 .screensaver-icon {
@@ -289,6 +310,20 @@
   margin-bottom: 0.5rem;
 }
 
+/* Rotating scene label, demoted out of the H1. Sits between the static
+   heading and the tagline and inherits the container's near-white text so it
+   keeps AA contrast against the dark vignette in every background state. */
+.screensaver-scene {
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.92;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 4px 26px rgba(0, 0, 0, 0.6);
+  margin-bottom: 0.4rem;
+}
+
 .screensaver-tagline {
   font-size: 0.8rem;
   font-weight: 400;
@@ -304,6 +339,55 @@
 .custom-range:focus-visible {
   outline: 2px solid #10b981;
   outline-offset: 4px;
+}
+
+/* ---------- Modal Overlay (Timer / Save / Share dialogs) ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(3, 7, 8, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: modal-overlay-in 0.2s ease-out;
+}
+
+.modal-content {
+  position: relative;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  animation: modal-content-in 0.2s ease-out;
+}
+
+@keyframes modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-content {
+    animation: none;
+  }
 }
 
 /* ---------- details pages (FAQ, Use Cases) ---------- */
@@ -324,6 +408,11 @@
     right: 1rem;
   }
   .screensaver-title {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    letter-spacing: 0.18em;
+  }
+  .screensaver-scene {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
   }
 }

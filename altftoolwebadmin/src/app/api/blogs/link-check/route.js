@@ -2,14 +2,14 @@ import dns from "node:dns/promises";
 import net from "node:net";
 import { NextResponse } from "next/server";
 import { enforceRateLimit, jsonResponse, routeError } from "@altftool/core/http";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
-import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
+import { verifyAdminRequest } from "@/lib/blogsAdminAuth";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 
 export const runtime = "nodejs";
 
 const MAX_URLS = 20;
 const CHECK_TIMEOUT_MS = 7000;
-const LOCAL_ADMIN_TOKEN = "local-dev-admin-token";
+const MAX_REDIRECTS = 5;
 const BLOCKED_HOSTS = new Set([
   "0.0.0.0",
   "127.0.0.1",
@@ -21,62 +21,6 @@ const BLOCKED_HOSTS = new Set([
 
 function jsonAuthError(message = "Unauthorized", status = 401) {
   return NextResponse.json({ error: message }, { status });
-}
-
-function getBearerToken(request) {
-  const header = request.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) return "";
-  return header.split("Bearer ")[1];
-}
-
-async function verifyAdminRequest(request) {
-  const token = getBearerToken(request);
-
-  if (process.env.NODE_ENV === "development" && token === LOCAL_ADMIN_TOKEN) {
-    return { uid: "local-dev-admin", email: "admin@altftool.local" };
-  }
-
-  if (!token) {
-    const error = new Error("Unauthorized");
-    error.status = 401;
-    throw error;
-  }
-
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  // RBAC-first: admins created through the current flow live only under
-  // super_admin_dashboard/main/admin_users, so the legacy-only lookup below
-  // 403'd every one of them.
-  const rbacAdmin = await getRbacAdminDoc(decoded);
-  if (rbacAdmin) {
-    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
-    if (!profile.isActive) {
-      const error = new Error("Forbidden");
-      error.status = 403;
-      throw error;
-    }
-    return decoded;
-  }
-
-  // Legacy fallback for admins created before the RBAC migration.
-  let snap = await adminDb.collection("admins").doc(decoded.uid).get();
-
-  if (!snap.exists && decoded.email) {
-    const byEmail = await adminDb
-      .collection("admins")
-      .where("email", "==", decoded.email)
-      .limit(1)
-      .get();
-    if (!byEmail.empty) snap = byEmail.docs[0];
-  }
-
-  if (!snap.exists || snap.data()?.isActive === false) {
-    const error = new Error("Forbidden");
-    error.status = 403;
-    throw error;
-  }
-
-  return decoded;
 }
 
 function normalizeInputUrl(value = "") {
@@ -141,7 +85,7 @@ async function assertPublicDestination(url) {
   }
 }
 
-async function fetchWithTimeout(url, method = "HEAD") {
+async function fetchOnce(url, method) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(new Error("Request timed out.")), CHECK_TIMEOUT_MS);
   const headers = {
@@ -154,11 +98,45 @@ async function fetchWithTimeout(url, method = "HEAD") {
     return await fetch(url, {
       headers,
       method,
-      redirect: "follow",
+      redirect: "manual",
       signal: controller.signal,
     });
   } finally {
     clearTimeout(timeout);
+  }
+}
+
+// Redirects are followed manually (never fetch's redirect:"follow") so each
+// hop's destination is re-validated against assertPublicDestination() before
+// it is requested. Without this, a URL whose initial hostname resolves
+// publicly could 3xx to an internal/private address (e.g. the cloud metadata
+// endpoint) and the server would blindly follow it — the SSRF class
+// assertPublicDestination() exists to prevent, bypassed via one redirect hop.
+async function fetchWithTimeout(url, method = "HEAD") {
+  let currentUrl = url;
+
+  for (let hop = 0; ; hop += 1) {
+    const response = await fetchOnce(currentUrl, method);
+    const isRedirect = response.status >= 300 && response.status < 400;
+    const location = isRedirect ? response.headers.get("location") : null;
+
+    if (!location) return response;
+
+    if (hop >= MAX_REDIRECTS) {
+      const error = new Error("Too many redirects.");
+      error.status = 400;
+      throw error;
+    }
+
+    const nextUrl = new URL(location, currentUrl);
+    if (!["http:", "https:"].includes(nextUrl.protocol)) {
+      const error = new Error("Only http(s) redirect targets are allowed.");
+      error.status = 400;
+      throw error;
+    }
+    nextUrl.hash = "";
+    await assertPublicDestination(nextUrl);
+    currentUrl = nextUrl;
   }
 }
 
@@ -231,7 +209,17 @@ export async function POST(request) {
     });
     if (limited) return limited;
 
-    await verifyAdminRequest(request);
+    const { admin } = await verifyAdminRequest(request);
+    // Link checking is a read-only diagnostic (no writes), but it makes the
+    // server issue outbound requests on the caller's behalf, so gate it on
+    // blogs module access rather than "is some active admin" — mirrors
+    // blogs/generate/route.js's module-scoped authz (see the comment there
+    // for why "any active admin" was judged too broad).
+    if (!hasModuleAccess({ adminData: admin, projectId: "altftool", moduleKey: "blogs", action: "read" })) {
+      const error = new Error("Forbidden");
+      error.status = 403;
+      throw error;
+    }
 
     const payload = await request.json().catch(() => ({}));
     const urls = [

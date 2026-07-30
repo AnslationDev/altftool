@@ -155,13 +155,16 @@ function RaiseTicketSection({ user, onTicketCreated }) {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        throw new Error(payload?.error || "Failed to raise ticket. Please try again.");
+      }
       emitAlert({ type: "success", message: "Ticket raised successfully!" });
       setForm({ title: "", description: "", type: "query", priority: "medium" });
       setErrors({});
       onTicketCreated?.();
-    } catch {
-      emitAlert({ type: "error", message: "Failed to raise ticket. Please try again." });
+    } catch (error) {
+      emitAlert({ type: "error", message: error?.message || "Failed to raise ticket. Please try again." });
     } finally {
       setLoading(false);
     }

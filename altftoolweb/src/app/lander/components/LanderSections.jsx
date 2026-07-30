@@ -4,9 +4,35 @@
 // `type` to its renderer; unknown/hidden sections render nothing.
 
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 
 const WIDTHS = { narrow: "max-w-2xl", normal: "max-w-4xl", wide: "max-w-6xl", full: "max-w-none" };
 const RADII = { none: "0px", sm: "0.375rem", md: "0.5rem", lg: "0.75rem", xl: "1rem" };
+
+// CMS-authored HTML (TextBlock/RawHtml sections) comes straight out of Firestore
+// with no editorial gate, so it is untrusted input. Sanitize with an explicit
+// allow-list before it ever reaches dangerouslySetInnerHTML — strips
+// <script>/<iframe>/<style>/on*-handlers/javascript: URLs while keeping the
+// basic formatting markup these sections are meant to carry.
+const SANITIZE_CONFIG = {
+  ALLOWED_TAGS: [
+    "a", "p", "br", "hr", "span", "div",
+    "strong", "b", "em", "i", "u", "s", "sub", "sup",
+    "ul", "ol", "li",
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "blockquote", "code", "pre",
+    "img",
+    "table", "thead", "tbody", "tr", "td", "th",
+  ],
+  ALLOWED_ATTR: ["href", "target", "rel", "src", "alt", "title", "width", "height"],
+  ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|[^a-z]|[a-z+.-]+(?:[^a-z+.:-]|$))/i,
+  FORBID_TAGS: ["style", "script", "iframe", "object", "embed", "form", "input", "svg"],
+  FORBID_ATTR: ["style"],
+};
+
+function sanitizeHtml(html) {
+  return DOMPurify.sanitize(html, SANITIZE_CONFIG);
+}
 
 function Container({ width = "normal", className = "", children }) {
   return <div className={`mx-auto w-full px-4 sm:px-6 ${WIDTHS[width] || WIDTHS.normal} ${className}`}>{children}</div>;
@@ -334,7 +360,7 @@ function TextBlock({ props, width }) {
   if (!props.html) return null;
   return (
     <Container width="narrow" className="py-8">
-      <div className="prose prose-neutral max-w-none text-(--foreground) dark:prose-invert" dangerouslySetInnerHTML={{ __html: props.html }} />
+      <div className="prose prose-neutral max-w-none text-(--foreground) dark:prose-invert" dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.html) }} />
     </Container>
   );
 }
@@ -359,7 +385,7 @@ function RawHtml({ props, width }) {
   if (!props.html) return null;
   return (
     <Container width={width} className="py-8">
-      <div dangerouslySetInnerHTML={{ __html: props.html }} />
+      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.html) }} />
     </Container>
   );
 }

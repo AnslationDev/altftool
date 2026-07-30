@@ -131,9 +131,15 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
       setEmailError("Enter a valid email address");
       return;
     }
-    if (newPassword && newPassword.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
-      return;
+    if (newPassword) {
+      if (newPassword.length < 8) {
+        setPasswordError("Password must be at least 8 characters");
+        return;
+      }
+      if (!/[A-Za-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+        setPasswordError("Password must include at least one letter and one number");
+        return;
+      }
     }
 
     setLoading(true);
@@ -185,7 +191,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
   const stepLabel = { idle: "Save Changes", saving: "Saving…", done: "Saved!" }[step];
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-[var(--overlay)] flex items-center justify-center z-50 p-4">
       <div role="dialog" aria-modal="true" aria-labelledby="edit-admin-modal-title" className="bg-[var(--surface)] rounded-2xl shadow-2xl w-full max-w-[700px] max-h-[92vh] flex flex-col overflow-hidden">
 
         {/* Header */}
@@ -269,7 +275,7 @@ export default function EditAdminModal({ admin, onClose, refresh }) {
               </div>
             )}
             <Field label="New Password" htmlFor="edit-admin-new-password" icon={<Lock className="w-3.5 h-3.5" />}
-              hint="Passwords cannot be viewed. Enter a new password to reset it." error={passwordError}>
+              hint="Passwords cannot be viewed. Enter a new password (min. 8 characters, with a letter and a number) to reset it." error={passwordError}>
               <div className="relative">
                 <input type={showPassword ? "text" : "password"} id="edit-admin-new-password" name="edit-admin-new-password"
                   autoComplete="new-password" placeholder="Leave blank to keep current password"

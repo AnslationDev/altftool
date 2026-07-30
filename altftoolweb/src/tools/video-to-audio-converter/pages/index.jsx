@@ -565,7 +565,6 @@ export default function SpliceDeck() {
       }
     };
     wait();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateSource]);
 
   const removeSource = (id) => {

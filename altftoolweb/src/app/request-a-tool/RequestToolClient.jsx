@@ -54,6 +54,8 @@ const initialForm = {
 export default function RequestToolClient() {
   const [form, setForm] = useState(initialForm);
   const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const isReady = useMemo(
     () => form.toolName.trim() && form.details.trim() && form.email.trim(),
@@ -62,11 +64,14 @@ export default function RequestToolClient() {
 
   const updateField = (field) => (event) => {
     setSent(false);
+    setCopied(false);
     setForm((current) => ({ ...current, [field]: event.target.value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
 
     const subject = `AltFTool tool request: ${form.toolName || "New tool idea"}`;
     const body = [
@@ -80,8 +85,16 @@ export default function RequestToolClient() {
       form.details || "Not provided",
     ].join("\n");
 
+    // mailto: navigation must happen synchronously within the click/submit
+    // gesture — Safari silently drops it if anything is awaited first.
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
+
+    Promise.resolve()
+      .then(() => navigator.clipboard.writeText(`To: ${CONTACT_EMAIL}\nSubject: ${subject}\n\n${body}`))
+      .then(() => setCopied(true))
+      .catch(() => setCopied(false))
+      .finally(() => setSubmitting(false));
   };
 
   return (
@@ -243,7 +256,7 @@ export default function RequestToolClient() {
               <div className="request-tool-actions">
                 <button
                   type="submit"
-                  disabled={!isReady}
+                  disabled={!isReady || submitting}
                   className="request-tool-submit"
                 >
                   <Send className="h-4 w-4" />
@@ -257,7 +270,10 @@ export default function RequestToolClient() {
 
               {sent ? (
                 <div className="request-tool-success">
-                  Your email app should open with the request details filled in.
+                  Your email app should open with the request details filled in.{" "}
+                  {copied
+                    ? `If it doesn't, the request has been copied to your clipboard — paste it into an email to ${CONTACT_EMAIL}.`
+                    : `If it doesn't, send the details above directly to ${CONTACT_EMAIL}.`}
                 </div>
               ) : null}
             </form>

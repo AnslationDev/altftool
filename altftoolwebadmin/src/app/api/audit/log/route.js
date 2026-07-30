@@ -1,45 +1,68 @@
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
 import { writeAdminAuditLog } from "@/lib/adminAuditLog";
-
-async function verifyActiveAdmin(request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Bearer ")) throw new Error("Unauthorized");
-
-  const token = authHeader.split("Bearer ")[1];
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  const snap = await adminDb.collection("admins").doc(decoded.uid).get();
-  if (!snap.exists) throw new Error("Forbidden");
-  const data = snap.data();
-  if (!data?.isActive) throw new Error("Inactive admin");
-
-  return {
-    uid: decoded.uid,
-    email: data.email ?? decoded.email ?? null,
-    roleType: data.roleType ?? "admin",
-  };
-}
+import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export async function POST(request) {
   try {
-    const actor = await verifyActiveAdmin(request);
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 60,
+      scope: "audit:log",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
+    // Was a private, legacy-`admins`-only check with no RBAC-store fallback —
+    // every RBAC-era admin (created through the current Admins UI) got
+    // "Forbidden" here regardless of a valid session. verifyActiveAdmin
+    // covers RBAC + legacy + the local-dev bypass, matching every other
+    // admin route.
+    const { admin } = await verifyActiveAdmin(request);
+    const actor = { uid: admin.uid, email: admin.email, roleType: admin.roleType };
     const body = await request.json();
 
-    const module = body?.module;
+    // `module` shadows the reserved CommonJS `module` binding.
+    const moduleName = body?.module;
     const action = body?.action;
-    if (!module || !action) {
+    if (!moduleName || !action) {
       return NextResponse.json({ error: "module and action are required" }, { status: 400 });
+    }
+
+    // This endpoint is a general-purpose activity sink for 100+ call sites
+    // (src/lib/auditClient.js), so any active admin — any role — may log an
+    // entry about their OWN activity. But actorUid/actorEmail/actorRole above
+    // are already server-derived and cannot be spoofed by the client; the gap
+    // was targetUid/targetEmail, taken verbatim from the request body with no
+    // check at all. Without this, a low-privilege admin could submit a
+    // fabricated entry naming a *different* admin as the target (e.g. a fake
+    // "ADMIN_STATUS_TOGGLE" against a colleague), and it would render on the
+    // Full Audit Log page indistinguishable from a genuine, server-verified
+    // entry. None of the real call sites pass targetUid/targetEmail today —
+    // only the admin-management CRUD routes do, and those write their audit
+    // entries server-side (bypassing this endpoint entirely) — so requiring
+    // an elevated role to name someone else as the target does not break any
+    // existing legitimate caller.
+    const targetUid = body?.targetUid ?? null;
+    const targetEmail = body?.targetEmail ?? null;
+    const sameEmail = (a, b) => Boolean(a) && Boolean(b) && String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+    const targetsSelf =
+      (!targetUid || targetUid === actor.uid) &&
+      (!targetEmail || sameEmail(targetEmail, actor.email));
+    if (!targetsSelf && actor.roleType !== "superadmin") {
+      return NextResponse.json(
+        { error: "Only a super admin can log an audit entry that names a different admin as the target" },
+        { status: 403 },
+      );
     }
 
     await writeAdminAuditLog({
       action,
-      module,
+      module: moduleName,
       actorUid: actor.uid,
       actorEmail: actor.email,
       actorRole: actor.roleType ?? null,
-      targetUid: body?.targetUid ?? null,
-      targetEmail: body?.targetEmail ?? null,
+      targetUid,
+      targetEmail,
       summary: body?.summary ?? null,
       changes: body?.changes ?? null,
       // Optional explicit Workspace hierarchy hints (highest resolver priority);
@@ -60,7 +83,18 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // Every error here used to answer a flat 401, which mapped a genuine
+    // Firestore/Auth infra fault to "you're not signed in" — same
+    // classification as withAdminApi.js's classifyAuthError.
+    if (err?.message === "Forbidden" || err?.message === "Inactive admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    const code = err?.code || err?.errorInfo?.code || "";
+    if (err?.message === "Unauthorized" || (typeof code === "string" && code.startsWith("auth/"))) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    console.error("AUDIT_LOG_ERROR:", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 

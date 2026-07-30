@@ -172,9 +172,6 @@ export function HeroPhoneSvg({ apps }) {
             <text x="116" y={y + 34} fontFamily="Inter, Arial, sans-serif" fontSize="9" fontWeight="700" fill="#94a3b8">
               {app.downloads}
             </text>
-            <text x="238" y={y + 27} fontFamily="Inter, Arial, sans-serif" fontSize="11" fontWeight="900" fill="#111827">
-              {app.rating}
-            </text>
           </g>
         );
       })}
@@ -204,14 +201,14 @@ export function AppScreenSvg({ app, index = 0, className = "" }) {
         <>
           <circle cx="195" cy="330" r="104" fill="none" stroke="#172554" strokeWidth="22" />
           <path d="M91 330a104 104 0 0 1 208-1" fill="none" stroke={style.accent} strokeWidth="22" strokeLinecap="round" />
-          <text x="195" y="326" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="44" fontWeight="900" fill="#fff">94.75</text>
+          <text x="195" y="326" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="44" fontWeight="900" fill="#fff">85</text>
           <text x="195" y="356" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="15" fontWeight="800" fill="#94a3b8">Mbps</text>
           <rect x="56" y="486" width="126" height="76" rx="20" fill="#ffffff14" />
           <rect x="208" y="486" width="126" height="76" rx="20" fill="#ffffff14" />
           <text x="80" y="522" fontFamily="Inter, Arial, sans-serif" fontSize="14" fontWeight="800" fill="#94a3b8">Download</text>
-          <text x="80" y="548" fontFamily="Inter, Arial, sans-serif" fontSize="24" fontWeight="900" fill="#fff">94.75</text>
+          <text x="80" y="548" fontFamily="Inter, Arial, sans-serif" fontSize="24" fontWeight="900" fill="#fff">85</text>
           <text x="232" y="522" fontFamily="Inter, Arial, sans-serif" fontSize="14" fontWeight="800" fill="#94a3b8">Upload</text>
-          <text x="232" y="548" fontFamily="Inter, Arial, sans-serif" fontSize="24" fontWeight="900" fill="#fff">32.16</text>
+          <text x="232" y="548" fontFamily="Inter, Arial, sans-serif" fontSize="24" fontWeight="900" fill="#fff">40</text>
         </>
       ) : (
         app.features.slice(0, 4).map((feature, itemIndex) => (

@@ -40,7 +40,7 @@ import { AnchorIds } from "./extensions/AnchorIds";
 import { SlashCommands } from "./extensions/SlashCommands";
 import { FirebaseVideo } from "./extensions/VideoExtension";
 import { HtmlComment, HtmlCommentInline, RawIframe } from "./extensions/PreserveExtensions";
-import { cleanPastedHtml, exportHtml, htmlToEditor } from "./EditorUtils";
+import { cleanPastedHtml, exportHtml, htmlToEditor, sanitizeHtml } from "./EditorUtils";
 import "./editor.css";
 
 const EditorContext = createContext(null);
@@ -87,9 +87,15 @@ export default function EditorProvider({
   // round-trip that echoes transformed HTML back through the value prop).
   const pendingEmitRef = useRef(false);
 
+  // Single front door for every path that reaches onChange (debounced visual
+  // edits via emitFromInstance, draft restore, and raw HTML pushed in from
+  // consumers like the HTML Source textarea). Sanitizing here — the same
+  // sanitizeHtml() that exportHtml() uses — guarantees onChange never sees
+  // unsanitized HTML, no matter which caller invokes emit().
   const emit = useCallback((html) => {
-    sentValuesRef.current = [html, ...sentValuesRef.current].slice(0, 10);
-    onChangeRef.current?.(html);
+    const safeHtml = sanitizeHtml(html);
+    sentValuesRef.current = [safeHtml, ...sentValuesRef.current].slice(0, 10);
+    onChangeRef.current?.(safeHtml);
   }, []);
 
   // The expensive work per edit — a full sanitize + heading-anchor DOM pass

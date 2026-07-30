@@ -70,6 +70,17 @@ html[data-theme="light"] {
   --anslation-ds-danger-soft: #fde2dd;
   --anslation-ds-info-soft: #e0f2fe;
 
+  /* Text-safe status colours. The base --anslation-ds-success/danger/info/warning
+     values are tuned for fills, icons and borders; several fail AA against
+     white/page/soft-tint backgrounds at the sizes they're actually used at
+     (badges, stat deltas, form errors, button fills). Use these -text
+     variants anywhere the colour carries text or sits under white
+     button-label text, and reserve the base tone for borders/left-accents/icons. */
+  --anslation-ds-warning-text: #b45309; /* 5.02:1 on white */
+  --anslation-ds-success-text: #166534; /* 7.13:1 on white, 6.14:1 on success-soft */
+  --anslation-ds-danger-text: #b91c1c; /* 6.47:1 on white, 5.27:1 on danger-soft */
+  --anslation-ds-info-text: #075985; /* 7.56:1 on white, 6.59:1 on info-soft */
+
   --anslation-ds-space-1: 0.25rem;
   --anslation-ds-space-2: 0.5rem;
   --anslation-ds-space-3: 0.75rem;
@@ -167,6 +178,13 @@ html[data-theme="dark"] {
   --anslation-ds-danger-soft: #3b1410;
   --anslation-ds-info-soft: #0b2a3d;
 
+  /* On the dark surface the base tones already clear AA against page/surface
+     (6.4-11.2:1), so the -text variants can just reuse the base colour. */
+  --anslation-ds-warning-text: #fbbf24;
+  --anslation-ds-success-text: #4ade80;
+  --anslation-ds-danger-text: #f87171;
+  --anslation-ds-info-text: #38bdf8;
+
   --anslation-ds-shadow-sm: 0 1px 2px rgb(0 0 0 / 36%);
   --anslation-ds-shadow-md: 0 10px 28px rgb(0 0 0 / 36%);
   --anslation-ds-shadow-lg: 0 24px 56px rgb(0 0 0 / 46%);
@@ -179,5 +197,14 @@ html[data-theme="dark"] {
     --anslation-ds-motion-base: 0ms;
     --anslation-ds-motion-modal: 0ms;
     --anslation-ds-motion-drawer: 0ms;
+  }
+}
+
+/* A 40px control is under the 44px minimum a finger needs. The system already
+   carries the correct figure as --anslation-ds-target-min; raise the medium
+   control to it where the pointer is a finger, and leave mouse density alone. */
+@media (pointer: coarse) {
+  :root {
+    --anslation-ds-control-md: var(--anslation-ds-target-min);
   }
 }

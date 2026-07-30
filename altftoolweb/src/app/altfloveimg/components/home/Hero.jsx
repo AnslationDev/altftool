@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Star, Lock, Wifi, ShieldCheck } from "lucide-react";
+import { Sparkles, ArrowRight, Lock, Wifi, ShieldCheck } from "lucide-react";
 import Dropzone from "../shared/Dropzone";
 import HeroArt from "../illustrations/HeroArt";
 import { GlowField, DotGrid } from "../illustrations/Decorations";
@@ -71,21 +71,8 @@ export default function Hero() {
 
           {/* social proof */}
           <motion.div variants={item} className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" style={{ color: "var(--ali-muted)" }}>
-            <span className="inline-flex items-center gap-2.5">
-              <span className="flex -space-x-2">
-                {[["MR", "#14B8A6"], ["DK", "#38BDF8"], ["PS", "#0D9488"], ["TL", "#06B6D4"]].map(([t, c]) => (
-                  <span key={t} className="grid h-7 w-7 place-items-center rounded-full text-[10px] font-bold text-white ring-2"
-                    style={{ background: `linear-gradient(135deg, ${c}, var(--secondary, #38BDF8))`, ["--tw-ring-color"]: "var(--ali-page)" }}>
-                    {t}
-                  </span>
-                ))}
-              </span>
-              <span>
-                <span className="flex" style={{ color: "#f59e0b" }}>
-                  {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={13} fill="#f59e0b" />)}
-                </span>
-                <span className="text-xs font-medium" style={{ color: "var(--ali-text)" }}>Loved by 10k+ creators</span>
-              </span>
+            <span className="inline-flex items-center gap-1.5 font-medium" style={{ color: "var(--ali-text)" }}>
+              <ShieldCheck size={15} style={{ color: "var(--ali-blue)" }} /> Built for creators who value privacy
             </span>
             <span className="inline-flex items-center gap-1.5"><Lock size={15} style={{ color: "var(--ali-blue)" }} /> Private</span>
             <span className="inline-flex items-center gap-1.5"><Wifi size={15} style={{ color: "var(--ali-blue)" }} /> Works offline</span>

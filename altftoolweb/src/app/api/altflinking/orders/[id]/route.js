@@ -3,6 +3,8 @@
  * PATCH /api/altflinking/orders/[id]
  */
 
+import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
@@ -26,6 +28,13 @@ const ALLOWED_TRANSITIONS = {
 };
 
 export async function PATCH(request, { params }) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 30,
+    scope: "altflinking:orders-id",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -56,9 +65,12 @@ export async function PATCH(request, { params }) {
       return err("You can only update your own orders", 403);
     }
 
-    // Validate transition
+    // Validate transition — unknown/missing role is denied, not skipped
     const roleTransitions = ALLOWED_TRANSITIONS[role];
-    if (roleTransitions && role !== "ADMIN" && role !== "SUPERADMIN") {
+    if (!roleTransitions) {
+      return err("Forbidden", 403);
+    }
+    if (role !== "ADMIN" && role !== "SUPERADMIN") {
       const allowed = roleTransitions[currentStatus] || roleTransitions["*"] || [];
       if (!allowed.includes(newStatus)) {
         return err(
@@ -98,11 +110,18 @@ export async function PATCH(request, { params }) {
     return ok({ id, ...order, ...update, status: newStatus });
   } catch (e) {
     console.error("[PATCH /orders/:id]", e);
-    return err("Failed to update order: " + e.message, 500);
+    return err("Failed to update order", 500);
   }
 }
 
 export async function GET(request, { params }) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:orders-id",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -123,6 +142,7 @@ export async function GET(request, { params }) {
 
     return ok(order);
   } catch (e) {
-    return err("Failed to fetch order: " + e.message, 500);
+    console.error("[GET /orders/:id]", e);
+    return err("Failed to fetch order", 500);
   }
 }

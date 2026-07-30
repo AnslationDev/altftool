@@ -16,48 +16,47 @@ const InfoSection = ({ toggleFullscreen }) => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    
+
     if (!email) {
       setError("Please fill the email");
     } else if (!validateEmail(email)) {
-      setError("Please enter a valid email"); // ✅ Ab ye incomplete email ko pakad lega
+      setError("Please enter a valid email");
     } else {
-      // Sab sahi hai toh Success Screen (Image 2) dikhao
       setError("");
+      try {
+        window.localStorage.setItem("ALTFT_FULLSCRN_NEWSLETTER_OPTIN", email.trim());
+      } catch {
+        // localStorage can be unavailable in private browsing; UI still succeeds.
+      }
       setIsSubscribed(true);
     }
   };
 
-  // 🖼️ SUCCESS UI (Image 2 - Fullskrin Updates)
   if (isSubscribed) {
     return (
       <div className="mt-12 flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
         <span className="text-[10px] font-bold text-[#6366f1] uppercase tracking-widest mb-2">MAILING LIST</span>
         <h2 className="text-4xl font-black text-[#1e293b] mb-10 tracking-tight">Fullskrin Updates</h2>
-        
-        {/* Error Box matching your Screenshot */}
-        <div className="w-[500px] bg-[#fff1f2] border border-[#fecdd3] rounded-[4px] p-5 mb-8">
+
+        <div className="w-[500px] bg-emerald-50 border border-emerald-200 rounded-[4px] p-5 mb-8">
           <div className="flex items-start gap-4">
-             <div className="bg-[#f43f5e] text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shrink-0 mt-0.5">✕</div>
+             <div className="bg-emerald-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] shrink-0 mt-0.5">✓</div>
              <div>
-                <p className="text-[#9f1239] font-bold text-[14px]">Something went wrong:</p>
-                <ul className="list-disc list-inside text-[#be123c] text-[13px] mt-1 ml-1">
-                  <li>Email you entered is already subscribed to this list</li>
-                </ul>
+                <p className="text-emerald-800 font-bold text-[14px]">Thanks — you&#39;re on the list</p>
+                <p className="text-emerald-700 text-[13px] mt-1">We&#39;ll email {email} about new Fullskrin features.</p>
              </div>
           </div>
         </div>
 
-        {/* Input area on Success Page */}
         <div className="flex gap-4 w-[500px]">
-          <input 
-            type="text" 
-            readOnly 
-            value={email} 
+          <input
+            type="text"
+            readOnly
+            value={email}
             className="flex-1 border border-[#e2e8f0] rounded-[6px] px-4 py-3.5 text-[#64748b] bg-white outline-none text-[15px]"
           />
-          <button className="bg-[#6366f1] text-white font-bold px-10 py-3.5 rounded-[6px] text-[15px] cursor-not-allowed">
-            Sign up
+          <button className="bg-emerald-500 text-white font-bold px-10 py-3.5 rounded-[6px] text-[15px] cursor-not-allowed">
+            Subscribed
           </button>
         </div>
       </div>

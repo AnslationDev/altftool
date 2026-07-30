@@ -4,12 +4,21 @@ import { ChevronRight } from "lucide-react";
 import WorkflowCard from "../../components/WorkflowCard";
 import NodeBadge from "../../components/NodeBadge";
 import { getAllNodes, getWorkflowsByNode } from "../../data/service";
-import { metaTitle } from "../../data/text";
+import { metaTitle, stripEmojis } from "../../data/text";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
+
+const description = (name) =>
+  `Explore free n8n workflow templates that use the ${name} node, compare practical examples, and download reusable automation JSON on AltFTool.`;
 
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
@@ -29,7 +38,7 @@ export async function generateMetadata({ params }) {
   }
   return createPageMetadata({
     title: `n8n Workflows with ${metaTitle(node.name, 32)}`,
-    description: `Explore free n8n workflow templates that use the ${node.name} node, compare practical examples, and download reusable automation JSON on AltFTool.`,
+    description: description(node.name),
     path: `/n8n/node/${slug}`,
   });
 }
@@ -39,29 +48,58 @@ export default async function Page({ params }) {
   const node = getAllNodes().find((n) => n.slug === slug);
   if (!node) notFound();
   const items = getWorkflowsByNode(slug).sort((a, b) => b.totalViews - a.totalViews);
+  const path = `/n8n/node/${slug}`;
 
   return (
-    <main className="min-h-screen bg-(--color-background)">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        <nav className="flex items-center gap-1 text-xs text-(--color-muted-foreground)">
-          <Link href="/n8n" className="hover:text-(--color-primary)">n8n Workflows</Link>
-          <ChevronRight size={13} />
-          <span className="text-(--color-foreground)">{node.name}</span>
-        </nav>
+    <>
+      {/* Same gap the category pages had: a grid of workflows with no entity
+          describing the collection or the node it is filtered by. */}
+      <JsonLd
+        id={`n8n-node-${slug}-schema`}
+        data={[
+          createCollectionPageJsonLd({
+            path,
+            name: `n8n Workflows using ${node.name}`,
+            description: description(node.name),
+          }),
+          createItemListJsonLd({
+            path,
+            name: `n8n workflows using ${node.name}`,
+            // Same order as the grid: most-viewed first.
+            items: items.map((w) => ({
+              name: stripEmojis(w.title),
+              path: `/n8n/${w.slug}`,
+            })),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "n8n Workflows", path: "/n8n" },
+            { name: node.name, path },
+          ]),
+        ]}
+      />
+      <main className="min-h-screen bg-(--color-background)">
+        <div className="mx-auto max-w-7xl px-4 py-8">
+          <nav className="flex items-center gap-1 text-xs text-(--color-muted-foreground)">
+            <Link href="/n8n" className="hover:text-(--color-primary)">n8n Workflows</Link>
+            <ChevronRight size={13} />
+            <span className="text-(--color-foreground)">{node.name}</span>
+          </nav>
 
-        <div className="mt-4 flex items-center gap-3">
-          <NodeBadge name={node.name} size={36} />
-          <h1 className="text-2xl font-extrabold text-(--color-foreground) sm:text-3xl">
-            {items.length} n8n Workflows using {node.name}
-          </h1>
-        </div>
+          <div className="mt-4 flex items-center gap-3">
+            <NodeBadge name={node.name} size={36} />
+            <h1 className="text-2xl font-extrabold text-(--color-foreground) sm:text-3xl">
+              {items.length} n8n Workflows using {node.name}
+            </h1>
+          </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map((w) => (
-            <WorkflowCard key={w.slug} workflow={w} />
-          ))}
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {items.map((w) => (
+              <WorkflowCard key={w.slug} workflow={w} />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

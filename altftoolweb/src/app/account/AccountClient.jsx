@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, Spinner } from "@altftool/ui";
 import { LogOut, Heart, Wrench, Gamepad2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAlert } from "@/shared/ui/AlertProvider";
 
 const QUICK_LINKS = [
   { href: "/tools/all", label: "Browse tools", icon: Wrench },
@@ -26,6 +27,7 @@ function initialsOf(user) {
 export function AccountClient() {
   const router = useRouter();
   const { user, loading, signOutUser } = useAuth();
+  const { showAlert } = useAlert();
   const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
@@ -47,6 +49,9 @@ export function AccountClient() {
     try {
       await signOutUser();
       router.replace("/");
+    } catch (err) {
+      console.error(err);
+      showAlert("Sign out failed. Please try again.", "error");
     } finally {
       setSigningOut(false);
     }

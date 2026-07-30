@@ -20,11 +20,11 @@ export default function FinalCtaBanner({ onExploreMarketplace, onListWebsite }) 
         </div>
 
         <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-          Join 1,400+ Verified Publishers & Agencies Today
+          Join Publishers & Agencies Building Links Today
         </h2>
 
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Zero upfront listing fees for publishers. Guaranteed indexation and escrow fund protection for SEO buyers. Start building high-DR authority links in minutes.
+          Zero upfront listing fees for publishers. Buyers pay the listed price with an on-demand link inspector to verify every placement. Start building high-DR authority links in minutes.
         </p>
 
         <div className="flex flex-wrap items-center gap-3 pt-2">

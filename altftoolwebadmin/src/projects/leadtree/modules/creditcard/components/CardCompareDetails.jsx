@@ -182,6 +182,5 @@ export const CardCompareDetails = memo(
     }
 );
 
-
-
+CardCompareDetails.displayName = "CardCompareDetails";
 

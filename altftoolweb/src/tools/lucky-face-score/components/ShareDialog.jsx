@@ -147,7 +147,7 @@ export default function ShareDialog({ result, open, onClose }) {
                 onClick={handleDownloadImage}
                 className="flex flex-col items-center gap-1.5 py-3 px-2 min-h-11 rounded-xl border border-border hover:bg-muted/50 transition cursor-pointer active:scale-[0.98] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
               >
-                <Image size={20} className="text-muted-foreground" />
+                <Image size={20} className="text-muted-foreground" alt="" />
                 <span className="text-[10px] font-medium text-muted-foreground">Image</span>
               </button>
             </div>

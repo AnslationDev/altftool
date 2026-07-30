@@ -10,7 +10,7 @@ import { getTop9Items, getTop9Title } from "./data/getTop9Items";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Top9 Lists - Ranked Guides, Entertainment, Sports & Tools",
+    title: "Top9 Ranked Lists - Entertainment, Sports & Tools",
     description:
       "Explore Top9 ranked lists across entertainment, sports, business, tools, lifestyle, and trending topics on AltFTool.",
     path: "/top9",

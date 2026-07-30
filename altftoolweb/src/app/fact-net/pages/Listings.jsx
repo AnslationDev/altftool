@@ -9,6 +9,12 @@ import {
   getCategoryByPath,
   getSearchSuggestions,
 } from "../data/factNetData";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 export default function Listings({ searchParams }) {
   const query = searchParams?.q || "";
@@ -34,16 +40,43 @@ export default function Listings({ searchParams }) {
       : count
         ? `${count} facts`
         : "All original topics";
+  const summary = `Explore ${formatCount(result.total)} original topic guides and learning resources.`;
 
   return (
     <main className="fn-page">
+      {/* Filters and paging live in the query string, so the entity describes
+          the result set this URL actually rendered — heading, summary, and the
+          same page of topics ArticleGrid shows below. */}
+      <JsonLd
+        id="fact-net-listings-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/fact-net/listings",
+            name: activeLabel,
+            description: summary,
+          }),
+          createItemListJsonLd({
+            path: "/fact-net/listings",
+            name: `${activeLabel} — Fact Hub topics`,
+            items: result.items.map((article) => ({
+              name: article.title,
+              path: article.href,
+            })),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Fact Hub", path: "/fact-net" },
+            { name: "Listings", path: "/fact-net/listings" },
+          ]),
+        ]}
+      />
       <div className="fn-stack">
         <FactNetNav />
         <section className="fn-glass">
           <div className="fn-panel-inner">
             <p className="fn-kicker">Listings</p>
             <h1 className="fn-title-sm">{activeLabel}</h1>
-            <p className="fn-subtitle">Explore {formatCount(result.total)} original topic guides and learning resources.</p>
+            <p className="fn-subtitle">{summary}</p>
           </div>
         </section>
         <SearchForm

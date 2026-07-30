@@ -95,7 +95,7 @@ export default function QRPreview({
     const win = window.open("");
     if (!win) return;
     win.document.write(
-      `<html><head><title>Print QR Code</title><style>body{display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;}img{max-width:90vw;max-height:90vh;}</style></head><body><img src="${dataUrl}" onload="window.print();window.close();" /></body></html>`
+      `<html><head><title>Print QR Code</title><style>body{display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;}img{max-width:90vw;max-height:90vh;}</style></head><body><img src="${dataUrl}" alt="QR code" onload="window.print();window.close();" /></body></html>`
     );
     win.document.close();
   }

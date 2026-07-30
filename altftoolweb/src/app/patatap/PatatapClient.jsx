@@ -1,11 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { Info, Maximize2, Minimize2, Volume2, VolumeX, X } from "lucide-react";
 import "./patatap.css";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const TOTAL_ASSETS = 26;
+const INTRO_DURATION_MS = 650;
 
 const PALETTE = [
   "#00b8ff",
@@ -548,7 +549,6 @@ export default function PatatapClient() {
   const activeTimeoutRef = useRef(0);
   const backgroundRef = useRef("#b5b5b5");
   const mutedRef = useRef(false);
-  const [loaded, setLoaded] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [hintVisible, setHintVisible] = useState(true);
   const [activeKey, setActiveKey] = useState("");
@@ -760,17 +760,8 @@ export default function PatatapClient() {
   }, [muted]);
 
   useEffect(() => {
-    let count = 0;
-    const loader = window.setInterval(() => {
-      count += 1;
-      setLoaded(count);
-      if (count >= TOTAL_ASSETS) {
-        window.clearInterval(loader);
-        window.setTimeout(() => setIsReady(true), 220);
-      }
-    }, 24);
-
-    return () => window.clearInterval(loader);
+    const timer = window.setTimeout(() => setIsReady(true), INTRO_DURATION_MS);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -861,9 +852,12 @@ export default function PatatapClient() {
       {!isReady && (
         <div className="patatap-loader" role="status" aria-live="polite">
           <div className="patatap-loader-mark">Patatap</div>
-          <div className="patatap-loader-count">
-            <span>{loaded}</span> / <span>{TOTAL_ASSETS}</span>
+          <div className="patatap-loader-dots" aria-hidden="true">
+            <span />
+            <span />
+            <span />
           </div>
+          <span className="sr-only">Loading</span>
         </div>
       )}
 
@@ -876,10 +870,10 @@ export default function PatatapClient() {
         {activeKey}
       </div>
 
-      <div className="patatap-brand" data-patatap-control>
+      <Link href="/" className="patatap-brand" data-patatap-control>
         <span>Patatap</span>
         <small>portable animation + sound kit</small>
-      </div>
+      </Link>
 
       <div className="patatap-controls" data-patatap-control>
         <button type="button" className="patatap-control" onClick={() => setCreditsOpen(true)} title="Info">

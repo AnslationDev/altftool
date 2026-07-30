@@ -1,7 +1,7 @@
 "use client";
 
-import SocialMediaSimulator from "./pages/index";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <SocialMediaSimulator />;
+  return <ToolHome />;
 }

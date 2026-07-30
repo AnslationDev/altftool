@@ -16,6 +16,13 @@ export default function NewsletterCtaSection({ onExplore }) {
     if (!email.trim()) return setError("Enter your email to get weekly picks.");
     if (!EMAIL_PATTERN.test(email)) return setError("Enter a valid email address.");
     setError("");
+    // No newsletter delivery backend exists yet — persist locally instead of
+    // discarding the signup.
+    try {
+      window.localStorage.setItem("ALTFT_FREE_AI_TOOL_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setSuccess(true);
   };
 

@@ -7,6 +7,12 @@ import { emitAlert } from "@/lib/alertBus";
 import AboutEditor from "./AboutEditor";
 import AboutPillarsEditor from "./AboutPillarsEditor";
 import AboutHeroEditor from "./AboutHeroEditor";
+import {
+  subscribeWhyChooseUsItems,
+  createWhyChooseUsItem,
+  updateWhyChooseUsItem,
+  deleteWhyChooseUsItem,
+} from "../service/apexboost.service";
 
 export default function WhyChooseUsPage() {
   const [wcuList, setWcuList] = useState([]);
@@ -15,17 +21,19 @@ export default function WhyChooseUsPage() {
   const [form, setForm] = useState({ title: "", desc: "", image: "" });
   const [activeTab, setActiveTab] = useState("wcu");
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    const unsubscribe = subscribeWhyChooseUsItems(
+      (items) => setWcuList(items),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load items." }),
+    );
+    return unsubscribe;
+  }, []);
 
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=whyChooseUs');
-    const json = await res.json();
-    if (json.success) setWcuList(json.data);
-  };
+  const nextOrder = () => (wcuList.length ? Math.max(...wcuList.map((i) => Number(i.order || 0))) + 1 : 1);
 
   const openAdd = () => {
     setEditingItem(null);
-    setForm({ title: "", desc: "", image: "" });
+    setForm({ title: "", desc: "", image: "", order: nextOrder() });
     setIsModalOpen(true);
   };
 
@@ -36,35 +44,24 @@ export default function WhyChooseUsPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = wcuList.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...wcuList, { ...form }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'whyChooseUs', data: updated }),
-    });
-    if (res.ok) {
-      setWcuList(updated);
+    try {
+      if (editingItem) {
+        await updateWhyChooseUsItem(editingItem.id, form);
+      } else {
+        await createWhyChooseUsItem(form);
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Item saved successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save item." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = wcuList.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'whyChooseUs', data: updated }),
-    });
-    if (res.ok) {
-      setWcuList(updated);
+    try {
+      await deleteWhyChooseUsItem(item.id);
       emitAlert({ type: "success", title: "Success", message: "Item deleted successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete item." });
     }
   };
@@ -108,8 +105,8 @@ export default function WhyChooseUsPage() {
 
           <div className="bg-white rounded-xl shadow p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {wcuList.map((item, index) => (
-                <div key={index} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
+              {wcuList.map((item) => (
+                <div key={item.id} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
                   {item.image && <img src={item.image} alt={item.title} className="w-full h-40 object-cover" />}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-2">

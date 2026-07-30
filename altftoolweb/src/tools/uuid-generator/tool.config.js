@@ -4,7 +4,7 @@ const toolConfig = {
   category: ["Developer"],
   description: "Generate secure unique UUIDs instantly for any application.",
   icon: "fingerprint",
-  iconColor: "text-purple-700",
+  iconColor: "text-[var(--primary)]",
 };
 
 export default toolConfig;

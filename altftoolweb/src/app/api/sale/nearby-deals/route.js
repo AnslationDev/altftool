@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { enforceRateLimit } from "@altftool/core/http";
 import { getOrSetSaleCache, buildCacheKey, SALE_CACHE_TTL_MS } from "@/lib/sale/cache";
 
 export const runtime = "nodejs";
@@ -26,6 +27,13 @@ export const runtime = "nodejs";
 
 export async function GET(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      scope: "sale:nearby-deals",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const { searchParams } = new URL(request.url);
     const city = searchParams.get("city") || "";
     const query = searchParams.get("query") || "deals";

@@ -116,8 +116,9 @@ export function useSearchDataSource() {
 
         managedResults = managedEntries
           .filter((entry) => String(entry.status || "active").toLowerCase() === "active")
+          .filter((entry) => String(entry.redirect_url || "").trim().length > 0)
           .map((entry) => {
-            const target = String(entry.redirect_url || "#").trim() || "#";
+            const target = String(entry.redirect_url).trim();
             const keywords = Array.isArray(entry.searchKeywords)
               ? entry.searchKeywords
               : String(entry.searchKeywords || "")

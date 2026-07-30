@@ -15,7 +15,7 @@ const extensionsDescription =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Best Chrome Extensions & Browser AddOns | AltFTool Extensions",
+    title: "Chrome Extensions & Browser AddOns | AltFTool Extensions",
     description: extensionsDescription,
     path: "/extensions",
     image: "/extension/hero.jpg",

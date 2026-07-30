@@ -22,6 +22,16 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = e.target;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(window.localStorage.getItem("helios_solar_leads") || "[]");
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem("helios_solar_leads", JSON.stringify(leads));
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
+    form.reset();
     setShowModal(true);
     setMessage("");
   };
@@ -84,15 +94,16 @@ export default function ContactSection() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div>
                   <label className="form-label">Full Name</label>
-                  <input type="text" placeholder="Enter your full name" required className="form-input" />
+                  <input type="text" name="name" placeholder="Enter your full name" required className="form-input" />
                 </div>
                 <div>
                   <label className="form-label">Email</label>
-                  <input type="email" placeholder="hello@example.com" required className="form-input" />
+                  <input type="email" name="email" placeholder="hello@example.com" required className="form-input" />
                 </div>
                 <div>
                   <label className="form-label">Message</label>
                   <textarea
+                    name="message"
                     placeholder="Tell us about your home and energy goals..."
                     rows={4}
                     required
@@ -145,10 +156,10 @@ export default function ContactSection() {
                 </svg>
               </div>
 
-              <h3 className="contact-modal-title">Message Sent!</h3>
+              <h3 className="contact-modal-title">Message Saved (Not Sent)</h3>
 
               <p className="contact-modal-text">
-                Contact us now for the quick estimate and installation
+                This was saved on your device only — no message was sent. Call us now for the quickest estimate and installation.
               </p>
 
               <a href="tel:+18005550192" className="contact-modal-cta">

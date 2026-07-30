@@ -70,8 +70,7 @@ function TreeNode({ node, depth, selectedPath, onSelect, authFetch }) {
           type="button"
           onClick={toggle}
           aria-label={node.hasChildren ? (expanded ? "Collapse" : "Expand") : undefined}
-          className="grid h-4 w-4 shrink-0 place-items-center rounded"
-          tabIndex={-1}
+          className="grid h-4 w-4 shrink-0 place-items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)]"
         >
           {node.hasChildren ? (
             loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" />

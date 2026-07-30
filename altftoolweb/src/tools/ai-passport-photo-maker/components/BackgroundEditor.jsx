@@ -100,7 +100,7 @@ export default function BackgroundEditor({
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2 text-(--muted-foreground)">
-            <Image size={28} />
+            <Image size={28} alt="" />
             <span className="text-xs">Upload a photo first</span>
           </div>
         )}

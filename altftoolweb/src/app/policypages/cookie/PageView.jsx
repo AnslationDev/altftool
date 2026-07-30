@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Cookie, Sliders, BarChart3 } from "lucide-react";
 
 /* Solid Card — visible in light & dark */
@@ -19,16 +17,6 @@ const Card = ({ children, className = "" }) => (
 );
 
 export default function CookiePolicy() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    if (query) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-(--background) text-(--foreground) flex flex-col">
       <main className="flex-grow py-12">

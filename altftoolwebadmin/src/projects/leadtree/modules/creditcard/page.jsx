@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 
 import CreditCardTable from "./components/CreditCardTable";
 import CreditCardStatus from "./components/CreditCardStatus";
@@ -167,12 +168,12 @@ export default function CreditCard() {
           <h1 className="text-2xl font-semibold text-gray-800">
             Manage your Credit Cards
           </h1>
-          <a
+          <Link
             href="/leadtree/credit-cards/add-cards"
             className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
           >
             Add New Card
-          </a>
+          </Link>
         </div>
 
         <div className="bg-white rounded-xl shadow p-6">

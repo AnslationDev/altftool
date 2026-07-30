@@ -13,7 +13,19 @@ export default function Footer() {
         {/* Top Row */}
         <div className="site-footer__top">
           {/* Logo */}
-          <div className="site-footer__logo" onClick={() => scrollTo()}>
+          <div
+            className="site-footer__logo"
+            role="button"
+            tabIndex={0}
+            aria-label="Scroll to top"
+            onClick={() => scrollTo()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollTo();
+              }
+            }}
+          >
             <svg viewBox="0 0 24 24" className="site-footer__logo-icon">
               <circle cx="12" cy="12" r="4"/>
               <path d="M12 2v2"/><path d="M12 20v2"/>

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Users } from "lucide-react";
+import { emitAlert } from "@/lib/alertBus";
+import { createTeamMember, deleteTeamMember, subscribeTeamMembers, updateTeamMember } from "../service/apexboost.service";
 
 export default function TeamsPage() {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -10,14 +12,11 @@ export default function TeamsPage() {
   const [form, setForm] = useState({ name: "", role: "", email: "" });
 
   useEffect(() => {
-    const res = fetch('/api/apexboost/data?section=teams').then(r => r.json()).then(j => {
-      if (j.success) setTeamMembers(j.data);
-    }).catch(() => {
-      setTeamMembers([
-        { id: 1, name: "John Doe", role: "CEO", email: "john@example.com" },
-        { id: 2, name: "Jane Smith", role: "CTO", email: "jane@example.com" },
-      ]);
-    });
+    const unsubscribe = subscribeTeamMembers(
+      (data) => setTeamMembers(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load team members." }),
+    );
+    return unsubscribe;
   }, []);
 
   const openAdd = () => {
@@ -33,33 +32,27 @@ export default function TeamsPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = teamMembers.map(t => t.id === editingItem.id ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...teamMembers, { ...form, id: Date.now() }];
-    }
+    const nextOrder = teamMembers.length
+      ? Math.max(...teamMembers.map((member) => Number(member.order) || 0)) + 1
+      : 1;
     try {
-      await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'teams', data: updated }),
-      });
-    } catch {}
-    setTeamMembers(updated);
-    setIsModalOpen(false);
+      if (editingItem) {
+        await updateTeamMember(editingItem.id, { ...form, order: editingItem.order ?? 0 });
+      } else {
+        await createTeamMember({ ...form, order: nextOrder });
+      }
+      setIsModalOpen(false);
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save team member." });
+    }
   };
 
   const handleDelete = async (item) => {
-    const updated = teamMembers.filter(t => t.id !== item.id);
     try {
-      await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'teams', data: updated }),
-      });
-    } catch {}
-    setTeamMembers(updated);
+      await deleteTeamMember(item.id);
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete team member." });
+    }
   };
 
   return (

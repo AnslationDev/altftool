@@ -23,6 +23,13 @@ const money = (v) => (Number.isFinite(v) ? INR.format(v) : "—");
 const STARTER_CATEGORIES = ["clothes", "papers", "kitchen", "garage"];
 const FALLBACK_START_DATE = "2026-01-01";
 
+const todayIso = () => {
+  const today = new Date();
+  return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
+};
+
 const DEFAULTS = {
   minutesPerSession: "90",
   sessionsPerWeek: "3",
@@ -49,10 +56,7 @@ export default function ToolHome() {
 
   // Seeded after mount so the server-rendered markup stays deterministic.
   useEffect(() => {
-    const today = new Date();
-    const iso = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 10);
+    const iso = todayIso();
     setForm((prev) => (prev.startDate === FALLBACK_START_DATE ? { ...prev, startDate: iso } : prev));
   }, []);
 
@@ -133,7 +137,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
-    setForm(DEFAULTS);
+    setForm({ ...DEFAULTS, startDate: todayIso() });
     setCopied(false);
   };
 

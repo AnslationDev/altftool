@@ -16,10 +16,17 @@ export const POST = withAdminApi(
       actor: principal,
       reason: body.reason || "forced_logout",
     });
+    // revokeSession() returns {ok:false} without touching any session when
+    // sessionId matches no doc (already ended, mistyped, or raced with
+    // another revoke) — audit that outcome distinctly instead of always
+    // recording a successful force-logout that never actually happened.
     await audit({
       action: "security.session.revoke",
-      summary: `Force-logout session ${body.sessionId}`,
-      metadata: { sessionId: body.sessionId, reason: body.reason || "forced_logout" },
+      status: res.ok ? "success" : "error",
+      summary: res.ok
+        ? `Force-logout session ${body.sessionId}`
+        : `Force-logout failed — session ${body.sessionId} not found`,
+      metadata: { sessionId: body.sessionId, reason: body.reason || "forced_logout", ok: res.ok },
     });
     return NextResponse.json(res);
   },

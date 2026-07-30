@@ -7,6 +7,7 @@ import { resolveToolCategories } from "../src/platform/registry/categoryTaxonomy
 const require = createRequire(import.meta.url);
 const TOOLS_DIR = "src/tools";
 const OUTPUT = "src/platform/registry/toolMetaMap.js";
+const SLUG_OUTPUT = "src/platform/registry/toolSlugs.js";
 const LEGACY_REDIRECT_TOOL_DIRS = new Set([
   "_shared",
   "_toolfk-suite",
@@ -104,7 +105,6 @@ for (const dir of toolDirs) {
       try {
         const code = fs.readFileSync(configPath, "utf8");
         const moduleShim = { exports: {} };
-        // eslint-disable-next-line no-new-func
         new Function("module", "exports", "require", "console", code)(
           moduleShim,
           moduleShim.exports,
@@ -155,4 +155,19 @@ export const toolMetaMap = ${JSON.stringify(toolMeta, null, 2)};
 `;
 
 fs.writeFileSync(OUTPUT, file);
-console.log("✅ toolMetaMap generated");
+
+// The middleware only ever asks "is this a tool slug?", and importing the full
+// map to answer that put 0.89 MiB of metadata into a bundle that runs on every
+// request. Emitting the slugs here, in the same pass and from the same object,
+// keeps the two from drifting — deriving them from a second source is how they
+// would eventually disagree.
+const slugs = Object.keys(toolMeta).sort();
+fs.writeFileSync(
+  SLUG_OUTPUT,
+  `// ⚠️ AUTO-GENERATED FILE — DO NOT EDIT\n` +
+    `// Slugs only. Generated beside toolMetaMap from the same object; import\n` +
+    `// this wherever a membership test is all that is needed.\n` +
+    `export const toolSlugSet = new Set(\n  ${JSON.stringify(slugs.join(" "))}.split(" ")\n);\n`,
+);
+
+console.log(`✅ toolMetaMap generated (+ ${slugs.length} slugs)`);

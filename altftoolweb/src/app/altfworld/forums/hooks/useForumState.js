@@ -25,11 +25,19 @@ export default function useForumState() {
     setPage(1);
   }
 
+  // A new search term can shrink the result set below the current page,
+  // leaving the user stranded on an empty page — reset to page 1 like
+  // chooseCategory already does for category changes.
+  function updateQuery(value) {
+    setQuery(value);
+    setPage(1);
+  }
+
   return {
     activeCategory,
     chooseCategory,
     query,
-    setQuery,
+    setQuery: updateQuery,
     page,
     setPage,
     categories: forumCategories,

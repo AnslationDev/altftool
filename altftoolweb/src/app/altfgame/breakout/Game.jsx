@@ -162,6 +162,7 @@ export default function BreakoutGame({ isPreview = false }) {
     const brickHeight = 20;
 
     let activeBricksCount = 0;
+    let pointsScoredThisFrame = 0;
 
     for (let c = 0; c < GAME_CONFIG.BRICK_COLS; c++) {
       for (let r = 0; r < GAME_CONFIG.BRICK_ROWS; r++) {
@@ -186,6 +187,7 @@ export default function BreakoutGame({ isPreview = false }) {
             ball.dy = -ball.dy;
             b.status = 0;
             activeBricksCount--; // Decrement immediately
+            pointsScoredThisFrame += 10;
             setScore(prev => prev + 10);
             if (soundEnabled) playSound('brick');
           }
@@ -198,9 +200,10 @@ export default function BreakoutGame({ isPreview = false }) {
         setGameState("WON");
         if (soundEnabled) playSound('win');
         fireConfetti();
-        if (score > highScore) {
-            setHighScore(score);
-            localStorage.setItem("breakout-highscore", score.toString());
+        const finalScore = score + pointsScoredThisFrame;
+        if (finalScore > highScore) {
+            setHighScore(finalScore);
+            localStorage.setItem("breakout-highscore", finalScore.toString());
         }
     }
 

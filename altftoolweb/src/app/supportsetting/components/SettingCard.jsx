@@ -121,9 +121,10 @@ const SettingCard = ({
             </ul>
           )}
 
-          {/* Existing Windows entries carry verified screenshots — new
-              macOS/Android/iOS entries intentionally have no imageUrl, so
-              nothing renders here for them regardless of this toggle. */}
+          {/* Only entries with a verified in-house screenshot set imageUrl —
+              most Windows entries and all macOS/Android/iOS entries
+              intentionally have no imageUrl, so nothing renders here for
+              them regardless of this toggle. */}
           {showImages && setting.imageUrl && (
             <div className="support-card-image">
               <ManagedImage

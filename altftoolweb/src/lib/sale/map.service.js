@@ -4,10 +4,6 @@
  * duplicated across future map views.
  */
 
-// Standard OSM tile server — plain OpenStreetMap cartography.
-export const OSM_TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-export const OSM_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
 // CARTO Voyager — a free, keyless tile style built on the same real OSM data,
 // but with a clean light basemap + labeled roads that reads much closer to
 // Google Maps' default look than the stock OSM tiles above. Attribution for
@@ -34,31 +30,6 @@ export function getMapCenter(origin, results = []) {
     return [origin.lat, origin.lng];
   }
   return [20.5937, 78.9629]; // geographic center of India — sane default
-}
-
-/**
- * Compute Leaflet bounds ([[south, west], [north, east]]) that fit every
- * point (origin + all results). Returns null when there's nothing to fit.
- *
- * @param {{ lat: number, lng: number } | null} origin
- * @param {Array<{ lat: number, lng: number }>} results
- * @returns {[[number, number], [number, number]] | null}
- */
-export function getBoundsForResults(origin, results = []) {
-  const points = [
-    ...(origin && Number.isFinite(origin.lat) && Number.isFinite(origin.lng) ? [origin] : []),
-    ...results.filter((r) => Number.isFinite(r.lat) && Number.isFinite(r.lng)),
-  ];
-
-  if (points.length === 0) return null;
-
-  const lats = points.map((p) => p.lat);
-  const lngs = points.map((p) => p.lng);
-
-  return [
-    [Math.min(...lats), Math.min(...lngs)],
-    [Math.max(...lats), Math.max(...lngs)],
-  ];
 }
 
 /**

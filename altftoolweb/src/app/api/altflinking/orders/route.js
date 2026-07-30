@@ -5,11 +5,19 @@
  */
 
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }    from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue }   from "firebase-admin/firestore";
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:orders",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -34,11 +42,18 @@ export async function GET(request) {
     return ok(orders);
   } catch (e) {
     console.error("[GET /orders]", e);
-    return err("Failed to fetch orders: " + e.message, 500);
+    return err("Failed to fetch orders", 500);
   }
 }
 
 export async function POST(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 20,
+    scope: "altflinking:orders",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -77,11 +92,15 @@ export async function POST(request) {
     const buyerSnap = await db.collection("users").doc(user.uid).get();
     const buyerData = buyerSnap.exists ? buyerSnap.data() : {};
 
-    // Resolve campaign (optional)
+    // Resolve campaign (optional) — must belong to this buyer (or admin)
     let campaignName = body.campaignName || "Default Campaign";
+    let campaignId = null;
     if (body.campaignId) {
       const campSnap = await db.collection("campaigns").doc(body.campaignId).get();
-      if (campSnap.exists) campaignName = campSnap.data().name;
+      if (campSnap.exists && (campSnap.data().ownerId === user.uid || role === "ADMIN" || role === "SUPERADMIN")) {
+        campaignId = body.campaignId;
+        campaignName = campSnap.data().name;
+      }
     }
 
     const price = body.type === "GUEST_POST"
@@ -108,7 +127,7 @@ export async function POST(request) {
       anchorText:    body.anchorText.trim(),
       articleContent: body.articleContent || "",
       articleDocUrl:  body.articleDocUrl  || "",
-      campaignId:    body.campaignId  || null,
+      campaignId,
       campaignName,
       price,
       // Workflow state — all orders start at PENDING_ADMIN_APPROVAL
@@ -135,8 +154,8 @@ export async function POST(request) {
     const docRef = await db.collection("orders").add(orderData);
 
     // If order belongs to a campaign, add orderId to campaign.orderIds
-    if (body.campaignId) {
-      await db.collection("campaigns").doc(body.campaignId).update({
+    if (campaignId) {
+      await db.collection("campaigns").doc(campaignId).update({
         orderIds: FieldValue.arrayUnion(docRef.id),
         updatedAt: now,
       });
@@ -145,6 +164,6 @@ export async function POST(request) {
     return ok({ id: docRef.id, ...orderData, status: "PENDING_ADMIN_APPROVAL" }, 201);
   } catch (e) {
     console.error("[POST /orders]", e);
-    return err("Failed to place order: " + e.message, 500);
+    return err("Failed to place order", 500);
   }
 }

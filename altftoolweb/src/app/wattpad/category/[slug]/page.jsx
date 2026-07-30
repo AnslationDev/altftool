@@ -1,12 +1,15 @@
 import books from "@/app/wattpad/data/books.json";
 import categories from "@/app/wattpad/data/categories.json";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { notFound } from "next/navigation";
-import {
-  Eye,
-  List,
-} from "lucide-react";
+import CategoryStoryList from "@/app/wattpad/components/CategoryStoryList";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -51,9 +54,33 @@ export default async function CategoryPage({ params }) {
   const filteredBooks = books.filter(
     (book) => book.categoryId === category.id
   );
+  const categoryPath = `/wattpad/category/${category.slug}`;
+  const jsonLd = [
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Stories", path: "/wattpad" },
+      { name: `${category.name} Stories`, path: categoryPath },
+    ]),
+    createCollectionPageJsonLd({
+      path: categoryPath,
+      name: `${category.name} Stories`,
+      description:
+        category.description || `${category.name} stories and related reads`,
+    }),
+    // The stories this category actually lists, in the order they render.
+    createItemListJsonLd({
+      path: categoryPath,
+      name: `${category.name} stories`,
+      items: filteredBooks.map((book) => ({
+        name: book.title,
+        path: `/wattpad/book/${book.slug}`,
+      })),
+    }),
+  ];
 
   return (
     <div className="wp-section min-h-screen">
+      <JsonLd id={`story-category-${category.slug}-schema`} data={jsonLd} />
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
         <div>
           <div className="mb-8">
@@ -99,80 +126,7 @@ export default async function CategoryPage({ params }) {
             </div>
           )}
 
-          <div className="bg-card border border-(--border) rounded-xl p-4 md:p-6 mb-6 shadow-sm">
-            <h3 className="text-sm text-(--muted-foreground) mb-3 font-medium">
-              Refine by tag:
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "romance", "love", "slowburn", "billionaire",
-                "darkromance", "mafia", "enemiestolovers",
-                "newadult", "possessive", "marriage", "ceo",
-                "india", "mature",
-              ].map((tag) => (
-                <button
-                  key={tag}
-                  className="wp-filter-btn"
-                >
-                  + {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="bg-card border border-(--border) rounded-xl p-4 md:p-6 shadow-sm">
-              <div className="wp-hot-header">
-                <h2 className="wp-hot-title">
-                  {filteredBooks.length} Stories
-                </h2>
-                <button className="wp-hot-sort">
-                  Sort by: Hot
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-7 gap-y-6">
-                {filteredBooks.map((book, index) => (
-                  <Link
-                    key={book.id}
-                    href={`/wattpad/book/${book.slug}`}
-                  >
-                    <div className="wp-related-card">
-                      <div className="wp-related-cover">
-                        <Image
-                          src={book.coverImage}
-                          width={170}
-                          height={260}
-                          alt={book.title}
-                          className="w-full h-[170px] sm:h-[190px] md:h-[220px] object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                      </div>
-                      <div className="flex flex-col justify-start pt-1">
-                        <h3 className="wp-related-title">
-                          <span className="wp-related-number">{index + 1}.</span> {book.title}
-                        </h3>
-                        <p className="wp-related-author">{book.authorId}</p>
-                        <div className="wp-related-stats">
-                          <span className="flex items-center gap-1">
-                            <Eye size={16}/> {book.stats.views}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <List size={16} /> {book.stats.totalChapters} parts
-                          </span>
-                        </div>
-                        <p className="wp-related-summary">{book.summary}</p>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {book.tags?.slice(0, 4).map((tag) => (
-                            <span key={tag} className="wp-book-tag text-xs py-1">{tag}</span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          <CategoryStoryList books={filteredBooks} />
         </div>
 
         <div className="hidden lg:block">

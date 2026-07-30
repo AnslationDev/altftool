@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { toolMetaMap } from "./platform/registry/toolMetaMap.js";
+// Slugs only, not the full metadata map. The map is 0.89 MiB and this file
+// runs on every request; the sole question asked of it here is membership.
+import { toolSlugSet } from "./platform/registry/toolSlugs.js";
 import { getActiveRedirects } from "./platform/seo/redirectSource.js";
 import { resolveRedirect } from "@altftool/core/seo/resolver";
 import { getLegacyCategorySlugMap } from "./platform/registry/categoryTaxonomy.js";
@@ -60,10 +62,16 @@ export async function proxy(request) {
     // Redirect /tools/:slug to /tools/all/:slug if slug matches a registered tool
     if (segments.length === 2 && segments[0] === "tools") {
       const slug = segments[1];
-      if (toolMetaMap && toolMetaMap[slug]) {
+      if (toolSlugSet.has(slug)) {
         pathname = `/tools/all/${slug}`;
         changed = true;
-      } else if (LEGACY_CATEGORY_REDIRECTS[slug]) {
+        // `toolMetaMap[slug]` used to answer this, and it inherited from
+        // Object.prototype: /tools/toString was truthy and redirected. A Set
+        // does not, so those paths now fall through to the line below — where
+        // a plain object would inherit in turn and send /tools/toString to
+        // /tools/function%20toString()%20%7B%20[native%20code]%20%7D. Own
+        // properties only, on both.
+      } else if (Object.hasOwn(LEGACY_CATEGORY_REDIRECTS, slug)) {
         // Legacy free-text category slug → canonical category route.
         pathname = `/tools/${LEGACY_CATEGORY_REDIRECTS[slug]}`;
         changed = true;

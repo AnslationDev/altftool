@@ -47,7 +47,11 @@ export const NewsletterSubscribeDialog = () => {
   }, []);
 
   useEffect(() => {
-    if (pathname?.startsWith("/buysmart") || isSelfChromePath(pathname)) {
+    if (
+      pathname?.startsWith("/buysmart") ||
+      pathname?.startsWith("/unsubscribe") ||
+      isSelfChromePath(pathname)
+    ) {
       setOpen(false);
       return;
     }
@@ -130,7 +134,7 @@ export const NewsletterSubscribeDialog = () => {
   return createPortal(
     <aside
       aria-labelledby="newsletter-prompt-title"
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl border border-border bg-(--card) p-4 text-(--foreground) shadow-lg sm:inset-x-auto sm:bottom-6 sm:right-6 sm:mx-0 sm:w-full"
+      className="fixed inset-x-4 bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-sm sm:bottom-6 rounded-xl border border-border bg-(--card) p-4 text-(--foreground) shadow-lg sm:inset-x-auto sm:bottom-6 sm:right-6 sm:mx-0 sm:w-full"
       data-testid="newsletter-prompt"
     >
       <div className="flex items-start gap-3 pr-8">

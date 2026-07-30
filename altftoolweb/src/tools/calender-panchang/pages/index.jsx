@@ -1,450 +1,649 @@
-
-
 "use client";
 
-import { useCallback, useState, useEffect } from 'react';
-import moment from 'moment-timezone';
-import Features from '../components/Features';
+/**
+ * Panchang calendar — UI only.
+ *
+ * Every number on this screen comes out of ../lib, which computes it from the date
+ * and the coordinates. There are no constants standing in for times, no placeholder
+ * values and no network calls. If a quantity cannot be computed it is not shown.
+ */
+
+import { useMemo, useState } from "react";
+import { Check, Copy, MapPin, Moon, RotateCcw, Sun, Sunrise } from "lucide-react";
+
+import {
+  CITIES,
+  computePanchang,
+  formatClock,
+  formatDuration,
+  formatRange,
+} from "../lib";
+
+const DASH = "—";
+
+const INPUT_CLASS =
+  "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
+const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
+const PRIMARY_BTN =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
+const GHOST_BTN =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
+const CARD = "rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]";
+
+/** Today's date in the browser's own timezone, as YYYY-MM-DD. Presentation only. */
+function todayIso() {
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+function parseIsoDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value).trim());
+  if (!match) return null;
+  return { year: Number(match[1]), month: Number(match[2]), day: Number(match[3]) };
+}
+
+const toNumber = (raw) => {
+  const trimmed = String(raw).trim();
+  if (trimmed === "") return NaN;
+  const value = Number(trimmed);
+  return Number.isFinite(value) ? value : NaN;
+};
+
+const DEFAULT_CITY = "New Delhi";
+
+function Row({ label, value, hint }) {
+  return (
+    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2.5">
+      <dt className="text-sm text-[var(--muted-foreground)]">{label}</dt>
+      <dd className="text-right text-sm font-semibold text-[var(--foreground)]">
+        {value ?? DASH}
+        {hint ? (
+          <span className="ml-2 font-normal text-[var(--muted-foreground)]">{hint}</span>
+        ) : null}
+      </dd>
+    </div>
+  );
+}
+
+function Stat({ icon: Icon, label, value, hint }) {
+  return (
+    <div className="rounded-lg border border-[var(--border)] p-4">
+      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+        {Icon ? <Icon className="h-3.5 w-3.5" aria-hidden="true" /> : null}
+        {label}
+      </p>
+      <p className="mt-1 text-xl font-semibold text-[var(--foreground)] sm:text-2xl">
+        {value ?? DASH}
+      </p>
+      {hint ? <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">{hint}</p> : null}
+    </div>
+  );
+}
 
 export default function ToolHome() {
-  const [panchang, setPanchang] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [date, setDate] = useState(moment().tz('Asia/Kolkata').format('YYYY-MM-DD'));
-  const [location, setLocation] = useState({ lat: 28.6139, lng: 77.209, city: 'New Delhi' });
-  const [city, setCity] = useState('New Delhi');
-  const [error, setError] = useState('');
+  const [dateValue, setDateValue] = useState(todayIso);
+  const [cityName, setCityName] = useState(DEFAULT_CITY);
+  const [manual, setManual] = useState(false);
+  const [latText, setLatText] = useState("28.6139");
+  const [lngText, setLngText] = useState("77.2090");
+  const [tzText, setTzText] = useState("5.5");
+  const [copied, setCopied] = useState(false);
 
-  const generatePanchangData = useCallback((date, lat, lng) => {
-    const tithis = [
-      'Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami',
-      'Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima','Amavasya'
+  const place = useMemo(() => {
+    if (manual) {
+      return {
+        name: "Custom coordinates",
+        latitude: toNumber(latText),
+        longitude: toNumber(lngText),
+        tzHours: toNumber(tzText),
+      };
+    }
+    const city = CITIES.find((c) => c.name === cityName) || CITIES[0];
+    return city;
+  }, [manual, cityName, latText, lngText, tzText]);
+
+  const result = useMemo(() => {
+    const parsed = parseIsoDate(dateValue);
+    if (!parsed) return { error: "Pick a date." };
+    return computePanchang({
+      year: parsed.year,
+      month: parsed.month,
+      day: parsed.day,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      tzHours: place.tzHours,
+    });
+  }, [dateValue, place]);
+
+  const hasError = Boolean(result.error);
+  const p = hasError ? null : result.panchanga;
+  const cal = hasError ? null : result.calendar;
+  const div = hasError ? null : result.divisions;
+
+  const summary = useMemo(() => {
+    if (hasError) return "";
+    const lines = [
+      `Panchang for ${dateValue} — ${place.name}`,
+      `${result.weekdayName} (${result.vaara}) · ${place.latitude.toFixed(4)}, ${place.longitude.toFixed(4)} · UTC${place.tzHours >= 0 ? "+" : ""}${place.tzHours}`,
+      "",
+      `Sunrise: ${formatClock(result.sunriseHours) ?? "does not rise"}`,
+      `Solar noon: ${formatClock(result.solarNoonHours)}`,
+      `Sunset: ${formatClock(result.sunsetHours) ?? "does not set"}`,
+      `Day length: ${formatDuration(result.dayLengthHours) ?? DASH}`,
+      `Moonrise: ${formatClock(result.moonriseHours) ?? "none on this date"}`,
+      `Moonset: ${formatClock(result.moonsetHours) ?? "none on this date"}`,
+      "",
+      `Tithi: ${p.paksha} ${p.tithiName} until ${formatClock(p.tithiEndHours)}`,
+      `Nakshatra: ${p.nakshatraName} pada ${p.nakshatraPada} until ${formatClock(p.nakshatraEndHours)}`,
+      `Yoga: ${p.yogaName} until ${formatClock(p.yogaEndHours)}`,
+      `Karana: ${p.karanaName} until ${formatClock(p.karanaEndHours)}`,
+      `Vaara: ${result.vaara}`,
+      "",
+      `Masa (amanta): ${cal.masaLabel}`,
+      `Ritu: ${cal.ritu} · Ayana: ${cal.ayana}`,
+      `Samvatsara: ${cal.samvatsara} · Shaka ${cal.shakaYear} · Vikram ${cal.vikramYear}`,
+      `Sun in ${p.sunRashi} · Moon in ${p.moonRashi}`,
     ];
-
-    const nakshatras = [
-      'Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu',
-      'Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra',
-      'Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha',
-      'Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'
-    ];
-
-    const yogas = [
-      'Vriddhi','Dhruva','Vyatipata','Parigha','Shiva','Siddha','Sadhya',
-      'Shubha','Bhadra','Vriddhi','Dhruva','Vyatipata','Parigha','Shiva',
-      'Siddha','Sadhya','Shubha','Bhadra','Vriddhi','Dhruva','Vyatipata',
-      'Parigha','Shiva','Siddha','Sadhya','Shubha','Bhadra'
-    ];
-
-    const karanas = [
-      'Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti',
-      'Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti',
-      'Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti',
-      'Bava','Balava','Kaulava','Taitila','Gara','Vanija','Vishti',
-      'Shakuni','Chatushpada','Naga','Kimstughna'
-    ];
-
-    const samvatsaras = [
-      'Prabhava','Vibhava','Shukla','Pramodoota','Prajapati','Angirasa',
-      'Shrimukha','Bhava','Yuva','Dhatri','Ishvara','Bahudhanya',
-      'Pramathi','Vikrama','Vrisha','Chitrabhanu','Subhanu','Tārana',
-      'Pārthiva','Vyaya','Sarvajit','Sarvadhārin','Virodhi','Vikriti',
-      'Khara','Nandana','Vijaya','Jaya','Manmatha','Durmukha','Hemalambi',
-      'Vilambi','Vikāri','Sharvari','Plava','Shubhakrit','Shobhakṛita',
-      'Krodhi','Vishvāvasu','Parābhava','Plavanga','Kīlaka','Saumya',
-      'Sādhārana','Virodhikṛita','Paridhāvi','Pramādin','Ānanda','Rākshasa',
-      'Nala','Pingala','Kālayukti','Siddhārthi','Raudri','Durmati','Dundubhi',
-      'Rudhirodgāri','Raktākshī','Krodhana','Akshaya'
-    ];
-
-    const maasas = [
-      'Chaitra','Vaishakha','Jyeshtha','Ashadha','Shravana','Bhadrapada',
-      'Ashwina','Kartika','Margashira','Pausha','Magha','Phalguna'
-    ];
-
-    const rituSeasons = ['Vasanta','Grishma','Varsha','Sharad','Hemant','Shishir'];
-    const ayanas = ['Uttarayana','Dakshinayana'];
-
-    const dayOfYear = moment(date).dayOfYear();
-    const randomIndex = (dayOfYear + Math.floor(lat + lng)) % 100;
-
-    return {
-      tithi: tithis[randomIndex % tithis.length],
-      nakshatra: nakshatras[randomIndex % nakshatras.length],
-      yoga: yogas[randomIndex % yogas.length],
-      karana: karanas[randomIndex % karanas.length],
-      samvatsara: samvatsaras[randomIndex % samvatsaras.length],
-      maasa: maasas[Math.floor(dayOfYear / 30) % maasas.length],
-      ritu: rituSeasons[Math.floor(dayOfYear / 60) % rituSeasons.length],
-      ayana: ayanas[dayOfYear > 180 ? 1 : 0],
-      paksha: randomIndex % 2 === 0 ? 'Shukla' : 'Krishna',
-      sunrise: moment(date).add(5 + (lng - 77) * 4 / 60 + Math.random() * 0.5, 'hours').format('hh:mm A'),
-      sunset: moment(date).add(18 + (lng - 77) * 4 / 60 + Math.random() * 0.5, 'hours').format('hh:mm A'),
-      moonrise: moment(date).add(20 + Math.random() * 4, 'hours').format('hh:mm A'),
-      moonset: moment(date).add(8 + Math.random() * 4, 'hours').format('hh:mm A'),
-      shubhMuhurat: ['06:15 AM - 07:30 AM','10:00 AM - 11:45 AM','05:30 PM - 06:45 PM'],
-      rahuKaal: '04:30 PM - 06:00 PM',
-      yamaganda: '07:30 AM - 09:00 AM',
-      gulika: '12:00 PM - 01:30 PM',
-      abhijit: '11:45 AM - 12:30 PM',
-      amritKaal: '08:15 AM - 09:45 AM',
-      brahmaMuhurta: '04:00 AM - 05:30 AM',
-      pratahSandhya: '05:30 AM - 06:15 AM',
-      sayanSandhya: '06:30 PM - 07:15 PM'
-    };
-  }, []);
-
-  const fetchCityCoordinates = useCallback(async (cityName) => {
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(cityName)}&format=json&limit=1`
+    if (div) {
+      lines.push(
+        "",
+        `Rahu Kaal: ${formatRange(div.rahu)}`,
+        `Yamaganda: ${formatRange(div.yamaganda)}`,
+        `Gulika Kaal: ${formatRange(div.gulika)}`,
+        `Abhijit Muhurta: ${formatRange(div.abhijit)}`,
       );
-      const data = await response.json();
-      if (data && data.length > 0) {
-        const { lat, lon, display_name } = data[0];
-        return { lat: parseFloat(lat), lng: parseFloat(lon), city: display_name.split(',')[0] };
-      }
-      return null;
-    } catch (err) {
-      console.error('Error fetching coordinates:', err);
-      return null;
+      if (div.brahmaMuhurta) lines.push(`Brahma Muhurta: ${formatRange(div.brahmaMuhurta)}`);
     }
-  }, []);
+    lines.push(
+      "",
+      `Panchanga elements are for the moment of local sunrise. Sidereal positions use the Lahiri (Chitrapaksha) ayanamsa, ${p.ayanamsa.toFixed(4)}° on this date.`,
+    );
+    return lines.join("\n");
+  }, [hasError, dateValue, place, result, p, cal, div]);
 
-  const fetchPanchang = useCallback(async () => {
-    setLoading(true);
-    setError('');
+  const copyResult = async () => {
+    if (!summary) return;
     try {
-      let targetLocation = location;
-      if (city && city !== location.city) {
-        const coords = await fetchCityCoordinates(city);
-        if (coords) {
-          targetLocation = coords;
-          setLocation(coords);
-        }
-      }
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const data = generatePanchangData(date, targetLocation.lat, targetLocation.lng);
-      setPanchang(data);
-    } catch (err) {
-      console.error('Error fetching panchang:', err);
-      setError('Failed to fetch Panchang data. Please try again.');
-    } finally {
-      setLoading(false);
+      await navigator.clipboard.writeText(summary);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
     }
-  }, [city, date, fetchCityCoordinates, generatePanchangData, location]);
+  };
 
-  useEffect(() => {
-    fetchPanchang();
-  }, [fetchPanchang]);
-
-  const formatDate = (dateStr) => moment(dateStr).format('dddd, D MMMM YYYY');
+  const reset = () => {
+    setDateValue(todayIso());
+    setCityName(DEFAULT_CITY);
+    setManual(false);
+    setLatText("28.6139");
+    setLngText("77.2090");
+    setTzText("5.5");
+    setCopied(false);
+  };
 
   return (
-    <div className="min-h-screen bg-(--background) ">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-         
-          <h1 className="heading  mb-2 animate-fade-up">
-            Panchang Calendar
-          </h1>
-          <p className="description "></p>
-        </header>
+    <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
+      <header className="mb-6">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
+          <Sunrise className="h-4 w-4" aria-hidden="true" />
+          Hindu almanac
+        </div>
+        <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Panchang Calendar</h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
+          Sunrise and sunset from the NOAA solar algorithm; tithi, nakshatra, yoga and karana
+          from the Moon&rsquo;s and Sun&rsquo;s longitudes using the Meeus series, with the
+          Lahiri (Chitrapaksha) ayanamsa. Everything is computed in your browser from the date
+          and the coordinates below.
+        </p>
+      </header>
 
-        <div className="bg-(--background) rounded-2xl shadow-xl p-6 mb-8 max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative">
-              <label className="block text-sm font-semibold text-(--foreground) mb-2">Select Date</label>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full px-4 py-3 border-2 bg-(--card) border-(--border) rounded-xl focus:border-orange-500 focus:outline-none transition-colors"
-              />
-            </div>
-            <div className="relative">
-              <label className="block text-sm font-semibold text-(--foreground) mb-2">Enter City</label>
-              <input
-                type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    fetchPanchang();
-                  }
-                }}
-                placeholder="e.g., Mumbai, New Delhi"
-                className="w-full px-4 py-3 border-2 border-(--border) bg-(--card) rounded-xl  focus:outline-none transition-colors"
-              />
-            </div>
-            <div className="flex items-end">
-              <button
-                onClick={fetchPanchang}
-                disabled={loading}
-                className="w-full bg-(--primary) text-white py-3 border border-(--border) px-6 rounded-xl font-semibold hover:from-orange-600 hover:to-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-              >
-                {loading ? 'Loading...' : 'Get Panchang'}
-              </button>
-            </div>
+      <section className={CARD} aria-labelledby="panchang-inputs">
+        <h2 id="panchang-inputs" className="sr-only">
+          Date and place
+        </h2>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={LABEL_CLASS} htmlFor="panchang-date">
+              Date
+            </label>
+            <input
+              id="panchang-date"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="date"
+              min="1700-01-01"
+              max="2200-12-31"
+              value={dateValue}
+              onChange={(e) => setDateValue(e.target.value)}
+            />
           </div>
+
+          {manual ? null : (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="panchang-city">
+                Place
+              </label>
+              <select
+                id="panchang-city"
+                className={`mt-2 ${INPUT_CLASS}`}
+                value={cityName}
+                onChange={(e) => setCityName(e.target.value)}
+              >
+                {CITIES.map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
-        {error && (
-          <div className="bg-(--card) border-l-4 border-(--border) p-4 mb-6 max-w-4xl mx-auto rounded">
-            <div className="flex items-center">
-              <svg className="w-6 h-6 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <p className="text-red-700">{error}</p>
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={() => setManual((v) => !v)}
+            aria-pressed={manual}
+            className={GHOST_BTN}
+          >
+            <MapPin className="h-4 w-4" aria-hidden="true" />
+            {manual ? "Pick from the city list" : "Enter coordinates by hand"}
+          </button>
+        </div>
+
+        {manual ? (
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div>
+              <label className={LABEL_CLASS} htmlFor="panchang-lat">
+                Latitude (&deg;N positive)
+              </label>
+              <input
+                id="panchang-lat"
+                className={`mt-2 ${INPUT_CLASS}`}
+                type="number"
+                inputMode="decimal"
+                min="-90"
+                max="90"
+                step="0.0001"
+                value={latText}
+                onChange={(e) => setLatText(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className={LABEL_CLASS} htmlFor="panchang-lng">
+                Longitude (&deg;E positive)
+              </label>
+              <input
+                id="panchang-lng"
+                className={`mt-2 ${INPUT_CLASS}`}
+                type="number"
+                inputMode="decimal"
+                min="-180"
+                max="180"
+                step="0.0001"
+                value={lngText}
+                onChange={(e) => setLngText(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className={LABEL_CLASS} htmlFor="panchang-tz">
+                UTC offset (hours)
+              </label>
+              <input
+                id="panchang-tz"
+                className={`mt-2 ${INPUT_CLASS}`}
+                type="number"
+                inputMode="decimal"
+                min="-12"
+                max="14"
+                step="0.25"
+                value={tzText}
+                onChange={(e) => setTzText(e.target.value)}
+              />
             </div>
           </div>
-        )}
-
-        {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-(--border) border-t-transparent mb-4"></div>
-              <p className="text-(--foreground) text-lg">Loading Panchang data...</p>
-            </div>
-          </div>
-        ) : panchang ? (
-          <>
-            <div className="bg-(--card) rounded-2xl shadow-xl p-6 mb-8 max-w-4xl mx-auto text-white">
-              <div className="text-center">
-                <p className="text-(--foreground) mb-2">{formatDate(date)}</p>
-                <h2 className="subheading mb-4">{location.city}, India</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                  <div className="bg-(--card) border border-(--border) text-(--foreground) rounded-xl p-4">
-                    <p className="content">Sunrise</p>
-                    <p className="text-2xl font-bold">{panchang.sunrise}</p>
-                  </div>
-                  <div className="bg-(--card) border border-(--border) text-(--foreground) rounded-xl p-4">
-                    <p className="content ">Sunset</p>
-                    <p className="text-2xl font-bold">{panchang.sunset}</p>
-                  </div>
-                  <div className="bg-(--card) border border-(--border) text-(--foreground) rounded-xl p-4">
-                    <p className="content">Moonrise</p>
-                    <p className="text-2xl font-bold">{panchang.moonrise}</p>
-                  </div>
-                  <div className="bg-(--card) border border-(--border) text-(--foreground) rounded-xl p-4">
-                    <p className="content">Moonset</p>
-                    <p className="text-2xl font-bold">{panchang.moonset}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mb-8 ">
-              <h3 className="subheading mb-4 flex items-center">
-                <span className="w-1 h-6 bg-(--primary) rounded mr-3"></span>
-                Basic Panchang
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div className="bg-(--card) rounded-xl shadow-md p-5 border-t-4 border-blue-500">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5" />
-                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-(--foreground) uppercase">Tithi</span>
-                  </div>
-                  <p className="text-xl font-bold text-(--foreground)">{panchang.tithi}</p>
-                  <p className="text-sm text-gray-500">{panchang.paksha} Paksha</p>
-                </div>
-                <div className="bg-(--card) rounded-xl shadow-md p-5 border-t-4 border-red-500">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-(--foreground) uppercase">Nakshatra</span>
-                  </div>
-                  <p className="text-xl font-bold text-(--foreground)">{panchang.nakshatra}</p>
-                </div>
-                <div className="bg-(--card) rounded-xl shadow-md p-5 border-t-4 border-yellow-500">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-(--foreground) uppercase">Yoga</span>
-                  </div>
-                  <p className="text-xl font-bold text-(--foreground)">{panchang.yoga}</p>
-                </div>
-                <div className="bg-(--card) rounded-xl shadow-md p-5 border-t-4 border-green-500">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17 12c0-2.76-2.24-5-5-5s-5 2.24-5 5 2.24 5 5 5 5-2.24 5-5zm-5-3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-() uppercase">Karana</span>
-                  </div>
-                  <p className="text-xl font-bold text-(--foreground)">{panchang.karana}</p>
-                </div>
-                <div className="bg-(--card) rounded-xl shadow-md p-5 border-t-4 border-purple-500">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" />
-                      </svg>
-                    </div>
-                    <span className="text-sm font-semibold text-(--foreground) uppercase">Maasa</span>
-                  </div>
-                  <p className="text-xl font-bold text-(--foreground)">{panchang.maasa}</p>
-                  <p className="text-sm text-(--foreground)">{panchang.ritu} Ritu</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mb-8">
-              <h3 className="subheading mb-4 flex items-center">
-                <span className="w-1 h-6 bg-red-500 rounded mr-3"></span>
-                Hindu Calendar Details
-              </h3>
-              <div className="bg-(--card) rounded-xl shadow-md p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-(--card) border border-(--border) rounded-lg">
-                  <p className="text-sm text-(--foreground) mb-1">Samvatsara</p>
-                  <p className="text-lg font-bold text-red-700">{panchang.samvatsara}</p>
-                </div>
-                <div className="text-center p-4 bg-(--card) border border-(--border) rounded-lg">
-                  <p className="text-sm text-(--foreground) mb-1">Ayana</p>
-                  <p className="text-lg font-bold text-orange-700">{panchang.ayana}</p>
-                </div>
-                <div className="text-center p-4 bg-(--card) border border-(--border) rounded-lg">
-                  <p className="text-sm text-(--foreground) mb-1">Ritu</p>
-                  <p className="text-lg font-bold text-yellow-700">{panchang.ritu}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mb-8">
-              <h3 className="subheading mb-4 flex items-center">
-                <span className="w-1 h-6 bg-green-500 rounded mr-3"></span>
-                Day Timings
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-(--card) rounded-xl shadow-md p-6">
-                  <h4 className="text-lg font-semibold text-(--foreground) mb-4 flex items-center">
-                    <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                    Inauspicious Timings
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Rahu Kaal</span>
-                      <span className="text-red-600 font-semibold">{panchang.rahuKaal}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Yamaganda</span>
-                      <span className="text-red-600 font-semibold">{panchang.yamaganda}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Gulika Kaal</span>
-                      <span className="text-red-600 font-semibold">{panchang.gulika}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-(--card) rounded-xl shadow-md p-6">
-                  <h4 className="subheading mb-4 flex items-center">
-                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                    Auspicious Timings
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Abhijit Muhurat</span>
-                      <span className="text-green-600 font-semibold">{panchang.abhijit}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Amrit Kaal</span>
-                      <span className="text-green-600 font-semibold">{panchang.amritKaal}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                      <span className="font-medium text-gray-700">Brahma Muhurta</span>
-                      <span className="text-green-600 font-semibold">{panchang.brahmaMuhurta}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mb-8">
-              <h3 className="subheading mb-4 flex items-center">
-                <span className="w-1 h-6 bg-purple-500 rounded mr-3"></span>
-                Shubh Muhurat (Auspicious Periods)
-              </h3>
-              <div className="bg-(--card) rounded-xl shadow-md p-6">  
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {panchang.shubhMuhurat.map((muhurat, index) => (
-                    <div key={index} className="flex items-center p-4 bg-(--card) rounded-lg border border-purple-100">
-                      <svg className="w-6 h-6 text-purple-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                      <span className="text-(--foreground) font-semibold">{muhurat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-4xl mx-auto mb-8">
-              <h3 className="subheading mb-4 flex items-center">
-                <span className="w-1 h-6 bg-blue-500 rounded mr-3"></span>
-                Sandhya Timings
-              </h3>
-              <div className="bg-(--card)  rounded-xl shadow-md p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center border border-(--border) p-4 text-(--foreground)  rounded-lg">
-                  <div className="w-12 h-12 bg-linear-to-br from-red-400 to-yellow-400 border border-(--border) rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm text-(--foreground)">Pratah Sandhya</p>
-                    <p className="text-lg font-bold text-(--foregroundd)">{panchang.pratahSandhya}</p>
-                  </div>
-                </div>
-                <div className="flex items-center border border-(--border) p-4 text-(--foreground)  rounded-lg">
-                  <div className="w-12 h-12 bg-linear-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm text-(--foreground)">Sayan Sandhya</p>
-                    <p className="text-lg font-bold text-(--foregroundd)">{panchang.sayanSandhya}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
         ) : null}
-      <Features/>
+      </section>
 
-        {/* <footer className="text-center py-8 text-gray-500">
-          <p className="mb-2">Panchang data is calculated based on astronomical algorithms and geographical location.</p>
-          <div className="flex justify-center space-x-6 mt-4">
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-orange-500 rounded-full mr-2"></span>
-              Sunrise/Sunset
-            </span>
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
-              Moonrise/Moonset
-            </span>
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-              Auspicious
-            </span>
-            <span className="flex items-center">
-              <span className="w-3 h-3 bg-red-500 rounded-full mr-2"></span>
-              Inauspicious
-            </span>
-          </div>
-        </footer> */}
-      </div>
-    </div>
+      {hasError ? (
+        <p
+          role="alert"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          {result.error}
+        </p>
+      ) : null}
+
+      {hasError ? null : (
+        <>
+          <section className={`mt-6 ${CARD}`}>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+                  {result.weekdayName} &middot; {result.vaara}
+                </p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--primary)]">
+                  {p.paksha} {p.tithiName}
+                </p>
+                <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+                  {place.name} &middot; {place.latitude.toFixed(4)}&deg;,{" "}
+                  {place.longitude.toFixed(4)}&deg;
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={copyResult}
+                  aria-label="Copy the panchang for this date"
+                  className={GHOST_BTN}
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Copy className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {copied ? "Copied!" : "Copy result"}
+                </button>
+                <button
+                  type="button"
+                  onClick={reset}
+                  aria-label="Reset the date and place"
+                  className={PRIMARY_BTN}
+                >
+                  <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                  Reset
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-sun">
+            <h2
+              id="panchang-sun"
+              className="flex items-center gap-2 text-base font-semibold text-[var(--foreground)]"
+            >
+              <Sun className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+              Sun
+            </h2>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Stat
+                label="Sunrise"
+                value={formatClock(result.sunriseHours) ?? "Does not rise"}
+              />
+              <Stat label="Solar noon" value={formatClock(result.solarNoonHours)} />
+              <Stat label="Sunset" value={formatClock(result.sunsetHours) ?? "Does not set"} />
+              <Stat
+                label="Day length"
+                value={formatDuration(result.dayLengthHours)}
+                hint={
+                  result.nightLengthHours === null
+                    ? null
+                    : `night ${formatDuration(result.nightLengthHours)}`
+                }
+              />
+            </div>
+            {result.circumpolar ? (
+              <p className="mt-3 text-xs text-[var(--muted-foreground)]">
+                At this latitude and date the Sun stays{" "}
+                {result.circumpolar === "up" ? "above" : "below"} the horizon all day, so the
+                day is not divided into eight parts and the kaals below cannot be defined.
+              </p>
+            ) : null}
+          </section>
+
+          <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-moon">
+            <h2
+              id="panchang-moon"
+              className="flex items-center gap-2 text-base font-semibold text-[var(--foreground)]"
+            >
+              <Moon className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+              Moon
+            </h2>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <Stat
+                label="Moonrise"
+                value={formatClock(result.moonriseHours) ?? "None on this date"}
+              />
+              <Stat
+                label="Moonset"
+                value={formatClock(result.moonsetHours) ?? "None on this date"}
+              />
+              <Stat label="Illuminated" value={`${(p.illumination * 100).toFixed(0)}%`} hint="approximate" />
+              <Stat
+                label="Distance"
+                value={`${Math.round(p.moonDistanceKm).toLocaleString("en-IN")} km`}
+              />
+            </div>
+            {result.moonriseHours === null || result.moonsetHours === null ? (
+              <p className="mt-3 text-xs text-[var(--muted-foreground)]">
+                The Moon rises about fifty minutes later each day, so roughly once a month a
+                calendar day contains no moonrise (or no moonset) at all. That is what
+                &ldquo;none on this date&rdquo; means here — it is not a missing value.
+              </p>
+            ) : null}
+          </section>
+
+          <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-five">
+            <h2 id="panchang-five" className="text-base font-semibold text-[var(--foreground)]">
+              The five limbs
+            </h2>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Each element is the one running at local sunrise
+              {result.sunriseHours === null ? "" : ` (${formatClock(result.sunriseHours)})`},
+              shown with the moment it ends.
+            </p>
+            <dl className="mt-3 divide-y divide-[var(--border)]">
+              <Row
+                label="Tithi"
+                value={`${p.paksha} ${p.tithiName}`}
+                hint={`ends ${formatClock(p.tithiEndHours)}`}
+              />
+              <Row
+                label="Nakshatra"
+                value={`${p.nakshatraName} · pada ${p.nakshatraPada}`}
+                hint={`ends ${formatClock(p.nakshatraEndHours)}`}
+              />
+              <Row
+                label="Yoga"
+                value={p.yogaName}
+                hint={`ends ${formatClock(p.yogaEndHours)}`}
+              />
+              <Row
+                label="Karana"
+                value={p.karanaName}
+                hint={`ends ${formatClock(p.karanaEndHours)}`}
+              />
+              <Row label="Vaara" value={`${result.vaara} (${result.weekdayName})`} />
+            </dl>
+          </section>
+
+          <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-calendar">
+            <h2
+              id="panchang-calendar"
+              className="text-base font-semibold text-[var(--foreground)]"
+            >
+              Hindu calendar
+            </h2>
+            <dl className="mt-3 divide-y divide-[var(--border)]">
+              <Row
+                label="Masa (amanta)"
+                value={cal.masaLabel}
+                hint={cal.isAdhikaMasa ? "intercalary month" : null}
+              />
+              <Row label="Ritu" value={cal.ritu} />
+              <Row label="Ayana" value={cal.ayana} />
+              <Row label="Samvatsara" value={cal.samvatsara} />
+              <Row label="Shaka Samvat" value={cal.shakaYear} />
+              <Row label="Vikram Samvat" value={cal.vikramYear} />
+              <Row label="Sun in" value={p.sunRashi} hint={`${p.sunSidereal.toFixed(2)}° sidereal`} />
+              <Row
+                label="Moon in"
+                value={p.moonRashi}
+                hint={`${p.moonSidereal.toFixed(2)}° sidereal`}
+              />
+              <Row
+                label="Ayanamsa (Lahiri)"
+                value={`${p.ayanamsa.toFixed(4)}°`}
+                hint="Chitrapaksha"
+              />
+            </dl>
+          </section>
+
+          {div ? (
+            <>
+              <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-kaal">
+                <h2
+                  id="panchang-kaal"
+                  className="text-base font-semibold text-[var(--foreground)]"
+                >
+                  Day periods
+                </h2>
+                <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                  Rahu Kaal, Yamaganda and Gulika are the published weekday parts of the
+                  daylight period split into eight; Abhijit is the eighth of fifteen equal
+                  daylight muhurtas, so it straddles solar noon; Brahma Muhurta is the
+                  second-last of the fifteen muhurtas of the night that just ended. All of
+                  them are measured from the sunrise and sunset computed above, so they move
+                  with the date and the place.
+                </p>
+                <dl className="mt-3 divide-y divide-[var(--border)]">
+                  <Row
+                    label="Rahu Kaal"
+                    value={<span className="text-[var(--danger)]">{formatRange(div.rahu)}</span>}
+                  />
+                  <Row
+                    label="Yamaganda"
+                    value={
+                      <span className="text-[var(--danger)]">{formatRange(div.yamaganda)}</span>
+                    }
+                  />
+                  <Row
+                    label="Gulika Kaal"
+                    value={<span className="text-[var(--danger)]">{formatRange(div.gulika)}</span>}
+                  />
+                  <Row
+                    label="Abhijit Muhurta"
+                    value={formatRange(div.abhijit)}
+                    hint={
+                      result.weekday === 3 ? "traditionally not observed on Wednesday" : null
+                    }
+                  />
+                  <Row label="Brahma Muhurta" value={formatRange(div.brahmaMuhurta)} />
+                </dl>
+              </section>
+
+              <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-choghadiya">
+                <h2
+                  id="panchang-choghadiya"
+                  className="text-base font-semibold text-[var(--foreground)]"
+                >
+                  Day Choghadiya
+                </h2>
+                <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                  The daylight period in eight parts, each carrying the choghadiya of a
+                  planet. The sequence runs in reverse Chaldean order and starts with the
+                  ruler of the weekday, so it is derived, not looked up.
+                </p>
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full min-w-[22rem] text-left text-sm">
+                    <caption className="sr-only">
+                      The eight day choghadiya with their start and end times
+                    </caption>
+                    <thead>
+                      <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                        <th scope="col" className="py-2 pr-3 font-semibold">
+                          Choghadiya
+                        </th>
+                        <th scope="col" className="py-2 pr-3 font-semibold">
+                          From
+                        </th>
+                        <th scope="col" className="py-2 pr-3 font-semibold">
+                          To
+                        </th>
+                        <th scope="col" className="py-2 font-semibold">
+                          Nature
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {div.choghadiya.map((slot, index) => (
+                        <tr
+                          key={`${slot.name}-${index}`}
+                          className="border-b border-[var(--border)] last:border-0"
+                        >
+                          <th
+                            scope="row"
+                            className="py-2 pr-3 font-semibold text-[var(--foreground)]"
+                          >
+                            {slot.name}
+                          </th>
+                          <td className="py-2 pr-3 text-[var(--muted-foreground)]">
+                            {formatClock(slot.start)}
+                          </td>
+                          <td className="py-2 pr-3 text-[var(--muted-foreground)]">
+                            {formatClock(slot.end)}
+                          </td>
+                          <td
+                            className={`py-2 ${
+                              slot.quality === "inauspicious"
+                                ? "text-[var(--danger)]"
+                                : "text-[var(--muted-foreground)]"
+                            }`}
+                          >
+                            {slot.quality}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </>
+          ) : null}
+        </>
+      )}
+
+      <section className={`mt-6 ${CARD}`} aria-labelledby="panchang-method">
+        <h2 id="panchang-method" className="text-base font-semibold text-[var(--foreground)]">
+          How these numbers are produced
+        </h2>
+        <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--muted-foreground)]">
+          <li>
+            Sunrise, sunset and solar noon use the NOAA solar position algorithm with the
+            standard &minus;0&deg;50&prime; horizon (refraction plus the solar semidiameter).
+            Solar noon sits exactly midway between sunrise and sunset.
+          </li>
+          <li>
+            Tithi and karana come from the Moon&rsquo;s elongation from the Sun; nakshatra
+            from the sidereal lunar longitude; yoga from the sum of the sidereal solar and
+            lunar longitudes. The longitudes are the Meeus (Astronomical Algorithms) solar and
+            lunar series.
+          </li>
+          <li>
+            Sidereal positions use the <strong>Lahiri (Chitrapaksha) ayanamsa</strong>. This
+            matters: Raman, Krishnamurti and Fagan&ndash;Bradley sit up to about a degree away
+            from Lahiri, which can move a nakshatra or tithi boundary by more than an hour. If
+            your family panchang uses a different ayanamsa, expect boundary times to differ.
+          </li>
+          <li>
+            Ending times are found by solving for the instant the relevant angle actually
+            reaches its boundary, not by assuming a fixed duration. A tithi can therefore be
+            skipped (kshaya) or repeated (vriddhi) across two sunrises, exactly as in a
+            printed panchang.
+          </li>
+          <li>
+            Amrit Kaal, the Sandhya periods and festival lists are deliberately not shown.
+            They depend on tradition-specific tables or regional convention rules rather than
+            on astronomy, so there is no single correct value this tool could compute.
+          </li>
+          <li>
+            For ritual timing, confirm against the panchang your tradition follows. Nothing
+            here needs a server: the calculation runs entirely on your device.
+          </li>
+        </ul>
+      </section>
+    </main>
   );
 }

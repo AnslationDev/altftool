@@ -54,6 +54,14 @@ export async function POST(request) {
       timeoutMs: 30_000,
     });
 
+    if (!result.ok) {
+      console.error("Hugging Face inference request failed", result.status, result.data);
+      return NextResponse.json(
+        { error: "AI analysis is temporarily unavailable." },
+        { status: result.status },
+      );
+    }
+
     return NextResponse.json(result.data || {}, { status: result.status });
   } catch (error) {
     return routeError(NextResponse, error, "Job-description analysis failed.");

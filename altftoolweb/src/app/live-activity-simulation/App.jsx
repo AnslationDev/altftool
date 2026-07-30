@@ -632,7 +632,7 @@ export default function App() {
       <header className="sticky top-0 z-50 border-b-2 border-slate-800 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-800 bg-[var(--playful-violet)] shadow-[3px_3px_0_0_#1E293B]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-800 bg-[var(--playful-violet)] shadow-[3px_3px_0_0_var(--playful-ink)]">
               <SparklesIcon className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -736,7 +736,7 @@ export default function App() {
                 tone={spotlightMeta.tone}
                 className="relative z-10 flex h-[430px] flex-col overflow-hidden p-6 sm:h-[490px] sm:p-8"
               >
-                <div className="inline-flex items-center gap-3 self-start rounded-full border-2 border-slate-800 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-slate-500 shadow-[3px_3px_0_0_#1E293B]">
+                <div className="inline-flex items-center gap-3 self-start rounded-full border-2 border-slate-800 bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-slate-500 shadow-[3px_3px_0_0_var(--playful-ink)]">
                   <IconBubble tone={spotlightMeta.tone} className="h-9 w-9">
                     <SpotlightIcon className="h-4 w-4" />
                   </IconBubble>
@@ -771,7 +771,7 @@ export default function App() {
                     </span>
                   </div>
 
-                  <div className="rounded-[22px] border-2 border-slate-800 bg-white p-3 shadow-[4px_4px_0_0_#1E293B]">
+                  <div className="rounded-[22px] border-2 border-slate-800 bg-white p-3 shadow-[4px_4px_0_0_var(--playful-ink)]">
                     <div className="mb-2 flex items-center justify-between gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-slate-500">
                       <span>Next in</span>
                       <span>
@@ -811,7 +811,7 @@ export default function App() {
             description="Readable content lives in clean cards, while the playful decoration around it keeps the experience lively and memorable."
           >
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border-2 border-slate-800 bg-[var(--playful-yellow)] px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-slate-800 shadow-[3px_3px_0_0_#1E293B]">
+              <div className="inline-flex items-center gap-2 rounded-full border-2 border-slate-800 bg-[var(--playful-yellow)] px-4 py-2 text-xs font-extrabold uppercase tracking-[0.2em] text-slate-800 shadow-[3px_3px_0_0_var(--playful-ink)]">
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                 Refreshing every {speedMap[speed]}ms
               </div>
@@ -1040,7 +1040,7 @@ export default function App() {
                   <span
                     key={location}
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-full border-2 px-3 py-2 text-sm font-bold shadow-[3px_3px_0_0_#1E293B]",
+                      "inline-flex items-center gap-2 rounded-full border-2 px-3 py-2 text-sm font-bold shadow-[3px_3px_0_0_var(--playful-ink)]",
                       index % 3 === 0 && "border-slate-800 bg-white text-slate-700",
                       index % 3 === 1 && "border-slate-800 bg-[var(--playful-pink)] text-slate-800",
                       index % 3 === 2 && "border-slate-800 bg-[var(--playful-mint)] text-slate-800",
@@ -1052,7 +1052,7 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="mt-5 rounded-3xl border-2 border-slate-800 bg-white p-4 shadow-[4px_4px_0_0_#1E293B]">
+              <div className="mt-5 rounded-3xl border-2 border-slate-800 bg-white p-4 shadow-[4px_4px_0_0_var(--playful-ink)]">
                 <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-500">
                   Spotlight city
                 </p>

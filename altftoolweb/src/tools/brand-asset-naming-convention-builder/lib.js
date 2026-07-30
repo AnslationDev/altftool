@@ -23,7 +23,6 @@ export const S3_KEY_MAX_BYTES = 1024;
 export const READABLE_NAME_LIMIT = 80;
 
 /** Characters Windows rejects in a filename. */
-// eslint-disable-next-line no-control-regex
 export const ILLEGAL_FILENAME_CHARS = /[<>:"/\\|?*\u0000-\u001F]/g;
 /** IEEE Std 1003.1 Portable Filename Character Set. */
 export const PORTABLE_FILENAME_RE = /^[A-Za-z0-9._-]+$/;

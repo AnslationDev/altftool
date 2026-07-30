@@ -138,7 +138,6 @@ export default function ToolHome() {
 
           <div className="mt-4 flex min-h-40 items-center justify-center overflow-hidden rounded-md border border-[var(--border)] bg-[var(--background)] p-3">
             {canPlay && blobUrl ? (
-              /* eslint-disable-next-line jsx-a11y/media-has-caption */
               <video src={blobUrl} controls className="max-h-72 w-full" />
             ) : (
               <span className="px-2 text-center text-sm text-[var(--muted-foreground)]">

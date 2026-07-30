@@ -24,7 +24,7 @@ export default function ExportOptions({ canvasRef, format, setFormat, quality, s
     const dataUrl = canvasRef.current.toDataURL("image/png");
     const win = window.open("");
     if (win) {
-      win.document.write(`<img src="${dataUrl}" style="max-width:100%" />`);
+      win.document.write(`<img src="${dataUrl}" alt="Cartoon image" style="max-width:100%" />`);
       win.print();
     }
   };

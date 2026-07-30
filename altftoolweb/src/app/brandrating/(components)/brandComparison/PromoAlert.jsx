@@ -128,17 +128,17 @@ export default function PromoAlert({ brand, subName, storageKey }) {
             : rank > 1
                 ? `#${rank} in ${subName}`
                 : `Top Rated ${subName}`;
-    const offerText =
-        typeof brand.offer === "string" && brand.offer.trim()
-            ? brand.offer.trim()
-            : `Rated ${formatRating(rating)}/5 · ${getRatingLabel(rating)} — compare it before you decide.`;
+    const hasOffer = typeof brand.offer === "string" && brand.offer.trim().length > 0;
+    const offerText = hasOffer
+        ? brand.offer.trim()
+        : `Rated ${formatRating(rating)}/5 · ${getRatingLabel(rating)} — compare it before you decide.`;
 
     return createPortal(
         <div
             className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6"
             role="dialog"
             aria-modal="true"
-            aria-label={`${brand.name} limited time offer`}
+            aria-label={`${brand.name} featured pick`}
         >
             {/* backdrop */}
             <button
@@ -200,7 +200,7 @@ export default function PromoAlert({ brand, subName, storageKey }) {
                     </div>
 
                     <p className="text-2xl sm:text-3xl font-serif font-medium text-gray-900">
-                        Limited Time Offer!
+                        Featured Pick
                     </p>
 
                     <p className="max-w-xs text-base sm:text-lg font-semibold leading-snug text-gray-800">
@@ -215,7 +215,7 @@ export default function PromoAlert({ brand, subName, storageKey }) {
                             onClick={close}
                             className="mt-1 w-full max-w-[300px] rounded-lg bg-red-600 px-6 py-3.5 text-base sm:text-lg font-bold text-white transition hover:bg-red-700"
                         >
-                            Get Offer
+                            {hasOffer ? "Get Offer" : "View Site"}
                         </a>
                     ) : (
                         <button

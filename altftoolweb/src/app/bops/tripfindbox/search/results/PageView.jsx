@@ -200,7 +200,7 @@ export default function ResultsPage() {
               <div className="results-card-wrap" key={result.id}>
                 <article className="found-flight-card">
                   <div className="found-card-left">
-                    <span className="flight-tag">{result.tag} <BadgeCheck size={13} /></span>
+                    <span className="flight-tag">{result.tag} {!result.isEstimatedPrice && <BadgeCheck size={13} />}</span>
                     <strong className="departure-line">Departure: {formatShortDate(criteria.departureDate)}</strong>
                     <div className="provider-row">
                       <span className="airline-mark"><Plane size={18} /></span>
@@ -275,6 +275,9 @@ export default function ResultsPage() {
                       <span><Luggage size={13} /></span>
                       <span><ShieldCheck size={13} /></span>
                     </div>
+                    {result.isEstimatedPrice && (
+                      <small className="baggage-note">Estimated price, schedule only — confirm the fare with the airline.</small>
+                    )}
                     <small className="baggage-note">{result.baggage}</small>
                   </div>
                 </article>

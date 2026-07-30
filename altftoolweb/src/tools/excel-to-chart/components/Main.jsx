@@ -678,7 +678,7 @@ export default function MainComponent() {
                   onClick={downloadPNG}
                   className="inline-flex items-center gap-1.5 px-3 py-2 border border-(--border) hover:border-teal-500 rounded-lg text-xs font-semibold text-(--foreground) transition-colors bg-(--page) cursor-pointer"
                 >
-                  <Image className="h-3.5 w-3.5 text-teal-500" /> PNG
+                  <Image className="h-3.5 w-3.5 text-teal-500" alt="" /> PNG
                 </button>
                 <button
                   onClick={downloadSVG}

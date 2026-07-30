@@ -63,7 +63,7 @@ export default function ArticleExportActions({ article }) {
     <div className="fn-sidebar-actions">
       <button type="button" className="fn-button fn-button-primary" onClick={printPdf}>
         <Printer className="fn-icon" />
-        Download as PDF
+        Print / Save as PDF
       </button>
       <button type="button" className="fn-button" onClick={downloadTxt}>
         <FileText className="fn-icon" />

@@ -52,9 +52,6 @@ export const process = [
     desc: "Compound winners into predictable growth."
   }
 ];
-  { icon: FileText, title: "Reporting", desc: "Transparent dashboards on performance." },
-  { icon: TrendingUp, title: "Scaling", desc: "Compound winners into predictable growth." },
-];
 
 export const processHeading = {
   eyebrow: "Our Process",

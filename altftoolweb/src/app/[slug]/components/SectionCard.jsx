@@ -26,6 +26,11 @@ export default function SectionCard({
       ? `${description.slice(0, 120)}...`
       : description;
 
+  const handleGetCode = () => {
+    if (!redirect || redirect === "#") return;
+    window.open(redirect, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="w-[350px] h-[400px] rounded-2xl border border-(--border) bg-(--card) overflow-hidden shadow-sm flex flex-col">
       
@@ -75,7 +80,11 @@ export default function SectionCard({
           </Link>
 
           {/* CTA */}
-          <button className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition">
+          <button
+            type="button"
+            onClick={handleGetCode}
+            className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition"
+          >
             Get Code
           </button>
         </div>

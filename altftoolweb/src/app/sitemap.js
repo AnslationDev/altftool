@@ -67,7 +67,12 @@ import {
   assetHref as tradeonAssetHref,
   chartHref as tradeonChartHref,
 } from "@/app/tradeon/lib/format";
+// The exam spec table is a plain data module (its only dependency, lib/specMath,
+// is pure maths with no React/DOM/"use client"), so it is safe to pull into the
+// sitemap build.
+import { EXAM_SPECS } from "@/app/exam-photo/data/examSpecs";
 
+import { shouldNoindexBlogPost } from "./blogs/utils/blogIndexPolicy";
 export const revalidate = 3600;
 
 const staticRoutes = [
@@ -87,7 +92,6 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  { path: "/smartlink", priority: 0.65 },
   { path: "/top11", priority: 0.7 },
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
@@ -163,6 +167,9 @@ const staticRoutes = [
   // --- AltF Calculators ---
   { path: "/altfcalculators", priority: 0.78 },
 
+  // --- Exam photo & signature specs (hub; per-exam pages are added below) ---
+  { path: "/exam-photo", priority: 0.75 },
+
   // --- QuoteNest Pros (homeserv) ---
   { path: "/homeserv", priority: 0.62 },
   { path: "/homeserv/contact-us", priority: 0.4 },
@@ -182,11 +189,20 @@ const staticRoutes = [
   { path: "/bops/tripfindbox/site-map", priority: 0.4 },
 
   // --- Housing Needs ---
-  // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs.
-  // Publish only the canonical Business Ops hub here.
+  // The hub only. Its vertical guides (/bops/housingneeds/<slug>) are live,
+  // indexable editorial pages and are published from the HN_CATEGORIES
+  // registry below — the rule is "publish every guide EXCEPT the paths
+  // next.config.mjs redirects away", not "publish the hub only". The legacy
+  // /housingneeds/* URLs are 301 sources and stay out on that same rule.
   { path: "/bops/housingneeds", priority: 0.72 },
   { path: "/siding", priority: 0.55 },
 ];
+
+// Housing Needs guide slugs whose /bops/housingneeds/<slug> URL is redirected
+// in next.config.mjs (bathroom and hvac go to /bops/housing-services#<slug>).
+// The registry still lists them for the dashboard, but a URL that answers with
+// a redirect must never be advertised in the sitemap.
+const HN_REDIRECTED_GUIDE_SLUGS = new Set(["bathroom", "hvac"]);
 
 const FIREBASE_API_KEY =
   process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
@@ -411,10 +427,15 @@ async function buildSitemapEntries({
     });
   }
 
+  // Housing Needs vertical guides. Each one renders through HnVerticalPage with
+  // FAQPage + BreadcrumbList JSON-LD and buildVerticalMetadata leaves it
+  // indexable, so the guides belong here alongside the hub.
   for (const category of HN_CATEGORIES) {
     for (const page of category.pages.filter((item) =>
       item.tags?.includes("Guide"),
     )) {
+      // A redirected path is not a canonical URL — see HN_REDIRECTED_GUIDE_SLUGS.
+      if (HN_REDIRECTED_GUIDE_SLUGS.has(page.slug)) continue;
       pushUnique(entries, seen, page.href, {
         priority: 0.8,
         changeFrequency: "monthly",
@@ -547,6 +568,9 @@ async function buildSitemapEntries({
   }
 
   for (const blog of getAllBlogs()) {
+    // A noindexed post must not also be submitted here — that pairing is
+    // what Search Console reports as "Submitted URL marked noindex".
+    if (shouldNoindexBlogPost(blog.slug)) continue;
     pushUnique(entries, seen, `/blogs/${blog.slug}`, {
       lastModified: blog.date ? new Date(blog.date) : undefined,
       priority: 0.7,
@@ -556,7 +580,7 @@ async function buildSitemapEntries({
   }
 
   for (const blog of liveCollections.firebaseBlogs) {
-    if (blog?.slug) {
+    if (blog?.slug && !shouldNoindexBlogPost(blog.slug)) {
       pushUnique(entries, seen, `/blogs/${blog.slug}`, {
         lastModified:
           blog.updatedAt || blog.date
@@ -861,6 +885,17 @@ async function buildSitemapEntries({
         changeFrequency: "monthly",
       });
     }
+  }
+
+  // Exam photo/signature spec pages (/exam-photo/[exam]). Driven by the same
+  // EXAM_SPECS table that renders the hub list, the per-exam spec sheet and the
+  // resizer preset, so a new exam is published everywhere at once.
+  for (const exam of EXAM_SPECS) {
+    if (!exam?.slug) continue;
+    pushUnique(entries, seen, `/exam-photo/${exam.slug}`, {
+      priority: 0.7,
+      changeFrequency: "monthly",
+    });
   }
 
   // QuoteNest Pros service pages (/homeserv/services/[slug])

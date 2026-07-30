@@ -53,13 +53,25 @@ const fallbackStoreOffers = fallbackStores.map((store, index) =>
   }),
 );
 
-export const fallbackBuySmartCategoryItems = [
-  ...fallbackStoreOffers,
-  ...fallbackBuySmartOffers.map(normalizeBuySmartCategory),
-].filter((item, index, items) => (
-  isActiveStatus(item.status) &&
-  items.findIndex((candidate) => candidate.storeSlug === item.storeSlug) === index
-));
+// Provenance marker. Fallback rows are seeded sample offers (their discounts,
+// coupon codes, vote counts, and verification flags are generated from an array
+// index), so consumers that publish structured data must be able to tell them
+// apart from rows Firestore actually returned. Only `isLiveRecord: true` rows
+// describe a real offer.
+function markProvenance(items, isLiveRecord) {
+  return items.map((item) => ({ ...item, isLiveRecord }));
+}
+
+export const fallbackBuySmartCategoryItems = markProvenance(
+  [
+    ...fallbackStoreOffers,
+    ...fallbackBuySmartOffers.map(normalizeBuySmartCategory),
+  ].filter((item, index, items) => (
+    isActiveStatus(item.status) &&
+    items.findIndex((candidate) => candidate.storeSlug === item.storeSlug) === index
+  )),
+  false,
+);
 
 const fallbackFeaturedDeals = fallbackDeals
   .filter((deal) => deal.image?.trim())
@@ -119,10 +131,13 @@ function useLiveSource(source, fallbackItems, normalizeLiveItems) {
 }
 
 function normalizeCategoryItems(data) {
-  const liveItems = (Array.isArray(data) ? data : [])
-    .filter(Boolean)
-    .map(normalizeBuySmartCategory)
-    .filter((item) => isActiveStatus(item.status));
+  const liveItems = markProvenance(
+    (Array.isArray(data) ? data : [])
+      .filter(Boolean)
+      .map(normalizeBuySmartCategory)
+      .filter((item) => isActiveStatus(item.status)),
+    true,
+  );
 
   if (!liveItems.length) return [];
 

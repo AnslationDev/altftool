@@ -3,29 +3,17 @@
 import { useState, useId } from "react";
 import Link from "next/link";
 import {
-  Mail, Zap, Clock, MapPin, Star, ArrowRight,
-  Check, Users, Newspaper, Bell, Globe, ChevronRight,
+  Mail, Zap, Clock, ArrowRight,
+  Check, Bell, Globe, ChevronRight,
 } from "lucide-react";
 
 // ─── data ─────────────────────────────────────────────────────────────────────
-
-const STATS = [
-  { icon: Users,     value: "6M+",  label: "Daily active readers", sublabel: "across all newsletters" },
-  { icon: Newspaper, value: "3–7",  label: "Issues per week",      sublabel: "based on your preference" },
-  { icon: MapPin,    value: "500+", label: "Cities covered",       sublabel: "with hyper-local reporting" },
-];
 
 const FEATURES = [
   { icon: Zap,   title: "Breaking alerts",    desc: "Instant notifications for major stories in your area, delivered before anyone else." },
   { icon: Clock, title: "Morning briefing",   desc: "Start every day with a crisp 5-minute digest of what matters locally." },
   { icon: Globe, title: "Topic customization",desc: "Choose politics, tech, sports, business — your feed, your rules." },
   { icon: Bell,  title: "Event reminders",    desc: "Never miss a local event, town hall, or community moment again." },
-];
-
-const TESTIMONIALS = [
-  { name: "Priya S.",   text: "I get all my local news from this newsletter. It's the first thing I read every morning.", stars: 5 },
-  { name: "James K.",  text: "Incredibly well-curated. Replaced my habit of doom-scrolling social media completely.", stars: 5 },
-  { name: "Anika M.",  text: "The local section is brilliant. I finally feel connected to what's happening nearby.", stars: 4 },
 ];
 
 const FREQUENCIES = [
@@ -35,35 +23,6 @@ const FREQUENCIES = [
 ];
 
 // ─── sub-components ───────────────────────────────────────────────────────────
-
-function StarRating({ count }) {
-  return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          size={12}
-          className={i < count ? "fill-amber-400 text-amber-400" : "text-[var(--border)]"}
-        />
-      ))}
-    </div>
-  );
-}
-
-function StatCard({ icon: Icon, value, label, sublabel }) {
-  return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)]/10 text-[var(--primary)]">
-        <Icon size={18} />
-      </div>
-      <div className="text-3xl font-extrabold tracking-tight text-[var(--foreground)]">{value}</div>
-      <div>
-        <p className="text-sm font-semibold text-[var(--foreground)]">{label}</p>
-        <p className="text-xs text-[var(--muted-foreground)]">{sublabel}</p>
-      </div>
-    </div>
-  );
-}
 
 function FeatureRow({ icon: Icon, title, desc }) {
   return (
@@ -100,8 +59,14 @@ function SubscribeForm() {
     }
     setError("");
     setState("loading");
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1200));
+    // No newsletter delivery backend exists yet for this vertical; persist
+    // locally so the signup isn't silently discarded, matching the pattern
+    // used by policypages/contact's newsletter form (ALTFT_NEWSLETTER_OPTIN).
+    try {
+      window.localStorage.setItem("ALTFT_NEWS_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setState("success");
   }
 
@@ -112,9 +77,9 @@ function SubscribeForm() {
           <Check size={20} />
         </div>
         <div>
-          <p className="font-semibold text-[var(--foreground)]">You&apos;re in! 🎉</p>
+          <p className="font-semibold text-[var(--foreground)]">You&apos;re on the list! 🎉</p>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-            Check <span className="font-medium text-[var(--foreground)]">{email}</span> for a confirmation link.
+            We&apos;ve saved <span className="font-medium text-[var(--foreground)]">{email}</span> for the newsletter launch.
           </p>
         </div>
       </div>
@@ -230,23 +195,8 @@ export default function NewsletterPage() {
           </h1>
 
           <p className="text-base leading-relaxed text-[var(--muted-foreground)]">
-            Join 6 million readers getting the best local stories — politics, tech, business, sports — curated and delivered to your inbox every morning.
+            Get the best local stories — politics, tech, business, sports — curated and delivered to your inbox every morning.
           </p>
-
-          {/* social proof */}
-          <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-              {["bg-violet-500","bg-sky-500","bg-emerald-500","bg-amber-500"].map((c, i) => (
-                <div key={i} className={`h-8 w-8 rounded-full border-2 border-[var(--background)] ${c} flex items-center justify-center text-xs font-bold text-white`}>
-                  {String.fromCharCode(65 + i)}
-                </div>
-              ))}
-            </div>
-            <div>
-              <StarRating count={5} />
-              <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">Loved by 6M+ readers</p>
-            </div>
-          </div>
         </div>
 
         {/* right: form card */}
@@ -256,17 +206,6 @@ export default function NewsletterPage() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">Get local updates delivered to your inbox.</p>
           </div>
           <SubscribeForm />
-        </div>
-      </section>
-
-      {/* ── stats ─────────────────────────────────────────────────────── */}
-      <section className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-[var(--foreground)]">Trusted by millions</h2>
-          <p className="mt-2 text-sm text-[var(--muted-foreground)]">Join a community that stays informed, every single day.</p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {STATS.map((s) => <StatCard key={s.label} {...s} />)}
         </div>
       </section>
 
@@ -280,20 +219,6 @@ export default function NewsletterPage() {
         </div>
         <div className="space-y-6">
           {FEATURES.map((f) => <FeatureRow key={f.title} {...f} />)}
-        </div>
-      </section>
-
-      {/* ── testimonials ──────────────────────────────────────────────── */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-[var(--foreground)]">What readers say</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {TESTIMONIALS.map(({ name, text, stars }) => (
-            <div key={name} className="flex flex-col gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
-              <StarRating count={stars} />
-              <p className="flex-1 text-sm leading-relaxed text-[var(--foreground)]">&quot;{text}&quot;</p>
-              <p className="text-xs font-semibold text-[var(--muted-foreground)]">{name}</p>
-            </div>
-          ))}
         </div>
       </section>
 

@@ -603,3 +603,331 @@ measured zero (above).
    some of those pages dynamic, or dropping route families, is a product decision.
 
 Do not raise the gate a third time without deciding which of these is the actual plan.
+
+---
+
+## 10. Deploys stopped firing on 2026-07-27 — check this before debugging code
+
+`e23cf5b33` (2,749 tools) has been the live commit since **2026-07-27 19:50**. Thirteen
+release commits have landed on `canonical-web/main` since, carrying roughly 950 tools.
+None of them reached production.
+
+**The code is not the problem.** The entire `amplify.yml` sequence reproduces locally and
+passes, run with Amplify's own environment variables:
+
+```bash
+ALTFT_RELEASE_COMMIT=<sha> ALTFT_RELEASE_BRANCH=main \
+AWS_APP_ID=d3o0ra1ab3rxzf AWS_BRANCH=main AWS_COMMIT_ID=<sha> \
+ALTFT_DEFER_BULK_PRERENDER=true ALTFT_BUILD_CPUS=1 \
+ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240 ALTFT_WEBPACK_BUILD_WORKER=true \
+npm ci && npm run build
+```
+
+Everything green: `npm ci` (1,870 packages, lock in sync), engines (node 24.8.0 / npm 11.6.0
+against `>=24 <25` / `>=11`), `write-amplify-runtime-env.mjs`, `assert-no-server-tool-loader.mjs`,
+compile, **artifact gate 213.82 / 215.00 MiB**, prerender size gate.
+
+An empty `chore: trigger Amplify release` commit (`c56740484`) produced no change in the live
+commit either. On its own that is not conclusive — a real build takes longer than the 12
+minutes it was watched for — but combined with 13 pushes over more than a day with the live
+SHA frozen, the auto-build trigger looks stale rather than failing.
+
+**What to check in the console** — this needs an operator; the `nbucket-n1` IAM user cannot
+call `amplify:ListJobs`, so it cannot be diagnosed from here:
+
+1. `knaltftoolweb → main` — is the newest job's commit still `e23cf5b33`? Then no build is
+   being *started*: reconnect the GitHub webhook (App settings → Repository), or hit
+   "Redeploy this version" to push the backlog through in one go.
+2. If jobs *are* running and failing, take the first error from the build log. It will be
+   environment-specific — memory, timeout or build image — because the same commit builds
+   clean locally.
+
+**Do not spend time re-checking the build for this.** It has been reproduced end to end. The
+next person should start at the console, not the code.
+
+---
+
+## 11. The catalogue has reached its artifact ceiling (2026-07-29)
+
+At **3,753 tools the artifact is 214.95 MiB against a 215 MiB gate**, with AWS's real
+ceiling at 220. This is no longer a list of fixes to apply — it is the constraint the
+roadmap has to be planned around.
+
+### What a tool costs
+
+| | |
+|---|---|
+| Code (`lib.js` + `pages/index.jsx` + config + entry) | ~17 KiB |
+| SEO content (`seo.js`, bundled) | ~3 KiB |
+| **Per tool** | **~20 KiB** |
+
+At that rate roughly **60–70 more tools fit**. The backlog holds ~6,500.
+
+### The largest single file is now SEO copy, not code
+
+`.next/server/chunks/*` contains one **9 MiB** chunk holding every tool's `seo.js`
+content. It was 6 MiB before this session's backfill of 244 files. It grows ~3 KiB per
+tool, so at the backlog's full size it alone would be ~33 MiB — a seventh of the entire
+budget, in FAQ text.
+
+**Do not try to lazy-load it per tool.** Measured: **+13.6 MiB**, because per-chunk
+webpack overhead across ~2,900 tiny modules costs more than the bundled prose it
+replaces. It also forces `buildToolSeoContent` async across seven call sites. Tried,
+measured, reverted — see §9.
+
+### Everything cheap is already taken
+
+Applied and verified this session: the three prerender deferrals, `serverExternalPackages`
+for the `/transform` codegen dependencies, image recompression, and pruning 136 dead
+`toolContentOverrides` entries (807 → 503 KiB). Together ~24 MiB.
+
+Deleting the now-unused shared shells (`_shared/assistive`, `_shared/newtasks`) changed
+the artifact by **0.00 MiB** — they were already unreachable, so webpack had never bundled
+them. That is a useful signal: there is no dead weight left to find. What remains in the
+artifact is reachable code and content.
+
+### What actually unblocks it
+
+Splitting the catalogue across deployments — the tools as their own Amplify app, so each
+app gets its own 220 MiB budget. Nothing short of that adds meaningful room, and 77
+finished tools plus the whole remaining backlog are waiting on it.
+
+The alternative is dropping large non-tool route families (`bops` alone is 30 MiB), which
+is a product decision about the owner's own pages, not an engineering one.
+
+### Two ordering traps found the hard way
+
+**Delete shared code only after the last consumer is gone, and re-check after any
+deferral.** `_shared/assistive/AssistiveTool` was deleted when all 91 rescued tools had
+replaced it — then 32 were deferred to fit the gate, their shells came back, and the build
+failed on the deleted file. Parse-checking never catches this; only a real build does.
+
+**A red main is worse than an unshipped tool.** When a release does not fit, cut its scope
+until it is green. Pushing an over-gate build would block the one deploy that could
+otherwise have gone out.
+
+---
+
+## §12 — The deploy freeze, resolved (2026-07-29)
+
+Production sat on `e23cf5b3` from 27 July through **21 consecutive failed builds** (Amplify
+jobs 81–101). §8's "a push to canonical-web/main auto-triggers a deploy" was correct all
+along; the webhook was never the problem. Builds ran, and failed.
+
+**Read the build log before theorising.** The `nik1` AWS profile has Amplify permissions
+(the default profile does not — an earlier note in this repo concluded no credentials here
+could reach Amplify, and that error cost hours):
+
+```bash
+export AWS_PROFILE=nik1 AWS_REGION=ap-south-1
+aws amplify list-jobs --app-id d3o0ra1ab3rxzf --branch-name main --max-results 5 \
+  --query 'jobSummaries[].[jobId,status,endTime]' --output text
+U=$(aws amplify get-job --app-id d3o0ra1ab3rxzf --branch-name main --job-id <N> \
+  --query 'job.steps[?stepName==`BUILD`].logUrl' --output text)
+curl -sL "$U" -o /tmp/build.log && tail -60 /tmp/build.log
+```
+
+### Cause 1 (jobs 81–100): a case-sensitive import
+
+`src/tools/event-tool/entry.jsx` imported `./Pages/index`; git tracks the directory as
+`pages`. macOS resolves it, Amplify's Linux does not. It landed at 20:21 on 27 July, minutes
+after job 80 succeeded at 19:59 — exactly when the freeze began.
+
+`scripts/check-import-case.mjs` now fails the build before webpack starts. **It reads
+`git ls-files`, not the working tree.** That distinction is the whole point: this checkout
+had drifted to `Pages/`, a rename a case-insensitive filesystem never reports, so a guard
+that checked the disk would have passed it. It also covers `public/` asset URL strings —
+that pass found two live production defects (`/personality` LCP image, `/sale` hero) which
+had never failed a build because next/image degrades silently.
+
+### Cause 2 (job 101): the upload, not the build
+
+The build completed successfully and AWS then refused it: 249,551,354 bytes against a
+230,686,720 limit. **The gate and AWS measure different quantities** — the gate read 205.68
+MiB for the same output, a 32.31 MiB difference. Its threshold is now 185 MiB, derived from
+that observed pair. Do not raise it because a build "only just" fails; that is the reasoning
+that produced 205 and then 215, both of which passed builds AWS would always reject.
+
+The gate now prints a `.next` inventory, which immediately answered what could not be
+determined locally: **`.next/standalone` exists on Amplify (230 MiB) and is never produced
+locally.** Amplify's build image injects `output: 'standalone'`, and the gate excludes that
+directory. Any purely local reasoning about artifact contents is blind to it.
+
+Also fixed: gate readings depended on checkout path length. Next writes the absolute build
+root into every RSC manifest, ~148,000 times, so one commit read 214.95 MiB from a
+47-character path and 215.21 MiB from a 116-character worktree. About 9.6 MiB of the
+"we are at the ceiling" story that parked the 81 tools in `PENDING_TOOL_RESCUES.json` was
+this, not the artifact.
+
+### The lever that fixed it: RSC manifest duplication, 24.78 MiB
+
+Next writes one client-reference manifest per app route. Across 390 routes they came to
+51.04 MiB, and **every one listed the same 429 client modules** — the manifest for
+`/altfgame/[slug]` carried 115 modules belonging to `/bops`, which it cannot render. All
+values share one shape, there are 6 distinct chunk arrays among 429 entries, and
+`ssrModuleMapping`/`rscModuleMapping` take 2 distinct values across all 390 files.
+
+Writing the shared data once and referencing it **is not possible**, and this is worth
+knowing before someone tries: Next reads these with `readFileSync` and evaluates them via
+`runInNewContext` with a context holding only `process.env.NEXT_DEPLOYMENT_ID`
+(`next/dist/esm/server/load-manifest.external.js`). No `require`, no `module`. Shipping a
+shared-module version would 500 every RSC page.
+
+`scripts/compact-rsc-manifests.mjs` instead gives each file its own copy as interned tables
+(names, chunk arrays, directory prefixes) plus a six-line expander, trailing zero fields
+dropped. Correctness is checked rather than assumed: every manifest is evaluated before and
+after and the objects compared on values **and key order**, and one mismatch aborts the
+build with the file untouched. A manifest whose source reads `process.env` is skipped, so a
+value Next resolves at load can never be frozen in at build time.
+
+  manifests  51.04 → 26.26 MiB     gate  205.61 → 183.73 MiB
+
+Green at `ca6e78336` (job 102), verified: `/api/health` reports that commit, `career.png`
+404s while `Career.png` 200s. Note the apex domain 302s to `www`, so curl without `-L`
+returns 302 for every path and looks like an outage when the site is fine.
+
+### What has not changed
+
+Two builds give the per-tool cost: job 80 was 165.88 MiB at 2,749 tools, job 101 205.68 MiB
+at 3,753. That is **40.6 KiB per tool, 19.8 MiB per 500**. At 183.73 MiB against a 185 gate,
+the next wave of 500 lands straight back on this wall, and the 81 parked tools with it.
+
+The 24.78 MiB is a reprieve, not a fix. Splitting the catalogue into its own Amplify app —
+each app getting its own budget — is what actually allows the 500-at-a-time cadence to
+continue. That is a product and infrastructure decision for the owner, not an engineering
+one to take unilaterally. Held in reserve: the `proxy.js` `toolMetaMap` → slug-set change,
+measured at 0.89 MiB, deliberately not shipped in the same release so that a second
+gate↔AWS data point would stay uncontaminated.
+
+---
+
+## §13 — What AWS measures is still unknown. Two models failed. (2026-07-29)
+
+Do not set the artifact gate from arithmetic. Set it from deploys that shipped.
+
+Four rejections and two acceptances, all real:
+
+| job | gate | .next/standalone | AWS reported | result |
+|---|---|---|---|---|
+| 101 | 205.68 | — | 237.99 | rejected |
+| 104 | 184.13 | — | — | **shipped** |
+| 105 | 185.09 | 235.7 | 220.01 | rejected |
+| 109 | 180.59 | — | — | **shipped** |
+| 110 | 182.30 | 237.4 | 220.96 | rejected |
+| 111 | 182.30 | 213.25 | 220.85 | rejected |
+
+**Model 1, constant overhead.** Job 101 implied 32.31 MiB between the gate's walk and
+AWS's number, so 220 − 32.31 = 187.69 looked like the bound and the gate went to 186.
+Job 105 measured 34.92 and failed at 185.09. Not constant.
+
+**Model 2, a ratio to .next/standalone.** Jobs 105 and 110 gave AWS ÷ standalone = 0.9334
+and 0.9307 — stable to a third of a percent, which reads as a law. Job 111 acted on it and
+cut standalone by 24.15 MiB; AWS moved 0.11 MiB. The ratio held only because both jobs
+happened to have near-identical standalone sizes (235.7 and 237.4).
+
+**What is actually known:** job 109 shipped at 180.59. Job 110 added exactly one thing —
+`force-static` on the homepage and /tools, two prerendered pages, +1.59 MiB — and AWS
+refused it by 0.96 MiB. The ceiling in this script's units is in (180.59, 182.30]. The gate
+is 181 for that reason and no other. Raise it only when a job reading above 181 is accepted.
+
+The offset between the two numbers is not stable: 34.92, 38.66, 38.55 MiB. Ruled out as the
+explanation: `.next/cache` (deleted before packaging), `public/` (535 MiB, far too large),
+the pruned WASM and build-only files (actually unlinked), and now `.next/standalone`.
+
+### Things that are settled
+
+- **`.nft.json` trace manifests must ship.** Pruning them saved 5.48 MiB and job 106 died
+  with `CustomerError: Server trace files are not found`. Amplify's packaging reads them.
+  They are already minified and use relative paths, so there is nothing to reclaim.
+- **`.next/standalone` holds a second copy of `.next/server`.** Post-build scripts that walk
+  only `.next/server` miss it. `compact-rsc-manifests.mjs` now covers both (700 of 824
+  manifests, standalone 237.4 → 213.25 MiB) and `prune-amplify-build.mjs` prunes both. This
+  does not move AWS's number, but it is correct and it halves an upload.
+- **`react-loadable-manifest.json` (0.75 MiB) is dead here** — a Pages Router artifact, and
+  this app has no `pages/`. The string appears nowhere in `next/dist`.
+- **Gate readings depend on checkout path length** and are normalised; run-to-run variance
+  is ~0.14 MiB, so never treat a sub-0.2 MiB difference as signal.
+
+### Route performance, shipped and measured
+
+Tool routes were dynamic and carried `no-store`, so CloudFront never held 3,753 URLs.
+`export const dynamic = "force-static"` + `revalidate` overrides the root layout's
+`await connection()`; `generateStaticParams` returns `[]` so nothing prerenders at build
+time. Live: `s-maxage=86400`, warm TTFB **205 ms → 45 ms**, with 6 JSON-LD blocks, the `h1`
+and the FAQ content unchanged in the served HTML.
+
+Do NOT remove `connection()` from the root layout to cache everything: without it the ~339
+static routes prerender at build time, roughly 237 MiB against a 181 MiB gate.
+
+Per-page client JS fell 1,551 → 525 KB raw (340 → 127 KB brotli). The cause was not the
+`toolMetaMap` imports in ToolClient/ToolDetailChrome — removing those changed nothing,
+because `toolRouteUtils` imports the catalogue on line 1 and those components pull two pure
+helpers out of it. A module is the unit webpack follows. The helpers now live in
+`toolRouteFormat.js`.
+
+---
+
+## §14 — SEO/GEO audit and what it found (2026-07-29)
+
+Seven lenses, 28 agents, every finding re-checked against the live site. 20 confirmed, and
+four rejected on inspection — the rejections matter as much as the fixes, because acting on
+any of them would have made the site worse.
+
+### Fixed and verified live
+
+| defect | scope |
+|---|---|
+| `/bops/tripfindbox/<slug>` returned HTTP 500 | 110 URLs, all now 200 |
+| `/tools/<any-string>` rendered an indexable page | crawl trap, now `noindex, follow` |
+| Four route families overrode their own layout metadata | ~120 URLs got identical titles |
+| Meta descriptions cut mid-word at 155 chars | 3,808 URLs; 98.1% now clean sentences |
+| `/site-map` variants canonicalised to bare `/site-map` | 55 pages disowned themselves |
+| `/site-map` pagination depth | worst case 14 clicks → 2 |
+| No `SoftwareApplication` entity | `/transform`, `/altfcalculators`, `/altflovepdf` |
+| Entity url/mainEntityOfPage contradicted the canonical | category mirror URLs |
+| Linking graph could recommend a page's own twin | 46 pairs |
+| Soft-404s shipped both `index, follow` and `noindex` | 3 route families |
+| Template keywords matched inside unrelated words | 22 tools |
+| KYM shipped scaffolding text as its meta description | 46 pages |
+
+### The finding worth acting on next
+
+**892 of 3,754 deployed tools (23.8%) have no `seo.js`.** They fall back to one generic
+template: same intro on every one, no use cases, no FAQs, and therefore no `FAQPage` entity —
+the thing an answer engine quotes. Found by testing the tool URLs `llms.txt` itself points
+engines at: five of six sampled had `FAQPage=0`.
+
+The content is not missing. It exists in the dev monorepo and was never released. Shipping all
+892 measures **2.71 MiB** against 0.41 MiB of headroom, so only the 51 that `llms.txt` and
+`TOP_PRIORITY_TOOL_SLUGS` name went out (0.19 MiB). The other 841 need the artifact room that
+only splitting the catalogue provides.
+
+### The two SSG routes that 500'd
+
+`generateStaticParams` returns `[]` on Amplify because `ALTFT_DEFER_BULK_PRERENDER` is set. A
+route that is SSG (`●`) with no prerendered output is served by Amplify as a bare 500 —
+`content-type: text/plain`, no Next error page — and it fails before the route's own code, so
+a bogus slug 500s too. Both of the app's `●` routes did this. The routes that work pair the
+same deferred `generateStaticParams` with `export const dynamic = "force-static"`, which
+builds them as `○` and lets an unknown param render on demand.
+
+### Rejected after checking — do not re-report
+
+- **"Every page ships its h1 and JSON-LD inside a `hidden` container."** It does not. The h1 sits
+  in ordinary markup; the 238 "hidden" matches were 481 `aria-hidden` and 236 Tailwind
+  `hidden lg:flex` classes.
+- **Anchoring every short template keyword.** It moves 54 tools and breaks five:
+  `profile-picture-maker` leaves media, `rot13-encoder-decoder` becomes a writing tool. `file`
+  in "profile" and `code` in "decoder" are accidents that land correctly. Only `ratio`, `api`
+  and `unit` are meaningless in-word and worth anchoring.
+- Two of my own measurements were wrong before they were right: a `<script type="application/
+  ld+json"` regex reported zero JSON-LD on every page including ones known to have six (the
+  real markup puts `id` first), and `sed 's|</\?loc>||g'` left the tags on, so 110 sitemap URLs
+  all reported curl code `000`. Check an extractor against a known-good case first.
+
+### Soft 404s are site-wide and not fixable per route
+
+Every unknown URL returns 200 — `/tools`, `/blogs`, `/apps`, `/alternatives` alike — because a
+statically generated `notFound()` is served with a 200 on this deployment. `noindex` on the
+not-found metadata is the mitigation; it must go through `createPageMetadata`, because a bare
+object leaves the layout's `index, follow` in place and the page then ships both directives.

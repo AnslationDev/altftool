@@ -12,9 +12,17 @@ const ApiStressTool = dynamic(() => import("@/tools/api-stress-estimator/entry")
   ssr: false,
 });
 
-export default function ApiStressToolClient({ category = "all" }) {
+// `seoContent` mirrors ToolClient: it lets the caller pass the SEO section in
+// so ToolDetailChrome renders it inside <main>, rather than leaving it a
+// sibling outside the landmark that answer-engine fetchers read first.
+export default function ApiStressToolClient({ tool, category = "all", children }) {
   return (
-    <ToolDetailChrome slug="api-stress-estimator" category={category}>
+    <ToolDetailChrome
+      slug="api-stress-estimator"
+      tool={tool}
+      category={category}
+      seoContent={children}
+    >
       <ApiStressTool />
     </ToolDetailChrome>
   );

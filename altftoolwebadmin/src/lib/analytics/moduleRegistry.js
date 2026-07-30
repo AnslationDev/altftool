@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import path from "path";
 import { buySmartDocPath } from "@altftool/core/firebasePaths";
 import { PROJECTS } from "@/projects";
-import { type } from "os";
 
 export const ANALYTICS_STALE_DAYS = 5;
 export const ANALYTICS_RECENT_LIMIT = 6;

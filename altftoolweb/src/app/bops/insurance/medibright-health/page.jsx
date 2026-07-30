@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Star,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./medibright-health.css";
 
 const QUOTE_URL = "https://example.com/quote/medibright-health";
@@ -190,6 +191,8 @@ export default function MediBrightHealthPage() {
       </header>
 
       <main id="medibright-top">
+        <DemoBrandNotice brand="MediBright Health" />
+
         {/* Hero */}
         <section className="medibright-hero">
           <div className="medibright-wrap medibright-hero-grid">

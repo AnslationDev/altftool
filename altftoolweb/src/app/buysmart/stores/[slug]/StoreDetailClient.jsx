@@ -260,29 +260,42 @@ export default function StoreDetailClient({ slug }) {
         : "No fixed expiry is listed, so treat the offer as live but time-sensitive.",
     },
   ];
+  // Offer/FAQ/HowTo schema describes a specific live saving. This route also
+  // renders bundled fallback rows (seeded sample offers whose discount, coupon
+  // code, and verification flags are generated from an array index), and those
+  // must never be published as structured data. Gate on where the record came
+  // from — not on the page having rendered — so a fallback render emits only
+  // the breadcrumb, which is true either way.
+  const isLiveOffer = offer.isLiveRecord === true;
   const jsonLd = [
-    createBuySmartOfferJsonLd({
-      offer: { ...offer, link: hasStoreLink ? offer.link : "" },
-      path: storePath,
-      savings,
-      domain,
-    }),
+    isLiveOffer
+      ? createBuySmartOfferJsonLd({
+        offer: { ...offer, link: hasStoreLink ? offer.link : "" },
+        path: storePath,
+        savings,
+        domain,
+      })
+      : null,
     createBreadcrumbJsonLd([
       { name: "Home", path: "/" },
       { name: "BuySmart", path: "/buysmart" },
       { name: "All stores", path: "/buysmart/view-all" },
       { name: offer.title, path: storePath },
     ]),
-    createFaqJsonLd({
-      path: storePath,
-      questions: faqItems,
-    }),
-    createHowToJsonLd({
-      path: storePath,
-      name: `How to use the ${offer.title} BuySmart offer`,
-      description: `Steps to use the current ${offer.title} BuySmart saving safely.`,
-      steps: howToSteps,
-    }),
+    isLiveOffer
+      ? createFaqJsonLd({
+        path: storePath,
+        questions: faqItems,
+      })
+      : null,
+    isLiveOffer
+      ? createHowToJsonLd({
+        path: storePath,
+        name: `How to use the ${offer.title} BuySmart offer`,
+        description: `Steps to use the current ${offer.title} BuySmart saving safely.`,
+        steps: howToSteps,
+      })
+      : null,
   ];
 
   return (

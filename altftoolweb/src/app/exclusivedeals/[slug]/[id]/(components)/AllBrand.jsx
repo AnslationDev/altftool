@@ -105,34 +105,48 @@ function AllBrand({ data }) {
             </div>
 
             {isCoupon ? (
-              <button
-                onClick={handleClick}
-                className={`min-w-[200px] relative overflow-hidden flex items-center gap-2 border-2 border-dashed rounded-lg px-4 py-2.5 text-sm font-bold tracking-widest transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:-rotate-[0.5deg] ${
-                  isCopiedOnce
-                    ? "border-green-500 text-green-600"
-                    : peeled
-                      ? "border-blue-300 hover:border-blue-500 text-gray-800"
-                      : "border-gray-300 hover:border-blue-400 text-gray-800"
-                }`}
-              >
-                <span
-                  className={`absolute inset-0 z-10 flex items-center justify-center gap-2 bg-blue-600 text-white text-md font-bold tracking-wide rounded-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left ${
-                    peeled ? "scale-x-0" : "scale-x-100"
+              <div className="flex flex-col items-end gap-1.5">
+                <button
+                  onClick={handleClick}
+                  className={`min-w-[200px] relative overflow-hidden flex items-center gap-2 border-2 border-dashed rounded-lg px-4 py-2.5 text-sm font-bold tracking-widest transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:-rotate-[0.5deg] ${
+                    isCopiedOnce
+                      ? "border-green-500 text-green-600"
+                      : peeled
+                        ? "border-blue-300 hover:border-blue-500 text-gray-800"
+                        : "border-gray-300 hover:border-blue-400 text-gray-800"
                   }`}
                 >
-                  Get Coupon
-                </span>
-                <span
-                  className={`flex items-center gap-2 transition-opacity duration-300 text-(--foreground) ${
-                    peeled ? "opacity-100 delay-300" : "opacity-0"
+                  <span
+                    className={`absolute inset-0 z-10 flex items-center justify-center gap-2 bg-blue-600 text-white text-md font-bold tracking-wide rounded-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left ${
+                      peeled ? "scale-x-0" : "scale-x-100"
+                    }`}
+                  >
+                    Get Coupon
+                  </span>
+                  <span
+                    className={`flex items-center gap-2 transition-opacity duration-300 text-(--foreground) ${
+                      peeled ? "opacity-100 delay-300" : "opacity-0"
+                    }`}
+                  >
+                    <Copy size={13} className={copied ? "text-green-500" : "text-(--foreground)"} />
+                    {copied ? "Copied!" : data.code}
+                  </span>
+                </button>
+                <Link
+                  href={data.link || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={peeled ? undefined : -1}
+                  aria-hidden={!peeled}
+                  className={`text-xs font-semibold text-(--primary) hover:underline transition-opacity duration-300 ${
+                    peeled ? "opacity-100" : "pointer-events-none opacity-0"
                   }`}
                 >
-                  <Copy size={13} className={copied ? "text-green-500" : "text-(--foreground)"} />
-                  {copied ? "Copied!" : data.code}
-                </span>
-              </button>
+                  Go to Store →
+                </Link>
+              </div>
             ) : (
-              <Link href={data.link || "#"} target="_blank">
+              <Link href={data.link || "#"} target="_blank" rel="noopener noreferrer">
                 <button className="bg-(--primary) min-w-[200px] hover:bg-blue-500 cursor-pointer active:scale-95 text-white text-md font-bold px-5 py-2.5 rounded-lg whitespace-nowrap transition-all">
                   Grab Deal →
                 </button>
@@ -202,37 +216,51 @@ function AllBrand({ data }) {
           </button>
 
           {isCoupon ? (
-            <button
-              onClick={handleClick}
-              className={`relative overflow-hidden flex items-center gap-2 w-32 border-2 border-dashed rounded-lg px-4 py-2 text-sm font-bold tracking-widest transition-all duration-200 cursor-pointer ${
-                  isCopiedOnce
-                    ? "border-green-500 text-green-600"
-                  : peeled
-                    ? "border-blue-300 hover:border-blue-500 text-(--foreground)"
-                    : "border-gray-300 hover:border-blue-400 text-(--foreground)"
-              }`}
-            >
-              <span
-                className={`absolute inset-0 z-10 flex items-center justify-center bg-blue-600 text-white md:text-sm text-xs  font-bold rounded-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left ${
-                  peeled ? "scale-x-0" : "scale-x-100"
+            <div className="flex flex-col items-end gap-1">
+              <button
+                onClick={handleClick}
+                className={`relative overflow-hidden flex items-center gap-2 w-32 border-2 border-dashed rounded-lg px-4 py-2 text-sm font-bold tracking-widest transition-all duration-200 cursor-pointer ${
+                    isCopiedOnce
+                      ? "border-green-500 text-green-600"
+                    : peeled
+                      ? "border-blue-300 hover:border-blue-500 text-(--foreground)"
+                      : "border-gray-300 hover:border-blue-400 text-(--foreground)"
                 }`}
               >
-                Get Coupon
-              </span>
-              <span
-                className={`flex items-center gap-1.5 transition-opacity duration-300 ${
-                  peeled ? "opacity-100 delay-300" : "opacity-0"
+                <span
+                  className={`absolute inset-0 z-10 flex items-center justify-center bg-blue-600 text-white md:text-sm text-xs  font-bold rounded-md transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] origin-left ${
+                    peeled ? "scale-x-0" : "scale-x-100"
+                  }`}
+                >
+                  Get Coupon
+                </span>
+                <span
+                  className={`flex items-center gap-1.5 transition-opacity duration-300 ${
+                    peeled ? "opacity-100 delay-300" : "opacity-0"
+                  }`}
+                >
+                  <Copy
+                    size={12}
+                    className={copied ? "text-green-500" : "text-(--foreground)"}
+                  />
+                  {copied ? "Copied!" : data.code}
+                </span>
+              </button>
+              <Link
+                href={data.websiteLink || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={peeled ? undefined : -1}
+                aria-hidden={!peeled}
+                className={`text-[11px] font-semibold text-(--primary) hover:underline whitespace-nowrap transition-opacity duration-300 ${
+                  peeled ? "opacity-100" : "pointer-events-none opacity-0"
                 }`}
               >
-                <Copy
-                  size={12}
-                  className={copied ? "text-green-500" : "text-(--foreground)"}
-                />
-                {copied ? "Copied!" : data.code}
-              </span>
-            </button>
+                Go to Store →
+              </Link>
+            </div>
           ) : (
-            <Link href={data.websiteLink || "#"} target="_blank">
+            <Link href={data.websiteLink || "#"} target="_blank" rel="noopener noreferrer">
               <button className="bg-(--primary) hover:bg-blue-500 w-32 cursor-pointer active:scale-95 text-white md:text-sm text-xs font-bold px-4 py-2 rounded-md whitespace-nowrap transition-all">
                 Grab Deal →
               </button>

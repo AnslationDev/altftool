@@ -46,6 +46,9 @@ export function AncestorPopularNames() {
             <AncestorPopularNameCard key={item.rank} item={item} />
           ))}
         </div>
+        <p className="text-center text-gray-400 dark:text-(--muted-foreground) text-xs">
+          *Small selection shown for illustration, not an exhaustive historical ranking.
+        </p>
       </div>
     </section>
   );

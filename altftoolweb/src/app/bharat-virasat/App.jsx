@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from "react";
+import Link from "next/link";
 import { SITES } from "./data/sites";
 import { useWikiData } from "./services/wikipedia";
 
@@ -176,14 +177,14 @@ export default function App() {
             <div className="h-8 w-8 rounded-full border border-white/30 grid place-items-center">
               <div className="h-2 w-2 rounded-full bg-white" />
             </div>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            <Link
+              href="/"
               className="leading-tight text-left"
-              aria-label="Scroll to top"
+              aria-label="Bharat Virasat — back to AltFTool"
             >
               <div className="serif text-[22px] leading-none">Bharat Virasat</div>
               <div className="text-[10px] tracking-[0.18em] uppercase opacity-60">Heritage 2026</div>
-            </button>
+            </Link>
           </div>
           <div className="hidden md:flex items-center gap-8 text-[11px] tracking-[0.14em] uppercase">
             <span className="opacity-60">{SITES.length} Sites</span>

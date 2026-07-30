@@ -113,7 +113,7 @@ export default function UploadPanel({ onImagesAdded, loading }) {
                   className="flex flex-col items-center gap-3"
                 >
                   <div className="rounded-xl bg-(--muted) p-3">
-                    <Image size={28} className="text-(--muted-foreground)" />
+                    <Image size={28} className="text-(--muted-foreground)" alt="" />
                   </div>
                   <div className="text-center">
                     <p className="text-sm font-semibold text-(--foreground)">

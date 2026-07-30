@@ -2,11 +2,13 @@
 
 import ManagedImage from "@/components/ui/ManagedImage";
 export default function AdGameCard({ ad }) {
+  if (!ad) return null;
+
   return (
     <a
       href={ad.redirect}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="noopener noreferrer sponsored"
       className="
         relative
         w-full
@@ -23,7 +25,7 @@ export default function AdGameCard({ ad }) {
       <ManagedImage
         src={ad.bannerUrl}
         alt="Sponsored"
-        className="absolute inset-0 w-full h-full object-fit"
+        className="absolute inset-0 w-full h-full object-cover"
       />
     </a>
   );

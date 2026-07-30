@@ -19,6 +19,7 @@ import {
   Check,
   ChevronDown,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./homesafe-cover.css";
 
 const QUOTE_URL = "https://example.com/quote/homesafe-cover";
@@ -92,6 +93,8 @@ export default function HomeSafeCoverPage() {
       </header>
 
       <main id="homesafe-top">
+        <DemoBrandNotice brand="HomeSafe Cover" />
+
         <section className="homesafe-hero homesafe-blueprint">
           <div className="homesafe-wrap homesafe-hero-grid">
             <div className="homesafe-hero-copy">

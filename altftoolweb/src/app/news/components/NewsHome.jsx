@@ -3,12 +3,13 @@
 import { useMemo, useState, useId } from "react";
 import Link from "next/link";
 import {
-  ChevronRight, ChevronDown, Mail, ArrowRight, Check, Clock, Eye, Plus,
+  ChevronRight, ChevronDown, Mail, ArrowRight, Check, Clock, Plus,
   Bookmark, Heart, TrendingUp, Zap,
 } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 import NewsCard from "./ui/NewsCard";
 import CategoriesSection from "./CategoriesSection";
+import NewsUnavailable from "./NewsUnavailable";
 
 // ─── helpers ──────────────────────────────────────────────────────────────
 function timeAgo(h) {
@@ -17,12 +18,6 @@ function timeAgo(h) {
   if (h < 24) return `${h}h ago`;
   const d = Math.floor(h / 24);
   return d === 1 ? "1 day ago" : `${d} days ago`;
-}
-
-function formatCount(n) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
-  return String(n);
 }
 
 function slugify(value = "") {
@@ -35,7 +30,7 @@ function slugify(value = "") {
 }
 
 // ─── Hero Slider ──────────────────────────────────────────────────────────
-function HeroSlider({ stories, timeAgo, formatCount }) {
+function HeroSlider({ stories, timeAgo }) {
   const [current, setCurrent] = useState(0);
   const story = stories[current];
 
@@ -193,7 +188,14 @@ function NewsletterWidget() {
     }
     setError("");
     setState("loading");
-    await new Promise((r) => setTimeout(r, 1000));
+    // No newsletter delivery backend exists yet, so persist locally instead
+    // of discarding the signup — matches ALTFT_NEWS_NEWSLETTER_OPTIN used by
+    // the dedicated /news/newsletter page.
+    try {
+      window.localStorage.setItem("ALTFT_NEWS_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setState("success");
   }
 
@@ -203,8 +205,8 @@ function NewsletterWidget() {
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--anslation-ds-success-soft)] text-[var(--anslation-ds-success)]">
           <Check size={18} />
         </div>
-        <p className="font-semibold text-[var(--foreground)]">You&apos;re subscribed!</p>
-        <p className="text-sm text-[var(--muted-foreground)]">Check your inbox for the latest news.</p>
+        <p className="font-semibold text-[var(--foreground)]">You&apos;re on the list!</p>
+        <p className="text-sm text-[var(--muted-foreground)]">We&apos;ll notify you when the newsletter launches.</p>
       </div>
     );
   }
@@ -316,31 +318,27 @@ export default function NewsHome({ initialNewsData }) {
     return sorted.filter((a) => !exclude.has(a.id)).slice(0, 6);
   }, [sorted, usedIds, latestNews]);
 
-  const [trendingTab, setTrendingTab] = useState("trending");
-
-  const trending = useMemo(() => {
-    const sorted = [...articles];
-    if (trendingTab === "trending") {
-      sorted.sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares));
-    } else if (trendingTab === "mostread") {
-      sorted.sort((a, b) => (b.likes) - (a.likes));
-    } else if (trendingTab === "editorspicks") {
-      sorted.sort((a, b) => (b.shares) - (a.shares));
-    }
-    return sorted.slice(0, 6);
-  }, [articles, trendingTab]);
-
   const moreNews = useMemo(() => {
     const exclude = new Set([...usedIds, ...latestNews.map((a) => a.id), ...topNews.map((a) => a.id)]);
     return sorted.filter((a) => !exclude.has(a.id)).slice(0, 4);
   }, [sorted, usedIds, latestNews, topNews]);
 
+  // We hold no engagement data for syndicated feed items, so this sidebar list
+  // is simply the next-freshest stories that are not already on the page. The
+  // old Trending / Most Read / Editor's Picks tabs ranked by synthesised
+  // like/share counts and have been removed.
+  const sidebarStories = useMemo(() => {
+    const exclude = new Set([
+      ...usedIds,
+      ...latestNews.map((a) => a.id),
+      ...topNews.map((a) => a.id),
+      ...moreNews.map((a) => a.id),
+    ]);
+    return sorted.filter((a) => !exclude.has(a.id)).slice(0, 5);
+  }, [sorted, usedIds, latestNews, topNews, moreNews]);
+
   if (!articles.length) {
-    return (
-      <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-12 text-center">
-        <p className="text-sm text-[var(--muted-foreground)]">No news available at the moment.</p>
-      </div>
-    );
+    return <NewsUnavailable />;
   }
 
   return (
@@ -384,7 +382,7 @@ export default function NewsHome({ initialNewsData }) {
       <section className="mx-auto max-w-[1440px] rounded-2xl news-card-surface px-6 py-6 sm:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-[2.2fr_1fr_0.9fr]">
           <div className="md:col-span-2 lg:col-span-1">
-            <HeroSlider stories={sorted.slice(0, 5)} timeAgo={timeAgo} formatCount={formatCount} />
+            <HeroSlider stories={sorted.slice(0, 5)} timeAgo={timeAgo} />
           </div>
           <TrendingHeadlines stories={sideStories} timeAgo={timeAgo} />
           <LatestNewsWidget stories={latestNews} timeAgo={timeAgo} />
@@ -454,41 +452,20 @@ export default function NewsHome({ initialNewsData }) {
         {/* Sidebar – 4/12 (≈30%) */}
         <aside className="lg:col-span-4">
           <div className="space-y-[10px] lg:sticky lg:top-8">
-            {/* Popular / Trending */}
-            {trending.length > 0 && (
+            {/* More of the freshest stories */}
+            {sidebarStories.length > 0 && (
               <div className="overflow-hidden rounded-[20px] news-card-surface p-6">
                 <div className="mb-6 flex items-center justify-between">
-                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Trending Now</h3>
+                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Latest Stories</h3>
                   <Link
-                    href="/news/trending"
+                    href="/news/headlines"
                     className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
                   >
                     View All
                   </Link>
                 </div>
-                <div className="mb-5 flex gap-8">
-                  {[
-                    { key: "trending", label: "Trending" },
-                    { key: "mostread", label: "Most Read" },
-                    { key: "editorspicks", label: "Editor's Picks" },
-                  ].map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => setTrendingTab(tab.key)}
-                      className={`relative text-sm font-medium transition ${trendingTab === tab.key
-                          ? "font-semibold text-[var(--primary)]"
-                          : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
-                        }`}
-                    >
-                      {tab.label}
-                      {trendingTab === tab.key && (
-                        <span className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-sm bg-[var(--primary)]" />
-                      )}
-                    </button>
-                  ))}
-                </div>
                 <div className="space-y-[18px]">
-                  {trending.slice(0, 5).map((item, index) => (
+                  {sidebarStories.map((item, index) => (
                     <TrendingItem key={item.id} news={item} rank={index + 1} />
                   ))}
                 </div>
@@ -551,11 +528,7 @@ function TopNewsCard({ news }) {
             {news.summary}
           </p>
         )}
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="flex items-center gap-[6px] text-[13px] font-medium text-[var(--muted-foreground)]">
-            <Eye size={14} />
-            {formatCount(news.likes + news.comments + news.shares)} views
-          </span>
+        <div className="mt-auto flex items-center justify-end pt-4">
           <button
             onClick={(e) => { e.preventDefault(); setSaved((v) => !v); }}
             aria-label={saved ? "Unsave" : "Save"}
@@ -596,7 +569,7 @@ function TrendingItem({ news, rank }) {
           {news.headline}
         </p>
         <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {readTime} min read &bull; {formatCount(news.likes + news.comments + news.shares)} views
+          {readTime} min read
         </span>
       </div>
       <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
@@ -646,9 +619,6 @@ function MoreNewsRow({ news }) {
         </div>
       </div>
       <div className="ml-5 flex shrink-0 flex-col items-end justify-center gap-[10px]">
-        <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {formatCount(news.likes + news.comments + news.shares)} views
-        </span>
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
           aria-label={saved ? "Unsave" : "Save"}

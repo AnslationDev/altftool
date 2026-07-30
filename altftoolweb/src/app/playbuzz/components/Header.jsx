@@ -23,6 +23,8 @@ const Header = () => {
           <button
             className="md:hidden flex flex-col gap-[3px] p-1 bg-transparent border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none rounded"
             aria-label="Toggle menu"
+            aria-expanded={aboutDropdownOpen}
+            onClick={() => setAboutDropdownOpen((open) => !open)}
             style={{ color: 'var(--anslation-ds-footer-text)' }}
           >
             <Menu size={20} />
@@ -54,10 +56,14 @@ const Header = () => {
                   boxShadow: 'var(--anslation-ds-shadow-md)',
                 }}
               >
-                {['Privacy Policy', 'Online Terms', 'DMCA Notice'].map((item) => (
+                {[
+                  { label: 'Privacy Policy', href: '/policypages/privacy' },
+                  { label: 'Online Terms', href: '/policypages/termsandconditions' },
+                  { label: 'DMCA Notice', href: '/policypages/termsandconditions' },
+                ].map(({ label: item, href }) => (
                   <a
                     key={item}
-                    href="#"
+                    href={href}
                     className="block px-3.5 py-2.5 no-underline text-xs transition-colors focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:outline-none"
                     style={{ color: 'var(--anslation-ds-text)' }}
                     onMouseEnter={(e) => {

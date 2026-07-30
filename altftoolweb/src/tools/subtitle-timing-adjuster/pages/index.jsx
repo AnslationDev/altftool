@@ -155,7 +155,6 @@ export default function ToolHome() {
     if (!useRegex || !findText) return "";
     try {
       // validate only
-      // eslint-disable-next-line no-new
       new RegExp(findText, "g");
       return "";
     } catch {

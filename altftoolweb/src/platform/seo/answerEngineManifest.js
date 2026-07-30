@@ -166,10 +166,16 @@ function toolLine(site, slug, tool) {
   )}`;
 }
 
+let cachedSortedToolEntries = null;
+
+/** Sorted once per server process; toolMetaMap is a static import-time constant. */
 function sortedToolEntries() {
-  return Object.entries(toolMetaMap).sort(([, a], [, b]) =>
-    String(a?.name || "").localeCompare(String(b?.name || "")),
-  );
+  if (!cachedSortedToolEntries) {
+    cachedSortedToolEntries = Object.entries(toolMetaMap).sort(([, a], [, b]) =>
+      String(a?.name || "").localeCompare(String(b?.name || "")),
+    );
+  }
+  return cachedSortedToolEntries;
 }
 
 function getToolsForCategory(categorySlug) {

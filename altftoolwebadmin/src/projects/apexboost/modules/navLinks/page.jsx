@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Menu } from "lucide-react";
 import NavbarConfigEditor from "./NavbarConfigEditor";
 import FooterConfigEditor from "./FooterConfigEditor";
+import { emitAlert } from "@/lib/alertBus";
+import { createNavLink, deleteNavLink, subscribeNavLinks, updateNavLink } from "../service/apexboost.service";
 
 export default function NavLinksPage() {
   const [navList, setNavList] = useState([]);
@@ -11,13 +13,13 @@ export default function NavLinksPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ to: "", label: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=navLinks');
-    const json = await res.json();
-    if (json.success) setNavList(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeNavLinks(
+      (data) => setNavList(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load navigation links." }),
+    );
+    return unsubscribe;
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -32,27 +34,27 @@ export default function NavLinksPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = navList.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...navList, { ...form }];
+    const nextOrder = navList.length
+      ? Math.max(...navList.map((item) => Number(item.order) || 0)) + 1
+      : 1;
+    try {
+      if (editingItem) {
+        await updateNavLink(editingItem.id, { ...form, order: editingItem.order ?? 0 });
+      } else {
+        await createNavLink({ ...form, order: nextOrder });
+      }
+      setIsModalOpen(false);
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save navigation link." });
     }
-    await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'navLinks', data: updated }),
-    });
-    setNavList(updated);
-    setIsModalOpen(false);
   };
 
   const handleDelete = async (item) => {
-    const updated = navList.filter(t => t !== item);
-    await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'navLinks', data: updated }),
-    });
-    setNavList(updated);
+    try {
+      await deleteNavLink(item.id);
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete navigation link." });
+    }
   };
 
   return (
@@ -72,8 +74,8 @@ export default function NavLinksPage() {
 
       <div className="bg-white rounded-xl shadow p-6">
         <div className="space-y-2">
-          {navList.map((item, index) => (
-            <div key={index} className="flex items-center gap-3 border rounded-lg p-4 hover:shadow-md transition">
+          {navList.map((item) => (
+            <div key={item.id} className="flex items-center gap-3 border rounded-lg p-4 hover:shadow-md transition">
               <Menu size={20} className="text-gray-400" />
               <div className="flex-1">
                 <span className="font-medium">{item.label}</span>

@@ -24,7 +24,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "Free Alternatives to Popular Online Tools",
     description:
-      "Honest comparisons between AltFTool and the tools people already pay for — iLovePDF, Smallpdf, Adobe Acrobat online, TinyPNG, remove.bg, CloudConvert and more. Real free-tier limits, real pricing, and what each one still does better.",
+      "Honest comparisons of AltFTool with iLovePDF, Smallpdf, TinyPNG, CloudConvert and Adobe Acrobat online: free-tier limits, pricing and what each does best.",
     path: PATH,
     canonical: PATH,
     keywords: [

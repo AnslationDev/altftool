@@ -34,6 +34,13 @@ export default function EstimateForm() {
     if (!validate()) return;
     setLoading(true);
     setTimeout(() => {
+      try {
+        const leads = JSON.parse(window.localStorage.getItem("siding_leads") || "[]");
+        leads.push({ ...form, submittedAt: new Date().toISOString() });
+        window.localStorage.setItem("siding_leads", JSON.stringify(leads));
+      } catch {
+        // localStorage can be unavailable in private browsing; the success state still works.
+      }
       setLoading(false);
       setSubmitted(true);
       setShowCallPopup(true);
@@ -62,15 +69,15 @@ export default function EstimateForm() {
             Get a Custom Quote in Under 60 Seconds
           </h2>
           <p className="mt-5 text-lg text-foreground/75 leading-relaxed">
-            Tell us about your project and a senior design specialist will reach out within
-            one business day with samples, pricing, and a flexible install schedule.
+            Tell us about your project below. This is a demo template — your answers are
+            saved only in this browser&rsquo;s local storage, and no one will contact you.
           </p>
 
           <ul className="mt-8 space-y-4">
             {[
-              { icon: Shield, t: "No-pressure, no-obligation estimate" },
-              { icon: Clock, t: "Response within 1 business day" },
-              { icon: Award, t: "Lifetime craftsmanship warranty included" },
+              { icon: Shield, t: "No account or payment needed to try it" },
+              { icon: Clock, t: "Saved instantly to this device" },
+              { icon: Award, t: "Nothing is sent anywhere" },
             ].map((b, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-secondary/10 text-primary flex items-center justify-center flex-shrink-0">
@@ -99,9 +106,10 @@ export default function EstimateForm() {
                 <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="mt-6 font-display font-extrabold text-2xl text-primary">Thank you, {form.name.split(" ")[0]}!</h3>
+                <h3 className="mt-6 font-display font-extrabold text-2xl text-primary">Saved, {form.name.split(" ")[0]}!</h3>
                 <p className="mt-3 text-foreground/75 max-w-md mx-auto">
-                  Your request has been received. A design specialist will be in touch within one business day at
+                  This is a demo template — your entries were saved to this browser&rsquo;s local storage only.
+                  No request was sent, and no one will contact you at
                   <span className="font-semibold text-primary"> {form.email}</span>.
                 </p>
                 <button
@@ -152,13 +160,13 @@ export default function EstimateForm() {
                     </>
                   ) : (
                     <>
-                      Request My Free Estimate
+                      Save My Estimate Details
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
                 <p className="text-xs text-center text-foreground/75">
-                  By submitting, you agree to be contacted by EliteShield. We respect your privacy and never share your data.
+                  Saved on this device — this is a demo template, no request was sent and no one will contact you.
                 </p>
               </form>
             )}
@@ -174,7 +182,22 @@ export default function EstimateForm() {
             service={form.service}
             liveTime={liveTime}
             callBooked={callBooked}
-            onBook={() => setCallBooked(true)}
+            onBook={() => {
+              try {
+                const leads = JSON.parse(window.localStorage.getItem("siding_leads") || "[]");
+                if (leads.length) {
+                  leads[leads.length - 1] = {
+                    ...leads[leads.length - 1],
+                    callbackRequested: true,
+                    callbackRequestedAt: new Date().toISOString(),
+                  };
+                  window.localStorage.setItem("siding_leads", JSON.stringify(leads));
+                }
+              } catch {
+                // localStorage can be unavailable in private browsing; the confirmation state still works.
+              }
+              setCallBooked(true);
+            }}
             onClose={() => setShowCallPopup(false)}
           />
         )}
@@ -188,7 +211,6 @@ function CallPopup({
 }) {
   const firstName = name.trim().split(" ")[0] || "there";
   const displayTime = liveTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  const callbackWindow = new Date(liveTime.getTime() + 15 * 60 * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   return (
     <motion.div
@@ -220,23 +242,16 @@ function CallPopup({
           <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-surface/15 blur-2xl" />
           <div className="absolute bottom-0 left-0 w-56 h-56 rounded-full bg-secondary/25 blur-3xl translate-y-1/2 -translate-x-1/3" />
           <div className="relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/15 backdrop-blur text-xs font-bold tracking-wider uppercase mb-4">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-300" />
-              </span>
-              Live Call Desk Online
-            </div>
             <div className="w-16 h-16 rounded-2xl bg-surface/15 backdrop-blur flex items-center justify-center mb-5 shadow-glow">
               <PhoneCall className="w-8 h-8" />
             </div>
             <h3 id="call-popup-title" className="font-display font-extrabold text-2xl lg:text-3xl leading-tight">
-              {callBooked ? "Callback Request Confirmed" : `Thanks, ${firstName}! Want a Faster Call?`}
+              {callBooked ? "Priority Flag Saved Locally" : `Thanks, ${firstName}!`}
             </h3>
             <p className="mt-3 text-primary-foreground/85 leading-relaxed">
               {callBooked
-                ? `Our estimate team will call ${phone} by ${callbackWindow}. Keep your phone nearby.`
-                : "Your form is submitted. You can call now or request a priority callback from our siding specialist."}
+                ? `We've saved a note against this local demo record for ${phone}. This is a demo template — no one will call, and nothing was sent anywhere.`
+                : "Your details are saved on this device. This is a demo template — you can flag this entry as high-priority below, but no one will call."}
             </p>
           </div>
         </div>
@@ -260,26 +275,19 @@ function CallPopup({
               className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5 text-center"
             >
               <CalendarCheck className="w-10 h-10 text-emerald-600 mx-auto" />
-              <div className="mt-3 font-display font-bold text-lg text-emerald-800">Priority callback is active</div>
+              <div className="mt-3 font-display font-bold text-lg text-emerald-800">Priority flag saved locally</div>
               <p className="mt-1 text-sm text-emerald-700">
-                A specialist will call you at <span className="font-bold">{phone}</span> within the next 15 minutes.
+                We&rsquo;ve noted <span className="font-bold">{phone}</span> in this browser&rsquo;s local storage. This is a demo — no one will call.
               </p>
             </motion.div>
           ) : (
             <div className="space-y-3">
-              <a
-                href="tel:+18005551234"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-bold shadow-premium hover:shadow-glow hover:scale-[1.02] transition-all"
-              >
-                <PhoneCall className="w-5 h-5" />
-                Call Now: (800) 555-1234
-              </a>
               <button
                 onClick={onBook}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border-2 border-primary text-primary font-bold hover:bg-primary hover:text-primary-foreground transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-bold shadow-premium hover:shadow-glow hover:scale-[1.02] transition-all"
               >
                 <CalendarCheck className="w-5 h-5" />
-                Request Callback in 15 Minutes
+                Flag as Priority (Demo Only)
               </button>
             </div>
           )}

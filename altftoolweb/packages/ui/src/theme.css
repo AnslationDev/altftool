@@ -4,6 +4,7 @@
   --font-mono: var(--anslation-ds-font-mono);
 
   --color-background: var(--anslation-ds-page);
+  --color-page: var(--anslation-ds-page);
   --color-foreground: var(--anslation-ds-text);
   --color-canvas: var(--anslation-ds-canvas);
   --color-surface: var(--anslation-ds-surface);

@@ -31,9 +31,14 @@ export async function POST(request) {
   const valid = VALID_TYPES.has(data?.type) && VALID_PLACEMENTS.has(data?.placement);
 
   if (valid && process.env.ALTFT_AD_EVENTS_LOG === "1") {
-    console.log(
-      `[ad-events] ${data.type} placement=${data.placement} ad=${data.adId || "n/a"} tool=${data.toolSlug || "n/a"} path=${data.path || ""}`,
-    );
+    console.log({
+      event: "ad-events",
+      type: data.type,
+      placement: data.placement,
+      adId: data.adId || "n/a",
+      toolSlug: data.toolSlug || "n/a",
+      path: data.path || "",
+    });
     // To persist: write `data` to Firestore (e.g. projects/altftool/adEvents) here.
   }
 

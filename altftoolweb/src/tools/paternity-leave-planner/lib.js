@@ -227,11 +227,17 @@ export function planPaternityLeave({ birthDate, policy, blocks = [] } = {}) {
   // Overlap check on blocks that parsed cleanly, in date order.
   const datedBlocks = evaluated.filter((item) => Number.isFinite(item.startTs));
   const ordered = [...datedBlocks].sort((a, b) => a.startTs - b.startTs);
+  let runningMaxEnd = ordered.length > 0 ? ordered[0].endTs : -Infinity;
+  let runningMaxSource = ordered.length > 0 ? ordered[0] : null;
   for (let i = 1; i < ordered.length; i += 1) {
-    if (ordered[i].startTs <= ordered[i - 1].endTs) {
-      const message = `Overlaps the block starting ${ordered[i - 1].start}.`;
+    if (ordered[i].startTs <= runningMaxEnd) {
+      const message = `Overlaps the block starting ${runningMaxSource.start}.`;
       ordered[i].issues.push(message);
       ordered[i].valid = false;
+    }
+    if (ordered[i].endTs > runningMaxEnd) {
+      runningMaxEnd = ordered[i].endTs;
+      runningMaxSource = ordered[i];
     }
   }
 

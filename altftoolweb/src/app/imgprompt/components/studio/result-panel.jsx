@@ -21,6 +21,7 @@ const SUGGESTION_MAP = [
 export function ResultPanel({ result, onApplySuggestion, onRegenerate, regenerating }) {
   const copyPrompt = useCopyPrompt();
   const destinationUrl = useRedirectConfig((s) => s.redirectUrl);
+  const destinationLabel = useRedirectConfig((s) => s.redirectLabel);
   const model = getModel(result.modelId);
 
   return (
@@ -48,7 +49,7 @@ export function ResultPanel({ result, onApplySuggestion, onRegenerate, regenerat
 
       <div className="mt-3 flex flex-wrap gap-2">
         <Button className="flex-1 min-w-[160px]" onClick={() => copyPrompt(result.prompt, result.title)}>
-          <Copy className="h-4 w-4" /> Copy Prompt → OpenArt
+          <Copy className="h-4 w-4" /> Copy Prompt → {destinationLabel}
         </Button>
         <Button
           variant="outline" size="icon"
@@ -61,7 +62,7 @@ export function ResultPanel({ result, onApplySuggestion, onRegenerate, regenerat
           <Download className="h-4 w-4" />
         </Button>
         <Button variant="secondary" asChild>
-          <a href={destinationUrl} target="_blank" rel="noopener noreferrer" title="Open OpenArt">
+          <a href={destinationUrl} target="_blank" rel="noopener noreferrer" title={`Open ${destinationLabel}`}>
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </Button>

@@ -213,13 +213,23 @@ export default function CategorySection() {
                         <div className="flex items-center gap-2 mt-auto">
 
                             {/* PRIMARY */}
-                            <button className="btn-primary flex-1 flex items-center justify-center gap-2 py-2.5">
+                            <button
+                                type="button"
+                                disabled
+                                title="Direct links are coming soon"
+                                className="btn-primary flex-1 flex items-center justify-center gap-2 py-2.5 opacity-60 cursor-not-allowed"
+                            >
                                 Visit
                                 <ArrowUpRight className="w-4 h-4" />
                             </button>
 
                             {/* SECONDARY */}
-                            <button className="btn-secondary px-3 py-2.5 text-md">
+                            <button
+                                type="button"
+                                disabled
+                                title="Coming soon"
+                                className="btn-secondary px-3 py-2.5 text-md opacity-60 cursor-not-allowed"
+                            >
                                 Details
                             </button>
 

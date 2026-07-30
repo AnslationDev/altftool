@@ -31,6 +31,7 @@ import {
   siteConfig,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { CHROME_LIGHT, CHROME_DARK } from "./chromeColors";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -44,10 +45,17 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+// Sora and IBM Plex Sans are declared here so their CSS variables and
+// @font-face rules stay global, but only a handful of routes actually render
+// them. Preloading both from the root layout put 73.9 KB of highest-priority
+// woff2 on the critical path of all 390 routes, ahead of a stylesheet that is
+// itself only 104 KB. `preload: false` keeps the faces available everywhere
+// and lets the routes that use them fetch on demand.
 const sora = Sora({
   subsets: ["latin"],
   variable: "--font-sora",
   display: "swap",
+  preload: false,
 });
 
 const inter = Inter({
@@ -61,6 +69,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   weight: ["400", "500"],
   variable: "--font-ibm-plex-sans",
   display: "swap",
+  preload: false,
 });
 
 const shouldLoadGoogleAds = isAdsenseProductionDeployment();
@@ -129,10 +138,53 @@ const baseMetadata = {
   },
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/favicon1.png",
+    // Square, purpose-built icons generated from the brand mark. The previous
+    // set pointed at /favicon1.png — 255x248, so not square — for both the tab
+    // icon and the iOS home screen, where iOS would have letterboxed it on a
+    // black field.
+    icon: [
+      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/brand/altftool-mark.svg", type: "image/svg+xml" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/favicon1.png",
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
+  appleWebApp: {
+    capable: true,
+    title: "AltFTool",
+    // "default" rather than "black-translucent": translucent forces white
+    // status-bar glyphs, which vanish against the light theme's near-white
+    // page. "default" keeps the bar legible in both themes and lets iOS tint
+    // it from theme-color.
+    statusBarStyle: "default",
+  },
+  other: {
+    // Chrome deprecated apple-mobile-web-app-capable in favour of this one;
+    // Next only emits the Apple-prefixed form from `appleWebApp`.
+    "mobile-web-app-capable": "yes",
+  },
+};
+
+// viewport-fit: "cover" is the switch that makes env(safe-area-inset-*)
+// resolve to real values on notched phones. Code across the app already
+// assumes it — BlogReaderTools pins to
+// bottom-[calc(1rem+env(safe-area-inset-bottom))], the step counter and
+// tripfindbox stylesheets do the same in dozens of places — and until now every
+// one of those insets evaluated to 0 because no viewport was exported at all,
+// so Next fell back to its plain `width=device-width, initial-scale=1`.
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Deliberately no maximumScale / user-scalable: capping pinch-zoom fails
+  // WCAG 1.4.4, and there is nothing to gain from it.
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: CHROME_LIGHT },
+    { media: "(prefers-color-scheme: dark)", color: CHROME_DARK },
+  ],
 };
 
 // Warm the central SEO config snapshot for the whole render tree BEFORE any
@@ -271,6 +323,23 @@ export default async function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var strip=function(n){if(n&&n.removeAttribute)n.removeAttribute("fdprocessedid");};var all=function(){if(!document.querySelectorAll)return;var ns=document.querySelectorAll("[fdprocessedid]");for(var i=0;i<ns.length;i++)strip(ns[i]);};var mo=new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var m=ms[i];if(m.type==="attributes")strip(m.target);}});mo.observe(document.documentElement,{attributes:true,subtree:true,attributeFilter:["fdprocessedid"]});all();setTimeout(function(){mo.disconnect();},15000);}catch(e){}})();`,
+          }}
+        />
+        {/* Keep the browser chrome (Android status/URL bar, iOS standalone
+            status bar) locked to the page background.
+
+            The two theme-color metas emitted by the viewport export follow the
+            OS preference, but this site's theme is an explicit user choice
+            stored in localStorage — a visitor on a light phone who picks dark
+            would otherwise get a white status bar over a navy page. The whole
+            theme is driven by data-theme on <html>, and ThemeProvider rewrites
+            that attribute both when the user switches and when the OS
+            preference changes, so watching that one attribute covers every
+            case. Runs before first paint; the media-query metas remain the
+            no-JS default. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var C={dark:${JSON.stringify(CHROME_DARK)},light:${JSON.stringify(CHROME_LIGHT)}};var sync=function(){var t=document.documentElement.getAttribute("data-theme")==="dark"?C.dark:C.light;var m=document.querySelectorAll('meta[name="theme-color"]');if(!m.length){var e=document.createElement("meta");e.setAttribute("name","theme-color");e.setAttribute("content",t);document.head.appendChild(e);return;}for(var i=0;i<m.length;i++){m[i].removeAttribute("media");m[i].setAttribute("content",t);}};sync();new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});}catch(e){}})();`,
           }}
         />
   <InjectedCode id="head" html={customCode.head} />

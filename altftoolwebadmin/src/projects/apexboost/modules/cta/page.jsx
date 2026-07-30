@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Save, RefreshCw } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeCta, saveCta } from "../service/apexboost.service";
 
 export default function CTAPage() {
   const [form, setForm] = useState({
@@ -17,34 +18,29 @@ export default function CTAPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    setLoading(true);
-    const res = await fetch("/api/apexboost/data?section=cta");
-    const json = await res.json();
-    if (json.success && json.data) {
-      setForm(json.data);
-    }
-    setLoading(false);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeCta(
+      (data) => {
+        setForm(data);
+        setLoading(false);
+      },
+      (err) => {
+        console.error(err);
+        emitAlert({ type: "error", title: "Error", message: "Failed to load Call to Action." });
+        setLoading(false);
+      },
+    );
+    return unsubscribe;
+  }, []);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "cta", data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "Call to Action saved successfully!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save Call to Action." });
-      }
+      await saveCta(form);
+      emitAlert({ type: "success", title: "Success", message: "Call to Action saved successfully!" });
     } catch (err) {
       console.error(err);
-      emitAlert({ type: "error", title: "Error", message: "An unexpected error occurred." });
+      emitAlert({ type: "error", title: "Error", message: "Failed to save Call to Action." });
     } finally {
       setSaving(false);
     }

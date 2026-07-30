@@ -20,6 +20,7 @@ import JsonLd from "@/platform/seo/JsonLd";
 import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { getMissingBlogRedirect } from "../utils/missingBlogRedirect";
+import { shouldNoindexBlogPost } from "../utils/blogIndexPolicy";
 import {
   createBlogPostingJsonLd,
   createBreadcrumbJsonLd,
@@ -101,8 +102,13 @@ export async function generateMetadata({ params }) {
     });
   }
 
+  // compactBrandedTitle() defaults to 65 chars, which is past the ~60 the SERP
+  // renders before truncating; the returned string already ends in "| AltFTool"
+  // so resolveDocumentTitle() marks it absolute and the layout template does
+  // not append the brand a second time. 60 in, 60 out.
   const title = compactBrandedTitle(
     blog.seoTitle || `${blog.heading} - AltFTool Blog`,
+    60,
   );
   const description = getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
@@ -117,6 +123,10 @@ export async function generateMetadata({ params }) {
       blog.tool,
       ...tags,
     ],
+    // The hub pages (category/tag/author/topic) already noindex when thin, but
+    // individual posts never did. See ../utils/blogIndexPolicy.js for the list
+    // and the Search Console numbers behind each entry.
+    noindex: shouldNoindexBlogPost(slug),
     type: "article",
   });
 

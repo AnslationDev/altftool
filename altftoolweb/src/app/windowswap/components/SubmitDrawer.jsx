@@ -17,6 +17,22 @@ export default function SubmitDrawer({ isOpen, onClose }) {
     e.preventDefault();
     if (!submitName || !submitLocation || !submitUrl) return;
 
+    // No moderation/review backend exists yet — persist locally instead of
+    // discarding the submission.
+    try {
+      const submissions = JSON.parse(window.localStorage.getItem("windowswap_submissions") || "[]");
+      submissions.push({
+        name: submitName,
+        location: submitLocation,
+        url: submitUrl,
+        notes: submitNotes,
+        submittedAt: new Date().toISOString(),
+      });
+      window.localStorage.setItem("windowswap_submissions", JSON.stringify(submissions));
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
+
     setIsFormSubmitted(true);
 
     // Burst beautiful confetti
@@ -149,7 +165,7 @@ export default function SubmitDrawer({ isOpen, onClose }) {
                 <CheckCircle2 className="h-16 w-16 text-emerald-400 mb-4 animate-bounce" />
                 <h3 className="font-serif text-2xl font-bold text-white mb-2">Thank you, {submitName}!</h3>
                 <p className="text-zinc-300 leading-relaxed font-light text-sm max-w-sm">
-                  Your scenic window view from **{submitLocation}** has been successfully submitted! Our moderation team will review the details shortly.
+                  This is a demonstration copy: your scenic window view from <span className="font-semibold text-white">{submitLocation}</span> has been saved only in this browser&rsquo;s local storage. It hasn&rsquo;t been sent to AltFTool or anyone else, so there&rsquo;s nothing yet for us to review.
                 </p>
               </motion.div>
             )}

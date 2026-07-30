@@ -7,7 +7,6 @@ import {
   PhoneCall,
   Scale,
   ShieldCheck,
-  Star,
 } from "lucide-react";
 import HnHeader from "./_components/HnHeader";
 import HnTrustBar from "./_components/HnTrustBar";
@@ -39,7 +38,7 @@ import "@/app/_altf/altf-brand.css";
 export const metadata = createPageMetadata({
   title: "Housing Needs — Free Home Quotes & Guides",
   description:
-    "America's one-stop home improvement resource. Compare roofing, plumbing, HVAC, electrical and more — read expert guides and get free quotes from licensed local pros.",
+    "Compare roofing, plumbing, HVAC, electrical and other home improvement services across the USA: read expert guides and get free quotes from licensed pros.",
   path: "/bops/housingneeds",
   keywords: [
     "home improvement guides",
@@ -264,46 +263,6 @@ export default function HousingNeedsLanding() {
           </section>
         </HnSubscribedGate>
 
-        {/* ---------- social proof ---------- */}
-        <section className="hn-section hn-section--tint">
-          <div className="hn-wrap">
-            <HnReveal className="hn-head--center">
-              <p className="hn-eyebrow">Homeowners like you</p>
-              <h2 className="hn-h2">Why homeowners start here</h2>
-            </HnReveal>
-
-            <div className="hn-testimonials">
-              {[
-                {
-                  quote:
-                    "Read the roofing guide, knew what a fair price looked like, and saved real money on the quote we accepted.",
-                  who: "Jennifer M. — North Carolina",
-                },
-                {
-                  quote:
-                    "Three plumbing quotes by the next morning. Picked the middle one and couldn't be happier.",
-                  who: "David S. — Arizona",
-                },
-                {
-                  quote:
-                    "The maintenance calendar alone is worth it — it reminded us to service the furnace before winter.",
-                  who: "Angela P. — Michigan",
-                },
-              ].map((t, index) => (
-                <HnReveal key={t.who} className="hn-testimonial" delay={index * 60}>
-                  <span className="hn-testimonial-stars" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} size={13} strokeWidth={0} fill="currentColor" />
-                    ))}
-                  </span>
-                  <p>&ldquo;{t.quote}&rdquo;</p>
-                  <footer>{t.who}</footer>
-                </HnReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ---------- vetting / trust ---------- */}
         <section className="hn-section">
           <div className="hn-wrap">
@@ -327,11 +286,6 @@ export default function HousingNeedsLanding() {
                   icon: ShieldCheck,
                   title: "Reputation-screened",
                   text: "Only established local pros with a solid track record make it into our network.",
-                },
-                {
-                  icon: Star,
-                  title: "Real homeowner reviews",
-                  text: "Ratings come from real customers — so you hire with your eyes wide open.",
                 },
                 {
                   icon: BadgeCheck,

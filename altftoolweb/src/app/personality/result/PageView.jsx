@@ -10,20 +10,18 @@ import {
 } from "lucide-react";
 
 import { questions } from "../data/questions";
+import { computeResult } from "../data/scoring";
 
 export default function ResultPage() {
   const [totalAnswered, setTotalAnswered] = useState(0);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
-    const savedAnswers = questions.filter((q) => {
-      const saved = window.localStorage.getItem(
-        `personality-question-${q.id}`
-      );
-
-      return saved;
-    }).length;
+    const getAnswer = (id) => window.localStorage.getItem(`personality-question-${id}`);
+    const savedAnswers = questions.filter((q) => getAnswer(q.id)).length;
 
     setTotalAnswered(savedAnswers);
+    setResult(computeResult(getAnswer));
   }, []);
 
   const progress = Math.round(
@@ -148,7 +146,7 @@ export default function ResultPage() {
                 px-2
               "
             >
-              Test Completed
+              Your Results
             </h1>
 
             <p
@@ -165,10 +163,38 @@ export default function ResultPage() {
                 px-2
               "
             >
-              Thank you for completing the personality test.
-              Your responses have been successfully recorded.
+              {result?.allAnswered
+                ? "Here's what your answers show across four core traits."
+                : "Answer every question to see your full trait breakdown."}
             </p>
           </div>
+
+          {/* TRAIT RESULTS */}
+          {result?.allAnswered ? (
+            <div className="mt-8 sm:mt-10 space-y-4">
+              {result.traits.map((trait) => (
+                <div
+                  key={trait.key}
+                  className="rounded-2xl border border-(--border) bg-(--card) p-4 sm:p-5 md:p-6"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm text-(--muted-foreground)">{trait.label}</p>
+                      <h3 className="mt-1 text-lg sm:text-xl font-bold">{trait.dominant}</h3>
+                    </div>
+                    <span className="text-sm font-semibold text-(--primary)">{trait.percent}%</span>
+                  </div>
+                  <div className="mt-3 h-2 overflow-hidden rounded-full personality-progress-track">
+                    <div
+                      className="h-full rounded-full personality-progress-fill transition-all duration-700"
+                      style={{ width: `${trait.percent}%` }}
+                    />
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-(--muted-foreground)">{trait.detail}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
 
           {/* STATS */}
           <div

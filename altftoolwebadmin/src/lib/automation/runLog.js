@@ -11,40 +11,11 @@ function startOfTodayUtc() {
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 }
 
-/** How many items each lane has already produced today (for daily limits). */
-export async function countProducedToday(kind) {
-  const snap = await adminDb
-    .collection(fsPath(RUNS_COLLECTION))
-    .where("startedAt", ">=", startOfTodayUtc())
-    .get();
-
-  let produced = 0;
-  snap.forEach((doc) => {
-    const data = doc.data();
-    if (data.kind !== kind) return;
-    produced += Array.isArray(data.created) ? data.created.length : Number(data.createdCount || 0);
-  });
-  return produced;
-}
-
-/** Total estimated OpenAI spend across ALL lanes today (for the daily cost cap). */
-export async function sumCostToday() {
-  const snap = await adminDb
-    .collection(fsPath(RUNS_COLLECTION))
-    .where("startedAt", ">=", startOfTodayUtc())
-    .get();
-
-  let total = 0;
-  snap.forEach((doc) => {
-    total += Number(doc.data()?.costEstimate) || 0;
-  });
-  return total;
-}
-
 /**
- * countProducedToday(kind) + sumCostToday() combined into one query — every
- * lane run (blogLane, seoLane) called both back-to-back, fetching the exact
- * same day's run docs twice.
+ * How many items a lane has produced today (for daily limits) plus total
+ * estimated spend across ALL lanes today (for the daily cost cap), in one
+ * query — every lane run (blogLane, seoLane) needs both back-to-back, so
+ * fetching the same day's run docs once avoids a duplicate read.
  */
 export async function getTodayUsage(kind) {
   const snap = await adminDb

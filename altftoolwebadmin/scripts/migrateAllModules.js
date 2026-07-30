@@ -31,13 +31,13 @@ const MODULES = [
 ];
 
 /* 🚀 Migrate single module */
-async function migrateModule(module) {
-  console.log(`\n🚀 Migrating: ${module}`);
+async function migrateModule(moduleName) {
+  console.log(`\n🚀 Migrating: ${moduleName}`);
 
-  const oldSnap = await db.collection(module).get();
+  const oldSnap = await db.collection(moduleName).get();
 
   if (oldSnap.empty) {
-    console.log(`⚠️ No data found in ${module}`);
+    console.log(`⚠️ No data found in ${moduleName}`);
     return;
   }
 
@@ -49,7 +49,7 @@ async function migrateModule(module) {
     const newRef = db
       .collection("projects")
       .doc(PROJECT_ID)
-      .collection(module)
+      .collection(moduleName)
       .doc(doc.id);
 
     const exists = await newRef.get();
@@ -58,19 +58,19 @@ async function migrateModule(module) {
     if (!exists.exists) {
       await newRef.set(data);
       count++;
-      console.log(`→ ${module}: ${doc.id}`);
+      console.log(`→ ${moduleName}: ${doc.id}`);
     }
   }
 
-  console.log(`✅ ${module}: ${count} docs migrated`);
+  console.log(`✅ ${moduleName}: ${count} docs migrated`);
 }
 
 /* 🔥 Run all */
 async function migrateAll() {
   console.log("🔥 Starting migration...\n");
 
-  for (const module of MODULES) {
-    await migrateModule(module);
+  for (const moduleName of MODULES) {
+    await migrateModule(moduleName);
   }
 
   console.log("\n🎉 Migration complete!");

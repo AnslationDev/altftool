@@ -59,6 +59,7 @@ export default function TravelDetailsPage() {
           <span>Fare from</span>
           <strong>{formatMoney(result.price)}</strong>
           <p>{criteria.tripType === "round" ? "Round trip" : "One way"} · {criteria.travelers.cabin}</p>
+          {result.isEstimatedPrice && <small>Estimated price, schedule only — confirm the fare with the airline.</small>}
           <Link href="/bops/tripfindbox/booking" className="primary-flow-button">Continue booking</Link>
         </aside>
         <article className="details-info-card"><Briefcase size={22} /><h2>Baggage</h2><p>{result.baggage}</p></article>

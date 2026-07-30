@@ -6,8 +6,10 @@ import {
   BarChart3,
   Box,
   Calendar,
+  Check,
   CheckCircle2,
   Clipboard,
+  Copy,
   Download,
   Home,
   PawPrint,
@@ -27,6 +29,7 @@ import {
   YAxis,
 } from "recharts";
 import SafeResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
+import { safeCopyText } from "@/shared/utils/clipboard";
 
 const MOVE_TYPES = [
   { value: "local", label: "Local (same city)" },
@@ -337,6 +340,7 @@ export default function MovingChecklistBuilder() {
   const [tasks, setTasks] = useState(() => createDefaultTasks());
   const [activePhase, setActivePhase] = useState("8weeks");
   const [newTaskText, setNewTaskText] = useState("");
+  const [summaryCopied, setSummaryCopied] = useState(false);
 
   const totalTasks = useMemo(
     () => Object.values(tasks).reduce((sum, phase) => sum + phase.length, 0),
@@ -415,6 +419,15 @@ export default function MovingChecklistBuilder() {
       [activePhase]: [...(prev[activePhase] || []), { id, text, done: false, notes: "" }],
     }));
     setNewTaskText("");
+  };
+
+  const handleCopySummary = async () => {
+    const success = await safeCopyText(
+      buildSummary(moveDate, moveType, homeSize, hasPets, hasChildren, tasks)
+    );
+    if (!success) return;
+    setSummaryCopied(true);
+    setTimeout(() => setSummaryCopied(false), 1500);
   };
 
   const handleReset = () => {
@@ -550,10 +563,16 @@ export default function MovingChecklistBuilder() {
         {/* Charts + Export */}
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
           <SectionCard title="Tasks by Phase" icon={BarChart3} action={
-            <button onClick={() => exportCsv(moveDate, moveType, homeSize, hasPets, hasChildren, tasks)} className="flex items-center gap-1.5 rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] hover:bg-[var(--primary)]/20 transition-colors">
-              <Download className="h-3.5 w-3.5" />
-              CSV
-            </button>
+            <div className="flex items-center gap-2">
+              <button onClick={handleCopySummary} className="flex items-center gap-1.5 rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] hover:bg-[var(--primary)]/20 transition-colors">
+                {summaryCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {summaryCopied ? "Copied!" : "Copy Summary"}
+              </button>
+              <button onClick={() => exportCsv(moveDate, moveType, homeSize, hasPets, hasChildren, tasks)} className="flex items-center gap-1.5 rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] hover:bg-[var(--primary)]/20 transition-colors">
+                <Download className="h-3.5 w-3.5" />
+                CSV
+              </button>
+            </div>
           }>
             <div className="h-64">
               <SafeResponsiveContainer width="100%" height="100%">

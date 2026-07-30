@@ -4,6 +4,8 @@
  * PATCH /api/altflinking/admin/listings  — approve / reject / edit / feature
  */
 
+import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
@@ -19,6 +21,13 @@ async function assertAdmin(request) {
 }
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:admin-listings",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, role, error } = await assertAdmin(request);
   if (error) return err(error, error === "Unauthorized" ? 401 : 403);
 
@@ -41,11 +50,18 @@ export async function GET(request) {
     return ok(listings);
   } catch (e) {
     console.error("[GET /admin/listings]", e);
-    return err("Failed to fetch listings: " + e.message, 500);
+    return err("Failed to fetch listings", 500);
   }
 }
 
 export async function PATCH(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 30,
+    scope: "altflinking:admin-listings",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, role, error } = await assertAdmin(request);
   if (error) return err(error, error === "Unauthorized" ? 401 : 403);
 
@@ -97,11 +113,18 @@ export async function PATCH(request) {
     return ok({ id, action, ...update });
   } catch (e) {
     console.error("[PATCH /admin/listings]", e);
-    return err("Failed to update listing: " + e.message, 500);
+    return err("Failed to update listing", 500);
   }
 }
 
 export async function DELETE(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 30,
+    scope: "altflinking:admin-listings",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, role, error } = await assertAdmin(request);
   if (error) return err(error, error === "Unauthorized" ? 401 : 403);
   if (role !== "SUPERADMIN") return err("Only Superadmins can delete listings", 403);
@@ -115,6 +138,7 @@ export async function DELETE(request) {
     await db.collection("listings").doc(id).delete();
     return ok({ deleted: id });
   } catch (e) {
-    return err("Failed to delete listing: " + e.message, 500);
+    console.error("[DELETE /admin/listings]", e);
+    return err("Failed to delete listing", 500);
   }
 }

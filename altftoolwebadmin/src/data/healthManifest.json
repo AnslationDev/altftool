@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-28T19:38:02.557Z",
+  "generatedAt": "2026-07-30T01:18:10.440Z",
   "tools": {
-    "total": 3816,
-    "healthy": 3816,
+    "total": 3947,
+    "healthy": 3947,
     "needsAttention": 0,
     "averageScore": 100,
     "categories": 22,
-    "directories": 3817,
+    "directories": 3948,
     "orphanToolDirs": [
       "candy-crush"
     ],
@@ -19,24 +19,24 @@
     "readiness": {
       "methodology": "static-readiness-v2",
       "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
-      "total": 3816,
+      "total": 3947,
       "score": 94,
       "counts": {
-        "working": 3735,
-        "api-required": 67,
-        "partial": 14,
+        "working": 3863,
+        "api-required": 68,
+        "partial": 16,
         "broken": 0
       },
       "automatedTests": 158,
       "automatedCoverage": 4,
-      "networkDependent": 67,
+      "networkDependent": 68,
       "envDependent": 4,
       "api": {
-        "tools": 68,
+        "tools": 69,
         "counts": {
           "configured": 1,
           "missing-config": 2,
-          "runtime-check": 65
+          "runtime-check": 66
         },
         "providerCount": 19,
         "requiredEnvKeys": [
@@ -54,7 +54,7 @@
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 53,
+            "tools": 54,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -235,7 +235,7 @@
           }
         ]
       },
-      "placeholderSignals": 14,
+      "placeholderSignals": 16,
       "unresolvedImports": 0,
       "priority": {
         "total": 51,
@@ -253,6 +253,33 @@
           "priority": false,
           "issues": [
             "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "calender-panchang",
+          "name": "Calender Panchang",
+          "category": "Lifestyle",
+          "route": "/tools/all/calender-panchang",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: not-implemented"
           ],
           "recommendations": [
             "Replace placeholder or unfinished implementation paths.",
@@ -391,6 +418,33 @@
           "priority": false,
           "issues": [
             "Unfinished signal: todo"
+          ],
+          "recommendations": [
+            "Replace placeholder or unfinished implementation paths.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": false,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "not-required",
+            "providers": [],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "fingerprint-viewer-hardware",
+          "name": "Hardware Capability Fingerprint Viewer",
+          "category": "Security & Privacy",
+          "route": "/tools/all/fingerprint-viewer-hardware",
+          "status": "partial",
+          "score": 60,
+          "priority": false,
+          "issues": [
+            "Unfinished signal: not-implemented"
           ],
           "recommendations": [
             "Replace placeholder or unfinished implementation paths.",
@@ -816,60 +870,6 @@
           "name": "API TESTER",
           "category": "Developer",
           "route": "/tools/all/api-tester",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "app-finder",
-          "name": "App Finder",
-          "category": "Business",
-          "route": "/tools/all/app-finder",
-          "status": "api-required",
-          "score": 80,
-          "priority": false,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime.",
-            "Add one deterministic functional or unit regression test."
-          ],
-          "evidence": {
-            "automatedTest": false,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
-          "slug": "aqi-today",
-          "name": "AQI Today",
-          "category": "Education & Science, Health & Fitness",
-          "route": "/tools/all/aqi-today",
           "status": "api-required",
           "score": 80,
           "priority": false,

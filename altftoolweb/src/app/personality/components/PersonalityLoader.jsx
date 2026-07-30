@@ -7,10 +7,9 @@ import {
     Brain,
 } from "lucide-react";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function PersonalityLoader() {
-    const [progress, setProgress] = useState(0);
     useEffect(() => {
         document.body.style.overflow = "hidden";
         document.documentElement.style.overflow = "hidden";
@@ -21,34 +20,8 @@ export default function PersonalityLoader() {
         };
     }, []);
 
-    useEffect(() => {
-        let current = 0;
-
-        const interval = setInterval(() => {
-            current += Math.random() * 4;
-
-
-            if (current > 88) {
-                current += 0.3;
-            }
-
-            if (current >= 100) {
-                current = 100;
-                clearInterval(interval);
-            }
-
-            setProgress(Math.floor(current));
-        }, 120);
-
-        return () => clearInterval(interval);
-    }, []);
-
-
     const radius = 92;
     const circumference = 2 * Math.PI * radius;
-
-    const strokeDashoffset =
-        circumference - (progress / 100) * circumference;
 
     return (
         <section className="fixed inset-0 z-[9999] personality-page flex items-center justify-center px-4 overflow-hidden bg-black/20 backdrop-blur-md pointer-events-auto">
@@ -115,7 +88,7 @@ md:text-[18px]
                         <div className="absolute inset-0 rounded-full  blur-2xl scale-110" />
 
 
-                        <svg   viewBox="0 0 240 240" className="w-full h-full -rotate-90">
+                        <svg   viewBox="0 0 240 240" className="w-full h-full -rotate-90 animate-spin [animation-duration:1.4s]">
 
                             <circle
                                cx="50%"
@@ -136,12 +109,9 @@ cy="50%"
                                 fill="none"
                                 strokeLinecap="round"
                                 strokeDasharray={circumference}
-                                strokeDashoffset={strokeDashoffset}
-                                className="transition-all duration-500 ease-out"
+                                strokeDashoffset={circumference * 0.75}
                             />
                         </svg>
-
-                        {/* Percentage */}
 
                         <div className="absolute inset-0 flex items-center justify-center -translate-y-2">
                             <div className=" w-16
@@ -173,37 +143,8 @@ px-2 font-bold tracking-tight  leading-[1.1] ">
 sm:text-base
 md:text-lg
 px-2 font-normal max-w-[520px] leading-[1.8]">
-                        Almost there! We’re customizing everything based on science and psychology.
+                        Just a moment while we get your test ready.
                     </p>
-
-                    {/* Progress Bar */}
-                    <div className="w-full max-w-[680px] mt-12">
-                        <div className="flex justify-between mb-3">
-                            <span className="text-(--foreground) font-semibold">
-                                Personality Analysis
-                            </span>
-
-                            <span className="font-bold">
-                                {progress}%
-                            </span>
-                        </div>
-
-                        <div className="h-4 rounded-full personality-progress-track overflow-hidden">
-                            <div
-                                className="
-                  h-full
-                  rounded-full
-                  personality-progress-fill
-                  transition-all
-                  duration-500
-                  ease-out
-                "
-                                style={{
-                                    width: `${progress}%`,
-                                }}
-                            />
-                        </div>
-                    </div>
 
                     {/* Footer */}
                     <div className="mt-12 flex items-center justify-center gap-2 text-(--muted-foreground) text-sm md:text-base">

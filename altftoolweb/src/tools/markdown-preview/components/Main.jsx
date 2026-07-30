@@ -263,7 +263,7 @@ console.log(greet('World'));
       <div className="bg-(--background)  px-4 sm:px-6 py-3">
 
      <div >
-      <h1 className="heading text-center pt-8 animate-fade-up">Markdown Previewer</h1>
+      <h1 className="heading text-center pt-8 animate-fade-up">Markdown Preview</h1>
       <p className="description text-center animate-fade-up">
         Format, validate, and visualize Markdown with ease
       </p>

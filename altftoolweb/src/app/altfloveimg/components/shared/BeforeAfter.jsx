@@ -28,11 +28,37 @@ export default function BeforeAfter({ before, after, beforeLabel = "Original", a
     setPos(Math.max(0, Math.min(100, p)));
   }, []);
 
+  const handleKeyDown = useCallback((e) => {
+    const STEP = 5;
+    if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      e.preventDefault();
+      setPos((p) => Math.max(0, p - STEP));
+    } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      e.preventDefault();
+      setPos((p) => Math.min(100, p + STEP));
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setPos(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setPos(100);
+    }
+  }, []);
+
   return (
     <div
       ref={ref}
       className="relative w-full select-none overflow-hidden rounded-2xl ali-checker"
       style={{ touchAction: "none", cursor: "ew-resize" }}
+      tabIndex={0}
+      role="slider"
+      aria-label="Comparison position"
+      aria-orientation="horizontal"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(pos)}
+      aria-valuetext={`${Math.round(pos)}% ${beforeLabel}, ${Math.round(100 - pos)}% ${afterLabel}`}
+      onKeyDown={handleKeyDown}
       onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
       onMouseMove={(e) => dragging.current && move(e.clientX)}
       onMouseUp={() => (dragging.current = false)}

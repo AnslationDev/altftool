@@ -49,16 +49,25 @@ export default function FlashSales({ flashSales }) {
   minutes: "00",
   seconds: "00",
 });
+const [saleEnded, setSaleEnded] = useState(false);
 
 useEffect(() => {
-  const target = new Date().getTime() + 1000 * 60 * 60 * 24; // 24 hrs
+  const endTime = flashSales?.banner?.endTime;
+  const target = endTime ? new Date(endTime).getTime() : NaN;
+
+  if (Number.isNaN(target) || target <= Date.now()) {
+    setSaleEnded(true);
+    return undefined;
+  }
+
+  setSaleEnded(false);
 
   const interval = setInterval(() => {
-    const now = new Date().getTime();
-    const diff = target - now;
+    const diff = target - Date.now();
 
     if (diff <= 0) {
       clearInterval(interval);
+      setSaleEnded(true);
       return;
     }
 
@@ -74,7 +83,7 @@ useEffect(() => {
   }, 1000);
 
   return () => clearInterval(interval);
-}, []);
+}, [flashSales?.banner?.endTime]);
 
   return (
     <section className="section bg-(--background)">
@@ -116,29 +125,35 @@ useEffect(() => {
               {/* timer overlay */}
               <div className="absolute bottom-7 left-4 right-4">
                 <div className="bg-(--primary) border border-(--primary)/40 rounded-xl px-3 py-3 shadow-md">
-                  <div className="flex items-center justify-center gap-3">
-                    {/* HOURS */}
-                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                      <span className="text-2xl font-bold">{time.hours}</span>
-                      <span className="text-xs opacity-70">HRS</span>
+                  {saleEnded ? (
+                    <p className="text-center text-(--primary-foreground) font-semibold text-sm">
+                      Sale ended
+                    </p>
+                  ) : (
+                    <div className="flex items-center justify-center gap-3">
+                      {/* HOURS */}
+                      <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                        <span className="text-2xl font-bold">{time.hours}</span>
+                        <span className="text-xs opacity-70">HRS</span>
+                      </div>
+
+                      <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
+
+                      {/* MINUTES */}
+                      <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                        <span className="text-2xl font-bold">{time.minutes}</span>
+                        <span className="text-xs opacity-70">MINS</span>
+                      </div>
+
+                      <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
+
+                      {/* SECONDS */}
+                      <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
+                        <span className="text-2xl font-bold">{time.seconds}</span>
+                        <span className="text-xs opacity-70">SECS</span>
+                      </div>
                     </div>
-
-                    <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
-
-                    {/* MINUTES */}
-                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                      <span className="text-2xl font-bold">{time.minutes}</span>
-                      <span className="text-xs opacity-70">MINS</span>
-                    </div>
-
-                    <span className="text-(--primary-foreground) font-bold text-2xl">:</span>
-
-                    {/* SECONDS */}
-                    <div className="bg-black/25 text-(--primary-foreground) rounded-lg w-15 h-15 flex flex-col items-center justify-center">
-                      <span className="text-2xl font-bold">{time.seconds}</span>
-                      <span className="text-xs opacity-70">SECS</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

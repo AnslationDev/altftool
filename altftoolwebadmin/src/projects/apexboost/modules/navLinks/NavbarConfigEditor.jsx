@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { emitAlert } from "@/lib/alertBus";
+import { saveNavbarConfig, subscribeNavbarConfig } from "../service/apexboost.service";
 
 export default function NavbarConfigEditor() {
   const [form, setForm] = useState({
@@ -14,34 +15,23 @@ export default function NavbarConfigEditor() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadConfig = async () => {
-      try {
-        const res = await fetch('/api/apexboost/data?section=navbarConfig');
-        const json = await res.json();
-        if (json.success && json.data) {
-          setForm(json.data);
-        }
-      } catch (err) {
-        console.error("Failed to load navbar config", err);
-      } finally {
+    const unsubscribe = subscribeNavbarConfig(
+      (data) => {
+        setForm(data);
         setIsLoading(false);
-      }
-    };
-    loadConfig();
+      },
+      (err) => {
+        console.error("Failed to load navbar config", err);
+        setIsLoading(false);
+      },
+    );
+    return unsubscribe;
   }, []);
 
   const handleSave = async () => {
     try {
-      const res = await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'navbarConfig', data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "Navbar settings saved!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save navbar settings." });
-      }
+      await saveNavbarConfig(form);
+      emitAlert({ type: "success", title: "Success", message: "Navbar settings saved!" });
     } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Error saving navbar settings." });
     }

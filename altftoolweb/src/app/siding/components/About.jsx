@@ -95,8 +95,8 @@ export default function About() {
             </motion.div>
 
             <div className="absolute -top-4 -right-2 sm:right-8 w-36 h-36 rounded-3xl bg-gradient-to-br from-primary to-secondary text-primary-foreground p-5 shadow-glow flex flex-col justify-center border border-primary-foreground/25">
-              <div className="text-5xl font-extrabold font-display leading-none">25+</div>
-              <div className="text-xs font-semibold mt-2 leading-tight">Years of exterior excellence</div>
+              <div className="text-2xl font-extrabold font-display leading-tight">Built to Last</div>
+              <div className="text-xs font-semibold mt-2 leading-tight">Engineered exterior excellence</div>
             </div>
 
             <motion.div
@@ -139,9 +139,9 @@ export default function About() {
               Built on Craftsmanship.<br />Driven by Trust.
             </h2>
             <p className="mt-5 text-lg text-foreground/75 leading-relaxed">
-              For over two decades, EliteShield has protected and beautified American homes
-              with siding systems engineered to outlast the elements. Family-founded and
-              homeowner-obsessed, we treat every project like it&#39;s our own.
+              EliteShield protects and beautifies American homes with siding systems engineered
+              to outlast the elements. Family-founded and homeowner-obsessed, we treat every
+              project like it&#39;s our own.
             </p>
 
             <div className="mt-6 space-y-4">

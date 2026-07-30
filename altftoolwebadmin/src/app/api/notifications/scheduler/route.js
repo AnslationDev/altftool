@@ -16,7 +16,7 @@
  */
 
 import { adminDb } from "@/lib/firebaseAdmin";
-import { deliverBroadcast } from "@/app/api/notifications/broadcast/route";
+import { deliverBroadcast, claimBroadcastForDelivery } from "@/app/api/notifications/broadcast/route";
 
 /**
  * Finds all broadcasts with status="scheduled" and scheduledAt <= now,
@@ -38,9 +38,21 @@ export async function processDueScheduledBroadcasts() {
   let processed = 0;
   for (const doc of snap.docs) {
     try {
-      await deliverBroadcast(doc.id, doc.data());
+      // Claim atomically before delivering — without this, an overlapping cron
+      // tick (or a manual PATCH ?action=resend firing at the same moment) could
+      // both read this doc as still "scheduled" and both call deliverBroadcast,
+      // sending duplicate pushes and duplicate in-app notifications to every
+      // recipient. Shares the same transaction the PATCH ?action=resend handler
+      // in broadcast/route.js uses (claimBroadcastForDelivery()).
+      const claimed = await claimBroadcastForDelivery(doc.id, ["scheduled"]);
+      await deliverBroadcast(doc.id, claimed);
       processed++;
     } catch (err) {
+      if (err?.code === "invalid-status") {
+        // Lost the race to a concurrent tick or a manual resend — someone else
+        // already claimed this broadcast, so there's nothing to deliver or log.
+        continue;
+      }
       console.error(`[scheduler] Failed to deliver broadcast ${doc.id}:`, err.message);
     }
   }

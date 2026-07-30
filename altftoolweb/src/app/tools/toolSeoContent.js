@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { toolContentOverrides } from "./toolContentOverrides";
 import { generatedToolSeo } from "./generated/toolSeoMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
@@ -74,24 +75,63 @@ function getCategories(tool) {
 function chooseTemplate(categories, slug = "", name = "") {
   const haystack = `${slug} ${name} ${categories.join(" ")}`.toLowerCase();
 
+  // `ratio`, `api` and `unit` are anchored because inside a longer word they
+  // carry no meaning at all and were choosing the copy for 22 tools:
+  // ration-card-category-explainer and every hydration planner matched
+  // "ratio", capital-city-quiz matched "api", community-post-planner matched
+  // "unit". They were served calculator, developer and converter workflows.
+  //
+  // The rest stay unanchored on purpose. `file` catching "profile-picture-*"
+  // and `code` catching "encoder-decoder" are accidents, but they land those
+  // tools in media and developer, which is where they belong — anchoring them
+  // moved profile-picture-maker out of media and rot13-encoder-decoder into
+  // writing. Fix what is meaningless, not what is merely lucky.
   if (/image|media|video|audio|pdf|file|svg|barcode/.test(haystack)) return workflowTemplates.media;
-  if (/calculator|calculate|finance|loan|ratio|converter|convert|base64|csv|json|xml|yaml|unit|byte|hex|binary/.test(haystack)) {
-    return /calculator|calculate|finance|loan|ratio/.test(haystack) ? workflowTemplates.calculator : workflowTemplates.converter;
+  if (/calculator|calculate|finance|loan|\bratio\b|converter|convert|base64|csv|json|xml|yaml|\bunit|byte|hex|binary/.test(haystack)) {
+    return /calculator|calculate|finance|loan|\bratio\b/.test(haystack) ? workflowTemplates.calculator : workflowTemplates.converter;
   }
-  if (/developer|api|code|css|html|javascript|sql|regex|cron|nginx|curl/.test(haystack)) return workflowTemplates.developer;
+  if (/developer|\bapi\b|code|css|html|javascript|sql|regex|cron|nginx|curl/.test(haystack)) return workflowTemplates.developer;
   if (/\bai\b|detect|recogni|generat|neural|face|emotion|smart/.test(haystack)) return workflowTemplates.ai;
   if (/text|writing|word|grammar|paraphras|summar|letter|essay|caption|bio\b/.test(haystack)) return workflowTemplates.writing;
   return workflowTemplates.default;
 }
 
-function buildMetaDescription(name, description, primaryCategory) {
-  const base = cleanText(description) || `${name} is a free online tool for quick browser-based workflows.`;
-  const suffix = `Use ${name} online for ${primaryCategory || "daily"} tasks with quick examples and copy-ready results.`;
-  const combined = `${base} ${suffix}`;
-  return combined.length > 158 ? `${combined.slice(0, 155).trim()}...` : combined;
+const META_DESCRIPTION_MAX = 158;
+
+// Cut on a word boundary, and only fall back to a hard cut if the last space
+// is so early that respecting it would throw most of the sentence away.
+function truncateAtWord(text, limit) {
+  if (text.length <= limit) return text;
+  const clipped = text.slice(0, limit - 1);
+  const lastSpace = clipped.lastIndexOf(" ");
+  const body = lastSpace > limit * 0.6 ? clipped.slice(0, lastSpace) : clipped;
+  return `${body.replace(/[\s,;:.–-]+$/, "")}…`;
 }
 
-export function buildToolSeoContent(slug, tool = {}) {
+function buildMetaDescription(name, description, primaryCategory) {
+  const base =
+    cleanText(description) ||
+    `${name} is a free online tool that runs entirely in your browser.`;
+  const suffix = `Use ${name} online for ${primaryCategory || "daily"} tasks with quick examples and copy-ready results.`;
+
+  // The suffix only earns its place when the whole thing fits. Appending it
+  // unconditionally and then hard-cutting at 155 characters left 3,808 tool
+  // URLs with a snippet ending mid-word — "Use 2FA Authenticator online fo...",
+  // "Use IELTS Writing Task Word Counter on..." — so the last thing a searcher
+  // read was a broken fragment of boilerplate rather than what the tool does.
+  const combined = `${base} ${suffix}`;
+  if (combined.length <= META_DESCRIPTION_MAX) return combined;
+
+  // The tool's own description is the part worth keeping; drop the boilerplate
+  // before dropping any of it.
+  if (base.length <= META_DESCRIPTION_MAX) return base;
+  return truncateAtWord(base, META_DESCRIPTION_MAX);
+}
+
+// Memoised per request. buildToolMetadata, the page body and ToolSeoSection
+// each build the same content for one render, and each call resolves
+// overrides and the generated SEO shard for the slug.
+export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool = {}) {
   const name = cleanText(tool.name) || cleanText(slug).replace(/[-_]/g, " ");
   const description = cleanText(tool.description);
   const categories = getCategories(tool);
@@ -196,4 +236,4 @@ export function buildToolSeoContent(slug, tool = {}) {
       : [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...template.steps],
     faqs,
   };
-}
+});

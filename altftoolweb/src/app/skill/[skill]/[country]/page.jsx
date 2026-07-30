@@ -16,6 +16,12 @@ export async function generateMetadata({ params }) {
       `${decodedSkill} market demand`,
       `${decodedCountry} tech jobs`,
     ],
+    // This route accepts any [skill]/[country] string pair and renders the
+    // same generic, unfilled tool shell for all of them (the underlying
+    // skill-demand-analyzer tool doesn't currently read these URL params) —
+    // indexing every combination would ship Google unlimited near-duplicate
+    // thin-content pages. noindex until the tool actually consumes the params.
+    noindex: true,
   });
 }
 

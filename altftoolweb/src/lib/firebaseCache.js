@@ -21,21 +21,3 @@ export function getCachedFirebaseRead(key, loader, ttlMs = 60000, options = {}) 
     ...options,
   });
 }
-
-export function clearFirebaseCache(key) {
-  if (key) {
-    readCache.delete(key);
-    subscriptions.clear(key);
-    return;
-  }
-
-  readCache.clear();
-  subscriptions.clear();
-}
-
-export function getFirebaseCacheStats() {
-  return {
-    reads: readCache.stats(),
-    subscriptions: subscriptions.stats(),
-  };
-}

@@ -61,6 +61,13 @@ export const REST_MET = 1.5;
 /** Warm-up and stretching: Compendium 02101, stretching / mobility, mild effort -> 2.3. */
 export const WARMUP_MET = 2.3;
 
+/**
+ * Energy stored in a kilogram of adipose tissue, the conventional 7700 kcal
+ * figure. Only ever used to translate a session into a tangible unit — it is not
+ * a weight-loss prediction, because the body adapts on both sides of the ledger.
+ */
+export const KCAL_PER_KG_BODY_FAT = 7700;
+
 export const WEIGHT_MIN_KG = 20;
 export const WEIGHT_MAX_KG = 300;
 export const SETS_MAX = 100;
@@ -158,10 +165,15 @@ export function computeLiftingCalories({
   const netKcal = Math.max(0, grossKcal - restingKcal);
 
   const averageMet = totalMinutes > 0 ? grossKcal / kcalFromMet(1, weightKg, totalMinutes) : 0;
+  const kcalPerMinute = totalMinutes > 0 ? grossKcal / totalMinutes : 0;
+
+  // Share of the session's gross energy that each phase contributed.
+  const share = (part) => (grossKcal > 0 ? (part / grossKcal) * 100 : 0);
 
   return {
     weightKg,
     setCount,
+    restIntervals,
     intensityId: chosen.id,
     intensityLabel: chosen.label,
     liftMet: chosen.met,
@@ -177,7 +189,24 @@ export function computeLiftingCalories({
     restingKcal,
     netKcal,
     averageMet,
-    kcalPerMinute: totalMinutes > 0 ? grossKcal / totalMinutes : 0,
+    kcalPerMinute,
+    kcalPerHour: kcalPerMinute * 60,
     kcalPerSet: setCount > 0 ? grossKcal / setCount : 0,
+    workShare: share(workKcal),
+    restShare: share(restKcal),
+    warmupShare: share(warmupKcal),
+    fatGramsEquivalent: (netKcal / KCAL_PER_KG_BODY_FAT) * 1000,
+    basis: `${chosen.met} MET for the working sets (${chosen.code}), ${REST_MET} MET while resting on your feet, ${WARMUP_MET} MET for the warm-up, applied to ${weightKg.toFixed(1)} kg through kcal = MET x ${ML_O2_PER_MET} x kg / 1000 x ${KCAL_PER_LITRE_O2} x minutes.`,
   };
+}
+
+/**
+ * The same session priced at all three Compendium intensities, so the effect of
+ * the intensity choice is visible instead of hidden behind one number.
+ */
+export function compareIntensities(input) {
+  return LIFT_INTENSITIES.map((item) => ({
+    ...item,
+    result: computeLiftingCalories({ ...input, intensity: item.id }),
+  }));
 }

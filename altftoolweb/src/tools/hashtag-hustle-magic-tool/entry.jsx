@@ -1,5 +1,7 @@
-import HashtagHustleMagicTool from './pages/index';
+"use client";
 
-export default function HashtagHustleMagicToolEntry() {
-  return <HashtagHustleMagicTool />;
+import ToolHome from "./pages";
+
+export default function ToolEntry() {
+  return <ToolHome />;
 }

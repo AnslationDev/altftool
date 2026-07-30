@@ -106,7 +106,7 @@ export default function MainComponent() {
       {/* Header Section */}
       <div className="space-y-2 mb-12 text-center">
         <h1 className="text-4xl md:text-7xl font-bold uppercase text-(--primary)">
-          QR Studio PRO
+          QR Generator
         </h1>
         <p className="text-(--muted-foreground) text-lg md:text-2xl font-medium mt-6">
           Create premium QR codes instantly.

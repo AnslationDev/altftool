@@ -6,8 +6,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Route stylesheets stay attached for the life of the document, so a bare
+ * body rule here kept repainting every page the visitor went to next. The
+ * colours live on this route's own root element, which already paints it. */
 body {
   margin: 0;
+}
+
+.roofing-page {
   background: #ffffff;
 }
 

@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ArrowRight, ChevronDown, HelpCircle } from "lucide-react";
 
-const faqs = [
+// Exported so the route can emit FAQPage schema from the exact same array that
+// renders below. The answers ship inside native <details>, so they are in the
+// server HTML whether or not the disclosure is open — the schema mirrors real,
+// crawlable page content rather than restating it.
+export const faqs = [
   {
     question: "What is the difference between a tool, product, and automation?",
     answer:
