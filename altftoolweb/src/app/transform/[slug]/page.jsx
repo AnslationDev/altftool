@@ -64,12 +64,18 @@ function createConverterJsonLd(tool, path) {
 }
 
 /**
- * Segment config has to be a literal — Next rejects a call expression here — so
- * this cannot be derived from shouldDeferBulkPrerendering(). It has to be
- * `true` regardless: during a deferred build generateStaticParams returns [],
- * and `false` would then 404 all 64 converters instead of rendering them on
- * demand. Unknown slugs still 404, because getToolBySlug misses and the page
- * calls notFound() below — the closed manifest is enforced there, not here.
+ * Amplify defers these pages to the first request, so they must override the
+ * root layout's connection() call and use on-demand static generation. Without
+ * this literal the Amplify runtime attempts a dynamic Server Components render
+ * and returns DYNAMIC_SERVER_USAGE for every converter while local `next start`
+ * still appears healthy.
+ */
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
+/**
+ * Keep valid manifest slugs available when generateStaticParams returns [].
+ * Unknown slugs still 404 through getToolBySlug/notFound below.
  */
 export const dynamicParams = true;
 

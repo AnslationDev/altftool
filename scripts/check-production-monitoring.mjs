@@ -47,6 +47,11 @@ const WEB_PAGE_CHECKS = [
     expectedText: ["Tools"],
   },
   {
+    name: "transform-converter-route",
+    path: "/transform/json-to-yaml",
+    expectedText: ["JSON to YAML"],
+  },
+  {
     name: "blogs-page",
     path: "/blogs",
     expectedText: ["AltFTool Blog"],

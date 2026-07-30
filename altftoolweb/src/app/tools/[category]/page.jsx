@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ToolsClient from "../ToolsClient";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
@@ -103,6 +104,34 @@ function getCategoryToolItems(category) {
     .slice(0, 100);
 }
 
+// The same set, uncapped. getCategoryToolItems stays at 100 because an ItemList
+// of 500 entries is not a useful entity; this one exists to put a real anchor on
+// the page for every tool in the category.
+//
+// It is the fix for the largest structural SEO problem this site has: of 3,947
+// tools, 518 had any inbound crawlable link from a non-tool page and 3,429 had
+// none. Tool routes are not prerendered (generateStaticParams returns [] under
+// the deferred-prerender flag), so the sitemap was the only way in, and a URL
+// whose only referrer is the sitemap accumulates no internal signal — which is
+// why a blog post outranks the tool it is written about.
+//
+// Cost lands where it is cheap: the largest category (Calculators, 503 tools)
+// adds roughly 32 KB of HTML, and these category pages are not prerendered on
+// Amplify, so this adds nothing to the build artifact.
+function getCategoryToolIndex(category) {
+  const isAll = category === "all";
+  return Object.entries(toolMetaMap)
+    .filter(
+      ([, tool]) =>
+        isAll ||
+        getToolCategories(tool)
+          .map(slugifyRouteSegment)
+          .includes(slugifyRouteSegment(category)),
+    )
+    .map(([slug, tool]) => ({ name: tool.name || slug, path: `/tools/all/${slug}` }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 export default async function Page({ params }) {
   const { category } = await params;
 
@@ -132,6 +161,7 @@ export default async function Page({ params }) {
   const isAll = category === "all";
   const path = `/tools/${category}`;
   const items = getCategoryToolItems(category);
+  const toolIndex = getCategoryToolIndex(category);
 
   return (
     <>
@@ -164,6 +194,32 @@ export default async function Page({ params }) {
         catalogTotal={getToolCatalogCount("all")}
         category={category}
       />
+      {/* Deliberately excluded on /tools/all: 3,947 anchors is ~250 KB of
+          HTML for a page where every one of those tools is already one hop
+          away through its own category. */}
+      {!isAll && toolIndex.length > 0 ? (
+        <nav
+          aria-label={`All ${label} tools`}
+          className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6"
+        >
+          <h2 className="mb-4 text-base font-semibold text-[var(--foreground)]">
+            All {toolIndex.length} tools in {label}
+          </h2>
+          <ul className="columns-1 gap-x-8 sm:columns-2 lg:columns-3 xl:columns-4">
+            {toolIndex.map((tool) => (
+              <li key={tool.path} className="break-inside-avoid">
+                <Link
+                  href={tool.path}
+                  prefetch={false}
+                  className="block py-1.5 text-sm text-[var(--muted-foreground)] transition-colors hover:text-[var(--primary-text)] hover:underline"
+                >
+                  {tool.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : null}
     </>
   );
 }
