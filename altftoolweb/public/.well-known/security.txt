@@ -1,0 +1,17 @@
+# AltFTool security contact — https://www.rfc-editor.org/rfc/rfc9116
+#
+# If you have found a security issue in AltFTool, please email the address
+# below with enough detail to reproduce it. Please give us a chance to fix it
+# before publishing.
+#
+# Please do not run tests that degrade the service for other people (load or
+# stress testing, brute force, automated scanning at volume), and please do not
+# access, alter or retain data belonging to anyone else while investigating.
+#
+# This file makes no promise of a reward, a bounty, or a response time.
+
+Contact: mailto:altftool@gmail.com
+Contact: https://www.altftool.com/policypages/contact
+Expires: 2027-07-30T00:00:00.000Z
+Preferred-Languages: en, hi
+Canonical: https://www.altftool.com/.well-known/security.txt
