@@ -18,7 +18,7 @@ const CATEGORY_COUNT = CANONICAL_CATEGORIES.length;
  * wording — in particular `processing` is scoped on purpose, because a blanket
  * "everything runs locally" is false for the tools that call an API.
  */
-const faqs = [
+export const faqs = [
   {
     question: "What is AltFTool?",
     answer: `AltFTool is a free website with ${TOOL_COUNT.toLocaleString()} online tools grouped into ${CATEGORY_COUNT} categories, covering converters, PDF and image editing, calculators, developer utilities, text and writing, security, generators and browser games. Every tool is a separate page you can open and use straight away.`,
