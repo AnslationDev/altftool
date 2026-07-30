@@ -263,7 +263,9 @@ export function describeDimensions(asset, target) {
     if (target.source === "derived" && asset.physical) {
       return `${target.width} x ${target.height} px, derived from the ${asset.physical.width} x ${asset.physical.height} ${asset.physical.unit} box in the notice at ${target.dpi} DPI`;
     }
-    return `${target.width} x ${target.height} px`;
+    // A floor is not a target. RRB NTPC prints 140 x 60 px as a minimum, and
+    // a cell that drops the qualifier tells a candidate to hit it exactly.
+    return `${asset.pixelsAreMinimum ? "at least " : ""}${target.width} x ${target.height} px`;
   }
   if (asset.statedPixels) return asset.statedPixels;
   if (isFiniteNumber(asset.longEdgePx)) return `${asset.longEdgePx} px on the long edge`;
@@ -283,7 +285,8 @@ export function describeTarget(asset, target) {
   }
   if (target && isFiniteNumber(target.width) && isFiniteNumber(target.height)) {
     const suffix = target.source === "derived" ? " (derived)" : "";
-    parts.push(`${target.width} x ${target.height} px${suffix}`);
+    const floor = asset.pixelsAreMinimum ? "at least " : "";
+    parts.push(`${floor}${target.width} x ${target.height} px${suffix}`);
   } else if (asset.statedPixels) {
     parts.push(asset.statedPixels);
   } else if (asset.physical) {

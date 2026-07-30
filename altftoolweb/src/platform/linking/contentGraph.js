@@ -21,13 +21,18 @@ import {
   getTop9Title,
   getTop9Description,
   getTop9Category,
+  isTop9Indexable,
 } from "@/app/top9/data/getTop9Items";
 import top11CategoryData from "@/app/top11/data/categoryData";
-import { getDeals } from "@/app/deals/data/deals";
+import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
+import { isSignalIndexable } from "@/app/signals/signalCoverage";
+import { getDeals, getDealPaidProducts } from "@/app/deals/data/deals";
 import { apps as appCatalog } from "@/app/apps/data/apps";
 import { getAllWorkflows } from "@/app/n8n/data/service";
 import { GAMES } from "@/app/altfgame/_data/games";
 import { CALCULATORS } from "@/app/altfcalculators/toolsData";
+import { TOOLS as TRANSFORM_TOOLS } from "@/app/transform/_lib/manifest";
+import { EXAM_SPECS as EXAM_PHOTO_SPECS } from "@/app/exam-photo/data/examSpecs";
 import { TOOLS as PDF_TOOLS } from "@/app/altflovepdf/toolsData";
 import { TOOLS as IMAGE_TOOLS, BASE as IMAGE_BASE } from "@/app/altfloveimg/data/tools";
 import { getAllGeoLocations } from "@/platform/seo/geoLocations";
@@ -42,12 +47,14 @@ export const SECTION_LABELS = {
   blogs: "Guide",
   top9: "Top 9",
   top11: "Top 11",
-  deals: "Deal",
+  deals: "Price comparison",
   apps: "App",
   products: "Product",
   experiences: "Experience",
   signals: "Signal",
   calculators: "Calculator",
+  transform: "Converter",
+  examPhoto: "Exam photo spec",
   pdfTools: "PDF tool",
   imageTools: "Image tool",
   locations: "Location",
@@ -144,7 +151,7 @@ const HUB_ITEMS = [
   { href: "/altfcalculators", title: "Calculators", description: "Finance, health, math, and everyday calculators.", tags: ["calculators", "finance", "health"] },
   { href: "/tools/games", title: "Free games", description: "Browser games — no install, no sign-up.", tags: ["games", "fun"] },
   { href: "/labs", title: "Labs & experiences", description: "Interactive experiments, creative spaces, and focus tools.", tags: ["labs", "experiences", "creative"] },
-  { href: "/deals", title: "Deals", description: "Curated savings on tools and services.", tags: ["deals", "shopping", "savings"] },
+  { href: "/deals", title: "Paid tool prices vs free alternatives", description: "Verified entry prices and free-tier limits for the paid tools people buy, mapped to the free page that does the same job.", tags: ["pricing", "alternatives", "comparison", "free tools"] },
   { href: "/news", title: "News", description: "Current headlines and topic pages.", tags: ["news", "headlines"] },
   { href: "/academy", title: "Academy", description: "Compare learning platforms and build skills.", tags: ["academy", "learning", "education"] },
   { href: "/site-map", title: "Site map", description: "Every AltFTool destination in one organized directory.", tags: ["sitemap", "directory"] },
@@ -194,8 +201,19 @@ function buildGraph() {
     });
   });
 
+  // Only indexable routes enter the graph.
+  //
+  // The band both links to what it picks and marks the picks up as an ItemList,
+  // so a noindexed entry here does two unhelpful things at once: it spends
+  // internal link equity on a page that cannot rank, and it asks a crawler to
+  // treat as notable a URL we have asked it to drop. 46 of the 49 /top9 routes
+  // and all 10 /top11 routes are noindexed, so before this filter they were a
+  // large share of what the band had to choose from.
+  //
+  // These are the same predicates src/app/sitemap.js gates on, so the graph, the
+  // sitemap and the pages' own robots meta cannot disagree.
   getTop9Items().forEach((item) => {
-    if (!item?.slug) return;
+    if (!item?.slug || !isTop9Indexable(item)) return;
     pushItem(items, seen, {
       href: `/top9/${item.slug}`,
       title: getTop9Title(item),
@@ -206,6 +224,7 @@ function buildGraph() {
   });
 
   Object.entries(top11CategoryData || {}).forEach(([slug, category]) => {
+    if (!isTop11Indexable(`/top11/${slug}`)) return;
     pushItem(items, seen, {
       href: `/top11/${slug}`,
       title: category?.title || `Top 11 ${slug.replace(/-/g, " ")}`,
@@ -215,14 +234,24 @@ function buildGraph() {
     });
   });
 
+  // /deals is a price-comparison family, not a product listing: each page maps
+  // one job to the paid products that charge for it. The paid product names are
+  // the strongest tag signal — a reader on the Photoshop comparison should be
+  // able to reach the image-editor one.
   getDeals().forEach((deal) => {
     if (!deal?.slug) return;
     pushItem(items, seen, {
       href: `/deals/${deal.slug}`,
-      title: deal.name,
-      description: deal.tagline,
+      title: `${deal.name} vs the paid alternatives`,
+      description: `${deal.job} — what the paid tools charge, what their free tiers cap, and what the free one gives up.`,
       section: "deals",
-      tags: [deal.category, deal.alternativeTo, deal.bestFor],
+      tags: [
+        deal.category,
+        deal.job,
+        "pricing",
+        "alternative",
+        getDealPaidProducts(deal).map((product) => product.name),
+      ],
     });
   });
 
@@ -258,7 +287,7 @@ function buildGraph() {
   });
 
   SIGNAL_CATALOG.forEach((signal) => {
-    if (!signal?.slug) return;
+    if (!signal?.slug || !isSignalIndexable(signal.slug)) return;
     pushItem(items, seen, {
       href: `/signals/${signal.slug}`,
       title: signal.name || signal.title,
@@ -276,6 +305,42 @@ function buildGraph() {
       description: calculator.description || calculator.desc || calculator.tagline,
       section: "calculators",
       tags: [calculator.category, calculator.sidebarCategory, calculator.slug.split("-")],
+    });
+  });
+
+  TRANSFORM_TOOLS.forEach((tool) => {
+    if (!tool?.slug) return;
+    pushItem(items, seen, {
+      href: `/transform/${tool.slug}`,
+      title: tool.title,
+      description: tool.description,
+      section: "transform",
+      // from/to carry the format pair the scorer needs to match a converter to
+      // a related converter ("json" pulls in json-to-yaml, json-to-go, …).
+      tags: [tool.category, tool.from, tool.to, tool.keywords, tool.slug.split("-")],
+    });
+  });
+
+  EXAM_PHOTO_SPECS.forEach((exam) => {
+    if (!exam?.slug) return;
+    // These records carry no blurb field, so the description is assembled from
+    // the assets the exam actually asks for. That keeps the link text tied to
+    // the sourced data instead of to a sentence someone would have to maintain.
+    const assetLabels = (exam.assets || []).map((asset) => asset.label).filter(Boolean);
+    pushItem(items, seen, {
+      href: `/exam-photo/${exam.slug}`,
+      title: `${exam.name} photo & signature size`,
+      description: assetLabels.length
+        ? `Upload sizes ${exam.body} publishes for ${exam.name}: ${assetLabels.join(", ").toLowerCase()}. Resize to the exact spec in your browser.`
+        : `Upload rules ${exam.body} publishes for ${exam.name}.`,
+      section: "examPhoto",
+      tags: [
+        "exam photo",
+        "photo resize",
+        "signature resize",
+        exam.body,
+        exam.slug.split("-"),
+      ],
     });
   });
 

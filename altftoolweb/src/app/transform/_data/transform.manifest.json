@@ -77,7 +77,7 @@
       "from": "html",
       "to": "pug",
       "engine": "server",
-      "lib": "html2pug",
+      "lib": "node-html-parser",
       "status": "done",
       "description": "Rewrite verbose HTML as terse, indentation-based Pug (Jade) template syntax.",
       "keywords": [
@@ -181,6 +181,9 @@
         "json to io-ts",
         "io-ts codec",
         "runtime validation typescript"
+      ],
+      "uses": [
+        "io-ts"
       ]
     },
     {
@@ -261,6 +264,9 @@
         "json to mobx-state-tree",
         "mst model",
         "mobx types"
+      ],
+      "uses": [
+        "mobx-state-tree"
       ]
     },
     {
@@ -277,6 +283,9 @@
         "json to mongoose",
         "mongoose schema",
         "mongodb model"
+      ],
+      "uses": [
+        "mongoose"
       ]
     },
     {
@@ -309,6 +318,9 @@
         "json to proptypes",
         "react proptypes",
         "prop-types generator"
+      ],
+      "uses": [
+        "prop-types"
       ]
     },
     {
@@ -341,6 +353,9 @@
         "json to sarcastic",
         "runtime assert",
         "type guard generator"
+      ],
+      "uses": [
+        "sarcastic"
       ]
     },
     {
@@ -534,6 +549,9 @@
         "style object to css",
         "styled-components",
         "template literal css"
+      ],
+      "uses": [
+        "json5"
       ]
     },
     {
@@ -591,7 +609,7 @@
       "from": "graphql",
       "to": "javascript",
       "engine": "server",
-      "lib": "@graphql-codegen/flow",
+      "lib": "@graphql-codegen/core",
       "status": "done",
       "description": "Generate Flow type definitions from a GraphQL schema for safer typed client code.",
       "keywords": [
@@ -911,7 +929,7 @@
       "from": "javascript",
       "to": "typescript",
       "engine": "server",
-      "lib": "flow-to-ts",
+      "lib": "@khanacademy/flow-to-ts",
       "status": "done",
       "description": "Convert Flow-annotated code into TypeScript to support typed migration cleanup.",
       "keywords": [
@@ -927,7 +945,7 @@
       "from": "javascript",
       "to": "typescript",
       "engine": "server",
-      "lib": "flow-to-ts",
+      "lib": "@khanacademy/flow-to-ts",
       "status": "done",
       "description": "Convert Flow types into a TypeScript declaration (.d.ts) style output.",
       "keywords": [
@@ -992,7 +1010,7 @@
       "to": "yaml",
       "engine": "browser",
       "lib": "@iarna/toml",
-      "status": "complete",
+      "status": "done",
       "description": "Convert TOML configuration into readable YAML for infrastructure and app config workflows.",
       "keywords": [
         "toml to yaml",
@@ -1008,7 +1026,7 @@
       "to": "json",
       "engine": "browser",
       "lib": "xml-js",
-      "status": "complete",
+      "status": "done",
       "description": "Convert XML documents into compact JSON for inspection, debugging, and data pipelines.",
       "keywords": [
         "xml to json",
@@ -1024,7 +1042,7 @@
       "to": "json",
       "engine": "browser",
       "lib": "js-yaml",
-      "status": "complete",
+      "status": "done",
       "description": "Parse YAML documents into clean, portable JSON for config checks and data exchange.",
       "keywords": [
         "yaml to json",
@@ -1040,7 +1058,7 @@
       "to": "toml",
       "engine": "browser",
       "lib": "@iarna/toml",
-      "status": "complete",
+      "status": "done",
       "description": "Convert YAML configuration into readable TOML for app settings and infrastructure workflows.",
       "keywords": [
         "yaml to toml",

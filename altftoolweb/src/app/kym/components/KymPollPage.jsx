@@ -1,21 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Megaphone } from "lucide-react";
 import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymComments from "./KymComments";
-import { contentGroups } from "./KymGenericPage";
+import { articleSidebar } from "../data/articleData";
 import { pollComments, pollOptions, pollPage } from "../data/pollData";
-import { slugifyTitle } from "../data/slug";
-
-const POLL_ENTRY_TITLE_OVERRIDES = {
-  "Will Levis And Gia Duddy": "Will Levis And Gia Duddy Video",
-};
-
-function relatedEntryHref(title) {
-  return `/kym/${slugifyTitle(POLL_ENTRY_TITLE_OVERRIDES[title] || title)}`;
-}
 
 function PollOption({ option, onSelect, selectedId, submitted }) {
   return (
@@ -30,36 +21,30 @@ function PollOption({ option, onSelect, selectedId, submitted }) {
       <img src={option.image.src} alt="" />
       <span>
         <strong>{option.title}</strong>
-        <small>{option.votes}% of sample votes</small>
       </span>
     </label>
   );
 }
 
-function PollSidebar({ currentTitle }) {
-  const related = contentGroups.filter((entry) => entry.title !== currentTitle).slice(0, 4);
-
+function PollSidebar() {
   return (
     <aside className="kym-article-sidebar kym-poll-sidebar">
       <section>
         <h2>Related Entries</h2>
         <div className="kym-article-side-grid">
-          {related.map((entry) => (
-            <a href={entry.href || `/kym/${slugifyTitle(entry.title)}`} key={entry.title}>
-              <img src={entry.image.src} alt="" />
-              <strong>{entry.title}</strong>
+          {articleSidebar.map((item) => (
+            <a href="#" key={item.title}>
+              <img src={item.image.src} alt="" />
+              <strong>{item.title}</strong>
             </a>
           ))}
         </div>
       </section>
-      <section>
-        <h2>Poll Info</h2>
-        <div className="kym-poll-facts">
-          <p>Voting window: May 29 - June 5</p>
-          <p>One vote per user account</p>
-          <p>Results update after moderation review</p>
-        </div>
-      </section>
+      {/*
+        A "Poll Info" panel used to claim a voting window, one vote per user
+        account and results updating "after moderation review". There are no
+        accounts, no window and no moderation behind this poll. Removed.
+      */}
       <div className="kym-sidebar-banners" aria-label="Sponsored banner">
         <KymAdBanner src={kymBanners.sidebarTall} variant="vertical" />
       </div>
@@ -67,28 +52,10 @@ function PollSidebar({ currentTitle }) {
   );
 }
 
-const POLL_STORAGE_KEY = "kym-poll-vote:meme-of-the-month-may-2026";
-
 export default function KymPollPage() {
   const [selectedId, setSelectedId] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [voteMessage, setVoteMessage] = useState("");
-  const [shareCopied, setShareCopied] = useState(false);
-  const shareCopyTimer = useRef(null);
-
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(POLL_STORAGE_KEY);
-
-      if (saved) {
-        setSelectedId(saved);
-        setSubmitted(true);
-        setVoteMessage("Your vote has been submitted. Thank you!");
-      }
-    } catch {
-      // localStorage unavailable; poll still works for the current session
-    }
-  }, []);
 
   const handleVote = () => {
     if (!selectedId) {
@@ -96,31 +63,8 @@ export default function KymPollPage() {
       return;
     }
 
-    try {
-      window.localStorage.setItem(POLL_STORAGE_KEY, selectedId);
-    } catch {
-      // ignore storage errors, vote still counts for this session
-    }
-
     setSubmitted(true);
     setVoteMessage("Your vote has been submitted. Thank you!");
-  };
-
-  const handleShare = async (e) => {
-    e.preventDefault();
-    const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-    if (!shareUrl) return;
-
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-    } catch {
-      window.prompt("Copy this link:", shareUrl);
-      return;
-    }
-
-    clearTimeout(shareCopyTimer.current);
-    setShareCopied(true);
-    shareCopyTimer.current = setTimeout(() => setShareCopied(false), 1600);
   };
 
   return (
@@ -139,7 +83,7 @@ export default function KymPollPage() {
             <span>By {pollPage.author}</span>
             <span>{pollPage.date}</span>
             <a href="#comments">Comments</a>
-            <button type="button" onClick={handleShare}>{shareCopied ? "Copied!" : "Share"}</button>
+            <a href="#">Share</a>
           </div>
           <p className="kym-article-lede">{pollPage.intro}</p>
 
@@ -160,8 +104,14 @@ export default function KymPollPage() {
               <button disabled={submitted} onClick={handleVote} type="button">
                 {submitted ? "Submitted" : "Vote"}
               </button>
-              <a href="#poll-heading">View Results</a>
             </div>
+            {/*
+              The "View Results" link went nowhere and there are no results:
+              votes are held in component state only and never leave the page.
+            */}
+            <p className="kym-poll-note">
+              This poll does not tally votes, so no results are published.
+            </p>
             {voteMessage ? (
               <p className={`kym-poll-message${submitted ? " is-success" : ""}`}>
                 {voteMessage}
@@ -173,7 +123,7 @@ export default function KymPollPage() {
             <h2>More May 2026 Meme Coverage</h2>
             <div className="kym-poll-related-grid">
               {pollOptions.slice(1, 5).map((option) => (
-                <a href={relatedEntryHref(option.title)} key={option.title}>
+                <a href="#" key={option.title}>
                   <img src={option.image.src} alt="" />
                   <strong>{option.title}</strong>
                 </a>
@@ -186,7 +136,7 @@ export default function KymPollPage() {
             storageKey="kym-comments:meme-of-the-month-may-2026"
           />
         </article>
-        <PollSidebar currentTitle={pollPage.title} />
+        <PollSidebar />
       </main>
     </div>
   );

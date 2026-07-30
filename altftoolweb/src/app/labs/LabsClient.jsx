@@ -34,6 +34,7 @@ import {
   Wrench,
 } from "lucide-react";
 import {
+  ALL_EXPERIMENTS,
   FEATURED_EXPERIMENTS,
   GRID_EXPERIMENTS,
   LAB_GRADUATES,
@@ -162,6 +163,9 @@ function LabsHeader() {
 
 /* ----------------------------------- Hero ---------------------------------- */
 
+/** Live count off the shared catalog — never hardcode, it drifts. */
+const EXPERIMENT_COUNT = ALL_EXPERIMENTS.length;
+
 /** Deterministic tile wall behind the hero (no media assets needed). */
 const HERO_TILES = [...FEATURED_EXPERIMENTS, ...GRID_EXPERIMENTS, ...FEATURED_EXPERIMENTS.slice(0, 2)].map(
   (exp, i) => ({
@@ -218,28 +222,47 @@ function HeroCarousel() {
     <section className="relative isolate flex min-h-[78vh] items-center justify-center" aria-label="Featured experiments">
       <HeroTileWall />
 
-      <div key={active.slug} className="labs-fade relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          AltFTool Labs · {active.tag}
-        </p>
+      {/* The page title and its answer sentence are static and sit OUTSIDE the
+          keyed carousel block — the h1 used to be the rotating experiment name,
+          which meant /labs had no stable heading describing the page and
+          remounted its h1 every six seconds. */}
+      <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
         <h1
           className="text-balance font-extrabold tracking-tight text-foreground"
-          style={{ fontSize: "clamp(2.5rem, 7vw, 4.5rem)", lineHeight: 1.05 }}
-          aria-live="polite"
+          style={{ fontSize: "clamp(2.25rem, 5.5vw, 3.5rem)", lineHeight: 1.08 }}
         >
-          {active.name}
+          AltFTool Labs
         </h1>
-        <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-          {active.tagline}
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+          AltFTool Labs is a set of {EXPERIMENT_COUNT} free interactive
+          experiments built by AltFTool — drawing and sound canvases, an
+          internet-radio globe, quizzes, generators, typing and reaction tests,
+          and browser games. Each one opens as its own page without an account.
         </p>
-        <div className="mt-8 flex items-center justify-center">
-          <Link
-            href={active.href}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-md transition hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+
+        <div key={active.slug} className="labs-fade mt-12">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            Featured · {active.tag}
+          </p>
+          <h2
+            className="text-balance font-extrabold tracking-tight text-foreground"
+            style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", lineHeight: 1.1 }}
+            aria-live="polite"
           >
-            {active.cta}
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+            {active.name}
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+            {active.tagline}
+          </p>
+          <div className="mt-8 flex items-center justify-center">
+            <Link
+              href={active.href}
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-md transition hover:bg-[var(--primary-hover)] active:bg-[var(--primary-active)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+            >
+              {active.cta}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -291,15 +314,16 @@ function ExperimentsGrid() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Experiments</p>
         <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Be the first to experiment
+          Every experiment in AltFTool Labs
         </h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Fresh ideas from the AltFTool workbench — playful, useful and sometimes a little strange.
-          Try them early and tell us what deserves to grow.
+          All {EXPERIMENT_COUNT} experiments, listed below with what each one
+          does. They are free, open without an account, and run in a normal
+          browser tab — no install and no extension.
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {GRID_EXPERIMENTS.map((exp) => (
+          {ALL_EXPERIMENTS.map((exp) => (
             <Link
               key={exp.slug}
               href={exp.href}

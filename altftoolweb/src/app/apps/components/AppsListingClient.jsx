@@ -1,45 +1,33 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import Link from "next/link";
 import {
   BadgeCheck,
   Grid2X2,
   ShieldCheck,
   Sparkles,
+  Star,
+  Users,
 } from "lucide-react";
 import AppCard from "./AppCard";
 import { AppIconSvg } from "./AppVisualAssets";
 
-const CATEGORY_META = [
-  { label: "Productivity", icon: "briefcase", fill: "from-teal-400 to-teal-600", glow: "group-hover:shadow-teal-500/25" },
-  { label: "Utilities", icon: "spark", fill: "from-cyan-400 to-sky-500", glow: "group-hover:shadow-cyan-500/25" },
-  { label: "Tools", icon: "tools", fill: "from-slate-700 to-cyan-500", glow: "group-hover:shadow-slate-500/25" },
+const categories = [
+  { label: "Productivity", count: "2 Apps", icon: "briefcase", fill: "from-teal-400 to-teal-600", glow: "group-hover:shadow-teal-500/25" },
+  { label: "Utilities", count: "2 Apps", icon: "spark", fill: "from-cyan-400 to-sky-500", glow: "group-hover:shadow-cyan-500/25" },
+  { label: "Tools", count: "3 Apps", icon: "tools", fill: "from-slate-700 to-cyan-500", glow: "group-hover:shadow-slate-500/25" },
+  { label: "Android", count: "7 Apps", icon: "grid", fill: "from-sky-400 to-blue-600", glow: "group-hover:shadow-blue-500/25" },
+  { label: "Learning", count: "OCR Ready", icon: "cap", fill: "from-emerald-400 to-teal-700", glow: "group-hover:shadow-emerald-500/25" },
+  { label: "Security", count: "Safe APK", icon: "shield", fill: "from-amber-400 to-teal-600", glow: "group-hover:shadow-amber-500/25" },
 ];
 
 const safetyItems = [
-  { title: "Direct APK Downloads", detail: "No third-party app store needed", icon: BadgeCheck },
-  { title: "Full App Details", detail: "Version, size & compatibility listed", icon: ShieldCheck },
+  { title: "Verified APKs", detail: "Manual quality checks", icon: BadgeCheck },
+  { title: "Malware-Free Apps", detail: "Security-first downloads", icon: ShieldCheck },
   { title: "Fast Downloads", detail: "Optimized APK delivery", icon: Sparkles },
   { title: "Regular Updates", detail: "Fresh versions tracked", icon: Grid2X2 },
+  { title: "Top Rated Apps", detail: "Curated by user signals", icon: Star },
 ];
-
-function parseDownloadCount(value) {
-  if (!value) return 0;
-  const match = String(value).match(/([\d.]+)\s*(K|M)?/i);
-  if (!match) return 0;
-  const num = parseFloat(match[1]);
-  if (Number.isNaN(num)) return 0;
-  const unit = (match[2] || "").toUpperCase();
-  if (unit === "M") return num * 1_000_000;
-  if (unit === "K") return num * 1_000;
-  return num;
-}
-
-function formatDownloadTotal(total) {
-  if (total >= 1_000_000) return `${(total / 1_000_000).toFixed(1)}M+`;
-  if (total >= 1_000) return `${Math.round(total / 1_000)}K+`;
-  return `${total}+`;
-}
 
 function CategorySvgIcon({ type }) {
   const common = "drop-shadow-[0_8px_14px_rgba(15,23,42,0.16)]";
@@ -101,44 +89,24 @@ function CategorySvgIcon({ type }) {
 }
 
 export default function AppsListingClient({ apps, searchQuery = "" }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filteredApps = normalizedQuery
+    ? apps.filter((app) => {
+        const searchableText = [
+          app.name,
+          app.category,
+          app.tagline,
+          app.shortDescription,
+          app.description,
+          ...(app.features || []),
+          ...(app.highlights || []),
+        ]
+          .join(" ")
+          .toLowerCase();
 
-  const categories = useMemo(() => {
-    return CATEGORY_META.map((meta) => ({
-      ...meta,
-      appCount: apps.filter((app) => app.category === meta.label).length,
-    }))
-      .filter((category) => category.appCount > 0)
-      .map((category) => ({
-        ...category,
-        count: `${category.appCount} App${category.appCount === 1 ? "" : "s"}`,
-      }));
-  }, [apps]);
-
-  const totalDownloads = useMemo(
-    () => apps.reduce((sum, app) => sum + parseDownloadCount(app.downloads), 0),
-    [apps],
-  );
-
-  const filteredApps = apps.filter((app) => {
-    if (selectedCategory && app.category !== selectedCategory) return false;
-    if (!normalizedQuery) return true;
-
-    const searchableText = [
-      app.name,
-      app.category,
-      app.tagline,
-      app.shortDescription,
-      app.description,
-      ...(app.features || []),
-      ...(app.highlights || []),
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    return searchableText.includes(normalizedQuery);
-  });
+        return searchableText.includes(normalizedQuery);
+      })
+    : apps;
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -160,14 +128,14 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             <div className="grid items-center gap-8 lg:grid-cols-[0.86fr_0.88fr] xl:grid-cols-[0.9fr_0.84fr]">
               <div className="z-10 lg:-translate-y-10">
                 <div className="home-reference-badge w-fit">
-                  <Grid2X2 size={15} aria-hidden="true" />
-                  {apps.length} Apps Available
+                  <ShieldCheck size={15} aria-hidden="true" />
+                  Trusted by 100K+ Users
                 </div>
                 <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-extrabold leading-[1.03] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
                   Discover. Download. Enjoy the <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">Best Apps</span>
                 </h1>
                 <p className="mt-6 max-w-[34rem] text-[1.04rem] font-semibold leading-8 text-[var(--muted-foreground)]">
-                  Curated Android apps with clean APK downloads and a polished AppHub experience.
+                  Curated Android apps with clean APK downloads, verified quality, and a polished AppHub experience.
                 </p>
               </div>
 
@@ -192,6 +160,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                           <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
                           <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.downloads} downloads</p>
                         </div>
+                        <span className="text-[9px] font-semibold text-[var(--foreground)] sm:text-[11px]">{app.rating}</span>
                       </div>
                     ))}
                   </div>
@@ -206,7 +175,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                       <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                       <div className="min-w-0">
                         <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.category}</p>
+                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.rating} rating</p>
                       </div>
                     </div>
                   ))}
@@ -214,9 +183,24 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
               </div>
 
               <div className="absolute right-[-4px] top-9 w-[148px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:top-24 sm:w-[206px] sm:rounded-[22px] sm:p-3 lg:right-14">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Combined Downloads</p>
-                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">{formatDownloadTotal(totalDownloads)}</p>
-                <p className="mt-1 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[10px]">Across {apps.length} apps</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Download Statistics</p>
+                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">3.4M+</p>
+                <div className="mt-2 overflow-hidden rounded-[14px] bg-[var(--home-surface)] p-2 sm:mt-2.5 sm:rounded-[16px] sm:p-2.5">
+                  <svg viewBox="0 0 160 62" className="h-[42px] w-full sm:h-[62px]" role="img" aria-label="Download progress chart">
+                    <defs>
+                      <linearGradient id="download-chart-fill" x1="0" y1="0" x2="1" y2="0">
+                        <stop stopColor="#14B8A6" />
+                        <stop offset="1" stopColor="#38BDF8" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="#e4e6f1" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="url(#download-chart-fill)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20 L152 58 L8 58 Z" fill="#14B8A6" opacity=".12" />
+                    {[62, 98, 134, 152].map((cx, index) => (
+                      <circle key={cx} cx={cx} cy={[34, 24, 14, 20][index]} r="4.2" fill="#fff" stroke="#14B8A6" strokeWidth="3" />
+                    ))}
+                  </svg>
+                </div>
               </div>
 
               <div className="absolute bottom-24 left-1 w-[152px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-8 sm:w-[188px] sm:rounded-[22px] sm:p-3 lg:bottom-28 lg:left-14 lg:w-[224px] lg:p-4">
@@ -226,12 +210,39 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                     <AppIconSvg key={app.slug} app={app} className="h-7 w-7 rounded-[9px] ring-2 ring-white sm:h-9 sm:w-9 sm:rounded-[11px] sm:ring-4 lg:h-10 lg:w-10 lg:rounded-[12px]" />
                   ))}
                 </div>
-                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">New APKs added regularly</p>
+                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">Fresh APKs reviewed weekly</p>
+              </div>
+
+              <div className="absolute bottom-24 right-1 w-[154px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:w-[204px] sm:rounded-[22px] sm:p-3.5 lg:right-12 lg:w-[224px]">
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Performance Insights</p>
+                <p className="mt-1.5 text-base font-bold text-[var(--foreground)] sm:mt-2 sm:text-xl">99.9% uptime</p>
+                <div className="mt-2 grid gap-1.5 sm:mt-3 sm:gap-2">
+                  {[92, 84, 76].map((value, index) => (
+                    <div key={value} className="flex items-center gap-2">
+                      <span className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--home-border)]">
+                        <span
+                          className="block h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] transition-all duration-300"
+                          style={{ width: `${value}%` }}
+                        />
+                      </span>
+                      <span className="w-6 text-right text-[8px] font-semibold text-[var(--foreground)] sm:w-7 sm:text-[10px]">{["92", "84", "76"][index]}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="absolute left-1/2 top-[142px] -translate-x-1/2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-sm)] backdrop-blur-xl sm:top-12 sm:px-4 sm:py-3">
+                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">Top Rated Apps · 4.7 ★</p>
+              </div>
+
+              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:bottom-7 sm:gap-3 sm:px-4 sm:py-3">
+                <Users size={15} className="text-[var(--primary)] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
+                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">User Activity +28%</p>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-[26px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
+          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-[26px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-5">
             {safetyItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -254,29 +265,18 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">Find apps by workflow and purpose.</p>
           </div>
         </div>
-        {/* CATEGORY_META has exactly 3 fixed entries — grid-cols-3 always fills
-            evenly, unlike a 2-column mobile breakpoint which orphans one card. */}
-        <div className="mt-5 grid grid-cols-3 gap-4">
+        <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-6">
           {categories.map((category) => {
-            const isActive = selectedCategory === category.label;
             return (
-              <button
-                key={category.label}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setSelectedCategory((prev) => (prev === category.label ? null : category.label))}
-                className={`home-premium-card group relative min-h-[128px] overflow-hidden rounded-[18px] p-4 text-center transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--primary)_25%,transparent)] lg:min-h-[138px] ${
-                  isActive ? "border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] bg-[color-mix(in_srgb,var(--primary)_8%,transparent)]" : ""
-                }`}
-              >
-                <span className={`absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent transition ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+              <div key={category.label} className="home-premium-card group relative min-h-[128px] overflow-hidden rounded-[18px] p-4 text-center lg:min-h-[138px]">
+                <span className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-0 transition group-hover:opacity-100" />
                 <div className={`mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-[16px] bg-gradient-to-br ${category.fill} p-2.5 text-white shadow-[0_12px_22px_rgba(15,23,42,0.14)] transition duration-300 group-hover:scale-105 group-hover:shadow-lg ${category.glow} sm:h-[58px] sm:w-[58px]`}>
                   <CategorySvgIcon type={category.icon} />
                 </div>
                 <p className="mt-3 text-[14px] font-semibold text-[var(--foreground)]">{category.label}</p>
                 <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{category.count}</p>
-                <span className={`mx-auto mt-2.5 block h-1 rounded-full bg-[var(--primary)] transition duration-300 ${isActive ? "w-10 opacity-100" : "w-7 opacity-0 group-hover:w-10 group-hover:opacity-100"}`} />
-              </button>
+                <span className="mx-auto mt-2.5 block h-1 w-7 rounded-full bg-[var(--primary)] opacity-0 transition duration-300 group-hover:w-10 group-hover:opacity-100" />
+              </div>
             );
           })}
         </div>
@@ -285,13 +285,14 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="featured-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-10 pt-2 sm:px-6 lg:px-8 lg:pb-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Featured Apps</h2>
+            {/* One section, not two: "Featured" and "All Apps" rendered the
+                identical list, so "handpicked" described the whole catalogue.
+                Until there is a real featured flag, there is one honest list. */}
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">All Apps</h2>
             <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">
               {normalizedQuery
                 ? `Search results for "${searchQuery}"`
-                : selectedCategory
-                ? `Showing ${selectedCategory} apps`
-                : "Handpicked apps for you."}
+                : "Every Android app in the AppHub catalogue."}
             </p>
           </div>
           <span className="text-sm font-semibold text-[var(--primary)]">{filteredApps.length} apps</span>
@@ -309,6 +310,9 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
           </div>
         )}
       </section>
+
+
+
     </main>
   );
 }

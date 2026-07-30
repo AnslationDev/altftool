@@ -10,12 +10,25 @@ export const GRID_EXPERIMENTS = EXPERIENCE_CATALOG.filter(
   (experience) => !experience.featured,
 );
 
+/**
+ * Every experiment, featured first. The /labs grid renders THIS, not
+ * GRID_EXPERIMENTS: a featured experiment is otherwise only reachable through
+ * the hero carousel, which renders one link at a time, so the other featured
+ * entries had no crawlable link anywhere on the page.
+ */
+export const ALL_EXPERIMENTS = [...FEATURED_EXPERIMENTS, ...GRID_EXPERIMENTS];
+
+// NOTE: no tool counts in here. This module is imported by LabsClient, a client
+// component, so it must never import the registry (that would ship the whole
+// tool map to the browser) — and a hardcoded count silently rots. It previously
+// read "885+" against a registry that has since grown well past that. Counts
+// belong in server components that can read the registry directly.
 export const LAB_GRADUATES = [
   {
     slug: "tools",
     name: "Tools Directory",
     description:
-      "Our biggest graduate — 885+ free tools for images, PDFs, developers, text and more, all running right in your browser.",
+      "Our biggest graduate — free tools for images, PDFs, developers, text and more, each one its own page and open without an account.",
     href: "/tools/all",
     label: "Now a core product",
     tone: "teal",

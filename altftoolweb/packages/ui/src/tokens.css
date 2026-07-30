@@ -60,8 +60,19 @@ html[data-theme="light"] {
   --anslation-ds-accent-soft: #ede9fe;
 
   --anslation-ds-success: #16a34a;
+  /* Text-safe success: the base green is 3.30:1 on the light surface. 5.02:1. */
+  --anslation-ds-success-text: #15803d;
   --anslation-ds-warning: #f59e0b;
+  /* Text-safe warning. The base --anslation-ds-warning is an amber tuned for
+     fills, icons and borders; on the light surface it is only 2.15:1 and fails
+     AA even at the 3:1 large-text bar. Use this for warning COPY and for stat
+     values. 5.02:1. */
+  --anslation-ds-warning-text: #b45309;
   --anslation-ds-danger: #ef4444;
+  /* Text-safe danger. The base --anslation-ds-danger is tuned for fills, icons
+     and borders (3:1 graphical) and only reaches 3.76:1 on the light surface,
+     which fails AA for normal-size text. Use this for error COPY. 6.47:1. */
+  --anslation-ds-danger-text: #b91c1c;
   --anslation-ds-danger-on-inverse: #fda4af;
   --anslation-ds-info: #0ea5e9;
   --anslation-ds-status-foreground: #ffffff;
@@ -168,8 +179,15 @@ html[data-theme="dark"] {
   --anslation-ds-accent-soft: #2e2451;
 
   --anslation-ds-success: #4ade80;
+  /* On the dark surface the base green already clears AA (10.20:1). */
+  --anslation-ds-success-text: #4ade80;
   --anslation-ds-warning: #fbbf24;
+  /* On the dark surface the base amber already clears AA (10.64:1). */
+  --anslation-ds-warning-text: #fbbf24;
   --anslation-ds-danger: #f87171;
+  /* On the dark surface the base danger already clears AA for text (6.42:1),
+     so the text-safe alias resolves to the same value here. */
+  --anslation-ds-danger-text: #f87171;
   --anslation-ds-danger-on-inverse: #b91c1c;
   --anslation-ds-info: #38bdf8;
   --anslation-ds-status-foreground: #07111f;

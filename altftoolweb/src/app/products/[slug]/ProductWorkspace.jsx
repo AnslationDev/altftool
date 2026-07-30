@@ -36,6 +36,14 @@ import {
   generateTotp,
   runTextWorkflow,
 } from "@altftool/core/product-utilities";
+// Shared with the server-rendered sections on page.jsx so the visible lists,
+// the counts stated in prose and the behaviour here cannot drift apart.
+import {
+  API_CONSOLE_ENDPOINTS,
+  IMPACT_EDITIONS,
+  SECURITY_CHECKS,
+  VAULT_GATES,
+} from "./suiteContent";
 
 const fieldClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition duration-150 placeholder:text-muted-foreground focus:border-primary focus:ring-[3px] focus:ring-primary/25 motion-reduce:transition-none";
 const panelClass = "border-border bg-card p-5 shadow-sm";
@@ -308,18 +316,21 @@ function SecurityWorkspace() {
   const audit = () => {
     const documentNode = new DOMParser().parseFromString(html, "text/html");
     const headings = [...documentNode.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((item) => Number(item.tagName.slice(1)));
-    const skipped = headings.some((level, index) => index > 0 && level > headings[index - 1] + 1);
-    const checks = [
-      ["Document language", Boolean(documentNode.documentElement.getAttribute("lang")), "Add a valid lang attribute to the html element."],
-      ["Unique page title", Boolean(documentNode.title.trim()), "Add a concise title element."],
-      ["Viewport metadata", Boolean(documentNode.querySelector('meta[name="viewport"]')), "Add responsive viewport metadata."],
-      ["One primary heading", documentNode.querySelectorAll("h1").length === 1, "Use exactly one descriptive H1."],
-      ["Heading order", !skipped, "Avoid skipping heading levels."],
-      ["Image alternatives", [...documentNode.images].every((image) => image.hasAttribute("alt")), "Give every image an alt attribute; decorative images use empty alt."],
-      ["Named controls", [...documentNode.querySelectorAll("button,a[href]")].every((item) => (item.textContent || item.getAttribute("aria-label") || item.querySelector("img")?.alt || "").trim()), "Give links and buttons an accessible name."],
-      ["Form labels", [...documentNode.querySelectorAll("input:not([type=hidden]),select,textarea")].every((item) => item.getAttribute("aria-label") || item.getAttribute("aria-labelledby") || (item.id && documentNode.querySelector(`label[for="${CSS.escape(item.id)}"]`))), "Associate every field with a label."],
-    ];
-    setResults(checks.map(([name, passed, guidance]) => ({ name, passed, guidance })));
+    const predicates = {
+      lang: (node) => Boolean(node.documentElement.getAttribute("lang")),
+      title: (node) => Boolean(node.title.trim()),
+      viewport: (node) => Boolean(node.querySelector('meta[name="viewport"]')),
+      "single-h1": (node) => node.querySelectorAll("h1").length === 1,
+      "heading-order": () => !headings.some((level, index) => index > 0 && level > headings[index - 1] + 1),
+      "image-alt": (node) => [...node.images].every((image) => image.hasAttribute("alt")),
+      "control-names": (node) => [...node.querySelectorAll("button,a[href]")].every((item) => (item.textContent || item.getAttribute("aria-label") || item.querySelector("img")?.alt || "").trim()),
+      "form-labels": (node) => [...node.querySelectorAll("input:not([type=hidden]),select,textarea")].every((item) => item.getAttribute("aria-label") || item.getAttribute("aria-labelledby") || (item.id && node.querySelector(`label[for="${CSS.escape(item.id)}"]`))),
+    };
+    setResults(SECURITY_CHECKS.map((check) => ({
+      name: check.name,
+      guidance: check.guidance,
+      passed: Boolean(predicates[check.id]?.(documentNode)),
+    })));
   };
   return (
     <Card className={panelClass}>
@@ -330,14 +341,6 @@ function SecurityWorkspace() {
     </Card>
   );
 }
-
-const IMPACT_EDITIONS = [
-  { country: "India", name: "AltF Bharat", sources: [["myScheme", "https://www.myscheme.gov.in/", "Government scheme discovery"], ["Startup India", "https://www.startupindia.gov.in/", "Startup recognition and support"]] },
-  { country: "United States", name: "AltF USA", sources: [["USAGov Benefit Finder", "https://www.usa.gov/benefit-finder", "Federal benefits and financial help"]] },
-  { country: "United Kingdom", name: "AltF UK", sources: [["GOV.UK Benefits", "https://www.gov.uk/browse/benefits", "Benefits, eligibility and claims"]] },
-  { country: "Canada", name: "AltF Canada", sources: [["Canada Benefits Finder", "https://www.canada.ca/en/services/benefits/finder.html", "Federal benefits and programs"]] },
-  { country: "Australia", name: "AltF Australia", sources: [["Business grants finder", "https://business.gov.au/grants-and-programs", "Government grants and business support"]] },
-];
 
 function ImpactWorkspace() {
   const [country, setCountry] = useState("India"); const edition = IMPACT_EDITIONS.find((item) => item.country === country);
@@ -354,13 +357,13 @@ function ImpactWorkspace() {
 }
 
 function DevelopersWorkspace() {
-  const [endpoint, setEndpoint] = useState("/api/signals"); const [state, setState] = useState({ loading: false, output: "", error: "" });
+  const [endpoint, setEndpoint] = useState(API_CONSOLE_ENDPOINTS[0].value); const [state, setState] = useState({ loading: false, output: "", error: "" });
   const run = async () => { setState({ loading: true, output: "", error: "" }); try { const response = await fetch(endpoint, { headers: { accept: "application/json" } }); const payload = await response.json(); setState({ loading: false, output: JSON.stringify(payload, null, 2), error: response.ok ? "" : `HTTP ${response.status}` }); } catch (error) { setState({ loading: false, output: "", error: error.message }); } };
   const origin = typeof window === "undefined" ? "https://altftool.com" : window.location.origin;
   return (
     <Card className={panelClass}>
       <WorkspaceTitle icon={Code2} title="Public API console" description="Try a read-only endpoint, inspect its JSON response, and copy a request example." />
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]"><SelectField id="api-endpoint" label="Endpoint" value={endpoint} onChange={(event) => setEndpoint(event.target.value)} options={[["/api/signals","GET /api/signals"],["/api/health","GET /api/health"],["/api/signals?sort=volume","GET /api/signals?sort=volume"]]} /><Button onClick={run} loading={state.loading} className="sm:self-end"><Play className="h-4 w-4" /> Send</Button></div>
+      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]"><SelectField id="api-endpoint" label="Endpoint" value={endpoint} onChange={(event) => setEndpoint(event.target.value)} options={API_CONSOLE_ENDPOINTS.map((item) => [item.value, item.label])} /><Button onClick={run} loading={state.loading} className="sm:self-end"><Play className="h-4 w-4" /> Send</Button></div>
       <div className="mt-4 flex flex-wrap gap-2"><CopyButton value={`curl -H "Accept: application/json" "${origin}${endpoint}"`} label="Copy cURL" /><CopyButton value={`const response = await fetch("${origin}${endpoint}");\nconst data = await response.json();`} label="Copy fetch" /></div>
       {state.error ? <p className="mt-4 text-sm text-[var(--anslation-ds-danger)]" role="alert">{state.error}</p> : null}
       <pre className="mt-4 min-h-56 max-h-96 overflow-auto rounded-lg border border-border bg-background p-4 text-xs text-muted-foreground">{state.output || "Response will appear here."}</pre>
@@ -369,7 +372,7 @@ function DevelopersWorkspace() {
 }
 
 function VaultWorkspace() {
-  const gates = ["Published threat model and abuse review", "Independent cryptography and extension audit", "Tested recovery model without server-readable secrets", "Security incident and disclosure process", "Telemetry verified to exclude secret material"];
+  const gates = VAULT_GATES;
   return (
     <Card className={panelClass}>
       <WorkspaceTitle icon={LockKeyhole} title="Vault is intentionally gated" description="A password manager must earn trust before it stores anything. AltFTool has not enabled account storage, sync, imports, or browser extension access." />

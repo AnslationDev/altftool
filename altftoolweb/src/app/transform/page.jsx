@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Wand2 } from "lucide-react";
-import { SECTION, getToolsByCategory, getToolCount } from "./_lib/manifest";
+import { SECTION, TOOLS, getToolsByCategory, getToolCount } from "./_lib/manifest";
+import { buildTransformHubContent } from "./_lib/transformSeoContent";
 import ToolCard from "./_components/ToolCard";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
@@ -40,6 +41,14 @@ export const metadata = {
 export default function TransformIndexPage() {
   const groups = getToolsByCategory();
   const total = getToolCount();
+  // Counts come from the manifest, never from a literal, so the copy and the
+  // schema cannot drift as converters are added.
+  const browserCount = TOOLS.filter((tool) => tool.engine === "browser").length;
+  const hub = buildTransformHubContent({
+    total,
+    categoryCount: groups.length,
+    browserCount,
+  });
 
   return (
     <>
@@ -72,41 +81,76 @@ export default function TransformIndexPage() {
         ]}
       />
     <div className="[font-family:var(--font-ibm-plex-sans,inherit)]">
+      <JsonLd
+        id="transform-hub-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/transform",
+            name: SECTION.title,
+            description: hub.answer,
+          }),
+          createItemListJsonLd({
+            path: "/transform",
+            name: `${total} format and code converters on AltFTool`,
+            items: TOOLS.map((tool) => ({
+              name: tool.title,
+              path: `/transform/${tool.slug}`,
+            })),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Transform", path: "/transform" },
+          ]),
+        ]}
+      />
+
       {/* hero */}
-      <header className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-9 dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-blue-600 dark:text-blue-400">
+      <header className="rounded-[28px] border border-(--border) bg-(--card) p-6 shadow-sm sm:p-9">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-(--primary-text)">
           <Wand2 className="h-4 w-4" /> Transform
         </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-(--foreground) sm:text-4xl">
           Format &amp; code converters
         </h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
-          {SECTION.description} {total} converters across {groups.length} categories — most run entirely in your
-          browser.
+        {/* Answer-first: this paragraph is a correct, standalone statement
+            about the section even when lifted away from the heading. */}
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-(--muted-foreground)">
+          {hub.answer}
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-(--muted-foreground)">{hub.detail}</p>
+        <nav aria-label="Converter categories" className="mt-5 flex flex-wrap gap-2">
           {groups.map((group) => (
             <a
               key={group.name}
               href={`#${slugifyCategory(group.name)}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:border-blue-500/50"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--border) bg-(--background) px-3 py-1.5 text-xs font-semibold text-(--muted-foreground) transition hover:border-(--primary) hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35 motion-reduce:transition-none"
             >
               {group.name}
-              <span className="rounded-full bg-slate-200 px-1.5 text-[10px] text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+              <span className="rounded-full bg-(--muted) px-1.5 text-[10px] text-(--foreground)">
                 {group.count}
               </span>
             </a>
           ))}
-        </div>
+        </nav>
       </header>
 
       {/* category sections */}
       <div className="mt-8 space-y-10">
         {groups.map((group) => (
-          <section key={group.name} id={slugifyCategory(group.name)} className="scroll-mt-24">
+          <section
+            key={group.name}
+            id={slugifyCategory(group.name)}
+            aria-labelledby={`${slugifyCategory(group.name)}-heading`}
+            className="scroll-mt-24"
+          >
             <div className="flex items-baseline justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">{group.name}</h2>
-              <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
+              <h2
+                id={`${slugifyCategory(group.name)}-heading`}
+                className="text-xl font-bold text-(--foreground)"
+              >
+                {group.name} converters
+              </h2>
+              <span className="text-sm font-medium text-(--muted-foreground)">
                 {group.count} {group.count === 1 ? "tool" : "tools"}
               </span>
             </div>
@@ -119,8 +163,11 @@ export default function TransformIndexPage() {
         ))}
       </div>
 
-      <footer className="mt-12 flex items-center justify-center gap-2 text-sm text-slate-400 dark:text-slate-500">
-        <Link href="/tools/all" className="inline-flex items-center gap-1 font-semibold text-blue-600 hover:underline dark:text-blue-400">
+      <footer className="mt-12 flex items-center justify-center gap-2 text-sm text-(--muted-foreground)">
+        <Link
+          href="/tools/all"
+          className="inline-flex items-center gap-1 rounded-[6px] font-semibold text-(--primary-text) hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35"
+        >
           Explore all AltFTool tools <ArrowRight className="h-4 w-4" />
         </Link>
       </footer>

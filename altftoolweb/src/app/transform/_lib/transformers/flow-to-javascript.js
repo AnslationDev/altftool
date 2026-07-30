@@ -20,8 +20,12 @@ export function transform(input) {
   if (isBlank(input)) return err("Paste Flow-typed JavaScript to convert.");
   try {
     const babel = requireFn("@babel/core");
+    // Babel resolves a preset named as a bare string against `cwd`, not against
+    // this file, so a workspace-hoisted @babel/preset-flow is invisible to it
+    // and transformSync throws "Cannot find module". Resolving to an absolute
+    // path here makes it independent of where the server was started.
     const result = babel.transformSync(input, {
-      presets: [["@babel/preset-flow"]],
+      presets: [[requireFn.resolve("@babel/preset-flow")]],
       filename: "input.js",
       babelrc: false,
       configFile: false,

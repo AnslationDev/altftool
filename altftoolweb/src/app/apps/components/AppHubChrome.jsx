@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Facebook, Instagram, Search, Twitter, Youtube } from "lucide-react";
 
 export function AppHubLogo() {
   return (
@@ -23,7 +23,9 @@ export function AppHubHeader() {
   const navItems = [
     { label: "Home", href: "/apps#apphub-home" },
     { label: "Categories", href: "/apps#categories" },
-    { label: "Featured Apps", href: "/apps#featured-apps" },
+    // "Featured" and "All Apps" were two links to two sections rendering the
+    // same seven apps; there is one list now, so there is one link.
+    { label: "All Apps", href: "/apps#featured-apps" },
   ];
 
   return (
@@ -50,12 +52,12 @@ export function AppHubHeader() {
               className="min-w-0 flex-1 bg-transparent text-[12px] font-semibold text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]"
             />
           </form>
-          <Link
-            href="/apps#featured-apps"
+          <a
+            href="#featured-apps"
             className="inline-flex h-10 shrink-0 items-center rounded-full bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] px-4 text-[12px] font-semibold text-[var(--primary-foreground)] shadow-[0_14px_28px_rgba(20,184,166,0.24)] transition hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#0D9488,#0EA5E9)] lg:px-5"
           >
             Get in Touch
-          </Link>
+          </a>
         </div>
       </div>
     </header>
@@ -63,11 +65,37 @@ export function AppHubHeader() {
 }
 
 export function AppHubFooter() {
+  const socialLinks = [
+    { label: "Facebook", icon: Facebook, className: "bg-[#1877f2] text-white hover:bg-[#0f5fc8]" },
+    { label: "Twitter", icon: Twitter, className: "bg-[#1da1f2] text-white hover:bg-[#0c86d2]" },
+    { label: "Instagram", icon: Instagram, className: "bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5] text-white hover:brightness-105" },
+    { label: "YouTube", icon: Youtube, className: "bg-[#ff0000] text-white hover:bg-[#cc0000]" },
+  ];
+
   return (
     <footer className="border-t border-[var(--home-border)] bg-[var(--section-highlight)]">
-      <div className="mx-auto flex max-w-[1320px] flex-col items-center gap-4 px-4 py-5 text-center sm:flex-row sm:justify-between sm:px-6 lg:px-8">
-        <AppHubLogo />
+      <div className="mx-auto grid max-w-[1320px] items-center gap-4 px-4 py-5 text-center sm:grid-cols-[1fr_auto_1fr] sm:px-6 lg:px-8">
+        <div className="flex justify-center sm:justify-start">
+          <AppHubLogo />
+        </div>
+
         <p className="text-[12px] font-semibold text-[var(--muted-foreground)]">© 2024 AppHub. Trusted APK downloads.</p>
+
+        <div className="flex justify-center gap-3 sm:justify-end">
+          {socialLinks.map((social) => {
+            const Icon = social.icon;
+            return (
+              <Link
+                key={social.label}
+                href="/apps"
+                className={`flex h-9 w-9 items-center justify-center rounded-full shadow-[0_10px_22px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 ${social.className}`}
+                aria-label={social.label}
+              >
+                <Icon size={16} aria-hidden="true" />
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </footer>
   );

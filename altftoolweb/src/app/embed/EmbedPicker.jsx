@@ -1,25 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import EmbedCodeCopy from "./EmbedCodeCopy";
-import { buildSnippet, EMBED_IFRAME_HEIGHT } from "./embedSnippet";
+import { EMBED_SNIPPET_VARIANTS } from "./embedSnippet";
 
 /**
  * Interactive widget chooser for the /embed hub: search + category filter,
- * live iframe preview, and the copy-paste snippet.
+ * live iframe preview, and the copy-paste snippet in each of the formats a
+ * publisher actually pastes into (raw HTML, a responsive wrapper, a WordPress
+ * block, and the bare URL for editors that resolve oEmbed).
  */
 export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [selected, setSelected] = useState(tools[0]?.slug || "");
-  // The catalog has grown past 1,300 embeddable tools — server-rendering
-  // every row blows the prerendered HTML past the size budget (enforced by
-  // scripts/check-prerender-size.mjs). The list is unusable without JS
-  // anyway (search/select are handlers), so hydrate it client-side instead
-  // of paying for it in the static HTML.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [variantId, setVariantId] = useState(EMBED_SNIPPET_VARIANTS[0].id);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -34,6 +30,10 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
   // visible row; when the selection is filtered out, advance to the first
   // visible tool instead of showing a stale preview.
   const active = filtered.find((tool) => tool.slug === selected) || filtered[0];
+
+  const variant =
+    EMBED_SNIPPET_VARIANTS.find((item) => item.id === variantId) || EMBED_SNIPPET_VARIANTS[0];
+  const snippet = active ? variant.build(baseUrl, active.slug, active.name) : "";
 
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -72,11 +72,7 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
           className="max-h-[420px] overflow-auto rounded-[12px] border border-(--border) bg-(--surface)"
           aria-label="Embeddable widgets"
         >
-          {!mounted ? (
-            <li className="p-4 text-sm text-(--muted-foreground)">
-              Loading {tools.length} widgets…
-            </li>
-          ) : filtered.length === 0 ? (
+          {filtered.length === 0 ? (
             <li className="p-4 text-sm text-(--muted-foreground)">No widgets match that search.</li>
           ) : (
             filtered.map((tool) => (
@@ -116,12 +112,56 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
           <iframe
             src={`/embed/widget/${active.slug}`}
             title={`${active.name} widget preview`}
-            className="w-full rounded-[12px] border border-(--border) bg-(--surface)"
-            style={{ height: EMBED_IFRAME_HEIGHT }}
+            className="h-[420px] w-full rounded-[12px] border border-(--border) bg-(--surface)"
             loading="lazy"
           />
-          <h3 className="text-sm font-semibold text-(--foreground)">Embed code</h3>
-          <EmbedCodeCopy snippet={buildSnippet(baseUrl, active.slug, active.name)} />
+          <div>
+            <h3 className="text-sm font-semibold text-(--foreground)">Embed code</h3>
+            <div
+              role="tablist"
+              aria-label="Embed code format"
+              className="mt-2 flex flex-wrap gap-1.5"
+            >
+              {EMBED_SNIPPET_VARIANTS.map((item) => {
+                const isActive = item.id === variant.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    id={`embed-format-${item.id}`}
+                    aria-selected={isActive}
+                    aria-controls="embed-format-panel"
+                    onClick={() => setVariantId(item.id)}
+                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35 motion-reduce:transition-none ${
+                      isActive
+                        ? "border-(--primary) bg-(--primary-soft) text-(--primary-text)"
+                        : "border-(--border) bg-(--surface) text-(--muted-foreground) hover:bg-(--muted) hover:text-(--foreground)"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div
+            role="tabpanel"
+            id="embed-format-panel"
+            aria-labelledby={`embed-format-${variant.id}`}
+            className="flex flex-col gap-2"
+          >
+            <p className="text-xs leading-5 text-(--muted-foreground)">{variant.help}</p>
+            <EmbedCodeCopy
+              snippet={snippet}
+              label={`Copy ${variant.language.toLowerCase()}`}
+            />
+            <p className="text-xs leading-5 text-(--muted-foreground)">
+              Keep the &ldquo;Widget by AltFTool&rdquo; credit link exactly as it comes — a plain,
+              followable link. That credit is the price of the widget.
+            </p>
+          </div>
         </div>
       ) : null}
     </div>

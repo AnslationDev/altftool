@@ -159,8 +159,30 @@ export const RELATED_PRESETS = {
   // Interactive tool/calculator/game pages: guides + adjacent utilities.
   utility: [
     { sections: ["blogs", "top9", "top11"], limit: 2 },
-    { sections: ["tools", "calculators", "pdfTools", "imageTools"], limit: 3 },
+    // examPhoto rides in this slot on purpose: the scorer is token-overlap
+    // based, so an exam page only surfaces on a photo/signature resize or
+    // compress tool, which is exactly where a candidate already is.
+    {
+      sections: ["tools", "calculators", "pdfTools", "imageTools", "transform", "examPhoto"],
+      limit: 3,
+    },
     { sections: ["experiences", "games", "products", "hubs"], limit: 1, minScore: 0 },
+  ],
+  // Developer converters (/transform). Someone converting JSON to Go wants the
+  // next converter far more than they want a listicle, so the sibling slot goes
+  // first and takes the widest share; the text/data tools in /tools/all are the
+  // nearest neighbours after that.
+  converter: [
+    { sections: ["transform"], limit: 4 },
+    { sections: ["tools", "toolCategories"], limit: 2 },
+    { sections: ["blogs", "hubs"], limit: 1, minScore: 0 },
+  ],
+  // Exam upload-spec pages: the other exams a candidate is likely also filling
+  // in, then the image/PDF tools that do the resizing and compressing.
+  examSpec: [
+    { sections: ["examPhoto"], limit: 3 },
+    { sections: ["imageTools", "pdfTools", "tools"], limit: 3 },
+    { sections: ["blogs", "hubs"], limit: 1, minScore: 0 },
   ],
   // Editorial pages (listicles, news, facts): tools + more reading.
   editorial: [

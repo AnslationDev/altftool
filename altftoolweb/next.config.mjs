@@ -55,10 +55,29 @@ const nextConfig = {
     "jsonld",
     "mobx-state-tree",
     "node-html-parser",
-    "html2pug",
     "xml-js",
     "io-ts",
     "@iarna/toml",
+    // Server-only converter dependencies. Bundling these into the server
+    // output costs Amplify artifact size for no benefit — they are required at
+    // runtime from node_modules either way. ("html2pug" used to sit in this
+    // list and was never a dependency at all; html-to-pug emits Pug by hand on
+    // node-html-parser, which is already above.)
+    "@svgr/core",
+    "@svgr/plugin-jsx",
+    "@svgr/plugin-prettier",
+    "flowgen",
+    "@babel/core",
+    "@babel/preset-flow",
+    "graphql",
+    "@graphql-codegen/core",
+    "@graphql-codegen/typescript",
+    "@graphql-codegen/typescript-operations",
+    "@graphql-codegen/typescript-resolvers",
+    "@graphql-codegen/typescript-react-apollo",
+    "@graphql-codegen/typescript-mongodb",
+    "@graphql-codegen/fragment-matcher",
+    "@graphql-codegen/java",
   ],
 
 

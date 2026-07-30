@@ -50,10 +50,17 @@ html[data-theme="light"] {
   --danger: var(--anslation-ds-danger);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --danger-soft: var(--anslation-ds-danger-soft);
+  /* The -text variants are the AA-safe versions for COPY: --danger, --success
+     and --warning are tuned for fills, icons and borders and only clear the 3:1
+     graphical bar on the light surface, so they fail AA as text. 72 usages
+     across 38 files already referenced these three names; with no alias they
+     resolved to nothing and the colour fell back to inherit. */
+  --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
+  --success-text: var(--anslation-ds-success-text);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
   --warning-text: var(--anslation-ds-warning-text);
@@ -105,10 +112,17 @@ html[data-theme="dark"] {
   --danger: var(--anslation-ds-danger);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --danger-soft: var(--anslation-ds-danger-soft);
+  /* The -text variants are the AA-safe versions for COPY: --danger, --success
+     and --warning are tuned for fills, icons and borders and only clear the 3:1
+     graphical bar on the light surface, so they fail AA as text. 72 usages
+     across 38 files already referenced these three names; with no alias they
+     resolved to nothing and the colour fell back to inherit. */
+  --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
+  --success-text: var(--anslation-ds-success-text);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
   --warning-text: var(--anslation-ds-warning-text);

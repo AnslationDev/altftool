@@ -614,12 +614,8 @@ export function createBookJsonLd({ book, path } = {}) {
   if (!book?.title || !path) return null;
 
   const url = absoluteUrl(path);
+  const price = Number(book.price || 0);
 
-  // No aggregateRating, offers, or isAccessibleForFree node here. The only
-  // caller (/wattpad/book/[slug]) reads books.json, whose stats.rating,
-  // stats.totalReviews and price are seed values — no reader ever rated these
-  // stories and nothing sells them — so publishing them would be fabricated
-  // structured data. Wire those nodes back only from a live ratings source.
   return compactJsonLdObject({
     "@context": "https://schema.org",
     "@type": "Book",
@@ -629,14 +625,25 @@ export function createBookJsonLd({ book, path } = {}) {
     description: book.description || book.summary || siteConfig.description,
     url,
     image: absoluteUrl(book.coverImage || book.bannerImage || siteConfig.defaultImagePath),
-    author: {
-      "@type": "Person",
-      name: book.authorId || siteConfig.name,
-    },
-    genre: [book.categoryId, ...(book.tags || [])].filter(Boolean),
+    // `authorId` is an unresolved foreign key ("user_002") — publishing it as a
+    // Person name is worse than omitting the author, so no author is emitted.
+    // `categoryId` ("cat_romance") is likewise an id, not a genre.
+    genre: (book.tags || []).filter(Boolean),
     inLanguage: book.language || "English",
     numberOfPages: Number(book.meta?.pages || 0) || undefined,
     datePublished: book.createdAt || undefined,
+    isAccessibleForFree: Boolean(book.isFree || price === 0),
+    // No aggregateRating and no offers.
+    //
+    // books.json is seed data: all eight titles carry ratings between 4.3 and
+    // 4.8 and round review counts, there is no review mechanism anywhere in the
+    // app to produce them, and no purchase flow to honour the price. The one
+    // indexable title advertises 25 chapters and has two. Marking that up as
+    // AggregateRating is fake review markup, which Google penalises directly,
+    // and an InStock Offer describes a transaction that cannot happen.
+    //
+    // If real ratings and a real checkout arrive, restore both nodes from the
+    // live values — not from this file.
     publisher: { "@id": `${getSiteUrl()}/#organization` },
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },

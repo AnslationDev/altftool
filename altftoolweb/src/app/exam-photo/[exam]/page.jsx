@@ -8,11 +8,12 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 import { EXAM_SPECS, SPECS_READ_ON, getExamBySlug, getOtherExams } from "../data/examSpecs";
 import { assetLine, buildExamSeo } from "../data/examSeo";
 import { formatIsoDate } from "../lib/specMath";
 import ExamResizer from "../components/ExamResizer";
-import SpecSheet, { SourceStamp } from "../components/SpecSheet";
+import SpecSheet, { SourceLine, SourceStamp } from "../components/SpecSheet";
 
 export const dynamic = "force-static";
 
@@ -67,6 +68,23 @@ export default async function ExamPhotoPage({ params }) {
   const seo = buildExamSeo(exam);
   const path = `/exam-photo/${exam.slug}`;
   const others = getOtherExams(exam.slug, 6);
+  const relatedItems = getRelatedContentForPreset(
+    {
+      href: path,
+      title: `${exam.name} photo and signature size`,
+      description: seo.intro,
+      tags: [
+        `${exam.name} photo size`,
+        `${exam.name} signature size`,
+        exam.body,
+        "exam photo",
+        "photo resize",
+        "signature resize",
+      ],
+      section: "examPhoto",
+    },
+    "examSpec",
+  );
 
   return (
     <>
@@ -106,6 +124,8 @@ export default async function ExamPhotoPage({ params }) {
           {exam.fullName} &middot; {exam.body}
         </p>
         <p className="mt-4 text-base text-[var(--foreground)]">{seo.intro}</p>
+
+        <SourceLine exam={exam} />
 
         <div className="mt-6">
           <ExamResizer exam={exam} />
@@ -189,12 +209,37 @@ export default async function ExamPhotoPage({ params }) {
           </ul>
         </section>
 
-        <p className="mt-8 text-xs text-[var(--muted-foreground)]">
-          Every figure on this page was read from the document named above on{" "}
-          {formatIsoDate(SPECS_READ_ON)}. Notices are reissued each cycle; the notice you are applying
-          under is the one that governs your upload.
-        </p>
+        <section className="mt-8" aria-labelledby="caveat-heading">
+          <h2 id="caveat-heading" className="text-lg font-semibold text-[var(--foreground)]">
+            Check this against the notice you are applying under
+          </h2>
+          <div className="mt-3 rounded-xl bg-[var(--warning-soft)] p-4 ring-1 ring-[var(--border)]">
+            <p className="text-sm text-[var(--foreground)]">
+              This page is not an authority on the {exam.name} specification and does not replace the
+              notification. {exam.body} revises these rules from one cycle to the next, and the
+              figures here were read from {exam.source.doc} on {formatIsoDate(SPECS_READ_ON)} - they
+              describe that document on that date, nothing more. Before you upload anything, open{" "}
+              <a
+                href={exam.source.url}
+                rel="noopener"
+                className="underline decoration-[var(--border)] underline-offset-2 hover:decoration-[var(--primary)]"
+              >
+                the notice itself
+              </a>{" "}
+              and confirm the numbers. Where the notice and this page disagree, the notice governs
+              your application.
+            </p>
+          </div>
+        </section>
       </main>
+
+      <RelatedContentSection
+        title="Keep exploring AltFTool"
+        description="Other exam specifications, and the image tools that pair with them."
+        items={relatedItems}
+        path={path}
+        jsonLdName={`Related to the ${exam.name} photo and signature specification`}
+      />
     </>
   );
 }
