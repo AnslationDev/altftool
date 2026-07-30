@@ -103,27 +103,47 @@ function scoreTool(slug, tool, blogTokens) {
   const categoryTokens = getToolCategories(tool).flatMap(tokenize);
   const descriptionTokens = tokenize(tool.description);
   let score = 0;
+  // Which DISTINCT post words the tool answers to, and whether a curated hint
+  // vouched for it. The score cannot tell these apart on its own: one word
+  // landing in both the slug and the name scores 38, more than two unrelated
+  // words would.
+  const matchedWords = new Set();
+  let hinted = false;
 
   DIRECT_HINTS.forEach((hint) => {
     if (hint.slugs.includes(slug) && hint.terms.every((term) => blogTokens.has(term))) {
       score += 80;
+      hinted = true;
+      hint.terms.forEach((term) => matchedWords.add(term));
     }
   });
 
   slugTokens.forEach((token) => {
-    if (blogTokens.has(token)) score += 18;
+    if (blogTokens.has(token)) {
+      score += 18;
+      matchedWords.add(token);
+    }
   });
   nameTokens.forEach((token) => {
-    if (blogTokens.has(token)) score += 20;
+    if (blogTokens.has(token)) {
+      score += 20;
+      matchedWords.add(token);
+    }
   });
   categoryTokens.forEach((token) => {
-    if (blogTokens.has(token)) score += 14;
+    if (blogTokens.has(token)) {
+      score += 14;
+      matchedWords.add(token);
+    }
   });
   descriptionTokens.forEach((token) => {
-    if (blogTokens.has(token)) score += 4;
+    if (blogTokens.has(token)) {
+      score += 4;
+      matchedWords.add(token);
+    }
   });
 
-  return score;
+  return { score, breadth: matchedWords.size, hinted };
 }
 
 function toToolItem(slug, tool, blogTokens, score = 0) {
@@ -140,17 +160,32 @@ function toToolItem(slug, tool, blogTokens, score = 0) {
   };
 }
 
+// One shared word is a coincidence, not a relationship, and this rail scores a
+// single word landing in a slug or name high enough to publish: the screen
+// recorder post linked /tools/all/dmarc-record-generator and
+// /tools/all/mx-record-priority-planner on nothing but "record", and the word
+// counter post linked /tools/all/word-search. Ask for a second, independent
+// word — or a curated DIRECT_HINTS pairing, which a human already vouched for.
+//
+// Measured over all 31 posts: this drops 19 of 186 shipped links (10.2%),
+// every post still fills its 6 slots, and because the replacements are spread
+// wider the rail ends up linking MORE of the catalogue, not less — 109
+// distinct tools before, 113 after.
+function isCorroborated(match) {
+  return match.hinted || match.breadth >= 2;
+}
+
 export function getRelatedToolsForBlog(blog = {}, limit = 6) {
   const blogTokens = getBlogTokens(blog);
   const scored = Object.entries(toolMetaMap)
     .map(([slug, tool]) => ({
       slug,
       tool,
-      score: scoreTool(slug, tool, blogTokens),
+      match: scoreTool(slug, tool, blogTokens),
     }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score || a.slug.localeCompare(b.slug))
-    .map((item) => toToolItem(item.slug, item.tool, blogTokens, item.score));
+    .filter((item) => item.match.score > 0 && isCorroborated(item.match))
+    .sort((a, b) => b.match.score - a.match.score || a.slug.localeCompare(b.slug))
+    .map((item) => toToolItem(item.slug, item.tool, blogTokens, item.match.score));
 
   const fallback = FALLBACK_SLUGS
     .filter((slug) => toolMetaMap[slug] && !scored.some((item) => item.slug === slug))

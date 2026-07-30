@@ -38,10 +38,23 @@ const geistSans = Geist({
   display: "swap",
 });
 
+// Geist Mono is only reachable through `--font-mono` (globals.css) and the
+// Tailwind `font-mono` utility, and nothing on the routes that earn traffic
+// uses either. On /, /blogs, /tools/all/step-counter and
+// /tools/all/api-stress-estimator all six of its faces report `unloaded` in
+// document.fonts and zero elements compute the family; across 400 of the
+// build's prerendered routes only 75 render a `font-mono` class at all
+// (/transform/*, /geektyper, /human-benchmark, /imgprompt, a few games) and not
+// one of them is under /tools/all. Preloading it spent 23,108 bytes of
+// highest-priority woff2 on every route to deliver a face that never painted.
+// `preload: false` keeps the @font-face rule global so the routes that do
+// use it still
+// fetch it on demand.
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   display: "swap",
+  preload: false,
 });
 
 // Sora and IBM Plex Sans are declared here so their CSS variables and
@@ -57,6 +70,22 @@ const sora = Sora({
   preload: false,
 });
 
+// Inter does render on every route, but only inside <footer> — that and
+// /extensions' hero are the only consumers of `--font-inter`. At 375x812 the
+// first element computing Inter on /tools/all/step-counter sits 10,021 px into
+// an 11,771 px page — 12.3 viewports below the fold, and every one of the 223
+// Inter elements on that page is inside the footer. Preloading it put 48,432
+// bytes — more than Geist and Geist Mono combined — at the highest priority the
+// head can ask for, ahead of the render-blocking stylesheet, for text nobody
+// reaches without scrolling the whole page.
+// Inter KEEPS its preload, deliberately. src/app/altpintrest/PageView.jsx:8
+// calls Inter() again with its own options and the default preload, so the two
+// call sites disagreeing makes Next emit the same latin face twice — measured
+// at +48,432 bytes of duplicated woff2 in the artifact, against a gate with
+// ~0.4 MiB of headroom. Dropping the preload here is only safe once that call
+// site is reconciled; until then the duplicate costs more than the preload.
+// Geist stays preloaded regardless: it is what the 109 above-the-fold elements
+// on a mobile tool page actually paint in.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -213,6 +242,19 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
+        {/* All four audited against PerformanceResourceTiming on /, /blogs and
+            /tools/all/step-counter; none removed, but they are not equal:
+              - googletagmanager: 1-2 requests on every route measured. Used.
+              - firebasestorage: 4 image requests on /blogs, none on / or a
+                tool page. Used on the routes that earn the traffic.
+              - clarity.ms: injected by clarity-init below, which is gated on
+                hostname !== localhost, so it cannot be observed here. Used in
+                production by code path, not by measurement.
+              - firestore: no request within 46 s on any of the three, with
+                sessionStorage cleared. Not proven unused either — AdsProvider
+                wraps every page and reads Firestore behind
+                requestIdleCallback, and blog/extensions/academy providers read
+                it on interaction. Later-in-session, so it stays. */}
         <link rel="preconnect" href="https://firestore.googleapis.com" />
         <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -223,30 +265,36 @@ export default async function RootLayout({ children }) {
           data={[createOrganizationJsonLd(), createWebsiteJsonLd()]}
         />
 
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
-            try {
-              var storedMode = localStorage.getItem("appThemeMode");
-              var legacyManual = localStorage.getItem("themeManual") === "true";
-              var legacyTheme = localStorage.getItem("appTheme");
-              var validMode = storedMode === "system" || storedMode === "light" || storedMode === "dark";
-              var validLegacy = legacyTheme === "light" || legacyTheme === "dark";
-              var mode = validMode ? storedMode : (legacyManual && validLegacy ? legacyTheme : "system");
-              var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-              var theme = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
-              document.documentElement.setAttribute("data-theme", theme);
-              document.documentElement.setAttribute("data-theme-mode", mode);
-              document.documentElement.style.colorScheme = theme;
-            } catch (_) {
-              try {
-                var fallbackTheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-                document.documentElement.setAttribute("data-theme", fallbackTheme);
-                document.documentElement.setAttribute("data-theme-mode", "system");
-                document.documentElement.style.colorScheme = fallbackTheme;
-              } catch (_) {}
-            }
-          `}
-        </Script>
+        {/* Resolve the theme before the first byte of <body> is parsed.
+
+            This was a <Script strategy="beforeInteractive">, which in the App
+            Router does NOT inline the code. Next emits
+            `(self.__next_s=self.__next_s||[]).push([0,{children:"…"}])` — an
+            array push, not the script — and the client bootstrap replays the
+            queue with `el.innerHTML = props.children` only after main-app.js
+            has downloaded and executed (see loadScriptsInSequence in
+            next/dist/client/app-bootstrap.js, Next 16.2.11). The served HTML
+            therefore shipped <html> with no data-theme at all, so everything
+            gated on that attribute was inert until a JS chunk landed: the 29
+            `--color-*` bridge tokens and the html background/color in
+            globals.css, and every `dark:` utility, because the dark variant is
+            `&:where([data-theme="dark"], [data-theme="dark"] *)`. Dark-mode
+            readers got a light page first; a visitor whose bundle never
+            arrives got an unthemed one permanently. It also raced the
+            theme-color sync below, which reads data-theme during body parse
+            and so always saw null.
+
+            A raw inline script runs during head parsing, which is the entire
+            point of this script. Same logic, verified identical over the 432
+            combinations of stored mode / legacy keys / prefers-color-scheme /
+            missing matchMedia / throwing localStorage; 737 bytes in the
+            document against 1,614 for the __next_s payload it replaces. */}
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var d=document.documentElement;try{var s=localStorage.getItem("appThemeMode"),lm=localStorage.getItem("themeManual")==="true",lt=localStorage.getItem("appTheme"),vm=s==="system"||s==="light"||s==="dark",vl=lt==="light"||lt==="dark",m=vm?s:(lm&&vl?lt:"system"),pd=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=m==="system"?(pd?"dark":"light"):m;d.setAttribute("data-theme",t);d.setAttribute("data-theme-mode",m);d.style.colorScheme=t;}catch(e){try{var f=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.setAttribute("data-theme",f);d.setAttribute("data-theme-mode","system");d.style.colorScheme=f;}catch(e2){}}})();`,
+          }}
+        />
 
         <Script id="retire-third-party-service-worker" strategy="afterInteractive">
           {`

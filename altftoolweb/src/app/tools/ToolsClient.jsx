@@ -40,10 +40,10 @@ import {
   readStoredSlugs,
   writeStoredSlugs,
 } from "./toolStorage";
-import { prefetchToolModule } from "./toolLoaderResolver";
 
 const ITEMS_PER_PAGE = 24;
 let fullCatalogPromise;
+let toolLoaderPromise;
 
 const loadFullToolCatalog = () => {
   if (!fullCatalogPromise) {
@@ -52,6 +52,36 @@ const loadFullToolCatalog = () => {
     );
   }
   return fullCatalogPromise;
+};
+
+// Same shape as loadFullToolCatalog, for the same reason. `import { ... } from
+// "./toolLoaderResolver"` is a static edge to the generated toolRuntimeMap —
+// one `slug -> () => import(...)` thunk per tool, measured at 289,180 bytes raw
+// / 54,430 brotli as static/chunks/551757-78688cd5aabc.js — and because this
+// module is the client component /tools and /tools/[category] render directly,
+// that chunk shipped as an async <script> on all 24 prerendered directory
+// pages. Every use of it is speculative prefetch — hover, focus and the
+// selection path — so nothing the visitor actually does depends on it being
+// resolved up front; the first prefetch pays for the import instead of every
+// visitor paying on first load. (It is NOT desktop-only: prefetchDirectoryTool
+// has seven bindings including four onFocus handlers, which fire on touch and
+// on keyboard.) The tool page is unaffected: /tools/all/<slug> ships no
+// reference to that chunk — it reaches the map through its own ToolClient
+// boundary.
+const prefetchToolModule = (slug) => {
+  if (!toolLoaderPromise) {
+    toolLoaderPromise = import("./toolLoaderResolver").catch((error) => {
+      // Let a later hover retry rather than poisoning prefetch for the session.
+      toolLoaderPromise = undefined;
+      throw error;
+    });
+  }
+
+  // Speculative, so failures stay silent — clicking through loads the runtime
+  // again via ToolClient, which surfaces its own error state.
+  toolLoaderPromise
+    .then((module) => module.prefetchToolModule(slug))
+    .catch(() => {});
 };
 
 const LABEL_OVERRIDES = {
