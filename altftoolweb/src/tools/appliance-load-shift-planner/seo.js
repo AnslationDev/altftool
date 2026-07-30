@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Assign flexible appliance cycles to cheaper time-of-use tariff windows, respect a parallel-load limit, and compare estimated cycle costs.",
   intro:
     "The Appliance Load-Shift Planner takes your tariff windows with their per-kWh prices and a list of flexible appliance cycles with their energy use, sorts the windows cheapest first, and assigns each cycle to a window — filling the cheapest slot up to your maximum-parallel limit before moving to the next. For every appliance it shows the suggested window, the price in that window and the cycle cost as kWh × price, plus a total for the whole plan. It is aimed at anyone on a time-of-use or economy tariff who wants to know where the dishwasher, water heater and laundry should sit in the day.",
   useCases: [

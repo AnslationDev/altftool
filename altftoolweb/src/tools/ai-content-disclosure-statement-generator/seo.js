@@ -1,4 +1,5 @@
 const seo = {
+  title: "AI Content Disclosure Statement Generator",
   intro:
     "This generator writes the three disclosure texts a single AI-assisted asset normally needs — a full statement for the page, a short label to sit beside the asset, and a metadata credit line for provenance — and then lists which published obligations that asset engages. The obligations come from Articles 50(2) and 50(4) of Regulation (EU) 2024/1689, the EU AI Act, whose transparency duties apply from 2 August 2026, alongside FTC clear-and-conspicuous expectations and the labelling rules of YouTube, Meta and TikTok. It is built for content, social and brand teams publishing AI-assisted images, video, audio and text across several channels at once.",
   useCases: [

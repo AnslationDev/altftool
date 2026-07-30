@@ -1,4 +1,5 @@
 const seo = {
+  title: "Amsterdam AMS Airport Arrival Buffer Calculator",
   intro:
     "This calculator turns an Amsterdam Schiphol departure time into the single time you need to leave home, working backwards through the boarding-gate close, passport control, security, bag drop and the drive itself. It applies the larger of three deadlines - Schiphol's advice of about 2 hours for a European flight and 3 hours for an intercontinental one, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Schengen departures skip the border check entirely, which is the biggest single difference between the two flight types.",
   useCases: [

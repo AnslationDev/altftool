@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Screen possible aurora visibility at your latitude using NOAA's latest Kp index and a simple boundary estimate, with source timing and limitations.",
   intro:
     "The Aurora Visibility Forecast reads the latest planetary K-index from NOAA's Space Weather Prediction Center and compares your latitude against a simple visibility boundary of 67 degrees minus 2.2 times Kp — so at Kp 0 the screen sits near 67 degrees and at Kp 7 it drops to about 51.6 degrees. If your latitude is poleward of that line, conditions pass a first screening for possible aurora. It is a fast go / no-go check for aurora chasers and photographers deciding whether tonight is worth driving for, not a substitute for a full auroral oval forecast.",
   useCases: [

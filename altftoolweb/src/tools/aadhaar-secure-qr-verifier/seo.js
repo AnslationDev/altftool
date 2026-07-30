@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Decode an Aadhaar QR image locally, identify legacy or Secure QR payloads, and preview the data without claiming signature verification.",
   intro:
     "This tool decodes the QR code printed on an Aadhaar letter or PVC card from an image you select, and tells you which of the two QR generations you are holding. It draws the image to a canvas, reads the code with a local QR decoder, then classifies the payload: a legacy PrintLetterBarcodeData XML block, or the newer binary Secure QR. It reports the payload size, the type and a 240-character preview — and it states plainly that the digital signature is not verified, rather than implying authenticity it cannot prove.",
   useCases: [

@@ -40,7 +40,7 @@ async function gotoToolRoute(page, url) {
 }
 
 async function expectWorkspaceHasUsableRuntime(page, slug) {
-  const workspace = page.getByTestId("tool-workspace-shell");
+  const workspace = page.locator("#main-content").getByTestId("tool-workspace-shell");
   await expect(workspace).toBeVisible({ timeout: routeTimeoutMs });
 
   const readWorkspace = () => workspace.evaluate((element) => {
@@ -100,7 +100,9 @@ test.describe("top priority microtool route health", () => {
       const routeNav = page.getByRole("navigation", { name: "Tool route" });
       await expect(routeNav).toContainText("Tools", { timeout: routeTimeoutMs });
       await expect(routeNav).toContainText(tool.name, { timeout: routeTimeoutMs });
-      await expect(page.getByTestId("tool-workspace-shell")).toBeVisible({ timeout: routeTimeoutMs });
+      await expect(
+        page.locator("#main-content").getByTestId("tool-workspace-shell"),
+      ).toBeVisible({ timeout: routeTimeoutMs });
       await expect(page.getByRole("status", { name: "Preparing workspace" })).toHaveCount(0, {
         timeout: routeTimeoutMs,
       });

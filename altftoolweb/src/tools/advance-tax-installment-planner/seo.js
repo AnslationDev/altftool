@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Plan India's cumulative advance-tax instalments from estimated liability, TDS/TCS credits, prior payments, and presumptive-taxpayer mode.",
   intro:
     "The Advance Tax Installment Planner turns one estimated annual tax figure into the four cumulative Indian advance-tax instalments — 15% by 15 June, 45% by 15 September, 75% by 15 December and 100% by 15 March — after subtracting your expected TDS and TCS credits and anything you have already paid. It is built for freelancers, consultants, traders and small-business owners in India whose tax is not fully deducted at source and who need to know what to transfer before each date rather than in one panicked March payment. There is also a presumptive-taxpayer mode that collapses the whole liability into a single 100% target on 15 March.",
   useCases: [

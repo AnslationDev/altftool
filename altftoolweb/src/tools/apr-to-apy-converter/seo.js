@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Convert nominal APR to effective APY for periodic or continuous compounding, with six-decimal results and the compounding uplift.",
   intro:
     "The APR-to-APY Converter turns a nominal annual percentage rate into the effective annual yield using APY = (1 + APR ÷ n)^n − 1, where n is the number of compounding periods per year, or APY = e^APR − 1 when you switch on continuous compounding. It reports the APR, the resulting APY and the uplift between them in percentage points, all to six decimal places. It exists because two accounts quoting the same headline rate can pay different amounts once compounding frequency differs.",
   useCases: [

@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Calculate a two-sided pooled proportion z-test from visitor and conversion counts, with rates, uplift, z-score, p-value, and confidence.",
   intro:
     "This calculator runs a two-sided pooled two-proportion z-test on an A/B test: enter visitors and conversions for each variant and it returns the z score, the exact p-value, each variant's conversion rate and the relative uplift. It pools the two samples to estimate the standard error, so the verdict is the standard frequentist one used by most experimentation platforms. You choose 90%, 95% or 99% confidence, and the result is called significant when p is below the matching alpha of 0.10, 0.05 or 0.01.",
   useCases: [

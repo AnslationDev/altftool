@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Find UTC meeting starts that keep the full meeting inside every participant's stated local hours, using manually entered UTC offsets.",
   intro:
     "The Availability & Time-Zone Finder takes a list of people written as `Name | UTC offset | HH:MM-HH:MM` and returns every UTC start time at which the whole meeting fits inside everyone's local working window. It steps through the full 24-hour day at your chosen interval and keeps a slot only when each person's local start time is at or after their window opens and their local end time is at or before it closes — no partial overlaps. Each surviving slot is listed with the UTC start and the local start and end for every participant, so you can pick the one that costs the fewest people their evening.",
   useCases: [

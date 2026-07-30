@@ -1,4 +1,5 @@
 const seo = {
+  title: "Appliance Wise Electricity Cost Estimator",
   intro:
     "This estimator converts an appliance's power rating and running hours into units of electricity and rupees: kilowatt-hours a month equal watts multiplied by hours a day and days used, divided by 1,000, and the cost is that figure times your tariff per unit. It totals every appliance in the home, adds electricity duty and fixed charges the way a bill does, and ranks the appliances so you can see which one is actually responsible for the increase. Typical wattages for fans, air conditioners, geysers and pumps are built in, and you can override any of them with the rating on your own nameplate.",
   useCases: [

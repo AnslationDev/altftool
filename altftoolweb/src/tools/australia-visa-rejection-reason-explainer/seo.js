@@ -1,4 +1,5 @@
 const seo = {
+  title: "Australia Visa Rejection Reason Explainer",
   intro:
     "This explainer maps the criterion named in an Australian visa refusal to what it actually tests and what evidence satisfies it. Every refusal is a decision under section 65 of the Migration Act 1958 - the delegate was not satisfied a criterion was met - and the decision record names it, whether that is clause 600.211 for a genuine temporary visitor, Public Interest Criterion 4020 for false information, or the section 501 character test. Select the criterion on your decision record to see how serious it is, whether an exclusion period applies, and what to change before you lodge again.",
   useCases: [

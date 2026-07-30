@@ -1,4 +1,5 @@
 const seo = {
+  title: "Advance Tax Interest 234B 234C Calculator",
   intro:
     "This calculator works out the interest you owe under Section 234B for paying less than 90% of your tax as advance tax, and under Section 234C for missing the 15 June, 15 September, 15 December and 15 March instalment percentages. It applies the 1% per month simple rate, the 12% and 36% safe harbours for the first two instalments, and the Rule 119A rounding to the nearest ₹100. It is meant for freelancers, consultants, traders and salaried people with big capital gains or interest income who pay tax outside TDS.",
   useCases: [

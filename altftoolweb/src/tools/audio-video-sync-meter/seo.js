@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Calculate signed audio lead or lag from a flash frame, frame rate, and audio spike time, then compare the offset with cited sync limits.",
   intro:
     "An audio-video sync meter converts a clap or camera-flash slate into a signed lip-sync error in milliseconds: offset = audio spike time − (flash frame − 1) ÷ frame rate, where a positive result means the sound arrives after the picture. It then grades that offset against the published limits — ATSC IS-191 allows 15 ms of audio lead and 45 ms of lag, EBU R37 allows 40 ms and 60 ms, and ITU-R BT.1359-1 puts the detectability threshold at 45 ms lead or 125 ms lag. It is for editors and streamers who can see something is off but need the number before they can fix it.",
   useCases: [

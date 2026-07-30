@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Inspect text OBJ meshes locally for duplicate vertices and degenerate faces, with clear counts and no file rewriting or upload.",
   intro:
     "This inspector reads a text OBJ mesh in the browser and reports the two defects that most often break a slicer or a game import: duplicate vertices and degenerate faces. It parses every v line into an x/y/z coordinate and every f line into its vertex indices, compares coordinates at eight decimal places to find points that occupy the same position twice, and flags any face that references fewer than three distinct vertices. It is read-only — you get counts and a verdict, not a rewritten file.",
   useCases: [

@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Compare two people's 100-point asset preferences, produce an educational adjusted-winner allocation, and identify any fractional split.",
   intro:
     "The Adjusted-Winner Splitter divides a set of shared items between exactly two people using the adjusted-winner idea from Brams and Taylor: each person secretly spreads 100 points across the items, every item first goes to whoever bid more points on it, and then the single item with the lowest ratio of the richer side's valuation to the poorer side's is split fractionally until both sides hold the same point total. It is for two people settling a shared pile — a separating couple, two siblings dividing an estate, two co-founders unwinding shared kit — who want the split driven by stated priorities rather than by who argues hardest. Everything is computed in the browser from the lines you type, and the output is an educational allocation, not a legal settlement.",
   useCases: [

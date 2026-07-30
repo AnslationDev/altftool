@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Explore an Apple Health export locally with readable summaries and charts, while keeping the selected health data in the browser.",
   intro:
     "The Apple Health Export Explorer reads the <Record> elements out of an Apple Health export.xml and summarizes them by data type — count, unit, mean, minimum and maximum for each — so you can see what is actually inside a multi-hundred-megabyte export without opening it in a spreadsheet. It strips the HKQuantityTypeIdentifier / HKCategoryTypeIdentifier prefix so types read as StepCount or HeartRate rather than raw keys, and it processes up to 50,000 records per run (5,000 by default). It runs on text you paste, so the export never leaves your device.",
   useCases: [

@@ -1,4 +1,6 @@
 const seo = {
+  metaDescription:
+    "Normalize text OBJ face indices locally, download a clean geometry-only OBJ, and review vertex, face, duplicate, and degenerate counts.",
   intro:
     "This tool normalises a text OBJ mesh in the browser: it parses every v vertex line and every f face line, strips the texture and normal index groups so each face token keeps only its vertex index, and writes the result back out as a clean OBJ you can download. Alongside the file it reports the mesh statistics that matter before an import — total vertices, total faces, duplicate vertices matched to eight decimal places, and degenerate faces with fewer than three distinct indices. The file never leaves your machine; parsing and rebuilding happen in the page.",
   useCases: [
