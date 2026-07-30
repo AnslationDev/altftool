@@ -8,6 +8,10 @@
 // The inline styles inside the snippet strings are intentional: the snippet
 // ships to OTHER sites, where AltFTool tokens don't exist.
 //
+// Every builder below takes a WIDGET ID, not a tool slug — see the widget-id
+// section for the grammar. A bare slug still means a /tools/all tool, so the
+// markup produced for the widgets that existed at launch is unchanged.
+//
 // ⚠️ The "Widget by AltFTool" credit link is the entire deal of the embed
 // programme — it is a link to our own property, not a paid or sponsored
 // placement, so it MUST stay a normal followable link. Never add
@@ -22,6 +26,112 @@ export const EMBED_NARROW_HEIGHT = 760;
 /** Breakpoint the responsive wrapper switches height at. */
 export const EMBED_NARROW_BREAKPOINT = 640;
 
+// ------------------------------------------------------------- widget ids
+//
+// A widget is addressed by a WIDGET ID, and the id is also its path under
+// /embed/widget/.
+//
+//   "bmi-calculator"            -> /embed/widget/bmi-calculator
+//   "transform/json-to-go"      -> /embed/widget/transform/json-to-go
+//   "exam-photo/ssc-cgl"        -> /embed/widget/exam-photo/ssc-cgl
+//
+// A BARE id is always a /tools/all tool. That form is load-bearing: iframes
+// pasted into third-party pages since launch point at /embed/widget/<toolSlug>,
+// so the bare shape must keep resolving byte-for-byte. Every family added after
+// launch is namespaced instead, which also keeps the two families that share a
+// slug distinct — `xml-to-json` is both a /tools/all tool and a /transform
+// converter, and they are different widgets.
+
+/**
+ * Per-source facts: where the public page lives, and the widget's natural box.
+ *
+ * The heights are the box each widget's own layout wants at 600px wide, not a
+ * measurement of anything: /transform is a two-pane workspace with a stats row,
+ * and the exam resizer adds a result panel with a preview image under its form.
+ * Consumers may always shrink; these are upper bounds, and `tool` keeps the
+ * launch numbers exactly so existing snippets are unchanged.
+ */
+const SOURCE_META = {
+  tool: {
+    publicBase: "/tools/all",
+    height: EMBED_DEFAULT_HEIGHT,
+    narrowHeight: EMBED_NARROW_HEIGHT,
+  },
+  transform: {
+    publicBase: "/transform",
+    height: 820,
+    narrowHeight: 1040,
+  },
+  "exam-photo": {
+    publicBase: "/exam-photo",
+    height: 900,
+    narrowHeight: 1080,
+  },
+};
+
+/** Namespace prefixes, i.e. every source except the bare-slug one. */
+const SOURCE_PREFIXES = new Set(Object.keys(SOURCE_META).filter((key) => key !== "tool"));
+
+/** One path segment: ASCII slug, exactly what the app's own routes accept. */
+const ID_SEGMENT = /^[a-z0-9][a-z0-9-]*$/;
+
+/**
+ * Parse a widget id into `{ source, slug }`, or `null` if it is not one.
+ *
+ * Strict rather than forgiving: this is the gate that decides what may reach an
+ * HTML attribute in a snippet we hand to other sites, so an id that is not
+ * exactly `<slug>` or `<knownPrefix>/<slug>` is rejected outright instead of
+ * being scrubbed into something that looks valid.
+ */
+export function parseWidgetId(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  if (!raw) return null;
+
+  const parts = raw.split("/");
+  if (parts.length === 1) {
+    return ID_SEGMENT.test(parts[0]) ? { source: "tool", slug: parts[0] } : null;
+  }
+  if (parts.length !== 2) return null;
+
+  const [prefix, slug] = parts;
+  if (!SOURCE_PREFIXES.has(prefix)) return null;
+  return ID_SEGMENT.test(slug) ? { source: prefix, slug } : null;
+}
+
+/** `{ source, slug }` back to its canonical id string. */
+export function formatWidgetId({ source, slug } = {}) {
+  return source && source !== "tool" ? `${source}/${slug}` : String(slug || "");
+}
+
+/**
+ * Defensive id normaliser. Callers already resolve ids through the registry,
+ * but snippet strings are HTML that ships to third-party pages — an id that
+ * does not parse becomes the empty string rather than a partially scrubbed
+ * value, so nothing caller-shaped can reach an attribute.
+ */
+function safeWidgetId(value) {
+  const parsed = parseWidgetId(value);
+  return parsed ? formatWidgetId(parsed) : "";
+}
+
+function metaFor(value) {
+  const parsed = parseWidgetId(value);
+  return SOURCE_META[parsed?.source || "tool"];
+}
+
+/**
+ * The widget's natural box. `maxwidth`/`maxheight` hints from an oEmbed
+ * consumer are clamped against this, and the snippet builders size from it.
+ */
+export function embedNaturalSize(id) {
+  const meta = metaFor(id);
+  return {
+    width: EMBED_DEFAULT_WIDTH,
+    height: meta.height,
+    narrowHeight: meta.narrowHeight,
+  };
+}
+
 /** Escape a value for use inside a double-quoted HTML attribute. */
 function attr(value) {
   return String(value ?? "")
@@ -31,29 +141,25 @@ function attr(value) {
     .replace(/"/g, "&quot;");
 }
 
-/**
- * Defensive slug normaliser. Callers already resolve slugs through the
- * registry, but snippet strings are HTML that ships to third-party pages —
- * nothing that is not `[a-z0-9-]` may ever reach an attribute value.
- */
-function safeSlug(slug) {
-  return String(slug || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, "");
-}
-
 function safeBase(baseUrl) {
   return String(baseUrl || "").replace(/\/+$/, "");
 }
 
 /** Public URL of the iframe document itself — also the paste-to-embed URL. */
-export function buildWidgetUrl(baseUrl, slug) {
-  return `${safeBase(baseUrl)}/embed/widget/${safeSlug(slug)}`;
+export function buildWidgetUrl(baseUrl, id) {
+  return `${safeBase(baseUrl)}/embed/widget/${safeWidgetId(id)}`;
 }
 
-/** Canonical tool URL the credit link points at (tagged so we can measure it). */
-export function buildAttributionUrl(baseUrl, slug) {
-  return `${safeBase(baseUrl)}/tools/all/${safeSlug(slug)}?utm_source=embed&utm_medium=widget`;
+/** The public page this widget belongs to, untagged. */
+export function buildPublicUrl(baseUrl, id) {
+  const parsed = parseWidgetId(id);
+  const meta = SOURCE_META[parsed?.source || "tool"];
+  return `${safeBase(baseUrl)}${meta.publicBase}/${parsed?.slug || ""}`;
+}
+
+/** Same page, tagged, for the credit link — so the programme is measurable. */
+export function buildAttributionUrl(baseUrl, id) {
+  return `${buildPublicUrl(baseUrl, id)}?utm_source=embed&utm_medium=widget`;
 }
 
 function iframeTitle(name) {
@@ -67,13 +173,30 @@ function creditLine(baseUrl, slug, { margin = "4px 0 0" } = {}) {
   )}">AltFTool — free online tools</a></p>`;
 }
 
-/** Plain iframe + credit. The default snippet, unchanged since launch. */
+/**
+ * Permission the host page has to delegate for the widget's Copy buttons to
+ * work. `clipboard-write` is not in the site's Permissions-Policy header, so it
+ * keeps its spec default of `self` — which, inside a third-party iframe, means
+ * the async clipboard API is unavailable and every Copy button fails. The
+ * widgets do fail visibly rather than silently ("Clipboard access was blocked")
+ * and Download still works, but a converter whose Copy button does not copy is
+ * a poor advertisement for the tool it is advertising.
+ *
+ * Snippets already pasted on other sites keep whatever HTML they were pasted
+ * with; this only affects newly copied ones.
+ */
+const IFRAME_ALLOW = 'allow="clipboard-write"';
+
+/**
+ * Plain iframe + credit. The default snippet; unchanged for tool widgets since
+ * launch, and the only thing a namespaced widget changes is the natural height.
+ */
 export function buildSnippet(baseUrl, slug, name = "AltFTool widget") {
   return [
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${EMBED_DEFAULT_HEIGHT}" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
+    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("\n");
 }
@@ -84,15 +207,16 @@ export function buildSnippet(baseUrl, slug, name = "AltFTool widget") {
  * `.altftool-embed`, so it cannot leak into the host site's own styles.
  */
 export function buildResponsiveSnippet(baseUrl, slug, name = "AltFTool widget") {
+  const { height, narrowHeight } = embedNaturalSize(slug);
   return [
     `<div class="altftool-embed" style="max-width:680px;margin:0 auto">`,
     `  <iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `    title="${attr(iframeTitle(name))}"`,
-    `    style="display:block;width:100%;height:${EMBED_DEFAULT_HEIGHT}px;border:0;border-radius:12px"`,
-    `    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
+    `    style="display:block;width:100%;height:${height}px;border:0;border-radius:12px"`,
+    `    loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     `  ${creditLine(baseUrl, slug)}`,
     `</div>`,
-    `<style>@media (max-width:${EMBED_NARROW_BREAKPOINT}px){.altftool-embed iframe{height:${EMBED_NARROW_HEIGHT}px}}</style>`,
+    `<style>@media (max-width:${EMBED_NARROW_BREAKPOINT}px){.altftool-embed iframe{height:${narrowHeight}px}}</style>`,
   ].join("\n");
 }
 
@@ -106,8 +230,8 @@ export function buildWordPressSnippet(baseUrl, slug, name = "AltFTool widget") {
     `<!-- wp:html -->`,
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${EMBED_DEFAULT_HEIGHT}" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
+    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
     `<!-- /wp:html -->`,
   ].join("\n");
@@ -121,14 +245,18 @@ export function buildWordPressSnippet(baseUrl, slug, name = "AltFTool widget") {
 export function buildOEmbedHtml(
   baseUrl,
   slug,
-  { name = "AltFTool widget", width = EMBED_DEFAULT_WIDTH, height = EMBED_DEFAULT_HEIGHT } = {},
+  {
+    name = "AltFTool widget",
+    width = EMBED_DEFAULT_WIDTH,
+    height = embedNaturalSize(slug).height,
+  } = {},
 ) {
   return [
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     ` title="${attr(iframeTitle(name))}"`,
     ` width="${width}" height="${height}"`,
     ` style="border:0;border-radius:12px;max-width:100%"`,
-    ` loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`,
+    ` loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("");
 }

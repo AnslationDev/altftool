@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { buildEmbedSnippet, isEmbeddable } from "@/app/embed/embedRegistry";
+import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
 import { DERIVED_DPI, SPECS_READ_ON, confidenceLabel } from "../data/examSpecs";
 import { describeDimensions, formatIsoDate, resolveTargetPixels } from "../lib/specMath";
 
@@ -227,6 +230,43 @@ export default function SpecSheet({ exam }) {
           </ul>
         </div>
       ) : null}
+
+      <EmbedResizerBlock exam={exam} />
     </section>
+  );
+}
+
+/**
+ * "Embed this resizer" — the copy-paste iframe for coaching sites and exam
+ * notification blogs, which is where this page's audience already is.
+ *
+ * The widget carries a followable credit link back to this page; that link is
+ * the entire consideration for the widget, so the copy states it plainly.
+ * Nothing here claims an install count or a number of embeds.
+ */
+function EmbedResizerBlock({ exam }) {
+  const widgetId = `exam-photo/${exam.slug}`;
+  if (!isEmbeddable(widgetId)) return null;
+
+  return (
+    <div className="mt-4 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <h3 className="text-sm font-semibold text-[var(--foreground)]">Embed this resizer</h3>
+      <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+        Put the live {exam.name} resizer on your own page with one snippet — free, responsive, light
+        and dark. It resizes in the reader&rsquo;s browser, so no file is uploaded to you or to us.
+        Keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
+      </p>
+      <div className="mt-3">
+        <EmbedCodeCopy snippet={buildEmbedSnippet(widgetId)} />
+      </div>
+      <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+        <Link
+          href="/embed"
+          className="font-medium text-[var(--foreground)] underline decoration-[var(--border)] underline-offset-2 hover:decoration-[var(--primary)]"
+        >
+          Browse every embeddable AltFTool widget
+        </Link>
+      </p>
+    </div>
   );
 }

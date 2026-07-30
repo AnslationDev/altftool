@@ -2,11 +2,12 @@
 //
 // WordPress, Ghost, Discourse and friends turn a pasted URL into a live embed
 // only when the pasted page advertises an oEmbed endpoint. This is that
-// endpoint; the advertisement lives in src/app/embed/widget/[slug]/page.jsx.
+// endpoint; the advertisement is built by
+// src/app/embed/widget/widgetMetadata.js for every widget family.
 //
 // SECURITY — the `url` parameter is never echoed anywhere. It is resolved to a
-// slug that must exist in the embeddable registry, and every field of the
-// response (including `html`) is rebuilt from that slug plus our own base URL.
+// widget id that must exist in the embeddable registry, and every field of the
+// response (including `html`) is rebuilt from that id plus our own base URL.
 // Reflecting a caller-supplied URL into `html` would be a stored-XSS vector on
 // every site that consumes us.
 
@@ -18,9 +19,9 @@ import {
   resolveEmbeddableSlugFromUrl,
 } from "@/app/embed/embedRegistry";
 import {
-  EMBED_DEFAULT_HEIGHT,
-  EMBED_DEFAULT_WIDTH,
   buildOEmbedHtml,
+  buildPublicUrl,
+  embedNaturalSize,
 } from "@/app/embed/embedSnippet";
 
 export const dynamic = "force-dynamic";
@@ -106,18 +107,23 @@ export async function GET(request) {
     return fail("A url parameter is required.", 400);
   }
 
-  const slug = resolveEmbeddableSlugFromUrl(target, {
+  // A widget id — a bare tool slug, or "<source>/<slug>" for the /transform and
+  // /exam-photo families. Never the caller's string.
+  const id = resolveEmbeddableSlugFromUrl(target, {
     extraHosts: extraResolvableHosts(request),
   });
-  if (!slug) {
-    // Foreign host, unknown path, or a tool that is not embeddable.
+  if (!id) {
+    // Foreign host, unknown path, or a widget that is not embeddable.
     return fail("No AltFTool widget is available for that URL.", 404);
   }
 
   const baseUrl = emitBaseUrl(request);
-  const name = getEmbedToolName(slug);
-  const width = clampDimension(searchParams.get("maxwidth"), EMBED_DEFAULT_WIDTH);
-  const height = clampDimension(searchParams.get("maxheight"), EMBED_DEFAULT_HEIGHT);
+  const name = getEmbedToolName(id);
+  // Each family has its own natural box, so the ceiling a maxwidth/maxheight
+  // hint is clamped against is the one this widget actually wants.
+  const natural = embedNaturalSize(id);
+  const width = clampDimension(searchParams.get("maxwidth"), natural.width);
+  const height = clampDimension(searchParams.get("maxheight"), natural.height);
 
   return jsonResponse(
     NextResponse,
@@ -128,10 +134,11 @@ export async function GET(request) {
       provider_url: baseUrl,
       // Matches the widget document's own <title>.
       title: `${name} — AltFTool widget`,
-      // AltFTool builds and hosts the widget; the tool page is where it lives.
+      // AltFTool builds and hosts the widget; the public page is where it
+      // lives. Built from our own base URL plus the resolved id, like `html`.
       author_name: "AltFTool",
-      author_url: `${baseUrl}/tools/all/${slug}`,
-      html: buildOEmbedHtml(baseUrl, slug, { name, width, height }),
+      author_url: buildPublicUrl(baseUrl, id),
+      html: buildOEmbedHtml(baseUrl, id, { name, width, height }),
       width,
       height,
       cache_age: 86400,

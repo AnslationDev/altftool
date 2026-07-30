@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { ArrowUpRight, HelpCircle, ListChecks, Plus, Table2 } from "lucide-react";
+import { ArrowUpRight, Code2, HelpCircle, ListChecks, Plus, Table2 } from "lucide-react";
+import { buildEmbedSnippet, isEmbeddable } from "@/app/embed/embedRegistry";
+import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
 import { buildTransformSeoContent } from "../_lib/transformSeoContent";
 
 /**
@@ -9,8 +11,10 @@ import { buildTransformSeoContent } from "../_lib/transformSeoContent";
  * page that is unambiguously present in the raw HTML for crawlers and answer
  * engines. Every claim is generated from the manifest by
  * buildTransformSeoContent(), and everything rendered here — steps, FAQs — is
- * exactly what the page's JSON-LD describes. No client JS: the FAQ uses native
- * <details>, so the answers stay in the crawlable source.
+ * exactly what the page's JSON-LD describes. The crawlable content needs no
+ * client JS: the FAQ uses native <details>, so the answers stay in the source.
+ * (The embed block's copy button is the one client island, and the snippet it
+ * copies is server-rendered text either way.)
  *
  * Styling follows master.md: semantic tokens only (light + dark), AA contrast,
  * visible focus, reduced-motion safe.
@@ -19,6 +23,9 @@ import { buildTransformSeoContent } from "../_lib/transformSeoContent";
  */
 export default function TransformSeoSection({ tool }) {
   const seo = buildTransformSeoContent(tool);
+  // Widget ids are namespaced by family: `xml-to-json` is both a /tools/all tool
+  // and a converter here, and they are two different widgets.
+  const widgetId = `transform/${tool.slug}`;
 
   return (
     <section
@@ -127,6 +134,39 @@ export default function TransformSeoSection({ tool }) {
           ))}
         </div>
       </div>
+
+      {/* Embed-on-your-site snippet. Every embed carries a followable credit
+          link back to this converter — that is the whole deal of the programme,
+          so the copy says so plainly rather than burying it. */}
+      {isEmbeddable(widgetId) ? (
+        <div className="rounded-[16px] border border-(--border) bg-(--card) p-5 sm:p-7">
+          <h2 className="flex items-center gap-2.5 text-lg font-bold tracking-tight sm:text-xl">
+            <span
+              className="grid h-8 w-8 shrink-0 place-items-center rounded-[7px] bg-(--muted) text-(--primary)"
+              aria-hidden="true"
+            >
+              <Code2 className="h-4 w-4" />
+            </span>
+            Embed this converter
+          </h2>
+          <p className="mt-4 max-w-3xl text-sm leading-6 text-(--muted-foreground)">
+            Drop the live {seo.title} workspace into your own docs page, tutorial or blog post with
+            one snippet. Free, responsive, light and dark — just keep the &ldquo;Widget by
+            AltFTool&rdquo; credit link visible.
+          </p>
+          <div className="mt-4">
+            <EmbedCodeCopy snippet={buildEmbedSnippet(widgetId)} />
+          </div>
+          <p className="mt-3 text-xs leading-5 text-(--muted-foreground)">
+            <Link
+              href="/embed"
+              className="rounded-[4px] font-semibold text-(--primary-text) underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35"
+            >
+              Browse every embeddable AltFTool widget →
+            </Link>
+          </p>
+        </div>
+      ) : null}
 
       {/* Nearest siblings, with real descriptive anchor text. */}
       {seo.siblings.length > 0 ? (

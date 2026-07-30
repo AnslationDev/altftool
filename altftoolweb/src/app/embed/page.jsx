@@ -1,15 +1,16 @@
+import Link from "next/link";
 import { createPageMetadata, createBreadcrumbJsonLd } from "@/platform/seo/generateMetadata";
 import JsonLd from "@/platform/seo/JsonLd";
 import { PRODUCTION_SITE_URL } from "@/platform/seo/siteUrl";
-import { EMBEDDABLE_CATEGORIES, getEmbeddableTools } from "./embedRegistry";
+import { getEmbedCategories, getEmbeddableGroups, getEmbeddableTools } from "./embedRegistry";
 import EmbedPicker from "./EmbedPicker";
 
 export async function generateMetadata() {
   // Derived, never hardcoded: the registry decides how many widgets exist.
   const count = getEmbeddableTools().length;
   return createPageMetadata({
-    title: "Free Embeddable Widgets — Calculators & Converters",
-    description: `Add free calculators and converters to your website with one copy-paste snippet. ${count} AltFTool widgets — no signup, no API key, fully responsive.`,
+    title: "Free Embeddable Widgets — Calculators, Converters & Resizers",
+    description: `Add free calculators, developer format converters and exam photo resizers to your website with one copy-paste snippet. ${count} AltFTool widgets — no signup, no API key, fully responsive.`,
     path: "/embed",
     keywords: [
       "free embeddable calculator",
@@ -17,12 +18,13 @@ export async function generateMetadata() {
       "embed calculator iframe",
       "free widgets for blog",
       "oembed calculator widget",
+      "embeddable json converter",
     ],
   });
 }
 
 const STEPS = [
-  { title: "Pick a widget", text: "Search every AltFTool calculator and converter below." },
+  { title: "Pick a widget", text: "Search every AltFTool widget below, or filter by family." },
   {
     title: "Copy the format you need",
     text: "Plain iframe, responsive wrapper, WordPress block, or just the URL — no account, no API key, no build step.",
@@ -33,8 +35,31 @@ const STEPS = [
   },
 ];
 
+/**
+ * How many widgets the picker gets up front.
+ *
+ * Sending the whole index as props put about 160 KiB of JSON in this page's
+ * initial payload — on the one page whose job is to turn a visitor into an
+ * embed. The seed is spread across the source families so every family is
+ * visible immediately, and the picker fetches /api/embed-index the moment
+ * someone searches or filters past it.
+ */
+const PICKER_SEED_PER_GROUP = 16;
+
 export default function EmbedHubPage() {
-  const tools = getEmbeddableTools();
+  const groups = getEmbeddableGroups();
+  const allTools = getEmbeddableTools();
+  const seedIds = new Set(
+    groups.flatMap((group) =>
+      allTools
+        .filter((tool) => tool.source === group.key)
+        .slice(0, PICKER_SEED_PER_GROUP)
+        .map((tool) => tool.id),
+    ),
+  );
+  // Filtered from the sorted list rather than concatenated, so the seed arrives
+  // in the same alphabetical order the full index will replace it with.
+  const seedTools = allTools.filter((tool) => seedIds.has(tool.id));
 
   return (
     <main className="bg-(--page) text-(--foreground)">
@@ -51,11 +76,47 @@ export default function EmbedHubPage() {
             Free widgets for your website
           </h1>
           <p className="mt-3 text-base leading-7 text-(--muted-foreground)">
-            {`Embed any of ${tools.length} AltFTool calculators and converters with a
-            single copy-paste snippet. Free forever, responsive, light & dark themes, and no
-            signup — just keep the small "Widget by AltFTool" credit link.`}
+            {`Embed any of ${allTools.length} AltFTool widgets with a single copy-paste snippet.
+            Free forever, responsive, light & dark themes, and no signup — just keep the small
+            "Widget by AltFTool" credit link.`}
           </p>
         </header>
+
+        <section aria-labelledby="embed-families-heading" className="mt-8">
+          <h2 id="embed-families-heading" className="sr-only">
+            Widget families
+          </h2>
+          {/* Counts come from the registry, never from a literal in this file. */}
+          <ul className="grid gap-3 md:grid-cols-3">
+            {groups.map((group) => (
+              <li
+                key={group.key}
+                className="flex flex-col rounded-[12px] border border-(--border) bg-(--surface) p-4"
+              >
+                <p className="text-2xl font-bold tracking-tight text-(--primary-text)">
+                  {group.count}
+                </p>
+                <h3 className="mt-1 text-sm font-semibold">{group.label}</h3>
+                <p className="mt-1 text-sm leading-6 text-(--muted-foreground)">{group.blurb}</p>
+                {/* Plain examples, taken in name order — not a popularity or
+                    usage ranking, which we have no data for. */}
+                <p className="mt-3 text-xs font-semibold text-(--muted-foreground)">For example:</p>
+                <ul className="mt-1.5 flex flex-wrap gap-1.5">
+                  {group.examples.map((example) => (
+                    <li key={example.id}>
+                      <Link
+                        href={`/embed/widget/${example.id}`}
+                        className="inline-flex rounded-full border border-(--border) bg-(--background) px-2.5 py-1 text-xs font-semibold text-(--foreground) transition hover:border-(--primary) hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--anslation-ds-primary-hover)]/35 motion-reduce:transition-none"
+                      >
+                        {example.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <ol className="mt-8 grid gap-3 sm:grid-cols-3">
           {STEPS.map((step, index) => (
@@ -74,8 +135,10 @@ export default function EmbedHubPage() {
 
         <section aria-label="Widget picker" className="mt-10">
           <EmbedPicker
-            tools={tools}
-            categories={EMBEDDABLE_CATEGORIES}
+            seedTools={seedTools}
+            totalCount={allTools.length}
+            indexUrl="/api/embed-index"
+            categories={getEmbedCategories()}
             baseUrl={PRODUCTION_SITE_URL}
           />
         </section>
@@ -106,7 +169,19 @@ export default function EmbedHubPage() {
             <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
               /api/oembed?url=&hellip;
             </code>{" "}
-            with a widget or tool URL and you get back a standard JSON oEmbed response, including
+            with a widget URL — or with the public page it came from, whether that is a{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              /tools
+            </code>
+            ,{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              /transform
+            </code>{" "}
+            or{" "}
+            <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">
+              /exam-photo
+            </code>{" "}
+            page — and you get back a standard JSON oEmbed response, including
             the ready-to-inject <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">html</code>.
             It accepts <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">maxwidth</code>{" "}
             and <code className="rounded-[6px] border border-(--border) bg-(--surface) px-1.5 py-0.5 text-xs">maxheight</code>.
@@ -120,10 +195,22 @@ export default function EmbedHubPage() {
             widget (and the credit line in the snippet) must stay visible, and stay a normal
             followable link — that&rsquo;s the whole deal.
           </p>
+          {/*
+            Accuracy matters more than the pitch here. Three different things are
+            true across the families, so all three are stated: most widgets
+            compute locally, a few fetch live data, and the /transform
+            converters that need a Node-only library send the pasted input to
+            AltFTool for that one request. Never compress this into "nothing
+            ever leaves the browser".
+          */}
           <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
-            Most widgets compute in your visitor&rsquo;s browser. A few need live data — the
-            currency converter fetches exchange rates from AltFTool, for example — so those make a
-            network request to get it.
+            Most widgets compute in your visitor&rsquo;s browser — the exam photo and signature
+            resizers, for instance, never upload the file at all. A few need live data: the currency
+            converter fetches exchange rates from AltFTool. And about half the developer format
+            converters run on a Node-only library, so those send the pasted input to AltFTool to
+            convert it and hand the result straight back — each of those carries a &ldquo;Runs in
+            your browser&rdquo; or &ldquo;Runs on server&rdquo; badge on its own face, so a reader
+            can see which one they are using.
           </p>
           <p className="mt-3 text-sm leading-6 text-(--muted-foreground)">
             <strong className="font-semibold text-(--foreground)">Tip:</strong> widgets follow the

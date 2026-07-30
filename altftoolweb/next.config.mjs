@@ -78,6 +78,17 @@ const nextConfig = {
     "@graphql-codegen/typescript-mongodb",
     "@graphql-codegen/fragment-matcher",
     "@graphql-codegen/java",
+    // The rest of what the transformers pull in. serverExternalPackages only
+    // affects the server compilation — client bundles are untouched — so a
+    // package used on both sides is safe to list. mongoose is the big one here;
+    // json-to-mongoose imports it purely to model the target schema.
+    "mongoose",
+    "zod",
+    "js-yaml",
+    "json5",
+    "marked",
+    "prop-types",
+    "sarcastic",
   ],
 
 
