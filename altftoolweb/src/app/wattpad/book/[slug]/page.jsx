@@ -14,8 +14,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import {
-  Eye,
-  Star,
   List,
   ChevronRight,
 } from "lucide-react";
@@ -38,13 +36,21 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // 7 of the 8 books have no chapters at all, so the page is a dead end: no
+  // "Start reading", an empty Parts tab, nothing to read. Those must not be
+  // indexed (the sitemap skips them on the same condition).
+  const hasChapters = chapters.some((chapter) => chapter.bookId === book.id);
+
   const storyDescription = book.description || book.summary || "";
   return createPageMetadata({
     title: `${book.title} - Wattpad-Style Story`,
-    description: `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`,
+    description: hasChapters
+      ? `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`
+      : `${storyDescription} No parts of ${book.title} have been published yet.`,
     path: `/wattpad/book/${book.slug}`,
     image: book.coverImage || book.bannerImage,
     type: "book",
+    noindex: !hasChapters,
   });
 }
 
@@ -57,6 +63,10 @@ export default async function BookDetailPage({ params }) {
   const bookChapters = chapters.filter(
     (chapter) => chapter.bookId === book.id
   );
+  // Counted, never read from book.stats.totalChapters — that field claims 25
+  // parts for the one title that has 2, and 18 to 40 for seven titles that have
+  // none at all.
+  const publishedChapterCount = bookChapters.length;
 
   const relatedBooks = books
     .filter(
@@ -65,6 +75,13 @@ export default async function BookDetailPage({ params }) {
         item.id !== book.id
     )
     .slice(0, 6);
+  /** id -> chapters that actually exist, for the related-story cards. */
+  const relatedChapterCounts = new Map(
+    relatedBooks.map((item) => [
+      item.id,
+      chapters.filter((chapter) => chapter.bookId === item.id).length,
+    ]),
+  );
   const bookPath = `/wattpad/book/${book.slug}`;
   const jsonLd = [
     createBreadcrumbJsonLd([
@@ -100,35 +117,26 @@ export default async function BookDetailPage({ params }) {
                   {book.title}
                 </h1>
 
-                <div className="flex items-center gap-3 mt-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden relative bg-(--muted)">
-                    <Image
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                      fill
-                      alt="author"
-                      sizes="40px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-medium text-base text-(--foreground)">
-                      {book.authorId}
-                    </p>
-                  </div>
-                </div>
+                {/* `authorId` is a raw foreign key ("user_002") with no authors
+                    table behind it, so it was rendering as the byline. There is
+                    no real author to name — show none rather than an id. */}
 
+                {/*
+                  The view count and review count that used to sit here came
+                  from books.json, which is seed data — every title carries a
+                  rating between 4.3 and 4.8 and a round review count, and the
+                  app has neither a review mechanism nor a view counter that
+                  could produce them. stats.totalChapters was invented the same
+                  way: this title claimed 25 and has 2. The only number left is
+                  the one counted from the chapters that actually exist.
+                */}
                 <div className="flex flex-wrap items-center gap-5 mt-6 text-sm text-(--muted-foreground)">
                   <div className="flex items-center gap-1.5">
-                    <Eye size={18} />
-                    <span>{book.stats.views}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Star size={18} />
-                    <span>{book.stats.totalReviews}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
                     <List size={18} />
-                    <span>{book.stats.totalChapters} parts</span>
+                    <span>
+                      {publishedChapterCount}{" "}
+                      {publishedChapterCount === 1 ? "part" : "parts"} published
+                    </span>
                   </div>
                 </div>
 
@@ -170,15 +178,18 @@ export default async function BookDetailPage({ params }) {
                           <h3 className="wp-related-title">
                             <span className="wp-related-number">{index + 1}.</span> {item.title}
                           </h3>
-                          <p className="wp-related-author">{item.authorId}</p>
-                          <div className="wp-related-stats">
-                            <span className="flex items-center gap-1">
-                              <Eye size={16} />{item.stats.views}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <List size={16} /> {item.stats.totalChapters} parts
-                            </span>
-                          </div>
+                          {/* Same seed data as above: the view count was
+                              invented and totalChapters disagrees with the
+                              chapters that exist, so only the counted figure
+                              is shown — and only when there is one. */}
+                          {relatedChapterCounts.get(item.id) ? (
+                            <div className="wp-related-stats">
+                              <span className="flex items-center gap-1">
+                                <List size={16} /> {relatedChapterCounts.get(item.id)}{" "}
+                                {relatedChapterCounts.get(item.id) === 1 ? "part" : "parts"}
+                              </span>
+                            </div>
+                          ) : null}
                           <p className="wp-related-summary">{item.summary}</p>
                           <div className="flex flex-wrap gap-2 mt-2">
                             {item.tags?.slice(0, 3).map((tag) => (

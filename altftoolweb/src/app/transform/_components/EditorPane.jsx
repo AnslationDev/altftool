@@ -34,11 +34,11 @@ const EditorPane = forwardRef(function EditorPane(
   const lineNumbers = Array.from({ length: linesCount }, (_, i) => i + 1);
 
   return (
-    <section className="flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700/70 dark:bg-slate-950/40">
+    <section className="flex min-w-0 flex-col rounded-2xl border border-(--border) bg-(--card) shadow-sm">
       {/* header */}
       <div className="flex flex-wrap items-center justify-between gap-2 px-4 pb-3 pt-4 sm:px-5">
-        <h2 className="flex items-center gap-2 text-sm font-bold text-slate-900 sm:text-base dark:text-white">
-          {Icon ? <Icon className="h-[18px] w-[18px] text-blue-600" /> : null}
+        <h2 className="flex items-center gap-2 text-sm font-bold text-(--foreground) sm:text-base">
+          {Icon ? <Icon className="h-[18px] w-[18px] text-(--primary)" /> : null}
           {title}
         </h2>
         {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
@@ -46,7 +46,7 @@ const EditorPane = forwardRef(function EditorPane(
 
       {/* editor body with gutter */}
       <div
-        className="mx-4 flex flex-1 overflow-hidden rounded-xl border border-slate-200 bg-slate-50/50 sm:mx-5 dark:border-slate-700/70 dark:bg-slate-900/60"
+        className="mx-4 flex flex-1 overflow-hidden rounded-xl border border-(--border) bg-(--background) sm:mx-5"
         onDragOver={onDropText ? (e) => e.preventDefault() : undefined}
         onDrop={
           onDropText
@@ -65,7 +65,7 @@ const EditorPane = forwardRef(function EditorPane(
         {/* line numbers gutter */}
         <div
           ref={gutterRef}
-          className="w-10 select-none text-right pr-2.5 py-4 font-mono text-[13px] leading-relaxed text-slate-400/70 border-r border-slate-200/80 dark:border-slate-800 dark:text-slate-600 bg-slate-100/10 dark:bg-slate-950/10 overflow-hidden"
+          className="w-10 select-none text-right pr-2.5 py-4 font-mono text-[13px] leading-relaxed text-(--muted-foreground) border-r border-(--border) bg-(--muted)/10 overflow-hidden"
         >
           {lineNumbers.map((n) => (
             <div key={n}>{n}</div>
@@ -83,7 +83,7 @@ const EditorPane = forwardRef(function EditorPane(
           wrap="off"
           onScroll={handleScroll}
           suppressHydrationWarning
-          className="h-[20rem] flex-1 resize-none bg-transparent p-4 font-mono text-[13px] leading-relaxed text-slate-800 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/25 lg:h-[24rem] dark:text-slate-200 dark:placeholder:text-slate-500 overflow-x-auto overflow-y-auto"
+          className="h-[20rem] flex-1 resize-none bg-transparent p-4 font-mono text-[13px] leading-relaxed text-(--foreground) outline-none placeholder:text-(--muted-foreground) focus:ring-2 focus:ring-(--primary)/25 lg:h-[24rem] overflow-x-auto overflow-y-auto"
         />
       </div>
 

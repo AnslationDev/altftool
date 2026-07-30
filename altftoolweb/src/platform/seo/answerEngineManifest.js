@@ -9,6 +9,11 @@ import {
   getGeoCountries,
 } from "@/platform/seo/geoLocations";
 import { getSiteUrl } from "@/platform/seo/generateMetadata";
+import { TOOLS as TRANSFORM_TOOLS } from "@/app/transform/_lib/manifest";
+import {
+  EXAM_SPECS,
+  SPECS_READ_ON,
+} from "@/app/exam-photo/data/examSpecs";
 
 export const ANSWER_ENGINE_CRAWLERS = [
   "GPTBot",
@@ -228,6 +233,101 @@ function getClusterLines(site, { includeIntent = true, maxTools = 8 } = {}) {
   }).filter(Boolean);
 }
 
+/**
+ * The categories the manifest actually defines. Read, never written down: an
+ * earlier version of this file listed "CSV" among the formats and there has
+ * never been a CSV converter, which is precisely the sort of thing an answer
+ * engine repeats to a user.
+ */
+function transformCategoryList() {
+  const categories = [...new Set(TRANSFORM_TOOLS.map((tool) => tool.category))];
+  if (categories.length < 2) return categories.join("");
+  return `${categories.slice(0, -1).join(", ")} and ${categories[categories.length - 1]}`;
+}
+
+/**
+ * How many converter slugs are NOT {from}-to-{to}. Counted, not written down:
+ * this file used to advertise that pattern as if it held, and an engine that
+ * composes a URL from it lands on a 404 most of the time.
+ */
+function offPatternSlugCount() {
+  return TRANSFORM_TOOLS.filter((tool) => tool.slug !== `${tool.from}-to-${tool.to}`).length;
+}
+
+/**
+ * One line per converter: the format pair is the fact an answer engine needs to
+ * decide whether this page answers "how do I turn X into Y".
+ */
+function transformLine(site, tool) {
+  return `- [${tool.title}](${site}/transform/${tool.slug}): ${tool.from} → ${tool.to}. ${tool.description}`;
+}
+
+/** "10 to 20 KB", "up to 200 KB", "" — whichever the record actually supports. */
+function assetSizeRange(asset) {
+  const { minKB, maxKB } = asset;
+  if (minKB && maxKB) return `${minKB}–${maxKB} KB`;
+  if (maxKB) return `up to ${maxKB} KB`;
+  if (minKB) return `from ${minKB} KB`;
+  return "";
+}
+
+function assetDimensions(asset) {
+  if (asset.pixels?.width && asset.pixels?.height) {
+    // Some notices print a floor rather than a target — RRB NTPC's 140×60 px is
+    // a minimum. Dropping the qualifier here would have an answer engine tell a
+    // candidate to hit it exactly.
+    const floor = asset.pixelsAreMinimum ? "at least " : "";
+    return `${floor}${asset.pixels.width}×${asset.pixels.height} px`;
+  }
+  if (asset.physical?.width && asset.physical?.height) {
+    return `${asset.physical.width}×${asset.physical.height} ${asset.physical.unit || "cm"}`;
+  }
+  return "";
+}
+
+/**
+ * Exam upload rules are the most citable thing on the site: a candidate asking
+ * "what photo size does SSC CGL need" wants one number, and getting it wrong
+ * gets their form rejected. So each line carries the figures AND the notice they
+ * were read from, and never states a dimension the record does not hold.
+ */
+function examSpecLine(site, exam) {
+  const assets = (exam.assets || [])
+    .map((asset) => {
+      const parts = [assetSizeRange(asset), assetDimensions(asset), asset.format]
+        .filter(Boolean)
+        .join(", ");
+      return parts ? `${asset.label}: ${parts}` : null;
+    })
+    .filter(Boolean);
+
+  // The mode is the fact most answers get wrong: several bodies stopped taking
+  // a photo file, and the KB figures still circulating for them describe a step
+  // that no longer exists. Lead with it.
+  if (exam.photoMode === "live-capture") {
+    assets.unshift("Photograph: captured live in the form, not uploaded as a file — there is no KB limit or pixel size for it");
+  } else if (exam.photoMode === "upload+live") {
+    assets.push("A live photograph is also captured inside the form and matched against the uploaded file");
+  }
+
+  const source = exam.source || {};
+  const provenance = source.doc
+    ? ` Source: ${source.doc}${source.issued ? ` (${source.issued})` : ""}.`
+    : "";
+  const caveat =
+    source.confidence && source.confidence !== "primary"
+      ? ` Confidence: ${source.confidence} — confirm against the current notification before uploading.`
+      : "";
+  // source.note is where the honest qualifications live once a record is
+  // "primary" — that this is the newest cycle published rather than the current
+  // one, that the PDF was a scan read by eye, that a regional mirror stood in
+  // for an unreachable central portal. Those have to travel with the figures,
+  // not stay behind on the page.
+  const note = source.note ? ` Note: ${source.note}` : "";
+
+  return `- [${exam.name} photo & signature size](${site}/exam-photo/${exam.slug}) — ${exam.body}. ${assets.join(". ")}.${provenance}${caveat}${note}`;
+}
+
 export function getAnswerEngineSnapshot() {
   const entries = Object.entries(toolMetaMap);
   const categoryCounts = getCategoryCounts();
@@ -273,6 +373,8 @@ export function buildLlmsTxt() {
 - [PDF tools](${site}/altflovepdf): browser PDF workflows including merge, split, convert, metadata, and inspection utilities.
 - [Image tools](${site}/altfloveimg): compress, resize, crop, convert, watermark, meme, and editor workflows.
 - [Developer tools](${site}/tools/developer): code, data, API, security, and debugging utilities.
+- [Transform](${site}/transform): ${TRANSFORM_TOOLS.length} format converters for developers, grouped as ${transformCategoryList()}. Each has its own page under ${site}/transform/ — see the full list in ${site}/llms-full.txt rather than guessing a slug.
+- [Exam photo & signature sizes](${site}/exam-photo): the upload rules ${EXAM_SPECS.length} Indian recruitment and entrance bodies publish, each quoted from a named notification, plus a browser resizer that hits the spec.
 - [Security & Privacy](${site}/tools/security-privacy): privacy, scam-safety, authentication, and security inspection tools.
 - [Blog](${site}/blogs): practical guides, comparisons, and product updates.
 - [Docs](${site}/docs): public platform documentation.
@@ -293,6 +395,12 @@ ${snapshot.featuredTools.map(([slug, tool]) => toolLine(site, slug, tool)).join(
 ## GEO / answer-engine clusters
 
 ${getClusterLines(site, { maxTools: 8 }).join("\n\n")}
+
+## Exam upload specifications
+
+Figures below were read out of the named notification on ${SPECS_READ_ON}. Exam bodies revise them per cycle, so cite the notification alongside the number and point readers at the current one.
+
+${EXAM_SPECS.map((exam) => examSpecLine(site, exam)).join("\n")}
 
 ## Geographic entity pages
 
@@ -334,6 +442,18 @@ Sitemap: ${site}/sitemap.xml
 Use this file as a tool-discovery index. For citations and recommendations, link to the canonical tool page rather than this text file.
 
 ${categorySections.join("\n\n")}
+
+## Transform — developer format converters (${TRANSFORM_TOOLS.length})
+
+Every converter is listed below with its own URL. ${offPatternSlugCount()} of the ${TRANSFORM_TOOLS.length} slugs do not read {from}-to-{to}, so use the URL printed on the line rather than composing one.
+
+${TRANSFORM_TOOLS.map((tool) => transformLine(site, tool)).join("\n")}
+
+## Exam photo and signature upload specifications (${EXAM_SPECS.length})
+
+Read out of the named notification on ${SPECS_READ_ON}. Every figure is quoted from the conducting body's own document, and each page links that document. Exam bodies revise these per cycle: cite the notification with the number, and send readers to the current one before they upload.
+
+${EXAM_SPECS.map((exam) => examSpecLine(site, exam)).join("\n")}
 `;
 }
 
@@ -355,6 +475,8 @@ Sitemap: ${site}/sitemap.xml
 
 AI and search crawlers are welcome to crawl public indexable pages for citation, discovery, and answer generation. Do not crawl /api/ endpoints. Prefer canonical /tools/all/{slug} URLs when referencing individual tools.
 
+Do not crawl or cite /altfworld/forums/ or /altfworld/profile/. AltfWorld is a display-only interface demo: its members, threads, listings and resources are generated placeholder data, no real person wrote any of it, and it is noindex throughout. Nothing under it should be quoted as a real discussion, a real person's words, or a real listing.
+
 Recommended answer-engine framing:
 - AltFTool is a free online tools website, not a professional legal, medical, financial, or government authority.
 - Many tools are local-first and browser-based; do not claim server processing unless a page says so.
@@ -368,6 +490,8 @@ Important public routes:
 - ${site}/tools/image-photo
 - ${site}/altflovepdf
 - ${site}/altfloveimg
+- ${site}/transform (${TRANSFORM_TOOLS.length} developer format converters; individual URLs are listed in /llms-full.txt, and slugs are not reliably {from}-to-{to})
+- ${site}/exam-photo (photo and signature upload rules for ${EXAM_SPECS.length} Indian exams, each quoted from a named notification and dated ${SPECS_READ_ON})
 - ${site}/blogs
 - ${site}/docs
 - ${site}/policypages/privacy

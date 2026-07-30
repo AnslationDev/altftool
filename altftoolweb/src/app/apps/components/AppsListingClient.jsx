@@ -285,9 +285,14 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="featured-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-10 pt-2 sm:px-6 lg:px-8 lg:pb-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Featured Apps</h2>
+            {/* One section, not two: "Featured" and "All Apps" rendered the
+                identical list, so "handpicked" described the whole catalogue.
+                Until there is a real featured flag, there is one honest list. */}
+            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">All Apps</h2>
             <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">
-              {normalizedQuery ? `Search results for "${searchQuery}"` : "Handpicked apps for you."}
+              {normalizedQuery
+                ? `Search results for "${searchQuery}"`
+                : "Every Android app in the AppHub catalogue."}
             </p>
           </div>
           <span className="text-sm font-semibold text-[var(--primary)]">{filteredApps.length} apps</span>
@@ -307,42 +312,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       </section>
 
 
-      <section id="top-rated-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-14 pt-4 sm:px-6 lg:px-8 lg:pb-16">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Top Rated Apps</h2>
-            <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">High quality apps loved by users.</p>
-          </div>
-        </div>
-        <div className="mt-5 grid gap-5 lg:grid-cols-4">
-          {filteredApps
-            .slice()
-            .sort((a, b) => Number(b.rating) - Number(a.rating))
-            .map((app) => (
-              <Link key={app.slug} href={`/apps/${app.slug}`} className="group flex min-h-[172px] flex-col justify-between rounded-[22px] border border-[var(--home-border)] bg-[var(--card)] p-6 shadow-[0_14px_34px_rgba(15,23,42,0.075)] transition hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] hover:shadow-[0_22px_48px_rgba(15,23,42,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--primary)_25%,transparent)]">
-                <div className="flex items-center gap-4">
-                  <AppIconSvg app={app} className="h-[72px] w-[72px] rounded-[20px]" />
-                  <div className="min-w-0">
-                    <p className="text-[17px] font-semibold text-[var(--foreground)] transition group-hover:text-[var(--primary)]">
-                      {app.name}
-                    </p>
-                    <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{app.category}</p>
-                  </div>
-                </div>
-                <div className="mt-6 flex items-center justify-between gap-3 text-sm">
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[16px] font-semibold text-[var(--foreground)]">{app.rating}</span>
-                      <span className="tracking-[1px] text-[#f5a400]" aria-label={`${app.rating} star rating`}>★★★★★</span>
-                    </div>
-                    <p className="mt-1 text-xs font-medium text-[var(--muted-foreground)]">{app.reviews?.length ?? 0} reviews</p>
-                  </div>
-                  <span className="rounded-full bg-[color-mix(in_srgb,var(--primary)_12%,transparent)] px-3 py-1.5 text-xs font-semibold text-[var(--primary)]">{app.downloads}</span>
-                </div>
-              </Link>
-            ))}
-        </div>
-      </section>
+
     </main>
   );
 }

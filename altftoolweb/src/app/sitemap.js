@@ -17,7 +17,8 @@ import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import { INCUMBENTS as alternativeIncumbents } from "@/app/alternatives/data/incumbents";
 import top11Categories from "@/app/top11/data/categoryData";
-import { getTop9Items } from "@/app/top9/data/getTop9Items";
+import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
+import { getIndexableTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
 import wattpadChapters from "@/app/wattpad/data/chapters.json";
@@ -38,6 +39,7 @@ import { CALCULATORS as altCalculators } from "@/app/altfcalculators/toolsData";
 import { services as homeservServices } from "@/app/homeserv/services-data";
 import { apps } from "@/app/apps/data/apps";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
+import { isSignalIndexable } from "@/app/signals/signalCoverage";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import {
@@ -50,6 +52,7 @@ import {
   GAMES as altfNativeGames,
 } from "@/app/altfgame/_data/games";
 import { TOOLS as transformTools } from "@/app/transform/_lib/manifest";
+import { EXAM_SPECS as examPhotoSpecs } from "@/app/exam-photo/data/examSpecs";
 import { ALL_NAV_ITEMS as promptStudioItems } from "@/app/imgprompt/data/navigation";
 import { getPromptCards } from "@/app/prompts/data/service";
 import {
@@ -58,6 +61,7 @@ import {
 } from "@/app/fact-net/data/factNetData";
 import { TEMPLATES as socialMockupTemplates } from "@/app/prank-socialmedia/lib/templates";
 import { getAllKymRoutes } from "@/app/kym/components/KymGenericPage";
+import { isKymIndexable } from "@/app/kym/data/indexPolicy";
 import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
 import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sitemapPages";
 import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
@@ -75,6 +79,7 @@ const staticRoutes = [
   { path: "/tools", priority: 0.95 },
   { path: "/alternatives", priority: 0.7 },
   { path: "/transform", priority: 0.7 },
+  { path: "/exam-photo", priority: 0.7 },
   { path: "/signals", priority: 0.88 },
   { path: "/products", priority: 0.9 },
   { path: "/blogs", priority: 0.9 },
@@ -87,8 +92,10 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  { path: "/smartlink", priority: 0.65 },
-  { path: "/top11", priority: 0.7 },
+  // /top11 is deliberately absent: the hub and all ten of its categories are
+  // noindexed (see app/top11/data/indexPolicy.js), and a noindexed URL must
+  // not be submitted. The gated loop further down covers the categories; this
+  // is the hub. /kym is absent for the same reason and never appeared here.
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
   { path: "/licenses", priority: 0.3 },
@@ -118,13 +125,10 @@ const staticRoutes = [
   { path: "/supportsetting", priority: 0.45 },
   { path: "/request-a-tool", priority: 0.5 },
   { path: "/site-map", priority: 0.5 },
-  { path: "/altfworld", priority: 0.62 },
-  { path: "/altfworld/about", priority: 0.48 },
-  { path: "/altfworld/forums", priority: 0.56 },
-  { path: "/altfworld/marketplace", priority: 0.52 },
-  { path: "/altfworld/members", priority: 0.5 },
-  { path: "/altfworld/resources", priority: 0.5 },
-  { path: "/altfworld/search", priority: 0.45 },
+  // The seven /altfworld URLs are deliberately absent: the section is a
+  // display-only demo whose members, threads, listings and resources are all
+  // generated (see altfworld/data/mockCommunity.js), so every route under it is
+  // noindex via altfworld/seo.js and a noindexed URL must not be submitted.
   { path: "/imgprompt", priority: 0.76 },
   { path: "/imgprompt/studio", priority: 0.66 },
   { path: "/n8n", priority: 0.76 },
@@ -485,6 +489,18 @@ async function buildSitemapEntries({
     }
   }
 
+  // One page per exam. These answer a narrow, high-intent question ("what photo
+  // size does SSC CGL want") from a named notification, and the figures change
+  // when the conducting body issues a new one — hence the monthly frequency.
+  for (const exam of examPhotoSpecs) {
+    if (exam?.slug) {
+      pushUnique(entries, seen, `/exam-photo/${exam.slug}`, {
+        priority: 0.66,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
   for (const category of altfNativeGameCategories) {
     pushUnique(entries, seen, `/altfgame/category/${category.slug}`, {
       priority: 0.58,
@@ -540,6 +556,9 @@ async function buildSitemapEntries({
   }
 
   for (const signal of SIGNAL_CATALOG) {
+    // Signals with no working tool behind them are noindex; submitting a
+    // noindexed URL is a contradiction Google reports as an error.
+    if (!isSignalIndexable(signal.slug)) continue;
     pushUnique(entries, seen, `/signals/${signal.slug}`, {
       priority: 0.74,
       changeFrequency: "weekly",
@@ -730,11 +749,17 @@ async function buildSitemapEntries({
     }
   }
 
+  // /deals/<slug> pages are submitted again. They used to be skipped because
+  // they duplicated /tools/all/<slug> and canonicalised there; they are now
+  // dated price comparisons against named paid products, which the tool page
+  // does not carry, and the canonical override in the deals route has been
+  // removed so each page is self-canonical. Both changes must stay together: a
+  // page that canonicalises away must never be submitted.
   for (const deal of getDeals() || []) {
     if (!deal?.slug) continue;
     pushUnique(entries, seen, `/deals/${deal.slug}`, {
       priority: 0.7,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
     });
   }
 
@@ -774,14 +799,21 @@ async function buildSitemapEntries({
     }
   }
 
+  // A noindexed URL must never be submitted: Google reports that pairing as an
+  // error and the submission is wasted crawl either way. Both loops below ask
+  // the same predicate the pages' own metadata asks, so the sitemap and the
+  // robots directives cannot disagree.
   for (const slug of Object.keys(top11Categories)) {
+    if (!isTop11Indexable(`/top11/${slug}`)) continue;
     pushUnique(entries, seen, `/top11/${slug}`, {
       priority: 0.65,
       changeFrequency: "monthly",
     });
   }
 
-  for (const item of getTop9Items()) {
+  // Only the lists that publish a ranking. The other 46 render a title and a
+  // paragraph, are noindexed, and so are not submitted.
+  for (const item of getIndexableTop9Items()) {
     pushUnique(entries, seen, `/top9/${item.slug}`, {
       lastModified: item.date ? new Date(item.date) : undefined,
       priority: 0.58,
@@ -802,7 +834,12 @@ async function buildSitemapEntries({
   }
 
   for (const book of wattpadBooks) {
-    if (book?.slug) {
+    // A book with no chapters has nothing to read — the page is noindex, so it
+    // must not be submitted either.
+    const bookHasChapters = wattpadChapters.some(
+      (chapter) => chapter.bookId === book?.id,
+    );
+    if (book?.slug && bookHasChapters) {
       pushUnique(entries, seen, `/wattpad/book/${book.slug}`, {
         lastModified: book.createdAt ? new Date(book.createdAt) : undefined,
         priority: 0.56,
@@ -905,7 +942,11 @@ async function buildSitemapEntries({
     }
   }
 
+  // Same rule as above: the meme-encyclopedia entries are noindexed because 35
+  // of the 37 are assembled from eight shared templates, so none of them is
+  // submitted. /kym itself was never in this file.
   for (const path of getAllKymRoutes()) {
+    if (!isKymIndexable(path)) continue;
     pushUnique(entries, seen, path, {
       priority: 0.52,
       changeFrequency: "monthly",

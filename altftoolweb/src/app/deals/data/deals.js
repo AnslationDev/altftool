@@ -1,780 +1,452 @@
-// AltF Deals — software deals data layer.
+// /deals — what the paid alternative costs, and what you give up for free.
 //
-// Every deal maps to a real ALTFTool in-house tool (toolMetaMap slug) and is
-// genuinely free — the "deal" framing compares against what the closest paid
-// alternative typically charges per year. Reviews/ratings below are seed
-// content for the launch; replace with live review data when a backend is
-// wired (same approach as exclusivedeals db.json seed lists).
+// WHAT THIS FILE IS NOT. It used to carry a `rating` (4.8 and similar), a
+// `gems` star histogram (5:182, 4:24, …), named `reviews` with quotes, and
+// `originalPrice`/`savings` figures. None of that had a source: nobody rated
+// these tools and there is no review store anywhere in this repo. Those fields
+// are gone and must not come back in any form. If a review system is ever
+// built, it renders from that system's data — never from a literal in here.
+//
+// Every price on these pages comes from src/app/deals/data/paidProducts.js,
+// where each figure is transcribed from the vendor's own page on a recorded
+// date. Nothing in this file may state or imply a price.
+//
+// The authored fields below (`job`, `answer`, `does`, `limits`, `faqs`) are
+// ours. `limits` is not optional and must not be softened: a page that cannot
+// say what our free tool gives up is an advert, not a comparison.
+
+import { getPaidProduct } from "./paidProducts";
 
 export const DEAL_CATEGORIES = [
-  "Design & Image",
-  "PDF & Documents",
-  "Video & Media",
-  "Developer Tools",
-  "Business & Finance",
-  "Productivity & AI",
-];
-
-const COMMON_FAQS = [
-  {
-    q: "Is this deal really 100% free?",
-    a: "Yes. Every AltF Deal is an ALTFTool product, and our tools are free to use — no trial window, no watermark tax, no credit card. The strikethrough price shows what the closest paid alternative typically charges per year.",
-  },
-  {
-    q: "Do I need an account to redeem it?",
-    a: "No. Click “Get deal” and the tool opens instantly in your browser. Nothing to install, nothing to sign up for.",
-  },
-  {
-    q: "What does “lifetime” mean here?",
-    a: "The tool stays free for as long as ALTFTool runs it — which is the whole point of the platform. There is no plan that expires and no paid tier waiting behind it.",
-  },
-  {
-    q: "Is my data uploaded anywhere?",
-    a: "Most ALTFTool utilities process files directly in your browser. Check the tool page for specifics — tools that do call a server say so on their own page.",
-  },
+  "Images & design",
+  "PDF & documents",
+  "Video",
+  "Data & business",
+  "Developer & text",
+  "Meetings & AI",
 ];
 
 export const DEALS = [
   {
     slug: "bg-remover",
     name: "Background Remover",
-    tagline: "Remove image backgrounds in one click — no signup, no watermark, no credits to buy",
-    category: "Design & Image",
+    job: "Removing the background from a photo",
+    category: "Images & design",
     icon: "wand-2",
-    iconColor: "text-indigo-600",
-    alternativeTo: ["remove.bg Pro", "Photoshop"],
-    worksWith: ["PNG", "JPG", "WebP"],
-    bestFor: ["Sellers", "Creators", "Marketers"],
-    originalPrice: 108,
-    priceNote: "vs remove.bg Pro at ~$9/mo",
-    rating: 4.8,
-    gems: { 5: 182, 4: 24, 3: 6, 2: 2, 1: 2 },
-    topRank: 1,
-    shelves: ["top9", "staff", "favorites"],
-    staffQuote: {
-      text: "Product photos. Profile pics. Thumbnails. One click, background gone.",
-      author: "Nikhil",
-      role: "Founder",
-    },
-    tldr: [
-      "Drop any photo and get a clean, transparent-background cutout in seconds",
-      "Unlimited images — no credit packs, no monthly caps, no watermarks",
-      "Everything runs in your browser, so photos never sit on someone else's server",
+    paid: ["remove-bg", "photoshop"],
+    answer:
+      "AltFTool's Background Remover is free, needs no account, and hands back the full-resolution cutout. The two products people pay for to do this are remove.bg, whose free web output is a preview of up to 0.25 megapixels and charges a credit for the real file, and Adobe Photoshop at US$22.99/month on the single-app plan.",
+    does: [
+      "Cuts the subject out and gives you a transparent PNG at the size you uploaded",
+      "Runs in the browser tab, so the photo is never uploaded to us",
+      "No credits, no account, no per-image counter",
     ],
-    overview: [
-      {
-        heading: "Cut out anything, instantly",
-        points: [
-          "AI edge detection handles hair, fur, and tricky product edges without manual masking",
-          "Export transparent PNGs ready for stores, decks, and thumbnails",
-          "Batch through a whole product shoot without hitting a paywall",
-        ],
-      },
-      {
-        heading: "Built for people who ship daily",
-        points: [
-          "No account, no queue — open the tool and drop your image",
-          "Works on the machine you're on: desktop, tablet, or phone browser",
-          "Pair it with ALTFTool's Image Editor and Compressor for a full free pipeline",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Priya S.", role: "Etsy seller", rating: 5, date: "Jul 2026", title: "Cancelled my credits subscription", text: "I was paying per-image on remove.bg for my product photos. This does the same job for my listings and I've processed hundreds of images. Genuinely can't tell the difference in output." },
-      { author: "Marcus T.", role: "YouTube creator", rating: 5, date: "Jun 2026", title: "Thumbnail workflow sorted", text: "Cutout in this, text in Text Behind Image, compress, upload. My whole thumbnail stack is now free." },
-      { author: "Ananya R.", role: "Social media manager", rating: 4, date: "Jun 2026", title: "Great for 95% of images", text: "Very fine hair on busy backgrounds sometimes needs a second pass, but for product and portrait shots it's spot on." },
+    limits: [
+      "Hair, fur, fine fabric and motion blur are where remove.bg's model is clearly better than in-browser segmentation. This is not a close contest.",
+      "No AI background replacement, no erase/restore brush and no bulk queue — a catalogue of thousands of product shots is not a job for this tool.",
+      "No API, so nothing here can run inside a build or a store's image pipeline.",
     ],
     faqs: [
-      { q: "Is there a resolution limit?", a: "You can process full-resolution photos; extremely large files are simply a bit slower since the work happens on your device." },
+      {
+        q: "Do I get the full-resolution image without paying?",
+        a: "Yes. The cutout is produced on your own device at the resolution you supplied, so there is no preview tier and no credit to spend. remove.bg's free web output is capped at roughly 0.25 megapixels and the full-resolution download costs one credit.",
+      },
     ],
-    aiSummary: "Reviewers consistently compare Background Remover to paid credit-based services and highlight that output quality holds up for product photos, portraits, and thumbnails. The most-praised points are unlimited free usage and in-browser processing; the only recurring nitpick is that very fine hair on busy backgrounds can need a second pass.",
   },
   {
     slug: "pdf-merger",
     name: "PDF Merger",
-    tagline: "Merge unlimited PDFs into one clean document — the Acrobat task without the Acrobat bill",
-    category: "PDF & Documents",
+    job: "Merging several PDFs into one document",
+    category: "PDF & documents",
     icon: "files",
-    iconColor: "text-red-600",
-    alternativeTo: ["Adobe Acrobat Pro", "Smallpdf Pro"],
-    worksWith: ["PDF"],
-    bestFor: ["Students", "Freelancers", "Small businesses"],
-    originalPrice: 240,
-    priceNote: "vs Adobe Acrobat Pro at ~$19.99/mo",
-    rating: 4.7,
-    gems: { 5: 148, 4: 31, 3: 9, 2: 3, 1: 2 },
-    topRank: 2,
-    shelves: ["top9", "staff"],
-    staffQuote: {
-      text: "Invoices, contracts, scans — merged before Acrobat would have finished loading.",
-      author: "Betul",
-      role: "Engineering",
-    },
-    tldr: [
-      "Combine any number of PDFs into a single file, in the order you drag them",
-      "Files are merged in your browser — contracts and invoices never leave your machine",
-      "Part of ALTFTool's full free PDF suite: split, watermark, and annotate too",
+    paid: ["adobe-acrobat-online", "smallpdf"],
+    answer:
+      "AltFTool's PDF Merger combines PDFs in your browser with no account and no daily counter. Adobe Acrobat Pro is US$19.99/month on the annual plan billed monthly, and its free online tools allow one premium transaction per rolling 30 days once you sign in. Smallpdf Pro was ₹979.00/month on the India storefront when we checked — their page is geo-localised, so that is not a USD figure.",
+    does: [
+      "Merges any number of PDFs in the order you arrange them",
+      "Runs locally in the tab — contracts and invoices are never uploaded to us",
+      "No page cap, no file counter, no sign-in",
     ],
-    overview: [
-      {
-        heading: "The most-needed PDF job, minus the subscription",
-        points: [
-          "Drag, reorder, merge, download — the whole flow takes under a minute",
-          "No page limits and no '2 free tasks per day' meter",
-          "Clean output with pages exactly as you arranged them",
-        ],
-      },
-      {
-        heading: "Private by design",
-        points: [
-          "Merging happens locally in the browser, which most paid web tools can't claim",
-          "Nothing is stored — close the tab and the files are gone",
-          "Works offline once the page is loaded",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Rahul D.", role: "CA firm owner", rating: 5, date: "Jul 2026", title: "Daily driver for client documents", text: "We merge dozens of scanned documents a day. Being local-only was the deciding factor — client financials shouldn't sit on a random server." },
-      { author: "Jessica M.", role: "Grad student", rating: 5, date: "May 2026", title: "Thesis appendix saved", text: "Merged 40+ PDFs of scanned references with zero fuss. The reorder UI is nicer than the paid tool my university licenses." },
-      { author: "Tom W.", role: "Freelancer", rating: 4, date: "Jun 2026", title: "Does one thing perfectly", text: "Would love bookmark preservation for very complex PDFs, but for contracts and invoices it's flawless." },
+    limits: [
+      "No OCR and no PDF-to-Word conversion. If the output has to keep a real table structure, Adobe is still the benchmark and you should pay them.",
+      "Adobe's ceilings are far above ours — 2 GB for compression, 1,500 pages for splitting. Ours is whatever your browser tab can hold.",
+      "No e-signature workflow, no DPA and no ISO certificate, so this will not pass a procurement review that requires one.",
     ],
     faqs: [
-      { q: "Is there a file size limit?", a: "No hard limit — very large PDFs just take a little longer since your own device does the work." },
+      {
+        q: "Is there a limit on how many PDFs I can merge?",
+        a: "There is no counter, because there is no server queue to protect. The practical ceiling is your device's memory: a few dozen ordinary documents is fine, while a hundred large scans will go faster on a hosted service.",
+      },
     ],
-    aiSummary: "Users love that PDF Merger removes the single most common reason to pay for Acrobat. Local, in-browser processing is the standout theme in reviews — especially from finance and legal users handling sensitive files. A minority of reviewers ask for advanced features like bookmark preservation.",
   },
   {
     slug: "image-editor",
     name: "Image Editor",
-    tagline: "Brightness, saturation, rotate, flip, grayscale — quick edits without opening Photoshop",
-    category: "Design & Image",
+    job: "Everyday image edits (crop, rotate, brightness, saturation, format)",
+    category: "Images & design",
     icon: "image",
-    iconColor: "text-blue-600",
-    alternativeTo: ["Photoshop", "Canva Pro"],
-    worksWith: ["PNG", "JPG", "WebP"],
-    bestFor: ["Creators", "Marketers", "Everyone"],
-    originalPrice: 264,
-    priceNote: "vs Photoshop at ~$22/mo",
-    rating: 4.6,
-    gems: { 5: 96, 4: 28, 3: 10, 2: 4, 1: 2 },
-    topRank: 3,
-    shelves: ["top9", "favorites"],
-    tldr: [
-      "All the everyday adjustments — brightness, contrast, saturation, rotation, flips",
-      "Full-canvas editing workspace right in the browser tab",
-      "Zero learning curve: if you've used a phone photo editor, you already know it",
+    paid: ["photoshop", "canva-pro"],
+    answer:
+      "AltFTool's Image Editor does the everyday adjustments — crop, rotate, flip, brightness, contrast, saturation, format conversion — free and in the browser. Adobe Photoshop's cheapest route to the same edits is the single-app plan at US$22.99/month, or US$263.88/year prepaid. Canva Pro's price could not be verified in USD on 2026-07-28; Canva served an India storefront at ₹500/month.",
+    does: [
+      "Exposure, colour and geometry adjustments with a live preview",
+      "Export to JPG, PNG or WebP at the original resolution",
+      "Opens instantly — no 4 GB download and no creative-suite account",
     ],
-    overview: [
-      {
-        heading: "The edits you actually make",
-        points: [
-          "90% of real-world image edits are exposure tweaks and crops — this nails exactly that",
-          "Live preview on every slider, undo anything",
-          "Export in web-ready formats at original quality",
-        ],
-      },
-      {
-        heading: "No install, no subscription, no upsell",
-        points: [
-          "Opens instantly — no 4GB download or creative-suite account",
-          "Free forever as part of the ALTFTool platform",
-          "Chain with Background Remover and Image Compressor for a complete pipeline",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Divya K.", role: "Blogger", rating: 5, date: "Jun 2026", title: "My featured images take 2 minutes now", text: "Crop, brighten, export. I stopped opening heavyweight editors for blog images completely." },
-      { author: "Sam P.", role: "Marketplace seller", rating: 4, date: "May 2026", title: "Perfect for listing photos", text: "Handles exposure fixes across a batch of product shots fast. Layers would be nice but that's not what this is for." },
+    limits: [
+      "No layers, masks or smart objects. Every edit is applied to one flat image and cannot be reopened and re-adjusted later — that is the whole point of Photoshop's non-destructive model.",
+      "No generative fill or AI editing, and no CMYK/16-bit colour management for print.",
+      "No Brand Kit and no template library, which is the reason a lot of teams keep paying Canva.",
     ],
     faqs: [
-      { q: "Does it support layers?", a: "No — it's deliberately a fast single-image editor. For composition work, try Text Behind Image or the Flow Chart Maker canvas." },
+      {
+        q: "Can I reopen an edit later and change it?",
+        a: "No. This is a flat, single-pass editor: what you export is final. Adjustment layers that stay editable are a Photoshop feature and we do not have an equivalent.",
+      },
     ],
-    aiSummary: "Reviewers describe Image Editor as the fast lane for everyday edits — exposure, crops, flips — with praise for instant load and zero learning curve. Power users note it isn't a layers-based compositor, which matches its intent.",
   },
   {
     slug: "invoice-generator",
     name: "Invoice Generator",
-    tagline: "Create clean, print-ready invoices with tax, discounts, and totals — free forever",
-    category: "Business & Finance",
+    job: "Creating a professional itemized invoice",
+    category: "Data & business",
     icon: "file-spreadsheet",
-    iconColor: "text-sky-600",
-    alternativeTo: ["FreshBooks", "Zoho Invoice"],
-    worksWith: ["PDF", "Print"],
-    bestFor: ["Freelancers", "Solopreneurs", "Small businesses"],
-    originalPrice: 228,
-    priceNote: "vs FreshBooks at ~$19/mo",
-    rating: 4.8,
-    gems: { 5: 121, 4: 15, 3: 5, 2: 1, 1: 1 },
-    topRank: 4,
-    shelves: ["top9", "staff"],
-    staffQuote: {
-      text: "Line items, tax, totals, print. Freelancer invoicing shouldn't cost a subscription.",
-      author: "Ilona",
-      role: "Operations",
-    },
-    tldr: [
-      "Professional invoices with line items, tax rates, discounts, and automatic totals",
-      "Print-ready output you can save as PDF and send immediately",
-      "No account, no invoice limits, no 'powered by' branding on the free tier — because there is no paid tier",
+    paid: ["freshbooks", "zoho-invoice"],
+    answer:
+      "AltFTool's Invoice Generator builds a print-ready itemized invoice with tax and totals, free and without an account. FreshBooks starts at US$23.00/month on the Lite plan and has no free tier at all. Zoho Invoice, though, is genuinely free — so if you need saved clients and payment collection, switching to a paid tool is not the only option, and we would rather say so.",
+    does: [
+      "Itemized rows with quantity, rate, per-line or global tax, and discounts",
+      "Automatic subtotal, tax and grand-total maths",
+      "Print or save as PDF straight from the browser, with no branding line added",
     ],
-    overview: [
-      {
-        heading: "Everything an invoice needs, nothing it doesn't",
-        points: [
-          "Itemized rows with quantity × rate, per-line or global tax, and discounts",
-          "Automatic subtotal, tax, and grand-total math — no spreadsheet formulas",
-          "Clean layout that looks professional to clients on first open",
-        ],
-      },
-      {
-        heading: "Built for the send-it-today workflow",
-        points: [
-          "Fill, print or save as PDF, and email it — under five minutes end to end",
-          "Nothing stored on our side; your billing data stays with you",
-          "Use it alongside Excel to Chart for simple revenue tracking",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Kunal V.", role: "Design freelancer", rating: 5, date: "Jul 2026", title: "Replaced my invoicing app", text: "I send 6-8 invoices a month. A subscription never made sense for that volume, and this output looks just as professional." },
-      { author: "Maria G.", role: "Consultant", rating: 5, date: "Jun 2026", title: "Clients noticed the upgrade", text: "Cleaner than the Word template I'd been abusing for years. The tax handling alone saved me embarrassing math errors." },
+    limits: [
+      "It cannot take the payment. FreshBooks processes card, ACH, Apple Pay and Google Pay against the invoice; this produces a document and nothing more.",
+      "No saved clients, no invoice history and no recurring invoices — it is stateless, so nothing carries over to next month.",
+      "No automatic payment reminders, late fees, expense tracking or accountant access.",
     ],
     faqs: [
-      { q: "Can I save clients and recurring invoices?", a: "It's a fast stateless generator today — recurring profiles are on the roadmap as part of the ALTFTool dashboard." },
+      {
+        q: "If Zoho Invoice is free, why use this?",
+        a: "Often you should use Zoho — it is free, it saves your clients and it collects payments. Its ceilings are 2 users, 3 projects and 500 invoices a year, and every invoice carries a 'Powered by Zoho Invoice' line. This tool suits the case where you want one clean invoice out the door now, without creating an account or putting a client's details into someone's CRM.",
+      },
     ],
-    aiSummary: "Low-volume invoicers — freelancers and consultants — call this the obvious replacement for subscription invoicing apps. Reviews highlight professional output and correct tax math. The most-requested addition is saved client profiles.",
   },
   {
     slug: "video-trimmer",
     name: "Video Trimmer",
-    tagline: "Trim clips right in the browser with precise start/end controls — no export queue, no watermark",
-    category: "Video & Media",
+    job: "Trimming a video clip and exporting it without a watermark",
+    category: "Video",
     icon: "video",
-    iconColor: "text-red-600",
-    alternativeTo: ["Camtasia", "Clipchamp Premium"],
-    worksWith: ["MP4", "WebM", "OGG"],
-    bestFor: ["Creators", "Teachers", "Marketers"],
-    originalPrice: 180,
-    priceNote: "vs Camtasia at ~$179.88/yr",
-    rating: 4.5,
-    gems: { 5: 74, 4: 22, 3: 9, 2: 4, 1: 3 },
-    topRank: 5,
-    shelves: ["top9", "favorites"],
-    tldr: [
-      "Frame-accurate start and end trimming without a timeline learning curve",
-      "Processes locally — no upload wait, no render queue, no watermark",
-      "Perfect for shorts, lecture clips, and demo videos",
+    paid: ["camtasia", "clipchamp-premium"],
+    answer:
+      "AltFTool's Video Trimmer cuts the start and end off a clip in your browser, watermark-free. Camtasia's free tier watermarks every export and so does its paid Starter tier, making Essentials the cheapest watermark-free option — ₹7,099.00/year on the India storefront we were served, with no USD figure readable on TechSmith's own site. Microsoft Clipchamp is the honest comparison here: its free tier already exports watermark-free up to 1080p, and the US$7.00 per user/month Premium tier buys 4K, not the trim.",
+    does: [
+      "Precise start and end handles plus numeric input for an exact cut",
+      "Processes locally — footage is never uploaded and there is no render queue",
+      "No watermark and no account wall between you and the exported file",
     ],
-    overview: [
-      {
-        heading: "The 30-second trim job, done in 30 seconds",
-        points: [
-          "Most 'video editing' is cutting the dead air off both ends — this is exactly that tool",
-          "Precise handles plus numeric start/end input for exact cuts",
-          "Instant preview of the trimmed range before export",
-        ],
-      },
-      {
-        heading: "Local-first, creator-friendly",
-        points: [
-          "Your footage never uploads anywhere — trims happen on your machine",
-          "No account walls between you and your exported clip",
-          "Chain with Video to GIF for instant shareable snippets",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Aditya N.", role: "Course creator", rating: 5, date: "Jun 2026", title: "Lecture clips in seconds", text: "I trim 20+ recordings a week for my course platform. This replaced a desktop app I only used for trimming." },
-      { author: "Chloe B.", role: "TikTok creator", rating: 4, date: "May 2026", title: "Fast and watermark-free", text: "Does the one thing I need before upload. Very long 4K files can get heavy in the browser, but everyday clips fly." },
+    limits: [
+      "No timeline. Multi-track editing, transitions, keyframes, callouts and cursor-zoom are Camtasia's product, not ours.",
+      "No screen or webcam capture. A browser tool cannot record the operating system at high framerate with system audio.",
+      "Long or high-bitrate 4K files are bounded by your device's memory; a server-side encoder will not be.",
     ],
     faqs: [
-      { q: "Can it handle long videos?", a: "Yes, though very long high-resolution files depend on your device's memory since processing is local." },
+      {
+        q: "Do I have to pay anything to trim a video without a watermark?",
+        a: "No — not here, and not on Clipchamp's free tier either, which exports watermark-free at up to 1080p. Camtasia is the one that puts watermark-free export behind a paid tier, and even its cheapest paid tier, Starter, still stamps every export.",
+      },
     ],
-    aiSummary: "Creators praise Video Trimmer for making the most common edit — cutting clip boundaries — instant and watermark-free. Local processing wins privacy points; the noted limit is browser memory on very large 4K files.",
   },
   {
     slug: "excel-to-chart",
     name: "Excel to Chart",
-    tagline: "Turn XLSX and CSV files into beautiful interactive charts — no BI tool, no license",
-    category: "Business & Finance",
+    job: "Turning a spreadsheet or CSV into a chart",
+    category: "Data & business",
     icon: "bar-chart-3",
-    iconColor: "text-teal-600",
-    alternativeTo: ["Tableau", "Power BI Pro"],
-    worksWith: ["XLSX", "XLS", "CSV"],
-    bestFor: ["Analysts", "Founders", "Students"],
-    originalPrice: 180,
-    priceNote: "vs Power BI Pro at ~$15/mo",
-    rating: 4.6,
-    gems: { 5: 68, 4: 19, 3: 7, 2: 2, 1: 2 },
-    topRank: 6,
-    shelves: ["top9", "favorites"],
-    tldr: [
-      "Drop a spreadsheet, get presentation-ready interactive charts",
-      "Multiple chart styles with customization — colors, labels, layout",
-      "Export for decks and reports without a BI seat license",
+    paid: ["power-bi-pro", "tableau-creator"],
+    answer:
+      "AltFTool's Excel to Chart turns an XLSX or CSV file into an interactive chart in the browser, free. Microsoft Power BI Pro is US$14.00 per user/month paid yearly — and its free account can already build reports; Pro is what you buy to share them. Tableau Creator is US$75.00 per user/month billed annually, or US$900.00 per user/year.",
+    does: [
+      "Reads the columns out of an XLSX, XLS or CSV file and suggests a chart type",
+      "Interactive charts with colour, label and layout controls",
+      "The file is parsed on your device, so finance data is not uploaded to us",
     ],
-    overview: [
-      {
-        heading: "From rows to insight in one drop",
-        points: [
-          "Auto-detects your columns and suggests sensible chart types",
-          "Interactive hover states make review meetings actually engaging",
-          "Style controls to match your deck without fighting a BI theme editor",
-        ],
-      },
-      {
-        heading: "For the 'I just need a chart' moment",
-        points: [
-          "No workspace setup, no data-source connectors, no admin approval",
-          "Your spreadsheet renders locally — finance data stays private",
-          "Pairs with Invoice Generator for a lightweight founder finance stack",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Neha J.", role: "Startup founder", rating: 5, date: "Jul 2026", title: "Investor update charts sorted", text: "Monthly metrics from CSV to clean charts in two minutes. I dropped my BI subscription for this exact use case." },
-      { author: "Daniel K.", role: "Ops analyst", rating: 4, date: "Jun 2026", title: "Great for quick shares", text: "Not a dashboard platform and doesn't pretend to be. For one-off chart requests it's faster than opening the real BI tool." },
+    limits: [
+      "No live data connections. This is file-based by design: to refresh a chart you re-drop an updated file.",
+      "No publishing, no shared workspace, no subscriptions or alerts, and no row-level security — that is exactly what a Power BI Pro or Tableau seat is for.",
+      "No data-prep pipeline. Joining and cleaning several sources repeatedly is Tableau Prep's job.",
     ],
     faqs: [
-      { q: "Does it support live data connections?", a: "No — it's file-based by design. Re-drop an updated file to refresh your charts." },
+      {
+        q: "Do I need Power BI Pro to make a chart from a CSV?",
+        a: "No. Power BI's free account can create reports; the paid Pro tier is required to share them with colleagues. If your chart is going into a deck or a document rather than a governed workspace, a free tool covers it.",
+      },
     ],
-    aiSummary: "Reviewers position Excel to Chart between spreadsheets and full BI platforms: ideal for one-off, presentation-ready charts from files. Founders and analysts cite speed and zero setup; it deliberately skips live data connections.",
   },
   {
     slug: "flow-chart-maker",
     name: "Flow Chart Maker",
-    tagline: "Sketch flowcharts and share them with your team — diagramming without the per-editor pricing",
-    category: "Productivity & AI",
+    job: "Drawing a flowchart or process diagram",
+    category: "Data & business",
     icon: "workflow",
-    iconColor: "text-gray-500",
-    alternativeTo: ["Lucidchart", "Miro"],
-    worksWith: ["PNG export", "Browser canvas"],
-    bestFor: ["Product teams", "Developers", "Students"],
-    originalPrice: 108,
-    priceNote: "vs Lucidchart at ~$9/mo per editor",
-    rating: 4.4,
-    gems: { 5: 52, 4: 20, 3: 8, 2: 4, 1: 2 },
-    topRank: 7,
-    shelves: ["top9", "rising"],
-    tldr: [
-      "Drag-and-connect shapes for flows, processes, and system sketches",
-      "Full-width canvas workspace in the browser",
-      "Export and share without per-seat licensing",
+    paid: ["miro", "lucidchart"],
+    answer:
+      "AltFTool's Flow Chart Maker gives you a browser canvas for boxes-and-arrows diagrams with no document or shape cap. Miro's Starter plan is US$8/month per member billed yearly, and its free plan keeps only the 3 most recent boards editable. Lucidchart's Individual plan is US$9/month billed annually (US$108/year), with a free plan capped at 3 documents and 75 shapes each.",
+    does: [
+      "Standard flowchart shapes with clean connectors on a full-width canvas",
+      "No cap on documents or on shapes per document",
+      "Export an image and drop it into any doc, ticket or deck",
     ],
-    overview: [
-      {
-        heading: "Think in boxes and arrows",
-        points: [
-          "Standard flowchart shapes with clean connectors",
-          "Fast keyboard-friendly editing for quick idea capture",
-          "Uncluttered canvas that stays out of your way",
-        ],
-      },
-      {
-        heading: "Free where others charge per editor",
-        points: [
-          "Diagram tools charge per seat — sketching an idea shouldn't need procurement",
-          "Export as an image and drop it in any doc, ticket, or deck",
-          "No document limits on a free tier — there is no tier",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Vikram S.", role: "Engineering manager", rating: 4, date: "Jun 2026", title: "Design-doc diagrams, minus the license debate", text: "For architecture sketches in design docs this covers us. Real-time multiplayer is the only thing I miss from the paid tools." },
-      { author: "Emily R.", role: "CS student", rating: 5, date: "May 2026", title: "Assignment flowcharts done", text: "My whole class uses trial accounts that keep expiring. This just works every time." },
+    limits: [
+      "Single editor. There is no real-time co-editing, no visible cursors, no commenting and no revision history.",
+      "No Visio import or export, and no data-linked shapes pulling live Jira, Salesforce or Confluence records onto the canvas.",
+      "No cloud account, so a diagram lives in the tab until you export it.",
     ],
     faqs: [
-      { q: "Can multiple people edit at once?", a: "Not yet — it's single-editor today. Export/import makes handoffs easy in the meantime." },
+      {
+        q: "Can my team edit the same diagram at once?",
+        a: "No. Multiplayer editing is the reason Miro and Lucidchart charge per seat, and we have no equivalent. Export and re-import is the handoff here.",
+      },
     ],
-    aiSummary: "Users adopt Flow Chart Maker for design docs, assignments, and process sketches where per-seat diagram pricing is hard to justify. The recurring wish-list item is real-time collaboration; solo diagramming reviews are consistently positive.",
   },
   {
     slug: "image-compressor",
     name: "Image Compressor",
-    tagline: "Shrink image file sizes instantly without visible quality loss — unlimited and free",
-    category: "Design & Image",
+    job: "Compressing an image to a smaller file size",
+    category: "Images & design",
     icon: "image",
-    iconColor: "text-indigo-700",
-    alternativeTo: ["TinyPNG Pro", "Kraken.io"],
-    worksWith: ["PNG", "JPG", "WebP"],
-    bestFor: ["Web developers", "Bloggers", "SEO teams"],
-    originalPrice: 39,
-    priceNote: "vs TinyPNG Pro at ~$39/yr",
-    rating: 4.7,
-    gems: { 5: 88, 4: 18, 3: 5, 2: 2, 1: 1 },
-    topRank: 8,
-    shelves: ["top9", "favorites"],
-    tldr: [
-      "Compress images to a fraction of their size with smart quality retention",
-      "No 20-image batch caps or monthly quotas",
-      "Faster pages, better Core Web Vitals, happier users",
+    paid: ["tinypng", "kraken-io"],
+    answer:
+      "AltFTool's Image Compressor re-encodes images in the browser with no batch or file-size cap. TinyPNG's Web Pro is US$3.25/month billed annually, and its free web tool stops at 20 compressions per batch and 5 MB per image. Kraken.io starts at US$5/month (US$50/year) with a free web interface capped at 1 MB per image.",
+    does: [
+      "Compresses PNG, JPG and WebP with no per-batch or per-session counter",
+      "No 5 MB or 1 MB per-file ceiling — the limit is your device's memory",
+      "Images are re-encoded locally and never uploaded to us",
     ],
-    overview: [
-      {
-        heading: "Page speed is a feature",
-        points: [
-          "Oversized images are the #1 cause of slow pages — fix them in seconds",
-          "Visually lossless output at dramatically smaller sizes",
-          "Compress a whole folder of assets before deploy, free",
-        ],
-      },
-      {
-        heading: "No quota anxiety",
-        points: [
-          "Paid compressors meter you by image count — this never does",
-          "Local processing means originals stay on your machine",
-          "Part of the same free pipeline as Background Remover and Image Editor",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Arjun M.", role: "Frontend developer", rating: 5, date: "Jul 2026", title: "Pre-deploy ritual", text: "Every asset goes through this before it ships. LCP improved measurably the week we standardized on it." },
-      { author: "Sophie L.", role: "Food blogger", rating: 5, date: "Jun 2026", title: "My photos finally load fast", text: "Recipe posts have 15+ photos each. Compressing them used to eat my monthly quota on day one; now it's a non-issue." },
+    limits: [
+      "This is a browser re-encode, not Tinify's tuned palette quantizer. On flat-colour PNGs and logos, TinyPNG will usually produce a smaller file at the same perceived quality.",
+      "No API, no WordPress or Photoshop plugin, no S3 delivery and no image CDN — nothing here fits into a build pipeline.",
+      "No target-size mode: you set quality, not an output file size.",
     ],
     faqs: [
-      { q: "How much smaller do files get?", a: "Typically 60-80% smaller for photos, depending on source quality and format — with no visible difference at normal viewing sizes." },
+      {
+        q: "Will this compress as well as TinyPNG?",
+        a: "Usually close on photographs, and usually not on flat-colour PNGs, where TinyPNG's quantizer has a decade of tuning behind it. What you get instead is no 20-per-batch cap, no 5 MB ceiling and no copy of your image on someone's server.",
+      },
     ],
-    aiSummary: "Developers and bloggers treat Image Compressor as a standard pre-publish step. Reviews emphasize unlimited usage versus quota-metered paid tools, with measurable page-speed wins reported. No significant complaints recur.",
   },
   {
     slug: "meeting-transcript-action-extractor",
     name: "Meeting Action Extractor",
-    tagline: "Paste a meeting transcript, get action items, decisions, and key points — automatically",
-    category: "Productivity & AI",
+    job: "Pulling action items and decisions out of a meeting transcript",
+    category: "Meetings & AI",
     icon: "clipboard-list",
-    iconColor: "text-violet-600",
-    alternativeTo: ["Otter.ai Business", "Fireflies Pro"],
-    worksWith: ["Any transcript text"],
-    bestFor: ["Managers", "Founders", "Project leads"],
-    originalPrice: 240,
-    priceNote: "vs Otter.ai Business at ~$20/mo",
-    rating: 4.5,
-    gems: { 5: 41, 4: 13, 3: 5, 2: 2, 1: 1 },
-    topRank: 9,
-    shelves: ["top9", "justLaunched"],
-    tldr: [
-      "Turns raw meeting transcripts into structured action items and decisions",
-      "Works with transcripts from any source — Zoom, Meet, Teams, or manual notes",
-      "No bot joins your call and no per-seat AI subscription",
+    paid: ["fireflies-pro", "otter-business"],
+    answer:
+      "AltFTool's Meeting Action Extractor takes a transcript you already have and structures it into action items, decisions and key points — free, with no bot in your call. Fireflies.ai Pro is US$18.00 per seat/month, or US$10.00 per seat/month billed annually. Otter.ai Business is US$30.00 per user/month, or US$19.99 per user/month billed annually. Read the limits below first: neither of those is really the same product.",
+    does: [
+      "Separates action items from decisions and from general discussion",
+      "Works with a transcript from any source — Zoom, Meet, Teams or typed notes",
+      "Nothing is retained after you close the tab",
     ],
-    overview: [
-      {
-        heading: "Meetings end. Follow-ups shouldn't be archaeology.",
-        points: [
-          "Extracts who-does-what action items from messy conversation text",
-          "Separates decisions from discussion so outcomes are unambiguous",
-          "Key-points summary for people who skipped the meeting",
-        ],
-      },
-      {
-        heading: "Bring your own transcript",
-        points: [
-          "Meeting AI tools charge per seat and want a bot in your call — this just takes the text",
-          "Paste, extract, copy into your task tracker",
-          "Nothing retained after you close the tab",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Karan P.", role: "Product manager", rating: 5, date: "Jul 2026", title: "Standup notes to Jira in minutes", text: "I paste the auto-transcript from our calls and get a clean action list. The per-seat AI meeting tools were a hard sell for exactly this output." },
-      { author: "Lena H.", role: "Agency owner", rating: 4, date: "Jun 2026", title: "Client call follow-ups nailed", text: "Decisions vs discussion separation is the killer feature. Occasionally over-extracts on very casual calls." },
+    limits: [
+      "It does not transcribe anything. You must already have the text. Otter and Fireflies are speech-to-text products first, and this tool cannot replace that half of the job.",
+      "No notetaker bot. Neither joining a call from your calendar nor recording it without a human present is possible from a web page.",
+      "No speaker identification, no CRM write-back to Salesforce or HubSpot, and no conversation-intelligence metrics like talk-time ratio or sentiment.",
     ],
     faqs: [
-      { q: "Does it record my meetings?", a: "No — it never joins or records calls. You bring a transcript from any source and it structures the text." },
+      {
+        q: "Does this record or join my meetings?",
+        a: "No. It never joins a call and never records audio. You bring text from any source and it structures it. If you need the recording and transcription itself, Fireflies' free plan includes unlimited transcription and Otter's free Basic plan includes 300 minutes a month.",
+      },
     ],
-    aiSummary: "Early adopters use Action Extractor as the missing follow-up step after calls, feeding transcripts from Zoom or Meet. Reviewers value that no bot joins calls and no per-seat fee applies; a few note over-extraction on informal conversations.",
   },
   {
     slug: "text-behind-image",
     name: "Text Behind Image",
-    tagline: "Create viral poster-style visuals with text layered behind your subject",
-    category: "Design & Image",
+    job: "Placing text behind the subject of a photo",
+    category: "Images & design",
     icon: "image-plus",
-    iconColor: "text-cyan-600",
-    alternativeTo: ["Canva Pro", "Photoshop"],
-    worksWith: ["PNG", "JPG"],
-    bestFor: ["Creators", "Social media managers", "Designers"],
-    originalPrice: 120,
-    priceNote: "vs Canva Pro at ~$120/yr",
-    rating: 4.6,
-    gems: { 5: 47, 4: 12, 3: 4, 2: 1, 1: 1 },
-    shelves: ["justLaunched", "rising"],
-    tldr: [
-      "The 'text behind subject' effect that usually needs Photoshop masking — automated",
-      "Large editable text layers with full font and color control",
-      "Export poster-ready compositions in minutes",
+    paid: ["photoshop", "canva-pro"],
+    answer:
+      "AltFTool's Text Behind Image separates the subject automatically so type sits behind it — free, in the browser. Doing it by hand means masking in Adobe Photoshop, which is US$22.99/month on the single-app plan. Canva Pro is the other common route; its price could not be verified in USD on 2026-07-28, when Canva served an India storefront at ₹500/month.",
+    does: [
+      "Detects the subject and layers editable text behind it automatically",
+      "Font, size, weight, colour and position controls on the text layer",
+      "Exports a finished composition without a watermark",
     ],
-    overview: [
-      {
-        heading: "The effect everyone asks how to make",
-        points: [
-          "AI separates your subject so text slides naturally behind it",
-          "No manual masking, no layer juggling, no tutorials needed",
-          "Perfect for thumbnails, posters, and social graphics",
-        ],
-      },
-      {
-        heading: "Design-tool results without design-tool pricing",
-        points: [
-          "This one effect is why many people keep a Canva Pro subscription",
-          "Full typography control — size, weight, color, position",
-          "Combine with Background Remover for complete creative control",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Ritika A.", role: "Instagram creator", rating: 5, date: "Jul 2026", title: "My reels covers look pro now", text: "This exact effect got me to try the tool and it delivered. Posted results, got DMs asking what app I use." },
-      { author: "Jake F.", role: "Podcast producer", rating: 4, date: "Jul 2026", title: "Episode art in minutes", text: "Great subject detection on portraits. Busy group shots need some tweaking, but solo shots are one-and-done." },
+    limits: [
+      "One effect, not a compositor. There are no layers to rearrange, no masks to refine by hand and no blend modes.",
+      "Subject detection is weakest exactly where Photoshop's manual masking wins: busy group shots, fine hair and semi-transparent edges.",
+      "A curated font set only — no custom font upload, and no Brand Kit enforcing your own typefaces.",
     ],
     faqs: [
-      { q: "Can I use my own fonts?", a: "A curated font set ships today; custom font upload is on the roadmap." },
+      {
+        q: "Do I need Photoshop skills for this effect?",
+        a: "No. The masking step that normally requires Photoshop is done for you. What you lose is the ability to fix the mask by hand when detection gets an edge wrong.",
+      },
     ],
-    aiSummary: "Reviews center on one thing: the text-behind-subject effect working automatically where it previously required Photoshop skills. Creators report strong results on portraits; complex group shots may need manual adjustment.",
   },
   {
     slug: "video-to-gif",
     name: "Video to GIF",
-    tagline: "Convert MP4, WebM, or OGG clips into optimized GIFs — directly in your browser",
-    category: "Video & Media",
+    job: "Converting a short video clip into a GIF",
+    category: "Video",
     icon: "video",
-    iconColor: "text-teal-500",
-    alternativeTo: ["Giphy Capture", "EZGif Premium"],
-    worksWith: ["MP4", "WebM", "OGG"],
-    bestFor: ["Creators", "Support teams", "Developers"],
-    originalPrice: 60,
-    priceNote: "vs paid GIF converters at ~$5/mo",
-    rating: 4.5,
-    gems: { 5: 38, 4: 14, 3: 5, 2: 2, 1: 1 },
-    shelves: ["justLaunched", "rising"],
-    tldr: [
-      "Highly-optimized GIFs from any short clip — sized for docs, PRs, and chats",
-      "Local conversion with no upload wait or file-size upsell",
-      "Control dimensions and quality for the perfect size/sharpness balance",
+    paid: ["freeconvert", "123apps"],
+    answer:
+      "AltFTool's Video to GIF converts MP4, WebM or OGG clips into optimized GIFs locally, with no daily conversion budget. FreeConvert's Basic plan is US$12.99/month and its free tier meters you at 20 conversion minutes per day. 123apps was ₹190/month or ₹1,824/year on the storefront we were served — an INR figure, not a USD one — with a free tier of 5 files per day.",
+    does: [
+      "Converts short clips to GIF with dimension and quality controls",
+      "No daily file counter and no conversion-minute budget",
+      "Conversion runs on your device, so nothing is uploaded and nothing is queued",
     ],
-    overview: [
-      {
-        heading: "GIFs that don't weigh 40MB",
-        points: [
-          "Smart optimization keeps GIFs shareable in Slack, GitHub, and docs",
-          "Trim-and-convert in one pass with Video Trimmer",
-          "No watermarks stamped on your output",
-        ],
-      },
-      {
-        heading: "Made for show-don't-tell moments",
-        points: [
-          "Bug reproductions, feature demos, UI walkthroughs — a GIF beats a paragraph",
-          "Everything processes on your machine",
-          "No account, no queue, no daily conversion cap",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Dev T.", role: "Software engineer", rating: 5, date: "Jul 2026", title: "PR demos leveled up", text: "Every PR gets a GIF walkthrough now. Reviewers actually understand the change before reading code." },
-      { author: "Hannah C.", role: "Support lead", rating: 4, date: "Jun 2026", title: "Help-doc GIFs made easy", text: "Our knowledge base went from static screenshots to GIF walkthroughs in a week." },
+    limits: [
+      "No GPU encoding and no multi-gigabyte ceiling. Long or high-bitrate video is a server's job, not a browser tab's.",
+      "No target-size mode — FreeConvert lets you name an output size and hits it; here you adjust dimensions and quality yourself.",
+      "No API and no batch queue, so this does not automate.",
     ],
     faqs: [
-      { q: "What's the maximum clip length?", a: "GIFs work best under ~30 seconds; longer clips convert but grow quickly in size — the optimizer will warn you." },
+      {
+        q: "How long can the clip be?",
+        a: "GIF as a format grows quickly past about 30 seconds, so short clips work best regardless of the tool. Beyond that the constraint is your device's memory rather than a plan limit.",
+      },
     ],
-    aiSummary: "Engineers and support teams use Video to GIF for demos in PRs and help docs. Local processing and no watermarks are the cited advantages; reviewers note the format's inherent size growth on long clips.",
   },
   {
     slug: "meme-generator",
     name: "Meme Generator",
-    tagline: "Create shareable memes in seconds — templates, captions, done",
-    category: "Design & Image",
+    job: "Adding captions to an image and exporting it without a watermark",
+    category: "Images & design",
     icon: "image",
-    iconColor: "text-blue-500",
-    alternativeTo: ["Imgflip Pro", "Canva Pro"],
-    worksWith: ["PNG", "JPG"],
-    bestFor: ["Creators", "Community managers", "Everyone"],
-    originalPrice: 48,
-    priceNote: "vs Imgflip Pro at ~$3.95/mo",
-    rating: 4.4,
-    gems: { 5: 44, 4: 16, 3: 8, 2: 3, 1: 2 },
-    shelves: ["endingSoon"],
-    tldr: [
-      "Classic top/bottom text meme creation with clean output",
-      "No watermark on exports — unlike the free tiers of paid meme tools",
-      "Fast enough to reply to the group chat while the joke is still fresh",
+    paid: ["imgflip-pro", "canva-pro"],
+    answer:
+      "AltFTool's Meme Generator captions an image and exports it with no watermark, free. On Imgflip, watermark-free export is the paid feature: Pro Basic is US$5.95/month billed monthly, or US$4.95/month billed yearly, and removing the watermark from animated GIFs needs full Imgflip Pro at US$14.95/month. Canva Pro is the other common route and its USD price could not be verified on 2026-07-28.",
+    does: [
+      "Top and bottom caption text with crisp rendering that survives re-shares",
+      "Export with no watermark and no ads on the output",
+      "Nothing is uploaded, so the image stays on your device",
     ],
-    overview: [
-      {
-        heading: "Speed is the whole game",
-        points: [
-          "Upload or pick an image, caption it, export — under a minute",
-          "Crisp text rendering that survives re-shares",
-          "No watermark ever",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Rohan B.", role: "Community manager", rating: 5, date: "Jun 2026", title: "Engagement content on tap", text: "Our community memes outperform our 'real' posts 3:1. This is now an official marketing tool, which is hilarious." },
-      { author: "Katie D.", role: "Student", rating: 4, date: "May 2026", title: "Does the job", text: "Watermark-free free meme tool. That's the review." },
+    limits: [
+      "No hosted template library. Imgflip's million-plus searchable templates are a big part of what it sells; here you bring your own image.",
+      "No AI meme generation and no background removal inside this tool.",
+      "No hosted publishing — no permanent imgflip-style URL, no community feed, no API and no Slack app.",
     ],
     faqs: [
-      { q: "Are meme templates included?", a: "You can upload any image; a starter template gallery is being expanded." },
+      {
+        q: "Why do free meme tools add a watermark?",
+        a: "Because watermark removal is the upsell. On Imgflip, the free tier stamps every meme and GIF, and Pro Basic at US$5.95/month is the cheapest tier that removes it from static memes. A tool that runs on your own device has nothing to meter, so there is no watermark to sell you.",
+      },
     ],
-    aiSummary: "Short, happy reviews: fast captioning and watermark-free export are the reasons users pick this over freemium meme tools. Community managers report real engagement wins.",
   },
   {
     slug: "json-editor",
     name: "JSON Editor",
-    tagline: "Validate, format, minify, and convert JSON — the dev utility that's always one tab away",
-    category: "Developer Tools",
+    job: "Validating, formatting and minifying JSON",
+    category: "Developer & text",
     icon: "braces",
-    iconColor: "text-emerald-600",
-    alternativeTo: ["JSONBuddy", "Paid IDE plugins"],
-    worksWith: ["JSON", "Clipboard"],
-    bestFor: ["Developers", "QA engineers", "Data analysts"],
-    originalPrice: 49,
-    priceNote: "vs desktop JSON editors at ~$49",
-    rating: 4.7,
-    gems: { 5: 71, 4: 15, 3: 4, 2: 1, 1: 1 },
-    shelves: ["endingSoon", "rising"],
-    tldr: [
-      "Instant validation with precise error locations",
-      "Format, minify, and convert JSON snippets in one workspace",
-      "Side-by-side editor layout built for real payloads",
+    paid: ["jsonformatter", "code-beautify"],
+    answer:
+      "There is no money to save here, and pretending otherwise would be dishonest: the two most popular JSON formatters, JSONFormatter and Code Beautify, both have no paid tier at all — each returns HTTP 404 on /pricing and is funded by ads. AltFTool's JSON Editor is free for the same reason. What differs is the limits: Code Beautify caps input at 1 MB with a 5-second processing timeout, and both offer a save-link feature their own policies warn you not to use for sensitive data.",
+    does: [
+      "Validation with line and column on the error, formatting and minifying",
+      "Runs entirely client-side, so a payload with a token in it is safe to paste",
+      "No 1 MB input cap and no processing timeout",
     ],
-    overview: [
-      {
-        heading: "For the hundred JSON moments a day",
-        points: [
-          "Paste an API response, see it formatted and validated instantly",
-          "Minify for payloads, prettify for humans",
-          "Clear error messages with line/column — no more staring at a missing comma",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Wei L.", role: "Backend developer", rating: 5, date: "Jul 2026", title: "Pinned tab status", text: "It's open all day next to my terminal. Faster than piping through jq for quick checks." },
-      { author: "Nadia F.", role: "QA engineer", rating: 5, date: "Jun 2026", title: "API testing companion", text: "Formatting API responses during test sessions used to be friction; now it's a paste away." },
+    limits: [
+      "No shareable saved links. Handing a colleague a URL to a formatted payload is JSONFormatter's best feature and we have no equivalent.",
+      "No account, no history, no favourites and no Chrome extension.",
+      "Code Beautify's catalogue in one consistent editor is broader than our developer section, particularly on crypto and string utilities.",
     ],
     faqs: [
-      { q: "Does my JSON leave the browser?", a: "No — validation and formatting run entirely client-side, safe for payloads with sensitive fields." },
+      {
+        q: "Is a paid JSON editor worth it?",
+        a: "For formatting and validating, the mainstream web tools are already free, so the question is really about limits and privacy rather than price. Check the input cap, whether the tool processes on a server, and what happens to anything you save.",
+      },
     ],
-    aiSummary: "Developers describe JSON Editor as a permanently pinned tab. Client-side processing makes it safe for real payloads; validation precision and speed drive the high rating.",
   },
   {
     slug: "diff-checker",
     name: "Diff Checker",
-    tagline: "Compare two texts or files and see every difference highlighted instantly",
-    category: "Developer Tools",
+    job: "Comparing two pieces of text side by side",
+    category: "Developer & text",
     icon: "text",
-    iconColor: "text-blue-500",
-    alternativeTo: ["Beyond Compare", "Araxis Merge"],
-    worksWith: ["Text", "Code", "Files"],
-    bestFor: ["Developers", "Writers", "Legal teams"],
-    originalPrice: 70,
-    priceNote: "vs Beyond Compare at ~$70",
-    rating: 4.6,
-    gems: { 5: 58, 4: 17, 3: 6, 2: 2, 1: 1 },
-    shelves: ["endingSoon"],
-    tldr: [
-      "Side-by-side comparison with per-line and per-word highlighting",
-      "Paste text or drop files — instant results",
-      "Nothing uploads; sensitive contracts and code stay local",
+    paid: ["beyond-compare", "araxis-merge"],
+    answer:
+      "AltFTool's Diff Checker compares two texts in the browser with per-line and per-word highlighting, free. The desktop tools people buy for this are one-time purchases, not subscriptions: Beyond Compare is US$35 per user for the Standard Edition (US$70 for Pro), and Araxis Merge is US$129 for Standard (US$269 for Professional). Neither has a free tier — only an evaluation period.",
+    does: [
+      "Word-level highlighting inside changed lines, side by side",
+      "Paste text or drop a file; nothing is uploaded",
+      "Handles code, prose, config files and contracts equally",
     ],
-    overview: [
-      {
-        heading: "Spot every change, miss nothing",
-        points: [
-          "Word-level highlighting inside changed lines",
-          "Handles code, prose, config files, and contracts equally well",
-          "Clean visual layout that makes review meetings faster",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Oliver S.", role: "Tech lead", rating: 5, date: "Jun 2026", title: "Config drift, spotted", text: "Comparing environment configs across deployments caught a drift bug that had been haunting us for a sprint." },
-      { author: "Amara O.", role: "Contract manager", rating: 4, date: "May 2026", title: "Redline sanity checker", text: "I verify counterparty edits against our last version. Local-only processing is why legal signed off on using it." },
+    limits: [
+      "Two-way text only. No three-way merge against a common ancestor, which is the reason developers buy the Pro editions.",
+      "No folder or drive comparison and no synchronization across thousands of files, and no FTP/SFTP or cloud endpoints.",
+      "No source-control integration, and no diffing of PDFs, office documents, images or binaries.",
     ],
     faqs: [
-      { q: "Is there a file size limit?", a: "Large files work; extremely large ones are limited by browser memory since everything runs locally." },
+      {
+        q: "Is Beyond Compare a subscription?",
+        a: "No. Scooter Software states the licence fee is a one-time purchase with no annual renewal fees. Araxis Merge is also perpetual, with optional support renewal at US$29/year for Standard.",
+      },
     ],
-    aiSummary: "Used across dev and legal workflows for verifying changes. Local-only processing repeatedly appears as the trust factor; word-level highlighting is the most-praised feature.",
   },
   {
     slug: "markdown-preview",
     name: "Markdown Preview",
-    tagline: "Write Markdown on the left, see rendered output live on the right",
-    category: "Developer Tools",
+    job: "Writing Markdown with a live rendered preview",
+    category: "Developer & text",
     icon: "edit",
-    iconColor: "text-blue-500",
-    alternativeTo: ["Typora", "iA Writer"],
-    worksWith: ["Markdown", "HTML"],
-    bestFor: ["Developers", "Writers", "Documentation teams"],
-    originalPrice: 15,
-    priceNote: "vs Typora at ~$14.99",
-    rating: 4.5,
-    gems: { 5: 39, 4: 13, 3: 5, 2: 2, 1: 1 },
-    shelves: ["endingSoon"],
-    tldr: [
-      "Live split-pane preview as you type",
-      "Perfect for READMEs, docs, and blog drafts",
-      "No install — works on any machine with a browser",
+    paid: ["typora", "ia-writer"],
+    answer:
+      "AltFTool's Markdown Preview gives you a live split-pane editor in any browser, free. The two editors people buy are one-time purchases: Typora is US$14.99 for a licence covering up to 3 devices, and iA Writer is US$29.99 on Windows or US$49.99 on Mac, paid per platform. Neither has a free tier — Typora offers 15 days and iA Writer 7.",
+    does: [
+      "Live preview as you type, with GitHub-flavoured tables, task lists and fenced code",
+      "Copy clean HTML out when you need it",
+      "Works on any machine with a browser, with nothing to install",
     ],
-    overview: [
-      {
-        heading: "See what you ship",
-        points: [
-          "Catch broken tables and heading levels before you commit",
-          "Familiar two-pane layout with synced scrolling",
-          "Copy clean HTML out when you need it",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Felix W.", role: "Open source maintainer", rating: 5, date: "Jun 2026", title: "README QA station", text: "Every README edit gets previewed here first. Zero broken-markdown commits since." },
+    limits: [
+      "No file management. It does not open or save .md files on disk, and there is no sidebar file tree for a folder of notes.",
+      "No export to PDF, Word or LaTeX — Typora bundles pandoc for exactly that.",
+      "No custom CSS themes, no iCloud/Dropbox sync across devices, and none of iA Writer's syntax style check.",
     ],
     faqs: [
-      { q: "Does it support GitHub-flavored Markdown?", a: "Yes — tables, task lists, and fenced code blocks render as expected." },
+      {
+        q: "Is Typora a subscription?",
+        a: "No. Typora is a one-time US$14.99 purchase covering up to three devices. iA Writer is also one-time, but priced per platform, so Mac and Windows are bought separately.",
+      },
     ],
-    aiSummary: "A simple tool with consistent reviews: reliable GFM rendering and instant preview make it the pre-commit check for documentation writers.",
   },
   {
     slug: "color-palette-from-image",
     name: "Color Palette from Image",
-    tagline: "Extract a practical, usable color palette from any image in one drop",
-    category: "Design & Image",
+    job: "Pulling a colour palette out of an image",
+    category: "Images & design",
     icon: "palette",
-    iconColor: "text-teal-600",
-    alternativeTo: ["Adobe Color", "Coolors Pro"],
-    worksWith: ["PNG", "JPG", "WebP"],
-    bestFor: ["Designers", "Brand teams", "Developers"],
-    originalPrice: 36,
-    priceNote: "vs Coolors Pro at ~$3/mo",
-    rating: 4.6,
-    gems: { 5: 33, 4: 9, 3: 3, 2: 1, 1: 1 },
-    shelves: ["justLaunched", "rising"],
-    tldr: [
-      "Upload an image, get its dominant colors as a ready-to-use palette",
-      "Copy hex codes straight into your design tool or CSS",
-      "Great for brand boards, theme building, and moodboards",
+    paid: ["adobe-color", "coolors-pro"],
+    answer:
+      "AltFTool's Color Palette from Image extracts an image's defining colours and gives you the hex codes, free. Be aware that the obvious alternative is also free: Adobe Color has no paid tier at all, and its colour wheel, contrast checker and palette extractor are open to anyone. Coolors does sell a Pro tier, but no USD figure was readable on 2026-07-28 — the site served an India storefront at ₹231/month billed yearly.",
+    does: [
+      "Extracts the colours that actually define an image, not just pixel averages",
+      "One-click hex copy for each swatch",
+      "The image is read on your device and never uploaded",
     ],
-    overview: [
-      {
-        heading: "Steal like a colorist",
-        points: [
-          "Pulls the colors that actually define an image, not just pixel averages",
-          "One-click hex copy for each swatch",
-          "Build a site theme from a single inspiration photo",
-        ],
-      },
-    ],
-    reviews: [
-      { author: "Isha M.", role: "Brand designer", rating: 5, date: "Jul 2026", title: "Moodboard to palette in seconds", text: "Client sends inspiration photos; I send back a palette the same hour. Looks like magic, costs nothing." },
+    limits: [
+      "No saved palettes and no account. Coolors' free tier already stores 10 palettes; ours stores none.",
+      "No Creative Cloud Libraries sync, so a palette will not appear in Photoshop, Illustrator or InDesign swatch panels the way Adobe Color's does.",
+      "No harmony-rule generator, no AI palette generation and no Web/UI/Print export presets.",
     ],
     faqs: [
-      { q: "How many colors does it extract?", a: "A practical palette of the image's defining colors — enough for a brand board without noise." },
+      {
+        q: "Is Adobe Color free?",
+        a: "Yes, entirely — there is no paid tier to compare against. Saving a palette into a library needs a free Adobe account, and that sync into Photoshop and Illustrator is a genuine reason to use Adobe Color over anything else.",
+      },
     ],
-    aiSummary: "Designers use this to convert inspiration images into working palettes instantly. One-click hex copying is the detail reviewers mention most.",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Accessors (mirror the getTop9Items.js getter pattern)
+// Accessors
 // ---------------------------------------------------------------------------
 
 export function getDeals() {
@@ -785,57 +457,89 @@ export function getDeal(slug) {
   return getDeals().find((deal) => deal.slug === slug) || null;
 }
 
-export function getDealsByShelf(shelf) {
-  return getDeals().filter((deal) => deal.shelves?.includes(shelf));
+/** Resolved paid-product records for a deal, in the order the deal lists them. */
+export function getDealPaidProducts(deal) {
+  return (deal?.paid || []).map((key) => getPaidProduct(key)).filter(Boolean);
 }
 
-export function getTopNine() {
-  return getDeals()
-    .filter((deal) => Number.isInteger(deal.topRank))
-    .sort((a, b) => a.topRank - b.topRank)
-    .slice(0, 9);
+/**
+ * The single product a deal leads with — the first entry that actually has a
+ * price to quote. A deal whose alternatives are all free (json-editor,
+ * color-palette-from-image) falls back to the first product, and the page then
+ * says plainly that there is nothing to save.
+ */
+export function getLeadPaidProduct(deal) {
+  const products = getDealPaidProducts(deal);
+  return products.find((product) => product.price?.status !== "free") || products[0] || null;
 }
 
-export function getStaffPicks() {
-  return getDeals().filter((deal) => deal.staffQuote);
+/** The newest `checkedOn` across a deal's products — what the page is dated by. */
+export function getDealCheckedOn(deal) {
+  const dates = getDealPaidProducts(deal)
+    .map((product) => product.checkedOn)
+    .filter(Boolean)
+    .sort();
+  return dates[dates.length - 1] || "";
 }
 
-export function getRelatedDeals(deal, limit = 4) {
+/** Oldest and newest check dates across every product on the hub. */
+export function getCheckedOnRange() {
+  const dates = getDeals()
+    .flatMap((deal) => getDealPaidProducts(deal).map((product) => product.checkedOn))
+    .filter(Boolean)
+    .sort();
+  return { from: dates[0] || "", to: dates[dates.length - 1] || "" };
+}
+
+/**
+ * Every (product, deal) pair, deduped by product, for the hub table.
+ *
+ * A product can appear on several deals — Photoshop is listed by three of them
+ * — so each one is filed under the deal that names it first. Photoshop lands on
+ * Image Editor rather than Background Remover, which is what a reader scanning
+ * the table expects. Rows still come out in DEALS order.
+ */
+export function getComparisonRows() {
+  const home = new Map();
+  getDeals().forEach((deal) => {
+    (deal.paid || []).forEach((key, index) => {
+      const current = home.get(key);
+      if (!current || index < current.index) home.set(key, { slug: deal.slug, index });
+    });
+  });
+
+  const rows = [];
+  getDeals().forEach((deal) => {
+    getDealPaidProducts(deal).forEach((product) => {
+      if (home.get(product.key)?.slug !== deal.slug) return;
+      rows.push({ product, deal });
+    });
+  });
+  return rows;
+}
+
+export function getDealsByCategory() {
+  return DEAL_CATEGORIES.map((category) => ({
+    category,
+    deals: getDeals().filter((deal) => deal.category === category),
+  })).filter((group) => group.deals.length);
+}
+
+export function getRelatedDeals(deal, limit = 3) {
   if (!deal) return [];
   const sameCategory = getDeals().filter(
-    (item) => item.slug !== deal.slug && item.category === deal.category
+    (item) => item.slug !== deal.slug && item.category === deal.category,
   );
   const others = getDeals().filter(
-    (item) => item.slug !== deal.slug && item.category !== deal.category
+    (item) => item.slug !== deal.slug && item.category !== deal.category,
   );
   return [...sameCategory, ...others].slice(0, limit);
 }
 
-export function getDealReviewCount(deal) {
-  return Object.values(deal?.gems || {}).reduce((sum, n) => sum + (n || 0), 0);
-}
-
 export function getDealFaqs(deal) {
-  return [...(deal?.faqs || []), ...COMMON_FAQS];
+  return deal?.faqs || [];
 }
 
 export function getDealToolHref(deal) {
   return `/tools/all/${deal?.slug || ""}`;
-}
-
-export function getDealSavings(deal) {
-  const price = Number(deal?.originalPrice) || 0;
-  return price > 0 ? price : 0;
-}
-
-export function getTotalSavings() {
-  return getDeals().reduce((sum, deal) => sum + getDealSavings(deal), 0);
-}
-
-export function getDealCategoryCounts() {
-  const counts = new Map([["all", getDeals().length]]);
-  getDeals().forEach((deal) => {
-    counts.set(deal.category, (counts.get(deal.category) || 0) + 1);
-  });
-  return counts;
 }

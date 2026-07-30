@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import ToolClient from "../../[category]/[slug]/ToolClient";
 import { buildToolMetadata, getRelatedTools, getTool } from "../../toolRouteUtils";
+import { getOEmbedEndpointUrl, isEmbeddable } from "@/app/embed/embedRegistry";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -36,7 +37,31 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  return buildToolMetadata(slug);
+  const metadata = await buildToolMetadata(slug);
+
+  // Advertise oEmbed here as well as on the widget shell. This is the URL a
+  // publisher actually pastes into WordPress, Ghost or Notion; without the
+  // discovery link the paste stays a plain link instead of expanding into the
+  // live widget — and every embedded widget carries an attribution link back.
+  // Only for slugs that really are embeddable, so a consumer never discovers
+  // an endpoint that would answer 404.
+  if (isEmbeddable(slug)) {
+    const tool = getTool(slug);
+    metadata.alternates = {
+      ...metadata.alternates,
+      types: {
+        ...metadata.alternates?.types,
+        "application/json+oembed": [
+          {
+            url: getOEmbedEndpointUrl(slug),
+            title: `${tool?.name || slug} — AltFTool widget`,
+          },
+        ],
+      },
+    };
+  }
+
+  return metadata;
 }
 
 export default async function ToolPage({ params }) {

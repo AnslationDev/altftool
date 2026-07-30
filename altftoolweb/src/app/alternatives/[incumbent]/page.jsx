@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ExternalLink, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   createBreadcrumbJsonLd,
@@ -15,6 +15,7 @@ import { getRelatedContentForPreset } from "@/platform/linking/relatedContent";
 import { ALTFTOOL_POSITION, INCUMBENTS } from "../data/incumbents";
 import AlternativeToolEmbed from "../components/AlternativeToolEmbed";
 import ComparisonTable from "../components/ComparisonTable";
+import VendorLink from "../components/VendorLink";
 
 export const dynamic = "force-static";
 export const revalidate = 86400;
@@ -147,7 +148,7 @@ export default async function AlternativePage({ params }) {
         {/* Live tool first: the fastest way to find out whether this actually
             solves your problem is to use it, not to read about it. */}
         {primary ? (
-          <section aria-labelledby="try-it-heading" className="mt-10">
+          <section aria-labelledby="try-it-heading" className="mt-10 scroll-mt-24">
             <h2 id="try-it-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
               {`Try it now: ${primary.name}`}
             </h2>
@@ -174,7 +175,7 @@ export default async function AlternativePage({ params }) {
           </section>
         ) : null}
 
-        <section aria-labelledby="comparison-heading" className="mt-12">
+        <section aria-labelledby="comparison-heading" className="mt-12 scroll-mt-24">
           <h2 id="comparison-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {`AltFTool vs ${short}`}
           </h2>
@@ -208,19 +209,23 @@ export default async function AlternativePage({ params }) {
               {entry.paidPrice}
             </p>
           ) : null}
+          {/* The new-tab cue is announced once for the whole list rather than
+              repeated on every source link, which is why these pass
+              newTabHint={false}. */}
           <p className="mt-3 text-xs leading-5 text-(--muted-foreground)">
             {`Checked on ${entry.checkedOn} against `}
+            <span className="sr-only">the following sources, each opening in a new tab: </span>
             {entry.sourcesChecked.map((source, index) => (
               <span key={source}>
                 {index > 0 ? ", " : ""}
-                <a
+                <VendorLink
                   href={source}
-                  rel="nofollow noopener"
-                  target="_blank"
-                  className="underline underline-offset-2 hover:text-(--primary-text)"
+                  showIcon={false}
+                  newTabHint={false}
+                  className="underline underline-offset-2 hover:text-(--primary-text) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
                 >
                   {source.replace(/^https?:\/\//, "")}
-                </a>
+                </VendorLink>
               </span>
             ))}
             {`. Vendors change their plans — if something here is out of date, trust ${short}'s own page over ours.`}
@@ -229,7 +234,7 @@ export default async function AlternativePage({ params }) {
 
         {/* Never omitted. A comparison page that cannot name what the other
             product does better is an advert, not a comparison. */}
-        <section aria-labelledby="incumbent-wins-heading" className="mt-12">
+        <section aria-labelledby="incumbent-wins-heading" className="mt-12 scroll-mt-24">
           <h2
             id="incumbent-wins-heading"
             className="text-xl font-semibold tracking-tight sm:text-2xl"
@@ -265,19 +270,17 @@ export default async function AlternativePage({ params }) {
           </ul>
 
           <p className="mt-5 text-sm leading-6 text-(--muted-foreground)">
-            <a
+            <VendorLink
               href={entry.homepage}
-              rel="nofollow noopener"
-              target="_blank"
-              className="inline-flex items-center gap-1.5 font-semibold text-(--primary-text) underline underline-offset-2"
+              iconClassName="h-3.5 w-3.5 flex-none"
+              className="inline-flex items-center gap-1.5 font-semibold text-(--primary-text) underline underline-offset-2 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
             >
               {`Visit ${short}`}
-              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
+            </VendorLink>
           </p>
         </section>
 
-        <section aria-labelledby="migration-heading" className="mt-12">
+        <section aria-labelledby="migration-heading" className="mt-12 scroll-mt-24">
           <h2 id="migration-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {`Where each ${short} job goes here`}
           </h2>
@@ -308,7 +311,7 @@ export default async function AlternativePage({ params }) {
           </ul>
         </section>
 
-        <section aria-labelledby="tools-heading" className="mt-12">
+        <section aria-labelledby="tools-heading" className="mt-12 scroll-mt-24">
           <h2 id="tools-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
             {`The tools that cover ${short} work`}
           </h2>
@@ -337,7 +340,7 @@ export default async function AlternativePage({ params }) {
         </section>
 
         {faqs.length ? (
-          <section aria-labelledby="faq-heading" className="mt-12">
+          <section aria-labelledby="faq-heading" className="mt-12 scroll-mt-24">
             <h2 id="faq-heading" className="text-xl font-semibold tracking-tight sm:text-2xl">
               Questions people actually ask
             </h2>

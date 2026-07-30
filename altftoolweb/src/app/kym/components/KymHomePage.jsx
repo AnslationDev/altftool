@@ -39,7 +39,6 @@ function EntryRow({ item }) {
       <div>
         <span>Meme</span>
         <h3>{item.title}</h3>
-        <p>{item.meta}</p>
       </div>
     </a>
   );

@@ -71,6 +71,14 @@ export default function ExamPhotoHubPage() {
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
           Specs read on {formatIsoDate(SPECS_READ_ON)}.
         </p>
+        <p className="mt-4 rounded-xl bg-[var(--warning-soft)] p-4 text-sm text-[var(--foreground)] ring-1 ring-[var(--border)]">
+          Four of these exams no longer take a photograph file at all - SSC CGL, SSC CHSL, SSC GD
+          Constable and RRB NTPC capture the photograph live inside the application form, so there is
+          no KB target to hit for the photo. Widely copied figures such as &ldquo;200 x 230 px, 20 to
+          50 KB&rdquo; for SSC describe a step those forms no longer have. These pages are not an
+          authority on any exam&apos;s rules: each conducting body revises them per cycle, so open the
+          notification linked on each page and confirm before you upload.
+        </p>
 
         <ul className="mt-6 space-y-3">
           {EXAM_SPECS.map((exam) => (

@@ -38,16 +38,26 @@
 
 ## Blockers to clear before promoting (ranked)
 
-**1. `/patatap` uses another project's exact name.** The live page title is
-"Patatap - Portable Animation and Sound Kit | AltFTool" and the page targets
-"Patatap clone" as an SEO keyword. Patatap is a known work by Jono Brandel and
-Lullatone. The experience catalog in this repo already renames it **KeyCanvas**,
-but `src/app/patatap/page.jsx` was never updated. Posting this to Hacker News
-or r/InternetIsBeautiful invites a public call-out, and the naming is a
-trademark risk independent of any backlink plan. `/radio-garden` and
-`/geektyper` have rebranded titles but still carry the originals' names in
-their URL slugs. **Decide before promoting:** renaming loses whatever traffic
-those keywords bring, so it is your call — but do not promote these pages as-is.
+**1. ~~`/patatap` uses another project's exact name~~ — CLEARED 30 Jul 2026.**
+The route published itself as "Patatap - Portable Animation and Sound Kit" and
+targeted "Patatap clone" as a keyword, while `experienceCatalog.js` had already
+named it **KeyCanvas**. The page now matches the catalog on title, H1,
+description and keywords, so it no longer trades on Jono Brandel and
+Lullatone's work title. Also removed: "windows minesweeper clone" and
+"classic tetris clone" from `/pranx` keyword sets — positioning a page as a
+clone of a named product is the least defensible framing available.
+
+The `/patatap` **slug** is unchanged, and so are `/radio-garden` and
+`/geektyper`. Changing a live URL needs a redirect plan and costs whatever the
+old path ranks for, so that stays your call.
+
+**1b. Still yours to decide: the Tetris naming.** `/pranx` titles a game
+"Tetris Blocks — Free Browser Game" and targets "tetris online free" and
+"play tetris no download". TETRIS is a registered mark that The Tetris Company
+enforces actively against browser implementations — more actively than most
+rights holders in this space. Renaming costs those keywords. I removed only the
+"clone" phrasing and left the rest for you, because the trade is yours: the
+downside is a takedown against a domain you are about to promote.
 
 **2. Confirm the production deploy matches this repo.** Local commits here are
 not pushed to any remote in this working tree, yet production serves the embed
