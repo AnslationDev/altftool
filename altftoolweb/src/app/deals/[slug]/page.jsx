@@ -23,6 +23,7 @@ import { ArrowRight, ScanSearch, TriangleAlert } from "lucide-react";
 
 import Icon from "@/shared/ui/Icon";
 import JsonLd from "@/platform/seo/JsonLd";
+import CitePage from "@/platform/seo/CitePage";
 import {
   createBreadcrumbJsonLd,
   createFaqJsonLd,
@@ -103,6 +104,17 @@ export default async function DealDetailPage({ params }) {
   const toolHref = getDealToolHref(deal);
   const checkedOn = getDealCheckedOn(deal);
   const caveats = products.filter((product) => product.price?.caveat);
+  // One expression for the H1 and for the cited title, so a reference copied off
+  // this page can never name something the page does not call itself.
+  const heading = `${deal.name}: what you'd pay elsewhere`;
+  // The header dates the page by the newest check across its products, so the
+  // citation block carries each product's own read date too - a figure read
+  // three days earlier must not inherit the newer date.
+  const citationSources = products.map((product) => ({
+    title: product.name,
+    urls: product.sources,
+    checked: product.checkedOn,
+  }));
   // json-editor and color-palette-from-image compare against products with no
   // paid tier at all. The headings must not promise a price that isn't there.
   const allProductsFree = products.length > 0 && products.every(isFreeProduct);
@@ -159,9 +171,7 @@ export default async function DealDetailPage({ params }) {
               <p className="text-xs font-semibold uppercase tracking-wider text-(--muted-foreground)">
                 {deal.category}
               </p>
-              <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
-                {`${deal.name}: what you'd pay elsewhere`}
-              </h1>
+              <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h1>
             </div>
           </div>
           <p className="mt-5 text-base leading-7 text-(--foreground)">{deal.answer}</p>
@@ -400,6 +410,16 @@ export default async function DealDetailPage({ params }) {
             </ul>
           </section>
         ) : null}
+
+        <CitePage
+          path={path}
+          title={heading}
+          asOf={checkedOn}
+          asOfLabel="Prices checked"
+          sources={citationSources}
+          sourcesLabel={citationSources.length > 1 ? "Prices read from" : "Price read from"}
+          note="Each price is transcribed from the vendor's own page on the date shown and is never converted between currencies, so quote that date alongside any figure you take from here. Software pricing drifts: if a number here disagrees with the vendor's page, trust theirs. The vendor links are plain links - no affiliate tracking, no referral IDs, no paid placement."
+        />
       </div>
 
       <RelatedContentSection

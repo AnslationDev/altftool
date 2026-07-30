@@ -7,9 +7,16 @@ import {
   createHowToJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import CitePage from "@/platform/seo/CitePage";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
-import { EXAM_SPECS, SPECS_READ_ON, getExamBySlug, getOtherExams } from "../data/examSpecs";
+import {
+  EXAM_SPECS,
+  SPECS_READ_ON,
+  confidenceLabel,
+  getExamBySlug,
+  getOtherExams,
+} from "../data/examSpecs";
 import { assetLine, buildExamSeo } from "../data/examSeo";
 import { formatIsoDate } from "../lib/specMath";
 import ExamResizer from "../components/ExamResizer";
@@ -67,7 +74,20 @@ export default async function ExamPhotoPage({ params }) {
 
   const seo = buildExamSeo(exam);
   const path = `/exam-photo/${exam.slug}`;
+  // One expression for the H1 and for the cited title, so a reference copied
+  // off this page can never name something the page does not call itself.
+  const heading = `${exam.name} photo and signature size`;
   const others = getOtherExams(exam.slug, 6);
+  // Everything the citation block prints is already on the page: the read date
+  // is SpecSheet's "Read on", and the document, its date and its URL are the
+  // same three values SourceLine and SourceStamp render.
+  const citationNote = [
+    `${confidenceLabel(exam.source.confidence)}.`,
+    exam.source.note || "",
+    `Cite ${exam.source.doc} alongside this page - where the notice and this page disagree, the notice governs.`,
+  ]
+    .filter(Boolean)
+    .join(" ");
   const relatedItems = getRelatedContentForPreset(
     {
       href: path,
@@ -118,7 +138,7 @@ export default async function ExamPhotoPage({ params }) {
         </nav>
 
         <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--foreground)] sm:text-3xl">
-          {exam.name} photo and signature size
+          {heading}
         </h1>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
           {exam.fullName} &middot; {exam.body}
@@ -231,6 +251,22 @@ export default async function ExamPhotoPage({ params }) {
             </p>
           </div>
         </section>
+
+        <CitePage
+          path={path}
+          title={heading}
+          asOf={SPECS_READ_ON}
+          asOfLabel="Notification read on"
+          sources={[
+            {
+              title: exam.source.doc,
+              urls: [exam.source.url],
+              issued: exam.source.issued,
+            },
+          ]}
+          sourcesLabel="Underlying source"
+          note={citationNote}
+        />
       </main>
 
       <RelatedContentSection
