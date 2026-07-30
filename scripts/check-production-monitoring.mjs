@@ -150,6 +150,16 @@ const ADMIN_PUBLIC_CHECKS = [
     path: "/login",
     expectedText: ["AltFTools Admin", "/_next/static/"],
   },
+  {
+    name: "admin-firebase-runtime-boundary",
+    path: "/api/tools/slugs",
+    expectedStatus: 401,
+    parseJson: true,
+    validate: (payload) => payload?.error === "Unauthorized",
+    summarize: (payload) => ({
+      error: payload?.error || null,
+    }),
+  },
 ];
 
 function normalizeUrl(value) {
@@ -178,8 +188,19 @@ function routeError(text = "") {
   );
 }
 
-function toFailureReason({ status, expectedText = [], text = "", body, validate }) {
-  if (status < 200 || status >= 400) return `HTTP ${status}`;
+function toFailureReason({
+  status,
+  expectedStatus,
+  expectedText = [],
+  text = "",
+  body,
+  validate,
+}) {
+  if (expectedStatus !== undefined) {
+    if (status !== expectedStatus) return `HTTP ${status}; expected ${expectedStatus}`;
+  } else if (status < 200 || status >= 400) {
+    return `HTTP ${status}`;
+  }
   if (routeError(text)) return "rendered route error";
 
   for (const expected of expectedText) {
@@ -215,6 +236,7 @@ async function checkHttp(checks, config) {
     url,
     headers,
     parseJson = false,
+    expectedStatus,
     expectedText = [],
     validate,
     summarize,
@@ -226,6 +248,7 @@ async function checkHttp(checks, config) {
     const body = parseJson ? safeJsonParse(text) : null;
     const error = toFailureReason({
       status: response.status,
+      expectedStatus,
       expectedText,
       text,
       body,
