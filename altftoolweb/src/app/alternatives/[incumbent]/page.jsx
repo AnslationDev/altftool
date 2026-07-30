@@ -8,6 +8,7 @@ import {
   createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import CitePage from "@/platform/seo/CitePage";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import RelatedContentSection from "@/platform/linking/RelatedContentSection";
@@ -72,6 +73,9 @@ export default async function AlternativePage({ params }) {
 
   const path = `/alternatives/${entry.slug}`;
   const short = entry.shortName || entry.name;
+  // One expression for the H1 and for the cited title, so a reference copied off
+  // this page can never name something the page does not call itself.
+  const heading = `A free ${short} alternative that runs in your browser`;
   const cards = entry.tools.map(toolMeta).filter(Boolean);
   const primary = toolMeta(entry.primaryTool);
   const steps = entry.migrationSteps
@@ -131,9 +135,7 @@ export default async function AlternativePage({ params }) {
         </nav>
 
         <header className="max-w-3xl">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {`A free ${short} alternative that runs in your browser`}
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h1>
           <p className="mt-4 text-base leading-7 text-(--muted-foreground)">
             {entry.valueProp}
           </p>
@@ -357,6 +359,16 @@ export default async function AlternativePage({ params }) {
             </dl>
           </section>
         ) : null}
+
+        <CitePage
+          path={path}
+          title={heading}
+          asOf={entry.checkedOn}
+          asOfLabel="Vendor pages checked"
+          sources={[{ title: entry.name, urls: entry.sourcesChecked }]}
+          sourcesLabel="Read from"
+          note={`Free-tier limits and prices are transcribed from the vendor's own pages on the date shown and are never converted between currencies, so quote that date alongside any figure you take from here. Vendors change their plans: if something here is out of date, trust ${short}'s own page over ours. The vendor links are plain links - no affiliate tracking, no referral IDs, no paid placement.`}
+        />
       </div>
 
       <RelatedContentSection
