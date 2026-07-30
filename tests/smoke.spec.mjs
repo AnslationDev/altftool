@@ -133,7 +133,9 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
     page.getByRole("navigation", { name: "Tool route" }),
   ).toContainText("All Tools");
   await expect(
-    page.getByRole("heading", { name: "API Stress Estimator", exact: true }),
+    page
+      .getByTestId("tool-workspace-shell")
+      .getByRole("heading", { name: "API Stress Estimator", exact: true }),
   ).toBeVisible();
   await expect(page.getByText("Loading tool…")).toHaveCount(0);
 
@@ -145,7 +147,9 @@ test("tool detail routes use the clean workspace flow", async ({ page }) => {
     page.getByRole("navigation", { name: "Tool route" }),
   ).toContainText("Developer");
   await expect(
-    page.getByRole("heading", { name: "API Stress Estimator", exact: true }),
+    page
+      .getByTestId("tool-workspace-shell")
+      .getByRole("heading", { name: "API Stress Estimator", exact: true }),
   ).toBeVisible();
   await quality.expectClean("tool detail routes");
 });
