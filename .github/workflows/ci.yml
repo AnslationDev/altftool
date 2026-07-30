@@ -114,7 +114,7 @@ jobs:
       # builds. Exercise the route and API surfaces together under one dev
       # server so cold compilation cannot abort the production validation above.
       - name: Validate local admin route and API surface
-        if: always()
+        if: ${{ always() && !cancelled() }}
         continue-on-error: true
         timeout-minutes: 15
         run: npm run test:admin:ci
