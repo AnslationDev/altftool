@@ -110,6 +110,14 @@ jobs:
       - name: Validate full route surface
         run: npm run validate:full
 
+      # Local-super-admin fixtures are intentionally unavailable in production
+      # builds. Exercise the route and API surfaces together under one dev
+      # server so cold compilation cannot abort the production validation above.
+      - name: Validate local admin route and API surface
+        continue-on-error: true
+        timeout-minutes: 15
+        run: npm run test:admin:dev
+
       - name: Write performance budget report
         run: npm run performance:budget:strict -- --output ci-performance-budget-report.json --output-md ci-performance-budget-report.md
 
