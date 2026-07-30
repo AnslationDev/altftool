@@ -23,6 +23,9 @@ env:
   ALTFT_NODE_MAX_OLD_SPACE_SIZE: "12288"
   ALTFT_DISABLE_SHARED_ASYNC_VENDOR_CHUNKS: "true"
   NEXT_PUBLIC_WHEREGOES_API_URL: "https://wheregoes.example.invalid"
+  NPM_CONFIG_FETCH_RETRIES: "5"
+  NPM_CONFIG_FETCH_RETRY_MINTIMEOUT: "10000"
+  NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT: "60000"
 
 jobs:
   # Deterministic gate: install, lint, build, and fast unit tests only.
@@ -123,19 +126,19 @@ jobs:
 
       - name: Verify live Firebase renders on public pages
         continue-on-error: true
-        run: npm run test:firebase-public-pages
+        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true npm run test:firebase-public-pages
 
       - name: Validate every microtool route
         if: github.event_name != 'pull_request'
         continue-on-error: true
-        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev npm run test:tools:all
+        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true npm run test:tools:all
 
       - name: Verify security headers
-        run: npm run test:security
+        run: npm run test:security:production
 
       - name: Run Lighthouse quality gate
         continue-on-error: true
-        run: npm run test:lighthouse
+        run: npm run test:lighthouse:production
 
       - name: Upload Playwright artifacts
         if: failure()
