@@ -1002,9 +1002,18 @@ a.kym-entry-row:hover img {
   padding: 10px 0;
 }
 
-.kym-article-meta a {
+.kym-article-meta a,
+.kym-article-meta button {
   color: var(--primary);
   font-weight: 700;
+}
+
+.kym-article-meta button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
 }
 
 .kym-article-lede,
@@ -1228,17 +1237,13 @@ a.kym-entry-row:hover img {
   gap: 8px;
 }
 
-.kym-topic-list a {
+.kym-topic-list span {
   background: var(--muted);
   border-radius: var(--anslation-ds-radius-xs);
   color: var(--primary);
   font-size: 11px;
   font-weight: 800;
   padding: 6px 8px;
-}
-
-.kym-topic-list a:hover {
-  color: var(--primary-hover);
 }
 
 .kym-poll-alert {
@@ -1734,7 +1739,7 @@ a.kym-entry-row:hover img {
   background: var(--anslation-ds-soft);
 }
 
-[data-theme="dark"] .kym-topic-list a {
+[data-theme="dark"] .kym-topic-list span {
   background: var(--anslation-ds-soft);
   color: var(--primary);
 }

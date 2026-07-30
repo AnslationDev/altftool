@@ -4,7 +4,7 @@ export function generateMetadata() {
   return createPageMetadata({
     title: "Cookie Policy",
     description:
-      "Learn how AltFTool uses cookies and similar technologies to improve your experience, analyse traffic, and personalise content — and how to manage your preferences.",
+      "How AltFTool uses cookies and similar technologies to run the site, remember your settings, measure traffic and personalise content, and how to manage them.",
     path: "/policypages/cookie",
   });
 }

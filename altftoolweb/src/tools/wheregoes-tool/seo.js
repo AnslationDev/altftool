@@ -1,8 +1,23 @@
 const seo = {
-  title: "WhereGoes Tool — Trace Any URL's Redirect Chain",
+  // Every impression this page gets is a WhereGoes brand search (GSC 7-day:
+  // "wheregoes" 1,487 imp / 11 clicks at position 2.5; the only non-brand query
+  // in the whole export is "url tracer" at 3 imp). The old title led with
+  // "WhereGoes Tool", so at position 2.9 the snippet looked like a worse copy of
+  // the result directly above it and earned 0.9% CTR. Lead with the job, then
+  // say honestly that this is an alternative — a searcher who wants
+  // wheregoes.com scrolls past either way, and one who just wants the trace done
+  // now gets a reason to stop here. Rendered title is 59 chars with the brand
+  // suffix the root layout appends.
+  title: "Trace URL Redirects — Free WhereGoes Alternative",
   h1: "WhereGoes Tool — URL Redirect & Link Checker",
+  // Every claim below is in the code: hops, status codes and headers in
+  // pages/index.jsx + components/ResponseHeaders.jsx, response times in
+  // components/SidebarCards.jsx (ResponseTimeline), and the two export buttons
+  // in the same file ("Export as JSON" / "Export as CSV"). No signup path
+  // exists anywhere in the tool. Timings and export are what wheregoes.com's
+  // free view does not put in its own snippet, so they are the differentiator.
   metaDescription:
-    "See exactly where any link redirects. WhereGoes traces the full hop-by-hop chain, HTTP status codes, and response headers — free, instant, no signup.",
+    "Paste any short, affiliate or tracking link and see every redirect hop with status codes, response times and headers. Free, no signup, export as JSON or CSV.",
   intro:
     "WhereGoes Tool traces what actually happens when a URL is requested: it follows every redirect hop from the original link to its final destination, reporting the HTTP status code (301, 302, 307…) and response headers at each step. Paste any link and get the full chain in seconds — no signup, no browser extension.",
   useCases: [

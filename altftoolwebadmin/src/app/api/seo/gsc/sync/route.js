@@ -34,13 +34,20 @@ async function authorize(request) {
 }
 
 export async function POST(request) {
+  let actor;
   try {
-    await authorize(request);
+    ({ actor } = await authorize(request));
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (!process.env.ALTFT_GSC_SYNC_SECRET) {
+  // The cron path can only reach here by matching ALTFT_GSC_SYNC_SECRET, so
+  // the secret being unset can only mean an authenticated admin manually
+  // triggered "Sync now" (see authorize()) — that documented fallback must
+  // still run. Only skip when neither condition holds (no secret configured
+  // and no admin actor, which authorize() would have already rejected, but
+  // this stays explicit rather than relying on that indirectly).
+  if (!process.env.ALTFT_GSC_SYNC_SECRET && actor !== "admin") {
     return NextResponse.json({ ok: true, skipped: true, reason: "Background sync not configured." });
   }
   if (!(await isGscReady())) {

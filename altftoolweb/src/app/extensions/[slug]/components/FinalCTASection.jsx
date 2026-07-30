@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Chrome, BookOpen, Share2, Check, Sparkles, ShieldCheck } from "lucide-react";
+import { Chrome, ArrowUp, Share2, Check, Sparkles, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 export default function FinalCTASection({ extension }) {
@@ -88,8 +88,8 @@ export default function FinalCTASection({ extension }) {
             onClick={handleScrollToTop}
             className="inline-flex items-center justify-center cursor-pointer px-6 py-4 text-base font-semibold text-[var(--foreground)] bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-xs hover:bg-[var(--muted)] hover:border-[var(--primary)]/30 active:scale-[0.98] transition-all duration-150 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
           >
-            <BookOpen className="w-5 h-5 mr-2.5 text-[var(--muted-foreground)]" />
-            <span>View Documentation</span>
+            <ArrowUp className="w-5 h-5 mr-2.5 text-[var(--muted-foreground)]" />
+            <span>Back to Top</span>
           </button>
 
           <button

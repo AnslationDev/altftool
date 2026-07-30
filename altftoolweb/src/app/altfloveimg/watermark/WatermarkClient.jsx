@@ -16,10 +16,10 @@ const GRID = [
   ["center-left", "center", "center-right"],
   ["bottom-left", "bottom-center", "bottom-right"],
 ];
-// map non-canonical to canonical anchors
+// map grid positions to imageProcessing.js anchor keys
 const ANCHOR = {
   "top-left": "top-left", "top-center": "top-center", "top-right": "top-right",
-  "center-left": "bottom-left", "center": "center", "center-right": "bottom-right",
+  "center-left": "center-left", "center": "center", "center-right": "center-right",
   "bottom-left": "bottom-left", "bottom-center": "bottom-center", "bottom-right": "bottom-right",
 };
 

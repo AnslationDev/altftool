@@ -27,7 +27,20 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-inner">
-        <div className="header-logo" style={{ cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><LogoSVG /></div>
+        <div
+          className="header-logo"
+          style={{ cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+          aria-label="Scroll to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+        ><LogoSVG /></div>
         <nav className="header-nav">
           {links.map(l => <a key={l.label} href={l.href}>{l.label}</a>)}
         </nav>

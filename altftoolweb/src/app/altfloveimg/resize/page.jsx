@@ -1,6 +1,7 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import ResizeClient from "./ResizeClient";
 import RelatedToolsBand from "../components/RelatedToolsBand";
+import ToolSchema from "../components/ToolSchema";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -14,6 +15,7 @@ export async function generateMetadata() {
 export default function Page() {
   return (
     <>
+      <ToolSchema slug="resize" />
       <ResizeClient />
       <RelatedToolsBand slug="resize" />
     </>

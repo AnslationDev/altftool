@@ -24,7 +24,10 @@ export async function generateMetadata({ params }) {
   if (!app) {
     return createPageMetadata({
       title: "App Not Found",
+      description:
+        "This APK download page does not exist. Browse the AltFTool apps directory to find the Android app you were looking for.",
       path: `/apps/${slug}`,
+      noindex: true,
     });
   }
 
@@ -69,13 +72,6 @@ function createAppJsonLd(app) {
       name: "AltFTool",
       url: absoluteUrl("/"),
     },
-    aggregateRating: app.rating
-      ? {
-          "@type": "AggregateRating",
-          ratingValue: app.rating,
-          reviewCount: String(app.reviewCount || "0").replace(/[^0-9.]/g, "") || undefined,
-        }
-      : undefined,
     offers: {
       "@type": "Offer",
       price: "0",

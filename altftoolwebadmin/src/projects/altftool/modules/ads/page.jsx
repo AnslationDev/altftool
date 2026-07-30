@@ -8,6 +8,7 @@ import {
   subscribeAdsByPlacement
 } from "./services/ads.service";
 import { PLACEMENTS, NAV } from "@/config/placements";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 import PlacementSidebar from "./components/PlacementSidebar";
 import PlacementHeader from "./components/PlacementHeader";
@@ -118,7 +119,16 @@ export default function AdsAdmin() {
       setTargetsLoading(true);
 
       let cancelled = false;
-      fetch(targetCfg.endpoint, { cache: "no-store" })
+      // /api/tools/slugs now requires an admin session (it used to be reachable
+      // unauthenticated) — attach the same Bearer token every other admin API
+      // call in this app sends.
+      getAdminIdToken()
+        .then((token) =>
+          fetch(targetCfg.endpoint, {
+            cache: "no-store",
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+          }),
+        )
         .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`Target API failed: ${res.status}`))))
         .then((data) => {
           if (cancelled) return;

@@ -1,332 +1,480 @@
 "use client";
-import { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Thermometer, RefreshCw, AlertCircle, Sparkles, Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import * as faceapi from "@vladmandic/face-api";
-import { analyzeRedness } from "@/tools/_shared/beauty/utils/skinAnalysis";
-import { extractFaceBox } from "@/tools/_shared/beauty/utils/faceAnalysis";
-import { initImageSegmenter } from "@/tools/_shared/beauty/utils/hairPreview";
-import BeautyUploader from "@/tools/_shared/beauty/components/BeautyUploader";
-import { ScoreBar, ConfidenceBadge, MetricGrid, DetailRow } from "@/tools/_shared/beauty/components/ResultCard";
 
-const SEVERITY_COLORS = {
-  Low: "var(--primary)",
-  Mild: "#F59E0B",
-  Moderate: "#F97316",
-  Significant: "#EF4444",
-  Severe: "#DC2626",
-};
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Check, Copy, Info, RotateCcw, Thermometer, Upload } from "lucide-react";
 
-const SEVERITY_BG = {
-  Low: "bg-(--primary)/10 text-(--primary)",
-  Mild: "bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400",
-  Moderate: "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400",
-  Significant: "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400",
-  Severe: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300",
-};
+import {
+  SEVERITY_BANDS,
+  analyzeFacialRedness,
+  buildRednessSummary,
+  buildSampleFrame,
+} from "../lib";
 
-const LOADING_STEPS = ["Loading face detection model...", "Loading face landmark model...", "Detecting face...", "Analyzing redness..."];
+const NUM = new Intl.NumberFormat("en-US");
+const DASH = "—";
 
-export default function RednessAnalyzer() {
-  const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [loadingStep, setLoadingStep] = useState(0);
-  const [error, setError] = useState(null);
-  const [result, setResult] = useState(null);
-  const [overlayUrl, setOverlayUrl] = useState(null);
+/** Long edge the photo is scaled to before pixels are read, to keep memory sane. */
+const MAX_EDGE = 1600;
+const PREVIEW_MAX_WIDTH = 480;
+
+const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
+const HINT_CLASS = "mt-1 text-xs text-[var(--muted-foreground)]";
+const PRIMARY_BTN =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 disabled:opacity-50";
+const GHOST_BTN =
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 disabled:opacity-50";
+
+export default function ToolHome() {
+  const [frame, setFrame] = useState(null);
+  const [source, setSource] = useState("sample");
+  const [fileName, setFileName] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [showOverlay, setShowOverlay] = useState(true);
+  const [copied, setCopied] = useState(false);
   const canvasRef = useRef(null);
-  const modelsLoaded = useRef(false);
+  const inputRef = useRef(null);
 
-  const generateHeatmap = useCallback((img, region) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+  // Build the synthetic sample after mount so the server and client markup match.
+  useEffect(() => {
+    setFrame(buildSampleFrame({ width: 320, height: 400 }));
+  }, []);
+
+  const result = useMemo(() => (frame ? analyzeFacialRedness(frame) : null), [frame]);
+  const hasError = Boolean(result?.error);
+  const report = hasError ? null : result;
+
+  // Preview with the sampled face box and region windows drawn on top.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !frame) return;
+    const scale = Math.min(1, PREVIEW_MAX_WIDTH / frame.width);
+    const displayW = Math.round(frame.width * scale);
+    const displayH = Math.round(frame.height * scale);
+    canvas.width = displayW;
+    canvas.height = displayH;
+
+    const offscreen = document.createElement("canvas");
+    offscreen.width = frame.width;
+    offscreen.height = frame.height;
+    const offCtx = offscreen.getContext("2d");
+    if (!offCtx) return;
+    offCtx.putImageData(new ImageData(frame.data, frame.width, frame.height), 0, 0);
+
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const { data } = imageData;
+    if (!ctx) return;
+    ctx.clearRect(0, 0, displayW, displayH);
+    ctx.drawImage(offscreen, 0, 0, displayW, displayH);
 
-    for (let y = 0; y < canvas.height; y++) {
-      for (let x = 0; x < canvas.width; x++) {
-        const idx = (y * canvas.width + x) * 4;
-        const r = data[idx], g = data[idx + 1], b = data[idx + 2];
-        const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-        let intensity = 0;
-        if (
-          x >= region.x && x < region.x + region.w &&
-          y >= region.y && y < region.y + region.h &&
-          luminance > 20
-        ) {
-          intensity = Math.min(1, Math.max(0, (r - (g + b) / 2) / 80));
-        }
-        if (intensity > 0.15) {
-          data[idx] = Math.min(255, Math.round(r + intensity * 120));
-          data[idx + 1] = Math.max(0, Math.round(g - intensity * 60));
-          data[idx + 2] = Math.max(0, Math.round(b - intensity * 40));
-          data[idx + 3] = Math.round(100 + intensity * 100);
-        }
-      }
+    if (!showOverlay || !report) return;
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = getComputedStyle(canvas).color;
+    ctx.setLineDash([6, 4]);
+    ctx.strokeRect(
+      report.face.x * scale,
+      report.face.y * scale,
+      report.face.w * scale,
+      report.face.h * scale,
+    );
+    ctx.setLineDash([]);
+    for (const region of report.regions) {
+      if (!region.enough) continue;
+      ctx.strokeRect(
+        region.box.x * scale,
+        region.box.y * scale,
+        region.box.w * scale,
+        region.box.h * scale,
+      );
     }
-    ctx.putImageData(imageData, 0, 0);
-    return canvas.toDataURL();
-  }, []);
+  }, [frame, report, showOverlay]);
 
-  const handleImage = useCallback(async ({ src, img }) => {
-    setError(null);
-    setResult(null);
-    setOverlayUrl(null);
-    setImage({ src, img });
-    setLoading(true);
-    setLoadingStep(0);
-    try {
-      if (!modelsLoaded.current) {
-        setLoadingStep(0);
-        await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
-        setLoadingStep(1);
-        await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
-        modelsLoaded.current = true;
-      }
-
-      setLoadingStep(2);
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      canvasRef.current = canvas;
-
-      const detection = await faceapi.detectAllFaces(canvas, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
-      if (!detection || detection.length === 0 || !detection[0].landmarks) {
-        throw new Error("No face detected. Please ensure your face is clearly visible and well-lit.");
-      }
-      const landmarks = detection[0].landmarks.positions;
-      const faceBox = extractFaceBox(landmarks);
-      if (!faceBox) throw new Error("Could not determine face region.");
-
-      const padX = Math.round(faceBox.w * 0.2);
-      const padY = Math.round(faceBox.h * 0.2);
-      const region = {
-        x: Math.max(0, faceBox.x + padX),
-        y: Math.max(0, faceBox.y + padY),
-        w: Math.min(Math.round(faceBox.w * 0.6), canvas.width - faceBox.x - padX),
-        h: Math.min(Math.round(faceBox.h * 0.6), canvas.height - faceBox.y - padY),
-      };
-
-      setLoadingStep(3);
-      let categoryMask = null;
+  const loadFile = useCallback((file) => {
+    if (!file) return;
+    setLoadError("");
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
       try {
-        const segmenter = await initImageSegmenter();
-        const result = segmenter.segment(img);
-        categoryMask = result.categoryMask.getAsUint8Array();
-      } catch (err) {
-        console.warn("AI Segmentation failed", err);
+        const longest = Math.max(img.naturalWidth, img.naturalHeight);
+        const scale = longest > MAX_EDGE ? MAX_EDGE / longest : 1;
+        const width = Math.max(1, Math.round(img.naturalWidth * scale));
+        const height = Math.max(1, Math.round(img.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, width, height);
+        const pixels = ctx.getImageData(0, 0, width, height);
+        setFrame({ data: pixels.data, width, height });
+        setSource("file");
+        setFileName(file.name);
+      } catch {
+        setLoadError(
+          "The browser refused to read the pixels of that file. Try a JPEG or PNG saved on this device.",
+        );
+      } finally {
+        URL.revokeObjectURL(url);
       }
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const analysis = analyzeRedness(imageData, region, categoryMask);
-      if (!analysis || analysis.confidence === 0) {
-        throw new Error("Insufficient skin pixels in the detected face region. Try a closer, well-lit photo.");
-      }
-      setResult(analysis);
-
-      const heatmapUrl = generateHeatmap(img, region);
-      setOverlayUrl(heatmapUrl);
-      toast.success(`Analysis complete: ${analysis.severity} redness`);
-    } catch (err) {
-      const msg = err.message || "Analysis failed. Try a well-lit image without filters.";
-      setError(msg);
-      toast.error(msg);
-    } finally {
-      setLoading(false);
-    }
-  }, [generateHeatmap]);
-
-  const reset = useCallback(() => {
-    setImage(null);
-    setResult(null);
-    setError(null);
-    setLoading(false);
-    setLoadingStep(0);
-    setOverlayUrl(null);
-    canvasRef.current = null;
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      setLoadError("That file could not be decoded as an image.");
+    };
+    img.src = url;
   }, []);
 
-  const metrics = result
-    ? [
-        { label: "Redness Index", value: result.rednessIndex.toFixed(1) },
-        { label: "Severity Score", value: `${result.score}%`, sub: result.severity },
-      ]
-    : [];
+  const summary = useMemo(() => (report ? buildRednessSummary(report) : ""), [report]);
+
+  const copyResult = async () => {
+    if (!summary) return;
+    try {
+      await navigator.clipboard.writeText(summary);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const reset = () => {
+    setFrame(buildSampleFrame({ width: 320, height: 400 }));
+    setSource("sample");
+    setFileName("");
+    setLoadError("");
+    setShowOverlay(true);
+    setCopied(false);
+    if (inputRef.current) inputRef.current.value = "";
+  };
 
   return (
-    <div className="min-h-screen bg-(--background)">
-      <div className="container py-12 px-4 md:px-6">
-        <div className="max-w-5xl mx-auto text-center space-y-4 mb-12 animate-fade-in">
-          <div className="inline-block">
-            <h1 className="heading text-center animate-fade-up pt-5 mt-[-40]">Redness Analyzer</h1>
-            <div className="h-1 bg-gradient-primary rounded-full" />
+    <div className="mx-auto w-full max-w-4xl px-4 py-6 text-[var(--foreground)] sm:px-6">
+      <header className="mb-6">
+        <h1 className="flex items-center gap-2 text-2xl font-bold sm:text-3xl">
+          <Thermometer className="h-6 w-6 text-[var(--primary)]" aria-hidden="true" />
+          Redness Analyzer
+        </h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
+          This measures colour, in the open. Skin-toned pixels are converted from sRGB to CIELAB and
+          the a* axis — green to red — is averaged for the cheeks, nose, forehead and chin. The
+          headline number is Δa*: how much redder an area is than the calmest skin in the same
+          photo, which cancels most of the skin tone and the lighting. The photo is decoded in this
+          browser and never uploaded.
+        </p>
+      </header>
+
+      <section
+        aria-label="Photo"
+        className="rounded-xl bg-[var(--card)] p-4 ring-1 ring-[var(--border)] sm:p-5"
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={LABEL_CLASS} htmlFor="ra-file">
+              Photo
+            </label>
+            <input
+              id="ra-file"
+              ref={inputRef}
+              type="file"
+              accept="image/*"
+              className="mt-1 block h-11 w-full cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] file:mr-3 file:rounded file:border-0 file:bg-[var(--primary)] file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-[var(--primary-foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+              onChange={(event) => loadFile(event.target.files?.[0])}
+            />
+            <p className={HINT_CLASS}>
+              Straight-on, even daylight, no filter or beauty mode. Nothing is uploaded.
+            </p>
           </div>
-          <p className="text-lg text-(--muted-foreground) max-w-2xl mx-auto">
-            Upload a selfie and let AI assess facial redness levels, detecting inflammation and sensitivity across your skin.
-          </p>
+
+          <div className="flex flex-col justify-end gap-2">
+            <label
+              className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-[var(--border)] px-3 text-sm font-medium"
+              htmlFor="ra-overlay"
+            >
+              <input
+                id="ra-overlay"
+                type="checkbox"
+                className="h-4 w-4 accent-[var(--primary)]"
+                checked={showOverlay}
+                onChange={(event) => setShowOverlay(event.target.checked)}
+              />
+              Show the areas that were sampled
+            </label>
+            <p className={HINT_CLASS}>
+              {source === "sample"
+                ? "Showing the built-in synthetic test card — a drawn colour target, not a person. Load a photo to measure your own skin."
+                : `Measuring ${fileName || "your photo"}.`}
+            </p>
+          </div>
         </div>
 
-        <div className="space-y-6">
-          {!image && !loading && !result && (
-            <div className="rounded-xl border border-(--border) bg-(--card) shadow-md p-6">
-              <BeautyUploader onImage={handleImage} />
-            </div>
-          )}
-
-          <AnimatePresence mode="wait">
-            {error && (
-              <motion.div
-                key="error"
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                className="rounded-xl border border-red-200 dark:border-red-800/50 bg-red-50 dark:bg-red-900/20 p-5 flex items-start gap-3"
-              >
-                <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-semibold text-red-700 dark:text-red-300">Analysis Error</p>
-                  <p className="text-sm text-red-600 dark:text-red-400 mt-0.5">{error}</p>
-                </div>
-              </motion.div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <button
+            type="button"
+            className={PRIMARY_BTN}
+            onClick={copyResult}
+            disabled={!summary}
+            aria-label="Copy the measurement summary"
+          >
+            {copied ? (
+              <Check className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-          </AnimatePresence>
-
-          {loading && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="rounded-xl border border-(--border) bg-(--card) shadow-md p-8 text-center space-y-4"
-            >
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-(--primary)/10 flex items-center justify-center">
-                <Loader2 className="w-6 h-6 text-(--primary) animate-spin" />
-              </div>
-              <div>
-                <p className="text-(--foreground) font-semibold">{LOADING_STEPS[loadingStep]}</p>
-                <p className="text-sm text-(--muted-foreground) mt-1">
-                  {loadingStep === 0 && "Downloading face detection model..."}
-                  {loadingStep === 1 && "Downloading face landmark model..."}
-                  {loadingStep === 2 && "Locating facial features..."}
-                  {loadingStep === 3 && "Measuring red channel intensity"}
-                </p>
-              </div>
-              <div className="max-w-xs mx-auto h-1.5 rounded-full bg-(--border) overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full bg-(--primary)"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${((loadingStep + 1) / LOADING_STEPS.length) * 100}%` }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-            </motion.div>
-          )}
-
-          {result && !loading && (
-            <motion.div
-              key="result"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
-              <div className="rounded-xl border border-(--border) bg-(--card) shadow-md overflow-hidden">
-                <div className="bg-gradient-to-r from-(--primary)/10 to-cyan-400/10 dark:from-(--primary)/5 dark:to-cyan-400/5 p-6 md:p-8 text-center relative">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                    className="w-20 h-20 mx-auto rounded-full bg-(--primary)/10 flex items-center justify-center mb-4"
-                  >
-                    <Thermometer className="w-10 h-10 text-(--primary)" />
-                  </motion.div>
-                  <motion.h2
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-3xl md:text-4xl font-bold text-(--foreground) mb-2"
-                  >
-                    <span className={`inline-block px-4 py-1 rounded-full text-lg md:text-xl ${SEVERITY_BG[result.severity] || SEVERITY_BG.Low}`}>
-                      {result.severity}
-                    </span>
-                  </motion.h2>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="flex items-center justify-center gap-2 flex-wrap mt-3"
-                  >
-                    <ConfidenceBadge confidence={Math.round(result.confidence)} />
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold text-(--foreground)">
-                      <Sparkles className="w-3 h-3" />
-                      AI Analysis
-                    </span>
-                  </motion.div>
-                </div>
-
-                <div className="p-6 md:p-8 space-y-6">
-                  <ScoreBar label="Redness Level" score={result.score} color={SEVERITY_COLORS[result.severity] || "var(--primary)"} />
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-(--foreground) mb-3">Detection Metrics</h3>
-                    <MetricGrid metrics={metrics} />
-                  </div>
-
-                  {overlayUrl && (
-                    <div>
-                      <h3 className="text-sm font-semibold text-(--foreground) mb-3 flex items-center gap-2">
-                        <Thermometer className="w-4 h-4 text-(--primary)" />
-                        Redness Heatmap
-                      </h3>
-                      <div className="relative rounded-lg border border-(--border) overflow-hidden">
-                        <img src={overlayUrl} alt="Redness heatmap" className="w-full h-auto" />
-                      </div>
-                      <p className="text-xs text-(--muted-foreground) mt-2">
-                        Intensified red regions highlight areas with elevated redness levels.
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="rounded-lg bg-(--background) border border-(--border) p-4">
-                    <div className="flex items-start gap-2.5">
-                      <Sparkles className="w-5 h-5 text-(--primary) mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-(--muted-foreground) leading-relaxed">{result.description}</p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-(--border) bg-(--background) overflow-hidden">
-                    <div className="px-4 py-2.5 border-b border-(--border)/50 bg-(--card)/50">
-                      <span className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider">Detailed Analysis</span>
-                    </div>
-                    <div className="p-4 space-y-1">
-                      <DetailRow label="Severity" value={result.severity} color={SEVERITY_COLORS[result.severity]} />
-                      <DetailRow label="Redness Index" value={result.rednessIndex.toFixed(1)} />
-                      <DetailRow label="Score" value={`${result.score}%`} color="var(--primary)" />
-                      <DetailRow label="Confidence" value={`${Math.round(result.confidence)}%`} color="var(--primary)" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={reset}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-(--primary) text-white font-semibold hover:brightness-110 transition-all shadow-lg cursor-pointer"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  Analyze Another
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
+            {copied ? "Copied!" : "Copy result"}
+          </button>
+          <button
+            type="button"
+            className={GHOST_BTN}
+            onClick={() => inputRef.current?.click()}
+            aria-label="Choose a photo"
+          >
+            <Upload className="h-4 w-4" aria-hidden="true" />
+            Choose photo
+          </button>
+          <button
+            type="button"
+            className={GHOST_BTN}
+            onClick={reset}
+            aria-label="Clear the photo and go back to the sample"
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
+            Reset
+          </button>
         </div>
+      </section>
+
+      {loadError ? (
+        <p
+          role="alert"
+          className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          {loadError}
+        </p>
+      ) : null}
+
+      {hasError ? (
+        <p
+          role="alert"
+          className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+        >
+          {result.error}
+        </p>
+      ) : null}
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-[auto_1fr]">
+        <section
+          aria-label="Preview"
+          className="rounded-xl bg-[var(--card)] p-4 ring-1 ring-[var(--border)]"
+        >
+          <canvas
+            ref={canvasRef}
+            className="mx-auto block h-auto w-full max-w-[480px] rounded-md text-[var(--primary)]"
+          />
+          <p className="mt-2 text-center text-xs text-[var(--muted-foreground)]">
+            {frame ? `${NUM.format(frame.width)} × ${NUM.format(frame.height)} px` : DASH}
+            {report ? ` · sampled every ${report.image.sampleStep} px` : ""}
+          </p>
+        </section>
+
+        <section
+          aria-label="Measurement"
+          className="rounded-xl bg-[var(--card)] p-4 ring-1 ring-[var(--border)] sm:p-5"
+        >
+          <p className="text-sm font-semibold text-[var(--muted-foreground)]">
+            Reddest area vs the calmest skin in this photo
+          </p>
+          <p className="mt-1 text-4xl font-bold tabular-nums text-[var(--primary)]">
+            {report ? `Δa* ${report.peak.delta}` : DASH}
+          </p>
+          <p className="mt-1 text-sm font-medium">
+            {report ? `${report.peak.label} · ${report.peak.severity.label}` : DASH}
+          </p>
+
+          <dl className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                Baseline area
+              </dt>
+              <dd className="text-sm font-semibold">
+                {report ? `${report.baseline.label} · a* ${report.baseline.aStar}` : DASH}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                Whole face a*
+              </dt>
+              <dd className="text-sm font-semibold tabular-nums">
+                {report ? report.overall.aStar : DASH}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                Whole face lightness L*
+              </dt>
+              <dd className="text-sm font-semibold tabular-nums">
+                {report ? report.overall.lStar : DASH}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                Skin pixels sampled
+              </dt>
+              <dd className="text-sm font-semibold tabular-nums">
+                {report ? NUM.format(report.quality.skinSamples) : DASH}
+              </dd>
+            </div>
+          </dl>
+
+          <p className="mt-4 text-xs leading-5 text-[var(--muted-foreground)]">
+            {report
+              ? `${report.method.metric}. ${report.method.comparison}. "Affected" is the ${report.method.affected}.`
+              : "Load a photo to measure."}
+          </p>
+        </section>
       </div>
+
+      <section
+        aria-label="Region readings"
+        className="mt-4 rounded-xl bg-[var(--card)] p-4 ring-1 ring-[var(--border)] sm:p-5"
+      >
+        <h2 className="text-base font-semibold">Region by region</h2>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full min-w-[36rem] border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-[var(--border)] text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                <th scope="col" className="py-2 pr-3 font-semibold">
+                  Area
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  a*
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Δa*
+                </th>
+                <th scope="col" className="py-2 pr-3 font-semibold">
+                  Band
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Affected
+                </th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">
+                  Pixels
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {!report ? (
+                <tr>
+                  <td className="py-3 text-[var(--muted-foreground)]" colSpan={6}>
+                    {DASH}
+                  </td>
+                </tr>
+              ) : (
+                report.regions.map((region) => (
+                  <tr key={region.id} className="border-b border-[var(--border)]/60">
+                    <td className="py-2 pr-3 font-medium">{region.label}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {region.enough ? region.aStar : DASH}
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {region.enough ? region.delta : DASH}
+                    </td>
+                    <td className="py-2 pr-3">
+                      {region.enough ? region.severity.label : "not enough visible skin"}
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">
+                      {region.enough ? `${region.affectedShare}%` : DASH}
+                    </td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{NUM.format(region.samples)}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <dl className="mt-4 grid gap-2 text-sm">
+          {SEVERITY_BANDS.map((band) => (
+            <div key={band.id} className="grid gap-0.5">
+              <dt className="font-semibold">
+                {band.label} — Δa* {band.min}
+                {Number.isFinite(band.max) ? ` to ${band.max}` : " and above"}
+              </dt>
+              <dd className="text-[var(--muted-foreground)]">{band.blurb}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section
+        aria-label="Photo quality"
+        className="mt-4 rounded-xl bg-[var(--card)] p-4 ring-1 ring-[var(--border)] sm:p-5"
+      >
+        <h2 className="flex items-center gap-2 text-base font-semibold">
+          <Info className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
+          What this photo actually supports
+        </h2>
+        <dl className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+              Skin share of frame
+            </dt>
+            <dd className="text-sm font-semibold tabular-nums">
+              {report ? `${report.quality.skinShare}%` : DASH}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+              Near-clipped pixels
+            </dt>
+            <dd className="text-sm font-semibold tabular-nums">
+              {report ? `${report.quality.clippedShare}%` : DASH}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+              Very dark pixels
+            </dt>
+            <dd className="text-sm font-semibold tabular-nums">
+              {report ? `${report.quality.darkShare}%` : DASH}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+              Background channel balance
+            </dt>
+            <dd className="text-sm font-semibold tabular-nums">
+              {report && report.quality.castIndex !== null ? `${report.quality.castIndex}:1` : DASH}
+            </dd>
+          </div>
+        </dl>
+
+        {report && report.quality.flags.length > 0 ? (
+          <ul className="mt-3 space-y-2">
+            {report.quality.flags.map((flag) => (
+              <li
+                key={flag}
+                className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]"
+              >
+                {flag}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-[var(--muted-foreground)]">
+          <li>
+            There is no confidence percentage here, because nothing in a single photo can produce one
+            honestly. The pixel counts above are the real measure of how much the reading rests on.
+          </li>
+          <li>
+            This reads the colour of light leaving the skin, not blood flow, inflammation or
+            vascular activity — a camera cannot see those.
+          </li>
+          <li>
+            It is not a diagnosis. Persistent flushing, burning or visible vessels are worth taking
+            to a clinician rather than to a colour tool.
+          </li>
+        </ul>
+      </section>
     </div>
   );
 }

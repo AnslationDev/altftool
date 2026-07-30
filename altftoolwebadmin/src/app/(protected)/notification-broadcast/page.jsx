@@ -31,7 +31,10 @@ import { readApiJson, getErrorMessage } from "@/lib/apiClient";
 
 function fmtDate(ms) {
   if (!ms) return "—";
-  return new Date(ms).toLocaleString("en-IN", {
+  // `undefined` uses the viewing admin's own browser locale, matching
+  // newsletter/page.jsx's formatDate() convention — "en-IN" forced every date
+  // here into Indian conventions regardless of who was looking at it.
+  return new Date(ms).toLocaleString(undefined, {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -175,7 +178,11 @@ function RowAction({ label, tone, onClick, disabled, children }) {
       disabled={disabled}
       title={label}
       aria-label={label}
-      className={`rounded-lg p-1.5 transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${toneCls}`}
+      // 44px tap target (design system minimum) — mirrors AdminHeader's icon
+      // buttons (e.g. the notification bell trigger), which use the same
+      // fixed h/w-[--anslation-ds-target-min] + grid/place-items-center
+      // pattern instead of relying on padding to reach the minimum size.
+      className={`grid h-[var(--anslation-ds-target-min)] w-[var(--anslation-ds-target-min)] place-items-center rounded-lg transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] ${toneCls}`}
     >
       {children}
     </button>

@@ -13,7 +13,7 @@ const description =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "AltF Signals - Worldwide Product and Search Opportunities",
+    title: "AltF Signals - Product & Search Opportunities",
     description,
     path: "/signals",
     keywords: ["product trends", "search demand", "startup opportunities", "market signals"],

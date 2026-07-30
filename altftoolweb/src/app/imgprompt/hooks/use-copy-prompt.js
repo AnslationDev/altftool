@@ -31,10 +31,10 @@ export function useCopyPrompt() {
         }
         if (!redirect) return;
 
-        start(label);
-        window.setTimeout(() => {
+        const timerId = window.setTimeout(() => {
           window.location.href = destinationUrl;
         }, REDIRECT_DELAY_SECONDS * 1000);
+        start(label, timerId);
       });
     },
     [start, destinationUrl, requireAuth]

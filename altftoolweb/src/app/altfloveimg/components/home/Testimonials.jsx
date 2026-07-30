@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem, scaleIn } from "../../lib/motion";
 
 const MARQUEE = [
@@ -8,11 +8,11 @@ const MARQUEE = [
   "Developers", "Marketers", "Students", "Agencies", "Creators",
 ];
 
-const REVIEWS = [
-  { quote: "Finally an image compressor that doesn't upload my client photos to some random server. The before/after slider is chef's kiss.", name: "Maya R.", role: "Freelance Photographer", initials: "MR", c: "#14B8A6" },
-  { quote: "I batch-resize product shots every week. It does it in seconds and the ZIP export saves me so much time.", name: "Daniel K.", role: "E-commerce Manager", initials: "DK", c: "#38BDF8" },
-  { quote: "The crop presets for Instagram and YouTube are exactly what our social team needed. No more guessing dimensions.", name: "Priya S.", role: "Social Media Lead", initials: "PS", c: "#0D9488" },
-  { quote: "Clean, fast, and it works on my phone. Converted a folder of WEBP files on the train. Zero friction.", name: "Tomás L.", role: "Indie Developer", initials: "TL", c: "#06B6D4" },
+const HIGHLIGHTS = [
+  { quote: "Compress client photos without uploading a single byte — the before/after slider makes it easy to check quality before you export.", tag: "Compress", c: "#14B8A6" },
+  { quote: "Batch-resize product shots in seconds, then export the whole set as one ZIP.", tag: "Resize", c: "#38BDF8" },
+  { quote: "Crop presets for Instagram, Facebook, LinkedIn and YouTube take the guesswork out of social dimensions.", tag: "Crop", c: "#0D9488" },
+  { quote: "Every tool runs entirely in your browser, so converting a folder of files works even offline.", tag: "Convert", c: "#06B6D4" },
 ];
 
 export default function Testimonials() {
@@ -36,28 +36,22 @@ export default function Testimonials() {
         </div>
 
         <Reveal className="mx-auto mt-16 max-w-2xl text-center">
-          <span className="ali-eyebrow">Loved by creators</span>
+          <span className="ali-eyebrow">Why people switch</span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            People get <span className="ali-gradient-text">more done</span>
+            Built for people who get <span className="ali-gradient-text">more done</span>
           </h2>
         </Reveal>
 
         <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2" stagger={0.08}>
-          {REVIEWS.map((r) => (
-            <RevealItem key={r.name} variants={scaleIn}>
+          {HIGHLIGHTS.map((r) => (
+            <RevealItem key={r.tag} variants={scaleIn}>
               <figure className="ali-card ali-card-hover ali-card-glow relative flex h-full flex-col p-6" style={{ "--ali-accent": r.c }}>
                 <Quote size={34} className="absolute right-5 top-5 opacity-10" style={{ color: r.c }} />
-                <div className="flex gap-0.5" style={{ color: "#f59e0b" }}>
-                  {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} fill="#f59e0b" />)}
-                </div>
-                <blockquote className="mt-3 flex-1 text-[15px] leading-relaxed">&quot;{r.quote}&quot;</blockquote>
-                <figcaption className="mt-5 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-full text-sm font-bold text-white" style={{ background: `linear-gradient(135deg, ${r.c}, var(--secondary, #38BDF8))` }}>{r.initials}</span>
-                  <span>
-                    <span className="block text-sm font-semibold">{r.name}</span>
-                    <span className="block text-xs" style={{ color: "var(--ali-muted)" }}>{r.role}</span>
-                  </span>
-                </figcaption>
+                <span className="w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+                  style={{ background: "color-mix(in srgb, var(--ali-accent) 14%, transparent)", color: "var(--ali-accent)" }}>
+                  {r.tag}
+                </span>
+                <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed">&quot;{r.quote}&quot;</blockquote>
               </figure>
             </RevealItem>
           ))}

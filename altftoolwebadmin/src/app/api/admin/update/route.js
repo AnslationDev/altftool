@@ -35,6 +35,11 @@ function hasOwn(source, key) {
   return Object.prototype.hasOwnProperty.call(source || {}, key);
 }
 
+function sameEmail(a, b) {
+  if (!a || !b) return false;
+  return String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+}
+
 function isSuperAdminDoc(data = {}) {
   return (
     data.isSuperAdmin === true ||
@@ -102,6 +107,20 @@ export async function POST(req) {
     if (activePresent && typeof safeUpdates.isActive !== "boolean") {
       return NextResponse.json({ error: "isActive must be a boolean" }, { status: 400 });
     }
+
+    // Unlike delete/toggle-status (whole-account actions that never make sense
+    // on self), this route also carries legitimate self-service edits (name,
+    // email, password) that the UI intentionally supports. Only the
+    // privilege-bearing fields — role and active status — can be used to
+    // silently demote or deactivate the caller, so only those are guarded,
+    // mirroring the self-target rejection delete/toggle-status already apply.
+    if (actor?.uid === uid && (rolePresent || activePresent)) {
+      return NextResponse.json(
+        { error: "You cannot change your own role or active status" },
+        { status: 400 },
+      );
+    }
+
     const projectAccessPresent = hasOwn(safeUpdates, "projectAccess");
     if (
       projectAccessPresent
@@ -156,6 +175,16 @@ export async function POST(req) {
     const existingData = existingSnap.exists
       ? existingSnap.data() || {}
       : (legacySnap.exists ? legacySnap.data() || {} : {});
+
+    // The uid-keyed self check above misses the case where the caller's own
+    // record is stored under a doc id that is not their Auth uid — the same
+    // gap delete/toggle-status close with an email-matched fallback.
+    if ((rolePresent || activePresent) && sameEmail(actor?.email, existingData.email)) {
+      return NextResponse.json(
+        { error: "You cannot change your own role or active status" },
+        { status: 400 },
+      );
+    }
 
     // Effective values: what the admin ends up with once this request is applied.
     const roleType = rolePresent

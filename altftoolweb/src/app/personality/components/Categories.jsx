@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { Users, ArrowRight, BriefcaseBusiness } from "lucide-react";
 import { useRef, useState } from "react";
-import PersonalityLoader from "./PersonalityLoader";
 import { useRouter } from "next/navigation";
+import PersonalityLoader from "./PersonalityLoader";
 
 const tests = [
   {

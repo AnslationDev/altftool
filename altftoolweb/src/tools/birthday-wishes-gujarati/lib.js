@@ -37,7 +37,7 @@ export const RELATIONSHIPS = [
     id: "friend",
     label: "Friend",
     register: "casual",
-    salutation: { native: "પ્રિય {name},", roman: "Priya {name}," },
+    salutation: { native: "પ્રિય મિત્ર {name},", roman: "Priya mitra {name}," },
   },
   {
     id: "elder-brother",
@@ -73,19 +73,19 @@ export const RELATIONSHIPS = [
     id: "partner",
     label: "Partner or spouse",
     register: "casual",
-    salutation: { native: "પ્રિય {name},", roman: "Priya {name}," },
+    salutation: { native: "મારા પ્રિય {name},", roman: "Mārā priya {name}," },
   },
   {
     id: "child",
     label: "Son or daughter",
     register: "casual",
-    salutation: { native: "પ્રિય {name},", roman: "Priya {name}," },
+    salutation: { native: "વહાલા {name},", roman: "Vahālā {name}," },
   },
   {
     id: "colleague",
     label: "Colleague",
     register: "respectful",
-    salutation: { native: "પ્રિય {name},", roman: "Priya {name}," },
+    salutation: { native: "પ્રિય સહકર્મી {name},", roman: "Priya sahakarmī {name}," },
   },
   {
     id: "boss",

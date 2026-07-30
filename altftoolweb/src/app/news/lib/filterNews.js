@@ -1,13 +1,16 @@
+// Articles carry no engagement data (we do not measure likes/comments/shares
+// for syndicated feed items), so every "most popular" style view falls back to
+// recency — the only signal we actually have.
+function byNewestFirst(news) {
+  return [...news].sort(
+    (a, b) => (a.published_hours_ago ?? 0) - (b.published_hours_ago ?? 0)
+  );
+}
+
 export function filterNews(news, type) {
   switch (type) {
     case "trending":
-      return [...news]
-        .sort(
-          (a, b) =>
-            b.likes + b.comments + b.shares -
-            (a.likes + a.comments + a.shares)
-        )
-        .slice(0, 6);
+      return byNewestFirst(news).slice(0, 6);
 
     case "local":
       return news.filter(
@@ -22,13 +25,7 @@ export function filterNews(news, type) {
       );
 
     case "newsletter":
-      return [...news]
-        .sort(
-          (a, b) =>
-            b.likes + b.comments + b.shares -
-            (a.likes + a.comments + a.shares)
-        )
-        .slice(0, 5);
+      return byNewestFirst(news).slice(0, 5);
 
     default:
       return news;

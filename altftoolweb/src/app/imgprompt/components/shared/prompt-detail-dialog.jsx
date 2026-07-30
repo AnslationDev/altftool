@@ -18,6 +18,7 @@ import { ScoreRing } from "./score-ring";
 export function PromptDetailDialog({ prompt, open, onOpenChange }) {
   const copyPrompt = useCopyPrompt();
   const destinationUrl = useRedirectConfig((s) => s.redirectUrl);
+  const destinationLabel = useRedirectConfig((s) => s.redirectLabel);
   const model = getModel(prompt.modelId);
   const category = getCategory(prompt.categorySlug);
 
@@ -108,7 +109,7 @@ export function PromptDetailDialog({ prompt, open, onOpenChange }) {
 
           <div className="mt-6 flex flex-wrap gap-2">
             <Button className="flex-1 min-w-[180px]" onClick={() => copyPrompt(prompt.prompt, prompt.title)}>
-              <Copy className="h-4 w-4" /> Copy Prompt → OpenArt
+              <Copy className="h-4 w-4" /> Copy Prompt → {destinationLabel}
             </Button>
             <Button variant="outline" onClick={() => downloadJson(prompt.slug, {
               title: prompt.title, prompt: prompt.prompt, negativePrompt: prompt.negativePrompt,
@@ -121,7 +122,7 @@ export function PromptDetailDialog({ prompt, open, onOpenChange }) {
             </Button>
             <Button variant="secondary" asChild>
               <a href={destinationUrl} target="_blank" rel="noopener noreferrer">
-                OpenArt <ArrowUpRight className="h-4 w-4" />
+                {destinationLabel} <ArrowUpRight className="h-4 w-4" />
               </a>
             </Button>
           </div>

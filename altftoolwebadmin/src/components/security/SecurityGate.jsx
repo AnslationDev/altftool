@@ -9,7 +9,7 @@
  *    signing the admin out when the server reports the session inactive.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ShieldCheck, Loader2 } from "lucide-react";
+import { ShieldCheck, Loader2, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/lib/firebaseAuth";
 
@@ -25,6 +25,7 @@ export default function SecurityGate() {
   const { user, logout } = useAuth();
   const [consent, setConsent] = useState(null); // { required, currentVersion, policySummary }
   const [accepting, setAccepting] = useState(false);
+  const [consentError, setConsentError] = useState(null);
   // Bumping this re-runs the session-start effect. It must be state, not a ref:
   // resetting `startedForUidRef` alone is invisible to the effect's dependency
   // list, so a persistent start failure previously disarmed the security gate
@@ -264,11 +265,22 @@ export default function SecurityGate() {
 
   const acceptConsent = async () => {
     setAccepting(true);
+    setConsentError(null);
     try {
       await authFetch("/api/security/consent", { method: "POST", body: JSON.stringify({}) });
       setConsent(null);
-    } catch {
-      setConsent(null); // don't trap the admin if the write fails
+    } catch (err) {
+      // Do NOT dismiss the modal here — the server never recorded consent
+      // (network blip, rate limit, 5xx), and SecurityGate only checks
+      // consent.required once per login (from session/start). Silently
+      // closing would let the admin proceed, and be treated as consented,
+      // for the rest of the session with nothing persisted. Keep the modal
+      // open and surface an error so they can retry.
+      setConsentError(
+        err?.status === 429
+          ? "Too many attempts. Please wait a moment and try again."
+          : "Could not save your response. Please check your connection and try again.",
+      );
     } finally {
       setAccepting(false);
     }
@@ -305,6 +317,16 @@ export default function SecurityGate() {
           <li>• Full IP addresses are encrypted at rest; only a masked IP is shown.</li>
           <li>• You can be signed out automatically after inactivity for your safety.</li>
         </ul>
+
+        {consentError && (
+          <div
+            role="alert"
+            className="mt-4 flex items-start gap-3 rounded-2xl border border-danger bg-danger-soft px-4 py-3 text-sm text-danger"
+          >
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+            <div className="flex-1">{consentError}</div>
+          </div>
+        )}
 
         <div className="mt-6 flex items-center justify-end gap-3">
           <button

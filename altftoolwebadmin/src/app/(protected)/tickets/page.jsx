@@ -449,7 +449,7 @@ export default function SupportManagementPage() {
         }}
         disabled={reopening}
         aria-label={`Reopen "${t.title}"`}
-        className="rounded-md p-1.5 text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-30"
+        className="flex min-h-11 min-w-11 items-center justify-center rounded-md text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-30"
       >
         <RefreshCw
           className={`h-3.5 w-3.5 ${reopening ? "animate-spin motion-reduce:animate-none" : ""}`}

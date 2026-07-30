@@ -9,18 +9,14 @@ import {
   ChevronDown,
   Clock,
   Loader2,
-  LocateFixed,
   Navigation,
   Search,
   X,
 } from "lucide-react";
 import Image from "next/image";
 import DealCard from "./DealCard";
-import MobileSearchBar from "./MobileSearchBar";
-import DesktopSearchBar from "./DesktopSearchBar";
 import { useNearbySearch } from "@/app/sale/hooks/useNearbySearch";
 import {
-  CITY_OPTIONS,
   normaliseCity,
   getRefCoords,
 } from "@/app/sale/data/cities";
@@ -62,37 +58,16 @@ export default function SalesNearYou({
 }) {
   const [sortBy, setSortBy] = useState("Nearest");
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isCityOpen, setIsCityOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(CARDS_PER_PAGE);
 
-  const mobileCityRef = useRef(null);
-  const desktopCityRef = useRef(null);
-  const controlsCityRef = useRef(null);
   const sortDropdownRef = useRef(null);
   const loadMoreRef = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
 
-  // All city options available in the dropdown: built-in + dynamically geocoded
-  const allCityOptions = useMemo(
-    () => [...CITY_OPTIONS, ...dynamicCities],
-    [dynamicCities],
-  );
-
-  // Close dropdowns on outside click
+  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
-      if (
-        mobileCityRef.current &&
-        !mobileCityRef.current.contains(e.target) &&
-        desktopCityRef.current &&
-        !desktopCityRef.current.contains(e.target) &&
-        controlsCityRef.current &&
-        !controlsCityRef.current.contains(e.target)
-      ) {
-        setIsCityOpen(false);
-      }
-
       if (
         sortDropdownRef.current &&
         !sortDropdownRef.current.contains(e.target)
@@ -235,10 +210,6 @@ export default function SalesNearYou({
   const displayCity = locationName || "Your Location";
   const cityResolved = locationStatus === "resolved";
   const isGPS = cityResolved && !!userCoords;
-  const showPrompt =
-    locationStatus === "idle" ||
-    locationStatus === "denied" ||
-    locationStatus === "error";
 
   const handleSearch = () => {
     // Fetch deals for the current location + search text right away
@@ -299,87 +270,6 @@ export default function SalesNearYou({
           </button>
         </div>
 
-        {/*  Mobile Search UI */}
-            {/* <MobileSearchBar
-             searchQuery={searchQuery}
-             onSearchChange={onSearchChange}
-             handleSearch={handleSearch}
-             locationStatus={locationStatus}
-             displayCity={displayCity}
-             isCityOpen={isCityOpen}
-             setIsCityOpen={setIsCityOpen}
-             onDetectLocation={onDetectLocation}
-             onCitySelect={onCitySelect}
-             onCitySearch={onCitySearch}
-             CITY_OPTIONS={allCityOptions}
-             locationName={locationName}
-             mobileCityRef={mobileCityRef}
-           /> */}
-
-        {/*  Desktop Search UI */}
-           {/* <DesktopSearchBar
-             searchQuery={searchQuery}
-             onSearchChange={onSearchChange}
-             handleSearch={handleSearch}
-             locationStatus={locationStatus}
-             displayCity={displayCity}
-             isCityOpen={isCityOpen}
-             setIsCityOpen={setIsCityOpen}
-             onDetectLocation={onDetectLocation}
-             onCitySelect={onCitySelect}
-             onCitySearch={onCitySearch}
-             CITY_OPTIONS={allCityOptions}
-             locationName={locationName}
-             desktopCityRef={desktopCityRef}
-           /> */}
-
-
-        {/* ── Location permission / error banner ── */}
-        {/* <AnimatePresence>
-          {showPrompt && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className={`flex items-center justify-between gap-4 px-5 py-4 rounded-2xl border mb-6 flex-wrap
-                ${locationStatus === "idle" ? "bg-blue-50 border-blue-200" : "bg-red-50 border-red-200"}`}
-            >
-              <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0
-                  ${locationStatus === "idle" ? "bg-blue-100" : "bg-red-100"}`}>
-                  <Navigation className={`w-4 h-4 ${locationStatus === "idle" ? "text-blue-600" : "text-red-500"}`} />
-                </div>
-                <div>
-                  <p className={`text-sm font-semibold font-primary
-                    ${locationStatus === "idle" ? "text-blue-800" : "text-red-700"}`}>
-                    {locationStatus === "idle"
-                      ? "Share your location for exact distances"
-                      : locationStatus === "denied"
-                        ? "Location access was denied"
-                        : "Could not detect your location"}
-                  </p>
-                  <p className={`text-xs font-secondary mt-0.5
-                    ${locationStatus === "idle" ? "text-blue-600" : "text-red-500"}`}>
-                    {locationStatus === "idle"
-                      ? "Or pick a city below to see nearby deals."
-                      : "Enable location in browser settings and retry, or pick a city manually."}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={onDetectLocation}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold font-secondary transition cursor-pointer shrink-0
-                  ${locationStatus === "idle"
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-red-500 text-white hover:bg-red-600"}`}
-              >
-                <LocateFixed className="w-4 h-4" />
-                {locationStatus === "idle" ? "Detect My Location" : "Retry"}
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence> */}
-
         {/* ── Nearby Sale Search results (real OSM malls/stores) ── */}
         {showMallView ? (
           <NearbyMallResults
@@ -398,14 +288,14 @@ export default function SalesNearYou({
           {filtered.length > 0 && (
             <div className="flex flex-row">
               <h3 className="text-xl md:text-2xl font-medium text-(--foreground) font-primary">
-                {filtered.length - 1}+ deals near you {displayCity}
+                {filtered.length}+ deals near you {displayCity}
               </h3>
             </div>
           )}
 
           {/* RIGHT SIDE */}
           <div className="relative" ref={sortDropdownRef}>
-            {/* <button
+            <button
               onClick={() => setIsSortOpen((p) => !p)}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-(--foreground) transition cursor-pointer bg-(--background) font-secondary"
             >
@@ -417,7 +307,7 @@ export default function SalesNearYou({
                 <span className="font-medium">{sortBy}</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-(--muted-foreground) transition ${isSortOpen ? "rotate-180" : ""}`} />
               </div>
-            </button> */}
+            </button>
 
             {isSortOpen && (
               <div className="absolute right-0 top-full mt-2 bg-(--background) border border-(--border) rounded-xl shadow-lg z-20 min-w-40 overflow-hidden">

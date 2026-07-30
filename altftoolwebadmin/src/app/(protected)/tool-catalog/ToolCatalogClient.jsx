@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { ExternalLink, Layers, LayoutGrid, Tags, Wrench } from "lucide-react";
 import {
   DataState,
@@ -10,19 +10,68 @@ import {
   SectionCard,
   StatGrid,
 } from "@/ansets";
+import { getAdminIdToken } from "@/lib/adminIdToken";
 
 const LIVE_SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.altftool.com";
 const PAGE_SIZE = 60;
 
-export default function ToolCatalogClient({ catalog }) {
+export default function ToolCatalogClient() {
+  // null = not loaded yet. The page no longer imports/passes the catalog as a
+  // server-rendered prop (that shipped the full list to anyone who requested
+  // the page, before any client-side auth check ran) — it's fetched here from
+  // the superadmin-gated /api/tools/catalog instead.
+  const [catalog, setCatalog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
   const safeCatalog = useMemo(() => (Array.isArray(catalog) ? catalog : []), [catalog]);
   const totalTools = safeCatalog.length;
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [visible, setVisible] = useState(PAGE_SIZE);
-  // The catalog is now imported by the server page and passed as RSC data, so
-  // it stays out of the client JS bundle while the search UI remains instant.
   const deferredQuery = useDeferredValue(query);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCatalog() {
+      try {
+        setLoading(true);
+        setError("");
+        const token = await getAdminIdToken();
+
+        if (!token) {
+          throw new Error("Your session is not ready. Please refresh and try again.");
+        }
+
+        const response = await fetch("/api/tools/catalog", {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Tool catalog could not be loaded.");
+        }
+
+        const data = await response.json();
+        if (!cancelled) {
+          setCatalog(Array.isArray(data?.items) ? data.items : []);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Tool catalog could not be loaded.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadCatalog();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reloadKey]);
 
   const categories = useMemo(() => {
     const counts = new Map();
@@ -73,111 +122,119 @@ export default function ToolCatalogClient({ catalog }) {
           description="Live registry of every tool shipped on the public site — search, filter by canonical category, and jump straight to the production page. Regenerated automatically on every build."
         />
 
-        <div className="flex flex-col gap-5">
-          <StatGrid
-            columns={3}
-            items={[
-              { label: "Tools", value: totalTools, icon: Wrench },
-              { label: "Categories", value: categories.length, icon: Layers },
-              {
-                label: "Matching filter",
-                value: filtered.length,
-                icon: LayoutGrid,
-                tone: "primary",
-              },
-            ]}
-          />
-
-          <FilterBar
-            search={query}
-            onSearchChange={(value) => {
-              setQuery(value);
-              setVisible(PAGE_SIZE);
-            }}
-            searchPlaceholder="Search tools by name, slug, or category…"
-            filters={[
-              {
-                key: "category",
-                label: "Filter by category",
-                value: category,
-                onChange: (value) => {
-                  setCategory(value);
-                  setVisible(PAGE_SIZE);
+        <DataState
+          loading={loading && !catalog}
+          error={catalog ? null : error}
+          onRetry={() => setReloadKey((key) => key + 1)}
+          loadingVariant="cards"
+          errorTitle="Tool catalog could not be loaded"
+        >
+          <div className="flex flex-col gap-5">
+            <StatGrid
+              columns={3}
+              items={[
+                { label: "Tools", value: totalTools, icon: Wrench },
+                { label: "Categories", value: categories.length, icon: Layers },
+                {
+                  label: "Matching filter",
+                  value: filtered.length,
+                  icon: LayoutGrid,
+                  tone: "primary",
                 },
-                options: categoryOptions,
-              },
-            ]}
-            count={`${filtered.length} of ${totalTools} tools`}
-          />
+              ]}
+            />
 
-          <DataState
-            isEmpty={!shown.length}
-            empty={
-              <SectionCard>
-                <EmptyState
-                  icon={Tags}
-                  title="No tools match this filter"
-                  description="Try a different search term or clear the category filter."
-                />
-              </SectionCard>
-            }
-          >
-            <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {shown.map((tool) => (
-                <li key={tool.slug}>
-                  <SectionCard
-                    flush
-                    className="h-full transition hover:border-[var(--primary)]/50 hover:shadow-md"
-                    bodyClassName="flex h-full flex-col p-4"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="font-semibold text-[var(--foreground)]">
-                        {tool.name}
-                      </p>
-                      <a
-                        href={`${LIVE_SITE}/tools/all/${tool.slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open ${tool.name} on the live site`}
-                        className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
-                      >
-                        <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                      </a>
-                    </div>
-                    <p className="mt-1 line-clamp-2 text-sm leading-6 text-[var(--muted)]">
-                      {tool.description}
-                    </p>
-                    <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                      {tool.categories.map((cat) => (
-                        <span
-                          key={cat}
-                          className="rounded-md bg-[var(--surface-soft)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--muted)]"
+            <FilterBar
+              search={query}
+              onSearchChange={(value) => {
+                setQuery(value);
+                setVisible(PAGE_SIZE);
+              }}
+              searchPlaceholder="Search tools by name, slug, or category…"
+              filters={[
+                {
+                  key: "category",
+                  label: "Filter by category",
+                  value: category,
+                  onChange: (value) => {
+                    setCategory(value);
+                    setVisible(PAGE_SIZE);
+                  },
+                  options: categoryOptions,
+                },
+              ]}
+              count={`${filtered.length} of ${totalTools} tools`}
+            />
+
+            <DataState
+              isEmpty={!shown.length}
+              empty={
+                <SectionCard>
+                  <EmptyState
+                    icon={Tags}
+                    title="No tools match this filter"
+                    description="Try a different search term or clear the category filter."
+                  />
+                </SectionCard>
+              }
+            >
+              <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {shown.map((tool) => (
+                  <li key={tool.slug}>
+                    <SectionCard
+                      flush
+                      className="h-full transition hover:border-[var(--primary)]/50 hover:shadow-md"
+                      bodyClassName="flex h-full flex-col p-4"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="font-semibold text-[var(--foreground)]">
+                          {tool.name}
+                        </p>
+                        <a
+                          href={`${LIVE_SITE}/tools/all/${tool.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${tool.name} on the live site`}
+                          className="grid h-11 w-11 shrink-0 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-[var(--surface-soft)] hover:text-[var(--primary)]"
                         >
-                          {cat}
+                          <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                      </div>
+                      <p className="mt-1 line-clamp-2 text-sm leading-6 text-[var(--muted)]">
+                        {tool.description}
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                        {tool.categories.map((cat) => (
+                          <span
+                            key={cat}
+                            className="rounded-md bg-[var(--surface-soft)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--muted)]"
+                          >
+                            {cat}
+                          </span>
+                        ))}
+                        <span className="ml-auto font-mono text-[11px] text-[var(--muted)]">
+                          /{tool.slug}
                         </span>
-                      ))}
-                      <span className="ml-auto font-mono text-[11px] text-[var(--muted)]">
-                        /{tool.slug}
-                      </span>
-                    </div>
-                  </SectionCard>
-                </li>
-              ))}
-            </ul>
-          </DataState>
+                      </div>
+                    </SectionCard>
+                  </li>
+                ))}
+              </ul>
+            </DataState>
 
-          {visible < filtered.length ? (
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={() => setVisible((count) => count + PAGE_SIZE)}
-                className="inline-flex min-h-11 items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 text-sm font-semibold text-[var(--foreground)] shadow-sm transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
-              >
-                Show more ({filtered.length - visible} remaining)
-              </button>
-            </div>
-          ) : null}
-        </div>
+            {visible < filtered.length ? (
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setVisible((count) => count + PAGE_SIZE)}
+                  className="inline-flex min-h-11 items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 text-sm font-semibold text-[var(--foreground)] shadow-sm transition hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                >
+                  Show more ({filtered.length - visible} remaining)
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </DataState>
       </div>
     </div>
   );

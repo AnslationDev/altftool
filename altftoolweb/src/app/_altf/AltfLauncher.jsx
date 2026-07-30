@@ -45,33 +45,39 @@ export default function AltfLauncher() {
 
   return (
     <div className="altfl" ref={wrapRef} data-open={open ? "true" : "false"}>
-      {open && (
-        <nav className="altfl-menu" id="altfl-menu" aria-label="AltFTool">
-          <p className="altfl-menu-title">Explore AltFTool</p>
-          <ul>
-            {ALTF_LAUNCHER_LINKS.map((link) => {
-              const Icon = ICONS[link.icon] ?? Home;
-              return (
-                <li key={link.href}>
-                  <Link href={link.href} onClick={() => setOpen(false)}>
-                    <span className="altfl-menu-icon" aria-hidden="true">
-                      <Icon size={16} strokeWidth={2.1} />
-                    </span>
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      )}
+      {/*
+        Rendered whether or not the menu is open. These four links are the only
+        outbound links in the markup of a self-chrome route, so mounting them
+        behind the toggle left every one of those routes a dead end for a
+        crawler even though a visitor could always click out. `hidden` keeps the
+        closed menu out of the tab order and the accessibility tree while the
+        anchors stay in the HTML.
+      */}
+      <nav className="altfl-menu" id="altfl-menu" aria-label="AltFTool" hidden={!open}>
+        <p className="altfl-menu-title">Explore AltFTool</p>
+        <ul>
+          {ALTF_LAUNCHER_LINKS.map((link) => {
+            const Icon = ICONS[link.icon] ?? Home;
+            return (
+              <li key={link.href}>
+                <Link href={link.href} onClick={() => setOpen(false)}>
+                  <span className="altfl-menu-icon" aria-hidden="true">
+                    <Icon size={16} strokeWidth={2.1} />
+                  </span>
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
 
       <button
         ref={buttonRef}
         type="button"
         className="altfl-btn"
         aria-expanded={open}
-        aria-controls={open ? "altfl-menu" : undefined}
+        aria-controls="altfl-menu"
         aria-label={open ? "Close AltFTool menu" : "Open AltFTool menu"}
         onClick={() => setOpen((value) => !value)}
       >

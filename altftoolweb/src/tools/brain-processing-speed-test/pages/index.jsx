@@ -169,7 +169,7 @@ export default function BrainProcessingSpeedTest() {
           Brain Processing Speed Test
         </h1>
         <p className="mx-auto mt-2 max-w-2xl text-[var(--muted-foreground)]">
-          Measure your visual processing speed and cognitive efficiency with a clinical symbol-to-digit substitution task.
+          Measure your visual processing speed and cognitive efficiency with a symbol-to-digit substitution task modelled on clinical tests.
         </p>
       </header>
 

@@ -124,7 +124,7 @@ export default function SequenceMemory({ onComplete, beep }) {
           </div>
         </div>
       )}
-      <StatsChart data={DIST} xLabel="Sequence length reached" title="Population Score Distribution" subtitle="How 200,000+ users scored on this test" />
+      <StatsChart data={DIST} xLabel="Sequence length reached" title="Population Score Distribution" subtitle="Illustrative example distribution, not measured from real users" />
       <AboutCard {...ABOUT} />
     </div>
   );

@@ -194,7 +194,6 @@ export default function ToolHome() {
             {segments.map((segment, index) =>
               segment.filler ? (
                 <mark
-                  // eslint-disable-next-line react/no-array-index-key
                   key={`seg-${index}`}
                   className="rounded-sm bg-[var(--danger-soft)] px-0.5 font-semibold text-[var(--danger)]"
                   title={segment.filler.advice}
@@ -202,7 +201,6 @@ export default function ToolHome() {
                   {segment.text}
                 </mark>
               ) : (
-                // eslint-disable-next-line react/no-array-index-key
                 <span key={`seg-${index}`}>{segment.text}</span>
               ),
             )}

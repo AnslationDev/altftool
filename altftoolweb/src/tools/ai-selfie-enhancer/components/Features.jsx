@@ -5,17 +5,12 @@ import { Smile, Sliders, Shield, Zap, Sparkles, Wand2 } from "lucide-react";
     {
       question: "How does the AI Selfie Enhancer improve my photos?",
       answer:
-        "It uses advanced client-side HTML5 Canvas pixel manipulation algorithms to perform skin smoothing (using multi-pass box blur algorithms), brightness adjustment, contrast boosting, and vibrance scaling. This acts like an instant digital airbrush.",
+        "It applies four adjustments — brightness, contrast, saturation, and a blur-based smoothing — as a CSS filter on the preview and the same filter on an HTML5 canvas for export. There is no machine-learning model or image analysis involved; every preset is just a fixed combination of those four values.",
     },
     {
       question: "What do the different enhancement presets do?",
       answer:
-        "The tool includes over 70 specialized AI presets across multiple categories including: Professional Studio (balanced lighting), Creative (artsy effects), Specialized Skin Enhancement (blemish reduction), Dynamic Colors, Portrait Photography (celebrity-quality), Lifestyle, and Artistic Expression. Each preset is optimized for specific use cases like corporate headshots, social media posts, or creative projects with detailed descriptions for each style.",
-    },
-    {
-      question: "Is there a progress indicator when applying presets?",
-      answer:
-        "Yes! When you apply any preset, a real-time progress bar appears showing the enhancement process. The bar simulates the AI enhancement algorithm processing your image, with detailed descriptions of what enhancements are being applied (skin tone, lighting, facial features, etc.). This provides visual feedback and demonstrates the sophisticated processing happening locally in your browser.",
+        "The tool includes 79 one-click presets across categories such as Professional Studio (balanced lighting), Creative (artsy effects), Specialized Skin Enhancement (blemish reduction), Dynamic Colors, Portrait Photography, Lifestyle, and Artistic Expression. Each preset simply sets the brightness, contrast, saturation, and smoothing sliders to fixed values tuned for that look, and you can fine-tune any of them afterward.",
     },
     {
       question: "Are my photos sent to any servers?",

@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Providers } from "./providers/Providers";
 
+import AltfLauncher from "@/app/_altf/AltfLauncher";
+import "@/app/_altf/altf-brand.css";
 export const metadata = {
   title: "Mockly — Create Ultra Realistic Social Mockups Instantly",
   description:
@@ -19,6 +21,7 @@ export default function Layout({ children }) {
   return (
     <Providers>
       <div className="mockly-root">{children}</div>
+      <AltfLauncher />
     </Providers>
   );
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { generateWithProvider } from "../../lib/prompt-engine/provider";
 import { DEFAULT_PARAMS } from "../../lib/prompt-engine/params";
 
@@ -6,6 +7,13 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
+  const limited = enforceRateLimit(NextResponse, req, {
+    limit: 20,
+    scope: "imgprompt:generate",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   let body;
   try {
     body = await req.json();

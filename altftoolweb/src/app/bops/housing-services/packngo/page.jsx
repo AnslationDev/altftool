@@ -118,11 +118,18 @@ function MaterialCard({ item }) {
 }
 
 function QuoteForm() {
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setSubmitted(true);
+  }
+
   return (
     <form
       className="packngo-form packngo-reveal"
       aria-label="Request a callback"
-      onSubmit={(event) => event.preventDefault()}
+      onSubmit={handleSubmit}
     >
       <div className="packngo-field">
         <label htmlFor="packngo-input-name">Name</label>
@@ -152,10 +159,21 @@ function QuoteForm() {
           <option value="villa">Villa</option>
         </select>
       </div>
-      <button type="submit" className="packngo-btn packngo-btn-solid packngo-form-submit">
-        Request a callback
+      <button
+        type="submit"
+        className="packngo-btn packngo-btn-solid packngo-form-submit"
+        disabled={submitted}
+      >
+        {submitted ? "Request sent" : "Request a callback"}
       </button>
-      <p className="packngo-form-note">Demo form — nothing is sent anywhere.</p>
+      {submitted ? (
+        <p className="packngo-form-note" role="status">
+          Thanks! This is a demo form, so nothing was actually sent — call{" "}
+          {PHONE_DISPLAY} for a real callback.
+        </p>
+      ) : (
+        <p className="packngo-form-note">Demo form — nothing is sent anywhere.</p>
+      )}
     </form>
   );
 }

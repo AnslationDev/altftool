@@ -61,7 +61,7 @@ export function HeaderLoadingSkeleton() {
       role="status"
       aria-label="Loading navigation"
     >
-      <div className="flex min-h-16 items-center justify-between gap-4 py-3">
+      <div className="flex min-h-14 items-center justify-between gap-4 py-3 lg:min-h-16">
         <LoadingBone className="h-10 w-36 rounded-[var(--anslation-ds-radius)]" />
         <div className="hidden items-center gap-3 lg:flex">
           {Array.from({ length: 5 }).map((_, index) => (

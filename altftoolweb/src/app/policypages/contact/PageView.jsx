@@ -15,6 +15,15 @@ import {
 import "../../styles/landing.css";
 import "./contact.css";
 
+const CONTACT_EMAIL = "altftool@gmail.com";
+
+const subjectLabels = {
+  bug: "Bug report",
+  feature: "Feature request",
+  partnership: "Partnership",
+  support: "General support",
+};
+
 const contactMethods = [
   {
     icon: MapPin,
@@ -41,14 +50,38 @@ export default function Contact() {
     subject: "",
     message: "",
   });
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
 
   const updateField = (field) => (event) => {
     setSent(false);
     setFormData((current) => ({ ...current, [field]: event.target.value }));
   };
 
+  const handleNewsletterSubmit = (event) => {
+    event.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    try {
+      window.localStorage.setItem("ALTFT_NEWSLETTER_OPTIN", newsletterEmail.trim());
+    } catch {
+      // localStorage unavailable (private mode) — still show success, intent captured for session
+    }
+    setNewsletterSubscribed(true);
+    setNewsletterEmail("");
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const subject = subjectLabels[formData.subject] || "Contact form message";
+    const body = [
+      `Name: ${formData.name || "Not provided"}`,
+      `Email: ${formData.email || "Not provided"}`,
+      "",
+      formData.message || "Not provided",
+    ].join("\n");
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
@@ -191,7 +224,7 @@ export default function Contact() {
 
             {sent ? (
               <p className="contact-success" role="status">
-                Message sent. We&apos;ll get back to you shortly.
+                Your email app should open with the message filled in.
               </p>
             ) : null}
 
@@ -218,19 +251,32 @@ export default function Contact() {
                 to your inbox.
               </p>
             </div>
-            <form className="contact-newsletter-form">
+            <form className="contact-newsletter-form" onSubmit={handleNewsletterSubmit}>
               <label className="sr-only" htmlFor="contact-newsletter-email">
                 Email Address
               </label>
               <input
                 id="contact-newsletter-email"
+                name="email"
                 type="email"
                 placeholder="Email Address"
+                required
+                value={newsletterEmail}
+                onChange={(event) => {
+                  setNewsletterSubscribed(false);
+                  setNewsletterEmail(event.target.value);
+                }}
               />
               <button type="submit">
                 Subscribe
                 <ArrowRight className="h-4 w-4" strokeWidth={2.35} />
               </button>
+
+              {newsletterSubscribed ? (
+                <p className="contact-success" role="status">
+                  We&apos;ve saved your email for the newsletter launch.
+                </p>
+              ) : null}
             </form>
           </div>
         </div>

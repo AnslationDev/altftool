@@ -1,21 +1,18 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Papa from "papaparse";
+import { normalizeHeader } from "../utils/helpers";
 
 /* ================= HELPERS ================= */
-// (UNCHANGED — YOUR ORIGINAL CODE)
-const parseCSV = (text) => {
-  const lines = text.split("\n").filter(Boolean);
-  const headers = lines[0].split(",").map(h => h.trim());
 
-  return lines.slice(1).map(line => {
-    const values = line.split(",");
-    const obj = {};
-    headers.forEach((h, i) => {
-      obj[h] = (values[i] || "").trim();
-    });
-    return obj;
+const parseCSV = (text) => {
+  const { data } = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true,
+    transformHeader: normalizeHeader,
   });
+  return data;
 };
 
 const cleanLeads = (rows) => {
@@ -25,10 +22,10 @@ const cleanLeads = (rows) => {
   let invalid = 0;
 
   rows.forEach(r => {
-    const name = r.Name?.trim();
-    const email = r.Email?.trim().toLowerCase();
-    const phone = r.Phone?.trim();
-    const company = r.Company?.trim();
+    const name = r.name?.trim();
+    const email = r.email?.trim().toLowerCase();
+    const phone = r.phone?.trim();
+    const company = r.company?.trim();
 
     if (!email) {
       invalid++;
@@ -56,9 +53,7 @@ const cleanLeads = (rows) => {
 const downloadCSV = (data) => {
   if (!data.length) return;
 
-  const headers = Object.keys(data[0]).join(",");
-  const rows = data.map(r => Object.values(r).join(",")).join("\n");
-  const csv = `${headers}\n${rows}`;
+  const csv = Papa.unparse(data);
 
   const blob = new Blob([csv], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
@@ -115,10 +110,20 @@ export default function CsvLeadCleaner() {
         ref={fileRef}
         onChange={handleFileChange}
         className="hidden"
+        aria-label="CSV file"
       />
 
       <div
         onClick={() => fileRef.current.click()}
+        role="button"
+        tabIndex={0}
+        aria-label="Choose CSV file to upload"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            fileRef.current.click();
+          }
+        }}
         className="
           border-2 border-dashed border-(--border)
           bg-(--card)
@@ -128,6 +133,9 @@ export default function CsvLeadCleaner() {
           transition-all duration-300
           hover:border-(--primary)
           hover:bg-(--primary)/5
+          focus-visible:outline-none
+          focus-visible:ring-[3px]
+          focus-visible:ring-(--primary)
           text-center
           shadow-sm
         "

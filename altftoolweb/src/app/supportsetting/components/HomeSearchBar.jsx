@@ -80,6 +80,7 @@ const HomeSearchBar = forwardRef(({ settings, searchQuery, onSearchChange, onSel
                   key={setting.id}
                   type="button"
                   role="option"
+                  aria-selected="false"
                   className="support-home-search-result"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => handleSelect(setting.id)}

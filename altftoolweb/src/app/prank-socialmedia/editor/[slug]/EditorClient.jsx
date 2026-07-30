@@ -60,7 +60,7 @@ export default function EditorClient({ slug }) {
     }
   })();
 
-  return <EditorLayout title={tpl.name} sidebar={sidebar} preview={preview} />;
+  return <EditorLayout title={tpl.name} slug={slug} sidebar={sidebar} preview={preview} />;
 }
 
 function SidebarForSlug({ slug }) {

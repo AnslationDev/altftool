@@ -67,23 +67,40 @@ export function injectAds(
 
 
 export function injectRandomAds(items, ads, maxAds = 3) {
+  if (!Array.isArray(items) || !Array.isArray(ads)) return items ?? [];
   if (!items.length || !ads.length) return items;
 
   const result = [...items];
   const usedPositions = new Set();
 
-  const adsToUse = ads.slice(0, maxAds);
+  // Never more ads than results. Drawing positions out of the array as it grew
+  // let a one-result list end up carrying four creatives; capping against the
+  // original length keeps the page a list of results with ads in it rather than
+  // the other way round.
+  const slotCount = items.length;
+  const adsToUse = ads.slice(0, Math.min(maxAds, slotCount));
 
   adsToUse.forEach((ad, index) => {
     let position;
+    let attempts = 0;
 
+    // Never position 0. The listing grid is a single column below 700px, so
+    // index 0 puts a 300px-tall creative above the first result the visitor
+    // came for. Same guard injectRandomFeedAds already uses. Positions are
+    // indexes into the ORIGINAL list; the splice below shifts by however many
+    // ads already sit ahead of the slot.
+    if (usedPositions.size >= slotCount) return;
     do {
-      position = Math.floor(Math.random() * result.length);
+      position = Math.floor(Math.random() * slotCount) + 1;
+      attempts++;
+      if (attempts > 20) return; // safety break
     } while (usedPositions.has(position));
 
+    let ahead = 0;
+    for (const taken of usedPositions) if (taken < position) ahead += 1;
     usedPositions.add(position);
 
-    result.splice(position, 0, {
+    result.splice(position + ahead, 0, {
       type: "ad-single",
       id: `ext-ad-${index}`,
       ad: ad.content,

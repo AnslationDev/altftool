@@ -69,14 +69,12 @@ function Slider({ pair }) {
       onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
       onTouchStart={(e) => { dragging.current = true; move(e.touches[0].clientX); }}
     >
-      {/* After uses the same home image with a polished, upgraded finish. */}
       <img src={pair.image} alt="After siding transformation" className="absolute inset-0 w-full h-full object-cover saturate-125 contrast-110 brightness-105" onLoad={measure} />
       <div className="absolute inset-0 bg-gradient-to-tr from-secondary/10 via-transparent to-surface/10 pointer-events-none" />
       <span className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-secondary text-primary-foreground text-xs font-bold tracking-wider uppercase shadow-lg z-10">
         After
       </span>
 
-      {/* Before is the same home with muted color, age, and pre-renovation surface treatment. */}
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <img
           src={pair.image}
@@ -125,9 +123,12 @@ export default function BeforeAfter() {
             Before & After
           </div>
           <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-primary leading-tight">
-            Real Transformations, Real Homeowners
+            See the Difference Quality Makes
           </h2>
-          <p className="mt-5 text-lg text-foreground/75">Drag the slider to see the EliteShield difference.</p>
+          <p className="mt-5 text-lg text-foreground/75">
+            Drag the slider to compare a weathered look with a refreshed finish — an illustrative
+            style comparison, not two different job sites.
+          </p>
         </motion.div>
 
         <motion.div

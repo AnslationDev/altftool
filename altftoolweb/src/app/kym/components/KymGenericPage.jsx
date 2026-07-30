@@ -13,7 +13,7 @@ import {
 } from "../data/kymData";
 import { slugifyTitle } from "../data/slug";
 
-const contentGroups = [
+export const contentGroups = [
   ...spotlightCards,
   ...freshEntries,
   ...explainers.map((item) => ({ ...item, category: "Explainer", meta: "KYM Staff - recently" })),
@@ -185,7 +185,15 @@ function getArticleProfile(item, category) {
 }
 
 export function findKymItem(slug) {
-  return contentGroups.find((item) => slugifyTitle(item.title) === slug);
+  // Links are built as `item.href || /kym/<slugified title>` (see kymPaths
+  // above), but this only ever matched the slugified title — so every item
+  // carrying an explicit href produced a hub link that could not be resolved.
+  // 36 of the 44 links on /kym landed on the "KYM Page" placeholder because of
+  // it. Match the same two forms the link generator uses.
+  const path = `/kym/${slug}`;
+  return contentGroups.find(
+    (item) => item.href === path || slugifyTitle(item.title) === slug,
+  );
 }
 
 function RelatedRail({ current }) {
@@ -269,7 +277,7 @@ export default function KymGenericPage({ item }) {
             <h2>Entry Notes</h2>
             <div className="kym-topic-list">
               {profile.notes.map((note) => (
-                <a href="#" key={note}>{note}</a>
+                <span key={note}>{note}</span>
               ))}
             </div>
           </section>

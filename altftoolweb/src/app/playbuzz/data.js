@@ -30,7 +30,7 @@ const normalizeQuiz = (quiz) => {
 
 const rawQuizzesData = [
   {
-    id: 1, title: "Only 1 in 100 People Can Ace This General Knowledge Quiz", author: 'James Whitfield', cardImage: '/playbuzz-assets/newsection_4.jpeg', heroImage: '/playbuzz-assets/newsection_4.jpeg', plays: '1.eg', plays: '1.6M plays', cat: "lifestyle", trending: false, questions: [
+    id: 1, title: "Only 1 in 100 People Can Ace This General Knowledge Quiz", author: 'James Whitfield', cardImage: '/playbuzz-assets/newsection_4.jpeg', heroImage: '/playbuzz-assets/newsection_4.jpeg', plays: '1.6M plays', cat: "lifestyle", trending: false, questions: [
       { id: 1, text: "What is the chemical symbol for gold?", options: ["Au", "Ag", "Fe", "Go"], correctIndex: 0 },
       { id: 2, text: 'How many sides does a hexagon have?', options: ["5", "7", "8", "6"], correctIndex: 3 },
       { id: 3, text: "Which planet is known as the Red Planet?", options: ["Venus", "Jupiter", "Mars", "Saturn"], correctIndex: 2 },

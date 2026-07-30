@@ -14,6 +14,7 @@ export const runtime = "nodejs";
 
 const MAX_URLS = 60;
 const TIMEOUT_MS = 8000;
+const MAX_REDIRECTS = 5;
 const DEFAULT_BASE = (process.env.ALTFT_WEB_BASE_URL || "https://altftool.com").replace(/\/+$/, "");
 
 // SSRF guard: any admin with SEO read access can otherwise make this server
@@ -80,6 +81,39 @@ function toAbsolute(input) {
   return `${DEFAULT_BASE}${s.startsWith("/") ? s : `/${s}`}`;
 }
 
+// Redirects are followed manually (never fetch's redirect:"follow") so each
+// hop's destination is re-validated against assertPublicDestination() before
+// it is requested. Without this, a URL whose initial hostname resolves
+// publicly could 3xx to an internal/private address (e.g. the cloud metadata
+// endpoint) and the server would blindly follow it — the SSRF class
+// assertPublicDestination() exists to prevent, bypassed via one redirect hop.
+// Mirrors src/app/api/blogs/link-check/route.js's fix.
+async function fetchWithValidatedRedirects(url, method, signal) {
+  let currentUrl = url;
+  let redirected = false;
+
+  for (let hop = 0; ; hop += 1) {
+    const res = await fetch(currentUrl, { method, redirect: "manual", signal });
+    const isRedirect = res.status >= 300 && res.status < 400;
+    const location = isRedirect ? res.headers.get("location") : null;
+
+    if (!location) return { res, redirected };
+
+    if (hop >= MAX_REDIRECTS) {
+      throw new Error("Too many redirects.");
+    }
+
+    const nextUrl = new URL(location, currentUrl);
+    if (!["http:", "https:"].includes(nextUrl.protocol)) {
+      throw new Error("Only http(s) redirect targets are allowed.");
+    }
+    nextUrl.hash = "";
+    await assertPublicDestination(nextUrl);
+    currentUrl = nextUrl;
+    redirected = true;
+  }
+}
+
 async function probe(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -92,19 +126,20 @@ async function probe(url) {
     await assertPublicDestination(parsed);
 
     let res;
+    let redirected;
     try {
-      res = await fetch(url, { method: "HEAD", redirect: "follow", signal: controller.signal });
+      ({ res, redirected } = await fetchWithValidatedRedirects(url, "HEAD", controller.signal));
       // Some servers reject HEAD — retry with GET.
       if (res.status === 405 || res.status === 501) {
-        res = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal });
+        ({ res, redirected } = await fetchWithValidatedRedirects(url, "GET", controller.signal));
       }
     } catch {
-      res = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal });
+      ({ res, redirected } = await fetchWithValidatedRedirects(url, "GET", controller.signal));
     }
     result.status = res.status;
     result.ok = res.ok;
     result.finalUrl = res.url || url;
-    result.redirected = Boolean(res.redirected) || result.finalUrl.replace(/\/$/, "") !== url.replace(/\/$/, "");
+    result.redirected = redirected || result.finalUrl.replace(/\/$/, "") !== url.replace(/\/$/, "");
   } catch (err) {
     result.error = err?.name === "AbortError" ? "Timeout" : String(err?.message || "Request failed");
   } finally {

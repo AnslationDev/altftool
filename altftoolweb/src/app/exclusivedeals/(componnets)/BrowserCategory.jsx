@@ -34,7 +34,7 @@ function BrowserCategory() {
       <div className='flex gap-4 overflow-x-auto pb-2 scrollbar-hide lg:grid lg:grid-cols-6 lg:gap-2 lg:overflow-visible no-scrollbar' >
         {category.map((item) => (
           <div key={item.id} className='flex-shrink-0 lg:flex-shrink animate-slide-right'>
-            <Link href={`/exclusivedeals/all-stores?category=${item.name}`}>
+            <Link href={`/exclusivedeals/all-stores?category=${encodeURIComponent(item.name)}`}>
               <CatCard item={item} />
             </Link>
           

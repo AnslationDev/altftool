@@ -136,7 +136,7 @@ export default function ToolHome() {
       // Clean string for javascript evaluation
       let cleanExpr = display
         .replace(/π/g, "Math.PI")
-        .replace(/e/g, "Math.E")
+        .replace(/(?<![0-9.])e(?![0-9+-])/g, "Math.E")
         .replace(/sin\(/g, isDegree ? "Math.sin(Math.PI/180*" : "Math.sin(")
         .replace(/cos\(/g, isDegree ? "Math.cos(Math.PI/180*" : "Math.cos(")
         .replace(/tan\(/g, isDegree ? "Math.tan(Math.PI/180*" : "Math.tan(")
@@ -154,7 +154,6 @@ export default function ToolHome() {
         cleanExpr += ")".repeat(openBrackets - closeBrackets);
       }
 
-      // eslint-disable-next-line no-eval
       const result = eval(cleanExpr);
       
       if (result === undefined || isNaN(result) || !isFinite(result)) {
@@ -310,9 +309,10 @@ export default function ToolHome() {
                 </button>
                 <button
                   onClick={handleBackspace}
+                  aria-label="Backspace"
                   className="h-12 bg-surface-soft border border-border text-foreground hover:bg-surface-soft/80 rounded-xl text-sm flex items-center justify-center transition-all"
                 >
-                  <ArrowLeft size={16} />
+                  <ArrowLeft size={16} aria-hidden="true" />
                 </button>
 
                 {/* Row 2 */}
@@ -516,17 +516,19 @@ export default function ToolHome() {
               ) : (
                 <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
                   {history.map((item) => (
-                    <div
+                    <button
                       key={item.id}
+                      type="button"
                       onClick={() => {
                         setDisplay(String(item.res));
                         setEquation(`${item.expr} =`);
+                        setShouldReset(false);
                       }}
-                      className="p-3 bg-surface-soft border border-border/80 rounded-xl text-right font-mono text-xs cursor-pointer hover:border-primary/50 transition-all space-y-0.5"
+                      className="w-full p-3 bg-surface-soft border border-border/80 rounded-xl text-right font-mono text-xs cursor-pointer hover:border-primary/50 transition-all space-y-0.5"
                     >
                       <div className="text-muted-foreground text-[10px] truncate">{item.expr}</div>
                       <div className="text-foreground font-black text-sm">{item.res}</div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}

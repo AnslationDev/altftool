@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Shield, Mail, Phone, MapPin } from "lucide-react";
 
 const cols = [
@@ -35,6 +36,15 @@ const cols = [
 ];
 
 export default function Footer() {
+  const [subscribed, setSubscribed] = useState(false);
+
+  function handleSubscribe(e) {
+    e.preventDefault();
+    e.target.reset();
+    setSubscribed(true);
+    setTimeout(() => setSubscribed(false), 4000);
+  }
+
   return (
     <footer className="bg-[#0A2C4D] text-white pt-6 pb-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-[0.04]" />
@@ -88,15 +98,17 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <h4 className="font-display font-bold text-sm uppercase tracking-wider">Stay Inspired</h4>
             <p className="mt-4 text-sm text-white/70">Design trends & exclusive offers, monthly.</p>
-            <form onSubmit={(e) => e.preventDefault()} className="mt-4 flex flex-col gap-2">
+            <form onSubmit={handleSubscribe} className="mt-4 flex flex-col gap-2">
               <input
                 type="email"
+                required
                 placeholder="you@home.com"
                 className="px-4 py-2.5 rounded-lg bg-white/10 border border-white/15 text-sm placeholder:text-white/50 focus:outline-none focus:border-[#00AEEF]"
               />
-              <button className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#00AEEF] to-[#1E5AA8] text-sm font-semibold hover:scale-[1.02] transition">
+              <button type="submit" className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#00AEEF] to-[#1E5AA8] text-sm font-semibold hover:scale-[1.02] transition">
                 Subscribe
               </button>
+              {subscribed && <p className="text-xs font-medium text-[#00AEEF]">You&apos;re subscribed — thanks!</p>}
             </form>
           </div>
         </div>

@@ -17,7 +17,6 @@ import {
   CloudRain,
   MoonStar,
   Waves,
-  PawPrint,
   Snowflake,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -28,7 +27,6 @@ const windowCategories = [
   { label: "City", icon: Building2 },
   { label: "Nature", icon: Trees },
   { label: "Rain", icon: CloudRain },
-  { label: "Animals", icon: PawPrint },
   { label: "Snow", icon: Snowflake },
   { label: "Night", icon: MoonStar },
   { label: "Water", icon: Waves },

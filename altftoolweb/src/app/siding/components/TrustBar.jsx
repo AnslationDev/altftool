@@ -1,42 +1,33 @@
-import { motion, useInView, animate } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
-const stats = [
-  { value: 5000, suffix: "+", label: "Projects Completed" },
-  { value: 98, suffix: "%", label: "Customer Satisfaction" },
-  { value: 25, suffix: "+", label: "Years of Experience" },
-  { value: 50, suffix: "+", label: "Industry Experts" },
+const serviceHighlights = [
+  { title: "Homeowner-First Approach", label: "Focused on Your Project" },
+  { title: "Clear, Upfront Pricing", label: "No Hidden Fees" },
+  { title: "Dependable Scheduling", label: "Work Around Your Timeline" },
+  { title: "Attentive Project Support", label: "Questions Answered Fast" },
 ];
 
-const certifications = [
-  { name: "BBB", subline: "A+ Accredited", style: "font-black text-3xl tracking-tight" },
-  { name: "GAF", subline: "MasterElite", style: "font-black text-3xl tracking-tight" },
-  { name: "ENERGY STAR", subline: "Partner", style: "font-extrabold text-xl tracking-[0.16em]" },
-  { name: "NARI", subline: "Certified Remodeler", style: "font-black text-3xl tracking-[0.08em]" },
-  { name: "EPA", subline: "Lead-Safe Certified", style: "font-black text-3xl tracking-tight" },
-  { name: "InstallShield", subline: "Pro Network", style: "font-extrabold text-2xl tracking-tight" },
-  { name: "HomeAdvisor", subline: "Elite Service", style: "font-extrabold text-xl tracking-tight" },
-  { name: "Angi", subline: "Certified Pro", style: "font-black text-3xl tracking-tight" },
+const qualityPoints = [
+  { name: "Quality Workmanship", subline: "Guaranteed", style: "font-black text-3xl tracking-tight" },
+  { name: "Careful Site Protection", subline: "Every Project", style: "font-extrabold text-2xl tracking-tight" },
+  { name: "Materials Built to Last", subline: "For the Elements", style: "font-black text-3xl tracking-tight" },
+  { name: "Clean Job Sites", subline: "Respect for Your Home", style: "font-extrabold text-2xl tracking-tight" },
+  { name: "Clear Communication", subline: "Daily Updates", style: "font-black text-3xl tracking-[0.04em]" },
+  { name: "Responsive Support", subline: "Fast Answers", style: "font-extrabold text-xl tracking-[0.12em]" },
 ];
 
-function Counter({ to, suffix = "" }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const c = animate(0, to, { duration: 2, ease: "easeOut", onUpdate: (v) => setVal(Math.floor(v)) });
-    return () => c.stop();
-  }, [inView, to]);
+function ServiceHighlight({ item }) {
   return (
-    <div ref={ref} className="text-5xl lg:text-6xl font-extrabold font-display text-gradient leading-none">
-      {val.toLocaleString()}
-      {suffix}
+    <div className="text-center">
+      <div className="text-2xl lg:text-3xl font-extrabold font-display text-gradient leading-tight">
+        {item.title}
+      </div>
+      <div className="mt-3 text-sm font-semibold text-foreground/75">{item.label}</div>
     </div>
   );
 }
 
-function CertificationLogo({ cert }) {
+function QualityPoint({ cert }) {
   return (
     <div className="flex h-20 min-w-[180px] items-center justify-center px-6 text-foreground/75 grayscale opacity-90 transition hover:text-primary hover:opacity-100">
       <div className="text-center leading-none">
@@ -65,36 +56,34 @@ export default function TrustBar() {
               Trusted Nationwide
             </div>
             <h2 className="font-display font-extrabold text-2xl lg:text-3xl text-primary">
-              Trusted by Thousands of Homeowners
+              Built Around Homeowner Trust
             </h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
-            {stats.map((s, i) => (
+            {serviceHighlights.map((item, i) => (
               <motion.div
-                key={i}
+                key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center border-l border-border first:border-l-0 lg:px-4"
+                className="border-l border-border first:border-l-0 lg:px-4"
               >
-                <Counter to={s.value} suffix={s.suffix} />
-                <div className="mt-3 text-sm font-semibold text-foreground/75">{s.label}</div>
+                <ServiceHighlight item={item} />
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Brand strip */}
         <div className="mt-10 overflow-hidden border-y border-border bg-surface py-6">
           <div className="text-center text-xs font-extrabold tracking-[0.2em] uppercase text-foreground/75 mb-6">
-            Certified Partners & Industry Standards
+            Our Service Commitments
           </div>
           <div className="relative">
             <div className="flex gap-10 animate-marquee whitespace-nowrap">
               {[...Array(2)].flatMap((_, k) =>
-                certifications.map((cert, i) => (
-                  <CertificationLogo key={`${k}-${i}`} cert={cert} />
+                qualityPoints.map((cert, i) => (
+                  <QualityPoint key={`${k}-${i}`} cert={cert} />
                 ))
               )}
             </div>

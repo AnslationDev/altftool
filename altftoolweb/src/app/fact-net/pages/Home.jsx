@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ArticleGrid from "../components/ArticleGrid";
 import FactNetNav from "../components/FactNetNav";
-import LocalFactImage from "../components/LocalFactImage";
+import FeatureCarousel from "../components/FeatureCarousel";
 import RandomFactWidget from "../components/RandomFactWidget";
 import SearchForm from "../components/SearchForm";
 import {
@@ -44,10 +44,14 @@ export default function Home() {
   const suggestions = getSearchSuggestions();
   const latest = getLatestArticles(30);
   const featuredSeeds = getFeaturedHomepageArticles(6);
-  const featured = [
+  const carouselArticles = [
     ...featuredSeeds,
     ...latest.filter((article) => !featuredSeeds.some((item) => item.slug === article.slug)),
-  ].slice(0, 6);
+  ].map((article) => ({
+    ...article,
+    categoryLabel: shortCategory(article.primaryCategory),
+    displayDate: formatDate(article.lastmod),
+  }));
   const popular = getArticlesPage({ pageSize: 10, sort: "count" }).items;
   const randomFacts = getRandomFactPool(18);
   const columns = chunkArticles(latest, 5);
@@ -73,31 +77,7 @@ export default function Home() {
           <h1>Latest Facts</h1>
         </div>
 
-        <div className="fn-latest-wrap">
-          <button type="button" className="fn-carousel-arrow fn-carousel-arrow-left" aria-label="Previous facts">
-            <span aria-hidden="true">‹</span>
-          </button>
-
-          <div className="fn-feature-strip">
-            {featured.map((article) => (
-              <Link key={article.slug} href={article.href} className="fn-feature-card">
-                <span className="fn-feature-image">
-                  <LocalFactImage article={article} fallbackLabel={article.title} />
-                </span>
-                <span className="fn-feature-meta">
-                  <strong>{shortCategory(article.primaryCategory)}</strong>
-                  <i aria-hidden="true" />
-                  <time dateTime={article.lastmod}>{formatDate(article.lastmod)}</time>
-                </span>
-                <span className="fn-feature-title">{article.title}</span>
-              </Link>
-            ))}
-          </div>
-
-          <button type="button" className="fn-carousel-arrow fn-carousel-arrow-right" aria-label="Next facts">
-            <span aria-hidden="true">›</span>
-          </button>
-        </div>
+        <FeatureCarousel articles={carouselArticles} />
 
         <div className="fn-link-columns">
           {columns.map((items, index) => (

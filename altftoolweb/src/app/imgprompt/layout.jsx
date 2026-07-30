@@ -19,7 +19,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata = createPageMetadata({
-  title: "AltF Prompt Studio - Create Professional AI Prompts",
+  title: "AltF Prompt Studio - Professional AI Prompts",
   description:
     "Generate better AI image, video & story prompts with AI Prompt Intelligence. Score, optimize and copy prompts in seconds.",
   path: "/imgprompt",

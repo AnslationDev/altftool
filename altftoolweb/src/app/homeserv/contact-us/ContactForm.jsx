@@ -18,7 +18,16 @@ export function ContactForm() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    event.currentTarget.reset();
+    const form = event.currentTarget;
+    try {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const messages = JSON.parse(window.localStorage.getItem("homeserv_contact_messages") || "[]");
+      messages.push({ ...data, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem("homeserv_contact_messages", JSON.stringify(messages));
+    } catch {
+      // localStorage can be unavailable in private browsing; the success state still works.
+    }
+    form.reset();
     setShowToast(true);
   }
 
@@ -63,14 +72,14 @@ export function ContactForm() {
         </label>
         <div className="hs-contact-submit">
           <button type="submit">Send Message</button>
-          <span>We usually respond within one business day.</span>
+          <span>Demo form — your message is saved only in this browser, not sent to anyone.</span>
         </div>
       </form>
 
       {showToast ? (
         <div className="hs-toast" role="status" aria-live="polite">
           <CheckCircle2 size={20} />
-          <span>Your message has been submitted.</span>
+          <span>Saved locally. This is a demo form, so nothing was actually sent.</span>
           <button type="button" aria-label="Close notification" onClick={() => setShowToast(false)}>
             ×
           </button>

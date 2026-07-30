@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Smile,
 } from "lucide-react";
+import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./pawcover.css";
 
 const QUOTE_URL = "https://example.com/quote/pawcover";
@@ -119,6 +120,8 @@ export default function PawCoverPage() {
       </header>
 
       <main id="pawcover-top">
+        <DemoBrandNotice brand="PawCover" />
+
         <section className="pawcover-hero">
           <PawStamp style={{ top: 30, left: "4%", width: 54, height: 54, transform: "rotate(-18deg)" }} />
           <PawStamp style={{ bottom: 40, right: "6%", width: 70, height: 70, transform: "rotate(14deg)" }} />

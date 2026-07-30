@@ -110,7 +110,6 @@ export default function ToolHome() {
       const cleanExpr = display.replace(/×/g, "*").replace(/÷/g, "/");
 
       // Perform safe evaluate
-      // eslint-disable-next-line no-eval
       const result = eval(cleanExpr);
 
       if (result === undefined || isNaN(result) || !isFinite(result)) {

@@ -10,8 +10,8 @@
   --extensions-shadow-md: var(--anslation-ds-shadow-md);
   --extensions-shadow-lg: var(--anslation-ds-shadow-lg);
   --extensions-focus-ring: var(--anslation-ds-focus-ring);
-  --extensions-gradient-start: #14b8a6;
-  --extensions-gradient-end: #38bdf8;
+  --extensions-gradient-start: var(--primary);
+  --extensions-gradient-end: var(--secondary);
   --extensions-brand: var(--extensions-gradient-start);
   --extensions-brand-soft: color-mix(in srgb, var(--extensions-brand) 14%, var(--extensions-surface));
   --extensions-info: var(--extensions-gradient-end);
@@ -844,15 +844,6 @@
   color: var(--extensions-brand);
   font-size: 0.78rem;
   font-weight: 800;
-}
-
-[data-theme="dark"] .extensions-page {
-  --extensions-gradient-start: #2dd4bf;
-  --extensions-gradient-end: #22d3ee;
-  --extensions-brand: var(--extensions-gradient-start);
-  --extensions-brand-soft: color-mix(in srgb, var(--extensions-brand) 16%, var(--extensions-surface));
-  --extensions-info: var(--extensions-gradient-end);
-  --extensions-info-soft: color-mix(in srgb, var(--extensions-info) 16%, var(--extensions-surface));
 }
 
 [data-theme="dark"] .extensions-route-band {

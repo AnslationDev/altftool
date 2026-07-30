@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import * as THREE from "three";
 import {
   ArrowLeft,
@@ -1637,11 +1638,11 @@ export default function RadioGardenClient() {
             <strong>OpenAir Garden</strong>
             <span>Get the free companion app for your phone.</span>
           </div>
-          <button type="button">
+          <button type="button" disabled title="Coming soon">
             <Smartphone size={18} />
             Google Play
           </button>
-          <button type="button">
+          <button type="button" disabled title="Coming soon">
             <Smartphone size={18} />
             App Store
           </button>
@@ -1649,22 +1650,32 @@ export default function RadioGardenClient() {
 
         <section className="rg-section">
           <h2>Information</h2>
-          {["OpenAir Garden", "Submit a Radio Station", "Contact", "Privacy Policy"].map((item) => (
-            <button type="button" className="rg-place-row" key={item}>
-              <span>{item}</span>
-              <ChevronRight size={20} />
-            </button>
-          ))}
+          <Link href="/" className="rg-place-row">
+            <span>OpenAir Garden</span>
+            <ChevronRight size={20} />
+          </Link>
+          <button type="button" className="rg-place-row" disabled title="Coming soon">
+            <span>Submit a Radio Station</span>
+            <ChevronRight size={20} />
+          </button>
+          <Link href="/policypages/contact" className="rg-place-row">
+            <span>Contact</span>
+            <ChevronRight size={20} />
+          </Link>
+          <Link href="/policypages/privacy" className="rg-place-row">
+            <span>Privacy Policy</span>
+            <ChevronRight size={20} />
+          </Link>
         </section>
 
         <section className="rg-section">
           <h2>Customize</h2>
-          <button type="button" className="rg-setting-row">
+          <button type="button" className="rg-setting-row" disabled title="Coming soon">
             <Languages size={20} />
             <span>Language</span>
             <small>English</small>
           </button>
-          <button type="button" className="rg-setting-row">
+          <button type="button" className="rg-setting-row" disabled title="Coming soon">
             <Moon size={20} />
             <span>Dark Mode</span>
             <small>On</small>
@@ -1679,7 +1690,7 @@ export default function RadioGardenClient() {
             <span>Globe Dots Size</span>
             <small>{zoomLevel > 2 ? "Large" : "Normal"}</small>
           </button>
-          <button type="button" className="rg-setting-row">
+          <button type="button" className="rg-setting-row" disabled title="Coming soon">
             <Globe2 size={20} />
             <span>Globe Quality</span>
             <small>Normal</small>
@@ -1688,11 +1699,11 @@ export default function RadioGardenClient() {
 
         <section className="rg-section">
           <h2>Transfer Favorites</h2>
-          <button type="button" className="rg-wide-row">
+          <button type="button" className="rg-wide-row" disabled title="Coming soon">
             <strong>Send Favorites</strong>
             <small>Create a transfer code</small>
           </button>
-          <button type="button" className="rg-wide-row">
+          <button type="button" className="rg-wide-row" disabled title="Coming soon">
             <strong>Receive Favorites</strong>
             <small>Enter a transfer code</small>
           </button>
@@ -1732,11 +1743,11 @@ export default function RadioGardenClient() {
       />
 
       <div className="rg-blue-wash" />
-      <div className="rg-top-brand">
+      <Link href="/" className="rg-top-brand">
         <Radio size={19} />
         <span>OpenAir Garden</span>
         <b>{stations.length}</b>
-      </div>
+      </Link>
 
       <aside className={`rg-drawer ${drawerOpen ? "is-open" : "is-condensed"}`}>
         {activeTab === "explore" && activePlace && (

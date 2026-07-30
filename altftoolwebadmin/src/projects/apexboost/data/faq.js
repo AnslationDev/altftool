@@ -21,9 +21,6 @@ export const faqs = [
     a: "You get a live dashboard plus clear weekly and monthly reports on spend, ROAS, CPA, leads and conversions — fully transparent, no jargon and no black boxes. You'll always know exactly what each channel returns.",
   },
 ];
-    a: "You get a live dashboard plus clear weekly and monthly reports on spend, ROAS, CPA, leads and conversions — fully transparent, no jargon and no black boxes. You'll always know exactly what each channel returns.",
-  },
-];
 
 export const faqHeading = {
   eyebrow: "FAQ",

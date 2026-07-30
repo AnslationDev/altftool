@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ExternalLink, MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ManagedImage from '@/components/ui/ManagedImage';
+import { getDidYouMean } from '../lib/searchEngine';
 
 // ─── SAFE URL HELPER ──────────────────────────────────────────────────────────
 const safeHostname = (url) => {
@@ -90,7 +91,7 @@ function SkeletonCard() {
 }
 
 // ─── SEARCH RESULTS CONTAINER ─────────────────────────────────────────────────
-export function SearchResults({ results, query, isLoading, searchTime, onTagSearch, searchType = 'all' }) {
+export function SearchResults({ results, query, isLoading, searchTime, onTagSearch, searchType = 'all', dataset = [] }) {
   const [pagination, setPagination] = useState({ query, count: 5 });
   const visibleCount = pagination.query === query ? pagination.count : 5;
 
@@ -103,12 +104,22 @@ export function SearchResults({ results, query, isLoading, searchTime, onTagSear
   }
 
   if (!isLoading && results.length === 0 && query) {
+    const suggestion = getDidYouMean(dataset, query);
     return (
       <div className="no-results-container">
         <div className="no-results-message">
           <span>No results for </span>
           <strong className="no-results-query">&quot;{query}&quot;</strong>
         </div>
+        {suggestion && (
+          <p className="no-results-hint">
+            Did you mean{' '}
+            <button type="button" onClick={() => onTagSearch(suggestion)} className="no-results-suggestion-link">
+              {suggestion}
+            </button>
+            ?
+          </p>
+        )}
         <p className="no-results-hint">Try different keywords or check spelling.</p>
         <div className="no-results-suggestions">
           <p className="no-results-suggestions-label">Try searching for:</p>

@@ -59,7 +59,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: `AltFTool Games Hub – Play ${count}+ Free Browser Games`,
     description:
-      "Play free online games in your browser — puzzle, arcade, word, card and board games. No downloads, no sign-up: minesweeper, solitaire, sudoku, typing test and more.",
+      "Play free browser games with no download and no sign-up: puzzle, arcade, word, card and board games including minesweeper, solitaire, sudoku and typing tests.",
     path: "/games",
     keywords: [
       "free online games",

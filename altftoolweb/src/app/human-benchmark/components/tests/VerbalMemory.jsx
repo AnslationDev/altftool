@@ -97,7 +97,7 @@ export default function VerbalMemory({ onComplete, beep }) {
           NEW
         </button>
       </div>
-      <StatsChart data={DIST} xLabel="Correct answers" title="Population Score Distribution" subtitle="How 200,000+ users scored on this test" />
+      <StatsChart data={DIST} xLabel="Correct answers" title="Population Score Distribution" subtitle="Illustrative example distribution, not measured from real users" />
       <AboutCard {...ABOUT} />
     </div>
   );

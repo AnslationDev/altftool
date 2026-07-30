@@ -257,12 +257,16 @@ export function ServiceDetailClient({ service }) {
           <div className="hs-heading hs-heading-center">
             <span className="hs-eyebrow">
               <ShieldCheck size={18} />
-              Verified local matches
+              Example listings
             </span>
             <h1>
-              Top 3 {service.shortTitle} pros in {matchedLocation}
+              {service.shortTitle} pro directory — sample results
             </h1>
-            <p>Select a verified local pro below to request your free quote.</p>
+            <p>
+              We don&rsquo;t yet have a live, location-matched partner network for {matchedLocation}. The
+              listings below are example placeholders showing what a match would look like, not real
+              local businesses.
+            </p>
           </div>
           <div className="hs-match-grid">
             {service.resultPros.map((pro) => (
@@ -280,10 +284,10 @@ export function ServiceDetailClient({ service }) {
                 </p>
                 <span className="hs-verified-pill">
                   <CheckCircle2 size={18} />
-                  Verified partner
+                  Sample listing
                 </span>
                 <span className="hs-local-badge">
-                  {pro.badge} in {matchedLocation}
+                  {pro.badge}
                 </span>
                 <button type="button" onClick={() => setCallModalPro(pro.name)}>
                   Compare Free Quotes
@@ -312,6 +316,9 @@ export function ServiceDetailClient({ service }) {
               <a className="hs-call-number" href="tel:+18884520194">
                 (888) 452-0194
               </a>
+              <p className="hs-modal-disclaimer">
+                Sample listing for demonstration only — not a real local business or call center.
+              </p>
               <p>Speak with a quote specialist to review local availability and next steps.</p>
             </div>
           </div>

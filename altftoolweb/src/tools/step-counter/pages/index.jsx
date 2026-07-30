@@ -10,22 +10,19 @@ export default function StepCounterApp() {
 
   return (
     <div className="font-secondary pb-2">
-      {/* Keep an explicit page heading for SEO/assistive tech — the app UI's
-          visible heading is the visitor's personalised greeting. */}
+      {/* Keep an explicit page heading for SEO/assistive tech — the app screen's
+          visible heading is the tool title inside the tracker. */}
       <h1 className="sr-only">Step Counter — Free Online Daily Step Tracker</h1>
 
-      {/*
-        Redesigned app-style screen (dark / cyan reference theme — see
-        StepAppV2.jsx). Renders as a phone-sized canvas on every breakpoint;
-        the previous indigo/violet StepApp.jsx is kept for easy rollback.
-      */}
-      <div className="px-3 pt-4 min-[400px]:px-4">
-        <StepAppV2 counter={counter} />
-      </div>
+      {/* No wrapper padding: the tool workspace (ToolDetailChrome) already
+          supplies the page gutter, and the tracker tops up only what a notched
+          phone needs. Adding another px-4 here doubled the gutter and shrank
+          the count on exactly the devices that matter most. */}
+      <StepAppV2 counter={counter} />
 
-      {/* Companion sections share the app theme AND the app column, so the
-          whole page reads as one designed product. */}
-      <div className="mx-auto w-full max-w-[420px] space-y-8 p-3 pt-5 min-[400px]:p-4 min-[400px]:pt-6 md:max-w-6xl md:p-6 md:pt-8 lg:p-7 lg:pt-10">
+      {/* Companion sections share the tracker's reading column and the platform
+          tokens, so the whole page reads as one product. */}
+      <div className="mx-auto w-full max-w-[30rem] space-y-8 pt-10 md:max-w-6xl md:pt-12">
         <ExploreFitnessTools />
         <StepFaqAbout />
       </div>

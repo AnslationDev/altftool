@@ -23,21 +23,21 @@ const steps = [
   },
   {
     icon: Copy,
-    title: "Copy Instantly",
+    title: "Pick an Emoji",
     description:
-      "Click on any emoji to instantly copy it to your clipboard for quick use.",
+      "Click any emoji to select it. The artwork is a 64px PNG, so a flag or a smiley looks the same on Windows, Android, macOS and Linux.",
   },
   {
     icon: Star,
-    title: "Save Your Favorites",
+    title: "Frequently Used, Automatically",
     description:
-      "Mark frequently used emojis as favorites to access them anytime easily.",
+      "The emojis you pick most often rise to the Frequently Used row at the top, saved in your own browser so they are still there next visit.",
   },
   {
     icon: Share2,
-    title: "Use Anywhere",
+    title: "Trending GIFs Too",
     description:
-      "Paste copied emojis into social media posts, chats, emails, or any content platform.",
+      "Switch to the GIFs tab for the 20 GIFs currently trending on Giphy, fetched through AltFTool's server so no API key reaches your browser.",
   },
   {
     icon: Smartphone,

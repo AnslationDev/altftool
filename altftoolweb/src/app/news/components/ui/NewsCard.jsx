@@ -316,7 +316,7 @@
 
 import Link from "next/link";
 import {
-  Heart, Share2, MessageCircle, Bookmark, ExternalLink, Clock, MapPin, Eye
+  Heart, Share2, Bookmark, ExternalLink, Clock, MapPin
 } from "lucide-react";
 import { useState, useRef } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";
@@ -357,7 +357,9 @@ function ActionButton({ onClick, active, activeClass, hoverClass, icon, count, l
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function NewsCard({ news, variant = "default", rank }) {
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(news.likes ?? 0);
+  // Session-local only. We store no engagement data for syndicated feed items,
+  // so this starts at zero rather than showing an invented count.
+  const [likes, setLikes] = useState(0);
   const [saved, setSaved] = useState(false);
   const [shareToast, setShareToast] = useState(false);
   const toastTimer = useRef(null);
@@ -459,15 +461,6 @@ export default function NewsCard({ news, variant = "default", rank }) {
               count={likes}
               icon={<Heart size={14} className={liked ? "fill-[var(--anslation-ds-danger)]" : ""} />}
             />
-            <ActionButton
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              active={false}
-              activeClass=""
-              hoverClass="hover:text-[var(--foreground)] hover:bg-[var(--card-hover-bg)]"
-              label="Comment"
-              count={news.comments}
-              icon={<MessageCircle size={14} />}
-            />
             <div className="relative">
               <ActionButton
                 onClick={handleShare}
@@ -475,7 +468,6 @@ export default function NewsCard({ news, variant = "default", rank }) {
                 activeClass="text-[var(--anslation-ds-success)] bg-[var(--anslation-ds-success-soft)]"
                 hoverClass="hover:text-[var(--foreground)] hover:bg-[var(--card-hover-bg)]"
                 label="Share"
-                count={news.shares}
                 icon={<Share2 size={14} />}
               />
               {shareToast && (
@@ -558,10 +550,6 @@ export default function NewsCard({ news, variant = "default", rank }) {
             <span className="flex items-center gap-1">
               <Clock size={11} />
               {timeAgo(news.published_hours_ago)}
-            </span>
-            <span className="flex items-center gap-1">
-              <Eye size={11} />
-              {formatCount(news.likes + news.comments + news.shares)} views
             </span>
           </div>
         </div>
@@ -660,15 +648,6 @@ export default function NewsCard({ news, variant = "default", rank }) {
               count={likes}
               icon={<Heart size={14} className={`transition-transform duration-200 ${liked ? "fill-[var(--anslation-ds-danger)] scale-110" : "fill-transparent group-hover:scale-110"}`} />}
             />
-            <ActionButton
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              active={false}
-              activeClass=""
-              hoverClass="hover:text-[var(--foreground)] hover:bg-[var(--card-hover-bg)]"
-              label="Comment"
-              count={news.comments}
-              icon={<MessageCircle size={14} />}
-            />
             <div className="relative">
               <ActionButton
                 onClick={handleShare}
@@ -676,7 +655,6 @@ export default function NewsCard({ news, variant = "default", rank }) {
                 activeClass="text-[var(--anslation-ds-success)] bg-[var(--anslation-ds-success-soft)]"
                 hoverClass="hover:text-[var(--foreground)] hover:bg-[var(--card-hover-bg)]"
                 label="Share"
-                count={news.shares}
                 icon={<Share2 size={14} />}
               />
               {shareToast && (

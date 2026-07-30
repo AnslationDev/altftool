@@ -36,14 +36,14 @@ export default function NewsletterSection() {
 
         <div className={`flex h-11 w-full items-center gap-2 rounded-[8px] border bg-(--card) px-4 transition-all duration-300 ease-out sm:h-14 sm:flex-1 sm:px-6
                 focus-within:shadow-[var(--anslation-ds-shadow-md)]
-                ${error ? "border-red-500" : success ? "border-green-500" : "border-(--border) focus-within:border-(--primary)"}`}>
+                ${error ? "border-destructive" : success ? "border-success" : "border-(--border) focus-within:border-(--primary)"}`}>
           <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--muted-foreground)] shrink-0" />
           <input
             type="email"
             placeholder="Input email address"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(""); setSuccess(false); }}
-            className="border-none outline-none bg-transparent text-sm sm:text-base text-[var(--foreground)] placeholder:text-[var(--secondary)] w-full font-[var(--font-secondary)]"
+            className="border-none outline-none bg-transparent text-sm sm:text-base text-[var(--foreground)] placeholder:text-[var(--input-placeholder)] w-full font-[var(--font-secondary)]"
           />
         </div>
 
@@ -58,12 +58,12 @@ export default function NewsletterSection() {
 
 
       {error && (
-        <p className="flex items-center gap-1.5 text-xs sm:text-sm text-red-500 pl-4 mt-1">
+        <p className="flex items-center gap-1.5 text-xs sm:text-sm text-destructive pl-4 mt-1">
           <X className="w-4 h-4 shrink-0" /> {error}
         </p>
       )}
       {success && (
-        <p className="flex items-center gap-1.5 text-xs sm:text-sm text-green-500 pl-4 mt-1">
+        <p className="flex items-center gap-1.5 text-xs sm:text-sm text-success pl-4 mt-1">
           <CircleCheck className="w-4 h-4 shrink-0" /> Thank you for subscribing!
         </p>
       )}

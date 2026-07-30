@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BadgeCheck,
   CalendarDays,
@@ -14,7 +14,6 @@ import {
   MonitorSmartphone,
   ShieldCheck,
   Sparkles,
-  Star,
   User,
   Wifi,
 } from "lucide-react";
@@ -33,14 +32,48 @@ const statIcons = {
 
 function AppScreenMock({ app, index }) {
   return (
-    <div className="h-full overflow-hidden rounded-[30px] bg-transparent shadow-[0_22px_54px_rgba(2,6,23,0.22)]">
+    <div className="relative h-full overflow-hidden rounded-[30px] bg-transparent shadow-[0_22px_54px_rgba(2,6,23,0.22)]">
+      <span className="absolute left-4 top-4 z-10 rounded-full bg-black/55 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur">
+        Illustrative preview
+      </span>
       <AppScreenSvg app={app} index={index} className="block h-full w-full rounded-[30px]" />
     </div>
   );
 }
 
+const WISHLIST_STORAGE_KEY = "ALTFT_APPS_WISHLIST";
+
+function readWishlist() {
+  try {
+    const raw = window.localStorage.getItem(WISHLIST_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function AppDetailClient({ app, relatedApps }) {
   const [activeScreenshot, setActiveScreenshot] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    setIsWishlisted(readWishlist().includes(app.slug));
+  }, [app.slug]);
+
+  const toggleWishlist = () => {
+    const current = readWishlist();
+    const next = current.includes(app.slug)
+      ? current.filter((slug) => slug !== app.slug)
+      : [...current, app.slug];
+    try {
+      window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // localStorage can be unavailable in private browsing; UI state still updates.
+    }
+    setIsWishlisted(next.includes(app.slug));
+  };
+
   const stats = [
     ["Developer", app.developer],
     ["Category", app.category],
@@ -81,11 +114,6 @@ export default function AppDetailClient({ app, relatedApps }) {
                 <BadgeCheck size={26} className="fill-[var(--primary)] text-white" aria-hidden="true" />
               </div>
               <p className="mt-3 max-w-2xl text-[15px] font-normal leading-[1.7] text-[var(--muted-foreground)]">{app.tagline}</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="text-base font-semibold text-[var(--foreground)]">{app.rating}</span>
-                <span className="text-sm text-amber-400">★★★★★</span>
-                <span className="text-sm font-semibold text-[var(--muted-foreground)]">({app.reviewCount} Reviews)</span>
-              </div>
             </div>
           </div>
 
@@ -105,10 +133,15 @@ export default function AppDetailClient({ app, relatedApps }) {
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <DownloadButton href={app.apkUrl} className="sm:min-w-72" />
-            <button className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[12px] border border-[color-mix(in_srgb,var(--primary)_24%,var(--home-border))] bg-[var(--home-primary-soft)] px-6 text-sm font-semibold text-[var(--foreground)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--home-hover)] hover:shadow-[0_8px_24px_rgba(2,6,23,0.1)]">
-              <Heart size={18} aria-hidden="true" />
-              Add to Wishlist
+            <DownloadButton href={app.apkUrl} className="sm:min-w-72" comingSoon={app.apkSize === "Coming Soon"} />
+            <button
+              type="button"
+              onClick={toggleWishlist}
+              aria-pressed={isWishlisted}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[12px] border border-[color-mix(in_srgb,var(--primary)_24%,var(--home-border))] bg-[var(--home-primary-soft)] px-6 text-sm font-semibold text-[var(--foreground)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--home-hover)] hover:shadow-[0_8px_24px_rgba(2,6,23,0.1)]"
+            >
+              <Heart size={18} aria-hidden="true" className={isWishlisted ? "fill-[var(--primary)] text-[var(--primary)]" : ""} />
+              {isWishlisted ? "Wishlisted" : "Add to Wishlist"}
             </button>
           </div>
         </div>
@@ -126,7 +159,6 @@ export default function AppDetailClient({ app, relatedApps }) {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-[var(--foreground)]">{item}</p>
-                  <p className="text-xs font-semibold text-[var(--muted-foreground)]">Verified by AppHub</p>
                 </div>
               </div>
             );
@@ -195,46 +227,6 @@ export default function AppDetailClient({ app, relatedApps }) {
               ))}
             </div>
           </div>
-
-          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--card)] p-8 shadow-[0_16px_40px_rgba(15,23,42,0.075)] transition duration-200 hover:shadow-[0_20px_48px_rgba(2,6,23,0.1)]">
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">Ratings & Reviews</h2>
-            <div className="mt-6 grid gap-9 lg:grid-cols-[0.38fr_1fr]">
-              <div className="flex items-end gap-3">
-                <span className="text-7xl font-semibold text-[var(--foreground)]">{app.rating}</span>
-                <div className="pb-2">
-                  <p className="text-amber-400">★★★★★</p>
-                  <p className="text-sm font-semibold text-[var(--muted-foreground)]">{app.reviewCount} Reviews</p>
-                </div>
-              </div>
-              <div className="space-y-3 pt-1">
-                {[5, 4, 3, 2, 1].map((rating, index) => (
-                  <div key={rating} className="grid grid-cols-[32px_1fr_44px] items-center gap-3 text-xs font-medium text-[var(--muted-foreground)]">
-                    <span>{rating} ★</span>
-                    <span className="h-4 overflow-hidden rounded-full bg-[var(--home-border)]">
-                      <span
-                        className="block h-full rounded-full bg-[var(--primary)]"
-                        style={{ width: `${[88, 42, 24, 12, 8][index]}%` }}
-                      />
-                    </span>
-                    <span>{["8.2K", "2.6K", "1.0K", "300", "300"][index]}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-9 grid gap-5 sm:grid-cols-2">
-              {app.reviews.map((review) => (
-                <article key={`${review.name}-${review.date}`} className="min-h-[154px] rounded-[20px] border border-[var(--home-border)] bg-[var(--section-highlight)] p-6 shadow-[0_12px_30px_rgba(15,23,42,0.065)] transition duration-200 hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_28%,var(--home-border))] hover:shadow-[0_16px_34px_rgba(2,6,23,0.1)]">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="font-semibold text-[var(--foreground)]">{review.name}</p>
-                    <p className="text-xs font-semibold text-[var(--muted-foreground)]">{review.date}</p>
-                  </div>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-[var(--muted-foreground)]">{review.text}</p>
-                  <p className="mt-3 text-xs font-medium text-[var(--primary)]">Helpful</p>
-                </article>
-              ))}
-            </div>
-          </div>
         </div>
 
         <aside className="space-y-8">
@@ -294,7 +286,7 @@ export default function AppDetailClient({ app, relatedApps }) {
               <p className="text-xs font-semibold text-white/68">{app.downloads} downloads · {app.apkSize} APK</p>
             </div>
           </div>
-          <DownloadButton href={app.apkUrl} className="w-full sm:min-w-72 sm:w-auto" />
+          <DownloadButton href={app.apkUrl} className="w-full sm:min-w-72 sm:w-auto" comingSoon={app.apkSize === "Coming Soon"} />
         </div>
       </div>
     </main>

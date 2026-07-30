@@ -5,7 +5,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "Siding & Exterior Services",
     description:
-      "Explore professional siding and home exterior services with project galleries, before-and-after results, customer testimonials, service areas, and free estimates.",
+      "Professional siding and home exterior services: browse project galleries and before-and-after results, read customer reviews and request a free estimate.",
     path: "/siding",
   });
 }

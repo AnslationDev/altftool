@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, GitBranch } from "lucide-react";
 import SectionHeadingEditor from "../../../../components/admin/SectionHeadingEditor";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeProcessSteps, createProcessStep, updateProcessStep, deleteProcessStep } from "../service/apexboost.service";
 
 export default function ProcessPage() {
   const [processList, setProcessList] = useState([]);
@@ -11,13 +12,12 @@ export default function ProcessPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ title: "", desc: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=process');
-    const json = await res.json();
-    if (json.success) setProcessList(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeProcessSteps(setProcessList, () => {
+      emitAlert({ type: "error", title: "Error", message: "Failed to load process steps." });
+    });
+    return () => unsubscribe?.();
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -32,35 +32,25 @@ export default function ProcessPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = processList.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...processList, { ...form }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'process', data: updated }),
-    });
-    if (res.ok) {
-      setProcessList(updated);
+    try {
+      if (editingItem) {
+        await updateProcessStep(editingItem.id, { ...editingItem, ...form });
+      } else {
+        const nextOrder = processList.length ? Math.max(...processList.map(s => Number(s.order) || 0)) + 1 : 0;
+        await createProcessStep({ ...form, order: nextOrder });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Process step saved successfully!" });
-    } else {
+    } catch {
       emitAlert({ type: "error", title: "Error", message: "Failed to save process step." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = processList.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'process', data: updated }),
-    });
-    if (res.ok) {
-      setProcessList(updated);
+    try {
+      await deleteProcessStep(item.id);
       emitAlert({ type: "success", title: "Success", message: "Process step deleted successfully!" });
-    } else {
+    } catch {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete process step." });
     }
   };

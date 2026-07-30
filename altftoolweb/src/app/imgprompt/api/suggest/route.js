@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { suggestIdea } from "../../lib/prompt-engine/suggest";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
+  const limited = enforceRateLimit(NextResponse, req, {
+    limit: 30,
+    scope: "imgprompt:suggest",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   let body;
   try {
     body = await req.json();

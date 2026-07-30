@@ -1,7 +1,10 @@
 import PageView from "./PageView";
 import blogData from "../../../(data)/db.json";
+import JsonLd from "@/platform/seo/JsonLd";
 import {
   compactBrandedTitle,
+  createArticleJsonLd,
+  createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
@@ -54,6 +57,37 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default function Page(props) {
-  return <PageView {...props} />;
+export default async function Page(props) {
+  const { slug, id } = await props.params;
+  const post = findPost(slug, id);
+  const path = `/exclusivedeals/e-blogs/${slug}/${id}`;
+
+  return (
+    <>
+      {/* The body renders a full article — byline, hero image, sections — but
+          described nothing. No datePublished: db.json stores relative strings
+          ("3 days ago"), and turning those into a date would be invented. */}
+      {post ? (
+        <JsonLd
+          id={`exclusive-deals-blog-schema-${slug}-${id}`}
+          data={[
+            createArticleJsonLd({
+              path,
+              headline: post.heading,
+              description: post.description,
+              image: post.image,
+              author: post.author,
+              type: "BlogPosting",
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Exclusive Deals", path: "/exclusivedeals" },
+              { name: post.heading, path },
+            ]),
+          ]}
+        />
+      ) : null}
+      <PageView {...props} />
+    </>
+  );
 }

@@ -261,7 +261,7 @@ export default function ClapperBoardGenerator() {
                                 </div>
                                 <div>
                                     <label className="block text-[9px] font-bold uppercase text-neutral-400 tracking-wider mb-1">STUDIO / PROD. CO.</label>
-                                    <input type="text" value={prodCo} onChange={(e) => handleInputChange(setProdCo(e.target.value.toUpperCase()))} className="w-full px-3 py-1.5 border border-neutral-200 rounded-md bg-white text-xs font-medium" />
+                                    <input type="text" value={prodCo} onChange={(e) => handleInputChange(setProdCo, e.target.value.toUpperCase())} className="w-full px-3 py-1.5 border border-neutral-200 rounded-md bg-white text-xs font-medium" />
                                 </div>
                                 <div>
                                     <label className="block text-[9px] font-bold uppercase text-neutral-400 tracking-wider mb-1">DIRECTOR NAME</label>

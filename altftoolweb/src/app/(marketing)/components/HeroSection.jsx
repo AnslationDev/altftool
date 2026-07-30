@@ -69,11 +69,14 @@ export default function HeroSection() {
             Organized tools for real work
           </p>
 
+          {/* The bare wordmark told a crawler nothing about the page. The H1
+              now names what the site is, with the gradient still on the mark. */}
           <h1
             id="home-title"
-            className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl"
+            className="mt-5 text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl"
           >
             Alt<span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">F</span>Tool
+            {" — free online tools, workflows and apps"}
           </h1>
           <span
             className="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary"

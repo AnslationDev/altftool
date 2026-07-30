@@ -13,9 +13,9 @@ export const dynamic = "force-static";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Exam Photo & Signature Size Specs - Dated, With a Resizer",
+    title: "Exam Photo & Signature Size Specs + Resizer",
     description:
-      "Photograph and signature upload specs for 12 Indian exams - SSC, IBPS, SBI, UPSC, RRB, NEET and JEE - each stamped with the notification it was read from, plus an in-browser resizer preset to that exam's KB and pixel target.",
+      "Photo and signature upload sizes in KB and pixels for 12 Indian exams including SSC, IBPS, SBI, UPSC, RRB, NEET and JEE, with a browser resizer for each.",
     path: "/exam-photo",
     keywords: [
       "exam photo size",

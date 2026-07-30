@@ -1,74 +1,17 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, jsonResponse, routeError } from "@altftool/core/http";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
-import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
+import { verifyAdminRequest } from "@/lib/blogsAdminAuth";
+import { hasModuleAccess } from "@/lib/permissionUtils";
 
 export const runtime = "nodejs";
 
 const CHECK_TIMEOUT_MS = 10000;
-const LOCAL_ADMIN_TOKEN = "local-dev-admin-token";
 const MAX_SLUGS = 8;
 const ALLOWED_PUBLIC_HOSTS = new Set(["altftool.com", "www.altftool.com"]);
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
 
 function jsonAuthError(message = "Unauthorized", status = 401) {
   return NextResponse.json({ error: message }, { status });
-}
-
-function getBearerToken(request) {
-  const header = request.headers.get("authorization");
-  if (!header?.startsWith("Bearer ")) return "";
-  return header.split("Bearer ")[1];
-}
-
-async function verifyAdminRequest(request) {
-  const token = getBearerToken(request);
-
-  if (process.env.NODE_ENV === "development" && token === LOCAL_ADMIN_TOKEN) {
-    return { email: "admin@altftool.local", uid: "local-dev-admin" };
-  }
-
-  if (!token) {
-    const error = new Error("Unauthorized");
-    error.status = 401;
-    throw error;
-  }
-
-  const decoded = await adminAuth.verifyIdToken(token);
-
-  // RBAC-first: admins created through the current flow live only under
-  // super_admin_dashboard/main/admin_users, so the legacy-only lookup below
-  // 403'd every one of them.
-  const rbacAdmin = await getRbacAdminDoc(decoded);
-  if (rbacAdmin) {
-    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
-    if (!profile.isActive) {
-      const error = new Error("Forbidden");
-      error.status = 403;
-      throw error;
-    }
-    return decoded;
-  }
-
-  // Legacy fallback for admins created before the RBAC migration.
-  let snap = await adminDb.collection("admins").doc(decoded.uid).get();
-
-  if (!snap.exists && decoded.email) {
-    const byEmail = await adminDb
-      .collection("admins")
-      .where("email", "==", decoded.email)
-      .limit(1)
-      .get();
-    if (!byEmail.empty) snap = byEmail.docs[0];
-  }
-
-  if (!snap.exists || snap.data()?.isActive === false) {
-    const error = new Error("Forbidden");
-    error.status = 403;
-    throw error;
-  }
-
-  return decoded;
 }
 
 function cleanText(value = "") {
@@ -317,7 +260,17 @@ export async function POST(request) {
     });
     if (limited) return limited;
 
-    await verifyAdminRequest(request);
+    const { admin } = await verifyAdminRequest(request);
+    // Runtime QA is a read-only diagnostic (no writes), but it makes the
+    // server fetch on the caller's behalf, so gate it on blogs module access
+    // rather than "is some active admin" — mirrors blogs/generate/route.js's
+    // module-scoped authz (see the comment there for why "any active admin"
+    // was judged too broad).
+    if (!hasModuleAccess({ adminData: admin, projectId: "altftool", moduleKey: "blogs", action: "read" })) {
+      const error = new Error("Forbidden");
+      error.status = 403;
+      throw error;
+    }
 
     const payload = await request.json().catch(() => ({}));
     const baseUrl = normalizeBaseUrl(payload.baseUrl);

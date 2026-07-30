@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Pitch aur tempo independently control kare.",
+  "description": "Shifts an audio file's pitch or tempo independently, without affecting the other.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

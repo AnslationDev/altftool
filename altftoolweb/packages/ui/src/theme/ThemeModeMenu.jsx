@@ -137,7 +137,7 @@ export function ThemeModeMenu({
         type="button"
         variant="secondary"
         aria-label={`Theme: ${currentOption.label}`}
-        aria-haspopup="dialog"
+        aria-haspopup="true"
         aria-expanded={open}
         title={`Theme: ${currentOption.label}`}
         onClick={() => setOpen((current) => !current)}
@@ -147,12 +147,16 @@ export function ThemeModeMenu({
 
       {open ? (
         <div
-          role="dialog"
           aria-label="Theme mode"
           className={cn(
             "alt-ui-theme-menu__popover",
             `alt-ui-theme-menu__popover--${align}`,
           )}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setOpen(false);
+            }
+          }}
         >
           <ThemeModeSelector
             autoFocusSelected

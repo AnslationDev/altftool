@@ -30,14 +30,24 @@ export function stripHtml(value = "") {
  * Pragmatic server-side HTML sanitizer for AI output.
  * Drafts are always human-reviewed before publish, but we still refuse the
  * dangerous stuff outright (scripts, embeds, event handlers, js: URLs).
+ *
+ * NOTE: this is a regex scrubber, not a real parser — browsers tolerate `/`
+ * as an attribute separator (e.g. `<img src=x/onerror=...>`,
+ * `<svg/onload=...>`) exactly like whitespace, so every on*= pattern below
+ * must treat `[\s/]` as the separator class, not just `\s`. Regex-based
+ * sanitization still carries residual risk against future
+ * malformed/obfuscated markup a real DOM parser would catch — see
+ * blogPreviewUtils.js's DOMPurify pass for the more robust alternative used
+ * on the manual-editor preview path (not usable here: this runs server-side
+ * in the automation lane, outside a DOM/browser environment).
  */
 export function sanitizeBlogHtml(html = "") {
   return String(html)
     .replace(/<(script|style|iframe|object|embed|form|link|meta)[\s\S]*?<\/\1>/gi, "")
     .replace(/<(script|style|iframe|object|embed|form|link|meta)[^>]*\/?>/gi, "")
-    .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")
-    .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
-    .replace(/\son\w+\s*=\s*[^\s>]+/gi, "")
+    .replace(/[\s/]+on\w+\s*=\s*"[^"]*"/gi, "")
+    .replace(/[\s/]+on\w+\s*=\s*'[^']*'/gi, "")
+    .replace(/[\s/]+on\w+\s*=\s*[^\s>]+/gi, "")
     .replace(/href\s*=\s*(["'])\s*javascript:[^"']*\1/gi, 'href="#"')
     .replace(/src\s*=\s*(["'])\s*javascript:[^"']*\1/gi, "")
     .replace(/\sstyle\s*=\s*"[^"]*"/gi, "")

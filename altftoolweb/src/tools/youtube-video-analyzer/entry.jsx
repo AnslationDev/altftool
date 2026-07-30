@@ -1,7 +1,7 @@
 "use client";
 
-import YouTubeVideoAnalyzer from "./pages";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <YouTubeVideoAnalyzer />;
+  return <ToolHome />;
 }

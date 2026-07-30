@@ -5,7 +5,7 @@ import { adminDb } from "@/lib/firebaseAdmin";
 import { sendPushToUsers } from "@/lib/sendPushNotification";
 import { enforceRateLimit } from "@altftool/core/http";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
-import { getRbacRootRef } from "@/lib/serverRbac";
+import { getRbacRootRef, writeRbacAuditLog } from "@/lib/serverRbac";
 import { RBAC_COLLECTIONS } from "@/lib/rbacPaths";
 
 // Firestore rejects a WriteBatch with more than 500 operations.
@@ -155,6 +155,39 @@ export async function deliverBroadcast(broadcastId, broadcastData) {
   }
 }
 
+/**
+ * Atomically transition a broadcast from one of `allowedStatuses` into
+ * "sending". The check (is this broadcast still deliverable?) and the act
+ * (deliverBroadcast) are two separate steps, so two concurrent claims — a
+ * resend racing another resend, a resend racing a scheduler tick, or two
+ * overlapping/retried scheduler ticks — could each read the same deliverable
+ * status and both fan out the full delivery. A transaction makes the claim
+ * atomic. Exported so both the PATCH ?action=resend handler and the
+ * scheduler's processDueScheduledBroadcasts() (src/app/api/notifications/
+ * scheduler/route.js) share the same race-free claim instead of only one of
+ * them being protected.
+ *
+ * @throws {Error & { code: "not-found" | "invalid-status", status?: string }}
+ */
+export async function claimBroadcastForDelivery(id, allowedStatuses) {
+  const ref = adminDb.collection("notification_broadcasts").doc(id);
+  return adminDb.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (!snap.exists) {
+      throw Object.assign(new Error("Broadcast not found"), { code: "not-found" });
+    }
+    const current = snap.data() || {};
+    if (!allowedStatuses.includes(current.status)) {
+      throw Object.assign(
+        new Error(`Broadcast ${id} is not claimable from status "${current.status}"`),
+        { code: "invalid-status", status: current.status },
+      );
+    }
+    tx.update(ref, { status: "sending" });
+    return current;
+  });
+}
+
 // ── POST ──────────────────────────────────────────────────────────────────────
 
 export async function POST(request) {
@@ -193,8 +226,20 @@ export async function POST(request) {
         );
       }
     }
-    if (!sendNow && !scheduledAt) {
-      return NextResponse.json({ error: "scheduledAt required for scheduled broadcasts" }, { status: 400 });
+    if (!sendNow) {
+      if (!scheduledAt) {
+        return NextResponse.json({ error: "scheduledAt required for scheduled broadcasts" }, { status: 400 });
+      }
+      // The client already enforces a numeric, future value (notification-broadcast
+      // /page.jsx), but a direct API call must not be able to hand the scheduler a
+      // non-numeric or past value — its `scheduledAt <= now` query silently never
+      // matches a malformed value, leaving the broadcast stuck "scheduled" forever.
+      if (typeof scheduledAt !== "number" || !Number.isFinite(scheduledAt) || scheduledAt <= Date.now()) {
+        return NextResponse.json(
+          { error: "scheduledAt must be a numeric timestamp in the future" },
+          { status: 400 },
+        );
+      }
     }
 
     if (decoded.isLocalAdmin) {
@@ -227,6 +272,17 @@ export async function POST(request) {
       const result = await deliverBroadcast(broadcastRef.id, broadcastData);
       recipientCount = result.recipientCount;
     }
+
+    await writeRbacAuditLog({
+      action: sendNow ? "notification.broadcast.send" : "notification.broadcast.schedule",
+      actorUid: decoded.uid ?? null,
+      actorEmail: decoded.email ?? null,
+      targetType: "notification_broadcast",
+      targetId: broadcastRef.id,
+      message: sendNow
+        ? `Sent broadcast "${broadcastData.title}"`
+        : `Scheduled broadcast "${broadcastData.title}" for ${new Date(scheduledAt).toISOString()}`,
+    });
 
     return NextResponse.json({
       success: true,
@@ -311,6 +367,16 @@ export async function DELETE(request) {
     const id = searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
     await adminDb.collection("notification_broadcasts").doc(id).delete();
+
+    await writeRbacAuditLog({
+      action: "notification.broadcast.delete",
+      actorUid: decoded.uid ?? null,
+      actorEmail: decoded.email ?? null,
+      targetType: "notification_broadcast",
+      targetId: id,
+      message: `Deleted broadcast ${id}`,
+    });
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("[broadcast/DELETE]", err?.message || err);
@@ -346,6 +412,16 @@ export async function PATCH(request) {
         status: "draft",
         scheduledAt: null,
       });
+
+      await writeRbacAuditLog({
+        action: "notification.broadcast.cancel",
+        actorUid: decoded.uid ?? null,
+        actorEmail: decoded.email ?? null,
+        targetType: "notification_broadcast",
+        targetId: id,
+        message: `Cancelled scheduled broadcast ${id}`,
+      });
+
       return NextResponse.json({ success: true });
     }
 
@@ -353,47 +429,43 @@ export async function PATCH(request) {
     // to send a draft (a cancelled schedule) — without it a single transient
     // Firestore blip left the send permanently dead with no way back.
     if (action === "resend") {
-      const ref = adminDb.collection("notification_broadcasts").doc(id);
-
-      // The check (status !== "sent"/"scheduled") and the act (deliverBroadcast)
-      // were two separate steps, so two concurrent resend calls (or an
-      // overlapping scheduler run) could both read a resendable status and both
-      // fan out the full delivery — a transaction makes the claim atomic.
+      // Only a "draft" (never sent) or "failed" (mid-delivery failure) broadcast
+      // can be (re)sent manually — "sent" is already delivered, "scheduled" must
+      // be cancelled first, and "sending" means a claim is already in flight
+      // (see claimBroadcastForDelivery() above, shared with the scheduler).
       let data;
       try {
-        data = await adminDb.runTransaction(async (tx) => {
-          const snap = await tx.get(ref);
-          if (!snap.exists) {
-            throw Object.assign(new Error("Broadcast not found"), { code: "not-found" });
-          }
-          const current = snap.data() || {};
-          if (current.status === "sent") {
-            throw Object.assign(new Error("This broadcast has already been sent."), { code: "already-sent" });
-          }
-          if (current.status === "scheduled") {
-            throw Object.assign(
-              new Error("Cancel the schedule before sending this broadcast manually."),
-              { code: "scheduled" },
-            );
-          }
-          if (current.status === "sending") {
-            throw Object.assign(new Error("This broadcast is already being sent."), { code: "in-flight" });
-          }
-          tx.update(ref, { status: "sending" });
-          return current;
-        });
+        data = await claimBroadcastForDelivery(id, ["draft", "failed"]);
       } catch (claimErr) {
         if (claimErr?.code === "not-found") {
           return NextResponse.json({ error: "Broadcast not found" }, { status: 404 });
         }
-        if (["already-sent", "scheduled", "in-flight"].includes(claimErr?.code)) {
-          return NextResponse.json({ error: claimErr.message }, { status: 400 });
+        if (claimErr?.code === "invalid-status") {
+          const message =
+            claimErr.status === "sent"
+              ? "This broadcast has already been sent."
+              : claimErr.status === "scheduled"
+                ? "Cancel the schedule before sending this broadcast manually."
+                : claimErr.status === "sending"
+                  ? "This broadcast is already being sent."
+                  : `This broadcast can't be sent from status "${claimErr.status}".`;
+          return NextResponse.json({ error: message }, { status: 400 });
         }
         throw claimErr;
       }
 
       try {
         const result = await deliverBroadcast(id, data);
+
+        await writeRbacAuditLog({
+          action: "notification.broadcast.resend",
+          actorUid: decoded.uid ?? null,
+          actorEmail: decoded.email ?? null,
+          targetType: "notification_broadcast",
+          targetId: id,
+          message: `Resent broadcast ${id}`,
+        });
+
         return NextResponse.json({ success: true, recipientCount: result.recipientCount });
       } catch {
         // deliverBroadcast() has already logged the raw error and re-marked the

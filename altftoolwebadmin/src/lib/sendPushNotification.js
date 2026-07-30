@@ -16,9 +16,12 @@ import { getRbacRootRef } from "@/lib/serverRbac";
  *
  * Tokens live in the RBAC store for admins created through the RBAC path and
  * in the legacy `admins` collection for older accounts. Reading only the legacy
- * collection silently delivered zero pushes to every RBAC-era admin.
+ * collection silently delivered zero pushes to every RBAC-era admin. Exported
+ * so callers other than sendPushToUsers() (e.g. the test-push diagnostic
+ * route) can check "does this user have any tokens" without re-implementing
+ * a narrower, legacy-only lookup.
  */
-async function readTokensForUid(uid) {
+export async function readTokensForUid(uid) {
   const [rbacSnap, legacySnap] = await Promise.all([
     getRbacRootRef()
       .collection(RBAC_COLLECTIONS.adminUsers)

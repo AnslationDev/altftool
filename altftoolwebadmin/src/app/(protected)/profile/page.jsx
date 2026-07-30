@@ -3,9 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useId, useRef, useState } from "react";
 import { auth } from "@/lib/firebaseAuth";
-import { db } from "@/lib/firebaseFirestore";
 import { storage } from "@/lib/firebaseStorage";
-import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 import {
@@ -25,7 +23,9 @@ import { Button, Field, Input, Textarea } from "@altftool/ui";
 import { EmptyState, PageHeader, SectionCard } from "@/ansets";
 import { emitAlert } from "@/lib/alertBus";
 import { PROJECTS } from "@/projects";
-import { RBAC_PATHS } from "@/lib/rbacPaths";
+import { getAdminIdToken } from "@/lib/adminIdToken";
+import { readApiJson } from "@/lib/apiClient";
+import { logAuditEvent } from "@/lib/auditClient";
 
 const NO_SESSION_MESSAGE =
   "Your session isn't ready — please sign in again before editing your profile.";
@@ -40,45 +40,45 @@ const ALLOWED_PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "i
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
 /**
- * Resolve where this admin's profile actually lives, mirroring /api/admin/me:
- * RBAC store first (`super_admin_dashboard/main/admin_users/{uid}`), legacy
- * `admins/{uid}` only as a fallback. Admins created through the current flow
- * have no legacy doc at all, so writing straight to `admins/{uid}` failed with
- * NOT_FOUND (or landed on a document nothing reads).
+ * Save this admin's own profile fields through /api/admin/profile.
  *
- * Both branches confirm the document exists before returning a writer, so
- * callers can trust that a resolved writer has a real destination.
+ * This used to write straight to Firestore from the browser, probing
+ * `admin_users/{uid}` then `admins/{uid}` by doc id. firestore.rules only
+ * allow a signed-in admin to read/write those docs at their exact Firebase
+ * Auth uid, so an admin whose RBAC doc id does not equal their current uid
+ * (provisioned under a different uid, migrated account, etc.) had no
+ * client-reachable document at all — every save threw NO_PROFILE_RECORD_MESSAGE.
  *
- * Known gap: /api/admin/me (serverRbac.getRbacAdminDoc) also falls back to a
- * `where("email","==",…)` lookup, so an RBAC doc whose id is not the uid still
- * renders the profile. The browser cannot follow that fallback — firestore.rules
- * only allows self-reads/writes at `admin_users/{request.auth.uid}` — so those
- * accounts get NO_PROFILE_RECORD_MESSAGE here instead of a silent failure.
- * Closing it properly needs a server route that writes with the Admin SDK.
+ * /api/admin/me, getRbacAdminDoc() and verifyActiveAdmin() already solve the
+ * same identity problem for reads by falling back to a
+ * `where("email","==",…)` lookup with the Admin SDK, which is not bound by
+ * the self-uid-only Firestore rule. /api/admin/profile applies that same
+ * uid-then-email resolution on the write path, so this now works regardless
+ * of whether the RBAC doc id matches the Firebase uid.
  */
-async function resolveProfileWriter(uid) {
-  const rbacRef = doc(db, ...RBAC_PATHS.adminUsers, uid);
-  const rbacSnap = await getDoc(rbacRef);
-
-  if (rbacSnap.exists()) {
-    // setDoc+merge rather than updateDoc so a partially-provisioned doc never
-    // throws; `updatedAt` is whitelisted by firestore.rules on this path only.
-    return (data) => setDoc(rbacRef, { ...data, updatedAt: serverTimestamp() }, { merge: true });
+async function saveProfileFields(updates) {
+  const token = await getAdminIdToken();
+  if (!token) {
+    const error = new Error(NO_SESSION_MESSAGE);
+    error.userMessage = NO_SESSION_MESSAGE;
+    throw error;
   }
 
-  // firestore.rules allows a signed-in admin to read its own `admins/{uid}`,
-  // so this probe is safe and keeps us from returning a writer that can only
-  // fail with NOT_FOUND.
-  const legacyRef = doc(db, "admins", uid);
-  const legacySnap = await getDoc(legacyRef);
+  const res = await fetch("/api/admin/profile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ updates }),
+  });
 
-  if (legacySnap.exists()) {
-    return (data) => updateDoc(legacyRef, data);
+  try {
+    return await readApiJson(res, "Failed to save profile.");
+  } catch (err) {
+    // Only the true "no record in either store" case (rare — an orphaned
+    // account) should show NO_PROFILE_RECORD_MESSAGE; every other failure
+    // keeps its own message.
+    if (err?.status === 404) err.userMessage = NO_PROFILE_RECORD_MESSAGE;
+    throw err;
   }
-
-  const error = new Error(NO_PROFILE_RECORD_MESSAGE);
-  error.userMessage = NO_PROFILE_RECORD_MESSAGE;
-  throw error;
 }
 
 export default function ProfilePage() {
@@ -151,18 +151,32 @@ export default function ProfilePage() {
         .join(" ");
       const fullName = derivedFullName || adminData?.fullName || "";
 
-      const write = await resolveProfileWriter(uid);
-      await write({
+      const changes = {
         firstName: form.firstName,
         lastName: form.lastName,
         fullName,
         team: form.team,
         designation: form.designation,
         bio: form.bio,
-      });
+      };
+      await saveProfileFields(changes);
 
       await refreshAuth();
       emitAlert({ type: "success", message: "Profile updated successfully." });
+      // Self-service edits previously left no trace in admin_audit_logs —
+      // mirror the ADMIN_UPDATE entry /api/admin/update writes when a super
+      // admin edits someone else's profile, so the same class of change is
+      // reviewable regardless of who made it.
+      logAuditEvent({
+        module: "admin-management",
+        action: "ADMIN_UPDATE",
+        targetUid: uid,
+        targetEmail: auth.currentUser?.email ?? user?.email ?? null,
+        entityType: "adminProfile",
+        entityId: uid,
+        summary: "Updated own profile",
+        changes,
+      });
     } catch (err) {
       console.error(err);
       emitAlert({
@@ -202,18 +216,23 @@ export default function ProfilePage() {
 
     setUploading(true);
     try {
-      // Resolve (and confirm the existence of) the destination BEFORE uploading,
-      // so a profile with no writable record does not leave an orphaned object
-      // in admin-avatars/.
-      const write = await resolveProfileWriter(uid);
-
       const storageRef = ref(storage, `admin-avatars/${uid}`);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
 
-      await write({ photoURL: url });
+      await saveProfileFields({ photoURL: url });
       await refreshAuth();
       emitAlert({ type: "success", message: "Profile picture updated." });
+      logAuditEvent({
+        module: "admin-management",
+        action: "ADMIN_UPDATE",
+        targetUid: uid,
+        targetEmail: auth.currentUser?.email ?? user?.email ?? null,
+        entityType: "adminProfile",
+        entityId: uid,
+        summary: "Updated own profile photo",
+        changes: { photoURL: url },
+      });
     } catch (err) {
       console.error(err);
       emitAlert({
@@ -238,11 +257,10 @@ export default function ProfilePage() {
 
     setRemovingPhoto(true);
     try {
-      const write = await resolveProfileWriter(uid);
       // Empty string (not deleteField) mirrors how `photoURL` is already read
       // elsewhere in this file: `adminData?.photoURL || null` treats "" the
       // same as absent and falls back to the initials avatar.
-      await write({ photoURL: "" });
+      await saveProfileFields({ photoURL: "" });
       // storage.rules allows public read on admin-avatars/{uid}, so clearing
       // only the Firestore pointer leaves the actual image permanently
       // fetchable at its old URL — delete the blob too, matching how every
@@ -255,6 +273,16 @@ export default function ProfilePage() {
       }
       await refreshAuth();
       emitAlert({ type: "success", message: "Profile picture removed." });
+      logAuditEvent({
+        module: "admin-management",
+        action: "ADMIN_UPDATE",
+        targetUid: uid,
+        targetEmail: auth.currentUser?.email ?? user?.email ?? null,
+        entityType: "adminProfile",
+        entityId: uid,
+        summary: "Removed own profile photo",
+        changes: { photoURL: "" },
+      });
     } catch (err) {
       console.error(err);
       emitAlert({
@@ -302,6 +330,20 @@ export default function ProfilePage() {
       setNewPassword("");
       setConfirmPassword("");
       emitAlert({ type: "success", message: "Password changed successfully." });
+      // Mirrors the ADMIN_PASSWORD_CHANGE entry /api/admin/change-password
+      // writes when a super admin resets someone else's password — this is
+      // the same class of action, self-service, and was previously invisible
+      // to admin_audit_logs / activity_events.
+      logAuditEvent({
+        module: "admin-management",
+        action: "ADMIN_PASSWORD_CHANGE",
+        targetUid: currentUser.uid,
+        targetEmail: currentUser.email,
+        entityType: "adminProfile",
+        entityId: currentUser.uid,
+        summary: "Changed own password",
+        changes: { passwordChanged: true },
+      });
     } catch (err) {
       console.error(err);
       const message =
@@ -356,7 +398,7 @@ export default function ProfilePage() {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading || removingPhoto}
-                className="absolute -bottom-2 -right-2 flex h-7 w-7 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
+                className="absolute -bottom-2 -right-2 flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
                 title="Change photo"
                 aria-label="Change profile photo"
               >
@@ -371,7 +413,7 @@ export default function ProfilePage() {
                   type="button"
                   onClick={handleRemovePhoto}
                   disabled={uploading || removingPhoto}
-                  className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
+                  className="absolute -top-2 -right-2 flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] shadow-sm transition hover:bg-[var(--surface-soft)] focus-visible:outline-none focus-visible:[box-shadow:var(--focus-ring)] disabled:opacity-50"
                   title="Remove photo"
                   aria-label="Remove profile photo"
                 >

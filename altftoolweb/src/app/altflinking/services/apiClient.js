@@ -66,6 +66,20 @@ export async function submitWebsiteListing(payload) {
   });
 }
 
+export async function verifyDnsRecord(domain, token) {
+  return apiFetch("/api/altflinking/verify-dns", {
+    method: "POST",
+    body: JSON.stringify({ domain, token }),
+  });
+}
+
+export async function updateListing(id, payload) {
+  return apiFetch(`/api/altflinking/listings/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+}
+
 // ---------------------------------------------------------------------------
 // ORDERS APIs
 // ---------------------------------------------------------------------------
@@ -85,6 +99,48 @@ export async function updateOrderStatus(orderId, status, extraData = {}) {
   return apiFetch(`/api/altflinking/orders/${orderId}`, {
     method: "PATCH",
     body: JSON.stringify({ status, ...extraData }),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// LINK INSPECTOR API
+// ---------------------------------------------------------------------------
+
+export async function inspectBacklink(url, targetAnchor = "") {
+  return apiFetch("/api/altflinking/inspect-backlink", {
+    method: "POST",
+    body: JSON.stringify({ url, targetAnchor }),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// ADMIN APIs
+// ---------------------------------------------------------------------------
+
+export async function fetchAdminListings(status = "all") {
+  const params = new URLSearchParams({ status });
+  return apiFetch(`/api/altflinking/admin/listings?${params.toString()}`);
+}
+
+export async function moderateListing(id, action, extra = {}) {
+  return apiFetch("/api/altflinking/admin/listings", {
+    method: "PATCH",
+    body: JSON.stringify({ id, action, ...extra }),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// WITHDRAWALS APIs
+// ---------------------------------------------------------------------------
+
+export async function fetchWithdrawals() {
+  return apiFetch("/api/altflinking/withdrawals");
+}
+
+export async function requestWithdrawal(payload) {
+  return apiFetch("/api/altflinking/withdrawals", {
+    method: "POST",
+    body: JSON.stringify(payload),
   });
 }
 

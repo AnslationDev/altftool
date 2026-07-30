@@ -34,6 +34,12 @@
 
 body {
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Scoped to this tool's own wrapper. A tool stylesheet stays attached for the
+ * life of the document, so a bare body rule here repainted every page the
+ * visitor opened next — and tools are where most visits start. */
+.orm-scope {
     background-color: var(--orm-bg);
     color: var(--orm-text-heading);
     transition: background-color 0.3s ease;

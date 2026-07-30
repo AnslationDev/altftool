@@ -620,3 +620,23 @@ html[data-theme="dark"] .live-activity-root .bg-slate-100 {
 html[data-theme="dark"] .live-activity-root .bg-slate-800 {
   background-color: var(--playful-ink);
 }
+
+html[data-theme="dark"] .live-activity-root .bg-amber-50 {
+  background-color: color-mix(in srgb, var(--playful-yellow) 16%, var(--playful-card));
+}
+
+html[data-theme="dark"] .live-activity-root .bg-violet-50 {
+  background-color: color-mix(in srgb, var(--playful-violet) 16%, var(--playful-card));
+}
+
+html[data-theme="dark"] .live-activity-root .bg-emerald-50 {
+  background-color: color-mix(in srgb, var(--playful-mint) 16%, var(--playful-card));
+}
+
+html[data-theme="dark"] .live-activity-root .bg-pink-50 {
+  background-color: color-mix(in srgb, var(--playful-pink) 16%, var(--playful-card));
+}
+
+html[data-theme="dark"] .live-activity-root .bg-slate-300 {
+  background-color: var(--playful-border);
+}

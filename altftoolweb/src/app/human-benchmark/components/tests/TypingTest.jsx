@@ -99,7 +99,7 @@ export default function TypingTest({ onComplete, beep }) {
         rows={4} maxLength={para.length + 10}
         className="w-full rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-4 py-3 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)] font-mono resize-none"
         placeholder="Start typing here..." />
-      <StatsChart data={DIST} xLabel="Adjusted score (WPM)" title="Population Score Distribution" subtitle="How 200,000+ users scored on this test" />
+      <StatsChart data={DIST} xLabel="Adjusted score (WPM)" title="Population Score Distribution" subtitle="Illustrative example distribution, not measured from real users" />
       <AboutCard {...ABOUT} />
     </div>
   );

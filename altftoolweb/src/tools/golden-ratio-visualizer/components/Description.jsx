@@ -1,7 +1,7 @@
 const howItWorks = [
     { title: "Choose Composition", description: "Pick a preset or start from a blank phi composition and select visible overlays." },
     { title: "Tune Visual System", description: "Adjust tile count, stroke style, colors, opacity, and rotation for your target use case." },
-    { title: "Export & Reuse", description: "Download high-quality PNG or save and import JSON configurations for repeatable workflows." },
+    { title: "Export & Reuse", description: "Download the canvas as a PNG at up to 1400px square, then drop it over your own image as a guide layer." },
 ];
 
 const features = [

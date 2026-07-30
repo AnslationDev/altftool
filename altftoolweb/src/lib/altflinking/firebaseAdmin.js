@@ -29,7 +29,6 @@ function getServiceAccount() {
   }
   return null;
 }
-
 let _app   = null;
 let _db    = null;
 let _auth  = null;
@@ -55,7 +54,3 @@ export function initAdmin() {
     return { db: null, auth: null, ready: false };
   }
 }
-
-export function adminDb()   { return _db; }
-export function adminAuth() { return _auth; }
-export function isReady()   { return _ready; }

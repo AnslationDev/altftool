@@ -180,6 +180,14 @@ export default function QuizRunner({ quiz, onClose }) {
                         key={idx}
                         className={cardClass}
                         onClick={() => handleOptionSelect(option, idx)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleOptionSelect(option, idx);
+                          }
+                        }}
                       >
                         {option.image && (
                           <div className="bf-option-img-wrap">

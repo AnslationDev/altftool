@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { jsonResponse } from "@altftool/core/http";
+import { enforceRateLimit, jsonResponse } from "@altftool/core/http";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
 import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
@@ -34,6 +34,12 @@ function releaseBranch() {
     process.env.VERCEL_GIT_COMMIT_REF ||
     null
   );
+}
+
+function hasInventorySecret(request) {
+  const expected = process.env.ALTFT_REVALIDATE_SECRET;
+  if (!expected) return false;
+  return request.headers.get("x-inventory-secret") === expected;
 }
 
 function publicUrl(request) {
@@ -189,6 +195,9 @@ function buildSeoReadiness(siteUrl) {
 }
 
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, { limit: 30, scope: "health", windowMs: 60_000 });
+  if (limited) return limited;
+
   const siteUrl = publicUrl(request);
   const [firebase, tools] = await Promise.all([
     buildFirebaseReadiness(),
@@ -220,8 +229,9 @@ export async function GET(request) {
     release: {
       environment: process.env.VERCEL_ENV || process.env.NODE_ENV || "unknown",
       url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : siteUrl,
-      commitSha: commitSha(),
-      branch: releaseBranch(),
+      ...(hasInventorySecret(request)
+        ? { commitSha: commitSha(), branch: releaseBranch() }
+        : {}),
     },
     firebase,
     tools,

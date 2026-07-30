@@ -5,7 +5,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "Disclaimer",
     description:
-      "Read the AltF Tools Disclaimer. Tools and content are provided for informational purposes only, on an as-is basis, with no professional advice and limited liability.",
+      "The AltF Tools disclaimer: our tools, calculators and articles are published for general information only, on an as-is basis, and are not professional advice.",
     path: "/policypages/disclaimer",
   });
 }

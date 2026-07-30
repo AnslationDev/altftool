@@ -13,7 +13,7 @@ export default function PricingPreview({ onExploreMarketplace, onListWebsite }) 
     <div className="space-y-6">
       <div className="text-center max-w-xl mx-auto space-y-2">
         <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Simple, Transparent Pricing</h2>
-        <p className="text-xs text-slate-500">Zero hidden fees for publishers. Protected escrow guarantee for SEO buyers.</p>
+        <p className="text-xs text-slate-500">Zero listing fees for publishers. Buyers pay exactly the listed price — no markups.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -31,7 +31,7 @@ export default function PricingPreview({ onExploreMarketplace, onListWebsite }) 
             <ul className="space-y-2.5 text-xs text-slate-600">
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span>Instant DNS TXT record ownership verification</span>
+                <span>DNS TXT record ownership verification</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
@@ -39,7 +39,7 @@ export default function PricingPreview({ onExploreMarketplace, onListWebsite }) 
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span>Automatic payout releases to your bank wallet</span>
+                <span>Request payouts once an order is verified live</span>
               </li>
             </ul>
           </div>
@@ -60,22 +60,22 @@ export default function PricingPreview({ onExploreMarketplace, onListWebsite }) 
               FOR SEO BUYERS & AGENCIES
             </span>
             <div>
-              <p className="text-3xl font-black text-white font-mono">15% <span className="text-xs font-normal text-slate-500">Escrow & Verification Fee</span></p>
-              <p className="text-xs text-slate-500 mt-1">Funds held safely until link passes Google indexation check</p>
+              <p className="text-3xl font-black text-white font-mono">Pay Listed Price <span className="text-xs font-normal text-slate-500">No Buyer Markup</span></p>
+              <p className="text-xs text-slate-500 mt-1">You pay exactly what the publisher lists — no hidden fees added at checkout</p>
             </div>
 
             <ul className="space-y-2.5 text-xs text-slate-600">
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span>Access to 1,400+ verified DR 50-90+ domains</span>
+                <span>Browse publisher domains with real DR & traffic data</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span>24/7 automated dofollow link crawler</span>
+                <span>On-demand dofollow link inspector to verify placements</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span>Full refund guarantee if TAT limit is missed</span>
+                <span>File a dispute if a publisher misses the turnaround time</span>
               </li>
             </ul>
           </div>

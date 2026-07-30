@@ -21,6 +21,17 @@ export function useAmbientAudio() {
   const [flowMode, setFlowMode] = useState(false);
   const [flowIntensity, setFlowIntensity] = useState("Soft");
 
+  // Sounds known (statically or discovered at runtime) to be unplayable
+  const [unavailableSounds, setUnavailableSounds] = useState(() => {
+    const initialUnavailable = {};
+    ambientSounds.forEach((s) => {
+      if (s.available === false) {
+        initialUnavailable[s.id] = true;
+      }
+    });
+    return initialUnavailable;
+  });
+
   // Timer states
   const [timerTime, setTimerTime] = useState(0); // in seconds
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -51,6 +62,24 @@ export function useAmbientAudio() {
     };
   }, []);
 
+  // Called whenever a sound's underlying <audio> element fails to load/play
+  const handleAudioError = (soundId) => {
+    if (fadeIntervalsRef.current[soundId]) {
+      clearInterval(fadeIntervalsRef.current[soundId]);
+      delete fadeIntervalsRef.current[soundId];
+    }
+
+    setUnavailableSounds((prev) => (prev[soundId] ? prev : { ...prev, [soundId]: true }));
+
+    setSoundsState((prev) => {
+      if (!prev[soundId] || !prev[soundId].active) return prev;
+      return {
+        ...prev,
+        [soundId]: { ...prev[soundId], active: false },
+      };
+    });
+  };
+
   // Initialize or retrieve Audio element
   const getAudio = (soundId) => {
     if (audiosRef.current[soundId]) {
@@ -62,10 +91,13 @@ export function useAmbientAudio() {
     const audio = new Audio(soundData.file);
     audio.loop = true;
     audio.volume = 0; // Start at 0 for fade-in
-    
+
     // Set crossOrigin to anonymous so we don't have issues if we ever do Web Audio API processing
     audio.crossOrigin = "anonymous";
-    
+
+    // Surface load/playback failures instead of failing silently
+    audio.addEventListener("error", () => handleAudioError(soundId));
+
     audiosRef.current[soundId] = audio;
     return audio;
   };
@@ -102,6 +134,11 @@ export function useAmbientAudio() {
 
   // Toggle Sound active status
   const toggleSound = (soundId) => {
+    const soundData = ambientSounds.find((s) => s.id === soundId);
+    if (soundData?.available === false || unavailableSounds[soundId]) {
+      return;
+    }
+
     setSoundsState((prev) => {
       const nextState = { ...prev };
       const current = nextState[soundId];
@@ -252,7 +289,9 @@ export function useAmbientAudio() {
 
     const nextState = {};
     ambientSounds.forEach((s) => {
-      const isPresetActive = presetSounds[s.id] !== undefined && presetSounds[s.id] > 0;
+      const isSoundAvailable = s.available !== false && !unavailableSounds[s.id];
+      const isPresetActive =
+        presetSounds[s.id] !== undefined && presetSounds[s.id] > 0 && isSoundAvailable;
       nextState[s.id] = {
         active: isPresetActive,
         volume: isPresetActive ? presetSounds[s.id] : s.defaultVolume,
@@ -406,6 +445,7 @@ export function useAmbientAudio() {
 
   return {
     soundsState,
+    unavailableSounds,
     isPlaying,
     masterVolume,
     flowMode,

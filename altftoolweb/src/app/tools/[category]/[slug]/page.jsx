@@ -105,8 +105,17 @@ export default async function ToolPage({ params }) {
           }),
         ]}
       />
-      <ToolClient slug={slug} category={category} />
-      <ToolSeoSection slug={slug} tool={tool} category={category} />
+      {/*
+        Nested, not a sibling: ToolDetailChrome renders `children` of
+        ToolClient as its `seoContent`, INSIDE <main> and inside the
+        container that applies px-4 sm:px-6 lg:px-8. As a sibling it landed
+        outside that padding, so on a 390px phone every "About this tool"
+        card ran edge-to-edge while the tool above it was inset by 16px.
+        Same shape /tools/all/api-stress-estimator already ships.
+      */}
+      <ToolClient slug={slug} tool={tool} category={category}>
+        <ToolSeoSection slug={slug} tool={tool} category={category} />
+      </ToolClient>
     </>
   );
 }

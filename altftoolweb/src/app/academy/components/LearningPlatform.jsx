@@ -77,7 +77,7 @@ export default function LearningPlatform({ loading = false }) {
 
 
           <button
-            onClick={() => document.getElementById("academy-card")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => document.getElementById("academy-project")?.scrollIntoView({ behavior: "smooth" })}
             className="academy-btn mt-5 sm:mt-7" >
             <span >Browse Platforms </span>
             <span className="academy-btn-icon">

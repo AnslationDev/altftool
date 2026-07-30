@@ -614,10 +614,12 @@ export function createBookJsonLd({ book, path } = {}) {
   if (!book?.title || !path) return null;
 
   const url = absoluteUrl(path);
-  const reviewCount = Number(book.stats?.totalReviews || 0);
-  const ratingValue = Number(book.stats?.rating || 0);
-  const price = Number(book.price || 0);
 
+  // No aggregateRating, offers, or isAccessibleForFree node here. The only
+  // caller (/wattpad/book/[slug]) reads books.json, whose stats.rating,
+  // stats.totalReviews and price are seed values — no reader ever rated these
+  // stories and nothing sells them — so publishing them would be fabricated
+  // structured data. Wire those nodes back only from a live ratings source.
   return compactJsonLdObject({
     "@context": "https://schema.org",
     "@type": "Book",
@@ -635,23 +637,6 @@ export function createBookJsonLd({ book, path } = {}) {
     inLanguage: book.language || "English",
     numberOfPages: Number(book.meta?.pages || 0) || undefined,
     datePublished: book.createdAt || undefined,
-    isAccessibleForFree: Boolean(book.isFree || price === 0),
-    aggregateRating:
-      ratingValue > 0 && reviewCount > 0
-        ? {
-            "@type": "AggregateRating",
-            ratingValue,
-            bestRating: 5,
-            worstRating: 1,
-            reviewCount,
-          }
-        : undefined,
-    offers: {
-      "@type": "Offer",
-      price: String(price),
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-    },
     publisher: { "@id": `${getSiteUrl()}/#organization` },
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },

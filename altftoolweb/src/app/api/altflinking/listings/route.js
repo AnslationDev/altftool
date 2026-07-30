@@ -5,12 +5,34 @@
  */
 
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
+import dns from "node:dns/promises";
 import { initAdmin }    from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue }   from "firebase-admin/firestore";
 
+// Re-checks the TXT record server-side rather than trusting a client-supplied
+// "verified" flag — the publisher dashboard's own DNS check is only a
+// convenience preview, not a security boundary.
+async function checkDnsVerification(domain, token) {
+  if (!token) return false;
+  try {
+    const records = await dns.resolveTxt(domain);
+    return records.map((chunks) => chunks.join("")).some((rec) => rec.includes(token));
+  } catch {
+    return false;
+  }
+}
+
 // GET — public endpoint, returns only APPROVED listings
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "altflinking:listings",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { db, ready } = initAdmin();
   if (!ready) return err("Service temporarily unavailable", 503);
 
@@ -26,19 +48,29 @@ export async function GET(request) {
 
     // Check if requester is admin (optional auth)
     let requesterRole = null;
+    let requesterUid = null;
     const authHeader = request.headers.get("authorization");
     if (authHeader?.startsWith("Bearer ")) {
       const { user } = await verifyToken(request);
-      if (user) requesterRole = await getUserRole(user.uid);
+      if (user) {
+        requesterUid = user.uid;
+        requesterRole = await getUserRole(user.uid);
+      }
     }
+
+    const isAdmin = requesterRole === "ADMIN" || requesterRole === "SUPERADMIN";
 
     let query = db.collection("listings");
 
     // Non-admin public: only APPROVED
-    if (!includeAll || requesterRole !== "ADMIN" && requesterRole !== "SUPERADMIN") {
-      if (publisherId) {
+    if (!includeAll || !isAdmin) {
+      if (publisherId && (isAdmin || requesterUid === publisherId)) {
         // Publisher sees their own listings (all statuses)
         query = query.where("publisherId", "==", publisherId);
+      } else if (publisherId) {
+        // Unauthenticated/non-owner caller asking for one publisher's
+        // listings — still scope to that publisher, just public-visible ones.
+        query = query.where("publisherId", "==", publisherId).where("status", "==", "APPROVED");
       } else {
         query = query.where("status", "==", "APPROVED");
       }
@@ -71,12 +103,19 @@ export async function GET(request) {
     return ok(listings);
   } catch (e) {
     console.error("[GET /listings]", e);
-    return err("Failed to fetch listings: " + e.message, 500);
+    return err("Failed to fetch listings", 500);
   }
 }
 
 // POST — publisher submits a new website listing (enters PENDING_REVIEW)
 export async function POST(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 20,
+    scope: "altflinking:listings",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { user, error } = await verifyToken(request);
   if (error || !user) return err(error || "Unauthorized", 401);
 
@@ -116,6 +155,8 @@ export async function POST(request) {
     const userDoc = await db.collection("users").doc(user.uid).get();
     const userData = userDoc.exists ? userDoc.data() : {};
 
+    const dnsVerified = await checkDnsVerification(body.domain.toLowerCase().trim(), body.verificationToken);
+
     const now = FieldValue.serverTimestamp();
     const listingData = {
       publisherId:    user.uid,
@@ -144,8 +185,8 @@ export async function POST(request) {
       featured:       false,
       rating:         0,
       reviewCount:    0,
-      verified:       false,
-      adminNotes:     "",
+      verified:       dnsVerified,
+      adminNotes:     dnsVerified ? "" : "DNS TXT record not detected at submission time — admin should verify domain ownership manually before approving.",
       approvedBy:     null,
       approvedAt:     null,
       createdAt:      now,
@@ -156,6 +197,6 @@ export async function POST(request) {
     return ok({ id: docRef.id, ...listingData, status: "PENDING_REVIEW" }, 201);
   } catch (e) {
     console.error("[POST /listings]", e);
-    return err("Failed to submit listing: " + e.message, 500);
+    return err("Failed to submit listing", 500);
   }
 }

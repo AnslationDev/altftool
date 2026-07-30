@@ -1,15 +1,9 @@
-import PageView from "./PageView";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+// No generateMetadata here on purpose. layout.jsx already resolves the
+// record and builds metadata from the store's own name and offers; Next takes the deepest
+// segment's metadata, so the hardcoded title that used to live here
+// overrode all of it and every URL in this family shipped the same one.
 
-export async function generateMetadata({ params }) {
-  const { slug, id } = await params;
-  return createPageMetadata({
-    title: "Store Offers & Coupon Codes | Exclusive Deals",
-    description:
-      "Explore store offers, coupon codes, and exclusive deals on AltFTool. Compare savings across brands before you shop.",
-    path: `/exclusivedeals/store/${slug}/${id}`,
-  });
-}
+import PageView from "./PageView";
 
 export default function Page(props) {
   return <PageView {...props} />;

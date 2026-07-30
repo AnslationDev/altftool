@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { enforceRateLimit } from "@altftool/core/http";
 
 /**
  * PATCH /api/notifications/mark-read
@@ -9,6 +10,16 @@ import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
  */
 export async function PATCH(request) {
   try {
+    // Every sibling mutating route in this cluster (broadcast POST/DELETE/PATCH,
+    // save-token POST/DELETE) rate-limits itself; this one didn't, so any
+    // authenticated admin could hammer it in a loop for unbounded Firestore cost.
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 60,
+      scope: "admin:notifications-mark-read",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const authHeader = request.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

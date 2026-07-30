@@ -3,21 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronDown, LayoutGrid, Menu, Search, X } from "lucide-react";
-import {
-  BrandLogo,
-  IconButton,
-  Input,
-  ThemeModeMenu,
-  ThemeModeSelector,
-} from "@altftool/ui";
+import { ChevronDown, LayoutGrid, Menu, Search } from "lucide-react";
+import { BrandLogo, IconButton, ThemeModeMenu } from "@altftool/ui";
 import { useTheme } from "@/contexts/ThemeContext";
 import AccountMenu from "./AccountMenu";
+import MobileNav from "./MobileNav";
 import {
   isPublicRouteActive,
   isPublicShellHidden,
   PUBLIC_NAV_ITEMS,
-  SITE_ROUTES,
 } from "./siteRoutes";
 
 function groupNavigationOptions(options = []) {
@@ -72,14 +66,11 @@ export default function Header() {
   const router = useRouter();
   const { setThemeMode, themeMode } = useTheme();
   const [activeDesktopMenu, setActiveDesktopMenu] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchError, setSearchError] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSheet, setActiveSheet] = useState(null);
+  const [headerHidden, setHeaderHidden] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
-  const mobileMenuButtonRef = useRef(null);
-  const mobileCloseButtonRef = useRef(null);
-  const mobilePanelRef = useRef(null);
-  const mobileMenuPanelId = "site-mobile-navigation";
+  const sheetTriggerRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   const prefetchRoute = (href) => {
     if (href?.startsWith("/")) router.prefetch(href);
@@ -90,13 +81,16 @@ export default function Header() {
     onMouseEnter: () => prefetchRoute(href),
   });
 
-  const closeMobileMenu = ({ returnFocus = false } = {}) => {
-    setMobileMenuOpen(false);
-    if (returnFocus) {
-      window.setTimeout(() => {
-        mobileMenuButtonRef.current?.focus({ preventScroll: true });
-      }, 0);
-    }
+  const openSheet = (id, trigger) => {
+    if (trigger) sheetTriggerRef.current = trigger;
+    setActiveSheet(id);
+  };
+
+  const closeSheet = ({ returnFocus = false } = {}) => {
+    setActiveSheet(null);
+    if (!returnFocus) return;
+    const trigger = sheetTriggerRef.current;
+    window.setTimeout(() => trigger?.focus?.({ preventScroll: true }), 0);
   };
 
   useEffect(() => {
@@ -107,82 +101,71 @@ export default function Header() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setActiveDesktopMenu(null);
-      setMobileMenuOpen(false);
-      setSearchError("");
-      setSearchQuery(
-        new URLSearchParams(window.location.search).get("q") || "",
-      );
+      setActiveSheet(null);
+      setHeaderHidden(false);
     }, 0);
     return () => window.clearTimeout(timer);
   }, [pathname]);
 
+  // App-style auto-hide: the bar slides out of the way while reading and comes
+  // back on the first upward scroll. It is a transform on a sticky element, so
+  // the document never reflows and nothing shifts. Skipped entirely for
+  // reduced-motion users, who keep a permanently visible bar.
   useEffect(() => {
-    if (!mobileMenuOpen) return undefined;
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    )?.matches;
+    if (reduceMotion) return undefined;
 
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const focusTimer = window.setTimeout(() => {
-      mobileCloseButtonRef.current?.focus({ preventScroll: true });
-    }, 50);
+    let lastY = window.scrollY;
+    let frame = 0;
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closeMobileMenu({ returnFocus: true });
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-      const focusable = mobilePanelRef.current?.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable?.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const y = Math.max(0, window.scrollY);
+        const delta = y - lastY;
+        if (Math.abs(delta) < 8) return;
+        lastY = y;
+        setHeaderHidden(y > 96 && delta > 0);
+      });
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      document.body.style.overflow = originalOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-      window.clearTimeout(focusTimer);
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [mobileMenuOpen]);
+  }, []);
 
   if (isPublicShellHidden(pathname)) return null;
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const query = searchQuery.trim();
-
-    if (query.length < 2) {
-      setSearchError("Type at least 2 characters.");
-      return;
-    }
-
-    router.push(`/search?q=${encodeURIComponent(query)}`);
-    closeMobileMenu();
-  };
 
   const handleThemeSelect = (value) => {
     setThemeMode(value);
   };
 
+  const hideHeader = headerHidden && !activeSheet;
+
+  // The bar slides out of view on scroll but its controls stay in the tab
+  // order, so a keyboard user could land on an invisible logo or menu button.
+  // onFocusCapture below brings it back before focus lands.
   return (
     <>
       <header
         id="main-header"
         data-hydrated={themeReady ? "true" : "false"}
-        className="sticky top-0 z-50 isolate border-b border-border bg-background/90 px-4 shadow-sm backdrop-blur-xl sm:px-6 lg:px-8"
+        onFocusCapture={() => setHeaderHidden(false)}
+        style={{
+          paddingTop: "env(safe-area-inset-top, 0px)",
+          paddingLeft: "env(safe-area-inset-left, 0px)",
+          paddingRight: "env(safe-area-inset-right, 0px)",
+        }}
+        className={`sticky top-0 z-50 isolate border-b border-border bg-background/90 shadow-sm backdrop-blur-xl transition-transform duration-200 ease-out motion-reduce:transition-none xl:translate-y-0 ${
+          hideHeader ? "-translate-y-full" : "translate-y-0"
+        }`}
       >
-        <div className="mx-auto grid h-16 max-w-[var(--anslation-ds-container)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 lg:h-16 lg:px-8">
           <Link
             href="/"
             prefetch={false}
@@ -311,12 +294,14 @@ export default function Header() {
           </nav>
 
           <div className="flex min-w-fit items-center justify-end gap-2 justify-self-end">
+            {/* Below `md` the thumb-reachable bottom bar owns search, so the
+                corner icon would only be a second, harder-to-reach copy. */}
             <Link
               href="/search"
               prefetch={false}
               aria-label="Search AltFTool"
               title="Search"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
+              className="hidden h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none md:inline-flex"
               {...routePreviewProps("/search")}
             >
               <Search className="h-5 w-5" aria-hidden="true" />
@@ -330,14 +315,19 @@ export default function Header() {
 
             <AccountMenu />
 
-            <span className="xl:hidden">
+            {/* Tablet-width trigger for the same sheet the bottom bar opens. */}
+            <span className="hidden md:inline-flex xl:hidden">
               <IconButton
-                ref={mobileMenuButtonRef}
+                ref={menuButtonRef}
                 type="button"
-                onClick={() => setMobileMenuOpen(true)}
+                onClick={(event) =>
+                  activeSheet === "more"
+                    ? closeSheet()
+                    : openSheet("more", event.currentTarget)
+                }
                 aria-label="Open menu"
-                aria-expanded={mobileMenuOpen}
-                aria-controls={mobileMenuPanelId}
+                aria-haspopup="dialog"
+                aria-expanded={activeSheet === "more"}
               >
                 <Menu className="h-5 w-5" aria-hidden="true" />
               </IconButton>
@@ -346,187 +336,11 @@ export default function Header() {
         </div>
       </header>
 
-      <div
-        id={mobileMenuPanelId}
-        role="dialog"
-        aria-label="Mobile navigation"
-        aria-modal={mobileMenuOpen ? "true" : undefined}
-        aria-hidden={mobileMenuOpen ? undefined : "true"}
-        inert={!mobileMenuOpen}
-        className={`fixed inset-0 z-[90] xl:hidden ${
-          mobileMenuOpen ? "" : "pointer-events-none"
-        }`}
-      >
-        <button
-          type="button"
-          aria-label="Close navigation"
-          tabIndex={-1}
-          onClick={() => closeMobileMenu()}
-          className={`fixed inset-0 bg-foreground/35 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none ${
-            mobileMenuOpen ? "opacity-100" : "opacity-0"
-          }`}
-        />
-
-        <aside
-          ref={mobilePanelRef}
-          className={`fixed inset-y-0 left-0 flex w-[min(24rem,calc(100vw-0.75rem))] flex-col overflow-y-auto border-r border-border bg-card p-5 text-foreground shadow-lg transition-transform duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
-            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex items-center justify-between gap-3">
-            <Link
-              href="/"
-              prefetch={false}
-              aria-label="AltFTool home"
-              onClick={() => closeMobileMenu()}
-              className="rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
-            >
-              <BrandLogo size="sm" />
-            </Link>
-            <IconButton
-              ref={mobileCloseButtonRef}
-              type="button"
-              onClick={() => closeMobileMenu({ returnFocus: true })}
-              aria-label="Close menu"
-            >
-              <X className="h-5 w-5" aria-hidden="true" />
-            </IconButton>
-          </div>
-
-          <form className="mt-6 grid gap-2" onSubmit={handleSearch}>
-            <div className="flex items-center gap-2">
-              <Input
-                type="search"
-                aria-label="Search AltFTool"
-                placeholder="Search tools, apps, and guides"
-                value={searchQuery}
-                onChange={(event) => {
-                  setSearchQuery(event.target.value);
-                  if (searchError) setSearchError("");
-                }}
-                className="min-w-0"
-              />
-              <IconButton type="submit" aria-label="Search">
-                <Search className="h-4 w-4" aria-hidden="true" />
-              </IconButton>
-            </div>
-            {searchError ? (
-              <p className="text-xs font-medium text-destructive">
-                {searchError}
-              </p>
-            ) : null}
-          </form>
-
-          <nav aria-label="Mobile navigation" className="mt-6 grid gap-1 pb-6">
-            {PUBLIC_NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const groups = groupNavigationOptions(item.options);
-              const itemIsActive =
-                isPublicRouteActive(pathname, item) ||
-                item.options?.some((option) =>
-                  isPublicRouteActive(pathname, option),
-                );
-
-              return (
-                <details
-                  className="group"
-                  key={item.label}
-                  open={itemIsActive || undefined}
-                >
-                  <summary
-                    className={`flex min-h-11 cursor-pointer list-none items-center justify-between rounded-md px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                      itemIsActive
-                        ? "bg-muted text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    }`}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <Icon className="h-4 w-4" aria-hidden="true" />
-                      {item.label}
-                    </span>
-                    <ChevronDown
-                      className="h-4 w-4 transition group-open:rotate-180"
-                      aria-hidden="true"
-                    />
-                  </summary>
-
-                  <div className="mt-1 grid gap-3 border-l border-border pl-3">
-                    {groups.map((group) => (
-                      <section
-                        aria-label={group.label}
-                        className="grid gap-1"
-                        key={group.label}
-                      >
-                        <p className="px-3 pt-1 text-xs font-semibold uppercase text-muted-foreground">
-                          {group.label}
-                        </p>
-                        {group.items.map((option) => {
-                          const OptionIcon = option.icon || LayoutGrid;
-                          const optionIsActive = isPublicRouteActive(
-                            pathname,
-                            option,
-                          );
-
-                          return (
-                            <Link
-                              key={option.href}
-                              href={option.href}
-                              prefetch={false}
-                              {...routePreviewProps(option.href)}
-                              onClick={() => closeMobileMenu()}
-                              className={`flex min-h-11 items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                                optionIsActive
-                                  ? "bg-muted text-primary"
-                                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                              }`}
-                            >
-                              <OptionIcon
-                                className="h-4 w-4 shrink-0"
-                                aria-hidden="true"
-                              />
-                              <span>{option.label}</span>
-                            </Link>
-                          );
-                        })}
-                      </section>
-                    ))}
-                  </div>
-                </details>
-              );
-            })}
-          </nav>
-
-          <div className="mt-auto border-t border-border pt-4">
-            <p className="text-xs font-semibold uppercase text-muted-foreground">
-              Theme
-            </p>
-            <ThemeModeSelector
-              className="mt-2"
-              value={themeReady ? themeMode : "system"}
-              onChange={handleThemeSelect}
-            />
-
-            <p className="mt-4 text-xs font-semibold uppercase text-muted-foreground">
-              Quick access
-            </p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {[SITE_ROUTES.docs, SITE_ROUTES.siteMap, SITE_ROUTES.support].map(
-                (route) => (
-                  <Link
-                    key={route.href}
-                    href={route.href}
-                    prefetch={false}
-                    onClick={() => closeMobileMenu()}
-                    className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-3 text-sm font-semibold text-foreground transition duration-150 hover:border-primary hover:text-primary active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transform-none"
-                  >
-                    {route.label}
-                  </Link>
-                ),
-              )}
-            </div>
-          </div>
-        </aside>
-      </div>
+      <MobileNav
+        activeSheet={activeSheet}
+        onOpenSheet={openSheet}
+        onCloseSheet={closeSheet}
+      />
     </>
   );
 }

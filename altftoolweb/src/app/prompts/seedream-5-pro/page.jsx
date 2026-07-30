@@ -13,7 +13,7 @@ const DESCRIPTION =
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Seedream 5 Pro Prompts – Copy-Ready AI Image Prompt Library",
+    title: "Seedream 5 Pro Prompts – Copy-Ready Library",
     description: DESCRIPTION,
     path: "/prompts/seedream-5-pro",
   });

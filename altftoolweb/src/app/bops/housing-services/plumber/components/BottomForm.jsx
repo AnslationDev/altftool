@@ -16,21 +16,50 @@ const slots = ['ASAP – Emergency','Today (morning)','Today (afternoon)','Tomor
 
 function BookingForm() {
   const [form, setForm] = useState({ name: '', phone: '', service: '', slot: '', address: '' });
+  const [status, setStatus] = useState('idle');
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-  const submit = (e) => e.preventDefault();
+  const submit = (e) => {
+    e.preventDefault();
+    if (status === 'submitting') return;
+    setStatus('submitting');
+    const lead = { ...form };
+    setTimeout(() => {
+      try {
+        const leads = JSON.parse(window.localStorage.getItem('plumber_leads') || '[]');
+        leads.push({ ...lead, formType: 'booking', submittedAt: new Date().toISOString() });
+        window.localStorage.setItem('plumber_leads', JSON.stringify(leads));
+      } catch {
+        // Local storage can be unavailable in private browsing; the success state still works.
+      }
+      setStatus('success');
+      setForm({ name: '', phone: '', service: '', slot: '', address: '' });
+    }, 900);
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="fp-bform__success">
+        <div className="fp-bform__success-icon"><Check size={20} /></div>
+        <p className="fp-bform__success-title">Booking saved on this device</p>
+        <p className="fp-bform__success-text">No booking was actually made — call us now to lock in your time slot.</p>
+        <button type="button" className="fp-bform__alt" onClick={() => setStatus('idle')}>Book another</button>
+      </div>
+    );
+  }
+
   return (
     <form className="fp-bform__form" onSubmit={submit}>
       <div className="fp-bform__field">
         <User size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Full name" value={form.name} onChange={e => set('name', e.target.value)} required />
+        <input className="fp-bform__input" name="name" placeholder="Full name" value={form.name} onChange={e => set('name', e.target.value)} required />
       </div>
       <div className="fp-bform__field">
         <Phone size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Phone number" type="tel" value={form.phone} onChange={e => set('phone', e.target.value)} required />
+        <input className="fp-bform__input" name="phone" placeholder="Phone number" type="tel" value={form.phone} onChange={e => set('phone', e.target.value)} required />
       </div>
       <div className="fp-bform__field">
         <Wrench size={16} className="fp-bform__field-icon" />
-        <select className="fp-bform__select" value={form.service} onChange={e => set('service', e.target.value)} required>
+        <select className="fp-bform__select" name="service" value={form.service} onChange={e => set('service', e.target.value)} required>
           <option value="">Select service</option>
           {services.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
@@ -38,7 +67,7 @@ function BookingForm() {
       </div>
       <div className="fp-bform__field">
         <Clock size={16} className="fp-bform__field-icon" />
-        <select className="fp-bform__select" value={form.slot} onChange={e => set('slot', e.target.value)} required>
+        <select className="fp-bform__select" name="slot" value={form.slot} onChange={e => set('slot', e.target.value)} required>
           <option value="">Preferred time</option>
           {slots.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
@@ -46,10 +75,10 @@ function BookingForm() {
       </div>
       <div className="fp-bform__field">
         <MapPin size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Address or zip code" value={form.address} onChange={e => set('address', e.target.value)} required />
+        <input className="fp-bform__input" name="address" placeholder="Address or zip code" value={form.address} onChange={e => set('address', e.target.value)} required />
       </div>
-      <button type="submit" className="fp-bform__submit">
-        <span>Confirm Booking</span><ArrowRight size={16} />
+      <button type="submit" className="fp-bform__submit" disabled={status === 'submitting'}>
+        <span>{status === 'submitting' ? 'Confirming…' : 'Confirm Booking'}</span><ArrowRight size={16} />
       </button>
       <p className="fp-bform__note">No credit card required · Free to book · Cancel anytime</p>
     </form>
@@ -58,21 +87,50 @@ function BookingForm() {
 
 function EstimateForm() {
   const [form, setForm] = useState({ name: '', phone: '', service: '', details: '', address: '' });
+  const [status, setStatus] = useState('idle');
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-  const submit = (e) => e.preventDefault();
+  const submit = (e) => {
+    e.preventDefault();
+    if (status === 'submitting') return;
+    setStatus('submitting');
+    const lead = { ...form };
+    setTimeout(() => {
+      try {
+        const leads = JSON.parse(window.localStorage.getItem('plumber_leads') || '[]');
+        leads.push({ ...lead, formType: 'estimate', submittedAt: new Date().toISOString() });
+        window.localStorage.setItem('plumber_leads', JSON.stringify(leads));
+      } catch {
+        // Local storage can be unavailable in private browsing; the success state still works.
+      }
+      setStatus('success');
+      setForm({ name: '', phone: '', service: '', details: '', address: '' });
+    }, 900);
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="fp-bform__success">
+        <div className="fp-bform__success-icon"><Check size={20} /></div>
+        <p className="fp-bform__success-title">Estimate request saved on this device</p>
+        <p className="fp-bform__success-text">No request was actually sent — call us now for an upfront price.</p>
+        <button type="button" className="fp-bform__alt" onClick={() => setStatus('idle')}>Request another</button>
+      </div>
+    );
+  }
+
   return (
     <form className="fp-bform__form" onSubmit={submit}>
       <div className="fp-bform__field">
         <User size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Full name" value={form.name} onChange={e => set('name', e.target.value)} required />
+        <input className="fp-bform__input" name="name" placeholder="Full name" value={form.name} onChange={e => set('name', e.target.value)} required />
       </div>
       <div className="fp-bform__field">
         <Phone size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Phone number" type="tel" value={form.phone} onChange={e => set('phone', e.target.value)} required />
+        <input className="fp-bform__input" name="phone" placeholder="Phone number" type="tel" value={form.phone} onChange={e => set('phone', e.target.value)} required />
       </div>
       <div className="fp-bform__field">
         <Wrench size={16} className="fp-bform__field-icon" />
-        <select className="fp-bform__select" value={form.service} onChange={e => set('service', e.target.value)} required>
+        <select className="fp-bform__select" name="service" value={form.service} onChange={e => set('service', e.target.value)} required>
           <option value="">Select service type</option>
           {services.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
@@ -80,14 +138,14 @@ function EstimateForm() {
       </div>
       <div className="fp-bform__field">
         <MapPin size={16} className="fp-bform__field-icon" />
-        <input className="fp-bform__input" placeholder="Address or zip code" value={form.address} onChange={e => set('address', e.target.value)} required />
+        <input className="fp-bform__input" name="address" placeholder="Address or zip code" value={form.address} onChange={e => set('address', e.target.value)} required />
       </div>
       <div className="fp-bform__field">
         <FileText size={16} className="fp-bform__field-icon fp-bform__field-icon--top" />
-        <textarea className="fp-bform__textarea" style={{ paddingLeft: '2.5rem' }} placeholder="Describe the issue (optional)" rows={3} value={form.details} onChange={e => set('details', e.target.value)} />
+        <textarea className="fp-bform__textarea" name="details" style={{ paddingLeft: '2.5rem' }} placeholder="Describe the issue (optional)" rows={3} value={form.details} onChange={e => set('details', e.target.value)} />
       </div>
-      <button type="submit" className="fp-bform__submit">
-        <span>Get Free Estimate</span><ArrowRight size={16} />
+      <button type="submit" className="fp-bform__submit" disabled={status === 'submitting'}>
+        <span>{status === 'submitting' ? 'Sending…' : 'Get Free Estimate'}</span><ArrowRight size={16} />
       </button>
       <div className="fp-bform__divider">
         <span className="fp-bform__divider-line" />

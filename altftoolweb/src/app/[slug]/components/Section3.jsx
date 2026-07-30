@@ -118,6 +118,7 @@ export function Section3({ title, tagline, brands = [] }) {
               name={brand.title}
               percentage={brand.cashback ?? brand.discount}
               prefix={brand.cashback ? "" : "Up to"}
+              href={brand.redirect || "#"}
             />
           ))}
         </div>
@@ -132,6 +133,7 @@ export function Section3({ title, tagline, brands = [] }) {
             name={brand.title}
             percentage={brand.cashback ?? brand.discount}
             prefix={brand.cashback ? "" : "Up to"}
+            href={brand.redirect || "#"}
           />
         ))}
       </div>

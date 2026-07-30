@@ -3,6 +3,38 @@ import Link from "next/link";
 import { CalendarDays, ChevronRight, Clock3, Home, RefreshCw, UserRound } from "lucide-react";
 import { blogTaxonomySlug, getBlogFreshness } from "../../data";
 
+const BLOG_IMAGE_FALLBACK = "/assets/og-default.png";
+
+function isFirebaseBlogImage(src) {
+  const value = String(src || "").trim();
+  if (!value || value.startsWith("/")) return false;
+
+  try {
+    const url = new URL(value);
+    return (
+      url.hostname === "firebasestorage.googleapis.com" &&
+      /\/o\/blogs(?:%2f|%252f|\/)/i.test(url.pathname)
+    );
+  } catch {
+    return false;
+  }
+}
+
+function getBlogImageSrc(src) {
+  const value = String(src || "").trim();
+  if (!value) return BLOG_IMAGE_FALLBACK;
+  if (value.startsWith("/")) return value;
+
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol)
+      ? value
+      : BLOG_IMAGE_FALLBACK;
+  } catch {
+    return BLOG_IMAGE_FALLBACK;
+  }
+}
+
 function formatDate(date) {
   if (!date) return "Recently updated";
 
@@ -23,9 +55,10 @@ export default function BlogHeader({ blog }) {
     <section className="mb-6 w-full sm:mb-10">
       <div className="relative isolate flex min-h-[380px] overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-[var(--anslation-ds-shadow-md)] sm:min-h-[480px] sm:rounded-3xl lg:min-h-[520px]">
         <Image
-          src={blog.image}
+          src={getBlogImageSrc(blog.image)}
           alt={blog.imageAlt || blog.heading}
           fill
+          unoptimized={isFirebaseBlogImage(blog.image)}
           sizes="(max-width: 1280px) 100vw, 1280px"
           className="object-cover"
           loading="eager"

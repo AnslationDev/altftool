@@ -54,7 +54,7 @@ export default function PromptCard({ prompt, onOpen }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
-          alt=""
+          alt={`${title} — ${description}`}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />

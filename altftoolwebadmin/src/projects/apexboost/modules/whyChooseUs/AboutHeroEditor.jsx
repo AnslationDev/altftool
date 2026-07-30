@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeAboutHero, saveAboutHero } from "../service/apexboost.service";
 
 export default function AboutHeroEditor() {
   const [form, setForm] = useState({
@@ -16,36 +17,25 @@ export default function AboutHeroEditor() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHero = async () => {
-      try {
-        const res = await fetch('/api/apexboost/data?section=aboutHero');
-        const json = await res.json();
-        if (json.success && json.data) {
-          setForm(json.data);
-        }
-      } catch (err) {
-        console.error("Failed to load about hero", err);
-      } finally {
+    const unsubscribe = subscribeAboutHero(
+      (data) => {
+        setForm(data);
         setIsLoading(false);
-      }
-    };
-    fetchHero();
+      },
+      (err) => {
+        console.error("Failed to load about hero", err);
+        setIsLoading(false);
+      },
+    );
+    return unsubscribe;
   }, []);
 
   const handleSave = async () => {
     try {
-      const res = await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'aboutHero', data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "About Hero saved successfully!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save About Hero." });
-      }
+      await saveAboutHero(form);
+      emitAlert({ type: "success", title: "Success", message: "About Hero saved successfully!" });
     } catch (err) {
-      emitAlert({ type: "error", title: "Error", message: "Error saving About Hero." });
+      emitAlert({ type: "error", title: "Error", message: "Failed to save About Hero." });
     }
   };
 

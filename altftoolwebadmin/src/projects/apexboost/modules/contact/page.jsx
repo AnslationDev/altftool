@@ -3,39 +3,32 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Trash2, Save, Mail, Phone, MapPin, Clock } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeContactConfig, saveContactConfig } from "../service/apexboost.service";
 
 export default function ContactPage() {
   const [form, setForm] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/apexboost/data?section=contactConfig')
-      .then(res => res.json())
-      .then(json => {
-        if (json.success && json.data) {
-          setForm(json.data);
-        }
+    const unsubscribe = subscribeContactConfig(
+      (data) => {
+        setForm(data);
         setIsLoading(false);
-      })
-      .catch(err => {
+      },
+      (err) => {
         console.error(err);
         setIsLoading(false);
-      });
+      },
+    );
+    return unsubscribe;
   }, []);
 
   const handleSave = async () => {
     try {
-      const res = await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'contactConfig', data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Saved", message: "Contact section updated successfully!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save updates." });
-      }
+      await saveContactConfig(form);
+      emitAlert({ type: "success", title: "Saved", message: "Contact section updated successfully!" });
     } catch (err) {
+      console.error(err);
       emitAlert({ type: "error", title: "Error", message: "Error saving updates." });
     }
   };

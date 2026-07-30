@@ -39,6 +39,10 @@ export default function BackgroundEngine({ currentTheme, themes }) {
       size: 1 + Math.random() * 1.5,
     }));
 
+    let radarRings = Array.from({ length: 4 }, (_, i) => ({
+      radius: i * 50,
+    }));
+
     const draw = () => {
       ctx.fillStyle = `rgba(0, 0, 0, ${config.canvasAlpha})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -101,6 +105,30 @@ export default function BackgroundEngine({ currentTheme, themes }) {
         if (waveTracker > canvas.height) waveTracker = 0;
         ctx.fillStyle = `${config.primary}08`;
         ctx.fillRect(0, waveTracker, canvas.width, 2);
+      }
+      // ENGINE D: SHIELD RADAR RECON CIRCLES
+      else if (config.bgEngine === "radar-circles") {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const maxRadius = Math.min(canvas.width, canvas.height) * 0.45;
+
+        ctx.lineWidth = 1;
+        radarRings.forEach((ring) => {
+          ring.radius += 1;
+          if (ring.radius > maxRadius) ring.radius = 0;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, ring.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `${config.primary}15`;
+          ctx.stroke();
+        });
+
+        waveTracker += 1.2;
+        const rad = (waveTracker * Math.PI) / 180;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + Math.cos(rad) * maxRadius, centerY + Math.sin(rad) * maxRadius);
+        ctx.strokeStyle = `${config.primary}30`;
+        ctx.stroke();
       }
 
       animId = requestAnimationFrame(draw);

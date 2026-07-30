@@ -519,7 +519,10 @@ export default function AirFlowMastersPage() {
             </nav>
           </div>
           <div className="airflow-fineprint">
-            <span>&copy; 2026 AirFlow Masters. Independent service provider listing.</span>
+            <span>
+              &copy; 2026 AirFlow Masters. Independent service provider listing. AirFlow Masters
+              is a fictional brand shown for directory demonstration purposes.
+            </span>
             <span>Licensed &amp; insured &middot; HVAC License #HM-20419</span>
           </div>
         </div>

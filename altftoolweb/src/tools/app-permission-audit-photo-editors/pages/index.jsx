@@ -100,7 +100,7 @@ export default function ToolHome() {
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
       <header className="mb-6">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
-          <Image className="h-4 w-4" aria-hidden="true" />
+          <Image className="h-4 w-4" aria-hidden="true" alt="" />
           Permission audit
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Photo Editor App Permission Audit</h1>

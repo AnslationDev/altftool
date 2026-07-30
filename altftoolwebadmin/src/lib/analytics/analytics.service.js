@@ -15,15 +15,11 @@ import {
   uniqueBy,
 } from "./analytics.utils";
 
-function docRefFromPath(path) {
-  let ref = adminDb;
-  path.forEach((segment, index) => {
-    ref = index % 2 === 0 ? ref.collection(segment) : ref.doc(segment);
-  });
-  return ref;
-}
-
-function collectionRefFromPath(path) {
+// Walks a Firestore path, alternating collection()/doc() calls by segment
+// parity. Used both to resolve a single document ref (odd-length path) and a
+// collection ref (even-length path) — the parity of the path determines
+// which kind of ref comes out, so one implementation covers both.
+function refFromPath(path) {
   let ref = adminDb;
   path.forEach((segment, index) => {
     ref = index % 2 === 0 ? ref.collection(segment) : ref.doc(segment);
@@ -165,7 +161,7 @@ async function analyzeCollectionSource({
   moduleCoverage,
   source,
 }) {
-  const ref = collectionRefFromPath(source.collectionPath);
+  const ref = refFromPath(source.collectionPath);
   // These six reads are independent — run them concurrently instead of awaiting
   // one after another. Per source this turns 6 sequential Firestore round-trips
   // into a single parallel batch (the dominant cost of the analytics dashboard).
@@ -250,7 +246,7 @@ async function analyzeDocArraySource({
   source,
 }) {
   try {
-    const snap = await docRefFromPath(source.docPath).get();
+    const snap = await refFromPath(source.docPath).get();
     const data = snap.exists ? snap.data() : null;
     const items = Array.isArray(data?.[source.arrayField]) ? data[source.arrayField] : [];
     const count = items.length;

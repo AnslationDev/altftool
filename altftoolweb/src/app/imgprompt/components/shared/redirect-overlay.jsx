@@ -4,18 +4,20 @@ import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useRedirect } from "../../store/redirect";
+import { useRedirectConfig } from "../../store/redirect-config";
 import { REDIRECT_DELAY_SECONDS } from "../../lib/site";
 import { Button } from "../ui/button";
 
 /**
  * Countdown shown while useCopyPrompt waits out the same
- * REDIRECT_DELAY_SECONDS before navigating this tab to OpenArt. This
- * overlay is just the visual countdown — the actual navigation timer
- * lives in useCopyPrompt and the two are kept in sync via the shared
- * REDIRECT_DELAY_SECONDS constant.
+ * REDIRECT_DELAY_SECONDS before navigating this tab to the configured
+ * destination. This overlay is just the visual countdown — the actual
+ * navigation timer lives in useCopyPrompt and the two are kept in sync via
+ * the shared REDIRECT_DELAY_SECONDS constant.
  */
 export function RedirectOverlay() {
   const { active, label, stop } = useRedirect();
+  const destinationLabel = useRedirectConfig((s) => s.redirectLabel);
   const [seconds, setSeconds] = React.useState(REDIRECT_DELAY_SECONDS);
 
   React.useEffect(() => {
@@ -89,9 +91,9 @@ export function RedirectOverlay() {
               </span>
             </div>
 
-            <h3 className="font-display text-xl font-semibold">Prompt copied — redirecting to OpenArt</h3>
+            <h3 className="font-display text-xl font-semibold">Prompt copied — redirecting to {destinationLabel}</h3>
             <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground">
-              Paste <span className="text-foreground">{label}</span> into OpenArt and hit generate.
+              Paste <span className="text-foreground">{label}</span> into {destinationLabel} and hit generate.
             </p>
 
             <div className="mt-6 flex items-center justify-center gap-3">

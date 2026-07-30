@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, MessageSquare } from "lucide-react";
 import SectionHeadingEditor from "../../../../components/admin/SectionHeadingEditor";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeFaqItems, createFaqItem, updateFaqItem, deleteFaqItem } from "../service/apexboost.service";
 
 export default function FaqPage() {
   const [faqList, setFaqList] = useState([]);
@@ -11,13 +12,13 @@ export default function FaqPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ q: "", a: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=faq');
-    const json = await res.json();
-    if (json.success) setFaqList(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeFaqItems(
+      (data) => setFaqList(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load FAQ." }),
+    );
+    return unsubscribe;
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -32,37 +33,27 @@ export default function FaqPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = faqList.map(item => item === editingItem ? { ...editingItem, ...form } : item);
-    } else {
-      updated = [...faqList, { ...form }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'faq', data: updated }),
-    });
-    if (res.ok) {
-      setFaqList(updated);
+    try {
+      if (editingItem) {
+        await updateFaqItem(editingItem.id, { ...editingItem, ...form });
+      } else {
+        const nextOrder = faqList.length
+          ? Math.max(...faqList.map((item) => Number(item.order) || 0)) + 1
+          : 0;
+        await createFaqItem({ ...form, order: nextOrder });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "FAQ saved successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save FAQ." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = faqList.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'faq', data: updated }),
-    });
-    if (res.ok) {
-      setFaqList(updated);
+    try {
+      await deleteFaqItem(item.id);
       emitAlert({ type: "success", title: "Success", message: "FAQ deleted successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete FAQ." });
     }
   };
@@ -84,8 +75,8 @@ export default function FaqPage() {
 
       <div className="bg-white rounded-xl shadow p-6">
         <div className="space-y-4">
-          {faqList.map((item, index) => (
-            <div key={index} className="border rounded-lg p-4 hover:shadow-md transition">
+          {faqList.map((item) => (
+            <div key={item.id} className="border rounded-lg p-4 hover:shadow-md transition">
               <div className="flex items-start gap-3">
                 <MessageSquare size={20} className="text-(--primary) mt-1" />
                 <div className="flex-1">

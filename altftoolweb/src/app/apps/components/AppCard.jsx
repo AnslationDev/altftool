@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import DownloadButton from "./DownloadButton";
 import { AppIconSvg } from "./AppVisualAssets";
 
@@ -23,11 +23,7 @@ export default function AppCard({ app, compact = false, descriptionFullWidth = f
         </p>
       ) : null}
 
-      <div className={`mt-auto flex items-center justify-between gap-3 text-sm ${compact ? "pt-6" : "pt-4"}`}>
-        <div className="flex items-center gap-1 font-bold text-[var(--foreground)]">
-          {app.rating}
-          <Star size={14} className="fill-amber-400 text-amber-400" aria-hidden="true" />
-        </div>
+      <div className={`mt-auto flex items-center justify-end gap-3 text-sm ${compact ? "pt-6" : "pt-4"}`}>
         <span className="text-xs font-semibold text-[var(--muted-foreground)]">{app.apkSize}</span>
       </div>
 
@@ -39,7 +35,14 @@ export default function AppCard({ app, compact = false, descriptionFullWidth = f
           Details
           <ArrowRight size={15} aria-hidden="true" />
         </Link>
-        {!compact ? <DownloadButton href={app.apkUrl} label="Download" className="min-h-11 px-4 py-2 text-sm" /> : null}
+        {!compact ? (
+          <DownloadButton
+            href={app.apkUrl}
+            label="Download"
+            className="min-h-11 px-4 py-2 text-sm"
+            comingSoon={app.apkSize === "Coming Soon"}
+          />
+        ) : null}
       </div>
     </article>
   );

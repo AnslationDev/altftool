@@ -8,6 +8,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
+import { formatAuthorName } from "@/app/wattpad/utils/formatAuthorName";
 import { notFound } from "next/navigation";
 
 import Image from "next/image";
@@ -112,7 +113,7 @@ export default async function BookDetailPage({ params }) {
                   </div>
                   <div>
                     <p className="font-medium text-base text-(--foreground)">
-                      {book.authorId}
+                      {formatAuthorName(book.authorId)}
                     </p>
                   </div>
                 </div>
@@ -128,17 +129,28 @@ export default async function BookDetailPage({ params }) {
                   </div>
                   <div className="flex items-center gap-1.5">
                     <List size={18} />
-                    <span>{book.stats.totalChapters} parts</span>
+                    <span>{bookChapters.length} parts</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 mt-8">
-                  <Link
-                    href={`/wattpad/read/${book.slug}/1`}
-                    className="flex h-14 flex-1 items-center justify-center rounded-full bg-(--primary) text-base font-semibold text-primary-foreground shadow-md transition hover:opacity-90 hover:shadow-lg md:w-[400px] md:flex-none"
-                  >
-                    Start reading
-                  </Link>
+                  {bookChapters.length > 0 ? (
+                    <Link
+                      href={`/wattpad/read/${book.slug}/1`}
+                      className="flex h-14 flex-1 items-center justify-center rounded-full bg-(--primary) text-base font-semibold text-primary-foreground shadow-md transition hover:opacity-90 hover:shadow-lg md:w-[400px] md:flex-none"
+                    >
+                      Start reading
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled
+                      title="Chapters are coming soon"
+                      className="flex h-14 flex-1 cursor-not-allowed items-center justify-center rounded-full bg-(--muted) text-base font-semibold text-(--muted-foreground) md:w-[400px] md:flex-none"
+                    >
+                      Chapters coming soon
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -170,7 +182,7 @@ export default async function BookDetailPage({ params }) {
                           <h3 className="wp-related-title">
                             <span className="wp-related-number">{index + 1}.</span> {item.title}
                           </h3>
-                          <p className="wp-related-author">{item.authorId}</p>
+                          <p className="wp-related-author">{formatAuthorName(item.authorId)}</p>
                           <div className="wp-related-stats">
                             <span className="flex items-center gap-1">
                               <Eye size={16} />{item.stats.views}

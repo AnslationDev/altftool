@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import ManagedImage from "@/components/ui/ManagedImage";
 
 
@@ -8,55 +9,55 @@ const slides = [
     title: "Tech & Apps",
     subtitle: "Explore trending apps & cool tech!",
     image: "https://images.pexels.com/photos/6078128/pexels-photo-6078128.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "App on Hand",
     subtitle: "Powerful tools in your pocket",
     image: "https://images.pexels.com/photos/5082578/pexels-photo-5082578.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Workspace Tech",
     subtitle: "Design, edit, create—all here",
     image: "https://images.pexels.com/photos/5077043/pexels-photo-5077043.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Vibrant Tech",
     subtitle: "Modern tech vibes",
     image: "https://images.pexels.com/photos/6078129/pexels-photo-6078129.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Social Media",
     subtitle: "Connect with the world!",
     image: "https://images.pexels.com/photos/735911/pexels-photo-735911.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "App Focus",
     subtitle: "Explore powerful features",
     image: "https://images.pexels.com/photos/5082579/pexels-photo-5082579.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Mobile Lifestyle",
     subtitle: "Your favourite tools & fun",
     image: "https://images.pexels.com/photos/2740957/pexels-photo-2740957.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Tech Shot",
     subtitle: "Sleek modern devices",
     image: "https://images.pexels.com/photos/6078129/pexels-photo-6078129.jpeg",
-    link: "#",
+    link: "/apps",
   },
   {
     title: "Desk Tech",
     subtitle: "Work & play combined",
     image: "https://images.pexels.com/photos/5077042/pexels-photo-5077042.jpeg",
-    link: "#",
+    link: "/apps",
   },
 ];
 
@@ -90,12 +91,12 @@ export default function HeroSlider() {
             <p className="subheading text-white">
               {slide.subtitle}
             </p>
-            <a
+            <Link
               href={slide.link}
               className="mt-4 inline-block bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium subheading transition"
             >
               Explore Now
-            </a>
+            </Link>
           </div>
         </div>
       ))}

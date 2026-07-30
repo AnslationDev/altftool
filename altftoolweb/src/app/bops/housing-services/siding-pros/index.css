@@ -16,22 +16,31 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  body {
+  .siding-pros-page {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-    color: #111827;
-    background: #ffffff;
   }
-  h1, h2, h3, h4, h5, h6 {
+  .siding-pros-page :is(h1, h2, h3, h4, h5, h6) {
     font-family: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
     letter-spacing: -0.02em;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #0D3B66; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #1E5AA8; }
+/* Scoped to this page's root on purpose.
+ *
+ * Next keeps a route's stylesheet attached for the life of the document, so a
+ * bare `body { background: … }` here did not stop applying when the visitor
+ * navigated away — it pinned the whole site to this page's light palette until
+ * a hard reload, which is what "the design breaks after changing route" looked
+ * like. The same went for ::-webkit-scrollbar and the heading rules, which
+ * restyled every scroll container and heading on every later page.
+ *
+ * The html/body colour rules are simply gone: this page's own root element
+ * already sets its background and text colour, so they were redundant as well
+ * as leaky. */
+.siding-pros-page ::-webkit-scrollbar { width: 10px; height: 10px; }
+.siding-pros-page ::-webkit-scrollbar-track { background: #f1f5f9; }
+.siding-pros-page ::-webkit-scrollbar-thumb { background: #0D3B66; border-radius: 8px; }
+.siding-pros-page ::-webkit-scrollbar-thumb:hover { background: #1E5AA8; }
 
 /* Gradients */
 .bg-gradient-hero {

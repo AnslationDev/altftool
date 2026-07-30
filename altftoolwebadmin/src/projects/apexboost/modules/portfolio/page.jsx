@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Folder } from "lucide-react";
 import SectionHeadingEditor from "../../../../components/admin/SectionHeadingEditor";
 import { emitAlert } from "@/lib/alertBus";
+import { createPortfolioItem, deletePortfolioItem, subscribePortfolioItems, updatePortfolioItem } from "../service/apexboost.service";
 
 export default function PortfolioPage() {
   const [portfolioItems, setPortfolioItems] = useState([]);
@@ -11,13 +12,13 @@ export default function PortfolioPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ title: "", client: "", category: "Digital Marketing", result: "", metric: "", image: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=portfolio');
-    const json = await res.json();
-    if (json.success) setPortfolioItems(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribePortfolioItems(
+      (data) => setPortfolioItems(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load portfolio items." }),
+    );
+    return unsubscribe;
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -32,37 +33,27 @@ export default function PortfolioPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = portfolioItems.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...portfolioItems, { ...form, id: Date.now() }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'portfolio', data: updated }),
-    });
-    if (res.ok) {
-      setPortfolioItems(updated);
+    const nextOrder = portfolioItems.length
+      ? Math.max(...portfolioItems.map((item) => Number(item.order) || 0)) + 1
+      : 1;
+    try {
+      if (editingItem) {
+        await updatePortfolioItem(editingItem.id, { ...form, order: editingItem.order ?? 0 });
+      } else {
+        await createPortfolioItem({ ...form, order: nextOrder });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Portfolio item saved successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save portfolio item." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = portfolioItems.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'portfolio', data: updated }),
-    });
-    if (res.ok) {
-      setPortfolioItems(updated);
+    try {
+      await deletePortfolioItem(item.id);
       emitAlert({ type: "success", title: "Success", message: "Portfolio item deleted successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete portfolio item." });
     }
   };
@@ -84,8 +75,8 @@ export default function PortfolioPage() {
 
       <div className="bg-white rounded-xl shadow p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {portfolioItems.map((item, index) => (
-            <div key={index} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
+          {portfolioItems.map((item) => (
+            <div key={item.id} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
               <img src={item.image} alt={item.title} className="w-full h-48 object-cover" />
               <div className="p-4">
                 <h3 className="font-semibold text-lg mb-2">{item.title}</h3>

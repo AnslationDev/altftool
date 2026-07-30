@@ -50,10 +50,11 @@ export default function HnQuoteForm({ services = [], source = "hub-cta" }) {
       <div className="hn-quoteform hn-quoteform--done" role="status">
         <CheckCircle2 size={26} strokeWidth={2.2} aria-hidden="true" />
         <div>
-          <p className="hn-quoteform-done-title">Request received!</p>
+          <p className="hn-quoteform-done-title">Saved on this device</p>
           <p className="hn-quoteform-done-text">
-            We&rsquo;ll email you free, no-obligation {picked.toLowerCase()} quotes
-            from licensed pros near you.
+            We&rsquo;ve noted your interest in {picked.toLowerCase()} quotes
+            locally — live quote matching isn&rsquo;t connected yet, so no
+            request has actually been sent to any pros.
           </p>
         </div>
       </div>

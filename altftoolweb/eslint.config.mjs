@@ -37,6 +37,10 @@ const eslintConfig = defineConfig([
     "**/__MACOSX/**",
     "**/._*",
     "next-env.d.ts",
+    // Leftover Claude Code agent worktrees (gitignored, but not excluded by
+    // default) — without this, lint recurses into whatever sibling repo copy
+    // happens to be checked out inside them.
+    ".claude/**",
   ]),
 ]);
 

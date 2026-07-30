@@ -51,21 +51,23 @@ function statusTone(status) {
     return {
       label: "Working",
       icon: CheckCircle2,
-      className: "border-success bg-success-soft text-success",
+      // Badge copy is normal-size text: --success on its own soft background
+      // fails AA, so the label uses the text-safe foreground token.
+      className: "border-success bg-success-soft text-[var(--foreground)]",
     };
   }
   if (status === "api-required") {
     return {
       label: "API required",
       icon: CloudCog,
-      className: "border-info bg-info-soft text-info",
+      className: "border-info bg-info-soft text-[var(--foreground)]",
     };
   }
   if (status === "partial") {
     return {
       label: "Partial",
       icon: AlertTriangle,
-      className: "border-warning bg-warning-soft text-warning",
+      className: "border-warning bg-warning-soft text-[var(--foreground)]",
     };
   }
   return {
@@ -95,7 +97,9 @@ function ApiStatusBadge({ status }) {
       ? {
           label: "Configured",
           icon: ShieldCheck,
-          className: "border-success bg-success-soft text-success",
+          // Badge copy is normal-size text: --success on its own soft
+          // background fails AA, so the label uses the foreground token.
+          className: "border-success bg-success-soft text-[var(--foreground)]",
         }
       : status === "missing-config"
         ? {
@@ -106,7 +110,7 @@ function ApiStatusBadge({ status }) {
         : {
             label: "Runtime check",
             icon: RadioTower,
-            className: "border-info bg-info-soft text-info",
+            className: "border-info bg-info-soft text-[var(--foreground)]",
           };
   const Icon = config.icon;
 
@@ -251,7 +255,7 @@ export default function ToolReadinessExplorer() {
                   key={entry.name}
                   className={`rounded-md border px-2 py-1 font-mono text-[11px] ${
                     entry.configured
-                      ? "border-success bg-success-soft text-success"
+                      ? "border-success bg-success-soft text-[var(--foreground)]"
                       : "border-danger bg-danger-soft text-[var(--danger-text)]"
                   }`}
                 >

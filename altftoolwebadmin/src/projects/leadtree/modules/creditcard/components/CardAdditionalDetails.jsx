@@ -205,4 +205,6 @@ const CardAdditionalDetails = memo(
     }
 );
 
+CardAdditionalDetails.displayName = "CardAdditionalDetails";
+
 export default CardAdditionalDetails;

@@ -129,7 +129,7 @@ export default function ToolHome() {
         <header className="mb-6 text-center">
           <div className="mx-auto mb-4 flex max-w-5xl flex-wrap items-center justify-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-bold text-blue-600">
-              <Image className="h-3.5 w-3.5" />
+              <Image className="h-3.5 w-3.5" alt="" />
               Image Editor
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1 text-xs font-bold text-[var(--foreground)]">

@@ -72,8 +72,11 @@ export async function POST(req) {
 
     const data = result.data;
     if (!result.ok) {
+      // Never forward data?.error?.message: OpenAI's invalid_api_key error
+      // echoes back a partial, masked form of the offending key.
+      console.error("OpenAI domain generation request failed", result.status, data?.error);
       return NextResponse.json(
-        { error: data?.error?.message || "OpenAI request failed.", suggestions: [] },
+        { error: "Domain generation is temporarily unavailable.", suggestions: [] },
         { status: result.status }
       );
     }

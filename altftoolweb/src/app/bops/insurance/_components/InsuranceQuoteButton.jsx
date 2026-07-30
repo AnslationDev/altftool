@@ -6,6 +6,16 @@ import { ArrowUpRight, Phone } from "lucide-react";
 // identical.
 export const QUOTE_LINK_REL = "sponsored noopener noreferrer";
 
+const PLACEHOLDER_QUOTE_HOST = "example.com";
+
+function isPlaceholderQuoteUrl(href) {
+  try {
+    return new URL(href, "https://placeholder.invalid").hostname === PLACEHOLDER_QUOTE_HOST;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * The single conversion element for the whole Insurance module.
  *
@@ -33,6 +43,19 @@ export default function InsuranceQuoteButton({
         <Phone size={15} strokeWidth={2.4} aria-hidden="true" />
         {label}
       </a>
+    );
+  }
+
+  if (isPlaceholderQuoteUrl(href)) {
+    return (
+      <button
+        type="button"
+        className={`${className} ${size}`.trim()}
+        disabled
+        title="Coming soon"
+      >
+        {label}
+      </button>
     );
   }
 

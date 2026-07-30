@@ -442,7 +442,7 @@ export default function MainComponent() {
                 </>
               ) : (
                 <>
-                  <Image className="inline h-4 w-4 mr-2" />
+                  <Image className="inline h-4 w-4 mr-2" alt="" />
                   Convert {pendingCount > 0 ? `(${pendingCount})` : ""}
                 </>
               )}

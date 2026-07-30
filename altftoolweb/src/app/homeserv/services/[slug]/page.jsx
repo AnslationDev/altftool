@@ -20,7 +20,10 @@ export async function generateMetadata({ params }) {
   if (!service) {
     return createPageMetadata({
       title: "Service Not Found | QuoteNest Pros",
+      description:
+        "This QuoteNest Pros home service does not exist. Browse the services directory to request a quote from a local pro.",
       path: `/homeserv/services/${slug}`,
+      noindex: true,
     });
   }
 

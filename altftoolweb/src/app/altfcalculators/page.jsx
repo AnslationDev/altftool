@@ -3,9 +3,9 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Free Online Calculators — Finance, Health, Math & More",
+    title: "Free Online Calculators — Finance, Health & Math",
     description:
-      "A clean, fast and fully private suite of online calculators: loan/EMI, compound interest, BMI, percentage, unit conversion, date & time and more. Runs entirely in your browser.",
+      "A fast, fully private suite of 100+ free online calculators for loan and EMI, compound interest, BMI, percentage, unit conversion, date and time, and more.",
     path: "/altfcalculators",
   });
 }

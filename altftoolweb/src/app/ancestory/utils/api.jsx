@@ -3,10 +3,6 @@ const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
 const globalCache = new Map();
 
-function hashOf(text) {
-  return Array.from((text || "").toLowerCase()).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
-}
-
 function cleanName(input) {
   return (input || "").toString().trim().replace(/\s+/g, " ");
 }
@@ -433,39 +429,7 @@ async function fetchNameData(name) {
 
   } catch (error) {
     console.log('Complete fetch failed:', error.message);
-
-    // IF LIVE FETCH FAILED OR WAS RATE LIMITED (429), GENERATE PLAUSIBLE FALLBACK DATA
-    // This ensures the MAP always shows data even if external APIs are down
-    const hash = hashOf(name);
-    const fallbackCountries = [
-      { country_id: "IN", probability: 0.4 + (hash % 20) / 100 },
-      { country_id: "US", probability: 0.2 + (hash % 10) / 100 },
-      { country_id: "GB", probability: 0.1 + (hash % 5) / 100 }
-    ];
-
-    const fallback = {
-      nationality: { name, country: fallbackCountries },
-      gender: { name, gender: hash % 2 === 0 ? "male" : "female", probability: 0.8, count: 100 },
-      age: { name, age: 30 + (hash % 40), count: 50 },
-      nameInfo: {
-        name: name,
-        meaning: "Data currently being synchronized",
-        origin: "Global Distribution",
-        etymology: null,
-        description: "We are currently processing high volumes of requests. Showing estimated historical distribution data.",
-        variations: [],
-        sources: ["historical_records"],
-        isLiveData: false
-      },
-      quality: {
-        confidence: "medium",
-        sources: ["historical_patterns"],
-        isLiveData: false
-      }
-    };
-
-    globalCache.set(key, { ts: Date.now(), value: fallback });
-    return fallback;
+    return null;
   }
 }
 

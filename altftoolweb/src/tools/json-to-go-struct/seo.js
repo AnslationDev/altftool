@@ -1,0 +1,34 @@
+const seo = {
+  intro:
+    "The JSON to Go Struct Generator turns a pasted JSON payload into compilable Go type declarations, inferring string, bool, int, float64 and interface{} from the actual values and emitting a `json:\"...\"` tag on every field. Nested objects become their own named structs, arrays of objects are merged so a field that appears in only some elements still gets declared, and you choose whether nullable fields render as pointers (*string) or as interface{}. It is built for Go developers wiring up a client against an API they only have sample responses for.",
+  useCases: [
+    "You captured a JSON response from a third-party API and need matching Go structs to unmarshal it, without hand-typing forty fields and their json tags.",
+    "A webhook payload has objects nested four levels deep and you want each level split into its own named struct instead of one giant map[string]interface{}.",
+    "Your sample array has records where some keys are missing or null, and you need to see which fields should be pointers before you write the decoder.",
+  ],
+  benefits: [
+    ["Merges every array element", "Fields are collected across all objects in a JSON array, so optional keys present in only one record still appear in the struct."],
+    ["Idiomatic Go naming", "Keys are converted to exported PascalCase and known initialisms like ID, URL, API, UUID and HTTP stay fully capitalised."],
+    ["Nullable handling you control", "Switch between pointer types for fields that ever appear as null and a plain interface{} fallback, and see the difference immediately."],
+  ],
+  faqs: [
+    [
+      "How does it decide between int and float64?",
+      "A JSON number becomes int only when it is a safe integer with no fractional part; anything else becomes float64. If the same key is an integer in one record and a decimal in another, the two are merged to float64 rather than left ambiguous.",
+    ],
+    [
+      "What happens to a field that is null in my sample?",
+      "With the pointer setting the field is emitted as a pointer type such as *string so you can tell null apart from the zero value; with the interface setting it becomes interface{}. Slices and interface{} are never given a pointer, since both already carry a nil state.",
+    ],
+    [
+      "Can I generate structs from a JSON array at the top level?",
+      "Yes, as long as the array contains objects. The generator builds one root struct from the union of all object elements; an array of plain strings or numbers has no struct to describe and is rejected with an error.",
+    ],
+    [
+      "What if a JSON key collides with a Go keyword?",
+      "It is renamed with a Field suffix, so a key named type becomes TypeField while the tag still reads `json:\"type\"`. Keys starting with a digit get a prefix for the same reason, since Go identifiers cannot begin with a number.",
+    ],
+  ],
+};
+
+export default seo;

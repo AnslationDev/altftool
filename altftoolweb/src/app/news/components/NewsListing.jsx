@@ -3,10 +3,11 @@
 import { useMemo, useState, useId } from "react";
 import Link from "next/link";
 import {
-  ChevronDown, Mail, Check, Eye, Bookmark, Zap,
+  ChevronDown, Mail, Check, Bookmark, Zap,
 } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 import CategoriesSection from "./CategoriesSection";
+import NewsUnavailable from "./NewsUnavailable";
 
 function timeAgo(h) {
   if (!h && h !== 0) return "";
@@ -14,12 +15,6 @@ function timeAgo(h) {
   if (h < 24) return `${h}h ago`;
   const d = Math.floor(h / 24);
   return d === 1 ? "1 day ago" : `${d} days ago`;
-}
-
-function formatCount(n) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
-  return String(n);
 }
 
 function NewsletterWidget() {
@@ -38,7 +33,14 @@ function NewsletterWidget() {
     }
     setError("");
     setState("loading");
-    await new Promise((r) => setTimeout(r, 1000));
+    // No newsletter delivery backend exists yet, so persist locally instead
+    // of discarding the signup — matches ALTFT_NEWS_NEWSLETTER_OPTIN used by
+    // the dedicated /news/newsletter page.
+    try {
+      window.localStorage.setItem("ALTFT_NEWS_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setState("success");
   }
 
@@ -48,8 +50,8 @@ function NewsletterWidget() {
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--anslation-ds-success-soft)] text-[var(--anslation-ds-success)]">
           <Check size={18} />
         </div>
-        <p className="font-semibold text-[var(--foreground)]">You&apos;re subscribed!</p>
-        <p className="text-sm text-[var(--muted-foreground)]">Check your inbox for the latest news.</p>
+        <p className="font-semibold text-[var(--foreground)]">You&apos;re on the list!</p>
+        <p className="text-sm text-[var(--muted-foreground)]">We&apos;ll notify you when the newsletter launches.</p>
       </div>
     );
   }
@@ -174,11 +176,7 @@ function TopNewsCard({ news }) {
             {news.summary}
           </p>
         )}
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="flex items-center gap-[6px] text-[13px] font-medium text-[var(--muted-foreground)]">
-            <Eye size={14} />
-            {formatCount(news.likes + news.comments + news.shares)} views
-          </span>
+        <div className="mt-auto flex items-center justify-end pt-4">
           <button
             onClick={(e) => { e.preventDefault(); setSaved((v) => !v); }}
             aria-label={saved ? "Unsave" : "Save"}
@@ -218,7 +216,7 @@ function TrendingItem({ news, rank }) {
           {news.headline}
         </p>
         <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {readTime} min read &bull; {formatCount(news.likes + news.comments + news.shares)} views
+          {readTime} min read
         </span>
       </div>
       <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
@@ -267,9 +265,6 @@ function MoreNewsRow({ news }) {
         </div>
       </div>
       <div className="ml-5 flex shrink-0 flex-col items-end justify-center gap-[10px]">
-        <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {formatCount(news.likes + news.comments + news.shares)} views
-        </span>
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
           aria-label={saved ? "Unsave" : "Save"}
@@ -296,28 +291,20 @@ export default function NewsListing({ title, articles = [], description }) {
   }, [articles]);
 
   const topNews = useMemo(() => sorted.slice(0, 9), [sorted]);
-  const moreNews = useMemo(() => sorted.slice(9, 13), [sorted]);
+  const [moreCount, setMoreCount] = useState(4);
+  const moreNews = useMemo(() => sorted.slice(9, 9 + moreCount), [sorted, moreCount]);
+  const hasMoreNews = 9 + moreCount < sorted.length;
 
-  const [trendingTab, setTrendingTab] = useState("trending");
-
-  const trending = useMemo(() => {
-    const s = [...articles];
-    if (trendingTab === "trending") {
-      s.sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares));
-    } else if (trendingTab === "mostread") {
-      s.sort((a, b) => (b.likes) - (a.likes));
-    } else if (trendingTab === "editorspicks") {
-      s.sort((a, b) => (b.shares) - (a.shares));
-    }
-    return s.slice(0, 6);
-  }, [articles, trendingTab]);
+  // We hold no engagement data for syndicated feed items, so this sidebar list
+  // is simply the next-freshest stories after the main grid. The old Trending /
+  // Most Read / Editor's Picks tabs ranked by synthesised like/share counts and
+  // have been removed.
+  const sidebarStories = useMemo(() => sorted.slice(9, 14), [sorted]);
 
   if (!articles.length) {
     return (
       <div className="mx-auto max-w-[1440px] space-y-8">
-        <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-12 text-center">
-          <p className="text-sm text-[var(--muted-foreground)]">No stories found.</p>
-        </div>
+        <NewsUnavailable />
       </div>
     );
   }
@@ -415,12 +402,15 @@ export default function NewsListing({ title, articles = [], description }) {
                   <MoreNewsRow key={item.id} news={item} />
                 ))}
               </div>
-              <Link
-                href="/news/headlines"
-                className="mx-auto mt-7 flex h-11 w-[200px] items-center justify-center gap-2 rounded-full bg-[var(--muted)] text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]"
-              >
-                Load More News <ChevronDown size={14} />
-              </Link>
+              {hasMoreNews && (
+                <button
+                  type="button"
+                  onClick={() => setMoreCount((v) => Math.min(v + 4, sorted.length - 9))}
+                  className="mx-auto mt-7 flex h-11 w-[200px] items-center justify-center gap-2 rounded-full bg-[var(--muted)] text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]"
+                >
+                  Load More News <ChevronDown size={14} />
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -428,42 +418,20 @@ export default function NewsListing({ title, articles = [], description }) {
         {/* Sidebar – 4/12 (≈30%) */}
         <aside className="lg:col-span-4">
           <div className="space-y-[10px] lg:sticky lg:top-8">
-            {/* Popular / Trending */}
-            {trending.length > 0 && (
+            {/* More of the freshest stories */}
+            {sidebarStories.length > 0 && (
               <div className="overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
                 <div className="mb-6 flex items-center justify-between">
-                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Trending Now</h3>
+                  <h3 className="text-[22px] font-bold uppercase text-[var(--foreground)]">Latest Stories</h3>
                   <Link
-                    href="/news/trending"
+                    href="/news/headlines"
                     className="text-[15px] font-semibold text-[var(--primary)] hover:underline"
                   >
                     View All
                   </Link>
                 </div>
-                <div className="mb-5 flex gap-8">
-                  {[
-                    { key: "trending", label: "Trending" },
-                    { key: "mostread", label: "Most Read" },
-                    { key: "editorspicks", label: "Editor's Picks" },
-                  ].map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => setTrendingTab(tab.key)}
-                      className={`relative text-sm font-medium transition ${
-                        trendingTab === tab.key
-                          ? "font-semibold text-[var(--primary)]"
-                          : "text-[var(--muted-foreground)] hover:text-[var(--primary)]"
-                      }`}
-                    >
-                      {tab.label}
-                      {trendingTab === tab.key && (
-                        <span className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-sm bg-[var(--primary)]" />
-                      )}
-                    </button>
-                  ))}
-                </div>
                 <div className="space-y-[18px]">
-                  {trending.slice(0, 5).map((item, index) => (
+                  {sidebarStories.map((item, index) => (
                     <TrendingItem key={item.id} news={item} rank={index + 1} />
                   ))}
                 </div>

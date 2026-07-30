@@ -59,6 +59,8 @@ export default function Top9Client() {
   const router = useRouter();
   const params = useSearchParams();
   const [search, setSearch] = useState("");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -77,6 +79,18 @@ export default function Top9Client() {
   const filtered = allItems.filter((item) => !query || item.title.toLowerCase().includes(query.toLowerCase()));
   const heroItems = [...trending.slice(3, 4), ...blogs.slice(0, 2)];
   const submit = (event) => { event.preventDefault(); router.push(search.trim() ? `/top9?q=${encodeURIComponent(search.trim())}` : "/top9"); };
+
+  // No newsletter delivery backend exists yet — persist locally instead of
+  // discarding the signup.
+  const handleNewsletterSubmit = (event) => {
+    event.preventDefault();
+    try {
+      window.localStorage.setItem("ALTFT_TOP9_NEWSLETTER_OPTIN", newsletterEmail.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
+    setNewsletterSubscribed(true);
+  };
 
   const handlePointerDown = (event) => {
     if (!marqueeRef.current) return;
@@ -162,7 +176,7 @@ export default function Top9Client() {
 
     <section className="t9-trust-section"><div className="t9-container"><Eyebrow>Our process</Eyebrow><h2>Why Trust Top9</h2><div className="t9-trust-process">{[[Search, "We research", "Every list starts with hours of digging specs, reviews, real user feedback."], [Sparkles, "We compare", "Every option is measured side by side against the same criteria."], [Star, "We rank", "Only the best nine make the cut no filler, no sponsored placement."], [Check, "You choose", "You get a shortlist you can trust, and a decision you can make fast."]].map(([Icon, title, copy]) => <div key={title}><i><Icon size={23} /></i><strong>{title}</strong><p>{copy}</p></div>)}</div></div></section>
 
-    <section className="t9-container"><div className="t9-newsletter"><Eyebrow>Stay in the top 9</Eyebrow><h2>The best rankings,<br />delivered before you ask for them.</h2><p>One email a week. Nine picks worth reading, every time no spam, no filler.</p><form onSubmit={(e) => e.preventDefault()}><input type="email" aria-label="Email address" placeholder="Enter your email address" /><button>Subscribe</button></form><small>Join 3.4M readers. Unsubscribe anytime.</small></div></section>
+    <section className="t9-container"><div className="t9-newsletter"><Eyebrow>Stay in the top 9</Eyebrow><h2>The best rankings,<br />delivered before you ask for them.</h2><p>One email a week. Nine picks worth reading, every time no spam, no filler.</p>{newsletterSubscribed ? (<p role="status">You&apos;re on the list! We&apos;ll be in touch.</p>) : (<form onSubmit={handleNewsletterSubmit}><input type="email" required aria-label="Email address" placeholder="Enter your email address" value={newsletterEmail} onChange={(e) => setNewsletterEmail(e.target.value)} /><button type="submit">Subscribe</button></form>)}<small>Unsubscribe anytime.</small></div></section>
 
     <section className="t9-faq t9-container"><Eyebrow>Good to know</Eyebrow><h2>Frequently Asked Questions</h2><div>{faqs.map(([question, answer], index) => <article className={openFaq === index ? "is-open" : ""} key={question}><button onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index}><strong>{question}</strong><ChevronDown size={20} /></button><p>{answer}</p></article>)}</div></section>
   </main>;

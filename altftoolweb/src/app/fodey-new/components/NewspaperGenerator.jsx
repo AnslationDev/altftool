@@ -88,6 +88,7 @@ export default function UltimateVintageNewspaper() {
     const [quoteAuthor, setQuoteAuthor] = useState("— General Headquarters");
 
     const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadError, setDownloadError] = useState(false);
     const [showPreview, setShowPreview] = useState(true);
     const [activeTab, setActiveTab] = useState("text_content");
     const [expandedSections, setExpandedSections] = useState({ basic: true, headlines: true });
@@ -131,12 +132,14 @@ export default function UltimateVintageNewspaper() {
     const handleDownload = async () => {
         if (!previewRef.current) return;
         setIsDownloading(true);
+        setDownloadError(false);
         try {
             await document.fonts.ready;
             const dataUrl = await toPng(previewRef.current, { pixelRatio: 3, backgroundColor: paperColor, cacheBust: true });
             saveAs(dataUrl, `vintage-newspaper-${Date.now()}.png`);
         } catch (err) {
             console.error(err);
+            setDownloadError(true);
         } finally {
             setIsDownloading(false);
         }
@@ -470,6 +473,9 @@ export default function UltimateVintageNewspaper() {
                     <button onClick={handleDownload} disabled={isDownloading} className="w-full bg-neutral-950 text-white py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition hover:bg-neutral-900 disabled:opacity-40 flex items-center justify-center gap-2">
                         {isDownloading ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Pressing Matrix...</> : <><Download className="w-3.5 h-3.5" /> Export Broadsheet Layout (PNG)</>}
                     </button>
+                    {downloadError && (
+                        <p className="text-[10px] font-bold text-red-600 text-center">Export failed. Please try again.</p>
+                    )}
                 </div>
             </div>
 

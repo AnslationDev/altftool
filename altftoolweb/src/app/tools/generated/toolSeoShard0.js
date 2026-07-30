@@ -138,6 +138,166 @@ export default {
     "Keep merging until a 2048 tile appears. Choose Keep Going to continue past the win, or New at any time to reset the board and the score."
   ]
 },
+  "2fa-authenticator": {
+  "intro": "This is a browser-based TOTP authenticator that turns a Base32 secret into the same six-digit code Google Authenticator or Authy would show, using the RFC 6238 time-step algorithm over HMAC and RFC 4226 dynamic truncation. Paste a secret or an otpauth:// URI and it derives the counter from the current 30-second window, signs it with HMAC-SHA1, SHA-256 or SHA-512 via the Web Crypto API, and shows the code with a live countdown. Secrets you choose to keep are stored as AES-256-GCM ciphertext in IndexedDB, never in plaintext and never sent anywhere.",
+  "useCases": [
+    "You are setting up 2FA on a laptop and the QR code is on the same screen — paste the otpauth:// URI or the secret shown under it and get the code without reaching for your phone",
+    "Your phone is lost or wiped and you still have the backup secret written down, so you need a working code to get back into the account and re-enrol a device",
+    "You are building a login flow and want to check that your server's TOTP validation accepts codes generated with 8 digits, a 60-second period or SHA-256 instead of the defaults"
+  ],
+  "benefits": [
+    [
+      "Full RFC 6238 parameter set",
+      "Switch between SHA1, SHA256 and SHA512, 6 or 8 digits, and 15, 30, 45 or 60-second periods."
+    ],
+    [
+      "Encrypted vault, not plaintext storage",
+      "Saved secrets are AES-256-GCM encrypted behind either a non-extractable device key or a PBKDF2-SHA256 passphrase key at 600,000 iterations."
+    ],
+    [
+      "Reads otpauth:// URIs directly",
+      "Paste the URI behind a setup QR code and the issuer, account label, algorithm, digit count and period are filled in for you."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why does my code keep getting rejected?",
+      "Nine times out of ten the clock is off. TOTP divides Unix time by the period — 30 seconds by default — so a device more than about 30 seconds out of sync produces a code for the wrong time step. Check that your system clock is set to network time, and confirm the algorithm, digit count and period match what the service issued."
+    ],
+    [
+      "Can I use this as my only authenticator app?",
+      "You can, but keep the original secret or the service's recovery codes somewhere else as well. Vault data lives in this browser profile's IndexedDB, so clearing site data, using a different browser or losing the passphrase means the encrypted secrets are gone with no server-side copy to restore from."
+    ],
+    [
+      "Is it safe to paste my 2FA secret into a web page?",
+      "Here the secret stays in the page: code generation runs through the browser's Web Crypto API and nothing is transmitted, logged or placed in the URL. That said, the general rule still applies — only paste a secret into a page you trust and have loaded over HTTPS, because any page you paste a TOTP seed into can generate codes forever."
+    ],
+    [
+      "What is the difference between TOTP and HOTP?",
+      "The counter. HOTP (RFC 4226) increments a counter each time you request a code, while TOTP (RFC 6238) computes the counter from the clock as floor(unix_time / period), which is why the code rotates on its own every 30 seconds. Both then run the same HMAC and dynamic-truncation step to produce the digits."
+    ]
+  ]
+},
+  "30-day-habit-tracker": {
+  "intro": "A 30-day habit tracker that gives one habit a fixed 30-square grid and marks each day completed, skipped or still pending, then derives a completion rate, a current streak and a longest streak from those marks. Every day can carry a short note, so you record not just whether you kept the habit but what got in the way. Each habit also stores a start date and a reward you have promised yourself for finishing the run, and the whole board can be exported as a plain-text progress report.",
+  "useCases": [
+    "You have promised yourself you will read every day for a month and want a single page that shows, on day 19, exactly how many days you actually kept and where the chain broke",
+    "You are trying to work out why a habit keeps collapsing, so you log a note on each skipped day and read them back to see whether it is always the same weekday or the same excuse",
+    "You want to hand a coach, an accountability partner or your own journal a plain-text summary of the month rather than a screenshot of a grid"
+  ],
+  "benefits": [
+    [
+      "Skipped is not the same as pending",
+      "A day you deliberately missed and a day you have not reached yet are tracked separately, so the completion rate is not quietly inflated by future days."
+    ],
+    [
+      "Two streaks, not one",
+      "Longest streak measures the best run anywhere in the 30 days; current streak only counts if your last completed day is today or yesterday, so a stale chain does not keep showing as active."
+    ],
+    [
+      "Notes attached to the day, not the habit",
+      "Each square holds its own comment, which is what makes the exported report useful for spotting patterns instead of just a score."
+    ]
+  ],
+  "faqs": [
+    [
+      "Does it really take 30 days to build a habit?",
+      "No — 30 days is a convenient commitment window, not a scientific threshold. The often-repeated 21-day figure comes from a 1960s surgeon's observation about patients adjusting to appearance changes, not from habit research, and later studies found automaticity takes anywhere from a few weeks to several months depending on the behaviour. A 30-day block is useful because it is short enough to finish and long enough to show a pattern."
+    ],
+    [
+      "What happens to my streak if I miss one day?",
+      "The streak resets to zero. Any day marked skipped or left pending breaks the run, so the longest streak is the best unbroken block of completed days across the 30. The completion rate is separate and is unaffected by where the gaps fall — 24 completed days is 80% whether they are consecutive or scattered."
+    ],
+    [
+      "Where is my data stored, and will I lose it?",
+      "It is saved in your browser's local storage on this device only. Nothing is uploaded and there is no account, so clearing site data, switching browsers or using a private window will lose the board. Export the text report if you want a copy that survives."
+    ],
+    [
+      "Can I track more than one habit at a time?",
+      "Yes, you can add several habits and switch between them, each with its own 30-day grid, start date, category and reward. Tracking two or three at once is usually the practical limit, though — the more simultaneous habits you start, the more likely all of them stall."
+    ]
+  ]
+},
+  "3d-mesh-repair-inspector": {
+  "intro": "This inspector reads a text OBJ mesh in the browser and reports the two defects that most often break a slicer or a game import: duplicate vertices and degenerate faces. It parses every v line into an x/y/z coordinate and every f line into its vertex indices, compares coordinates at eight decimal places to find points that occupy the same position twice, and flags any face that references fewer than three distinct vertices. It is read-only — you get counts and a verdict, not a rewritten file.",
+  "useCases": [
+    "A print keeps failing to slice and you want to know before opening Blender whether the OBJ has collapsed triangles or a pile of doubled-up vertices",
+    "You exported the same model from two different packages and want to compare their vertex and face counts to see which one welded the seams",
+    "A downloaded asset seems heavier than it should be, and you want to check how much of the vertex count is duplicated points sitting on top of each other"
+  ],
+  "benefits": [
+    [
+      "Counts duplicates by position, not by index",
+      "Vertices are compared on their coordinates rounded to eight decimals, so points written twice under different indices are caught."
+    ],
+    [
+      "Names the exact defect",
+      "You get separate figures for duplicate vertices and degenerate faces rather than a single pass/fail score."
+    ],
+    [
+      "Read-only by design",
+      "Nothing is rewritten or re-exported, so the file you inspect is byte-for-byte the file you keep."
+    ]
+  ],
+  "faqs": [
+    [
+      "What counts as a degenerate face here?",
+      "A face whose index list contains fewer than three distinct vertices. That covers a triangle that names the same vertex twice and any face that has collapsed to a line or a point — geometry with zero area, which is what causes slicers and renderers to produce holes or artefacts."
+    ],
+    [
+      "Does it repair the mesh or just report on it?",
+      "It only reports. The inspection returns vertex and face totals plus the duplicate and degenerate counts, and writes no output file. Use the findings to run the matching operation in your modelling tool — merge by distance for duplicates, delete loose or degenerate geometry for zero-area faces."
+    ],
+    [
+      "Which file formats does it accept?",
+      "Text-based OBJ. It matches lines beginning with v for vertices and f for faces, so ASCII OBJ works directly and any format without those lines — binary STL, glTF, FBX, 3MF — will report that no OBJ vertices were found. Export to ASCII OBJ first if your model is in one of those."
+    ],
+    [
+      "Why does my model show thousands of duplicate vertices?",
+      "Usually because the exporter split vertices per face so each triangle carries its own normals or UVs, which is normal for a rendering-ready mesh and harmless. It matters when you are about to sculpt, subdivide or print, since unwelded points leave the surface open — that is when merging by distance is worth doing."
+    ]
+  ]
+},
+  "3d-model-format-converter": {
+  "intro": "This tool normalises a text OBJ mesh in the browser: it parses every v vertex line and every f face line, strips the texture and normal index groups so each face token keeps only its vertex index, and writes the result back out as a clean OBJ you can download. Alongside the file it reports the mesh statistics that matter before an import — total vertices, total faces, duplicate vertices matched to eight decimal places, and degenerate faces with fewer than three distinct indices. The file never leaves your machine; parsing and rebuilding happen in the page.",
+  "useCases": [
+    "An OBJ exported from one package fails to load in another because of its f v/vt/vn index groups, and you need a plain vertex-index-only version",
+    "You are handed a model and want its real vertex and face counts before deciding whether it is light enough to drop into a scene or a print job",
+    "A mesh imports with visible artefacts and you want to check whether it carries collapsed faces or doubled vertices before spending time debugging the importer"
+  ],
+  "benefits": [
+    [
+      "Flattens the face index syntax",
+      "Faces written as v/vt/vn are rewritten to bare vertex indices, which is the form the strictest OBJ readers accept."
+    ],
+    [
+      "Statistics come with the conversion",
+      "The same pass reports vertex and face totals, duplicate vertices and degenerate faces, so you see what you are converting."
+    ],
+    [
+      "Deterministic text output",
+      "The rebuilt file is plain ASCII OBJ — all vertices, then all faces — so you can diff it or hand-edit it afterwards."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which formats can it convert between?",
+      "Text OBJ in, text OBJ out. It matches lines starting with v and f, so a binary STL, glTF, GLB or FBX will parse to zero vertices and report that no OBJ geometry was found. Export to ASCII OBJ from your modelling tool first."
+    ],
+    [
+      "Will my textures and materials survive the conversion?",
+      "No. The normalised output keeps vertex positions and face connectivity only — UV coordinates, vertex normals, smoothing groups, object and group names and the .mtl material reference are all dropped. Keep the original file if you need any of those; this output is for geometry."
+    ],
+    [
+      "What does the duplicate vertex count mean?",
+      "It is the number of vertex lines whose x, y and z values match another line once rounded to eight decimal places. A high count usually means the exporter split vertices per face rather than welding shared corners, which is expected for render-ready meshes but worth merging before sculpting or printing."
+    ],
+    [
+      "Is my model uploaded anywhere?",
+      "No. The file is read with the browser's own file reader, parsed in the page, and the rebuilt OBJ is created as a local blob download. Nothing is transmitted, which is the point if the asset is client work or unreleased."
+    ]
+  ]
+},
   "80tta-vs-80ttb-calculator": {
   "intro": "80TTA vs 80TTB Interest Deduction compares the two competing deductions on interest income under the old tax regime. Section 80TTA allows up to Rs 10,000 of savings-account interest for taxpayers below 60, while Section 80TTB allows resident senior citizens up to Rs 50,000 covering savings, fixed and recurring deposit interest. Enter your interest split and the calculator shows which section applies, the deduction allowed, the interest that stays taxable, and the tax saved at your slab rate.",
   "useCases": [
@@ -175,6 +335,46 @@ export default {
     [
       "Are these deductions available in the new tax regime?",
       "No. Both 80TTA and 80TTB are Chapter VI-A deductions allowed only under the old regime. Separately, banks deduct TDS on interest above the Section 194A thresholds, which for FY 2025-26 are Rs 1,00,000 for senior citizens and Rs 50,000 for others — TDS is not the same as tax payable, and Form 15G/15H can prevent it where no tax is due."
+    ]
+  ]
+},
+  "a-b-test-significance-calculator": {
+  "intro": "This calculator runs a two-sided pooled two-proportion z-test on an A/B test: enter visitors and conversions for each variant and it returns the z score, the exact p-value, each variant's conversion rate and the relative uplift. It pools the two samples to estimate the standard error, so the verdict is the standard frequentist one used by most experimentation platforms. You choose 90%, 95% or 99% confidence, and the result is called significant when p is below the matching alpha of 0.10, 0.05 or 0.01.",
+  "useCases": [
+    "Your checkout variant converted 125 of 1,000 against the control's 100 of 1,000 and you need to know whether that 25% uplift is real before rolling it out",
+    "A stakeholder wants to stop a test early on a promising-looking lead, and you want the p-value in front of you to show the gap is still inside the noise",
+    "You are writing up a finished experiment and need the z score and p-value to quote alongside the conversion rates in the summary"
+  ],
+  "benefits": [
+    [
+      "The actual test statistic, not just a verdict",
+      "You get the z score and the p-value to six decimal places, so you can see how close a borderline result really is."
+    ],
+    [
+      "Absolute and relative effect side by side",
+      "Both conversion rates and the relative uplift are reported, which stops a 0.2-point move on a tiny base from looking like a win."
+    ],
+    [
+      "Confidence target is explicit",
+      "Switching between 90%, 95% and 99% changes the alpha the p-value is compared against, so the threshold behind the call is never hidden."
+    ]
+  ],
+  "faqs": [
+    [
+      "What p-value counts as significant?",
+      "Below your chosen alpha: 0.05 at 95% confidence, 0.10 at 90%, and 0.01 at 99%. A p-value of 0.03 clears the bar at 95% but not at 99%. The p-value is the probability of seeing a difference at least this large if the two variants actually converted at the same rate — it is not the probability that B is better."
+    ],
+    [
+      "Can I check the result while the test is still running?",
+      "You can look, but do not decide. This is a single planned analysis: repeatedly checking and stopping the moment p dips under 0.05 inflates the false-positive rate well beyond the nominal 5%. Fix the sample size in advance, or use a sequential testing method designed for peeking."
+    ],
+    [
+      "Why is my big-looking uplift still not significant?",
+      "Almost always sample size. The standard error scales with the square root of traffic, so at a 10% baseline a few hundred visitors per arm can only detect very large swings. A 10% to 12.5% move needs roughly a thousand visitors per variant to reach 95% confidence; smaller true effects need several times that."
+    ],
+    [
+      "Does this work for revenue or time-on-page tests?",
+      "No. The pooled z-test assumes each visitor is a yes/no conversion, so it applies to binary outcomes like signups, purchases or clicks. Continuous metrics such as revenue per visitor or session duration are skewed and need a t-test, a bootstrap, or a test on a transformed metric instead."
     ]
   ]
 },
@@ -216,6 +416,126 @@ export default {
     [
       "What is the difference between bleed and safe margin?",
       "Bleed is artwork that extends past the trim line so a slight cutting drift never leaves a white sliver. The safe margin works inward: keep text and logos at least 5 mm inside the trim so the same drift does not clip them."
+    ]
+  ]
+},
+  "aac-phrase-board": {
+  "intro": "An augmentative and alternative communication board that speaks a phrase aloud when you tap its tile, using the browser's own SpeechSynthesis voice. It opens with eight everyday phrases — Yes, No, Please wait, I need help, I need water, I am uncomfortable, Please call my contact, Thank you — and you can type your own to fill the board out to 24 tiles. Tiles are large touch targets, the spoken phrase is echoed in a live region for screen readers, and nothing you type is uploaded or saved to a server.",
+  "useCases": [
+    "Someone recovering from surgery cannot speak comfortably for a few days and needs a fast way to say I need water or I am uncomfortable from a bedside tablet",
+    "A carer sets up a handful of phrases specific to one appointment — a clinic name, a medication, a contact's name — so the person can lead the conversation themselves",
+    "A speech-language session needs a quick, no-install board to try phrase-based communication before committing to a dedicated AAC app or device"
+  ],
+  "benefits": [
+    [
+      "Ready to use with no setup",
+      "Eight core phrases are already on the board, so it is usable the second the page loads rather than after a configuration step."
+    ],
+    [
+      "Custom phrases stay in the page",
+      "Anything you add lives only in this browser session — no account, no sync, no record of what was said."
+    ],
+    [
+      "Spoken output is also announced",
+      "The last phrase is echoed in an aria-live region, so a screen reader user or a listener who missed the audio still gets it."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many phrases can I put on the board?",
+      "Up to 24 tiles in total, including the eight it starts with. Duplicates are ignored, so adding a phrase already on the board does nothing. The cap keeps every tile large enough to hit reliably with an imprecise touch."
+    ],
+    [
+      "Do my custom phrases save for next time?",
+      "No. Phrases you add exist only for the current page session and disappear on reload — a deliberate privacy choice, since AAC phrases are often personal or medical. If you need a fixed board every day, a dedicated AAC app with saved profiles is the better fit."
+    ],
+    [
+      "Why is there no sound when I tap a tile?",
+      "The board uses the browser's built-in speech synthesis, so it needs a device voice installed and the volume up. Some mobile browsers also require a user gesture before any audio plays, and a few restrict speech output entirely — if nothing is heard, try a different browser or check the system text-to-speech settings."
+    ],
+    [
+      "Can this replace a prescribed AAC device?",
+      "No. This is an informational aid, not a medical device, and it does not offer symbol sets, grid navigation, switch access or word prediction the way a prescribed system does. Use it as a stopgap or a trial, and work with a speech-language pathologist for an assessed long-term solution."
+    ]
+  ]
+},
+  "aadhaar-masking-tool": {
+  "intro": "This tool masks Aadhaar numbers and checks their structure locally: it strips formatting to 12 digits, runs the Verhoeff checksum that Aadhaar numbers are built on, and rewrites each number with only the digits you choose left visible. Four masking modes are available — full mask, last 2, last 4 (the convention UIDAI's own masked Aadhaar uses), or first and last 4 — with a mask character of your choosing. Paste a whole list separated by newlines, commas, semicolons, pipes or tabs and export the masked results as CSV; the numbers are processed in the page and never sent anywhere.",
+  "useCases": [
+    "You have to attach an ID copy to a form and want the number reduced to XXXX XXXX 1234 before it goes into a document that will be forwarded on",
+    "An onboarding spreadsheet arrived with full Aadhaar numbers in a column and you need a masked version, plus a list of which rows are malformed, before it goes any further",
+    "A support agent needs to confirm the last four digits a customer read out actually belong to a well-formed number without storing the whole thing"
+  ],
+  "benefits": [
+    [
+      "Real Verhoeff validation, not a digit count",
+      "Every 12-digit entry is run through the Verhoeff dihedral-group checksum, so transposed or mistyped digits are caught, not just wrong-length input."
+    ],
+    [
+      "Four masking levels for different documents",
+      "Full mask, last 2, last 4 or first-and-last-4, so you can match whatever the receiving form actually requires."
+    ],
+    [
+      "Bulk in, CSV out",
+      "A pasted list is split on newlines, commas, semicolons, pipes or tabs, and exports with the masked value, format status, checksum result and the specific issue for each row."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many digits of an Aadhaar number can be shown?",
+      "The standard masked form leaves only the last four digits visible and hides the first eight, which is what UIDAI's own masked Aadhaar download produces. This tool defaults to that pattern and also offers last-2 and full masking when even four digits is more than the recipient needs."
+    ],
+    [
+      "What makes a number fail the check?",
+      "Four things are flagged: fewer or more than 12 digits, any letters in the input, a first digit of 0 or 1 (Aadhaar numbers do not begin with either), and a failed Verhoeff checksum. All twelve digits being identical is flagged separately as an unrealistic pattern."
+    ],
+    [
+      "Does this confirm an Aadhaar number is genuine?",
+      "No. It only confirms the number is well-formed and its checksum is internally consistent. A number can pass every check here and still not be issued to anyone — real verification requires UIDAI's own authentication or offline eKYC channels, not arithmetic on the digits."
+    ],
+    [
+      "Is it safe to paste real Aadhaar numbers here?",
+      "The numbers are read, masked and exported entirely in your browser — there is no upload, no server call and no storage. Even so, treat Aadhaar data as sensitive: close the tab when you are done, and remember that under Indian rules only masked or authorised forms of the number should be shared or retained by most organisations."
+    ]
+  ]
+},
+  "aadhaar-secure-qr-verifier": {
+  "intro": "This tool decodes the QR code printed on an Aadhaar letter or PVC card from an image you select, and tells you which of the two QR generations you are holding. It draws the image to a canvas, reads the code with a local QR decoder, then classifies the payload: a legacy PrintLetterBarcodeData XML block, or the newer binary Secure QR. It reports the payload size, the type and a 240-character preview — and it states plainly that the digital signature is not verified, rather than implying authenticity it cannot prove.",
+  "useCases": [
+    "You have been sent a photo of an Aadhaar card and want to see whether its QR is the old XML kind or the current Secure QR before choosing how to process it",
+    "You are building an eKYC integration and need to inspect the raw payload a scan actually produces to work out why your parser is failing",
+    "A scanned document will not read on a verification app and you want to check whether the QR decodes at all or the scan is simply too low-resolution"
+  ],
+  "benefits": [
+    [
+      "Tells the two QR generations apart",
+      "Legacy XML payloads starting with PrintLetterBarcodeData are identified separately from the newer binary Secure QR format."
+    ],
+    [
+      "Shows the raw payload",
+      "A preview of the decoded bytes lets you see what a scanner receives, which is what you need when debugging an integration."
+    ],
+    [
+      "Honest about what it does not do",
+      "Signature status is reported as unverified instead of being presented as a pass, so no false assurance is attached to the result."
+    ]
+  ],
+  "faqs": [
+    [
+      "Does this prove an Aadhaar card is genuine?",
+      "No. It decodes the QR payload but does not validate the UIDAI digital signature attached to a Secure QR, so a successful decode says nothing about authenticity. Genuine verification requires UIDAI's own offline eKYC or authentication services, which check the signature against UIDAI's public certificate."
+    ],
+    [
+      "What is the difference between the old QR and Secure QR?",
+      "The older QR encodes a plain XML block (PrintLetterBarcodeData) with demographic fields and no signature, so anyone can rewrite it. Secure QR, introduced later, encodes a compressed, digitally signed binary payload that can additionally carry a photo, and it is the signature that makes it tamper-evident."
+    ],
+    [
+      "Why does my image fail to decode?",
+      "Usually resolution or contrast. A QR photographed at an angle, printed small, or compressed heavily loses the module edges the decoder needs. Rescan flat at a higher resolution, crop tightly to the QR, and avoid glare on laminated PVC cards."
+    ],
+    [
+      "Is my Aadhaar image uploaded when I use this?",
+      "No. The image is drawn to a canvas and decoded by JavaScript running in your browser; no file, pixel data or decoded payload is transmitted. Aadhaar data is still sensitive, so avoid leaving decoded output on a shared screen and close the tab when finished."
     ]
   ]
 },
@@ -379,6 +699,46 @@ export default {
     ]
   ]
 },
+  "ac-star-rating-savings-calculator": {
+  "intro": "This calculator works out how long a higher BEE star rating takes to pay back its price premium, using each model's ISEER and the formula annual kWh = (tons x 3516.85 / ISEER) x hours x days / 1000. It compares the two units' yearly electricity, turns the difference into a rupee saving at your tariff, escalates that saving each year, and solves for the exact payback point as n = ln(1 + premium x g / first-year saving) / ln(1 + g). You also get lifetime net benefit, a year-by-year table, and the CO2 avoided at the Indian grid factor of 0.71 kg per kWh.",
+  "useCases": [
+    "You are standing in a showroom deciding whether a 5-star split at a few thousand rupees more than the 3-star model is worth it for the hours you actually run the AC",
+    "You run the AC only two months a year in a mild city and suspect the premium will never pay back within the unit's life — this tells you whether that hunch is right",
+    "You are budgeting for a new flat and want the ten-year electricity cost of each option, not just the sticker price, before choosing"
+  ],
+  "benefits": [
+    [
+      "Uses ISEER, not the star badge alone",
+      "You type the ISEER printed on the label, so the comparison reflects the actual model rather than a generic assumption about its star band."
+    ],
+    [
+      "Tariff escalation is built into the payback",
+      "Rising unit rates make an efficient unit pay back sooner, and the closed-form solution accounts for that instead of assuming a flat tariff forever."
+    ],
+    [
+      "A year-by-year table, not just one number",
+      "Each year shows that year's saving, the running total and the net position against the premium, so you can see exactly when you break even."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is ISEER and why does it matter more than the star count?",
+      "ISEER is the Indian Seasonal Energy Efficiency Ratio: the cooling delivered over a season divided by the electricity used, so a higher number means less power for the same cooling. Star bands are just ranges of ISEER, and BEE revises those thresholds every few years — which is why yesterday's 5-star can become today's 3-star, and why the printed ISEER is the number to compare."
+    ],
+    [
+      "How much electricity does a 5-star AC actually save over a 3-star?",
+      "Roughly a quarter, for typical label values. At an ISEER of about 5.0 against about 3.7, the efficient unit draws around 26% fewer units for the same tonnage and running hours, because consumption is inversely proportional to ISEER. The rupee saving then depends entirely on your tariff and how many hours a year you run it."
+    ],
+    [
+      "Is a 5-star AC always worth the extra money?",
+      "No — it depends on running hours. The premium is recovered from usage, so a unit running eight hours a day for six months pays back far faster than one used a few weeks a year. If the calculated payback exceeds the years you expect to keep the AC, the cheaper unit is the better financial choice even though it uses more power."
+    ],
+    [
+      "Why is my real electricity bill higher than the estimate?",
+      "Because ISEER is measured under standard test conditions. Real consumption rises with a lower thermostat setting, poor insulation, an oversized or undersized unit, dirty filters, frequent door opening and higher outdoor temperatures. Treat the figures here as a like-for-like comparison between two models, not a bill prediction — and check the current tariff slab with your discom."
+    ]
+  ]
+},
   "ac-temperature-savings-simulator": {
   "intro": "This simulator shows the electricity and money a higher AC setpoint saves, using the fact that heat leaks into a room in proportion to the temperature difference across its envelope: the energy ratio is (outdoor − new setpoint) ÷ (outdoor − old setpoint). On a 38 °C day, moving from 22 °C to 24 °C gives 14/16, a 12.5% cut — about 6.25% per degree, which is why BEE's 24 °C default-setting advisory quotes roughly 6% saved per degree. Both the model figure and the published rule of thumb are shown, with a full table from 16 to 30 °C.",
   "useCases": [
@@ -419,6 +779,46 @@ export default {
     ]
   ]
 },
+  "ac-tonnage-calculator": {
+  "intro": "This calculator sizes a room air conditioner by adding up the actual heat load in BTU rather than applying a rule of thumb: floor area at 34 BTU per sq ft scaled by ceiling height, 600 BTU per person, 165 BTU per sq ft of sunlit glass (55 if shaded), 150 BTU per window for leakage, appliance watts at 3.412 BTU each, plus 28 BTU per sq ft if you are on the top floor. The subtotal is multiplied by a climate factor for your city — 1.15 hot and humid, 1.10 hot and dry, 1.05 composite, 0.92 moderate — then divided by 12,000 BTU to give tons and rounded up to the nearest standard size. It then estimates the monthly running cost at 3, 4 and 5 star for both inverter and fixed-speed units.",
+  "useCases": [
+    "You are buying for a top-floor 12x12 bedroom in Delhi and want to know whether the 1.5 ton everyone recommends is actually right for a west-facing room under a sun-baked slab",
+    "A dealer is pushing a 2 ton unit for a small Bengaluru study and you want an itemised load breakdown to argue for something smaller",
+    "You are choosing between a 3-star and a 5-star inverter and want the monthly bill difference at your own tariff and running hours before deciding"
+  ],
+  "benefits": [
+    [
+      "Itemised load, not a square-foot shortcut",
+      "Every contribution — fabric, people, glass, leakage, appliances, roof, orientation, insulation — is listed in BTU so you can see what is driving the size."
+    ],
+    [
+      "Climate and construction are separate inputs",
+      "City climate zone, top floor, west-facing wall and insulation quality each apply their own factor, which is why the same room needs different units in Mumbai and Pune."
+    ],
+    [
+      "Sizing and running cost together",
+      "The same load feeds an ISEER-based bill estimate for 3, 4 and 5 star inverter and fixed-speed units, so capacity and operating cost are decided in one pass."
+    ]
+  ],
+  "faqs": [
+    [
+      "What size AC do I need for a 12x12 room?",
+      "A 144 sq ft room with average construction usually lands between 1 and 1.5 ton, but the deciding factors are the extras: a top-floor slab adds about 28 BTU per sq ft, direct sun on 15 sq ft of glass adds around 2,500 BTU, and a hot-humid city multiplies the whole load by 1.15. The same room can need 1 ton in Bengaluru and 1.5 ton in Delhi's top floor."
+    ],
+    [
+      "Is a bigger AC always better?",
+      "No — oversizing hurts comfort. An oversized unit cools the air quickly, hits the setpoint and shuts off before it has removed much moisture, so the room feels cold and clammy, and a fixed-speed compressor short-cycles, which wastes power and wears it out. Sizing to the calculated load is what gives both temperature and humidity control."
+    ],
+    [
+      "Does a top floor or a west-facing wall really change the tonnage?",
+      "Yes, and often by a whole step. A directly sunlit roof adds about 28 BTU per sq ft of floor area, so a 144 sq ft top-floor room picks up roughly 4,000 extra BTU — a third of a ton — and a west-facing wall adds around 8% of the fabric load for the afternoon peak."
+    ],
+    [
+      "How is the monthly running cost worked out?",
+      "Cooling capacity in watts is divided by the unit's ISEER to get the electrical draw, then multiplied by your daily hours, 30 days and your tariff. Inverter models are assumed at roughly 3.7, 4.2 and 4.8 ISEER for 3, 4 and 5 star and fixed-speed at about 3.2 to 3.6, so an inverter's advantage grows the longer you run it. Check the ISEER printed on the model you are buying, since BEE revises the star bands periodically."
+    ]
+  ]
+},
   "accent-wall-colour-suggester": {
   "intro": "This suggester takes the hex value of a wall you already have and returns eight accent colours built from the standard colour-wheel harmonies — complementary, split-complementary, analogous, triadic, monochromatic and a near-neutral anchor — each reported with its Light Reflectance Value so it can be matched against a paint chip. LRV is the CIE Y value expressed as a percentage, identical to the WCAG relative luminance formula (0.2126R + 0.7152G + 0.0722B on linearised channels), which is the same number paint manufacturers print on the back of a sample. It is aimed at anyone repainting one wall and unsure whether a shade will read as a deliberate accent or as a patch, since the tool also checks that each candidate clears the trade rule of roughly 10 LRV points from the existing wall.",
   "useCases": [
@@ -456,6 +856,86 @@ export default {
     [
       "Does the direction a room faces change which accent colour works?",
       "Yes, noticeably. In the northern hemisphere a north-facing room gets cool indirect skylight that drains warmth from a colour, so warm and slightly lighter accents hold up better, while a south-facing room gets warm direct sun for most of the day and can carry a cooler, deeper shade. Reverse north and south in the southern hemisphere, and always test a sample on the actual wall at several times of day before buying the full tin."
+    ]
+  ]
+},
+  "accessible-authentication-auditor": {
+  "intro": "This auditor reviews a pasted sign-in page against the WCAG 2.2 authentication criteria — SC 3.3.8 and 3.3.9 Accessible Authentication, SC 1.3.5 Identify Input Purpose, SC 2.2.1 Timing Adjustable, and SC 3.3.1/3.3.3 error handling — and returns findings graded high, medium or review. It reads the markup for the patterns that turn a login into a memory test: onpaste handlers calling preventDefault, autocomplete=off on credential fields, captcha and security-question wording, and missing alternative sign-in routes. A seven-question checklist then records what you observed in the live flow, because paste blocking, timeout controls and error recovery cannot be judged from static HTML alone.",
+  "useCases": [
+    "Your OTP screen rejects pasted codes and you need the specific criterion and wording to put in a ticket explaining why that has to change",
+    "You are preparing an accessibility conformance statement and want a first pass over the login, OTP and password-reset pages before an auditor sees them",
+    "A security team wants to add a session timeout to the sign-in step and you need to show what controls WCAG expects alongside it"
+  ],
+  "benefits": [
+    [
+      "Each finding cites its criterion",
+      "Every issue names the WCAG 2.2 success criterion behind it, so the report can be handed straight to a developer or an auditor."
+    ],
+    [
+      "Separates what it read from what you saw",
+      "Findings are tagged as a source heuristic or as observed behaviour, so an inference from markup is never presented as a tested fact."
+    ],
+    [
+      "The markup is parsed, never executed",
+      "Pasted HTML is scanned as text with scripts and templates stripped out, and nothing is fetched from the page's original host."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is blocking paste in a password or OTP field a WCAG failure?",
+      "Yes, under SC 3.3.8 Accessible Authentication (Minimum), a Level AA criterion in WCAG 2.2. Preventing paste forces the user to transcribe or memorise a credential, which is exactly the cognitive function test the criterion prohibits, and it breaks password managers. The same applies to autocomplete=off on username and password fields."
+    ],
+    [
+      "What does WCAG require if my sign-in step times out?",
+      "Under SC 2.2.1 Timing Adjustable you must let the user turn the limit off, or adjust it to at least ten times the default, or warn before it expires and give at least 20 seconds to extend it — with extension possible at least ten times. Security-essential and real-time limits can qualify as exceptions, but the exception has to be justified, not assumed."
+    ],
+    [
+      "What is the difference between SC 3.3.8 and SC 3.3.9?",
+      "The exceptions. SC 3.3.8 (Level AA) allows object recognition and identifying user-provided non-text content as permitted cognitive function tests; SC 3.3.9 (Level AAA) removes those allowances, so a picture-selection challenge that passes at AA still fails at AAA. Findings here flag when a step clears one but not the other."
+    ],
+    [
+      "Does a clean report mean my login is WCAG conformant?",
+      "No. This is a bounded review of up to 300,000 characters and 8,000 elements of pasted markup plus your own checklist answers — it cannot exercise the flow, test with assistive technology, or evaluate anything you did not paste in. Treat it as a triage step before a manual audit, not as a conformance claim."
+    ]
+  ]
+},
+  "accessible-document-checker": {
+  "intro": "This checker opens a PDF, DOCX, XLSX or PPTX in the browser and reports the accessibility markers actually present in the file: a document title, a default language, heading or outline structure, table header rows, alternative-text metadata on images, and bookmarks. For PDFs it scans the raw bytes for /StructTreeRoot with /Marked true, /Lang, /Title, /Alt entries against image objects and /Outlines; for Office files it unzips the package and reads docProps/core.xml and the document XML for language, heading styles, table header markers and drawing descriptions. Each result comes back as present, needs review, or manual — it never claims conformance it cannot observe.",
+  "useCases": [
+    "A report is about to be published on a government or university site and you need to know whether the PDF was exported tagged or flat before it goes live",
+    "A supplier sends a DOCX and you want to check it carries real heading styles and image descriptions rather than bold text sized to look like headings",
+    "You are triaging a folder of legacy documents and need to find the ones with no language tag or no title so you know where remediation should start"
+  ],
+  "benefits": [
+    [
+      "Four formats, one check",
+      "PDF, Word, Excel and PowerPoint are inspected with format-appropriate markers instead of a single generic file scan."
+    ],
+    [
+      "Three-state results, not pass or fail",
+      "Findings are present, review or manual, so items a static scan genuinely cannot judge — reading order, decorative intent — are marked as needing a human rather than silently passed."
+    ],
+    [
+      "Bounded and local",
+      "The file is parsed in the page under explicit size limits and never uploaded, which matters for unpublished or confidential documents."
+    ]
+  ],
+  "faqs": [
+    [
+      "What file types and sizes can I check?",
+      "PDF, DOCX, XLSX and PPTX, up to 20 MB per file. Office packages are additionally bounded at 3,000 entries and 80 MB uncompressed, with each XML part read to 2 MB, so a very large deck or workbook is inspected partially and flagged as truncated rather than parsed unsafely."
+    ],
+    [
+      "Does a clean result mean the document is accessible?",
+      "No. It means the structural markers it looks for were found. Reading order, heading hierarchy, whether alt text is actually meaningful, table semantics, colour contrast and form labelling all need a human and assistive technology. The checker marks those as manual precisely so they are not mistaken for passes."
+    ],
+    [
+      "Why does my tagged PDF still show tagged structure as needing review?",
+      "Because PDF markers can sit inside compressed object streams that a raw byte scan cannot see, so absence of a marker is not proof of absence of the feature. An encrypted PDF has the same effect. Confirm in a PDF editor's accessibility checker before concluding the tags are missing."
+    ],
+    [
+      "Is my document uploaded anywhere?",
+      "No. Office files are unzipped with a JavaScript ZIP reader and PDFs are decoded as bytes, all inside your browser tab. Nothing is transmitted, so you can check draft contracts, unreleased reports or student records without them leaving the machine."
     ]
   ]
 },
@@ -660,6 +1140,86 @@ export default {
     [
       "What contrast ratio do I need between two colours?",
       "WCAG 2.1 requires 4.5:1 for body text (SC 1.4.3), 3:1 for large text and for user interface components and graphical objects (SC 1.4.11), and 7:1 for enhanced AAA text. Two swatches below roughly 1.5:1 read as the same tone and should never be the only way a state is signalled."
+    ]
+  ]
+},
+  "acne-severity-analyzer": {
+  "intro": "The Acne Severity Analyzer is a browser-based photo tool that locates your face with a TinyFaceDetector plus a 68-point landmark model, samples the central 60% of the face box, and counts pixels that are strongly red relative to the green and blue channels to estimate a blemish count, a coverage percentage and a severity band. It is built for anyone tracking a skincare routine who wants a repeatable number instead of a vague feeling that things look better or worse. Everything — model inference, pixel scoring and the red heatmap overlay — happens locally on your device, and the result is an informational screening signal, not a clinical diagnosis.",
+  "useCases": [
+    "You started a new retinoid six weeks ago and want to compare a photo from week one with today's under identical lighting to see whether the spot count actually moved",
+    "You are keeping a skincare journal and want a consistent number to log each Sunday rather than relying on memory",
+    "You want to see the heatmap overlay so you can tell whether the redness is clustered on the cheeks or spread across the whole T-zone before you ask a dermatologist about it"
+  ],
+  "benefits": [
+    [
+      "Analyses the skin, not the whole photo",
+      "Facial landmarks isolate the central face region first, so hair, background and clothing red tones never inflate the count."
+    ],
+    [
+      "Shows you where the score came from",
+      "A pixel-level heatmap tints every detected blemish pixel red, so you can sanity-check the score against what you actually see."
+    ],
+    [
+      "Repeatable banding",
+      "The same fixed thresholds produce the same Clear / Mild / Moderate / Moderately Severe / Severe band every run, which makes week-to-week comparisons meaningful."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does the tool decide what counts as a blemish?",
+      "It flags any pixel whose red channel is more than 18 levels above both green and blue, with red above 75 and Rec. 601 luminance above 40. Those flagged pixels are then divided by 15 to give an approximate spot count, and their share of the sampled region becomes the coverage percentage, capped at 10%."
+    ],
+    [
+      "What do the severity levels mean?",
+      "They are fixed spot-count bands: more than 35 spots reads as Severe, more than 20 as Moderately Severe, more than 10 as Moderate, more than 2 as Mild, and 2 or fewer as Clear. The severity score shown alongside them is the spot count expressed as a share of 40, capped at 100%."
+    ],
+    [
+      "Can this diagnose my acne or replace a dermatologist?",
+      "No. It is an informational colour-analysis screen, not a clinical grading scale, and it cannot distinguish an inflamed pimple from a birthmark, sunburn, rosacea or a red-toned filter. Painful, cystic, scarring or rapidly worsening acne should be assessed by a dermatologist or physician."
+    ],
+    [
+      "Why did it say no face detected, or give a very different score than last time?",
+      "Detection needs a clear, well-lit, front-facing photo — the analyser stops if no face is found or if too few skin pixels fall inside the region. Because the test is purely colour-based, warm lighting, makeup, flash and camera white balance all shift the result, so shoot in the same light and at the same distance each time you want to compare."
+    ]
+  ]
+},
+  "acronym-generator": {
+  "intro": "The Acronym Generator works in both directions: give it a phrase and it takes the first letter of every whitespace-separated word and uppercases them into an acronym, or give it a set of letters and it builds a backronym by matching each letter to a word from one of four themed vocabularies — tech, business, creative or health. It is aimed at anyone naming a project, product, team or process who needs the initials and the expansion to line up. Results are deterministic, so the same letters and theme always return the same expansion, and the copy button hands you the finished 'ACRONYM: expanded words' string.",
+  "useCases": [
+    "You have settled on a project name like 'Advanced Network Technology Solutions' and want to see the initials before you put them on a slide",
+    "Leadership has already chosen the letters for an internal programme and you need a plausible expansion to fit them, themed to business or tech language",
+    "You are checking whether a proposed department name produces an acronym that is pronounceable rather than an awkward six-letter string"
+  ],
+  "benefits": [
+    [
+      "Works from either end",
+      "Phrase to initials and letters to expansion are both first-class modes, so you can start from whichever half you already have."
+    ],
+    [
+      "Themed vocabularies, not random words",
+      "Four curated word sets keep an expansion in a consistent register instead of mixing clinical and creative language in one name."
+    ],
+    [
+      "Repeatable output",
+      "The letter-to-word match is a fixed lookup, not a random draw, so the same input and theme give you the same result every time you show it to a colleague."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does it decide which letters go into the acronym?",
+      "It splits your phrase on whitespace and takes the first character of every word, uppercased. That includes small words like 'of', 'and' and 'the', so if you want them left out, delete them from the phrase before generating."
+    ],
+    [
+      "What themes can I expand my letters into?",
+      "Four: tech, business, creative and health, holding 14 to 15 curated words each — tech offers Artificial, Intelligence, Network, Digital, Cloud, Quantum and similar, while health offers Vital, Holistic, Clinical, Therapeutic and so on. Each letter is matched against the chosen list only, so switching themes changes the whole expansion."
+    ],
+    [
+      "Why did one of my letters come back with a dash instead of a word?",
+      "Because no word in the selected theme starts with that letter. Each list covers roughly a dozen distinct initials, so letters such as K, X and Z usually have no match — try another theme, or type your own word into that slot after copying the result."
+    ],
+    [
+      "What is the difference between an acronym, an initialism and a backronym?",
+      "An acronym is read as a word (NASA, RADAR), an initialism is spelled out letter by letter (FBI, HTML), and a backronym is an expansion invented after the letters were chosen — which is exactly what the Letters to Phrase mode produces. This tool builds the string of initials either way; whether it is pronounceable is your call."
     ]
   ]
 },
@@ -980,6 +1540,86 @@ export default {
     ]
   ]
 },
+  "adjustable-reading-reformatter": {
+  "intro": "The Adjustable Reading Reformatter takes any text you paste and re-renders it live with five controls you set yourself: font size from 14 to 42 px, line height from 1.2 to 2.4, letter spacing from 0 to 0.18em, line width from 32 to 90 characters, and left, centred or justified alignment. It is for readers with dyslexia, low vision, ADHD or simple screen fatigue who already know that default web typography does not suit them and want to find the settings that do. The text never leaves your device — the preview is styled entirely in the browser, and nothing is uploaded or stored.",
+  "useCases": [
+    "You are about to read a long article set in small, tightly packed type, and want to paste it into a wider-spaced view before you start",
+    "You suspect narrower lines help you, so you drop the measure from 90 characters down towards 45 and see whether you stop losing your place",
+    "You are choosing accessible defaults for a document or site and want to eyeball your own copy at 1.5 line height and 0.12em letter spacing before committing"
+  ],
+  "benefits": [
+    [
+      "Five independent dimensions, one live preview",
+      "Size, line height, letter spacing, measure and alignment all update the same block of your own text as you drag."
+    ],
+    [
+      "Ranges that reach real accessibility targets",
+      "The sliders extend past the WCAG 2.1 text-spacing values, so you can test 1.5 line height and 0.12em tracking rather than guess at them."
+    ],
+    [
+      "Your own text, not a lorem sample",
+      "Comfort depends on the actual words, language and punctuation you read, so the preview reformats whatever you paste in."
+    ]
+  ],
+  "faqs": [
+    [
+      "What line height should I use for comfortable reading?",
+      "Start at 1.5 times the font size — that is the line-height value named in WCAG 2.1 Success Criterion 1.4.12 Text Spacing, and the slider covers 1.2 to 2.4 so you can go further. Readers who lose their place mid-paragraph often settle noticeably above 1.5."
+    ],
+    [
+      "How wide should a line of text be?",
+      "Typographic convention puts a comfortable measure at roughly 45 to 75 characters per line, and the width slider runs from 32 to 90ch so you can bracket that range. Shorter lines mean more return sweeps; longer lines make it easier to land on the wrong line coming back."
+    ],
+    [
+      "Does increasing letter spacing actually help dyslexic readers?",
+      "Extra spacing is a widely used adjustment and it costs nothing to test, which is why the control exists — the letter-spacing slider goes from 0 to 0.18em, comfortably past the 0.12em figure WCAG 2.1 uses. Whether it helps you is individual, so change one control at a time and read a few paragraphs before deciding. This is a reading-comfort aid, not an assessment or treatment for dyslexia."
+    ],
+    [
+      "Should I use justified text?",
+      "Usually no. Justified alignment stretches word spacing to force flush edges, which creates uneven gaps and the vertical 'rivers' that many readers with dyslexia or low vision find disruptive; left-aligned with a ragged right edge keeps spacing uniform. The option is here so you can compare the two on your own text."
+    ]
+  ]
+},
+  "adjusted-winner-splitter": {
+  "intro": "The Adjusted-Winner Splitter divides a set of shared items between exactly two people using the adjusted-winner idea from Brams and Taylor: each person secretly spreads 100 points across the items, every item first goes to whoever bid more points on it, and then the single item with the lowest ratio of the richer side's valuation to the poorer side's is split fractionally until both sides hold the same point total. It is for two people settling a shared pile — a separating couple, two siblings dividing an estate, two co-founders unwinding shared kit — who want the split driven by stated priorities rather than by who argues hardest. Everything is computed in the browser from the lines you type, and the output is an educational allocation, not a legal settlement.",
+  "useCases": [
+    "Two siblings are dividing a parent's house contents and want to stop trading the same three items back and forth by putting numbers on what each one actually cares about",
+    "A separating couple is listing the car, the savings, the furniture and the artwork, and needs a starting allocation both can look at before speaking to solicitors",
+    "Two co-founders are winding down a shared workspace and want to see which single asset would have to be sold or shared because it is the one the maths splits"
+  ],
+  "benefits": [
+    [
+      "Points, not arguments",
+      "Each person's 100 points are a private statement of priority, so the allocation reflects intensity of preference instead of negotiating stamina."
+    ],
+    [
+      "Only one item ever gets divided",
+      "Whole items go to whoever valued them most, and just the lowest-ratio item is split fractionally — so you know in advance which single asset needs a cash adjustment or a sale."
+    ],
+    [
+      "Shows the working, item by item",
+      "The table lists both point bids, the initial owner and the final share for every line, so each side can see exactly why an item landed where it did."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many points does each person get?",
+      "100 each, spread across the items in whatever proportions reflect how much each item matters to them. The tool does not force the totals to balance, so check both columns add to 100 before you trust the result — the caption under the table reminds you to."
+    ],
+    [
+      "How does it decide who gets each item?",
+      "Every item goes first to whoever put more points on it, with ties going to the person listed first. Point totals are then compared, and the item with the smallest ratio of the higher-scoring person's points to the lower-scoring person's points is divided fractionally so both totals meet in the middle."
+    ],
+    [
+      "What if an item cannot physically be split, like a car?",
+      "Read the fraction as a value share rather than a physical cut: the person keeping the item pays the other their percentage in cash, or the item is sold and the proceeds are divided in those proportions. Because at most one item is ever divided, you only have to negotiate that one."
+    ],
+    [
+      "Is this a legally binding division of assets?",
+      "No. It is an educational two-party allocation method and it knows nothing about legal ownership, current market valuations, debts secured on an asset, tax on a transfer, or what a court would treat as fair. Use it to structure the conversation, then take a proposed split to a solicitor, mediator or tax adviser before signing anything."
+    ]
+  ]
+},
   "adr-generator": {
   "intro": "An architecture decision record (ADR) is a short, numbered markdown file that captures one architecturally significant decision along with its context, the alternatives weighed, the choice made and the consequences accepted. This generator produces that file in either Michael Nygard's original 2011 template or MADR 4.0, and names it with the conventional `0007-short-title.md` pattern. It is for engineers who keep decisions in the repository next to the code they govern.",
   "useCases": [
@@ -1017,6 +1657,46 @@ export default {
     [
       "Which decisions deserve an ADR?",
       "The ones that are expensive to reverse or that constrain future work — datastore choice, service boundaries, authentication model, a language or framework commitment, a public API contract. A useful test is whether a new joiner six months from now would ask why it was done this way."
+    ]
+  ]
+},
+  "advance-tax-installment-planner": {
+  "intro": "The Advance Tax Installment Planner turns one estimated annual tax figure into the four cumulative Indian advance-tax instalments — 15% by 15 June, 45% by 15 September, 75% by 15 December and 100% by 15 March — after subtracting your expected TDS and TCS credits and anything you have already paid. It is built for freelancers, consultants, traders and small-business owners in India whose tax is not fully deducted at source and who need to know what to transfer before each date rather than in one panicked March payment. There is also a presumptive-taxpayer mode that collapses the whole liability into a single 100% target on 15 March.",
+  "useCases": [
+    "You freelance, your clients deduct some TDS, and it is late May — you want to know what to actually pay by 15 June rather than guessing",
+    "You already paid one instalment and your income forecast has changed, so you need the revised amount due at the next cumulative checkpoint",
+    "You file under the presumptive scheme and want to confirm that one payment by 15 March covers you instead of four quarterly ones"
+  ],
+  "benefits": [
+    [
+      "Cumulative, not quarterly quarters",
+      "Indian advance tax targets are cumulative percentages of the year's liability, and the table shows both the running target and the incremental cheque for each date."
+    ],
+    [
+      "Credits and part-payments come off first",
+      "TDS and TCS credits reduce the base before any instalment is calculated, and anything already paid is carried forward so later instalments shrink automatically."
+    ],
+    [
+      "Handles the presumptive exception",
+      "One toggle switches from the four-date schedule to the single 15 March target that eligible presumptive taxpayers follow."
+    ]
+  ],
+  "faqs": [
+    [
+      "What are the advance tax due dates in India?",
+      "Four, and each is a cumulative share of the year's liability: at least 15% by 15 June, 45% by 15 September, 75% by 15 December and 100% by 15 March. Because they are cumulative, a missed June instalment simply enlarges the September payment rather than disappearing."
+    ],
+    [
+      "Who has to pay advance tax at all?",
+      "Broadly, a taxpayer whose net tax liability for the year, after TDS and TCS credits, is ₹10,000 or more. Resident senior citizens with no income from business or profession are outside the requirement. The planner does not test eligibility for you, so check your own position against current Income Tax Department guidance."
+    ],
+    [
+      "What happens if I miss an instalment?",
+      "Interest becomes payable on the shortfall — section 234C covers deferment of individual instalments and section 234B covers a shortfall in total advance tax for the year, both charged as simple interest on the unpaid amount for the period of delay. This planner schedules payments only; it does not calculate that interest, so confirm the current rate and any relief before assuming a figure."
+    ],
+    [
+      "Why does my TDS reduce the instalment?",
+      "Because advance tax is due only on the tax that will not already have been collected at source. The tool subtracts your expected TDS and TCS credits from the estimated annual liability first, and every percentage target is then applied to that net base. If your actual TDS lands lower than expected, revisit the estimate — this is a planning tool and not tax advice, so a chartered accountant should confirm the final numbers."
     ]
   ]
 },
@@ -1360,6 +2040,46 @@ export default {
     "Read the estimated age range and gender for each face, shown in seconds."
   ]
 },
+  "age-in-days-calculator": {
+  "intro": "The Age in Days Calculator counts the exact number of days elapsed between your date of birth and today, then restates the same span as weeks, whole months, hours, and calendar years-and-months, and tells you how many days remain until your next birthday. It counts real elapsed time rather than assuming a 365-day year, so every leap day you have lived through is already included. Enter one date; everything is computed in your device's local time zone and nothing is sent anywhere.",
+  "useCases": [
+    "You want to know which date your 10,000th day falls on so you can mark it — it lands roughly 27 years and 4 months after birth",
+    "You are filling in a form or a school project that asks for an age in months rather than years and need the exact whole-month count",
+    "You are planning a surprise and need to know precisely how many days are left until someone's next birthday"
+  ],
+  "benefits": [
+    [
+      "Counts leap days automatically",
+      "The day figure comes from actual elapsed time, so 29 February birthdays and leap years are already accounted for rather than approximated."
+    ],
+    [
+      "Four units from one date",
+      "Days, weeks, whole months and hours appear together, alongside the conventional years-and-months reading of the same age."
+    ],
+    [
+      "Includes the countdown to your next birthday",
+      "The next-birthday figure rolls to the following year automatically once this year's date has passed."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many days old am I if I am 25?",
+      "Around 9,131 or 9,132 days, depending on how many 29 Februaries fell inside that span and whether your birthday has already passed this year. The calculator does not multiply by 365 — it measures the actual interval between the two dates, so the leap days are counted individually."
+    ],
+    [
+      "When do I turn 10,000 days old?",
+      "About 27 years and 4 months after birth, since 10,000 days divided by the Gregorian average of 365.2425 days per year is roughly 27.38 years. The 20,000-day mark falls near 54 years 9 months, and 30,000 days near 82 years 1 month."
+    ],
+    [
+      "Why does the month count not match days divided by 30?",
+      "Because months are counted on the calendar, not as fixed 30-day blocks. The tool compares the day of the month directly and only counts a month once that day has arrived, which is why a 31 January birth date and a 28 February today reads as 0 whole months rather than 1."
+    ],
+    [
+      "Does the time of day or my time zone affect the result?",
+      "Slightly. The count runs from midnight on your birth date to the current moment in your device's local time zone, so a browser set to a different zone can shift the day figure by one either side of midnight. For a birthday countdown or a milestone date that is not a problem; for anything official, use the date itself rather than the day count."
+    ]
+  ]
+},
   "age-on-exam-cutoff-date-calculator": {
   "intro": "This calculator computes your exact completed age — years, months and days — on any exam notification's cutoff or \"crucial\" date, using the calendar convention recruitment bodies apply: a year of age completes on the birthday anniversary. It can also test that age against a minimum limit (\"must have attained\") and a maximum limit (\"must not have attained\"), showing the precise day margin on either side, which is where borderline candidates usually get eligibility wrong.",
   "useCases": [
@@ -1397,6 +2117,126 @@ export default {
     [
       "Why does my age differ between exam forms?",
       "Because each notification fixes a different crucial date — 1 January, 1 July, 1 August or the application closing date — and your completed age can differ across them. Always compute against the exact date printed in the eligibility clause, not today's date."
+    ]
+  ]
+},
+  "age-progression-generator": {
+  "intro": "The Age Progression Generator takes a photo you upload, finds the face with a 68-point landmark model, and draws an older version of it on canvas — desaturating the image, multiplying a fine procedural crease texture over the face region, and adding structural lines at the landmarks themselves: three forehead furrows above the brows, crow's feet at the outer eye corners, and nasolabial folds running from the nostrils to the mouth corners. A slider sets the target age anywhere from 50 to 90, and alongside the image you get simple index readouts for grey hair, skin elasticity and life experience derived from that number. It is a novelty visualisation for fun and curiosity, not a forensic or medical prediction, and the photo never leaves your browser.",
+  "useCases": [
+    "You want a light-hearted 'us in forty years' picture for an anniversary card or a birthday slideshow",
+    "You are curious how the classic ageing cues — forehead lines, crow's feet, nasolabial folds — actually sit on your own face rather than a stock example",
+    "You are running a family quiz or a school project on ageing and want a quick before-and-after image you can download as a PNG"
+  ],
+  "benefits": [
+    [
+      "Lines follow your face, not a template",
+      "Creases are drawn at detected landmark coordinates — brow points, outer eye corners, nostrils and mouth corners — so they sit where your own features are."
+    ],
+    [
+      "The target age actually changes the render",
+      "Desaturation and the index readouts both scale with the slider, so age 55 and age 85 produce visibly different results from the same photo."
+    ],
+    [
+      "Download and text report in one pass",
+      "Export the aged image as a PNG and copy a plain-text summary of the projection numbers without re-running anything."
+    ]
+  ],
+  "faqs": [
+    [
+      "What age range can I simulate?",
+      "50 to 90 years, set with the slider. The grey-hair index scales as (target age minus 30) multiplied by 1.8 and therefore saturates at 100% from about age 86 upward, while the elasticity index falls by 1.1 points per year past 20 and bottoms out at 10%."
+    ],
+    [
+      "Is this an accurate prediction of how I will look?",
+      "No. It applies generic ageing cues — desaturation, a crease texture and landmark-anchored lines — at a strength driven only by the age you pick. It does not model your genetics, sun exposure, weight change, hairline or bone structure over time, so treat the output as entertainment rather than a forecast."
+    ],
+    [
+      "What are the grey hair, elasticity and wisdom percentages based on?",
+      "Purely on the target age you selected — each one is a fixed arithmetic formula applied to that number, not a measurement taken from your photo. They exist to make the slider's effect legible, and the accompanying hobby and wellness lines are drawn from a short fixed list. None of it is health information; talk to a clinician about anything to do with your actual skin or health."
+    ],
+    [
+      "What happens if no face is detected in my photo?",
+      "The tool still produces an image, but it falls back to generic forehead arcs across the centre of the picture instead of landmark-anchored creases, and the result looks noticeably cruder. A clear, well-lit, front-facing photo under the 10 MB upload limit gives the detector the best chance."
+    ]
+  ]
+},
+  "agent-action-dry-run-simulator": {
+  "intro": "The Agent Action Dry-Run Simulator reads a proposed AI tool call as JSON and tells you what it would probably do before anything runs: it classifies each call into write, deletion, message, money movement, external side effect, code execution or read-only, pulls out the concrete targets from the arguments, checks which safeguards are present, and scores how much review the call deserves. It is for anyone wiring up an agent — a developer testing a new tool schema, or a reviewer looking at a plan an agent produced — who wants a second opinion before granting execution. No call is connected, sent or executed; the analysis is deterministic pattern matching over the JSON you paste, entirely in the browser.",
+  "useCases": [
+    "An agent has proposed a batch of tool calls and you want to see, before approving, which ones send messages or move money rather than just reading data",
+    "You are designing a new tool schema and want to check that its arguments expose a reviewable target and a confirmation flag rather than hiding the destination",
+    "You are writing an incident review and need a plain-text report listing every irreversible step in a plan and the safeguards that were missing from each"
+  ],
+  "benefits": [
+    [
+      "Separates irreversible from recoverable",
+      "Messages and payments are marked likely irreversible outright, while deletions and code execution downgrade to potentially reversible only when a backup, snapshot, rollback or undo signal is actually present in the arguments."
+    ],
+    [
+      "Names the target, skips the secret",
+      "Destination-shaped keys such as recipient, path, url, endpoint, repository, table and bucket are surfaced for review, while anything matching password, token, secret or private key is deliberately excluded."
+    ],
+    [
+      "Tells you which safeguard is absent",
+      "Rather than a bare score, each call lists the specific missing control — confirmation, dry-run flag, recovery, idempotency key, or a narrow scope — matched to the effects it actually has."
+    ]
+  ],
+  "faqs": [
+    [
+      "Does this actually run or send the tool call?",
+      "No. Nothing is connected, sent, saved or executed — the JSON is parsed and pattern-matched locally, and the only output is a report. That is the point of a dry run: you get the preview without the side effect."
+    ],
+    [
+      "How is the risk score calculated?",
+      "Each detected effect adds a fixed weight — money movement 6, deletion 5, code execution 5, messaging 4, write 3, external side effect 2 — plus 2 if no confirmation signal is present, 1 if no explicit target could be found, and 1 more for a deletion with no recovery signal. A total of 10 or more reads as critical review, 7 to 9 as high, 4 to 6 as moderate, and below that as low signal."
+    ],
+    [
+      "What input format does it accept?",
+      "Any JSON containing tool calls: a single object, a bare array, or an object with a calls, toolCalls, tool_calls or actions array. Arguments may be a nested object or a JSON string, OpenAI-style function blocks are unwrapped automatically, and up to 200 calls can be analysed at once."
+    ],
+    [
+      "Does a low score mean the action is safe?",
+      "No. The classifier reads tool names, argument keys and HTTP methods, so a custom or misleadingly named tool can be scored low while doing something drastic, and a well-named read-only call can look riskier than it is. Treat the output as a prompt for human review, not as an authorisation — runtime permissions, policy and explicit approval still have to be checked separately."
+    ]
+  ]
+},
+  "agent-audit-log-integrity-verifier": {
+  "intro": "The Agent Audit Log Integrity Verifier checks a JSON or JSONL audit log for internal continuity — duplicate or missing entry IDs, gaps and reordering in the sequence numbers, timestamps that run backwards, and broken previous-hash links where one entry's previousHash should equal the prior entry's hash — and can optionally recompute a SHA-256 hash chain using a recipe you select explicitly. It is for anyone who has to answer 'has this agent's log been altered or truncated?' with something better than a visual scan: platform engineers, auditors and incident responders. Parsing, canonicalisation and hashing all run locally through the browser's Web Crypto API, and the exportable report contains counts and states only, never log contents.",
+  "useCases": [
+    "An agent run ended badly and you need to know whether entries were dropped in the middle, so you check the sequence numbers for gaps before reading the log at all",
+    "Your platform writes a hash chain into every audit entry and you want to confirm the stored digests still match what the entries currently contain",
+    "You are handing a log to an auditor and want a counts-only summary of which continuity checks passed, without disclosing what the entries actually say"
+  ],
+  "benefits": [
+    [
+      "Four independent continuity checks, reported separately",
+      "IDs, sequence, timestamps and previous-hash links each get their own verified, mismatch or not-checkable state, so you can tell a missing field apart from a real break."
+    ],
+    [
+      "Hash recipes are chosen, never guessed",
+      "You pick either canonical-entry or previous-hash-plus-entry, and the tool canonicalises with sorted keys and omits the hash field itself — so a match means a match against a stated rule rather than a lucky heuristic."
+    ],
+    [
+      "Honest about what it cannot prove",
+      "Entries that lack a well-formed digest are marked not-checkable rather than quietly passing, and the report never reads a null result as a clean bill of health."
+    ]
+  ],
+  "faqs": [
+    [
+      "What log formats does it accept?",
+      "A JSON array of objects, a JSON object containing an entries, events, logs, records, auditLog or audit_log array, or newline-delimited JSONL. Up to 25,000 entries are checked in one pass, and field paths for ID, sequence, timestamp, hash and previousHash are auto-discovered from the first 50 entries down to three levels of nesting — you can override any of them."
+    ],
+    [
+      "How does the SHA-256 chain verification work?",
+      "It recomputes each entry's digest and compares it to the stored one. The canonical-entry recipe hashes the entry with its own hash field removed and all object keys sorted; the previous-plus-entry recipe hashes the previous hash, a newline, then the canonical entry with both the hash and previousHash fields removed. A stored value must be exactly 64 lowercase hexadecimal characters to be checkable at all, since that is the length of a SHA-256 digest."
+    ],
+    [
+      "Does a verified chain prove the log was not tampered with?",
+      "No, and this is the important limit. A hash chain only proves internal consistency: anyone who could edit an entry could also recompute every hash after it and produce a perfectly verified log. Tamper-evidence requires something outside the file — a digital signature, a write-once store, or a digest anchored with a third party — so treat a pass as 'no accidental corruption or truncation found', not as proof of authenticity."
+    ],
+    [
+      "What does 'not-checkable' mean next to a check?",
+      "That the data needed for that check was absent, not that the check passed. A missing sequence field, an unconfigured hash path, a digest that is not 64 hex characters, or a single-entry log with no genesis hash all produce not-checkable — which is a prompt to configure the field or fix the writer, not a clean result."
     ]
   ]
 },
@@ -1440,6 +2280,46 @@ export default {
     ]
   ]
 },
+  "agent-memory-poisoning-inspector": {
+  "intro": "The Agent Memory Poisoning Inspector diffs two exports of an AI assistant's stored memory — a before and an after — and runs six detection rules over everything that was added or modified, flagging instruction-override language, invisible or direction-changing Unicode, identity and role rewrites, permission expansion, secrecy or forced-persistence phrasing, and instructions that point at an external URL. It exists because persistent memory is a durable injection surface: a single line written during one conversation keeps steering every later one. Both snapshots are parsed and compared in the browser, and the exportable report deliberately contains counts and rule IDs only — never your memory values or their paths.",
+  "useCases": [
+    "You pasted a long document or browsed an untrusted page in a chat session, and want to check what that session quietly wrote into long-term memory afterwards",
+    "You are reviewing a shared or team assistant and need to see whether anyone's session added a line granting it broader tool access than it had last week",
+    "You suspect a copy-pasted block carried hidden characters, and want a rule that actually catches zero-width and right-to-left override codepoints rather than eyeballing the text"
+  ],
+  "benefits": [
+    [
+      "Diff first, then inspect",
+      "Only the entries that actually changed between the two snapshots are scanned, so a large memory store does not drown the findings that matter."
+    ],
+    [
+      "Catches what the eye cannot see",
+      "The hidden-control rule matches zero-width, bidirectional-override and word-joiner codepoints in the U+200B–U+200F, U+202A–U+202E, U+2066–U+2069 and U+FEFF ranges, which render as nothing at all in a normal text view."
+    ],
+    [
+      "Reports without disclosing",
+      "The exportable report lists change counts, severities and which rules fired — not the memory contents — so you can escalate a finding without circulating the sensitive text."
+    ]
+  ],
+  "faqs": [
+    [
+      "What does it actually look for?",
+      "Six rules across three severities. Two are high: instruction-override phrasing such as ignore, disregard, override or bypass placed near words like previous, system, policy or safety; and invisible or directional Unicode control characters. Three are medium: identity or role changes, permission and authority expansion, and secrecy or 'never forget' persistence cues. One is low: instructions that reference an external http or https URL."
+    ],
+    [
+      "What memory formats can I paste in?",
+      "Either JSON, which is flattened to dotted paths so nested objects and arrays are compared field by field, or plain text, where each non-empty line is treated as one entry. Each snapshot is capped at 1,000,000 characters and 10,000 entries, and the tool tells you when it truncated rather than silently dropping data."
+    ],
+    [
+      "Does a flagged finding mean my assistant was actually poisoned?",
+      "No. These are pattern matches on text, and legitimate memory entries trigger them constantly — a note that says 'call me Sam' fires the identity rule, and a saved bookmark fires the external-instruction rule. The value is in narrowing thousands of lines down to the handful worth reading yourself; the judgement stays with you."
+    ],
+    [
+      "Why does it only scan additions and modifications, not deletions?",
+      "Because a removed entry has no new text that could carry an injection — there is nothing left to match against. Removals are still counted and shown in the diff, since a deletion can matter for other reasons, such as a safety instruction quietly disappearing from the store."
+    ]
+  ]
+},
   "agent-observability-checklist": {
   "intro": "An agent observability checklist turns a vague 'add logging' ticket into a named list of spans, metrics, logs, evaluations and redaction rules, then scores how many of them your agent already emits. Signal names follow the OpenTelemetry semantic conventions for generative AI systems — the gen_ai.* namespace used by most tracing backends — so the plan maps onto whatever collector you already run. It is aimed at engineers taking an LLM agent from a working demo to something on call rotation can actually debug.",
   "useCases": [
@@ -1478,6 +2358,86 @@ export default {
     [
       "How do I keep personal data out of agent traces?",
       "Redact inside a span processor or exporter so raw text never leaves your process, keep card numbers, government IDs and API keys out of telemetry entirely, hash identifiers you need for joins, and truncate IP addresses or round coordinates to about two decimal places (roughly 1.1 km). Set a short retention window on raw messages and make deletion automatic. This is informational guidance, not legal advice — confirm your obligations with a privacy professional."
+    ]
+  ]
+},
+  "agent-permission-policy-builder": {
+  "intro": "The Agent Permission Policy Builder turns plain lists into a validated JSON permission policy for an AI agent, covering seven rule groups: allowed tools, denied tools, allowed filesystem path prefixes, allowed domains, allowed message recipients, named numeric ceilings, and which tools require a confirmation flag before they run. It validates as you type — hostnames are parsed properly so a URL with a path or port is rejected, numeric limits must be non-negative numbers, and requiring confirmation without naming an accepted flag is treated as an error rather than a silent gap. It is for developers and platform owners writing the guardrail file itself; the document is generated in your browser and enforces nothing on its own.",
+  "useCases": [
+    "You are giving an agent filesystem access for the first time and want the allowed path prefixes written down as an absolute-path allowlist before you hand over the keys",
+    "Your agent can send email, and you want a recipient allowlist plus a confirmation requirement on the send tool encoded in one reviewable file",
+    "You need a spending ceiling and a per-run row limit expressed as named numeric fields your runtime can check, rather than a comment in a README"
+  ],
+  "benefits": [
+    [
+      "Validates the rules, not just the syntax",
+      "Domain entries are parsed as hostnames and rejected if they carry a path, port or whitespace, so an entry like example.com/api never silently becomes a rule that matches nothing."
+    ],
+    [
+      "Catches the contradictions you would ship",
+      "Overlapping allow and deny entries raise a warning that says deny wins, relative path prefixes are flagged as ambiguous, and a policy with no enforceable rule at all is called out."
+    ],
+    [
+      "Confirmation must be answerable",
+      "If any tool is marked as needing confirmation, the builder refuses to produce a policy until you list the flag values that count as confirmation."
+    ]
+  ],
+  "faqs": [
+    [
+      "What goes into the generated policy file?",
+      "A single JSON object with allowedTools, deniedTools, allowedPathPrefixes, allowedDomains, allowedRecipients, numericLimits and a confirmation block holding requiredForTools and acceptedFlags. Each list accepts up to 200 entries of up to 500 characters, split on newlines or commas and deduplicated case-insensitively."
+    ],
+    [
+      "What happens if a tool appears in both the allow and deny lists?",
+      "Deny wins, and the builder raises a warning naming how many patterns collide. Deny-by-default is the safer resolution, but a rule sitting in both lists usually means two people edited the policy with different intentions, so it is worth resolving rather than leaving."
+    ],
+    [
+      "How should I write domain and numeric-limit rules?",
+      "Domains are hostnames only — example.com, or *.example.com to include subdomains — with no scheme, path or port. Numeric limits are one per line in the form 'field = maximum' or 'field: maximum', such as max_transfer_amount = 5000, and the value must be a finite non-negative number; if the same field appears twice, the last value is used and you are told."
+    ],
+    [
+      "Does this policy actually stop my agent doing something?",
+      "No. It is a configuration document, and it constrains only the checks that your linter, runtime or agent framework actually reads and enforces. Generating a policy is the first step; wiring it into the execution path, and testing that a denied call is genuinely refused, is the step that provides the protection."
+    ]
+  ]
+},
+  "agent-undo-plan-validator": {
+  "intro": "The Agent Undo Plan Validator reads a proposed AI agent plan — as a JSON action array or as one step per line — and labels every step reversible, recoverable or irreversible, then checks the plan for the four safeguards that would make an undo real: backup, checkpoint, confirmation and rollback. Crucially it grades each safeguard twice, as merely mentioned or as actually detailed, so 'we will take a backup first' is treated differently from a line that says where the backup goes and how it is restored. It is for anyone reviewing an agent plan before granting execution, and it never runs, sends or verifies anything — the analysis is local keyword classification over the text you paste.",
+  "useCases": [
+    "An agent has produced a twelve-step migration plan and you want to know which steps cannot be undone before you approve any of them",
+    "You are writing a runbook for an autonomous job and want a check that your rollback section actually says how to roll back, rather than just promising to",
+    "You are reviewing a plan that mixes cleanup with a deployment, and need to spot the delete step buried among the read-only ones"
+  ],
+  "benefits": [
+    [
+      "Distinguishes mentioned from detailed",
+      "A safeguard counts as detailed only when the plan names a location, method, commit, version or approver alongside it — a bare promise to 'restore if needed' is reported as vague, not present."
+    ],
+    [
+      "Knows which undos are not undos",
+      "Sending a message, publishing content and moving money are classified irreversible outright, because no rollback step recalls a delivered email or a completed payment."
+    ],
+    [
+      "Quotes the phrase that triggered it",
+      "Every finding cites the matched wording and the rule it hit, so you can tell a genuine destructive step from a false positive on the word 'remove' in a sentence."
+    ]
+  ],
+  "faqs": [
+    [
+      "What makes a step come back as irreversible?",
+      "Two things. Either it matches an inherently irreversible external effect — communication, publication, or money movement — or it contains a destructive phrase such as delete, purge, drop table, truncate, force-push or factory reset without a detailed backup-or-checkpoint and a detailed restoration path in the plan. Add both of those in specific terms and the same step downgrades to recoverable."
+    ],
+    [
+      "Which safeguards does it look for?",
+      "Four: Backup, Checkpoint, Confirmation and Rollback. Which ones are required depends on the step — a state change needs a checkpoint and a rollback, an external side effect needs confirmation and rollback, and a destructive step needs all four. Each is reported as detailed, mentioned but vague, or not found."
+    ],
+    [
+      "What input format should the plan be in?",
+      "Either JSON — a bare array, or an object with an actions, steps, tasks, operations or plan key — or plain text with one step per line. Markdown bullets, numbered lists, checkboxes, headings and code fences are stripped automatically, so you can paste a runbook straight from a document."
+    ],
+    [
+      "If everything comes back reversible, is the plan safe to run?",
+      "No. This is keyword-based static analysis: it cannot see runtime behaviour, hidden instructions, or what a custom tool name really does, and it never checks that the backups and approvals described in the plan actually exist. A reversible label means a rollback path looks plausible in the wording, so verify that path yourself before granting execution."
     ]
   ]
 },
@@ -1885,6 +2845,46 @@ export default {
     ]
   ]
 },
+  "ai-conversation-privacy-scanner": {
+  "intro": "The AI Conversation Privacy Scanner reads a pasted chat log or an exported ChatGPT/Claude-style JSON file in your browser and flags personal data and credentials across 15 detector categories — names, emails, phone numbers, addresses, dates of birth, Aadhaar, Indian PAN, passport numbers, US SSN, payment cards, bank accounts, IBAN, IP addresses, MAC addresses, and API keys, tokens and passwords. It rebuilds the conversation as a redacted transcript you can copy or download, plus a counts-only JSON report that contains no conversation text. Nothing is uploaded — the parsing and the pattern matching both run in the tab.",
+  "useCases": [
+    "You want to paste a debugging session with an AI assistant into a public bug report, and need to know whether an API key or a customer email slipped into it first",
+    "Your team archives support-chat exports, and you need a version with account numbers and phone numbers masked before it goes into the shared drive",
+    "You are handing a conversation log to a vendor or auditor and need a counts-only summary — how many signals of each type were found — without disclosing the text itself"
+  ],
+  "benefits": [
+    [
+      "Understands export formats, not just plain text",
+      "Parses ChatGPT-style mapping trees, messages arrays and role-labelled transcripts, ordering messages by timestamp and normalising user/assistant/system roles."
+    ],
+    [
+      "Three redaction styles",
+      "Stable labels keep the same placeholder for the same value, partial masking leaves a recognisable tail, and remove strips the value outright."
+    ],
+    [
+      "Report separated from content",
+      "The downloadable JSON carries only per-category counts, message totals and flagged-message counts — the transcript stays in a separate file you control."
+    ]
+  ],
+  "faqs": [
+    [
+      "Does the scanner upload my AI conversation anywhere?",
+      "No. Both the file you open and the text you paste are parsed and scanned by JavaScript inside the page, and no request carries the conversation off the device. That also means the scan works with the network disconnected."
+    ],
+    [
+      "How large a conversation can it handle?",
+      "Up to a 2 MB file, 2,000,000 characters of source text, and 5,000 messages. Anything past those limits is cut off and the results panel shows a truncation warning, so a very large export should be split before scanning."
+    ],
+    [
+      "What is the difference between the three redaction modes?",
+      "Stable labels replace each value with a consistent placeholder so you can still tell two mentions apart; partial masking keeps a fragment of the original so a human reviewer can recognise which record it was; remove deletes the value with no trace. Pick labels when the transcript still has to make sense, remove when it must not."
+    ],
+    [
+      "Can I trust it to catch everything sensitive?",
+      "No — treat it as a first pass, not a guarantee. Pattern matching misses unusual identifiers, personal details implied by context, and anything inside images or attachments, so read the full redacted transcript yourself before sharing. If a conversation contains live credentials, rotate them rather than relying on redaction."
+    ]
+  ]
+},
   "ai-cost-per-1000-requests-calculator": {
   "intro": "This calculator converts per-million-token AI pricing into the number engineers actually budget with: cost per 1,000 requests. The formula is (input tokens x input rate + output tokens x output rate) / 1,000,000 per request, adjusted for the share of input served from a prompt cache and for billed retries — then compared side by side across five capability tiers from frontier to nano so you can see what stepping down a model tier saves.",
   "useCases": [
@@ -2032,6 +3032,126 @@ export default {
     "Type a keyword and press Generate. Use a single word: only the first word of your input is used, lowercased with punctuation stripped.",
     "Narrow the list with the Category, Length and TLD controls — the visible results re-filter instantly, without another lookup.",
     "Star the names you want to keep, use Copy All to take the full list, or click a card and hit Open Registrar to check that name at Namecheap."
+  ]
+},
+  "ai-ecg-report-analyzer": {
+  "intro": "The AI ECG Report Analyzer takes the numbers already printed on an ECG report — heart rate, PR interval, QRS duration and QTc — plus rhythm, axis, ST segment and T wave morphology, and classifies each one against standard adult reference ranges before combining them into a weighted 0–25 severity score. It is an educational reference for students, trainees and patients trying to read their own printout, not a diagnostic device: it does not read the tracing itself, only the measurements you type. Every classification and the plain-text report it generates stay in your browser.",
+  "useCases": [
+    "You are revising for a cardiology viva and want to check whether a PR of 230 ms with a QRS of 130 ms lands in first-degree AV block plus bundle branch block territory",
+    "You have your own ECG printout showing a QTc of 475 ms and want to understand which reference band that falls into before your follow-up appointment",
+    "You are teaching ECG interpretation and want a repeatable way to show how ST elevation and a ventricular rhythm push a case from moderate into critical on a severity scale"
+  ],
+  "benefits": [
+    [
+      "Sex-specific QTc bands",
+      "Uses separate male and female thresholds — normal to 450 ms and 470 ms prolonged for males, 460 ms and 480 ms for females — instead of one blanket cut-off."
+    ],
+    [
+      "Weighted, not additive, scoring",
+      "ST segment and rhythm findings carry a 3x weight, QTc 2.5x, and heart rate and QRS 2x, so a rhythm emergency outranks a mildly long PR."
+    ],
+    [
+      "Explains each band, not just the label",
+      "Every classified interval comes with the differential it suggests — junctional rhythm or WPW for a short PR, Torsades risk for a long QTc."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a normal PR interval and QRS duration?",
+      "A normal PR interval is 120–200 ms and a normal QRS is 80–100 ms in adults. This tool flags PR under 120 ms as short, 200–300 ms as first-degree AV block and above 300 ms as advanced delay; QRS of 100–120 ms as an incomplete block and above 120 ms as a complete bundle branch block."
+    ],
+    [
+      "At what QTc is the interval considered prolonged?",
+      "Above 470 ms in males and above 480 ms in females, with 450–470 ms and 460–480 ms treated as borderline. Prolonged QTc raises the risk of Torsades de Pointes, which is why the analyzer weights it heavily and prompts a review of QT-prolonging medications and potassium and magnesium levels."
+    ],
+    [
+      "How is the risk score calculated?",
+      "Each parameter is placed in a severity tier from 0 to 3, multiplied by a weight, and the total is capped at 25. Scores of 0–2 read as low, 3–6 moderate, 7–12 high and above 12 critical — the weights are 3x for ST changes and rhythm, 2.5x for QTc, 2x for heart rate, QRS and T waves, and 1.5x for PR and axis."
+    ],
+    [
+      "Can this replace a cardiologist reading my ECG?",
+      "No. It classifies numbers you type against textbook reference ranges and has no access to the waveform, lead placement, your symptoms, history or medications — all of which change the interpretation. Use it to understand terminology, and take any abnormal finding, especially ST changes or a wide-complex rhythm, to a qualified clinician."
+    ]
+  ]
+},
+  "ai-face-match": {
+  "intro": "AI Face Match compares two photographs by running face-api.js in your browser — a tiny face detector, a 68-point landmark model and a face-recognition network that turns each face into a 128-number descriptor — then measures the Euclidean distance between those two descriptors and maps it to a similarity percentage. A distance of 0 reads as a perfect match and a distance of 1.4 as no resemblance, with the score clamped between 12% and 99%. It is built for look-alike and family-resemblance curiosity, not identity verification, and the images never leave the page.",
+  "useCases": [
+    "You and a friend keep getting mistaken for siblings and want a number on how close your facial geometry actually is",
+    "You are putting together a family album and want to see whether a childhood photo and a recent one land in the same-person band",
+    "You found a celebrity look-alike claim online and want to check the two published photos yourself rather than take the caption's word for it"
+  ],
+  "benefits": [
+    [
+      "Real descriptor distance, not a filter",
+      "The headline percentage comes from the Euclidean distance between two 128-dimension face embeddings, the same metric face recognition libraries use for matching."
+    ],
+    [
+      "Models run locally from the page",
+      "The detector, landmark and recognition networks are fetched as static model files and executed in the tab, so neither photo is uploaded anywhere."
+    ],
+    [
+      "Bands you can act on",
+      "Scores are grouped at 90%+ (same person or identical twins), 75–89% (look-alikes), 50–74% (family resemblance) and below 50% (distinct faces)."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is the face similarity percentage calculated?",
+      "By Euclidean distance between two 128-value face descriptors, converted with the formula (1 − distance ÷ 1.4) × 100 and clamped to the 12–99% range. Identical images give a near-zero distance and score at the top of the scale; unrelated faces typically produce distances near or above 1.0."
+    ],
+    [
+      "What image size and format can I upload?",
+      "Any format your browser can display, up to 10 MB per photo. Use a front-facing, well-lit image with the whole face visible — heavy shadow, extreme angles, sunglasses or masks can stop the detector finding a face at all."
+    ],
+    [
+      "What happens if no face is detected in one of the photos?",
+      "The tool falls back to a deterministic signature derived from the two file names and sizes, which produces a placeholder score in the 54–85% range rather than a real facial comparison. If the result looks arbitrary, re-upload with clearer, forward-facing photos so the recognition network can actually run."
+    ],
+    [
+      "Can I use this to verify someone's identity?",
+      "No. It is an entertainment and curiosity tool: lighting, age, pose, camera lens and photo compression all move the distance score, and a single embedding comparison is not evidence of who someone is. Never use the result for access control, background checks, or any decision that affects a real person."
+    ]
+  ]
+},
+  "ai-fake-image-detector": {
+  "intro": "The AI Fake Image Detector runs eight forensic checks on a JPEG, PNG, WebP or TIFF in your browser — noise consistency, JPEG compression artifacts, EXIF metadata, lighting distribution, texture gradients, edge sharpness, colour histograms and skin-tone face regions — and combines them into a single 0–100 AI-likelihood score. Each check is weighted (lighting 18, noise and texture 15 each, compression and edges 12, metadata and colour 10, faces 8) and then scaled by its own confidence, so a check that could not read much contributes less. It is a signal-gathering aid for anyone triaging a suspicious image, not a verdict.",
+  "useCases": [
+    "A photo is circulating in a group chat as breaking news and you want to see whether it carries camera EXIF and normal JPEG block structure before you forward it",
+    "You are reviewing stock or submitted images for a publication and need a documented technical report on why one of them looked off",
+    "A marketplace listing photo looks too clean, and you want to check whether its noise and texture are suspiciously uniform across the frame"
+  ],
+  "benefits": [
+    [
+      "Eight independent checks, confidence-weighted",
+      "Each detector reports its own confidence, and the overall score is a confidence-scaled weighted mean rather than a flat average."
+    ],
+    [
+      "Shows the raw measurements",
+      "Every check prints its numbers — noise sigma, cross-block coefficient of variation, JPEG block boundary ratio, Sobel gradient CV — so you can judge the reasoning yourself."
+    ],
+    [
+      "Reads real container metadata",
+      "It parses JPEG APP1/EXIF segments for camera manufacturer and editing-software strings and PNG tEXt/iTXt chunks, which often carry a generator's own signature."
+    ]
+  ],
+  "faqs": [
+    [
+      "How accurate is an AI image detector?",
+      "No pixel-forensics detector is reliable enough to be treated as proof, this one included. Screenshotting, re-encoding, resizing or social-media re-compression strips the exact signals it measures, and a real photo pushed through heavy editing can score like a synthetic one — use the result as one input alongside source, context and reverse image search."
+    ],
+    [
+      "What do the score bands mean?",
+      "A score of 0–35 is reported as Likely Authentic, 36–55 as Possibly AI Generated, and above 55 as Likely AI Generated. Anything in the middle band genuinely means the checks disagreed, not that the image is half-fake."
+    ],
+    [
+      "Which image formats does it accept?",
+      "JPEG, PNG, WebP and TIFF. Compression analysis only applies to JPEG, since it looks for 8x8 quantisation block boundaries; for the other formats that check is skipped and the remaining seven still run."
+    ],
+    [
+      "Is my image uploaded to a server?",
+      "No. The image is drawn to a canvas and analysed in JavaScript in your tab, and only the first 512 KB of the file is read for metadata parsing. Large images are downsampled to about 400,000 pixels before the statistical checks run, purely to keep the analysis fast."
+    ]
   ]
 },
   "ai-glossary-explorer": {
@@ -2397,6 +3517,126 @@ export default {
     ]
   ]
 },
+  "ai-medical-report-analyzer": {
+  "intro": "The AI Medical Report Analyzer takes 23 common blood-test values across five panels — CBC, basic metabolic panel, liver function, thyroid and coagulation — compares each against a standard adult reference range, and labels it low, normal or high with the differential that abnormality usually points to. It then adds up a severity weight per abnormal result to place the set in a low, moderate, high or critical band and produces a plain-text report you can take to an appointment. It is an educational reference for reading your own lab printout, not a diagnosis, and every value stays in your browser.",
+  "useCases": [
+    "Your results portal shows a potassium of 5.4 mEq/L with no comment, and you want to know which side of the 3.5–5.0 reference range that sits on before your callback",
+    "You are a nursing or medical student practising panel interpretation and want to see which combinations of abnormal values push a case into the critical band",
+    "You are collecting a year of lab printouts before a specialist visit and want one typed summary that lists every out-of-range value with its unit and label"
+  ],
+  "benefits": [
+    [
+      "Live classification as you type",
+      "Each field shows its reference range and labels the value the moment you enter it — Hypokalemia, Microcytic, Thrombocytopenia — rather than waiting for a submit button."
+    ],
+    [
+      "Severity weighting, not a flat count",
+      "Hyperkalemia carries a weight of 3 while a mildly low BUN carries 0, so three trivial deviations do not outrank one dangerous result."
+    ],
+    [
+      "Panel-aware follow-up notes",
+      "Abnormal potassium, creatinine, glucose, INR, haemoglobin, platelets, TSH and transaminases each trigger the specific next investigations clinicians normally order."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which lab values does it cover?",
+      "23 in total: WBC, RBC, haemoglobin, haematocrit, platelets and MCV in the CBC; glucose, BUN, creatinine, sodium, potassium, chloride and calcium in the metabolic panel; ALT, AST, ALP, bilirubin and albumin for the liver; TSH and free T4 for thyroid; and PT, INR and PTT for coagulation. You can fill in as few or as many as you have."
+    ],
+    [
+      "What reference ranges does it use?",
+      "One standard adult set — for example potassium 3.5–5.0 mEq/L, sodium 136–145 mEq/L, TSH 0.4–4.0 mIU/L, creatinine 0.7–1.3 mg/dL, fasting glucose 70–100 mg/dL and INR 0.8–1.1. Your own laboratory prints its own ranges, which vary by assay, sex, age and pregnancy, so always compare against the numbers on your report."
+    ],
+    [
+      "How is the overall risk band decided?",
+      "By summing a 0–3 severity weight for every out-of-range value: a total of 0–2 reads as low risk, 3–6 moderate, 7–12 high and above 12 critical. Hyperkalemia is the only single finding weighted at 3, because of its arrhythmia risk."
+    ],
+    [
+      "Can this tell me what is wrong with me?",
+      "No. It matches numbers to reference intervals and lists the conditions those intervals are associated with; it has no access to your symptoms, medications, history or the trend of previous results, all of which change what a value means. Take any flagged result to a qualified clinician, and treat a critical band as a reason to contact one promptly rather than to self-treat."
+    ]
+  ]
+},
+  "ai-memory-capsule": {
+  "intro": "AI Memory Capsule is a private journal that scores each entry you write with a lexicon-based sentiment analysis — counting matches against a built-in list of positive and negative words, adjusting for intensifiers and diminishers, and returning a −100 to +100 score — then tracks how those scores, moods and topics move over time. You tag each entry with one of 10 moods and a 1–5 intensity, and can seal a capsule behind a future unlock date so its content stays hidden until then. Everything is stored in your browser's localStorage, with JSON and CSV export so the archive is always yours.",
+  "useCases": [
+    "You want to write a letter to yourself that stays sealed until a specific date next year, without trusting a mailing service to still exist by then",
+    "You have journalled for a few months and want to see which topics — work, family, health, travel — dominate the entries where your sentiment score went negative",
+    "You are moving off a subscription journalling app and want a local archive you can export to CSV with mood, intensity, tags and word count per entry"
+  ],
+  "benefits": [
+    [
+      "Sentiment you can audit",
+      "The score is a transparent positive-minus-negative word ratio with a 1.3x bump for intensifiers and a 0.7x damping for diminishers — no opaque model deciding how you felt."
+    ],
+    [
+      "Automatic topic and word insight",
+      "Entries are matched against 10 topic dictionaries and a stop-word-filtered word frequency count, so recurring themes surface without you tagging them."
+    ],
+    [
+      "Genuinely sealed entries",
+      "A capsule with a future unlock date hides its content in both the list and detail views until that timestamp passes."
+    ]
+  ],
+  "faqs": [
+    [
+      "Where are my journal entries stored?",
+      "In your browser's localStorage, under the key altftool_ai_memory_capsule_data — never on a server. That means entries are tied to this browser and profile, and clearing site data deletes them, so export to JSON regularly if the archive matters."
+    ],
+    [
+      "How does the mood score work?",
+      "It scores from −100 to +100 using the formula (positive words − negative words) ÷ total sentiment words × 100, after stripping stop words. Above +30 reads as Positive and above +60 Very Positive; below −30 is Negative and below −60 Very Negative, with anything in between labelled Neutral."
+    ],
+    [
+      "Can a sealed capsule be opened early?",
+      "Not through the interface — the content stays hidden until the unlock date you set. It is a self-discipline feature rather than encryption, though: the entry is stored in plain form in localStorage, so treat it as a promise to yourself, not a security control."
+    ],
+    [
+      "How do I move my entries somewhere else?",
+      "Export as JSON for a complete copy including full text, or as CSV for a spreadsheet view with id, title, category, mood, intensity, tags, creation date, word count and favourite/pinned flags. The JSON export is the one to keep as a backup."
+    ]
+  ]
+},
+  "ai-object-counter": {
+  "intro": "AI Object Counter runs the COCO-SSD detector on TensorFlow.js inside your browser to find and count the 80 everyday object classes in the COCO dataset — people, cars, bottles, chairs, dogs, laptops and the rest — drawing a labelled bounding box around each one and a per-class tally beside it. The model is run once at a 20% confidence floor and the results are re-filtered live by a slider, so you can raise or lower the threshold and watch the count change without re-detecting. Nothing is uploaded: the model weights are fetched once and the image is processed on a canvas in the tab.",
+  "useCases": [
+    "You photographed a car park or a shelf and need a defensible count rather than eyeballing it, with a box drawn around each object you can check",
+    "You are checking a crowd photo and want to see how the person count changes between a 40% and a 70% confidence threshold before you quote a number",
+    "You are prototyping a computer-vision idea and want to know whether an off-the-shelf COCO detector even sees the objects in your sample images"
+  ],
+  "benefits": [
+    [
+      "Re-threshold without re-running",
+      "Detection happens once at a 20% floor and the confidence slider filters client-side, so changing the threshold is instant instead of a fresh model pass."
+    ],
+    [
+      "Per-detection evidence",
+      "Every detection gets a cropped 96x72 thumbnail and its own confidence score, so you can see exactly what the model counted rather than trusting a total."
+    ],
+    [
+      "Survives a bad GPU path",
+      "If WebGL warmup stalls past 45 seconds the loader falls back to the CPU backend and retries, so detection still completes on machines where GPU acceleration misbehaves."
+    ]
+  ],
+  "faqs": [
+    [
+      "What objects can it detect?",
+      "The 80 COCO categories — person, bicycle, car, motorcycle, bus, truck, traffic light, dog, cat, bottle, cup, chair, laptop, cell phone and so on. Anything outside that list, including faces, text, logos and specialised industrial parts, will not be counted no matter how clear it is in the photo."
+    ],
+    [
+      "What confidence threshold should I use?",
+      "The default is 40%, which is a reasonable balance for clear photos. Lower it toward the 20% floor when objects are small or partly hidden and you would rather over-count and prune manually; raise it above 60% when a false positive costs more than a miss."
+    ],
+    [
+      "Why did it miss objects in a crowded photo?",
+      "The tool uses the lite_mobilenet_v2 base of COCO-SSD, which trades accuracy for speed and struggles with heavily overlapping, very small, or partly occluded objects. Cropping the image into sections and counting each one usually recovers more than lowering the threshold does."
+    ],
+    [
+      "Does my image get uploaded?",
+      "No. The COCO-SSD weights are downloaded to your browser once, and detection runs there via TensorFlow.js — the image itself is only ever drawn to a local canvas. After the first load, detection works with the network disconnected."
+    ]
+  ]
+},
   "ai-passport-photo-maker": {
   "intro": "This passport photo maker crops any photo to an official ID size — 51 × 51 mm for US and Indian passports, 35 × 45 mm for Schengen, UK and Indian forms — and shows the published chin-to-crown head band you have to fit inside it. It converts millimetres to pixels at 300, 400 or 600 dpi using the exact 25.4 mm inch, then lays out a print sheet on 4×6, 5×7, A6 or A4 paper. Everything runs in your browser, so the photo is never uploaded.",
   "useCases": [
@@ -2597,6 +3837,46 @@ export default {
     ]
   ]
 },
+  "ai-productivity-optimizer": {
+  "intro": "AI Productivity Optimizer turns four answers — your role, your peak energy window, your biggest distractor and your main goal — into a named focus method, a concrete daily schedule and a short tool list, using a fixed rule set rather than generic advice. Pick Morning and it returns 90-minute ultradian focus blocks with an Eat-the-Frog start at 8 AM; pick Night and it moves admin to the morning and deep creative work past 8 PM. It is a starting template for someone who has read about a dozen productivity systems and wants one picked for their chronotype.",
+  "useCases": [
+    "You keep abandoning Pomodoro because 25 minutes is too short for your work, and you want to know which method fits a morning chronotype doing deep technical work",
+    "Slack and email fragment your day and you want a specific batching rule to try — a fixed pair of check times rather than 'check less often'",
+    "You are a night owl on a nine-to-five team and want a written schedule that puts admin in the morning and protects your late-evening focus window"
+  ],
+  "benefits": [
+    [
+      "Chronotype drives the schedule",
+      "Morning, afternoon and night answers produce genuinely different plans — 8 AM hardest-task-first versus post-8 PM creative blocks — not the same advice reworded."
+    ],
+    [
+      "Distractor changes the method, not just the tip",
+      "Social media routes you to identity-based habit framing, email overload to fixed batch processing at 12 PM and 4 PM, and context switching to timed focus blocks."
+    ],
+    [
+      "Named frameworks you can go read about",
+      "Every recommendation is an existing, documented method — Pomodoro, Eat the Frog, ultradian 90-minute blocks, time blocking, batch processing — so you can research it further."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is this actually using an AI model?",
+      "No — it is a deterministic rule set, and the same four answers always produce the same plan. That is a feature for this kind of tool: the mapping from chronotype and distractor to method is explicit and repeatable rather than a different answer every time you ask."
+    ],
+    [
+      "How long should a focus block be?",
+      "This tool defaults to 25 minutes of work and 5 minutes of break for the classic Pomodoro pattern, and switches to 90-minute blocks when you report a morning peak, following the ultradian rhythm idea that alertness runs in roughly 90-minute cycles. Start with whichever matches how long you can currently concentrate and extend from there."
+    ],
+    [
+      "How often should I check email if it keeps derailing me?",
+      "The plan it generates for email-driven distraction is twice a day, at 12 PM and 4 PM, with the inbox closed in between. Two fixed windows work because the cost is the context switch, not the reading — batching removes dozens of switches without delaying anything by more than a few hours."
+    ],
+    [
+      "What inputs does it take?",
+      "Four: one of 5 roles (developer, designer, writer/creator, manager/executive, student), one of 4 distractors, one of 3 peak energy windows, and one of 4 goals. Energy window and distractor do most of the work in choosing the method; role mainly shapes the suggested tool list."
+    ]
+  ]
+},
   "ai-productivity-time-saved-calculator": {
   "intro": "The AI Time Saved Calculator estimates weekly and annual hours saved by AI using the before/after task-timing method: (minutes before − minutes with AI) × runs per week, summed across tasks and multiplied by your working weeks per year (default 46). Because it works from measured timings rather than vendor productivity multipliers, it also handles the honest case where a task got slower with AI. It is built for individuals and team leads who want a defensible savings number for a review, business case or renewal decision.",
   "useCases": [
@@ -2674,6 +3954,86 @@ export default {
     [
       "What is a fallback plan in an AI project?",
       "The defined path the work takes when the model is unavailable or below its confidence threshold — usually routing to the existing manual process plus a feature flag that disables the AI path entirely. Writing it during scoping is what makes a pilot reversible; if you cannot describe how to turn the system off, it is not ready to switch on."
+    ]
+  ]
+},
+  "ai-prompt-organizer": {
+  "intro": "AI Prompt Organizer is a local prompt library: save each prompt with a title, description, category, target model and tags, then search across titles, descriptions, content and tags, and copy any one to the clipboard in a click. While you write, it scores the draft out of 5 against the structural checks that separate a working prompt from a wish — does it assign a role, give context, state the task, use a [VARIABLE], and define an output format. Everything lives in your browser's localStorage, with Markdown, CSV, JSON and PDF export so the library is portable.",
+  "useCases": [
+    "The prompt that finally produced the right output is buried three chats back and you want it saved, tagged and findable next time",
+    "Your team keeps rewriting the same code-review and meeting-summary prompts, and you want one exportable Markdown file everyone works from",
+    "You are learning prompt engineering and want feedback on whether a draft actually specifies a role and an output format, not just a vague request"
+  ],
+  "benefits": [
+    [
+      "Structural quality score while you type",
+      "Five live checks — role, context, task, [VARIABLE] placeholder, output format — turn 'this prompt feels weak' into a specific missing piece."
+    ],
+    [
+      "Six insertable building blocks",
+      "Role, Context, Task, Steps, Output format and Constraints snippets append to the draft, so a rough idea becomes a structured prompt without retyping the scaffolding."
+    ],
+    [
+      "Four export formats, no lock-in",
+      "Markdown for docs, CSV for a spreadsheet, JSON for a full backup and a print-to-PDF view — per prompt or across whatever your current filter shows."
+    ]
+  ],
+  "faqs": [
+    [
+      "Where are my saved prompts stored?",
+      "In your browser's localStorage under the key premium_prompts_replica_v2 — nothing is sent to a server or tied to an account. They are therefore specific to this browser and profile, and clearing site data removes them, so take a JSON export as a backup."
+    ],
+    [
+      "What makes a prompt score 5 out of 5?",
+      "It must assign a role ('You are…', 'Act as…'), supply context or background, state the task with an action verb, include at least one [VARIABLE] placeholder in capitals and brackets, and name an output format such as Markdown, JSON, a table or a bullet list. The checks are pattern matches on your text, so they measure structure, not whether the prompt gets a good answer."
+    ],
+    [
+      "How do I organise a large library?",
+      "Use the eight built-in categories — Writing, Coding, Marketing, Design, Business, SEO, Social Media and Productivity — plus free-form comma-separated tags, and the five filter chips for All, Recent, Favorites, Personal and Team. Search matches title, description, full prompt content and tags at once, so a distinctive phrase inside the prompt body finds it."
+    ],
+    [
+      "Can I share a prompt with someone else?",
+      "Yes — copy the content, download that single prompt as a .md file, or open a prefilled email or post. Sharing produces a file or a message you send yourself; there is no hosted copy, since nothing is stored outside your browser."
+    ]
+  ]
+},
+  "ai-quiz-generator": {
+  "intro": "AI Quiz Generator turns any passage of text into a graded quiz using in-browser NLP: it splits the passage into sentences, ranks the key terms in each one, then blanks a term to build multiple-choice and fill-in-the-blank questions or swaps a term to build a false statement for true/false. Terms are prioritised by type — capitalised two-word phrases rank highest, then proper nouns, then numbers, then long words — so the questions target the content words rather than random filler. It produces up to 15 questions per run, grades instantly, and shows the original sentence as the explanation for every answer.",
+  "useCases": [
+    "You have a chapter of lecture notes and want to self-test on it tonight rather than reread it a fourth time",
+    "You are teaching and need a quick comprehension check from a reading you assigned, with the source sentence attached to each answer",
+    "You are onboarding someone onto a policy or handbook section and want to confirm they actually absorbed the specifics, not just skimmed"
+  ],
+  "benefits": [
+    [
+      "Difficulty changes which terms get tested",
+      "Easy targets the highest-priority terms (proper nouns and capitalised phrases); hard deliberately picks low-priority ordinary vocabulary, which is far harder to recall from context."
+    ],
+    [
+      "Every answer traces back to the source",
+      "Explanations quote the original sentence verbatim, including the corrected version for a false true/false item, so a disputed answer is settled from the text."
+    ],
+    [
+      "Three question formats from one paste",
+      "Multiple choice, true/false and fill-in-the-blank are generated from the same passage in a single pass, capped at 5 of each so no one format dominates."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much text do I need to paste in?",
+      "At least two usable sentences containing at least two distinct key terms, but a few hundred words gives much better results. Only sentences between 4 and 45 words are used — very short fragments carry nothing to test, and very long ones make unreadable question stems."
+    ],
+    [
+      "How many questions will it generate?",
+      "Up to 15 in total, with a maximum of 5 per question type. If your passage is short you will get fewer, because each question consumes a sentence and a key term and neither is reused."
+    ],
+    [
+      "Does my text get uploaded anywhere?",
+      "No. Sentence splitting, term extraction and question building all run in JavaScript in your tab, and quiz history is kept in localStorage under the key ai-quiz-generator-history. That makes it safe for internal documents and unpublished coursework."
+    ],
+    [
+      "Why are some of the wrong answers obviously wrong?",
+      "Distractors are drawn from other key terms in the same passage, so when the text is short or the terms are very different in kind, the wrong options stand out. Paste a longer, more uniform passage — more candidate terms means more plausible distractors."
     ]
   ]
 },
@@ -2795,6 +4155,46 @@ export default {
     [
       "What is balanced accuracy and why is it used here instead of a simple score?",
       "Balanced accuracy is the average of recall (scams correctly flagged) and specificity (genuine messages correctly cleared), which prevents a good-looking score from a lazy strategy. Marking every message as a scam gives 100% recall but 0% specificity, so balanced accuracy lands at 50% — the same as guessing."
+    ]
+  ]
+},
+  "ai-selfie-enhancer": {
+  "intro": "AI Selfie Enhancer retouches a portrait with four controls — brightness, contrast and saturation from 50% to 150%, plus a 0–10 smoothing amount applied as a Gaussian blur — and layers 79 one-click presets on top, from a barely-there natural look to studio, cinematic and glamour finishes. A draggable split slider shows the original and the edited version side by side in the same frame, and the export re-renders the same filter chain onto a full-resolution canvas so the download matches what you previewed. The photo is never uploaded; every pixel operation happens on a canvas in your tab.",
+  "useCases": [
+    "You have one usable photo for a work profile and it was shot under yellow office light that needs lifting without turning your skin orange",
+    "A group selfie came out flat and underexposed, and you want to fix brightness and contrast without installing an app that wants an account",
+    "You want to see exactly how much retouching a preset applied before you post the photo, using a side-by-side wipe rather than toggling back and forth"
+  ],
+  "benefits": [
+    [
+      "Presets you can then take over",
+      "Each of the 79 presets simply sets the four sliders, so you can start from a look and dial any part of it back instead of accepting a fixed result."
+    ],
+    [
+      "Honest before/after comparison",
+      "The split slider clips the original over the edited image in the same position and scale, so you are comparing the same pixels rather than two separate previews."
+    ],
+    [
+      "Export at the original resolution",
+      "The download redraws the source at its full natural width and height with the same filter string, saved as JPEG at quality 0.95 — no downscaling to a preview size."
+    ]
+  ],
+  "faqs": [
+    [
+      "How strong should skin smoothing be?",
+      "Start between 1 and 2 on the 0–10 scale; the smoothing value is halved to set the blur radius, so a setting of 2 is a 1-pixel blur. Anything above about 3 starts erasing real skin texture and reads as artificial, especially on a large screen or in print."
+    ],
+    [
+      "Does it change my face shape or features?",
+      "No. All four controls are global image adjustments — brightness, contrast, saturation and blur — applied uniformly across the frame. Nothing detects, reshapes, slims or repositions facial features, so the person in the photo stays the person in the photo."
+    ],
+    [
+      "Is my photo uploaded to a server?",
+      "No. The preview uses CSS filters on the image element and the export draws to an HTML canvas locally, so the file never leaves the browser. There is no account, no gallery and no copy kept."
+    ],
+    [
+      "Why does my exported image look slightly different from the preview?",
+      "Both use the same filter chain, but the preview is scaled to fit the screen while the export runs at full resolution — so blur, which is measured in pixels, covers proportionally less of a large image. If the smoothing looks weaker in the download, raise the value a step and export again."
     ]
   ]
 },
@@ -3200,6 +4600,46 @@ export default {
     ]
   ]
 },
+  "aim-trainer": {
+  "intro": "Aim Trainer is a click-accuracy drill with two modes: Timed gives you 30 seconds to pop as many targets as possible, and Precision spawns one target at a time that grows then shrinks away, ending the run on a single stray shot or three escaped targets. Every run reports hits, accuracy as a percentage of shots fired, and average reaction time in milliseconds, and your best score per mode is saved on the device. Targets are never smaller than 44 pixels, so it plays the same with a mouse or a thumb.",
+  "useCases": [
+    "You want a 30-second warm-up before a match rather than spending your first two rounds finding your aim",
+    "You changed mouse DPI or sensitivity and want a repeatable measurement to tell whether the new setting is actually better",
+    "You want to know your real click reaction time in milliseconds instead of guessing from how fast a game feels"
+  ],
+  "benefits": [
+    [
+      "Two modes that train different things",
+      "Timed rewards raw speed over 30 seconds; Precision punishes a single misclick, so it trains restraint rather than spray."
+    ],
+    [
+      "Difficulty that ramps with your streak",
+      "In Precision each target lives 45 ms less than the last, from 2,100 ms down to a 1,050 ms floor, so a long run gets genuinely harder."
+    ],
+    [
+      "Accuracy counted honestly",
+      "Clicks on empty space count as shots, so the accuracy figure reflects everything you fired, not just the targets you happened to hit."
+    ]
+  ],
+  "faqs": [
+    [
+      "How long is a round?",
+      "Timed mode is a fixed 30 seconds. Precision mode has no clock — it runs until one stray shot lands on empty space or three targets escape before you hit them, so a good run can last far longer than 30 seconds."
+    ],
+    [
+      "What is a good average reaction time?",
+      "The tool reports the mean milliseconds between a target appearing and your hit, which includes the time to move the pointer, so it runs well above pure reaction tests. Compare it against your own earlier runs on the same input device rather than against someone else's number — mouse, trackpad and touch give very different figures."
+    ],
+    [
+      "Does it work on a phone?",
+      "Yes. Targets are clamped to a 44-pixel minimum diameter, the standard minimum touch target, and scale with the arena — 14% of arena width in Timed mode up to 80 pixels, and up to 20% or 112 pixels at full size in Precision."
+    ],
+    [
+      "Can I play with the keyboard?",
+      "Partly. Space or Enter starts, pauses and restarts a run, 1 and 2 switch between Timed and Precision, and P pauses; hitting the targets themselves needs a pointer. Best scores are stored per mode on this device, so clearing site data resets them."
+    ]
+  ]
+},
   "air-cooler-vs-ac-cost": {
   "intro": "This comparison shows what an evaporative desert cooler and an air conditioner each cost to run, and — more usefully — what temperature each can actually deliver in your air. A cooler cannot go below the wet-bulb temperature: its outlet is dry-bulb minus the pad's saturation effectiveness times the wet-bulb depression, so at 40 °C and 25% humidity an 85% honeycomb pad reaches about 27 °C, while at 33 °C and 85% humidity it manages under 2 °C of cooling. Wet bulb is computed with Stull's 2011 approximation and the water evaporated from a constant-enthalpy psychrometric balance.",
   "useCases": [
@@ -3277,6 +4717,46 @@ export default {
     [
       "What happens if I never change the cabin filter?",
       "Airflow from the vents drops noticeably, the AC feels weaker even though the gas is fine, and the blocked filter traps damp debris that produces the musty smell people blame on the AC itself. A badly clogged cabin filter also makes the blower motor work harder, which shortens its life."
+    ]
+  ]
+},
+  "air-fryer-converter": {
+  "intro": "The Air Fryer Time & Temp Converter turns any oven recipe into air fryer settings using the standard rule of thumb: drop the temperature by 25°C (50°F) and cut the cooking time by 20%. Enter the oven temperature and minutes from the recipe and it returns the air fryer temperature rounded to the nearest 5°, the adjusted time, when to shake or flip, and when to start checking doneness. It also carries a cheat sheet of tested settings for everyday foods and a table of safe internal temperatures.",
+  "useCases": [
+    "You found a tray-bake recipe that says 200°C for 30 minutes and need to know what to dial into the air fryer basket instead",
+    "You are cooking chicken wings for the first time and want a tested starting point plus the internal temperature that means they are actually done",
+    "You are reheating leftover pizza and want a crisper result than the microwave without guessing at the time"
+  ],
+  "benefits": [
+    [
+      "Shows the rule, not just the answer",
+      "Every result states the −25°C and ×0.8 arithmetic so you can adjust it yourself for a thicker cut."
+    ],
+    [
+      "Warns when the setting is out of range",
+      "Flags conversions above the 200°C/400°F ceiling most basket air fryers have and suggests adding 2-3 minutes at max instead."
+    ],
+    [
+      "Ties timing to doneness",
+      "Gives a shake/flip point at the halfway mark, a check-early time, and the safe internal temperature for each food group."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you convert an oven recipe to an air fryer?",
+      "Lower the temperature by 25°C (50°F) and reduce the time by about 20%. A recipe calling for 200°C for 30 minutes becomes roughly 175°C for 24 minutes in the air fryer, because the fan moves hot air directly over the food instead of heating a large cavity."
+    ],
+    [
+      "What internal temperature is safe for air fried chicken?",
+      "74°C (165°F) for all poultry, measured in the thickest part away from bone. Ground meat and egg dishes are 71°C (160°F), fish is 63°C (145°F), and whole cuts of beef, lamb or pork are 63°C (145°F) with a 3-minute rest. Colour and crispness are not reliable — use an instant-read thermometer. These are general food-safety figures; follow your local food authority's guidance."
+    ],
+    [
+      "Do you need to preheat an air fryer?",
+      "3-5 minutes at the cooking temperature is enough for most models, and it matters most for anything you want crisp or seared. Small baskets recover heat quickly, so skipping the preheat mainly costs you a couple of extra minutes rather than ruining the dish."
+    ],
+    [
+      "Why is my air fried food soggy instead of crisp?",
+      "Almost always overcrowding. Air frying is convection, so hot air has to reach every surface — food stacked in layers steams in its own moisture. Keep everything in a single layer, shake or flip halfway, and if the basket is full either cook in two batches or add 3-5 minutes and shake more often. Never raise the temperature to compensate: the outside burns before the centre cooks."
     ]
   ]
 },
@@ -3520,6 +5000,126 @@ export default {
     ]
   ]
 },
+  "alcohol-unit-calculator": {
+  "intro": "The Alcohol Units & BAC Calculator counts UK units from the real volume and ABV of what you drank using units = ml × ABV% ÷ 1000, then estimates blood alcohol with the Widmark formula: BAC% = (grams of alcohol × 100) ÷ (body weight in grams × r) − 0.015 × hours since the first drink. It converts the same session into US standard drinks (14 g of pure alcohol each), tracks a rolling seven days against the 14-unit low-risk guidance, and shows how long the estimate takes to fall back to zero. Everything is an informational estimate from population averages — it is not a measurement, and never a basis for deciding whether to drive.",
+  "useCases": [
+    "You poured two large pegs and a beer at home and want to know what that adds up to in units before you log the week",
+    "You are checking whether a Friday night plus a Sunday lunch has already used up the 14 units of weekly low-risk guidance",
+    "You want to see roughly how many hours a session takes to clear at 0.015% per hour, so you can plan tomorrow morning around it rather than around a guess"
+  ],
+  "benefits": [
+    [
+      "Real pour sizes, not \"a drink\"",
+      "A 30 ml peg at 42.8%, a 568 ml pint at 5% and a 750 ml bottle of wine are each counted on their own numbers."
+    ],
+    [
+      "Shows the Widmark arithmetic",
+      "The r value, your weight in grams and the elimination subtraction are all printed, so the estimate can be checked rather than trusted blindly."
+    ],
+    [
+      "Honest about what it cannot know",
+      "It refuses to pretend food shortens your time to sober, and states plainly that a low reading is not evidence you are under any legal limit."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you calculate alcohol units?",
+      "Units = volume in ml × ABV% ÷ 1000. A 330 ml beer at 5% is 1.65 units, a 175 ml glass of wine at 12% is 2.1 units, and a 750 ml bottle of wine at 12% is 9 units. One UK unit is 10 ml — about 8 g — of pure alcohol."
+    ],
+    [
+      "How many units a week is considered low risk?",
+      "UK Chief Medical Officers' guidance is no more than 14 units a week, spread over three or more days, with several drink-free days. Guidance differs between countries, and 14 units is described as a low-risk line rather than a safe one — no level of drinking is completely risk-free. Speak to a doctor about your own drinking rather than relying on a threshold."
+    ],
+    [
+      "How long does it take for alcohol to leave your system?",
+      "Roughly 0.015% BAC per hour for most adults, which works out to about one unit an hour. A reading of 0.06% therefore takes around four hours to reach zero. Coffee, a cold shower, food and sleep do not speed elimination up — only time does. This is an average rate, and individual clearance varies."
+    ],
+    [
+      "Can I use a BAC estimate to decide if I am safe to drive?",
+      "No. This is arithmetic on population averages, not a measurement of you, and two people of the same weight and sex drinking identically can land at meaningfully different real readings. India's legal limit is 0.03% BAC — 30 mg per 100 ml of blood — and driving at or above it is a criminal offence under the Motor Vehicles Act. If you have been drinking, do not drive."
+    ]
+  ]
+},
+  "algebra-solver": {
+  "intro": "The Algebra Solver works out three kinds of equation and shows every line of the working: single-variable linear equations by isolating x, quadratics with the discriminant Δ = b² − 4ac and the quadratic formula, and two-equation systems in x and y by Cramer's rule. It reports the numeric answer alongside the exact fraction whenever the two differ, so 3x = 5 comes back as both 1.666667 and 5/3. It is aimed at students checking homework, where the steps matter more than the final number.",
+  "useCases": [
+    "You solved 2x + 5 = 13 by hand, got a different answer to the textbook, and want to see which line you dropped a sign on",
+    "You need to know whether x² + 2x + 5 = 0 has real roots before you try to sketch it, and the discriminant answers that in one step",
+    "You are stuck on a simultaneous-equations question like 2x + y = 7, x − y = 2 and want the determinant worked out rather than a bare (3, 1)"
+  ],
+  "benefits": [
+    [
+      "Every step is written out",
+      "Coefficients identified, discriminant computed, roots substituted — not just the final value."
+    ],
+    [
+      "Exact fractions, not just decimals",
+      "Answers are reduced with a GCD, so you get 5/3 rather than a rounded 1.666667."
+    ],
+    [
+      "Names the case, not just the number",
+      "Distinguishes a unique solution, a repeated root, two real roots, complex roots, no solution and infinitely many."
+    ]
+  ],
+  "faqs": [
+    [
+      "What does the discriminant tell you about a quadratic?",
+      "The sign of Δ = b² − 4ac decides the roots: Δ > 0 gives two distinct real roots, Δ = 0 gives one repeated real root at x = −b/2a, and Δ < 0 gives no real roots, only a complex conjugate pair. For x² + 2x + 5 = 0, Δ = 4 − 20 = −16, so the roots are complex."
+    ],
+    [
+      "How does the solver handle systems of two equations?",
+      "By Cramer's rule. It computes the determinant D = a₁b₂ − b₁a₂, then Dx and Dy, and gives x = Dx/D and y = Dy/D. If D = 0 there is no unique solution, because the two lines are either parallel or the same line."
+    ],
+    [
+      "What format should I type the equation in?",
+      "Plain text with x as the variable: 2x + 5 = 13 for linear, x^2 - 5x + 6 = 0 for quadratic (x² and x**2 both work), and two comma-separated equations like 2x + y = 7, x - y = 2 for a system. Spaces are ignored, and quadratics are read from the left-hand side with the right side taken as 0."
+    ],
+    [
+      "Can a linear equation have no solution?",
+      "Yes. When every x term cancels out, the equation is no longer about x. If what remains is a false statement such as 5 = 3 there is no solution; if it reduces to 0 = 0 the equation is true for every x, which is infinitely many solutions. The solver labels both cases explicitly rather than returning an error."
+    ]
+  ]
+},
+  "algorithm-visualizer": {
+  "intro": "The Algorithm Visualizer steps through a comparison sort on your own array, drawing every comparison and swap as a bar chart you can play, pause, scrub and rewind. Type up to 16 numbers or generate a random set, and it builds the full list of steps up front — highlighting the two indices being compared in amber, the elements already in their final position in green, and running counters for comparisons and swaps. Alongside it sits a browsable catalogue of twelve classic algorithms with their Big-O complexities, and a merge-sort divide-and-merge walkthrough with the Python and JavaScript source.",
+  "useCases": [
+    "You are revising for a data-structures exam and want to watch why a nearly-sorted array still costs a full pass of comparisons",
+    "You are teaching a first-year class and need a chart you can pause mid-comparison and point at, rather than a finished animation",
+    "You want to compare the comparison count for the same 7 values sorted by hand versus by the algorithm, to check your trace was right"
+  ],
+  "benefits": [
+    [
+      "Scrub, don't just watch",
+      "Steps are precomputed, so the slider moves backwards as freely as forwards and you can sit on one comparison."
+    ],
+    [
+      "Counts as well as colours",
+      "Comparisons, swaps and the current step index update at every frame, so the O(n²) growth is a number you can read."
+    ],
+    [
+      "Your data, not a canned demo",
+      "Paste your own array — including deliberately worst-case or already-sorted input — and see what it costs."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the time complexity of bubble sort?",
+      "O(n²) in the average and worst case, because each of n passes compares up to n elements. On 7 values that is 21 comparisons; on 16 values it is 120. The visualizer's comparison counter makes this quadratic growth visible directly."
+    ],
+    [
+      "Why is merge sort faster than bubble sort?",
+      "Merge sort is O(n log n) in the best, average and worst case, while bubble sort is O(n²). Splitting the array in half repeatedly gives log n levels of merging, each doing n work, instead of comparing every pair. The trade-off is O(n) extra space for the merge buffers, where bubble sort sorts in place."
+    ],
+    [
+      "How many numbers can I visualize at once?",
+      "Up to 16. Input is split on commas or whitespace, non-numeric tokens are dropped, and anything past the sixteenth value is ignored — past that the bars get too thin to read and the step count grows quadratically."
+    ],
+    [
+      "When would you use linear search instead of binary search?",
+      "When the data is unsorted, or the list is short enough that sorting it first costs more than scanning it. Linear search is O(n) but works on any array; binary search is O(log n) but requires the array to be sorted first, which is at best O(n log n) if it is not already."
+    ]
+  ]
+},
   "allen-key-size-finder": {
   "intro": "Matches hex key sizes across the metric and imperial systems and grades every swap by clearance, the number that decides whether a substitution works or destroys the fastener. A key that leaves under 1% slack in the socket is the same tool with a different name; 1 to 3% turns a lightly torqued screw; over 3% loads the corners of the socket instead of the flats and rounds it out. Fastener sizes come from the published standards — ISO 4762, 7380, 10642 and 4026, and ASME B18.3 for the imperial series.",
   "useCases": [
@@ -3641,6 +5241,46 @@ export default {
     ]
   ]
 },
+  "alphabet-explorer": {
+  "intro": "Alphabet Explorer is a character-by-character reference for 19 writing systems — Latin, Greek, Cyrillic, Arabic, Hebrew, Devanagari, Hiragana, Katakana, Hangul, Thai, Urdu and eight Indic scripts — where tapping any letter shows its name, its romanised pronunciation, its Unicode code point and an example word in the language. It lays each script out in its own reading direction, so the three right-to-left scripts render and navigate right-to-left, and it can read a character aloud through the browser's speech synthesis. Each letter can be copied straight to the clipboard.",
+  "useCases": [
+    "You are learning Hiragana and want to drill all 46 characters with the romanisation and a real example word next to each one",
+    "You need the Unicode code point for a specific Devanagari or Greek letter to paste into a regex or a font-subset config",
+    "You are setting a menu or a poster in Bengali and want to check you have copied the right character rather than a lookalike"
+  ],
+  "benefits": [
+    [
+      "Reading direction is respected",
+      "Arabic, Hebrew and Urdu grids lay out and arrow-key through right-to-left instead of being forced into Latin order."
+    ],
+    [
+      "Four facts per character",
+      "Name, pronunciation, U+ code point and an example word — not just a glyph you have to identify yourself."
+    ],
+    [
+      "Searchable within a script",
+      "Filter by glyph, letter name or pronunciation, so \"theta\" and \"θ\" both land on the same tile."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many letters are in the Greek alphabet?",
+      "24, from Alpha (Α, U+0391) to Omega (Ω, U+03A9). Greek is the oldest documented alphabet still in use, and its letters double as standard symbols across mathematics and the sciences."
+    ],
+    [
+      "How many Hiragana characters are there?",
+      "46 basic characters, listed here alongside the 45 basic Katakana. The two are parallel syllabaries for the same sounds — Hiragana is used for native Japanese words and grammar, Katakana mainly for loanwords and emphasis."
+    ],
+    [
+      "Which of these scripts are written right to left?",
+      "Three of the 19: Arabic, Hebrew and Urdu. The grid switches to RTL layout for those, and the left and right arrow keys swap so that \"next character\" always means the next one in reading order."
+    ],
+    [
+      "How do I find a character's Unicode code point?",
+      "Select the character and its U+ value is shown in the detail panel — Greek Alpha is U+0391, Cyrillic А is U+0410, Latin A is U+0041. Code points are what you need when writing a regex range, subsetting a font or debugging text that renders as boxes."
+    ]
+  ]
+},
   "alt-text-policy-generator": {
   "intro": "This generator produces a written alt text policy: one rule for each kind of image a team publishes, the WCAG success criterion behind it, a sentence pattern, a worked example and the mistake to avoid. The rules implement SC 1.1.1 Non-text Content at Level A and, at Level AA, SC 1.4.5 Images of Text — the level that EN 301 549 in Europe and Section 508 in the United States both point at. Aimed at content, design and engineering teams who keep arguing about alt text case by case instead of writing the rule down once.",
   "useCases": [
@@ -3679,6 +5319,46 @@ export default {
     [
       "How do you write alt text for a chart?",
       "Give a short alternative naming the chart type and the single takeaway, then make the underlying numbers available as real text — a data table next to the chart or a description linked from it. Putting every data point into the alt attribute is unusable, and W3C technique G92 expects a long description for complex images."
+    ]
+  ]
+},
+  "alt-text-quality-assistant": {
+  "intro": "The Alt-Text Quality Assistant checks alt text against the thing that actually decides whether it is right — the image's purpose in this exact context — by asking you to classify it as decorative, informative, functional, complex, text-in-image or undecided, record the current alt state (missing, empty or present), and enter the essential information or the control's action. It then runs W3C-aligned rules over what you entered: empty alt on a meaningful image, a generic value like \"image of\", a filename used as alt, alt that duplicates nearby text, a complex image with no longer equivalent, and a word-overlap check against the information you said the image carries. It reviews text and context only — it never looks at the pixels, and a clean result is not a claim of WCAG conformance.",
+  "useCases": [
+    "You are auditing a page before launch and need to decide whether a decorative hero banner should have alt=\"\" or a description",
+    "You wrote alt text for a revenue chart and want to check whether a one-line alt can carry it or whether the page needs a longer equivalent in nearby text",
+    "You inherited a template where every icon link has alt=\"icon.svg\" and need a defensible list of which ones are errors and which need a human to look"
+  ],
+  "benefits": [
+    [
+      "Purpose first, wording second",
+      "The same photo needs different alt in different places, so the review is driven by the six purpose types rather than a generic style checklist."
+    ],
+    [
+      "Separates errors from judgement calls",
+      "Findings are graded error or review, and the outcome is one of needs-change, needs-human-review, or no configured cue triggered."
+    ],
+    [
+      "States what it cannot know",
+      "It reports plainly that word overlap misses synonyms, tone and accuracy, and that zero findings does not establish conformance."
+    ]
+  ],
+  "faqs": [
+    [
+      "When should an image have empty alt text?",
+      "When it is purely decorative — it adds no information and performs no function that is not already available in text. Use an explicitly empty alt=\"\" rather than omitting the attribute, because a missing attribute leaves screen readers to fall back on the filename. The assistant flags a missing attribute as an error and an empty alt on a meaningful image as an error too."
+    ],
+    [
+      "How long should alt text be?",
+      "WCAG sets no universal character limit. This tool flags alt over 200 characters for review, not as a failure — the question it asks is whether a concise alt plus a longer equivalent nearby would communicate more clearly than one very long string."
+    ],
+    [
+      "Should alt text start with \"image of\"?",
+      "Usually not. Screen readers already announce the image role, so the prefix is redundant; the tool flags it for review rather than as an error, because occasionally the distinction matters — a painting versus a photograph of the same scene, for instance. An alt that is only \"image\" or \"photo of\" with nothing after it is flagged as an error."
+    ],
+    [
+      "Can a tool tell me whether my alt text is good?",
+      "No — and this one says so. It applies rules to the purpose, state and context you enter, and its word-overlap heuristic requires 50% of the meaningful words you listed to appear in the alt (25% for complex images) before it stays quiet. It cannot judge synonyms, accuracy, tone or whether a description makes sense to a real user, and it never inspects the image itself."
     ]
   ]
 },
@@ -4008,6 +5688,46 @@ export default {
     ]
   ]
 },
+  "anagram-generator": {
+  "intro": "The Anagram Generator rearranges the letters of any word or phrase into random distinct orderings using a Fisher-Yates shuffle, returning up to 100 unique results per run with the original spelling kept as the first entry. It shows how many arrangements exist in total (n factorial for the letters you typed — 720 for a six-letter word), and lets you narrow the output by starting letters, ending letters, a required substring or letters to exclude. Results can be sorted alphabetically or by length and exported as TXT, CSV or JSON. It shuffles letters rather than checking a dictionary, so the output is raw material for wordplay, not a list of confirmed words.",
+  "useCases": [
+    "You are naming a band, a startup or a D&D character and want to see what the letters of an existing word can be pushed into",
+    "You are setting a puzzle for a school newsletter and need a scrambled version of each answer word, exported as a CSV you can drop into the layout",
+    "You are stuck on a crossword or word-game rack and want to scan the letter orderings that start with a given prefix"
+  ],
+  "benefits": [
+    [
+      "Constrain the search, not just the output",
+      "Filter by prefix, suffix, required substring and excluded letters, so \"must start with st, no vowel y\" is one query."
+    ],
+    [
+      "Tells you the size of the space",
+      "The permutation count is shown alongside the results, so you know whether you are seeing a sample or nearly all of it."
+    ],
+    [
+      "Exports in three formats",
+      "Copy all as plain lines, or download TXT, CSV with index and length columns, or JSON keyed to the original input."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many anagrams can a word have?",
+      "n factorial, where n is the number of letters — 6 letters give 720 orderings, 8 give 40,320, and 12 give 479,001,600. Repeated letters reduce the number of distinct results, which is why a word like \"letter\" yields far fewer unique strings than its raw factorial suggests."
+    ],
+    [
+      "Does this only generate real dictionary words?",
+      "No. It shuffles the letters you give it and returns distinct orderings, most of which will not be words in any language. Treat the list as candidates to scan by eye — that is what makes it useful for names and puzzles, where a pronounceable non-word is often exactly the point."
+    ],
+    [
+      "How many results do I get per run?",
+      "Up to 100 unique arrangements, and the generator stops after 1,000 shuffle attempts even if it has not reached your requested count. Short inputs with repeated letters hit that ceiling quickly, because there simply are not that many distinct orderings to find."
+    ],
+    [
+      "What counts as an anagram?",
+      "A rearrangement that uses every letter of the original exactly once — \"listen\" and \"silent\" is the classic example. That is stricter than a scramble that drops or adds letters, and it is why the permutation count is a factorial rather than a count of possible substrings."
+    ]
+  ]
+},
   "analog-clock-alarm": {
   "title": "Analog Clock with Alarm — Free Fullscreen Clock",
   "h1": "Analog Clock & Alarm",
@@ -4076,6 +5796,166 @@ export default {
     "Leave the tab open — when the time arrives, a full-screen alert appears with Snooze and Dismiss buttons, and the header shows how long until your next alarm."
   ]
 },
+  "analytics-pii-checker": {
+  "intro": "The Analytics PII Checker scans a pasted analytics payload or request log for five classes of personal data that commonly leak into event tracking: email addresses, phone numbers, IPv4 addresses, authorization tokens and API keys, and sensitive property names such as name, email, address, dob, aadhaar, pan, passport and user_id. It reports how many matches each detector found and shows a masked example — first two and last two characters only — so you can confirm the hit without copying the raw value anywhere. It is a pattern-matching first pass for engineers reviewing what their tag manager actually sends, not a compliance assessment.",
+  "useCases": [
+    "You are reviewing a checkout event before it ships and want to know whether the customer's email is riding along in the payload",
+    "A tag manager change added a new custom dimension and you need to check the outgoing request log for a bearer token that was pasted in by mistake",
+    "You are preparing a data-flow record and want a quick inventory of which identifier types appear in a sample of your event traffic"
+  ],
+  "benefits": [
+    [
+      "Masks what it finds",
+      "Matches are shown as the first two and last two characters, so a review does not turn into another copy of the personal data."
+    ],
+    [
+      "Covers keys as well as values",
+      "It flags property names like dob, aadhaar or user_id even when the value itself looks harmless, because the field name is the leak."
+    ],
+    [
+      "Works on raw request logs",
+      "Paste a JSON body or a captured request line — it matches on text, so nested payloads and query strings both get scanned."
+    ]
+  ],
+  "faqs": [
+    [
+      "What kinds of personal data does this detect?",
+      "Five: email addresses, phone numbers (any run of 9 or more digits with common separators), IPv4 addresses, authorization headers and API keys of 8 or more characters, and sensitive property names including name, email, phone, address, dob, aadhaar, pan, passport and user_id. Anything outside those patterns — a custom internal identifier, a hashed value, a free-text field — will not be caught."
+    ],
+    [
+      "Is an IP address personal data?",
+      "Under GDPR, an IP address is generally treated as personal data because it can single out a device and, combined with other information, a person. Most analytics platforms therefore offer IP truncation or anonymisation. Whether a specific field is personal data in your jurisdiction is a legal question — this tool only tells you the value is present. Consult a privacy or legal professional for that determination."
+    ],
+    [
+      "Does my data get uploaded when I scan it?",
+      "No. The scan runs in your browser on the text you paste; nothing is sent to a server, and the masked examples are generated locally. That is deliberate — a tool for finding leaked personal data should not be a place you send personal data."
+    ],
+    [
+      "A clean result means my analytics are compliant, right?",
+      "No. A clean result means none of the five configured patterns matched the sample you pasted. It says nothing about custom identifiers, nested fields the regexes did not reach, other payloads on other pages, consent, retention, or lawful basis. Treat it as a first pass and review the remaining fields by hand."
+    ]
+  ]
+},
+  "anger-test": {
+  "intro": "The Anger Test is a 10-question self-reflection quiz that puts you in ordinary provoking situations — being cut off in traffic, corrected by your boss in front of the team, a friend cancelling 30 minutes before — and scores each answer from 1 to 5 for a total between 10 and 50. That total places you in one of five bands (Minimal 10-15, Low 16-25, Moderate 26-35, Elevated 36-42, High 43-50), each with a named response style and matching immediate, long-term and lifestyle suggestions. It is an informational self-check for noticing patterns, not a diagnosis; a clinician is the only person who can assess anger clinically.",
+  "useCases": [
+    "You snapped at someone over something small this week and want a structured way to look at whether it is a pattern or a bad day",
+    "You keep replaying an argument and want to see which situations — public criticism, being ignored at home, losing work to a crash — actually set you off",
+    "You are considering whether to bring your temper up with a therapist and want a starting point more specific than \"I get angry sometimes\""
+  ],
+  "benefits": [
+    [
+      "Scenarios, not adjectives",
+      "You pick what you would actually do in a specific situation, which is harder to flatter yourself on than rating your own temper out of ten."
+    ],
+    [
+      "Names the style, not just the size",
+      "The same total also maps to a response pattern — constructive, passive, reactive, suppressed or chronic — because bottled-up anger and explosive anger need different responses."
+    ],
+    [
+      "Suggestions matched to the band",
+      "The Moderate band gets 4-7-8 breathing and the STOP technique; the High band leads with getting a licensed professional involved."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is the anger score calculated?",
+      "Each of the 10 questions offers five responses worth 1 to 5 points, so the total runs from 10 to 50. Above 35 the result is flagged as Elevated, and 43 or more as High, which is where the tool starts recommending professional support rather than self-help techniques."
+    ],
+    [
+      "What does a high score actually mean?",
+      "It means the responses you selected describe stronger reactions than most people report, in enough situations to show a pattern. It is not a diagnosis — a self-report questionnaire cannot account for context, stress, sleep, grief, pain or anything else feeding the reaction. If the result worries you, or if others have raised it, speak to a doctor or a licensed therapist."
+    ],
+    [
+      "Is anger a mental health condition?",
+      "Anger itself is a normal emotion, not a disorder, and there is no standalone diagnosis for it in the major classification systems. It can, however, be a prominent feature of conditions such as depression, PTSD or substance use, which is one reason a clinician assessment is more useful than a score. Persistent anger that affects your relationships, work or health is worth raising with a professional."
+    ],
+    [
+      "What should I do if I feel anger rising right now?",
+      "Interrupt the physical build-up before you respond. The technique this tool offers at the moderate band is 4-7-8 breathing — inhale for 4 seconds, hold for 7, exhale for 8 — and at higher bands, physically leaving the situation and using sensory grounding: name 5 things you can see, 4 you can hear, 3 you can feel, 2 you can smell, 1 you can taste. If you ever feel you might harm yourself or someone else, contact a crisis line or emergency services immediately."
+    ]
+  ]
+},
+  "animated-qr-file-beam": {
+  "intro": "This tool carries a small file across an air gap using nothing but a screen and a camera. It chops the file into fixed-size chunks, Base64-encodes each chunk into a numbered frame of the form QFB1|fileId|seq|total|data, and plays those frames as a QR loop with a header frame — file name, byte count and CRC-32 — repeated throughout so a late-joining receiver still learns what it is catching. On the receiving device the same page reads frames with the camera, ignores duplicates, accepts them out of order, and rebuilds the file only when every sequence number is present and the CRC-32 matches. Frame sizing is not guesswork: it uses the ISO/IEC 18004 byte-mode capacity table, so a version-12 M symbol is treated as exactly 287 bytes and the payload per frame is the largest multiple of 3 whose Base64 form still fits after the frame header. There is no upload, no server, no pairing code and no network request of any kind.",
+  "useCases": [
+    "Move a WireGuard config, SSH key or recovery seed from a laptop to a phone that is deliberately kept off the network.",
+    "Get a short config file off an air-gapped or camera-only machine in a lab where USB ports are blocked.",
+    "Hand a colleague a small file across a desk when both devices are on captive-portal Wi-Fi that blocks AirDrop and local sharing."
+  ],
+  "benefits": [
+    [
+      "Real frames, not a mock-up",
+      "Every frame shown is a scannable QR whose text is the actual chunk; the same page can read them back and reproduce the file byte for byte."
+    ],
+    [
+      "Verified, not assumed",
+      "The header frame carries a CRC-32 of the original bytes, and the receiver reports match or mismatch rather than silently saving a corrupt file."
+    ],
+    [
+      "Honest capacity maths",
+      "Frame counts and loop times come from the published QR byte-mode capacity table for the chosen version and error-correction level, not from an estimate."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much data fits in one QR frame?",
+      "A version-12 symbol at error-correction level M holds 287 bytes of byte-mode data. After the 22-byte frame header and the 4:3 expansion of Base64 that leaves 198 raw file bytes per frame. Version 40 at level L is the ceiling at 2,953 bytes per symbol."
+    ],
+    [
+      "What size of file is realistic?",
+      "This tool caps beaming at 256 KiB and is happiest well under that. At 198 bytes per frame and 5 frames a second, a 4 KiB file is a 21-frame loop of about four seconds, while 256 KiB would be over 1,300 frames and several minutes of steady scanning."
+    ],
+    [
+      "Is the transfer encrypted?",
+      "No. The frames are plain Base64 inside a QR symbol, so anyone who can photograph the screen can reconstruct the file. Encrypt the file first — with age, GPG or a password-protected archive — if the content is sensitive."
+    ],
+    [
+      "What does this tool not do?",
+      "It never contacts a server, so there is no cloud relay, no link to share and no history. Camera scanning needs browser camera permission; if that is refused or unavailable you can still paste decoded frame text from any QR scanner app and the file is rebuilt from those lines instead."
+    ]
+  ]
+},
+  "animated-webp-apng-builder": {
+  "intro": "The Animated WebP/APNG Builder turns two still images into a single looping animation, encoded in the browser by FFmpeg compiled to WebAssembly. Each source frame is held for one second, the pair is concatenated and scaled to 800 pixels wide with the height kept proportional and even, and the result is written at 12 fps with an infinite loop flag — as an animated WebP, or as an APNG saved with a .png extension. The finished file downloads straight to your machine; the images are never uploaded.",
+  "useCases": [
+    "You have a before-and-after product shot and want a two-frame loop for a landing page, without the colour banding a GIF would introduce",
+    "You need a small looping avatar or badge for a forum that accepts APNG but rejects video files",
+    "You are comparing two versions of a chart or UI screenshot and want them to alternate automatically instead of sitting side by side"
+  ],
+  "benefits": [
+    [
+      "Real encoder, not a GIF fallback",
+      "FFmpeg runs in WebAssembly locally, so you get genuine animated WebP or APNG output with full colour rather than a 256-colour palette."
+    ],
+    [
+      "Predictable output settings",
+      "800 px wide, 12 fps, one second per frame, infinite loop — the same every time, so results are reproducible."
+    ],
+    [
+      "Nothing is uploaded",
+      "Both source images are written to an in-browser filesystem, processed, and deleted; the only thing that leaves is the file you download."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the difference between animated WebP and APNG?",
+      "Both carry full 24-bit colour and 8-bit alpha transparency, unlike GIF's 256-colour palette and 1-bit alpha. WebP usually produces smaller files because it uses lossy and lossless compression modes; APNG is a PNG extension, so it is always lossless and larger, but it degrades gracefully to a still first frame in software that does not understand the animation."
+    ],
+    [
+      "Why does my APNG download as a .png file?",
+      "Because that is what an APNG is — the Animated PNG format reuses the PNG container and the .png extension, with the animation carried in extra chunks. Browsers and image viewers that support APNG will play it; anything that does not will show the first frame as an ordinary PNG."
+    ],
+    [
+      "How long is the animation and how many frames does it use?",
+      "Two frames, one second each, encoded at 12 fps and looping forever. Each source image is held for a full second before the next, so the complete cycle is two seconds long."
+    ],
+    [
+      "Should I use animated WebP or GIF on a website?",
+      "Animated WebP for almost any modern site — it is supported across current browsers and typically produces files several times smaller than an equivalent GIF at better quality, because GIF is limited to 256 colours per frame and cannot do partial transparency. GIF is still the safer choice only where you need maximum compatibility with old software or platforms that re-encode uploads."
+    ]
+  ]
+},
   "animation-generator": {
   "title": "CSS Animation Generator — Free @keyframes Builder",
   "h1": "CSS Animation Generator",
@@ -4142,6 +6022,46 @@ export default {
     "Choose a base animation — Fade In, Slide Right or Bounce — then set duration, delay and easing. Use the replay and pause buttons to re-run the motion as you change values.",
     "Refine it: edit the 0%, 50% and 100% keyframe stops (opacity plus an optional transform like scale(1.2)), adjust translate, rotate and scale, pick a solid colour or a 45-degree two-colour gradient for the element, and set the trigger to autoplay, hover or click.",
     "Copy the generated @keyframes block from the code preview into your stylesheet and add the animation shorthand with the timing values you chose — or use Export Video for a 2-second WebM of the motion at the pixel size you specify."
+  ]
+},
+  "animation-generator-tool": {
+  "intro": "The Animation Generator builds ready-to-paste CSS keyframe animations from 15 presets — fade, slide in four directions, rotate, bounce, scale up and down, pulse, shake, flip, swing and heartbeat — and lets you set every part of the animation shorthand: duration, delay, timing function, iteration count, direction and fill mode. It previews the result live on a sample element and outputs both the @keyframes block and the matching animation property, which you can copy or download as a .css file. It is for front-end developers and designers who want to see how ease-out at 0.6s actually feels before committing it to a stylesheet.",
+  "useCases": [
+    "You are adding an entrance animation to a hero section and need to compare slideUp at 0.4s ease-out against scaleUp at 0.8s ease-in-out before choosing",
+    "A loading badge needs to pulse forever and you want the correct animation shorthand with iteration-count set to infinite rather than guessing at the property order",
+    "You are writing a component library and need the raw @keyframes for a shake used on invalid form input, without pulling in an animation dependency"
+  ],
+  "benefits": [
+    [
+      "Every shorthand slot is exposed",
+      "Duration, delay, easing, iterations, direction and fill mode are all editable, so you get the full property, not a name and a duration."
+    ],
+    [
+      "Replays on demand",
+      "One-shot animations can be re-triggered without reloading, which is the only way to actually judge a 300 ms entrance."
+    ],
+    [
+      "Copy or download the real CSS",
+      "The output is the @keyframes block plus the animation rule — plain CSS with no library, class-name convention or build step attached."
+    ]
+  ],
+  "faqs": [
+    [
+      "What does animation-fill-mode do?",
+      "It decides what styles apply outside the animation's running time. `forwards` keeps the final keyframe after the animation ends — which is what you want for a fade-in, otherwise the element snaps back to opacity 0. `backwards` applies the first keyframe during the delay, `both` does both, and `none` does neither."
+    ],
+    [
+      "What is the difference between ease-in and ease-out?",
+      "`ease-in` starts slow and accelerates, so it suits elements leaving the screen; `ease-out` starts fast and decelerates, which is why it reads as more natural for elements entering. `ease` is the CSS default and is a gentler in-and-out curve; `linear` moves at constant speed and is mostly right for continuous rotation."
+    ],
+    [
+      "How do I make a CSS animation loop forever?",
+      "Set the iteration count to `infinite` — in the shorthand that is the value between the delay and the direction, as in `animation: pulse 1s ease 0s infinite normal forwards`. Pair it with `alternate` direction if you want the animation to run backwards on every second cycle instead of jumping back to the start."
+    ],
+    [
+      "Should I animate transform or top/left?",
+      "Transform, in almost every case. `transform` and `opacity` can be handled by the compositor without recalculating layout or repainting, so they stay smooth; animating `top`, `left`, `width` or `height` forces layout work on every frame. All the slide and scale presets here use translate and scale for exactly that reason."
+    ]
   ]
 },
   "anna-university-attendance-calculator": {
@@ -4793,6 +6713,46 @@ export default {
     "Download JSON, YAML, Markdown, HTML or PDF — or copy a share link to the rendered docs."
   ]
 },
+  "api-endpoint-usage-mapper": {
+  "intro": "The API Endpoint Usage Mapper turns pasted access logs, cURL commands, fetch/Axios calls and Express-style route definitions into a normalized endpoint inventory, collapsing concrete IDs (numbers, UUIDs, prefixed keys like ord_91) into :id so /api/users/42 and /api/users/73 count as one endpoint. For each method + path it reports request count, success and error counts, error rate, average, min/max and p95 latency, and a Low/Medium/High risk grade. Backend engineers, SREs and API owners use it to see which routes actually carry traffic before they refactor, version or deprecate anything.",
+  "useCases": [
+    "You inherited a service with 60 declared routes and want to know which ones real traffic touches — paste a day of access log lines and read the request count per normalized path before deprecating anything.",
+    "A release went out and latency complaints started; you paste the log slice and sort by slowest p95 to find the one endpoint whose 95th percentile crossed 500 ms.",
+    "Before writing an OpenAPI spec for an undocumented internal API, you paste the frontend's fetch and Axios calls plus a cURL scratch file and export the deduplicated method + path list as CSV."
+  ],
+  "benefits": [
+    [
+      "Path normalization, not raw counting",
+      "Numeric IDs, UUIDs and Stripe-style prefixed keys collapse to :id, so thousands of log lines become a handful of real endpoints."
+    ],
+    [
+      "Mixed input in one paste",
+      "Access logs, cURL, fetch, axios.get and app.get/router.post route definitions are all parsed line by line in the same textarea."
+    ],
+    [
+      "Risk grading with numbers behind it",
+      "Each endpoint is scored High, Medium or Low from its measured error rate and p95 latency, with a stated reason rather than a colour alone."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does the tool decide an endpoint is high risk?",
+      "An endpoint is graded High risk when its error rate reaches 20% or its p95 latency reaches 1000 ms. Medium starts at a 5% error rate or 500 ms p95; anything below both is Low. The thresholds are applied per normalized endpoint, not across the whole sample."
+    ],
+    [
+      "What log and code formats can I paste?",
+      "Anything line-oriented that contains an HTTP method and a URL or path: common access-log lines, cURL commands, fetch() and axios.get/post/put/patch/delete calls, and Express-style app.get or router.post route definitions. Lines with no recognizable URL are counted as unrecognized and shown in the footer."
+    ],
+    [
+      "How are two requests treated as the same endpoint?",
+      "Path segments that look like identifiers are replaced with :id before grouping — pure digits, UUIDs, hex strings of 12 or more characters, and prefixed keys such as ord_91 or cus_a8f2. The key is then the HTTP method plus that normalized path, so GET and DELETE on the same route stay separate rows."
+    ],
+    [
+      "Where do the latency and status numbers come from?",
+      "They are read out of your own text: a trailing number followed by ms becomes the latency sample, and a standalone 3-digit 1xx–5xx code becomes the status. Statuses of 400 and above count as errors. If your log lines carry neither, the endpoint still appears with its request count and the tool notes that status and latency were missing."
+    ]
+  ]
+},
   "api-key-rotation-planner": {
   "intro": "This planner turns an API key's creation date and exposure level into a concrete rotation schedule: the next due date, a dual-key overlap window, and a six-step revocation runbook. It applies the cryptoperiod concept from NIST SP 800-57 and the 90-day rotation baseline that AWS and Google Cloud publish for long-lived access keys. It is built for developers and small teams running OpenAI, Anthropic or other AI API keys without a dedicated secrets-management platform.",
   "useCases": [
@@ -4979,6 +6939,46 @@ export default {
     "Enter your request rate in requests per second, the average server time one request takes in milliseconds, and your total concurrent workers (instances × concurrency).",
     "Read utilisation and its risk band, then work down the table: offered load in erlangs, the chance a request queues, mean queue wait, mean response time and the p50, p90, p95 and p99 rows.",
     "Set a latency budget and the percentile it applies to for the smallest pool that meets it, check the ×2, ×5 and ×10 traffic scenarios below, then copy the summary into your capacity review."
+  ]
+},
+  "api-tester": {
+  "intro": "API Tester is a browser-based REST client that builds and sends a request across all seven HTTP methods — GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS — then shows the status code, round-trip time in milliseconds, response size and full response headers. It supports query params, custom headers, a raw JSON body, Bearer and Basic auth, and {{variable}} placeholders that are substituted into the URL, headers and body before sending. Requests go straight from your browser to the target API, and saved collections, environment variables and the last 50 requests are kept in local storage on your own machine.",
+  "useCases": [
+    "A backend teammate sends you a new endpoint and a token over chat and you need to confirm it returns 200 with the expected JSON before wiring it into the app — paste the URL, set Bearer auth, hit Send.",
+    "You are reproducing a bug that only appears on PATCH with a specific payload, so you save the request into a collection and re-fire it after every deploy while watching the status badge and response time.",
+    "You are testing the same route against staging and production by keeping a {{base}} variable in the environment tab and swapping its value instead of editing the URL each time."
+  ],
+  "benefits": [
+    [
+      "Collections and history that persist",
+      "Saved requests, environment variables and the 50 most recent calls stay in your browser's local storage between sessions — no account, no sync."
+    ],
+    [
+      "Variables everywhere, not just the URL",
+      "{{name}} placeholders are expanded in the URL, every header value and the request body at send time, so one change switches environments."
+    ],
+    [
+      "Response detail beyond the body",
+      "Every send reports status and status text, elapsed milliseconds, payload size in B/KB/MB, and the complete response header list, with JSON pretty-printing toggleable."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why does my request fail with a network error when the API works in Postman?",
+      "Almost always CORS. The request is made by your browser with fetch(), so the target API must return permissive Access-Control-Allow-Origin headers; desktop clients like Postman are not bound by that rule. There is no proxy in between, which is also why your tokens never reach a third-party server."
+    ],
+    [
+      "Do I need to set Content-Type myself when posting JSON?",
+      "No. If the method is not GET or HEAD, the body is non-empty and you have not set a Content-Type header yourself, the tool adds Content-Type: application/json automatically. Set the header explicitly if you are sending form-encoded or plain-text bodies."
+    ],
+    [
+      "How much request history is kept, and where?",
+      "The 50 most recent requests are kept, newest first, in your browser's local storage along with saved collections and environment variables. Nothing is uploaded; clearing site data or using the Clear history button removes them permanently."
+    ],
+    [
+      "How is Basic auth sent?",
+      "Choosing Basic Auth and filling in a username and password sends an Authorization: Basic header whose value is the base64 encoding of username:password. Bearer Token mode sends Authorization: Bearer followed by your token, after any {{variables}} in it are substituted."
+    ]
   ]
 },
   "api-versioning-strategy-chooser": {
@@ -5676,6 +7676,46 @@ export default {
     ]
   ]
 },
+  "apple-health-export-explorer": {
+  "intro": "The Apple Health Export Explorer reads the <Record> elements out of an Apple Health export.xml and summarizes them by data type — count, unit, mean, minimum and maximum for each — so you can see what is actually inside a multi-hundred-megabyte export without opening it in a spreadsheet. It strips the HKQuantityTypeIdentifier / HKCategoryTypeIdentifier prefix so types read as StepCount or HeartRate rather than raw keys, and it processes up to 50,000 records per run (5,000 by default). It runs on text you paste, so the export never leaves your device.",
+  "useCases": [
+    "You requested your Apple Health export to share readings with a doctor and want to check which metrics it actually contains, and over what value range, before sending anything.",
+    "You are building an app that ingests Apple Health XML and need a quick view of the type names and units present in a real export so you can write the right parser.",
+    "Your step count looks wrong in a third-party app, so you paste the StepCount Record lines and compare the min, max and mean the raw file reports against what the app shows."
+  ],
+  "benefits": [
+    [
+      "Type-level summary, not a raw dump",
+      "Records are grouped by health type with count, unit, mean to four decimal places, and min/max, sorted with the most numerous type first."
+    ],
+    [
+      "Readable type names",
+      "The HK…Identifier prefix is stripped automatically, so HKQuantityTypeIdentifierHeartRate is shown simply as HeartRate."
+    ],
+    [
+      "Handles partial pastes",
+      "It scans for <Record …/> elements anywhere in the text, so a fragment copied out of a huge export works as well as a whole file section."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many records can it summarize at once?",
+      "Up to 50,000 Record elements per run, with a default limit of 5,000. Records past the limit are ignored rather than truncating the file, so raise the limit if the count reported back is lower than you expected."
+    ],
+    [
+      "Where do I get the export.xml file?",
+      "In the Health app on iPhone, open your profile and choose the option to export all health data; iOS produces a zip archive containing export.xml. Unzip it, open export.xml in a text editor, and paste the section you want to inspect."
+    ],
+    [
+      "What parts of the export are not covered?",
+      "Only <Record> elements and their attributes are read. Nested workout and route data, clinical records, provenance and device metadata, and timezone semantics are not parsed, so the mean and range are simple statistics over the value attribute, not clinically adjusted figures."
+    ],
+    [
+      "Can this tell me whether my readings are healthy?",
+      "No — it reports what your file contains and nothing more. The mean, min and max are arithmetic summaries of raw sensor values, with no interpretation of context, accuracy or health meaning; discuss anything concerning with a clinician who can see the full picture."
+    ]
+  ]
+},
   "appliance-electricity-cost-estimator": {
   "intro": "This estimator converts an appliance's power rating and running hours into units of electricity and rupees: kilowatt-hours a month equal watts multiplied by hours a day and days used, divided by 1,000, and the cost is that figure times your tariff per unit. It totals every appliance in the home, adds electricity duty and fixed charges the way a bill does, and ranks the appliances so you can see which one is actually responsible for the increase. Typical wattages for fans, air conditioners, geysers and pumps are built in, and you can override any of them with the rating on your own nameplate.",
   "useCases": [
@@ -5713,6 +7753,86 @@ export default {
     [
       "Does a refrigerator run 24 hours a day?",
       "The plug is on all day but the compressor is not. A typical 250 litre refrigerator's compressor runs roughly six to nine hours in total across the day depending on ambient temperature and how often the door is opened, so enter compressor running hours rather than 24 or the estimate will be three times too high."
+    ]
+  ]
+},
+  "appliance-load-shift-planner": {
+  "intro": "The Appliance Load-Shift Planner takes your tariff windows with their per-kWh prices and a list of flexible appliance cycles with their energy use, sorts the windows cheapest first, and assigns each cycle to a window — filling the cheapest slot up to your maximum-parallel limit before moving to the next. For every appliance it shows the suggested window, the price in that window and the cycle cost as kWh × price, plus a total for the whole plan. It is aimed at anyone on a time-of-use or economy tariff who wants to know where the dishwasher, water heater and laundry should sit in the day.",
+  "useCases": [
+    "You moved onto a time-of-use tariff with a cheap overnight rate and want to know, in money rather than vague advice, what running the 3 kWh water heater at the peak rate actually costs you versus the off-peak one.",
+    "Your washing machine and dishwasher both have delay timers, and you can only run one at a time without tripping the circuit, so you set maximum parallel cycles to 1 and read off which appliance goes in which window.",
+    "You are comparing two tariff offers by pasting each one's window prices in turn and seeing which produces a lower total for the same weekly set of flexible cycles."
+  ],
+  "benefits": [
+    [
+      "Cheapest-window-first ordering",
+      "Windows are sorted by price per kWh and cycles are filled into them in that order, so the plan is an explicit cost ranking rather than a rule of thumb."
+    ],
+    [
+      "Respects a parallel-run limit",
+      "The maximum parallel cycles setting controls how many appliances share a window before the next-cheapest one is used, matching a real circuit or hot-water constraint."
+    ],
+    [
+      "Per-cycle cost, not just a total",
+      "Each row shows the cycle's kWh, its assigned window, that window's rate and the resulting cost, so you can see which single appliance dominates the bill."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does it choose which appliance goes in which window?",
+      "Tariff windows are sorted from cheapest to most expensive per kWh, then appliances are assigned in the order you listed them, placing up to your maximum-parallel number of cycles in each window before moving to the next. It is a cost-ordering aid, not a scheduler that knows appliance run times."
+    ],
+    [
+      "How is the cost of each cycle worked out?",
+      "Cycle cost = cycle energy in kWh × the price per kWh of the assigned window. A 1.2 kWh dishwasher cycle in a window priced at 5 per kWh costs 6; the total shown is the sum of every row."
+    ],
+    [
+      "What format do the tariff windows use?",
+      "One window per line as start-end | price, for example 00:00-06:00 | 5. The price can be in any currency unit you like — pence, cents, rupees — because the tool only multiplies it by kWh and never converts. Lines without a numeric price are ignored."
+    ],
+    [
+      "Is it always safe to shift these loads overnight?",
+      "Not always, and cost is only one input. Follow the appliance manual on unattended operation, keep water-heater temperatures high enough for hot-water hygiene, and consider noise, ventilation, fire safety and any demand limit on your supply before running cycles while you sleep."
+    ]
+  ]
+},
+  "appliance-power-usage-estimator": {
+  "intro": "The Appliance Power Usage Estimator converts an appliance's wattage, daily running hours and quantity into electricity units using kWh per day = watts × hours × quantity ÷ 1000, then multiplies by 30 for the month and 365 for the year and by your tariff to give a cost. Add every appliance in the house and it ranks them by monthly cost, names the biggest contributor, and exports the whole list as CSV or PDF. It ships with wattage presets for common appliances — 1500 W air conditioner, 2000 W water heater, 250 W refrigerator, 75 W ceiling fan, 12 W LED bulb — and defaults to a rate of ₹8.0 per unit that you can change.",
+  "useCases": [
+    "Your electricity bill jumped after buying an air conditioner and you want to see, unit by unit, how much of the increase 1500 W for six hours a day actually accounts for.",
+    "You are deciding between running the geyser twice a day or once, and need the monthly rupee difference rather than a guess before changing the household routine.",
+    "You are moving into a rented flat with a fixed per-unit tariff and want a printable estimate of the monthly bill from the appliances you own before you commit."
+  ],
+  "benefits": [
+    [
+      "Whole-house totals, not one appliance",
+      "Daily, monthly and yearly units and cost are summed across every appliance you add, and the single highest-cost appliance is called out by name."
+    ],
+    [
+      "Quantity-aware",
+      "Four identical 75 W fans are entered once with a quantity, so the kWh figure reflects the real count instead of needing a separate row per unit."
+    ],
+    [
+      "Keeps your list and exports it",
+      "The appliance list and tariff persist in your browser between visits, and both CSV and a printable PDF summary can be downloaded."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you convert watts to units on the electricity bill?",
+      "One unit is one kilowatt-hour, so units per day = watts × hours used per day ÷ 1000. A 1500 W air conditioner run for 6 hours uses 1500 × 6 ÷ 1000 = 9 units a day; at ₹8 per unit that is ₹72 a day, about ₹2,160 a month."
+    ],
+    [
+      "Which month and year lengths does the estimate use?",
+      "Monthly figures are daily consumption × 30 and yearly figures are daily consumption × 365. Months with 31 days will run slightly higher than the estimate, so treat the monthly number as a close approximation rather than a billed amount."
+    ],
+    [
+      "What if I do not know an appliance's wattage?",
+      "Start from the built-in presets — air conditioner 1500 W, microwave 1200 W, washing machine 500 W, refrigerator 250 W, air cooler 200 W, television 100 W, ceiling fan 75 W, laptop 65 W, LED bulb 12 W — then correct it from the rating label on the appliance or its manual, which is always more accurate than a category average."
+    ],
+    [
+      "Will this match my actual electricity bill?",
+      "Rarely to the rupee. Real bills use slab or time-of-use tariffs, fixed charges, taxes and duties, and appliances like refrigerators and air conditioners cycle on and off rather than drawing rated wattage continuously. Use the result to compare appliances against each other and to size a change in habits."
     ]
   ]
 },
@@ -5836,6 +7956,46 @@ export default {
     ]
   ]
 },
+  "apr-to-apy-converter": {
+  "intro": "The APR-to-APY Converter turns a nominal annual percentage rate into the effective annual yield using APY = (1 + APR ÷ n)^n − 1, where n is the number of compounding periods per year, or APY = e^APR − 1 when you switch on continuous compounding. It reports the APR, the resulting APY and the uplift between them in percentage points, all to six decimal places. It exists because two accounts quoting the same headline rate can pay different amounts once compounding frequency differs.",
+  "useCases": [
+    "Two savings accounts both advertise 6%, but one compounds monthly and the other quarterly, and you want the effective yield on each before moving the money.",
+    "A lender quotes a monthly rate and you need the annual figure that is actually comparable with a competitor's advertised APY.",
+    "You are checking a spreadsheet model that assumes daily compounding and want to confirm the effective rate it should be using for 365 periods."
+  ],
+  "benefits": [
+    [
+      "Six-decimal output",
+      "Results are shown to six decimal places, enough to see the difference between quarterly and monthly compounding on the same nominal rate."
+    ],
+    [
+      "Shows the uplift explicitly",
+      "Alongside the APY it reports how many percentage points compounding adds over the nominal APR, which is the number that actually decides between two offers."
+    ],
+    [
+      "Continuous compounding included",
+      "A single toggle switches from the periodic formula to e^APR − 1, the theoretical upper bound used in options and fixed-income maths."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the difference between APR and APY?",
+      "APR is the nominal rate ignoring compounding within the year; APY is what you actually earn or pay once interest compounds. At 12% APR compounded monthly the APY is 12.682503%, an uplift of about 0.68 percentage points over the headline figure."
+    ],
+    [
+      "What is the formula for converting APR to APY?",
+      "APY = (1 + APR ÷ n)^n − 1, with the rate as a decimal and n the compounding periods per year — 12 for monthly, 4 for quarterly, 365 for daily. With n = 1 the APY equals the APR, because there is no intra-year compounding."
+    ],
+    [
+      "How much more does daily compounding pay than monthly?",
+      "Less than most people expect. A 12% nominal rate gives 12.682503% APY compounded monthly and roughly 12.7475% compounded daily — a gap of about 0.065 percentage points, or ₹65 per ₹100,000 per year."
+    ],
+    [
+      "When should I use continuous compounding?",
+      "Use it when a model or contract specifies it, typically in derivatives pricing and academic finance, not for ordinary deposit accounts. Continuous compounding gives e^APR − 1, which is the ceiling any periodic frequency approaches: 12.749685% for a 12% nominal rate. This is an arithmetic conversion, not financial advice — check the compounding basis in your product's terms and talk to a licensed adviser about the decision itself."
+    ]
+  ]
+},
   "aqi-exercise-safety-advisor": {
   "intro": "The AQI Exercise Safety Advisor turns an air quality index reading into an outdoor training decision. It inverts the official AQI formula to recover the underlying PM2.5 concentration — using the US EPA breakpoints revised in 2024 or the India CPCB National AQI sub-index — then multiplies that by the EPA Exposure Factors Handbook inhalation rate for your session intensity to estimate the micrograms of fine particulate you would actually breathe in. The verdict follows the EPA Air Quality Guide for Particle Pollution, which is written around prolonged or heavy exertion.",
   "useCases": [
@@ -5874,6 +8034,46 @@ export default {
     [
       "Does wearing an N95 make it safe to run in polluted air?",
       "A well-fitted N95 or FFP2 filters at least 95% of fine particles, but it increases breathing resistance and its seal breaks down with heavy sweating and jaw movement, so it is a poor fit for hard training. Moving the session indoors, shifting it away from traffic, or training earlier when concentrations are usually lower generally does more than a mask."
+    ]
+  ]
+},
+  "aqi-live-dashboard": {
+  "intro": "The AQI Live Dashboard reports the current air quality index for a set of coordinates along with the pollutant-by-pollutant readings behind it — PM2.5, PM10, ozone, nitrogen dioxide, sulphur dioxide and carbon monoxide — pulled on demand from the Open-Meteo Air Quality API, which is built on the Copernicus CAMS model. It shows both the US AQI and the European AQI for the same location, because the two scales are computed differently and rarely agree. Enter a latitude and longitude or use your device location, and each reading comes back with its unit and an update timestamp.",
+  "useCases": [
+    "You are deciding whether to take the morning run outside and want the PM2.5 figure itself, not just a colour, before you commit.",
+    "An app shows one AQI number for your city while a neighbour's app shows another, and you want to see the US and European index for the same coordinates side by side to understand the gap.",
+    "You are logging conditions for an asthma diary and need the individual pollutant concentrations with units at a specific time and place."
+  ],
+  "benefits": [
+    [
+      "Two index scales, one location",
+      "US AQI and European AQI are returned together for the same coordinates, making it obvious when a headline number depends on which standard is being used."
+    ],
+    [
+      "Component readings, not just the index",
+      "The six modelled pollutants are listed with their units, so you can see whether the index is being driven by particulates or by ozone."
+    ],
+    [
+      "Coordinate-level, not city-level",
+      "Readings are requested for the exact latitude and longitude you enter or the position your device reports, rather than a citywide average."
+    ]
+  ],
+  "faqs": [
+    [
+      "Why do the US AQI and European AQI numbers differ so much?",
+      "They use different pollutant breakpoints and averaging windows. US AQI runs 0-500 with bands at 50 (Good), 100 (Moderate), 150 (Unhealthy for Sensitive Groups), 200 (Unhealthy) and 300 (Very Unhealthy); the European index is scaled so that 100 marks the extremely poor threshold. The same air can score very differently on each."
+    ],
+    [
+      "Where does the data come from, and is it a real sensor?",
+      "It comes from the Open-Meteo Air Quality API, which serves Copernicus CAMS model output rather than a reading from a monitoring station at your doorstep. It is a modelled estimate for your coordinates, so a nearby regulatory monitor is the better reference for official figures."
+    ],
+    [
+      "Which pollutants are reported?",
+      "Six: PM2.5 and PM10 particulates, ozone, nitrogen dioxide, sulphur dioxide and carbon monoxide, each with the unit returned by the source — micrograms per cubic metre for most of them."
+    ],
+    [
+      "Does this run entirely in my browser?",
+      "No, and it says so. The latitude and longitude you enter are sent to ALTFTool's server, which requests the named public air quality source and returns the reading with its timestamp; nothing else about you is transmitted. Treat the result as informational and follow local health authority guidance if you have a respiratory or cardiac condition."
     ]
   ]
 },
@@ -5962,6 +8162,46 @@ export default {
     ]
   ]
 },
+  "archive-safety-inspector": {
+  "intro": "The Archive Safety Inspector reads a ZIP file's end-of-central-directory record and per-entry headers to flag risky structure before you extract anything — path traversal (..), absolute paths, Unix symlink entries, encrypted or masked entries, control and bidi characters in filenames, double extensions like invoice.pdf.exe, duplicate names, central-versus-local header mismatches, and declared compression ratios of 200:1 or more. It never decompresses, opens or executes a single archived byte; every finding comes from metadata. It accepts ZIP and ZIP-based packages — JAR, APK, EPUB, DOCX/XLSX/PPTX, ODF, WHL — up to 30 MB.",
+  "useCases": [
+    "A ZIP arrived attached to an email you were not expecting, and you want to see the entry names and whether anything executable or symlinked is inside before deciding to open it.",
+    "You are about to unzip a downloaded archive into a build directory and want to be sure no entry escapes it with ../ or an absolute path.",
+    "A 200 KB archive claims to expand to several gigabytes, and you want the declared ratio per entry to confirm a zip-bomb pattern before your extractor tries."
+  ],
+  "benefits": [
+    [
+      "Nothing is extracted",
+      "Findings come from the central directory and local file headers only, so a hostile archive never gets its content decompressed on your machine."
+    ],
+    [
+      "Cross-checks central against local headers",
+      "Each entry's flags, compression method and filename are compared between the central directory and its local header, catching the mismatch trick that makes tools disagree about what an archive contains."
+    ],
+    [
+      "Hard bounds on the parse itself",
+      "Inspection stops at 3,000 entries, an 8 MB central directory and 4,096-byte entry names, so a malformed archive cannot turn the inspector into the denial-of-service vector."
+    ]
+  ],
+  "faqs": [
+    [
+      "What counts as a zip bomb here?",
+      "An entry whose declared uncompressed size divided by its compressed size is 200 or more, an entry declaring over 64 MB expanded, or a whole archive declaring over 160 MB expanded. Those are metadata claims, not measured extraction, and a crafted archive can lie about them in either direction."
+    ],
+    [
+      "Does a clean result mean the archive is safe?",
+      "No. A result with no review markers means nothing in the header structure matched the checks — it says nothing about whether the contents are malicious. There is no malware scanning, no content inspection and no signature verification here; treat a clean report as one preflight signal among several."
+    ],
+    [
+      "What is the file size limit and which formats work?",
+      "Up to 30 MB, and the file must be a ZIP or a common ZIP-based package: zip, jar, apk, epub, whl, the OOXML formats (docx, xlsx, pptx and their macro-enabled docm, xlsm, pptm, xlam variants) and the ODF formats (odt, ods, odp). Split and multi-disk archives are rejected rather than partially parsed."
+    ],
+    [
+      "Which file extensions are flagged as suspicious?",
+      "Roughly 30 executable and script types including exe, dll, msi, bat, cmd, ps1, vbs, js, jar, apk, scr, lnk, hta, iso, dmg and the macro-enabled Office formats. An entry is additionally flagged for a double extension when one of those follows a decoy such as .pdf, .docx or .jpg in the same filename."
+    ]
+  ]
+},
   "art-style-prompt-explorer": {
   "intro": "The Art Style Prompt Explorer is a reference table of 16 art movements — their period, documented visual hallmarks, characteristic palette and the things they never do — wired to a prompt composer that turns your choices into an image-generation prompt plus a matching negative prompt. It flags movement pairs that pull against each other, caps blending at three, and estimates whether the result fits the 75 usable tokens in CLIP's text window. For anyone who keeps typing 'make it artistic' and getting the same beige render back.",
   "useCases": [
@@ -6041,6 +8281,86 @@ export default {
     [
       "How long should a home yoga practice be?",
       "Anything from 10 to 60 minutes is worthwhile, and consistency matters more than length — a 15-minute practice most days beats a 90-minute session once a week. Build the sequence around the time you actually have rather than abandoning practice on busy days."
+    ]
+  ]
+},
+  "ascii-explorer": {
+  "intro": "The ASCII Explorer is a searchable reference for all 128 characters of the 7-bit ASCII table, showing each code in decimal, hexadecimal, octal and 8-bit binary alongside its character and full name. Type a character to get its code, or a code from 0 to 127 to get the character, and the matching row scrolls into view and highlights. It is built for students, embedded and protocol developers, and anyone debugging a byte stream who needs to know what 0x0D or 65 actually is.",
+  "useCases": [
+    "You are reading a hex dump and hit 0D 0A, and want to confirm that is carriage return followed by line feed rather than data.",
+    "You are writing a C exercise that converts a digit character to its numeric value and need to check that '0' is code 48, so subtracting 48 works.",
+    "A parser is choking on an invisible byte in a file, and you want to look up which control character code 27 or code 9 corresponds to."
+  ],
+  "benefits": [
+    [
+      "Four bases per character at once",
+      "Every row shows decimal, hex, zero-padded octal and 8-bit binary side by side, so you never convert between them by hand."
+    ],
+    [
+      "Control codes are named, not blank",
+      "All 33 control characters carry their mnemonic and meaning — LF is line feed, ESC is escape, DC1 is XON — instead of appearing as empty cells."
+    ],
+    [
+      "Search and filter across the whole table",
+      "Filter to control or printable characters and search by character, decimal code, hex value or description name in one field."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many ASCII characters are there, and how many are printable?",
+      "128 in total, numbered 0 to 127 because ASCII is a 7-bit code. 95 of them are printable (codes 32 to 126, starting with space), and the remaining 33 are control characters: codes 0 to 31 plus DEL at 127."
+    ],
+    [
+      "What is the ASCII code for A and a?",
+      "Uppercase A is 65 (0x41) and lowercase a is 97 (0x61). Every letter pair differs by exactly 32, which is a single bit — bit 5 — so flipping that one bit changes case for the whole alphabet."
+    ],
+    [
+      "What are the ASCII codes for newline, tab and space?",
+      "Line feed (LF) is 10, carriage return (CR) is 13, horizontal tab is 9 and space is 32. Windows text files traditionally end lines with CR followed by LF (13 then 10) while Unix uses LF alone, which is the source of most stray-character bugs in text files."
+    ],
+    [
+      "Why does my character return nothing in the lookup?",
+      "Because it is above code 127 and therefore outside 7-bit ASCII. Accented letters, curly quotes, emoji and every non-Latin script live in Unicode, where they are typically encoded in UTF-8 as two to four bytes; only the first 128 Unicode code points match ASCII exactly."
+    ]
+  ]
+},
+  "ashtakoot-matching": {
+  "intro": "Ashtakoot Matching scores two birth details against the eight koota of Vedic Guna Milan — Varna 1, Vashya 2, Tara 3, Yoni 4, Graha Maitri 5, Gana 6, Bhakoot 7 and Nadi 8 — for a total out of 36 gunas. It derives each person's Moon nakshatra, pada and rashi from a computed sidereal Moon longitude rather than asking you to look them up, dividing the zodiac into 27 nakshatras of 13°20' each and four padas of 3°20'. The conventional reading it applies is that 18 or more out of 36 is considered a match, with 24+ labelled Very Good and 30+ Excellent.",
+  "useCases": [
+    "Two families have exchanged birth details and you want to see the koota-by-koota breakdown yourself before a formal horoscope reading, instead of only hearing a final number.",
+    "A pandit mentioned Nadi dosha and you want to see which of the eight kootas actually scored zero and how many points that cost out of 36.",
+    "You are curious how much of a 36-guna total comes from just two categories, and want to check that Bhakoot and Nadi alone are worth 15 points."
+  ],
+  "benefits": [
+    [
+      "Full eight-koota breakdown",
+      "Every koota is shown with its own score and maximum, so a total is traceable to the categories that produced it rather than presented as a bare number."
+    ],
+    [
+      "Moon position is computed, not looked up",
+      "Nakshatra, pada and Moon rashi are derived from the birth date and time through a sidereal longitude calculation, so you do not need to know your nakshatra in advance."
+    ],
+    [
+      "Shows both charts side by side",
+      "Each person's nakshatra, pada, Moon rashi and Sun rashi are listed, which is the context that makes an individual koota score interpretable."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many gunas out of 36 are needed for a match?",
+      "By the common convention this tool applies, 18 or more out of 36 is treated as compatible: 18-23 is Good, 24-29 Very Good and 30 or above Excellent. Below 18 is reported as Low. Different traditions and astrologers set the bar differently and weigh individual doshas separately."
+    ],
+    [
+      "How are the 36 gunas divided between the eight kootas?",
+      "Varna carries 1 point, Vashya 2, Tara 3, Yoni 4, Graha Maitri 5, Gana 6, Bhakoot 7 and Nadi 8, adding to 36. Because Bhakoot and Nadi are all-or-nothing in the classical rules, those two alone account for 15 points and dominate most low scores."
+    ],
+    [
+      "What is Nadi dosha and how does it affect the score?",
+      "Nadi koota awards 8 points when the two nakshatras fall in different nadis and 0 when they share the same nadi — the condition usually called Nadi dosha. Losing all 8 points makes it arithmetically impossible to exceed 28 out of 36."
+    ],
+    [
+      "How exact does the birth time need to be?",
+      "It matters, because the Moon moves roughly 13 degrees a day, so it can cross a nakshatra boundary in about a day and a pada boundary in about six hours. Times entered here are interpreted as Indian Standard Time (UTC+5:30) and the positions use an approximate ephemeris, so treat the result as an informational reference for tradition and consult a qualified astrologer, and a counsellor for the relationship decision itself."
     ]
   ]
 },
@@ -6338,6 +8658,127 @@ export default {
     ]
   ]
 },
+  "atrial-fibrillation-risk-calculator": {
+  "intro": "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 12 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
+  "useCases": [
+    "You are 68 with treated hypertension and a BMI over 30, and want a structured sense of how those stack up before a routine cardiology appointment.",
+    "A relative was diagnosed with AF and you want to see which of your own risk factors are the modifiable ones — blood pressure, weight, alcohol, smoking, sleep apnoea — rather than the fixed ones.",
+    "You are preparing questions for a GP visit and want a one-page printout listing the factors you ticked and what each contributed to the total."
+  ],
+  "benefits": [
+    [
+      "Separates fixed from modifiable factors",
+      "Age, sex and race are scored but flagged as unchangeable, while blood pressure, weight, exercise, alcohol, smoking and sleep apnoea are listed separately as the ones an intervention can move."
+    ],
+    [
+      "Shows the arithmetic, not just a verdict",
+      "Every selected factor is listed with its own point value alongside the total, so you can see exactly which entries produced the band you landed in."
+    ],
+    [
+      "Produces a report you can take to a clinician",
+      "The selected factors, score, band and suggested discussion points export as a plain text file rather than staying trapped in the page."
+    ]
+  ],
+  "faqs": [
+    [
+      "What score means high risk of atrial fibrillation?",
+      "In this simplified 12-point scheme, 0-2 is Low, 3-4 Moderate, 5-7 High and 8-12 Very High, with indicative annual AF incidence of under 1%, 1-3%, 3-5% and over 5% respectively. These are broad bands from population data, not a prediction for any individual."
+    ],
+    [
+      "Why does age count for so much more than the other factors?",
+      "Because age is the strongest single predictor of atrial fibrillation in every major cohort study. Here age 65-74 adds 2 points and age 75 or over adds 4, out of a 12-point maximum — a person over 75 starts a third of the way up the scale before any other factor is counted."
+    ],
+    [
+      "Which risk factors can I actually change?",
+      "The tool separates six: blood pressure control (target below 130/80 mmHg), weight (BMI 18.5-24.9), at least 150 minutes a week of moderate exercise, alcohol at no more than one drink a day, complete smoking cessation, and treating diagnosed sleep apnoea, typically with CPAP. Population studies attribute a large share of AF cases to factors in this group."
+    ],
+    [
+      "Can this tell me whether I have AF?",
+      "No. It estimates the likelihood of developing atrial fibrillation from risk factors; it cannot detect an arrhythmia, which requires an ECG or extended rhythm monitoring. This is an informational screening aid only — if you have palpitations, breathlessness, chest pain or fainting, seek medical attention, and discuss any score with your doctor rather than acting on it alone."
+    ]
+  ]
+},
+  "attachment-file-type-risk-explainer": {
+  "intro": "Attachment File Type Risk Explainer rates an email attachment from its file name alone, using the one rule that decides what happens on a double-click: only the final extension counts. It sorts extensions into programs, scripts, shortcuts, macro-capable documents, containers and inert data, marks the ones on Microsoft's default Outlook blocked-attachment list, and detects the disguises — a second extension such as .pdf.exe, a right-to-left override character, trailing spaces, or an archive wrapped inside another archive. Nothing is uploaded; the name is analysed in the browser.",
+  "useCases": [
+    "Decide whether an unexpected 'invoice' attachment is a PDF or an executable wearing a PDF name.",
+    "Explain to a colleague why Windows shows Statement.pdf when the file on disk is Statement.pdf.exe.",
+    "Check whether a .docm, .xlsm or .one attachment needs macro-blocking before anyone opens it.",
+    "Brief a helpdesk team on which extensions mail filters already block, so they know a wrapped .zip is a deliberate workaround."
+  ],
+  "benefits": [
+    [
+      "Only the last extension counts",
+      "Shows the full dotted chain and names which part actually decides how the file opens."
+    ],
+    [
+      "Catches invisible tricks",
+      "Flags right-to-left override characters and padding spaces that make the displayed name differ from the real one."
+    ],
+    [
+      "Tells you what to do next",
+      "Each rating comes with handling steps for that category, not a generic warning."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which email attachments are the most dangerous?",
+      "Anything that executes without a further prompt: .exe, .scr, .com, .msi, .pif, .cpl and .jar, scripts such as .js, .vbs, .ps1, .bat, .cmd, .hta and .wsf, and shortcut files such as .lnk. Microsoft blocks roughly fifty of these in Outlook by default, so if one still reaches you it has usually been renamed or zipped to get past the filter."
+    ],
+    [
+      "What is a double extension, and why does it work?",
+      "It is a file named like Invoice.pdf.exe, where the harmless-looking .pdf is just part of the name. It works because Windows Explorer hides extensions for known file types by default, so the file is displayed as Invoice.pdf. Turn on File name extensions in Explorer's View tab and the disguise disappears."
+    ],
+    [
+      "Is a .docx safer than a .doc or .docm?",
+      "Yes. The XML-based .docx format cannot store VBA macros at all, while .doc, .docm, .xlsm and .pptm can. Since 2022 Microsoft also blocks macros by default in Office files that arrive from the internet, which is why attackers moved towards .lnk shortcuts, .iso images and OneNote .one files."
+    ],
+    [
+      "Can a PDF or an image be dangerous?",
+      "Usually not by itself. Most malicious PDFs simply contain a link to a fake login page, which is a phishing problem rather than a file problem, though reader vulnerabilities do exist and are patched regularly. An .svg is the exception among images: it is XML and can contain script when opened in a browser. This tool is educational — if you handle a suspected attack at work, report it rather than investigating alone."
+    ]
+  ]
+},
+  "attendance-calculator": {
+  "intro": "The Attendance Percentage Calculator works out your current attendance as attended ÷ total held × 100 and then answers the question that actually matters: how many classes in a row you must attend to reach the cutoff, using x ≥ (p × total − attended) ÷ (1 − p), or how many you can skip while staying above it, using z ≤ attended ÷ p − total. Enter the classes remaining in the semester and it also reports your maximum safe bunks, your final percentage if you attend everything, and your final percentage if you attend nothing. It shows the algebra behind each answer, with one-click targets at 65%, 70%, 75%, 80% and 85%.",
+  "useCases": [
+    "You are at 42 of 50 classes with a 75% requirement and want to know how many lectures you can miss before the department flags you — the answer is 6.",
+    "You have fallen to 60% with a 75% cutoff and need to know whether recovery is even possible this term, and how many consecutive classes it would take (30, from 30 of 50).",
+    "There are 30 classes left before the exam form deadline and you want your maximum safe bunks and your finishing percentage under best and worst cases before planning a trip home."
+  ],
+  "benefits": [
+    [
+      "Answers the skip question, not just the percentage",
+      "It converts your position into a concrete count of classes you can miss or must attend, rather than leaving you to solve the inequality yourself."
+    ],
+    [
+      "Shows the algebra",
+      "Each answer prints the working, including the unrounded figure before it is floored or ceilinged, so you can verify it against your college's own rounding."
+    ],
+    [
+      "Warns when the target is already unreachable",
+      "If perfect attendance for every remaining class still finishes below the cutoff, it says so explicitly instead of quietly showing an impossible target."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I calculate attendance percentage?",
+      "Divide classes attended by total classes held and multiply by 100. Attending 42 of 50 classes gives 42 ÷ 50 × 100 = 84%. Only classes actually held count in the denominator, so a cancelled lecture changes nothing."
+    ],
+    [
+      "How many classes can I skip and still keep 75%?",
+      "Skippable classes z satisfy attended ÷ (total + z) ≥ 0.75, so z ≤ attended ÷ 0.75 − total, rounded down. At 42 of 50 that is 42 ÷ 0.75 − 50 = 6 classes. Every class you skip after that drops you below the cutoff."
+    ],
+    [
+      "How many classes must I attend to get back to the required percentage?",
+      "Attend x consecutive classes where x ≥ (p × total − attended) ÷ (1 − p), with p as the required fraction. From 30 of 50 with a 75% target that is (37.5 − 30) ÷ 0.25 = 30 classes in a row. The closer the requirement is to 100%, the faster this number explodes."
+    ],
+    [
+      "What if even perfect attendance is not enough?",
+      "The semester planner detects this and says so: it compares your best possible finish, (attended + remaining) ÷ (total + remaining), against your target. When that is still short, no amount of attending fixes it, and the next step is your course coordinator and whatever condonation or medical-leave rules your institution has — check your own handbook, since cutoffs and rounding rules vary by university."
+    ]
+  ]
+},
   "attendance-percentage-calculator": {
   "intro": "Attendance Percentage Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
   "useCases": [
@@ -6460,6 +8901,46 @@ export default {
     ]
   ]
 },
+  "attention-span-test": {
+  "intro": "The Attention Span Test runs an A-not-X Continuous Performance Task in the browser: single letters flash for 250 ms every 1.25 seconds and you press the spacebar for every letter except X, which appears on roughly 15% of trials. It is built for anyone who wants a repeatable, timed measure of sustained attention rather than a personality-style quiz — students checking focus before study blocks, shift workers gauging fatigue, or people curious how their vigilance holds up over minutes. You pick a 1-, 2- or 5-minute run and finish with accuracy, average reaction time, omission errors and commission errors broken out separately.",
+  "useCases": [
+    "Comparing your focus at 9am against the same 2-minute run at 4pm to see whether your afternoon slump is real or imagined.",
+    "Checking whether a night of five hours' sleep actually slows you down, by re-running the identical 5-minute test after a normal night and reading the change in average reaction time.",
+    "Getting a concrete number to describe 'I keep zoning out' before a conversation with a doctor or a study coach, instead of trying to explain the feeling from memory."
+  ],
+  "benefits": [
+    [
+      "Separates zoning out from acting too fast",
+      "Missed letters are counted as omission errors and spacebar presses on X as commission errors, so inattention and poor impulse control show up as two different numbers rather than one blended score."
+    ],
+    [
+      "Millisecond-accurate timing",
+      "Reaction time is measured with performance.now() from the exact frame the letter is painted, so results are not rounded to the nearest animation tick or network round trip."
+    ],
+    [
+      "Long enough to expose fatigue",
+      "The 5-minute option runs about 240 trials, which is where vigilance decrement typically appears — a 1-minute check is too short for attention to drift."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a Continuous Performance Task?",
+      "A Continuous Performance Task is a timed vigilance test where you respond to a fast stream of stimuli and withhold your response for one specific target. This tool uses the A-not-X variant: press the spacebar for every letter, hold back on X. The withholding is the hard part, and it is what makes the task measure inhibitory control as well as attention."
+    ],
+    [
+      "What is a good reaction time on this test?",
+      "Under 400 ms is flagged as a strong result here, 400-600 ms is treated as typical, and above 600 ms is flagged for review. Simple visual reaction times in healthy adults commonly land in the 250-450 ms range, so most people who are rested and undistracted finish somewhere in the middle band."
+    ],
+    [
+      "How is the attention grade calculated?",
+      "The grade comes from two thresholds: 90% or better accuracy on non-X letters with no more than 2 presses on X scores Excellent, and accuracy below 80% or more than 5 presses on X scores Below Average. Everything in between is graded Average. Accuracy is hits divided by the number of non-X trials."
+    ],
+    [
+      "Can this test diagnose ADHD?",
+      "No. This is an informational self-check, not a clinical instrument — it is not normed against an age-matched population and a single browser session cannot control for screen lag, caffeine, sleep or distraction. Clinical CPTs are administered and interpreted alongside history and rating scales, so bring any concerns to a qualified clinician."
+    ]
+  ]
+},
   "audio-bit-depth-size-calculator": {
   "intro": "Audio Bit Depth Size Calculator returns the exact size of an uncompressed linear PCM recording from sample rate × bit depth × channels × duration, divided by eight bits per byte. Because PCM stores every sample frame in the same number of bits, the answer is exact rather than an estimate — unlike lossy or lossless codecs whose size depends on the material. It also reports the bitrate, size per minute and hour, and how long a recording can run before hitting the 4 GiB RIFF ceiling of a classic .wav.",
   "useCases": [
@@ -6539,6 +9020,86 @@ export default {
     [
       "Should I deliver stems as well as a mix?",
       "Deliver stems whenever the client may need to re-version, re-dub or re-time the piece later. Stems should be full length, start at the same timecode as the master, and be exported at the master's bit depth and sample rate, otherwise they will not line up when reassembled."
+    ]
+  ]
+},
+  "audio-description-gap-finder": {
+  "intro": "The Audio-Description Gap Finder decodes a local audio or video file, measures RMS loudness in 250 ms windows, and lists every stretch quieter than -42 dBFS that survives after your caption cues are subtracted — the timing candidates where an audio description could be spoken. It is for describers, accessibility leads and post-production editors who need a starting list of gaps instead of scrubbing a timeline by ear. Paste SRT or WebVTT cues (or plain start,end seconds), and each surviving gap comes back with in and out points, mean dBFS, and a planning score that rewards length and quiet while penalising gaps that butt against dialogue or the media edges.",
+  "useCases": [
+    "Planning a describe pass on a 6-minute training video: load the file, paste the existing WebVTT captions, and get the ranked list of silences longer than 1.2 seconds where narration will not collide with speech.",
+    "Sanity-checking a client's claim that 'there is plenty of room to describe' before quoting the job, by counting how many candidate gaps actually clear your minimum length.",
+    "Handing a describer a timing sheet: export the counts-and-timing JSON so the writer gets in/out points and durations without having to open the media themselves."
+  ],
+  "benefits": [
+    [
+      "Caption cues are subtracted, not just displayed",
+      "Dialogue intervals are padded by 150 ms on each side, merged, and cut out of every quiet stretch, so a gap that only looks free because a cue ends mid-window is split rather than reported whole."
+    ],
+    [
+      "Every candidate is ranked and flagged",
+      "The planning score adds up to 120 points for length and quietness, then subtracts 12 for sitting within the media-edge guard, 8 for being trimmed by dialogue and 5 for hugging a cue, so the risky gaps sort to the bottom."
+    ],
+    [
+      "Tunable thresholds instead of one fixed definition of quiet",
+      "The RMS window (50-2,000 ms), quiet threshold (-90 to -6 dBFS), minimum gap (250-60,000 ms) and bridge allowance are all adjustable, so a music-bed documentary and a bare interview can each be screened sensibly."
+    ]
+  ],
+  "faqs": [
+    [
+      "How long does an audio-description gap need to be?",
+      "This tool defaults to 1,200 ms and lets you set anything from 250 ms to 60 seconds. In practice a usable description phrase needs a couple of seconds, so most describers raise the minimum rather than lower it — very short gaps rank low anyway because length contributes up to 120 points of the score at 4 points per second."
+    ],
+    [
+      "What caption formats can I paste in?",
+      "SRT and WebVTT timing lines using the `-->` arrow are recognised, as is a plain manual format of two comma, semicolon or tab separated second values per line. Timestamps parse as HH:MM:SS,mmm, MM:SS.mmm or bare seconds, and the parser reports malformed, out-of-range and overlapping cue counts so you can tell whether your file was read correctly."
+    ],
+    [
+      "What size and length of file can it handle?",
+      "Up to 30 MB and 10 minutes, with 1 or 2 channels at a sample rate between 8 kHz and 96 kHz, and a hard ceiling of 24 million sample values. Caption input is capped at 500,000 characters or 5,000 cue timings, and the results list returns the top 200 candidates."
+    ],
+    [
+      "Does this make my video WCAG compliant?",
+      "No. It only finds timing candidates for a human to review — it does not judge whether a gap is semantically appropriate, does not write description text, and is not an accessibility conformance check. WCAG 2.1 success criteria 1.2.3 and 1.2.5 concern the description itself, so the written and recorded output still needs review by a describer."
+    ]
+  ]
+},
+  "audio-edit-boundary-visualizer": {
+  "intro": "The Audio Edit Boundary Visualizer draws a 1,000-bucket waveform envelope of a local audio file and flags the moments where the sample-to-sample jump or the local DC offset changes abruptly enough to deserve a human listen. It scans in 10 ms bins, takes the largest first-difference in each bin, and converts it to a robust modified z-score against the median and MAD of the whole file, so a click that is loud relative to that particular recording gets flagged even if it would be quiet in another. It is aimed at editors, podcast producers and reviewers who want a shortlist of suspicious timestamps rather than a claim about whether a file was edited.",
+  "useCases": [
+    "Checking a delivered interview recording for the seam left by a hard cut, before you sign off on it, by jumping straight to the flagged timestamps instead of listening end to end.",
+    "Tracking down an audible click in a 40-minute podcast export: the discontinuity shows up as a high-score sample-jump candidate you can read off in seconds.",
+    "Screening a voiceover file for DC-offset steps that suggest two takes were butted together at different noise floors, which the waveform view alone would not make obvious."
+  ],
+  "benefits": [
+    [
+      "Robust statistics, not a fixed loudness cutoff",
+      "The detection baseline is the median of per-bin maximum jumps and the scale is the median absolute deviation times 1.4826, so a noisy recording does not drown the threshold and a very clean one does not flood you with false hits."
+    ],
+    [
+      "Two independent cues, labelled separately",
+      "Each candidate is tagged sample-jump, dc-shift or both, so a hard waveform discontinuity is distinguishable from a slow offset step between two takes."
+    ],
+    [
+      "Nearby hits collapse to one timestamp",
+      "Candidates within the merge window (50 ms by default, adjustable 10-500 ms) collapse to the single strongest one, so one click does not appear as a cluster of near-identical rows."
+    ]
+  ],
+  "faqs": [
+    [
+      "What do the detection settings actually mean?",
+      "There are four. Score threshold (default 6, range 3-20) is the modified z-score a jump must clear; absolute jump (default 0.08, range 0.01-1) is the minimum raw sample-to-sample step in normalised amplitude; DC shift (default 0.025, range 0.005-0.5) is the minimum change in local mean across the point; merge window (default 50 ms) collapses neighbouring hits. A candidate is reported if it clears the jump pair or the DC rule."
+    ],
+    [
+      "How large a file can I analyse?",
+      "Up to 30 MB and 10 minutes, mono or stereo, at a decoded sample rate no higher than 96 kHz, with a ceiling of 24 million total sample values. Results are capped at 500 candidates, and the report tells you when that cap was reached so you know the list is truncated."
+    ],
+    [
+      "Can this prove a recording was edited?",
+      "No, and the exported report states so explicitly — it records that authenticity was not established and no edit was proven. Legitimate production choices such as gates, fades, splices between silent regions and codec artefacts all produce discontinuities, so every flag is a candidate for review, not evidence."
+    ],
+    [
+      "Does anything from my audio leave the browser or end up in the report?",
+      "No. Decoding and analysis run locally, and the JSON report deliberately excludes the file name, the audio samples and the waveform data — it carries only timestamps, jump and DC values, scores, cue labels and your settings."
     ]
   ]
 },
@@ -6623,6 +9184,46 @@ export default {
     ]
   ]
 },
+  "audio-pitch-tempo-shifter": {
+  "intro": "The Audio Pitch & Tempo Shifter changes the speed of an audio file without moving its pitch, or moves its pitch by two semitones without changing its length, using FFmpeg compiled to WebAssembly and run inside your own browser. Tempo presets apply atempo=0.8 and atempo=1.25 (80% and 125% of original speed); pitch presets resample by a factor of 1.12246, which is exactly two equal-tempered semitones, then compensate with the inverse tempo change so the running time comes back. The result downloads as a WAV, and the source file is written to FFmpeg's in-memory filesystem rather than uploaded anywhere.",
+  "useCases": [
+    "Slowing a guitar solo to 80% speed so you can hear the individual notes, without the recording dropping into a lower key that makes it useless for practice.",
+    "Dropping a backing track two semitones because the singer cannot reach the top note, while keeping the arrangement exactly the same length as the click track.",
+    "Speeding an interview recording to 125% for a faster transcription pass, with the speaker's voice still sounding like themselves instead of chipmunked."
+  ],
+  "benefits": [
+    [
+      "Pitch and tempo move independently",
+      "The pitch presets chain asetrate with a compensating atempo, so a two-semitone shift leaves the duration where it was — a plain speed change would have moved both together."
+    ],
+    [
+      "Lossless WAV output",
+      "Results are written as uncompressed WAV, so a file you plan to edit further does not pick up a second generation of lossy encoding on the way through."
+    ],
+    [
+      "The engine loads only when you ask",
+      "The FFmpeg WebAssembly core is fetched on first press of Process, not on page load, so simply opening the page costs you nothing."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much does the pitch actually change?",
+      "Two semitones — one whole tone — up or down. The resampling factor is 1.12246, which is 2 raised to the power 2/12, the exact ratio between notes a whole step apart in equal temperament. Pitch-up multiplies the playback rate by it and pitch-down divides by it."
+    ],
+    [
+      "How much faster or slower do the tempo presets run?",
+      "Slower plays at 0.8x, so a 5-minute track becomes 6 minutes 15 seconds; faster plays at 1.25x, turning 5 minutes into 4 minutes. Both use FFmpeg's atempo filter, which time-stretches without transposing."
+    ],
+    [
+      "Will speeding up or pitch-shifting make the audio sound worse?",
+      "Some artefacts are expected. Time-stretching works on overlapping windows, so transients such as drum hits and hard consonants can smear slightly, and the effect grows the further you move from 1.0x. At 0.8x and 1.25x it is usually mild on speech and noticeable on percussive material."
+    ],
+    [
+      "Is my audio uploaded to a server?",
+      "No. The file is read by the page and written into the WebAssembly engine's in-memory filesystem, processed there, and downloaded straight back to you. The only network request is the one that fetches the FFmpeg core itself the first time you run a job."
+    ]
+  ]
+},
   "audio-to-base64": {
   "intro": "This converter turns an audio file into a Base64 data URL — the data:audio/mpeg;base64,… string you can paste directly into HTML, CSS or JavaScript instead of shipping a separate file. Encoding follows RFC 4648, which packs every 3 bytes into 4 characters, so the output is always 33% larger than the original. It is aimed at developers inlining short UI sounds, and at anyone who needs an audio clip embedded in a single self-contained file.",
   "useCases": [
@@ -6660,6 +9261,86 @@ export default {
     [
       "Can I convert a Base64 string back into an audio file?",
       "Yes. Paste the data URL into the inspector on this page and it reports the declared MIME type and the exact decoded size in bytes; the audio player above plays the same string directly, which is the quickest way to confirm a payload is intact."
+    ]
+  ]
+},
+  "audio-transcript-alignment-checker": {
+  "intro": "The Audio-Transcript Alignment Checker measures your audio in 50 ms RMS windows, marks every window above -40 dBFS as speech activity, and reports what percentage of that activity falls inside an SRT or WebVTT cue — plus the specific stretches of audio that no cue covers. Paste a second transcript and it also pairs cues by time overlap and flags text differences using a Dice token-similarity score below 0.85 and boundary shifts beyond 500 ms. It is for captioners, QC reviewers and accessibility teams who need to find the missing or drifted cue rather than proofread the whole file.",
+  "useCases": [
+    "Checking a captioner's delivery before you accept it: if active audio coverage comes back at 91% you know roughly a tenth of the speech has no cue over it, and the uncovered ranges tell you where.",
+    "Finding out why captions on a re-cut episode feel late, by diffing the new SRT against the pre-cut reference and reading the start and end delta in milliseconds for each shifted cue.",
+    "Catching cues that were left over from an earlier edit — timings that sit past the end of the audio, or cues placed over near-silence, both of which are listed separately."
+  ],
+  "benefits": [
+    [
+      "Finds the gaps, not just a pass/fail",
+      "Uncovered speech is merged into contiguous ranges and reported with its peak dB and in/out times, so you get a worklist of timestamps instead of a single score."
+    ],
+    [
+      "Diffs two transcripts by time, then by words",
+      "Cues are paired by greatest time overlap first, so a renumbered or re-split file still matches up, and only then is the text compared — a rename does not read as a rewrite."
+    ],
+    [
+      "Separates the four ways a transcript goes wrong",
+      "Findings are typed as reference-unmatched, candidate-extra, text-difference or timing-shift and counted individually, so a missing cue is never confused with a mistyped one."
+    ]
+  ],
+  "faqs": [
+    [
+      "What do the alignment settings control?",
+      "Five values. Activity threshold (default -40 dBFS, range -80 to -6) decides what counts as speech; window size (default 50 ms, range 20-200) sets the measurement resolution; minimum uncovered length (default 250 ms) suppresses trivial gaps; timing tolerance (default 500 ms) is how far a cue boundary may drift before it is flagged; text similarity threshold (default 0.85) is the score below which two cue texts are reported as different."
+    ],
+    [
+      "How is text similarity between two cues scored?",
+      "As a Dice coefficient over word tokens: twice the number of shared tokens divided by the combined token count of both cues, giving 1.0 for identical wording and 0 for no shared words. Comparison is case-insensitive and ignores punctuation and markup, so `Hello, world!` and `hello world` score 1.0."
+    ],
+    [
+      "What transcript formats and sizes does it accept?",
+      "SRT and WebVTT blocks with `-->` timing lines in HH:MM:SS,mmm or MM:SS.mmm form, up to 1,000,000 characters and 5,000 cues; WEBVTT, NOTE, STYLE and REGION headers are skipped and tags and entities are stripped before comparison. Audio is limited to 30 MB, 10 minutes, mono or stereo, up to 96 kHz."
+    ],
+    [
+      "Does this check whether my captions are accurate or WCAG compliant?",
+      "No, and the exported report says so explicitly. No speech recognition is performed, so the tool never knows what was actually said — it only compares energy in the audio against cue timings, and compares your two transcripts against each other. Semantic accuracy and WCAG conformance still need a human reviewer."
+    ]
+  ]
+},
+  "audio-video-sync-meter": {
+  "intro": "The Audio-Video Sync Meter analyses a local clap or flash recording with FFmpeg compiled to WebAssembly and produces a timestamped diagnostic log you use to measure lip-sync offset: silencedetect at -30 dB with a 0.05-second minimum marks the audio transient, and showinfo prints the presentation timestamp of every video frame. Subtract the frame time of the visible clap from the audio transition time and the difference, in milliseconds, is how far the audio leads or lags. It is aimed at videographers, streamers and AV installers who suspect a delay somewhere in their capture chain and want a number rather than a hunch.",
+  "useCases": [
+    "Diagnosing a webcam-plus-USB-microphone setup that looks slightly off in recordings: clap once on camera, run the file through, and read how many milliseconds separate the audio transient from the frame where your hands meet.",
+    "Checking whether a Bluetooth headset is adding latency to a screen recording before you blame the editing software.",
+    "Documenting an installed AV system's offset for a handover report, using the exported log as evidence of the frame and audio timestamps measured."
+  ],
+  "benefits": [
+    [
+      "Frame-accurate timestamps, not a slider you nudge by eye",
+      "showinfo prints the exact presentation timestamp of every decoded frame, so the reference point for the clap is the frame's own pts rather than wherever your playhead happened to land."
+    ],
+    [
+      "The transient is found by threshold, not by scrubbing",
+      "silencedetect reports each crossing of the -30 dB noise floor lasting at least 0.05 seconds, which is short enough to catch a hand clap and long enough to ignore room noise."
+    ],
+    [
+      "You keep the raw log",
+      "The full FFmpeg diagnostic output downloads as a text file, so the measurement can be re-checked, attached to a ticket, or compared against a second take."
+    ]
+  ],
+  "faqs": [
+    [
+      "How much audio delay is actually noticeable?",
+      "For broadcast, ITU-R BT.1359 treats audio leading video by more than about 45 ms or lagging by more than about 125 ms as beyond the range viewers accept — the ear tolerates sound arriving late far better than early, because that is what distance does in the real world. Offsets under roughly 20 ms are generally imperceptible."
+    ],
+    [
+      "How do I record a good sync test clip?",
+      "Point the camera at your hands, keep them clearly in frame, and clap once sharply after a couple of seconds of quiet. A single loud transient against a quiet background is what the -30 dB threshold detects cleanly; a noisy room or a soft clap produces ambiguous silence transitions."
+    ],
+    [
+      "Does this correct the offset for me?",
+      "No. It measures and reports timestamps only — it does not re-mux the file or shift the audio track. Once you know the offset in milliseconds you apply it in your editor or capture software, which is also where you would verify the fix."
+    ],
+    [
+      "Is my video uploaded anywhere?",
+      "No. The file is written into the FFmpeg WebAssembly engine's in-memory filesystem in your browser and analysed there; only the text log is produced, and it downloads straight to your device."
     ]
   ]
 },
@@ -6741,6 +9422,46 @@ export default {
     [
       "Will the same photo always give the same colour?",
       "Yes. The whole calculation is deterministic: same pixels in, same hue out, with no randomness anywhere. Re-uploading the same file gives the identical result, and a name typed the same way always hashes to the same hue."
+    ]
+  ]
+},
+  "aurora-visibility-forecast": {
+  "intro": "The Aurora Visibility Forecast reads the latest planetary K-index from NOAA's Space Weather Prediction Center and compares your latitude against a simple visibility boundary of 67 degrees minus 2.2 times Kp — so at Kp 0 the screen sits near 67 degrees and at Kp 7 it drops to about 51.6 degrees. If your latitude is poleward of that line, conditions pass a first screening for possible aurora. It is a fast go / no-go check for aurora chasers and photographers deciding whether tonight is worth driving for, not a substitute for a full auroral oval forecast.",
+  "useCases": [
+    "Deciding at 9pm in Edinburgh whether the current Kp is high enough to be worth a drive north of the city, before committing to the trip.",
+    "Checking during a reported geomagnetic storm whether the boundary has actually dropped far enough south to reach your latitude, rather than trusting a social-media alert.",
+    "Working out which of two possible shooting locations, several degrees of latitude apart, currently clears the screen."
+  ],
+  "benefits": [
+    [
+      "Reads the official Kp product directly",
+      "The value comes from NOAA SWPC's planetary K-index feed each time you press for a reading, and the result shows the source timestamp in UTC so you can see how fresh it is."
+    ],
+    [
+      "Answers for your latitude, not a generic map",
+      "You enter coordinates or use device location, and the screen compares your absolute latitude against the computed boundary, so a yes or no applies to where you actually are."
+    ],
+    [
+      "Shows its working",
+      "The result lists the Kp value, your latitude and the boundary figure side by side, so you can see how close a marginal call was instead of getting an unexplained verdict."
+    ]
+  ],
+  "faqs": [
+    [
+      "What Kp do I need to see the aurora from where I am?",
+      "Rearrange the screen: you need a Kp of roughly (67 minus your latitude) divided by 2.2. At 55 degrees that is about Kp 5.5; at 60 degrees about Kp 3.2; at 50 degrees about Kp 7.7. Higher Kp pushes the auroral oval further towards the equator."
+    ],
+    [
+      "What is the Kp index?",
+      "Kp is a planetary geomagnetic activity index on a 0 to 9 scale, derived from magnetometer readings at a network of ground observatories and published in three-hour intervals. NOAA's G-scale for geomagnetic storms starts at Kp 5 (G1) and reaches G5 at Kp 9."
+    ],
+    [
+      "Does passing the screen mean I will actually see the aurora?",
+      "No. This is a latitude-and-Kp screen only. Darkness, cloud cover, moonlight, light pollution, your local horizon to the north, and the difference between geographic and geomagnetic latitude all matter, and any one of them can rule out a night that clears the boundary."
+    ],
+    [
+      "How current is the reading?",
+      "It is fetched on demand when you request a result, and the row labelled Latest UTC shows the timestamp NOAA attached to that Kp value. Kp is reported in three-hour periods, so a value can be up to a few hours old even when the fetch is instant."
     ]
   ]
 },
@@ -6901,6 +9622,86 @@ export default {
     ]
   ]
 },
+  "availability-time-zone-finder": {
+  "intro": "The Availability & Time-Zone Finder takes a list of people written as `Name | UTC offset | HH:MM-HH:MM` and returns every UTC start time at which the whole meeting fits inside everyone's local working window. It steps through the full 24-hour day at your chosen interval and keeps a slot only when each person's local start time is at or after their window opens and their local end time is at or before it closes — no partial overlaps. Each surviving slot is listed with the UTC start and the local start and end for every participant, so you can pick the one that costs the fewest people their evening.",
+  "useCases": [
+    "Booking a recurring standup for a team split across India, the UK and the US east coast, and finding out whether an hour that works for all three even exists.",
+    "Checking before you promise a client a 90-minute workshop that their 09:00-17:00 and your team's 10:00-19:00 leave enough shared room for it.",
+    "Settling an argument about whether someone is being unreasonable, by showing the full list of valid start times and letting the group choose rather than the organiser deciding."
+  ],
+  "benefits": [
+    [
+      "The whole meeting has to fit, not just the start",
+      "A slot is only reported when start plus duration lands inside every person's window, so a 60-minute call is never proposed at 16:45 for someone who stops at 17:00."
+    ],
+    [
+      "Handles half-hour and quarter-hour offsets",
+      "Offsets are entered as decimal hours, so 5.5 for India, 5.75 for Nepal and -3.5 for Newfoundland all work — not just whole-hour zones."
+    ],
+    [
+      "Shows each person's local clock time",
+      "Every result row prints the local start and end for each participant next to the UTC time, so the cost of a slot is visible before anyone accepts the invite."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I enter each person's availability?",
+      "One person per line as `Name | UTC offset in hours | HH:MM-HH:MM`, for example `Asha | 5.5 | 09:00-18:00`. The offset is that person's current offset from UTC as a decimal number, positive east of Greenwich and negative west, and the range is their local working window in 24-hour time."
+    ],
+    [
+      "What meeting lengths and search intervals can I use?",
+      "Duration runs from 15 to 480 minutes and the search step from 15 to 120 minutes, defaulting to a 60-minute meeting searched in 30-minute increments. A smaller step finds more candidate start times; the results table lists up to 100 of them."
+    ],
+    [
+      "Does it account for daylight saving time?",
+      "No — you supply each person's offset yourself, so it reflects whatever offset you type. If a participant's region changes clocks between now and the meeting date, enter the offset that will apply on that date rather than today's."
+    ],
+    [
+      "What if it finds no common time?",
+      "It reports zero common start times, which means no slot exists where the full duration sits inside every window. Shorten the meeting, widen one person's stated hours, or accept that someone takes it outside their normal day — the tool is a decision aid, and the group should agree who absorbs that cost."
+    ]
+  ]
+},
+  "avatar-generator": {
+  "intro": "The Avatar Generator builds a vector portrait as inline SVG from seven feature choices — face shape, eyes, eyebrows, mouth, hair, facial hair and accessory — across four illustration styles, four editable colours and six background treatments. Every avatar is produced by a seeded mulberry32 pseudo-random generator, so the same seed always redraws exactly the same face and any avatar you like can be reproduced later. It is for anyone who needs a profile picture, a placeholder headshot or a set of matching team portraits without hiring an illustrator or using a photo of themselves.",
+  "useCases": [
+    "Replacing a photo on a public profile with something recognisable but not identifying, when you would rather not have your face indexed by search engines.",
+    "Filling a design mockup or a demo user list with distinct-looking people, using a different seed per user so the faces stay stable across screenshots.",
+    "Making a matching set for a small team: pick one style and background, then vary skin, hair and features so the avatars read as a family rather than a random collection."
+  ],
+  "benefits": [
+    [
+      "Same seed, same face, every time",
+      "Generation runs through a deterministic hash-and-PRNG chain rather than a random draw, so a seed you keep will regenerate the identical avatar months later — no need to archive the file."
+    ],
+    [
+      "Vector under the hood, sharp at any size",
+      "The avatar is drawn as SVG on a 240x240 canvas and exported at three times pixel density, so a 32-pixel favicon and a 720-pixel profile picture come off the same source without softening."
+    ],
+    [
+      "Randomise, then take control",
+      "Randomise and the curated palette generator give you a starting point, and every field stays editable afterwards — you are not stuck rerolling until something lands."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many different avatars can it make?",
+      "Over 550 million distinct combinations from the built-in options alone: 4 styles, 6 backgrounds, 3 face shapes, 4 eye types, 3 eyebrow types, 4 mouths, 5 hairstyles, 3 facial-hair options, 4 accessories, 6 skin tones, 8 hair colours, 8 background colours and 7 accent colours. Custom colour values push it far higher."
+    ],
+    [
+      "Does this use AI to generate faces?",
+      "No. Despite the AI-style label, there is no model and no image generation — the avatar is drawn from explicit SVG shapes chosen by a seeded pseudo-random number generator. The practical upshot is that nothing is uploaded, output is instant, and results are reproducible rather than one-off."
+    ],
+    [
+      "What formats can I export?",
+      "PNG download at 3x pixel ratio, and copy to clipboard as a PNG image where the browser supports the async clipboard with ClipboardItem. If it does not, the copy falls back to an SVG data URL you can paste into a text field or editor."
+    ],
+    [
+      "Can I use the avatar commercially?",
+      "The avatars are generated from geometric shapes in your own browser and are not derived from any photograph or third-party artwork, so there is no model release or stock licence involved. If it will represent a brand or appear in a paid product, check the site's terms for the current usage position."
+    ]
+  ]
+},
   "awards-honours-notes-tracker": {
   "intro": "This tracker is a structured revision table for the award questions that appear in every competitive exam's current-affairs section: each row records award, recipient, field and year, and the table is searchable, sortable by any column and exportable as CSV. It is built for SSC, banking, UPSC prelims and state PSC aspirants who currently keep award facts scattered across monthly PDFs, and it stores everything locally in the browser.",
   "useCases": [
@@ -6978,6 +9779,46 @@ export default {
     [
       "How much do EBS snapshots cost?",
       "Standard-tier EBS snapshots cost $0.05 per GB-month of stored data in us-east-1. Snapshots are incremental, so you pay for changed blocks rather than the full volume size each time; the archive tier is cheaper per GB but has a 90-day minimum and slower restores."
+    ]
+  ]
+},
+  "aws-iam-policy-validator": {
+  "intro": "The AWS IAM Policy Validator parses a pasted identity or resource policy JSON in your browser and returns per-statement findings graded high, medium or review — covering structural mistakes, broad Allow patterns such as Action \"*\" or a service-wide wildcard, wildcard Principal, the inverted NotAction, NotPrincipal and NotResource selectors, iam:PassRole, and ten privilege-management action patterns. It is for engineers reviewing a policy in a pull request or a console tab who want the risky lines pointed at before it ships. Nothing is sent to AWS: it is a lexical review of the one document you paste, so it flags cues to check rather than deciding what access is actually authorised.",
+  "useCases": [
+    "Reviewing a teammate's Terraform-generated policy in a PR and wanting to know quickly whether any Allow statement widened to Action \"*\" or Resource \"*\" without a Condition block.",
+    "Checking a cross-account S3 bucket policy before you apply it, because `\"Principal\": \"*\"` in a resource policy is the one line you cannot afford to get wrong.",
+    "Auditing a deployment role that includes iam:PassRole, to confirm the pass is constrained by a condition rather than left open across every role in the account."
+  ],
+  "benefits": [
+    [
+      "Catches the inverted selectors people miss",
+      "An Allow built on NotAction, NotPrincipal or NotResource looks short but grants everything except a small list; each is raised as a high finding rather than passing as a tidy statement."
+    ],
+    [
+      "Severity depends on combination, not just keywords",
+      "Resource \"*\" alone is a medium cue, but the same statement is escalated to high when it also carries iam:PassRole or a privilege-management action — the pairing is what makes it dangerous."
+    ],
+    [
+      "Structure and risk in one pass",
+      "Grammar problems such as an unsupported Effect, Action and NotAction both present, or an empty Condition are reported alongside the risk cues, so a policy that would fail to apply is caught at the same time."
+    ]
+  ],
+  "faqs": [
+    [
+      "What counts as a high-priority finding?",
+      "Eight patterns, all on Allow statements: Action \"*\", a service-wide wildcard like `s3:*`, NotAction, Principal \"*\", NotPrincipal, NotResource, iam:PassRole, and any privilege-management action. Resource \"*\" joins them when the statement also has PassRole or a privilege-management cue; on its own it is medium."
+    ],
+    [
+      "Which actions count as privilege management?",
+      "Ten patterns: iam:Attach*Policy and iam:Detach*Policy, iam:Put*Policy and iam:Delete*Policy, iam:CreatePolicyVersion, iam:SetDefaultPolicyVersion, iam:UpdateAssumeRolePolicy, iam:CreateAccessKey, iam:UpdateLoginProfile, iam:AddUserToGroup, iam:CreateUser/Role/Group, and sts:AssumeRole. Each can be a step in granting further permissions to oneself or another identity."
+    ],
+    [
+      "How large a policy can I check?",
+      "Up to 200,000 characters and 500 statements, with a maximum of 600 findings reported (higher-severity findings displace lower ones when that cap is hit). AWS's own managed-policy character limit is far smaller, so real policies rarely approach it."
+    ],
+    [
+      "Does a clear result mean the policy is safe or least-privilege?",
+      "No. This is a lexical review of one document — it does not call AWS, resolve accounts or ARNs, or consider SCPs, permission boundaries, session policies, other attached policies, or explicit denies elsewhere. Effective authorisation depends on all of those, so use IAM Access Analyzer and a human reviewer for the real decision."
     ]
   ]
 },
@@ -7222,6 +10063,46 @@ export default {
     ]
   ]
 },
+  "baby-name-generator": {
+  "intro": "The Baby Name Generator is a browsable, filterable set of 42 curated baby names, each shown with its linguistic origin and its meaning, that you narrow by gender, by any of 13 origins, or by typing part of a name. Expectant parents get a shortlist they can build up with the heart icon and copy out one name at a time, rather than an endless scroll of names with no context. Every entry carries the meaning alongside it, so a name never lands on the list purely on the strength of how it sounds.",
+  "useCases": [
+    "Narrowing down to gender-neutral options before the 20-week scan, when you would rather not commit to a boy's or girl's list yet.",
+    "Looking for a name that honours a Hebrew, Irish or Greek family background, by filtering to that origin and reading the meanings side by side.",
+    "Building a shortlist during one sitting with your partner, tapping the heart on the ones you both like so the favourites strip shows the agreed set at the end."
+  ],
+  "benefits": [
+    [
+      "Meaning shown on every card, not hidden behind a click",
+      "Origin and meaning sit on the name card itself, so you compare what the names actually mean instead of clicking through one at a time."
+    ],
+    [
+      "Three filters that stack",
+      "Gender, origin and a live name search apply together, so you can ask for neutral names of Irish origin containing 'in' in one pass."
+    ],
+    [
+      "A shortlist that stays visible",
+      "Favourited names collect into a strip at the bottom of the page and can be removed with one tap, so the list you are actually choosing from never scrolls out of sight."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many names are in the list?",
+      "42 names: 18 listed as boys' names, 18 as girls' names and 6 as gender-neutral, spanning 13 origins — Hebrew, Latin, Greek, English, Germanic, Italian, Irish, Welsh, Scottish, Gaelic, French, Spanish and Arabic. It is a curated set chosen for recognisability and clear meanings, not an exhaustive database."
+    ],
+    [
+      "Does it show which names are most popular?",
+      "No. The list carries origin and meaning only, with no ranking or birth-registration data. For popularity, national registries publish the real figures — the US Social Security Administration and the UK Office for National Statistics both release annual baby-name rankings."
+    ],
+    [
+      "Are my favourites saved if I close the tab?",
+      "No. The shortlist lives in the page for the current session and clears on reload, which also means nothing about your name search is stored or transmitted. Copy the names you want to keep before you leave."
+    ],
+    [
+      "How reliable are the listed meanings?",
+      "They are the conventional meanings usually given for each name — for example Olivia from Latin for the olive tree, Noah from Hebrew for rest or comfort. Name etymology is often contested and meanings can differ between traditions, so treat these as a starting point and check a dedicated etymological source if the exact origin matters to you."
+    ]
+  ]
+},
   "baby-name-initial-combiner": {
   "intro": "The Baby Name Initial Combiner splices two names into new ones by splitting each into consonant-plus-vowel syllables and recombining the pieces ten different ways in both directions — first syllable of one with the last of the other, opening consonants on the other's vowel body, overlapping shared letters, and so on. Every result is scored out of 100: sixty percent for pronounceability (no three-consonant runs, no vowel pile-ups, four to eight letters) and forty percent for how evenly the two parents contributed. The same two names always produce the same list.",
   "useCases": [
@@ -7385,6 +10266,46 @@ export default {
     ]
   ]
 },
+  "baby-wake-window-planner": {
+  "intro": "The Baby Wake Window Planner turns a baby's age, morning wake time and target bedtime into a full nap schedule by solving span = naps x nap length + (naps + 1) x wake window, then choosing the nap count whose required awake stretch sits closest to the middle of the age-appropriate range. It is built for parents and carers of children up to 36 months who want the day to actually end at the bedtime they picked. Nap length is derived rather than guessed: total daily sleep for the age (AASM consensus ranges from 4 months, National Sleep Foundation below that) minus the typical overnight portion, divided across the naps.",
+  "useCases": [
+    "Your 7-month-old wakes at 06:30 and you want a 19:00 bedtime — you need to know whether that day holds two naps or three, and how long each has to be.",
+    "You are in the middle of the 3-to-2 nap transition and want to see what awake stretch each nap count would demand before deciding which one to try tomorrow.",
+    "You are writing a handover sheet for a grandparent or nanny and need nap start and end clock times, not vague advice like 'nap after two hours'."
+  ],
+  "benefits": [
+    [
+      "Solves for the bedtime you chose",
+      "Most wake-window charts fix the window and let bedtime land wherever it falls; this works backwards from your target bedtime and tells you the window that reaches it."
+    ],
+    [
+      "Picks the nap count for you",
+      "It tests every plausible nap count for the age band, prefers the ones whose required window lands inside the published range, and breaks ties by closeness to the range midpoint."
+    ],
+    [
+      "Flags a day that does not add up",
+      "If the required window is shorter or longer than the age range, or the bedtime falls outside the usual 17:30 to 20:30 span, the plan says so instead of quietly producing an unrealistic schedule."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a wake window?",
+      "A wake window is the stretch a baby can stay comfortably awake between sleeps. The planner uses ranges from common paediatric sleep practice that widen with age: roughly 45 to 60 minutes at 0 to 1 month, 105 to 150 minutes at 4 to 6 months, 180 to 240 minutes at 9 to 12 months, and 300 to 420 minutes at 2 to 3 years."
+    ],
+    [
+      "How many hours should my baby sleep in 24 hours?",
+      "The planner uses 12 to 16 hours for 4 to 12 months and 11 to 14 hours for 1 to 2 years, which are the AASM consensus recommendations endorsed by the AAP. Below 4 months the AASM declined to issue a recommendation, so the National Sleep Foundation newborn range of 14 to 17 hours is used instead."
+    ],
+    [
+      "Why does it say the naps do not fit my wake time and bedtime?",
+      "That message means the daytime sleep the age needs is longer than the gap you left between waking and bedtime, so no positive wake window exists. Move bedtime later or the wake time earlier. The planner also rejects days under 4 hours or over 16 hours from wake to bedtime as input errors."
+    ],
+    [
+      "Does this replace advice from a paediatrician?",
+      "No — it is an informational planner built on published age ranges, not a medical assessment of your child. Every baby varies, and sleep problems, unusual sleep totals, or concerns about growth and feeding should go to your paediatrician or health visitor."
+    ]
+  ]
+},
   "backpacking-packing-list-builder": {
   "intro": "This builder treats a backpacking list as a weight budget rather than a checklist. It separates base weight — everything that is not eaten, drunk or burned — from consumables, sizes food by calorie density at the classic 125 kcal per ounce (4.4 kcal per gram), counts water at 1 kg per litre, and checks the loaded total against the 20%-of-body-weight carrying guideline. The sleep system is chosen from the expected night low using the ISO 23537 comfort rating rather than the survival limit printed on the label.",
   "useCases": [
@@ -7466,6 +10387,46 @@ export default {
     ]
   ]
 },
+  "backup-restore-verifier": {
+  "intro": "The Backup Restore Verifier opens a ZIP backup in your browser and actually decompresses every entry with CRC32 checking on, so each file is reported as Readable, Directory, or Encrypted or unreadable along with its true uncompressed byte size. It is for anyone who keeps ZIP backups of photos, documents, exports or archives and has never confirmed that the archive still restores. The result is a per-entry table plus a count of how many files came back readable — a restore test rather than a file listing.",
+  "useCases": [
+    "You found a 2019 backup ZIP on an old external drive and want to know whether the files inside still decompress before you delete the drive.",
+    "A password-protected archive is refusing to open and you need to see which specific entries are encrypted rather than just getting a generic failure.",
+    "Before handing a client or family member an archive, you want proof that every entry in it survives extraction and matches its stored CRC32."
+  ],
+  "benefits": [
+    [
+      "It extracts, it does not just read the index",
+      "Every non-directory entry is decompressed to a Uint8Array, so a corrupt deflate stream or a bad CRC32 shows up as unreadable instead of hiding behind a valid-looking central directory."
+    ],
+    [
+      "Per-entry verdicts, not one pass or fail",
+      "The table names each entry with its size and status, so a mostly-good archive with three broken files tells you exactly which three."
+    ],
+    [
+      "Encrypted entries are called out honestly",
+      "Entries that cannot be decoded are labelled Encrypted or unreadable rather than being silently skipped or counted as fine."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I check if a ZIP backup is corrupted?",
+      "Select the ZIP and run the workbench — it decompresses every entry with CRC32 verification enabled, and any entry whose data fails to decode is listed as Encrypted or unreadable. The summary line tells you how many entries came back readable."
+    ],
+    [
+      "Can it open password-protected ZIP files?",
+      "No. There is no password field, and standard ZIP encryption is not decrypted here, so encrypted members are reported as unreadable. Use the archiver that created the backup to test those with the password."
+    ],
+    [
+      "Does my backup get uploaded anywhere?",
+      "No. The archive is parsed by JSZip inside your browser tab and never leaves the device — nothing is sent to a server, which also means very large archives are limited by your available memory."
+    ],
+    [
+      "Which archive formats work?",
+      "ZIP only. TAR, 7z, RAR, and disk-image formats are not parsed, and an encrypted or non-ZIP file will simply fail to load rather than producing a partial report."
+    ]
+  ]
+},
   "badminton-calorie-burn-calculator": {
   "intro": "The Badminton Calorie Burn Calculator converts your body weight, rally time and break time into an estimated calorie burn using the MET equation kcal/min = MET x 3.5 x kg / 200. The Compendium of Physical Activities rates competitive badminton at 7.0 METs and social singles or doubles at 5.5 METs, and this tool prices the singles-versus-doubles gap in between, while breaks between games are counted separately at the 1.3 MET standing rate. It suits club players and coaches who want a session figure that reflects real time on court rather than total time at the hall.",
   "useCases": [
@@ -7507,6 +10468,46 @@ export default {
     ]
   ]
 },
+  "baisakhi-wishes-generator": {
+  "intro": "The Baisakhi Wishes Generator composes a Vaisakhi greeting in Gurmukhi, Roman transliteration and English at once, in one of four styles, and scores the finished message against the SMS rules in 3GPP TS 23.038 so you know how many texts it will cost to send. It also works out the Khalsa anniversary for any year — simply that year minus 1699, the Vaisakhi on which Guru Gobind Singh founded the Khalsa at Anandpur Sahib. It is for anyone sending Vaisakhi greetings to family, sangat, staff or clients who wants the Gurmukhi right and the length predictable.",
+  "useCases": [
+    "You want to send the Sikh salutation in Gurmukhi to relatives on WhatsApp but cannot type Gurmukhi on your phone keyboard.",
+    "Your business is sending a Vaisakhi SMS to a customer list and you need to know before you send whether the Gurmukhi line makes it one message or three.",
+    "You are making a Vaisakhi card or a status post and need the correct Khalsa Sajna Diwas anniversary number for this year."
+  ],
+  "benefits": [
+    [
+      "Three scripts in one message",
+      "Gurmukhi, Roman transliteration in brackets and plain English can all be switched on together, so a mixed family group can each read the line they know."
+    ],
+    [
+      "Real SMS segment counting, not a character count",
+      "Any Gurmukhi in the text forces UCS-2 encoding, so the tool switches from the 160-character GSM-7 budget to the 70-character UCS-2 one and shows the actual segment count."
+    ],
+    [
+      "The Khalsa anniversary is computed, not typed",
+      "Enter the year and it returns the Vaisakhi date, its weekday, and the anniversary of the 1699 founding along with the five Panj Pyare."
+    ]
+  ],
+  "faqs": [
+    [
+      "What date is Baisakhi?",
+      "Vaisakhi falls on 13 or 14 April in the Gregorian calendar, as the first day of the month of Vaisakh. The generator lets you pick which of those two dates applies for the year you are writing about and returns the weekday it lands on."
+    ],
+    [
+      "How many years of the Khalsa is it this Vaisakhi?",
+      "Subtract 1699 from the year — that is the Khalsa Sajna Diwas anniversary, counted from the Vaisakhi in 1699 when Guru Gobind Singh founded the Khalsa at Anandpur Sahib and initiated the five Panj Pyare. The tool does this for any year from 1699 to 2200."
+    ],
+    [
+      "Why does my Gurmukhi message count as more than one SMS?",
+      "Gurmukhi characters are outside the GSM-7 alphabet, so the message is sent as UCS-2: 70 characters for a single SMS and 67 per part once it splits. A Roman or English-only greeting stays in GSM-7 and gets 160 characters single, 153 per part."
+    ],
+    [
+      "What is the traditional Baisakhi greeting?",
+      "The common Punjabi greeting is Vaisakhi diyan lakh lakh vadhaiyan, and the Sikh salutation is Waheguru ji ka Khalsa, Waheguru ji ki Fateh. Both are available here in Gurmukhi with Roman transliteration, alongside warm-harvest, formal and short-caption styles."
+    ]
+  ]
+},
   "bajaj-service-schedule-planner": {
   "intro": "This planner builds a dated Bajaj service schedule from the maintenance chart: it works out the kilometre and month at which each free and paid visit falls due, lists the consumables that land on each one, and totals the cost so you can compare it against a prepaid package. Bajaj models use a running-in service near 750 km or 1 month and then a periodic cycle of roughly 4,500-5,000 km. Liquid-cooled models such as the Pulsar 220F, RS200 and Dominar also pick up coolant replacement and a radiator check.",
   "useCases": [
@@ -7544,6 +10545,46 @@ export default {
     [
       "Is a prepaid service package worth buying?",
       "It depends entirely on whether the package price is below the sum of labour and parts for the visits it covers, which is exactly what this planner compares. Read what the package excludes, because consumables such as brake pads, chain kits and coolant are often billed separately even inside a package. Confirm the inclusions in writing with the dealer."
+    ]
+  ]
+},
+  "baking-pan-converter": {
+  "intro": "The Baking Pan Size Converter divides your pan's brim volume by the recipe pan's brim volume to give the exact multiplier for every ingredient, then adds bake-time advice and an overflow warning based on how deep the batter would sit. Round volumes come from pi x radius squared x depth, rectangles from length x width x depth, with bundt and cupcake tins using their real published capacities. It is for home bakers who own the wrong tin and want the recipe scaled properly instead of guessed.",
+  "useCases": [
+    "The recipe calls for a 9-inch round and all you own is a 9 x 13 rectangle — you need the multiplier before you start weighing flour.",
+    "You want to turn a single layer cake batter into cupcakes and need to know roughly how many liners it fills and how much sooner to check them.",
+    "You are halving a 9 x 13 traybake into an 8-inch square and want to know whether the shallower batter means pulling it out early."
+  ],
+  "benefits": [
+    [
+      "Scales by volume, not by diameter",
+      "It compares actual brim capacity, which is why a 9-inch square holds about 27 percent more batter than a 9-inch round even though both are called nine inches."
+    ],
+    [
+      "Warns you before the batter goes over",
+      "It works out what fraction of the new pan unscaled batter would fill and flags anything above the two-thirds line as an overflow risk or below one-third as too thin."
+    ],
+    [
+      "Bake-time advice tied to batter depth",
+      "The advice is driven by the computed depth ratio, so a deeper bake gets a 15 C (25 F) temperature drop and a 15 to 30 percent longer estimate rather than generic guidance."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I convert a 9-inch round recipe to a 9 x 13 pan?",
+      "Multiply every ingredient by the ratio of the two pan volumes, which the tool computes for you and rounds to a practical kitchen figure like 1 1/2x or 2x. A 9-inch round at 2 inches deep holds roughly 2.1 L to the brim against about 3.8 L for a 9 x 13."
+    ],
+    [
+      "How full should I fill a cake pan?",
+      "Between one-half and two-thirds full. Above two-thirds the batter is likely to rise over the rim, and below one-third you get a flat, dry layer — the fill bar marks both thresholds."
+    ],
+    [
+      "Do I need to change the oven temperature when I change pans?",
+      "Only when the batter depth changes materially. If the new pan makes the batter more than about 15 percent deeper, drop the temperature by 15 C (25 F) and expect 15 to 30 percent more time; bundt pans get the same drop plus 20 to 40 percent more time."
+    ],
+    [
+      "How do I scale eggs when the multiplier is not a whole number?",
+      "Multiply, then round to the nearest half egg. For half an egg, whisk one whole egg and weigh out about 25 g, which is roughly 2 tablespoons."
     ]
   ]
 },
@@ -7745,6 +10786,46 @@ export default {
     [
       "Why do MET tables seem low for grand allegro?",
       "MET values are derived from steady-state oxygen uptake, which is a poor fit for the short, explosive jumps of allegro and does not capture the elevated oxygen consumption in the minutes afterwards. Treat the grand allegro figure as a conservative floor."
+    ]
+  ]
+},
+  "band-name-generator": {
+  "intro": "The Band Name Generator builds names in the classic \"The [adjective] [noun]\" pattern by pairing a genre-specific adjective with a genre-specific noun, and returns five distinct names each time you press regenerate. Four genres are wired in — rock, indie, metal and electronic — each with its own five adjectives and five nouns, so the vocabulary matches the sound rather than coming from one shared word bag. It is for people naming a new band, a side project, an open-mic act or a fictional group who want a starting shortlist instead of a blank page.",
+  "useCases": [
+    "Your first gig is booked and the promoter needs a name for the poster by tomorrow, so you need five options to argue about at rehearsal.",
+    "You are writing a novel or a game and need a plausible metal band on the venue's billboard that sounds like a metal band, not a random word pair.",
+    "You have the sound but not the name, and you want to hear how different genre vocabularies feel before committing to one direction."
+  ],
+  "benefits": [
+    [
+      "Genre-matched vocabulary",
+      "Metal draws on Iron, Blackened, Savage, Eternal and Crimson with Reign, Abyss, Vein, Wrath and Tombs; electronic draws on Neon, Digital, Chrome, Solar and Static with Pulse, Circuit, Drift, Signal and Void."
+    ],
+    [
+      "Five different names per run",
+      "Results are collected in a set, so the same name never appears twice in one batch of five."
+    ],
+    [
+      "A consistent, usable naming pattern",
+      "Every result follows the definite-article structure real bands use, so the output reads like a band name rather than two words stuck together."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many band names does it generate?",
+      "Five unique names per run, and you can press regenerate as many times as you like. Each genre has five adjectives and five nouns, giving 25 possible combinations in that genre."
+    ],
+    [
+      "Which genres does it cover?",
+      "Four: rock, indie, metal and electronic. Each has its own adjective and noun lists, so choosing indie gives you pairings like Lonely, Paper, Golden, Quiet or Neon with Foxes, Waves, Ghosts, Rivers or Bloom."
+    ],
+    [
+      "Can I legally use a name it generates?",
+      "The names are built from ordinary English words and are not checked against any trademark or artist database, so before you print merchandise, search the name on streaming services and your national trademark register. For anything commercial, check with a lawyer."
+    ],
+    [
+      "Why do I keep getting names that start with The?",
+      "That is the pattern the generator uses — definite article, adjective, plural or abstract noun. If you want a name without it, take one of the pairings and drop the article, or use it as a seed for your own variation."
     ]
   ]
 },
@@ -8266,6 +11347,46 @@ export default {
     ]
   ]
 },
+  "bank-statement-redactor": {
+  "intro": "The Bank Statement Redactor rasterises every page of a PDF or image statement to a canvas, paints opaque masks over the regions you mark, and rebuilds the file from those flattened pixels — so the covered text is gone from the output, not just hidden under a black rectangle. It scans the PDF text layer for account numbers, IBAN, IFSC, SWIFT, card numbers, UPI IDs and transaction references and offers each as a one-click mask, alongside eight statement presets and free-hand boxes. It is for anyone who has to hand a statement to a landlord, lender, employer or accountant without handing over the whole account.",
+  "useCases": [
+    "A rental agency wants proof of salary credits, and you need the balance column and every unrelated transaction covered before you email the PDF.",
+    "You are attaching a statement to a support ticket or an insurance claim and must remove the account number, IFSC and card references first.",
+    "You need the same masked region applied to all 12 pages of a statement, not redrawn page by page."
+  ],
+  "benefits": [
+    [
+      "Flattened output, not an overlay",
+      "Pages are re-rendered to a raster canvas with the masks baked in and reassembled as a new PDF, so the original text cannot be selected, copied, or recovered from beneath the box."
+    ],
+    [
+      "Detection that names what it found",
+      "Pattern matching over the PDF text layer flags account numbers, IBAN, IFSC, SWIFT, card numbers, UPI IDs, PAN and UTR references by category and severity, with a redact-all-high-risk action."
+    ],
+    [
+      "Editing built for statements",
+      "Presets for the account holder name, address, account number, routing codes, card references, balance column and transaction rows, plus arrow-key nudging, undo and redo, and copy-a-mask-to-every-page."
+    ]
+  ],
+  "faqs": [
+    [
+      "Can the redacted text be recovered from the exported file?",
+      "No. Each page is rasterised to pixels with the mask already drawn, then embedded as an image in a fresh PDF, so there is no text layer left underneath. This is the difference from drawing a shape in a PDF viewer, where the text often survives beneath it."
+    ],
+    [
+      "What files and sizes can I load?",
+      "PDF plus PNG, JPEG, WebP, BMP and AVIF images, up to 40 MB and 30 PDF pages per session. Export raster quality is adjustable, defaulting to 144 DPI with a 6000-pixel maximum edge."
+    ],
+    [
+      "Is my bank statement uploaded to a server?",
+      "No. Rendering, detection and export all run inside your browser tab using pdf.js and pdf-lib, and the finished file is created as a local blob download. Nothing is transmitted."
+    ],
+    [
+      "Does automatic detection catch everything?",
+      "No — treat it as a first pass. Detection only reads the PDF text layer, so scanned or photographed statements return nothing to scan, and the tool requires you to acknowledge the export and confirm a final visual inspection before download for exactly this reason."
+    ]
+  ]
+},
   "barbell-plate-loading-calculator": {
   "intro": "This calculator turns a target bar weight into the exact plates to hang on each sleeve: weight per side is (target − bar − both collars) ÷ 2, and plates are chosen heaviest first from the denominations you actually own. Bar weights and disc sizes follow IWF and IPF competition specifications — a 20 kg men's bar, a 15 kg women's bar, 2.5 kg collars and 25/20/15/10/5/2.5/1.25 kg discs — with a pound mode for 45 lb bars. When a number cannot be made, it shows the closest loading and how much it falls short.",
   "useCases": [
@@ -8375,6 +11496,46 @@ export default {
     "Pick PNG, SVG, PDF or EPS and click Download — or use Copy Image to put a PNG on your clipboard, Save to History to keep the settings, or upload a CSV in Bulk Generate to get the whole batch as a ZIP."
   ]
 },
+  "barcode-scanner": {
+  "intro": "The Barcode Scanner decodes a barcode or QR code from an uploaded image or a live camera feed by running a three-stage pipeline: the browser's native BarcodeDetector first, then jsQR for QR codes with both polarities attempted, then Quagga for the 1D retail and logistics symbologies. It reports the decoded value together with the detected format — EAN-13, UPC-A, Code 128, Data Matrix, PDF417 and more — and keeps a local history of recent scans. It is for anyone who needs the number behind a barcode without installing a scanner app.",
+  "useCases": [
+    "You photographed a product label and need the EAN-13 to look up the item, but your phone's camera app will not hand you the digits.",
+    "A supplier sent a PDF or screenshot with a Code 128 shipping barcode and you need it as text to paste into a tracking form.",
+    "You are testing QR codes you generated and want to confirm what they actually encode before printing them."
+  ],
+  "benefits": [
+    [
+      "Three decoders, tried in order",
+      "If the native BarcodeDetector is missing or returns nothing, jsQR runs with attemptBoth inversion for inverted QR codes, and Quagga then attempts EAN, EAN-8, UPC, UPC-E, Code 128, Code 39, Codabar and ITF."
+    ],
+    [
+      "Upload or live camera, same engine",
+      "Camera frames use the fast native-plus-jsQR path so the loop stays smooth, while still images get the full pipeline including the slower 1D readers."
+    ],
+    [
+      "The result is exportable, not just displayed",
+      "Copy the value, download it as a .txt, or export a JSON record with the format, image dimensions, source and an ISO timestamp."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which barcode formats can it read?",
+      "QR Code plus EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39 and Codabar and ITF through the JavaScript readers, and additionally Code 93, Data Matrix, Aztec and PDF417 wherever your browser's native BarcodeDetector supports them."
+    ],
+    [
+      "Does it work without a camera?",
+      "Yes. Upload mode decodes any image file — a photo, a screenshot, or an exported label — and the image is drawn to a canvas capped at 1600 pixels on its longest edge before decoding."
+    ],
+    [
+      "Are my images or scans uploaded anywhere?",
+      "No. Decoding runs entirely in your browser, and the recent-scans list with its small thumbnails is stored in your browser's local storage on this device only."
+    ],
+    [
+      "Why does it say no barcode was detected?",
+      "Usually blur, glare, or too little of the code in frame. Fill more of the picture with the barcode, keep it flat and in focus, and avoid reflections — the decoders need clean bar edges, and heavily damaged 1D codes often fail where a QR code would still recover."
+    ]
+  ]
+},
   "base-converter": {
   "intro": "This base converter rewrites a number in any positional base from 2 to 36 — binary, octal, decimal, hexadecimal, base 36 and everything between — using repeated division for the integer part and repeated multiplication for the fraction. Integers are handled as BigInt, so a 200-digit value converts exactly, and fractions are carried as exact rationals instead of being rounded through a 64-bit float. It is built for developers reading hex dumps and bit masks, and for students checking base-conversion homework.",
   "useCases": [
@@ -8452,6 +11613,86 @@ export default {
     [
       "What happens to the query string on the base URL?",
       "Reference resolution throws it away. RFC 3986 section 5.3 keeps the base query only when the reference is entirely empty; any relative path at all replaces the query with the reference's own, which is usually nothing. If you need base parameters preserved, merge them yourself after resolving."
+    ]
+  ]
+},
+  "base32-encoder": {
+  "intro": "This Base32 encoder converts text to RFC 4648 Base32 using the standard A-Z and 2-7 alphabet, reading your input as UTF-8 so accented characters and emoji encode correctly. It packs the byte stream five bits at a time, pads the result with = to a multiple of 8 characters, and lets you switch to the lowercase alphabet or wrap the output at a fixed line length. It is for developers who need a case-insensitive, transcription-safe encoding of a value and want to see the byte count, padding count and size overhead alongside the result.",
+  "useCases": [
+    "You need a token or identifier that survives being read aloud, typed by hand, or printed on a label, where Base64's case-sensitivity and + / characters would cause errors.",
+    "You are debugging a system that stores Base32 strings and want to confirm what a given piece of text encodes to, byte for byte.",
+    "You are producing Base32 for a file format or config that requires unpadded lowercase output, or fixed-width lines."
+  ],
+  "benefits": [
+    [
+      "Padding and case are switches, not afterthoughts",
+      "Turn the = padding off for systems that reject it, and switch the whole alphabet to lowercase, without editing the output by hand."
+    ],
+    [
+      "UTF-8 correct for non-ASCII input",
+      "Input goes through TextEncoder first, so a multi-byte character or emoji becomes its real UTF-8 bytes rather than being mangled or dropped."
+    ],
+    [
+      "Shows the cost of the encoding",
+      "Alongside the output you get the source byte length, the encoded length, the number of padding characters, and the percentage size change."
+    ]
+  ],
+  "faqs": [
+    [
+      "What alphabet does RFC 4648 Base32 use?",
+      "The 32 symbols A through Z followed by the digits 2 through 7, with = as padding. The digits 0, 1 and 8 are deliberately left out because they are easily confused with O, I and B when read or typed."
+    ],
+    [
+      "How much bigger does Base32 make my data?",
+      "About 60 percent. Every 5 bytes of input become 8 Base32 characters, so 5 bytes in gives 8 characters out — noticeably larger than Base64, which produces 4 characters per 3 bytes for roughly 33 percent overhead."
+    ],
+    [
+      "Why does my output end in equals signs?",
+      "Because the encoded length was not a multiple of 8. Padding fills it out to the next multiple, which is why you commonly see 1, 3, 4 or 6 = characters at the end. You can switch padding off if the receiving system does not want it."
+    ],
+    [
+      "Base32 or Base64 — which should I use?",
+      "Use Base64 when size matters and the value only ever moves between machines. Use Base32 when a human has to read, type, or dictate the value, or when the transport is case-insensitive, since Base32 uses one case and avoids ambiguous characters."
+    ]
+  ]
+},
+  "base58-encoder": {
+  "intro": "The Base58 Encoder converts text to and from Base58 using the Bitcoin alphabet, treating the input as one big integer and repeatedly dividing it by 58 with BigInt so long values stay exact. The alphabet is the 58 characters 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz — the digit 0 and the letters O, I and l are removed because they are the pairs people misread. It is for developers working with Bitcoin-style addresses, IPFS-adjacent identifiers, or any short human-transcribable key, who need to check a value in both directions.",
+  "useCases": [
+    "You are studying how a Bitcoin address is put together and want to see the byte string behind a Base58 value.",
+    "A short ID from an API arrives Base58-encoded and you need to read what it actually contains before filing a bug.",
+    "You are generating human-readable identifiers and want to confirm your implementation matches the standard Bitcoin alphabet rather than a variant."
+  ],
+  "benefits": [
+    [
+      "BigInt arithmetic, not floating point",
+      "The base conversion runs on BigInt, so long inputs convert exactly instead of losing precision past 2^53."
+    ],
+    [
+      "Both directions in one field",
+      "Flip the mode select to decode the same box you just encoded from, so you can round-trip a value and confirm it comes back unchanged."
+    ],
+    [
+      "Leading zero bytes are preserved",
+      "Each leading zero byte in the input becomes a leading 1 in the output and is restored on decode, which is the rule that keeps Base58 addresses stable."
+    ]
+  ],
+  "faqs": [
+    [
+      "What characters does the Base58 alphabet leave out?",
+      "Four: the digit 0, the capital letter O, the capital letter I, and the lowercase letter l. Removing them leaves 58 symbols that cannot be confused with each other when a value is read aloud or copied by hand."
+    ],
+    [
+      "How is Base58 different from Base64?",
+      "Base58 drops the four ambiguous characters and both non-alphanumeric symbols (+ and /), and uses no padding, so a value can be double-clicked, typed, or written down safely. The trade-off is size: Base58 output is longer than Base64 for the same data."
+    ],
+    [
+      "Why does a leading 1 appear in my encoded output?",
+      "Because the input began with a zero byte. Base58 encodes the value as a number, which would otherwise lose those leading zeros, so each one is written back as a literal 1 character at the front."
+    ],
+    [
+      "Is this the same Base58 used by Bitcoin addresses?",
+      "It uses the same alphabet, but a Bitcoin address is Base58Check — a version byte plus a 4-byte double-SHA-256 checksum appended before encoding. This tool does the raw Base58 conversion only, so it will not validate or generate a checksummed address."
     ]
   ]
 },
@@ -8872,9 +12113,9 @@ export default {
   ]
 },
   "base64-url-encoder": {
-  "title": "Base64 URL Encoder — Free URL-Safe base64url Tool",
-  "h1": "Base64 URL Encoder",
-  "metaDescription": "Convert text, standard Base64 or hex bytes to URL-safe base64url in your browser — padding toggle, plus URL and 4 KB cookie size checks. Free, no signup.",
+  "title": "Base64 URL Encoder — Free URL-Safe base64url",
+  "h1": "Base64 URL Encoder — URL-Safe base64url",
+  "metaDescription": "Encode text, a URL, standard Base64 or hex bytes to URL-safe base64url in your browser — padding toggle, plus URL and cookie size checks. Free.",
   "intro": "Base64 URL Encoder converts plain text, standard Base64 or raw hex bytes into base64url — the URL and filename safe alphabet defined in RFC 4648 §5. Text is read as UTF-8 through the browser's own TextEncoder, the bytes are encoded with the native btoa in 32,768-byte chunks, then value 62 is rewritten from `+` to `-` and value 63 from `/` to `_`, with the trailing `=` padding dropped unless you choose to keep it. Each result is measured against the limits that actually break requests — roughly 2,000 characters for interoperable URLs, Apache's 8,190-character LimitRequestLine, and the 4,096-byte per-cookie size in RFC 6265 §6.1. The whole conversion runs on your device; nothing is uploaded.",
   "useCases": [
     "Encode a small JSON claim set into a token segment that survives a query string without percent-escaping",
@@ -8929,6 +12170,10 @@ export default {
       "Not to plain text — it is an encoder. It can, however, normalise in the other direction: set \"Interpret input as\" to Standard Base64 and paste a base64url string, and it folds `-` back to `+`, `_` back to `/` and restores the `=` padding, so \"Copy standard Base64\" gives you the canonical form. For turning that back into readable text, use a Base64 decoder."
     ],
     [
+      "How do I Base64-encode a URL itself?",
+      "Leave \"Interpret input as\" on Plain text (UTF-8) and paste the whole address — https://example.com/path?a=1 and all. The URL is just text, so it is read as UTF-8 bytes and encoded like any other string, and because the output is base64url it can then be dropped into a query parameter, a path segment or a filename without any percent-escaping. That is the difference from URL-encoding: percent-encoding escapes the characters a URL cannot carry, while this replaces the whole string with an alphabet a URL can carry as-is."
+    ],
+    [
       "Is the Base64 URL Encoder free, and is my input uploaded anywhere?",
       "It is completely free with no signup, and nothing is uploaded. The conversion runs entirely in your browser using TextEncoder and btoa — there is no server round-trip and no storage — so encoding an API key or token is safe. Input is capped at 2,000,000 characters, enough for a certificate or a long token."
     ]
@@ -8976,6 +12221,86 @@ export default {
     [
       "Is #!/usr/bin/env bash better than #!/bin/bash?",
       "env finds bash on the PATH, which matters on systems where bash is not in /bin — notably macOS users who install a newer bash via Homebrew, and BSDs. #!/bin/bash is fine when the script only ever targets standard Linux hosts. The generator offers both."
+    ]
+  ]
+},
+  "basic-auth-header-generator": {
+  "intro": "The Basic Auth Header Generator builds the HTTP Authorization header defined in RFC 7617: it joins your username and password with a single colon, Base64-encodes that string, and prefixes it with the word Basic. You get a ready-to-paste value in the form Basic dXNlcjpwYXNz, plus a realm field for the matching WWW-Authenticate challenge on the server side. It is for developers wiring up a cURL call, an API client, a webhook, or a CI job against an endpoint that expects HTTP Basic authentication.",
+  "useCases": [
+    "You are testing an internal API with Postman or cURL and need the exact Authorization header value rather than letting the client build it for you.",
+    "A CI pipeline or webhook config takes a raw header string, so you need the encoded credential to paste into a secret variable.",
+    "You are reading a captured request, want to confirm which account a Basic header refers to, and need to reproduce the same encoding to compare."
+  ],
+  "benefits": [
+    [
+      "Produces the complete header value",
+      "The output is the full Basic <token> string, not just the Base64 blob, so it drops straight into an Authorization header with nothing left to assemble."
+    ],
+    [
+      "The colon rule is handled for you",
+      "Only the first colon separates username from password, which is exactly why a password containing a colon still works and a username containing one cannot."
+    ],
+    [
+      "Realm alongside the credential",
+      "The realm you enter is shown next to the header so you can set the server's WWW-Authenticate challenge and the client's credential from one place."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is a Basic auth header built?",
+      "Take username:password as a single string, Base64-encode it, and send it as Authorization: Basic <encoded>. That is the whole scheme, defined in RFC 7617, which replaced the Basic definition in RFC 2617."
+    ],
+    [
+      "Is Basic authentication secure?",
+      "Not on its own. Base64 is an encoding, not encryption — anyone who sees the header can decode the password in one step — so Basic auth must only be used over HTTPS, and the credential should be treated as a secret at rest too."
+    ],
+    [
+      "What if my username contains a colon?",
+      "It cannot. The colon is the delimiter, and the server splits on the first one, so a colon in the username makes the credential unparseable. A colon anywhere in the password is fine because everything after the first colon is the password."
+    ],
+    [
+      "What is the realm for?",
+      "The realm is the protected-space label the server sends back in its 401 challenge, as in WWW-Authenticate: Basic realm=\"Restricted Area\". It is not part of the Authorization header the client sends — browsers use it to label the login prompt and to decide which stored credential applies."
+    ]
+  ]
+},
+  "basic-calculator": {
+  "intro": "This Basic Calculator lets you type a whole expression across the display — for example 12 + 7 * 3 — and evaluates it with standard operator precedence, so multiplication and division resolve before addition and subtraction rather than left to right the way a cheap pocket calculator does. Results are rounded to 8 decimal places to suppress binary floating-point noise, and the last 20 calculations stay in a log you can click to reload. It is for anyone doing quick arithmetic in a browser tab who wants to see the full expression, correct it, and check what they entered.",
+  "useCases": [
+    "You are checking an invoice line and want to enter 4 * 250 + 18 as one expression instead of running three separate steps.",
+    "You mistyped a digit halfway through a long sum and need backspace on the expression rather than starting over with AC.",
+    "You worked out a figure two calculations ago and want to click it in the log to bring it back into the display."
+  ],
+  "benefits": [
+    [
+      "Precedence is respected",
+      "2 + 3 * 4 returns 14, not 20, because the whole expression is evaluated at once instead of each operator being applied as you press it."
+    ],
+    [
+      "Floating-point noise is trimmed",
+      "Results are rounded to 8 decimal places and trailing zeros dropped, so 0.1 + 0.2 comes back as 0.3 rather than 0.30000000000000004."
+    ],
+    [
+      "Full keyboard control",
+      "Digits and the decimal point, + - * /, Enter or = to evaluate, Backspace to delete, and Escape or C to clear all work without touching the mouse."
+    ]
+  ],
+  "faqs": [
+    [
+      "Does it follow order of operations?",
+      "Yes. The entire expression on the display is evaluated together, so multiplication and division bind tighter than addition and subtraction — 2 + 3 * 4 gives 14."
+    ],
+    [
+      "How many past calculations does it remember?",
+      "The 20 most recent, newest first. Clicking any entry loads its result back into the display. The log lives in the page only, so refreshing or closing the tab clears it."
+    ],
+    [
+      "Why does it show Error?",
+      "Because the expression could not be evaluated or the result is not a finite number — an incomplete expression, or a division by zero, which returns Infinity. Press AC to clear and start again."
+    ],
+    [
+      "What does the +/- button do?",
+      "It toggles the minus sign on the front of whatever is currently in the display. It negates the whole entry, so use it before typing an operator rather than to subtract mid-expression."
     ]
   ]
 },
@@ -9060,6 +12385,246 @@ export default {
     ]
   ]
 },
+  "batch-face-privacy-blur": {
+  "intro": "Batch Face Privacy Blur uses the browser's built-in FaceDetector API to locate faces in a photo you own, paints an 18-pixel Gaussian blur over each detected bounding box on a canvas, and re-encodes the result as a PNG — which also drops the original EXIF block, including any GPS coordinates. It reports how many faces it blurred, so you can see whether detection found what you expected before you share the file. It is for anyone posting a photo where bystanders, children, or colleagues should not be identifiable.",
+  "useCases": [
+    "You want to post a photo from a school event, a protest, or a busy street and need the bystanders' faces covered before it goes online.",
+    "A screenshot or product photo for a support ticket has a person's face in the background and must be anonymised before it reaches a vendor.",
+    "You are publishing an image and also want the camera's EXIF metadata — model, timestamp, GPS location — gone in the same step."
+  ],
+  "benefits": [
+    [
+      "Blur, not a black box",
+      "Detected regions are re-drawn through a canvas blur filter, so the photo still reads naturally instead of being punched full of rectangles."
+    ],
+    [
+      "Metadata leaves with the faces",
+      "Because the output is re-encoded to PNG from canvas pixels, the original EXIF block — including GPS coordinates — is not carried over."
+    ],
+    [
+      "It tells you when detection failed",
+      "The result reports the face count, and says so explicitly when no face was found or when your browser has no FaceDetector, rather than handing back an untouched image that looks processed."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which browsers can actually detect faces?",
+      "Only those that implement the experimental FaceDetector API — in practice Chromium-based browsers, and often only with the relevant flag enabled. If it is unavailable the image is still re-encoded and stripped of EXIF, but the report will say no faces were blurred, so check that line every time."
+    ],
+    [
+      "Is the blur reversible?",
+      "No. The blur is applied to the pixels and then the image is re-encoded, so the original detail is not stored anywhere in the output file. Keep your own copy of the unblurred original if you need it."
+    ],
+    [
+      "Are my photos uploaded?",
+      "No. Detection, blurring and encoding all run in your browser tab, and the blurred PNG is produced as a local download. The image never goes to a server."
+    ],
+    [
+      "Can I rely on it to catch every face?",
+      "No — always check the output yourself. Automatic detection misses faces in profile, at small scale, in poor light, or partly hidden, and it does not touch other identifying details such as name badges, licence plates, tattoos, or reflections."
+    ]
+  ]
+},
+  "batch-generation-tool": {
+  "intro": "The Batch Generation Tool turns one template plus a set of named variables into up to 500 finished text outputs at once, expanding tokens like {batch}, {index}, {category} and {seed} on every row. It is built for people who keep rewriting the same block of copy with small changes — product blurbs, ticket bodies, filenames, caption variants — and want the whole run produced, validated and exported in one pass. Outputs only unlock for export once the batch clears validation, so an incomplete field cannot slip into a downloaded file.",
+  "useCases": [
+    "You need 120 product description stubs for a catalogue upload, all following the same sentence structure but swapping title, category and a sequence number.",
+    "A launch checklist needs 40 identically formatted task titles like launch-may-007 — you set the naming pattern to {batch}-{index} and let the padding work itself out.",
+    "You wrote a template for internal release notes last quarter and want it back exactly as it was, so you reload it from the saved template list instead of rebuilding the fields."
+  ],
+  "benefits": [
+    [
+      "Validation before export",
+      "ZIP, CSV and TXT stay locked until every required field, unique variable key and quantity check passes."
+    ],
+    [
+      "Reusable workflows, not one-off runs",
+      "Templates and completed batches are stored locally so a monthly job is a reload, not a rebuild."
+    ],
+    [
+      "Live preview of the real output",
+      "The first rows render with your actual variable values as you type, before you commit to generating the full run."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many items can I generate in one batch?",
+      "Up to 500 items per batch. Quantity is validated on every change and anything below 1 or above 500 blocks generation with a message rather than silently truncating your run."
+    ],
+    [
+      "What variables can I use inside a template?",
+      "Six built-in tokens — {batch}, {index}, {type}, {category}, {purpose} and {seed} — plus any custom variable key you add as a dynamic field. Keys are normalised to lowercase with underscores, and duplicate keys are rejected because two fields writing to the same token would make the output ambiguous."
+    ],
+    [
+      "Why is the export button disabled?",
+      "Export unlocks only after validation passes and no output in the queue is marked failed. The validation panel lists the exact blockers, usually a missing batch name, type, category, purpose or template body, or a required dynamic field left empty."
+    ],
+    [
+      "What formats can I export, and where do the files go?",
+      "ZIP, CSV or TXT. The ZIP contains one text file per item plus a manifest.json describing the run; the CSV uses the columns index, title, type, category, status and content. Files are assembled in the browser and saved straight to your downloads folder."
+    ]
+  ]
+},
+  "batch-image-workflow-runner": {
+  "intro": "The Batch Image Workflow Runner applies one of four fixed image pipeline presets — resize to 1200px, centre square crop to 1080×1080, grayscale, or a corner watermark — to a source image using an FFmpeg WebAssembly engine that runs inside the page. It suits anyone standardising images to a house format who does not want to relearn crop maths or filter syntax for every file. The engine only downloads after you press Process, and your image is written to its in-memory filesystem rather than uploaded to a server.",
+  "useCases": [
+    "A marketplace listing rejects your photos for being too large, so you run the resize preset to cap the longest dimension at 1200px without touching the aspect ratio.",
+    "Your team's avatar slots need a perfect square and your source shots are all 3:2, so the square-crop preset centre-crops and outputs at exactly 1080×1080.",
+    "You are sending a mockup out for review and want a visible ownership mark, so the watermark preset burns a label into the bottom-right corner before you export."
+  ],
+  "benefits": [
+    [
+      "Presets encode the maths for you",
+      "Each option is a tested FFmpeg filter chain, so the crop stays centred and the resize stays proportional every time."
+    ],
+    [
+      "Real FFmpeg filters, not canvas approximations",
+      "The same scale, crop, format and drawtext filters a desktop encoder would use, compiled to WebAssembly."
+    ],
+    [
+      "A visible processing log",
+      "The FFmpeg output streams into a report panel so you can see exactly what ran and why a file failed."
+    ]
+  ],
+  "faqs": [
+    [
+      "What are the four pipeline presets?",
+      "Resize-1200 scales the image down so its width is at most 1200px while keeping proportions; square-crop takes a centred crop of the shorter side and scales it to 1080×1080; grayscale converts to a gray pixel format; and watermark draws a boxed text label 24px in from the bottom-right corner at 28px."
+    ],
+    [
+      "What format does the output come out as?",
+      "PNG. Every preset writes a .png file that downloads automatically when processing finishes, so a resize or crop will not add a second round of JPEG compression artefacts."
+    ],
+    [
+      "Can it process a whole folder at once?",
+      "No — each run takes one source image and one selected pipeline. The workflow is reusable rather than parallel: pick the preset once and re-run it per file without reconfiguring anything."
+    ],
+    [
+      "Does my image get uploaded anywhere?",
+      "No. The FFmpeg WebAssembly core is fetched on first use, then your file is written into that engine's in-browser virtual filesystem, processed, downloaded, and deleted. The image data itself never leaves the tab."
+    ]
+  ]
+},
+  "batch-metadata-scrubber": {
+  "intro": "The Batch Metadata Scrubber strips EXIF, GPS and camera metadata from a photo by decoding it and re-encoding the raw pixels through an HTML canvas, which carries no metadata block at all. It is for anyone about to post or send a photo who does not want the file to also reveal where it was taken, on what device, and when. The tool reports the decoded width, height and original byte size so you can confirm the picture itself came through unchanged.",
+  "useCases": [
+    "You are listing furniture on a marketplace and the photos were taken at home — the GPS tags in those JPEGs would give away your address to anyone who downloads them.",
+    "A colleague asks for a screenshot-quality product photo for a deck, and you want the camera serial number and editing-software fields gone before it circulates outside the company.",
+    "You are uploading an image to a forum where the moderator has warned that phone photos leak location, and you want the file clean before it ever leaves your machine."
+  ],
+  "benefits": [
+    [
+      "Removal by re-encoding, not editing",
+      "The pixels are redrawn into a fresh canvas, so there is no metadata block left to miss a field in."
+    ],
+    [
+      "Confirms the image survived",
+      "The report shows decoded dimensions and the original file size next to the cleaned output."
+    ],
+    [
+      "Nothing is uploaded",
+      "Decode, redraw and encode all happen in the tab; the download comes from memory, not a server round trip."
+    ]
+  ],
+  "faqs": [
+    [
+      "What metadata does this actually remove?",
+      "Everything outside the pixel data — EXIF, GPS coordinates, camera make and model, timestamps, orientation tags and editing-software fields. Canvas holds only RGBA pixel values, so re-encoding from it cannot carry any of those blocks forward."
+    ],
+    [
+      "What file do I get back?",
+      "A PNG. The re-encode always outputs PNG, so a photo that arrived as a JPEG will come back larger in bytes but without a second round of lossy compression."
+    ],
+    [
+      "Does it process a whole folder at once?",
+      "You can select multiple files, but each run scrubs the first selected image. Re-run per file rather than expecting a single zipped output."
+    ],
+    [
+      "Will stripping metadata change how the photo looks?",
+      "The pixels are copied unchanged, so colour and detail are preserved. The one thing worth checking is rotation: a photo that depended on an EXIF orientation flag no longer has that flag afterwards, so confirm the result is upright before you send it and rotate the source first if it is not."
+    ]
+  ]
+},
+  "batch-timestamp-conversion-tool": {
+  "intro": "The Batch Timestamp Conversion Tool takes a pasted list of mixed Unix epochs and written dates and converts every row at once, deciding whether a number is seconds, milliseconds, microseconds or nanoseconds from its digit count. It is aimed at anyone reading raw logs, database dumps or API responses who needs the whole column in a readable timezone rather than one value at a time. Every row is converted through the IANA timezone database, and rows that cannot be parsed are listed separately instead of silently becoming a wrong date.",
+  "useCases": [
+    "A log export gives you a column of 13-digit values and you need to know which entries fall inside last Tuesday's incident window in your own timezone.",
+    "Two services disagree about when an event happened because one writes epoch seconds and the other writes ISO strings — paste both columns and compare the ISO output side by side.",
+    "You are filing a bug and need every timestamp in the ticket rendered in Asia/Kolkata rather than UTC, then exported as CSV to attach."
+  ],
+  "benefits": [
+    [
+      "Unit detection by digit width",
+      "Seconds, milliseconds, microseconds and nanoseconds are told apart automatically, so you do not have to divide by a thousand and hope."
+    ],
+    [
+      "Bad rows are surfaced, not swallowed",
+      "Unparseable values get an invalid badge and their own validation list, with a success percentage across the batch."
+    ],
+    [
+      "Both directions in one pass",
+      "Numbers become readable dates and written dates become epoch seconds, in the same table, from the same paste."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does it know if my number is seconds or milliseconds?",
+      "By digit count. Up to 10 digits is read as Unix seconds, 11-13 digits as milliseconds, 14-16 as microseconds, and anything longer as nanoseconds. All four are normalised to milliseconds internally before formatting."
+    ],
+    [
+      "How many timestamps can I convert at once?",
+      "2,000 rows per batch. Input is split on line breaks, tabs and spaces, surrounding quotes are stripped, and anything past the 2,000th value is ignored."
+    ],
+    [
+      "Which timezones are supported?",
+      "Any IANA zone name, such as Asia/Kolkata or Europe/London, entered in the custom field, plus quick picks for UTC, your detected local zone, Kolkata, Los Angeles, New York, London and Tokyo. An unrecognised zone name falls back to UTC with a visible warning rather than failing."
+    ],
+    [
+      "What date formats will it accept as input?",
+      "ISO 8601 plus common written forms including YYYY-MM-DD HH:mm:ss, MM/DD/YYYY, DD/MM/YYYY, YYYYMMDD, YYYYMMDDHHmmss, 'MMM D, YYYY' and RFC-style strings. A value that already carries a zone offset, Z, GMT or UTC is honoured as written; anything without one is read in the timezone you selected."
+    ]
+  ]
+},
+  "battery-health-and-lifespan-predictor": {
+  "intro": "The Battery Health and Lifespan Predictor estimates how much capacity a lithium battery has likely lost by starting at 100 percent and subtracting modelled penalties for age, heat, charging habits, depth of discharge and workload, then projecting that curve out 3, 6 and 12 months. It is for anyone deciding whether a phone, laptop, EV or power bank is worth keeping, and it also plots a second curve showing where the same device would land on gentler habits. This is a habit-based model, not a reading taken from the battery's own controller, so treat the number as a planning estimate rather than a diagnostic.",
+  "useCases": [
+    "Your two-year-old phone dies by mid-afternoon and you want to know whether a battery replacement will actually fix it or whether the screen-on time was always going to be this short.",
+    "You have kept a laptop permanently plugged in at a desk for three years and want to see how much that high state-of-charge habit alone is estimated to have cost you.",
+    "You are buying a used EV and want a sense of what 40 km a day, weekly DC fast charging and charging to 100 percent typically imply for remaining pack capacity."
+  ],
+  "benefits": [
+    [
+      "A penalty breakdown, not just a score",
+      "Every deduction is itemised — age, heat, cycles, charging depth, fast charging — so you can see which habit is doing the damage."
+    ],
+    [
+      "Two futures on the same chart",
+      "Your current trajectory is plotted next to a best-practice version of the same device, so the payoff from changing habits is visible."
+    ],
+    [
+      "Device-specific cycle budgets",
+      "Phones, laptops, EVs and power banks each carry their own expected cycle count and service life instead of one generic curve."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is the health percentage calculated?",
+      "It starts at 100 percent and subtracts weighted penalties for the inputs you provide. For a phone that means roughly 0.12 points per month of age, a screen-time penalty scaled by battery capacity, up to 3 points for high heat, up to 3 for frequent fast charging, 2 for habitual full 0-100 cycles and 0.8 for routine overnight charging. The result is clamped to a 5-100 range."
+    ],
+    [
+      "What counts as a good, fair or poor battery here?",
+      "80 percent or higher is reported as Good, 60 to 79 as Fair, and below 60 as Poor. The 80 percent line matters because it is the industry convention for a battery's rated end of useful life, and most manufacturer warranties are written around it."
+    ],
+    [
+      "How many charge cycles should my device last?",
+      "The model uses 500 cycles for phones and tablets, 800 for laptops, 1,500 for EV cars, 1,000 for electric scooters, and 300 for UPS units and power banks, each measured as cycles to roughly 80 percent capacity. Estimated cycles used are subtracted from that budget to show what is left."
+    ],
+    [
+      "Is this as accurate as my device's own battery health readout?",
+      "No. Your phone or laptop reports coulomb-counted data from the battery's own management chip; this tool infers wear from self-reported habits, so it is best used to compare scenarios and spot which habits cost the most. For a warranty claim or a repair decision, rely on the manufacturer's diagnostic instead."
+    ]
+  ]
+},
   "battle-ropes-calorie-calculator": {
   "intro": "This calculator estimates battle rope energy expenditure from the interval you actually run — rounds, seconds of work, seconds of rest — rather than a flat per-hour figure, because rope training is never continuous. Working intensity is anchored at 10 METs for standard double-arm waves, the middle of the roughly 8 to 11 MET range reported in published laboratory measurements of battling-rope bouts, then scaled by movement pattern and effort and converted with the ACSM equation kcal/min = METs x 3.5 x kg / 200. Recovery periods are costed at 2 METs and an EPOC range of 6 to 15 percent is reported separately.",
   "useCases": [
@@ -9098,6 +12663,46 @@ export default {
     [
       "How much extra do you burn from the afterburn effect?",
       "For higher-intensity interval work, EPOC typically adds 6 to 15 percent of the exercise energy cost, so a 100 kcal session might add another 6 to 15 kcal over the following hours. It is real but modest — far smaller than the numbers often claimed, and not a substitute for the work itself."
+    ]
+  ]
+},
+  "bayesian-update-calculator": {
+  "intro": "The Bayesian Update Calculator applies Bayes' theorem to turn a starting belief and one piece of evidence into a revised probability, using posterior = P(E|H)·P(H) divided by P(E|H)·P(H) + P(E|¬H)·P(1−H). Enter three percentages — your prior, how likely the evidence is if the hypothesis is true, and how likely it is if the hypothesis is false — and it returns the posterior along with prior odds, the likelihood ratio and posterior odds. It is for anyone who has to reason about a positive test, a warning signal or a noisy indicator and wants the base rate accounted for properly.",
+  "useCases": [
+    "A screening test came back positive and you want to see what the result actually implies once the condition's rarity in the population is factored in, before drawing any conclusion.",
+    "Your fraud rule fires on 4 percent of legitimate transactions and catches 85 percent of fraudulent ones — you need to know what fraction of flagged transactions are genuinely fraud.",
+    "A monitoring alert has gone off and you want to justify to the team, with numbers, why a highly sensitive check on a rare failure still produces mostly false alarms."
+  ],
+  "benefits": [
+    [
+      "Odds form alongside the percentage",
+      "Prior odds, likelihood ratio and posterior odds are shown together, which makes chaining a second piece of evidence straightforward."
+    ],
+    [
+      "Exposes the base rate trap directly",
+      "Changing only the prior while holding the test quality fixed shows immediately how much the starting rate drives the answer."
+    ],
+    [
+      "Shows the denominator",
+      "The total evidence probability P(E) is reported as its own row, so you can see how many of all positives come from the false-positive branch."
+    ]
+  ],
+  "faqs": [
+    [
+      "What three numbers do I need to enter?",
+      "The prior probability that the hypothesis is true, P(evidence | hypothesis) — the true positive rate or sensitivity — and P(evidence | not hypothesis), the false positive rate. All three are entered as percentages between 0 and 100."
+    ],
+    [
+      "Why is a positive result on a 90 percent accurate test often still probably wrong?",
+      "Because the false positives are drawn from a much larger group. With a 1 percent prior, 90 percent sensitivity and a 5 percent false positive rate, the posterior is only about 15.4 percent: 0.9 percent of the population are true positives while 4.95 percent are false positives."
+    ],
+    [
+      "What is the likelihood ratio and how do I read it?",
+      "It is P(evidence | hypothesis) divided by P(evidence | not hypothesis) — how many times more often the evidence appears when the hypothesis is true. Multiply your prior odds by it to get the posterior odds. A ratio of 18, from 90 percent over 5 percent, means the evidence is 18 times more expected under the hypothesis."
+    ],
+    [
+      "Can I update on more than one piece of evidence?",
+      "Yes, one step at a time: run the calculation, then feed the posterior back in as the prior for the next piece of evidence. This is only valid when the two pieces of evidence are conditionally independent — two tests that fail in the same way will overstate the result."
     ]
   ]
 },
@@ -9222,6 +12827,46 @@ export default {
     ]
   ]
 },
+  "beam-deflection-stress-calculator": {
+  "intro": "The Beam Deflection & Stress Calculator solves the two standard simply supported cases — a central point load and a uniformly distributed load — returning maximum deflection, maximum bending moment, bending stress and the span-to-deflection ratio. It uses the textbook closed-form results PL³/48EI and 5wL⁴/384EI for deflection, PL/4 and wL²/8 for moment, and σ = M/Z for stress. It is for students, makers and engineers sanity-checking a section size, and it assumes linear-elastic small-deflection behaviour rather than performing a code design check.",
+  "useCases": [
+    "You are sizing a steel lintel over a 2 m opening and want to see whether the deflection under the design load lands anywhere near a serviceability limit before you commit to a section.",
+    "A workbench or shelf spanning between two supports feels bouncy, and you want to know whether doubling the beam depth or halving the span does more for stiffness.",
+    "You are working through a mechanics of materials problem set and need to check your hand-calculated moment and stress against the closed-form result."
+  ],
+  "benefits": [
+    [
+      "Deflection and stress from one input set",
+      "Both serviceability and strength come out of the same run, so you are not entering the section twice in two tools."
+    ],
+    [
+      "Handles the unit conversions",
+      "E in GPa, I in cm⁴ and Z in cm³ are the units section tables actually publish; the conversion to SI happens internally."
+    ],
+    [
+      "Gives the span/deflection ratio directly",
+      "The L/δ figure is the number serviceability limits are written in, so it can be compared to a limit without extra arithmetic."
+    ]
+  ],
+  "faqs": [
+    [
+      "What formulas does this use?",
+      "For a simply supported beam with a central point load, maximum moment is PL/4 and maximum deflection is PL³/(48EI). For a uniformly distributed load over the full span, maximum moment is wL²/8 and maximum deflection is 5wL⁴/(384EI). Bending stress in both cases is the maximum moment divided by the section modulus Z."
+    ],
+    [
+      "What is a reasonable deflection limit?",
+      "Serviceability limits are usually written as a fraction of the span, and L/360 under live load is a widely used figure for floors, with L/240 or L/180 applied to less sensitive members. The governing value depends on your local building code, the material and what the member supports, so check the code that applies rather than treating any one ratio as universal."
+    ],
+    [
+      "Why does span matter so much more than load?",
+      "Because deflection scales with the cube of span for a point load and the fourth power for a distributed load, while it scales only linearly with the load. Doubling a span under a uniform load increases deflection sixteen-fold; doubling the load only doubles it."
+    ],
+    [
+      "Can I use this to design a real structural member?",
+      "No. These are ideal simply supported, linear-elastic, small-deflection formulas that ignore shear deflection, buckling, lateral-torsional stability, local effects, fatigue, connection behaviour, load combinations and safety factors. Use it to build intuition or check a hand calculation, and have anything load-bearing verified by a qualified structural engineer against the governing code."
+    ]
+  ]
+},
   "beard-style-preview": {
   "title": "Beard Style Preview — Try 18 Beard Styles on a Photo",
   "h1": "Beard Style Preview: Try Beard Styles on Your Own Photo",
@@ -9327,6 +12972,46 @@ export default {
     [
       "Is this a replacement for a real minifier?",
       "No. Terser or esbuild rename variables, drop dead branches and rewrite expressions, typically cutting 40–60% off a bundle; this tool only removes comments and indentation, which is closer to 10–20% and completely reversible. Use it to read code, and use a build-step minifier to ship it."
+    ]
+  ]
+},
+  "beauty-score": {
+  "intro": "The Beauty Score Calculator is an entertainment tool that measures two geometric properties of a face — left/right symmetry and how close its proportions sit to the golden ratio of 1.618 — using 68 facial landmark points detected in your browser. It combines them as 60 percent symmetry and 40 percent proportion into a single novelty score. It measures distances between landmarks, nothing more: attractiveness is cultural, personal and not something a ratio can decide, so treat the number as a party trick rather than a verdict.",
+  "useCases": [
+    "You and a friend are curious how a photo scores and want to compare which of two shots the landmark detector reads as more symmetric.",
+    "You are teaching a class about the golden ratio and want a live demonstration of how a face's height-to-width proportion is measured from real landmark coordinates.",
+    "You have heard the claim that faces are judged on symmetry and want to see for yourself what a symmetry percentage from actual measurements looks like on your own photo."
+  ],
+  "benefits": [
+    [
+      "Shows the two component scores",
+      "Symmetry and golden-ratio proportion are reported separately, so you can see what is driving the number rather than getting one opaque figure."
+    ],
+    [
+      "Real landmark geometry",
+      "Distances are computed from 68 detected face points — jaw outline, eye centres, nose tip and mouth — not guessed from the image as a whole."
+    ],
+    [
+      "The photo stays on your device",
+      "Face detection and landmark models run in the browser, so the image is never sent to a server for scoring."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is the beauty score calculated?",
+      "Symmetry is the ratio of the shorter to the longer distance from the nose tip to each side of the jaw, expressed as a percentage. The golden-ratio score averages how close the face height-to-width ratio is to 1.618 and how close the face-width to eye-distance ratio is to about 2.15. The final number is 60 percent symmetry plus 40 percent proportion, with a small random variance added and the result kept within a 65 to 99 range."
+    ],
+    [
+      "Is this a real measure of how attractive I am?",
+      "No. It measures distances between detected landmark points and nothing else. It cannot see skin, expression, colouring, movement or personality, standards of beauty vary enormously across cultures and eras, and the score is deliberately floored so it stays a light-hearted result. Do not use it to make any decision about your appearance."
+    ],
+    [
+      "Why does the same photo give a slightly different score each time?",
+      "A random variance of up to plus or minus 2.5 points is added on purpose to keep the result playful, and the landmark detector can place points a pixel or two differently between runs. The underlying symmetry and proportion figures stay close, so look at those if you want the more stable numbers."
+    ],
+    [
+      "What makes a photo work best?",
+      "One face, looking straight at the camera, evenly lit, with the whole jawline visible. The detector uses a 512-pixel input with a 0.5 confidence threshold and analyses a single face, so a turned head, heavy shadow across one side or a partly cropped chin will distort the symmetry measurement or prevent detection entirely."
     ]
   ]
 },
@@ -9447,6 +13132,86 @@ export default {
     [
       "Is it bad to buy an AC bigger than I need?",
       "Yes, beyond about 25% headroom. An oversized unit cools the air fast, hits the setpoint and switches off before it has run long enough to condense moisture out of the room, leaving a cold but humid feel, and the frequent starts wear the compressor. Sizing close to the calculated load, then choosing an inverter model to handle part-load, works better."
+    ]
+  ]
+},
+  "before-after-comparator": {
+  "intro": "The Before vs After Comparator puts two images against each other in three viewing modes — a draggable split slider, a side-by-side grid, and a fade overlay with a 0-100 opacity control — and exports the pair as a single labelled PNG. It also reports each image's pixel resolution and flags whether the two match, which is the usual reason a comparison looks misaligned. It is for anyone showing an edit, a repair or a restoration and needing the difference to be obvious at a glance.",
+  "useCases": [
+    "You retouched a client photo and want the split slider so they can drag across the frame and see exactly which areas changed.",
+    "You are checking whether an upscaler actually added detail or just smoothed it, and the fade overlay lets you cross-dissolve between the two at any opacity to catch what moved.",
+    "You need one image to attach to a report or post, so you export the labelled before/after PNG rather than sending two separate files and hoping they stay in order."
+  ],
+  "benefits": [
+    [
+      "Three ways to look at the same pair",
+      "Slider, side-by-side and fade each reveal different kinds of change — edges, framing, and subtle tonal shifts respectively."
+    ],
+    [
+      "Catches resolution mismatches",
+      "The analysis panel compares both images' pixel dimensions and warns when they differ, which is what makes an overlay drift."
+    ],
+    [
+      "Exports a self-labelling image",
+      "The PNG comes out double-width with Before and After burned into the corners, so it stays readable wherever it is reposted."
+    ]
+  ],
+  "faqs": [
+    [
+      "What are the three comparison modes?",
+      "Slider draws one image over the other with a draggable vertical split; side-by-side shows both in a two-column grid; and fade stacks them with an opacity slider from 0 to 100 so you can cross-dissolve between them."
+    ],
+    [
+      "Do both images need to be the same size?",
+      "Not to view them, but yes for a clean overlay. The analysis panel reports each image's width and height and marks the pair as a match or different, because the slider and fade modes only line up when the two frames share the same dimensions and crop."
+    ],
+    [
+      "What does the exported file look like?",
+      "A single PNG at twice the width of the larger source image, with the before image on the left, the after image on the right, and small Before and After captions drawn into the bottom corners of each half."
+    ],
+    [
+      "Are my images uploaded anywhere?",
+      "No. Both images are read into the page, drawn to a canvas for the export, and downloaded from memory. Nothing is transmitted, so unreleased client work stays on your machine."
+    ]
+  ]
+},
+  "before-after-slider": {
+  "intro": "The Before/After Slider overlays two images in one frame and reveals them with a wipe divider you drag left or right, starting centred at 50 percent. The container locks itself to the before image's natural aspect ratio so neither picture is stretched, and the divider can be moved by mouse, by touch, or with the arrow keys on the range control beneath it. It is for showing an edit, a repair or a renovation where a side-by-side pair loses the point and the change needs to land in a single frame.",
+  "useCases": [
+    "A retouched portrait needs approval and the client should be able to drag across the face themselves rather than flick between two tabs.",
+    "You restored a scanned family photo and want to show the damage disappearing in the exact same frame position, at the original aspect ratio.",
+    "You loaded the two shots in the wrong order and the reveal reads backwards, so you press Swap Images instead of re-uploading both."
+  ],
+  "benefits": [
+    [
+      "Aspect ratio taken from the source",
+      "The frame adopts the before image's own width-to-height ratio, so nothing is squashed to fit a fixed box."
+    ],
+    [
+      "Draggable and keyboard-operable",
+      "The same position is driven by pointer drag, touch drag and a labelled 0-100 range input, so it works without a mouse."
+    ],
+    [
+      "Swap without re-uploading",
+      "One button exchanges the before and after images and recentres the divider at 50 percent."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I move the divider?",
+      "Drag it with the mouse, swipe with a finger on touch screens, or focus the range slider below the image and use the arrow keys. Its position runs from 0 to 100 percent of the frame width and starts at 50."
+    ],
+    [
+      "Do the two images need identical dimensions?",
+      "They should share the same aspect ratio and framing for the wipe to line up. The frame sizes itself from the before image's natural dimensions, and the output summary lists both images' pixel width and height so a mismatch is easy to spot before you present it."
+    ],
+    [
+      "What image formats can I use?",
+      "Anything the browser can display — JPEG, PNG, WebP, GIF and AVIF among them. Each file is read into an object URL locally, so large images load without any upload wait."
+    ],
+    [
+      "Can I save or embed the comparison?",
+      "This tool is for viewing and presenting live rather than exporting; there is no download step. If you need a single saved image with both halves labelled, use a comparator that renders the pair to a PNG instead."
     ]
   ]
 },
@@ -9734,6 +13499,46 @@ export default {
     ]
   ]
 },
+  "bg-remover": {
+  "intro": "The Background Remover runs a neural segmentation model inside your browser to separate the subject from its background and return a transparent PNG, with no upload and no account. Beyond the cutout it can drop the subject onto a preset backdrop or a flat colour, add a configurable contact shadow, and process a folder of images in one pass into a downloadable ZIP. It suits anyone preparing product shots, profile photos or design assets who needs a clean alpha channel rather than a rough lasso selection.",
+  "useCases": [
+    "You are listing products and every marketplace wants the same plain white backdrop, so you cut out each item and drop it onto the white preset instead of reshooting.",
+    "A headshot for a company directory was taken against a cluttered wall, and you need it on a neutral studio background at the same resolution.",
+    "You have thirty images for a catalogue and need every one cut out to transparent PNG, so batch mode processes the whole set and hands back a single ZIP."
+  ],
+  "benefits": [
+    [
+      "A real alpha channel, not a white fill",
+      "The output is a transparent PNG, so the same cutout works on any backdrop you place it over later."
+    ],
+    [
+      "Composite and shadow in the same step",
+      "Backdrop swap and a directional drop shadow are applied to the cutout live, so you see the finished frame rather than a floating subject."
+    ],
+    [
+      "Batch to ZIP",
+      "Multiple files are processed one after another with a progress readout and downloaded together as batch-images.zip."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is there a file size limit?",
+      "Yes, 10 MB per image in single-image mode. Larger files are rejected with a message rather than silently failing, so downscale a very large camera original before running it."
+    ],
+    [
+      "Does my photo get uploaded to a server?",
+      "No. The segmentation model is downloaded to your browser on first use and every step — the cutout, the backdrop composite, the shadow and the ZIP — runs locally in the tab. Nothing about the image leaves your device."
+    ],
+    [
+      "What backgrounds can I put behind the subject?",
+      "Five presets — white, office, beach, studio and blur — or any flat colour entered as a hex value. The backdrop is drawn first and the cutout composited over it at the cutout's own pixel dimensions, so the resolution of the original is preserved."
+    ],
+    [
+      "How do I control the shadow?",
+      "Four settings: angle, distance, blur radius and opacity. The defaults are a 45 degree angle, 20 pixels of offset, a 15 pixel blur and 40 percent opacity, which reads as a soft shadow down and to the right. Turn it off entirely if you want a flat cutout."
+    ]
+  ]
+},
   "bhangra-calorie-burn-calculator": {
   "intro": "The Bhangra Calorie Burn Calculator estimates how much energy a bhangra session costs by multiplying a MET intensity value by your body weight and the minutes you danced. It uses the ACSM relationship kcal/min = MET x 3.5 x kg / 200, splits the session into dancing time and break time so standing around is not counted as full-effort dance, and reports both gross calories and calories net of resting metabolism. Useful for dancers, Vaisakhi and wedding performers, and anyone using bhangra practice as their main cardio.",
   "useCases": [
@@ -9972,6 +13777,46 @@ export default {
     [
       "Does riding in the rain really wear a bike out faster?",
       "Yes, and by a large margin. Water carries road grit into the chain rollers, bearings and brake pads, and it flushes lubricant out, which is why wet-weather intervals in this planner are set at about 45% of the dry-road distance. Rinsing and re-lubricating after wet rides recovers much of that gap."
+    ]
+  ]
+},
+  "big-button-medical-info-card": {
+  "intro": "The Big-Button Medical Info Card builds a large-print emergency information card from six fields — name, conditions, medicines, allergies, emergency contact and clinician — and renders it live in a heavy-bordered, high-contrast layout you can print or copy as plain text. It is for anyone who wants their essentials legible to a paramedic, a carer or a pharmacist without squinting at a folded note. Nothing you type is saved or transmitted; it exists only in the page until you print or copy it. This is a way to write information down, not medical advice — what belongs on it is a conversation for your doctor.",
+  "useCases": [
+    "An older parent is going to a new specialist and needs their full medicine list, doses and allergies on one readable sheet instead of a bag of boxes.",
+    "You are carrying a rare drug allergy and want a wallet card that a stranger or a paramedic could read at a glance in poor light.",
+    "A carer is covering a weekend shift and needs the conditions, dosing schedule and both emergency numbers on the fridge in text large enough to read across the kitchen."
+  ],
+  "benefits": [
+    [
+      "Sized for someone else to read",
+      "The card renders at large body text with a bold heading and a heavy border rather than shrinking everything to fit."
+    ],
+    [
+      "Print or plain text, your choice",
+      "Print through the browser dialog for a paper card, or copy a labelled plain-text block to paste into a phone note or a message."
+    ],
+    [
+      "Nothing is stored",
+      "The fields live in the page only — there is no account, no upload and no saved copy left behind on a shared computer."
+    ]
+  ],
+  "faqs": [
+    [
+      "What should go on an emergency medical card?",
+      "The six fields here cover the usual essentials: your name, the conditions a responder needs to know about, current medicines with doses, allergies, an emergency contact with phone number, and your clinician or care team. Ask your own doctor or pharmacist what is worth adding for your situation — a device implant, an anticoagulant or a rare reaction may deserve prominence."
+    ],
+    [
+      "Is my information saved anywhere?",
+      "No. There is no login, no server call and no local storage; the six fields are held in the page while it is open. Closing or reloading the tab clears them, so print or copy the card before you leave."
+    ],
+    [
+      "How do I get a PDF instead of a printed page?",
+      "Use the Print button and choose Save as PDF as the destination in your browser's print dialog. That gives you a file you can email to a carer or keep on a phone."
+    ],
+    [
+      "Does this replace a medical ID bracelet or my hospital records?",
+      "No. It is an informational card you write yourself, with no verification and no link to any medical record. Responders are trained to look for engraved medical IDs and your phone's own emergency card, so treat this as a supplement and follow your clinician's guidance on how your condition should be flagged."
     ]
   ]
 },
@@ -10297,6 +14142,86 @@ export default {
     ]
   ]
 },
+  "binary-hex-decimal-converter": {
+  "intro": "The Binary / Hex / Decimal Converter takes one number typed in any of those three bases and shows all of them at once, plus the matching Unicode character and the bit length. It parses with JavaScript BigInt, so values far beyond the 32-bit or 64-bit range convert exactly instead of drifting into floating-point rounding. It is built for developers reading register dumps, byte values, colour codes and protocol fields who want a single copy-ready answer rather than three separate lookups.",
+  "useCases": [
+    "You are reading a hardware datasheet that gives a status register as 0xB4 and you need the bit pattern to see which flags are set — paste it in hex mode and read the binary 10110100 and the 8-bit length.",
+    "A CSV export contains raw code points like 8364 and you want to know which characters they are before writing a parser — decimal mode shows the Unicode character alongside the hex 0x20AC.",
+    "You are writing a bitmask constant and want to confirm that 1111 1111 1111 in binary really is 4095 and 0xFFF, so the mask width in your header file matches the field width in the spec."
+  ],
+  "benefits": [
+    [
+      "Arbitrary precision, not 53-bit",
+      "BigInt parsing means a 128-bit hash or a huge decimal converts digit-for-digit, where a normal calculator would round it."
+    ],
+    [
+      "Every representation in one pass",
+      "Decimal, binary, uppercase hex with the 0x prefix, the Unicode character and the bit length all update from a single input."
+    ],
+    [
+      "Tells you why input is rejected",
+      "Stray characters produce a specific message — binary limited to 0 and 1, hex to 0-9 and A-F, decimal to whole numbers — instead of a silent NaN."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do I convert hex to binary?",
+      "Switch the input format to hex, paste the value, and read the binary output row. A leading 0x is stripped automatically, and each hex digit maps to exactly 4 binary digits, so 0xB4 becomes 10110100."
+    ],
+    [
+      "Can it handle numbers bigger than 64 bits?",
+      "Yes. Parsing uses BigInt, which has no fixed width, so a 128-bit or 256-bit value converts exactly. Standard JavaScript numbers lose precision above 2^53 - 1 (9,007,199,254,740,991); this tool does not."
+    ],
+    [
+      "What does the Unicode character row show?",
+      "It shows the character whose code point equals your number, for any value from 0 up to 0x10FFFF (1,114,111) — the highest code point Unicode defines. Anything above that, or a negative number, is reported as outside the Unicode range."
+    ],
+    [
+      "Why does a negative number not produce binary or hex?",
+      "Negative binary and hex depend on a chosen width and encoding — two's complement in 8, 16, 32 or 64 bits gives four different answers for the same value. Rather than guess a width, the converter returns the decimal and marks binary and hex as unsupported for negatives."
+    ]
+  ]
+},
+  "binary-learning-tool": {
+  "intro": "The Binary Learning Tool teaches base-2 by converting between decimal and binary and then showing the answer as eight labelled bit boxes weighted 128, 64, 32, 16, 8, 4, 2 and 1, so you can see which powers of two add up to your number. A built-in quiz asks you to write a random value from 0 to 255 in binary and grades it instantly. It suits school and college students meeting number bases for the first time, and anyone revising for a computer-science exam.",
+  "useCases": [
+    "You are working through a homework sheet on number systems and want to check that 42 really is 101010 before you write out the rest of the answers.",
+    "You keep losing marks for reading bit positions backwards, so you convert a few values and study the 2^7 to 2^0 labels sitting under each bit.",
+    "You have a base-conversion test tomorrow and want timed practice, so you run the quiz repeatedly until you can produce the 8-bit pattern for any number under 256 without counting."
+  ],
+  "benefits": [
+    [
+      "Shows the place values, not just the answer",
+      "Each output bit is drawn above its weight — 128 down to 1 — so the conversion becomes visible arithmetic rather than a black box."
+    ],
+    [
+      "Consistent 8-bit padding",
+      "Results are padded to a full byte, so 5 appears as 00000101 and you learn to read fixed-width patterns the way real memory stores them."
+    ],
+    [
+      "Practice with immediate correction",
+      "A wrong quiz answer reveals the correct binary for that exact number straight away, so the mistake is fixed while the question is still in mind."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you convert a decimal number to binary?",
+      "Subtract the largest power of two that fits, write a 1 in that position, and repeat with the remainder. For a byte the positions are 128, 64, 32, 16, 8, 4, 2 and 1 — so 42 is 32 + 8 + 2, giving 00101010."
+    ],
+    [
+      "Why is the result shown with eight digits?",
+      "Output is padded to 8 bits because a byte is 8 bits, the smallest unit most computers address. The leading zeros carry no value — 00000101 and 101 are both 5 — but fixed width makes patterns easier to compare."
+    ],
+    [
+      "What range of numbers does the quiz use?",
+      "The quiz picks a whole number from 0 to 255, which is exactly the range one unsigned 8-bit byte can hold (2^8 = 256 distinct values). Answers are checked as base-2, so leading zeros are optional."
+    ],
+    [
+      "What is the largest number 8 bits can store?",
+      "255, when all eight bits are 1: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1. Add a ninth bit and the maximum doubles plus one to 511, which is why byte-sized fields overflow at 256."
+    ]
+  ]
+},
   "binaural-beat-generator": {
   "title": "Binaural Beat Generator — Free Online, No Signup",
   "h1": "Binaural Beat Generator",
@@ -10365,6 +14290,86 @@ export default {
     "Open Settings to layer in pink or brown noise, trim left and right gain in decibels, switch on the 4-second inhale / 4-second exhale breathing guide, or save the current configuration as a named preset."
   ]
 },
+  "bingo-game": {
+  "intro": "This Bingo Game deals a standard 75-ball American card — a 5x5 grid where the B column draws from 1-15, I from 16-30, N from 31-45, G from 46-60 and O from 61-75, with a free centre square — and calls balls from a shuffled 1-75 pool. It detects a win on any row, any column, either diagonal, the four corners or a full house, and names the pattern you hit. Use it as a caller for a family or classroom game, or play solo with auto-call running.",
+  "useCases": [
+    "You are running bingo at a birthday party or care home and need a caller that draws without repeats and announces the letter group, so nobody has to shake a cage of balls.",
+    "A teacher wants a five-minute end-of-lesson activity where the class marks numbers on a projected card and shouts when a line completes.",
+    "You want to play alone while waiting, so you set auto-call to a steady interval, leave auto-mark on, and see how few balls it takes to reach a full house."
+  ],
+  "benefits": [
+    [
+      "Named win patterns, not just a beep",
+      "When a line completes it tells you exactly which one — Row 3, Column G, a diagonal, Four Corners or Full House — so disputed calls are settled instantly."
+    ],
+    [
+      "Draws without replacement",
+      "The 75 numbers are shuffled once per game and consumed in order, so no ball is ever called twice and the pool genuinely runs out."
+    ],
+    [
+      "Pace and marking are yours to set",
+      "Call manually or run auto-call at your chosen interval, and switch auto-mark off if players should spot their own numbers."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many numbers are in a bingo game?",
+      "75 in the American version this game uses, split five ways across the columns: B is 1-15, I is 16-30, N is 31-45, G is 46-60 and O is 61-75. The British 90-ball variant is a different format with a 9x3 ticket."
+    ],
+    [
+      "What counts as a win here?",
+      "Any of five rows, five columns, the two diagonals, the four corners, or a full house — 14 winning patterns in total. Each is checked after every mark, and the first one completed ends the game."
+    ],
+    [
+      "Why is the middle square already marked?",
+      "The centre of a 75-ball card is a free space, marked from the start. That is why a row or column through the centre needs only four called numbers instead of five, and a full house needs 24 rather than 25."
+    ],
+    [
+      "Can two players use the same page?",
+      "Each new game deals one card, so the page acts as a single card plus the caller. For a group, run this on a shared screen as the caller and have players mark printed cards against the numbers it draws."
+    ]
+  ]
+},
+  "bio-link-page-builder": {
+  "intro": "The Bio Link Page Builder lays out a link-in-bio profile — photo, name, handle, tagline, a bio capped at 180 characters, and a drag-to-reorder stack of buttons — and renders it live in a phone-shaped preview. Each link is validated against http, https, mailto and tel schemes and tagged with one of eleven platform icons, and the whole project autosaves locally and exports as JSON. It is for creators planning the layout and copy of a link page before committing to a hosting service.",
+  "useCases": [
+    "You are about to move your Instagram link to a new service and want to settle the button order and wording first, dragging the top three links into the position that gets tapped most.",
+    "A client asked for two versions of their link page in different colour schemes, so you build one, export the JSON, then switch preset and accent colour for the second.",
+    "You have eight links and no idea which fit on one screen, so you use the phone preview to see exactly where the fold lands before deciding what to cut."
+  ],
+  "benefits": [
+    [
+      "Reorder by dragging, with keyboard support too",
+      "Links sort via drag-and-drop or arrow keys, so the running order you settle on is the order you see in the preview immediately."
+    ],
+    [
+      "Catches broken links before your audience does",
+      "Every URL is parsed and flagged unless it resolves to http, https, mailto or tel, and a bare domain is auto-prefixed with https://."
+    ],
+    [
+      "The whole project is portable",
+      "Profile, links and theme export as a single JSON file you can re-import or hand to a designer, rather than being locked in an account."
+    ]
+  ],
+  "faqs": [
+    [
+      "How long can the bio be?",
+      "180 characters. The counter above the field updates as you type and input stops at the limit, which keeps the bio short enough to read without scrolling on a phone-sized preview."
+    ],
+    [
+      "Does this publish my page at a real URL?",
+      "No. The altftool.com/bio/ address it shows is a simulated preview URL used to demonstrate the share card and generate the QR code — nothing is uploaded or hosted. Export the JSON and use it to set the page up wherever you actually host it."
+    ],
+    [
+      "Will my page still be here if I close the tab?",
+      "Yes. The project autosaves to your browser's local storage after every edit and reloads when you return. It is tied to that browser and profile, so clearing site data or switching devices loses it — export the JSON if you need a copy."
+    ],
+    [
+      "What can I customise about the look?",
+      "Four gradient presets, a free-choice accent colour, corner radius from 8 to 32 pixels, three button styles (glass, solid, outline) and three typefaces. Profile images accept PNG, JPEG and WEBP."
+    ]
+  ]
+},
   "bio-writer-multi-length": {
   "intro": "The Multi Length Bio Writer takes one set of facts — role, specialism, audience, achievements, credentials and a call to action — and assembles them into the three bio lengths people are actually asked for: 50 words for a speaker blurb or directory listing, 100 words for an about paragraph, and 250 words for a press kit or long profile. Each version can be written in first or third person with your chosen pronoun, and the short version is checked against the character limits of X (160), Instagram (150), Facebook (255), YouTube (1,000) and the LinkedIn About section (2,600).",
   "useCases": [
@@ -10403,6 +14408,46 @@ export default {
     [
       "What should a short bio include?",
       "The role you want to be known for, who you do it for, one concrete achievement with a number in it, and a way to reach you. Adjectives such as 'passionate' or 'results-driven' take space without adding information — a shipped project and a percentage do the same job more credibly."
+    ]
+  ]
+},
+  "bionic-reading-converter": {
+  "intro": "The Bionic Reading Converter bolds the opening characters of every word in your text — by default the first 45% of each word, adjustable from 25% to 75% — so the eye has a fixed anchor at the start of each word. The underlying words are untouched; only the weight of the first few letters changes, and you can compare the emphasised view against the original at any time. It is aimed at readers who want to try front-loaded emphasis on their own material and judge for themselves whether it helps.",
+  "useCases": [
+    "You have a long article to get through and want to test whether emphasising the first part of each word makes it easier to hold your place, so you paste a few paragraphs and try 35%, 45% and 60%.",
+    "A student with a reading difficulty wants to see a study passage in a different visual treatment before deciding to ask for it as an accommodation.",
+    "You are preparing handout text and want to view it with word-initial emphasis to see how heavy the page looks before choosing a formatting style for the printed version."
+  ],
+  "benefits": [
+    [
+      "The emphasis strength is yours to set",
+      "The bolded prefix runs from 25% to 75% of each word in 5% steps, so you can find a level that helps instead of accepting one fixed setting."
+    ],
+    [
+      "Nothing is rewritten",
+      "Words, punctuation and spacing are preserved exactly; only the font weight of the leading characters changes, so the passage stays readable to anyone else."
+    ],
+    [
+      "Short words stay legible",
+      "The prefix length rounds up with a minimum of one character, so a two-letter word gets one bold letter rather than the whole word turning bold."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is bionic reading?",
+      "It is a text-display technique that bolds the first part of each word so the reader's eye fixates there and the brain completes the rest. It is a formatting style, not a proven treatment — independent studies have not consistently shown faster reading, so treat it as a preference to test rather than a guaranteed improvement."
+    ],
+    [
+      "How much of each word gets bolded?",
+      "45% by default, rounded up, with a floor of one character. You can move it anywhere from 25% to 75% — so in a six-letter word, 45% bolds three letters and 25% bolds two."
+    ],
+    [
+      "Can I copy the bolded text into a document?",
+      "The copy button returns your original plain text, because the emphasis is applied as on-screen styling rather than embedded formatting. To carry the look into a document you would need to apply bold formatting there yourself."
+    ],
+    [
+      "Does this help people with dyslexia?",
+      "There is no reliable evidence that it does, and reading research has not found a consistent benefit. Some readers still find it comfortable, so it is worth trying, but for a diagnosed reading difficulty an educational psychologist or specialist teacher should guide which supports to use."
     ]
   ]
 },
@@ -10593,12 +14638,43 @@ export default {
   ]
 },
   "birthday-wishes-gujarati": {
-  "title": "Gujarati Birthday Wishes Generator - ALTFTool",
-  "description": "Generate Gujarati birthday greetings for friends, family and colleagues in Gujarati script or Roman transliteration.",
-  "keywords": [
-    "Gujarati birthday wishes",
-    "Gujarati birthday message",
-    "birthday greeting generator"
+  "intro": "Gujarati Birthday Wishes Generator writes a complete Gujarati birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Gujarati distinguishes તું from તમે, and that choice changes the possessive (તારું versus તમારું) and the verb ending, so each of the twelve wordings here is written out twice rather than word-swapped, and the register is set automatically from the relationship you choose. Every message is shown with romanised Gujarati, an English meaning, the same wish in the opposite register, and the number of SMS parts it will cost.",
+  "useCases": [
+    "Send a manager, a teacher or an older relative a wish in the તમે form without accidentally sounding over-familiar.",
+    "Write a light-hearted message for a close friend or sibling in the તું form that still reads like natural Gujarati.",
+    "Get a romanised version to type on a phone that has no Gujarati keyboard, with an English gloss so you can check what you are sending."
+  ],
+  "benefits": [
+    [
+      "તું and તમે handled properly",
+      "Both registers are written out in full, so possessives and verb endings agree instead of being patched pronoun-first."
+    ],
+    [
+      "Roman Gujarati and English included",
+      "Every message ships with a transliteration and a plain-English meaning, so you can send it even if you cannot read the script."
+    ],
+    [
+      "SMS cost shown",
+      "Gujarati is UCS-2 over SMS, so the tool counts the 70/67-character parts before you send."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you say happy birthday in Gujarati?",
+      "The everyday forms are જન્મદિવસની હાર્દિક શુભેચ્છા (janmadivasnī hārdik shubhecchā), literally 'heartfelt birthday wishes', and જન્મદિન મુબારક (janmadin mubārak), which is the more casual, Urdu-derived phrasing you will hear among friends. A formal card usually opens with શુભેચ્છા rather than મુબારક."
+    ],
+    [
+      "Should I use તું or તમે in a Gujarati birthday message?",
+      "Use તમે for parents, teachers, managers, clients and anyone older or senior; use તું for close friends, a partner, younger siblings and children. તમે changes the possessive to તમારું and the verb to the plural ending, which is why the two versions here are stored separately rather than swapped word by word. In very formal writing Gujarati also uses આપ, a step above તમે, which this tool uses in the formal wordings."
+    ],
+    [
+      "Why does a Gujarati message cost more than one SMS?",
+      "The Gujarati script falls outside the GSM 03.38 7-bit alphabet, so the message is encoded as UCS-2. That drops the limit from 160 characters to 70 in a single SMS, and to 67 per part once the message has to be split, under 3GPP TS 23.038 and 23.040. WhatsApp and other data messaging apps are not affected."
+    ],
+    [
+      "What is the difference between શુભેચ્છા and અભિનંદન?",
+      "શુભેચ્છા means good wishes for what lies ahead, so it fits a birthday, a new job or an exam. અભિનંદન is congratulation on something already achieved — a promotion, a wedding, a result. On a birthday card શુભેચ્છા is the natural choice; અભિનંદન on its own would read as if you were congratulating someone on having had the birthday."
+    ]
   ]
 },
   "birthday-wishes-hindi": {
@@ -10643,21 +14719,83 @@ export default {
   ]
 },
   "birthday-wishes-kannada": {
-  "title": "Kannada Birthday Wishes Generator - ALTFTool",
-  "description": "Generate Kannada birthday greetings for friends, family and colleagues in Kannada script or Roman transliteration.",
-  "keywords": [
-    "Kannada birthday wishes",
-    "Kannada birthday message",
-    "birthday greeting generator"
+  "intro": "Kannada Birthday Wishes Generator writes a complete Kannada birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Kannada separates ನೀನು from ನೀವು, and that choice changes the pronoun, the possessive (ನಿನ್ನ versus ನಿಮ್ಮ), the dative (ನಿನಗೆ versus ನಿಮಗೆ) and the imperative ending (ಬಾಳು versus ಬಾಳಿ), so each wording here is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written for a particular person — a grandparent, a manager, a small child — only appear for that relationship, so the body of the message changes too, not just the name. Every message comes with romanised Kannada, an English meaning, and the number of SMS parts it needs.",
+  "useCases": [
+    "Send a manager, a teacher or an older relative a wish in the ನೀವು form, with the ಅವರೇ honorific on the name, without sounding over-familiar.",
+    "Write a light-hearted ನೀನು message for a close friend or a younger sibling that still reads like natural Kannada rather than translated English.",
+    "Get a romanised version to type on a phone that has no Kannada keyboard, plus an English gloss so you can check what you are actually sending."
+  ],
+  "benefits": [
+    [
+      "ನೀನು and ನೀವು handled properly",
+      "Both registers are written out in full, so the pronoun, the possessive, the dative and the verb ending all agree."
+    ],
+    [
+      "Roman Kannada and an English gloss",
+      "Every message ships with a transliteration and a line-by-line English meaning, covering the greeting and the sign-off as well as the wish."
+    ],
+    [
+      "SMS cost shown before you send",
+      "Kannada is UCS-2 over SMS, so the tool counts the 70/67-character parts for you instead of letting the bill surprise you."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you say happy birthday in Kannada?",
+      "The everyday phrase is ಹುಟ್ಟುಹಬ್ಬದ ಶುಭಾಶಯಗಳು (huṭṭuhabbada shubhāshayagaḷu), literally 'birthday good wishes'. Add ಹಾರ್ದಿಕ (hārdika, heartfelt) for warmth: ಹುಟ್ಟುಹಬ್ಬದ ಹಾರ್ದಿಕ ಶುಭಾಶಯಗಳು. ಜನ್ಮದಿನದ ಶುಭಾಶಯಗಳು (janmadinada shubhāshayagaḷu) is the more Sanskritised alternative and suits printed cards and formal notes."
+    ],
+    [
+      "Should I use ನೀನು or ನೀವು in a Kannada birthday message?",
+      "Use ನೀವು (nīvu) for parents, grandparents, teachers, managers, clients and anyone older or senior, and ನೀನು (nīnu) for close friends, a partner, siblings of your own age or younger, and children. The choice is not only the pronoun: the possessive becomes ನಿಮ್ಮ instead of ನಿನ್ನ, the dative becomes ನಿಮಗೆ instead of ನಿನಗೆ, and an imperative such as 'live long' becomes ಬಾಳಿ instead of ಬಾಳು. That is why the two versions are written out separately here rather than word-swapped."
+    ],
+    [
+      "What does ಅವರೇ mean at the end of a name?",
+      "ಅವರೇ (avarē) is the Kannada respectful vocative. Attaching it to a name — ಆತ್ಮೀಯ ರಮೇಶ್ ಅವರೇ — is the normal way to address a colleague, a senior or anyone you are not on familiar terms with, roughly the job 'ji' does in Hindi. It belongs with the ನೀವು register; pairing ಅವರೇ with ನೀನು reads as inconsistent."
+    ],
+    [
+      "Why does a Kannada message cost more than one SMS?",
+      "Kannada falls outside the GSM 03.38 7-bit alphabet, so the message is encoded as UCS-2. That drops the limit from 160 characters to 70 in a single SMS, and to 67 per part once the message is split, under 3GPP TS 23.038 and 23.040. A full greeting with a salutation and a sign-off usually lands at two or three parts. WhatsApp, Telegram and other data apps are unaffected."
+    ]
   ]
 },
   "birthday-wishes-malayalam": {
-  "title": "Malayalam Birthday Wishes Generator - ALTFTool",
-  "description": "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration.",
-  "keywords": [
-    "Malayalam birthday wishes",
-    "Malayalam birthday message",
-    "birthday greeting generator"
+  "intro": "Malayalam Birthday Wishes Generator writes a complete Malayalam birthday message — opening line, wish and sign-off — from the relationship you pick and the tone you want. Malayalam separates നീ from നിങ്ങൾ, and adds താങ്കൾ for formal writing; the pronoun changes the possessive (നിന്റെ, നിങ്ങളുടെ, താങ്കളുടെ) and the dative (നിനക്ക്, നിങ്ങൾക്ക്, താങ്കൾക്ക്), so each wording is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written for a parent, a partner, a child, a teacher or a manager are only offered to that relationship, so two people never get the same sentence with a different name pasted in. Every message comes with romanised Malayalam, an English meaning, and the number of SMS parts it needs.",
+  "useCases": [
+    "Send a manager, a teacher or an older relative a wish in the നിങ്ങൾ or താങ്കൾ form without accidentally sounding over-familiar.",
+    "Write something light for a close friend or a younger sibling in the നീ form that still reads like natural Malayalam.",
+    "Get a romanisation and an English gloss so you can check what you are sending before you send it, even if you cannot read the script."
+  ],
+  "benefits": [
+    [
+      "നീ, നിങ്ങൾ and താങ്കൾ handled properly",
+      "All three registers are written out in full, so the possessive and dative forms agree instead of being word-swapped."
+    ],
+    [
+      "Romanisation and English on every line",
+      "Each message ships with a transliteration and a plain-English meaning, so nothing goes out unread."
+    ],
+    [
+      "Wordings that match the relationship",
+      "A message for a parent, a partner, a child or a manager is written for that person, not reused from a single template."
+    ]
+  ],
+  "faqs": [
+    [
+      "How do you say happy birthday in Malayalam?",
+      "The two everyday forms are ജന്മദിനാശംസകൾ (janmadināśaṁsakaḷ), literally 'birthday wishes', and പിറന്നാൾ ആശംസകൾ (piṟannāḷ āśaṁsakaḷ), which uses the more homely word പിറന്നാൾ for a birthday. For a warmer version, put ഹൃദയം നിറഞ്ഞ (hr̥dayaṁ niṟañña, 'heartfelt') in front."
+    ],
+    [
+      "Should I use നീ, നിങ്ങൾ or താങ്കൾ?",
+      "നീ (nī) is the familiar form for friends, a partner, younger siblings and children. നിങ്ങൾ (niṅṅaḷ) is the ordinary polite form for parents, elder siblings, colleagues and anyone older. താങ്കൾ (tāṅkaḷ) is the formal honorific used in written and ceremonial Malayalam — managers, teachers, clients and public messages. Getting this wrong is the most common mistake in a Malayalam greeting, so the tool picks a default from the relationship and lets you override it."
+    ],
+    [
+      "Do Malayalam verbs change with the pronoun?",
+      "No. Unlike Hindi, Malayalam verbs do not inflect for person or number, so ആകട്ടെ ('may it be') is the same whoever you are addressing. The register lives entirely in the pronoun and its case forms, which is why only those parts differ between the versions here."
+    ],
+    [
+      "Why does a Malayalam message cost more than one SMS?",
+      "Malayalam falls outside the GSM 03.38 7-bit alphabet, so the message is encoded as UCS-2. That drops the limit from 160 characters to 70 in a single SMS, and to 67 per part once the message is split, under 3GPP TS 23.038. WhatsApp and other data messaging apps are unaffected."
+    ]
   ]
 },
   "birthday-wishes-marathi": {
@@ -10947,6 +15085,46 @@ export default {
     ]
   ]
 },
+  "black-scholes-options-pricer": {
+  "intro": "The Black-Scholes Options Pricer computes the theoretical value of a European call or put from six inputs — spot, strike, time to expiry in years, risk-free rate, volatility and continuous dividend yield — using the Black-Scholes-Merton formula, and returns the five Greeks alongside it. Delta, Gamma, Vega, Theta and Rho are reported in trading units: Vega per one volatility point, Theta per calendar day and Rho per one rate point. It is built for students, analysts and traders who want a fair-value reference and a sensitivity read on one screen.",
+  "useCases": [
+    "You are quoted 3.20 for an option and want to know whether that is rich or cheap against a 25% volatility assumption before you decide the trade is worth doing.",
+    "You hold a position and need to know how much it moves for a one-point change in implied volatility, so you read Vega directly rather than repricing twice by hand.",
+    "You are working through a derivatives course problem set and want to check your hand-computed d1 and d2 against a reference implementation."
+  ],
+  "benefits": [
+    [
+      "Greeks in the units desks actually quote",
+      "Vega is scaled per one volatility point and Rho per one rate point, and Theta is divided by 365 to give decay per calendar day, so the numbers are directly usable."
+    ],
+    [
+      "Dividends handled properly",
+      "A continuous dividend yield q enters the Merton extension, discounting the spot by e^(-qT), so index and dividend-paying names are not mispriced as if they yielded nothing."
+    ],
+    [
+      "Shows the intermediate terms",
+      "d1 and d2 are printed alongside the price, which is what you need to check a hand calculation or trace where an unexpected value came from."
+    ]
+  ],
+  "faqs": [
+    [
+      "What inputs does Black-Scholes need?",
+      "Six: spot price, strike, time to expiry in years, the risk-free rate, volatility, and dividend yield. Rate, volatility and yield are entered as percentages here and converted to decimals internally, and time is in years — so a three-month option is 0.25."
+    ],
+    [
+      "Does this work for American options?",
+      "No. It prices European exercise only, meaning exercise at expiry. American puts in particular can be worth more because of the right to exercise early, so this value is a lower bound for them rather than a correct price."
+    ],
+    [
+      "What does Vega of 0.19 mean?",
+      "The option gains roughly 0.19 in value if implied volatility rises by one percentage point — for example from 25% to 26% — with everything else unchanged. Vega here is deliberately divided by 100 to express it per volatility point rather than per unit of sigma."
+    ],
+    [
+      "Why does my broker's price differ from this?",
+      "Black-Scholes assumes constant volatility, continuous trading, no transaction costs and lognormal returns. Real markets show a volatility smile, discrete dividends, jumps and bid-ask spreads, so quoted prices legitimately diverge. This is an educational estimate, not investment advice — talk to a licensed adviser before trading."
+    ]
+  ]
+},
   "blister-pack-refill-tracker": {
   "intro": "This tracker turns a physical tablet count into dates: divide the tablets you have on hand by the tablets you take a day to get the full days of cover, add that to the day you counted for the run-out date, then subtract the delivery lead time and a safety buffer to get the day the order has to be placed. It also works out how many whole packs the next order needs for a chosen period of cover. Count the strips once and you know both dates instead of discovering an empty strip on a Sunday evening.",
   "useCases": [
@@ -10987,6 +15165,86 @@ export default {
     ]
   ]
 },
+  "block-stacker": {
+  "intro": "Block Stacker is a falling-block puzzle game on the classic 10-column by 20-row well, where the seven tetromino shapes (I, O, T, S, Z, J, L) drop from a shuffled seven-bag so every shape appears once before any repeats. Clearing one, two, three or four rows at a time scores 100, 300, 500 or 800 points multiplied by your level, and the level rises every ten lines cleared, cutting the gravity interval by about 18% each time. It has a hold slot, a three-piece preview queue, a ghost outline showing where the piece will land, and wall kicks so rotations near the wall still work.",
+  "useCases": [
+    "You have ten minutes before a meeting and want a game you can start and stop instantly without an account or a tutorial.",
+    "You keep topping out around level 5 and want to practise the specific skill of setting up four-row clears, which pay 800 times level instead of 100.",
+    "You are on a phone and want a stacker you can play one-handed — tap the board to rotate, swipe down to hard-drop — rather than one built only for a keyboard."
+  ],
+  "benefits": [
+    [
+      "Fair piece distribution",
+      "Pieces come from a shuffled bag of all seven, so you can never be starved of an I-piece for long the way pure random generation allows."
+    ],
+    [
+      "Ghost outline and hold slot",
+      "You see exactly where the piece lands before committing, and can park an awkward shape in hold until it is useful."
+    ],
+    [
+      "Rotations that do not get stuck",
+      "Eight wall-kick offsets are tried in order when a rotation would collide, so turning against a wall or a stack usually still succeeds."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does scoring work?",
+      "Clearing 1, 2, 3 or 4 lines at once awards 100, 300, 500 or 800 points, multiplied by your current level. Soft dropping adds 1 point per cell and hard dropping adds 2 per cell, so a four-line clear at level 5 is worth 4,000 points against 500 for four single clears."
+    ],
+    [
+      "How fast does it get?",
+      "The level goes up every 10 lines cleared, and each level multiplies the gravity interval by 0.82 — starting near 900 ms per row at level 1 and bottoming out at 70 ms, which is reached around level 14."
+    ],
+    [
+      "What are the controls?",
+      "Arrow keys or WASD to move and rotate, Space for a hard drop, C to hold a piece, and P to pause. On touch, the on-screen buttons work, tapping the board rotates, and a downward swipe of more than about 48 pixels hard-drops."
+    ],
+    [
+      "Is my high score saved?",
+      "Yes, your best score is stored in the browser and also recorded if you leave mid-game, so an unfinished run still counts. It lives on that device and browser, so it will not follow you to another machine."
+    ]
+  ]
+},
+  "blog-outline-generator": {
+  "intro": "The Blog Outline Generator turns a topic into a ready-to-fill markdown skeleton: an H1 title, an introduction, between two and eight numbered body sections drawn from a fixed set of proven article angles, then a conclusion and an FAQ heading. The angles run in order — why it matters, getting started, key steps, common mistakes, best tools, tips for beginners, advanced strategies, real examples — so the structure follows a reader from motivation to detail. It is for writers who know their subject but stall on how to arrange it.",
+  "useCases": [
+    "You have committed to publishing a guide this week and want the heading structure on the page in ten seconds so you can start writing paragraphs instead of staring at a blank document.",
+    "A client brief says 1,500 words on one topic and you want to see whether four sections or seven gives each heading a sensible word budget before you quote a delivery date.",
+    "You are briefing a freelance writer and want to hand over an agreed section order rather than a one-line topic, so the first draft comes back in the shape you expected."
+  ],
+  "benefits": [
+    [
+      "Output is markdown you can paste straight in",
+      "Headings come back as # and ## lines, so they drop into a markdown editor, a CMS or a Google Doc and immediately become real heading levels."
+    ],
+    [
+      "The angle order is deliberate",
+      "Sections progress from why it matters through steps and mistakes to advanced strategies, which is the sequence most how-to readers actually want."
+    ],
+    [
+      "Length is a dial, not a guess",
+      "Choosing between 2 and 8 body sections gives you a total of 6 to 12 headings, so you can match the outline to a target word count before writing a word."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many sections does the outline have?",
+      "Between 6 and 12 in total. You pick 2 to 8 main body sections, and four more are always added: the title, the introduction, the conclusion, and an FAQ heading."
+    ],
+    [
+      "Does this use AI to write the outline?",
+      "No. It assembles the outline from a fixed sequence of eight editorial angles with your topic inserted, which makes the result instant, predictable and identical every time for the same inputs. The headings are a starting frame, not finished copy."
+    ],
+    [
+      "What should I do with the FAQ section?",
+      "Replace it with three real questions your readers ask, phrased as they would type them. Genuine question-and-answer pairs are what search engines can use for FAQ rich results; the placeholder heading alone does nothing."
+    ],
+    [
+      "How long should each section be?",
+      "As a rough planning figure, divide your target word count by the number of body sections — a 1,500-word post across five sections is about 250 words each, plus roughly 150 for the introduction and conclusion. Adjust so the sections readers care about get the most room."
+    ]
+  ]
+},
   "blog-outline-prompt-builder": {
   "intro": "The Blog Outline Prompt Builder converts a target article length into an explicit word budget per outline block — introduction, H2 sections, H3 subsections, FAQ and conclusion — and writes an AI outline prompt with that budget embedded. It is built for content writers and SEO teams who want an outline that actually fits the word count they were briefed, using a 10% introduction share, an 8% conclusion share and the 238 words-per-minute average silent reading rate from Brysbaert's 2019 meta-analysis to estimate reading time.",
   "useCases": [
@@ -11024,6 +15282,46 @@ export default {
     [
       "Does the outline prompt stop the AI from inventing statistics?",
       "The generated prompt instructs the model to write [source needed] wherever evidence is required rather than fabricate figures, studies or quotations. You still need to verify and fill those markers yourself before publishing — no prompt makes model output trustworthy on its own."
+    ]
+  ]
+},
+  "blog-post-ideas": {
+  "intro": "The Blog Post Idea Generator takes one topic or niche and returns five headline angles drawn from eight proven article formats — beginner's guide, common mistakes, budget version, day in the life, myths, 30-day experiment, tools roundup, and honest comparison. Regenerate reshuffles the deck so a different five surface each time. It is for bloggers, newsletter writers and marketers who have a subject but need an angle before they can commit to a post.",
+  "useCases": [
+    "Your content calendar has four empty slots for next month and you need working titles for each before the planning meeting on Friday.",
+    "You have written three how-to posts in a row on the same subject and want a format you have not used yet — a myth-busting piece or an honest comparison, for instance.",
+    "A client asks what you would write about their product category, and you want half a dozen concrete headline options to show rather than a vague promise of ideas."
+  ],
+  "benefits": [
+    [
+      "Formats, not word salad",
+      "Every suggestion is built on an article shape that reliably works — comparison, mistakes list, budget angle — so each idea already implies a structure you can write to."
+    ],
+    [
+      "Reshuffles for a fresh five",
+      "Regenerating draws a different subset from the eight templates, so you can keep pulling until an angle clicks rather than accepting the first list."
+    ],
+    [
+      "Instant and repeatable",
+      "Ideas come from templates rather than a model call, so results appear with no wait and no dependence on an external service."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many ideas do I get?",
+      "Five per run, selected at random from eight underlying angle templates. Hitting regenerate reshuffles and gives you a different five, so across a couple of runs you will see all eight."
+    ],
+    [
+      "Are these AI-generated?",
+      "No. Each headline is a proven format with your topic slotted in, which is why results are instant and never invent facts about your subject. Treat the output as a working title to sharpen, not a finished headline."
+    ],
+    [
+      "How do I turn one of these into a real post?",
+      "Pick the angle, then replace the generic noun with the specific thing your readers care about — 'the ultimate beginner's guide to home fitness' becomes stronger as 'a beginner's home fitness plan with no equipment and 20 minutes a day'. Specificity is what makes a headline get clicked."
+    ],
+    [
+      "Will these titles rank in search?",
+      "Not on their own. A headline template gets you a viable angle; ranking depends on the post genuinely answering a query people search for, so check the phrasing against real search demand before you publish."
     ]
   ]
 },
@@ -11109,6 +15407,86 @@ export default {
     ]
   ]
 },
+  "blog-title-generator": {
+  "intro": "The Blog Title Generator turns a keyword into four ready headlines in the tone you choose — how-to, listicle or bold — with your keyword title-cased and dropped into each template. Listicle headlines pull an odd number (5, 7, 9, 11 or 13) because odd counts are the convention for list posts, and regenerating reshuffles the order and re-rolls that number. It is for writers who have the topic settled and want several headline options to compare side by side.",
+  "useCases": [
+    "You have finished a post and the working title is flat, so you feed the target keyword in and compare a how-to phrasing against a bolder claim before publishing.",
+    "You are planning a series and want each instalment framed differently — one guide, one list, one contrarian piece — from the same core keyword.",
+    "You need three subject-line variants for an A/B test on a newsletter promoting the same article, and want them to differ in tone rather than wording."
+  ],
+  "benefits": [
+    [
+      "Tone is an explicit choice",
+      "How-to, listicle and bold draw from separate template pools, so you compare genuinely different framings rather than four rewordings of one idea."
+    ],
+    [
+      "Sensible list numbers",
+      "Listicle titles use an odd count from 5 to 13, matching how list posts are conventionally written, instead of an arbitrary round number."
+    ],
+    [
+      "Keyword sits in the headline",
+      "Your term is capitalised and placed inside each title, so the phrase people search for stays in the H1 rather than being paraphrased away."
+    ]
+  ],
+  "faqs": [
+    [
+      "How many titles does it produce?",
+      "Four per run, all from the tone you selected. Regenerating reshuffles them and re-rolls the number used in listicle headlines, so switching tones is the fastest way to see genuinely new options."
+    ],
+    [
+      "How long should a blog title be?",
+      "Google typically displays around 50 to 60 characters of a title before truncating it in search results, so keep the important words — especially your keyword — near the front. Longer titles are not penalised, they are just cut off in the listing."
+    ],
+    [
+      "Why are listicle numbers always odd?",
+      "The tool draws from 5, 7, 9, 11 and 13. Odd numbers are the long-standing convention for list posts because they read as counted rather than rounded — but swap the number to whatever your post actually contains before publishing."
+    ],
+    [
+      "Should I use the title exactly as generated?",
+      "Use it as a starting point. These are templates with your keyword inserted, so add the specific detail that makes your piece different — a result, a timeframe, an audience — and make sure the title matches what the article delivers."
+    ]
+  ]
+},
+  "blood-alcohol-content-calculator": {
+  "intro": "The Blood Alcohol Content Calculator estimates BAC with the Widmark formula, treating each standard drink as 14 grams of pure alcohol, dividing by body weight times a distribution factor of 0.68 for men or 0.55 for women, and subtracting 0.015 percentage points per hour for elimination. It reports the result as a percentage and flags whether it sits above or below the 0.08% threshold used in most of the United States. It is an educational estimate for understanding how drinks, weight and time interact — never a fitness-to-drive test.",
+  "useCases": [
+    "You are curious why the same three drinks affect you and a heavier friend so differently, and want to see the weight term in the formula do the work.",
+    "You are studying pharmacology or forensic science and need to check a Widmark worked example against the textbook answer.",
+    "You are planning an event and want to understand roughly how many hours the body needs to clear a given number of drinks before people would even begin to consider driving the next morning."
+  ],
+  "benefits": [
+    [
+      "States the assumptions it uses",
+      "The 14 g standard drink, the 0.68 and 0.55 distribution factors and the 0.015 per hour elimination rate are the Widmark constants, not hidden fudge factors."
+    ],
+    [
+      "Shows the grams of alcohol, not just a percentage",
+      "Seeing that three drinks is 42 grams of ethanol makes the input side of the calculation concrete and easy to sanity-check."
+    ],
+    [
+      "Time is part of the answer",
+      "Hours since the first drink are subtracted at the elimination rate, so the estimate falls as it should rather than treating all drinks as if consumed at once."
+    ]
+  ],
+  "faqs": [
+    [
+      "How is BAC calculated?",
+      "The Widmark equation: grams of alcohol divided by (body weight in grams x the distribution factor r), expressed as a percentage, minus 0.015 per hour elapsed. Here r is 0.68 for men and 0.55 for women, reflecting differences in body water proportion."
+    ],
+    [
+      "How much alcohol is in one standard drink?",
+      "This tool uses 14 grams of pure ethanol, the US standard drink — roughly a 350 ml regular beer at 5%, 150 ml of wine at 12%, or 45 ml of 40% spirits. The UK unit is 8 grams and Australia uses 10, so convert before entering a count."
+    ],
+    [
+      "How long does it take for alcohol to leave your system?",
+      "Roughly one hour per standard drink, since the body clears alcohol at about 0.015 percentage points of BAC per hour and one drink raises a typical adult by around that much. A BAC of 0.08% therefore takes about five hours to reach zero — and nothing speeds it up: not coffee, food, a cold shower or exercise."
+    ],
+    [
+      "Can I use this to decide if I am safe to drive?",
+      "No. This is an educational estimate only. Real BAC varies with food, medication, drinking pace, health and individual metabolism, and impairment begins well below any legal limit — 0.05% in much of Europe and 0.03% or effectively zero in India, Brazil and many other countries. If you have been drinking, do not drive."
+    ]
+  ]
+},
   "blood-glucose-unit-converter": {
   "intro": "The Blood Glucose Unit Converter changes a blood sugar reading between mg/dL and mmol/L using the standard glucose factor of 18.0182, derived from glucose's molar mass of 180.156 g/mol. It also places the converted value against published American Diabetes Association reference bands for a fasting sample, a two-hour post-meal or OGTT sample, and a random sample. It is useful for anyone reading results across countries: mg/dL is standard in the US and India, mmol/L in the UK, Europe, Canada and Australia.",
   "useCases": [
@@ -11150,6 +15528,126 @@ export default {
     ]
   ]
 },
+  "blood-pressure-checker": {
+  "intro": "The Blood Pressure Checker logs systolic and diastolic readings, labels each one against the ACC/AHA categories — Normal, Elevated, Stage 1 and Stage 2 hypertension — and plots both numbers as a trend line so you can see the pattern rather than a single measurement. Every reading is timestamped as you add it and the two series are charted together in mmHg. It is for people who take readings at home and want the numbers organised before a doctor's appointment, not a diagnosis.",
+  "useCases": [
+    "Your GP asked you to bring a week of home readings, so you log morning and evening measurements and show the chart rather than a scribbled list.",
+    "You started a new medication and want to see whether the afternoon numbers are genuinely drifting down or just bouncing around.",
+    "You got one alarming reading at a pharmacy machine and want to see how it compares once you have taken three more sitting quietly at home."
+  ],
+  "benefits": [
+    [
+      "Each reading is categorised as you enter it",
+      "The label uses the standard thresholds rather than leaving you to look up whether 132 over 84 counts as elevated or Stage 1."
+    ],
+    [
+      "Systolic and diastolic plotted together",
+      "Both lines share one time axis, which makes it obvious when only one of the two numbers is moving — something a list of pairs hides."
+    ],
+    [
+      "Nothing leaves the page",
+      "Readings stay in the browser session, so there is no account, no upload and no health record held anywhere."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a normal blood pressure reading?",
+      "Under 120 systolic and under 80 diastolic, by the ACC/AHA categories this tool uses. Elevated is 120-129 systolic with diastolic still under 80; Stage 1 hypertension is 130-139 or 80-89; Stage 2 is 140 or higher, or 90 or higher."
+    ],
+    [
+      "How should I take a reading so it is accurate?",
+      "Sit quietly with your back supported and feet flat for 5 minutes first, and avoid caffeine, smoking or exercise for at least 30 minutes beforehand. Keep the cuff at heart level and do not talk during the measurement — talking alone can add several mmHg."
+    ],
+    [
+      "Are my readings saved if I close the tab?",
+      "No. Readings live in the page session only, so refreshing or closing the tab clears them. Note the numbers down or take a screenshot of the chart if you need to keep a record between sessions."
+    ],
+    [
+      "One high reading — should I worry?",
+      "A single high reading is not a diagnosis; blood pressure varies through the day and with stress, so clinicians look at an average across several readings on different days. Seek urgent medical care if a reading is 180/120 or above, or if you have chest pain, breathlessness or vision changes — and discuss any persistent elevation with your doctor."
+    ]
+  ]
+},
+  "blood-pressure-classification": {
+  "intro": "The Blood Pressure Classification Tool takes a systolic and diastolic reading in mmHg and names the category it falls into under either the ACC/AHA 2017 or the ESC/ESH 2018 guideline, which disagree about where hypertension begins. It is built for people tracking readings from a home cuff who want to know whether 132/78 counts as Elevated or High Normal, and it keeps your last 30 readings locally so you can see an average and a trend rather than one isolated number. Every reading also returns the guideline's own risk wording plus lifestyle notes, and it is informational only — diagnosis and treatment belong to a clinician.",
+  "useCases": [
+    "Your home monitor reads 134/82 and your last clinic visit called you normal — switching between ACC/AHA and ESC/ESH shows you that the same reading is Stage 1 Hypertension under one guideline and only High Normal under the other.",
+    "You have been asked to take morning and evening readings for two weeks before a follow-up appointment, and you want the average, highest and lowest of those readings on one page to hand over instead of a scribbled list.",
+    "A parent's cuff shows 186/124 and you need to know immediately whether that is a wait-and-recheck number or the hypertensive-crisis threshold that means calling emergency services now."
+  ],
+  "benefits": [
+    [
+      "Both guidelines side by side",
+      "Switch between ACC/AHA 2017 and ESC/ESH 2018 on the same reading instead of guessing which chart your doctor uses."
+    ],
+    [
+      "Classifies on both numbers",
+      "A reading only lands in a category when systolic and diastolic are both within it, so a high bottom number is never hidden by a normal top number."
+    ],
+    [
+      "Thirty readings of context",
+      "Stores your recent readings in the browser and shows average, highest and lowest, because a single measurement rarely reflects your real blood pressure."
+    ]
+  ],
+  "faqs": [
+    [
+      "Is 130/80 high blood pressure?",
+      "Under the ACC/AHA 2017 guideline, 130/80 mmHg is Stage 1 Hypertension — that guideline lowered the hypertension threshold from 140/90 to 130/80. Under the ESC/ESH 2018 guideline the same reading is only High Normal, since ESC/ESH keeps 140/90 as the start of Grade 1. The tool lets you switch guidelines to see both labels for one reading."
+    ],
+    [
+      "What blood pressure is a medical emergency?",
+      "A reading above 180/120 mmHg is classified as a Hypertensive Crisis and needs emergency medical care rather than a recheck at home, especially if it comes with symptoms such as chest pain, breathlessness, vision changes or weakness. The tool flags anything past that threshold as Critical risk. Do not use a web page to manage a crisis reading — call emergency services."
+    ],
+    [
+      "What if my top number is normal but my bottom number is high?",
+      "You are still classified into the higher category. The tool only assigns a reading to a category when both the systolic and the diastolic value fall inside it, so 118/94 is not Normal — the diastolic of 94 pushes it into Stage 1 under ACC/AHA and Grade 1 under ESC/ESH."
+    ],
+    [
+      "How many readings should I take before deciding anything?",
+      "Single readings swing too much to act on; guidelines base decisions on averaged readings taken over days, which is why the tool keeps your last 30 and shows a running average, high and low. Home readings taken while seated and rested are often more representative than a one-off office measurement, but the interpretation is your clinician's to make."
+    ]
+  ]
+},
+  "blood-pressure-log": {
+  "intro": "The Blood Pressure Log records each cuff reading with its date, time, pulse, arm and posture, labels it against the 2017 AHA/ACC categories, and averages your readings over the last 7 and 30 days plus a separate morning and evening average. It is meant for anyone whose doctor asked them to monitor at home for a couple of weeks: instead of a paper slip of loose numbers you get a trend chart, a category breakdown, and a printable sheet. Readings live in your browser only, and the log records rather than diagnoses — hypertension is a diagnosis a clinician makes.",
+  "useCases": [
+    "Your doctor asked for two weeks of home readings before deciding on medication, and you want to arrive with a printed sheet showing the 7-day and 30-day averages instead of a phone full of screenshots.",
+    "You suspect white-coat hypertension because clinic readings run far higher than home ones, and you need a dated record of both to show the gap is real.",
+    "You started a new tablet three weeks ago and want to see whether your morning average has actually moved, using the note field to mark the day the dose changed."
+  ],
+  "benefits": [
+    [
+      "Averages, not single numbers",
+      "Computes 7-day, 30-day, morning and evening averages, which is what treatment decisions are actually based on."
+    ],
+    [
+      "Splits morning from evening",
+      "Groups readings before noon separately from those after, so a morning-heavy pattern shows up instead of being averaged away."
+    ],
+    [
+      "Prints as a clinic handout",
+      "One click produces a plain sheet with your name, the averages table, the category spread and every reading — designed to be handed over, not scrolled."
+    ]
+  ],
+  "faqs": [
+    [
+      "What counts as high blood pressure at home?",
+      "Under the 2017 AHA/ACC categories used here, 130-139 systolic or 80-89 diastolic is Stage 1 hypertension, and 140 or higher or 90 or higher is Stage 2. Normal is below 120 and below 80, with 120-129 over a diastolic under 80 counted as Elevated. Home averages are usually judged slightly lower than clinic readings, so bring the log to your doctor rather than self-diagnosing from it."
+    ],
+    [
+      "If only one of my two numbers is high, which category do I get?",
+      "The worse of the two numbers decides, because the guideline joins the thresholds with 'or'. A reading of 135/75 is Stage 1 on the systolic alone, and 118/92 is Stage 2 on the diastolic alone — the log applies exactly that rule."
+    ],
+    [
+      "What blood pressure means I should get help right away?",
+      "180 systolic or higher, and/or 120 diastolic or higher, is the hypertensive crisis range. Sit quietly for five minutes and repeat the measurement; if it stays that high, get medical help immediately, and do not wait to re-measure at all if you also have chest pain, breathlessness, weakness, trouble speaking or vision changes."
+    ],
+    [
+      "How do I take a reading that is actually worth logging?",
+      "Sit still for five minutes with your back supported, feet flat and the cuff on bare skin at heart level, then take two readings a minute apart and log the average. Technique errors move a reading by 10-20 mmHg — crossed legs alone can add about 8 mmHg and a full bladder roughly 10 — which is more than many medications shift it."
+    ]
+  ]
+},
   "blood-pressure-unit-converter": {
   "intro": "The Blood Pressure Unit Converter changes a systolic and diastolic reading between millimetres of mercury and kilopascals using the exact definition 1 mmHg = 0.133322387415 kPa. Alongside the conversion it computes mean arterial pressure as diastolic plus one third of the pulse pressure, reports the pulse pressure itself, and places the reading in the 2017 ACC/AHA category table. It is aimed at students, researchers and anyone reading equipment or papers that report pressure in SI units.",
   "useCases": [
@@ -11188,6 +15686,46 @@ export default {
     [
       "Is a torr the same as a mmHg?",
       "For clinical purposes yes. One torr is defined as 1/760 of a standard atmosphere, which is 133.3224 Pa, while the conventional mmHg is 133.322387415 Pa — a difference of about one part in seven million, far below the precision of any blood pressure cuff."
+    ]
+  ]
+},
+  "blood-sugar-log": {
+  "intro": "The Blood Sugar Log records each glucose reading against the context it was taken in — fasting, before a meal, two hours after a meal, bedtime or random — so it is judged against the ADA target band for that moment rather than one blanket number. It then reports your time in range against the 70-180 mg/dL zone, your average per context, and an estimated HbA1c from the ADAG regression A1c% = (average mg/dL + 46.7) / 28.7 over your last 90 days. It is a record to take to your care team, not a substitute for a lab test or for medical advice.",
+  "useCases": [
+    "You test four times a day and want to know whether your high numbers are a fasting problem or a post-meal problem, because the fix is different — the per-context averages separate the two.",
+    "Your next HbA1c blood test is months away and you want a rough read on where you are heading from the readings you already have.",
+    "You are visiting a clinic in a country that uses mmol/L while your meter reads mg/dL, and you need the same log printed in either unit without re-entering anything."
+  ],
+  "benefits": [
+    [
+      "Context sets the target",
+      "A 140 two hours after lunch is scored in range while a fasting 140 is not, because each reading is judged against its own ADA band."
+    ],
+    [
+      "Time in range, not just an average",
+      "Splits your readings into very low, low, in range, high and very high bands so a flat average does not hide swings in both directions."
+    ],
+    [
+      "Unit changes never lose data",
+      "Readings are stored in mg/dL and converted for display using the 18.0182 factor, so toggling to mmol/L and back does not round your history away."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is a good time in range for blood sugar?",
+      "A commonly cited goal for many adults is more than 70% of readings inside 70-180 mg/dL (3.9-10.0 mmol/L), with under 4% below 70 mg/dL and under 1% below 54 mg/dL. This log calculates exactly those bands from your entries. Your own targets can be tighter or looser — pregnancy, older age and hypoglycemia unawareness all change them, so confirm yours with your care team."
+    ],
+    [
+      "How is estimated HbA1c calculated from finger-stick readings?",
+      "It uses the ADAG study regression: A1c % = (average glucose in mg/dL + 46.7) / 28.7, applied to the average of your readings over the last 90 days, since that roughly matches the lifespan of a red blood cell. Treat it as a signal only — finger-stick readings are a biased sample that skips the overnight hours, and anaemia, pregnancy, kidney disease and haemoglobin variants shift real lab A1c independently."
+    ],
+    [
+      "What should I do about a reading under 70 mg/dL?",
+      "Under 70 mg/dL (3.9 mmol/L) is hypoglycemia, and the standard response is the 15-15 rule: take 15 g of fast-acting carbohydrate such as four glucose tablets or 120 ml of juice, wait 15 minutes, and recheck — repeat if still under 70. Avoid chocolate and nuts, whose fat slows absorption. If someone is confused, seizing or unable to swallow, do not give anything by mouth; that needs glucagon and emergency help."
+    ],
+    [
+      "What are the fasting and post-meal targets used here?",
+      "Fasting and pre-meal readings use the ADA band of 80-130 mg/dL, and two-hour post-meal readings use under 180 mg/dL, with 100 and 140 mg/dL marked as the tighter non-diabetes ideals. Bedtime uses a 90-150 mg/dL band to reduce overnight hypoglycemia risk. These are general adult figures, and only your clinician can set the ones that apply to you."
     ]
   ]
 },
@@ -11312,6 +15850,126 @@ export default {
     ]
   ]
 },
+  "blur-comparison": {
+  "intro": "Blur Comparison applies the CSS Gaussian blur filter to an image at a radius you choose from 1 to 100 pixels and splits the view down a draggable line, so the sharp original and the blurred version sit side by side in the same frame. It is for anyone who has to pick a blur strength by eye rather than by guessing a number — designers testing a background, or someone obscuring a detail in a screenshot. The chosen radius exports as a PNG rendered at the image's full native resolution.",
+  "useCases": [
+    "You are building a frosted-glass header and need to know whether the CSS blur radius should be 8px or 20px before you type it into a stylesheet.",
+    "You want to blur a car number plate or a name badge out of a photo before posting it, and you need to check the detail is genuinely unreadable rather than just softened.",
+    "You are choosing a background image for a title slide and want to see how much blur it takes before the overlaid text becomes comfortably legible."
+  ],
+  "benefits": [
+    [
+      "Blurred and sharp in one frame",
+      "The split slider puts the two states edge to edge on the same picture, which reads the difference far more accurately than toggling back and forth."
+    ],
+    [
+      "The radius is the CSS value",
+      "The intensity you settle on is the same number you paste into a filter: blur() rule, with no conversion or guesswork."
+    ],
+    [
+      "Exports at native resolution",
+      "The download re-renders the blur onto a canvas at the image's original pixel dimensions instead of saving the on-screen preview."
+    ]
+  ],
+  "faqs": [
+    [
+      "What blur radius should I use to hide sensitive text?",
+      "There is no single safe number — it depends on how large the text is in the image, so drag the slider until the characters are unrecoverable rather than trusting a preset. The Heavy preset here is 40px against a 1 to 100px range, and for anything genuinely sensitive a solid box or pixelation is safer than blur, because blur is a reversible mathematical operation in principle."
+    ],
+    [
+      "Does the blur value match CSS filter: blur()?",
+      "Yes. The preview applies the standard CSS filter blur() with the pixel radius shown on the slider, so setting 12px here and writing filter: blur(12px) in your stylesheet produces the same Gaussian falloff. The presets map to 5px for Subtle, 15px for Medium and 40px for Heavy."
+    ],
+    [
+      "Will the downloaded image be the same size as the one I uploaded?",
+      "Yes, the export draws to a canvas sized to the image's natural width and height, so a 4000 x 3000 photo comes back at 4000 x 3000 as a PNG. Only the blurred version is exported; the original is untouched on your device."
+    ],
+    [
+      "Can I compare more than two blur levels at once?",
+      "Not simultaneously — the split view compares exactly one blur radius against the untouched original. To weigh two candidate radii against each other, export each one and compare the two files, or step the slider between them while watching the same region of the image."
+    ]
+  ]
+},
+  "blur-detector": {
+  "intro": "Blur Detector measures how sharp a photo is by converting it to Rec.601 luminance, averaging the brightness difference between each pixel and its right and lower neighbours, and turning that gradient energy into a sharpness score, a blur percentage and a six-step verdict from Sharp down to Severe Blur. It also tiles the image into blocks and paints a red heatmap over the softest ones, so you can see whether the whole frame is soft or only part of it. It is a quick triage pass for photographers and anyone culling a shoot, not a substitute for zooming in at 100 percent.",
+  "useCases": [
+    "You came back from an event with 300 frames and want a fast first pass that flags the ones too soft to keep before you start editing.",
+    "A client says a supplied photo looks soft in print and you need something more concrete than an opinion — a sharpness score and an edge-density figure to point at.",
+    "A portrait looks off and you cannot tell whether you missed focus entirely or only landed it on the ear; the heatmap shows which blocks of the frame carry the detail."
+  ],
+  "benefits": [
+    [
+      "A number, not an impression",
+      "Reports sharpness, blur percentage, edge density and focus area as separate figures instead of a single vague pass or fail."
+    ],
+    [
+      "Shows where the softness is",
+      "Splits the frame into blocks and shades each one by its own local gradient, so a sharp subject on a soft background scores differently from a uniformly soft frame."
+    ],
+    [
+      "Works on the full-resolution file",
+      "Analysis runs on the image's native pixel data drawn to a canvas, not on a downscaled preview that would smooth away the detail being measured."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does the tool decide an image is blurry?",
+      "It computes the mean absolute luminance gradient across the image — for every pixel, the brightness difference to the pixel on its right plus the pixel below — and scales that against a reference of 30 to produce the sharpness score. Blur percentage is simply 100 minus that score, and a value above 50 triggers the shooting suggestions."
+    ],
+    [
+      "What do the blur labels mean?",
+      "They are severity bands on the same average gradient value: under 5 is Severe Blur, under 15 Significant, under 30 Moderate, under 50 Slight, under 80 Minimal, and anything above that is labelled Sharp. They describe how much blur is present, not whether it came from camera shake or missed focus."
+    ],
+    [
+      "What is edge density telling me?",
+      "It is the share of pixels whose gradient magnitude exceeds 30, expressed as a percentage — effectively how much of the frame carries hard detail. A crisp architectural shot scores high, while a correctly focused portrait against a smooth backdrop can score low without being blurry, so read it alongside the heatmap rather than on its own."
+    ],
+    [
+      "Why does a deliberately shallow depth-of-field shot get flagged?",
+      "Because the measurement is global: intentional background bokeh lowers the average gradient exactly the way a missed focus does. Switch to the heatmap view — if the red overlay covers the background but leaves your subject clear, the frame is doing what you intended."
+    ]
+  ]
+},
+  "bmi-calculator": {
+  "intro": "This BMI Calculator divides your weight in kilograms by your height in metres squared and places the result on the WHO scale — under 18.5 Underweight, 18.5 to 24.9 Normal, 25 to 29.9 Overweight, 30 and above Obese. Enter height in centimetres or feet and inches and weight in kilograms or pounds, and it also returns the weight range that would put you inside the normal band, a daily water figure of 33 ml per kilogram, and a protein target scaled to your category. Add age and sex and it estimates maintenance calories from the Mifflin-St Jeor equation; it is a screening number, not a diagnosis.",
+  "useCases": [
+    "A gym membership or insurance form asks for your BMI and you have your height in feet and inches but your weight in kilograms, with no interest in converting either by hand.",
+    "You want a concrete goal weight rather than a vague one, so you need the actual kilogram range that corresponds to a BMI between 18.5 and 24.9 at your height.",
+    "You have been told your BMI is 27 and want to know what that band actually means before your next check-up, along with roughly how many calories a day maintain your current weight."
+  ],
+  "benefits": [
+    [
+      "Turns the category into a weight target",
+      "Instead of just naming a band, it back-calculates the kilogram range that a BMI of 18.5 to 24.9 works out to at your exact height."
+    ],
+    [
+      "Mixes measurement systems freely",
+      "Height in feet and inches with weight in kilograms, or centimetres with pounds — the conversions to metric happen before the formula runs."
+    ],
+    [
+      "Adds calories when you give it age and sex",
+      "Supply those two optional fields and it runs the Mifflin-St Jeor BMR equation and a moderate activity factor alongside the BMI result."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the formula for BMI?",
+      "BMI equals weight in kilograms divided by height in metres squared. For a person 1.75 m tall weighing 70 kg that is 70 / (1.75 x 1.75) = 22.9. Imperial entries are converted first, using 30.48 cm per foot, 2.54 cm per inch and 0.453592 kg per pound."
+    ],
+    [
+      "What BMI is considered healthy?",
+      "The WHO classification used here treats 18.5 to 24.9 as the normal range, below 18.5 as underweight, 25 to 29.9 as overweight and 30 or above as obese. These cut-offs are population screening thresholds, and some health bodies apply lower ones for South Asian populations, so discuss your own number with a clinician rather than treating the band as a verdict."
+    ],
+    [
+      "Why does BMI call muscular people overweight?",
+      "Because the formula only knows height and weight — it cannot tell muscle from fat, so a lean, heavily trained person can land above 25 while carrying very little body fat. It is a screening tool for populations rather than a body-composition measurement; a waist measurement or a body-fat estimate gives a more useful picture for an individual."
+    ],
+    [
+      "How is the daily water figure worked out?",
+      "It uses 33 ml of water per kilogram of body weight, so a 70 kg person gets about 2.3 litres a day. That is a rule of thumb for a temperate climate and ordinary activity — heat, exercise, pregnancy and several medical conditions change the requirement, and some conditions require restricting fluid, so treat it as a starting point."
+    ]
+  ]
+},
   "bmi-prime-calculator": {
   "intro": "BMI Prime is body mass index divided by the upper limit of the healthy BMI range, so the answer reads as a plain ratio: 1.00 sits exactly on the ceiling, 1.15 is fifteen percent above it, and 0.90 is ten percent below. This calculator computes BMI as weight in kilograms over height in metres squared, then divides by 25 for the WHO international range or by 23 for the WHO Asia-Pacific range. Because the result is dimensionless it compares cleanly across people of different heights and across the two reference standards.",
   "useCases": [
@@ -11349,6 +16007,46 @@ export default {
     [
       "Should Asian populations use a different BMI Prime reference?",
       "Yes, dividing by 23 rather than 25 is the closer fit. The WHO Asia-Pacific guideline puts the healthy ceiling at 22.9 for South and East Asian populations because diabetes and cardiovascular risk rise at a lower BMI. This calculator offers both references and reports each result."
+    ]
+  ]
+},
+  "bmr-calculator": {
+  "intro": "This BMR Calculator estimates the calories your body burns at complete rest using the Mifflin-St Jeor equation — 10 x weight in kg plus 6.25 x height in cm minus 5 x age, then +5 for men or -161 for women — and multiplies it by an activity factor from 1.2 to 1.9 to give your total daily energy expenditure. From that it builds a target for losing or gaining 0.25 to 0.5 kg a week, splits the calories 25 percent protein, 45 percent carbohydrate and 30 percent fat, and adds BMI, a Deurenberg body-fat estimate and protein and water targets. It is a planning estimate for healthy adults, not a clinical measurement.",
+  "useCases": [
+    "You are starting a cut and need a real daily calorie number to aim at rather than a guess, plus the gram targets for protein, carbs and fat that go with it.",
+    "Your weight has stalled on a fixed calorie intake and you want to check what your maintenance level actually is now that you weigh less than when you started.",
+    "You switched from a desk job to shift work on your feet and want to see how much moving from the sedentary 1.2 factor to the very active 1.725 factor changes your daily requirement."
+  ],
+  "benefits": [
+    [
+      "Uses the modern equation",
+      "Runs Mifflin-St Jeor rather than the older Harris-Benedict formula, which generally overestimates resting expenditure in today's populations."
+    ],
+    [
+      "Turns the target into grams and meals",
+      "Converts your chosen calorie goal into protein, carb and fat grams at 4, 4 and 9 kcal per gram, then splits the day 25/35/30/10 across breakfast, lunch, dinner and snacks."
+    ],
+    [
+      "Refuses to go below a floor",
+      "Weight-loss targets are clamped at 1,200 kcal a day, so a large deficit on a small frame does not silently produce an unsafe number."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the Mifflin-St Jeor formula for BMR?",
+      "BMR = (10 x weight in kg) + (6.25 x height in cm) - (5 x age in years) + 5 for men, or - 161 for women. For a 30-year-old man of 175 cm and 68 kg that gives about 1,629 kcal a day. It is the equation most dietitians now use in place of Harris-Benedict."
+    ],
+    [
+      "What activity multiplier should I pick?",
+      "Sedentary is 1.2 for little or no exercise, lightly active 1.375 for 1-3 days a week, moderate 1.55 for 3-5 days, very active 1.725 for 6-7 days, and extra active 1.9 for hard training plus a physical job. Most people overestimate here, so if you are between two levels the lower one usually tracks reality better."
+    ],
+    [
+      "How big a calorie deficit gives 0.5 kg of loss a week?",
+      "The tool subtracts 500 kcal a day from your TDEE for roughly 0.5 kg a week and 250 kcal for roughly 0.25 kg, based on the convention that about 7,700 kcal equals a kilogram of body mass. Losses of 0.25 to 0.5 kg per week are the range generally considered sustainable; faster drops tend to cost lean tissue."
+    ],
+    [
+      "How accurate is the body-fat percentage shown?",
+      "It is a rough estimate from the Deurenberg equation, which derives body fat from BMI, age and sex: 1.20 x BMI + 0.23 x age - 16.2 for men or - 5.4 for women. Because it starts from BMI it inherits BMI's blind spot and will read high for muscular people and low for those with little muscle — DEXA or a skinfold measurement is far more reliable."
     ]
   ]
 },
@@ -11472,6 +16170,86 @@ export default {
     ]
   ]
 },
+  "body-fat-calculator": {
+  "intro": "The Body Fat Percentage Calculator estimates body fat two ways: the US Navy tape method, which feeds neck, waist and — for women — hip circumference plus height into a log-based regression, and the Deurenberg equation, which derives fat from BMI, age and sex when you have no tape. It then splits your weight into fat mass and lean mass, places the result on the standard essential/athlete/fitness/average/obese bands, and works out the goal weight and rough timeline to reach a target percentage. Tape estimates typically carry a few percentage points of error, so treat the number as a trend line rather than a lab result.",
+  "useCases": [
+    "The scale has not moved in a month but your waist is down two centimetres, and you want to see whether you have swapped fat for lean mass rather than stalled.",
+    "You have a target of 15 percent body fat and need to know what that actually means in kilograms — the goal weight, the fat to lose, and how many weeks that is at a sensible rate.",
+    "You only have a bathroom scale and no tape measure, and want a first estimate from height, weight, age and sex before deciding whether a proper measurement is worth it."
+  ],
+  "benefits": [
+    [
+      "Two methods on the same inputs",
+      "Runs the Navy tape formula and the Deurenberg BMI formula side by side, so you can see how far apart the two estimates land for you."
+    ],
+    [
+      "Separates fat mass from lean mass",
+      "Reports both in kilograms or pounds, which is what actually tells you whether a diet is costing you muscle."
+    ],
+    [
+      "Turns a target percentage into a weight",
+      "Holds your lean mass constant to compute the weight you would be at your goal body fat, plus a week range at 0.5 to 1 percent of body weight lost per week."
+    ]
+  ],
+  "faqs": [
+    [
+      "How does the US Navy body fat formula work?",
+      "For men it is 495 / (1.0324 - 0.19077 x log10(waist - neck) + 0.15456 x log10(height)) - 450, all in centimetres. For women the same shape uses waist + hip - neck with the constants 1.29579, 0.35004 and 0.221. It is circumference-based, so a waist larger than the neck is required for the formula to produce a value at all."
+    ],
+    [
+      "What is a healthy body fat percentage?",
+      "The bands used here put men at 6-13 percent athlete, 14-17 percent fitness, 18-24 percent average and 25 percent or more obese, with 2-5 percent as essential fat. For women the same steps are 14-20, 21-24, 25-31 and 32 percent or more, with 10-13 percent essential. Dropping below the essential band is not a fitness goal — it carries real hormonal and health consequences."
+    ],
+    [
+      "Which method should I trust, tape or BMI?",
+      "The tape method is generally the better of the two because it responds to where your weight actually sits, while the Deurenberg estimate starts from BMI and therefore cannot distinguish muscle from fat. Neither approaches DEXA or hydrostatic weighing for accuracy — tape estimates commonly sit a few percentage points off — so use one method consistently and watch the direction it moves."
+    ],
+    [
+      "How is the timeline to my goal calculated?",
+      "It takes the fat you would need to lose to hit your target percentage and divides it by a weekly loss of 1 percent of body weight for the fast end and 0.5 percent for the slow end, producing a week range. That rate band is the one usually recommended to preserve lean mass; faster loss tends to take muscle with it, and a dietitian or doctor is the right person to sign off on an aggressive plan."
+    ]
+  ]
+},
+  "body-fat-estimator": {
+  "intro": "The Body Fat % Estimator runs three different estimation methods on the same person: the US Navy tape formula from neck, waist and hip circumference, a BMI regression using height, weight, age and sex, and the Jackson-Pollock three-site skinfold equation, which converts caliper readings into body density and then into fat via the Siri conversion 495 / density - 450. It is aimed at people who own calipers or a tape measure and want to see whether the methods agree before trusting any one of them. Each result is split into fat mass and lean mass, banded from essential to excess, and can be saved locally to build a history.",
+  "useCases": [
+    "You bought a set of calipers and want to check your three-site pinch total against the tape-measure number before deciding which one to track from now on.",
+    "You are eight weeks into a training block and want a dated history of the same measurement method, so you can tell progress from measurement noise.",
+    "You have a goal of 20 percent body fat and want to know the scale weight that corresponds to it if your lean mass stays where it is."
+  ],
+  "benefits": [
+    [
+      "Three methods, one profile",
+      "Tape, BMI regression and caliper estimates all run off the same stats, so you can see the spread between them instead of trusting a single figure."
+    ],
+    [
+      "Proper caliper mathematics",
+      "The skinfold path uses the sex-specific Jackson-Pollock density equation and the Siri conversion rather than a generic lookup table."
+    ],
+    [
+      "Warns when the method is a poor fit",
+      "Flags tape-method results when BMI exceeds 35 or age is under 18, the two conditions where circumference estimates are known to drift."
+    ]
+  ],
+  "faqs": [
+    [
+      "Which three sites does the caliper method use?",
+      "It uses the Jackson-Pollock three-site protocol: chest, abdomen and thigh for men, and triceps, suprailiac and thigh for women. The three readings in millimetres are summed and fed into a sex-specific body-density equation together with your age, then converted with the Siri formula 495 / density - 450."
+    ],
+    [
+      "Why do the three methods give me different numbers?",
+      "Because they measure different proxies — circumference, overall mass, and subcutaneous fat thickness — and each was fitted to a different reference population. Spreads of several percentage points between methods are normal. Pick one method, measure it the same way each time, and follow the direction it moves rather than comparing across methods."
+    ],
+    [
+      "What body fat percentage counts as athletic?",
+      "The bands used here put men at under 14 percent for athletic, 14 to 17 percent for fitness, 18 to 24 percent acceptable and 25 percent or more as excess, with under 6 percent as essential fat only. For women the same steps are under 21, 21 to 24, 25 to 31 and 32 percent or more, with under 14 percent essential. Sitting in the essential band is a health risk, not an achievement."
+    ],
+    [
+      "How is the goal weight worked out?",
+      "It assumes your lean mass stays fixed and solves for the weight at which your target percentage would hold: target weight = lean mass / (1 - target percent / 100). That is a useful planning figure, but real dieting usually costs some lean mass too, so treat it as a ceiling on what pure fat loss would achieve rather than a promise."
+    ]
+  ]
+},
   "body-fat-percentage-calculator": {
   "intro": "Body Fat Percentage Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
   "useCases": [
@@ -11553,6 +16331,46 @@ export default {
     ]
   ]
 },
+  "body-surface-area-calculator": {
+  "intro": "The Body Surface Area Calculator converts a height in centimetres and a weight in kilograms into BSA in square metres, using the Mosteller formula — the square root of height times weight divided by 3600 — and showing the Du Bois result, 0.007184 x height^0.725 x weight^0.425, alongside it. BSA is the figure many drug doses, cardiac indices and burn assessments are scaled to, so students, nurses and anyone checking a calculation need it in a hurry. It reports both formulas because they do not always agree, and it is an arithmetic aid, not a dosing authority.",
+  "useCases": [
+    "You are working through a chemotherapy dosing question where the dose is written in mg per square metre and need the BSA before you can go any further.",
+    "A cardiac report quotes cardiac index rather than cardiac output and you need the patient's BSA to reconcile the two numbers.",
+    "You are revising for a pharmacology exam and want to see how much Mosteller and Du Bois diverge at the extremes of height and weight."
+  ],
+  "benefits": [
+    [
+      "Both standard formulas at once",
+      "Shows the Mosteller and Du Bois results side by side so you can see whether the choice of formula changes anything material for this patient."
+    ],
+    [
+      "The formula clinicians actually use",
+      "Leads with Mosteller, the square-root form adopted in most clinical settings precisely because it is simple enough to check by hand."
+    ],
+    [
+      "Two inputs, no setup",
+      "Height in centimetres and weight in kilograms are all it needs — no age, sex or body-composition assumptions enter the calculation."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the Mosteller formula for body surface area?",
+      "BSA in square metres equals the square root of (height in cm x weight in kg) / 3600. For a person 175 cm and 70 kg that is the square root of 3.403, or about 1.84 m². Its appeal is that it can be worked out on a basic calculator, which is why it became the clinical default."
+    ],
+    [
+      "How does Du Bois differ from Mosteller?",
+      "Du Bois uses a power relationship — 0.007184 x height^0.725 x weight^0.425 — derived from a 1916 study of only nine subjects, while Mosteller is a later square-root simplification. For average adults the two land within a few percent of each other, but they diverge more at very high or very low body weights, which is why both are shown here."
+    ],
+    [
+      "Why is body surface area used for drug dosing?",
+      "Because BSA correlates better than body weight alone with metabolic rate, blood volume and renal clearance, so several drug classes — cytotoxic chemotherapy in particular — are prescribed in mg per square metre. Which formula and which dose apply to a given patient is a prescriber's decision; this tool only performs the arithmetic."
+    ],
+    [
+      "Can I enter height in feet or weight in pounds?",
+      "No — the inputs are centimetres and kilograms, so convert first: multiply inches by 2.54 for centimetres and pounds by 0.4536 for kilograms. Entering imperial figures directly will produce a BSA that is badly wrong rather than an error message, so check the units before reading the result."
+    ]
+  ]
+},
   "bodybuilder-protein-calculator": {
   "intro": "This calculator turns your bodyweight, body-fat percentage and training phase into a daily protein target and a per-meal dose sized for muscle growth. It applies the ISSN Position Stand range of 1.4-2.0 g per kg bodyweight for building and maintaining muscle, switches to the 2.3-3.1 g per kg fat-free mass range used when dieting down, and then divides the total using the 0.4 g/kg per-meal dose that maximises muscle protein synthesis. It is aimed at lifters running a structured bulk, cut or maintenance block who want the distribution right, not just the daily number.",
   "useCases": [
@@ -11590,6 +16408,46 @@ export default {
     [
       "Is very high protein intake safe?",
       "In healthy adults with normal kidney function, controlled studies of intakes above 2 g/kg for months have not shown harm to kidney or bone health. That evidence does not extend to people with kidney or liver disease, so anyone with an existing condition, or who is pregnant, should get individual advice from a doctor or registered dietitian."
+    ]
+  ]
+},
+  "bolt-torque-preload-calculator": {
+  "intro": "The Bolt Torque & Preload Calculator applies the short-form torque equation T = K x F x d, converting an applied torque in newton-metres into the clamp load a fastener of a given nominal diameter should produce for a chosen nut factor K, and working the same relationship backwards to give the torque needed to hit a target preload. It is for anyone specifying or sanity-checking a tightening spec — a mechanic questioning a workshop figure, or an engineer comparing a dry and a lubricated assembly. The equation is a first-order estimate; approved fastener procedures govern real assemblies.",
+  "useCases": [
+    "You have a proof-load target in kilonewtons from a joint calculation and need the torque wrench setting that corresponds to it for an M10 bolt.",
+    "A supplier quotes a torque figure but not the assumed friction, and you want to see how much clamp load changes between a dry K of about 0.2 and a lubricated one nearer 0.15.",
+    "You are checking whether a specified torque actually reaches the preload the joint design assumes, or whether it lands well short of it."
+  ],
+  "benefits": [
+    [
+      "Works the equation in both directions",
+      "Gives you preload from torque and the torque needed for a target preload in the same result, so you do not have to rearrange anything by hand."
+    ],
+    [
+      "Makes the friction assumption explicit",
+      "K is an input rather than a hidden constant, which surfaces the fact that friction — not bolt strength — dominates the torque-to-preload relationship."
+    ],
+    [
+      "Scores the result against your target",
+      "Reports the estimated preload as a percentage of the proof load you entered, so you can see immediately whether the spec is under or over."
+    ]
+  ],
+  "faqs": [
+    [
+      "What is the formula for bolt torque and preload?",
+      "T = K x F x d, where T is torque in newton-metres, K is the dimensionless nut factor, F is the preload in newtons and d is the nominal bolt diameter in metres. Rearranged, preload F = T / (K x d) — so 45 N·m on an M10 bolt with K = 0.2 gives about 22.5 kN of clamp load."
+    ],
+    [
+      "What K factor should I use?",
+      "K = 0.2 is the conventional starting value for plain, as-received steel fasteners, with lubricated or coated threads typically falling lower and dry, rusty or galled ones running higher. K is not a material property — it lumps thread friction, under-head friction and thread geometry into one number, so it should come from test data or the fastener supplier for anything load-bearing."
+    ],
+    [
+      "Why does the same torque give different clamp loads?",
+      "Because roughly 90 percent of applied torque is consumed by friction under the head and in the threads, so lubrication, plating, surface finish, reuse and even wash-down before assembly all shift the result. Torque control alone typically scatters preload by tens of percent, which is why critical joints use angle control, bolt stretch measurement or ultrasonic methods instead."
+    ],
+    [
+      "Can I use this to set a torque wrench on a safety-critical joint?",
+      "No. This is a simplified first-order estimate that ignores joint stiffness, embedment relaxation, thermal effects, gasket creep and the fastener's actual grade and proof strength. Use the manufacturer's or standard's published tightening procedure for anything structural, pressure-retaining or safety-related, and treat this as a cross-check on the order of magnitude."
     ]
   ]
 },
@@ -11712,4922 +16570,6 @@ export default {
     [
       "How long is a bonafide certificate valid?",
       "There is no fixed expiry printed on it, but verifiers commonly reject one dated more than about six months earlier, and many want it dated within the current academic year. Ask for a fresh copy if the purpose is a passport, visa or scholarship deadline."
-    ]
-  ]
-},
-  "bonus-variable-pay-calculator": {
-  "intro": "The Bonus and Variable Pay Calculator converts a target variable pay figure into the amount that actually reaches your account. Enter variable pay as a share of CTC or as a fixed annual number, then apply your individual rating multiplier, the company or business payout factor and the months you were eligible. It shows the gross payout, the tax deducted and what each quarterly or annual cycle pays out.",
-  "useCases": [
-    "Your offer says 15% of CTC is variable and you want to know what an 'exceeds expectations' rating plus a 90% company factor actually pays.",
-    "You joined in September and need the prorated bonus for the four months you were eligible in the performance year.",
-    "You are comparing two offers where one has a large variable component and want the risk-adjusted cash at a 100% payout versus a 70% payout."
-  ],
-  "benefits": [
-    [
-      "Both multipliers modelled",
-      "Individual rating and company payout factor are applied separately, the way most Indian bonus schemes actually work."
-    ],
-    [
-      "Proration built in",
-      "Mid-year joiners and exits get the correct months-out-of-twelve target instead of a full-year number."
-    ],
-    [
-      "Cycle-level clarity",
-      "Splits the payout across annual, half-yearly, quarterly or monthly cycles, gross and net of tax."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is variable pay calculated in an Indian salary structure?",
-      "Variable pay is usually a stated percentage of CTC held back from fixed pay. The payout is the target amount multiplied by your individual performance factor and by a company or business unit achievement factor, prorated for the months you were eligible during the performance year."
-    ],
-    [
-      "What is a typical performance rating multiplier?",
-      "Multipliers vary by employer, but a common ladder is around 130-150% for a top rating, 110-125% for exceeds expectations, 100% for meets expectations, 50-80% for partially meets and nil for below expectations. Always use the grid published in your own policy."
-    ],
-    [
-      "How is bonus taxed in India?",
-      "A performance bonus is fully taxable as salary in the year it is received, and the employer deducts TDS at your applicable slab rate. Because a lump-sum bonus can push the month's TDS higher, the in-hand amount often looks smaller than expected before the year-end reconciliation."
-    ],
-    [
-      "Is statutory bonus the same as variable pay?",
-      "No. Statutory bonus under the Payment of Bonus Act 1965 applies to employees drawing wages up to 21,000 per month and is payable at between 8.33% and 20% of eligible wages. Performance variable pay is a separate contractual arrangement and is not governed by that Act."
-    ]
-  ]
-},
-  "book-page-bookmark-organizer": {
-  "intro": "This organiser collects page references from every book you study — topic, book, page or page range, and an optional note — and builds one sorted topic index across all of them. It follows the ordering convention of a printed subject index: entries grouped by topic, then sorted by book title and start page, and the whole index can be copied as plain text into your notes app. It is made for students and researchers who keep rediscovering that the answer they need is 'somewhere in one of three books'.",
-  "useCases": [
-    "A UPSC aspirant indexes where federalism, DPSP and emergency provisions are covered across Laxmikanth, NCERTs and class notes",
-    "A law student maps each syllabus topic to page ranges across the bare act, a commentary and lecture handouts",
-    "A researcher collects page references for one theme across a dozen library books before a chapter deadline"
-  ],
-  "benefits": [
-    [
-      "One index, many books",
-      "Topic-wise grouping shows every book that covers a topic side by side with exact pages."
-    ],
-    [
-      "Copy-ready output",
-      "The whole index exports as clean plain text for Notion, OneNote or a printed sheet."
-    ],
-    [
-      "Saved locally",
-      "References persist in your browser between visits and never leave your device."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I keep track of important pages across multiple books?",
-      "Record each reference as topic + book + page range in one shared index rather than sticky notes in each book. Grouped by topic, the index instantly answers 'where have I seen this before' across every book at once — which is exactly what this tool builds and sorts for you."
-    ],
-    [
-      "Can I save a page range instead of a single page?",
-      "Yes — enter a start and end page and it is shown as 'pp. 312-329'; leave the end page blank for a single-page reference shown as 'p. 418'. The tool also totals the pages saved per topic so you can estimate revision time."
-    ],
-    [
-      "Will topics with different capitalisation be treated as the same topic?",
-      "Yes. Grouping is case-insensitive, so 'Federalism' and 'federalism' merge into one topic block, using the spelling of the first entry. Books, however, are matched by their exact name, so keep book titles consistent."
-    ],
-    [
-      "Where is my bookmark index stored?",
-      "In your browser's local storage on your own device — it survives reloads but is never uploaded. Use the copy button to back the index up into your notes, since clearing browser data will remove it."
-    ]
-  ]
-},
-  "books-of-accounts-requirement-checker": {
-  "intro": "Section 44AA of the Income-tax Act decides who must keep books of account, and this checker applies its two separate tests: the Rule 6F prescribed list for a specified profession whose receipts exceed Rs 1,50,000 in all three preceding years, and the income and turnover tests for every other business. It also applies the higher limits an individual or HUF gets under the Finance Act 2017 proviso, and flags the section 44AA(2)(iv) trap that catches anyone declaring less than the presumptive profit. The output names the registers to keep, the six-year retention rule and the section 271A penalty.",
-  "useCases": [
-    "A consulting engineer checking whether a cash book, journal and ledger are legally required or whether invoices and bank statements are enough.",
-    "A trader with Rs 26,00,000 turnover confirming that the Rs 25,00,000 limit for an individual has been crossed in one of the three preceding years.",
-    "A freelancer thinking of declaring less than 50% under section 44ADA and wanting to see the books and audit that follow."
-  ],
-  "benefits": [
-    [
-      "Both statutory tests",
-      "Applies the all-three-years test for professions and the any-one-year test for businesses."
-    ],
-    [
-      "Correct entity limits",
-      "Uses Rs 2,50,000 and Rs 25,00,000 for an individual or HUF, and Rs 1,20,000 and Rs 10,00,000 otherwise."
-    ],
-    [
-      "Names the registers",
-      "Lists the Rule 6F(2) books, plus the Form 3C case register and drug inventory for doctors."
-    ]
-  ],
-  "faqs": [
-    [
-      "Who has to maintain books of accounts under section 44AA?",
-      "Anyone carrying on a specified profession — legal, medical, engineering, architectural, accountancy, technical consultancy, interior decoration and the notified professions — must keep records, and must follow the Rule 6F list once gross receipts exceed Rs 1,50,000 in each of the three preceding years. Any other business or profession is caught when income exceeds Rs 1,20,000 or turnover exceeds Rs 10,00,000 in any one of those years."
-    ],
-    [
-      "What is the turnover limit for maintaining books for an individual?",
-      "Rs 25,00,000 of turnover, or Rs 2,50,000 of income, in any one of the three preceding years. The Finance Act 2017 inserted this higher proviso for individuals and Hindu Undivided Families; every other assessee stays on Rs 10,00,000 and Rs 1,20,000."
-    ],
-    [
-      "Which books does Rule 6F prescribe?",
-      "A cash book, a journal where the mercantile system is followed, a ledger, carbon copies of bills and receipts issued above Rs 25, and original bills and vouchers for expenditure. A medical practitioner must additionally keep a daily case register in Form 3C and an inventory of drugs and consumables."
-    ],
-    [
-      "How long must books of accounts be kept?",
-      "Six years from the end of the relevant assessment year, under Rule 6F(5). Failing to keep or retain the required books attracts a penalty of Rs 25,000 under section 271A, and separate GST and Companies Act retention rules may run longer."
-    ]
-  ]
-},
-  "bookshelf-capacity-calculator": {
-  "intro": "This bookshelf capacity calculator turns a shelf's span into a book count, a load in kilograms, and a sag prediction. Capacity comes from average spine thickness — around 2 cm for a mass-market paperback and 3.5 cm for a hardback — while sag uses the standard simply-supported beam formula, delta = 5qL⁴ / (32Et³), with long-term creep-adjusted stiffness for particleboard, plywood, softwood and hardwood. The verdict is measured against the span/180 sag limit used in shelving practice.",
-  "useCases": [
-    "Checking whether a 120 cm particleboard shelf will bow before you fill it with hardbacks",
-    "Sizing a built-in wall unit and deciding where the vertical dividers have to go",
-    "Estimating the total weight a wall or floor will carry from a full-height bookcase"
-  ],
-  "benefits": [
-    [
-      "Real beam mechanics",
-      "Sag is calculated, not guessed, from span, board thickness and material stiffness."
-    ],
-    [
-      "Creep is included",
-      "Uses long-term stiffness, which is why particleboard shelves that look fine at first bow within a year."
-    ],
-    [
-      "Capacity and load together",
-      "Book count, kilograms per shelf and total unit weight in one place."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many books fit on a one metre shelf?",
-      "About 49 mass-market paperbacks (2 cm spines), 39 trade paperbacks, or 28 hardbacks (3.5 cm spines) on a 100 cm shelf, allowing a 2 cm end gap so books can be pulled out. A mixed home library averages roughly 2.6 cm per spine, giving around 37 books per metre."
-    ],
-    [
-      "How much weight can a bookshelf hold?",
-      "A shelf full of hardbacks carries about 20 kg per metre of length; art and coffee-table books can reach 60 kg per metre. The limiting factor is usually stiffness rather than strength — the board bows long before it breaks."
-    ],
-    [
-      "What is the maximum span for a bookshelf before it sags?",
-      "For a 19 mm board under a normal book load and the span/180 limit, roughly 72 cm in particleboard or MDF, 92 cm in plywood, and about 120 cm in hardwood. Doubling the thickness roughly doubles the safe span, because deflection falls with the cube of thickness."
-    ],
-    [
-      "How do I stop a shelf from bowing?",
-      "Shorten the span with a vertical divider, use a thicker or stiffer board, or glue a hardwood lipping along the front edge — the lipping adds depth exactly where the bending stress is highest. Turning the board on edge as a fixed shelf with a back panel also stiffens it considerably."
-    ]
-  ]
-},
-  "bpm-to-milliseconds-delay-calculator": {
-  "intro": "BPM To Delay Milliseconds Calculator converts a tempo into the exact note lengths a track runs on, starting from the one rule everything else follows: a quarter note lasts 60000 ÷ BPM milliseconds. From there it derives straight, dotted and triplet values from a whole note down to a 1/64, and shows each as milliseconds, hertz for LFO rates, and samples for code or plugin automation. It also names the closest note value to a delay time you already have.",
-  "useCases": [
-    "Dialling a dotted eighth delay for a guitar or synth line — 375 ms at 120 BPM — without guessing.",
-    "Setting an LFO or tremolo to an eighth-note rate by entering the hertz value the plugin asks for.",
-    "Choosing reverb pre-delay of a 1/32 or 1/16 so early reflections land on the grid instead of smearing the transient.",
-    "Checking whether the 380 ms on a hardware delay is close enough to a tempo-synced value or needs nudging."
-  ],
-  "benefits": [
-    [
-      "One formula, every value",
-      "Straight, dotted and triplet lengths all come from 60000 ÷ BPM, so nothing drifts."
-    ],
-    [
-      "Three unit systems",
-      "Milliseconds for delays, hertz for LFOs and samples for buffer or code work."
-    ],
-    [
-      "Reverse lookup",
-      "Enter a delay time you already have and see which note value it is closest to."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I convert BPM to milliseconds?",
-      "Divide 60000 by the tempo to get one quarter note. At 120 BPM that is 500 ms; an eighth is half of it (250 ms) and a sixteenth is a quarter of it (125 ms)."
-    ],
-    [
-      "What delay time is a dotted eighth at 120 BPM?",
-      "375 ms. A dot adds half the note's own value, so a dotted eighth is 250 ms × 1.5. This is the setting behind the familiar rhythmic guitar delay sound, usually paired with feedback low enough that the repeats fall away before the next bar."
-    ],
-    [
-      "How do I set a delay in hertz instead of milliseconds?",
-      "Take 1000 divided by the millisecond value. A quarter note at 120 BPM is 500 ms, which is 2 Hz — a useful figure when a modulation source or tremolo only accepts a rate in hertz."
-    ],
-    [
-      "Does the time signature change the note lengths?",
-      "No — BPM always counts quarter notes, so a 1/8 note is the same length in 4/4 and 6/8. What changes is the bar length: 4/4 at 120 BPM is 2000 ms per bar, while 6/8 at the same tempo is 1500 ms because a bar holds six eighth notes."
-    ]
-  ]
-},
-  "braille-dot-chart-trainer": {
-  "intro": "Braille Dot Chart Trainer teaches the six-dot braille cell: dots 1, 2 and 3 down the left column and 4, 5 and 6 down the right, giving 64 possible patterns including the blank cell. It shows a full dot-number chart for a-z, 0-9 and common punctuation, transliterates typed text into uncontracted (grade 1) cells, and quizzes you on letters in three directions — cell to letter, dot numbers to letter, and letter to dots. Useful for teachers, accessibility staff and anyone starting braille from scratch.",
-  "useCases": [
-    "Learn the alphabet in the order it was designed: a-j first, then k-t which add dot 3, then u-z which add dots 3 and 6.",
-    "Check how a name or short label would be written in uncontracted braille before ordering a sign or label.",
-    "Drill the cells you keep confusing with the letter-to-dots quiz, which tells you exactly which dots were missing or extra.",
-    "Show a class why the number sign matters — the cells for 1 to 0 are the same as the letters a to j."
-  ],
-  "benefits": [
-    [
-      "Real cell structure, not pictures",
-      "Every character is stored as its dot numbers, so the chart, the text view and the quiz all agree."
-    ],
-    [
-      "Precise quiz feedback",
-      "A wrong dot answer lists the missing and extra dot numbers instead of just marking it wrong."
-    ],
-    [
-      "Indicators shown explicitly",
-      "Capital, number and letter indicator cells appear in the output, so the cell count matches real braille."
-    ]
-  ],
-  "faqs": [
-    [
-      "How are the six braille dots numbered?",
-      "Dots 1, 2 and 3 run down the left column from top to bottom, and dots 4, 5 and 6 run down the right column the same way. A cell of six dots gives 64 patterns in total, counting the blank cell used as a space."
-    ],
-    [
-      "What is the pattern behind the braille alphabet?",
-      "The first ten letters, a to j, use only the top four dots (1, 2, 4 and 5). Letters k to t repeat those ten shapes with dot 3 added, and u, v, x, y and z repeat a to e with dots 3 and 6 added. W is dots 2-4-5-6 and breaks the pattern because the original French alphabet had no w."
-    ],
-    [
-      "How are numbers written in braille?",
-      "A number sign (dots 3-4-5-6) is placed before the digits, after which the letters a to i stand for 1 to 9 and j stands for 0. If a letter from a to j follows the digits directly, a grade 1 indicator (dots 5-6) is used to show it is a letter again."
-    ],
-    [
-      "Is this grade 1 or grade 2 braille?",
-      "Grade 1, also called uncontracted braille, where each print letter maps to one cell. Most published braille books use grade 2, which contracts common words and letter groups into single cells; that larger system is not produced here."
-    ]
-  ]
-},
-  "brand-asset-naming-convention-builder": {
-  "intro": "Brand Asset Naming Convention Builder turns a chosen set of tokens — brand, campaign, asset type, variant, dimensions, date and version — into a single filename pattern, then validates the result against the limits that actually break files: the POSIX portable filename character set, the Windows reserved device names, the 255-byte path component limit shared by NTFS, ext4 and APFS, the 260-character legacy MAX_PATH, and the 1024-byte Amazon S3 object key cap. Design and marketing teams get a copyable rules document plus worked examples across a real export set.",
-  "useCases": [
-    "Agree one filename pattern before a rebrand dumps several hundred logo exports into shared storage.",
-    "Stop a Windows colleague from being unable to open files that a Mac designer named with a colon or a question mark.",
-    "Set zero-padded version numbers so v02 sorts before v10 in every file browser.",
-    "Check that a deeply nested campaign folder plus filename still fits inside the 260-character Windows path limit."
-  ],
-  "benefits": [
-    [
-      "Validated, not just generated",
-      "Every example is checked against real filesystem, Windows and S3 limits before you adopt it."
-    ],
-    [
-      "Sortable by design",
-      "ISO 8601 dates and padded versions make an alphabetical file list a chronological one."
-    ],
-    [
-      "Shareable rules",
-      "Copies out as a Markdown page you can paste straight into a brand book or team wiki."
-    ]
-  ],
-  "faqs": [
-    [
-      "What characters are safe in a filename?",
-      "Stick to A-Z, a-z, 0-9, dot, underscore and hyphen — the POSIX portable filename character set defined in IEEE Std 1003.1. Windows additionally forbids < > : \" / \\ | ? * and control characters, so anything outside the portable set risks failing on at least one platform."
-    ],
-    [
-      "How long can a filename be?",
-      "A single path component is capped at 255 bytes on NTFS, ext4 and APFS, and the legacy Windows MAX_PATH limits a whole path to 260 characters. In practice keep filenames under about 80 characters so they are not truncated in file browsers and email clients."
-    ],
-    [
-      "Should I use hyphens or underscores in asset filenames?",
-      "Use hyphens if the file may ever be served from a URL — search engines treat a hyphen as a word separator and an underscore as a joiner. Underscores are equally safe on disk, but they can be hidden by the underline in a hyperlink."
-    ],
-    [
-      "Why do some filenames break on Windows?",
-      "Windows reserves the device names CON, PRN, AUX, NUL, COM1-COM9 and LPT1-LPT9, and rejects them even with an extension, so CON.png cannot be created. It also silently strips a trailing dot or space, which turns \"logo .png\" into a different file from the one you saved."
-    ]
-  ]
-},
-  "brand-color-palette-locker": {
-  "intro": "Brand Colour Palette Locker takes the small set of hex values a brand actually owns and generates everything downstream: a 50-900 tint and shade ramp, hex, RGB, HSL and CMYK for every stop, WCAG 2.2 contrast ratios so you know which stops can carry text, and a total ink coverage figure checked against the 300% coated and 260% uncoated press limits. Tints are produced by mixing toward white and shades by mixing toward black, so the ramp stays perceptually connected to the locked base rather than drifting in hue.",
-  "useCases": [
-    "Turn two brand hex values into a full design-token ramp with CSS custom properties ready to paste.",
-    "Check which stops of a brand colour can hold white text at the 4.5:1 threshold before a component library is built.",
-    "Catch a brand colour whose CMYK conversion pushes total ink coverage above the press limit before a print job is sent.",
-    "Verify that two brand colours are far enough apart in contrast to be told apart when placed side by side."
-  ],
-  "benefits": [
-    [
-      "One source of truth",
-      "Every ramp stop, format and token is derived from the locked hex, so nothing drifts between files."
-    ],
-    [
-      "Contrast built in",
-      "Each stop reports the ratio for its best text colour, checked against WCAG 2.2 thresholds."
-    ],
-    [
-      "Print sanity check",
-      "Total ink coverage is flagged against the coated and uncoated limits printers actually enforce."
-    ]
-  ],
-  "faqs": [
-    [
-      "What contrast ratio does brand text need?",
-      "WCAG 2.2 asks for at least 4.5:1 for normal body text and 3:1 for large text, which is 18.66 px bold or 24 px regular and above. 7:1 meets the stricter AAA level for body copy."
-    ],
-    [
-      "How are tints and shades calculated?",
-      "A tint mixes the base colour toward white and a shade mixes it toward black, channel by channel. Mixing a colour 50% toward white gives the 300 stop; mixing 30% toward black gives the 700 stop, which keeps the hue stable across the ramp."
-    ],
-    [
-      "What is total ink coverage and why does it matter?",
-      "It is the sum of the cyan, magenta, yellow and black percentages for one colour. Sheet-fed coated work is usually kept at or below 300%, and uncoated or web offset nearer 260%, because beyond that the ink cannot dry and offsets onto the next sheet."
-    ],
-    [
-      "Can I use these CMYK values for print?",
-      "Use them to check ink coverage and to brief a printer, not as final separations. The conversion here is the standard formula from sRGB and ignores the ICC profile, paper and press, so ask your printer to convert with the correct profile for the job."
-    ]
-  ]
-},
-  "brand-kit-manager": {
-  "intro": "Brand Kit Manager is a browser workspace that stores one brand's logo files, hex palette, type scale, official links and written guidelines as a single reusable kit. It is built for freelancers, small studios and in-house marketers who keep re-sending the same assets to designers, developers and printers. Colours are validated as six-digit hex, links are checked against the http, https and mailto protocols, and everything stays in your browser's localStorage — nothing is uploaded.",
-  "useCases": [
-    "Hand a new freelance designer one JSON export instead of a folder of loose PNGs and a Slack message with the hex codes",
-    "Keep separate kits for a parent company and its sub-brands, and switch between them when writing social posts",
-    "Paste the plain-text brand summary into a print shop's order notes so the logo, fonts and palette arrive with the file"
-  ],
-  "benefits": [
-    [
-      "Everything in one record",
-      "Logos, colours, fonts, links and tone-of-voice notes live in the same kit rather than four different apps."
-    ],
-    [
-      "Validated before it ships",
-      "Palette entries must be full six-digit hex and links must resolve to http, https or mailto, so a broken value never reaches the export."
-    ],
-    [
-      "Private by default",
-      "Kits are held in your browser's localStorage and exported only when you click download — no account, no server copy."
-    ]
-  ],
-  "faqs": [
-    [
-      "Where is my brand kit stored?",
-      "In your own browser, under the localStorage key altftools:brand-kit-manager:v1. Nothing is sent to a server, so clearing site data or switching browsers loses the kit — use the JSON export as your backup."
-    ],
-    [
-      "What logo file types can I upload?",
-      "Four: PNG, JPEG, SVG and WebP, each up to 2 MB. The 2 MB cap exists because kits persist to localStorage, whose practical per-origin quota is about 5 MB, and base64 encoding inflates a file by roughly one third."
-    ],
-    [
-      "Why is my colour rejected?",
-      "The palette only accepts full six-digit hex such as #14B8A6. Three-digit shorthand (#1B8), eight-digit hex with alpha (#14B8A6FF) and named colours like \"teal\" are refused so the exported values paste cleanly into CSS, Figma and print specs."
-    ],
-    [
-      "What do I actually get when I export?",
-      "Two formats. The JSON export is the complete kit object — every field, plus logos embedded as base64 data URLs — and can be re-imported. The copy button puts a plain-text one-pager on your clipboard: name, tagline, industry, website, contact, the full colour list, heading and body fonts, and the voice, messaging and design-rule guidelines."
-    ]
-  ]
-},
-  "brand-social-avatar-kit-generator": {
-  "intro": "Brand Social Avatar Kit Generator crops one square master image into profile pictures at each platform's recommended upload size and shows the circle-safe area before you export. Because every major network masks a square avatar to a circle, only the centred square of 70.71% of the width — the largest square that fits inside an inscribed circle — is guaranteed to survive; the preview draws that boundary so a wordmark never loses its edges. Cropping and PNG export happen entirely in the browser, so the image is never uploaded.",
-  "useCases": [
-    "Ship one logo mark to X, LinkedIn, YouTube, Discord and a 512 px app icon without opening a design app.",
-    "Check whether a horizontal wordmark survives the circular crop before a rebrand goes live.",
-    "Re-cut every avatar after a logo refresh, keeping the same framing across all platforms.",
-    "Confirm a supplied logo file is large enough for an 800 px YouTube avatar before asking for a new export."
-  ],
-  "benefits": [
-    [
-      "Circle-safe by construction",
-      "The 70.71% safe square is drawn from the geometry of an inscribed circle, not guessed."
-    ],
-    [
-      "Nothing leaves your device",
-      "Cropping and PNG encoding use the canvas API in your own browser."
-    ],
-    [
-      "Upscale warnings",
-      "Flags any platform whose target size is larger than the crop you actually have."
-    ]
-  ],
-  "faqs": [
-    [
-      "What size should a social media profile picture be?",
-      "Export a square image at least 400 × 400 px for X and LinkedIn, 320 × 320 for Instagram and Facebook, and 800 × 800 for YouTube. Keeping a 1600 × 1600 master covers every current target at 2× so the same file survives the next round of platform changes."
-    ],
-    [
-      "How much of a square avatar gets cut off by the circle crop?",
-      "The corners. A circle inscribed in a square touches all four edges, so the largest square that stays fully visible has a side of 1/√2 — about 70.71% — of the image width, leaving a 14.64% margin on each edge. Anything in that margin can be clipped."
-    ],
-    [
-      "Should a logo avatar be transparent or have a background?",
-      "Give it a solid background. Platforms composite avatars over light and dark chrome, and a transparent PNG can leave a dark mark invisible in dark mode. Export one solid version for social and keep the transparent original as the master."
-    ],
-    [
-      "Why does my avatar look blurry after upload?",
-      "Usually because the source was smaller than the display size and got upscaled, or because the platform re-compressed a JPEG. Upload a PNG at or above the recommended size — this tool flags any platform where your crop is smaller than the target."
-    ]
-  ]
-},
-  "brand-voice-guideline-generator": {
-  "intro": "Brand Voice Guideline Generator converts four tone settings into a written voice guide your writers can actually follow. It uses the Nielsen Norman Group four-dimension tone model — Formal vs Casual, Serious vs Funny, Respectful vs Irreverent, Matter-of-fact vs Enthusiastic — and turns each setting into concrete do and don't rules, preferred and banned wording, and readability targets such as average sentence length and Flesch-Kincaid grade. It is built for marketing leads, content designers and founders who need one agreed document before briefing freelancers or an agency.",
-  "useCases": [
-    "Write the first voice section of a brand book before handing the account to an agency.",
-    "Settle a disagreement between two writers about whether product copy should use contractions and exclamation marks.",
-    "Give a new freelance copywriter a one-page brief with the exact words to prefer and avoid.",
-    "Set a reading-level target for help-centre articles so support copy stays consistent with marketing."
-  ],
-  "benefits": [
-    [
-      "Based on a published model",
-      "Uses the NN/g four-dimension tone framework rather than invented personality labels."
-    ],
-    [
-      "Rules, not adjectives",
-      "Every dial produces testable do and don't lines a writer can check copy against."
-    ],
-    [
-      "Measurable targets",
-      "Outputs a sentence-length and reading-grade target you can verify with any readability checker."
-    ]
-  ],
-  "faqs": [
-    [
-      "What are the four dimensions of tone of voice?",
-      "They are Formal vs Casual, Serious vs Funny, Respectful vs Irreverent, and Matter-of-fact vs Enthusiastic, defined by the Nielsen Norman Group in 2016. Any brand voice can be placed on all four at once, which is why describing a voice as simply \"friendly\" is not enough to guide a writer."
-    ],
-    [
-      "What reading level should brand copy target?",
-      "Most consumer-facing copy targets a US grade 7 to 9 reading level, which is roughly a 12 to 16 word average sentence. Technical, legal or professional audiences tolerate grade 12 to 13, and this tool moves the target inside that range as you shift the formality dial."
-    ],
-    [
-      "How many words should a brand's banned list contain?",
-      "Keep it short enough to remember — 10 to 25 words is typical. A list that runs to hundreds of entries stops being a guideline and becomes a review bottleneck; put the rest into examples of good and bad copy instead."
-    ],
-    [
-      "Is a tone of voice the same as a brand voice?",
-      "No. Brand voice is constant — it is who you are. Tone shifts with the situation: the same brand should sound different in a payment failure message and a launch announcement. This guide sets the voice and flags the surfaces, such as errors and billing, where the tone must drop back to plain and serious."
-    ]
-  ]
-},
-  "brass-to-cft-converter": {
-  "intro": "A brass is 100 cubic feet of loose construction material, so this converter multiplies or divides by 100 to move between brass and cft, then applies the exact foot definition (1 ft = 0.3048 m, so 1 cft = 0.028316846592 m3) to reach cubic metres. Weight comes from the loose bulk density you pick — river sand near 1,600 kg/m3, 20 mm aggregate near 1,500 kg/m3 — which makes one brass of sand roughly 4.53 tonnes. It is built for site engineers, contractors and homeowners checking a sand or aggregate invoice.",
-  "useCases": [
-    "Check whether a tipper that billed you 3 brass actually delivered 300 cft by measuring the heap.",
-    "Convert a bill of quantities written in cubic metres into the brass figure your supplier quotes.",
-    "Work out how many tonnes a weighbridge slip should show for the brass of aggregate you ordered."
-  ],
-  "benefits": [
-    [
-      "Exact volume maths",
-      "Uses the defined 0.3048 m foot, so cft to m3 is precise rather than rounded to 0.0283."
-    ],
-    [
-      "Weight from real densities",
-      "Loose bulk densities for sand, M-sand, stone dust and 10/20/40 mm aggregate, each editable."
-    ],
-    [
-      "Truckloads, not just numbers",
-      "Converts the volume into trips for tractor trolleys and 2 to 6 brass tippers."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many cft is 1 brass?",
-      "One brass is 100 cubic feet. It is a volume unit used across Maharashtra, Gujarat and neighbouring states for loose material, and it equals 2.8317 cubic metres."
-    ],
-    [
-      "How many tonnes is 1 brass of sand?",
-      "About 4.5 tonnes. One brass is 2.8317 m3, and dry loose river sand has a bulk density near 1,600 kg/m3, giving 4,531 kg. M-sand at about 1,750 kg/m3 works out closer to 4.96 tonnes per brass."
-    ],
-    [
-      "Is brass a unit of area or volume?",
-      "Both, and the context decides. For sand, aggregate and excavation it means 100 cubic feet of volume; for plastering, tiling and shuttering it means 100 square feet of area. This converter handles the volume meaning."
-    ],
-    [
-      "Why does my delivered sand measure more volume than the weight suggests?",
-      "Moisture makes sand bulk. Water films push the grains apart, so damp sand can occupy 15-25% more volume than the same weight of dry sand, peaking around 5-8% moisture content. Measure the truck body dimensions and agree the billing basis — volume or weighbridge weight — before delivery."
-    ]
-  ]
-},
-  "break-even-accuracy-calculator": {
-  "intro": "Break-even accuracy is the accuracy at which answering a question and leaving it blank are worth exactly the same, and it equals P ÷ (M + P) where M is the marks for a correct answer and P is the deduction for a wrong one. This calculator applies that identity to any marking scheme — NEET and JEE at +4/-1 give 20%, UPSC prelims at one-third gives 25%, and IBPS at one-fourth gives 20% — and then shows how many options you must rule out before a guess becomes profitable. It is for candidates deciding, question by question, whether to attempt or move on.",
-  "useCases": [
-    "Settling whether a 50-50 guess is worth taking in an exam where a wrong answer costs a third of the marks.",
-    "Comparing the guessing economics of NEET, UPSC prelims and a bank PO paper before switching exam tracks.",
-    "Checking a custom scheme used by a state PSC or a private mock series that does not match any national pattern."
-  ],
-  "benefits": [
-    [
-      "One formula, every exam",
-      "The same expected-value identity covers NEET, JEE, UPSC, SSC, CAT, GATE, CLAT and any custom scheme."
-    ],
-    [
-      "Elimination ladder",
-      "Shows the expected marks from a guess at every level of option elimination, not just a blind pick."
-    ],
-    [
-      "Translates into real marks",
-      "Converts your accuracy and attempt count into net marks and marks lost per 100 attempts."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is break-even accuracy in an exam?",
-      "It is the accuracy at which attempting a question earns the same expected marks as leaving it blank, namely zero. It equals P ÷ (M + P): for a +4/-1 scheme that is 1 ÷ 5, or 20%, and for a scheme that deducts one-third of the marks it is 25%."
-    ],
-    [
-      "How do I know whether to guess or leave a question blank?",
-      "Compare your chance of being right with the break-even accuracy. If you can eliminate enough options that your hit rate beats the threshold, answer; otherwise leave it. On a four-option question with a one-third deduction, a blind guess is exactly break-even, so you need to rule out at least one option before guessing adds anything."
-    ],
-    [
-      "Why is blind guessing neutral in UPSC prelims and bank exams?",
-      "Because the number of options exactly matches the penalty. UPSC has four options and deducts one-third, giving a 25% hit rate against a 25% threshold. Bank papers have five options and deduct one-fourth, giving 20% against 20%. In both cases the expected value of a blind guess is exactly zero."
-    ],
-    [
-      "Does a higher penalty always mean fewer attempts?",
-      "It means a higher accuracy bar, not necessarily fewer attempts. A scheme deducting one mark against four raises the bar to 20%, while one deducting one against three raises it to 25%. What changes is the quality of question you can afford to attempt, which is why elimination skill matters more than raw attempt count."
-    ]
-  ]
-},
-  "break-even-point-calculator": {
-  "intro": "The break-even point is the sales volume at which total contribution exactly covers fixed costs, calculated as fixed costs divided by contribution per unit, where contribution is selling price minus variable cost per unit. This calculator returns that volume and the revenue it represents, then adds the figures a small business actually plans with: units needed for a profit target, the margin of safety between expected sales and break-even, and the degree of operating leverage. It works for any unit — a plate, a subscription, a billable hour or a box.",
-  "useCases": [
-    "Checking how many plates a day a new restaurant must serve before the rent and salaries are covered",
-    "Testing whether a 10% discount campaign still leaves the shop above break-even once contribution falls",
-    "Working out the sales volume that produces Rs 10 lakh of after-tax profit at a 25% tax rate"
-  ],
-  "benefits": [
-    [
-      "Volume and revenue together",
-      "Answers both how many to sell and how much to bill."
-    ],
-    [
-      "Target profit built in",
-      "Grosses an after-tax target up to the pre-tax profit the volume must produce."
-    ],
-    [
-      "Risk view",
-      "Margin of safety and operating leverage show how much a sales dip would hurt."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you calculate the break-even point?",
-      "Divide fixed costs by contribution per unit, where contribution is selling price minus variable cost per unit. On Rs 2,00,000 of fixed costs with a Rs 500 price and Rs 300 variable cost, contribution is Rs 200 and break-even is 1,000 units, or Rs 5,00,000 of revenue."
-    ],
-    [
-      "What is the difference between fixed and variable costs?",
-      "Fixed costs do not change with how much you sell — rent, salaries, insurance, software subscriptions. Variable costs move with each sale — raw material, packaging, delivery, payment gateway charges. Only variable costs are subtracted from price to get contribution, which is what pays for the fixed costs."
-    ],
-    [
-      "What is a good margin of safety for a small business?",
-      "Margin of safety is the gap between expected sales and break-even sales, as a percentage of expected sales. Anything above about 20% gives room for a bad quarter, while a single-digit margin of safety means a small drop in volume pushes the business into a loss."
-    ],
-    [
-      "What does it mean if variable cost is higher than the selling price?",
-      "There is no break-even point at all. Each additional sale increases the loss, so more volume makes the position worse, and the only fixes are raising the price, cutting the unit cost or dropping the product. That is why this calculator refuses to return a number in that case."
-    ]
-  ]
-},
-  "breaking-change-impact-checklist": {
-  "intro": "This tool generates a phased consumer-impact checklist — before, release and after — for an API or library breaking change, along with a 0-100 risk score built from the change type, affected surfaces, audience and mitigations you select. It encodes the SemVer 2.0.0 rule that any incompatible public API change requires a major version bump, and the deprecate-warn-remove lifecycle that mature platforms use. Maintainers get a copyable Markdown checklist ready to paste into an issue or RFC.",
-  "useCases": [
-    "Preparing an RFC for removing a deprecated endpoint from a public HTTP API and needing the rollout steps enumerated",
-    "Comparing the risk of shipping a config-format change with and without a dual-support release, using the transparent score",
-    "Turning 'we're renaming this SDK method' into a concrete checklist covering aliases, type definitions and changelog wording"
-  ],
-  "benefits": [
-    [
-      "Phased checklist",
-      "Items are grouped into Before, Release and After so nothing lands unannounced or unmonitored."
-    ],
-    [
-      "Transparent risk score",
-      "Every weight and mitigation credit is a named constant — the same inputs always score the same."
-    ],
-    [
-      "Copy-ready Markdown",
-      "Exports as a - [ ] task list that pastes directly into GitHub issues, RFCs or release plans."
-    ]
-  ],
-  "faqs": [
-    [
-      "What counts as a breaking change in an API or library?",
-      "Anything that makes previously valid consumer code or requests stop working or behave differently: removing or renaming public functions, endpoints, flags or fields; changing signatures, types or response shapes; changing documented behaviour or defaults; altering wire or config formats; and raising runtime or dependency requirements. SemVer 2.0.0 item 8 requires a major version bump for all of them."
-    ],
-    [
-      "Can I ship a breaking change in a minor version?",
-      "Not under SemVer for packages at 1.0.0 or above — item 8 reserves incompatible changes for major releases, and consumers using caret ranges will auto-install your minor releases assuming compatibility. The only exception is major version zero (0.x), where item 4 allows anything to change; the convention there is to signal breakage in the minor digit."
-    ],
-    [
-      "How long should a deprecation period be before removal?",
-      "There is no universal number; the norm is at least one full major release cycle with runtime warnings, and public platforms commonly give calendar guarantees — for example Google's stable API policies promise a year or more of notice for many products. The right length depends on how fast your consumers actually upgrade, which is why the checklist pushes usage telemetry before removal."
-    ],
-    [
-      "How is the risk score calculated?",
-      "It sums fixed weights for each selected change type (removal and wire-format changes weigh 30, behaviour changes 25, signature changes 20, renames and config changes 15, platform bumps 10), adds 5 per extra affected surface, multiplies by an audience factor (0.5 internal, 0.8 company-wide, 1.0 public), then subtracts mitigation credits such as 15 for a deprecation period. The result is clamped to 5-100 and banded Low, Moderate, High or Critical."
-    ]
-  ]
-},
-  "breast-self-exam-reminder": {
-  "intro": "This reminder works out which day of each month is the easiest one to check your breasts, and lists the next twelve. If you have periods it lands the check three days after bleeding stops, when oestrogen and progesterone are at their monthly low and breast tissue is at its least tender and lumpy; if you no longer have a monthly cycle it fixes one calendar day instead. It pairs the dates with the five-step look-and-feel routine used in NHS and Breast Cancer Now breast-awareness material.",
-  "useCases": [
-    "Find the least tender day this month to check, instead of squeezing sore premenstrual tissue and worrying about normal lumpiness.",
-    "Set the same fixed day every month after menopause, during pregnancy, or on continuous hormonal contraception where there is no cycle to follow.",
-    "Copy twelve dates straight into a phone calendar so the check does not depend on remembering.",
-    "Learn what a change actually looks like — dimpling, a newly inverted nipple, a lump that stays after a period — before you need to describe it to a doctor."
-  ],
-  "benefits": [
-    [
-      "Timed to your hormones",
-      "Checks land after bleeding stops, when cyclical swelling and tenderness have settled."
-    ],
-    [
-      "Twelve months at once",
-      "A full year of dates in one list, ready to copy into a calendar."
-    ],
-    [
-      "Routine you can repeat",
-      "Five fixed steps, done the same way each month, so a change stands out."
-    ]
-  ],
-  "faqs": [
-    [
-      "When is the best time of the month to check my breasts?",
-      "About three to five days after your period ends. Oestrogen and progesterone are lowest then, so cyclical swelling, tenderness and normal lumpiness have settled and a genuine change is easier to feel. If you no longer have periods, pick one fixed day of the month and keep it the same."
-    ],
-    [
-      "Does a breast self-exam replace a mammogram?",
-      "No. Self-checking builds familiarity so you notice change early, but it is not a screening test and does not detect what imaging detects. In the US the Preventive Services Task Force recommends screening mammography every two years for women aged 40 to 74; in the UK the NHS programme invites women aged 50 to 71 every three years. Follow whichever programme applies to you."
-    ],
-    [
-      "What am I actually looking for?",
-      "Change from your own normal — a new lump or thickening in the breast or armpit that stays after a period, a change in size or outline of one breast, skin dimpling or puckering, a nipple that has newly turned inward, nipple discharge (especially bloodstained), or new one-sided pain that does not come and go with your cycle. Any of these should be shown to a doctor."
-    ],
-    [
-      "Is it normal for breasts to feel lumpy?",
-      "Yes, very. Most breasts have areas that feel ridged, grainy or rope-like, and that texture changes across the cycle — which is exactly why checking at the same low-hormone point each month matters more than checking often. This tool is informational and cannot tell a normal texture from an abnormal one; a lump that is new, hard, or does not settle after a period should be assessed by a doctor."
-    ]
-  ]
-},
-  "breastfeeding-hydration-calculator": {
-  "intro": "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of the 2.0 L/day adequate intake for adult women.",
-  "useCases": [
-    "See how much less fluid you need at 9 months on solids and three feeds a day than during exclusive newborn feeding.",
-    "Work out the target while tandem feeding twins, where the flat +700 ml figure clearly under-counts.",
-    "Convert a measured 24-hour pumped volume into a personal daily drinks target."
-  ],
-  "benefits": [
-    [
-      "Derived, not guessed",
-      "Rebuilds EFSA's +700 ml from milk volume x 87% water, so the number moves with your output."
-    ],
-    [
-      "Scales with feeding",
-      "Stage and feeds per day change the milk estimate instead of everyone getting the same answer."
-    ],
-    [
-      "Practical unit",
-      "Also expressed as a glass at each feed, which is easier to act on than a daily litre figure."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much water should I drink while breastfeeding?",
-      "About 2.7 litres of total water a day — the 2.0 L adequate intake for adult women plus EFSA's 700 ml lactation increment. Around 20% comes from food, so roughly 2.1-2.2 litres as drinks, more in hot weather or with a heavy milk supply."
-    ],
-    [
-      "Does drinking more water increase milk supply?",
-      "No. Trials of forced fluid intake have not shown higher milk production, and drinking well beyond thirst does not help. Supply responds to frequent, effective milk removal; if supply is a concern, ask a lactation consultant or your health visitor rather than adding litres."
-    ],
-    [
-      "How much milk does a breastfeeding mother produce a day?",
-      "Roughly 750-800 ml a day during exclusive breastfeeding in the first six months, dropping to about 600 ml once solids start and lower again past a year. Individual output varies widely, which is why a measured pumped volume beats any average."
-    ],
-    [
-      "Why am I so thirsty when breastfeeding?",
-      "Oxytocin released during let-down triggers thirst, which is the body's way of covering the water leaving as milk — roughly 700 ml a day. Drinking to thirst, with a glass at each feed as a prompt, generally covers it. Persistent extreme thirst with frequent urination should be checked by a doctor."
-    ]
-  ]
-},
-  "breastfeeding-session-log": {
-  "intro": "A breastfeeding session log records the start time, side and duration of every feed, then totals the day: minutes at the breast, start-to-start gaps, left-right balance and the longest stretch between feeds including overnight. It is built for the first weeks at home, when guidance from the AAP and WHO describes roughly 8-12 feeds in every 24 hours and alternating the starting breast to keep supply even. The log stays in your browser and produces a plain-text summary you can hand to a midwife, health visitor or paediatrician.",
-  "useCases": [
-    "Answering the health visitor's question about how many feeds and how many minutes the baby had yesterday, without relying on memory",
-    "Spotting that the right breast is only getting a third of the minutes and needs to start more feeds",
-    "Checking whether the baby went longer than four hours between feeds during a sleepy day"
-  ],
-  "benefits": [
-    [
-      "Whole day at a glance",
-      "Feed count, total minutes and average feed length from one list."
-    ],
-    [
-      "Gap tracking",
-      "Start-to-start gaps, the longest daytime gap and the overnight stretch."
-    ],
-    [
-      "Side balance",
-      "Left and right minute shares so one breast does not quietly fall behind."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many times a day should a newborn breastfeed?",
-      "AAP and WHO guidance describes roughly 8 to 12 feeds in every 24 hours for a healthy newborn in the first weeks, fed on demand rather than on a fixed clock. Fewer than eight feeds a day, or a baby too sleepy to wake for feeds, is worth raising with your midwife or paediatrician."
-    ],
-    [
-      "Should I measure the gap between feeds from the start or the end of a feed?",
-      "Measure from the start of one feed to the start of the next. That is how the 8-12 feeds per 24 hours and the two-to-three-hourly rhythm are normally described, and it does not change when a feed runs long. This log uses start-to-start for every gap it reports."
-    ],
-    [
-      "How long is a normal breastfeeding session?",
-      "Newborn feeds commonly run about 10 to 20 minutes per breast, but the range is wide and shortens as the baby gets more efficient — a five-minute feed from an older, fast-feeding baby can transfer as much milk as a 30-minute newborn feed. Duration alone is not a measure of intake; nappy output and weight gain are."
-    ],
-    [
-      "Does it matter which breast I start on?",
-      "Alternating the starting breast helps keep milk production even on both sides, because the breast that starts is usually drained more thoroughly. This log shows the minute split between left and right and flags it when the two sides drift more than 20 percentage points apart, which is the usual sign one side is being skipped."
-    ]
-  ]
-},
-  "breathing-pacer-tones": {
-  "intro": "Breathing Pacer with Tones guides any inhale-hold-exhale-hold rhythm with a tone that glides upward as you breathe in and back down as you breathe out, so you can pace with your eyes closed. Set the four counts yourself or load a known pattern — box breathing 4-4-4-4, Dr Andrew Weil's 4-7-8 relaxing breath, or coherent breathing at 5.5 seconds each way, which works out to about 5.5 breaths per minute. It shows the resulting breath rate, the number of breaths in the session and how the exhale compares with the inhale.",
-  "useCases": [
-    "Run five minutes of box breathing before a presentation, interview or difficult conversation.",
-    "Practise the 4-7-8 pattern at bedtime without counting in your head.",
-    "Train at the coherent rate of about 5.5-6 breaths per minute used in heart-rate-variability work.",
-    "Build a custom pattern with a longer exhale, such as 4 in and 6 out, and hear when each phase changes."
-  ],
-  "benefits": [
-    [
-      "Audio, not just visuals",
-      "A rising and falling tone means you can close your eyes instead of watching an animation."
-    ],
-    [
-      "Any ratio you like",
-      "Inhale, both holds and exhale are set independently, and the tool shows the breath rate that results."
-    ],
-    [
-      "Honest numbers",
-      "Breaths per minute, cycle length and session totals are calculated from your counts, not rounded to a preset."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is box breathing and how do you do it?",
-      "Box breathing uses four equal counts: breathe in for 4 seconds, hold for 4, breathe out for 4, hold for 4. That is a 16-second cycle, or 3.75 breaths per minute, and it is commonly taught for steadying yourself under pressure."
-    ],
-    [
-      "How does the 4-7-8 breathing technique work?",
-      "You inhale through the nose for 4 seconds, hold for 7, then exhale through the mouth for 8, giving a 19-second cycle of about 3.2 breaths per minute. The long exhale relative to the inhale is the active ingredient, so keep the ratio even if you shorten all three counts while learning."
-    ],
-    [
-      "What is the ideal breathing rate for relaxation?",
-      "Slow breathing around 5 to 6 breaths per minute — roughly 5 seconds in and 5 seconds out — is the range most often used in coherent or resonance breathing practice. Normal resting breathing is about 12 to 20 breaths per minute, so this is a deliberate slow-down rather than an everyday rate."
-    ],
-    [
-      "Is it safe to hold my breath during breathing exercises?",
-      "Short holds of a few seconds are generally comfortable for healthy adults, but stop immediately if you feel dizzy, tingly or light-headed and return to normal breathing. Never practise breath holds in or near water or while driving, and speak to a doctor first if you are pregnant or have a heart, lung or blood-pressure condition."
-    ]
-  ]
-},
-  "brick-quantity-calculator": {
-  "intro": "A brick quantity calculator turns wall length, height and thickness into the number of bricks, the mortar volume and the cement and sand inside that mortar. It counts bricks by the nominal cell each one fills — brick size plus one mortar joint in all three directions, so a 190 × 90 × 90 mm brick with a 10 mm joint occupies exactly 0.002 m³ and gives the familiar 500 bricks per cubic metre — then takes the leftover volume as mortar and bulks it by 1.33 before splitting it by the cement : sand ratio. It is aimed at masons, contractors and homeowners pricing a wall before ordering.",
-  "useCases": [
-    "Ordering bricks and cement for a 10 m × 3 m boundary wall in 230 mm brickwork after deducting a 2 m² gate opening",
-    "Comparing how many bricks a 110 mm half-brick partition needs against the same wall built one brick thick",
-    "Checking a supplier's quantity for AAC blocks, where the 600 × 200 × 100 mm block size changes the count per square metre completely"
-  ],
-  "benefits": [
-    [
-      "Joint thickness matters",
-      "A 10 mm joint versus a 15 mm joint changes both the brick count and the mortar volume, and both are recalculated."
-    ],
-    [
-      "Mortar broken down",
-      "Wet mortar, dry mortar, cement bags, sand in m³, cft and kg, and mixing water — not just a brick number."
-    ],
-    [
-      "Six brick standards",
-      "Indian modular and traditional, UK, US modular and AAC block sizes, plus a fully custom size."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many bricks are there in 1 cubic metre of brickwork?",
-      "500 standard Indian modular bricks of 190 × 90 × 90 mm laid with a 10 mm joint, because each brick plus its joint fills 0.2 × 0.1 × 0.1 = 0.002 m³. A 230 × 110 × 70 mm traditional brick with the same joint gives about 434 per cubic metre."
-    ],
-    [
-      "How much mortar does a brick wall need?",
-      "Roughly 20 to 25% of the wall volume for traditional brick sizes with a 10 mm joint — a 6.9 m³ wall works out to about 1.6 m³ of wet mortar. Smaller bricks mean more joints and more mortar; large blocks with thin-bed adhesive use far less."
-    ],
-    [
-      "How do I calculate cement and sand for brickwork mortar?",
-      "Multiply the wet mortar volume by 1.33 to get the dry ingredient volume, then split it by the mix ratio. For 1.6 m³ of wet mortar at 1:6 that is 2.12 m³ dry, giving 0.30 m³ of cement — about 8.7 bags of 50 kg — and 1.82 m³ of sand."
-    ],
-    [
-      "What wastage allowance should I add when ordering bricks?",
-      "5% is a normal allowance for breakage in transit and cutting; go to 10% for long haulage, soft handmade bricks, or a wall with many cut closers around openings. The allowance covers breakage only, so add separately for any bricks you plan to hold back as spares."
-    ]
-  ]
-},
-  "brisk-walk-intensity-checker": {
-  "intro": "Brisk Walk Intensity Checker scores a walk against the four field measures of exercise intensity used in physical-activity research: cadence, heart rate, the talk test and Borg perceived exertion. Cadence is judged against the 100 and 130 steps-per-minute thresholds, heart rate against Karvonen or percent-of-maximum zones built on the Tanaka formula HRmax = 208 − 0.7 × age, and the verdict is the median of whichever readings you supply. It is for walkers who want to know if their daily walk really counts toward the 150-minutes-a-week guideline.",
-  "useCases": [
-    "Confirm that a lunchtime walk at 105 steps per minute genuinely reaches moderate intensity.",
-    "Translate a smartwatch heart-rate reading into a moderate or vigorous verdict for your age.",
-    "Use the talk test on a walk where you have no watch or step counter.",
-    "See how many extra steps per minute you need to cross from light into brisk walking."
-  ],
-  "benefits": [
-    [
-      "Four checks, one verdict",
-      "Takes the median of cadence, heart rate, talk test and RPE so a single odd reading cannot skew it."
-    ],
-    [
-      "Better HRmax formula",
-      "Uses Tanaka's 208 − 0.7 × age rather than the older, less accurate 220 − age."
-    ],
-    [
-      "Tells you the gap",
-      "Shows exactly how many steps per minute or beats per minute short of moderate you are."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I know if I am walking briskly?",
-      "The simplest check is cadence: 100 steps per minute or more is the accepted moderate-intensity threshold for adults, roughly 3 METs. The talk test agrees when you can hold a conversation but cannot comfortably sing."
-    ],
-    [
-      "What heart rate counts as moderate-intensity walking?",
-      "About 64 to 76 percent of your maximum heart rate. For a 40-year-old with an estimated maximum of 180 bpm that is roughly 115 to 137 bpm, or 111 to 133 bpm if a resting rate of 65 is used with the heart-rate reserve method."
-    ],
-    [
-      "What is the talk test?",
-      "A no-equipment intensity check: if you can sing, the effort is light; if you can talk but not sing, it is moderate; if you can only get out a few words before needing a breath, it is vigorous. It tracks the ventilatory threshold closely enough to be recommended by ACSM."
-    ],
-    [
-      "Is 220 minus age a good way to estimate maximum heart rate?",
-      "It is the best-known formula but it under-estimates maximum heart rate in older adults. Tanaka's 208 − 0.7 × age fits population data better, though individual maximums still vary by around 10 bpm either way. Anyone with a heart condition or on rate-limiting medication should get targets from a clinician rather than a formula."
-    ]
-  ]
-},
-  "british-airways-baggage-allowance-checker": {
-  "intro": "This checker tests your bags against British Airways' piece-based allowance, which counts bags rather than pooling kilograms. It separates the two things that get charged differently — an extra piece beyond what your fare includes, and a heavy bag over its 23 kg or 32 kg ceiling — and applies the 90 × 75 × 43 cm size rule that BA measures with wheels and handles included. Hand baggage is checked too: one 56 × 45 × 25 cm cabin bag plus one 40 × 30 × 15 cm handbag or laptop bag, each up to 23 kg, on every fare including hand-baggage-only tickets.",
-  "useCases": [
-    "Working out whether splitting one 30 kg case into two 15 kg cases helps or costs more on a 1-bag World Traveller fare.",
-    "Checking a hard case against 90 × 75 × 43 cm before a Club World flight, since BA measures the wheels and handles too.",
-    "Confirming that a hand-baggage-only Basic fare still lets you take both cabin bags into the aircraft."
-  ],
-  "benefits": [
-    [
-      "Pieces, not pooled kilos",
-      "Counts bags the way BA does, so two light cases are correctly shown as two pieces."
-    ],
-    [
-      "Extra bag and heavy bag apart",
-      "The two charges are calculated separately instead of being merged into a single fee."
-    ],
-    [
-      "Wheels-and-handles sizing",
-      "The 90 × 75 × 43 cm test is applied in any orientation, matching how the gauge is used."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the British Airways baggage allowance?",
-      "Every BA fare includes two hand baggage items — a cabin bag up to 56 × 45 × 25 cm and a handbag or laptop bag up to 40 × 30 × 15 cm, each up to 23 kg. Checked allowance depends on the cabin and fare: hand-baggage-only Basic tickets include none, Euro Traveller and World Traveller include one 23 kg bag, World Traveller Plus two 23 kg bags, Club Europe and Club World two 32 kg bags, and First three 32 kg bags."
-    ],
-    [
-      "How much does an extra bag cost on British Airways?",
-      "Extra bags are priced per piece by route band, and buying one in Manage My Booking before you get to the airport is consistently cheaper than paying at the check-in desk. Because the amount changes by route and by how far ahead you buy, this tool takes the fee as an input — enter the figure your booking quotes rather than a stored average."
-    ],
-    [
-      "What happens if my British Airways bag is over 23 kg?",
-      "A bag between 23 kg and 32 kg in an economy cabin is accepted but attracts a heavy bag charge, applied per bag rather than per kilogram. Nothing over 32 kg is accepted at all, in any cabin, because that is a manual-handling limit for the ground crew — the bag has to be repacked into two pieces first."
-    ],
-    [
-      "Does the British Airways cabin bag size include wheels and handles?",
-      "Yes. Both the 56 × 45 × 25 cm cabin bag limit and the 90 × 75 × 43 cm checked bag limit are measured with wheels, handles and side pockets included, which is why a case sold as \"cabin size\" can still fail at the gauge. You also need to be able to lift your own cabin bag into the overhead locker unaided."
-    ]
-  ]
-},
-  "british-airways-excess-baggage-cost-estimator": {
-  "intro": "This estimator prices British Airways checked baggage the way the airline actually bills it — per bag, not per kilogram. It separates the three charges that can apply, each levied per piece: an extra bag beyond the number your fare includes, a heavy bag over its 23 kg ceiling in economy cabins or 32 kg in Club and First, and an oversize bag outside 90 × 75 × 43 cm. Each is priced both prepaid in Manage My Booking and paid at the airport desk, so the saving from booking ahead is a number rather than a guess.",
-  "useCases": [
-    "Deciding whether to buy a second bag online now or risk paying the higher airport rate on the day.",
-    "Checking whether shifting 3 kg from a 26 kg case into a lighter one removes a heavy-bag charge entirely.",
-    "Working out how many bags four people on one booking can check before an extra-piece charge starts."
-  ],
-  "benefits": [
-    [
-      "Per-piece maths",
-      "Bags are counted the way BA counts them, so two light cases are not treated as one pooled weight."
-    ],
-    [
-      "Repacking check built in",
-      "Tells you when evening out the weight across your bags removes the heavy-bag fee for free."
-    ],
-    [
-      "Both channels compared",
-      "Prepaid and airport totals sit side by side with the saving shown in money and percent."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does an extra bag cost on British Airways?",
-      "Extra bags are charged per piece, with the amount set by route band, and buying one in Manage My Booking before you travel is consistently cheaper than paying at the check-in desk. Because BA revises the table and prices short-haul European routes very differently from long-haul, this tool takes the fee as an input so you can price the amount your own booking quotes."
-    ],
-    [
-      "What counts as a heavy bag on British Airways?",
-      "A checked bag over 23 kg in Euro Traveller, World Traveller and World Traveller Plus, or over 32 kg in Club and First, attracts a heavy-bag charge levied per bag rather than per kilogram. Nothing over 32 kg is accepted in any cabin — that is a manual-handling limit for ground crew, so a heavier bag has to be repacked into two before check-in will take it."
-    ],
-    [
-      "Can passengers on one booking share their baggage allowance?",
-      "Piece allowances add up across passengers travelling on the same booking, so two people each entitled to one 23 kg bag can check two bags between them however they like. What does not transfer is the per-bag weight ceiling: pooling gives you more pieces, never a heavier single bag."
-    ],
-    [
-      "Is it cheaper to pay for an extra bag or to pay the heavy bag charge?",
-      "It depends on the fees on your route, which is exactly what this tool compares — but the free option is often overlooked. If your bags together weigh less than their combined ceilings, moving weight from the heavy bag into a lighter one removes the heavy-bag charge at no cost, and the estimator flags that case automatically."
-    ]
-  ]
-},
-  "brokerage-charges-calculator": {
-  "intro": "The Brokerage and Charges Calculator shows exactly what a trade costs in India once brokerage, STT/CTT, exchange transaction charges, SEBI turnover fees, stamp duty, 18% GST and DP charges are added up. Pick equity delivery, intraday, futures or options, enter your buy and sell prices, and it returns the total charges, net profit after costs and the price move you need just to break even.",
-  "useCases": [
-    "Check whether a small intraday scalp still leaves a profit after ₹20-per-order brokerage and taxes.",
-    "Compare a percentage-based full-service brokerage plan against a flat-fee discount plan on the same trade.",
-    "Estimate the DP charge and STT hit before booking a delivery position you have held for months."
-  ],
-  "benefits": [
-    [
-      "Every statutory line item",
-      "STT, exchange charges, SEBI fees, stamp duty and GST are calculated separately, not lumped together."
-    ],
-    [
-      "Any broker plan",
-      "Model flat per-order fees, a percentage of turnover, or the common 'whichever is lower' cap."
-    ],
-    [
-      "Break-even in points",
-      "See the exact price move per share or unit that only covers costs, before any profit starts."
-    ]
-  ],
-  "faqs": [
-    [
-      "What charges apply to an equity delivery trade in India?",
-      "STT at 0.1% on both the buy and the sell value, exchange transaction charges, SEBI turnover fees of ₹10 per crore, stamp duty of 0.015% on the buy side, 18% GST on brokerage plus exchange and SEBI fees, and a DP charge levied per scrip when you sell."
-    ],
-    [
-      "How is STT different for intraday and options?",
-      "Equity intraday attracts STT of 0.025% on the sell side only, while options carry STT of 0.1% on the sell-side premium. Delivery is the only equity segment where STT is charged on both legs."
-    ],
-    [
-      "Is GST charged on the whole trade value?",
-      "No. GST at 18% applies only to brokerage, exchange transaction charges and SEBI turnover fees — not to STT, stamp duty or the traded amount itself."
-    ],
-    [
-      "Why does a profitable-looking trade still end up negative?",
-      "On small quantities the fixed portion of costs — flat brokerage on both legs, DP charges and stamp duty — can exceed the price difference. The break-even figure in the result shows the minimum move that covers those costs."
-    ]
-  ]
-},
-  "browser-fingerprint-visualizer": {
-  "intro": "Browser Fingerprint Visualizer reads the signals a website can silently collect about your browser — canvas and WebGL rendering, an AudioContext waveform, installed fonts, screen geometry, CPU cores, timezone, languages, storage and media devices — and turns them into a single SHA-256 fingerprint plus a 0-100 tracking risk score. It exists for anyone who wants to see what \"cookieless tracking\" actually looks like before they change browsers or install a blocker. The weighting follows the entropy ranking from the EFF's Panopticlick research: canvas is worth 20 points, WebGL 15, audio 10 and fonts 10, because those four carry the most identifying information.",
-  "useCases": [
-    "Check whether a privacy extension or Firefox's resistFingerprinting actually changed your canvas and WebGL readings — run the tool, toggle the setting, run it again and compare the hash",
-    "Show a client or a class the real difference between a cookie banner and fingerprinting, using their own laptop as the example",
-    "Confirm that a hardened browser profile you built for research or reporting produces a common, low-entropy fingerprint rather than a distinctive one"
-  ],
-  "benefits": [
-    [
-      "Signal-by-signal breakdown",
-      "Every one of the twelve scored signals shows its own raw value and point contribution, so you can see which probe is exposing you."
-    ],
-    [
-      "Stability re-test",
-      "Re-runs the collection to check whether your fingerprint holds steady between reads — a stable hash is what makes cross-site tracking possible."
-    ],
-    [
-      "Nothing leaves the browser",
-      "All probes run locally in JavaScript and the fingerprint is hashed in your own tab; no reading is uploaded or stored on a server."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is a browser fingerprint?",
-      "It is a profile built from configuration details your browser reveals automatically — screen size, timezone, installed fonts, GPU model, how your hardware renders a hidden canvas image and an audio waveform. The EFF's Panopticlick study found 83.6% of tested browsers had a fingerprint that was unique across the whole dataset, which is why the technique works without a single cookie."
-    ],
-    [
-      "How is the tracking risk score calculated?",
-      "Twelve signals are scored and summed, then capped at 100: canvas 20, WebGL/GPU 15, audio 10, installed fonts 10, timezone 8, screen resolution 8, CPU cores plus device memory 7, languages 5, storage profile 4, media devices 4, touch points 3, and 3 for sending a Do-Not-Track header. Under 30 is Low, under 70 is Medium, 70 and above is High. Blocked or unavailable probes score zero, so a hardened browser genuinely scores lower."
-    ],
-    [
-      "Does blocking cookies stop fingerprinting?",
-      "No. Fingerprinting reads properties your browser must expose to render pages at all, so it survives cookie blocking, private browsing and clearing site data. What does help: Tor Browser and Firefox's privacy.resistFingerprinting, which return uniform canvas, font and screen values so many users share one profile; Safari's Intelligent Tracking Prevention, which reports a simplified system configuration; and Brave's per-session randomisation of canvas and audio readings."
-    ],
-    [
-      "What is the hash shown at the top?",
-      "A SHA-256 digest — 64 hexadecimal characters — of every raw signal joined together. It is computed in your tab with the Web Crypto API and never sent anywhere. Change one input, such as connecting an external monitor or installing a font, and the hash changes completely, which is exactly how you can test whether a privacy setting worked."
-    ]
-  ]
-},
-  "browser-session-analyzer": {
-  "intro": "Browser Session Analyzer takes a list of open tab URLs — pasted, or exported as JSON or CSV from a session manager — and reports how many are duplicates, which domains dominate, what the tabs are actually for, and roughly how much memory they cost. It is for people who habitually run 80 tabs and want a defensible list of what to close. Duplicates are matched on the normalised URL (lower-cased, with the hash, query string and trailing slash stripped), so twenty copies of the same article arriving via different UTM links collapse into one.",
-  "useCases": [
-    "Export a 120-tab window from a session manager, find the 30 duplicate URLs, and close them before the machine starts swapping",
-    "Audit a week of research tabs to see how much of the session is genuinely Development and Research versus Social Media and Entertainment",
-    "Spot the tabs still on plain http, or with malformed URLs left behind by a crashed extension, before you save the session as a bookmark folder"
-  ],
-  "benefits": [
-    [
-      "Duplicate detection that ignores tracking parameters",
-      "URLs are normalised before comparison, so ?utm_source= and #anchor copies of one page are counted as one."
-    ],
-    [
-      "Domain categories out of the box",
-      "Around 150 well-known domains are pre-classified into 14 groups — AI, Development, Research, Social Media, Entertainment and more — with no setup."
-    ],
-    [
-      "Runs entirely in your browser",
-      "The URL list is parsed in the page; nothing is uploaded, which matters because a tab list is a detailed record of what you have been reading."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is the tab health score calculated?",
-      "It starts at 100 and subtracts 5 points per duplicate URL and 10 per malformed URL, then 0.5 per tab above 50 and a further 0.3 per tab above 100, clamped to 0-100. So 60 clean tabs score 95, and 120 clean tabs score 59. The 50-tab knee is where Chrome typically begins discarding background tabs on an 8 GB machine."
-    ],
-    [
-      "What does the focus score mean?",
-      "It is ((productive − 0.5 × distracting) / total) × 50 + 50. An all-productive session scores 100, an even split scores 50 and an all-distracting session scores 25. Productive means Development, Productivity, Education and Research; distracting means Entertainment, Social Media, Shopping and Gaming. Uncategorised domains land in Other and pull the score toward 50."
-    ],
-    [
-      "How accurate is the estimated memory figure?",
-      "It is a planning estimate, not a measurement: 50 MB per tab plus 150 MB extra for a tab on YouTube or Netflix. Chrome's own task manager puts a typical content-heavy tab in the 40-60 MB band once renderer, compositor and page heap are counted. For a real per-tab number use Shift+Esc in Chrome or about:performance in Firefox."
-    ],
-    [
-      "What formats can I paste in?",
-      "Three, auto-detected. A plain list of URLs one per line; a CSV column of URLs; or JSON in any of the common shapes — a bare array of strings, an array of objects with a url field, or an object with a tabs, urls or bookmarks key. Nested bookmark trees are walked recursively, so a Chrome bookmarks export works as-is."
-    ]
-  ]
-},
-  "btu-to-ton-converter": {
-  "intro": "A ton of refrigeration is defined as 12,000 BTU per hour — the rate needed to melt one short ton of ice in 24 hours — which this converter uses to move a cooling capacity between tons, BTU/h, watts, kilowatts and kcal/h. Because the International Table BTU is exactly 1,055.05585262 J, one ton works out to 3,516.85 W or 3,024 kcal/h. It also divides capacity by COP to show the electrical input the same machine would draw, since capacity is heat moved and not power consumed.",
-  "useCases": [
-    "Read an imported air conditioner rated 18,000 BTU/h and confirm it is the 1.5 ton size sold locally.",
-    "Convert a chiller schedule written in kW of cooling into the tons the vendor quotes.",
-    "Estimate the electrical load a 3 ton system adds to a panel before sizing the breaker and cable."
-  ],
-  "benefits": [
-    [
-      "Exact definitions",
-      "12,000 BTU/h per ton and 1,055.05585262 J per BTU, so the watts figure is precise."
-    ],
-    [
-      "kcal/h included",
-      "The unit still printed on many Indian and Gulf datasheets, converted alongside the rest."
-    ],
-    [
-      "Capacity versus consumption",
-      "Separates cooling output from electrical input using COP, and shows the matching EER."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many BTU is 1 ton of AC?",
-      "12,000 BTU per hour. That is 3,516.85 watts of cooling or 3,024 kcal/h. A 1.5 ton split is therefore rated 18,000 BTU/h and a 2 ton unit 24,000 BTU/h."
-    ],
-    [
-      "Is a 1.5 ton AC 1.5 kW?",
-      "No — those are different quantities. A 1.5 ton unit removes about 5.28 kW of heat, but it draws far less electricity, typically 1.3 to 1.6 kW at a COP around 3.3 to 4. Capacity is heat moved; the electricity bill follows the input power."
-    ],
-    [
-      "What is the difference between EER and COP?",
-      "Both compare cooling output with electrical input; they only differ in units. COP is watts of cooling per watt of input, EER is BTU/h of cooling per watt of input, so EER equals COP multiplied by 3.4121. A COP of 3.5 is an EER of 11.94."
-    ],
-    [
-      "Why is a cooling ton called a ton?",
-      "It dates from ice-based cooling. Melting one short ton (2,000 lb) of ice absorbs 2,000 x 144 = 288,000 BTU, and spreading that over 24 hours gives 12,000 BTU per hour. The name stuck even though modern systems use no ice."
-    ]
-  ]
-},
-  "buddhist-baby-name-finder": {
-  "intro": "The Buddhist Baby Name Finder searches a curated library of names drawn from Pali, Sanskrit and Tibetan Buddhist sources, showing the literal meaning of each word alongside the disciple, bodhisattva or doctrinal term it refers to. Filter by gender, source language, starting letter, name length or by the meaning itself — searching \"compassion\" surfaces Karuna, Avalokita and Tara. Useful for parents who want a name with a traceable source rather than an invented one.",
-  "useCases": [
-    "Find a short, easy-to-spell name under six letters that still carries a classical Pali meaning, such as Metta, Khema or Bodhi.",
-    "Compare the Pali and Sanskrit spellings of the same word — Siddhattha and Siddhartha, Panna and Prajna — before deciding which tradition's form to register.",
-    "Search by meaning to build a shortlist around one idea, such as wisdom, light, lotus or equanimity.",
-    "Pick a Tibetan name like Tenzin, Pema or Sonam and see exactly what it translates to before using it."
-  ],
-  "benefits": [
-    [
-      "Sourced meanings",
-      "Each entry gives the literal sense of the Pali, Sanskrit or Tibetan word, not a marketing gloss."
-    ],
-    [
-      "Canonical context",
-      "Names tied to a disciple, a brahmavihara or a bodhisattva carry a short note saying who or what."
-    ],
-    [
-      "Filter by shape",
-      "Cap the letter count, fix the starting letter or search the meaning text to narrow a long list fast."
-    ]
-  ],
-  "faqs": [
-    [
-      "What are the four brahmavihara names used for Buddhist babies?",
-      "Metta (loving-kindness), Karuna (compassion), Mudita (sympathetic joy) and Upekkha (equanimity) are the four brahmaviharas, and all four are used as given names. The Sanskrit forms are Maitri, Karuna, Mudita and Upeksha."
-    ],
-    [
-      "Should I choose the Pali or the Sanskrit spelling of a name?",
-      "Theravada communities in Sri Lanka, Thailand, Myanmar, Laos and Cambodia use Pali forms such as Dhamma, Panna and Siddhattha, while Mahayana and Vajrayana traditions in India, Nepal, Tibet and East Asia use the Sanskrit forms Dharma, Prajna and Siddhartha. Both refer to the same word; pick the tradition your family follows."
-    ],
-    [
-      "Are Buddhist names gender-specific?",
-      "Many are not. Abstract-quality names such as Bodhi, Khema, Samadhi, Ratna and the Tibetan Tenzin, Sonam, Karma and Tashi are used for any gender, while names of specific figures — Rahula, Sariputta, Yasodhara, Visakha — follow the gender of that person."
-    ],
-    [
-      "Is it disrespectful to name a child after the Buddha?",
-      "Practice varies by community. Naming after disciples, qualities and bodhisattvas is common everywhere, but some families avoid using Buddha, Gautama or Shakyamuni directly as a personal name out of respect. If you are unsure, ask a monastic or teacher in your own tradition rather than relying on a general list."
-    ]
-  ]
-},
-  "budget-prompt-builder": {
-  "intro": "The Budget Prompt Builder turns your monthly take-home pay into a 50/30/20 allocation — 50% needs, 30% wants, 20% savings and debt — and writes an AI budgeting prompt that carries those exact rupee figures, your household size and your goal deadline. It also sizes an emergency fund at three to six months of essential spending and works out the monthly saving your named goal requires. It suits anyone who wants a chat assistant to plan a household budget from real numbers instead of generic advice.",
-  "useCases": [
-    "A family of four on Rs 80,000 take-home pay who want a category-by-category monthly plan rather than a lecture on saving more",
-    "Someone saving Rs 2,00,000 in 18 months who needs to know whether that fits inside the 20% savings share or requires cuts elsewhere",
-    "A first-time budgeter switching from the 50/30/20 split to zero-based or envelope budgeting and wanting the same numbers restated in the new format"
-  ],
-  "benefits": [
-    [
-      "Real figures, not guesses",
-      "The prompt carries your income, essentials and goal so the model never invents amounts."
-    ],
-    [
-      "Overspend flagged early",
-      "A warning appears when essentials exceed the 50% needs cap or the goal outruns the 20% savings share."
-    ],
-    [
-      "Three budgeting methods",
-      "Switch between 50/30/20, zero-based and envelope wording without re-entering anything."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the 50/30/20 budget rule?",
-      "It allocates after-tax income as 50% to needs, 30% to wants and 20% to savings and debt repayment. The rule comes from Elizabeth Warren and Amelia Warren Tyagi's 2005 book All Your Worth, and it works as a first-pass sanity check rather than a strict target."
-    ],
-    [
-      "How much should my emergency fund be?",
-      "Three to six months of essential spending held in liquid savings is the common planning guideline. If your essentials are Rs 38,000 a month, that is Rs 1,14,000 to Rs 2,28,000; single-income households and variable earners usually aim at the upper end."
-    ],
-    [
-      "What if my essential expenses are more than 50% of my income?",
-      "The tool flags it and the prompt asks the assistant to look for reductions in needs first, because trimming the 30% wants bucket cannot close a gap created inside needs. High rent in metro cities routinely pushes essentials past 50%, in which case the split becomes a direction of travel rather than a target for this year."
-    ],
-    [
-      "Why use a prompt builder instead of just asking the chatbot to budget for me?",
-      "A bare request makes the model guess your income, prices and priorities, and the resulting plan is usually generic. Supplying the computed caps, the emergency fund range and the required monthly saving forces the answer to be arithmetic about your situation. This is informational only — consult a registered financial adviser before acting on debt or investment decisions."
-    ]
-  ]
-},
-  "bulk-find-replace": {
-  "intro": "Bulk Find and Replace applies as many search-and-replace rules as you need to a block of text in a single pass, showing the match count for every rule and the total number of replacements. Switch on regular expressions for patterns and $1 capture groups, or keep it literal so characters like . and ? are matched exactly. Case sensitivity and whole-word matching are one click away, and everything runs in your browser.",
-  "useCases": [
-    "Swap an old company name, product name and support address across a whole email template at once.",
-    "Reformat every date in a data dump from DD/MM/YYYY to YYYY-MM-DD with one regex rule.",
-    "Clean a CSV export by stripping stray tags and double spaces before importing it."
-  ],
-  "benefits": [
-    [
-      "Many rules, one pass",
-      "Rules run top to bottom over the same text, so you can chain edits instead of pasting between tools."
-    ],
-    [
-      "Match counts per rule",
-      "See exactly how many times each rule fired, which instantly reveals a typo in a pattern."
-    ],
-    [
-      "Safe regex handling",
-      "Invalid patterns show a clear error instead of breaking the page, and zero-width patterns are skipped."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I use capture groups in the replacement?",
-      "Turn on regular expressions, wrap the parts you want to reuse in parentheses, then reference them as $1, $2 and so on in the replace field. For example (\\d{2})/(\\d{2})/(\\d{4}) with $3-$2-$1 converts 12/03/2026 into 2026-03-12."
-    ],
-    [
-      "What does whole words only do?",
-      "It wraps your search term in word boundaries, so searching for 'cat' changes the standalone word but leaves 'category' untouched. It works with both literal and regex mode."
-    ],
-    [
-      "Do the rules run at the same time or one after another?",
-      "One after another, from the top down. Each rule sees the output of the rules above it, so ordering matters if one rule's replacement could be matched by a later rule."
-    ],
-    [
-      "Is my text sent to a server?",
-      "No. All matching and replacing happens locally in your browser, so contracts, customer data and unpublished copy stay on your device."
-    ]
-  ]
-},
-  "bulk-order-discount-calculator": {
-  "intro": "Bulk price lists come in two shapes and they give different totals for the same order. Flat (non-cumulative) tiers charge every unit at the rate of the band the quantity reaches, so 60 units on a 50+ break at Rs 80 costs Rs 4,800. Graduated (slab) tiers charge each unit at its own band's rate, so the same 60 units cost 9 × 100 + 40 × 90 + 11 × 80 = Rs 5,380. This calculator prices an order either way, adds freight and GST on goods plus freight, and reports the effective and landed cost per unit — including the flat-tier cases where ordering more units lowers the total.",
-  "useCases": [
-    "Deciding whether to order 48 units at the mid tier or 50 at the next break when 50 costs less in total",
-    "Converting a supplier's slab price list into a single landed cost per unit for a costing sheet",
-    "Checking whether topping up an order to clear a free-shipping threshold is cheaper than paying freight"
-  ],
-  "benefits": [
-    [
-      "Both tier structures",
-      "Flat whole-order rates and graduated slab rates, priced from the same list."
-    ],
-    [
-      "Finds the cheaper bigger order",
-      "Flags when buying more units costs less, which flat tiering makes possible."
-    ],
-    [
-      "Landed cost, not list price",
-      "Freight and GST folded in to give the number a costing sheet actually needs."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you calculate a bulk discount price?",
-      "Find the tier your quantity falls into and multiply. With flat tiers of 1–9 at Rs 100, 10–49 at Rs 90 and 50+ at Rs 80, an order of 60 units is charged entirely at Rs 80, giving Rs 4,800. The effective discount against the base rate is (100 − 80) ÷ 100 = 20%."
-    ],
-    [
-      "What is the difference between flat and graduated quantity pricing?",
-      "Flat pricing applies one rate to the whole order once the quantity reaches a break. Graduated pricing charges each unit at the rate of the band it sits in, like income tax slabs. For 60 units on the same list, flat gives Rs 4,800 and graduated gives Rs 5,380 — a Rs 580 difference on identical published rates, so it is worth confirming which one a supplier means."
-    ],
-    [
-      "Can ordering more units cost less in total?",
-      "Yes, but only with flat tiering. Ordering 48 units at Rs 90 costs Rs 4,320, while 50 units at Rs 80 costs Rs 4,000 — two extra units and Rs 320 less. Graduated pricing is always monotonic, so the total can never fall as quantity rises."
-    ],
-    [
-      "Is GST charged on shipping in a bulk order?",
-      "Yes, when the supplier charges the freight. Section 15(2)(c) of the CGST Act, 2017 includes incidental expenses such as packing and freight charged by the supplier in the value of supply, so GST applies to goods plus shipping at the rate applicable to the goods. Freight arranged independently by the buyer is a separate supply with its own treatment."
-    ]
-  ]
-},
-  "bulk-text-replacer": {
-  "title": "Bulk Text Replacer — Free Find and Replace Online",
-  "h1": "Bulk Text Replacer — Find and Replace Every Match at Once",
-  "metaDescription": "Paste text, enter a find and replace pair, and swap every match in one click. Regex supported, case-sensitive toggle, runs in your browser — no uploads.",
-  "intro": "The Bulk Text Replacer swaps every occurrence of a word, phrase or pattern across a whole block of pasted text in a single pass. It compiles whatever you type in the Find field into a JavaScript RegExp — with the flags `gi` by default, or `g` when you tick Case sensitive — and runs String.replace() once over your input, so the global flag catches all matches instead of stepping through them one at a time. Because the Find field is a real regular expression, patterns like \\d{4} or (draft|DRAFT) work, and $1 backreferences work in the Replace field. Everything executes in client-side JavaScript in your own browser: no upload, no account, no server call.",
-  "useCases": [
-    "Renaming a variable, API endpoint or class name across a pasted block of code or JSON before you commit it.",
-    "Filling placeholder tokens — {{name}}, [CITY], Lorem ipsum — with real values in an email, invoice or template draft.",
-    "Cleaning bulk exports: normalising product names, fixing one misspelled brand across hundreds of CSV rows, or stripping a repeated prefix from a URL list."
-  ],
-  "benefits": [
-    [
-      "Every match in a single pass",
-      "The global regex flag is always on, so one click on Replace Text updates all occurrences — whether that's three instances or ten thousand lines. There is no next-match button to click through."
-    ],
-    [
-      "Real regex, not just literal words",
-      "The Find field is passed straight to JavaScript's RegExp constructor, so character classes, quantifiers, anchors and alternation all work. Replacement tokens work too: $1 inserts the first capture group, $& inserts the whole match."
-    ],
-    [
-      "Case handling you control",
-      "Matching ignores case by default, so Product, product and PRODUCT are all caught in one run. Tick Case sensitive and the i flag is dropped, restricting replacements to exact-case matches."
-    ],
-    [
-      "Nothing leaves your browser",
-      "The replacement runs entirely in client-side JavaScript — the source contains no fetch call, no upload and no login. Your original text stays in the Input box while the result is written to a separate read-only Output box."
-    ]
-  ],
-  "faqs": [
-    [
-      "how to replace multiple instances of a word at once",
-      "Paste your text, type the word in Find text, type the new value in Replace with, then click Replace Text — every occurrence is swapped in one pass, because the pattern is always compiled with the global regex flag. You never confirm matches individually, and the result appears in the Output box on the right."
-    ],
-    [
-      "is this bulk find and replace tool free",
-      "Yes — it is free with no signup, no account and no usage limit. The replacement is done by JavaScript running in your browser, so there is no server processing to meter and nothing is uploaded when you paste text in."
-    ],
-    [
-      "does the bulk text replacer support regex",
-      "Yes. Whatever you type in Find text is handed to JavaScript's RegExp constructor, so \\d+, [A-Z]{2}, ^\\s+ and (cat|dog) all behave as patterns. The Replace with field supports the standard replacement syntax as well — $1 for the first capture group, $& for the entire match, and $$ for a literal dollar sign."
-    ],
-    [
-      "why is my find and replace not working",
-      "Usually a regex metacharacter in the Find field. Because your input is treated as a regular expression, characters like . * + ? ( ) [ ] { } | ^ $ and \\ have special meaning — to match them literally, escape each with a backslash, e.g. \\$29\\.99 rather than $29.99. Two other causes: an empty Find field does nothing at all, and an unbalanced bracket or parenthesis is an invalid pattern that produces no output."
-    ],
-    [
-      "how do I make find and replace case sensitive",
-      "Tick the Case sensitive checkbox beside the Replace with field. Unticked, the tool runs with the gi flags so iPhone, iphone and IPHONE all match the same search. Ticked, it uses g only, and just exact-case matches are replaced."
-    ],
-    [
-      "can I replace several different words at the same time",
-      "Not as separate rows — the tool takes one Find and one Replace pair per run. There are two workarounds: run the tool again on its own output for each further pair, or use a regex alternation such as (colour|behaviour|favourite) in the Find field when they all share the same replacement text."
-    ],
-    [
-      "how much text can I paste into the bulk text replacer",
-      "There is no character limit set anywhere in the code. The full input is held in browser memory and processed in a single replace() call, so the practical ceiling is your device's memory — very large pastes may make the tab pause for a moment while the pattern runs."
-    ],
-    [
-      "does it change my original text",
-      "No. The Input box keeps your original text untouched and the result is written to a separate read-only Output box, so you can tweak the Find or Replace value and run it again without re-pasting. Copy Output puts the result on your clipboard using the browser's Clipboard API."
-    ]
-  ],
-  "steps": [
-    "Paste the text, code, JSON or CSV you want to edit into the Input box.",
-    "Enter your search term or regex pattern in Find text, enter the new value in Replace with, and tick Case sensitive if exact capitalisation matters.",
-    "Click Replace Text to update every match, review the Output box, then click Copy Output to copy the result."
-  ]
-},
-  "bulk-url-opener": {
-  "title": "Bulk URL Opener — Open Multiple Links at Once, Free",
-  "h1": "Bulk URL Opener",
-  "metaDescription": "Paste a list of URLs and open every one in its own new tab with a single click. Free, no signup, no extension to install.",
-  "intro": "The Bulk URL Opener takes a list of links — one per line — and opens each one in its own new browser tab with a single click. No browser extension or account is required; just paste your list and click open.",
-  "useCases": [
-    "Opening a batch of research links, product pages, or articles saved for later, all at once",
-    "Checking a list of URLs (redirects, campaign pages, broken links) without opening them one by one",
-    "Opening every link from a spreadsheet or CRM export in seconds"
-  ],
-  "benefits": [
-    [
-      "One click, every tab",
-      "Paste your list and every URL opens in its own tab immediately — no clicking links one at a time."
-    ],
-    [
-      "Popup-blocker aware",
-      "If your browser blocks the tabs, the tool tells you and explains how to allow popups for this site, so you're not left wondering why nothing opened."
-    ],
-    [
-      "No extension needed",
-      "Works entirely on the page — nothing to install, no browser permissions beyond the one-time popup allowance."
-    ],
-    [
-      "Free, unlimited use",
-      "No signup and no cap on how many times you use it."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I open multiple URLs at once?",
-      "Paste your links into the box, one per line, and click open — each URL opens in its own new tab immediately."
-    ],
-    [
-      "Why did only some of my tabs open?",
-      "Browsers block automated pop-ups by default, so opening many tabs at once can trigger the popup blocker. The tool detects this and shows a warning — allow popups for this site in your browser settings and try again."
-    ],
-    [
-      "Is there a limit to how many URLs I can open at once?",
-      "There's no hard limit set by the tool, but browsers themselves may throttle or block very large batches of simultaneous tabs — allowing popups for the site helps the most."
-    ],
-    [
-      "Do I need to install a browser extension for this?",
-      "No. The bulk URL opener works entirely on the page using your browser's own new-tab function — no extension or account needed."
-    ],
-    [
-      "Is this free to use?",
-      "Yes, completely free with no signup."
-    ]
-  ],
-  "steps": [
-    "Paste your list of URLs into the box, one per line.",
-    "Click \"Open All\" to launch every link in its own new tab.",
-    "If prompted, allow popups for this site so every tab can open."
-  ]
-},
-  "bullet-to-prose-prompt": {
-  "intro": "Bullet to Prose Prompt measures the notes you paste — bullet count, words per bullet, nesting depth — and converts them into a length budget: source words multiplied by an expansion factor gives a target word count, which divides by your average sentence length into sentences and then into paragraphs. The prompt it writes carries those numbers plus a hard rule against inventing any fact not present in the notes. For anyone whose draft exists as a list and needs to become a paragraph.",
-  "useCases": [
-    "Turn a sprint's worth of standup bullets into a status update for leadership who did not follow the detail.",
-    "Expand interview notes into a readable summary without letting the model add opinions you never heard.",
-    "Convert a CV's bullet list into a cover letter paragraph that keeps every achievement.",
-    "Rewrite nested research notes into prose where the indented sub-points become subordinate clauses."
-  ],
-  "benefits": [
-    [
-      "A length budget, not a guess",
-      "Expansion factor sets the word count, which resolves into a paragraph and sentence count."
-    ],
-    [
-      "Catches overloaded bullets",
-      "Any bullet over 30 words is flagged as more than one idea and marked for splitting."
-    ],
-    [
-      "No invented detail",
-      "The prompt forbids adding facts, numbers or names, and asks the model to name any bullet too thin to expand."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I turn bullet points into a paragraph?",
-      "Decide the target length first, then give the AI the bullets with an explicit instruction that every bullet must appear and nothing may be added. Without a length target and a no-invention rule, models pad bullets with generic filler — which is exactly what makes AI prose recognisable."
-    ],
-    [
-      "How many words should each bullet expand to?",
-      "An expansion of 2 to 3 times the source word count usually reads naturally: 27 words of notes becomes roughly 55 to 80 words of prose. Beyond about 4x the model has to start inventing connective material, which is where accuracy slips."
-    ],
-    [
-      "What is a good average sentence length?",
-      "Plain-language guidance from the UK Government Digital Service and plainlanguage.gov converges on 15 to 20 words per sentence on average, with variation between sentences. This tool defaults to 18 and lets you change it — the average matters more than any single sentence."
-    ],
-    [
-      "Will the AI add things I did not write?",
-      "It can, which is why the generated prompt bans new facts, numbers, names and claims outright and asks the model to list any bullet it could not expand honestly. Always read the output against your notes before sending it — the instruction reduces invention but does not eliminate it."
-    ]
-  ]
-},
-  "burnout-self-check": {
-  "intro": "The Burnout Self-Check scores the three dimensions ICD-11 uses to define burnout — energy depletion, mental distance or negativism about the job, and reduced professional efficacy — from twelve statements rated 0 (never) to 6 (every working day). Instead of one overall number it returns a profile: engaged, overextended, disengaged, ineffective, or the full burnout pattern where all three dimensions line up. Saved checks build a trend log so you can see whether a workload change actually moved anything.",
-  "useCases": [
-    "Separate 'I am tired' from 'I no longer care', which need completely different responses.",
-    "Check before and after a project crunch whether exhaustion recovered or turned into cynicism.",
-    "Bring a written three-dimension summary to a one-to-one with a manager instead of a vague 'I'm swamped'.",
-    "Log the score monthly to see whether a four-day week, a team change or a delegation push made a measurable difference."
-  ],
-  "benefits": [
-    [
-      "Three dimensions, not one score",
-      "Exhaustion, cynicism and efficacy are scored separately because the same total can mean very different problems."
-    ],
-    [
-      "Profile-matched actions",
-      "An overextended profile gets workload actions; a disengaged profile gets values and fairness actions."
-    ],
-    [
-      "Trend log built in",
-      "Save a dated check and the tool reports the change in composite risk against your previous entry."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is burnout an official medical diagnosis?",
-      "No. ICD-11 classifies burnout (code QD85) as an occupational phenomenon, not a medical condition, and defines it by three dimensions: energy depletion, increased mental distance or negativism about one's job, and reduced professional efficacy. It applies specifically to the work context, not to life in general."
-    ],
-    [
-      "What is the difference between burnout and depression?",
-      "Burnout is tied to the job and typically eases when the work situation changes, while depression affects mood, interest and energy across all areas of life and does not lift on holiday. The symptoms overlap heavily, so persistent low mood, hopelessness, or changes in sleep and appetite should be assessed by a doctor rather than by a questionnaire."
-    ],
-    [
-      "Can I be exhausted without being burnt out?",
-      "Yes, and it is the most common pattern. High exhaustion with intact belief in the work and a normal sense of accomplishment is usually described as overextension — a workload problem. It becomes the burnout pattern when cynicism rises and sense of efficacy falls alongside it."
-    ],
-    [
-      "Will a holiday fix burnout?",
-      "Time off reliably reduces exhaustion for a short period, but studies of vacation effects show the benefit fades within weeks if the job demands are unchanged. Sustained improvement generally requires changes to workload, control, reward, fairness or values at work, which is why the actions here focus on the job rather than on recovery alone."
-    ]
-  ]
-},
-  "business-name-numerology-checker": {
-  "intro": "The Business Name Numerology Checker scores each shortlisted company name on both numerology systems people ask about — Chaldean, where letters take values 1 to 8 and the unreduced compound total carries a classical reading, and Pythagorean, where the alphabet cycles 1 to 9 and 11, 22 and 33 stay unreduced. Alongside those it runs the practical tests that actually decide whether a name works online: the 63-character DNS label limit from RFC 1035, the 15-character X username limit, the 30-character Instagram limit, and whether the name needs hyphens, digits or non-ASCII characters to be written down.",
-  "useCases": [
-    "Putting four candidate company names side by side before a founders' meeting, with the numerology figures and the domain lengths in one table.",
-    "Checking whether a two-word name will still fit an X username once the space is removed.",
-    "Deciding between a name that needs a hyphen in its domain and a single-word alternative.",
-    "Answering an investor or family member who asks for the numerology number of a shortlisted brand name."
-  ],
-  "benefits": [
-    [
-      "Two systems, one pass",
-      "Chaldean and Pythagorean numbers are computed from the same spelling so you can see where they disagree."
-    ],
-    [
-      "Real platform limits",
-      "Handle and domain checks use published limits — 63 characters for a DNS label, 15 for X, 30 for Instagram."
-    ],
-    [
-      "Shortlist table",
-      "Paste the whole list and compare totals, roots, domain length and checks passed in one view."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you calculate the numerology number of a business name?",
-      "Add the value of every letter, then reduce. In Chaldean, Tata Steel totals 30 and reduces to root 3; in Pythagorean the same name totals 22, which is a master number and is not reduced further. Spaces and punctuation are not scored in either system."
-    ],
-    [
-      "How long can a domain name be?",
-      "A single DNS label — the part before the dot — can be at most 63 characters, and a full domain name at most 253 characters, per RFC 1035. It may contain only letters, digits and hyphens, and cannot start or end with a hyphen."
-    ],
-    [
-      "Should I pick a company name based on its numerology number?",
-      "Numerology is a cultural tradition, not evidence about how a business will perform, so it should not be the deciding factor. The practical checks on this page — length, spelling, hyphens and digits — have a measurable effect on whether customers can find and type your name."
-    ],
-    [
-      "Does this tell me if the name is available?",
-      "No. Availability depends on the trade marks register, company registrar and domain WHOIS, none of which are checked here. Search those before you commit, and take professional advice before registering a company name or filing a trade mark."
-    ]
-  ]
-},
-  "button-min-size-spec-generator": {
-  "intro": "The Button Minimum Size Spec Generator computes the real rendered box of a button from its font size, line height, padding, border and icon, then checks that box against four target-size rules: WCAG 2.2 SC 2.5.8 (24 by 24 CSS pixels, Level AA), WCAG 2.1 SC 2.5.5 (44 by 44, Level AAA), the Apple Human Interface Guidelines 44 by 44 pt tap target, and Material Design's 48 by 48 dp touch target. It also models the SC 2.5.8 spacing exception, which lets an undersized target conform when adjacent targets are far enough apart, and reports the exact padding needed to clear whichever standard you are aiming at.",
-  "useCases": [
-    "Check whether a 16px label with 8px vertical padding actually reaches the 44 pixel AAA target, or falls six pixels short.",
-    "Find the vertical padding that turns a compact table-row button into a 48dp Material touch target.",
-    "Confirm that a row of small icon buttons still conforms at AA through the SC 2.5.8 spacing exception rather than by size.",
-    "Produce a CSS rule with min-height, min-width and padding that a developer can paste straight into a component."
-  ],
-  "benefits": [
-    [
-      "Box model, not guesswork",
-      "Adds line-height times font-size to padding and border on both edges, the way the browser does."
-    ],
-    [
-      "Models the spacing exception",
-      "Applies the real SC 2.5.8 test - a 24 pixel circle on each target's bounding box must not intersect its neighbour's."
-    ],
-    [
-      "Tells you the padding",
-      "Reports the exact per-edge padding needed to reach 24, 44 or 48 pixels rather than leaving you to solve for it."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the minimum button size for accessibility?",
-      "24 by 24 CSS pixels under WCAG 2.2 SC 2.5.8 at Level AA, and 44 by 44 under WCAG 2.1 SC 2.5.5 at Level AAA. Apple's Human Interface Guidelines ask for 44 by 44 pt and Material Design for 48 by 48 dp, so 48 is the practical target if you want to satisfy all four."
-    ],
-    [
-      "What is the WCAG 2.5.8 spacing exception?",
-      "An undersized target still conforms if a 24 CSS pixel diameter circle centred on its bounding box does not intersect the circle of any adjacent target. For two equal targets in a row that reduces to a simple test: target size plus the gap between them must be at least 24 pixels."
-    ],
-    [
-      "How do I calculate a button's height from its CSS?",
-      "With the standard border-box model: line-height multiplied by font-size, plus the top and bottom padding, plus the top and bottom border. A 16px label at line-height 1.25 with 8px padding and a 1px border is 20 + 16 + 2 = 38 pixels tall, which misses the 44 pixel AAA target by six."
-    ],
-    [
-      "Does the button label width matter for target size?",
-      "Yes - the target-size rules apply to both dimensions, so a tall but very narrow button can still fail. Width here is estimated from an average glyph advance, which varies by typeface, so measure the real string when the width is close to the threshold."
-    ]
-  ]
-},
-  "byte-converter": {
-  "title": "Byte Converter — Bytes to KB, MB, GB, TB & MiB",
-  "h1": "Byte Converter",
-  "metaDescription": "Convert bytes, bits, kB/MB/GB/TB and KiB/MiB/GiB/TiB in one table — plus transfer time and why a 1 TB drive shows as 931 GB. Free, in-browser.",
-  "intro": "Byte Converter turns one size into all 15 supported units at once: bits through gigabits, SI decimal bytes (kB, MB, GB, TB, PB — powers of 1000) and IEC binary bytes (KiB, MiB, GiB, TiB, PiB — powers of 1024). Each unit is stored as its exact byte factor, so your input is normalised to a single byte total and then divided into every target unit — one division per row, with no chained rounding. Both prefix families, and the fixed 8-bits-per-byte octet, come from IEC 80000-13, which is why the tool keeps kB and KiB visibly apart instead of treating them as the same thing. The whole calculation is plain JavaScript running in your browser: no upload, no API call, no account.",
-  "useCases": [
-    "Work out why a 1 TB SSD shows as 931 GB in Windows — 1,000,000,000,000 bytes divided by 1024³ is 931.32 GiB, the number Windows prints under a \"GB\" label",
-    "Convert an upload limit written as 25 MB into the exact byte count for a Content-Length check or an nginx client_max_body_size value",
-    "Turn a 4.7 GB file and a 100 Mbps link into a transfer time before you start the copy"
-  ],
-  "benefits": [
-    [
-      "Both prefix systems, side by side",
-      "Decimal and binary values for the same size sit in one table with a Group column, so the 1000-versus-1024 gap is visible rather than guessed at."
-    ],
-    [
-      "Bits and bytes in the same view",
-      "Link speeds are quoted in bits and file sizes in bytes. Both appear together at a fixed 8 bits per byte, plus a transfer-time readout for any Mbps figure you enter."
-    ],
-    [
-      "Refuses to print a wrong number",
-      "Sizes above 2^53 bytes, negative values and non-numeric input return a plain-language message instead of a silently rounded or NaN result."
-    ],
-    [
-      "Nothing leaves your device",
-      "The conversion is arithmetic in your browser — no file upload, no server request, no sign-up, and no usage limit."
-    ]
-  ],
-  "faqs": [
-    [
-      "Why does my 1 TB drive show as 931 GB?",
-      "Because the manufacturer counts a terabyte as 1,000,000,000,000 bytes, while Windows divides by 1024 three times and still writes the label \"GB\". 1,000,000,000,000 ÷ 1024³ = 931.32, so the same drive is honestly 1 TB and 931.32 GiB. No capacity is missing — the two labels just use different bases."
-    ],
-    [
-      "What is the difference between MB and MiB?",
-      "1 MB is 1,000,000 bytes and 1 MiB is 1,048,576 bytes, so MiB is 4.86% larger. The binary prefixes (kibi, mebi, gibi) were standardised in IEC 60027-2 and carried into IEC 80000-13 precisely so a power-of-1024 quantity has its own name. Drive makers, network gear and macOS mean the decimal MB; Windows and most RAM specs mean MiB even when they print \"MB\"."
-    ],
-    [
-      "How many bytes are in a GB?",
-      "1,000,000,000 bytes in a decimal gigabyte (GB), and 1,073,741,824 bytes in a binary gibibyte (GiB) — a 7.4% difference. This converter shows both rows for the same input, so you can pick whichever one your operating system or spec sheet actually means."
-    ],
-    [
-      "How many bits are in a byte?",
-      "8, universally in modern computing — IEC 80000-13 defines the byte as an 8-bit octet. That is why a 100 Mbps connection moves at most 12.5 MB per second: 100,000,000 bits ÷ 8 = 12,500,000 bytes."
-    ],
-    [
-      "How long does a 4.7 GB file take to download at 100 Mbps?",
-      "About 376 seconds, or 6 minutes 16 seconds, at the theoretical line rate. The tool computes it as bytes × 8 ÷ (Mbps × 1,000,000), so 4.7 GB is 37,600,000,000 bits over a 100,000,000 bit/s link. Real transfers run slower because of protocol overhead and shared bandwidth."
-    ],
-    [
-      "Why does the converter stop at about 9 petabytes?",
-      "The ceiling is 2^53 − 1 bytes, or 9,007,199,254,740,991 — the largest integer a JavaScript number represents exactly. Past that, conversions start dropping low-order digits, so the tool returns an error rather than a figure that looks precise but isn't."
-    ],
-    [
-      "Is the byte converter free, and does it upload anything?",
-      "Yes it's free with no sign-up, and nothing is uploaded. Every conversion is arithmetic performed in your browser; there are no network requests in the tool, so the numbers you type never reach a server. It also keeps working on a page you already have open if your connection drops."
-    ],
-    [
-      "Which units does it convert between?",
-      "15 in total: bit, kilobit, megabit and gigabit; the decimal bytes B, kB, MB, GB, TB and PB; and the binary bytes KiB, MiB, GiB, TiB and PiB. Enter a size in any one of them and every other unit updates in the same table, with a Copy button that puts the full list on your clipboard."
-    ]
-  ],
-  "steps": [
-    "Type the size into the Size field and pick its unit from the menu — the options are grouped into Bits, Decimal (×1000) and Binary (×1024).",
-    "Read the total in bytes, the human-readable binary and decimal forms, and the full table of all 15 units, which recalculates as you type.",
-    "Enter a link speed in Mbps for a transfer-time estimate, or press Copy result to put every converted value on your clipboard."
-  ]
-},
-  "caa-record-generator": {
-  "intro": "This generator builds CAA (Certification Authority Authorization) records as defined by RFC 8659 — DNS records that name the certificate authorities permitted to issue TLS certificates for a domain, using the issue, issuewild and iodef tags with the correct flags octet. Public CAs have been required to check CAA before every issuance since 8 September 2017 under the CA/Browser Forum Baseline Requirements, so a correct record set meaningfully reduces mis-issuance risk. It is for site owners, security teams and anyone completing a security questionnaire that asks for CAA.",
-  "useCases": [
-    "Locking issuance to Let's Encrypt on a domain that only ever uses certbot-issued certificates",
-    "Allowing normal certificates from one CA while forbidding wildcard issuance entirely with issuewild \";\"",
-    "Publishing an iodef address so CAs report attempted policy violations to your security team"
-  ],
-  "benefits": [
-    [
-      "RFC 8659 syntax exact",
-      "Flags octet, tag names and quoted values come out in valid zone-file form every time."
-    ],
-    [
-      "Known CA identifiers built in",
-      "Pick Let's Encrypt, DigiCert, Sectigo, Google Trust Services and other registered identifiers without looking them up."
-    ],
-    [
-      "Renewal-breaking mistakes flagged",
-      "Warns when a record set would block all issuance and explains subdomain inheritance."
-    ]
-  ],
-  "faqs": [
-    [
-      "What does a CAA record do?",
-      "A CAA record lists which certificate authorities may issue TLS certificates for your domain; any CA not named must refuse the request. Since 8 September 2017, all publicly trusted CAs are required by the CA/Browser Forum Baseline Requirements to check CAA before issuing, so the restriction is enforced industry-wide."
-    ],
-    [
-      "Do CAA records apply to subdomains?",
-      "Yes. RFC 8659 has the CA walk up the DNS tree from the requested name and apply the closest CAA record set it finds, so records on example.com govern shop.example.com unless that subdomain publishes its own CAA records."
-    ],
-    [
-      "What happens if I have no CAA record at all?",
-      "Any publicly trusted CA may issue for your domain, subject to its normal domain-control validation. CAA is opt-in: an empty record set imposes no restriction, which is why adding one for just the CAs you use is a cheap security win."
-    ],
-    [
-      "Can a wrong CAA record break my HTTPS certificate renewal?",
-      "Yes — if your CA is not listed, its next validation attempt fails and the renewal is refused, though existing certificates keep working until they expire. Before publishing, confirm the identifier your CA documents (for example ZeroSSL certificates are covered by sectigo.com), and remember the record is cached for its TTL after you fix it."
-    ]
-  ]
-},
-  "cache-hit-ratio-calculator": {
-  "intro": "This calculator computes a cache's hit ratio — hits ÷ (hits + misses) — and turns it into the numbers that matter for capacity planning: effective request latency via the AMAT formula (hit time + miss rate × miss penalty, from Hennessy & Patterson), the speedup versus running uncached, and the share of traffic that still reaches the backend. Feed it counters from Redis INFO, Memcached stats, a CDN dashboard or an application cache and it shows what the cache is really buying you.",
-  "useCases": [
-    "Reading keyspace_hits and keyspace_misses from Redis INFO and translating them into backend load reduction for a capacity review",
-    "Estimating how much p50 latency improves if a cache tuning change lifts the hit ratio from 85% to 95%",
-    "Sizing a database connection pool by computing how many requests per second still miss the cache at peak traffic"
-  ],
-  "benefits": [
-    [
-      "Real latency model",
-      "Uses AMAT (hit time + miss rate × miss penalty) rather than pretending misses cost nothing."
-    ],
-    [
-      "Backend load figures",
-      "Shows the exact requests/second your origin still serves at a given traffic rate and hit ratio."
-    ],
-    [
-      "Sanity warnings",
-      "Flags configurations where the cache lookup is slower than the backend it fronts."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I calculate cache hit ratio?",
-      "Hit ratio = hits ÷ (hits + misses). For example 900 hits and 100 misses give 900/1000 = 90%. In Redis the counters are keyspace_hits and keyspace_misses in INFO stats; in Memcached they are get_hits and get_misses."
-    ],
-    [
-      "What is a good cache hit ratio?",
-      "It depends on workload, but content and CDN caches commonly target 90%+ while database query caches may sit lower. The marginal value is nonlinear: going from 90% to 99% cuts backend traffic by another factor of ten (10% of requests down to 1%), which is why the last few percentage points matter most."
-    ],
-    [
-      "What is the AMAT formula for cache latency?",
-      "AMAT (average memory access time) = hit time + miss rate × miss penalty, from Hennessy and Patterson's computer architecture texts. With a 2 ms cache, a 50 ms backend and a 90% hit ratio: 2 + 0.10 × 50 = 7 ms average, a 7.1× speedup over the uncached 50 ms."
-    ],
-    [
-      "How much backend load does a cache remove?",
-      "Exactly the hit ratio: at 90% hits only 10% of requests reach the backend, so 1,000 req/s of traffic becomes 100 req/s of origin load. This calculator multiplies your traffic rate by the miss ratio to give the residual backend requests per second."
-    ]
-  ]
-},
-  "cad-cash-budget-planner": {
-  "intro": "This planner works out the small cash float a Canada trip actually needs and prices it against putting the same money on a card. The cash side applies the money changer's markup and the GST that Rule 32(2)(b) of the CGST Rules charges on a currency purchase; the card side applies the issuer's foreign-currency markup plus 18% GST on that fee. It also checks the plan against the RBI limit of USD 3,000 in currency notes per visit and the ₹10,00,000 Liberalised Remittance Scheme threshold at which 20% TCS begins.",
-  "useCases": [
-    "Sizing the cash float for a student flying to Canada, where rent and groceries go on a card and only odd costs need notes.",
-    "Deciding whether to buy Canadian dollars in India or draw them from an ATM after landing.",
-    "Checking whether a year's tuition remittance plus travel forex crosses the ₹10,00,000 LRS threshold for TCS."
-  ],
-  "benefits": [
-    [
-      "Sized for a card economy",
-      "Defaults to a low cash share because Interac and contactless cover almost all everyday spending in Canada."
-    ],
-    [
-      "All-in rupee cost",
-      "Shows the effective rupees-per-dollar you end up paying on notes and on the card, after markup and GST."
-    ],
-    [
-      "Flags the Indian limits",
-      "Tests the plan against the RBI note limit, the customs declaration thresholds and the LRS TCS threshold."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much cash should I carry to Canada?",
-      "Very little — around 10% of your on-ground budget covers it. Cards work at cafés, transit, small shops and taxis, and restaurant terminals prompt for the tip, so a two-week trip often needs no more than C$150 to C$250 per person in notes."
-    ],
-    [
-      "Why is the shop price different from what I pay in Canada?",
-      "Sales tax is added at the till rather than shown on the shelf, and it varies by province: Alberta charges the 5% federal GST alone, Ontario and the Atlantic provinces charge a combined HST, and most other provinces add a provincial sales tax on top of GST. Cash totals are also rounded to the nearest five cents because the penny was withdrawn in 2013."
-    ],
-    [
-      "What is cheaper — buying Canadian dollars in India or using an ATM there?",
-      "For a small float, buying in India usually wins, because a foreign ATM withdrawal carries a flat fee of roughly ₹150 to ₹250 from your bank plus the machine's own surcharge, and Canadian convenience-store ATMs charge the most. For larger amounts the card markup versus the changer markup starts to matter more than the flat fee, which is what the comparison above works out."
-    ],
-    [
-      "Do I pay TCS on money sent to Canada for study?",
-      "TCS applies once your LRS total for the financial year passes ₹10,00,000, the threshold in force from 1 April 2025. Education remittances have historically been treated more favourably than ordinary travel remittances, including a nil or reduced rate where the money is funded by an education loan from a specified institution. The rules are detailed and change with each Finance Act, so confirm your case with your bank or a chartered accountant rather than relying on a general figure."
-    ]
-  ]
-},
-  "caddyfile-generator": {
-  "intro": "This generator assembles a complete Caddy v2 Caddyfile site block from a form — reverse proxy or static file server, encode zstd gzip compression, baseline security headers, optional HSTS, a www-to-apex redirect and file-based access logging. It follows the Caddyfile conventions from the official docs, including automatic HTTPS for hostname addresses and the try_files {path} /index.html fallback pattern for single-page applications.",
-  "useCases": [
-    "A developer putting Caddy in front of a Node or Go app on localhost:3000 with automatic HTTPS and zero manual certificate work",
-    "Deploying a React, Vue or Svelte build as static files with the SPA fallback so client-side routes do not 404",
-    "Adding a www.example.com to example.com permanent redirect plus security headers to an existing single-domain Caddyfile"
-  ],
-  "benefits": [
-    [
-      "Automatic HTTPS aware",
-      "Hostname addresses get Caddy's built-in certificate provisioning; port-only addresses are flagged as plain HTTP."
-    ],
-    [
-      "Correct SPA fallback",
-      "Uses the documented try_files {path} /index.html pattern so real files win and everything else serves the app shell."
-    ],
-    [
-      "Guarded HSTS",
-      "HSTS defaults to the one-year preload minimum of 31536000 seconds and refuses values over two years as likely unit mistakes."
-    ]
-  ],
-  "faqs": [
-    [
-      "Does Caddy really handle HTTPS automatically?",
-      "Yes — for any site address with a hostname and no explicit http:// prefix, Caddy obtains, installs and renews TLS certificates automatically via ACME (Let's Encrypt or ZeroSSL). The only prerequisites are that DNS points at the server and ports 80 and 443 are reachable."
-    ],
-    [
-      "How do I reverse proxy an app with a Caddyfile?",
-      "A two-line site block is enough: example.com { reverse_proxy localhost:3000 }. Caddy's reverse_proxy forwards the Host header and sets X-Forwarded-For and X-Forwarded-Proto automatically, which nginx requires several proxy_set_header lines to achieve."
-    ],
-    [
-      "How do I serve a single-page application with Caddy?",
-      "Combine root, try_files and file_server: root * /srv/app, then try_files {path} /index.html, then file_server. Real files like JS bundles are served directly, and any other path — such as a client-side route like /dashboard — falls back to index.html."
-    ],
-    [
-      "What HSTS max-age should I set?",
-      "31536000 seconds (one year) is the standard value and the minimum for the hstspreload.org list. Start lower (for example 300) while testing, because HSTS makes browsers refuse plain-HTTP connections to your domain — and with includeSubDomains, to every subdomain — until the timer expires."
-    ]
-  ]
-},
-  "cafe-working-posture-routine": {
-  "intro": "This tool ranks the three standard commercial seating heights — dining (about 75 cm with a 45 cm chair), counter (about 89 cm with a 64 cm stool) and bar (about 104 cm with a 75 cm stool) — against your own seated elbow height, then sizes the cushion, footrest and laptop riser needed to close whatever gap remains. Elbow, eye and popliteal heights are derived from your body height using 50th-percentile adult proportions, and screen height comes from the laptop diagonal, so the riser figure is real rather than generic. Break counts follow the 20-20-20 eye rule and the general advice to change posture at least every 30 minutes.",
-  "useCases": [
-    "Decide between the window bar stool and the low table when you walk into a coffee shop with two hours of work to do.",
-    "Work out how thick a cushion or folded jacket has to be so a too-high cafe table stops lifting your shoulders.",
-    "Check whether the folding laptop stand in your bag is worth carrying without a wireless keyboard to go with it.",
-    "Plan eye and posture breaks for a long co-working session so a laptop-only setup stays tolerable."
-  ],
-  "benefits": [
-    [
-      "Ranks the tables for you",
-      "Compares all three standard heights against your elbow height so the seat choice is made before you sit down."
-    ],
-    [
-      "Improvised fixes, sized",
-      "Cushion and footrest heights are given in centimetres, so a jacket or a book becomes a measured adjustment."
-    ],
-    [
-      "Honest about the riser",
-      "If you have no separate keyboard, the tool says so rather than telling you to raise the laptop anyway."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the best table height for laptop work in a cafe?",
-      "Pick the table whose surface is closest to your seated elbow height. For someone 175 cm tall that is usually a counter-height table with a mid stool: the elbow lands about 87 cm above the floor against an 89 cm table, versus a 7 cm shortfall at a standard 75 cm dining table."
-    ],
-    [
-      "Should I sit on a bar stool to work?",
-      "Only if the table is genuinely at your elbow height and you can rest your feet. A 75 cm stool leaves most people's feet more than 30 cm off the floor, which pushes weight forward onto the thighs — use the stool's foot ring or move to a lower table."
-    ],
-    [
-      "Is a laptop stand worth carrying to a cafe?",
-      "Only alongside a separate keyboard. On its own, a stand lifts the keys above your elbow height and moves the strain from your neck to your shoulders and wrists — the tool shows the riser figure but marks it unusable when no keyboard is packed."
-    ],
-    [
-      "How often should I take a break when working in a cafe?",
-      "Look 20 feet away for 20 seconds every 20 minutes, which is the standard 20-20-20 advice for screen work, and get up to change posture at least every 30 minutes. A two-hour session therefore contains about five eye breaks and three posture breaks."
-    ]
-  ]
-},
-  "caffeine-cutoff-time-calculator": {
-  "intro": "This calculator finds the latest time you can have a caffeinated drink by applying first-order decay — remaining = dose × 0.5^(hours ÷ half-life) — and working backwards from your bedtime to the residual dose you are willing to sleep on. It uses a default 5-hour half-life for healthy adults, lets you set your own, and cross-checks the answer against trial evidence showing 400 mg still disrupts sleep 6 hours before bed. Built for anyone who sleeps badly and is not sure whether the afternoon coffee is the reason.",
-  "useCases": [
-    "You have a 4 pm meeting coffee and want to know how much of it is still circulating at your 11 pm bedtime.",
-    "You are moving your bedtime earlier and need to shift your last-coffee time by the same amount.",
-    "You switched from an energy drink to green tea and want to see how much the cutoff time moves.",
-    "You know you metabolise caffeine slowly and want the cutoff recalculated on a 7-hour half-life."
-  ],
-  "benefits": [
-    [
-      "Pharmacokinetic, not a rule of thumb",
-      "Uses the exponential decay equation rather than a fixed 'no coffee after 2 pm' rule."
-    ],
-    [
-      "Personal half-life",
-      "Half-life is adjustable between 1.5 and 12 hours because clearance varies several-fold between people."
-    ],
-    [
-      "Evidence cross-check",
-      "Never suggests a gap shorter than the 6 hours shown to disturb sleep in controlled testing."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many hours before bed should I stop drinking coffee?",
-      "At least 6 hours, and longer for bigger doses or slower metabolisers. A controlled trial found 400 mg of caffeine taken 6 hours before bedtime still reduced total sleep time measurably, so 6 hours is the floor rather than a safe margin."
-    ],
-    [
-      "How long does caffeine stay in your system?",
-      "The half-life in healthy adults averages about 5 hours, with an individual range of roughly 3 to 7 hours. After 5 hours half the dose remains, after 10 hours a quarter, and traces persist well beyond that — so a 200 mg coffee still leaves about 25 mg on board 15 hours later."
-    ],
-    [
-      "How much caffeine is in a cup of coffee?",
-      "A 240 ml cup of brewed coffee contains roughly 95 mg, instant coffee about 62 mg, a single espresso about 63 mg, black tea about 47 mg and a 355 ml cola about 34 mg. Actual strength varies with the bean, grind and brew time, so treat these as typical rather than exact."
-    ],
-    [
-      "How much caffeine a day is too much?",
-      "The FDA describes up to 400 mg a day as not generally associated with negative effects for healthy adults, and pregnancy guidance is usually under 200 mg a day. These are population figures — if caffeine gives you palpitations, anxiety or reflux, or you take interacting medication, discuss your own limit with a doctor."
-    ]
-  ]
-},
-  "cagr-calculator-detailed": {
-  "intro": "CAGR Calculator Detailed turns a start value, an end value and a holding period into the compound annual growth rate — the single steady yearly rate that would have taken you from one to the other. Alongside the CAGR it shows absolute return, the growth multiple, the doubling time and a year-wise path at that constant rate. Useful for comparing mutual funds, stocks, property or business revenue over unequal periods.",
-  "useCases": [
-    "Compare a stock held for 7 years 6 months against a fund held for 3 years on an annualised basis.",
-    "Convert a headline 'my money grew 2.5x' into a per-year rate you can benchmark against an index.",
-    "Check a business's revenue growth rate between two financial years."
-  ],
-  "benefits": [
-    [
-      "Years and months",
-      "Handles part-years, so a 7-year-6-month holding is annualised correctly rather than rounded."
-    ],
-    [
-      "Absolute vs annualised",
-      "Shows total return and simple average next to CAGR so the difference is obvious."
-    ],
-    [
-      "Doubling time included",
-      "Gives the exact doubling period at that rate plus the Rule of 72 shortcut for comparison."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the CAGR formula?",
-      "CAGR = (end value ÷ start value) raised to the power of 1/number of years, minus 1. Multiply by 100 to express it as a percentage."
-    ],
-    [
-      "How is CAGR different from absolute return?",
-      "Absolute return is the total percentage gain regardless of time. CAGR spreads that gain across the holding period as a compounded yearly rate, which is the only fair way to compare investments held for different lengths of time."
-    ],
-    [
-      "Can CAGR be used when I invested in instalments?",
-      "No. CAGR assumes one lump sum in and one value out. For SIPs or any series of cash flows at different dates, use XIRR instead."
-    ],
-    [
-      "Does a high CAGR mean the investment was safe?",
-      "No. CAGR smooths the path into one steady number and hides the drawdowns along the way. Two investments with the same CAGR can have very different volatility."
-    ]
-  ]
-},
-  "cagr-calculator-tool": {
-  "intro": "CAGR is the single constant yearly rate that would carry a starting value to an ending value over a given period, calculated as (end ÷ start)^(1 ÷ years) − 1. This calculator returns that rate along with the absolute return, the growth multiple, and the number of years the money would take to double at the same pace. Investors, founders and analysts use it to compare holdings of different sizes and holding periods on one scale.",
-  "useCases": [
-    "Compare a mutual fund held for 3 years against a stock held for 11 years on the same annualised basis.",
-    "Turn a property's purchase and sale price into a yearly growth rate before deciding whether it beat a fixed deposit.",
-    "Report revenue growth over a five-year window as one headline rate for a board deck or investor update."
-  ],
-  "benefits": [
-    [
-      "Geometric, not averaged",
-      "Uses the compounding identity rather than dividing total gain by years, so the rate actually reproduces the ending value."
-    ],
-    [
-      "Years or dates",
-      "Enter a plain number of years, or two calendar dates and let the fractional period be worked out for you."
-    ],
-    [
-      "Doubling time included",
-      "Applies t = ln 2 ÷ ln(1 + r) so you can see how long the same rate needs to double your money."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you calculate CAGR?",
-      "Divide the ending value by the starting value, raise the result to the power of 1 divided by the number of years, then subtract 1. For example, ₹2,50,000 growing to ₹10,00,000 over 10 years gives (4)^(1/10) − 1 = 14.87% a year."
-    ],
-    [
-      "What is the difference between CAGR and absolute return?",
-      "Absolute return is the total percentage gain over the whole period, while CAGR spreads that gain across the years with compounding. A 100% absolute return over 5 years is a CAGR of 14.87%, not 20%."
-    ],
-    [
-      "Is a good CAGR the same for every asset?",
-      "No — it depends on the asset class and the period. Broad equity indices have historically compounded in the high single to low double digits over long stretches, while cash and bonds sit far lower; judge any figure against a relevant benchmark over the same window, not in isolation."
-    ],
-    [
-      "Can CAGR be negative?",
-      "Yes. If the ending value is lower than the starting value the rate is negative, and if the investment ends at zero the CAGR is exactly −100%. Negative CAGR simply means the value shrank at that compounded rate each year."
-    ]
-  ]
-},
-  "calcium-intake-calculator-for-women": {
-  "intro": "This calculator gives the daily calcium and vitamin D a woman needs at her age and life stage, then tallies what a real day of food actually delivers against it. The targets are the Institute of Medicine dietary reference intakes: 1300 mg of calcium through ages 9 to 18, 1000 mg from 19 to 50, and 1200 mg from 51 onward, alongside 600 IU of vitamin D up to age 70 and 800 IU after. It also shows the gap in milligrams and which everyday foods would close it.",
-  "useCases": [
-    "Check whether two cups of milk and a bowl of curd actually reach the 1000 mg target, or fall short.",
-    "See how much the target jumps at 51, when the female calcium requirement rises to 1200 mg a day.",
-    "Work out a plant-based day's calcium from ragi, sesame, calcium-set tofu and fortified milk without dairy.",
-    "Compare a supplement's dose against the tolerable upper limit before adding it to an already dairy-heavy diet."
-  ],
-  "benefits": [
-    [
-      "Published reference values",
-      "Uses the IOM dietary reference intakes for both calcium and vitamin D, not rounded-off advice."
-    ],
-    [
-      "Food tally, not just a number",
-      "Adds up servings so you can see where the day's calcium is really coming from."
-    ],
-    [
-      "Upper limits shown too",
-      "Flags the 2000-3000 mg calcium ceiling and the 4000 IU vitamin D ceiling for your age band."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much calcium does a woman need per day?",
-      "1000 mg a day between 19 and 50, rising to 1200 mg from 51 onward, and 1300 mg for girls and teenagers aged 9 to 18. Those are the Institute of Medicine recommended dietary allowances, and the same figures underpin most national guidance."
-    ],
-    [
-      "Does pregnancy increase calcium needs?",
-      "No. Pregnancy and breastfeeding do not raise the calcium RDA — the gut simply absorbs a larger share of what you eat, and bone turnover adapts. A pregnant woman aged 19 to 50 stays on 1000 mg a day; a pregnant teenager stays on 1300 mg."
-    ],
-    [
-      "How much vitamin D goes with it?",
-      "600 IU (15 micrograms) a day from age 1 to 70, and 800 IU (20 micrograms) from 71, with a tolerable upper limit of 4000 IU. Vitamin D matters here because without enough of it the gut absorbs only a fraction of dietary calcium, so a high calcium intake with low vitamin D underdelivers."
-    ],
-    [
-      "Can you take too much calcium?",
-      "Yes. The tolerable upper intake level is 2500 mg a day for ages 19 to 50 and 2000 mg from 51, with 3000 mg for ages 9 to 18. Habitually exceeding it — usually through supplements rather than food — is associated with kidney stones. Absorption also drops off above roughly 500 mg taken at one time, so spreading intake across meals beats one large dose. This is informational; discuss supplements with a doctor, particularly with kidney disease or a history of stones."
-    ]
-  ]
-},
-  "calicut-university-cgpa-converter": {
-  "intro": "This converter turns a University of Calicut CBCSS grade point average into an equivalent percentage of marks by scaling it directly: percentage = CGPA x 10. That works without an offset because the CBCSS scale is constructed so each grade point is one tenth of the mid-point of its marks band, so grade point 8 stands for the 75 to 85 band whose centre is 80. It also rebuilds a semester average from course letter grades and credits when you have a grade card but no printed SGPA.",
-  "useCases": [
-    "A job portal accepts only a percentage and your Calicut consolidated grade card prints a CGPA of 7.6.",
-    "Reconstructing an SGPA from a grade card that lists letter grades and credits but no computed average.",
-    "Checking which CBCSS grade band a course mark falls into before an improvement or supplementary attempt."
-  ],
-  "benefits": [
-    [
-      "Matches the CBCSS scale",
-      "Uses straight ten-times scaling, correct for Calicut, instead of an offset formula borrowed from another university."
-    ],
-    [
-      "Grades in, average out",
-      "Letter grades and credits are enough; no marks needed."
-    ],
-    [
-      "Credit weighted, not averaged",
-      "A four credit core course moves the result more than a two credit open course, as the regulation requires."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I convert Calicut University CGPA to percentage?",
-      "Multiply the CGPA by 10. A CGPA of 7.6 is equivalent to 76% and a CGPA of 8.45 is 84.5%. No number is subtracted first, unlike the RGPV or VTU formulas that use a 0.75 offset."
-    ],
-    [
-      "How is SGPA calculated at Calicut University?",
-      "Multiply each course's grade point by its credits, add those products across the semester, and divide by the total credits. Four credits at grade A+ (9 points) plus three credits at B+ (7 points) gives (36 + 21) / 7 = 8.14."
-    ],
-    [
-      "What are the CBCSS grade points at Calicut University?",
-      "O is 10, A+ is 9, A is 8, B+ is 7, B is 6, C is 5, P is 4 and F is 0. The bands step in tens from 95 and above for O down to 35 to below 45 for P, with the pass floor raised to 40 on some science and professional programmes."
-    ],
-    [
-      "Is a CGPA of 7 a first class at Calicut University?",
-      "CBCSS reports a letter grade rather than a division, and 7.0 to below 8.0 carries the grade A. Employers that still ask for a division usually read the 70% equivalent as a first class, but the authoritative statement is the grade printed on your consolidated grade card."
-    ]
-  ]
-},
-  "calver-version-generator": {
-  "intro": "This generator turns a release date into a Calendar Versioning (CalVer) number using the token scheme defined at calver.org — YYYY, YY, 0Y, MM, 0M, WW, 0W, DD, 0D plus MINOR, MICRO and MODIFIER — so YYYY.MM.MICRO on a July 2026 release yields 2026.7.0. It is built for release managers choosing or applying a date-based scheme, and previews what the next six monthly releases will be numbered. Presets cover well-known schemes such as Ubuntu's YY.0M (24.04 = April 2024) and JetBrains' YYYY.MINOR.",
-  "useCases": [
-    "Picking between YYYY.MM.MICRO and YY.0M for a new internal platform and seeing a six-month release timeline for each",
-    "Computing the correct Ubuntu-style version (YY.0M) for an April release without off-by-one padding mistakes",
-    "Generating a week-numbered YYYY.WW build identifier for a product that ships weekly"
-  ],
-  "benefits": [
-    [
-      "Full calver.org token set",
-      "Handles padded and unpadded year, month, week and day tokens plus MINOR, MICRO and MODIFIER."
-    ],
-    [
-      "Timeline preview",
-      "Shows the version each of the next six monthly releases would receive, rolling year boundaries correctly."
-    ],
-    [
-      "Real calendar validation",
-      "Rejects impossible dates like 30 February and handles leap years when counting days and weeks."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is CalVer and how is it different from SemVer?",
-      "CalVer (Calendar Versioning) encodes the release date into the version number — Ubuntu 24.04 means April 2024 — while SemVer encodes API compatibility (major.minor.patch). CalVer suits time-based release trains and products without a programmatic API; SemVer suits libraries whose consumers need to know whether an upgrade can break them."
-    ],
-    [
-      "What does YY mean in a CalVer scheme like YY.0M?",
-      "YY is the short year: the full year minus 2000, without padding, so 2026 becomes 26 and 2106 becomes 106. 0Y is the same value zero-padded to two digits (06 for 2006). The month tokens work the same way: MM is unpadded (4) and 0M is padded (04), which is why Ubuntu's April 2024 release is 24.04."
-    ],
-    [
-      "What are MICRO and MODIFIER in CalVer?",
-      "MICRO is a plain counter for releases within the same date period — the third fix released in July 2026 under YYYY.MM.MICRO is 2026.7.2 — and it conventionally resets to 0 when the date segment rolls over. MODIFIER is an optional trailing tag such as beta1 or rc2 for pre-releases."
-    ],
-    [
-      "Which projects use calendar versioning?",
-      "Ubuntu (YY.0M, e.g. 24.04), JetBrains IDEs (YYYY.MINOR, e.g. 2026.1), and Python's pip and pytz have used CalVer-style schemes. It is popular for operating systems, SaaS platforms and data products where 'how old is this?' matters more than 'is this API-compatible?'."
-    ]
-  ]
-},
-  "canada-vac-india-appointment-day-checklist": {
-  "intro": "This planner converts a Canada visa application centre slot in India into a departure time, a biometric fee figure and a checklist you can tick off. It applies the published IRCC rules — CAD 85 per person for biometric collection with a CAD 170 family cap, a Biometric Instruction Letter that must be used within 30 days, and the under-14 and over-79 age exemptions — plus the standard VAC restrictions on bags and electronics. Aimed at visitor, study permit, work permit and permanent residence applicants attending their first biometric appointment.",
-  "useCases": [
-    "Find the time to set off for a 10:00 biometric slot when the centre is 45 minutes away in peak traffic.",
-    "Check what a family of three actually pays for biometrics before reaching the counter.",
-    "Confirm the last date your Biometric Instruction Letter can be used, counted from the day IRCC issued it.",
-    "See whether a 12-year-old child or an 82-year-old parent in the party has to give biometrics at all."
-  ],
-  "benefits": [
-    [
-      "Fee capped correctly",
-      "Applies the CAD 170 family cap and the CAD 255 performing-artist group cap instead of just multiplying by head count."
-    ],
-    [
-      "BIL deadline in writing",
-      "Enter the issue date and the 30-day expiry is calculated for you, leap years included."
-    ],
-    [
-      "Route-specific documents",
-      "Study permit applicants see the PAL and GIC items; PR applicants see police certificates and the upfront medical."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much are Canada biometrics from India?",
-      "CAD 85 per person for biometric collection. A family applying at the same time pays a maximum of CAD 170 in total, and a group of three or more performing artists pays a maximum of CAD 255. The fee is paid with the application, not in cash at the centre."
-    ],
-    [
-      "How long is the Biometric Instruction Letter valid?",
-      "You must give your biometrics within 30 days of the date IRCC issues the BIL. Book the appointment as soon as the letter arrives, because slots in busy Indian cities can fill for weeks."
-    ],
-    [
-      "Who is exempt from giving biometrics for Canada?",
-      "Applicants under 14 and applicants over 79 do not give biometrics — there is no upper age exemption for asylum claimants. Everyone else applying for a visitor visa, study permit, work permit or permanent residence gives fingerprints and a photo once, and for temporary residence they stay valid for 10 years."
-    ],
-    [
-      "What should I carry to the Canada visa application centre?",
-      "The printed Biometric Instruction Letter, your current passport and any old passports, a photocopy of the bio-data page, and the application and fee confirmations. Leave bags, laptops, power banks, sealed envelopes and food outside — and do not hand over your passport at the biometric visit unless IRCC has sent a passport request."
-    ]
-  ]
-},
-  "canada-visa-cost-estimator": {
-  "intro": "A Canada visa cost estimator totals the IRCC government fees for a temporary residence application — the visitor visa, study permit or work permit fee plus biometrics — and applies the two family maximums that make a joint application cheaper per head: CAD 500 for a family of five or more applying for visitor visas at the same time and place, and CAD 170 for two or more family members giving biometrics together. It also respects the age rule, since biometrics are only collected from applicants aged 14 to 79. Visa centre service charges, medical exams, photographs and courier are added on top, and the whole thing is converted to rupees at a rate you set.",
-  "useCases": [
-    "Costing a super visa application for parents where one applicant is over 79 and pays no biometrics fee",
-    "Checking how much a family of six saves by applying for visitor visas together rather than separately",
-    "Budgeting a study permit alongside a spouse's open work permit, including the open work permit holder fee"
-  ],
-  "benefits": [
-    [
-      "Both family caps applied",
-      "CAD 500 on visitor visas and CAD 170 on biometrics, when the conditions are met."
-    ],
-    [
-      "Age rule built in",
-      "Under-14s and over-79s are counted out of the biometrics fee automatically."
-    ],
-    [
-      "Shows the saving",
-      "A separate figure for how much the family maximums actually cut."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does a Canada visitor visa cost from India?",
-      "The IRCC visitor visa fee is CAD 100 a person, with a maximum of CAD 500 for a family of five or more applying at the same time and place, plus a biometrics fee of CAD 85 a person capped at CAD 170 for a family of two or more. On top of that you pay the visa application centre's service charge, photographs and any courier — all payable in rupees in India."
-    ],
-    [
-      "Who is exempt from the Canada biometrics fee?",
-      "Biometrics are collected only from applicants aged 14 to 79, so children under 14 and applicants aged 80 and over pay no biometrics fee for a temporary residence application, even though they still pay the visa fee. Anyone who gave biometrics for a temporary residence application within the last ten years can normally reuse them and skip the fee as well."
-    ],
-    [
-      "Does the Canada family fee cap apply if we apply separately?",
-      "No. Both maximums require the family members to apply at the same time and place — a joint submission. Five people applying individually pay CAD 100 each with no cap and CAD 85 each for biometrics, which is why staggered applications end up costing considerably more than one family submission."
-    ],
-    [
-      "Do I get my Canada visa fee refunded if I am refused?",
-      "No. The application processing fee and the biometrics fee pay for the assessment, not for the visa, and IRCC does not refund them when an application is refused or withdrawn after processing has begun. The right of permanent residence fee, which applies to permanent residence rather than visitor applications, is the main fee that is refunded if the application does not succeed."
-    ]
-  ]
-},
-  "canada-visa-cover-letter-builder": {
-  "intro": "The Canada Visa Cover Letter Builder produces the letter of explanation that accompanies an IMM 5257 temporary resident visa or a super visa application, and totals the government fees at the same time. It applies the published IRCC amounts — CAD 100 per person for the visitor visa with a CAD 500 family maximum from five applicants, CAD 85 per person for biometrics with a CAD 170 family maximum — and checks the trip against the six months a visitor is normally authorised from the day of entry. For super visa applicants it also tests the CAD 100,000 emergency medical insurance requirement.",
-  "useCases": [
-    "A parent applying for a super visa who must show CAD 100,000 of emergency medical cover valid for a year from entry",
-    "A family of five applying together and wanting the visa fee capped correctly at CAD 500 rather than CAD 500 plus per-head biometrics",
-    "A repeat traveller checking whether biometrics given eight years ago are still inside their ten-year validity"
-  ],
-  "benefits": [
-    [
-      "Fees calculated, not guessed",
-      "Applies the per-person amounts and both family caps, so the total in your letter matches what you will actually pay."
-    ],
-    [
-      "Six-month rule made explicit",
-      "Shows the date a standard six-month admission would end and warns when your plan runs past it."
-    ],
-    [
-      "Super visa rules built in",
-      "Checks the CAD 100,000 insurance minimum and reminds you that the host must meet the minimum necessary income."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does a Canadian visitor visa cost?",
-      "CAD 100 per person for the visitor visa, with a maximum of CAD 500 for a family of five or more applying at the same time, plus biometrics at CAD 85 per person to a maximum of CAD 170 per family of two or more. Biometrics are reused for ten years, so you may not have to pay that part again."
-    ],
-    [
-      "How long can I stay in Canada as a visitor?",
-      "Normally six months from the day you enter, unless the border services officer writes a different date in your passport or issues a visitor record. If no date is stamped, the six months runs from the entry date. To stay longer you apply for a visitor record from inside Canada before that date passes."
-    ],
-    [
-      "What is a letter of explanation for a Canada visa?",
-      "It is the optional cover letter you upload with an IMM 5257 application to explain, in your own words, why you are travelling, how long for, who is paying, and why you will return home. It is not a form, but visa officers read it, and it is the natural place to explain anything unusual in your file — a gap in employment, a change of name, or a previous refusal."
-    ],
-    [
-      "What insurance does a super visa require?",
-      "Emergency medical insurance of at least CAD 100,000, from a Canadian insurer or an approved non-Canadian insurer, valid for at least one year from the date you enter Canada, and paid for in full. Your inviting child or grandchild must also show income at or above the minimum necessary income for their household size — that table is updated each year, so check the current figure on canada.ca before you file."
-    ]
-  ]
-},
-  "canada-visa-rejection-reason-explainer": {
-  "intro": "This explainer translates the checkboxes on an IRCC refusal letter into the regulation behind them and a checklist of what to fix. Nearly every refused visitor visa or study permit ends with the same sentence - the officer is not satisfied you will leave Canada at the end of your stay, under section 179(b) or 216(1)(b) of the Immigration and Refugee Protection Regulations - followed by ticked factors such as travel history, purpose of visit, family ties or financial status. Select the factors on your letter to see what each one means, how serious it is, and what evidence answers it.",
-  "useCases": [
-    "Your visitor visa letter ticked travel history and family ties and you want to know what documents would answer those specific factors.",
-    "You are weighing a fresh application against an application for leave and judicial review in the Federal Court.",
-    "A study permit was refused on funds and you need to know which cost-of-living figure IRCC now expects you to prove."
-  ],
-  "benefits": [
-    [
-      "Checkbox to regulation",
-      "Each ticked factor is mapped to the IRPA or IRPR provision it comes from, so you can read the source."
-    ],
-    [
-      "Points you at the GCMS notes",
-      "The template letter says little; the officer's Global Case Management System notes say everything, and this explains how to get them."
-    ],
-    [
-      "A scored fix list",
-      "Tick off each remedy and see how much of the refusal you have actually closed before paying the fee again."
-    ]
-  ],
-  "faqs": [
-    [
-      "What does 'I am not satisfied that you will leave Canada at the end of your stay' mean?",
-      "It is the standard conclusion under section 179(b) of the Immigration and Refugee Protection Regulations - for study permits, section 216(1)(b) - that the officer was not satisfied you would depart when your authorised stay ended. It is a balance-of-ties judgement, not a finding of dishonesty. The ticked sub-factors underneath it, such as travel history, purpose of visit, family ties or employment prospects, tell you which part of the balance failed."
-    ],
-    [
-      "Can I appeal a Canadian visitor visa refusal?",
-      "There is no appeal to the Immigration Appeal Division for a refused visitor visa, study permit or work permit. Your options are to reapply with the ticked factor properly addressed, or to apply for leave and judicial review in the Federal Court under section 72 of IRPA - the filing window is 15 days if the matter arose in Canada and 60 days if it arose outside Canada, and the court reviews whether the decision was reasonable rather than making a new one."
-    ],
-    [
-      "How do I get the GCMS notes for a refused Canadian application?",
-      "You request them through an access-to-information request to IRCC. The notes contain the officer's actual reasoning, which is far more specific than the checkbox letter and is the only reliable basis for deciding what to change. Applicants outside Canada normally authorise a Canadian citizen or permanent resident to file the request on their behalf, and processing typically takes several weeks."
-    ],
-    [
-      "How long does a misrepresentation finding last in Canada?",
-      "Section 40(2)(a) of IRPA makes a person found to have misrepresented inadmissible for five years from the date of the final determination, and during that period they cannot apply for permanent residence. Materiality is judged by whether the misstatement could have induced an error in administering the Act, so an omission counts even where it would not have changed the outcome. Get legal advice before responding to a procedural fairness letter raising it."
-    ]
-  ]
-},
-  "candy-crush": {
-  "title": "Candy Crush Online — Free Match-3 Game, No Download",
-  "h1": "Candy Crush — Free Online Match-3 Puzzle Game",
-  "metaDescription": "Play a free match-3 candy game in your browser — 8×8 board, 6 candy types, cascading combos, 3 levels, classic and timed modes. No download or signup.",
-  "intro": "The Candy Crush game on AltFTool is a match-3 puzzle played on an 8×8 grid of six candy types. Every swap runs a row-and-column scanner that flags any straight run of three or more identical candies, clears them, applies gravity so the candies above drop into the gaps, refills the empty slots from the top, then re-scans — each pass through that loop counts as one cascade step and multiplies the points for that clear. Everything runs on your own device: the board, the scoring and even the sound effects, which are synthesised live with Web Audio oscillators rather than loaded as audio files. Your best score is kept in your browser's localStorage, and the game makes no network requests at all.",
-  "useCases": [
-    "A break that fits in a coffee-length gap — a level is 20-25 moves in Classic mode, or under a minute in Timed mode.",
-    "Practising match-3 pattern spotting without lives, cooldown timers between attempts, or in-app purchases.",
-    "A puzzle you can open on a work machine with nothing to install, no account, and full keyboard and color-blind support."
-  ],
-  "benefits": [
-    [
-      "No lives, no waiting, nothing to buy",
-      "Restart a level as many times as you like. There is no energy meter, no timer between attempts and no purchases — the whole game is client-side JavaScript that loads with the page."
-    ],
-    [
-      "Cascades genuinely pay off",
-      "The score multiplier is the cascade number, so the fourth clear in a chain pays at 4×. Setting up a drop that triggers a chain beats taking the first match you spot."
-    ],
-    [
-      "The board never dead-ends",
-      "After every resolution the game tests all 112 adjacent swaps on the 8×8 grid. If none of them would make a match, it re-rolls a board that is both match-free and solvable, and tells you it shuffled."
-    ],
-    [
-      "Readable by design",
-      "Each of the six candies has its own shape as well as its own colour, arrow keys move focus around the grid, and the HUD shows percent-to-target rather than a bare score."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is this the real Candy Crush Saga?",
-      "No. This is an independent match-3 puzzle game built for AltFTool and is not affiliated with, endorsed by or connected to King or Candy Crush Saga. It has its own 8×8 board, three levels and scoring rules — there are no Saga levels, boosters, lives or characters here."
-    ],
-    [
-      "Can I play Candy Crush online free without downloading anything?",
-      "Yes. The game loads as part of the web page and runs entirely in your browser — no download, no install, no account and no sign-up. There is no server involved in play, so the game keeps working even if your connection drops after the page loads."
-    ],
-    [
-      "How is the score calculated?",
-      "Each cleared candy is worth 10 points, plus a 15-point bonus for every candy beyond the third in a single match, and the whole amount is multiplied by the cascade number. So a five-candy match on the first clear scores (50 + 30) × 1 = 80, and if the falling candies trigger a second clear of three, that one scores 30 × 2 = 60."
-    ],
-    [
-      "How many levels are there and what are the targets?",
-      "Three. Level 1 needs 500 points in 25 moves, level 2 needs 1,000 in 22 moves, and level 3 needs 1,500 in 20 moves. In Timed mode you get 60, 55 and 50 seconds instead of a move limit. Your score resets to zero at the start of each level, so every target has to be hit within that level."
-    ],
-    [
-      "What happens when there are no possible moves left?",
-      "The board reshuffles automatically. After each match resolves, the game checks every adjacent swap on the grid; if not one of them would create a run of three, it generates a fresh board that starts with no matches and at least one valid move, and shows a \"No moves left — board shuffled!\" notice. It costs you nothing — no move and no time."
-    ],
-    [
-      "Can I play it with a keyboard instead of a mouse?",
-      "Yes. Arrow keys move focus between tiles, and Enter or Space selects a candy; selecting a second candy next to it performs the swap. With a mouse or touchscreen you can either drag a candy about 18 pixels toward a neighbour, or tap it and then tap the neighbour."
-    ],
-    [
-      "Is the game playable if I'm colour blind?",
-      "Yes. The six candies are distinguished by shape as well as colour — circle, square, star, leaf, droplet and hexagon — so matches can be read without relying on the red, orange, yellow, green, blue and purple palette at all."
-    ],
-    [
-      "Does it save my high score?",
-      "Yes, in your browser's own localStorage, alongside your sound on/off preference. That means the score is tied to that one browser on that one device: it survives a page refresh, but it is not synced anywhere and it disappears if you clear site data or play in a private window."
-    ]
-  ],
-  "steps": [
-    "Drag a candy onto the square next to it, or tap the candy and then tap its neighbour, to swap the two. Swaps that don't create a match snap back and don't cost you a move.",
-    "Line up three or more of the same candy in a row or column. They clear, the candies above fall into the gaps, new ones refill from the top, and any match that forms in the process clears again at a higher multiplier.",
-    "Reach the level's target score before your moves run out — or before the clock runs out, if you switch to Timed mode with the button under the board."
-  ]
-},
-  "canva-ai-prompt-builder": {
-  "intro": "The Canva AI Prompt Builder writes a structured design brief that pins down the four things generative design tools get wrong without instruction: exact canvas size, aspect ratio, brand palette and type, and how much copy actually fits. Canvas sizes are real Canva presets (Instagram post 1080 x 1080, YouTube thumbnail 1280 x 720, A4 poster 2480 x 3508 at 300 DPI), aspect ratios are reduced with the greatest common divisor, and the character budget is derived from a 16 px minimum rendered text size at the smallest width the design is normally viewed at. It is for marketers and small-business owners who want on-brand output rather than a lucky first draft.",
-  "useCases": [
-    "Briefing a set of Instagram posts where the headline must stay readable at the roughly 470 px width a feed post is actually rendered at",
-    "Getting three genuinely different layout options for a launch announcement instead of three colour swaps of the same idea",
-    "Preparing an A4 poster brief that already states 210 x 297 mm at 300 DPI, CMYK and 3 mm bleed so the file is press-ready"
-  ],
-  "benefits": [
-    [
-      "Real preset dimensions",
-      "Every format carries its actual Canva pixel size and reduced aspect ratio, so nothing gets cropped on export."
-    ],
-    [
-      "Legibility-checked copy",
-      "Headline and supporting-line limits come from a 16 px minimum readable size, not from guesswork about brevity."
-    ],
-    [
-      "Brand slots that hold",
-      "Palette and type are stated as constraints with a dominant colour, which is what stops output drifting off brand between options."
-    ]
-  ],
-  "faqs": [
-    [
-      "What size should an Instagram post be in Canva?",
-      "1080 x 1080 pixels for a square feed post and 1080 x 1920 for a Story or Reel cover. A square post is rendered around 470 px wide in the feed, so text set smaller than roughly 37 px on the 1080 px canvas falls below the 16 px readable floor once it is displayed."
-    ],
-    [
-      "How long should a headline be on a social graphic?",
-      "It depends on the canvas and how small it is viewed. On a YouTube thumbnail seen at about 210 px wide in a results grid, the readable budget is around 22 characters across two lines; on an A4 poster read at arm's length it is closer to 85. This tool calculates the number for whichever format you pick."
-    ],
-    [
-      "How do I write a good prompt for Canva AI?",
-      "State the canvas size and format first, then the subject and audience, then the brand palette and fonts as hard constraints, then the exact copy you want set, then a named visual direction, and finally what to leave out. Ambiguity is what produces generic output, so an explicit 'do not' list matters as much as the brief itself."
-    ],
-    [
-      "What resolution should a Canva design be for printing?",
-      "300 DPI. At 300 DPI an A4 page is 2480 x 3508 pixels and a US business card is 1050 x 600 pixels. Export as PDF Print with CMYK and 3 mm bleed, and keep all text roughly 7% in from every edge so nothing is lost when the sheet is trimmed."
-    ]
-  ]
-},
-  "canvas-wrap-bleed-calculator": {
-  "intro": "Canvas Wrap Bleed Calculator works out the full print size a gallery-wrapped canvas needs: print width equals face width plus twice the stretcher bar depth plus twice the back tuck, and the same again for height. It reports the bleed on every edge, the safe zone your subject must stay inside on the front face, how much of the image disappears around the sides, and the pixel count needed to hit 300 DPI at that print size. Aimed at photographers and print buyers sizing a file before it goes to a canvas lab.",
-  "useCases": [
-    "Size a 40 × 50 cm canvas on 1.5 inch bars and find the 55.2 × 65.2 cm sheet you actually have to print.",
-    "Check whether a subject's head or a signature will be lost around the side of a deep 2 inch gallery wrap.",
-    "See how much extra canvas a wrap consumes compared with a flat print of the same visible size.",
-    "Confirm a 6000 pixel wide file still clears 150 DPI once the bleed is added to the print dimensions."
-  ],
-  "benefits": [
-    [
-      "Exact sheet size",
-      "Face size plus depth plus tuck on all four edges, in millimetres, centimetres or inches."
-    ],
-    [
-      "Safe zone drawn out",
-      "Shows how far in from the sheet edge your important detail has to start."
-    ],
-    [
-      "Resolution check",
-      "Compares your file width against the printed sheet and flags anything under 150 DPI."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much bleed does a gallery wrapped canvas need?",
-      "Bleed per edge equals the stretcher bar depth plus the back tuck, so a standard 1.5 inch bar with a 1.5 inch tuck needs 3 inches (about 76 mm) on every side — 6 inches added to both the width and the height. Slim 0.75 inch bars with a 1.5 inch tuck need about 57 mm per edge."
-    ],
-    [
-      "What is the safe zone on a canvas print?",
-      "The safe zone is the part of the front face where nothing gets bent over the corner fold, normally at least 0.5 inch (about 13 mm) inside the fold line. Faces, text and signatures should sit inside it; anything closer to the edge risks landing on the rounded corner or being pulled out of square during stretching."
-    ],
-    [
-      "Should I use an image wrap or a mirrored wrap?",
-      "Use an image wrap when the photo has spare margin you are happy to lose around the sides, and a mirrored wrap when the composition reaches the edges — mirroring flips a strip of the image outward so the sides are filled without cropping the front. A solid colour wrap is the third option and loses nothing at all."
-    ],
-    [
-      "What resolution do canvas prints need?",
-      "Most canvas labs ask for 150 DPI as a minimum and 300 DPI as the target, measured across the full printed sheet including bleed rather than just the visible face. Canvas texture hides softness better than photo paper, so 150 DPI usually looks acceptable on large pieces viewed from a normal distance."
-    ]
-  ]
-},
-  "caption-emoji-density-checker": {
-  "intro": "Emoji density is the number of emoji measured against the words around them, and it matters because a screen reader announces each emoji by its Unicode name in the position it appears — so a caption reading 'we just 🚀 shipped it' is heard as 'we just rocket shipped it'. This checker counts emoji as whole grapheme clusters (a flag or a family sequence counts as one, not four), reports emoji per 100 words, and flags the four placements that cause trouble: long runs, emoji inside a sentence, an emoji opening the caption, and the same one repeated. Written for social managers who want emoji to stay decorative rather than load-bearing.",
-  "useCases": [
-    "Check a launch caption before publishing, when enthusiasm has quietly added eleven emoji.",
-    "Show a team why an emoji used in place of a word breaks the sentence when it is read aloud.",
-    "Compare a caption with and without its emoji to see whether the words still carry the message.",
-    "Audit a brand's caption style so accessibility guidance becomes a number rather than an opinion."
-  ],
-  "benefits": [
-    [
-      "Counts what is spoken",
-      "Grapheme-cluster counting, so joined sequences and flags are one emoji each, as announced."
-    ],
-    [
-      "Placement, not just count",
-      "Separates emoji after a sentence from emoji inside one — the difference that matters."
-    ],
-    [
-      "Stated thresholds",
-      "Every flag names the limit it crossed, so the result can be argued with rather than trusted blindly."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many emoji should a social caption have?",
-      "Keep it to a handful — this tool flags more than five in a single caption. The reason is not taste: each emoji is read out by its name, so a caption with a dozen becomes a spoken list before the message arrives."
-    ],
-    [
-      "Are emoji bad for accessibility?",
-      "Not in themselves. Problems come from placement and volume: emoji inside a sentence interrupt it when announced, long runs read as a string of unrelated words, and an emoji used in place of a word leaves nothing when the name does not fit the sentence. Placing one or two after the sentence is generally fine."
-    ],
-    [
-      "How does a screen reader read an emoji?",
-      "It announces the Unicode name — 'fire', 'red heart', 'party popper'. Skin-tone modifiers are announced too, as in 'thumbs up medium-dark skin tone', and joined sequences like a family emoji are announced as several words. Exact wording varies between screen readers and platforms."
-    ],
-    [
-      "Should the emoji go at the start or the end of a caption?",
-      "The end. An emoji at the start is the first thing announced and the first thing shown in a truncated feed preview, so it spends the most valuable position on a picture name instead of your point."
-    ]
-  ]
-},
-  "caption-length-optimizer-per-platform": {
-  "intro": "Caption Length Optimizer measures one caption against the hard character limit and the visible-before-\"more\" fold of every major social platform at once. It counts by code point so an emoji costs one character, applies X's rule that any link counts as a fixed 23 characters after t.co wrapping, and shows the exact words that survive above each platform's fold. Limits covered include Instagram's 2,200, X's 280, LinkedIn's 3,000, Threads' 500 and a YouTube title's 100.",
-  "useCases": [
-    "Repurpose one caption across Instagram, TikTok, LinkedIn and X without rewriting it four times to find what fits.",
-    "Check whether the hook of a LinkedIn post survives the mobile \"...see more\" break at roughly 140 characters.",
-    "Confirm a post with two links still fits X's 280 characters once t.co wrapping is applied.",
-    "Catch a 31st hashtag before Instagram rejects the post at its 30-hashtag ceiling."
-  ],
-  "benefits": [
-    [
-      "Every platform at once",
-      "One caption checked against twelve limits and fold points, with a per-platform pass or fail."
-    ],
-    [
-      "Link maths handled",
-      "X charges 23 characters per URL regardless of length; that is applied automatically."
-    ],
-    [
-      "See the fold",
-      "Each platform shows the exact visible slice, so you know whether the point lands before the cut."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long can an Instagram caption be?",
-      "2,200 characters, but only about the first 125 show in the feed before \"... more\". Instagram also rejects a post carrying more than 30 hashtags, and hashtags count toward the same 2,200 characters."
-    ],
-    [
-      "How many characters is a post on X?",
-      "280 characters on a standard account and 25,000 with Premium. Links are the catch: every URL is wrapped by t.co and counted as exactly 23 characters, so a 90-character link still only costs 23."
-    ],
-    [
-      "Where does LinkedIn cut off a post?",
-      "The limit is 3,000 characters, and the feed collapses the post behind \"...see more\" at roughly 140 characters on mobile — earlier than on desktop. Front-load the claim in the first line or most readers never expand it."
-    ],
-    [
-      "Do emojis count as one character or two?",
-      "It depends on the platform's counting method; this tool counts by Unicode code point, so a standard emoji costs one. Multi-part emoji such as flags or skin-tone and family sequences are made of several code points and can cost more, so leave a little headroom when a caption is right at the limit."
-    ]
-  ]
-},
-  "car-ac-fuel-cost-impact": {
-  "intro": "Car air conditioning costs fuel because the compressor is a mechanical load on the engine, and this calculator prices that load properly: average compressor shaft power multiplied by the engine's brake specific fuel consumption — about 300 g/kWh for a petrol engine at part load and 220 g/kWh for a diesel — then converted to litres at the fuel's density. Compressor power itself scales with how far the cabin is being pulled below outside temperature, sun exposure and how many people are adding body heat, so the answer changes with conditions instead of being a fixed percentage.",
-  "useCases": [
-    "You crawl through 38°C city traffic for two hours a day and want to know what the AC alone adds to the monthly fuel bill.",
-    "You are deciding whether to run the AC or open the windows on a highway drive and want the real size of the penalty.",
-    "Your mileage dropped sharply in summer and you want to check whether the AC explains it or something else is wrong."
-  ],
-  "benefits": [
-    [
-      "Load, not a flat percentage",
-      "Compressor power moves with the temperature gap, sun and occupant count, so a mild morning and a 45°C afternoon give different answers."
-    ],
-    [
-      "Speed changes the percentage",
-      "The AC costs the same per hour whether you crawl or cruise, so the mileage penalty is far larger in traffic — the tool shows both."
-    ],
-    [
-      "Fuel-specific engine efficiency",
-      "Diesel engines burn about a third less fuel per kilowatt-hour of shaft work, so the same AC costs a diesel less."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much mileage does car AC reduce?",
-      "Typically 10–20% in city driving and 5–10% on a highway. The compressor draws roughly the same power per hour either way, so the penalty is proportionally much bigger when the engine is otherwise doing little — a car at 16 km/l crawling at 30 km/h in 38°C heat loses about 19%, while the same car at 80 km/h loses about 8%."
-    ],
-    [
-      "Is it cheaper to use AC or open the windows?",
-      "Below roughly 60–80 km/h, open windows generally cost less; above that the extra aerodynamic drag from open windows usually exceeds the compressor's fuel draw. In stop-start traffic the AC is at its most expensive relative to the fuel you are burning anyway, which is where opening the windows saves most."
-    ],
-    [
-      "Does setting a lower temperature use more fuel?",
-      "Yes, because the compressor has to remove more heat to hold a bigger gap between cabin and outside air. Dropping the setpoint from 24°C to 20°C in 38°C weather raises the temperature gap from 14 to 18 degrees — about a 29% larger cooling load, and a proportionally larger fuel cost."
-    ],
-    [
-      "Why does a diesel car lose less mileage to the AC?",
-      "Because a diesel engine converts fuel into shaft work more efficiently. It burns roughly 220 grams of fuel per kilowatt-hour of work against about 300 for a petrol engine, so the same compressor load costs it noticeably less fuel — before you account for diesel's higher energy content per litre."
-    ]
-  ]
-},
-  "car-ac-gas-refill-cost": {
-  "intro": "The Car AC Gas Refill Cost calculator builds a regas estimate the way a workshop builds the invoice: refrigerant charged by weight at a rate per gram, plus labour, plus any parts and service-bay charges, with 18% GST — the Indian rate on motor vehicle servicing — applied to the total. Every money figure is editable, because rates differ sharply by city and workshop, while the charge weight itself is fixed by the manufacturer and printed on the underbonnet AC label. It also compares the same job on R134a and R1234yf, which is where most of the price difference between an older and a newer car comes from.",
-  "useCases": [
-    "Sanity-checking a workshop quote for a regas before agreeing to the job",
-    "Budgeting for a newer car that runs R1234yf rather than the cheaper R134a",
-    "Working out how much of a quoted bill is gas and how much is labour, parts and tax"
-  ],
-  "benefits": [
-    [
-      "Itemised like the invoice",
-      "Separates gas, labour, parts and service charges instead of quoting one lump sum."
-    ],
-    [
-      "Refrigerant aware",
-      "Handles R134a and R1234yf separately, and flags R12 systems as needing a retrofit, not a refill."
-    ],
-    [
-      "Editable rates",
-      "Defaults are indicative; replace them with your workshop's actual figures for a real comparison."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does a car AC gas refill cost?",
-      "The gas itself is charged by weight, so cost depends on the refrigerant and the charge your car takes — typically 400 to 500 g for a hatchback and 650 to 900 g for an SUV. R134a is inexpensive per gram, while R1234yf costs many times more, which is why the same job on a newer car can run several times the bill. Add labour, any parts, and 18% GST."
-    ],
-    [
-      "How often should car AC gas be refilled?",
-      "Ideally never on a schedule. Refrigerant is not consumed the way oil or fuel is — it circulates in a sealed loop. If the system has lost enough gas to cool poorly, it has a leak, and refilling without finding that leak simply means paying for the same gas again in a few months."
-    ],
-    [
-      "What is the difference between R134a and R1234yf?",
-      "R1234yf is the newer refrigerant introduced to cut climate impact: its global warming potential is about 4, against roughly 1430 for R134a. It costs far more per gram, is mildly flammable, and requires its own recovery and charging machine, so not every workshop can service it. The two are not interchangeable — check the underbonnet label before any work."
-    ],
-    [
-      "Why does my car AC stop cooling after a few months?",
-      "Almost always a leak that was never found. Common leak points are the condenser at the front of the car, where stone chips and corrosion attack it, the O-rings at every joint, and the compressor shaft seal. Ask for a UV dye or electronic sniffer leak test, and for the O-rings and receiver drier to be replaced whenever the system has been opened."
-    ]
-  ]
-},
-  "car-battery-replacement-planner": {
-  "intro": "The Car Battery Replacement Planner estimates how much service life is left in a starter battery by taking its typical life for the construction fitted — flooded, maintenance-free, EFB or AGM — adjusting it for heat and charging pattern, then subtracting a penalty for the failure symptoms you are already seeing. It is for drivers deciding whether to replace a battery now or wait, especially before a long trip or a cold season. The two adjustments that matter most are sustained under-bonnet heat and habitual short trips, because both leave a lead-acid battery permanently undercharged.",
-  "useCases": [
-    "Deciding whether a three-year-old battery will survive one more winter before a long highway trip",
-    "Working out why a start-stop car keeps eating batteries every 18 months",
-    "Checking a used car's battery age against the symptoms the seller dismissed as normal"
-  ],
-  "benefits": [
-    [
-      "Type-aware baseline",
-      "Uses a separate typical life for flooded, MF, EFB and AGM instead of one generic number."
-    ],
-    [
-      "Symptoms count",
-      "Jump starts, slow cranking and warning lights reduce the estimate, not just the calendar."
-    ],
-    [
-      "Actionable output",
-      "Returns a clear verdict plus the specific habit changes that would extend the battery's life."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long does a car battery last?",
-      "Typically 3 to 5 years, varying by construction: around 36 months for a conventional flooded battery, 48 months for a sealed maintenance-free one, and 54 to 60 months for EFB and AGM batteries fitted to start-stop cars. Sustained heat is the biggest single reducer — lead-acid life roughly halves for every 10 to 15 °C of extra sustained temperature."
-    ],
-    [
-      "What are the signs a car battery is failing?",
-      "The clearest sign is slow cranking that is worst first thing in the morning, followed by needing a jump start, headlights dimming at idle, the battery warning light appearing, and the clock or radio presets resetting. A swollen or bulging case is different — that battery is gassing internally and should be replaced immediately, whatever its age."
-    ],
-    [
-      "Why does my battery keep dying on short trips?",
-      "Starting the engine takes a large slug of charge, and a drive of under 15 minutes does not give the alternator enough time to put it back. Repeating that daily leaves the battery permanently at a partial state of charge, which sulphates the plates and permanently reduces capacity. One 30-minute continuous run a week, or a monthly session on a smart charger, largely prevents it."
-    ],
-    [
-      "Can I fit a normal battery in a start-stop car?",
-      "It will physically work but will fail early, often within half the normal life. Start-stop systems cycle the battery constantly at a partial state of charge, which is exactly what EFB and AGM constructions are designed for and what a plain flooded battery is not. Many cars also need the new battery registered to the energy-management system, so have it fitted by someone with the right tool."
-    ]
-  ]
-},
-  "car-depreciation-calculator": {
-  "intro": "Car depreciation follows a declining-balance curve — each year's loss is a percentage of what the car was worth at the start of that year, not of its original price — and this calculator plots that curve out to ten years alongside the separate IDV figure your insurer uses. It takes ex-showroom price, age, kilometres run and your own depreciation rates, then reports value today, total loss, loss per kilometre and the effective compound rate you have actually realised. The insurance side follows the Indian Motor Tariff schedule: 5% off in the first six months, 15% to one year, 20%, 30%, 40% and 50% at each subsequent year up to five.",
-  "useCases": [
-    "Deciding whether to sell a four-year-old car now or run it another year, by comparing this year's rupee loss against the next one's",
-    "Sanity-checking a dealer's exchange quote against the value the curve implies for the car's age and odometer reading",
-    "Working out the true cost per kilometre of a car once depreciation is counted alongside fuel and servicing"
-  ],
-  "benefits": [
-    [
-      "Two curves, clearly separated",
-      "Market resale value and the statutory IDV are shown side by side instead of being confused."
-    ],
-    [
-      "Kilometres actually change the answer",
-      "Running above or below 12,000 km a year adjusts the value, capped so it never dominates."
-    ],
-    [
-      "Loss per year and per kilometre",
-      "Turns an abstract percentage into the rupee figure that decides whether to keep or sell."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does a car depreciate in the first year in India?",
-      "A mainstream Indian car typically loses about 15% to 20% of its ex-showroom price in the first year, and the drop is steepest the moment it is registered because the second owner pays no road tax, registration fee or dealer margin. For insurance purposes the figure is fixed rather than estimated: the Indian Motor Tariff sets IDV depreciation at 5% up to six months and 15% from six months to one year."
-    ],
-    [
-      "What is IDV and is it the same as resale value?",
-      "IDV is the Insured Declared Value — the maximum a comprehensive motor policy pays out on a total loss or theft — and it is not the same as resale value. It is calculated as the manufacturer's listed selling price minus a fixed depreciation percentage set by the tariff schedule, excluding registration cost and insurance premium. Resale value depends on the market, so the two figures routinely differ by a wide margin."
-    ],
-    [
-      "How is car depreciation calculated?",
-      "The standard method is declining balance: value after n years = price × (1 − first-year rate) × (1 − later-year rate)^(n − 1). At a 20% first year and 15% thereafter, a ₹12,00,000 car is worth ₹9,60,000 after one year and ₹5,89,560 after four — 49% of what was paid. Straight-line depreciation, which subtracts the same rupee amount every year, is used in company accounts but describes the used-car market poorly."
-    ],
-    [
-      "Do high kilometres reduce a car's value a lot?",
-      "Yes, but less than age does. Against a benchmark of roughly 12,000 km a year, buyers discount unusually high readings and pay a modest premium for low ones — this calculator applies about 0.5% of value per 1,000 km away from the benchmark, capped at 20% either way. Beyond that, a documented service history and a clean accident record usually move the price more than the odometer."
-    ]
-  ]
-},
-  "car-detailing-cost-calculator": {
-  "intro": "The Car Detailing Cost Calculator compares wax, polymer sealant, Teflon, ceramic coating, graphene coating and paint protection film on cost per year rather than sticker price, by dividing the ownership period by each treatment's real durability and counting how many times you would have to buy it. A carnauba wax lasting about three months is applied twenty times across a five-year period, which changes the arithmetic completely against a ceramic coating rated for two years. Routine washing is added identically to every option, so the difference between rows is purely the protection.",
-  "useCases": [
-    "Deciding between a ceramic coating and repeated waxing for a car you plan to keep five years",
-    "Checking whether front-end-only PPF is better value than full-body film for stone chip protection",
-    "Working out how much of a detailing quote is protection and how much is just routine washing"
-  ],
-  "benefits": [
-    [
-      "Cost per year, not per visit",
-      "Divides the ownership period by each treatment's real durability and counts the repeat applications."
-    ],
-    [
-      "Size-adjusted pricing",
-      "Applies a body-size multiplier so an SUV quote is not compared against a hatchback price."
-    ],
-    [
-      "Honest durability figures",
-      "Uses realistic service life rather than marketing claims, and flags that machine polish is not protection at all."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is ceramic coating worth it?",
-      "It depends on how long you keep the car and how much you value the easy cleaning. A ceramic coating typically protects for around two years with periodic maintenance, so over five years you pay for it roughly three times. Compared against waxing every three months, it usually wins on convenience and consistency of finish, and can be close on cost — run both through the comparison with your own quotes."
-    ],
-    [
-      "How long does a ceramic coating actually last?",
-      "Around two years of real protection for a professionally applied 9H coating, and about three for a graphene variant, provided the paint was properly decontaminated and corrected first and the car is washed with pH-neutral shampoo. Claims of five to nine years generally describe the coating's chemical potential rather than what survives real road use."
-    ],
-    [
-      "Is PPF better than ceramic coating?",
-      "They solve different problems. Paint protection film is a physical layer that absorbs stone chips and light scratches; a ceramic coating is a chemical layer that resists bird lime, water spots and UV but stops nothing physical. Front-end-only PPF covers the bonnet, bumper and mirrors, which is where almost all stone chips actually land, at a fraction of full-body cost."
-    ],
-    [
-      "Does a car need machine polishing before coating?",
-      "Yes, if the paint has swirls or scratches you want removed, because a coating locks in whatever is underneath it. Understand what polishing is though: it removes a thin layer of clear coat, so it cannot be repeated indefinitely on the same panel. On a nearly new car, a light decontamination and a single-stage finishing polish is usually all that is needed."
-    ]
-  ]
-},
-  "car-exchange-vs-private-sale": {
-  "intro": "A dealer exchange quote and a private-sale asking price are not comparable numbers until both are reduced to what actually lands in your hand, on the same date. This comparison nets the exchange offer and loyalty bonus against a private sale after reconditioning, listing fees, RTO paperwork, the depreciation a car keeps accruing while it waits for a buyer, and the present value of money that arrives weeks later. It also solves for the break-even asking price — the figure a private sale must genuinely close at to beat the dealer, which is usually well above the offer on the table.",
-  "useCases": [
-    "Testing whether a ₹25,000 exchange bonus is enough to give up a private sale that would fetch ₹70,000 more on paper",
-    "Deciding how long a private listing is worth running once each unsold day is costing depreciation, insurance and lost interest",
-    "Working out the minimum private price worth negotiating for when the dealer offer expires with the new car booking"
-  ],
-  "benefits": [
-    [
-      "Same date, same footing",
-      "Private proceeds are discounted back to the day the exchange would have paid out."
-    ],
-    [
-      "Break-even price, not a gut feel",
-      "Solves for the exact private price that matches the dealer, so you know your walk-away number."
-    ],
-    [
-      "Counts the costs people forget",
-      "Detailing, listing fees, RTO transfer, holding cost and your own hours all appear as line items."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is it better to exchange a car at the dealer or sell it privately?",
-      "Privately, usually — but by less than the sticker gap suggests. A private buyer typically pays 10% to 20% more than a dealer's exchange quote, and this calculator shows how much of that premium is eaten by reconditioning, listing costs, RTO paperwork, weeks of depreciation and the delay in getting paid. Run your own numbers: if the break-even price is close to what you realistically expect, the exchange is the better trade because it is certain and immediate."
-    ],
-    [
-      "How is the exchange bonus different from the dealer's offer for my car?",
-      "The dealer's offer is what they will pay for your vehicle; the exchange or loyalty bonus is a separate discount the manufacturer funds on the new car, and it exists only if you buy that new car through that dealer. Because it is conditional, it disappears if you change variant, change dealer or walk away, so treat it as money only once the terms are in writing on the booking form."
-    ],
-    [
-      "What paperwork does a private car sale need in India?",
-      "Ownership transfer needs Forms 29 and 30 signed by both parties and filed with the RTO, plus the original RC, a valid PUC certificate and insurance transfer. If the car was financed you also need Form 35 and a bank NOC to remove the hypothecation, and an inter-state sale needs an NOC from the selling RTO. Until the transfer is recorded, challans and liability stay with the seller."
-    ],
-    [
-      "How much does waiting to sell cost?",
-      "More than most sellers expect. On a ₹5,20,000 car depreciating 15% a year, roughly ₹200 a day evaporates from the value alone, and insurance, parking and the interest the money is not earning add to it. The tool prints a per-day cost of staying unsold so you can see when holding out for a higher price stops paying for itself."
-    ]
-  ]
-},
-  "car-loan-emi-calculator": {
-  "intro": "Car Loan EMI Calculator turns an on-road price, down payment, interest rate and tenure into the exact monthly EMI banks would charge, using the standard reducing-balance formula. It also shows total interest, the split between principal and interest, and a year-by-year amortisation schedule, plus one-time costs like the processing fee and upfront insurance so you see the real cash outgo. Useful for anyone comparing dealer finance quotes against a bank or NBFC offer before signing.",
-  "useCases": [
-    "Compare a 5-year loan at 9.5% from your bank with the dealer's in-house finance offer at a different rate and tenure.",
-    "See how raising the down payment from 10% to 25% of the on-road price cuts both the EMI and the lifetime interest.",
-    "Check whether a used-car loan at 13-15% still fits your monthly budget before you commit to the vehicle.",
-    "Work out the outstanding balance at the end of year three if you plan to foreclose or trade the car in early."
-  ],
-  "benefits": [
-    [
-      "Real bank formula",
-      "Uses reducing-balance EMI — the same method used in a sanction letter, not a flat-rate approximation."
-    ],
-    [
-      "Full amortisation view",
-      "Year-wise principal, interest and closing balance show exactly when the loan starts eating into principal."
-    ],
-    [
-      "True cost of ownership",
-      "Down payment, processing fee and upfront insurance are added on top of the repayment total."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is car loan EMI calculated?",
-      "EMI = P x r x (1+r)^n / ((1+r)^n - 1), where P is the loan amount, r is the monthly interest rate (annual rate divided by 12 and by 100) and n is the number of monthly instalments. Interest is charged on the reducing balance, so the interest portion of each EMI falls over time."
-    ],
-    [
-      "How much down payment should I pay on a car loan?",
-      "Most lenders finance 80-90% of the on-road or ex-showroom price, so a 10-20% down payment is typical. A larger down payment reduces the financed amount, the EMI and the total interest, but keep enough cash aside for registration, insurance and an emergency buffer."
-    ],
-    [
-      "Why is my dealer's flat rate cheaper than the bank's reducing rate?",
-      "A flat rate charges interest on the full original principal for the whole tenure, so a 6% flat rate is roughly equivalent to an 11-12% reducing rate. Always convert both quotes to EMI and total interest before comparing."
-    ],
-    [
-      "Does this calculator include GST and other charges?",
-      "It adds the processing fee and any upfront add-ons you enter to the total cash outgo, but it does not compute GST on the fee, documentation charges or hypothecation costs. Treat the output as an informational estimate and confirm the final figures in your sanction letter."
-    ]
-  ]
-},
-  "car-ownership-cost-analyzer": {
-  "intro": "Car Ownership Cost Analyzer works out what a car costs you per month, per kilometre and across 1, 3, 5 and 10 years by adding four blocks together: the loan EMI, running costs (fuel, insurance, maintenance, parking, tolls), one-off charges like registration and accessories, and depreciation — the purchase price minus what the car is worth when you sell it. It is built for Indian buyers deciding between a purchase and staying with cabs. The EMI uses the standard reducing-balance formula, EMI = P × r × (1+r)^n / ((1+r)^n − 1), and fuel is compounded forward each year at the inflation rate you enter.",
-  "useCases": [
-    "Compare a ₹10 lakh car on a 5-year, 9% loan against Ola and Uber at ₹18/km for the same 1,200 km a month",
-    "Check what happens to the monthly figure if petrol rises 10%, you double your driving, or the loan rate goes up two points — the scenario buttons apply each change directly",
-    "See what share of your take-home pay the car eats before you sign the loan, using the 15% comfortable / 25% manageable bands"
-  ],
-  "benefits": [
-    [
-      "Depreciation is counted",
-      "Most calculators stop at EMI plus fuel; this one charges the price-minus-resale gap over your ownership period, which is usually the single largest cost."
-    ],
-    [
-      "Fuel inflation compounds",
-      "Year 2's fuel bill is year 1's grown by your inflation rate, so a 10-year projection does not quietly assume today's pump price forever."
-    ],
-    [
-      "Owning versus cabs, with a break-even year",
-      "Cab cost is projected over the same 1, 3, 5 and 10-year horizons and the tool names the first year at which owning wins, or says it never does."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is the car loan EMI calculated?",
-      "With the standard reducing-balance formula: EMI = P × r × (1+r)^n / ((1+r)^n − 1), where P is the loan amount, r is the annual rate divided by 12 and by 100, and n is the tenure in months. On ₹8,00,000 at 9% for 5 years that is ₹16,607 a month, and ₹1,96,401 of interest across the 60 instalments."
-    ],
-    [
-      "What monthly car cost is affordable?",
-      "This tool flags under 15% of monthly take-home pay as comfortable and 15-25% as manageable; above 25% it warns. Those bands are a little wider than the well-known 20/4/10 rule (20% down, 4-year loan, all car costs under 10% of gross income) because the figure here already includes fuel, tolls and parking, which the 10% rule usually leaves out."
-    ],
-    [
-      "Does the calculator include depreciation?",
-      "Yes. Enter the resale value as a percentage of the purchase price and the ownership period, and the tool charges the difference across those years. A ₹10,00,000 car worth 40% after 5 years depreciates ₹6,00,000 — about ₹10,000 a month, which is often more than the fuel bill."
-    ],
-    [
-      "Is it cheaper to own a car or take Ola and Uber?",
-      "It depends almost entirely on distance. Below roughly 500 km a month cabs nearly always win, because EMI, insurance and depreciation run whether you drive or not. The tool projects both sides over 1, 3, 5 and 10 years and reports the first horizon at which total ownership cost, depreciation included, falls below the cab bill."
-    ]
-  ]
-},
-  "car-purchase-savings-planner": {
-  "intro": "This planner answers the three questions a car purchase actually turns on: what to save each month for the down payment, whether the EMI is affordable, and what the car costs across the years you keep it. Affordability is tested against the 20/4/10 rule — at least 20% down, a loan of no more than four years, and total car costs including fuel, insurance and servicing under 10% of gross monthly income. Ownership cost is down payment plus EMIs plus running costs, less a resale value estimated from the India Motor Tariff depreciation schedule used to fix Insured Declared Value.",
-  "useCases": [
-    "Deciding between a five-year loan with a low EMI and a four-year loan that passes the 20/4/10 rule.",
-    "Finding the monthly saving that builds a 20% down payment two years before you plan to buy.",
-    "Comparing a petrol car with high mileage against a costlier one with lower running costs on total cost per kilometre."
-  ],
-  "benefits": [
-    [
-      "Affordability tested, not assumed",
-      "Each leg of the 20/4/10 rule is checked separately, so you can see exactly which one the purchase fails."
-    ],
-    [
-      "Resale from a published schedule",
-      "Depreciation follows the motor-tariff IDV table rather than a made-up percentage."
-    ],
-    [
-      "Running costs included",
-      "Fuel derived from your annual kilometres and mileage, plus insurance and servicing, is where most of the surprise lives."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the 20/4/10 rule for buying a car?",
-      "Put down at least 20% of the price, keep the loan to four years or less, and keep all car costs — EMI plus fuel, insurance and maintenance — under 10% of your gross monthly income. It is a budgeting guideline rather than a lending rule, and a longer loan usually means the car is more expensive than the budget supports."
-    ],
-    [
-      "How much does a car depreciate in India?",
-      "The India Motor Tariff depreciation schedule used to fix Insured Declared Value writes down the ex-showroom price by 5% under six months, 15% at six months to a year, 20% in years one to two, 30% in years two to three, 40% in years three to four and 50% at four to five years. Past five years there is no tariff figure and the value is agreed between insurer and owner."
-    ],
-    [
-      "Should I take a longer car loan to reduce the EMI?",
-      "It lowers the monthly payment but raises total interest and keeps you in negative equity for longer, because a car depreciates faster than the loan amortises. On a ₹10 lakh loan at 9.5%, stretching from four to five years cuts the EMI by roughly ₹4,000 but adds well over ₹50,000 of interest."
-    ],
-    [
-      "Is the on-road price the same as the ex-showroom price?",
-      "No. On-road price is ex-showroom plus road tax, registration, insurance and handling, typically adding 10–20% depending on the state and the vehicle. Road tax and registration have no resale value, which is why the depreciation schedule is applied to the ex-showroom share rather than the full on-road figure."
-    ]
-  ]
-},
-  "car-rental-cost-comparison": {
-  "intro": "A car rental cost comparison prices competing self-drive quotes against one real trip instead of their headline day rates. It adds the daily tariff, the per-day insurance or CDW, the excess-kilometre charge on whatever you drive beyond the included allowance and any delivery fee, applies GST to that rental subtotal, then adds fuel separately — petrol and diesel sit outside GST in India, so they belong after tax. Prepaid-tank policies are costed with the unrefunded litres included, and the refundable deposit is reported but never counted as spend.",
-  "useCases": [
-    "Choosing between a ₹2,000-a-day quote with 150 free km and a ₹2,800-a-day unlimited-km quote for a 600 km weekend",
-    "Working out whether a prepaid fuel tank is worth taking when you will return the car half full",
-    "Checking how much of a cheap-looking quote is really the excess-kilometre charge before you book"
-  ],
-  "benefits": [
-    [
-      "Landed cost, not the headline",
-      "Combines tariff, excess km, fees, GST and fuel into the number you actually pay."
-    ],
-    [
-      "Fuel policies modelled properly",
-      "Same-to-same, prepaid tank and fuel-included each cost differently and are treated differently."
-    ],
-    [
-      "Marginal km price",
-      "Shows what the next kilometre costs once the free allowance runs out."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is unlimited kilometres worth paying extra for?",
-      "Only when your planned distance exceeds the included allowance by enough to cover the higher day rate. On a three-day rental with 150 free km a day, unlimited km starts paying at roughly the point where excess charges beat the rate difference — at ₹12 per excess kilometre, a ₹800-a-day premium needs about 200 extra kilometres a day to break even."
-    ],
-    [
-      "What is a same-to-same fuel policy?",
-      "You collect the car at a given fuel level and return it at the same level, so you only ever pay the pump for what you burn. It is almost always cheaper than a prepaid tank, because prepaid fuel is charged at the operator's rate and anything left in the tank at return is not refunded."
-    ],
-    [
-      "Is the security deposit part of the rental cost?",
-      "No — it is a refundable hold, usually released within a few working days after return, so it never belongs in a cost comparison. It does have to be free on your card during the rental though, and operators may deduct traffic fines, toll dues or damage from it before refunding."
-    ],
-    [
-      "What charges do self-drive rentals add that the quote does not show?",
-      "The common ones are the excess-kilometre rate, a delivery or airport pickup fee, per-day insurance or damage waiver, late-return charges billed by the hour, interstate permit fees, cleaning charges and the insurance excess you owe on any claim. Ask for the rate card in writing and compare on the trip you plan to take, not on the day rate."
-    ]
-  ]
-},
-  "car-storage-checklist": {
-  "intro": "This checklist works out how long a parked car can actually be left before its 12 V battery stops it starting, and builds the preparation list around that answer. On a modern car the deciding factor is parasitic drain — the alarm, body control module and telematics keep drawing 20 to 50 mA once the car is asleep — which is added to self-discharge that roughly doubles for every 10 °C rise, giving the days to the 80 percent sulfation point and to the 50 percent point where a cold engine will not crank. The rest of the list adapts to the powertrain, the transmission, the temperature and the storage location, and includes a separate list for bringing the car back.",
-  "useCases": [
-    "Working out whether a car left at an airport for six weeks will still start, or whether it needs a maintainer fitted",
-    "Preparing a diesel for a winter lay-up including the biocide, tank level and particulate filter considerations",
-    "Deciding what state of charge to leave an electric car at before a long trip away"
-  ],
-  "benefits": [
-    [
-      "Battery days, not vague advice",
-      "Parasitic drain and self-discharge are added together, so the answer is a number of days rather than 'fit a trickle charger just in case'."
-    ],
-    [
-      "Parking brake handled properly",
-      "The list tells you to chock the wheels instead, because a parking brake left applied for months can bond the pads to the disc."
-    ],
-    [
-      "Adapted to the powertrain",
-      "Diesel biocide, petrol stabiliser and the traction-battery charge band appear only for the cars they apply to."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long can a car sit before the battery dies?",
-      "Usually four to six weeks on a modern car. A 60 Ah battery with 30 mA of parasitic drain loses about 0.72 Ah a day to the electronics alone, reaching the 50 percent point where it will not reliably crank in roughly 40 days — and it passes the 80 percent sulfation threshold in about 16 days, which is when permanent capacity loss begins."
-    ],
-    [
-      "Should I leave the handbrake on when storing a car?",
-      "No. Chock the wheels and leave a manual in gear or an automatic in Park instead. A parking brake left applied for months can bond the friction material to the drum or disc, and freeing it usually means dismantling that corner of the car."
-    ],
-    [
-      "What tyre pressure should I use for long-term car storage?",
-      "About 25 percent above the normal cold pressure, never above the maximum moulded on the sidewall — so a tyre normally at 33 psi goes to roughly 41 psi. Move the car a metre every few weeks as well, because changing the contact patch is what actually stops a flat spot becoming permanent."
-    ],
-    [
-      "What charge should I leave an electric car at when storing it?",
-      "Between about 40 and 60 percent. Lithium-ion cells age faster the longer they sit at a high state of charge and the warmer they are, so a middling charge is the least damaging place to leave them, and letting the pack drift to empty over a long stand risks a deep-discharge state that needs dealer recovery. Follow the manufacturer's own instructions, which sometimes differ."
-    ]
-  ]
-},
-  "car-washing-calorie-calculator": {
-  "intro": "This calculator estimates the calories a hand car wash costs by pricing each stage at its published MET value and applying the formula kcal/min = MET x 3.5 x kg / 200. Washing and waxing a vehicle has its own compendium entry at 4.5 METs, which puts it firmly in the moderate-intensity band, while rinsing sits nearer 2.5 METs and interior vacuuming at 3.3. Vehicle-size presets fill in typical timings for a hatchback, sedan, SUV, van or full detail, and every minute figure stays editable.",
-  "useCases": [
-    "See whether a Sunday morning wash is worth logging as moderate-intensity activity rather than as a chore.",
-    "Compare a quick rinse against a full detail with wax before deciding between doing it yourself and paying for a drive-through wash.",
-    "Add up what washing the car twice a month contributes over a year when auditing everyday movement."
-  ],
-  "benefits": [
-    [
-      "Uses the real car-wash MET value",
-      "Washing and waxing a vehicle has a dedicated 4.5 MET compendium entry rather than a generic 'chores' figure."
-    ],
-    [
-      "Six stages, not one average",
-      "Rinsing, scrubbing, wheels, drying, waxing and interior vacuuming are each priced separately."
-    ],
-    [
-      "Vehicle presets you can edit",
-      "Hatchback to van timings load in one tap and remain fully adjustable."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many calories does washing a car burn?",
-      "About 240 kcal for a typical 50-minute sedan wash at 70 kg body weight, of which roughly 175 kcal is above resting metabolism. The scrubbing and waxing stages dominate because they are rated 4.5 METs, or about 5.5 kcal a minute at that weight."
-    ],
-    [
-      "Does washing the car count as exercise?",
-      "Yes, as moderate-intensity activity. At 4.5 METs, washing and waxing a vehicle sits inside the 3.0 to 5.9 MET moderate band, so those minutes count toward the WHO recommendation of 150 to 300 moderate-intensity minutes a week."
-    ],
-    [
-      "Is hand washing a car better exercise than a drive-through wash?",
-      "Considerably, since an automatic wash costs you almost nothing beyond sitting in the driver's seat. A 50-minute hand wash at 70 kg is roughly 240 kcal, about the same as 55 minutes of brisk walking at 3.5 METs."
-    ],
-    [
-      "Which part of washing a car burns the most calories?",
-      "Soaping and scrubbing the bodywork, and hand waxing, both at 4.5 METs. Crouching to scrub wheels and arches and drying with a cloth are around 3.5 METs, and rinsing with a hose is the lightest stage at roughly 2.5 METs."
-    ]
-  ]
-},
-  "career-switch-prompt-builder": {
-  "intro": "The Career Switch Prompt Builder compares the skills you already have against the skills a target role advertises, scores the overlap as a percentage of the requirement list, and writes an AI prompt that turns that gap analysis into a switch plan. It also converts the gaps into a study budget — hours per missing skill multiplied by the number of gaps, divided by the hours you can study each week — so the plan has a real timeline attached. Built for people changing field who need to know what actually transfers before they rewrite a CV.",
-  "useCases": [
-    "Paste requirements from three real job adverts and see how many of them your current role already covers.",
-    "Work out how many weeks of evening study it would take to close the gaps at six hours a week.",
-    "Get CV wording that restates finance or operations experience in the vocabulary of an engineering or product team.",
-    "Prepare an honest answer to the 'you have never done this job before' objection before an interview."
-  ],
-  "benefits": [
-    [
-      "Overlap scored, not guessed",
-      "Matching is case-insensitive and substring-aware, so 'Python' counts against 'Python scripting'."
-    ],
-    [
-      "A timeline, not a wish list",
-      "Gaps × hours per skill ÷ hours per week gives a week count you can actually hold yourself to."
-    ],
-    [
-      "Asks the model to push back",
-      "The prompt tells the AI to name which claimed skills would not survive a technical interview."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I know if a career switch is realistic?",
-      "Compare your skills against the requirement list of several real job adverts: above roughly 80% overlap the move reads as a sideways step, 55–80% is a credible stretch with one bridging project, and below 30% usually needs retraining or an intermediate role. The percentage measures paper overlap only — evidence and referrals move the odds far more than the score does."
-    ],
-    [
-      "What are transferable skills?",
-      "Transferable skills are capabilities that keep their value when the job title changes — stakeholder management, data analysis, writing, forecasting, project delivery — as opposed to tools or domain knowledge tied to one field. The practical test is whether a hiring manager in the new field would recognise the skill from your description without you explaining your old industry."
-    ],
-    [
-      "How long does it take to close a skill gap?",
-      "This tool uses a default planning figure of 40 hours of deliberate practice per missing skill, which is one full-time week, and you can change it. That is a budgeting assumption rather than a research finding — depth of skill, prior background and the complexity of the tool all move the real number substantially."
-    ],
-    [
-      "Should I list every skill I have?",
-      "List the ones you could defend in an interview with a concrete example, and leave out anything you have only read about. Overstating overlap inflates the score and produces a plan that skips the gap you most need to close."
-    ]
-  ]
-},
-  "caret-tilde-range-visualizer": {
-  "intro": "This visualizer draws the allowed update window of a caret (^) or tilde (~) semver range on a number line, marking each neighbouring version as allowed or blocked. It applies the node-semver desugaring npm uses: ^1.2.3 means >=1.2.3 <2.0.0, ~1.2.3 means >=1.2.3 <1.3.0, and the caret tightens on 0.x versions (^0.2.3 stops at 0.3.0, ^0.0.3 allows only itself). Developers reviewing dependency ranges see at a glance exactly where the window opens and where it slams shut.",
-  "useCases": [
-    "Showing a code reviewer why ~1.2.3 blocks 1.3.0 while ^1.2.3 allows it, with both windows drawn side by side",
-    "Checking how much update freedom ^0.2.3 really gives before trusting automatic installs of a 0.x dependency",
-    "Teaching new developers the left-most-non-zero-digit rule of the caret using concrete allowed/blocked versions"
-  ],
-  "benefits": [
-    [
-      "Visual number line",
-      "Neighbouring versions are plotted in order and coloured allowed or blocked, with the base version highlighted."
-    ],
-    [
-      "Exact npm semantics",
-      "Windows come from the node-semver caret and tilde rules, including the stricter 0.x and 0.0.x cases."
-    ],
-    [
-      "Boundary clarity",
-      "Always shows the lowest allowed version (inclusive) and the first blocked version (the exclusive bound)."
-    ]
-  ],
-  "faqs": [
-    [
-      "What versions does ^1.2.3 allow?",
-      "Everything from 1.2.3 up to but not including 2.0.0 — so 1.2.4, 1.3.0 and 1.9.9 are allowed while 2.0.0 is blocked. The caret keeps the left-most non-zero digit (here the major) fixed and lets everything to its right float."
-    ],
-    [
-      "Why is ^0.2.3 so much stricter than ^1.2.3?",
-      "Because on 0.x versions the left-most non-zero digit is the minor, so ^0.2.3 desugars to >=0.2.3 <0.3.0 — patch updates only. This matches SemVer's warning that 0.x APIs may break at any time, so npm refuses to auto-install 0.3.0. In the extreme case ^0.0.3 allows only 0.0.3 itself."
-    ],
-    [
-      "When should I use tilde instead of caret?",
-      "Use ~ when you want only bug-fix (patch) updates: ~1.2.3 allows up to 1.2.x but blocks 1.3.0, whereas ^1.2.3 accepts every 1.x from 1.2.3 up. Teams often pick tilde for risk-sensitive production dependencies and caret (npm's default on install) for everything else."
-    ],
-    [
-      "Is the upper bound of a caret or tilde range inclusive?",
-      "No — the upper bound is always exclusive. ^1.2.3 means strictly below 2.0.0, so 2.0.0 itself never matches; the same applies to 1.3.0 for ~1.2.3. Only the lower bound, the version you wrote, is inclusive."
-    ]
-  ]
-},
-  "carnivore-diet-macro-calculator": {
-  "intro": "The Carnivore Diet Macro Calculator works out the two numbers that matter when carbohydrate is zero: a daily protein target in grams per kilogram of body weight, and the fat that must sit alongside it to reach your calorie goal. Calories come from the Mifflin-St Jeor equation multiplied by an activity factor and adjusted for your goal; protein is set first and fat takes every remaining calorie at 9 kcal per gram. It reports the resulting fat-to-protein ratio by weight, warns when protein passes 35% of energy, and shows which cuts naturally land closest to your ratio.",
-  "useCases": [
-    "Finding the fat-to-protein ratio your calorie target implies before choosing between ribeye and lean mince.",
-    "Working out how much butter or tallow to add when a lean cut leaves you short on fat.",
-    "Checking whether a high protein target on a steep deficit pushes protein past a safe share of energy.",
-    "Comparing how many grams of eggs, salmon or ground beef it takes to reach the same protein number."
-  ],
-  "benefits": [
-    [
-      "Ratio-first thinking",
-      "Reports fat per gram of protein — the number carnivore eaters actually shop by."
-    ],
-    [
-      "Cut matching",
-      "Ten common animal foods ranked by how closely their natural ratio matches your target."
-    ],
-    [
-      "Protein ceiling check",
-      "Flags protein above 35% of energy, the threshold associated with protein poisoning on very lean meat."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the right fat to protein ratio on a carnivore diet?",
-      "Most people land between 1:1 and 2:1 grams of fat per gram of protein, and the exact figure falls out of your calorie target rather than being chosen. For a 90 kg person eating 162 g of protein at about 2,900 kcal, the arithmetic gives roughly 253 g of fat, or about 1.56 g of fat per gram of protein."
-    ],
-    [
-      "Can you eat too much protein on a carnivore diet?",
-      "Yes. Sustained protein above roughly 35% of total energy is the level associated with protein poisoning, historically called rabbit starvation, which is what happens when only very lean meat is available. On an all-meat diet fat is what keeps protein below that share, so lean cuts generally need added fat."
-    ],
-    [
-      "How much meat do you need to eat on carnivore?",
-      "More than most people expect. Hitting 162 g of protein takes about 675 g of ribeye or roughly 625 g of 80/20 ground beef, and the ribeye still leaves you around 110 g of fat short of a 253 g target — about 138 g of butter's worth. Planning by weight rather than by plate avoids under-eating fat."
-    ],
-    [
-      "Do you need any carbohydrate on a carnivore diet?",
-      "The body can make the glucose it needs through gluconeogenesis, so a strict zero-carbohydrate intake is possible, and this calculator defaults to 0 g with an allowance up to 20 g for the trace carbohydrate in liver, eggs and dairy. That said, an all-animal diet removes fibre and most dietary vitamin C and folate — this tool is informational only, and a doctor or registered dietitian should be involved before you start."
-    ]
-  ]
-},
-  "carousel-copy-splitter": {
-  "intro": "This splitter packs long-form copy into carousel slides greedily on sentence boundaries: sentences are added to a slide until the next one would pass your characters-per-slide budget, then a new slide begins. A sentence longer than the budget is broken at a clause and then at a word, so no word is ever cut in half. Slide one is reserved for the hook and the last slide for the call to action, and the result reports how balanced the slide lengths are against the platform's slide limit — 20 items on an Instagram carousel, fewer in practice on a LinkedIn document post.",
-  "useCases": [
-    "Turn a newsletter section or blog intro into a ten-slide carousel without rewriting it by hand.",
-    "Check whether a script fits inside Instagram's 20-slide carousel limit before starting the design.",
-    "Rebalance a deck where slide three is three lines and slide four is nine.",
-    "Set a character budget from your own template so the text never overflows the artboard."
-  ],
-  "benefits": [
-    [
-      "Sentence-safe splitting",
-      "Breaks at sentence ends first, clause breaks second, and never mid-word."
-    ],
-    [
-      "Balance measured",
-      "Reports the standard deviation of slide lengths so ragged decks are visible before design."
-    ],
-    [
-      "Hook and CTA reserved",
-      "The first and last slides are treated as their own jobs, not as overflow space."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many slides can an Instagram carousel have?",
-      "Up to 20 photos or videos in a single carousel post. Most carousels that perform well use far fewer — between 6 and 12 — because each extra slide is another chance for the reader to stop swiping."
-    ],
-    [
-      "How much text should go on one carousel slide?",
-      "One idea, usually 150 to 250 characters at typical carousel type sizes. The real limit comes from your template: the same text that fits comfortably at 28px will overflow at 40px, so set the character budget from your own layout rather than a generic number."
-    ],
-    [
-      "What should the first and last slides do?",
-      "The first slide is the only one seen in the feed, so it carries the hook and nothing else. The last slide is where the swipe pays off, which means one specific action — save, follow, comment, open the link — not a summary of what was already said."
-    ],
-    [
-      "Does the splitter rewrite my copy?",
-      "No. It only decides where the breaks fall and trims a trailing comma at a clause break. Nothing is reworded, nothing is sent anywhere, and the output is the same every time for the same input."
-    ]
-  ]
-},
-  "carpet-roll-quantity-calculator": {
-  "intro": "This calculator converts a room's length and width into the running metres of broadloom carpet you have to buy off a fixed-width roll, along with the seam count and the offcut you will pay for. Because carpet is sold by the running metre from a roll of set width, the quantity depends on which way the drops run, so it evaluates both orientations and reports the cheaper one. It is built for anyone pricing a wall-to-wall installation before the roll gets cut, since cut lengths are not returnable.",
-  "useCases": [
-    "Check a fitter's quote for a 6 m × 5 m bedroom against the running metres a 3.66 m roll actually needs.",
-    "See how much extra a patterned carpet with a 0.5 m repeat costs compared with the same plain quality.",
-    "Decide whether turning the drops 90 degrees removes a seam or saves two metres off the roll."
-  ],
-  "benefits": [
-    [
-      "Both directions compared",
-      "Reports the layout with fewer running metres and shows what the other direction would have cost."
-    ],
-    [
-      "Offcut made visible",
-      "Prints the square metres you buy but do not lay, and that waste as a percentage of floor area."
-    ],
-    [
-      "Underlay and gripper too",
-      "Adds underlay at 5% over floor area and gripper rod at perimeter minus doorways."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I calculate how much carpet I need for a room?",
-      "Divide the room dimension that runs across the roll by the roll width and round up — that is the number of drops. Multiply the drops by the other room dimension plus a trim allowance of about 100 mm to get the running metres to order. A 6 m × 5 m room on a 3.66 m roll needs two drops of 5.1 m, so 10.2 running metres."
-    ],
-    [
-      "What width does carpet come in?",
-      "Broadloom carpet is most commonly 3.66 m wide, the metric equivalent of the imperial 12 ft roll. Some mills also run 2 m, 4 m and 5 m widths, and a 4 m or 5 m roll can remove a seam in a wide room even if the price per square metre is higher."
-    ],
-    [
-      "How much carpet wastage should I allow?",
-      "There is no fixed percentage — the waste is whatever the roll width leaves over after the drops are cut, which this calculator computes exactly. In a room only slightly wider than the roll it can exceed 40%, while a room close to a multiple of the roll width can be under 5%. Patterned carpet adds more because every drop is cut to a whole pattern repeat."
-    ],
-    [
-      "Do I need underlay and how much?",
-      "Underlay goes under almost all stretch-fitted broadloom carpet; it cushions the pile, adds insulation and roughly doubles carpet life. Buy about 5% over the floor area so the sheets can be butted, taped and trimmed at the walls, and fit gripper rod round the perimeter except across doorways."
-    ]
-  ]
-},
-  "carpool-cost-split-calculator": {
-  "intro": "This carpool cost split calculator divides a shared commute into the two kinds of cost that behave differently: running cost, which is fuel price divided by fuel efficiency plus a per-kilometre wear allowance, and fixed cost per trip such as tolls and parking. Running cost is shared by person-kilometres so a rider who joins halfway pays for half the distance, while tolls and parking are split equally. It reports each person's share per trip and per month, and how much the car owner saves against driving alone.",
-  "useCases": [
-    "Settling a monthly office carpool where three colleagues board at different points on the route",
-    "Deciding a fair per-trip figure before a school run rota starts, so nobody negotiates every week",
-    "Showing a reluctant car owner what the carpool actually saves them versus commuting alone"
-  ],
-  "benefits": [
-    [
-      "Distance-fair, not headcount-fair",
-      "Person-kilometre weighting stops short-hop riders from subsidising long-hop ones."
-    ],
-    [
-      "Wear is counted, not just fuel",
-      "A per-km allowance covers tyres, servicing and depreciation that fuel price alone ignores."
-    ],
-    [
-      "Driver-waiver option",
-      "One toggle reassigns the driver's share to the passengers when that is the arrangement."
-    ]
-  ],
-  "faqs": [
-    [
-      "How should carpool costs be split fairly?",
-      "Split distance-related costs — fuel and vehicle wear — in proportion to the kilometres each person is actually in the car, and split tolls and parking equally between everyone aboard. Splitting the whole bill by headcount overcharges anyone who joins partway along the route."
-    ],
-    [
-      "How do I calculate the fuel cost of a carpool trip?",
-      "Divide the fuel price per litre by the vehicle's kilometres per litre to get cost per kilometre, then multiply by the distance travelled. At ₹105 a litre and 15 km/l that is ₹7 per kilometre, so a 40 km round trip burns about 2.67 litres and ₹280 of fuel."
-    ],
-    [
-      "Should the driver pay a share of the carpool cost?",
-      "Both arrangements are common. If the driver pays a share, everyone including the driver contributes by distance. If the driver rides free, their share is reassigned to the passengers as compensation for owning the vehicle and doing the driving — worth roughly one extra passenger's contribution."
-    ],
-    [
-      "What should I use for the wear-and-tear allowance?",
-      "Take a year of service bills, tyres, brake pads and any battery or clutch replacement, then divide by the kilometres you drove that year. For an ordinary hatchback or sedan the figure usually lands between ₹1.5 and ₹3 per kilometre, which is why fuel-only splits understate the true cost of a commute."
-    ]
-  ]
-},
-  "carry-on-only-trip-planner": {
-  "intro": "This planner works out whether a trip fits in one cabin bag by solving the three constraints separately. The wardrobe is a combinatorics problem — t tops and b bottoms make t x b outfits, so the tool searches every split to find the fewest garments that still cover your days, which for a week is four tops and two bottoms giving eight outfits. Liquids are audited against the 3-1-1 rule (every container 100 ml or less, all inside one 1 litre transparent bag). Weight and packed volume are then checked against the cabin allowance you select.",
-  "useCases": [
-    "Check whether a 10-day work trip really needs a checked bag, or six garments and one laundry stop.",
-    "Audit a toiletry bag before security so nothing gets pulled at the scanner.",
-    "See how much cabin volume switching to solid shampoo and toothpaste tablets frees up."
-  ],
-  "benefits": [
-    [
-      "Optimal capsule, not a guess",
-      "Searches every tops-and-bottoms split to minimise the number of garments carried."
-    ],
-    [
-      "Liquids checked container by container",
-      "Flags any bottle over 100 ml, which fails even when it is half empty."
-    ],
-    [
-      "Weight and volume both",
-      "Cabin bags fail on size before they fail on mass, so both limits are checked."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many clothes do I need for a week in a carry-on?",
-      "Six garments: four tops and two bottoms, which mix into eight outfits and cover seven days with one to spare. Adding a third pair of bottoms buys twelve outfits but costs more space than another two tops, which is why the counts are not symmetrical."
-    ],
-    [
-      "What is the 3-1-1 rule for liquids?",
-      "Every liquid, gel, cream or aerosol container must hold 100 ml or less, all of them must fit inside one transparent resealable bag of at most 1 litre, and each passenger gets one bag. The limit is on the container's stated size, not how full it is, so a half-empty 150 ml bottle is still refused."
-    ],
-    [
-      "Do solid toiletries count towards the liquid limit?",
-      "No. Bar soap, solid shampoo and conditioner bars, toothpaste tablets, stick deodorant and stick sunscreen are not liquids and travel outside the 1 litre bag entirely. Swapping the four biggest bottles usually frees up 300-400 ml of the allowance."
-    ],
-    [
-      "How much can a carry-on bag weigh?",
-      "It depends on the airline: 7 kg is the common short-haul and Indian domestic figure, many European low-cost carriers allow around 10 kg for a bag placed in the overhead locker, and most US domestic carriers state a size limit but no weight limit. Size is usually the tighter constraint — always confirm both against your specific fare."
-    ]
-  ]
-},
-  "cart-bill-splitter": {
-  "intro": "Cart Bill Splitter divides a shared bill line by line rather than by head count: each item can be split equally, by percentage, by quantity of units, or by an exact typed amount, and shared charges like tax and delivery are then apportioned in proportion to what each person actually ordered. It is for flatmates splitting a grocery order and for tables where three people shared the starters and one drank all the wine. The settlement step uses greedy cash-flow minimisation, which clears any group in at most n − 1 transfers.",
-  "useCases": [
-    "Split a supermarket delivery where two flatmates share the household staples and one bought their own snacks, with the ₹99 delivery fee shared in proportion to each subtotal",
-    "Divide a restaurant bill where four people shared appetisers equally but only two had dessert, then apply an 18% service charge across the whole table",
-    "Settle a trip where one person paid the entire hotel bill up front — the tool converts everyone's balance into the smallest possible set of transfers"
-  ],
-  "benefits": [
-    [
-      "Four split modes per line",
-      "Equal, percentage, quantity or exact amount — chosen per item, not once for the whole bill."
-    ],
-    [
-      "Tax and delivery split fairly",
-      "Shared charges follow each person's item subtotal, so someone who ordered ₹200 of a ₹1,000 bill pays 20% of the tax, not 25% because there were four people."
-    ],
-    [
-      "Fewest possible transfers",
-      "The largest debtor is matched to the largest creditor repeatedly, so a group of five settles in at most four payments instead of twenty."
-    ]
-  ],
-  "faqs": [
-    [
-      "How should tax and delivery be split between people?",
-      "In proportion to what each person ordered, which is what this tool does. On a ₹1,000 order with 5% tax, someone whose items came to ₹200 pays ₹10 of the ₹50, not ₹12.50. Splitting shared charges per head overcharges the person who ordered least — the standard fix is to apportion by subtotal."
-    ],
-    [
-      "What is the fewest number of payments needed to settle a group?",
-      "n − 1 for a group of n, and often fewer. The tool computes each person's balance (paid minus owed), then repeatedly sends the biggest debtor's money to the biggest creditor. Three friends where one paid for everything settle in two transfers; nobody pays anybody twice."
-    ],
-    [
-      "Can I split one item unequally while splitting the rest evenly?",
-      "Yes — the split mode is per line, not per bill. Set the shared pizza to equal, the bottle of wine to exact amounts, and a bulk pack to quantity so someone taking 2 of 3 units pays two-thirds of it. Percentage mode handles cases like a 70/30 split on a shared subscription."
-    ],
-    [
-      "Is my bill data uploaded anywhere?",
-      "No. People, items, charges and the chosen currency are kept in your browser's localStorage and the whole calculation runs in the page. Closing the tab keeps the bill on that device only; there is no account and no server copy."
-    ]
-  ]
-},
-  "cartoon-yourself": {
-  "title": "Cartoon Yourself — Free Photo to Cartoon Editor",
-  "h1": "Cartoon Yourself: Turn Your Photo Into a Cartoon",
-  "metaDescription": "Turn a photo into a cartoon with 11 style presets — anime, comic, sketch, pop art. Runs in your browser: no upload, no signup. Export PNG, JPG or WEBP.",
-  "intro": "Cartoon Yourself restyles a photo into a cartoon look using 11 filter presets applied to an HTML canvas through the browser's CanvasRenderingContext2D.filter property — each style is a tuned stack of contrast(), saturate(), brightness() and, for the pencil styles, grayscale(). It is a filter effect, not a generative AI model: your photo is redrawn with new colour and contrast rather than repainted as an illustration, which is why the result appears instantly. The image is read locally with URL.createObjectURL and drawn on your own device, so nothing is uploaded to a server and no account is needed.",
-  "useCases": [
-    "Making a cartoon-style profile picture or avatar from a selfie without sending the photo to a third-party service",
-    "Creators and streamers turning a headshot into a bold comic-book or pop-art thumbnail in a few seconds",
-    "Converting a portrait to a grayscale pencil-sketch or watercolour look for a card, print or class project"
-  ],
-  "benefits": [
-    [
-      "Eleven one-click cartoon styles",
-      "Classic Cartoon, Anime, Comic Book, Sketch, Pencil Art, Watercolour, Pixar Inspired, 3D Cartoon, Minimal, Pop Art and Flat Illustration — each a fixed contrast/saturation/brightness recipe, so Pop Art pushes saturation to 200% while Sketch drops to full grayscale at 160% contrast."
-    ],
-    [
-      "Nothing is uploaded",
-      "The photo is loaded from your device with a local object URL and rendered on a canvas in the page. The tool makes no network requests with your image, stores nothing, and needs no signup."
-    ],
-    [
-      "Full-resolution, watermark-free export",
-      "The canvas is sized to the photo's own pixel width and height, so Download HD saves at the source resolution — lossless PNG, or JPEG/WEBP with a quality slider from 10% to 100% (default 90%). You can also copy the result to the clipboard as a PNG or send it straight to a printer."
-    ],
-    [
-      "Live before/after comparison",
-      "Drag the divider over the preview to wipe between the original and the cartoon version, and watch brightness, contrast, saturation, sharpness and smoothness sliders redraw the canvas about 30 ms after each change."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I cartoon myself from a photo for free?",
-      "Drop a JPG, PNG or WEBP photo onto the upload box, pick one of the 11 cartoon styles, then click Download HD. It is free, there is no signup, no watermark and no limit on how many photos you convert — the whole effect is rendered in your browser."
-    ],
-    [
-      "Does this cartoon photo tool use AI?",
-      "No. It applies canvas filter presets — combinations of contrast, saturation, brightness and grayscale — rather than a generative model that redraws your face. That means it will not turn you into a hand-drawn illustration or invent new features; it restyles the real photo, which is why it is instant, private and free with no queue or credits."
-    ],
-    [
-      "Are my photos uploaded or stored anywhere?",
-      "No. The file is read locally with URL.createObjectURL and painted onto a canvas element on your device. The tool sends no image data to AltFTool or any external API, and nothing is saved after you close the tab."
-    ],
-    [
-      "What image formats and file size does it accept?",
-      "JPG, PNG and WEBP. The file picker is set to image/jpeg, image/png and image/webp, and the upload box is sized for photos up to about 10 MB. On a phone, the Camera button opens the front camera so you can shoot the photo directly instead of choosing a file."
-    ],
-    [
-      "Which cartoon style works best for a profile picture?",
-      "Comic Book (160% contrast) and Pop Art (200% saturation) give the boldest, most obviously cartoon result. Anime and Pixar Inspired stay closer to natural skin tones, Watercolour and Minimal are the softest, and Sketch (full grayscale) or Pencil Art (80% grayscale) produce a drawn, monochrome look."
-    ],
-    [
-      "Can I adjust the effect after choosing a style?",
-      "Yes. Brightness and contrast run from 50 to 200, saturation from 0 to 200, and sharpness and smoothness from 0 to 100 — sharpness stacks extra contrast on top of the style, while smoothness adds up to a 10-pixel blur. Reset restores every slider to its default in one click."
-    ],
-    [
-      "Can I copy the cartoon image instead of downloading it?",
-      "Yes. Copy Image writes a PNG of the finished canvas to your system clipboard using the Clipboard API's ClipboardItem, so you can paste it straight into a chat or document. It needs a browser that supports clipboard image writes, such as recent Chrome or Edge; if that fails, use Download HD instead."
-    ],
-    [
-      "Does it work on a phone?",
-      "Yes. The tool runs in any modern mobile browser — the before/after slider responds to touch, the Camera button uses your phone's front-facing camera, and export works the same as on desktop."
-    ]
-  ],
-  "steps": [
-    "Drag a JPG, PNG or WEBP photo onto the upload box, browse for a file, or tap Camera on mobile to take one.",
-    "Choose one of the 11 cartoon styles, then fine-tune brightness, contrast, saturation, sharpness and smoothness while the before/after slider updates live.",
-    "Pick PNG, JPEG or WEBP, set the export quality, and click Download HD — or copy the image to your clipboard or print it."
-  ]
-},
-  "cascading-discount-calculator": {
-  "intro": "A cascading discount is a chain of offers applied one after another, each on the price the previous one left behind, so the effective discount is 1 minus the product of the remaining fractions — never the sum of the percentages. This calculator takes a list price, any number of stacked percentage offers, a flat coupon and a tax rate, and returns the single equivalent discount, the net price and exactly how much the naive addition overstates your saving. It is built for shoppers comparing offers and for sellers pricing a promotion stack.",
-  "useCases": [
-    "A store advertises '50% off plus an extra 20% off at the counter' and you want to know whether that is 70% or 60%.",
-    "You are stacking a festive sale price, a bank card offer and a flat 500 coupon, and need the true landed price before GST.",
-    "You price a promotion as a retailer and must check the margin left after a distributor discount, a trade discount and a cash discount."
-  ],
-  "benefits": [
-    [
-      "Multiplies, never adds",
-      "Each offer is applied to the reduced price, which is how successive discounts actually work at the till."
-    ],
-    [
-      "Shows the overstatement",
-      "The gap between the plain sum of the offers and the real effective discount is printed as a percentage-point figure."
-    ],
-    [
-      "Coupon and tax in the right order",
-      "The flat coupon comes off after the percentages and tax is charged on the discounted value, matching normal invoice sequencing."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is 50% off plus 20% off the same as 70% off?",
-      "No — it is 60% off. The second discount is taken on the already-reduced price, so 100 becomes 50 and then 40, a total saving of 60. The single equivalent discount for two offers is d1 + d2 - (d1 x d2)/100, which here is 50 + 20 - 10 = 60%."
-    ],
-    [
-      "How do I calculate the effective rate of three or more stacked discounts?",
-      "Multiply the remaining fractions and subtract from one: effective = [1 - (1 - d1/100)(1 - d2/100)(1 - d3/100)] x 100. Three 50% discounts give 1 - 0.5 x 0.5 x 0.5 = 0.875, so 87.5% off, not 150%."
-    ],
-    [
-      "Does the order of the discounts change the final price?",
-      "No. Multiplication is commutative, so 20% then 10% and 10% then 20% both leave 72% of the price. The order only matters when a flat rupee coupon or a rupee cap is mixed in, because a fixed amount removed early is worth more than the same amount removed after a percentage cut."
-    ],
-    [
-      "Is GST charged before or after a discount?",
-      "After. Under section 15 of the CGST Act, 2017 the taxable value is the transaction value, and a discount recorded on the invoice at the time of supply is excluded from it, so GST applies to the discounted amount. Post-sale discounts are only excluded if they were agreed before the supply and are linked to the relevant invoices — confirm the treatment with your tax adviser for your own invoices."
-    ]
-  ]
-},
-  "case-brief-template-generator": {
-  "intro": "A case brief is a one-page summary of a judicial decision that records the material facts, the legal issue, the rule applied, the court's holding, its reasoning and the final order. This generator lays those components out in IRAC, FIRAC or CREAC order, formats the citation in Bluebook, SCC or neutral-citation form, and flags any required component you have left blank. Built for law students, paralegals and moot participants who need consistent briefs across a whole reading list.",
-  "useCases": [
-    "Brief the assigned reading for a first-year contracts or constitutional law class in a repeatable format your professor can follow.",
-    "Prepare a case list for a moot problem where every authority needs the same headings so you can compare holdings side by side.",
-    "Convert a long judgment you have already read into a revision card that keeps only the facts the court actually relied on."
-  ],
-  "benefits": [
-    [
-      "Framework you choose",
-      "Switch between FIRAC, IRAC and CREAC ordering without retyping any section."
-    ],
-    [
-      "Citation built for you",
-      "Bluebook, Indian SCC and neutral-citation formats, with the court parenthetical dropped when the reporter already identifies it."
-    ],
-    [
-      "Completeness check",
-      "Shows which of the nine required components are still empty and whether the brief has grown past one page."
-    ]
-  ],
-  "faqs": [
-    [
-      "What should a case brief include?",
-      "Nine components: case name and citation, court and year, procedural history, material facts, the issue, the rule of law, the holding, the reasoning, and the disposition. Concurring and dissenting opinions plus your own notes are optional but are frequently where exam questions come from."
-    ],
-    [
-      "What is the difference between IRAC and FIRAC?",
-      "FIRAC is IRAC with a Facts section placed first. IRAC opens with the Issue and is better for doctrine revision; FIRAC opens with the facts and is the ordering most law-school case briefs use because the issue only makes sense once the facts are on the page."
-    ],
-    [
-      "How long should a case brief be?",
-      "About one page — roughly 250 to 700 words depending on spacing. If you are past that you are summarising the judgment rather than briefing it; the usual fix is to cut facts the court did not rely on and to compress the procedural history to a single sentence."
-    ],
-    [
-      "What is the difference between the holding and the disposition?",
-      "The holding is the court's answer to the legal issue and is the part that becomes precedent; the disposition is the order that follows from it, such as affirmed, reversed and remanded, or appeal dismissed. A court can reverse the judgment below while holding for the party who lost on one of the issues."
-    ]
-  ]
-},
-  "case-study-prompt-builder": {
-  "intro": "The Case Study Prompt Builder assembles a complete, structured AI prompt for writing a business case study from the three facts every case study needs: the problem, the approach and the measurable result. It structures the prompt around a recognised framework — Problem–Solution–Result, STAR (Situation, Task, Action, Result) or Challenge–Solution–Impact — and instructs the AI to use only the facts you supply, so nothing gets invented. It is built for marketers, founders and consultants who have the raw wins but not the time to brief a writer.",
-  "useCases": [
-    "A SaaS marketer turning a customer's before/after metrics into a 1,000-word case study prompt for ChatGPT or Claude without the AI fabricating numbers",
-    "A consultant preparing an anonymised Challenge–Solution–Impact case study where the client cannot be named",
-    "A founder drafting a crisp one-pager for a sales deck using the STAR framework and an executive, numbers-first tone"
-  ],
-  "benefits": [
-    [
-      "Three proven frameworks",
-      "Choose Problem–Solution–Result, STAR or Challenge–Solution–Impact, each with a ready-made section outline."
-    ],
-    [
-      "Anti-hallucination rules built in",
-      "The prompt tells the AI to use only your source facts and to quote key metrics verbatim."
-    ],
-    [
-      "Token estimate included",
-      "See prompt length in words, characters and estimated tokens (~4 characters per token) before you paste it."
-    ]
-  ],
-  "faqs": [
-    [
-      "What structure should a business case study follow?",
-      "The most common structure is Problem–Solution–Result: client background, the problem and its business cost, the approach step by step, then quantified results. Two well-known alternatives are STAR (Situation, Task, Action, Result), popular in consulting and interviewing, and Challenge–Solution–Impact, common in B2B marketing decks. This builder outputs a section-by-section outline for whichever you pick."
-    ],
-    [
-      "How do I stop AI from making up numbers in a case study?",
-      "Put every real metric in the prompt and explicitly instruct the model to use only those facts. The prompts generated here include a rule that every results claim must lead with a concrete number from your source facts, and that outcomes without numbers must be described qualitatively rather than invented. Always verify names and figures in the draft before publishing."
-    ],
-    [
-      "How long should a case study be?",
-      "Published guidance across B2B content marketing generally puts case studies at roughly 500 to 1,500 words. This builder offers three targets: a brief one-pager around 500 words, a standard piece around 1,000 words, and a deep dive around 1,800 words for technical evaluators."
-    ],
-    [
-      "Can I write a case study without naming the client?",
-      "Yes. Enable the anonymise option and the prompt instructs the AI to use a descriptive stand-in such as “a mid-size logistics company” and never to invent a real-sounding company name. This is standard practice when an NDA or client policy prevents attribution."
-    ]
-  ]
-},
-  "cash-denomination-calculator": {
-  "intro": "This calculator does the two jobs a cashier does before opening the cash box: it rounds an amount to a figure that can physically be paid — a whole rupee, or a ₹5, ₹10, ₹50 or ₹100 step — and then splits that figure into the smallest possible number of notes and coins. The split uses a minimum-piece dynamic program rather than simple largest-first counting, so it still returns a correct answer when a denomination has run out; ₹600 with only ₹500 and ₹200 notes available comes back as three ₹200 notes instead of failing. Denominations follow the Reserve Bank of India series in circulation.",
-  "useCases": [
-    "Preparing 40 identical wage envelopes of ₹8,750 and knowing exactly how many ₹500 notes to withdraw.",
-    "Rounding a ₹2,547.30 reimbursement up to ₹2,550 so it can be paid in notes, with the ₹2.70 posted to rounding off.",
-    "Working out a payout when the branch has no ₹100 notes left and everything has to come from ₹500 and ₹200."
-  ],
-  "benefits": [
-    [
-      "Fewest pieces, not just largest first",
-      "A minimum-piece search finds the true smallest count, including when you switch denominations off."
-    ],
-    [
-      "Rounding difference shown",
-      "The gap between the amount due and the amount paid is stated separately so it can be booked to a rounding account."
-    ],
-    [
-      "Scales to many packets",
-      "Enter the number of identical envelopes and get both the per-packet count and the total notes to draw from the bank."
-    ]
-  ],
-  "faqs": [
-    [
-      "What notes and coins are currently in circulation in India?",
-      "Banknotes of ₹10, ₹20, ₹50, ₹100, ₹200 and ₹500, and circulating coins of ₹1, ₹2, ₹5, ₹10 and ₹20. The ₹2000 note was withdrawn from circulation on 19 May 2023: it remains legal tender but is no longer issued, so most cash boxes no longer hold it."
-    ],
-    [
-      "Why is cash rounded to the nearest rupee?",
-      "Coins of 25 paise and below ceased to be legal tender on 30 June 2011, and the 50 paise coin is rarely available at a counter, so a paise balance cannot be handed over. Settling to the whole rupee and booking the small difference to a rounding-off account is the standard practice."
-    ],
-    [
-      "How do I work out the fewest notes for an amount?",
-      "Take the largest denomination that fits, repeat on what is left, and keep going down. That largest-first method gives the fewest pieces for the standard Indian set because it is a canonical system, but it can fail on a restricted set — ₹600 from only ₹500 and ₹200 notes needs three ₹200 notes, which largest-first never finds."
-    ],
-    [
-      "Is the ₹2000 note still valid?",
-      "Yes. The Reserve Bank withdrew it from circulation on 19 May 2023 under its clean note policy, and it continues to be legal tender; deposits and exchange at RBI issue offices remained available after the initial bank window closed. It is simply no longer printed or dispensed, so payouts are planned without it."
-    ]
-  ]
-},
-  "cash-deposit-reporting-checker": {
-  "intro": "This checker compares a financial year of cash deposits, withdrawals and card payments against every threshold that makes a bank report you under Rule 114E of the Income-tax Rules, 1962 — the Statement of Financial Transactions that feeds your Annual Information Statement. It also applies the Rule 114B and Rule 114BA PAN-quoting rules, the section 194N TDS slabs on cash withdrawals, and the section 269ST prohibition on receiving ₹2,00,000 or more in cash from one person in a day. You get a line-by-line verdict showing which limits you cross, the rule behind each and what it means before you file.",
-  "useCases": [
-    "A shopkeeper who banked ₹12,00,000 of daily takings into a savings account wanting to know why it appeared in the AIS and whether the ₹10,00,000 Rule 114E limit was the trigger.",
-    "A contractor drawing large sums for wages checking how much section 194N TDS the bank will deduct on withdrawals above ₹1 crore, and how the figure changes if returns have not been filed for three years.",
-    "A family that received a large cash gift at a wedding checking the section 269ST limit before accepting it, since the penalty under section 271DA falls on the receiver and equals the whole amount."
-  ],
-  "benefits": [
-    [
-      "Ten rules in one pass",
-      "Reporting, PAN quoting, mandatory PAN and cash-receipt limits are tested together."
-    ],
-    [
-      "Names the rule",
-      "Every result cites the rule or section so you can look it up before answering a notice."
-    ],
-    [
-      "Quantifies section 194N",
-      "Splits withdrawals across the 2% and 5% slabs and shows the exact TDS the bank deducts."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much cash can I deposit in a savings account without it being reported?",
-      "Banks report the moment cash deposits reach ₹10,00,000 in a financial year across your savings accounts, under Rule 114E(2) item 2. Current accounts have a separate ₹50,00,000 limit that counts deposits and withdrawals together, and any single-day cash deposit above ₹50,000 already needs your PAN under Rule 114B."
-    ],
-    [
-      "Does a reported cash deposit mean I will get an income tax notice?",
-      "No. Reporting under Rule 114E is routine information gathering, and the entry simply appears in your Annual Information Statement. A query only follows if the reported cash does not reconcile with the income and sources declared in your return, so keep the books and bank narration that explain it."
-    ],
-    [
-      "When does the bank deduct TDS on my cash withdrawals?",
-      "Section 194N applies at 2% on cash withdrawals above ₹1 crore in a financial year. If you have not filed returns for all three preceding assessment years whose due dates have passed, the deduction starts much earlier — 2% from ₹20,00,000 and 5% above ₹1 crore. Co-operative societies have a higher ₹3 crore base threshold from 1 April 2023."
-    ],
-    [
-      "When is a PAN compulsory for cash banking?",
-      "Rule 114BA makes holding and quoting a PAN compulsory once cash deposits, or cash withdrawals, aggregate to ₹20,00,000 or more in a financial year across your bank, co-operative bank or post office accounts. Opening a current account or cash credit account also requires it regardless of amount, and Form 60 is the substitute only for someone who genuinely has no PAN."
-    ]
-  ]
-},
-  "caste-certificate-checklist": {
-  "intro": "This checklist runs the eligibility bars on a caste certificate application before it lists the paperwork, because some of those bars no file can overcome. Paragraph 3 of the Constitution (Scheduled Castes) Order, 1950 limits Scheduled Caste status to persons professing the Hindu, Sikh or Buddhist religion, while the Scheduled Tribes Order carries no such condition. Scheduled Caste and Scheduled Tribe entries are notified state by state and do not travel when a family migrates. For an OBC non-creamy-layer certificate the ₹8,00,000 income ceiling applies over three consecutive years, with salary and agricultural income left out of the computation. Once those are checked, the tool builds the document list for your circumstances.",
-  "useCases": [
-    "A Christian applicant discovering that a Scheduled Caste certificate is barred by paragraph 3 of the 1950 Order, while the same person could hold a Scheduled Tribe certificate because that Order has no religion condition.",
-    "A family that moved from Bihar to Maharashtra checking whether their caste appears in Maharashtra's notified list, since status does not transfer across state lines.",
-    "A married woman being told the certificate issues on her father's caste rather than her husband's, and assembling her father's certificate accordingly."
-  ],
-  "benefits": [
-    [
-      "Bars checked before paperwork",
-      "Religion, migration, marriage and creamy layer are tested first, with the authority for each."
-    ],
-    [
-      "Distinguishes SC from ST",
-      "The religion condition applies to Scheduled Castes only, a distinction most guides skip."
-    ],
-    [
-      "Central format flagged",
-      "Warns that a state-format OBC certificate will not serve for a central government post."
-    ]
-  ],
-  "faqs": [
-    [
-      "Can a Christian or Muslim get an SC certificate?",
-      "No. Paragraph 3 of the Constitution (Scheduled Castes) Order, 1950 provides that a person professing a religion other than Hindu, Sikh or Buddhist is not deemed a member of a Scheduled Caste. Sikhs were brought within it by amendment in 1956 and Buddhists in 1990. Scheduled Tribe status carries no religion condition at all."
-    ],
-    [
-      "Does a caste certificate work in another state?",
-      "Not for SC and ST. Those entries are notified for a named state or area, and the Supreme Court held in Marri Chandra Shekhar Rao in 1990 and in the Action Committee case in 1994 that a person notified in one state cannot claim that status on migrating to another. You have to check whether the caste appears in the list for the state where you now apply."
-    ],
-    [
-      "Does a woman take her husband's caste after marriage?",
-      "No. Following Sunita Singh v. State of Uttar Pradesh (2018), caste is determined by birth and is not acquired by marriage. A married woman's certificate is issued on her father's caste, and the marriage certificate in the file explains only the change of surname or address."
-    ],
-    [
-      "What income puts an OBC family in the creamy layer?",
-      "Gross annual income of ₹8,00,000 or above for three consecutive years, the ceiling set by the DoPT order of 13 September 2017. Income from salary and from agricultural land is excluded from that figure, so the test amount is often much lower than the family's actual earnings. Income is only one of six routes into the creamy layer — service in a constitutional post, Group A or Group B, or armed forces rank can place a family there whatever the income."
-    ]
-  ]
-},
-  "cat-exam-countdown": {
-  "intro": "This countdown turns the days left before CAT into a mock schedule and a sectional study pace. It splits the remaining calendar into a concept-build, sectional-practice and full-mock phase, distributes the mocks you still owe yourself across them with the volume deliberately back-loaded, and divides your study hours across VARC, DILR and QA by each section's share of the paper. A separate calculation applies CAT's +3 and -1 marking to work out how many questions you must attempt at your current accuracy to reach a target net score.",
-  "useCases": [
-    "Deciding in August how many mocks a 30-mock target means per week between now and the last Sunday of November",
-    "Checking whether QA still has enough hours left in the plan once VARC and DILR take their share of the paper",
-    "Working out how many attempts a net score of 100 needs at 80 percent accuracy before deciding to push attempts or fix accuracy"
-  ],
-  "benefits": [
-    [
-      "Back-loaded mock plan",
-      "Mock volume rises phase by phase instead of sitting flat across five months."
-    ],
-    [
-      "Hours split by paper weight",
-      "Sectional time follows each section's share of the questions, not gut feel."
-    ],
-    [
-      "Marking scheme built in",
-      "The attempts figure uses the real +3 / -1 rule, so negatives are priced in."
-    ]
-  ],
-  "faqs": [
-    [
-      "When is the CAT exam held?",
-      "CAT is normally written on the last Sunday of November, in three shifts across the day, and the exact date is announced by the convening IIM in its notification around late July or August. Enter your own admit card date here — the default is only the usual November Sunday."
-    ],
-    [
-      "How many mocks should I give before CAT?",
-      "There is no official number; 25 to 35 full-length mocks with serious analysis is a common target among successful candidates, and what matters more is that the volume rises towards the exam. This tool takes whatever target you set and spreads the remaining mocks across three phases at roughly 20, 40 and 40 percent, so a 24-mock balance over 126 days becomes about 0.6 mocks a week early and 2.4 a week in the final stretch."
-    ],
-    [
-      "What is the CAT marking scheme?",
-      "Each correct answer earns 3 marks and each wrong multiple-choice answer loses 1, while type-in-the-answer questions carry no negative marking. That makes the break-even accuracy on MCQs 25 percent — below that, every extra guess reduces your score rather than raising it."
-    ],
-    [
-      "Can I move time between CAT sections?",
-      "No. Each of the three sections is locked to its own 40 minute window inside the 120 minute paper, so unused VARC time cannot be carried into DILR or QA. This is why sectional pace matters as much as overall preparation — a weak section cannot be rescued with extra time on exam day."
-    ]
-  ]
-},
-  "cat-exam-day-checklist": {
-  "intro": "This planner converts a CAT slot into a wall clock: reporting time, gate closing, and the exact minute each of the three sections locks. CAT runs 120 minutes with a hard 40-minute limit on VARC, DILR and QA in that fixed order — the screen moves on by itself and there is no going back, so knowing that DILR ends at 9:50 AM changes how you spend 9:45. Candidates granted compensatory time get 53 minutes 20 seconds a section, 160 minutes in all. It also works out seconds per question and projects a net score under the published +3 and -1 marking.",
-  "useCases": [
-    "A Slot 1 candidate with a 45-minute commute seeing that a 8:30 AM start means leaving home by 6:30 to clear biometrics inside the reporting window.",
-    "Deciding attempt strategy before the test: 22 DILR questions in 40 minutes is 1 minute 49 seconds each, which makes it obvious that three sets solved fully beat six started.",
-    "Checking that a wristwatch, a personal pen and a calculator all have to stay outside, because the centre issues the scribble pad and puts a basic calculator on screen."
-  ],
-  "benefits": [
-    [
-      "Sectional lock made visible",
-      "Each section's start and end printed as a clock time, not just a 40-minute figure."
-    ],
-    [
-      "Compensatory time built in",
-      "Switch to 53 minutes 20 seconds a section and the whole day's clock recomputes."
-    ],
-    [
-      "Score model, not guesswork",
-      "Net marks from correct, wrong-MCQ and wrong-TITA counts under the real +3 / -1 scheme."
-    ]
-  ],
-  "faqs": [
-    [
-      "Can I go back to a previous section in CAT?",
-      "No. Each of the three sections has a hard 40-minute limit and the screen advances automatically when the time is up. Once VARC closes you cannot return to it, which is why the order — VARC, then DILR, then QA — is worth planning around rather than discovering on the day."
-    ],
-    [
-      "What is the marking scheme in CAT?",
-      "Three marks for a correct answer and minus one for an incorrect multiple-choice answer. Type-in-the-answer questions, where you key the response instead of choosing an option, carry no negative marking, so a considered guess there is free. Nothing is deducted for leaving a question unattempted."
-    ],
-    [
-      "Am I allowed a watch or a calculator in the CAT exam hall?",
-      "Neither. Watches of every kind are barred, and the section countdown runs on the test screen instead. A basic on-screen calculator is provided inside the test window for arithmetic, square roots included, so practise with it in the official mock rather than meeting it for the first time on test day."
-    ],
-    [
-      "What documents do I need to carry to the CAT centre?",
-      "The admit card printed on A4 paper and an original photo identity document — passport, PAN, voter ID, driving licence, Aadhaar or a college ID. Photocopies and phone images are refused. Candidates using compensatory time or a scribe also carry the disability certificate in the prescribed format and the scribe declaration, both of which must have been sanctioned during registration."
-    ]
-  ]
-},
-  "cbse-best-of-five-calculator": {
-  "intro": "Best of five is the aggregate rule almost every Indian institution applies to a CBSE Class 12 marksheet: the compulsory language plus the four highest scoring of the remaining subjects, divided by 500. This calculator applies that rule to the subjects you enter, shows which paper drops out, and compares the result with counting every subject. CBSE does not print a percentage or a division on the marksheet at all, which is why the figure has to be worked out this way.",
-  "useCases": [
-    "A science student with a sixth subject seeing whether Physical Education displaces a weaker Chemistry score in the aggregate.",
-    "Checking how many marks a college cutoff of 90% needs across the five counted subjects before filling an admission form.",
-    "Comparing the best-of-five percentage with the all-subject percentage to know which figure a form is actually asking for."
-  ],
-  "benefits": [
-    [
-      "Shows the subject that drops",
-      "Names the paper excluded and the marks it needed to stay in."
-    ],
-    [
-      "Keeps the language locked in",
-      "Applies the rule correctly — English is counted whatever it scores."
-    ],
-    [
-      "Checks the pass condition too",
-      "Flags any subject under the 33% pass mark, which a percentage hides."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is CBSE best of five percentage calculated?",
-      "Add the marks of the compulsory language and your four highest-scoring other subjects, divide by 500 and multiply by 100. A student with English 75, Mathematics 95, Computer Science 91, Physics 88 and Chemistry 82 totals 431, which is 86.2%. The sixth subject is left out unless it beats one of those four."
-    ],
-    [
-      "Is English compulsory in best of five?",
-      "Yes. The language you offered as a core subject is always counted in the aggregate, even when it is your lowest score, and cannot be swapped for a higher-scoring elective. Only the four subjects alongside it are chosen for being the best."
-    ],
-    [
-      "Does CBSE give a percentage on the marksheet?",
-      "No. The Class 12 marksheet carries subject-wise marks and grades, with no aggregate percentage and no division. Any percentage you quote — best of five, best of four, or all subjects — is computed by you or by the institution you are applying to, using its own rule."
-    ],
-    [
-      "Can my sixth subject be counted in best of five?",
-      "Yes, and that is the point of offering one: if it scores higher than one of your main electives, it takes that subject's place in the four. Some universities restrict which subjects qualify, publishing lists of academic and vocational subjects and applying a deduction when a subject outside the list is used, so check the prospectus of the course before assuming the swap will be accepted."
-    ]
-  ]
-},
-  "cbse-class-10-percentage-calculator": {
-  "intro": "This calculator computes a CBSE Class 10 percentage from subject-wise marks using the best-of-five convention: the average of your five highest-scoring subjects out of 100 each. CBSE itself prints only marks and positional A1–E grades on the marksheet, so the best-of-five average is what schools, admission committees and CBSE's own screening use as 'the percentage'. The tool also shows the overall all-subjects average and flags any subject below the 33% pass mark from the Examination Bye-laws.",
-  "useCases": [
-    "A student with six subjects (five main plus an IT skill subject) computing the best-of-five percentage for Class 11 stream admission",
-    "Parents checking whether a 32 in one subject means a fail under the 33% rule and how the skill subject affects the result",
-    "Comparing the best-of-five figure against the all-six average before filling school admission forms that ask for percentage"
-  ],
-  "benefits": [
-    [
-      "Best-of-five, done right",
-      "Picks the five highest-scoring subjects automatically and shows exactly which ones counted."
-    ],
-    [
-      "Pass check built in",
-      "Every subject is tested against the 33% pass standard and failures are named, not hidden in an average."
-    ],
-    [
-      "Both figures reported",
-      "Shows the best-of-five percentage and the overall average so you can quote whichever a form asks for."
-    ]
-  ],
-  "faqs": [
-    [
-      "How is CBSE Class 10 percentage calculated?",
-      "Add the marks of your best five subjects and divide by 5 (each subject is out of 100). For example, 95 + 92 + 90 + 88 + 85 = 450, giving 90%. CBSE does not print a percentage on the marksheet, so this best-of-five average is the accepted convention for admissions and forms."
-    ],
-    [
-      "Is the 6th subject counted in CBSE Class 10 percentage?",
-      "Only if it is among your top five scores. Under CBSE's scheme of studies, if a student fails one of Science, Mathematics or Social Science but passes the skill (6th) subject, the skill subject replaces the failed one in the result computation — best-of-five handles this automatically by dropping the lowest score."
-    ],
-    [
-      "What are the passing marks in CBSE Class 10?",
-      "33% in each subject, per CBSE's Examination Bye-laws. For a subject out of 100 that means 33 marks, counting board theory and internal assessment together as CBSE currently aggregates them."
-    ],
-    [
-      "What do A1, A2 and B1 grades mean in CBSE Class 10?",
-      "They are positional grades: A1 goes to roughly the top eighth of passed candidates in that subject, A2 to the next eighth, and so on down to D — they are assigned by rank, not by fixed marks. Mark bands like 91–100 for A1 are only indicative, which is why this tool labels its band column that way."
-    ]
-  ]
-},
-  "cbse-class-10-syllabus-tracker": {
-  "intro": "This tracker lists every chapter of the rationalised CBSE Class 10 syllabus and scores your revision status across the subjects you pick. Each chapter is marked not started, read once, revised, or revised with sample papers done, and only the last state counts as fully complete — so the percentage measures readiness for an 80-mark board paper rather than time spent reading. It also divides the chapters still open by the days left and tells you the chapters-per-week pace that finishes the syllabus on time.",
-  "useCases": [
-    "Check before the pre-boards whether Social Science, with its 22 chapters across four books, is anywhere near ready.",
-    "Spot that Science has been read once but never revised, and that 13 chapters are sitting at 50% credit.",
-    "Turn '58 chapters left, 75 days to go' into a concrete 5.4 chapters a week target."
-  ],
-  "benefits": [
-    [
-      "Every board subject in one view",
-      "Science, Mathematics, Social Science, English, Hindi and Computer Applications with their real chapter lists."
-    ],
-    [
-      "Revision-aware scoring",
-      "Reading a chapter earns partial credit; only revision plus sample papers closes it out."
-    ],
-    [
-      "Pace, not just percentage",
-      "Reports the weekly chapter target and the days you can afford per remaining chapter."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many chapters are there in CBSE Class 10 Science?",
-      "Thirteen in the current rationalised NCERT book, from Chemical Reactions and Equations to Our Environment. Periodic Classification of Elements, Sources of Energy and Sustainable Management of Natural Resources were removed when the book was trimmed."
-    ],
-    [
-      "How many chapters are in Class 10 Maths?",
-      "Fourteen, and the list is the same for the Standard and Basic papers — only the difficulty of the question paper differs. Constructions was dropped from the rationalised syllabus, though construction-based reasoning can still appear inside other chapters."
-    ],
-    [
-      "How are Class 10 marks split between theory and internal assessment?",
-      "Each main subject is 80 marks of board theory plus 20 marks of internal assessment, made up of a periodic test, multiple assessment, portfolio and subject enrichment activity worth 5 marks each. Verify the current scheme in your school's CBSE curriculum circular."
-    ],
-    [
-      "When should I finish the Class 10 syllabus to leave time for revision?",
-      "Aim to close first reading well before the pre-board exams so the final stretch is only revision and sample papers. This tracker shows the chapters-per-week pace implied by the days you have left, which is a more honest test of the plan than a calendar alone."
-    ]
-  ]
-},
-  "cbse-class-12-syllabus-tracker": {
-  "intro": "This tracker turns the CBSE Class 12 syllabus into a chapter-level checklist and reports one weighted completion percentage across the subjects you actually take. Each chapter carries a state — not started, first reading done, revised, or revised with previous-year questions solved — and only the last state counts as fully complete, so the score reflects exam readiness rather than pages turned. Chapter lists follow the rationalised NCERT books CBSE currently prescribes, with each subject's theory and practical or internal-assessment marks shown alongside.",
-  "useCases": [
-    "See at a glance that Physics is 62% ready while Chemistry organic is untouched, three weeks before the pre-boards.",
-    "Convert 41 chapters left and 90 days to go into the 3.2 chapters a week you actually have to cover.",
-    "Separate chapters you have merely read from chapters you have revised and drilled with past papers."
-  ],
-  "benefits": [
-    [
-      "Readiness, not page count",
-      "A chapter is only complete once it has been revised and its previous-year questions solved."
-    ],
-    [
-      "Pace maths built in",
-      "Divides the chapters still open by the days left and reports a weekly target you can hold yourself to."
-    ],
-    [
-      "Marks context on every subject",
-      "Shows the CBSE theory and practical or internal-assessment split, so 30-mark practicals are not forgotten."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many chapters are there in CBSE Class 12 Physics?",
-      "Fourteen chapters in the current rationalised NCERT book, from Electric Charges and Fields to Semiconductor Electronics. The theory paper carries 70 marks and the practical 30 marks."
-    ],
-    [
-      "How many chapters are in Class 12 Chemistry after the syllabus was rationalised?",
-      "Ten, beginning with Solutions and ending with Biomolecules. The units on the Solid State, Surface Chemistry, General Principles of Isolation of Elements, the p-Block Elements and Polymers were removed when NCERT trimmed the book."
-    ],
-    [
-      "How many chapters should I finish per week for the Class 12 boards?",
-      "Divide the chapters you have not mastered by the weeks left. Forty chapters with ten weeks to go means four a week, and this tracker does that division for you every time you update a chapter's status."
-    ],
-    [
-      "Do practical marks count in the Class 12 board result?",
-      "Yes. In Physics, Chemistry, Biology and Computer Science the paper is 70 marks of theory plus 30 marks of practical, while Mathematics, English and the commerce subjects are 80 marks of theory plus 20 marks of internal assessment or project work. Confirm the split for your session in the CBSE curriculum document."
-    ]
-  ]
-},
-  "cbse-lesson-plan-prompt-builder": {
-  "intro": "The CBSE Lesson Plan Prompt Builder converts a class, subject, chapter and period length into an AI prompt that already contains a minute-by-minute time split and the CBSE marks scheme that applies to that class. Time is divided using either the 5E learning cycle (Engage 10%, Explore 25%, Explain 30%, Elaborate 20%, Evaluate 15%) or the five Herbartian steps, allocated by the largest-remainder method so the phase minutes always add back to the full period. It is built for CBSE teachers and heads of department who need an inspection-ready plan file without hand-calculating the timings.",
-  "useCases": [
-    "Writing a two-period Class 10 Science plan on Chemical Reactions and Equations where 90 minutes has to be split across the 5E phases exactly.",
-    "Producing a Herbartian-format plan for a Class 7 Social Science lesson because the school's plan file template follows the five traditional steps.",
-    "Preparing a Class 12 Physics plan that names the Theory 70 + Practical 30 split so the lesson's assessment ties back to the board scheme."
-  ],
-  "benefits": [
-    [
-      "Timings that add up",
-      "Phase minutes are allocated by largest remainder, so 45 or 50 minute periods never drift by a minute."
-    ],
-    [
-      "Correct marks scheme",
-      "Class 9-10 gets 80 + 20 with the four internal components; Classes 11-12 get 70/30 or 80/20 by subject."
-    ],
-    [
-      "No invented references",
-      "The prompt explicitly forbids the model from inventing CBSE circular numbers or NCERT page numbers."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the internal assessment scheme for CBSE Class 10?",
-      "Each subject carries 80 marks of board or annual theory plus 20 marks of internal assessment. The 20 is split equally into Periodic Test (5), Multiple Assessment (5), Portfolio (5) and Subject Enrichment (5), so no single component decides the internal grade."
-    ],
-    [
-      "How long should a CBSE lesson plan be?",
-      "Plan for the period you actually get, most commonly 35 to 45 minutes. Depth matters more than length: three to five observable learning outcomes, a stated time for each teaching phase, and one check for understanding before the bell is enough for a plan file."
-    ],
-    [
-      "What is the 5E lesson plan model?",
-      "5E is a five-phase learning cycle - Engage, Explore, Explain, Elaborate, Evaluate - in which students investigate before the teacher explains. A common working split is 10 / 25 / 30 / 20 / 15 percent of the period, which on a 40 minute period gives 4, 10, 12, 8 and 6 minutes."
-    ],
-    [
-      "How many teaching days does CBSE require in a session?",
-      "CBSE affiliation bye-laws set a minimum of 220 working days of teaching in an academic session, excluding admission and examination days. That figure is the practical ceiling when you spread a unit's periods across the year."
-    ]
-  ]
-},
-  "cease-desist-noise-nuisance": {
-  "intro": "Cease & Desist Noise Nuisance Letter helps organise a formal but calm notice about repeated noise disturbance. It captures dates, times, impact, prior requests, evidence and the remedy you are asking for.",
-  "useCases": [
-    "Prepare a neighbour noise complaint letter before escalating.",
-    "Summarise repeated disturbances with a clear timeline.",
-    "Create a record for society, landlord, building manager, or local authority follow-up."
-  ],
-  "benefits": [
-    [
-      "Calm wording",
-      "Keeps the tone factual and non-threatening."
-    ],
-    [
-      "Evidence checklist",
-      "Reminds you to record dates, times, witnesses, and messages."
-    ],
-    [
-      "Clear remedy",
-      "States what needs to stop and by when."
-    ]
-  ],
-  "faqs": [
-    [
-      "Is this legal advice?",
-      "No. It is a document drafting helper; consult a qualified professional for legal strategy."
-    ],
-    [
-      "Should I mention recordings?",
-      "Mention only lawful evidence you are allowed to collect and share in your location."
-    ],
-    [
-      "Can it be used for landlords?",
-      "Yes, add landlord/building-manager context in the input notes."
-    ]
-  ]
-},
-  "ceiling-fan-electricity-cost": {
-  "intro": "This calculator prices the electricity your ceiling fans use — watts divided by 1000, times hours per day, times days of use, times your tariff — and then works out the simple payback period on replacing them with BLDC fans. Payback is net upgrade cost divided by the annual saving, with no discounting. It also applies the fan affinity law, where power falls with the cube of speed, so you can price a fan that mostly runs at a lower setting.",
-  "useCases": [
-    "Costing four fans that run twelve hours a day for eight months of the year before the summer bill arrives",
-    "Deciding whether replacing old 75 W induction fans with 30 W BLDC fans is worth the up-front spend",
-    "Checking how much running at speed 3 instead of speed 5 saves on a fan with electronic speed control"
-  ],
-  "benefits": [
-    [
-      "Simple payback shown",
-      "Reports the months until the BLDC upgrade repays itself, plus the 5 and 10 year position."
-    ],
-    [
-      "Affinity law built in",
-      "Speed buttons apply the cube law rather than a guessed percentage."
-    ],
-    [
-      "Seasonal use handled",
-      "Set the months per year fans actually run instead of assuming twelve."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much electricity does a ceiling fan use per hour?",
-      "A conventional 1200 mm induction ceiling fan draws about 70 to 80 W at full speed, so roughly 0.075 kWh per hour; a BEE 5-star model is nearer 50 W and a BLDC fan around 28 to 35 W. At 8 INR per kWh, a 75 W fan costs about 60 paise an hour."
-    ],
-    [
-      "Is a BLDC fan worth the extra cost?",
-      "Usually, if the fan runs long hours. Replacing a 75 W fan with a 30 W BLDC saves 45 W, which at twelve hours a day for eight months is about 131 kWh and roughly 1050 INR a year per fan — enough to repay a 3000 INR price difference in under three years."
-    ],
-    [
-      "Does running a fan at a lower speed save electricity?",
-      "It depends entirely on the regulator. With electronic speed control the affinity law applies and power falls with the cube of speed, so speed 3 of 5 draws only about 22 percent of full power. An old resistive regulator dissipates the difference as heat in the resistor, so the meter barely notices."
-    ],
-    [
-      "How much does it cost to run a fan all night?",
-      "A 75 W fan running eight hours uses 0.6 kWh, about 4.80 INR at 8 INR per kWh, or roughly 145 INR a month. The same eight hours on a 30 W BLDC fan is 0.24 kWh, close to 1.92 INR a night."
-    ]
-  ]
-},
-  "ceiling-fan-size-selector": {
-  "intro": "This selector answers the two separate questions a ceiling fan poses: how wide the blades should be, chosen from floor area, and how far the fan should hang, chosen from ceiling height. Sweep follows the standard floor-area bands — 900 mm up to about 7 m², 1200 mm to 13.5 m², 1400 mm to 21 m² — and the downrod is sized so the blades land near 2.4 m above the floor with at least 450 mm of blade-to-wall clearance. It also reports the air changes per minute you get from the recommended fan's rated delivery.",
-  "useCases": [
-    "Choose between a 1200 mm and a 1400 mm fan for a 4 m × 3.5 m bedroom before ordering online.",
-    "Work out the downrod length to buy for a 3.2 m ceiling so the fan is not choked against the slab.",
-    "Check whether a 20 m² hall needs one large fan or two, and how far apart to space them."
-  ],
-  "benefits": [
-    [
-      "Sweep and rod together",
-      "Most guides cover only blade width; this also gives the downrod and the resulting blade height."
-    ],
-    [
-      "Airflow, not just size",
-      "Converts the fan's rated m³/min into air changes per minute for your actual room volume."
-    ],
-    [
-      "Flags the awkward rooms",
-      "Warns when the ceiling is too low, the rod too long, or the room too narrow for the sweep."
-    ]
-  ],
-  "faqs": [
-    [
-      "What size ceiling fan do I need for my room?",
-      "Go by floor area: 900 mm (36 inch) up to about 7 m², 1200 mm (48 inch) up to 13.5 m², 1400 mm (56 inch) up to 21 m², and two fans beyond roughly 26 m². A standard 10 ft × 12 ft Indian bedroom is 11 m², so a 1200 mm fan is the right call."
-    ],
-    [
-      "How high should a ceiling fan hang above the floor?",
-      "Aim for the blades about 2.4 m above the floor and never below 2.1 m, which is why a 3 m ceiling needs roughly a 300 mm downrod and a 2.7 m ceiling needs none. Keep at least 300 mm between the blades and the ceiling too, or the fan starves for air and moves far less than its rating."
-    ],
-    [
-      "What is air delivery in a ceiling fan and how much do I need?",
-      "Air delivery is the volume of air the fan moves, quoted in cubic metres per minute. IS 374 sets 210 m³/min as the minimum for a 1200 mm ceiling fan, and a fan delivering that into a 30 m³ bedroom turns the air over about seven times a minute — enough for the breeze to feel continuous."
-    ],
-    [
-      "Can I put a large ceiling fan in a small room?",
-      "Not usefully. The blade tip needs at least 450 mm of clearance to the nearest wall, so a 1400 mm fan wants a room at least 2.3 m across on its shortest side. Closer than that and the blades work against the wall, which cuts airflow and makes the fan noisy."
-    ]
-  ]
-},
-  "ceiling-paint-coverage-calculator": {
-  "intro": "The Ceiling Paint Coverage Calculator turns room length and width into the litres of emulsion a ceiling needs, using litres = area x coats / spreading rate with the 130-160 sq ft per litre per coat that interior emulsion data sheets quote for smooth primed surfaces. It adds the cove or cornice band, which is measured as perimeter x drop and is routinely left out of hand estimates, and corrects coverage for gypsum board, bare plaster or a textured finish. The output is a litre figure, a tin-by-tin shopping list and a material cost.",
-  "useCases": [
-    "Buying paint for the ceilings of a whole flat at once, by entering the largest room and the number of similar rooms.",
-    "Estimating the extra paint a deep POP cove adds to what looks like a simple 12 ft x 15 ft ceiling.",
-    "Sanity-checking a painter's material list before agreeing to a labour-plus-material quote."
-  ],
-  "benefits": [
-    [
-      "Cove area included",
-      "Adds perimeter x cove drop, the part most rough estimates miss entirely."
-    ],
-    [
-      "Surface-aware coverage",
-      "Gypsum, bare plaster and textured ceilings each get their own spreading rate."
-    ],
-    [
-      "Buy-it-two-ways",
-      "Shows both the least-paint and the fewest-tins purchase so you can pick on price."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much paint does a 12 x 15 ft ceiling need?",
-      "About 2.5 litres for two coats on a smooth primed slab: 180 sq ft x 2 coats divided by roughly 140 sq ft per litre per coat, before a wastage allowance. A textured ceiling of the same size can need 4 litres or more because the profile adds real surface area."
-    ],
-    [
-      "How many coats of paint does a ceiling need?",
-      "Two coats over a primed surface is standard and is what gives an even sheen under overhead light. One coat is enough only when you are refreshing the same shade on a clean, sound ceiling; a stained or patched ceiling usually needs a stain-blocking primer first rather than a third finish coat."
-    ],
-    [
-      "Can I use wall emulsion on the ceiling?",
-      "Yes, interior wall emulsion works on ceilings, but dedicated ceiling paint is formulated to be thicker and flatter so it drips less and hides roller lines under grazing light. Whatever you use, a matt finish is far more forgiving on a ceiling than a sheen."
-    ],
-    [
-      "Should I paint the ceiling before or after the walls?",
-      "Paint the ceiling first. Overspray and roller spatter from the ceiling land on the walls, and any ceiling paint that runs onto the wall line gets covered when you cut in the wall colour afterwards."
-    ]
-  ]
-},
-  "cent-to-sqft-converter": {
-  "intro": "A cent is one hundredth of an acre, which makes it exactly 435.6 square feet or 40.4686 square metres. This converter moves a parcel between cent, square feet, square metres, ankanam, ground, guntha, are, acre and hectare, all derived from the 43,560 sq ft acre and the exact 0.3048 m foot. It also converts a rate quoted per cent into the rate per square foot or per ground, and divides a parcel into equal shares.",
-  "useCases": [
-    "Check what a 5 cent plot in Kerala or Tamil Nadu works out to in square feet before planning a house on it.",
-    "Compare a Chennai plot quoted per ground with a suburban plot quoted per cent.",
-    "Work out each sibling's share in square feet when a 20 cent family property is divided four ways."
-  ],
-  "benefits": [
-    [
-      "Derived from the acre",
-      "Cent, guntha and acre are exact ratios here, so converting back and forth never drifts."
-    ],
-    [
-      "Local units included",
-      "Ground, ankanam and are sit alongside the metric and imperial units in one table."
-    ],
-    [
-      "Rate and total together",
-      "See the same asking price expressed per cent, per square foot and per ground."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many square feet is 1 cent?",
-      "435.6 square feet, or 40.4686 square metres. A cent is defined as one hundredth of an acre, and an acre is 43,560 square feet, so the figure is exact rather than approximate."
-    ],
-    [
-      "How many cents are in 1 acre?",
-      "Exactly 100 cents. That is where the name comes from. One acre is also 40 guntha, so 1 guntha equals 2.5 cent, or 1,089 square feet."
-    ],
-    [
-      "How many cents is 1 ground?",
-      "One ground is 2,400 square feet, which is 5.51 cent. Ground is used mainly in Chennai and nearby districts of Tamil Nadu; elsewhere in the south the cent is the working unit."
-    ],
-    [
-      "What is an ankanam in square feet?",
-      "One ankanam is 8 square yards, which is 72 square feet or about 0.165 cent. It appears in Andhra Pradesh and parts of Karnataka, usually for smaller residential plots."
-    ]
-  ]
-},
-  "certificate-expiry-tracker": {
-  "intro": "This tracker computes the days remaining and the renewal deadline for every TLS certificate you list, flags anything expired or inside its renewal window, and exports RFC 5545 iCalendar reminders. It applies the CA/Browser Forum rule capping public certificates at 398 days of validity and defaults to the 30-day renewal lead time Let's Encrypt recommends. It is built for sysadmins and DevOps teams who track a handful of certificates and want a local list — everything stays in the browser, nothing is uploaded.",
-  "useCases": [
-    "An ops team listing 15 customer-facing domains with owners so the next expiry never surprises them",
-    "A freelancer downloading .ics renewal reminders for client sites into Google Calendar or Outlook",
-    "An admin triaging which certificates are already inside their 30-day renewal window after coming back from leave"
-  ],
-  "benefits": [
-    [
-      "Worst-first triage",
-      "Certificates sort expired first, then those within 7 days, then open renewal windows."
-    ],
-    [
-      "Calendar export",
-      "One click builds an RFC 5545 .ics file with an all-day reminder on each renewal date."
-    ],
-    [
-      "Fully local",
-      "The list lives in your browser's localStorage — no account, no server, no data leaving the machine."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long can a TLS certificate be valid?",
-      "398 days at most for publicly trusted certificates, a cap the CA/Browser Forum Baseline Requirements have enforced since 1 September 2020. Ballot SC-081, adopted in 2025, schedules further cuts — roughly 200 days in 2026, 100 days in 2027 and 47 days from March 2029 — so renewal automation is becoming essential."
-    ],
-    [
-      "How many days before expiry should I renew an SSL certificate?",
-      "30 days before expiry is the widely used baseline — it is the point at which Let's Encrypt recommends renewing its 90-day certificates. That buffer leaves time for DNS validation problems, CA outages or approval delays without risking an outage."
-    ],
-    [
-      "What happens when a TLS certificate expires?",
-      "Browsers reject the connection outright with an error such as NET::ERR_CERT_DATE_INVALID, and API clients typically fail the TLS handshake, so the site or service is effectively down for anyone who does not click through a warning. Expiry is a hard outage, which is why this tracker ranks expired certificates above every other status."
-    ],
-    [
-      "Does this tool check my certificates automatically?",
-      "No — it is a local, manual tracker. You enter each certificate's expiry date (from your CA dashboard or the browser padlock) and the tool computes days remaining, renewal deadlines and statuses in your browser. For automatic discovery you would pair it with monitoring that queries your endpoints directly."
-    ]
-  ]
-},
-  "cft-to-cubic-meter-converter": {
-  "intro": "One cubic foot is exactly 0.028316846592 cubic metres, because a foot is defined as exactly 0.3048 metres. This converter moves a construction load between cubic feet, cubic metres, litres, brass, cubic yards and cubic inches, then multiplies by bulk density to give the weight in kilograms and tonnes, the number of tipper loads and the cost per unit. Bulk densities offered are the unit weights from IS 875 Part 1, plus the 1,440 kg per cubic metre figure that defines the standard 50 kg cement bag.",
-  "useCases": [
-    "Convert a sand delivery quoted as 1 brass into cubic metres for a metric bill of quantities.",
-    "Check whether a 4.5 tonne tipper receipt matches the 100 cft of sand you were charged for.",
-    "Work out the concrete volume in a 10 ft by 10 ft slab 6 inches deep, in both cft and cubic metres."
-  ],
-  "benefits": [
-    [
-      "Exact volume maths",
-      "Every conversion comes from the defined 0.3048 m foot, so nothing rounds away."
-    ],
-    [
-      "Volume to weight",
-      "Applies published bulk densities for sand, aggregate, cement, concrete and soil."
-    ],
-    [
-      "Load and cost view",
-      "Shows tipper loads to order and the same rate expressed per cft, per cubic metre, per brass and per tonne."
-    ]
-  ],
-  "faqs": [
-    [
-      "How many cubic feet are in 1 cubic metre?",
-      "35.3147 cubic feet. Going the other way, 1 cubic foot is 0.0283168 cubic metres — exact figures, since the foot is defined as 0.3048 metres."
-    ],
-    [
-      "What is 1 brass in cubic feet and cubic metres?",
-      "One brass is 100 cubic feet, which is 2.8317 cubic metres. Brass is a volume measure used for sand, aggregate and rubble in western India; it says nothing about weight, which depends on the material and how damp it is."
-    ],
-    [
-      "How many tonnes is 100 cft of sand?",
-      "About 4.5 tonnes. 100 cft is 2.83 cubic metres, and dry river sand has a bulk density near 1,600 kg per cubic metre, giving roughly 4,530 kg. Wet sand weighs more, so a weighbridge slip is the reliable check when buying by weight."
-    ],
-    [
-      "How do I convert cubic feet to litres?",
-      "Multiply cubic feet by 28.3168. One cubic metre is 1,000 litres, and a cubic foot is 0.0283168 cubic metres, so 100 cft is 2,831.68 litres — useful for sizing a water tank quoted in cft."
-    ]
-  ]
-},
-  "cgpa-to-percentage-converter": {
-  "intro": "CGPA to Percentage Converter turns a cumulative grade point average into a percentage using the exact rule your institution follows — CBSE's x 9.5, the generic x 10, VTU's (CGPA - 0.75) x 10, GTU's (CGPA - 0.5) x 10, Mumbai University's piecewise formula, or a custom multiplier. It also runs in reverse, converting a percentage back to CGPA, and shows what the same CGPA would look like under the other common rules. Useful when a job portal, scholarship form or foreign university application demands a percentage and your marksheet only prints grade points.",
-  "useCases": [
-    "Fill in the percentage field on a campus placement or government job form that will not accept a CGPA.",
-    "Check what your engineering CGPA works out to under your own university rule instead of the generic x 10 shortcut.",
-    "Convert a required percentage cut-off back into the CGPA you need to hit this semester."
-  ],
-  "benefits": [
-    [
-      "Real university formulas",
-      "CBSE, VTU, GTU and Mumbai University rules are built in, not just a single multiplier."
-    ],
-    [
-      "Two-way conversion",
-      "Go CGPA to percentage or percentage to CGPA with the same rule and no manual algebra."
-    ],
-    [
-      "Side-by-side comparison",
-      "See how much your number changes across rules, so you know when to insist on an official conversion certificate."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I convert CGPA to percentage?",
-      "Multiply your CGPA by your institution's factor. CBSE uses 9.5, many universities use a flat 10, VTU subtracts 0.75 before multiplying by 10, and GTU subtracts 0.5. Always use the rule your own institution publishes."
-    ],
-    [
-      "Why does CBSE multiply by 9.5?",
-      "CBSE derived 9.5 from the average of the marks ranges behind grades A1 to D1 across several years of results, so multiplying the grade point by 9.5 approximates the underlying marks percentage."
-    ],
-    [
-      "Which formula should I use if my university has not published one?",
-      "Ask your examination section for a conversion certificate. Many employers and foreign universities require that official document, and using the wrong multiplier can overstate or understate your score by several percent."
-    ],
-    [
-      "Can I convert a 4.0 scale GPA to a percentage?",
-      "The tool includes GPA / 4 x 100 as a simple linear option, but US institutions do not officially map GPA to percentages. For credential evaluation, submit your transcript to the evaluating body rather than a converted number."
-    ]
-  ]
-},
-  "cgst-sgst-igst-split-calculator": {
-  "intro": "This calculator applies the test in sections 7 and 8 of the IGST Act, 2017: when the location of the supplier and the place of supply fall in the same state code the supply is intra-state and tax splits equally into CGST and SGST or UTGST; when the codes differ it is inter-state and the whole amount is IGST. Section 7(5) overrides the codes for SEZ and export supplies, which are always inter-state and zero-rated under section 16. Enter the two state codes, the taxable value and the rate to get the invoice lines.",
-  "useCases": [
-    "A Maharashtra supplier billing a Karnataka customer and confirming that IGST rather than CGST plus SGST applies",
-    "A vendor supplying an SEZ unit in its own state, where the supply is still inter-state",
-    "An accountant reading the state code off a customer's GSTIN before raising the invoice"
-  ],
-  "benefits": [
-    [
-      "Reads a GSTIN",
-      "Paste a GSTIN and the first two digits fill in the state automatically."
-    ],
-    [
-      "SEZ and export handled",
-      "Applies the section 7(5) override and the letter-of-undertaking option."
-    ],
-    [
-      "UTGST labelled correctly",
-      "Shows UTGST instead of SGST for union territories without a legislature."
-    ]
-  ],
-  "faqs": [
-    [
-      "When is IGST charged instead of CGST and SGST?",
-      "IGST applies when the location of the supplier and the place of supply are in different states or union territories, under section 7 of the IGST Act. It also applies to any supply to or by an SEZ developer or unit and to imports and exports, under section 7(5), even if both parties are in the same state."
-    ],
-    [
-      "What are the first two digits of a GSTIN?",
-      "They are the state code of the registration — 27 is Maharashtra, 29 is Karnataka, 07 is Delhi, 33 is Tamil Nadu and 09 is Uttar Pradesh. Comparing the supplier's code with the place-of-supply code is the quickest way to tell intra-state from inter-state."
-    ],
-    [
-      "How is 18% GST split into CGST and SGST?",
-      "Equally: 9% CGST and 9% SGST or UTGST. The total tax on the invoice is the same 18% either way; the split only decides whether the revenue goes to the Centre and the state, or entirely through the IGST pool for later apportionment."
-    ],
-    [
-      "Is the place of supply always the customer's address?",
-      "No. Sections 10 to 13 of the IGST Act set special rules — services relating to immovable property are supplied where the property is, admission to an event where the event is held, and passenger transport where the journey begins. Use those rules to fix the place of supply first, then apply the split, and check with a GST practitioner in unusual cases."
-    ]
-  ]
-},
-  "chai-coffee-sugar-tracker": {
-  "intro": "The Chai and Coffee Sugar Tracker adds up the free sugar in a day of tea and coffee by multiplying cups by teaspoons and converting at 4 g of sugar per level teaspoon and 4 kcal per gram. It separates the sugar from the milk and coffee calories, measures the total against the WHO free-sugar guideline of under 10% of energy, and scales the habit to a week, a month and a year. Built for people whose intake is not in the food they eat but in five cups of chai.",
-  "useCases": [
-    "See that three cups of chai with two spoons each is 24 g of sugar, roughly half a 2,000 kcal day's WHO ceiling.",
-    "Compare a filter coffee habit against a cafe latte habit in calories and sugar.",
-    "Find out how much sugar a year one teaspoon less per cup would save.",
-    "Check whether sweetened drinks alone push you past the 5% free-sugar level."
-  ],
-  "benefits": [
-    [
-      "Sugar separated from milk",
-      "Base drink calories and added sugar are counted apart, so you can see which one is the problem."
-    ],
-    [
-      "Measured against WHO guidance",
-      "Both the 10% ceiling and the 5% further-benefit level are computed for your own calorie intake."
-    ],
-    [
-      "Scaled to a year",
-      "Daily grams become kilograms a year, which is what makes a two-spoon habit visible."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much sugar is in one cup of chai?",
-      "It depends entirely on how many spoons go in. Two level teaspoons is 8 g of sugar and 32 kcal; a heaped spoon is closer to 6 g, so two heaped spoons is about 12 g. The tea and milk themselves add no free sugar, though milk contributes lactose and calories."
-    ],
-    [
-      "How many teaspoons of sugar a day is safe?",
-      "WHO advises keeping free sugars below 10% of total energy, which is 50 g or roughly 12 level teaspoons on a 2,000 kcal diet, and suggests a further drop below 5% (25 g, about 6 teaspoons) for extra benefit. That budget covers all added sugar, not just what goes in your cup."
-    ],
-    [
-      "Will cutting sugar from my tea help me lose weight?",
-      "It removes calories, which helps, but the effect is modest and gradual. Dropping one teaspoon from four cups a day is 16 g of sugar and 64 kcal, about 23,000 kcal over a year. The commonly quoted 7,700 kcal per kilogram of body fat oversimplifies real weight change, so treat the yearly figure as perspective rather than a prediction."
-    ],
-    [
-      "Is jaggery in chai better than sugar?",
-      "Jaggery still counts as a free sugar under WHO's definition and supplies a similar amount of energy per gram, so the total in the budget is essentially the same. It carries trace minerals that refined sugar does not, but the quantities are too small to change the calculation."
-    ]
-  ]
-},
-  "chair-height-calculator": {
-  "intro": "Seat height is set by one measurement — popliteal height, the distance from the floor to the crease behind your knee while you sit with your feet flat — plus the heel thickness of the shoes you wear. This calculator turns that into a seat height, a usable seat depth, the desk height that matches it, and the footrest you need when the desk is fixed and the chair has to come up to meet it. It also checks whether your thighs clear the underside of the desk, and states the knee space OSHA's computer-workstation guidance asks for: at least 51 cm wide and 38 cm deep.",
-  "useCases": [
-    "Set a new office chair's gas lift correctly on the first attempt instead of adjusting it for weeks.",
-    "Work out how tall a footrest to buy when a fixed 74 cm desk sits above the height your legs want.",
-    "Check, before ordering, whether a tall person will actually fit their thighs under a particular desk.",
-    "Give an occupational health assessment concrete seat and desk figures rather than 'adjust to comfort'."
-  ],
-  "benefits": [
-    [
-      "One measurement drives it",
-      "Popliteal height is the dimension chair standards use, and it is easy to measure at home with a tape."
-    ],
-    [
-      "Handles fixed desks honestly",
-      "When the desk cannot move, the tool raises the seat to the desk and sizes the footrest that has to follow."
-    ],
-    [
-      "Checks the space under the desk",
-      "Flags when the thighs will not clear the desk apron, which is what makes tall people sit sideways."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I work out the right chair height?",
-      "Set the seat to your popliteal height plus your shoe heel — for a 43 cm popliteal height and 2 cm heels, that is 45 cm. Sitting at that height puts your feet flat on the floor with your thighs roughly level and no pressure from the seat edge behind the knee."
-    ],
-    [
-      "What desk height matches my chair?",
-      "Add your seated elbow height to the seat height. For a 172 cm adult, seated elbow height is about 23 cm above the seat, so a 45 cm seat pairs with a desk around 68 cm — noticeably lower than the 73 to 75 cm most fixed desks are built at."
-    ],
-    [
-      "Do I need a footrest?",
-      "You need one whenever the desk is fixed above the height your legs want, because the chair has to come up to reach the desk and your feet leave the floor. With a 74 cm desk and a 45 cm ideal seat height, the seat rises to about 51 cm and the footrest needs to be roughly 6 cm tall."
-    ],
-    [
-      "How much space should there be under a desk?",
-      "OSHA's computer-workstation guidance asks for knee space at least 20 inches (51 cm) wide and 15 inches (38 cm) deep at knee level, plus enough height that your thighs clear the underside with a couple of centimetres to spare. Drawers, cross-braces and thick aprons are the usual culprits when that fails."
-    ]
-  ]
-},
-  "chair-yoga-desk-routine": {
-  "intro": "This builder assembles a seated stretch routine that fits the exact number of minutes you have, drawing from eighteen chair-based positions for the neck, shoulders and chest, wrists, spine, hips and eyes. Holds sit in the 20-30 second static stretch range recommended for adults, and the eye break follows the 20-20-20 rule — every 20 minutes, look about 20 feet away for 20 seconds. Nothing requires a mat, floor space or changing clothes.",
-  "useCases": [
-    "Fill a five-minute gap between calls with neck, shoulder and wrist work without leaving your desk.",
-    "Build a three-minute wrist and eye reset for a day of heavy typing and screen time.",
-    "Give a team a shared 10-minute afternoon routine that everyone can do in an office chair.",
-    "Run a seated spine and hip sequence on a long flight or train journey."
-  ],
-  "benefits": [
-    [
-      "Fits the time you actually have",
-      "The routine is built to your break length, including the seconds spent changing position."
-    ],
-    [
-      "Target the part that hurts",
-      "Choose neck, shoulders, wrists, spine, hips, eyes or breath and only those positions are used."
-    ],
-    [
-      "Guided as you go",
-      "A built-in timer names the current position, the cue and the seconds left."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long should you hold a stretch?",
-      "For general flexibility in adults, static stretches are usually held for 10 to 30 seconds, repeated two to four times, on most days of the week. Holds beyond about 60 seconds add little for most people, which is why this builder caps a single hold at twice its base length."
-    ],
-    [
-      "What is the 20-20-20 rule for screen use?",
-      "Every 20 minutes, look at something about 20 feet (6 metres) away for at least 20 seconds. It gives the focusing muscles of the eye a break from close work and is the most commonly given practical measure for digital eye strain, alongside blinking fully and keeping the screen slightly below eye level."
-    ],
-    [
-      "Does chair yoga actually help desk pain?",
-      "Regular movement breaks reduce the sustained low-level muscle load that builds up in the neck, shoulders and forearms during static desk work, and short frequent breaks tend to help more than one long one. Chair stretching does not fix a badly set-up workstation, so adjust chair height, screen height and keyboard position as well."
-    ],
-    [
-      "Can I do chair yoga if I have neck or back problems?",
-      "Gentle range-of-motion work is often fine, but anything that produces tingling, numbness or pain running down an arm or leg should be stopped and assessed. If you have a disc problem, recent surgery, osteoporosis or dizziness on head movement, get a physiotherapist or doctor to review the positions before you use them regularly."
-    ]
-  ]
-},
-  "chaldean-numerology-calculator": {
-  "intro": "The Chaldean Numerology Calculator converts a written name into its Chaldean compound number and single-digit root, and a date of birth into psychic (moolank) and destiny (bhagyank) numbers. It uses the classical Chaldean letter table in which letters take values 1 to 8 and 9 is never assigned, which is what separates it from the Pythagorean A=1 to Z=26 method. The unreduced compound total is shown alongside Cheiro's published reading for numbers 10 to 52, so you can see the working rather than a single unexplained figure.",
-  "useCases": [
-    "Checking the compound and root number of a spelling before settling on how a child's name will be written on official records.",
-    "Comparing two spellings of the same name — such as Aditya and Adithya — to see how the letter totals differ.",
-    "Working out the psychic number from the day of the month and the destiny number from the full date of birth without hand arithmetic.",
-    "Understanding why a Chaldean total differs from a Pythagorean one when two calculators disagree."
-  ],
-  "benefits": [
-    [
-      "Authentic 1–8 table",
-      "Uses the Chaldean values where 9 is never assigned to a letter, not a relabelled Pythagorean chart."
-    ],
-    [
-      "Compound number kept visible",
-      "The unreduced total and its classical 10–52 reading are shown, not just the reduced digit."
-    ],
-    [
-      "Real calendar validation",
-      "Dates are checked against the Gregorian leap rule, so 29 February 1900 is correctly rejected."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the difference between Chaldean and Pythagorean numerology?",
-      "Chaldean assigns letters values 1 to 8 only and never uses 9, while Pythagorean maps A–I to 1–9, J–R to 1–9 and S–Z to 1–8. Chaldean also keeps the unreduced compound total as meaningful; Pythagorean usually reads only the reduced digit."
-    ],
-    [
-      "Why is 9 not given to any letter in the Chaldean system?",
-      "In the Chaldean tradition 9 was treated as sacred and set apart from the letters, so no letter carries it. The number 9 can still appear as a root number after reduction — it simply never comes directly from a letter value."
-    ],
-    [
-      "How do you calculate the psychic and destiny numbers?",
-      "The psychic number is the day of the month reduced to one digit — 29 becomes 2+9=11, then 1+1=2. The destiny number sums every digit of the full date; 29 February 2000 gives 2+9+0+2+2+0+0+0=15, which reduces to 6."
-    ],
-    [
-      "Does the name number change if I add a middle name or a title?",
-      "Yes. The total is the sum of every scored letter, so adding a middle name, changing a surname or altering a spelling changes the compound number and can change the root. Treat all of this as cultural tradition and entertainment — it is not evidence-based and should not guide medical, legal or financial choices."
-    ]
-  ]
-},
-  "change-freeze-calendar-planner": {
-  "intro": "A change freeze planner that converts a list of protected dates into dated freeze windows, merges the ones that overlap, and totals how many days and working days of the year end up frozen. Each event gets its own lead and trail padding, so a five-day pre-sale freeze and a two-day post-close freeze are modelled separately rather than averaged. Built around the Indian financial year ending 31 March and the festive sale calendar, with moving dates such as Diwali and Black Friday entered by hand instead of guessed.",
-  "useCases": [
-    "Publishing next year's deployment freeze calendar to engineering before sprint planning starts",
-    "Showing leadership that stacking a Diwali freeze onto a 31 March fiscal close leaves only a handful of shippable weeks in Q4",
-    "Finding the longest gap between freeze blocks so a risky migration can be scheduled where there is real room to roll back"
-  ],
-  "benefits": [
-    [
-      "Overlaps merged automatically",
-      "Back-to-back freezes are joined into one block so you see the true length, not two short ones."
-    ],
-    [
-      "Counts working days too",
-      "Total days and Monday-to-Friday days are reported separately, because weekends were never release days."
-    ],
-    [
-      "Shows the gaps",
-      "The release windows between freezes are listed with their weekday counts."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long should a change freeze be before a big sale?",
-      "Most e-commerce teams freeze 3 to 7 days before the sale opens and 2 to 4 days after it closes. The pre-sale padding matters more than the post-sale padding: it gives load tests, cache warmers and third-party integrations time to settle, and it means any regression is found while engineers are still watching rather than mid-event."
-    ],
-    [
-      "When does the Indian financial year end?",
-      "31 March. Indian companies close books for the financial year on 31 March and file for the assessment year that follows, which is why finance, billing and reporting systems typically sit under a freeze from around 26 March to the first few days of April. Calendar quarter ends on 30 June, 30 September and 31 December matter separately if you report to a group parent on a calendar year."
-    ],
-    [
-      "Should security patches be blocked during a change freeze?",
-      "No. A freeze that has no exception path encourages people to route around it. Define an explicit carve-out for security fixes, Sev-1 incident remediation and config-only rollbacks, name who can approve one, and require the same testing and rollback plan as a normal change — just with a shorter approval chain."
-    ],
-    [
-      "Why are Diwali and Black Friday not filled in automatically?",
-      "Because they move. Diwali follows the Hindu lunar calendar and shifts by two to three weeks year to year, and Black Friday is the Friday after the fourth Thursday of November in the US calendar. A wrong date here would silently misplace your longest freeze, so the tool asks for it rather than assuming."
-    ]
-  ]
-},
-  "changelog-prompt-builder": {
-  "intro": "A changelog prompt builder reads your merged commit titles, classifies each one under Conventional Commits 1.0.0, maps it to a Keep a Changelog 1.1.0 section, and works out the Semantic Versioning 2.0.0 bump the set implies before writing the prompt. Breaking changes marked with an exclamation mark or a BREAKING CHANGE footer force a major bump and get pulled to the top with a migration note. The result is a prompt that turns commit shorthand into release notes a user can act on, without inventing changes that were never shipped.",
-  "useCases": [
-    "Turn a release branch's commit log into user-facing release notes without rewriting each line by hand.",
-    "Check the version bump a set of merged pull requests actually justifies before you tag the release.",
-    "Write two versions of the same entry — one for end users, one for SDK consumers — from a single commit list.",
-    "Spot the breaking changes hiding in a large merge queue so the migration note gets written before release day."
-  ],
-  "benefits": [
-    [
-      "The bump is computed, not guessed",
-      "Breaking beats feature, feature beats fix — the same precedence Semantic Versioning 2.0.0 defines."
-    ],
-    [
-      "Standard section order",
-      "Added, Changed, Deprecated, Removed, Fixed, Security, with empty sections dropped, exactly as Keep a Changelog specifies."
-    ],
-    [
-      "Nothing silently disappears",
-      "Lines that are not in Conventional Commits format are still listed, defaulted to Changed and flagged for a human to re-classify."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do I decide between a major, minor and patch release?",
-      "Semantic Versioning 2.0.0 is explicit: increment MAJOR for backwards-incompatible API changes, MINOR for backwards-compatible new functionality, and PATCH for backwards-compatible bug fixes. One breaking change anywhere in the set forces MAJOR, no matter how many small fixes ship with it."
-    ],
-    [
-      "How do I mark a breaking change in a commit message?",
-      "Conventional Commits 1.0.0 gives you two ways: put an exclamation mark before the colon, as in feat(api)!: drop v1 endpoints, or add a BREAKING CHANGE: footer describing the break. Either one signals a MAJOR bump, and the footer is the better choice when the explanation needs more than a subject line."
-    ],
-    [
-      "What sections should a changelog have?",
-      "Keep a Changelog defines six: Added, Changed, Deprecated, Removed, Fixed and Security. Show only the ones with entries, keep them in that order, and put the newest release at the top of the file so a reader lands on what just shipped."
-    ],
-    [
-      "Should chore and refactor commits appear in the changelog?",
-      "No, unless they change observable behaviour. Dependency bumps, formatting, test and CI commits belong in the commit history, not the release notes. The exception is a dependency bump that fixes a known vulnerability — that goes under Security with the advisory referenced."
-    ]
-  ]
-},
-  "changesets-config-generator": {
-  "intro": "This tool generates the .changeset/config.json that controls how @changesets/cli versions and publishes a monorepo — changelog generator, npm access level, base branch, fixed and linked package groups, internal-dependency bump policy and ignored packages. It emits the documented option names and shapes, including the [\"@changesets/changelog-github\", { repo }] tuple for GitHub-linked changelogs. Maintainers get a valid config with the sharp edges (restricted access, fixed-vs-linked semantics) explained inline.",
-  "useCases": [
-    "An open-source maintainer switching the default changelog to @changesets/changelog-github so entries link commits and pull requests",
-    "A team publishing scoped @org/* packages who must set access to public before their first npm publish succeeds",
-    "A monorepo with a core and CLI package that must always share a version, configured as a fixed group"
-  ],
-  "benefits": [
-    [
-      "Schema-valid output",
-      "Includes the $schema pointer and only documented keys, so editors and the CLI validate the file immediately."
-    ],
-    [
-      "Fixed vs linked done right",
-      "Group syntax is checked, single-package groups are rejected, and a package cannot land in both lists."
-    ],
-    [
-      "GitHub changelog wired",
-      "Emits the changelog-github tuple with your org/repo and reminds you it needs a GITHUB_TOKEN in CI."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the difference between fixed and linked packages in changesets?",
-      "Fixed groups always share the exact same version — releasing any member bumps every member, like Lerna's fixed mode. Linked groups only receive a shared bump when they are released together; a linked package with no changes keeps its old version, which suits packages that should stay in step without forcing empty releases."
-    ],
-    [
-      "Why does changesets publish fail with a 402 error for my scoped package?",
-      "Because access defaults to restricted, and npm charges for private scoped packages — publishing @org/package without a paid plan returns a 402 Payment Required. Set access to \"public\" in .changeset/config.json (or publishConfig.access in the package) for open-source scoped packages."
-    ],
-    [
-      "How do I stop changesets from versioning a package like my docs site?",
-      "Add its package name to the ignore array — ignored packages are never bumped or published, and the CLI will refuse a changeset that mixes an ignored and a published package. For private packages across the board, the privatePackages option can disable versioning and tagging entirely."
-    ],
-    [
-      "What does updateInternalDependencies patch versus minor mean?",
-      "It sets the smallest bump of a workspace dependency that makes changesets rewrite the depending package's range: with \"patch\" (the usual choice) any internal release propagates, while with \"minor\" a patch release of a dependency leaves dependents' ranges untouched. It only affects internal workspace dependencies, not third-party ones."
-    ]
-  ]
-},
-  "character-limit-checker": {
-  "intro": "Character Limit Checker counts your text against 23 real platform limits — X posts at 280, Instagram captions at 2,200, LinkedIn posts at 3,000, YouTube titles at 100, meta descriptions at 160 and more — and shows exactly how many characters you have left as you type. It also weights links the way X does (every URL counts as 23 characters) and works out SMS segment billing in GSM-7 or UCS-2. Useful for social media managers, SEO writers and anyone drafting copy that has to fit.",
-  "useCases": [
-    "Trim a meta description to 160 characters so Google does not cut it off mid-sentence.",
-    "Check a launch post fits X's 280-character limit after link shortening is applied.",
-    "See whether a marketing SMS is billed as one segment or three before you send it to a list."
-  ],
-  "benefits": [
-    [
-      "Real platform limits",
-      "23 presets covering social, video, SEO, ads and messaging, plus a custom limit field for anything else."
-    ],
-    [
-      "Emoji-safe counting",
-      "Shows both raw characters and visible characters, so a two-code-unit emoji never surprises you at the limit."
-    ],
-    [
-      "Trim in one click",
-      "Over the limit? Cut the text to fit and copy it without leaving the page."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the character limit for an X (Twitter) post?",
-      "Standard posts are capped at 280 characters. Every link counts as 23 characters regardless of its real length because X rewrites URLs through t.co, and this tool applies that weighting for you."
-    ],
-    [
-      "How long should a meta description be?",
-      "Aim for roughly 150-160 characters. Google truncates on pixel width rather than a hard character count, so keeping the key message in the first 120 characters is the safest approach."
-    ],
-    [
-      "Why do emoji use more than one character?",
-      "Most platforms count UTF-16 code units, and many emoji — especially those with skin tones or joined sequences — take two or more units each. The 'visible characters' figure shows the human count so you can see the difference."
-    ],
-    [
-      "How many characters fit in one SMS?",
-      "A GSM-7 message fits 160 characters in a single segment, then 153 per segment once it splits. Any character outside the GSM alphabet, including most emoji, switches the message to UCS-2 at 70 characters per segment (67 when split)."
-    ]
-  ]
-},
-  "chatbot-analytics-metric-planner": {
-  "intro": "This planner fixes the definition of every chatbot success metric — containment, escalation, deflection, CSAT, goal completion and fallback rate — before the bot goes live, and projects deflected contact volume as monthly conversations multiplied by the target containment rate. It is for support leads and conversation designers who have to defend a bot's business case, and who need each metric's formula agreed with analytics before the first conversation is logged rather than argued about after launch.",
-  "useCases": [
-    "A support manager building the business case for a bot who needs deflected contacts per month and the rupee saving at their own cost per contact",
-    "A conversation designer agreeing with the analytics team exactly what counts as a 'contained' conversation before instrumentation is written",
-    "A team reviewing a bot 90 days after launch that has no goal-completion definition and cannot tell whether flows actually succeed"
-  ],
-  "benefits": [
-    [
-      "Formulas, not vibes",
-      "Every metric ships with the exact numerator and denominator to instrument."
-    ],
-    [
-      "Pitfalls flagged",
-      "Each metric names the way it is most commonly gamed or misread."
-    ],
-    [
-      "Business case attached",
-      "Turns a containment target into deflected contacts and an annual saving."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is a good chatbot containment rate?",
-      "It depends entirely on scope: a bot answering a narrow set of FAQ intents can reasonably contain 60-80%, while one fronting complex account or billing work often sits at 20-40%. Compare against your own pre-launch baseline rather than a published benchmark, because containment is defined differently by almost every vendor."
-    ],
-    [
-      "How is containment rate calculated?",
-      "Containment rate = conversations the bot resolved with no human handoff divided by total bot conversations, times 100. The critical decision is whether abandoned conversations count as contained — they should not, so require an explicit resolution signal such as a confirmed answer, a completed task or a no-return window before counting one."
-    ],
-    [
-      "What is the difference between containment and deflection?",
-      "Containment measures what share of conversations the bot finished on its own; deflection measures how many human contacts were actually avoided. They differ because some bot conversations would never have become a ticket, so deflection is always the smaller and harder number, and savings math built on raw containment overstates the result."
-    ],
-    [
-      "Which chatbot metrics should I track before launch?",
-      "At minimum containment, escalation, goal or task completion per flow, fallback rate and bot CSAT with its response rate. Instrument all of them before the first release — a metric added three months later has no comparable history, so you cannot tell whether a change helped."
-    ]
-  ]
-},
-  "chatbot-escalation-rules-planner": {
-  "intro": "The Chatbot Escalation Rules Planner generates an ordered, first-match-wins rule set defining exactly when a chatbot must hand a conversation to a human agent. It builds on established conversation-design conventions — the two-strikes repair rule for repeated misunderstanding, an NLU intent-confidence floor (commonly around 0.7), unconditional handoff when a user asks for a human, and safety-first ordering for sensitive topics. It is built for support leads and conversation designers preparing a bot for launch or tightening one that traps users in loops.",
-  "useCases": [
-    "A support team writing the handoff spec for a new customer-service bot before connecting it to their live-chat platform",
-    "A conversation designer fixing a bot that loops endlessly by codifying a two-failed-attempts escalation rule",
-    "An e-commerce operator adding a rule that any refund above a set value goes to a human before the bot acts"
-  ],
-  "benefits": [
-    [
-      "Safety-first ordering",
-      "Self-harm, fraud and complaint topics outrank cost triggers, and the self-harm rule can never be switched off."
-    ],
-    [
-      "Grounded defaults",
-      "Two failed attempts and a 0.7 confidence floor reflect real conversation-design and NLU-platform conventions, and both are tunable."
-    ],
-    [
-      "Off-hours handling built in",
-      "If agents only work business hours, every rule gains a queue-and-callback path instead of a dead end."
-    ]
-  ],
-  "faqs": [
-    [
-      "When should a chatbot escalate to a human agent?",
-      "At minimum: immediately when the user explicitly asks for a human, after two consecutive failed attempts to understand the same request, when intent confidence is too low to act safely on a consequential action, and always for sensitive topics like self-harm, fraud or formal complaints. High-value transactions and strongly negative sentiment are common additional triggers — this planner turns each into an ordered rule."
-    ],
-    [
-      "What is a good confidence threshold for chatbot escalation?",
-      "Around 0.7 is a common conservative floor for acting on an intent without clarification; NLU platforms such as Dialogflow ship classification thresholds in the 0.3–0.7 range and treat scores below the threshold as no-match. The right value depends on your platform's score distribution — set it too high and everything escalates, too low and the bot acts on guesses."
-    ],
-    [
-      "Why should the bot escalate after two failed attempts?",
-      "Because a third re-prompt almost never recovers the conversation and measurably increases frustration — conversation-design guidance (including Google's error-repair patterns) recommends at most one or two repair attempts before changing strategy. The two-strikes rule stops the loop, summarises what the bot understood, and passes that summary to the agent so the customer doesn't repeat themselves."
-    ],
-    [
-      "Should a chatbot ever refuse to connect a user to a human?",
-      "No. Hiding or refusing an explicit human request is a recognised dark pattern that damages trust and CSAT, and consumer-protection regulators have criticised obstruction of human contact. If no agent is available — for instance outside business hours — the right pattern is to say so honestly, collect contact details, create a priority ticket and commit to a response time."
-    ]
-  ]
-},
-  "chatbot-monthly-cost-estimator": {
-  "intro": "A support chatbot's monthly bill is conversation volume × cost per conversation, and cost per conversation is driven by what gets resent on every single turn: the system prompt, the retrieved knowledge-base context, and the transcript so far. For n turns with system prompt s, retrieval r, user message u and reply a, total prompt tokens are n(s + r) + u·n(n+1)/2 + a·n(n−1)/2, and output tokens are n·a. This estimator applies that model, adds prompt-cache discounts and retrieval cost, then compares the result against the agent handling cost the bot deflects.",
-  "useCases": [
-    "Budget a RAG support bot before launch, when you know average handle length but not the token bill.",
-    "Show finance the deflection rate the bot has to hit before it pays for itself.",
-    "Test whether shrinking retrieved context from 4,000 to 1,500 tokens per turn is worth the answer-quality trade-off."
-  ],
-  "benefits": [
-    [
-      "Per-turn reality",
-      "Counts retrieval and system prompt on every turn, not once per conversation."
-    ],
-    [
-      "Deflection maths",
-      "Reports net saving, ROI and the exact break-even containment rate."
-    ],
-    [
-      "Cache and retrieval",
-      "Separate cached-input rate and a per-conversation retrieval cost line."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much does an AI chatbot cost per month?",
-      "It is set by tokens, not by seats. A four-turn RAG conversation with an 800-token system prompt and 2,000 tokens of retrieved context runs roughly 13,000 prompt and 900 output tokens; at $1 per million input and $5 per million output that is under two cents a conversation, so 50,000 conversations cost a few hundred dollars."
-    ],
-    [
-      "Why is retrieved context so expensive in a RAG chatbot?",
-      "Because it is injected fresh on every turn, not once. Four turns with 2,000 tokens of retrieved context means 8,000 prompt tokens of retrieval alone, which typically dwarfs the user's own words. Cutting chunk count or chunk size is usually the single biggest lever on the bill."
-    ],
-    [
-      "What deflection rate does a support bot need to break even?",
-      "Divide the monthly bot cost by (conversations × fully loaded agent cost per contact). When a conversation costs under two cents to answer and a human contact costs several dollars, the break-even containment rate is often well under 1% — the business case usually rests on answer quality and escalation handling, not on token price."
-    ],
-    [
-      "Does prompt caching help a support chatbot?",
-      "Yes, and more than in most workloads, because the system prompt and tool definitions are identical across every conversation. Cached input is billed far below fresh input, so a high cache hit rate on the static prefix removes most of that portion of the bill; freshly retrieved chunks and the growing transcript still bill at full rate."
-    ]
-  ]
-},
-  "chennai-airport-transfer-time-planner": {
-  "intro": "This planner gives the clock time to walk out of your door for a flight from Chennai International Airport (MAA), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you actually travel. Chennai is one of the few Indian cities where that factor can be sidestepped entirely: both the metro Blue Line and the suburban railway reach the airport at Tirusulam, and neither is affected by what the roads are doing.",
-  "useCases": [
-    "Work out whether an 06:15 departure from Anna Nagar needs a 03:30 alarm or whether the empty roads let you sleep longer.",
-    "Compare the Blue Line metro against a cab from T Nagar during the evening peak.",
-    "Check whether a hand-baggage-only fare lets you leave later, once bag drop stops being the binding deadline."
-  ],
-  "benefits": [
-    [
-      "Rail options that ignore traffic",
-      "Metro and suburban rail journeys are computed without a congestion factor, because at Tirusulam that is genuinely true."
-    ],
-    [
-      "Three deadlines, not one",
-      "Shows which of bag drop, gate closing or reporting advice is actually setting your departure time."
-    ],
-    [
-      "Hour-by-hour comparison table",
-      "The same distance costed for every hour of the day, so you can see what leaving earlier actually buys."
-    ]
-  ],
-  "faqs": [
-    [
-      "Does the Chennai metro go to the airport?",
-      "Yes — the Blue Line terminates at the airport, and the suburban railway also stops at Tirusulam, a short walk from the terminals. Both are immune to road congestion, so their journey times barely change between the morning peak and the middle of the night, which makes them far easier to plan around than a cab."
-    ],
-    [
-      "How long does it take to get to Chennai airport from Chennai Central?",
-      "About 20 km by road, which is roughly 35 minutes on clear roads and 55 minutes or more through the evening peak. The metro covers the same corridor on a fixed schedule, so the gap between the two options widens sharply once the roads slow down."
-    ],
-    [
-      "How early should I reach Chennai airport?",
-      "Indian airports advise reporting two hours before a domestic departure and three hours before an international one. With a checked bag on a domestic flight the airline's counter typically closes 45 minutes before departure — a looser deadline than the two-hour advice, which is therefore usually what sets the plan."
-    ],
-    [
-      "Is the traffic estimate live?",
-      "No. It applies a typical weekday congestion profile with a morning peak around 08:00 to 10:00 and an evening one from about 17:00 to 19:00, plus a weekend setting that flattens both. Check a live map before you leave, and during the north-east monsoon add a generous allowance — waterlogging around the GST Road corridor can add far more than a typical-day profile predicts."
-    ]
-  ]
-},
-  "chennai-auto-cab-fare-estimator": {
-  "intro": "This estimator turns a Chennai trip into a rupee figure by applying the notified auto rickshaw meter — ₹25 for the first 1.8 km and ₹12 for every kilometre after it — plus the ₹3-per-five-minutes waiting charge and the 50% night surcharge that applies between 11 pm and 5 am. Switch the vehicle to an app auto, hatchback, sedan or SUV and it prices the same trip the way ride-hailing apps do, on base fare plus distance plus ride minutes with a surge multiplier. It is built for passengers who want to know whether a quote is fair before they get in.",
-  "useCases": [
-    "Check whether the ₹250 an auto driver is asking for a 7 km run from Egmore to Adyar is anywhere near the meter.",
-    "Work out the night premium on a 1 am airport run before booking, when the 50% surcharge window is live.",
-    "Compare a surge-priced cab quote against what the same distance would cost at 1.0x before deciding to wait."
-  ],
-  "benefits": [
-    [
-      "Uses the notified meter",
-      "The auto option follows the Tamil Nadu tariff card, not a guessed rate."
-    ],
-    [
-      "Night window handled correctly",
-      "The 11 pm to 5 am surcharge wraps across midnight instead of being applied by hand."
-    ],
-    [
-      "Every line itemised",
-      "Distance, ride time, waiting, night charge, surge and tolls are shown separately so you can see what is inflating the quote."
-    ]
-  ],
-  "faqs": [
-    [
-      "What is the auto fare per km in Chennai?",
-      "₹12 per kilometre after the first 1.8 km, which is covered by the ₹25 minimum fare. So a 5 km trip meters at ₹25 + (3.2 × ₹12) = ₹63.40, before any waiting or night charge."
-    ],
-    [
-      "Is there a night charge for autos in Chennai?",
-      "Yes — 50% extra on the metered fare between 11 pm and 5 am. A trip that meters ₹100 in the daytime becomes ₹150 inside that window, and the surcharge applies to the meter reading only, not to tolls or parking you pay separately."
-    ],
-    [
-      "How much can an auto charge for waiting?",
-      "₹3 for every five minutes of waiting, which works out to ₹36 an hour. Waiting time is meant to cover halts you ask for during the trip, not time the driver spends stuck in traffic while moving toward your destination."
-    ],
-    [
-      "Why is my Ola or Uber quote higher than the meter fare here?",
-      "App cabs are not covered by the auto tariff notification. They add a per-minute ride-time charge to the per-kilometre rate, apply a surge multiplier when demand is high, and add GST and airport pick-up charges — which is why the same 10 km can cost twice the metered auto fare at 9 am. Fares and surcharges change without notice, so confirm the figure in the app before you ride."
-    ]
-  ]
-},
-  "chennai-maa-airport-arrival-buffer-calculator": {
-  "intro": "This calculator turns a Chennai MAA departure time into the single time you need to leave home, working backwards through the boarding-gate close, security, emigration, bag drop and the drive down GST Road. It applies the larger of three deadlines - the advised reporting time (2 hours domestic, 3 hours international at Chennai International), the airline bag-drop cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Handy for the heavy late-night bank of Gulf and South-East Asia departures.",
-  "useCases": [
-    "Planning a midnight Singapore or Colombo departure from T1 when the cab has to come from OMR.",
-    "Checking whether a domestic morning flight from T4 leaves room for a school drop-off first.",
-    "Building extra road time into a northeast-monsoon week when GST Road and the Adyar bridges back up."
-  ],
-  "benefits": [
-    [
-      "Three deadlines, one answer",
-      "Compares gate close, bag-drop cut-off and airport advice, and reports which one is binding."
-    ],
-    [
-      "Local road model",
-      "Free-flow drive times from Velachery, OMR, Tambaram and other suburbs, multiplied by a traffic factor you choose."
-    ],
-    [
-      "Full timeline",
-      "Shows the clock time each step starts, from leaving home to the aircraft door shutting."
-    ]
-  ],
-  "faqs": [
-    [
-      "How early should I reach Chennai airport for an international flight?",
-      "Three hours before departure is the reporting time advised for international flights at Chennai, and two hours for domestic. The binding deadline with a checked bag is usually the airline counter cut-off, commonly 60 minutes before an international departure and 45 minutes before a domestic one."
-    ],
-    [
-      "Which terminal do I use at Chennai airport?",
-      "T1 handles international departures and T4 handles domestic, with the new integrated T2 taking a growing share of both. They are linked landside within the same complex, but always follow the terminal printed on your boarding pass because airline allocations keep shifting as T2 opens up."
-    ],
-    [
-      "How far is Chennai airport from the city centre?",
-      "The airport is at Tirusulam, roughly 20 km from Chennai Central, which is about 40 minutes off-peak and an hour or more in the evening peak. The Chennai Metro blue line stops at the airport, which sidesteps the Kathipara and GST Road congestion entirely."
-    ],
-    [
-      "When does the boarding gate close at MAA?",
-      "Indian carriers typically close the boarding gate 25 minutes before scheduled departure. Because the calculator counts back from gate close rather than from departure, the walking time from security to a far gate is already inside the answer it gives you."
-    ]
-  ]
-},
-  "cheque-amount-to-words-indian": {
-  "intro": "The Indian numbering system groups digits as 2-2-3 after the hundreds place, which is why 1,23,456 reads as one lakh twenty three thousand four hundred fifty six rather than one hundred twenty three thousand. This converter turns any rupee figure into the courtesy line a cheque needs — starting with 'Rupees', stating paise separately out of one hundred, and closing with 'Only' so no words can be appended after it. It also shows the same amount in international million and billion wording and in both digit-grouping styles.",
-  "useCases": [
-    "Writing a cheque for 1,23,456.78 and needing the exact wording that a bank will accept.",
-    "Preparing an invoice or a demand draft request where the amount must appear in words as well as figures.",
-    "Filling a loan or property agreement that requires the consideration in Indian words with lakh and crore."
-  ],
-  "benefits": [
-    [
-      "Correct Indian place names",
-      "Lakh and crore are used at the right positions, and counts above a crore are spelled as crores rather than invented names."
-    ],
-    [
-      "Paise handled exactly",
-      "The amount is converted through paise as integers, so a decimal like 0.1 plus 0.2 can never round into the wrong word."
-    ],
-    [
-      "Cheque-safe formatting",
-      "The 'Only' suffix and the separate paise clause follow what banks look for when they verify the courtesy line against the figures."
-    ]
-  ],
-  "faqs": [
-    [
-      "How do you write 123456.78 in words on a cheque?",
-      "Rupees One Lakh Twenty Three Thousand Four Hundred Fifty Six and Paise Seventy Eight Only. Write the figures as 1,23,456.78 in the amount box, keep the two lines consistent, and draw a line through any empty space after 'Only'."
-    ],
-    [
-      "Why is 'Only' written at the end of a cheque amount?",
-      "It closes the line so nobody can append extra words and inflate the amount. It is a long-standing banking convention rather than a legal requirement under the Negotiable Instruments Act, 1881, but leaving it out invites a query and makes the cheque easier to alter."
-    ],
-    [
-      "What happens if the words and figures on a cheque do not match?",
-      "Section 18 of the Negotiable Instruments Act, 1881 says the amount written in words is the amount payable. In practice most banks simply return the instrument with the reason 'amount in words and figures differ' rather than paying the lower sum, so correct the cheque and re-issue it instead of overwriting it."
-    ],
-    [
-      "How is a crore written in the international system?",
-      "One crore is ten million, and one hundred crore is one billion. The Indian system inserts a name every two digits after the thousands place while the international system inserts one every three, which is why 1,23,45,67,890 in India is written 1,234,567,890 elsewhere."
-    ]
-  ]
-},
-  "cheque-stop-payment-request-generator": {
-  "intro": "A stop payment request is the written instruction telling your bank not to honour a cheque you have already issued. This generator writes that letter with the details a branch actually needs, checks the cheque number against the 6-digit CTS-2010 format and the IFSC against its 11-character pattern, works out the date the cheque stops being presentable under the RBI's three-month validity rule, and totals the stop payment charge with tax. For account holders whose cheque was lost, stolen, wrongly written, or superseded by a payment made another way.",
-  "useCases": [
-    "Stop a single cheque posted to the wrong payee and confirm how many days of presentation validity are left.",
-    "Cover a whole run of leaves from a stolen chequebook and see what the per-cheque charge adds up to.",
-    "Discover that a cheque dated seven months ago is already stale, so the fee would buy nothing.",
-    "Keep a stop instruction alive on a post-dated cheque right through to the end of its validity, not just to the cheque date."
-  ],
-  "benefits": [
-    [
-      "Validity clock, not guesswork",
-      "The three-month expiry date is calculated from the date on the cheque and compared with the day you write."
-    ],
-    [
-      "Format checks before you post",
-      "Cheque number, IFSC and MICR are validated against their real formats, so the branch is not sent a typo."
-    ],
-    [
-      "Charges totalled honestly",
-      "Per-cheque or per-request charging, multiplied out across the range, with tax added."
-    ]
-  ],
-  "faqs": [
-    [
-      "How long is a cheque valid in India?",
-      "Three months from the date written on it. The Reserve Bank of India reduced validity from six months to three with effect from 1 April 2012, and the rule covers cheques, demand drafts, pay orders and banker's cheques alike. A cheque presented after that date is returned as stale, so a stop payment on an expired cheque achieves nothing."
-    ],
-    [
-      "How do I stop a cheque payment?",
-      "Give the bank a written instruction quoting the account number, the cheque number, the date and amount on the cheque, the payee, and the reason. Most banks also accept the instruction through net banking or the phone, but follow it with the letter and insist on a written confirmation with a service request number - that acknowledgement is what proves the bank had notice in time."
-    ],
-    [
-      "Can I be prosecuted for stopping a cheque?",
-      "Possibly, if the cheque was issued to discharge a real debt. Indian courts have held that instructing the bank to stop payment does not by itself take a cheque outside section 138 of the Negotiable Instruments Act, 1881, so a stop payment used to avoid a legitimate liability can still lead to proceedings. Where the underlying payment is genuinely disputed, take legal advice and put your reasons to the payee in writing."
-    ],
-    [
-      "What does the IFSC on a cheque look like?",
-      "Eleven characters: four letters identifying the bank, then a compulsory zero in the fifth position, then six characters identifying the branch - HDFC0001234, for example. The 9 digits at the far left of the MICR band at the bottom of the cheque are a different code, made up of a 3-digit city code, a 3-digit bank code and a 3-digit branch code."
-    ]
-  ]
-},
-  "chhath-puja-wishes-generator": {
-  "intro": "The Chhath Puja Wishes Generator writes a greeting for the specific day of the festival you are on — Nahay Khay, Kharna, Sandhya Arghya or Usha Arghya — in Bhojpuri, Maithili, Hindi or English. Chhath runs four days, from Kartika shukla chaturthi to saptami, and is addressed to Surya and Chhathi Maiya; the vrat between Kharna and the morning arghya is nirjala and lasts about 36 hours. Each message shows its character count and SMS part count, because Devanagari text is sent as UCS-2 at 70 characters per part.",
-  "useCases": [
-    "Send a Bhojpuri message on Kharna evening that actually mentions the gud ki kheer, not a generic festival line.",
-    "Post a Sandhya Arghya greeting in the afternoon and an Usha Arghya one before dawn the next day.",
-    "Write a Maithili wish for relatives in Mithila and a Hindi one for the office group.",
-    "Look up which tithi each of the four days falls on before scheduling posts."
-  ],
-  "benefits": [
-    [
-      "Day-aware wording",
-      "Separate lines for Nahay Khay, Kharna, Sandhya Arghya and Usha Arghya instead of one message reused four times."
-    ],
-    [
-      "Bhojpuri and Maithili included",
-      "Written in Devanagari in each language rather than a Hindi message relabelled."
-    ],
-    [
-      "Ritual detail on hand",
-      "The four-day table lists the tithi and the ritual for each day, plus the usual prasad."
-    ]
-  ],
-  "faqs": [
-    [
-      "What are the four days of Chhath Puja?",
-      "Day one is Nahay Khay on chaturthi, a bath and one sattvik meal of kaddu-bhat. Day two is Kharna on panchami, a day-long fast broken at dusk with gud ki kheer and roti. Day three is Sandhya Arghya on shashthi, offerings to the setting sun. Day four is Usha Arghya on saptami, offerings to the rising sun, after which the fast is broken."
-    ],
-    [
-      "How long is the Chhath fast?",
-      "The nirjala vrat runs about 36 hours, from the Kharna prasad on the evening of panchami until the Usha Arghya at sunrise on saptami, with no food and no water in between. It is physically demanding, so anyone who is pregnant, diabetic or on regular medication should speak to a doctor before keeping it."
-    ],
-    [
-      "Who is Chhathi Maiya?",
-      "Chhathi Maiya is worshipped alongside Surya during Chhath and is popularly identified with Shashthi Devi, the deity invoked for the wellbeing of children. The offerings — thekua, sugarcane, coconut and seasonal fruit — are made from a soop while standing in the water at a river ghat."
-    ],
-    [
-      "Is Chhath celebrated more than once a year?",
-      "Yes. The main Kartika Chhath falls in late October or November, and a smaller Chaiti Chhath is kept in Chaitra, in March or April. The rituals are the same across both; the Kartika one draws the far larger crowds at the ghats."
-    ]
-  ]
-},
-  "child-education-corpus-planner": {
-  "intro": "This planner converts today's college fee into the corpus you must actually hold on the first day of the course, then works out the monthly SIP that gets you there. Each year of the degree is inflated separately at your chosen fee-inflation rate and discounted back to the course start date at your expected return, because money left in the fund keeps earning while the course runs. It also rolls forward what you have already set aside and supports an annual step-up in the SIP amount.",
-  "useCases": [
-    "Your child is eight and you want the monthly amount that funds a four-year engineering degree starting in ten years.",
-    "You already hold ₹20 lakh in an earmarked fund and want to check whether any further saving is needed at all.",
-    "Comparing a flat SIP against a 10%-a-year step-up SIP to see how much lower the starting instalment can be."
-  ],
-  "benefits": [
-    [
-      "Corpus, not a single fee",
-      "A four-year degree is four separate inflated bills, so the target is the present value of all of them at course start."
-    ],
-    [
-      "Existing savings counted",
-      "Money already earmarked is compounded to the goal date and subtracted before the SIP is sized."
-    ],
-    [
-      "Step-up modelled exactly",
-      "The step-up SIP is rolled forward month by month rather than approximated, so the first instalment is accurate."
-    ]
-  ],
-  "faqs": [
-    [
-      "How much will a degree cost in 10 years?",
-      "Multiply today's annual fee by (1 + fee inflation) raised to the number of years. At 8% inflation a ₹5 lakh annual fee becomes about ₹10.8 lakh in year one of the course, and a four-year degree costs roughly ₹48.6 lakh in nominal terms against ₹20 lakh today."
-    ],
-    [
-      "What education inflation rate should I use?",
-      "Use the fee history of the specific institution rather than a generic figure — private professional colleges have historically raised fees faster than headline CPI inflation. If you have no data, plan on a rate above general inflation and revisit the number every two or three years."
-    ],
-    [
-      "Do I need the whole amount saved before the course starts?",
-      "No. You need the present value at course start of every year's fee, which is less than the nominal total because the balance keeps earning through the course. In the example above, roughly ₹42 lakh at course start funds ₹48.6 lakh of nominal fees at a 10% return."
-    ],
-    [
-      "Is a step-up SIP better than a flat SIP?",
-      "It lowers the starting instalment, which matters when the goal is far away and your income is still growing. A 10% annual step-up can cut the first instalment by around a third versus a flat SIP for the same target, but the final year's instalment is much higher — check it against your expected income. This is general information, not investment advice."
     ]
   ]
 },

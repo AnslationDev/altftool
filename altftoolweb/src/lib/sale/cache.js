@@ -29,15 +29,6 @@ export function peekSaleCache(key) {
   return saleCache.get(key);
 }
 
-export function clearSaleCache(key) {
-  if (key) saleCache.delete(key);
-  else saleCache.clear();
-}
-
-export function saleCacheStats() {
-  return saleCache.stats();
-}
-
 /**
  * Build a stable cache key from a namespace + params object.
  * @param {string} namespace

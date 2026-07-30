@@ -1,6 +1,20 @@
 import { Download } from "lucide-react";
 
-export default function DownloadButton({ href, label = "Download APK", className = "" }) {
+export default function DownloadButton({ href, label = "Download APK", className = "", comingSoon = false }) {
+  if (comingSoon) {
+    return (
+      <button
+        type="button"
+        disabled
+        title="Coming soon"
+        className={`inline-flex min-h-12 cursor-not-allowed items-center justify-center gap-2 rounded-[14px] bg-[var(--muted)] px-6 py-3 text-sm font-semibold text-[var(--muted-foreground)] opacity-60 ${className}`}
+      >
+        <Download size={18} aria-hidden="true" />
+        Coming Soon
+      </button>
+    );
+  }
+
   return (
     <a
       href={href}

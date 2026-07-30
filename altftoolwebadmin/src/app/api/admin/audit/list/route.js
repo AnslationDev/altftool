@@ -1,6 +1,54 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebaseAdmin";
-import { verifySuperAdminRequest } from "@/lib/adminAccess";
+import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
+import { createLocalDevAdminActor, isLocalDevAdminRequest } from "@/lib/adminAccess";
+import { buildRbacAdminProfile, getRbacAdminDoc } from "@/lib/serverRbac";
+
+// Local variant of lib/adminAccess.js's verifySuperAdminRequest that keeps the
+// same RBAC + legacy + local-dev-bypass resolution, but — like the
+// requireSuperAdmin() in src/app/api/rbac/bootstrap/route.js — distinguishes
+// "no/invalid token" (Unauthorized) from "valid token, insufficient role"
+// (Forbidden) via the thrown error's message. verifySuperAdminRequest itself
+// throws "Unauthorized" for both cases, which is fine for the routes that
+// already collapse every authz failure to 401 — but this route's catch below
+// needs the distinction, so it gets its own resolver rather than changing the
+// shared one (other routes' catch blocks treat any non-"Unauthorized" message
+// as a 500, so widening verifySuperAdminRequest's vocabulary would misclassify
+// their errors).
+async function requireSuperAdmin(request) {
+  if (isLocalDevAdminRequest(request)) {
+    return createLocalDevAdminActor();
+  }
+
+  const authHeader = request.headers.get("authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    throw new Error("Unauthorized");
+  }
+
+  const decoded = await adminAuth.verifyIdToken(authHeader.split("Bearer ")[1]);
+
+  const rbacAdmin = await getRbacAdminDoc(decoded);
+  if (rbacAdmin) {
+    const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
+    if (!profile.isSuperAdmin || !profile.isActive) throw new Error("Forbidden");
+    return decoded;
+  }
+
+  let snap = await adminDb.collection("admins").doc(decoded.uid).get();
+  if (!snap.exists && decoded.email) {
+    const emailSnap = await adminDb
+      .collection("admins")
+      .where("email", "==", decoded.email)
+      .limit(1)
+      .get();
+    if (!emailSnap.empty) snap = emailSnap.docs[0];
+  }
+
+  if (!snap.exists) throw new Error("Forbidden");
+  const data = snap.data();
+  if (data?.roleType !== "superadmin" || data?.isActive === false) throw new Error("Forbidden");
+
+  return decoded;
+}
 
 function toFirestoreTimestamp(isoOrMs) {
   if (!isoOrMs) return null;
@@ -35,11 +83,11 @@ function normalizeLog(doc) {
 
 export async function GET(request) {
   try {
-    // Was a private, legacy-`admins`-only check with no local-dev bypass — every
-    // RBAC-era superadmin got 401 here regardless of the console session, and
-    // this route could never be exercised under the local-admin dev mode at
-    // all. verifySuperAdminRequest covers RBAC + legacy + the dev bypass.
-    await verifySuperAdminRequest(request);
+    // requireSuperAdmin() (above) covers RBAC + legacy + the dev bypass, same
+    // as lib/adminAccess.js's verifySuperAdminRequest, but throws a distinct
+    // "Forbidden" for a valid-but-insufficient-role caller so the catch below
+    // can answer 403 instead of a blanket 401.
+    await requireSuperAdmin(request);
 
     const url = new URL(request.url);
     const pageSizeParam = Number(url.searchParams.get("pageSize") || 30);
@@ -59,35 +107,50 @@ export async function GET(request) {
       return NextResponse.json({ error: "Invalid date range" }, { status: 400 });
     }
 
-    // Cursor-based pagination: cursor is the createdAtMs of the last doc
-    const cursorMs = url.searchParams.get("cursor")
-      ? Number(url.searchParams.get("cursor"))
-      : null;
+    // Cursor-based pagination: cursor is the Firestore doc id of the last log
+    // returned on the previous page.
+    const cursorId = url.searchParams.get("cursor") || null;
 
     // Server-side "filter by admin" — actorUid/targetUid scope the query to a
     // single admin's full history within the date range, instead of forcing
-    // callers to page through everything and filter client-side.
+    // callers to page through everything and filter client-side. `module`
+    // does the same for a single module (e.g. "admin-management") — this
+    // collection is a cross-app activity sink (SEO, blogs, tickets, RBAC
+    // bootstrap, etc. all write into it via their own `module`), so without
+    // this a burst of unrelated activity in the date window can push the
+    // admin-management events an operator is looking for onto a later page.
     const actorUidParam = url.searchParams.get("actorUid");
     const targetUidParam = url.searchParams.get("targetUid");
+    const moduleParam = url.searchParams.get("module");
 
-    const buildQuery = (endBound) => {
-      let q = adminDb
-        .collection("admin_audit_logs")
+    const collectionRef = adminDb.collection("admin_audit_logs");
+
+    const buildQuery = () => {
+      let q = collectionRef
         .where("createdAt", ">=", startDate)
-        .where("createdAt", "<=", endBound);
+        .where("createdAt", "<=", endDate);
       if (actorUidParam) q = q.where("actorUid", "==", actorUidParam);
       if (targetUidParam) q = q.where("targetUid", "==", targetUidParam);
+      if (moduleParam) q = q.where("module", "==", moduleParam);
       return q.orderBy("createdAt", "desc").limit(pageSize + 1); // fetch one extra to determine hasMore
     };
 
-    let query = buildQuery(endDate);
+    let query = buildQuery();
 
-    // If cursor provided, fetch the cursor document first then use startAfter
-    if (cursorMs) {
-      // Use a timestamp-based cursor via startAfter on the createdAt field
-      // We add 1ms offset to avoid re-fetching the boundary doc
-      const cursorTs = new Date(cursorMs - 1); // slightly before so startAfter works correctly
-      query = buildQuery(cursorTs);
+    // Fetch the cursor document itself, then paginate with a real
+    // `startAfter(docSnapshot)` — Firestore Timestamps carry nanosecond
+    // precision, but the previous implementation truncated the cursor to
+    // milliseconds and re-ran the same `<=` inequality query, which could
+    // permanently drop any entry sharing the exact millisecond of the page
+    // boundary (e.g. a bulk "Deactivate 5 admins" action firing near-
+    // simultaneous writes). A real document cursor cannot have this gap.
+    if (cursorId) {
+      const cursorSnap = await collectionRef.doc(cursorId).get();
+      if (cursorSnap.exists) {
+        query = query.startAfter(cursorSnap);
+      }
+      // If the cursor doc is gone (e.g. deleted), fall back to the
+      // unmodified query rather than erroring the whole page out.
     }
 
     const snap = await query.get();
@@ -97,9 +160,9 @@ export async function GET(request) {
     const pageDocs = hasMore ? docs.slice(0, pageSize) : docs;
     const logs = pageDocs.map(normalizeLog);
 
-    // nextCursor is the createdAtMs of the last doc returned
+    // nextCursor is the doc id of the last doc returned on this page.
     const lastDoc = pageDocs[pageDocs.length - 1];
-    const nextCursor = hasMore && lastDoc ? normalizeLog(lastDoc).createdAtMs : null;
+    const nextCursor = hasMore && lastDoc ? lastDoc.id : null;
 
     return NextResponse.json({
       logs,
@@ -113,7 +176,32 @@ export async function GET(request) {
       },
     });
   } catch (err) {
-    console.error("[audit/list]", err.message);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // Mirrors src/app/api/rbac/bootstrap/route.js: "Unauthorized" (no/invalid
+    // token) -> 401, "Forbidden" (valid token, insufficient role) -> 403,
+    // anything else (a genuine Firestore/infra fault) -> 500. Previously every
+    // branch — including a legitimate non-superadmin's Forbidden case and
+    // unrelated infra errors — collapsed to 401 "Unauthorized", which the
+    // client always rendered as "Your session has expired. Sign in again."
+    //
+    // Also treats any raw `auth/*` Firebase error (expired/malformed/revoked
+    // token — thrown by adminAuth.verifyIdToken() itself, before it reaches
+    // requireSuperAdmin's own explicit throws) as Unauthorized rather than a
+    // bucket-of-last-resort 500 — confirmed by hitting this route with a
+    // garbage bearer token, which otherwise reported "Internal Server Error"
+    // for what is, from the operator's chair, an expired-session case. Same
+    // classification src/app/api/audit/log/route.js already uses.
+    const message = err?.message || "";
+    const code = err?.code || err?.errorInfo?.code || "";
+    console.error("[audit/list]", message || err);
+    let status;
+    if (message === "Forbidden") {
+      status = 403;
+    } else if (message === "Unauthorized" || (typeof code === "string" && code.startsWith("auth/"))) {
+      status = 401;
+    } else {
+      status = 500;
+    }
+    const error = status === 403 ? "Forbidden" : status === 401 ? "Unauthorized" : "Internal Server Error";
+    return NextResponse.json({ error }, { status });
   }
 }

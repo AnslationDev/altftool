@@ -13,7 +13,7 @@ const AIRLINE_NAMES = {
   G4: "Allegiant Air",
 };
 
-function hashRoute(criteria, index) {
+function estimateSeed(criteria, index) {
   const value = `${criteria.from.code}${criteria.to.code}${criteria.departureDate}${criteria.tripType}${index}`;
   return [...value].reduce((total, char) => total + char.charCodeAt(0), 0);
 }
@@ -49,8 +49,10 @@ function formatStops(count) {
   return `${count} stop${count > 1 ? "s" : ""}`;
 }
 
-function buildDisplayPrice(criteria, index) {
-  const base = 145 + (hashRoute(criteria, index) % 280);
+// AirLabs' /v9/schedules endpoint returns no fare data, so this is a rough
+// placeholder range for display purposes only — never a real, bookable price.
+function buildPriceEstimate(criteria, index) {
+  const base = 145 + (estimateSeed(criteria, index) % 280);
   const travelerCount = criteria.travelers.adults + criteria.travelers.children + criteria.travelers.infants;
   const tripBoost = criteria.tripType === "round" ? 1.7 : 1;
   const cabinBoost = {
@@ -75,10 +77,11 @@ function normalizeAirLabsSchedules(schedules, criteria) {
       departTime: formatTime(schedule.dep_time),
       arriveTime: formatTime(schedule.arr_time),
       duration: formatDuration(schedule.duration),
-      price: buildDisplayPrice(criteria, index),
+      price: buildPriceEstimate(criteria, index),
+      isEstimatedPrice: true,
       stops: "Non-stop",
       baggage: "Baggage rules vary by airline",
-      tag: `${statusLabel} flight data`,
+      tag: `${statusLabel} flight · estimated price`,
     };
   });
 }
@@ -162,6 +165,7 @@ function normalizeFlightApiResults(payload, criteria) {
         arriveTime: formatTime(outboundLeg?.arrival),
         duration: formatDuration(totalDuration),
         price: Math.round(price),
+        isEstimatedPrice: false,
         stops: formatStops(totalStops),
         baggage: "Live fare data; baggage rules vary by airline and vendor",
         tag: "live FlightAPI fare",

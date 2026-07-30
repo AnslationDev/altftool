@@ -90,7 +90,6 @@ export default function ExtensionHero({ extension }) {
             <div className="inline-flex items-center gap-1 bg-[var(--card)] border border-[var(--border)] px-3 py-1 rounded-full text-xs font-medium text-[var(--foreground)] shadow-xs">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
               <span className="font-semibold">{ratingText}</span>
-              <span className="text-[var(--muted-foreground)]">(4.9/5 overall)</span>
             </div>
 
             {versionText ? (

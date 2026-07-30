@@ -34,9 +34,14 @@ const SEARCH_BACKEND_URL = (process.env.NEXT_PUBLIC_SEARCH_BACKEND_URL || '').re
 const RESULT_TABS = [
   { label: 'All', value: 'all', Icon: Search },
   { label: 'Images', value: 'images', Icon: ImageIcon },
-  { label: 'News', value: 'news', Icon: Newspaper },
+  { label: 'News', value: 'news', Icon: Newspaper, disabled: true },
   { label: 'Videos', value: 'videos', Icon: PlayCircle },
 ];
+
+const SEARCH_TYPE_CATEGORY_MATCH = {
+  images: 'image',
+  videos: 'video',
+};
 
 const QUICK_TOPICS = [
   { label: 'PDF Tools', query: 'pdf tools', Icon: FileText },
@@ -105,9 +110,10 @@ function SearchEngineContent() {
       }
 
       const local = performSmartSearch(dataset, query).items;
+      const categoryMatch = SEARCH_TYPE_CATEGORY_MATCH[searchType] || searchType;
       const filteredLocal = searchType === 'all'
         ? local
-        : local.filter((item) => item.category?.toLowerCase().includes(searchType));
+        : local.filter((item) => item.category?.toLowerCase().includes(categoryMatch));
       const mergedResults = mergeSearchResults(filteredLocal, webItems);
 
       setResults(mergedResults);
@@ -180,12 +186,14 @@ function SearchEngineContent() {
               {/* Category tabs */}
               <div className="se-results-tabs">
                 <div className="se-results-tabs-inner" role="tablist" aria-label="Result categories">
-                  {RESULT_TABS.map(({ label, value, Icon }) => (
+                  {RESULT_TABS.map(({ label, value, Icon, disabled }) => (
                     <button
                       key={value}
                       role="tab"
                       aria-selected={searchType === value}
                       onClick={() => setSearchType(value)}
+                      disabled={disabled}
+                      title={disabled ? 'Coming soon' : undefined}
                       className={`se-tab ${searchType === value ? 'active' : ''}`}
                     >
                       <Icon size={15} aria-hidden="true" />
@@ -211,6 +219,7 @@ function SearchEngineContent() {
                   searchTime={searchMeta.time}
                   onTagSearch={handleSearch}
                   searchType={searchType}
+                  dataset={dataset}
                 />
               </div>
             </main>

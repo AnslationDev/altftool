@@ -1,16 +1,20 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
+import Link from "next/link";
+
 export default function BrandCard({
   logo,
   name,
   percentage,
   prefix = "Up to",
+  href = "#",
 }) {
   return (
-    <div
+    <Link
+      href={href}
       className="
-        group cursor-pointer
+        group block cursor-pointer
         bg-(--card) rounded-2xl p-4
         shadow-sm border border-(--border)
         transition-all duration-200 ease-out
@@ -51,6 +55,6 @@ export default function BrandCard({
           </span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -56,6 +56,7 @@ html[data-theme="light"] {
   --success-soft: var(--anslation-ds-success-soft);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
+  --warning-text: var(--anslation-ds-warning-text);
   --info: var(--anslation-ds-info);
   --info-soft: var(--anslation-ds-info-soft);
   --shadow-sm: var(--anslation-ds-shadow-sm);
@@ -110,6 +111,7 @@ html[data-theme="dark"] {
   --success-soft: var(--anslation-ds-success-soft);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
+  --warning-text: var(--anslation-ds-warning-text);
   --info: var(--anslation-ds-info);
   --info-soft: var(--anslation-ds-info-soft);
   --shadow-sm: var(--anslation-ds-shadow-sm);
@@ -128,6 +130,11 @@ html[data-theme="dark"] {
 html,
 body {
   min-height: 100%;
+  /* Hold at the edges like an app instead of rubber-banding like a document,
+     and stop Android Chrome's pull-to-refresh from firing on an upward flick
+     at the top of a tool. Vertical only: overscroll-behavior-x is left at
+     `auto` so the browser's horizontal back-swipe still works. */
+  overscroll-behavior-y: none;
 }
 
 html[data-theme] {
@@ -167,11 +174,25 @@ html[data-theme] {
   background: var(--background) !important;
   color: var(--foreground);
   overflow-x: clip;
+  /* Safari (every iOS browser) only honours the -webkit- form. Without it,
+     rotating an iPhone to landscape inflates body copy mid-session. */
+  -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body.anslation-ds-public {
+  /* 100vh is the LARGEST mobile viewport (URL bar hidden), so it makes even a
+     short page taller than the screen and gives it a phantom scroll — one of
+     the clearest "this is a web page" tells. svh is the smallest viewport, so
+     the page fills the screen without inventing scroll. vh stays first as the
+     fallback for engines without the new units. */
   min-height: 100vh;
+  min-height: 100svh;
+  /* viewport-fit: cover (see the viewport export in layout.jsx) lets content
+     run under the notch in landscape. These insets are 0 in portrait and on
+     every non-notched device. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
   margin: 0;
   font-family: var(--font-primary);
   background: var(--background) !important;
@@ -190,6 +211,15 @@ body::before {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--card) 72%, transparent) 0%, transparent 28rem),
     linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 32%, color-mix(in srgb, var(--anslation-ds-accent) 4%, transparent));
+}
+
+/* The global footer is the last thing on the page, so on a gesture-nav phone
+   it is what ends up beneath the home indicator once viewport-fit: cover is
+   on. Padding it (rather than the body) keeps the footer's own dark surface
+   bleeding to the physical bottom edge while its content clears the
+   indicator. Direct child only, so card/article <footer>s are untouched. */
+body > footer {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 * {
@@ -214,9 +244,19 @@ select {
   border-radius: var(--anslation-ds-radius-sm);
 }
 
+/* Kill the grey iOS/Android tap flash on anything tappable. These all carry a
+   :active/:focus-visible state of their own, so touch feedback is not lost —
+   only the browser's default rectangle is. */
 button,
 a,
-[role="button"] {
+label,
+summary,
+select,
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+[role="option"],
+[role="switch"] {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -406,7 +446,9 @@ a {
   }
 
   .route-page-shell {
+    /* Same reason as body: 100vh over-measures on mobile. */
     min-height: 100vh;
+    min-height: 100svh;
     background: var(--background);
     color: var(--foreground);
   }

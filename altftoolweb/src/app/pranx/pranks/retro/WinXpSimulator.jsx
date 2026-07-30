@@ -5,11 +5,28 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { openFullscreen } from "../../lib/fullscreen";
 
+const desktopIconMessages = {
+  "Internet Explorer": "Connecting... 404: Friend Not Found.",
+  "My Computer": "C:\\ has 640K free of 640K. Somehow that is enough.",
+  "My Documents": "0 documents. 12 unfinished excuses.",
+  "Recycle Bin": "It's empty, just like your victim's patience right now.",
+  "My Network Places": "Searching for a network... found dial-up. Please hold.",
+};
+
+const startMenuMessages = {
+  Internet: "Dialing up... please wait 45 minutes.",
+  "My Computer": "C:\\ has 640K free of 640K. Somehow that is enough.",
+  Games: "Loading Solitaire... just kidding, go prank someone.",
+  "Control Panel": "Access denied: too many pranks pending.",
+  "Shut Down...": "Nice try. This computer refuses to shut down.",
+};
+
 export function WinXpSimulator() {
   const [start, setStart] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [showTetris, setShowTetris] = useState(true);
   const [showWinamp, setShowWinamp] = useState(true);
+  const [popup, setPopup] = useState(null);
   const desktopRef = useRef(null);
   const icons = [
     ["Internet Explorer", "🌐"],
@@ -24,7 +41,11 @@ export function WinXpSimulator() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_0%,rgba(255,255,255,0.9),transparent_18rem),radial-gradient(circle_at_20%_80%,rgba(255,255,255,0.35),transparent_15rem)]" />
       <div className="absolute left-5 top-5 grid w-28 gap-5 text-center text-sm font-semibold text-white drop-shadow">
         {icons.map(([label, icon]) => (
-          <button key={label} className="grid justify-items-center gap-1 rounded p-1 hover:bg-blue-700/40">
+          <button
+            key={label}
+            onClick={() => setPopup({ title: label, body: desktopIconMessages[label] })}
+            className="grid justify-items-center gap-1 rounded p-1 hover:bg-blue-700/40"
+          >
             <span className="text-4xl">{icon}</span>
             <span>{label}</span>
           </button>
@@ -88,7 +109,27 @@ export function WinXpSimulator() {
       {start ? (
         <div className="absolute bottom-11 left-0 z-30 w-80 overflow-hidden rounded-tr-xl border-2 border-blue-800 bg-white shadow-2xl">
           <div className="bg-blue-700 p-4 text-xl font-black text-white">Pranx User</div>
-          {["Internet", "My Computer", "Games", "Control Panel", "Shut Down..."].map((item) => <button key={item} className="block w-full px-5 py-3 text-left font-bold hover:bg-blue-100">{item}</button>)}
+          {["Internet", "My Computer", "Games", "Control Panel", "Shut Down..."].map((item) => (
+            <button
+              key={item}
+              onClick={() => {
+                setStart(false);
+                setPopup({ title: item, body: startMenuMessages[item] });
+              }}
+              className="block w-full px-5 py-3 text-left font-bold hover:bg-blue-100"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      {popup ? (
+        <div className="absolute left-1/2 top-1/2 z-40 w-80 -translate-x-1/2 -translate-y-1/2 overflow-hidden border-4 border-[#0055e8] bg-white shadow-2xl">
+          <div className="flex h-8 items-center justify-between bg-gradient-to-b from-[#2d8bff] to-[#0055e8] px-2 text-sm font-bold text-white">
+            <span>{popup.title}</span>
+            <button onClick={() => setPopup(null)} className="bg-red-500 px-2">×</button>
+          </div>
+          <div className="p-5 text-base font-semibold text-slate-800">{popup.body}</div>
         </div>
       ) : null}
       <button onClick={() => openFullscreen(desktopRef)} className="absolute right-4 top-4 rounded bg-yellow-100 px-4 py-2 font-black shadow">Start the Prank F11</button>

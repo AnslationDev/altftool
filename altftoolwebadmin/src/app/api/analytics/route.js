@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { verifySuperAdminRequest } from "@/lib/adminAccess";
 import { getAnalyticsDashboardData } from "@/lib/analytics/analytics.service";
 
 export async function GET(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      windowMs: 60_000,
+      scope: "admin:analytics",
+    });
+    if (limited) return limited;
+
     // RBAC-aware: recognises super admins in the new RBAC store
     // (super_admin_dashboard/main/admin_users) AND the legacy `admins`
     // collection. The old hand-rolled check here only read legacy `admins`, so

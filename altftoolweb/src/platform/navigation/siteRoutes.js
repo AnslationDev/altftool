@@ -10,6 +10,7 @@ import {
   Dumbbell,
   FileText,
   FlaskConical,
+  Footprints,
   Gamepad2,
   Gavel,
   HandHeart,
@@ -25,7 +26,6 @@ import {
   LayoutGrid,
   Library,
   Lightbulb,
-  Link2,
   Maximize2,
   Bot,
   MapPin,
@@ -39,6 +39,8 @@ import {
   Puzzle,
   Radar,
   Radio,
+  ScanFace,
+  Search,
   SearchCheck,
   ScrollText,
   ShieldCheck,
@@ -140,29 +142,53 @@ const TOOL_CATEGORY_ICONS = {
   other: LayoutGrid,
 };
 
+// Tool categories grouped by the job a visitor is trying to finish, not by the
+// order the codebase grew. The previous buckets ("Create & work",
+// "Build & calculate", "Learn & everyday") mixed unrelated jobs — image editing
+// sat next to invoicing, and fitness sat next to browser games — which made the
+// mobile list impossible to scan. `TOOL_INTENT_ORDER` fixes display order so a
+// new canonical category cannot silently reshuffle the menu.
+export const TOOL_INTENT_ORDER = Object.freeze([
+  "Images & video",
+  "PDF & writing",
+  "Calculate & convert",
+  "Health & fitness",
+  "AI, code & work",
+  "Learn & play",
+]);
+
 const TOOL_CATEGORY_GROUPS = {
-  "ai-tools": "Create & work",
-  "image-photo": "Create & work",
-  "video-audio": "Create & work",
-  "text-writing": "Create & work",
-  generators: "Create & work",
-  "design-color": "Create & work",
-  "marketing-social": "Create & work",
-  productivity: "Create & work",
-  business: "Create & work",
-  "pdf-documents": "Build & calculate",
-  developer: "Build & calculate",
-  "security-privacy": "Build & calculate",
-  converters: "Build & calculate",
-  calculators: "Build & calculate",
-  "finance-calculators": "Build & calculate",
-  "health-calculators": "Build & calculate",
-  "education-science": "Learn & everyday",
-  "health-fitness": "Learn & everyday",
-  lifestyle: "Learn & everyday",
-  fun: "Learn & everyday",
-  games: "Learn & everyday",
-  other: "Learn & everyday",
+  "image-photo": "Images & video",
+  "video-audio": "Images & video",
+  "design-color": "Images & video",
+  "pdf-documents": "PDF & writing",
+  "text-writing": "PDF & writing",
+  calculators: "Calculate & convert",
+  "finance-calculators": "Calculate & convert",
+  "health-calculators": "Calculate & convert",
+  converters: "Calculate & convert",
+  "health-fitness": "Health & fitness",
+  lifestyle: "Health & fitness",
+  "ai-tools": "AI, code & work",
+  generators: "AI, code & work",
+  developer: "AI, code & work",
+  "security-privacy": "AI, code & work",
+  productivity: "AI, code & work",
+  business: "AI, code & work",
+  "marketing-social": "AI, code & work",
+  "education-science": "Learn & play",
+  games: "Learn & play",
+  fun: "Learn & play",
+  other: "Learn & play",
+};
+
+const TOOL_INTENT_ICONS = {
+  "Images & video": ImageIcon,
+  "PDF & writing": FileText,
+  "Calculate & convert": Calculator,
+  "Health & fitness": HeartPulse,
+  "AI, code & work": Bot,
+  "Learn & play": Gamepad2,
 };
 
 export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map(
@@ -193,6 +219,33 @@ export const TOOL_CATEGORY_ROUTE_OPTIONS = CANONICAL_CATEGORIES.map(
     icon: TOOL_CATEGORY_ICONS[category.slug] || LayoutGrid,
   }),
 );
+
+/**
+ * The 22 canonical tool categories, collapsed into the six intent groups above
+ * and returned in a stable display order. This is the shape the mobile tool
+ * browser renders, so the grouping lives in the registry instead of the header.
+ */
+export const TOOL_BROWSE_GROUPS = (() => {
+  const byIntent = new Map();
+
+  for (const option of TOOL_CATEGORY_ROUTE_OPTIONS) {
+    if (!byIntent.has(option.group)) byIntent.set(option.group, []);
+    byIntent.get(option.group).push(option);
+  }
+
+  const ordered = [
+    ...TOOL_INTENT_ORDER.filter((label) => byIntent.has(label)),
+    ...[...byIntent.keys()].filter(
+      (label) => !TOOL_INTENT_ORDER.includes(label),
+    ),
+  ];
+
+  return ordered.map((label) => ({
+    label,
+    icon: TOOL_INTENT_ICONS[label] || LayoutGrid,
+    items: byIntent.get(label),
+  }));
+})();
 
 export const SITE_ROUTES = {
   home: { label: "Home", href: "/" },
@@ -262,6 +315,11 @@ export const SITE_ROUTES = {
     href: "/altfcalculators",
     match: ["/altfcalculators"],
   },
+  examPhoto: {
+    label: "Exam Photo Specs",
+    href: "/exam-photo",
+    match: ["/exam-photo"],
+  },
   promptStudio: {
     label: "AI Prompt Studio",
     href: "/imgprompt",
@@ -271,11 +329,6 @@ export const SITE_ROUTES = {
     label: "n8n Automation Library",
     href: "/n8n",
     match: ["/n8n"],
-  },
-  smartLink: {
-    label: "Smart Link",
-    href: "/smartlink",
-    match: ["/smartlink"],
   },
   fullScreen: {
     label: "Fullscreen Browser",
@@ -376,8 +429,12 @@ export const PUBLIC_NAV_ITEMS = [
       },
       { ...SITE_ROUTES.pdfTools, group: "Directories & apps", icon: FileText },
       { ...SITE_ROUTES.altfGames, group: "Directories & apps", icon: Gamepad2 },
+      {
+        ...SITE_ROUTES.examPhoto,
+        group: "Directories & apps",
+        icon: GraduationCap,
+      },
       ...TOOL_CATEGORY_ROUTE_OPTIONS,
-      { ...SITE_ROUTES.smartLink, group: "Build & calculate", icon: Link2 },
       {
         ...SITE_ROUTES.fullScreen,
         group: "Build & calculate",
@@ -495,6 +552,11 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.faq, group: "Help & directory", icon: BookOpen },
       { ...SITE_ROUTES.siteMap, group: "Help & directory", icon: LayoutGrid },
       { ...SITE_ROUTES.status, group: "Help & directory", icon: Activity },
+      {
+        ...SITE_ROUTES.licenses,
+        group: "Help & directory",
+        icon: ScrollText,
+      },
     ],
   },
   {
@@ -507,6 +569,117 @@ export const PUBLIC_NAV_ITEMS = [
       ...EXPERIENCE_ROUTE_OPTIONS,
     ],
   },
+];
+
+// ---------------------------------------------------------------------------
+// Mobile information architecture
+//
+// Most visitors arrive from search on a single tool page and never see the home
+// page, so the phone navigation is built around two jobs — "find another tool"
+// and "search" — with everything else behind one "Explore" entry. These are
+// registry values so the header stays a renderer.
+// ---------------------------------------------------------------------------
+
+/**
+ * Thumb-reachable bottom bar. `sheet` entries open an overlay instead of
+ * navigating, so browsing costs one tap from any page.
+ */
+export const MOBILE_TAB_ITEMS = [
+  { id: "home", label: "Home", icon: House, ...SITE_ROUTES.home },
+  {
+    id: "tools",
+    label: "Tools",
+    icon: Wrench,
+    sheet: "tools",
+    href: SITE_ROUTES.tools.href,
+    match: [
+      "/tools",
+      "/altfcalculators",
+      "/altfloveimg",
+      "/altflovepdf",
+      "/exam-photo",
+    ],
+  },
+  {
+    id: "search",
+    label: "Search",
+    icon: Search,
+    sheet: "search",
+    href: "/search",
+    match: ["/search"],
+  },
+  { id: "more", label: "Explore", icon: LayoutGrid, sheet: "more" },
+];
+
+/**
+ * Direct links to the tool pages that carry the most organic mobile traffic, so
+ * a visitor who landed on one tool reaches the next one in two taps. Ordered by
+ * Search Console landing-page volume; no counts or ratings are ever rendered.
+ */
+export const TOOL_QUICK_LINKS = [
+  { label: "Step Counter", href: "/tools/all/step-counter", icon: Footprints },
+  {
+    label: "Age & Gender Detector",
+    href: "/tools/all/age-gender-detector",
+    icon: ScanFace,
+  },
+  {
+    label: "Image Resizer",
+    href: "/tools/all/image-resizer",
+    icon: ImageIcon,
+  },
+  {
+    label: "Image Compressor",
+    href: "/tools/all/image-compressor",
+    icon: ImageIcon,
+  },
+  {
+    label: "BMI Calculator",
+    href: "/tools/all/bmi-calculator",
+    icon: HeartPulse,
+  },
+  {
+    label: "Percentage Calculator",
+    href: "/tools/all/percentage-calculator",
+    icon: Calculator,
+  },
+  {
+    label: "Unit Converter",
+    href: "/tools/all/unit-converter",
+    icon: Workflow,
+  },
+  {
+    label: "Password Generator",
+    href: "/tools/all/password-generator",
+    icon: ShieldCheck,
+  },
+];
+
+/** Directory-level destinations shown above the category grid. */
+export const TOOL_DIRECTORY_LINKS = [
+  { ...SITE_ROUTES.tools, label: "All tools", icon: Wrench },
+  { ...SITE_ROUTES.calculators, icon: Calculator },
+  { ...SITE_ROUTES.imageTools, icon: ImageIcon },
+  { ...SITE_ROUTES.pdfTools, icon: FileText },
+  { ...SITE_ROUTES.altfGames, icon: Gamepad2 },
+  { ...SITE_ROUTES.apps, icon: Smartphone },
+];
+
+/**
+ * Everything that is not "tools" or "search", for the Explore sheet. Tools are
+ * excluded because they have a dedicated sheet — keeping them here would
+ * duplicate ~30 links in every page's HTML.
+ */
+export const MOBILE_MORE_NAV_ITEMS = PUBLIC_NAV_ITEMS.filter(
+  (item) => item.href !== SITE_ROUTES.tools.href,
+);
+
+/** Support/utility routes pinned to the bottom of the Explore sheet. */
+export const MOBILE_UTILITY_LINKS = [
+  SITE_ROUTES.support,
+  SITE_ROUTES.docs,
+  SITE_ROUTES.requestTool,
+  SITE_ROUTES.siteMap,
 ];
 
 export const FOOTER_ROUTE_GROUPS = [
@@ -528,6 +701,7 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.calculators,
       SITE_ROUTES.imageTools,
       SITE_ROUTES.pdfTools,
+      SITE_ROUTES.examPhoto,
       SITE_ROUTES.embedWidgets,
       SITE_ROUTES.extensions,
       SITE_ROUTES.apps,
@@ -594,6 +768,8 @@ export const LEGAL_ROUTE_LINKS = [
 // Top tools surfaced as server-rendered links in the footer (every page) to push
 // crawl equity to the highest-value canonical tool pages.
 export const POPULAR_TOOL_LINKS = [
+  { label: "Step Counter", href: "/tools/all/step-counter" },
+  { label: "Age & Gender Detector", href: "/tools/all/age-gender-detector" },
   { label: "Image Resizer", href: "/tools/all/image-resizer" },
   { label: "Image Compressor", href: "/tools/all/image-compressor" },
   { label: "Unit Converter", href: "/tools/all/unit-converter" },

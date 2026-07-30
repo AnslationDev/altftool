@@ -81,8 +81,11 @@ export async function generateMetadata({ params }) {
   if (!cluster) {
     return createPageMetadata({
       title: "Blog Topic Cluster - AltFTool",
-      description: "Browse AltFTool blog topic clusters.",
+      description:
+        "We could not find this AltFTool blog topic cluster. Browse the topic hubs to find grouped guides on tools, file workflows, and productivity.",
       path: `/blogs/topics/${topic}`,
+      // The page 404s on this branch — keep the URL out of the index.
+      noindex: true,
     });
   }
 

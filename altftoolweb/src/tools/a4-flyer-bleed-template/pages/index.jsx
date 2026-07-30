@@ -324,7 +324,6 @@ export default function ToolHome() {
           <h2 className="text-base font-semibold">Guide preview</h2>
           <div
             className="mt-4 overflow-x-auto rounded-lg border border-[var(--border)] p-3 [&>svg]:h-auto [&>svg]:w-full [&>svg]:max-w-[420px]"
-            /* eslint-disable-next-line react/no-danger */
             dangerouslySetInnerHTML={{ __html: svg }}
           />
           <ul className="mt-4 space-y-1.5 text-xs leading-5 text-[var(--muted-foreground)]">

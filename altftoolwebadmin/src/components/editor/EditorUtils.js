@@ -160,7 +160,11 @@ export function seoAudit(editor) {
       if (/^https?:\/\//i.test(href) && typeof window !== "undefined") {
         try {
           const url = new URL(href);
-          if (url.hostname === window.location.hostname || url.hostname.endsWith("altftool.com")) {
+          if (
+            url.hostname === window.location.hostname ||
+            url.hostname === "altftool.com" ||
+            url.hostname.endsWith(".altftool.com")
+          ) {
             links.internal += 1;
           } else {
             links.external += 1;

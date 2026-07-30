@@ -1,47 +1,9 @@
 "use client";
 
-import { createPortal } from "react-dom";
-import { useRef, useState, useCallback } from "react";
 import { Pencil, UserCheck, UserX, ShieldCheck, Shield } from "lucide-react";
 import AdminAvatar from "./AdminAvatar";
 import PermissionSummary from "./PermissionSummary";
-
-function Tooltip({ label, children }) {
-  const ref = useRef(null);
-  const [pos, setPos] = useState(null);
-
-  const show = useCallback(() => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    setPos({ top: r.top - 8, left: r.left + r.width / 2 });
-  }, []);
-
-  const hide = useCallback(() => setPos(null), []);
-
-  return (
-    <>
-      <div ref={ref} className="inline-flex" onMouseEnter={show} onMouseLeave={hide}>
-        {children}
-      </div>
-
-      {pos && typeof document !== "undefined" &&
-        createPortal(
-          <div
-            className="pointer-events-none fixed z-[9999] px-2 py-1 rounded-md text-[11px] font-medium whitespace-nowrap bg-[var(--foreground)] text-[var(--background)] shadow-xl"
-            style={{
-              top: pos.top,
-              left: pos.left,
-              transform: "translateX(-50%) translateY(-100%)",
-            }}
-          >
-            {label}
-            <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--foreground)]" />
-          </div>,
-          document.body
-        )}
-    </>
-  );
-}
+import Tooltip from "./Tooltip";
 
 export default function AdminCard({
   admin,

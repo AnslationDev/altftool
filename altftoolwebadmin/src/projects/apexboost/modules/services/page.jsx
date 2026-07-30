@@ -3,6 +3,24 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, ArrowLeft, ImageIcon, Settings } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeServiceCategories,
+  createServiceCategory,
+  updateServiceCategory,
+  deleteServiceCategory,
+  subscribeServicesHero,
+  saveServicesHero,
+  subscribeSectionHeading,
+  saveSectionHeading,
+  subscribeMarketingImpactCards,
+  createMarketingImpactCard,
+  updateMarketingImpactCard,
+  deleteMarketingImpactCard,
+  subscribePortfolioItems,
+  createPortfolioItem,
+  updatePortfolioItem,
+  deletePortfolioItem,
+} from "../service/apexboost.service";
 
 export default function ServicesPage() {
   const [servicesData, setServicesData] = useState([]);
@@ -36,39 +54,12 @@ export default function ServicesPage() {
   const [portfolioForm, setPortfolioForm] = useState({ title: "", client: "", category: "Digital Marketing", result: "", metric: "", image: "", gradient: "from-brand to-brand-cyan" });
 
   useEffect(() => {
-    const saved = localStorage.getItem("servicesData");
-    if (saved) {
-      try { setServicesData(JSON.parse(saved)); } catch {}
-    }
-    loadServices();
+    const unsubscribe = subscribeServiceCategories(
+      (categories) => setServicesData(categories),
+      (err) => console.error("Failed to load services:", err),
+    );
+    return unsubscribe;
   }, []);
-
-  const loadServices = async () => {
-    try {
-      const res = await fetch("/api/apexboost/services");
-      const json = await res.json();
-      if (json.success && Array.isArray(json.services)) {
-        setServicesData(json.services);
-        localStorage.setItem("servicesData", JSON.stringify(json.services));
-      }
-    } catch (err) {
-      console.error("Failed to load services:", err);
-    }
-  };
-
-  const saveServices = async (updated) => {
-    setServicesData(updated);
-    localStorage.setItem("servicesData", JSON.stringify(updated));
-    try {
-      await fetch("/api/apexboost/services", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ services: updated }),
-      });
-    } catch (err) {
-      console.error("Failed to save services:", err);
-    }
-  };
 
   const openItemsView = (categoryId) => {
     setSelectedCategoryId(categoryId);
@@ -96,10 +87,10 @@ export default function ServicesPage() {
 
   const handleSaveItem = async () => {
     if (!itemForm.title.trim()) return;
-    const updated = [...servicesData];
-    const catIdx = updated.findIndex(c => c.id === selectedCategoryId);
-    if (catIdx === -1) return;
+    const category = servicesData.find(c => c.id === selectedCategoryId);
+    if (!category) return;
 
+    const items = [...(category.items || [])];
     const newItem = {
       title: itemForm.title,
       desc: itemForm.desc,
@@ -108,29 +99,37 @@ export default function ServicesPage() {
     };
 
     if (editingItemIdx !== null) {
-      updated[catIdx].items[editingItemIdx] = {
-        ...updated[catIdx].items[editingItemIdx],
+      items[editingItemIdx] = {
+        ...items[editingItemIdx],
         ...newItem,
       };
     } else {
-      updated[catIdx].items.push(newItem);
+      items.push(newItem);
     }
 
-    await saveServices(updated);
-    setIsItemModalOpen(false);
-    setEditingItem(null);
-    setEditingItemIdx(null);
+    try {
+      await updateServiceCategory(category.id, { ...category, items });
+      setIsItemModalOpen(false);
+      setEditingItem(null);
+      setEditingItemIdx(null);
+    } catch (err) {
+      console.error("Failed to save services:", err);
+    }
   };
 
   const confirmDeleteItem = async () => {
     if (itemToDelete === null) return;
-    const updated = [...servicesData];
-    const catIdx = updated.findIndex(c => c.id === selectedCategoryId);
-    if (catIdx === -1) return;
-    updated[catIdx].items.splice(itemToDelete, 1);
-    await saveServices(updated);
-    setIsDeleteConfirmOpen(false);
-    setItemToDelete(null);
+    const category = servicesData.find(c => c.id === selectedCategoryId);
+    if (!category) return;
+    const items = [...(category.items || [])];
+    items.splice(itemToDelete, 1);
+    try {
+      await updateServiceCategory(category.id, { ...category, items });
+      setIsDeleteConfirmOpen(false);
+      setItemToDelete(null);
+    } catch (err) {
+      console.error("Failed to save services:", err);
+    }
   };
 
   const openAddCategory = () => {
@@ -161,8 +160,7 @@ export default function ServicesPage() {
 
   const handleSaveCategory = async () => {
     if (!catForm.title.trim()) return;
-    const updated = [...servicesData];
-    
+
     const newCatData = {
       title: catForm.title,
       tagline: catForm.tagline,
@@ -172,51 +170,50 @@ export default function ServicesPage() {
       features: catForm.features.split("\n").map(f => f.trim()).filter(Boolean),
     };
 
-    if (editingCategory) {
-      const catIdx = updated.findIndex(c => c.id === editingCategory.id);
-      if (catIdx !== -1) {
-        updated[catIdx] = { ...updated[catIdx], ...newCatData };
+    try {
+      if (editingCategory) {
+        await updateServiceCategory(editingCategory.id, { ...editingCategory, ...newCatData });
+      } else {
+        const nextOrder = servicesData.length
+          ? Math.max(...servicesData.map(c => Number(c.order || 0))) + 1
+          : 1;
+        await createServiceCategory({ ...newCatData, items: [], order: nextOrder });
       }
-    } else {
-      updated.push({
-        id: catForm.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        ...newCatData,
-        items: []
-      });
+      setIsCatModalOpen(false);
+      setEditingCategory(null);
+    } catch (err) {
+      console.error("Failed to save services:", err);
     }
-
-    await saveServices(updated);
-    setIsCatModalOpen(false);
-    setEditingCategory(null);
   };
 
   const confirmDeleteCategory = async () => {
     if (catToDelete === null) return;
-    const updated = servicesData.filter(c => c.id !== catToDelete.id);
-    await saveServices(updated);
-    setIsCatDeleteConfirmOpen(false);
-    setCatToDelete(null);
-  };
-
-  const loadHeroData = async () => {
     try {
-      const res = await fetch("/api/apexboost/data?section=servicesHero");
-      const json = await res.json();
-      if (json.success && json.data) {
-        setHeroForm({
-          images: Array.isArray(json.data.images) ? json.data.images.join("\n") : "",
-          badge: json.data.badge || "",
-          heading: json.data.heading || "",
-          description: json.data.description || "",
-        });
-      }
+      await deleteServiceCategory(catToDelete.id);
+      setIsCatDeleteConfirmOpen(false);
+      setCatToDelete(null);
     } catch (err) {
-      console.error("Failed to load hero data:", err);
+      console.error("Failed to save services:", err);
     }
   };
 
+  useEffect(() => {
+    if (!isHeroModalOpen) return undefined;
+    const unsubscribe = subscribeServicesHero(
+      (data) => {
+        setHeroForm({
+          images: Array.isArray(data.images) ? data.images.join("\n") : "",
+          badge: data.badge || "",
+          heading: data.heading || "",
+          description: data.description || "",
+        });
+      },
+      (err) => console.error("Failed to load hero data:", err),
+    );
+    return unsubscribe;
+  }, [isHeroModalOpen]);
+
   const openHeroEditor = () => {
-    loadHeroData();
     setIsHeroModalOpen(true);
   };
 
@@ -228,36 +225,31 @@ export default function ServicesPage() {
       description: heroForm.description,
     };
     try {
-      await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "servicesHero", data }),
-      });
+      await saveServicesHero(data);
       setIsHeroModalOpen(false);
     } catch (err) {
       console.error("Failed to save hero data:", err);
     }
   };
 
-  const loadHeadingData = async () => {
-    try {
-      const res = await fetch("/api/apexboost/data?section=servicesHeading");
-      const json = await res.json();
-      if (json.success && json.data) {
+  useEffect(() => {
+    if (!isHeadingModalOpen) return undefined;
+    const unsubscribe = subscribeSectionHeading(
+      "servicesHeading",
+      (data) => {
         setHeadingForm({
-          eyebrow: json.data.eyebrow || "",
-          title: json.data.title || "",
-          highlight: json.data.highlight || "",
-          subtitle: json.data.subtitle || "",
+          eyebrow: data.eyebrow || "",
+          title: data.title || "",
+          highlight: data.highlight || "",
+          subtitle: data.subtitle || "",
         });
-      }
-    } catch (err) {
-      console.error("Failed to load heading data:", err);
-    }
-  };
+      },
+      (err) => console.error("Failed to load heading data:", err),
+    );
+    return unsubscribe;
+  }, [isHeadingModalOpen]);
 
   const openHeadingEditor = () => {
-    loadHeadingData();
     setIsHeadingModalOpen(true);
   };
 
@@ -269,11 +261,7 @@ export default function ServicesPage() {
       subtitle: headingForm.subtitle,
     };
     try {
-      await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "servicesHeading", data }),
-      });
+      await saveSectionHeading("servicesHeading", data);
       setIsHeadingModalOpen(false);
     } catch (err) {
       console.error("Failed to save heading data:", err);
@@ -282,48 +270,48 @@ export default function ServicesPage() {
 
   const selectedCategory = servicesData.find(c => c.id === selectedCategoryId);
 
-  const openImpactEditor = async () => {
-    try {
-      const [hRes, cRes] = await Promise.all([
-        fetch("/api/apexboost/data?section=marketingImpact"),
-        fetch("/api/apexboost/data?section=marketingImpactCards"),
-      ]);
-      const [hJson, cJson] = await Promise.all([hRes.json(), cRes.json()]);
-      if (hJson.success && hJson.data) {
+  useEffect(() => {
+    if (!isImpactModalOpen) return undefined;
+    const unsubscribe = subscribeSectionHeading(
+      "marketingImpact",
+      (data) => {
         setImpactHeadingForm({
-          eyebrow: hJson.data.eyebrow || "",
-          title: hJson.data.title || "",
-          highlight: hJson.data.highlight || "",
-          subtitle: hJson.data.subtitle || "",
+          eyebrow: data.eyebrow || "",
+          title: data.title || "",
+          highlight: data.highlight || "",
+          subtitle: data.subtitle || "",
         });
-      }
-      if (cJson.success && Array.isArray(cJson.data)) setImpactCards(cJson.data);
-    } catch (err) { console.error(err); }
+      },
+      (err) => console.error("Failed to load impact heading:", err),
+    );
+    return unsubscribe;
+  }, [isImpactModalOpen]);
+
+  useEffect(() => {
+    if (!isImpactModalOpen) return undefined;
+    const unsubscribe = subscribeMarketingImpactCards(
+      (cards) => setImpactCards(cards),
+      (err) => console.error("Failed to load impact cards:", err),
+    );
+    return unsubscribe;
+  }, [isImpactModalOpen]);
+
+  const openImpactEditor = () => {
     setIsImpactModalOpen(true);
   };
 
   const handleSaveImpactHeading = async () => {
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section: "marketingImpact", data: {
+    try {
+      await saveSectionHeading("marketingImpact", {
         eyebrow: impactHeadingForm.eyebrow,
         title: impactHeadingForm.title,
         highlight: impactHeadingForm.highlight,
         subtitle: impactHeadingForm.subtitle,
-      }}),
-    });
-    if (res.ok) emitAlert({ type: "success", title: "Success", message: "Marketing Impact heading saved!" });
-    else emitAlert({ type: "error", title: "Error", message: "Failed to save heading." });
-  };
-
-  const handleSaveImpactCards = async (cards) => {
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section: "marketingImpactCards", data: cards }),
-    });
-    return res.ok;
+      });
+      emitAlert({ type: "success", title: "Success", message: "Marketing Impact heading saved!" });
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save heading." });
+    }
   };
 
   const openAddImpactCard = () => {
@@ -339,42 +327,44 @@ export default function ServicesPage() {
   };
 
   const handleSaveImpactCard = async () => {
-    const updated = editingImpactCard !== null
-      ? impactCards.map((c, i) => i === editingImpactCard ? { ...impactCardForm } : c)
-      : [...impactCards, { ...impactCardForm }];
-    const ok = await handleSaveImpactCards(updated);
-    if (ok) {
-      setImpactCards(updated);
+    try {
+      if (editingImpactCard !== null) {
+        const card = impactCards[editingImpactCard];
+        await updateMarketingImpactCard(card.id, impactCardForm);
+      } else {
+        const nextOrder = impactCards.length
+          ? Math.max(...impactCards.map(c => Number(c.order || 0))) + 1
+          : 1;
+        await createMarketingImpactCard({ ...impactCardForm, order: nextOrder });
+      }
       setIsImpactCardModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Card saved!" });
-    } else emitAlert({ type: "error", title: "Error", message: "Failed to save card." });
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save card." });
+    }
   };
 
   const handleDeleteImpactCard = async (idx) => {
-    const updated = impactCards.filter((_, i) => i !== idx);
-    const ok = await handleSaveImpactCards(updated);
-    if (ok) {
-      setImpactCards(updated);
-      emitAlert({ type: "success", title: "Success", message: "Card deleted!" });
-    } else emitAlert({ type: "error", title: "Error", message: "Failed to delete card." });
-  };
-
-  const openPortfolioEditor = async () => {
     try {
-      const res = await fetch("/api/apexboost/data?section=portfolio");
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) setPortfolioItems(json.data);
-    } catch (err) { console.error(err); }
-    setIsPortfolioModalOpen(true);
+      const card = impactCards[idx];
+      await deleteMarketingImpactCard(card.id);
+      emitAlert({ type: "success", title: "Success", message: "Card deleted!" });
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete card." });
+    }
   };
 
-  const handleSavePortfolioItems = async (items) => {
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section: "portfolio", data: items }),
-    });
-    return res.ok;
+  useEffect(() => {
+    if (!isPortfolioModalOpen) return undefined;
+    const unsubscribe = subscribePortfolioItems(
+      (items) => setPortfolioItems(items),
+      (err) => console.error("Failed to load portfolio items:", err),
+    );
+    return unsubscribe;
+  }, [isPortfolioModalOpen]);
+
+  const openPortfolioEditor = () => {
+    setIsPortfolioModalOpen(true);
   };
 
   const openAddPortfolioItem = () => {
@@ -390,24 +380,31 @@ export default function ServicesPage() {
   };
 
   const handleSavePortfolioItem = async () => {
-    const updated = editingPortfolioItem !== null
-      ? portfolioItems.map((c, i) => i === editingPortfolioItem ? { ...portfolioForm, id: c.id } : c)
-      : [...portfolioItems, { ...portfolioForm, id: Date.now() }];
-    const ok = await handleSavePortfolioItems(updated);
-    if (ok) {
-      setPortfolioItems(updated);
+    try {
+      if (editingPortfolioItem !== null) {
+        const item = portfolioItems[editingPortfolioItem];
+        await updatePortfolioItem(item.id, portfolioForm);
+      } else {
+        const nextOrder = portfolioItems.length
+          ? Math.max(...portfolioItems.map(i => Number(i.order || 0))) + 1
+          : 1;
+        await createPortfolioItem({ ...portfolioForm, order: nextOrder });
+      }
       setIsPortfolioItemModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Portfolio item saved!" });
-    } else emitAlert({ type: "error", title: "Error", message: "Failed to save item." });
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save item." });
+    }
   };
 
   const handleDeletePortfolioItem = async (idx) => {
-    const updated = portfolioItems.filter((_, i) => i !== idx);
-    const ok = await handleSavePortfolioItems(updated);
-    if (ok) {
-      setPortfolioItems(updated);
+    try {
+      const item = portfolioItems[idx];
+      await deletePortfolioItem(item.id);
       emitAlert({ type: "success", title: "Success", message: "Item deleted!" });
-    } else emitAlert({ type: "error", title: "Error", message: "Failed to delete item." });
+    } catch (err) {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete item." });
+    }
   };
 
   const catView = viewState === "categories";

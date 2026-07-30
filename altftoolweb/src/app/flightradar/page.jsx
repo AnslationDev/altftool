@@ -4,16 +4,15 @@ import ClientDashboardLoader from "./components/ClientDashboardLoader";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Live Flight Tracker & Air Traffic | AltFTool",
+    title: "Flight Radar Simulator | AltFTool",
     description:
-      "Explore global air traffic in real-time. Watch 400+ active flights traverse great-circle routes (Slerp) on our gorgeous wabi-sabi map, inspect aircraft specifications, and trace telemetry statistics.",
+      "Explore simulated global air traffic: watch 400+ generated flights follow great-circle routes on an interactive radar-style map, with aircraft specs and simulated stats.",
     path: "/flightradar",
     keywords: [
-      "flight tracker",
-      "live flight tracking",
-      "Aero radar",
+      "flight radar simulator",
+      "simulated flight tracking",
+      "aero radar visualizer",
       "Next.js flight radar",
-      "real-time air traffic",
       "aviation visualizer",
     ],
     type: "website",
@@ -23,7 +22,7 @@ export async function generateMetadata() {
 export default function FlightRadarPage() {
   return (
     <>
-      <h1 className="sr-only">Live flight tracker and air traffic dashboard</h1>
+      <h1 className="sr-only">Flight radar simulator — simulated global air traffic dashboard</h1>
       <ClientDashboardLoader />
     </>
   );

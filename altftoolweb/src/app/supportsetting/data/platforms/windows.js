@@ -161,9 +161,6 @@ export const windowsSettings = [
     ],
     relatedSettingIds: ["windows-security", "windows-reset", "storage-settings"],
     updateFrequency: "Check weekly; installs automatically in the background",
-    imageUrl:
-      "https://softwarehubs.b-cdn.net/wp-content/uploads/2024/10/HD-Audio50.jpeg",
-    imageAlt: "Windows Update Settings",
     afterImageContent: {
       heading: "How Windows Update Works",
       paragraphs: [
@@ -240,9 +237,6 @@ export const windowsSettings = [
       "Check available disk space first — Cloud download needs more free space than Local reinstall.",
     ],
     relatedSettingIds: ["windows-update", "storage-settings", "system-restart"],
-    imageUrl:
-      "https://i.pcmag.com/imagery/articles/06seN9qhHZtc6Rv8ocLmKZ2-16.fit_lim.size_1050x.png",
-    imageAlt: "Reset This PC Settings",
     afterImageContent: {
       heading: "Understanding the Reset Process",
       paragraphs: [
@@ -322,9 +316,6 @@ export const windowsSettings = [
       "If a restart hangs repeatedly, boot into Safe Mode via Advanced Startup to isolate whether a startup app or driver is the cause.",
     ],
     relatedSettingIds: ["windows-reset", "power-sleep", "windows-update"],
-    imageUrl:
-      "https://img.webnots.com/2023/05/Confirm-Restart-Now-from-Advanced-Startup-Setting.jpg",
-    imageAlt: "System Restart Advanced Startup Settings",
     afterImageContent: {
       heading: "How Restart Works in Windows",
       paragraphs: [
@@ -401,9 +392,6 @@ export const windowsSettings = [
       "If a webcam cover isn't available, a small piece of opaque tape works as a zero-cost physical safeguard.",
     ],
     relatedSettingIds: ["microphone-permission", "windows-security", "windows-family-safety"],
-    imageUrl:
-      "https://browserstack.wpenginepowered.com/wp-content/uploads/2024/11/Click-on-Camera-to-Allow-Access.jpg",
-    imageAlt: "Camera Permission Settings",
     afterImageContent: {
       heading: "Understanding Camera Privacy Settings",
       paragraphs: [
@@ -480,9 +468,6 @@ export const windowsSettings = [
       "Disable 'Let apps use my microphone' entirely and re-enable only for specific apps if you want the tightest possible control.",
     ],
     relatedSettingIds: ["camera-permission", "sound-settings", "windows-security"],
-    imageUrl:
-      "https://media.geeksforgeeks.org/wp-content/uploads/20240318113853/Turn-on-Mic-and-Camera-Using-Site-Settings_2.png",
-    imageAlt: "Microphone Permission Settings",
     afterImageContent: {
       heading: "Managing Microphone Access in Windows",
       paragraphs: [
@@ -561,9 +546,6 @@ export const windowsSettings = [
       "Switch to the 5GHz band manually if your router broadcasts both bands and you're getting interference on 2.4GHz.",
     ],
     relatedSettingIds: ["network-reset", "bluetooth-settings", "windows-security"],
-    imageUrl:
-      "https://www.top-password.com/blog/wp-content/uploads/2021/04/wifi-settings.png",
-    imageAlt: "WiFi Connection Settings",
     afterImageContent: {
       heading: "How WiFi Settings Work",
       paragraphs: [
@@ -640,9 +622,6 @@ export const windowsSettings = [
       "Check Device Manager immediately after the restart to confirm all expected network adapters reappeared correctly.",
     ],
     relatedSettingIds: ["wifi-connection", "bluetooth-settings", "windows-security"],
-    imageUrl:
-      "https://img.kaspersky.com/kb/en-global/278876_494082_common_12378_04.png",
-    imageAlt: "Network Reset Settings",
     afterImageContent: {
       heading: "What Happens During a Network Reset",
       paragraphs: [
@@ -719,9 +698,6 @@ export const windowsSettings = [
       "Rename a paired device in its device properties to something recognizable if you own multiples of the same accessory model.",
     ],
     relatedSettingIds: ["wifi-connection", "sound-settings", "network-reset"],
-    imageUrl:
-      "https://images.drivereasy.com/wp-content/uploads/2018/11/img_5be92aafe0cad.jpg",
-    imageAlt: "Bluetooth Settings Panel",
     afterImageContent: {
       heading: "Pairing a Bluetooth Device",
       paragraphs: [
@@ -798,9 +774,6 @@ export const windowsSettings = [
       "Enable HDR under Display settings if both your monitor and content support it for noticeably better contrast and color.",
     ],
     relatedSettingIds: ["sound-settings", "power-sleep", "notifications-settings"],
-    imageUrl:
-      "https://www.cnet.com/a/img/resize/ab00d42266b4a5b6e2b9c90cc5570b14a70761ce/hub/2018/05/16/a945b0cf-df92-47b1-8fc2-66a4be89b8e0/windows-10-display-settings.jpg?auto=webp&width=1200",
-    imageAlt: "Display Settings Interface",
     afterImageContent: {
       heading: "Customizing Your Display",
       paragraphs: [
@@ -879,9 +852,6 @@ export const windowsSettings = [
     ],
     relatedSettingIds: ["windows-update", "windows-reset", "power-sleep"],
     updateFrequency: "Review monthly; Storage Sense runs automatically on its own schedule",
-    imageUrl:
-      "https://siriusofficesolutions.com/wp-content/uploads/2025/01/windows-storage-settings.png",
-    imageAlt: "Windows 11 Storage Settings",
     afterImageContent: {
       heading: "How Storage Management Works",
       paragraphs: [
@@ -959,8 +929,6 @@ export const windowsSettings = [
       "Create a custom power plan for specific scenarios, like a presentation-mode plan that disables sleep and screen timeout entirely.",
     ],
     relatedSettingIds: ["display-settings", "windows-update", "system-restart"],
-    imageUrl: "https://i.sstatic.net/ite9v.png",
-    imageAlt: "Windows 11 Power & Sleep Settings",
     afterImageContent: {
       heading: "How Power & Sleep Settings Work",
       paragraphs: [
@@ -1037,9 +1005,6 @@ export const windowsSettings = [
       "Assign specific apps to specific audio devices via 'App volume and device preferences' if you want calls routed to headphones while music plays through speakers.",
     ],
     relatedSettingIds: ["microphone-permission", "bluetooth-settings", "notifications-settings"],
-    imageUrl:
-      "https://winaero.com/blog/wp-content/uploads/2021/07/Windows-11-Settings-System-Sound.png",
-    imageAlt: "Windows 11 Sound Settings",
     afterImageContent: {
       heading: "Understanding Sound Settings",
       paragraphs: [
@@ -1116,9 +1081,6 @@ export const windowsSettings = [
       "Use automatic rules to enable Focus Assist during duplicate/mirrored display mode so presentations never get interrupted by a popup.",
     ],
     relatedSettingIds: ["sound-settings", "display-settings", "windows-security"],
-    imageUrl:
-      "https://60a99bedadae98078522-a9b6cded92292ef3bace063619038eb1.ssl.cf2.rackcdn.com/images_Screenshot%202025-01-23%20161009.png",
-    imageAlt: "Windows 11 Notification Settings",
     afterImageContent: {
       heading: "How Notifications Work in Windows",
       paragraphs: [
@@ -1195,9 +1157,6 @@ export const windowsSettings = [
       "After changing a default browser, also verify PDF association separately if that browser doubles as a PDF viewer, since it can silently take over .pdf files too.",
     ],
     relatedSettingIds: ["display-settings", "windows-update"],
-    imageUrl:
-      "https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/5158464766/original/E5AV0fe4TR7JuZnK_yuccTfgTnxo_-HXpA.png?1668029284",
-    imageAlt: "Windows 11 Default Apps Settings",
     afterImageContent: {
       heading: "How Default Apps Work",
       paragraphs: [
@@ -1274,9 +1233,6 @@ export const windowsSettings = [
       "Download offline speech and handwriting packs for a language before traveling if you plan to use dictation without reliable internet.",
     ],
     relatedSettingIds: ["default-apps", "notifications-settings"],
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQmWzry3yu_sJfWcucCq37Qwcku0K4Lb1TKbHpJyGDcg&s=10",
-    imageAlt: "Windows 11 Language & Region Settings",
     afterImageContent: {
       heading: "How Language & Region Settings Work",
       paragraphs: [

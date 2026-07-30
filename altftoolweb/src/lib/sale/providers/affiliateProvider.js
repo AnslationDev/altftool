@@ -30,7 +30,6 @@ export class AffiliateProvider {
    * @param {{ query: string, page?: number }} _params
    * @returns {Promise<import("../types.js").AffiliateOffer[]>}
    */
-  // eslint-disable-next-line no-unused-vars
   async searchDeals(_params) {
     throw new SaleApiError(`${this.name}.searchDeals() is not implemented.`, {
       status: 501,
@@ -44,7 +43,6 @@ export class AffiliateProvider {
    * @param {{ query?: string, merchantId?: string }} _params
    * @returns {Promise<import("../types.js").AffiliateOffer[]>}
    */
-  // eslint-disable-next-line no-unused-vars
   async getCoupons(_params) {
     throw new SaleApiError(`${this.name}.getCoupons() is not implemented.`, {
       status: 501,
@@ -58,7 +56,6 @@ export class AffiliateProvider {
    * @param {{ query?: string, merchantId?: string }} _params
    * @returns {Promise<import("../types.js").AffiliateOffer[]>}
    */
-  // eslint-disable-next-line no-unused-vars
   async getOffers(_params) {
     throw new SaleApiError(`${this.name}.getOffers() is not implemented.`, {
       status: 501,

@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Malayalam Birthday Wishes Generator",
   category: ["Generators"],
   description:
-    "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration.",
+    "Write Malayalam birthday messages tuned to relationship and tone, with correct നീ, നിങ്ങൾ or താങ്കൾ forms, romanisation, an English meaning and SMS length.",
   icon: "cake",
   iconColor: "text-[var(--primary)]",
 };

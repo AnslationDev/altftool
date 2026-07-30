@@ -29,37 +29,38 @@
   html {
     scroll-behavior: smooth;
   }
-  body {
+  .window-replacement-page {
     font-family: var(--font-sans);
-    background-color: var(--color-cream);
-    color: #2c3148;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4 {
+  .window-replacement-page :is(h1, h2, h3, h4) {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
-  ::selection {
+  .window-replacement-page ::selection {
     background: var(--color-bronze-200);
     color: var(--color-bronze-900);
   }
 }
 
 /* Refined scrollbar */
-::-webkit-scrollbar {
+/* Scoped to this page's root: Next keeps a route's stylesheet attached for the
+ * life of the document, so bare body/::selection/scrollbar rules kept applying
+ * after the visitor navigated away and pinned later pages to this palette. */
+.window-replacement-page ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
-::-webkit-scrollbar-track {
+.window-replacement-page ::-webkit-scrollbar-track {
   background: #d5d8ec;
 }
-::-webkit-scrollbar-thumb {
+.window-replacement-page ::-webkit-scrollbar-thumb {
   background: #767F9E;
   border-radius: 9999px;
   border: 3px solid #d5d8ec;
 }
-::-webkit-scrollbar-thumb:hover {
+.window-replacement-page ::-webkit-scrollbar-thumb:hover {
   background: var(--color-bronze-600);
 }
 

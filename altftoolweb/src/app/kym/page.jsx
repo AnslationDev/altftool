@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Know Your Meme – Trending Memes & Internet Culture",
+    title: "Know Your Meme – Memes & Internet Culture",
     description:
       "Explore trending memes, viral moments, and internet culture on AltFTool's KYM hub. Browse meme origins, roundups, and community polls.",
     path: "/kym",

@@ -197,27 +197,6 @@ export function useAds({ placement } = {}) {
   return byPlacement(ads, placement);
 }
 
-export function useBlogAds({ placement, slug, category } = {}) {
-  const ads = useContext(AdsContext);
-  if (!ads.length || !placement) return [];
-
-  const pool = byPlacement(ads, placement);
-
-  const targeted = pool.filter((ad) => ad.target && ad.target === slug);
-  if (targeted.length) return targeted;
-
-  const byCat = pool.filter(
-    (ad) =>
-      !ad.target &&
-      ad.categories.length > 0 &&
-      category &&
-      ad.categories.some((c) => c.toLowerCase() === category.toLowerCase()),
-  );
-  if (byCat.length) return byCat;
-
-  return pool.filter((ad) => !ad.target && ad.categories.length === 0);
-}
-
 export function useToolAds({ placement, toolSlug, toolCategories = [] } = {}) {
   const ads = useContext(AdsContext);
   if (!ads.length || !placement) return [];

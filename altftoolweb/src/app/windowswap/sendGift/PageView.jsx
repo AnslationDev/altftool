@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Gift, Sparkles, CreditCard, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Gift, Sparkles, CheckCircle2 } from "lucide-react";
 import "../style/windowswap.css";
 
 export default function SendGiftPage() {
@@ -34,23 +34,21 @@ export default function SendGiftPage() {
       return;
     }
 
+    // No payment or gift-delivery backend exists yet — save the request
+    // locally instead of claiming a purchase and an email delivery that
+    // never happen.
     setLoading(true);
-    // Simulate premium payment processing
     setTimeout(() => {
+      try {
+        const requests = JSON.parse(window.localStorage.getItem("windowswap_gift_requests") || "[]");
+        requests.push({ ...formData, requestedAt: new Date().toISOString() });
+        window.localStorage.setItem("windowswap_gift_requests", JSON.stringify(requests));
+      } catch {
+        // localStorage can be unavailable in private browsing; UI still succeeds.
+      }
       setLoading(false);
       setIsSubmitted(true);
-
-      // Import canvas-confetti dynamically for a beautiful victory explosion
-      import("canvas-confetti").then((module) => {
-        const confetti = module.default;
-        confetti({
-          particleCount: 150,
-          spread: 80,
-          origin: { y: 0.6 },
-          colors: ["#c56543", "#dfc7a7", "#ffffff", "#0b2c30"]
-        });
-      });
-    }, 1500);
+    }, 800);
   };
 
   return (
@@ -143,7 +141,7 @@ export default function SendGiftPage() {
                     Send All-Access Gift
                   </h3>
                   <p className="text-xs text-windowswap-cream/70">
-                    Provide the sender and recipient details to purchase a gift card.
+                    Gift subscriptions aren&rsquo;t live yet — tell us who you&rsquo;d gift and we&rsquo;ll reach out when it launches.
                   </p>
                 </div>
 
@@ -261,7 +259,6 @@ export default function SendGiftPage() {
                   />
                 </div>
 
-                {/* SIMULATED PAYMENT BUTTON */}
                 <button
                   type="submit"
                   disabled={loading}
@@ -271,8 +268,8 @@ export default function SendGiftPage() {
                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
-                      <CreditCard className="h-4 w-4" />
-                      Purchase & Send Gift Subscription
+                      <Gift className="h-4 w-4" />
+                      Request This Gift
                     </>
                   )}
                 </button>
@@ -286,10 +283,10 @@ export default function SendGiftPage() {
 
                 <div className="space-y-2">
                   <h3 className="font-serif text-3xl font-bold text-white">
-                    Gift Sent Successfully!
+                    Request Saved!
                   </h3>
                   <p className="text-sm text-windowswap-cream/80 leading-relaxed max-w-sm">
-                    Thank you! A gorgeous gift email with activation details and your personal message has been delivered to <span className="text-white font-semibold">{formData.recipientEmail}</span>.
+                    This is a demonstration copy: gift subscriptions are still in development, and this request has been saved only in this browser&rsquo;s local storage. Nothing has been charged, and nothing has been sent to AltFTool or to <span className="text-white font-semibold">{formData.recipientEmail}</span> — there is no follow-up to expect.
                   </p>
                 </div>
 
@@ -317,8 +314,8 @@ export default function SendGiftPage() {
       {/* FOOTER */}
       {/* ──────────────────────────────────────────────────────── */}
       <footer className="w-full max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between text-[10px] tracking-widest text-windowswap-cream/55 select-none font-medium">
-        <span>POWERED BY <span className="text-white font-semibold">stripe</span></span>
-        <span className="uppercase mt-2 sm:mt-0">SECURE 256-BIT SSL ENCRYPTION • T&C&#39;s APPLY</span>
+        <span>WINDOWSWAP</span>
+        <span className="uppercase mt-2 sm:mt-0">GIFT SUBSCRIPTIONS ARE NOT YET AVAILABLE</span>
       </footer>
 
     </div>

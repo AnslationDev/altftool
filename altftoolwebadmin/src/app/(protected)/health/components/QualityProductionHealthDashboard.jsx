@@ -72,7 +72,9 @@ function statusTone(status) {
   ) {
     return {
       label: "Healthy",
-      className: "border-success bg-success-soft text-success",
+      // Badge copy is normal-size text: --success on its own soft background
+      // fails AA, so the label uses the text-safe foreground token instead.
+      className: "border-success bg-success-soft text-[var(--foreground)]",
       icon: CheckCircle2,
     };
   }
@@ -98,7 +100,9 @@ function statusTone(status) {
   }
   return {
     label: status === "not-run" ? "Not run" : "Watch",
-    className: "border-warning bg-warning-soft text-warning",
+    // Same AA fix as the "Healthy" tone above: --warning text on its own
+    // soft background fails AA, so the label uses the foreground token.
+    className: "border-warning bg-warning-soft text-[var(--foreground)]",
     icon: AlertTriangle,
   };
 }
@@ -578,7 +582,7 @@ function ToolReadinessSection({ tools }) {
                 <div className="flex flex-wrap items-center gap-2">
                   <StatusBadge status={item.status} label={item.status} />
                   {item.priority ? (
-                    <span className="rounded-full border border-info bg-info-soft px-2.5 py-1 text-xs font-semibold text-info">
+                    <span className="rounded-full border border-info bg-info-soft px-2.5 py-1 text-xs font-semibold text-[var(--foreground)]">
                       Priority
                     </span>
                   ) : null}

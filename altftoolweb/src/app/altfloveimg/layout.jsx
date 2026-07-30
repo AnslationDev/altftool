@@ -7,7 +7,7 @@ export async function generateMetadata() {
   return createPageMetadata({
   title: "ALTF Love IMG — Premium Browser Image Tools",
   description:
-    "Compress, resize, crop, convert, watermark and edit images right in your browser. 100% private, no uploads, unlimited and free. The premium image toolkit by AltFTool.",
+    "Compress, resize, crop, convert, watermark and edit JPG, PNG and WebP images right in your browser: free, unlimited and private, with no file ever uploaded.",
   path: "/altfloveimg",
   keywords: [
     "image tools",

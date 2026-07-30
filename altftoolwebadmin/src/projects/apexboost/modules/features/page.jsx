@@ -3,6 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Layers } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeFeatures,
+  createFeature,
+  updateFeature,
+  deleteFeature,
+  subscribeSectionHeading,
+  saveSectionHeading,
+} from "../service/apexboost.service";
 
 export default function FeaturesPage() {
   const [featuresList, setFeaturesList] = useState([]);
@@ -13,13 +21,29 @@ export default function FeaturesPage() {
   const [headingForm, setHeadingForm] = useState({ eyebrow: "", title: "", highlight: "", subtitle: "" });
 
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    const unsubscribe = subscribeFeatures(
+      (data) => setFeaturesList(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load features." }),
+    );
+    return unsubscribe;
+  }, []);
 
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=features');
-    const json = await res.json();
-    if (json.success) setFeaturesList(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeSectionHeading(
+      "featuresHeading",
+      (data) => {
+        setHeadingForm({
+          eyebrow: data.eyebrow || "",
+          title: data.title || "",
+          highlight: data.highlight || "",
+          subtitle: data.subtitle || "",
+        });
+      },
+      (err) => console.error("Failed to load heading data:", err),
+    );
+    return unsubscribe;
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -34,60 +58,32 @@ export default function FeaturesPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = featuresList.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...featuresList, { ...form }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'features', data: updated }),
-    });
-    if (res.ok) {
-      setFeaturesList(updated);
+    try {
+      if (editingItem) {
+        await updateFeature(editingItem.id, { ...editingItem, ...form });
+      } else {
+        const nextOrder = featuresList.length
+          ? Math.max(...featuresList.map((item) => Number(item.order) || 0)) + 1
+          : 0;
+        await createFeature({ ...form, order: nextOrder });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Feature saved successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save feature." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = featuresList.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'features', data: updated }),
-    });
-    if (res.ok) {
-      setFeaturesList(updated);
+    try {
+      await deleteFeature(item.id);
       emitAlert({ type: "success", title: "Success", message: "Feature deleted successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete feature." });
     }
   };
 
-  const loadHeadingData = async () => {
-    try {
-      const res = await fetch("/api/apexboost/data?section=featuresHeading");
-      const json = await res.json();
-      if (json.success && json.data) {
-        setHeadingForm({
-          eyebrow: json.data.eyebrow || "",
-          title: json.data.title || "",
-          highlight: json.data.highlight || "",
-          subtitle: json.data.subtitle || "",
-        });
-      }
-    } catch (err) {
-      console.error("Failed to load heading data:", err);
-    }
-  };
-
   const openHeadingEditor = () => {
-    loadHeadingData();
     setIsHeadingModalOpen(true);
   };
 
@@ -99,17 +95,9 @@ export default function FeaturesPage() {
       subtitle: headingForm.subtitle,
     };
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "featuresHeading", data }),
-      });
-      if (res.ok) {
-        setIsHeadingModalOpen(false);
-        emitAlert({ type: "success", title: "Success", message: "Heading saved successfully!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save heading." });
-      }
+      await saveSectionHeading("featuresHeading", data);
+      setIsHeadingModalOpen(false);
+      emitAlert({ type: "success", title: "Success", message: "Heading saved successfully!" });
     } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save heading." });
       console.error("Failed to save heading data:", err);
@@ -135,8 +123,8 @@ export default function FeaturesPage() {
 
       <div className="bg-white rounded-xl shadow p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuresList.map((feature, index) => (
-            <div key={index} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
+          {featuresList.map((feature) => (
+            <div key={feature.id} className="border rounded-xl overflow-hidden hover:shadow-lg transition">
               {feature.image && (
                 <div className="relative h-40 bg-gray-100">
                   <img src={feature.image} alt={feature.title} className="w-full h-full object-cover" onError={e => { e.target.style.display = "none"; }} />

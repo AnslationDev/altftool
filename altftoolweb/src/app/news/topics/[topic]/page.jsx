@@ -50,11 +50,29 @@ export async function generateMetadata({ params }) {
   });
 }
 
+// getNewsDataServer({ topic }) only ADDS one extra topic-search feed on top
+// of the ~10 generic global feeds — it never filters the combined,
+// recency-sorted result set, so a topic page mostly showed unrelated global
+// headlines. Filter locally by relevance instead; fall back to the
+// unfiltered set only when nothing actually matches, so an obscure topic
+// still renders something instead of a blank page.
+function filterByTopicRelevance(articles, label) {
+  const needle = label.toLowerCase();
+  const matches = articles.filter((article) => {
+    const haystack = [article.headline, article.summary, ...(article.tags || [])]
+      .join(" ")
+      .toLowerCase();
+    return haystack.includes(needle);
+  });
+  return matches.length > 0 ? matches : articles;
+}
+
 export default async function TopicPage({ params }) {
   const { topic } = await params;
   const label = resolveTopicLabel(topic);
   const topicSlug = slugify(label);
-  const newsData = await getNewsDataServer({ topic: label });
+  const fetched = await getNewsDataServer({ topic: label });
+  const newsData = filterByTopicRelevance(fetched, label);
 
   return (
     <>

@@ -3,6 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Target } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeAboutPillars,
+  createAboutPillar,
+  updateAboutPillar,
+  deleteAboutPillar,
+} from "../service/apexboost.service";
 
 export default function AboutPillarsEditor() {
   const [list, setList] = useState([]);
@@ -11,21 +17,25 @@ export default function AboutPillarsEditor() {
   const [form, setForm] = useState({ title: "", desc: "", icon: "Target" });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    const unsubscribe = subscribeAboutPillars(
+      (items) => {
+        setList(items);
+        setLoading(false);
+      },
+      () => {
+        emitAlert({ type: "error", title: "Error", message: "Failed to load pillars." });
+        setLoading(false);
+      },
+    );
+    return unsubscribe;
+  }, []);
 
-  const loadData = async () => {
-    setLoading(true);
-    const res = await fetch("/api/apexboost/data?section=aboutPillars");
-    const json = await res.json();
-    if (json.success && json.data) {
-      setList(json.data);
-    }
-    setLoading(false);
-  };
+  const nextOrder = () => (list.length ? Math.max(...list.map((i) => Number(i.order || 0))) + 1 : 1);
 
   const openAdd = () => {
     setEditingItem(null);
-    setForm({ title: "", desc: "", icon: "Target" });
+    setForm({ title: "", desc: "", icon: "Target", order: nextOrder() });
     setIsModalOpen(true);
   };
 
@@ -36,37 +46,24 @@ export default function AboutPillarsEditor() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = list.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...list, { ...form }];
-    }
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section: "aboutPillars", data: updated }),
-    });
-    if (res.ok) {
-      setList(updated);
+    try {
+      if (editingItem) {
+        await updateAboutPillar(editingItem.id, form);
+      } else {
+        await createAboutPillar(form);
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Pillar saved successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save pillar." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = list.filter(t => t !== item);
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section: "aboutPillars", data: updated }),
-    });
-    if (res.ok) {
-      setList(updated);
+    try {
+      await deleteAboutPillar(item.id);
       emitAlert({ type: "success", title: "Success", message: "Pillar deleted successfully!" });
-    } else {
+    } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete pillar." });
     }
   };
@@ -87,8 +84,8 @@ export default function AboutPillarsEditor() {
 
       <div className="bg-white rounded-xl shadow p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((item, index) => (
-            <div key={index} className="border rounded-xl p-4 hover:shadow-lg transition">
+          {list.map((item) => (
+            <div key={item.id} className="border rounded-xl p-4 hover:shadow-lg transition">
               <div className="flex items-center gap-2 mb-2">
                 <Target size={20} className="text-(--primary)" />
                 <h3 className="font-semibold">{item.title}</h3>

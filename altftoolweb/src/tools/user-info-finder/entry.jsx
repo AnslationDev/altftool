@@ -1,11 +1,7 @@
 "use client";
 
-import UserInfoApp from "./pages";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return (
-    <div>
-      <UserInfoApp />
-    </div>
-  );
+  return <ToolHome />;
 }

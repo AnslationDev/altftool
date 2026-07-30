@@ -85,6 +85,19 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const lead = Object.fromEntries(new FormData(e.target).entries());
+    try {
+      const leads = JSON.parse(
+        window.localStorage.getItem("window-replacement_leads") || "[]"
+      );
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem(
+        "window-replacement_leads",
+        JSON.stringify(leads)
+      );
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
     setSubmitted(true);
     setShowCallPopup(true);
   };
@@ -165,8 +178,8 @@ export default function Contact() {
                     Thank you, {form.name || "friend"}!
                   </h3>
                   <p className="mt-3 max-w-sm text-stone-600">
-                    Your enquiry has been received. One of our designers will
-                    reach out within one business day.
+                    Saved on this device only — it was not sent anywhere. For a
+                    real response, please call us directly.
                   </p>
                   <button
                     onClick={() => {
@@ -368,9 +381,9 @@ export default function Contact() {
               Speak with us now?
             </h3>
             <p className="mt-3 text-stone-600">
-              Thanks, {form.name || "friend"}! Your enquiry has been received.
-              Our designer is ready to help you right away — give us a call for
-              instant guidance.
+              Thanks, {form.name || "friend"}! Your enquiry was saved on this
+              device only — no designer has been notified. Call us now for
+              real, instant guidance.
             </p>
 
             <div className="mt-6 rounded-2xl bg-cream-100 p-5">

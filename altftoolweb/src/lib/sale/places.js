@@ -4,7 +4,7 @@ import { getOrSetSaleCache, buildCacheKey } from "./cache.js";
 
 // Free, keyless nearby-places search via the OpenStreetMap Overpass API —
 // no paid Google Places key required. Same public interface as before
-// (fetchNearbyStores / PLACE_TYPES / getPlacePhotoUrl) so callers don't change.
+// (fetchNearbyStores / PLACE_TYPES) so callers don't change.
 const OVERPASS_ENDPOINT = "https://overpass-api.de/api/interpreter";
 const PROVIDER = "openstreetmap";
 const USER_AGENT = "AltFTool-SaleLocator/1.0 (https://altftool.com)";
@@ -301,15 +301,5 @@ export async function searchNearbyPlaces({ latitude, longitude, radius, types = 
  * @returns {Promise<import("./types.js").PlaceResult[]>}
  */
 export async function fetchNearbyStores({ latitude, longitude, radius, types }) {
-  const places = await searchNearbyPlaces({ latitude, longitude, radius, types });
-  return [...places].sort((a, b) => (b.name ? -1 : 0) - (a.name ? -1 : 0));
-}
-
-/**
- * OSM has no equivalent of Google's Place Photo API — always returns null
- * so callers fall back to their own placeholder image.
- * @returns {null}
- */
-export function getPlacePhotoUrl() {
-  return null;
+  return searchNearbyPlaces({ latitude, longitude, radius, types });
 }

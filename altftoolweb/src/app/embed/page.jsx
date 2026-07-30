@@ -1,4 +1,8 @@
-import { createPageMetadata, createBreadcrumbJsonLd } from "@/platform/seo/generateMetadata";
+import {
+  createPageMetadata,
+  createBreadcrumbJsonLd,
+  createHowToJsonLd,
+} from "@/platform/seo/generateMetadata";
 import JsonLd from "@/platform/seo/JsonLd";
 import { PRODUCTION_SITE_URL } from "@/platform/seo/siteUrl";
 import { EMBEDDABLE_CATEGORIES, getEmbeddableTools } from "./embedRegistry";
@@ -6,7 +10,7 @@ import EmbedPicker from "./EmbedPicker";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Free Embeddable Widgets — Calculators & Converters",
+    title: "Free Embeddable Calculator & Converter Widgets",
     description:
       "Add free calculators and converters to your website with one copy-paste snippet. 190+ AltFTool widgets — no signup, no API key, fully responsive.",
     path: "/embed",
@@ -25,28 +29,40 @@ const STEPS = [
   { title: "Paste it anywhere", text: "Works in WordPress, Ghost, Webflow, plain HTML — anywhere an iframe works." },
 ];
 
+// Rendered as the visible intro paragraph *and* as the HowTo description, so the
+// markup can never drift from the copy on the page.
+const buildIntro = (count) =>
+  `Embed any of ${count} AltFTool calculators and converters with a single copy-paste snippet. Free forever, responsive, light & dark themes, and no signup — just keep the small "Widget by AltFTool" credit link.`;
+
 export default function EmbedHubPage() {
   const tools = getEmbeddableTools();
+  const intro = buildIntro(tools.length);
 
   return (
     <main className="bg-(--page) text-(--foreground)">
       <JsonLd
-        id="embed-hub-breadcrumb"
-        data={createBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Embeddable widgets", path: "/embed" },
-        ])}
+        id="embed-hub-schema"
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Embeddable widgets", path: "/embed" },
+          ]),
+          // Every step below is rendered as a visible <li> in the ordered list,
+          // straight from the same STEPS array — no templated or hidden copy.
+          createHowToJsonLd({
+            path: "/embed",
+            name: "How to embed a free AltFTool calculator on your website",
+            description: intro,
+            steps: STEPS.map((step) => `${step.title}: ${step.text}`),
+          }),
+        ]}
       />
       <div className="mx-auto w-full max-w-[1200px] px-4 py-10 sm:px-5 lg:px-8">
         <header className="max-w-2xl">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Free widgets for your website
           </h1>
-          <p className="mt-3 text-base leading-7 text-(--muted-foreground)">
-            {`Embed any of ${tools.length} AltFTool calculators and converters with a
-            single copy-paste snippet. Free forever, responsive, light & dark themes, and no
-            signup — just keep the small "Widget by AltFTool" credit link.`}
-          </p>
+          <p className="mt-3 text-base leading-7 text-(--muted-foreground)">{intro}</p>
         </header>
 
         <ol className="mt-8 grid gap-3 sm:grid-cols-3">

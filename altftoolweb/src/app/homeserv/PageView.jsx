@@ -208,9 +208,9 @@ export default function HomePage() {
       {/* Reviews */}
       <section className="hs-section" id="reviews">
         <div className="hs-heading hs-heading-center">
-          <span className="hs-eyebrow">Homeowner notes</span>
-          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>Trusted by Homeowners</h2>
-          <p style={{ fontSize: 16 }}>Real feedback from people who compared local quotes.</p>
+          <span className="hs-eyebrow">Example homeowner notes</span>
+          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>What Homeowners Might Say</h2>
+          <p style={{ fontSize: 16 }}>Illustrative example quotes, not real customer feedback.</p>
         </div>
         <div className="hs-testimonial-grid">
           {testimonials.map((item) => (

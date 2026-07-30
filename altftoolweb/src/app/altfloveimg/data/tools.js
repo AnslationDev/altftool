@@ -142,14 +142,14 @@ export const TOOLS = [
   },
   {
     slug: "upscaler",
-    name: "AI Image Upscaler",
+    name: "Image Upscaler",
     tagline: "Enhance & enlarge",
     description:
-      "Upscale and sharpen images up to 4×. Premium UI prepared for future AI integration.",
+      "Upscale and sharpen images up to 4× with a fast canvas-based resample and detail-preserving sharpen.",
     icon: Sparkles,
-    category: "ai",
+    category: "create",
     accent: "#0D9488",
-    badge: "AI",
+    badge: "Enhance",
   },
 ];
 

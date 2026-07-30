@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LogOut, UserRound } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAlert } from "@/shared/ui/AlertProvider";
 
 function initialsOf(user) {
   const source = user.displayName || user.email || "?";
@@ -22,6 +23,7 @@ function initialsOf(user) {
  */
 export function AccountMenu() {
   const { user, loading, signOutUser } = useAuth();
+  const { showAlert } = useAlert();
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -101,8 +103,13 @@ export function AccountMenu() {
             type="button"
             onClick={async () => {
               setOpen(false);
-              await signOutUser();
-              router.push("/");
+              try {
+                await signOutUser();
+                router.push("/");
+              } catch (err) {
+                console.error(err);
+                showAlert("Sign out failed. Please try again.", "error");
+              }
             }}
             className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-(--foreground) transition hover:bg-(--muted)"
           >

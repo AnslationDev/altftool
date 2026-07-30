@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import BLogStat from "../blogs/components/LeadTreeBlogStats";
 import BlogTable from "../blogs/components/LeadTreeBlogTable";
 import { emitAlert } from "@/lib/alertBus";
@@ -169,12 +170,12 @@ export default function Blogs() {
           <h1 className="text-2xl font-semibold text-gray-800">
             Manage your Blogs
           </h1>
-          <a
+          <Link
             href="/leadtree/blogs/add-blogs"
             className="bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
           >
             Add Blog
-          </a>
+          </Link>
         </div>
 
         <div className="bg-white rounded-xl shadow p-6">

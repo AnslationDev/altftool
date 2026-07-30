@@ -1,19 +1,22 @@
-import { Play } from "lucide-react";
 import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymComments from "./KymComments";
-import { articleSidebar, roundupArticle } from "../data/articleData";
+import { contentGroups } from "./KymGenericPage";
+import { roundupArticle } from "../data/articleData";
+import { slugifyTitle } from "../data/slug";
 
-function ArticleSidebar() {
+function ArticleSidebar({ currentTitle }) {
+  const related = contentGroups.filter((entry) => entry.title !== currentTitle).slice(0, 4);
+
   return (
     <aside className="kym-article-sidebar">
       <section>
         <h2>Related Entries</h2>
         <div className="kym-article-side-grid">
-          {articleSidebar.map((item) => (
-            <a href="#" key={item.title}>
-              <img src={item.image.src} alt="" />
-              <strong>{item.title}</strong>
+          {related.map((entry) => (
+            <a href={entry.href || `/kym/${slugifyTitle(entry.title)}`} key={entry.title}>
+              <img src={entry.image.src} alt="" />
+              <strong>{entry.title}</strong>
             </a>
           ))}
         </div>
@@ -53,12 +56,9 @@ export default function KymArticlePage() {
 
           <div className="kym-video-card">
             <img src={article.videoImage.src} alt="" />
-            <button aria-label="Play video">
-              <Play size={20} fill="currentColor" />
-            </button>
             <div>
               <strong>He Tryna Ignore It</strong>
-              <span>Watch the meme spread through this week&#39;s edits.</span>
+              <span>This week&#39;s top edit of the meme.</span>
             </div>
           </div>
 
@@ -80,7 +80,7 @@ export default function KymArticlePage() {
 
           <KymComments storageKey="kym-comments:weekly-meme-roundup" />
         </article>
-        <ArticleSidebar />
+        <ArticleSidebar currentTitle={article.title} />
       </main>
     </div>
   );

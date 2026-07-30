@@ -353,6 +353,15 @@ function Geek2Content() {
                   <div
                     key={folder.id}
                     onClick={() => triggerManualModule(folder.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isRunning}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        triggerManualModule(folder.id);
+                      }
+                    }}
                     className={`flex flex-col items-center text-center group cursor-pointer transition-all rounded-lg ${
                       collapsed ? 'p-1' : 'p-2'
                     } ${

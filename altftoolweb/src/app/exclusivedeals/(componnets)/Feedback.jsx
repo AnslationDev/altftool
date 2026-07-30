@@ -91,6 +91,9 @@ useEffect(() => {
         <p className="section-subtitle !mx-0 text-left">
           See how users are saving with us
         </p>
+        <p className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-medium text-(--muted-foreground)">
+          Sample reviews shown for illustration — not verified customer submissions
+        </p>
       </div>
 
       {/* Carousel */}

@@ -104,8 +104,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Each tool owns exactly one stage of the pipeline — research, writing, voice, visuals, editing, and distribution — so nothing bottlenecks the next step, and every tool has a genuine free tier to start with.",
-      productivityIncrease: "~3x faster turnaround",
-      hoursSavedPerWeek: "8-10 hrs/week",
+      productivityIncrease: "Noticeably faster turnaround (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Solo creators and small teams publishing 2-3 videos a week",
       dailyWorkflow:
         "Morning: idea + research (30 min) → Midday: script + voiceover (45 min) → Afternoon: edit + thumbnail (60 min) → Evening: publish + repurpose into Shorts (20 min).",
@@ -161,8 +161,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Writing, design, and scheduling are handled by purpose-built free tools instead of one do-everything app, so quality stays high at every step without slowing you down.",
-      productivityIncrease: "~2.5x more content shipped",
-      hoursSavedPerWeek: "6-9 hrs/week",
+      productivityIncrease: "More content shipped, consistently (illustrative)",
+      hoursSavedPerWeek: "Solid time saved weekly (estimated)",
       bestFor: "Creators and small brands managing multiple platforms solo",
       dailyWorkflow: "15 min ideation → 30 min writing → 20 min design → 15 min scheduling, daily.",
       alternatives: [alt("Notion AI", "notion.so"), alt("Publer", "publer.com"), alt("Predis AI", "predis.ai")],
@@ -213,8 +213,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Research and keyword data ground every ad in real numbers before a single dollar is spent, and the creative tools turn that data into copy and visuals fast enough to test in volume.",
-      productivityIncrease: "~40% lower cost-per-click via faster testing",
-      hoursSavedPerWeek: "5-7 hrs/week",
+      productivityIncrease: "Lower cost-per-click from faster testing (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Freelance marketers and small businesses running their own ad accounts",
       dailyWorkflow:
         "Weekly: keyword refresh (30 min) → new ad copy batch (45 min) → creative review (30 min); daily 10-min performance check.",
@@ -271,8 +271,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Product photography, copy, and email automation are the three biggest time sinks for solo sellers — each tool here removes one of them almost entirely.",
-      productivityIncrease: "~2x listings shipped per week",
-      hoursSavedPerWeek: "10-12 hrs/week",
+      productivityIncrease: "More listings shipped per week (illustrative)",
+      hoursSavedPerWeek: "Significant time saved weekly (estimated)",
       bestFor: "Solo Shopify and Etsy sellers without a design or marketing team",
       dailyWorkflow:
         "New product day: photos + copy (90 min) → visuals (45 min) → email/social queue (30 min); ongoing: 15 min daily performance check.",
@@ -334,8 +334,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Each step compounds on the last — research grounds the wireframe, the wireframe becomes the prototype, and documentation keeps handoff friction-free.",
-      productivityIncrease: "~35% faster from brief to prototype",
-      hoursSavedPerWeek: "6-8 hrs/week",
+      productivityIncrease: "Faster from brief to prototype (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Freelance and in-house product designers on lean teams",
       dailyWorkflow: "Research + synthesis (45 min) → wireframe (30 min) → hi-fi UI (90 min) → documentation (20 min), per feature.",
       alternatives: [alt("Galileo AI", "usegalileo.ai"), alt("Framer", "framer.com"), alt("Beautiful.ai", "beautiful.ai")],
@@ -376,8 +376,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Planning and review stay with the stronger reasoning models, while the IDE-embedded tools handle in-flow autocomplete — splitting the two keeps both fast and accurate.",
-      productivityIncrease: "~50% less time on boilerplate and debugging",
-      hoursSavedPerWeek: "8-10 hrs/week",
+      productivityIncrease: "Less time on boilerplate and debugging (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Indie hackers and developers shipping features solo",
       dailyWorkflow: "Plan (20 min) → build with AI pair programming (2-3 hrs) → test (30 min) → deploy + review (20 min).",
       alternatives: [alt("Windsurf", "windsurf.com"), alt("Codeium", "codeium.com"), alt("Tabnine", "tabnine.com")],
@@ -407,8 +407,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Framing the question well before touching data prevents wasted analysis, and open-model access means you're never blocked waiting on paid API budget.",
-      productivityIncrease: "~30% faster from question to insight",
-      hoursSavedPerWeek: "7-9 hrs/week",
+      productivityIncrease: "Faster from question to insight (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Analysts and data scientists who need to move from data to decision fast",
       dailyWorkflow: "Frame the question (20 min) → explore data (60-90 min) → model or validate (60 min) → write up (30 min).",
       alternatives: [alt("DeepSeek", "deepseek.com"), alt("Gemini", "gemini.google.com"), alt("Kaggle", "kaggle.com")],
@@ -443,8 +443,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Strategy stays grounded in real market data before a single asset is made, so creative output doesn't need constant rework.",
-      productivityIncrease: "~2x campaigns launched per month",
-      hoursSavedPerWeek: "8-10 hrs/week",
+      productivityIncrease: "More campaigns launched per month (illustrative)",
+      hoursSavedPerWeek: "Solid time saved weekly (estimated)",
       bestFor: "In-house marketers or agencies juggling multiple channels and clients",
       dailyWorkflow: "Weekly strategy sync (30 min) → daily content batch (45 min) → daily scheduling (15 min) → weekly reporting (30 min).",
       alternatives: [alt("Writesonic", "writesonic.com"), alt("Ocoya", "ocoya.com"), alt("Publer", "publer.com")],
@@ -484,8 +484,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Ideation, drafting, and polishing are deliberately split across different tools so each pass catches what the last one missed, instead of one model doing everything in one shot.",
-      productivityIncrease: "~3x drafts produced per day",
-      hoursSavedPerWeek: "5-6 hrs/week",
+      productivityIncrease: "More drafts produced per day (illustrative)",
+      hoursSavedPerWeek: "Modest time saved weekly (estimated)",
       bestFor: "Freelance copywriters and in-house writers handling high volume",
       dailyWorkflow: "Brainstorm (15 min) → draft (40 min) → variants (20 min) → polish + file (15 min), per piece.",
       alternatives: [alt("Writesonic", "writesonic.com"), alt("Simplified", "simplified.com"), alt("Gemini", "gemini.google.com")],
@@ -510,8 +510,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Every early-stage bottleneck — validation, positioning, and investor materials — gets a dedicated free tool, so founders spend time deciding, not producing.",
-      productivityIncrease: "~4x faster from idea to pitch-ready",
-      hoursSavedPerWeek: "6-8 hrs/week",
+      productivityIncrease: "Faster from idea to pitch-ready (illustrative)",
+      hoursSavedPerWeek: "Meaningful time saved weekly (estimated)",
       bestFor: "Early-stage founders building and fundraising without a big team",
       dailyWorkflow: "Weekly: validation/research (2 hrs) → deck iteration (1 hr) → planning (30 min); daily 15-min task review.",
       alternatives: [alt("DeepSeek", "deepseek.com"), alt("Tome", "tome.app"), alt("ClickUp AI", "clickup.com")],
@@ -536,8 +536,8 @@ export const COMBO_PACKS = [
     summary: {
       whyTheyWork:
         "Tutoring, research, writing, and self-testing map directly onto how studying actually works, so nothing requires switching mental modes mid-task.",
-      productivityIncrease: "~2x study material covered per session",
-      hoursSavedPerWeek: "4-6 hrs/week",
+      productivityIncrease: "More study material covered per session (illustrative)",
+      hoursSavedPerWeek: "Some time saved weekly (estimated)",
       bestFor: "Students and independent researchers studying or writing solo",
       dailyWorkflow: "Concept review (20 min) → research (30 min) → writing (45 min) → self-test (15 min).",
       alternatives: [alt("Gemini", "gemini.google.com"), alt("Tutor AI", "tutorai.me"), alt("Studyable", "studyable.app")],

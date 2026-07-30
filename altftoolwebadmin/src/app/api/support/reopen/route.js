@@ -6,6 +6,18 @@ import { verifyActiveAdmin } from "@/lib/serverAdminAuth";
 import { hasModuleAccess } from "@/lib/permissionUtils";
 import { enforceRateLimit } from "@altftool/core/http";
 
+// Distinguishes "the caller's credentials are missing/invalid" (401) from an
+// infrastructure fault raised while verifying them — mirrors create/route.js
+// and update-status/route.js so an expired/invalid token maps to 401 instead
+// of falling into the outer catch as a generic 500.
+function isAuthenticationFailure(error) {
+  // Thrown by getBearerToken() when the Authorization header is missing/malformed.
+  if (error?.message === "Unauthorized") return true;
+  // firebase-admin auth errors: auth/id-token-expired, auth/argument-error, ...
+  const code = error?.code || error?.errorInfo?.code || "";
+  return typeof code === "string" && code.startsWith("auth/");
+}
+
 export async function PATCH(request) {
   try {
     const limited = enforceRateLimit(NextResponse, request, {
@@ -21,15 +33,31 @@ export async function PATCH(request) {
     }
 
     const token = authHeader.split("Bearer ")[1];
-    const decoded = await adminAuth.verifyIdToken(token);
+    let decoded;
+    try {
+      decoded = await adminAuth.verifyIdToken(token);
+    } catch (authErr) {
+      if (isAuthenticationFailure(authErr)) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+      // Anything else is a genuine backend fault: rethrow so the outer catch
+      // logs it and answers 500 instead of telling the client to re-authenticate.
+      throw authErr;
+    }
 
     const { ticketId } = await request.json();
 
-    if (!ticketId) {
-      return NextResponse.json({ error: "Missing ticketId" }, { status: 400 });
+    // Mirrors update-status/route.js: trim once and use the trimmed value
+    // everywhere, and reject any ticketId containing '/' so it can't resolve
+    // to a nested document path under support_tickets instead of a top-level
+    // ticket.
+    if (typeof ticketId !== "string" || !ticketId.trim() || ticketId.includes("/")) {
+      return NextResponse.json({ error: "Missing or invalid ticketId" }, { status: 400 });
     }
 
-    const ticketRef = adminDb.collection("support_tickets").doc(ticketId);
+    const safeTicketId = ticketId.trim();
+
+    const ticketRef = adminDb.collection("support_tickets").doc(safeTicketId);
     const ticketSnap = await ticketRef.get();
 
     if (!ticketSnap.exists) {

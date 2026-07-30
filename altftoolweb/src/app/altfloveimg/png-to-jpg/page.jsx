@@ -1,6 +1,7 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import ConverterClient from "../components/shared/ConverterClient";
 import RelatedToolsBand from "../components/RelatedToolsBand";
+import ToolSchema from "../components/ToolSchema";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -13,6 +14,7 @@ export async function generateMetadata() {
 export default function Page() {
   return (
     <>
+      <ToolSchema slug="png-to-jpg" />
       <ConverterClient slug="png-to-jpg" to="jpg" lossy={true} />
       <RelatedToolsBand slug="png-to-jpg" />
     </>

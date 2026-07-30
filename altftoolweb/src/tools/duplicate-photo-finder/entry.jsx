@@ -10,7 +10,7 @@ const DuplicatePhotoFinderApp = dynamic(
       <div className="flex flex-col items-center justify-center p-12 bg-card rounded-2xl border border-border min-h-[400px]">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-t-transparent border-primary mb-4" />
         <span className="text-sm font-semibold text-muted-foreground animate-pulse flex items-center gap-2">
-          <Image className="w-4 h-4" aria-hidden="true" />
+          <Image className="w-4 h-4" aria-hidden="true" alt="" />
           Loading Duplicate Photo Finder...
         </span>
       </div>

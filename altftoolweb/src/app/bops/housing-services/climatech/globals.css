@@ -14,10 +14,10 @@
   --font-sans: "Rubik", system-ui, sans-serif;
 }
 
-html,
-body {
-  background-color: #F7F3EB;
-  color: #1a1a1a;
+/* Scoped to this page's root: Next keeps a route's stylesheet attached for the
+ * life of the document, so bare body/::selection/scrollbar rules kept applying
+ * after the visitor navigated away and pinned later pages to this palette. */
+.climatech-page {
   font-family: "Rubik", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,21 +32,21 @@ body {
 }
 
 /* Subtle scrollbar */
-::-webkit-scrollbar {
+.climatech-page ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-::-webkit-scrollbar-track {
+.climatech-page ::-webkit-scrollbar-track {
   background: #F7F3EB;
 }
 
-::-webkit-scrollbar-thumb {
+.climatech-page ::-webkit-scrollbar-thumb {
   background: #D4C9B5;
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.climatech-page ::-webkit-scrollbar-thumb:hover {
   background: #BFB09A;
 }
 

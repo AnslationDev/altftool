@@ -1,5 +1,5 @@
 const seo = {
-  title: "Emoji Hub — Free Emoji Picker & Trending GIFs",
+  title: "Emoji Hub — 1,898 Emojis, Search & Skin Tones",
   h1: "Emoji Hub — Emoji Picker & GIF Browser",
   metaDescription:
     "Free emoji picker with 1,898 emojis in 8 categories, instant keyword search and skin tones, plus a live feed of the 20 GIFs trending on Giphy.",

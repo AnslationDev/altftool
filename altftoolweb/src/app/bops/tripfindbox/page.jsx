@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "TripFindBox | Flight Search, Travel Deals & Route Planning",
+    title: "TripFindBox | Flights, Deals & Route Planning",
     description: "Search flights, compare routes, and discover travel deals with TripFindBox — a booking-first travel experience.",
     path: "/bops/tripfindbox",
   });

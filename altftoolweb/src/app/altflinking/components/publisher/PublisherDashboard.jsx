@@ -6,9 +6,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Globe, ShieldCheck, Plus, CheckCircle2, Clock, Wallet, Copy, ExternalLink, ArrowRight } from "lucide-react";
+import { Globe, ShieldCheck, Plus, CheckCircle2, Clock, Wallet, Copy, ExternalLink, ArrowRight, AlertTriangle, Loader2 } from "lucide-react";
 import { NICHES } from "../../types";
 import DnsVerificationFlowVisual from "../visuals/DnsVerificationFlowVisual";
+import * as apiClient from "../../services/apiClient";
 
 export default function PublisherDashboard({
   websites = [],
@@ -18,6 +19,7 @@ export default function PublisherDashboard({
   incomingOrders = [],
   onAcceptOrder,
   onSubmitLiveLink,
+  onUpdateListing,
 }) {
   const [showForm, setShowForm] = useState(false);
   const [domainInput, setDomainInput] = useState("");
@@ -29,31 +31,83 @@ export default function PublisherDashboard({
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationToken, setVerificationToken] = useState("");
   const [copiedToken, setCopiedToken] = useState(false);
+  const [dnsCheckStatus, setDnsCheckStatus] = useState("idle"); // idle | checking | verified | not_found
+  const [isSubmittingListing, setIsSubmittingListing] = useState(false);
+  const [managingSite, setManagingSite] = useState(null);
+  const [manageForm, setManageForm] = useState(null);
+  const [isSavingManage, setIsSavingManage] = useState(false);
+
+  const openManageModal = (site) => {
+    setManagingSite(site);
+    setManageForm({
+      guestPostPrice: String(site.prices?.guestPost || 0),
+      linkInsertionPrice: String(site.prices?.linkInsertion || 0),
+      tatDays: String(site.tatDays || 7),
+      guidelines: site.guidelines || "",
+    });
+  };
+
+  const handleSaveManage = async () => {
+    if (!managingSite || !manageForm || !onUpdateListing) return;
+    setIsSavingManage(true);
+    try {
+      await onUpdateListing(managingSite.id, manageForm);
+      setManagingSite(null);
+      setManageForm(null);
+    } catch {
+      // onUpdateListing surfaces its own error toast
+    } finally {
+      setIsSavingManage(false);
+    }
+  };
 
   const handleStartSubmit = (e) => {
     e.preventDefault();
     if (!domainInput) return;
     setIsVerifying(true);
+    setDnsCheckStatus("idle");
     const token = `altftool-verify-${Math.random().toString(36).substring(2, 9)}`;
     setVerificationToken(token);
   };
 
-  const handleConfirmVerification = () => {
-    onSubmitWebsite({
-      domain: domainInput.replace(/^https?:\/\//i, "").replace(/\/+$/, ""),
-      name: domainInput.split(".")[0].toUpperCase() + " Media",
-      niche: nicheInput,
-      country: "United States",
-      prices: {
-        guestPost: Number(guestPrice),
-        linkInsertion: Number(linkPrice),
-      },
-      tatDays: Number(tat),
-      guidelines,
-    });
-    setIsVerifying(false);
-    setShowForm(false);
-    setDomainInput("");
+  const cleanDomain = domainInput.replace(/^https?:\/\//i, "").replace(/\/+$/, "");
+
+  const handleCheckDns = async () => {
+    setDnsCheckStatus("checking");
+    try {
+      const result = await apiClient.verifyDnsRecord(cleanDomain, verificationToken);
+      setDnsCheckStatus(result.verified ? "verified" : "not_found");
+    } catch {
+      setDnsCheckStatus("not_found");
+    }
+  };
+
+  const handleConfirmVerification = async () => {
+    setIsSubmittingListing(true);
+    try {
+      await onSubmitWebsite({
+        domain: cleanDomain,
+        name: domainInput.split(".")[0].toUpperCase() + " Media",
+        niche: nicheInput,
+        country: "United States",
+        prices: {
+          guestPost: Number(guestPrice),
+          linkInsertion: Number(linkPrice),
+        },
+        tatDays: Number(tat),
+        guidelines,
+        verificationToken,
+      });
+      setIsVerifying(false);
+      setShowForm(false);
+      setDomainInput("");
+      setDnsCheckStatus("idle");
+    } catch {
+      // onSubmitWebsite already surfaces a toast on failure — keep the modal
+      // open so the publisher doesn't lose their form input.
+    } finally {
+      setIsSubmittingListing(false);
+    }
   };
 
   return (
@@ -165,7 +219,12 @@ export default function PublisherDashboard({
                       )}
                     </td>
                     <td className="p-3 text-right">
-                      <button className="altf-btn-secondary py-1 px-3 text-[11px]">Manage</button>
+                      <button
+                        onClick={() => openManageModal(site)}
+                        className="altf-btn-secondary py-1 px-3 text-[11px]"
+                      >
+                        Manage
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -368,6 +427,37 @@ export default function PublisherDashboard({
                 {/* DNS Setup Flow Vector Visual */}
                 <DnsVerificationFlowVisual domain={domainInput} token={verificationToken} />
 
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3">
+                  <div className="flex items-center gap-2 text-xs">
+                    {dnsCheckStatus === "checking" && (
+                      <span className="flex items-center gap-1.5 text-slate-500">
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" /> Checking DNS…
+                      </span>
+                    )}
+                    {dnsCheckStatus === "verified" && (
+                      <span className="flex items-center gap-1.5 font-semibold text-emerald-500">
+                        <CheckCircle2 className="h-3.5 w-3.5" /> TXT record found — domain ownership confirmed
+                      </span>
+                    )}
+                    {dnsCheckStatus === "not_found" && (
+                      <span className="flex items-center gap-1.5 font-semibold text-amber-500">
+                        <AlertTriangle className="h-3.5 w-3.5" /> Record not found yet — you can still submit; admin will verify manually before approval
+                      </span>
+                    )}
+                    {dnsCheckStatus === "idle" && (
+                      <span className="text-slate-500">Add the record above, then check it — or submit now and it'll be checked on review.</span>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCheckDns}
+                    disabled={dnsCheckStatus === "checking"}
+                    className="altf-btn-secondary py-1.5 px-3 text-[11px] font-bold shrink-0 disabled:opacity-60"
+                  >
+                    Check DNS Record
+                  </button>
+                </div>
+
                 <div className="flex justify-end gap-2 pt-2">
                   <button
                     onClick={() => setIsVerifying(false)}
@@ -377,13 +467,84 @@ export default function PublisherDashboard({
                   </button>
                   <button
                     onClick={handleConfirmVerification}
-                    className="altf-btn-primary py-1.5 px-4 text-xs font-bold"
+                    disabled={isSubmittingListing}
+                    className="altf-btn-primary py-1.5 px-4 text-xs font-bold disabled:opacity-60"
                   >
-                    Confirm & Publish Listing
+                    {isSubmittingListing ? "Submitting…" : "Confirm & Publish Listing"}
                   </button>
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Manage Listing Modal */}
+      {managingSite && manageForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white backdrop-blur-sm">
+          <div className="altf-card w-full max-w-lg p-6 space-y-5">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Globe className="h-5 w-5 text-indigo-400" />
+              <span>Manage {managingSite.domain}</span>
+            </h3>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-1">Guest Post Price ($)</label>
+                <input
+                  type="number"
+                  value={manageForm.guestPostPrice}
+                  onChange={(e) => setManageForm({ ...manageForm, guestPostPrice: e.target.value })}
+                  className="altf-input text-xs"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-1">Link Insertion Price ($)</label>
+                <input
+                  type="number"
+                  value={manageForm.linkInsertionPrice}
+                  onChange={(e) => setManageForm({ ...manageForm, linkInsertionPrice: e.target.value })}
+                  className="altf-input text-xs"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Max Turnaround (Days)</label>
+              <input
+                type="number"
+                value={manageForm.tatDays}
+                onChange={(e) => setManageForm({ ...manageForm, tatDays: e.target.value })}
+                className="altf-input text-xs"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-600 mb-1">Guest Post Guidelines</label>
+              <textarea
+                rows={3}
+                value={manageForm.guidelines}
+                onChange={(e) => setManageForm({ ...manageForm, guidelines: e.target.value })}
+                className="altf-input text-xs resize-none"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => { setManagingSite(null); setManageForm(null); }}
+                className="altf-btn-secondary py-1.5 px-3 text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveManage}
+                disabled={isSavingManage}
+                className="altf-btn-primary py-1.5 px-4 text-xs font-bold disabled:opacity-60"
+              >
+                {isSavingManage ? "Saving…" : "Save Changes"}
+              </button>
+            </div>
           </div>
         </div>
       )}

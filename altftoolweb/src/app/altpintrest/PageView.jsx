@@ -129,6 +129,7 @@ export default function AltPinterest({ defaultView }) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [savedItems, setSavedItems] = useState(new Set([1, 3, 5, 7, 9, 10, 12, 14]));
+  const [likedItems, setLikedItems] = useState(new Set());
   const [selectedItem, setSelectedItem] = useState(null);
 
   const [firebaseCategories, setFirebaseCategories] = useState([]);
@@ -416,7 +417,15 @@ export default function AltPinterest({ defaultView }) {
   const handleLike = async (e, pinId, originalId) => {
     e.stopPropagation();
     const idToUpdate = originalId || pinId;
-    if (typeof idToUpdate !== 'string') return;
+    if (typeof idToUpdate !== 'string') {
+      setLikedItems(prev => {
+        const next = new Set(prev);
+        if (next.has(pinId)) next.delete(pinId);
+        else next.add(pinId);
+        return next;
+      });
+      return;
+    }
 
     const result = await updatePinLikes(idToUpdate);
     if (!result.success && result.error?.code === 'permission-denied') {
@@ -662,8 +671,8 @@ export default function AltPinterest({ defaultView }) {
                       onClick={(e) => handleLike(e, selectedItem.id, selectedItem.originalData?.id)}
                       className="flex items-center gap-1.5 hover:bg-[var(--muted)] px-2 py-1 rounded-lg cursor-pointer transition-colors text-[var(--foreground)]"
                     >
-                      <Heart size={22} className={selectedItem.originalData?.likes > 0 ? "fill-[#2563EB] text-[#2563EB]" : ""} />
-                      <span className="font-bold text-[15.5px]">{selectedItem.originalData?.likes || 0}</span>
+                      <Heart size={22} className={selectedItem.originalData?.likes > 0 || likedItems.has(selectedItem.id) ? "fill-[#2563EB] text-[#2563EB]" : ""} />
+                      <span className="font-bold text-[15.5px]">{selectedItem.originalData?.likes || (likedItems.has(selectedItem.id) ? 1 : 0)}</span>
                     </div>
                     <MessageCircle size={22} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]" />
                     <button onClick={(e) => handleShare(e, selectedItem)} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]">

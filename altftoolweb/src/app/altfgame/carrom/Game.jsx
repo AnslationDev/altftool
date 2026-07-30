@@ -452,7 +452,7 @@ export default function CarromProFinal() {
     // striker
     if (strikerRef.current.active)
       piece(strikerRef.current.x, strikerRef.current.y, STRIKER_R, "#4fc3f7", "#0288d1", "#fff");
-  }, []); // eslint-disable-line
+  }, []);
 
   // ── rAF loop ──────────────────────────────────────────────────────────────
   useEffect(() => {

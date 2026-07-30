@@ -331,7 +331,7 @@ function AncestorRecordCards({ name, data }) {
     <section className="bg-slate-50 dark:bg-slate-950 py-16">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h3 className="text-5xl mb-8 text-foreground" style={{ fontFamily: "Georgia, serif" }}>
-          Based on data records...
+          Suggested pairings
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden dark:bg-(--muted) dark:border-(--border)">
@@ -342,8 +342,8 @@ function AncestorRecordCards({ name, data }) {
               <p className="text-4xl mb-2 text-slate-800 dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{surname || "Unknown"}</p>
               <p className="text-sm text-slate-500 dark:text-(--muted-foreground)">
                 {hasSurname
-                  ? `Common surname associated with ${displayName} based on geographical data.`
-                  : `No reliable surname association available for ${displayName}.`}
+                  ? `Suggested surname style for ${displayName}'s origin.`
+                  : `No suggested surname available for ${displayName}.`}
               </p>
             </div>
           </div>
@@ -355,8 +355,8 @@ function AncestorRecordCards({ name, data }) {
               <p className="text-4xl mb-2 text-slate-800 dark:text-(--foreground)" style={{ fontFamily: "Georgia, serif" }}>{partner || "Unknown"}</p>
               <p className="text-sm text-slate-500 dark:text-(--muted-foreground)">
                 {hasPartner
-                  ? `Common partner name for ${displayName} based on historical records.`
-                  : `No reliable partner-name association available for ${displayName}.`}
+                  ? `Suggested partner-name pairing for ${displayName}.`
+                  : `No suggested partner name available for ${displayName}.`}
               </p>
             </div>
           </div>

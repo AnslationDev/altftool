@@ -6,16 +6,22 @@ export const revalidate = 900;
 
 const DNS_TYPES = ["A", "AAAA", "MX", "NS", "TXT", "CAA"];
 
+function validationError(message) {
+  const error = new Error(message);
+  error.expose = true;
+  return error;
+}
+
 function normalizeDomain(value) {
   const raw = String(value || "").trim().toLowerCase();
-  if (!raw || raw.length > 253) throw new Error("Enter a valid domain name.");
+  if (!raw || raw.length > 253) throw validationError("Enter a valid domain name.");
   let hostname;
   try { hostname = new URL(raw.includes("://") ? raw : `https://${raw}`).hostname; }
-  catch { throw new Error("Enter a valid domain name."); }
+  catch { throw validationError("Enter a valid domain name."); }
   hostname = hostname.replace(/^www\./, "").replace(/\.$/, "");
   const labels = hostname.split(".");
   if (labels.length < 2 || labels.some((label) => !label || label.length > 63 || !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(label))) {
-    throw new Error("Enter a public domain such as example.com.");
+    throw validationError("Enter a public domain such as example.com.");
   }
   return hostname;
 }
@@ -23,7 +29,7 @@ function normalizeDomain(value) {
 function normalizeSelector(value) {
   const selector = String(value || "").trim().toLowerCase();
   if (!selector) return "";
-  if (selector.length > 63 || !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(selector)) throw new Error("Enter a valid DKIM selector.");
+  if (selector.length > 63 || !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(selector)) throw validationError("Enter a valid DKIM selector.");
   return selector;
 }
 
@@ -102,6 +108,7 @@ export async function GET(request) {
     ].map(([id, label, message]) => ({ id, label, message, passed: checks[id] }));
     return jsonResponse(NextResponse, { domain, checkedAt: new Date().toISOString(), score, findings, records, sources: ["Google Public DNS over HTTPS", "RDAP.org bootstrap service"] }, { cache: { sMaxage: revalidate, staleWhileRevalidate: 3600 } });
   } catch (error) {
-    return jsonResponse(NextResponse, { error: error.message || "Domain report failed." }, { status: 400, headers: { "Cache-Control": "no-store" } });
+    const exposed = error?.expose === true;
+    return jsonResponse(NextResponse, { error: exposed ? error.message : "Domain report failed." }, { status: exposed ? 400 : 500, headers: { "Cache-Control": "no-store" } });
   }
 }

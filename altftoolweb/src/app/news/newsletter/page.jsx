@@ -1,4 +1,8 @@
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import PageView from "./PageView";
 
 export async function generateMetadata() {
@@ -12,5 +16,26 @@ export async function generateMetadata() {
 }
 
 export default function Page(props) {
-  return <PageView {...props} />;
+  return (
+    <>
+      {/* BreadcrumbList only. This page lists no content — it is a signup form
+          (email + frequency) plus feature copy — so CollectionPage/ItemList
+          would be false. There is also nothing to sell or subscribe to yet:
+          the form only writes ALTFT_NEWS_NEWSLETTER_OPTIN to localStorage and
+          the success state says the newsletter has not launched, so a Product,
+          Offer or SubscribeAction node would assert a service that does not
+          run. No ratings, prices or issue dates exist to claim either. */}
+      <JsonLd
+        id="news-newsletter-schema"
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "News", path: "/news" },
+            { name: "Newsletter", path: "/news/newsletter" },
+          ]),
+        ]}
+      />
+      <PageView {...props} />
+    </>
+  );
 }

@@ -7,9 +7,10 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Route stylesheets stay attached for the life of the document, so a bare
+ * body rule here kept repainting every page the visitor went to next. The
+ * colours live on this route's own root element, which already paints it. */
 body {
-  background-color: #f5f7fb;
-  color: #333;
   line-height: 1.6;
 }
 

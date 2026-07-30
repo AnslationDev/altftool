@@ -288,7 +288,21 @@ export default function AltfLinkingPageView() {
     }
     // Note: Submitted website is PENDING_REVIEW, so it won't appear on public marketplace until admin approves
     showToast(`Website ${newSite.domain || sitePayload.domain} submitted! Enters Pending Admin Review.`);
+    setWebsites((prev) => [newSite, ...prev]);
     return newSite;
+  };
+
+  // Publisher edits their own listing's pricing/guidelines/TAT
+  const handleUpdateListing = async (siteId, payload) => {
+    try {
+      const updated = await apiClient.updateListing(siteId, payload);
+      setWebsites((prev) => prev.map((w) => (w.id === siteId ? { ...w, ...updated } : w)));
+      showToast("Listing updated");
+      return updated;
+    } catch (err) {
+      showToast(err.message || "Failed to update listing", "error");
+      throw err;
+    }
   };
 
   // Campaign Creation Handler
@@ -464,8 +478,20 @@ export default function AltfLinkingPageView() {
               {/* 9. FAQ Accordion */}
               <FaqAccordion />
 
+              {/* 10. Pricing Preview */}
+              <PricingPreview
+                onExploreMarketplace={() => setActiveTab("marketplace")}
+                onListWebsite={() => setSubmitListingOpen(true)}
+              />
+
               {/* Section 11: Enterprise Contact Us & Lead Generation */}
               <ContactUsSection showToast={showToast} />
+
+              {/* 12. Final CTA Banner */}
+              <FinalCtaBanner
+                onExploreMarketplace={() => setActiveTab("marketplace")}
+                onListWebsite={() => setSubmitListingOpen(true)}
+              />
             </div>
           )}
 
@@ -622,6 +648,7 @@ export default function AltfLinkingPageView() {
                 incomingOrders={orders}
                 onAcceptOrder={handleAcceptOrder}
                 onSubmitLiveLink={handleSubmitLiveLink}
+                onUpdateListing={handleUpdateListing}
               />
             ))}
 
@@ -744,8 +771,13 @@ export default function AltfLinkingPageView() {
       <WithdrawalModal
         isOpen={withdrawalOpen}
         onClose={() => setWithdrawalOpen(false)}
-        onConfirmWithdrawal={(payout) => {
-          showToast(`Payout request of $${payout.amount} submitted via ${payout.method.toUpperCase()}`);
+        onConfirmWithdrawal={async (payout) => {
+          try {
+            await apiClient.requestWithdrawal(payout);
+            showToast(`Payout request of $${payout.amount} submitted via ${payout.method.toUpperCase()}`);
+          } catch (e) {
+            showToast(e.message || "Failed to submit withdrawal request", "error");
+          }
         }}
       />
 
@@ -757,7 +789,20 @@ export default function AltfLinkingPageView() {
           setDisputeOrder(null);
         }}
         order={disputeOrder}
-        onFileDispute={(dispute) => {
+        onFileDispute={async (dispute) => {
+          // The PATCH /orders/:id route only persists status/liveLinkUrl/
+          // adminNotes/note from the body, so the dispute reason and
+          // description are folded into `note` rather than sent as fields
+          // the route would silently drop.
+          const note = `Dispute: ${dispute.reason}${dispute.description ? ` — ${dispute.description}` : ""}`;
+          try {
+            await apiClient.updateOrderStatus(dispute.orderId, "DISPUTED", { note });
+          } catch {
+            await firebaseUpdateOrderStatus(dispute.orderId, "DISPUTED", { note });
+          }
+          setOrders((current) =>
+            current.map((o) => (o.id === dispute.orderId ? { ...o, status: "DISPUTED" } : o))
+          );
           showToast(`Dispute filed for Order ${dispute.orderId}. Escrow locked for crawler re-verification.`);
         }}
       />

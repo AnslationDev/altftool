@@ -99,17 +99,23 @@ export function jsonResponse(NextResponse, data, options = {}) {
   return NextResponse.json(data, { status, headers: responseHeaders });
 }
 
+// Rate-limit keying must not trust a header value the caller can set
+// directly. This app sits behind AWS Amplify/CloudFront, not Cloudflare, so
+// cf-connecting-ip is never actually set by trusted infra here — trusting it
+// let any caller pick their own bucket. x-forwarded-for is appended-to by
+// each hop, so the *last* entry is the one our own edge added; the first
+// entry is whatever the client (or an earlier untrusted hop) claimed.
 export function getClientAddress(req) {
   const forwardedFor = req.headers.get("x-forwarded-for") || "";
   const realIp = req.headers.get("x-real-ip") || "";
-  const cfIp = req.headers.get("cf-connecting-ip") || "";
 
-  return (
-    cfIp ||
-    realIp ||
-    forwardedFor.split(",")[0]?.trim() ||
-    "unknown"
-  );
+  const forwardedEntries = forwardedFor
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  const trustedForwarded = forwardedEntries[forwardedEntries.length - 1] || "";
+
+  return trustedForwarded || realIp || "unknown";
 }
 
 export function checkRateLimit(req, options = {}) {

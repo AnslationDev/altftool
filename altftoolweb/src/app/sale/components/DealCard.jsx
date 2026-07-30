@@ -24,9 +24,6 @@ export default function DealCard({ deal, index, isGPS }) {
   const ratingValue = Number(deal.rating);
   const hasRating = Number.isFinite(ratingValue) && ratingValue > 0;
 
-
-  console.log("mee",deal)
-
   return (
     <motion.a
       href={deal.ctaLink}

@@ -66,7 +66,8 @@ export default function NinjaTextGenerator() {
             document.removeEventListener("mousedown", handleClickOutside);
             if (animationRef.current) clearInterval(animationRef.current);
         };
-    }, [typingSpeed]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const triggerNinjaAnimation = (textToAnimate) => {
         if (animationRef.current) clearInterval(animationRef.current);
@@ -238,7 +239,7 @@ export default function NinjaTextGenerator() {
                         className={`w-full max-w-xl border border-neutral-300 rounded-xl px-10 py-14 min-h-[180px] shadow-2xl relative flex items-center overflow-hidden select-none my-auto transition-all duration-200 ${activeThemeData.bg}`}
                     >
                         {/* Dynamic Horizontal Scanning Lines based on theme selection */}
-                        {dojoTheme === 'cyber' && (
+                        {dojoTheme === 'neon' && (
                             <div className="absolute inset-0 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(244,63,94,0.06)_1px,rgba(244,63,94,0.06)_2px)]" />
                         )}
 

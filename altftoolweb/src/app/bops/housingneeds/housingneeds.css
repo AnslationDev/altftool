@@ -324,6 +324,13 @@
 
 .hn-btn--lg { padding: 0.95rem 1.7rem; font-size: 1rem; }
 
+.hn-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.hn-btn:disabled:hover { transform: none; box-shadow: none; background: var(--hn-accent); }
+
 .hn-ext-icon { opacity: .75; }
 
 /* Visually hidden but announced — used to warn that a link opens a new tab. */
@@ -1768,41 +1775,6 @@
 }
 
 /* ============================================================
-   Testimonial strip
-   ============================================================ */
-.hn-testimonials {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  gap: 1.1rem;
-  margin-top: 2.25rem;
-}
-.hn-testimonial {
-  padding: 1.35rem 1.4rem;
-  border-radius: var(--hn-radius-lg);
-  border: 1px solid var(--hn-border);
-  background: var(--hn-surface);
-  box-shadow: var(--hn-shadow-sm);
-}
-.hn-testimonial-stars {
-  display: inline-flex;
-  gap: 2px;
-  color: #f59e0b;
-  margin-bottom: 0.6rem;
-}
-.hn-testimonial p {
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--hn-text-soft);
-}
-.hn-testimonial footer {
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 650;
-  color: var(--hn-muted);
-}
-
-/* ============================================================
    Category grid on the hub — one card per category, linking
    straight to its guide (tabs removed once categories became 1:1).
    Cards carry data-accent so each inherits its own accent palette.
@@ -2067,32 +2039,6 @@
 }
 .hn-email-trust svg { color: var(--hn-accent); flex-shrink: 0; }
 
-.hn-email-proof {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--hn-border);
-}
-.hn-email-avatars { display: inline-flex; }
-.hn-email-avatars span {
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  margin-left: -0.5rem;
-  border-radius: 999px;
-  border: 2px solid var(--hn-surface);
-  background: linear-gradient(140deg, var(--hn-accent), var(--hn-accent-strong));
-  color: var(--hn-accent-contrast);
-  font-size: 0.62rem;
-  font-weight: 700;
-}
-.hn-email-avatars span:first-child { margin-left: 0; }
-.hn-email-proof-text { font-size: 0.82rem; color: var(--hn-text-soft); }
-.hn-email-proof-text strong { color: var(--hn-text); }
-
 /* Trust-badge chips under the field — reassurance at the point of action. */
 .hn-email-badges {
   display: flex;
@@ -2115,15 +2061,6 @@
   color: var(--hn-text);
 }
 .hn-email-badges svg { color: var(--hn-accent); flex-shrink: 0; }
-
-/* Gold star rating in the social-proof line. */
-.hn-email-stars {
-  display: inline-flex;
-  gap: 1px;
-  margin-right: 0.35rem;
-  color: #f59e0b;
-  vertical-align: -2px;
-}
 
 /* ============================================================
    Quote form — benefit line above, trust row below.

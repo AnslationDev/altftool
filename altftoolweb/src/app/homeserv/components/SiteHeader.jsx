@@ -39,10 +39,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hs-header-actions">
-          <span className="hs-availability">
-            <span className="hs-availability-dot" aria-hidden="true" />
-            27 pros online
-          </span>
+          <span className="hs-availability">Get matched with local pros</span>
 
           <button
             type="button"

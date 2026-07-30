@@ -14,7 +14,7 @@ import PapercallInterceptor from "./components/PapercallInterceptor";
 
 export default function Home() {
   return (
-    <main className="bg-[#060D0C] min-h-screen overflow-x-clip">
+    <main className="climatech-page bg-[#060D0C] min-h-screen overflow-x-clip">
       <Header />
       <Hero />
       <Services />

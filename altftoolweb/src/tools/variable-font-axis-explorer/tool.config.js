@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Weight, width aur optical-size axes visually inspect aur export kare.",
+  "description": "Read the fvar table out of a .ttf or .otf: every weight, width, slant and optical-size axis with its real min, default and max, every named instance, and the @font-face CSS those ranges imply — parsed in your browser.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

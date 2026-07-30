@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Link2, ShieldCheck, DollarSign,BadgeCheck } from "lucide-react";
 
 
@@ -19,16 +17,6 @@ const Card = ({ children, className = "" }) => (
 );
 
 export default function AffiliateDisclosure() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const router = useRouter();
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    if (query) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-(--background) text-(--foreground) flex flex-col">
 

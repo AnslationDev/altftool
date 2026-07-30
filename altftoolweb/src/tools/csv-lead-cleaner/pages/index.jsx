@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 // Components
-import LeadPreviewTable from "../components/LeadPreviewTable";
 import Cards from "../components/Cards";
 import Privacy from "../components/Privacy";
 import CsvLeadCleaner from "../components/CsvLeadCleaner";
 import Description from "../components/Description";
 
-// Utilities
-import * as helpers from "../utils/helpers";
-
 export default function App() {
-  const [csvData, setCsvData] = useState([]);
-
   return (
     <div className="min-h-screen bg-(--background) text-(--foreground) font-secondary">
 
@@ -50,12 +44,7 @@ export default function App() {
           mx-auto
           space-y-8
         ">
-          <CsvLeadCleaner
-            csvText={csvDataToText(csvData)}
-            helpers={helpers}
-          />
-
-          <LeadPreviewTable data={csvData} />
+          <CsvLeadCleaner />
         </div>
       </section>
 
@@ -76,18 +65,4 @@ export default function App() {
 
     </div>
   );
-}
-
-/* ================================
-   Helper: convert csvData array to CSV string
-================================ */
-function csvDataToText(data) {
-  if (!data || !data.length) return "";
-
-  const headers = Object.keys(data[0]);
-  const rows = data
-    .map((row) => headers.map((h) => row[h]).join(","))
-    .join("\n");
-
-  return [headers.join(","), rows].join("\n");
 }

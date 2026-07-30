@@ -32,8 +32,24 @@ export default function ContactUsSection({ showToast = () => { } }) {
     };
     localStorage.setItem("altf_leads", JSON.stringify([newLead, ...existingLeads]));
 
+    // No CRM/email backend is wired up yet, so also open a mailto: to a real
+    // inbox — otherwise the lead only ever sits in this one browser's
+    // localStorage and never actually reaches anyone.
+    const subject = `Enterprise inquiry from ${formData.name}`;
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Role: ${formData.role}`,
+      `Budget: ${formData.budget}`,
+      `Website: ${formData.website || "Not provided"}`,
+      "",
+      "Message:",
+      formData.message || "Not provided",
+    ].join("\n");
+    window.location.href = `mailto:altftool@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
     setSubmitted(true);
-    showToast("Lead submitted! An Enterprise Backlink Strategist will contact you within 2 hours.");
+    showToast("Your email app should open with the enquiry filled in — send it to reach our team.");
   };
 
   return (
@@ -194,9 +210,9 @@ export default function ContactUsSection({ showToast = () => { } }) {
                 <CheckCircle2 className="h-6 w-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-white">Lead Successfully Captured!</h3>
+                <h3 className="text-lg font-bold text-white">Almost done</h3>
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
-                  Thank you, <strong>{formData.name}</strong>. Your inquiry has been logged in our lead queue. An Enterprise Backlink Strategist will follow up via <strong>{formData.email}</strong> shortly.
+                  Thank you, <strong>{formData.name}</strong>. Your email app should open with your inquiry filled in — send it and our team will follow up via <strong>{formData.email}</strong>.
                 </p>
               </div>
               <button

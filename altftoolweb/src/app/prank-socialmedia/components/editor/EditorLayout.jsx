@@ -2,17 +2,30 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { ArrowLeft, Download, RotateCcw, Save, Copy, Maximize2, Sparkles } from "lucide-react";
+import { ArrowLeft, Download, RotateCcw, Save, Upload, Copy, Maximize2, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import { Navbar } from "../site/Navbar";
 import { Disclaimer } from "../site/Disclaimer";
 import { useEditor } from "../../lib/editor-store";
 import { toast } from "sonner";
-function EditorLayout({ title, sidebar, preview }) {
+
+const DUPLICATE_KEY_BY_SLUG = {
+  whatsapp: "messages",
+  "instagram-dm": "messages",
+  messenger: "messages",
+  telegram: "messages",
+  snapchat: "messages",
+  "facebook-post": "comments",
+  youtube: "comments",
+  "search-results": "searchResults",
+};
+
+function EditorLayout({ title, slug, sidebar, preview }) {
   const previewRef = useRef(null);
   const [fullscreen, setFullscreen] = useState(false);
   const reset = useEditor((s) => s.reset);
   const setMany = useEditor((s) => s.setMany);
+  const duplicateKey = DUPLICATE_KEY_BY_SLUG[slug];
   const handleExport = async () => {
     if (!previewRef.current) return;
     try {
@@ -34,9 +47,24 @@ function EditorLayout({ title, sidebar, preview }) {
       toast.error("Could not save");
     }
   };
+  const handleLoad = () => {
+    try {
+      const raw = localStorage.getItem(`mockly:${title}`);
+      if (!raw) {
+        toast.error("No saved draft found");
+        return;
+      }
+      setMany(JSON.parse(raw));
+      toast.success("Draft loaded");
+    } catch {
+      toast.error("Could not load draft");
+    }
+  };
   const handleDuplicate = () => {
+    if (!duplicateKey) return;
     const s = useEditor.getState();
-    setMany({ messages: [...s.messages, ...s.messages.map((m) => ({ ...m, id: Math.random().toString(36).slice(2) }))] });
+    const list = s[duplicateKey] ?? [];
+    setMany({ [duplicateKey]: [...list, ...list.map((item) => ({ ...item, id: Math.random().toString(36).slice(2) }))] });
     toast.success("Duplicated");
   };
   return <div className="min-h-screen bg-hero animate-gradient">
@@ -74,7 +102,8 @@ function EditorLayout({ title, sidebar, preview }) {
             <div className="grid gap-2">
               <Button onClick={handleExport} className="justify-start rounded-xl bg-gradient-primary text-primary-foreground shadow-glow"><Download className="mr-2 h-4 w-4" />Export PNG</Button>
               <Button onClick={handleSave} variant="outline" className="justify-start rounded-xl"><Save className="mr-2 h-4 w-4" />Save draft</Button>
-              <Button onClick={handleDuplicate} variant="outline" className="justify-start rounded-xl"><Copy className="mr-2 h-4 w-4" />Duplicate</Button>
+              <Button onClick={handleLoad} variant="outline" className="justify-start rounded-xl"><Upload className="mr-2 h-4 w-4" />Load draft</Button>
+              <Button onClick={handleDuplicate} disabled={!duplicateKey} variant="outline" className="justify-start rounded-xl"><Copy className="mr-2 h-4 w-4" />Duplicate</Button>
               <Button onClick={() => setFullscreen((v) => !v)} variant="outline" className="justify-start rounded-xl"><Maximize2 className="mr-2 h-4 w-4" />Fullscreen</Button>
               <Button onClick={() => {
     reset();

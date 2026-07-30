@@ -3,9 +3,9 @@ import PageView from "./PageView";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "ALTFTool Backlink Marketplace — Verified High-DR Guest Posts & Links",
+    title: "ALTFTool Backlink Marketplace — High-DR Guest Posts",
     description:
-      "The premier backlink marketplace: buy & sell verified high-authority backlinks, guest posts, and link insertions with automated DNS verification, escrow guarantees, and real-time index tracking.",
+      "Buy and sell verified high-DR backlinks, guest posts and link insertions with automated domain verification, escrow protection and real-time index tracking.",
     path: "/altflinking",
     keywords: [
       "backlink marketplace",

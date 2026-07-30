@@ -19,7 +19,16 @@ export default function Footer() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    e.target.reset();
+    const form = e.target;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(window.localStorage.getItem('pest_killer_leads') || '[]');
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem('pest_killer_leads', JSON.stringify(leads));
+    } catch {
+      // Local storage can be unavailable in private browsing; the success state still works.
+    }
+    form.reset();
     setSent(true);
     setTimeout(() => setSent(false), 4000);
   }
@@ -86,10 +95,10 @@ export default function Footer() {
               <h3>Get Free Pest Control Consultation</h3>
               <p>Fill the form and our team will contact you quickly with the best pest control solution.</p>
               <form className="footer-form" onSubmit={handleSubmit}>
-                <input type="text" placeholder="Your Name *" required />
-                <input type="tel" placeholder="Phone Number *" required onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')} />
-                <input type="email" placeholder="Email Address *" required />
-                <input type="text" placeholder="Your Message" />
+                <input type="text" name="name" placeholder="Your Name *" required />
+                <input type="tel" name="phone" placeholder="Phone Number *" required onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')} />
+                <input type="email" name="email" placeholder="Email Address *" required />
+                <input type="text" name="message" placeholder="Your Message" />
                 <button type="submit" className="btn-green">Submit Now <i className="fa-solid fa-arrow-up-right-from-square" style={{ marginLeft: '6px', fontSize: '13px' }}></i></button>
                 {sent && <div className="toast-msg">We will contact you soon!</div>}
               </form>

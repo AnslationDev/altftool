@@ -2,6 +2,8 @@ import "../globals.css";
 import React from "react";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
+import AltfLauncher from "@/app/_altf/AltfLauncher";
+import "@/app/_altf/altf-brand.css";
 export const metadata = createPageMetadata({
   title: "AltF Code Theater | Cinematic Terminal Simulator",
   description: "Run fictional cinematic terminal interfaces for demos, streams, and harmless creative play.",
@@ -18,6 +20,7 @@ export default function CodeTheaterLayout({ children }) {
     >
       {/* Main viewport only; global footer comes from the root layout. */}
       <div className="flex-1 w-full relative min-h-0">{children}</div>
+      <AltfLauncher />
     </div>
   );
 }

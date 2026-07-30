@@ -62,32 +62,22 @@ export default function ToolDetailChrome({ slug, tool, category = "all", seoCont
     // `@container/toolpage` lets the rail respond to the actual content area
     // width (page width minus padding) rather than the viewport, so page
     // chrome, scrollbars and future padding changes are accounted for.
-    <div className="@container/toolpage w-full px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    // Mobile top padding is deliberately small (pt-2 = 8px). The large
+    // majority of search clicks arrive on a phone, where the sticky 64px
+    // header already owns the top of the viewport; every pixel above the
+    // workspace pushes the tool the visitor came for below the 844px fold.
+    // Desktop keeps the roomier py-10.
+    <div className="@container/toolpage w-full px-4 pb-6 pt-2 sm:px-6 sm:py-10 lg:px-8">
       <div className="mx-auto flex w-full justify-center gap-6 lg:gap-8">
+        {/*
+          Order inside <main> is fold-first: the tool workspace is the FIRST
+          thing after the header, so a visitor landing from a mobile search
+          result sees the app, not chrome. Breadcrumbs, the SEO prose and the
+          related-tool band all render below it (breadcrumbs at the very
+          bottom, see the trail nav). The BreadcrumbList JSON-LD lives on the
+          server page and is unaffected by this visual order.
+        */}
         <main className="min-w-0 flex-1">
-          <nav
-            aria-label="Tool route"
-            className="mx-auto mb-4 flex w-full max-w-6xl flex-wrap items-center gap-1.5 text-xs font-medium text-(--muted-foreground)"
-          >
-            <Link
-              href="/tools/all"
-              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
-            >
-              Tools
-            </Link>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            <Link
-              href={categoryHref}
-              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
-            >
-              {categoryLabel}
-            </Link>
-            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-            <span className="px-1 font-semibold text-(--foreground)" aria-current="page">
-              {toolName}
-            </span>
-          </nav>
-
           <div
             data-testid="tool-workspace-shell"
             data-tool-slug={slug}
@@ -119,13 +109,48 @@ export default function ToolDetailChrome({ slug, tool, category = "all", seoCont
             </RouteLazySection>
           )}
 
-          {seoContent}
+          {/* Below the tool, always. The H1 and all the indexable prose live
+              in here — moved down the page, never removed. The wrapper only
+              supplies the gap the section used to get from being a sibling of
+              this container. */}
+          {seoContent ? <div className="mt-6">{seoContent}</div> : null}
 
           {bottomAd?.content && (
             <RouteLazySection className="mx-auto mt-8 w-full max-w-6xl" minHeight={120}>
               <AdToolBanner ad={bottomAd.content} toolSlug={slug} />
             </RouteLazySection>
           )}
+
+          {/*
+            Breadcrumb trail. Kept in the DOM (same links, same labels) but
+            moved from above the workspace to the end of <main>: on a 390px
+            phone it cost 40px of the first screen — the pill row plus its
+            margin — directly between the visitor and the tool. DOM order and
+            visual order still match, so focus order stays correct (WCAG 2.4.3);
+            no CSS `order` trick is used.
+          */}
+          <nav
+            aria-label="Tool route"
+            className="mx-auto mt-10 flex w-full max-w-6xl flex-wrap items-center gap-1.5 border-t border-(--border) pt-5 text-xs font-medium text-(--muted-foreground)"
+          >
+            <Link
+              href="/tools/all"
+              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+            >
+              Tools
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <Link
+              href={categoryHref}
+              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+            >
+              {categoryLabel}
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="px-1 font-semibold text-(--foreground)" aria-current="page">
+              {toolName}
+            </span>
+          </nav>
         </main>
 
         {/*

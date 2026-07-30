@@ -105,7 +105,6 @@ for (const dir of toolDirs) {
       try {
         const code = fs.readFileSync(configPath, "utf8");
         const moduleShim = { exports: {} };
-        // eslint-disable-next-line no-new-func
         new Function("module", "exports", "require", "console", code)(
           moduleShim,
           moduleShim.exports,

@@ -1773,6 +1773,14 @@
   font-weight: 700;
 }
 
+.hs-modal-disclaimer {
+  max-width: 330px;
+  margin: 0 0 10px;
+  color: var(--hs-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 @keyframes hs-spin { to { transform: rotate(360deg); } }
 @keyframes hs-modal-in {
   from { opacity: 0; transform: translateY(10px) scale(0.97); }

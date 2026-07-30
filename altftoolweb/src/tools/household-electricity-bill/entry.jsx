@@ -3,5 +3,9 @@
 import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <ToolHome />;
+  return (
+    <div className="heb-scope">
+      <ToolHome />
+    </div>
+  );
 }

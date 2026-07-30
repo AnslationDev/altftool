@@ -253,11 +253,18 @@ const MainComponent = () => {
                 <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full mb-4 font-bold tracking-widest text-[10px] uppercase border border-indigo-100">
                   <Tags className="w-3.5 h-3.5" /> Campaign Tracking
                 </div>
+                {/* Matches the server-rendered <h1> in ToolSeoSection ("UTM
+                    Builder") on purpose: this widget is loaded with ssr:false,
+                    so after hydration the page holds both headings, and the
+                    two reading differently ("UTM Link Builder" here vs "UTM
+                    Builder" below) sent Google two different subjects for one
+                    URL. Head query in Search Console is "utm builder". */}
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-3">
-                  UTM Link Builder
+                  UTM Builder
                 </h1>
                 <p className="text-slate-500 text-base md:text-lg max-w-xl leading-relaxed">
-                  Build perfect UTM-tagged campaign URLs in seconds. Track traffic across Google Analytics effortlessly.
+                  Build a tracked campaign URL in seconds — set utm_source, utm_medium and
+                  utm_campaign, then copy the link.
                 </p>
               </div>
               <div className="flex flex-col gap-3 shrink-0">

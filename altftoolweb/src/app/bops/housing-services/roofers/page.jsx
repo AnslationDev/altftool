@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import logoImage from "./Logo.png";
 import "./styles.css";
 
@@ -277,136 +277,6 @@ function getSectionId(label) {
   return label.toLowerCase().replace(/\s+/g, "-");
 }
 
-/* ========== LOADER COMPONENT ========== */
-function PageLoader({ visible, fading }) {
-  if (!visible) return null;
-  return (
-    <div className={`loader-overlay${fading ? " fade-out" : ""}`}>
-      <div className="loader-content">
-        <div className="loader-ring">
-          <svg
-            className="loader-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-          </svg>
-        </div>
-        <div className="loader-text">
-          Connecting you<span className="loader-dots"></span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ========== REFERENCE POPUP ========== */
-function ReferencePopup({
-  sectionName,
-  continueLabel,
-  onClose,
-  onContinue,
-  fading,
-}) {
-  return (
-    <div
-      className={`ref-popup-overlay${fading ? " fade-out" : ""}`}
-      onClick={onClose}
-    >
-      <div className="ref-popup-card" onClick={(e) => e.stopPropagation()}>
-        <button
-          className="ref-close"
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-
-        {/* Call Icon */}
-        <div className="ref-icon">
-          <svg
-            width="90"
-            height="70"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#111111"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-            <path d="M15 4a5 5 0 0 1 5 5" />
-            <path d="M15 1a8 8 0 0 1 8 8" />
-          </svg>
-        </div>
-
-        <h2 className="ref-title">Hello! Need a Roofer?</h2>
-
-        <p className="ref-subtitle">
-          Let our expert team help you with <strong>{sectionName}</strong>.
-          Speak directly with a CrestNova roofing specialist for a free estimate
-          and professional guidance.
-        </p>
-
-        <div className="ref-divider"></div>
-
-        <div className="ref-cta-label">Call Now for Instant Help</div>
-
-        <a className="ref-phone-btn" href={`tel:${phoneNumber}`}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-          </svg>
-          {phoneDisplay}
-        </a>
-
-        <div className="ref-availability">
-          <svg
-            className="ref-availability-icon"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <circle cx="10" cy="10" r="5" />
-          </svg>
-          We are available 24/7
-        </div>
-
-        <br />
-
-        <button
-          className="ref-continue-btn"
-          type="button"
-          onClick={onContinue}
-        >
-          {continueLabel}
-        </button>
-      </div>
-    </div>
-  );
-}
-
 /* ========== MAIN APP ========== */
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -414,17 +284,6 @@ export default function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [view, setView] = useState("home");
   const [activeBlogSlug, setActiveBlogSlug] = useState(blogPosts[0].slug);
-
-  // Loader / reference popup state
-  const [loaderVisible, setLoaderVisible] = useState(false);
-  const [loaderFading, setLoaderFading] = useState(false);
-  const [refPopupOpen, setRefPopupOpen] = useState(false);
-  const [refPopupFading, setRefPopupFading] = useState(false);
-  const [refSectionName, setRefSectionName] = useState("Roofing Services");
-  const [refContinueLabel, setRefContinueLabel] = useState("Continue Browsing");
-
-  // Pending action runs only when the user chooses Continue.
-  const pendingActionRef = useRef(null);
 
   const activeBlog = useMemo(
     () =>
@@ -471,66 +330,6 @@ export default function App() {
     return () => observer.disconnect();
   }, [view, activeBlogSlug]);
 
-  const openPaperCall = (label, pendingAction = null) => {
-    setView("home");
-    setMenuOpen(false);
-    setRefSectionName(label);
-    setRefContinueLabel(
-      pendingAction?.type === "scroll"
-        ? `Continue to ${label}`
-        : "Continue Browsing",
-    );
-
-    setLoaderFading(false);
-    setLoaderVisible(true);
-
-    window.setTimeout(() => {
-      setLoaderFading(true);
-      window.setTimeout(() => {
-        setLoaderVisible(false);
-        setLoaderFading(false);
-        setRefPopupOpen(true);
-        setRefPopupFading(false);
-      }, 400);
-    }, 1600);
-
-    pendingActionRef.current = pendingAction;
-  };
-
-  const triggerNavAction = (sectionId, label) => {
-    openPaperCall(label, { type: "scroll", sectionId });
-  };
-
-  const triggerPhoneCall = (label) => {
-    openPaperCall(label);
-  };
-
-  const closeRefPopup = () => {
-    setRefPopupFading(true);
-    window.setTimeout(() => {
-      setRefPopupOpen(false);
-      setRefPopupFading(false);
-      pendingActionRef.current = null;
-    }, 300);
-  };
-
-  const continueRefPopup = () => {
-    const pending = pendingActionRef.current;
-    setRefPopupFading(true);
-    window.setTimeout(() => {
-      setRefPopupOpen(false);
-      setRefPopupFading(false);
-      if (pending?.type === "scroll") {
-        window.setTimeout(() => {
-          document
-            .getElementById(pending.sectionId)
-            ?.scrollIntoView({ behavior: "smooth" });
-        }, 50);
-      }
-      pendingActionRef.current = null;
-    }, 300);
-  };
-
   const directScroll = (sectionId) => {
     setView("home");
     setMenuOpen(false);
@@ -568,8 +367,18 @@ export default function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    event.currentTarget.reset();
-    triggerPhoneCall("Your Roofing Request");
+    const form = event.currentTarget;
+    const lead = Object.fromEntries(new FormData(form).entries());
+    try {
+      const leads = JSON.parse(
+        window.localStorage.getItem("roofers_leads") || "[]",
+      );
+      leads.push({ ...lead, submittedAt: new Date().toISOString() });
+      window.localStorage.setItem("roofers_leads", JSON.stringify(leads));
+    } catch {
+      // Local storage can be unavailable in private browsing; the request still proceeds.
+    }
+    form.reset();
   };
 
   const handleMobileClick = (label) => {
@@ -594,14 +403,7 @@ export default function App() {
       <header>
         <div className="topbar">
           <span>54-30 44th Street, Queens, NY 11378</span>
-          <a
-            className="topbar-phone"
-            href={`tel:${phoneNumber}`}
-            onClick={(event) => {
-              event.preventDefault();
-              triggerPhoneCall("Instant Roofing Help");
-            }}
-          >
+          <a className="topbar-phone" href={`tel:${phoneNumber}`}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -647,14 +449,7 @@ export default function App() {
             <img src={logoImage.src} alt="CrestNova Roofing" />
           </button>
 
-          <a
-            className="mobile-contact-link"
-            href={`tel:${phoneNumber}`}
-            onClick={(event) => {
-              event.preventDefault();
-              triggerPhoneCall("Mobile Contact");
-            }}
-          >
+          <a className="mobile-contact-link" href={`tel:${phoneNumber}`}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -785,7 +580,7 @@ export default function App() {
             activeIndex={activeIndex}
             moveCarousel={moveCarousel}
             handleSubmit={handleSubmit}
-            onPaperCall={triggerNavAction}
+            onNavigate={directScroll}
           />
         ) : null}
 
@@ -811,23 +606,12 @@ export default function App() {
         <span>(c) 2026 CrestNova Roofing. Landing page recreation.</span>
         <span className="footer-phone">(718) 555-0198</span>
       </footer>
-
-      <PageLoader visible={loaderVisible} fading={loaderFading} />
-      {refPopupOpen ? (
-        <ReferencePopup
-          sectionName={refSectionName}
-          continueLabel={refContinueLabel}
-          onClose={closeRefPopup}
-          onContinue={continueRefPopup}
-          fading={refPopupFading}
-        />
-      ) : null}
     </div>
   );
 }
 
 /* ========== HOME CONTENT ========== */
-function HomeContent({ activeIndex, moveCarousel, handleSubmit, onPaperCall }) {
+function HomeContent({ activeIndex, moveCarousel, handleSubmit, onNavigate }) {
   return (
     <>
       <section className="hero" id="home">
@@ -848,14 +632,14 @@ function HomeContent({ activeIndex, moveCarousel, handleSubmit, onPaperCall }) {
             <button
               className="btn"
               type="button"
-              onClick={() => onPaperCall("contact", "Free Estimate")}
+              onClick={() => onNavigate("contact")}
             >
               Get Free Estimate
             </button>
             <button
               className="btn secondary"
               type="button"
-              onClick={() => onPaperCall("services", "Services")}
+              onClick={() => onNavigate("services")}
             >
               View Services
             </button>
@@ -1063,6 +847,13 @@ function LogoMarquee({ logos, label, reverse = false }) {
 }
 
 function QuestionSection({ handleSubmit }) {
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = (event) => {
+    handleSubmit(event);
+    setSent(true);
+  };
+
   return (
     <section className="question-section" id="contact">
       <div className="question-header reveal">
@@ -1086,7 +877,7 @@ function QuestionSection({ handleSubmit }) {
         </div>
 
         <div className="question-form-shell reveal from-right">
-          <form className="question-form" onSubmit={handleSubmit}>
+          <form className="question-form" onSubmit={onSubmit}>
             <input
               className="field"
               type="text"
@@ -1167,6 +958,14 @@ function QuestionSection({ handleSubmit }) {
             <button className="send-button" type="submit">
               Send Message
             </button>
+            {sent && (
+              <p
+                role="status"
+                style={{ color: "#ffffff", fontSize: "12px", textAlign: "center", marginTop: "4px" }}
+              >
+                Saved on this device only — nothing was sent. Call us at {phoneDisplay} for a real response.
+              </p>
+            )}
             <div className="policy-links">
               <a href="#privacy">Privacy Policy</a> |{" "}
               <a href="#terms">Terms of Service</a>

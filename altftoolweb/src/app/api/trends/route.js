@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import { enforceRateLimit, jsonResponse } from '@altftool/core/http';
 import googleTrends from 'google-trends-api';
 
+function withTimeout(promise, timeoutMs = 8000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(`Timed out after ${timeoutMs}ms`)), timeoutMs),
+    ),
+  ]);
+}
+
 export async function GET(req) {
   try {
     const limited = enforceRateLimit(NextResponse, req, {
@@ -27,12 +36,12 @@ export async function GET(req) {
     const now = new Date();
     const lastYear = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
 
-    const resText = await googleTrends.interestOverTime({
+    const resText = await withTimeout(googleTrends.interestOverTime({
       keyword: skill,
       startTime: lastYear,
       endTime: now,
       geo,
-    });
+    }));
 
     if (!resText || typeof resText !== 'string' || resText.trim().startsWith('<')) {
       console.error('Google Trends returned non-JSON response:', resText.slice(0, 100));

@@ -236,6 +236,18 @@ export async function startSession({ uid, email, request }) {
     await Promise.all(
       overflow.map((s) => revokeSessionDoc(s.id, { reason: "device_limit_exceeded", by: "system" })),
     );
+    await Promise.all(
+      overflow.map((s) =>
+        recordSecurityEvent({
+          type: "session.device_limit_exceeded",
+          severity: "warning",
+          uid,
+          email,
+          summary: `${s.deviceLabel} signed out — device limit exceeded`,
+          metadata: { sessionId: s.id, deviceLimit: limit },
+        }),
+      ),
+    );
   }
 
   await upsertDevice({ uid, email, ctx });
@@ -305,6 +317,7 @@ export async function heartbeatSession({ sessionId, uid, touch = true }) {
   }
   if (now - (s.createdAtMs || now) > absMs) {
     await revokeSessionDoc(sessionId, { reason: "absolute_timeout", by: "system" });
+    await recordSecurityEvent({ type: "session.absolute_timeout", uid, email: s.email, summary: s.deviceLabel });
     return { active: false, reason: "absolute_timeout" };
   }
 

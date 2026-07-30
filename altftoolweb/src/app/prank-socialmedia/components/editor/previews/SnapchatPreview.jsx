@@ -4,7 +4,8 @@ import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
 
 function SnapchatPreview() {
-  const { username, avatar, postImage, time, theme } = useEditor();
+  const { username, avatar, postImage, time, theme, messages } = useEditor();
+  const latestMessage = messages[messages.length - 1];
   const dark = theme !== "light";
   const bg = "#000"; // Snapchat stories/camera is always full black or camera feed
   const fg = "#fff";
@@ -53,7 +54,7 @@ function SnapchatPreview() {
         {/* Overlay content (e.g. caption / snap details) */}
         <div className="relative z-10 flex-1 flex flex-col justify-end p-4 pb-20">
           <div className="w-full bg-black/50 backdrop-blur-md rounded-xl p-3 text-center text-sm border border-white/10 shadow-lg">
-            Tap to edit this message! 👻
+            {latestMessage ? latestMessage.text : "Tap to edit this message! 👻"}
           </div>
         </div>
 

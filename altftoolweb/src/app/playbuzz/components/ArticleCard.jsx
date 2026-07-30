@@ -1,6 +1,47 @@
-﻿import Link from 'next/link';
+﻿import { useRef, useState } from 'react';
+import Link from 'next/link';
 
 const ArticleCard = ({ id = 1, image, title, author, plays }) => {
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef(null);
+
+  const getShareUrl = () => {
+    if (typeof window === 'undefined') return '';
+    return `${window.location.origin}/playbuzz/quiz-play?id=${id}`;
+  };
+
+  const handleFacebookShare = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const shareUrl = getShareUrl();
+    if (!shareUrl) return;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer,width=650,height=500');
+  };
+
+  const handleTwitterShare = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const shareUrl = getShareUrl();
+    if (!shareUrl) return;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`, '_blank', 'noopener,noreferrer,width=650,height=500');
+  };
+
+  const handleCopyLink = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const shareUrl = getShareUrl();
+    if (!shareUrl) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      window.prompt('Copy this quiz link:', shareUrl);
+      return;
+    }
+    clearTimeout(copyTimer.current);
+    setCopied(true);
+    copyTimer.current = setTimeout(() => setCopied(false), 1600);
+  };
+
   return (
     <Link
       href={`/playbuzz/quiz-play?id=${id}`}
@@ -12,25 +53,41 @@ const ArticleCard = ({ id = 1, image, title, author, plays }) => {
           alt={title}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black/45 flex items-center justify-center gap-2.5 opacity-0 transition-opacity duration-200 pointer-events-none group-hover:opacity-100">
-          <span
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
+        <div className="absolute inset-0 bg-black/45 flex items-center justify-center gap-2.5 opacity-0 transition-opacity duration-200 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+          <button
+            type="button"
+            onClick={handleFacebookShare}
+            aria-label="Share on Facebook"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
             style={{ backgroundColor: '#1877f2' }}
           >
             f
-          </span>
-          <span
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
+          </button>
+          <button
+            type="button"
+            onClick={handleTwitterShare}
+            aria-label="Share on Twitter"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
             style={{ backgroundColor: '#1da1f2' }}
           >
             t
-          </span>
-          <span
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
-            style={{ backgroundColor: '#25d366' }}
-          >
-            w
-          </span>
+          </button>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              aria-label="Copy quiz link"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white border-none cursor-pointer focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
+              style={{ backgroundColor: '#25d366' }}
+            >
+              w
+            </button>
+            {copied && (
+              <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[var(--foreground)] px-2.5 py-1 text-[11px] font-medium text-[var(--card)] shadow-lg">
+                Copied!
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <div className="px-4 py-5 text-center flex-1 flex flex-col justify-start">

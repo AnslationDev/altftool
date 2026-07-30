@@ -130,3 +130,18 @@ export function serializeSaleError(error) {
     code: normalized.code,
   };
 }
+
+// Upstream error bodies (Overpass/Nominatim return raw HTML error pages,
+// SerpAPI/RapidAPI can include account/key details) leak into
+// SaleApiError.message via the shared http client — every route that
+// surfaces an error to the client must map by code to one of these fixed,
+// safe messages instead of forwarding serializeSaleError(...).message.
+export const FRIENDLY_ERROR_MESSAGES = {
+  timeout: "The search took too long to respond. Please try again in a moment.",
+  quota_exceeded: "Too many searches right now. Please wait a moment and try again.",
+  upstream_error: "Couldn't reach the map data service. Please try again shortly.",
+};
+
+export function friendlyMessageFor(code) {
+  return FRIENDLY_ERROR_MESSAGES[code] || "Something went wrong. Please try again.";
+}

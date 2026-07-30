@@ -3,10 +3,19 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Pixel Thought Meditation – Clear Your Mind",
+    // This route renders the exact same <PixelThoughtMeditation /> component as
+    // /pixel-thought — same markup, same H1, no unique content. Both were
+    // self-canonical, so the site was competing with itself on the one query it
+    // already fails to convert. src/app/sitemap.js lists THIS url (line 101)
+    // and not /pixel-thought, yet GSC shows /pixel-thought with 324 impressions
+    // and this one with none, so search has already picked the parent.
+    // Canonicalising here follows that choice instead of fighting it; title and
+    // description deliberately match the parent, as a duplicate's should.
+    title: "60-Second Meditation — Pixel Thoughts Alternative",
     description:
-      "Take a calming 60-second meditation break with Pixel Thought on AltFTool. Release a worry and refocus your mind.",
+      "Type the worry on your mind, watch it shrink into a star and vanish over 60 seconds. Free, no signup, and your words stay in the page — never stored, never sent to us.",
     path: "/pixel-thought/meditation",
+    canonical: "/pixel-thought",
   });
 }
 

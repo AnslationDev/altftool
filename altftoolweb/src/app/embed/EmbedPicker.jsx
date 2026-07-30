@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import EmbedCodeCopy from "./EmbedCodeCopy";
-import { buildSnippet } from "./embedSnippet";
+import { buildSnippet, EMBED_IFRAME_HEIGHT } from "./embedSnippet";
 
 /**
  * Interactive widget chooser for the /embed hub: search + category filter,
@@ -13,6 +13,13 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
   const [selected, setSelected] = useState(tools[0]?.slug || "");
+  // The catalog has grown past 1,300 embeddable tools — server-rendering
+  // every row blows the prerendered HTML past the size budget (enforced by
+  // scripts/check-prerender-size.mjs). The list is unusable without JS
+  // anyway (search/select are handlers), so hydrate it client-side instead
+  // of paying for it in the static HTML.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -65,7 +72,11 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
           className="max-h-[420px] overflow-auto rounded-[12px] border border-(--border) bg-(--surface)"
           aria-label="Embeddable widgets"
         >
-          {filtered.length === 0 ? (
+          {!mounted ? (
+            <li className="p-4 text-sm text-(--muted-foreground)">
+              Loading {tools.length} widgets…
+            </li>
+          ) : filtered.length === 0 ? (
             <li className="p-4 text-sm text-(--muted-foreground)">No widgets match that search.</li>
           ) : (
             filtered.map((tool) => (
@@ -105,7 +116,8 @@ export default function EmbedPicker({ tools = [], categories = [], baseUrl }) {
           <iframe
             src={`/embed/widget/${active.slug}`}
             title={`${active.name} widget preview`}
-            className="h-[420px] w-full rounded-[12px] border border-(--border) bg-(--surface)"
+            className="w-full rounded-[12px] border border-(--border) bg-(--surface)"
+            style={{ height: EMBED_IFRAME_HEIGHT }}
             loading="lazy"
           />
           <h3 className="text-sm font-semibold text-(--foreground)">Embed code</h3>

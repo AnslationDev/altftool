@@ -6,13 +6,7 @@ import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
 
-  // deterministic mock users
-  const seed = slug
-    ? slug.split("").reduce((a, c) => a + c.charCodeAt(0), 0)
-    : 0;
-
-  const randomUsers = ((seed * 9301 + 49297) % 50) + 5;
-  const usersCount = extension.users || `${randomUsers}K+`;
+  const usersCount = extension.users || "10K+";
 
   return (
     <Link

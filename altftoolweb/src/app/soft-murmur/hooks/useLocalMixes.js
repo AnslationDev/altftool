@@ -21,7 +21,17 @@ export function useLocalMixes() {
 
   // Save a new mix
   const saveMix = (name, soundsState, masterVolume, flowMode, flowIntensity) => {
-    if (!name.trim()) return false;
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      return { ok: false, error: "Please enter a name for your custom mix." };
+    }
+
+    const isDuplicate = savedMixes.some(
+      (mix) => mix.name.trim().toLowerCase() === trimmedName.toLowerCase()
+    );
+    if (isDuplicate) {
+      return { ok: false, error: "A mix with this name already exists." };
+    }
 
     // Filter only active sounds to keep storage light
     const activeSounds = {};
@@ -32,12 +42,12 @@ export function useLocalMixes() {
     });
 
     if (Object.keys(activeSounds).length === 0) {
-      return { error: "Mix must contain at least one active sound." };
+      return { ok: false, error: "Mix must contain at least one active sound." };
     }
 
     const newMix = {
       id: `mix_${Date.now()}`,
-      name: name.trim(),
+      name: trimmedName,
       sounds: activeSounds,
       masterVolume,
       flowMode,
@@ -48,7 +58,7 @@ export function useLocalMixes() {
     const updatedMixes = [newMix, ...savedMixes];
     setSavedMixes(updatedMixes);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedMixes));
-    return true;
+    return { ok: true };
   };
 
   // Delete a mix

@@ -922,7 +922,7 @@ export const toolMetaMap = {
   },
   "ai-selfie-enhancer": {
     "name": "AI Selfie Enhancer",
-    "description": "Enhance your selfies with smart AI-driven filters, skin smoothing, lighting correction, and background tuning directly in your browser.",
+    "description": "Adjust brightness, contrast, saturation, and smoothing on your selfie with one-click presets, right in your browser.",
     "category": [
       "AI Tools",
       "Design & Color"
@@ -1278,12 +1278,12 @@ export const toolMetaMap = {
   },
   "animated-qr-file-beam": {
     "name": "Animated QR File Beam",
-    "description": "Small file ko sequential QR frames se nearby device par transfer kare.",
+    "description": "Split a small file into numbered QR frames, loop them on screen, and rebuild the file on another device from its camera — entirely offline.",
     "category": [
       "Developer",
       "Productivity"
     ],
-    "icon": "wrench",
+    "icon": "qr-code",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -1810,6 +1810,13 @@ export const toolMetaMap = {
     "icon": "heart-pulse",
     "iconColor": "text-red-600"
   },
+  "attachment-file-type-risk-explainer": {
+    "name": "Attachment File Type Risk Explainer",
+    "description": "Rates any email attachment by its file extension and explains double-extension and hidden-extension disguises.",
+    "category": "Security & Privacy",
+    "icon": "file-warning",
+    "iconColor": "text-[var(--primary)]"
+  },
   "attendance-calculator": {
     "name": "Attendance Percentage Calculator",
     "description": "Check your attendance percentage and find exactly how many classes you must attend — or can safely skip.",
@@ -1923,7 +1930,7 @@ export const toolMetaMap = {
   },
   "audio-pitch-tempo-shifter": {
     "name": "Audio Pitch & Tempo Shifter",
-    "description": "Pitch aur tempo independently control kare.",
+    "description": "Shifts an audio file's pitch or tempo independently, without affecting the other.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -3097,7 +3104,7 @@ export const toolMetaMap = {
   },
   "birthday-wishes-malayalam": {
     "name": "Malayalam Birthday Wishes Generator",
-    "description": "Generate Malayalam birthday greetings for friends, family and colleagues in Malayalam script or Roman transliteration.",
+    "description": "Write Malayalam birthday messages tuned to relationship and tone, with correct നീ, നിങ്ങൾ or താങ്കൾ forms, romanisation, an English meaning and SMS length.",
     "category": "Generators",
     "icon": "cake",
     "iconColor": "text-[var(--primary)]"
@@ -3631,7 +3638,7 @@ export const toolMetaMap = {
   },
   "brain-processing-speed-test": {
     "name": "Brain Processing Speed Test",
-    "description": "Measure your visual processing speed and cognitive efficiency with a clinical symbol-to-digit substitution task.",
+    "description": "Measure your visual processing speed and cognitive efficiency with a symbol-to-digit substitution task modelled on clinical tests.",
     "category": [
       "Education & Science",
       "Health & Fitness",
@@ -3701,6 +3708,55 @@ export const toolMetaMap = {
     "description": "Convert brass to cubic feet, cubic metres, tonnes and truckloads for sand, aggregate and other loose construction material.",
     "category": "Converters",
     "icon": "boxes",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-address": {
+    "name": "Home Address Exposure Checklist",
+    "description": "Weighted response plan for a leaked or published home address: physical safety, public-source removals and identity-check fixes.",
+    "category": "Security & Privacy",
+    "icon": "map-pin-house",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-card": {
+    "name": "Card Number Exposure Checklist",
+    "description": "What to do when a card number leaks without CVV or expiry: kill the number, check pending charges for card-testing, and score how much worse it gets if more leaked with it.",
+    "category": "Security & Privacy",
+    "icon": "credit-card",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-dob": {
+    "name": "Date of Birth Exposure Checklist",
+    "description": "What to change when your date of birth leaks, scored by combination risk and by the credentials and identity checks the date still unlocks.",
+    "category": "Security & Privacy",
+    "icon": "cake",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-email": {
+    "name": "Email Data Breach Response Checklist",
+    "description": "Weighted response plan for an email address caught in a data breach: password resets on every linked account, 2FA, and breach-themed phishing watch.",
+    "category": "Security & Privacy",
+    "icon": "mail-warning",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-employer": {
+    "name": "Employer Data Breach Employee Checklist",
+    "description": "Build an employee response plan from the data categories in your company's breach notice, scored only against the steps that actually apply.",
+    "category": "Security & Privacy",
+    "icon": "building-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-password-reuse": {
+    "name": "Password Reuse Breach Checklist",
+    "description": "Weighted response plan for a reused password caught in a breach: which other accounts share it, rotation order, a 2FA backstop and a password manager switch.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "breach-exposure-checklist-phone": {
+    "name": "Phone Number Exposure Checklist",
+    "description": "Weighted response plan for a leaked phone number: SIM-swap lockdown with your carrier, smishing and spam-call triage, and phone-based identity-check fixes.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
     "iconColor": "text-[var(--primary)]"
   },
   "breach-notification-timeline-planner": {
@@ -3889,6 +3945,13 @@ export const toolMetaMap = {
     ],
     "icon": "share-2",
     "iconColor": "text-teal-500"
+  },
+  "browser-storage-cleanup-planner": {
+    "name": "Browser Storage Cleanup Planner",
+    "description": "Plan exactly which browser stores to clear, which to keep, and what breaks — cookies, localStorage, IndexedDB, service workers and more.",
+    "category": "Security & Privacy",
+    "icon": "database",
+    "iconColor": "text-[var(--primary)]"
   },
   "btu-to-ton-converter": {
     "name": "BTU to Ton Converter",
@@ -4199,19 +4262,19 @@ export const toolMetaMap = {
   },
   "calender-panchang": {
     "name": "Calender Panchang",
-    "description": "View calendar and panchang details for dates, festivals, and daily planning.",
+    "description": "Compute tithi, nakshatra, yoga, karana, sunrise, sunset, Rahu Kaal and Abhijit Muhurta for any date and place, from the NOAA solar algorithm and the Meeus lunar series with the Lahiri ayanamsa.",
     "category": "Lifestyle",
     "icon": "calendar-range",
-    "iconColor": "text-gray-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "calibrated-camera-ruler": {
     "name": "Calibrated Camera Ruler",
-    "description": "Reference card se approximate object dimensions estimate kare.",
+    "description": "Measure an object from a photo by calibrating against something of known size — a bank card, an A4 sheet, a coin — with the error range shown.",
     "category": [
       "Developer",
       "Productivity"
     ],
-    "icon": "wrench",
+    "icon": "ruler",
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
@@ -5979,6 +6042,13 @@ export const toolMetaMap = {
     "icon": "database",
     "iconColor": "text-blue-600"
   },
+  "consent-banner-dark-pattern-spotter": {
+    "name": "Consent Banner Dark Pattern Spotter",
+    "description": "Score a cookie banner for the 14 manipulative design tricks regulators flag, and learn how to refuse properly.",
+    "category": "Security & Privacy",
+    "icon": "cookie",
+    "iconColor": "text-[var(--primary)]"
+  },
   "consent-inventory-mapper": {
     "name": "Consent Inventory Mapper",
     "description": "Business ke consent collection aur withdrawal points map kare.",
@@ -6691,6 +6761,20 @@ export const toolMetaMap = {
     "category": "Lifestyle",
     "icon": "smile",
     "iconColor": "text-pink-500"
+  },
+  "crypto-explainer-end-to-end": {
+    "name": "End-to-End Encryption Explainer",
+    "description": "Trace a message hop by hop and see exactly who can read the content and the metadata, with and without end-to-end encryption.",
+    "category": "Education & Science",
+    "icon": "lock",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "crypto-explainer-hashing-vs-encryption": {
+    "name": "Hashing vs Encryption Explainer",
+    "description": "Run one input through a real SHA-256 hash, a reversible cipher and Base64 side by side to see why a hash is not encryption.",
+    "category": "Education & Science",
+    "icon": "hash",
+    "iconColor": "text-[var(--primary)]"
   },
   "crypto-loss-setoff-explainer": {
     "name": "Crypto Loss Set Off Rules Explainer",
@@ -7920,6 +8004,13 @@ export const toolMetaMap = {
     "icon": "gauge",
     "iconColor": "text-[var(--primary)]"
   },
+  "device-resale-wipe-checklist-phone": {
+    "name": "Old Phone Resale Wipe Checklist",
+    "description": "The correct order to back up, migrate, sign out and factory reset a phone before selling it — and a warning when you tick a step too early.",
+    "category": "Security & Privacy",
+    "icon": "eraser",
+    "iconColor": "text-[var(--primary)]"
+  },
   "device-sensor-calibration-checker": {
     "name": "Device Sensor Calibration Checker",
     "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare.",
@@ -8240,6 +8331,13 @@ export const toolMetaMap = {
     "icon": "sliders-horizontal",
     "iconColor": "text-[var(--primary)]"
   },
+  "disposable-email-policy-explainer": {
+    "name": "Disposable Email Policy Explainer",
+    "description": "Scores the lockout risk of a signup and shows when a throwaway address is safe and when it will cost you the account.",
+    "category": "Security & Privacy",
+    "icon": "mail-x",
+    "iconColor": "text-[var(--primary)]"
+  },
   "dividend-income-tax-calculator-india": {
     "name": "Dividend Income Tax Calculator India",
     "description": "Tax on Indian dividend income at your slab rate, with the 20% interest deduction cap under section 57 and section 194 TDS credit.",
@@ -8337,6 +8435,13 @@ export const toolMetaMap = {
     ],
     "icon": "dna",
     "iconColor": "text-teal-500"
+  },
+  "dnd-spam-call-control-guide-india": {
+    "name": "DND and Spam Call Control Guide",
+    "description": "Build your 1909 DND preference command, classify a spam caller's number series and check whether you are still inside the TRAI complaint window.",
+    "category": "Security & Privacy",
+    "icon": "phone-off",
+    "iconColor": "text-[var(--primary)]"
   },
   "dns-propagation-checker": {
     "name": "DNS Propagation Checker",
@@ -8448,6 +8553,13 @@ export const toolMetaMap = {
     "icon": "stamp",
     "iconColor": "text-[var(--primary)]"
   },
+  "document-backup-priority-ranker": {
+    "name": "Document Backup Priority Ranker",
+    "description": "Rank which household documents to scan and back up first, by how hard each one is to replace, how fast you would need it and what it unlocks.",
+    "category": "Productivity",
+    "icon": "list-ordered",
+    "iconColor": "text-[var(--primary)]"
+  },
   "document-checklist-generator": {
     "name": "Document Checklist Generator",
     "description": "Generate ready-to-use document checklists for visa, job, loan, rental, admission, KYC, and business workflows.",
@@ -8554,6 +8666,13 @@ export const toolMetaMap = {
     "icon": "wrench",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "domain-expiry-renewal-planner": {
+    "name": "Domain Expiry and Renewal Planner",
+    "description": "Dates every stage of the gTLD expiry lifecycle — grace, redemption, pending delete and drop — plus transfer locks and renewal risks.",
+    "category": "Business",
+    "icon": "calendar-clock",
+    "iconColor": "text-[var(--primary)]"
   },
   "domain-name-ideas-generator": {
     "name": "Domain Name Ideas Generator",
@@ -9208,6 +9327,13 @@ export const toolMetaMap = {
     "icon": "minus",
     "iconColor": "text-[var(--primary)]"
   },
+  "email-alias-strategy-planner": {
+    "name": "Email Alias Strategy Planner",
+    "description": "Design per-service email aliases so a leaked address names the company that leaked it, with RFC length checks on every address.",
+    "category": "Security & Privacy",
+    "icon": "at-sign",
+    "iconColor": "text-[var(--primary)]"
+  },
   "email-authentication-checker": {
     "name": "Email Authentication Checker",
     "description": "Check a domain's SPF, DKIM, DMARC and MX records live in your browser and get a clear pass/warn/fail verdict with fixes — the deliverability-critical checks that decide whether your email reaches the inbox.",
@@ -9412,7 +9538,7 @@ export const toolMetaMap = {
   },
   "emoji-hub": {
     "name": "Emoji Hub",
-    "description": "A collection of emoji icons",
+    "description": "Browse 1,898 emojis across 8 categories with keyword search and skin tones, plus trending GIFs",
     "category": "Design & Color",
     "topics": [
       "Creators"
@@ -9508,6 +9634,13 @@ export const toolMetaMap = {
     "description": "Track systems, recurring tasks, contacts and pending items into a weighted readiness score and a ready-to-send handover document.",
     "category": "Business",
     "icon": "clipboard-list",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "employee-monitoring-rights-explainer": {
+    "name": "Employee Monitoring Rights Explainer",
+    "description": "See what common workplace monitoring actually captures, score how much your employer has disclosed, and draft the questions to put to HR in writing.",
+    "category": "Security & Privacy",
+    "icon": "eye",
     "iconColor": "text-[var(--primary)]"
   },
   "empty-state-copy-generator": {
@@ -10480,6 +10613,20 @@ export const toolMetaMap = {
     "icon": "house",
     "iconColor": "text-[var(--primary)]"
   },
+  "family-anti-scam-agreement-builder": {
+    "name": "Family Anti-Scam Agreement Builder",
+    "description": "Turn household rules on OTPs, urgent money requests and safe words into a written agreement, scored against the common scam types.",
+    "category": "Security & Privacy",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "family-archive-redundancy-checker": {
+    "name": "Family Photo Archive Redundancy Checker",
+    "description": "Check whether your family photo archive really exists in two independent places, and score it against the 3-2-1-1-0 backup rule.",
+    "category": "Security & Privacy",
+    "icon": "archive",
+    "iconColor": "text-[var(--primary)]"
+  },
   "family-car-size-selector": {
     "name": "Family Car Size Selector",
     "description": "Match a car body type to your seat count, child seats, luggage volume and the longest car your parking allows.",
@@ -10507,6 +10654,13 @@ export const toolMetaMap = {
     "icon": "lock-keyhole",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "family-password-sharing-planner": {
+    "name": "Shared Family Password Plan Builder",
+    "description": "Decide which household logins to share, which to keep individual and which need emergency access instead.",
+    "category": "Security & Privacy",
+    "icon": "users",
+    "iconColor": "text-[var(--primary)]"
   },
   "family-safe-word-generator": {
     "name": "Family Safe-Word Generator",
@@ -10897,6 +11051,27 @@ export const toolMetaMap = {
     "description": "Answer eight questions to get your FINDRISC score out of 26 and the matching 10-year type 2 diabetes risk band.",
     "category": "Health Calculators",
     "icon": "droplet",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "fingerprint-viewer-hardware": {
+    "name": "Hardware Capability Fingerprint Viewer",
+    "description": "See the CPU count, memory bucket, touch points and input capabilities any website can read from your device.",
+    "category": "Security & Privacy",
+    "icon": "cpu",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "fingerprint-viewer-screen": {
+    "name": "Screen and Display Fingerprint Viewer",
+    "description": "See the resolution, pixel ratio, colour depth and window signals every website can read from your display.",
+    "category": "Security & Privacy",
+    "icon": "monitor",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "fingerprint-viewer-timezone-locale": {
+    "name": "Timezone and Locale Fingerprint Viewer",
+    "description": "See the timezone, UTC offset, language list and formatting hints any website can read from your browser.",
+    "category": "Security & Privacy",
+    "icon": "globe",
     "iconColor": "text-[var(--primary)]"
   },
   "fire-calculator": {
@@ -13036,8 +13211,8 @@ export const toolMetaMap = {
     "topics": [
       "Social Media"
     ],
-    "icon": "wrench",
-    "iconColor": "text-muted-foreground"
+    "icon": "hash",
+    "iconColor": "text-[var(--primary)]"
   },
   "hashtag-mix-balancer": {
     "name": "Hashtag Mix Balancer",
@@ -14437,6 +14612,13 @@ export const toolMetaMap = {
     "icon": "target",
     "iconColor": "text-[var(--primary)]"
   },
+  "inactive-account-plan-google": {
+    "name": "Google Inactive Account Plan Builder",
+    "description": "Plan Google Inactive Account Manager: inactivity period, warning date, trusted contacts and the data-download deadline.",
+    "category": "Security & Privacy",
+    "icon": "hourglass",
+    "iconColor": "text-[var(--primary)]"
+  },
   "inattentional-blindness": {
     "name": "Inattentional Blindness Test",
     "description": "Experience the famous Gorilla Experiment — test your awareness, see if you spot the unexpected, and share your results.",
@@ -14455,6 +14637,13 @@ export const toolMetaMap = {
     "description": "Convert bag dimensions between inches and centimetres and check them against a cabin or checked baggage allowance.",
     "category": "Converters",
     "icon": "ruler",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "incident-playbook-cloned-card": {
+    "name": "Cloned Card Response Playbook",
+    "description": "Block, dispute and document an unauthorised card transaction, with your RBI limited-liability position and the bank's reversal deadlines worked out.",
+    "category": "Security & Privacy",
+    "icon": "credit-card",
     "iconColor": "text-[var(--primary)]"
   },
   "incident-severity-matrix-builder": {
@@ -15146,6 +15335,48 @@ export const toolMetaMap = {
     "icon": "clock-3",
     "iconColor": "text-primary"
   },
+  "iot-privacy-guide-baby-monitor": {
+    "name": "Baby Monitor Security Checklist",
+    "description": "Weighted 15-point hardening checklist for baby cameras, plus an exposure model showing whether the feed is reachable from the internet or only nearby.",
+    "category": "Security & Privacy",
+    "icon": "baby",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "iot-privacy-guide-robot-vacuum": {
+    "name": "Robot Vacuum Mapping Privacy Guide",
+    "description": "Weighted 15-step guide to robot vacuum maps, obstacle photos and cloud sharing, with a footprint model of what data leaves your home.",
+    "category": "Security & Privacy",
+    "icon": "bot",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "iot-privacy-guide-smart-lock": {
+    "name": "Smart Lock Security Checklist",
+    "description": "Weighted 16-point audit of smart lock accounts, guest codes, door hardware and offline fallback, with a keypad-code guessing-time estimate.",
+    "category": "Security & Privacy",
+    "icon": "lock-keyhole",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "iot-privacy-guide-smart-plugs": {
+    "name": "Smart Plug and Bulb Security Guide",
+    "description": "Weighted 14-step guide to segmenting cheap smart plugs and bulbs, with a router-aware isolation plan and IoT subnet sizing.",
+    "category": "Security & Privacy",
+    "icon": "plug",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "iot-privacy-guide-smart-speaker": {
+    "name": "Smart Speaker Privacy Setup Guide",
+    "description": "Step-by-step privacy hardening for Alexa, Google and Siri speakers, with a completion score and the true scale of what auto-delete windows retain.",
+    "category": "Security & Privacy",
+    "icon": "speaker",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "iot-privacy-guide-video-doorbell": {
+    "name": "Video Doorbell Privacy Setup Guide",
+    "description": "Weighted 15-step guide to lock down doorbell accounts, set privacy and motion zones, and see how many days of footage you keep.",
+    "category": "Security & Privacy",
+    "icon": "bell-ring",
+    "iconColor": "text-[var(--primary)]"
+  },
   "iou-letter-generator": {
     "name": "IOU Letter Generator",
     "description": "Draft an acknowledgement of debt with the amount in words, simple interest to the due date and the limitation expiry.",
@@ -15496,6 +15727,13 @@ export const toolMetaMap = {
     "description": "Generate a formal Hindi job application letter in correct patra format, with age on the cut-off date and relaxation checked.",
     "category": "Text & Writing",
     "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "job-board-profile-cleanup-guide": {
+    "name": "Job Board Profile Cleanup Guide",
+    "description": "Scan pasted résumé text for personal data that should not sit on a public job portal — government IDs, phone, address, date of birth and more — get an exposure score, and copy a redacted version.",
+    "category": "Security & Privacy",
+    "icon": "file-search",
     "iconColor": "text-[var(--primary)]"
   },
   "job-description-prompt-builder": {
@@ -15930,6 +16168,83 @@ export const toolMetaMap = {
     "description": "Age and sex appropriate daily step targets for children, with WHO active-minute goals and playful progress levels to close the gap.",
     "category": "Health & Fitness",
     "icon": "footprints",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-android": {
+    "name": "Android Kids Device Setup Guide",
+    "description": "Age-aware Family Link setup plan for a child's Android phone, with install approvals, limits and a daily time budget built from sleep guidance.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-instagram-teen": {
+    "name": "Teen Instagram Safety Setup Guide",
+    "description": "Check Instagram Teen Account defaults, DM and tag limits, supervision and a sleep-mode window worked out from wake time.",
+    "category": "Security & Privacy",
+    "icon": "instagram",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-ipad": {
+    "name": "iPad Study Device Setup Guide",
+    "description": "Turn a shared or personal iPad into a study device with Guided Access, Focus, content filters and a homework block schedule with 20-20-20 eye breaks.",
+    "category": "Security & Privacy",
+    "icon": "tablet",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-iphone": {
+    "name": "iPhone Kids Device Setup Guide",
+    "description": "Age-aware Screen Time setup for a child's iPhone: content ratings, web filter, Ask to Buy, Communication Safety and Downtime, with the exact values to pick.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-minecraft": {
+    "name": "Minecraft Multiplayer Safety Setup",
+    "description": "Build a step-by-step plan for safer Minecraft multiplayer: Xbox privacy, realm invites, chat filters and spend limits.",
+    "category": "Security & Privacy",
+    "icon": "pickaxe",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-nintendo-switch": {
+    "name": "Nintendo Switch Parental Setup",
+    "description": "Plan Nintendo Switch parental controls: play-time limits in 15-minute steps, age presets, eShop and chat restrictions.",
+    "category": "Security & Privacy",
+    "icon": "joystick",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-playstation": {
+    "name": "PlayStation Family Safety Setup",
+    "description": "Plan PSN child accounts, spend caps, play-time limits and an age-rating ceiling for PS5 and PS4 family consoles.",
+    "category": "Security & Privacy",
+    "icon": "gamepad",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-smart-tv": {
+    "name": "Smart TV Kids Safety Setup Guide",
+    "description": "Lock down profiles, purchase PINs, app installs and maturity ratings on Roku, Fire TV, Google TV, Samsung, LG or Apple TV.",
+    "category": "Security & Privacy",
+    "icon": "tv",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-whatsapp-teen": {
+    "name": "Teen WhatsApp Safety Setup Guide",
+    "description": "A scored WhatsApp privacy checklist for teens: group invites, unknown callers, last seen, two-step PIN and blocking.",
+    "category": "Security & Privacy",
+    "icon": "message-circle",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-device-setup-windows-family": {
+    "name": "Windows Family Account Setup Guide",
+    "description": "Set up a Windows child account with Microsoft Family Safety: standard-user rights, Edge-only web filtering, app limits and a weekly screen-time total.",
+    "category": "Security & Privacy",
+    "icon": "laptop",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "kids-first-smartphone-readiness-quiz": {
+    "name": "Kids First Smartphone Readiness Quiz",
+    "description": "A weighted 14-question quiz that scores a child's readiness for a first phone and returns starting rules to match.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
     "iconColor": "text-[var(--primary)]"
   },
   "kids-hydration-reminder": {
@@ -16403,6 +16718,13 @@ export const toolMetaMap = {
     "icon": "salad",
     "iconColor": "text-teal-600"
   },
+  "legacy-contact-setup-apple": {
+    "name": "Apple Legacy Contact Setup Guide",
+    "description": "Check Apple legacy contact eligibility, plan the access key handover and see what the 3-year access window covers.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-[var(--primary)]"
+  },
   "legal-deadline-countdown-board": {
     "name": "Legal Deadline Countdown Board",
     "description": "Track every legal deadline on one board with calendar days, working days remaining and colour-coded reminder bands.",
@@ -16582,6 +16904,13 @@ export const toolMetaMap = {
     "icon": "arrow-down-up",
     "iconColor": "text-[var(--primary)]"
   },
+  "link-anatomy-highlighter": {
+    "name": "Link Anatomy Highlighter",
+    "description": "Colour-codes the scheme, userinfo, host, port, path and query of any URL and flags the parts phishing links abuse.",
+    "category": "Security & Privacy",
+    "icon": "link-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "link-organizer": {
     "name": "Link Organizer",
     "description": "Group, save, and bulk-open your daily links and resources.",
@@ -16601,7 +16930,7 @@ export const toolMetaMap = {
   },
   "link-sorter": {
     "name": "Link Sorter",
-    "description": "Sort your long url/links",
+    "description": "Shorten a long URL into a compact, shareable link and keep the last few to hand",
     "category": "Developer",
     "topics": [
       "Web"
@@ -17138,7 +17467,7 @@ export const toolMetaMap = {
   },
   "lossless-audio-transcoder": {
     "name": "Lossless Audio Transcoder",
-    "description": "WAV, FLAC, MP3 aur OGG formats convert kare.",
+    "description": "Converts audio files between WAV, FLAC, MP3 and OGG formats.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -17332,6 +17661,13 @@ export const toolMetaMap = {
     ],
     "icon": "grid",
     "iconColor": "text-purple-500"
+  },
+  "mac-address-randomisation-explainer": {
+    "name": "MAC Randomisation Explainer",
+    "description": "Reads the U/L and I/G bits of any MAC address to say whether it is a real vendor identity or a randomised private Wi-Fi address, and what that breaks.",
+    "category": "Security & Privacy",
+    "icon": "fingerprint",
+    "iconColor": "text-[var(--primary)]"
   },
   "macro-calculator": {
     "name": "Macro Calculator",
@@ -17577,6 +17913,13 @@ export const toolMetaMap = {
     "description": "Write unbundled, non-prechecked marketing consent checkbox wording for signup forms, with per-channel labels and frequency promises.",
     "category": "Marketing & Social",
     "icon": "square-check-big",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "marketing-consent-withdrawal-builder": {
+    "name": "Marketing Consent Withdrawal Builder",
+    "description": "Draft an opt-out message for email, SMS, calls or post with the right legal citation and the date the company must act by.",
+    "category": "Security & Privacy",
+    "icon": "megaphone-off",
     "iconColor": "text-[var(--primary)]"
   },
   "marketing-opt-out-request-generator": {
@@ -19425,6 +19768,13 @@ export const toolMetaMap = {
     "icon": "newspaper",
     "iconColor": "text-[var(--primary)]"
   },
+  "newsletter-unsubscribe-safety-guide": {
+    "name": "Newsletter Unsubscribe Safety Guide",
+    "description": "Decide whether unsubscribing is safe or whether it just confirms your address, and see the date the sender must stop mailing.",
+    "category": "Security & Privacy",
+    "icon": "mail-minus",
+    "iconColor": "text-[var(--primary)]"
+  },
   "nginx-cache-header-planner": {
     "name": "Nginx Cache Header Planner",
     "description": "Plan Cache-Control and expires directives per asset type and copy a ready nginx location-block snippet.",
@@ -19877,6 +20227,13 @@ export const toolMetaMap = {
     "icon": "circle-dot",
     "iconColor": "text-violet-500"
   },
+  "old-account-deletion-tracker": {
+    "name": "Old Account Deletion Tracker",
+    "description": "Track dormant account deletion requests with real response deadlines under GDPR and CCPA, overdue flags and proof references.",
+    "category": "Security & Privacy",
+    "icon": "trash-2",
+    "iconColor": "text-[var(--primary)]"
+  },
   "old-age-pension-eligibility-checker": {
     "name": "Old Age Pension Scheme Eligibility Checker",
     "description": "Check IGNOAPS, widow and disability pension criteria under NSAP, with the central share, state top-up and monthly total.",
@@ -20047,6 +20404,13 @@ export const toolMetaMap = {
     "description": "Sachet-to-water ratios, homemade sugar-salt proportions and WHO replacement volumes for oral rehydration solution.",
     "category": "Health & Fitness",
     "icon": "flask-conical",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "os-hardening-checklist-android": {
+    "name": "Android Hardening Checklist",
+    "description": "A weighted Android security checklist filtered to your Android version and threat profile, with patch-level freshness and a hardening score.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
     "iconColor": "text-[var(--primary)]"
   },
   "osmania-university-cgpa-converter": {
@@ -20469,6 +20833,41 @@ export const toolMetaMap = {
     ],
     "icon": "shield-check",
     "iconColor": "text-emerald-600"
+  },
+  "password-policy-tester-banking": {
+    "name": "Bank Password Policy Tester",
+    "description": "Test a net-banking password against typical bank rules and see exactly which constraint fails and why.",
+    "category": "Security & Privacy",
+    "icon": "landmark",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "password-policy-tester-corporate": {
+    "name": "Corporate Password Policy Tester",
+    "description": "Check a password against Active Directory complexity rules and NIST SP 800-63B guidance side by side.",
+    "category": "Security & Privacy",
+    "icon": "building-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "password-policy-tester-gov-portal": {
+    "name": "Government Portal Password Tester",
+    "description": "Check a password against the 8-14 character rules typical of Indian government portals, including PAN and mobile checks.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "password-policy-tester-school-portal": {
+    "name": "School Portal Password Policy Tester",
+    "description": "A kid-friendly checker for school login passwords, with plain-language rules and a passphrase builder.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "password-reuse-self-audit-sheet": {
+    "name": "Password Reuse Self Audit Sheet",
+    "description": "Map your accounts to password families in the browser to find reuse clusters and see which one to break first.",
+    "category": "Security & Privacy",
+    "icon": "key-round",
+    "iconColor": "text-[var(--primary)]"
   },
   "password-strength-checker": {
     "name": "Password Strength Checker",
@@ -21112,6 +21511,90 @@ export const toolMetaMap = {
     "description": "Check your Philippines visa-free allowance, the eTravel registration window, passport validity beyond the stay and the extension you will need.",
     "category": "Productivity",
     "icon": "palmtree",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-apple-id-locked": {
+    "name": "Apple ID Locked Phishing Anatomy",
+    "description": "Check an Apple ID account-locked email, text or call against Apple's real domains and the things Apple never asks for.",
+    "category": "Security & Privacy",
+    "icon": "lock-keyhole",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-bank-otp": {
+    "name": "Bank OTP Phishing Anatomy Explainer",
+    "description": "Takes a fake bank OTP SMS apart line by line and scans any message you paste for the same weighted scam markers and lookalike links.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-courier-delivery": {
+    "name": "Courier Delivery Phishing Anatomy",
+    "description": "Breaks down the fake parcel-on-hold redelivery-fee SMS line by line and scans any message you paste for the same weighted markers and lookalike links.",
+    "category": "Security & Privacy",
+    "icon": "truck",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-electricity-bill": {
+    "name": "Electricity Bill Scam Anatomy",
+    "description": "Explains the disconnection-tonight SMS and its remote-access endgame, with a scanner that weighs the same markers in any message you paste.",
+    "category": "Security & Privacy",
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-invoice-attachment": {
+    "name": "Invoice Attachment Phishing Anatomy",
+    "description": "Break down a suspicious invoice email: double extensions, macro lures, password-protected archives and lookalike sender domains.",
+    "category": "Security & Privacy",
+    "icon": "file-warning",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-job-offer": {
+    "name": "Job Offer Phishing Anatomy",
+    "description": "Anatomy of fraudulent offer letters, fee demands and lookalike HR domains, with a scanner that weighs the same markers in any recruiter message.",
+    "category": "Security & Privacy",
+    "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-kyc-update": {
+    "name": "KYC Update Phishing Anatomy",
+    "description": "India-first teardown of KYC-expiry scam messages, with a scanner that weighs remote-access, UPI-PIN and identity-harvest markers in anything you paste.",
+    "category": "Security & Privacy",
+    "icon": "id-card",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-payroll-redirect": {
+    "name": "Payroll Redirect Phishing Anatomy",
+    "description": "Take apart a salary-account change request: lookalike domains, no-phone-calls excuses, cut-off timing and the money at risk.",
+    "category": "Security & Privacy",
+    "icon": "banknote",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-sextortion-email": {
+    "name": "Sextortion Email Anatomy Explainer",
+    "description": "Why an email quoting your old password is almost always a mass-mailed bluff, and the steps that actually reduce your risk.",
+    "category": "Security & Privacy",
+    "icon": "mail-warning",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-streaming-billing": {
+    "name": "Streaming Billing Phishing Anatomy",
+    "description": "Check a Netflix, Prime Video, Disney+ or Spotify payment-failed message against the domains each service really uses.",
+    "category": "Security & Privacy",
+    "icon": "tv",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-tax-refund": {
+    "name": "Income Tax Refund Phishing Anatomy",
+    "description": "Shows how fake refund notices imitate official domains and skip the DIN, with a scanner that weighs the same markers in any message you paste.",
+    "category": "Security & Privacy",
+    "icon": "receipt-indian-rupee",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "phishing-anatomy-university-portal": {
+    "name": "University Portal Phishing Anatomy",
+    "description": "Split a student-portal login link into its parts and see whether the registrable domain really belongs to your institution.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
   },
   "phishing-url-x-ray": {
@@ -22142,6 +22625,48 @@ export const toolMetaMap = {
     "description": "26-point YouTube privacy audit — private subscriptions and playlists, history retention, public comment history, ad data and channel access.",
     "category": "Security & Privacy",
     "icon": "youtube",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-freelancer": {
+    "name": "Freelancer Privacy Starter Kit",
+    "description": "Separation checklist for solo professionals covering home address, client folders, invoices and contracts, with a blast-radius estimate.",
+    "category": "Security & Privacy",
+    "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-real-estate-agent": {
+    "name": "Real Estate Agent Privacy Kit",
+    "description": "Retention register for client KYC documents that flags what to keep, what to delete now and what should never have been collected.",
+    "category": "Business",
+    "icon": "building-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-remote-worker": {
+    "name": "Remote Worker Privacy Starter Kit",
+    "description": "Home-office security baseline for router, devices and video calls that adapts to BYOD or company laptop and to who else lives with you.",
+    "category": "Security & Privacy",
+    "icon": "laptop",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-senior-citizen": {
+    "name": "Senior Citizen Privacy Starter Kit",
+    "description": "Large-type scam-safety checklist covering OTPs, spoofed calls, app installs and daily transfer limits, with a money-at-risk figure.",
+    "category": "Security & Privacy",
+    "icon": "shield-check",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-student": {
+    "name": "Student Privacy Starter Kit",
+    "description": "Weighted campus privacy checklist for shared lab devices, college Wi-Fi and student portals, with a time-boxed action plan.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "privacy-starter-kit-teacher": {
+    "name": "Teacher Privacy Starter Kit",
+    "description": "A prioritised privacy plan for teachers: protect student records on school platforms and keep your own number, device and time private.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
     "iconColor": "text-[var(--primary)]"
   },
   "private-bank-statement-analyzer": {
@@ -23235,6 +23760,13 @@ export const toolMetaMap = {
     "icon": "award",
     "iconColor": "text-[var(--primary)]"
   },
+  "recovery-code-storage-planner": {
+    "name": "Recovery Code Storage Planner",
+    "description": "Plan where to keep 2FA backup codes across offline, encrypted and off-site copies, and see which resilience rules your plan fails.",
+    "category": "Security & Privacy",
+    "icon": "vault",
+    "iconColor": "text-[var(--primary)]"
+  },
   "recruitment-height-weight-ratio-checker": {
     "name": "Height Weight Ratio For Recruitment",
     "description": "Check whether your weight sits inside the height band and BMI range used by Army, SSC GD and police physical standards.",
@@ -23284,7 +23816,7 @@ export const toolMetaMap = {
   },
   "redness-analyzer": {
     "name": "Redness Analyzer",
-    "description": "Analyze facial redness with AI-powered color analysis. Detect inflammation, sensitivity, and vascular activity with precise scoring and severity assessment.",
+    "description": "Measure facial redness from a photo in CIELAB a*, cheek by cheek, against the calmest skin in the same frame. Colour measurement only, run entirely in your browser.",
     "category": [
       "Lifestyle",
       "Health & Fitness",
@@ -23295,8 +23827,8 @@ export const toolMetaMap = {
       "Health",
       "Selfie"
     ],
-    "icon": "activity",
-    "iconColor": "text-teal-500"
+    "icon": "thermometer",
+    "iconColor": "text-[var(--primary)]"
   },
   "reel-audio-usage-planner": {
     "name": "Reel Audio Usage Planner",
@@ -23341,6 +23873,13 @@ export const toolMetaMap = {
     "description": "Work out calorie, protein, fat and carbohydrate targets for a planned refeed day, plus what it costs your weekly deficit.",
     "category": "Health Calculators",
     "icon": "utensils",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "referrer-policy-chooser": {
+    "name": "Referrer Policy Chooser",
+    "description": "Compare all eight Referrer-Policy values on a real URL pair and see the exact Referer header each one sends.",
+    "category": "Developer",
+    "icon": "link-2",
     "iconColor": "text-[var(--primary)]"
   },
   "refinance-savings-calculator": {
@@ -23878,6 +24417,13 @@ export const toolMetaMap = {
     "icon": "arrow-right-left",
     "iconColor": "text-[var(--primary)]"
   },
+  "review-site-data-removal-guide": {
+    "name": "Review Site Personal Data Removal Guide",
+    "description": "Build a dated, ordered plan to get your name, contact details or photos off review and rating platforms, with the right escalation route.",
+    "category": "Security & Privacy",
+    "icon": "star-off",
+    "iconColor": "text-[var(--primary)]"
+  },
   "revision-limit-contract-helper": {
     "name": "Revision Limit Contract Helper",
     "description": "Price your included revision rounds, see your real effective hourly rate, and draft the scope clause that ends endless changes.",
@@ -24308,6 +24854,13 @@ export const toolMetaMap = {
   "router-hardening-checklist-tp-link": {
     "name": "TP-Link Router Hardening Checklist",
     "description": "Weighted 21-point TP-Link hardening audit covering the admin account, WPA encryption, WPS, remote management and firmware, with a WPA2 crack-time check.",
+    "category": "Security & Privacy",
+    "icon": "router",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "router-hardening-checklist-xiaomi": {
+    "name": "Xiaomi Router Hardening Checklist",
+    "description": "Weighted 22-point Mi and Redmi router audit covering the admin password, Mi Account binding, plug-ins, WPA settings and firmware, with a passphrase crack-time check.",
     "category": "Security & Privacy",
     "icon": "router",
     "iconColor": "text-[var(--primary)]"
@@ -24815,6 +25368,76 @@ export const toolMetaMap = {
     "icon": "file-type",
     "iconColor": "text-[var(--primary)]"
   },
+  "scam-explainer-army-officer-marketplace": {
+    "name": "Army Officer Marketplace Scam Explainer",
+    "description": "Break down the defence-personnel advance-payment script on classifieds apps and total up what is at risk.",
+    "category": "Security & Privacy",
+    "icon": "shopping-bag",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-fake-customer-care": {
+    "name": "Fake Customer Care Number Explainer",
+    "description": "Check where a helpline number came from, what the caller is asking for, and what the excess-refund trick costs.",
+    "category": "Security & Privacy",
+    "icon": "phone-call",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-fake-scholarship": {
+    "name": "Fake Scholarship Scam Explainer",
+    "description": "Red flags in scholarship and admission fee scams, a fee-demand tally and an offline check of whether a scholarship link is really a government domain.",
+    "category": "Security & Privacy",
+    "icon": "graduation-cap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-fake-traffic-challan": {
+    "name": "Fake Traffic Challan Scam Explainer",
+    "description": "Spot fake e-challan SMS and APK links, validate a registration number offline and check the demanded fine against Motor Vehicles Act penalties.",
+    "category": "Security & Privacy",
+    "icon": "receipt-text",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-gift-parcel-customs": {
+    "name": "Gift Parcel Customs Fee Scam Explainer",
+    "description": "Break down the foreign-friend gift-stuck-at-customs scam step by step, score the red flags and see what real Indian customs duty would be.",
+    "category": "Security & Privacy",
+    "icon": "package",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-matrimonial-fraud": {
+    "name": "Matrimonial & Dating Fraud Explainer",
+    "description": "Score the profile, story and money warning signs in a matrimonial or dating relationship, check how much you have verified independently, and total anything already sent.",
+    "category": "Security & Privacy",
+    "icon": "heart-crack",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-meter-update": {
+    "name": "Electricity Meter Update Scam Explainer",
+    "description": "The meter-update SMS that ends in a remote-access app or a UPI collect request, checked against the 15 clear days notice the Electricity Act requires.",
+    "category": "Security & Privacy",
+    "icon": "zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-sim-block-warning": {
+    "name": "SIM Block Warning Scam Explainer",
+    "description": "Break down the your-number-will-be-disconnected call, the remote-access app trap, and check your SIM count against the DoT per-person limit.",
+    "category": "Security & Privacy",
+    "icon": "smartphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-task-based-jobs": {
+    "name": "Work From Home Task Scam Explainer",
+    "description": "Model the like-and-review task scam: seed payouts, escalating deposits, and the app balance that never withdraws.",
+    "category": "Security & Privacy",
+    "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "scam-explainer-upi-refund": {
+    "name": "UPI Refund Scam Explainer",
+    "description": "See why a UPI PIN can only send money, never receive it, and check any refund request against that rule.",
+    "category": "Security & Privacy",
+    "icon": "shield-alert",
+    "iconColor": "text-[var(--primary)]"
+  },
   "scam-message-triage": {
     "name": "Scam Message Triage",
     "description": "Review SMS, WhatsApp, and email text locally for common scam warning patterns and get safer next steps without sending the message anywhere.",
@@ -25229,6 +25852,55 @@ export const toolMetaMap = {
     "iconColor": "text-primary",
     "wideWorkspace": true
   },
+  "security-question-answer-generator": {
+    "name": "Security Question Answer Generator",
+    "description": "Generate false but memorable answers to security questions so nobody can research their way into your account.",
+    "category": "Security & Privacy",
+    "icon": "shield-question",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-osint-query-builder-facebook": {
+    "name": "Facebook Self Exposure Query Builder",
+    "description": "Builds site: and quoted-phrase searches from your own name and profile link to reveal which Facebook posts, photos and group activity are publicly indexed.",
+    "category": "Security & Privacy",
+    "icon": "facebook",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-osint-query-builder-instagram": {
+    "name": "Instagram Self Exposure Query Builder",
+    "description": "Builds site: and quoted-phrase searches from your own username to find indexed posts, embedded copies and reposts of your Instagram content.",
+    "category": "Security & Privacy",
+    "icon": "instagram",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-osint-query-builder-linkedin": {
+    "name": "LinkedIn Self Exposure Query Builder",
+    "description": "Builds site:, filetype: and quoted-phrase searches from your own name and profile URL to show how discoverable your LinkedIn presence is.",
+    "category": "Security & Privacy",
+    "icon": "linkedin",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-osint-query-builder-youtube": {
+    "name": "YouTube Self Exposure Query Builder",
+    "description": "Build the exact search-operator queries that surface videos, comments and profile pages exposing your identity or location.",
+    "category": "Security & Privacy",
+    "icon": "youtube",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-osint-reverse-image-planner": {
+    "name": "Image Reverse Search Planner",
+    "description": "Plan a reverse-image audit of your profile photos: which engines can answer your question, which crops to submit, how long it takes.",
+    "category": "Security & Privacy",
+    "icon": "scan-search",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "self-signed-certificate-explainer": {
+    "name": "Self Signed Certificate Risk Explainer",
+    "description": "Scores a self-signed or private-CA TLS setup by context and trust model, and says exactly what it protects against and what it does not.",
+    "category": "Developer",
+    "icon": "file-badge",
+    "iconColor": "text-[var(--primary)]"
+  },
   "seller-details-disclosure-generator": {
     "name": "Seller Details Disclosure Generator",
     "description": "Build the legal entity, address and contact block e-commerce rules require, with GSTIN, PAN and CIN validated.",
@@ -25621,7 +26293,7 @@ export const toolMetaMap = {
   },
   "silence-filler-word-cutter": {
     "name": "Silence & Filler-Word Cutter",
-    "description": "Long silences aur selected filler segments remove kare.",
+    "description": "Removes long silences from an audio recording using an adjustable loudness threshold.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -26179,6 +26851,62 @@ export const toolMetaMap = {
     "description": "Log social events and alone time for the week, see the battery level left, the heaviest day and the recovery hours you still owe yourself.",
     "category": "Health & Fitness",
     "icon": "battery-medium",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-atm-skimmer-checklist": {
+    "name": "ATM Skimmer Inspection Checklist",
+    "description": "A 16-point physical inspection routine for an unfamiliar ATM, with a stop-or-proceed verdict based on what you find.",
+    "category": "Security & Privacy",
+    "icon": "credit-card",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-callback-verification-builder": {
+    "name": "Callback Verification Number Builder",
+    "description": "Build a card of official numbers you trust enough to call back on, with Indian number-format checks and a source trust rating.",
+    "category": "Security & Privacy",
+    "icon": "phone-call",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-coworking-checklist": {
+    "name": "Coworking Space Security Checklist",
+    "description": "Score your screen, print, device, network and people habits in a shared workspace, with a per-category breakdown of the gaps.",
+    "category": "Security & Privacy",
+    "icon": "briefcase",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-group-admin-scam": {
+    "name": "WhatsApp Group Admin Scam Explainer",
+    "description": "Score the tells behind fake group admin, fake payment and exit-scam messages, and see which fraud pattern they match.",
+    "category": "Security & Privacy",
+    "icon": "users-round",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-hotel-room-checklist": {
+    "name": "Hotel Room Tech Safety Checklist",
+    "description": "A check-in routine for the smart TV, room safe, network kit and door hardware, ranked by what to do in the first ten minutes.",
+    "category": "Security & Privacy",
+    "icon": "bed-double",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-juice-jacking-explainer": {
+    "name": "Juice Jacking Risk Explainer",
+    "description": "Work out the real data risk of charging in public from your power source, cable, lock state and OS — and which fix actually removes it.",
+    "category": "Security & Privacy",
+    "icon": "plug-zap",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-public-wifi-checklist": {
+    "name": "Public Wi-Fi Safety Checklist",
+    "description": "Score your cafe, airport or hotel Wi-Fi habits against the controls that still matter, and get the gaps ranked by impact.",
+    "category": "Security & Privacy",
+    "icon": "wifi",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "social-engineering-tailgating-explainer": {
+    "name": "Tailgating and Badge Policy Explainer",
+    "description": "Estimate unsupervised door openings per day from headcount and entry type, then get the control tier and polite challenge scripts to match.",
+    "category": "Business",
+    "icon": "door-open",
     "iconColor": "text-[var(--primary)]"
   },
   "social-media-simulator": {
@@ -27423,6 +28151,13 @@ export const toolMetaMap = {
     "description": "Normalise every recurring subscription to a yearly cost, see the true annual drain and what cancelling the dead ones saves.",
     "category": "Finance Calculators",
     "icon": "repeat",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "subscription-wind-down-planner": {
+    "name": "Subscription Wind-Down Planner",
+    "description": "List recurring subscriptions, project what they cost if nobody cancels, and record where each one can be stopped.",
+    "category": "Security & Privacy",
+    "icon": "list-checks",
     "iconColor": "text-[var(--primary)]"
   },
   "subtitle-bom-utf8-fixer": {
@@ -29135,6 +29870,27 @@ export const toolMetaMap = {
     "icon": "trophy",
     "iconColor": "text-primary"
   },
+  "tracker-explainer-ad-topics": {
+    "name": "Ad Topic Profile Explainer",
+    "description": "See what interest-based ad topics are, how each platform builds them, and get a per-platform reset checklist.",
+    "category": "Marketing & Social",
+    "icon": "megaphone",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tracker-explainer-loyalty-programs": {
+    "name": "Loyalty Program Data Explainer",
+    "description": "See what supermarket and airline loyalty records infer about your household, and which inferences are special-category data.",
+    "category": "Security & Privacy",
+    "icon": "shopping-cart",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "tracker-explainer-telemetry-vs-analytics": {
+    "name": "Telemetry vs Analytics Explainer",
+    "description": "Classify what your app actually measures, see whether it needs consent, and generate an honest analytics notice.",
+    "category": "Developer",
+    "icon": "activity",
+    "iconColor": "text-[var(--primary)]"
+  },
   "tracking-link-decoder": {
     "name": "Tracking Link Decoder",
     "description": "Name every tracking parameter in a URL, see who set it and what it reveals, and copy a stripped clean link.",
@@ -29145,6 +29901,13 @@ export const toolMetaMap = {
     "icon": "link-2",
     "iconColor": "text-primary",
     "wideWorkspace": true
+  },
+  "tracking-opt-out-priority-checklist": {
+    "name": "Tracking Opt-Out Priority Checklist",
+    "description": "Ranks every tracking opt-out by benefit per minute, fits the best ones into your time budget, and names the ones not worth doing.",
+    "category": "Security & Privacy",
+    "icon": "list-checks",
+    "iconColor": "text-[var(--primary)]"
   },
   "tracking-pixel-disclosure-generator": {
     "name": "Tracking Pixel Disclosure Generator",
@@ -29313,6 +30076,41 @@ export const toolMetaMap = {
     "description": "Add up device wattages to see whether one hotel socket and travel power strip can safely run them all at your destination voltage.",
     "category": "Education & Science",
     "icon": "power",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "travel-security-airport-transit": {
+    "name": "Airport and Transit Security Checklist",
+    "description": "Score your readiness to protect devices, documents and screens through security, the lounge, the flight and the border.",
+    "category": "Security & Privacy",
+    "icon": "plane",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "travel-security-backpacker": {
+    "name": "Backpacker Digital Safety Checklist",
+    "description": "Score your backpacking security across theft, devices, accounts, documents and payments, and see the cheapest kit that closes the gaps.",
+    "category": "Security & Privacy",
+    "icon": "backpack",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "travel-security-family-photo-sharing": {
+    "name": "Family Holiday Photo Sharing Guide",
+    "description": "Score how much your holiday posting advertises an empty house, and see which settings and habits actually reduce it.",
+    "category": "Security & Privacy",
+    "icon": "camera",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "travel-security-hotel-checklist": {
+    "name": "Hotel Wi-Fi and Safe Checklist",
+    "description": "A room-arrival routine for hotel Wi-Fi, the in-room safe, smart devices and door security, scored for your type of property.",
+    "category": "Security & Privacy",
+    "icon": "bed-double",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "travel-security-roaming-privacy": {
+    "name": "International Roaming Privacy Guide",
+    "description": "Compare home roaming, a travel eSIM, a local SIM and Wi-Fi only on identity exposure, OTP access, cost control and coverage for your trip.",
+    "category": "Security & Privacy",
+    "icon": "smartphone-nfc",
     "iconColor": "text-[var(--primary)]"
   },
   "travel-toiletry-quantity-estimator": {
@@ -30123,6 +30921,13 @@ export const toolMetaMap = {
     "icon": "beaker",
     "iconColor": "text-[var(--primary)]"
   },
+  "url-embedded-base64-decoder": {
+    "name": "Base64 in URL Decoder",
+    "description": "Find and decode base64, base64url and hex blobs hidden inside a link, including redirect targets and embedded email addresses.",
+    "category": "Security & Privacy",
+    "icon": "binary",
+    "iconColor": "text-[var(--primary)]"
+  },
   "url-encoder-decoder": {
     "name": "URL Encoder Decoder Tool",
     "description": "Encode and decode URLs instantly for safe web usage.",
@@ -30159,6 +30964,13 @@ export const toolMetaMap = {
     "description": "Convert titles into clean URL slugs with transliteration, stop-word removal and length limits.",
     "category": "Text & Writing",
     "icon": "link-2",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "url-tracking-parameter-stripper": {
+    "name": "URL Tracking Parameter Stripper",
+    "description": "Remove utm, gclid, fbclid, mc_eid and hundreds of other tracking parameters from links, in bulk, entirely in your browser.",
+    "category": "Security & Privacy",
+    "icon": "eraser",
     "iconColor": "text-[var(--primary)]"
   },
   "us-consulate-india-appointment-day-checklist": {
@@ -30201,6 +31013,13 @@ export const toolMetaMap = {
     "description": "Decode the INA section on a US visa refusal slip - 214(b), 221(g) and the rest - and get a checklist of what to fix.",
     "category": "Education & Science",
     "icon": "file-search",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "usb-drive-hygiene-checklist": {
+    "name": "USB Drive Hygiene Checklist",
+    "description": "Score the residual risk of a USB situation against the controls you actually have in place, and see which ones only feel safe.",
+    "category": "Security & Privacy",
+    "icon": "usb",
     "iconColor": "text-[var(--primary)]"
   },
   "usd-cash-budget-planner": {
@@ -30284,8 +31103,8 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "utm-link-builder": {
-    "name": "UTM Link Builder",
-    "description": "Build tracked UTM links easily for marketing campaigns.",
+    "name": "UTM Builder",
+    "description": "Free UTM builder for campaign URLs — set utm_source, utm_medium and utm_campaign, then copy a clean tracking link.",
     "category": "Marketing & Social",
     "topics": [
       "Marketing",
@@ -30339,7 +31158,7 @@ export const toolMetaMap = {
   },
   "variable-font-axis-explorer": {
     "name": "Variable Font Axis Explorer",
-    "description": "Weight, width aur optical-size axes visually inspect aur export kare.",
+    "description": "Read the fvar table out of a .ttf or .otf: every weight, width, slant and optical-size axis with its real min, default and max, every named instance, and the @font-face CSS those ranges imply — parsed in your browser.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -30732,7 +31551,7 @@ export const toolMetaMap = {
   },
   "video-stabilizer": {
     "name": "Video Stabilizer",
-    "description": "Shaky footage ko frame-motion analysis se smooth kare.",
+    "description": "Smooths shaky footage using frame-motion analysis.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31372,7 +32191,7 @@ export const toolMetaMap = {
   },
   "wav-spectrogram-analyzer": {
     "name": "WAV Spectrogram Analyzer",
-    "description": "FFT spectrogram, clipping, hum aur frequency distribution visualize kare.",
+    "description": "Renders an audio file as an FFT spectrogram to visualize clipping, hum and frequency distribution.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31525,6 +32344,13 @@ export const toolMetaMap = {
     "description": "Build a wedding trip packing list from the events you are attending, with outfit weights checked against your baggage allowance.",
     "category": "Lifestyle",
     "icon": "gem",
+    "iconColor": "text-[var(--primary)]"
+  },
+  "wedding-website-privacy-cleanup": {
+    "name": "Wedding Website Privacy Cleanup",
+    "description": "Audit a public wedding or event page for over-shared personal details and get a ranked cleanup plan before you send the link.",
+    "category": "Lifestyle",
+    "icon": "heart-handshake",
     "iconColor": "text-[var(--primary)]"
   },
   "week-number-calculator": {
@@ -31840,6 +32666,13 @@ export const toolMetaMap = {
     ],
     "icon": "globe",
     "iconColor": "text-primary"
+  },
+  "whois-privacy-explainer": {
+    "name": "WHOIS Privacy Explainer",
+    "description": "Shows field by field what a public WHOIS or RDAP lookup reveals about a domain owner, scores the exposure, and lists the trade-offs of privacy.",
+    "category": "Security & Privacy",
+    "icon": "eye-off",
+    "iconColor": "text-[var(--primary)]"
   },
   "whole30-macro-planner": {
     "name": "Whole30 Macro Planner",
@@ -32332,7 +33165,7 @@ export const toolMetaMap = {
   },
   "youtube-video-analyzer": {
     "name": "YouTube Video Analyzer",
-    "description": "Analyze YouTube videos and extract insights instantly.",
+    "description": "Break a YouTube link into its video id, start time, playlist and tracking parameters, rebuild clean and privacy-enhanced links, and audit a pasted title and description against YouTube's title, hashtag and chapter rules — entirely in your browser.",
     "category": "AI Tools",
     "topics": [
       "Creators",

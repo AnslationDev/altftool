@@ -14,6 +14,12 @@ import {
   getCategoryByPath,
   getSearchSuggestions,
 } from "../data/factNetData";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+} from "@/platform/seo/generateMetadata";
 
 export default function CategoryDetail({ categoryPath, searchParams }) {
   const category = getCategoryByPath(categoryPath);
@@ -39,8 +45,36 @@ export default function CategoryDetail({ categoryPath, searchParams }) {
     { label: "Image slots", value: result.total, icon: "link" },
   ];
 
+  const path = `/fact-net/categories/${category.categoryPath}`;
+
   return (
     <main className="fn-page">
+      {/* ItemList mirrors the page of topics ArticleGrid renders below (the
+          grid is paginated, so this is the current page, in render order). */}
+      <JsonLd
+        id={`fact-net-category-schema-${category.categoryPath}`}
+        data={[
+          createCollectionPageJsonLd({
+            path,
+            name: category.name,
+            description: category.description,
+          }),
+          createItemListJsonLd({
+            path,
+            name: `${category.name} fact guides`,
+            items: result.items.map((article) => ({
+              name: article.title,
+              path: article.href,
+            })),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Fact Hub", path: "/fact-net" },
+            { name: "Categories", path: "/fact-net/categories" },
+            { name: category.name, path },
+          ]),
+        ]}
+      />
       <div className="fn-stack">
         <FactNetNav />
         <section className="fn-glass">

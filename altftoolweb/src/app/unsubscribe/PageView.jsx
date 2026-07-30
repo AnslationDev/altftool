@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Loader2, CheckCircle, Mail } from "lucide-react";
+
+const CONTACT_EMAIL = "altftool@gmail.com";
 
 export default function UnsubscribePage() {
   const [email, setEmail] = useState("");
@@ -9,10 +12,7 @@ export default function UnsubscribePage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const API_URL =
-    "https://ads.ads-astra.com/api/ndatalab_workspace/receiver-bucket1";
-
-  // ✅ Hide header, footer, chatbot, cookie, etc.
+  // ✅ Hide header, footer for a distraction-free unsubscribe screen
   useEffect(() => {
     const hideLayout = () => {
       // Hide header
@@ -22,22 +22,6 @@ export default function UnsubscribePage() {
       // Hide footer
       const footer = document.querySelector("footer");
       if (footer) footer.style.display = "none";
-
-      // Hide popups / widgets
-      const selectors = [
-        '[class*="cookie"]',
-        '[class*="newsletter"]',
-        '[class*="chat"]',
-        '[id*="cookie"]',
-        '[id*="newsletter"]',
-        '[id*="chat"]',
-      ];
-
-      selectors.forEach((selector) => {
-        document.querySelectorAll(selector).forEach((el) => {
-          el.style.display = "none";
-        });
-      });
     };
 
     hideLayout();
@@ -61,7 +45,7 @@ export default function UnsubscribePage() {
 //     }
 //   }, [success]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) return;
 
@@ -69,28 +53,11 @@ export default function UnsubscribePage() {
       setLoading(true);
       setError("");
 
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken":
-            "0SGf2FTPgeyUgPnYTYVc9anlbIQZGm7IxMpoojKCMfNlzykSuW93sk4yqD14TMPr",
-        },
-        body: JSON.stringify({
-          secret_token: "cc-ASJFSNFRGF",
-          data_list: [
-            {
-              source_name: "unsubscribe_page",
-              json_data: {
-                email,
-                status: "unsubscribed",
-              },
-            },
-          ],
-        }),
-      });
-
-      if (!res.ok) throw new Error("Failed");
+      const subject = "Unsubscribe request";
+      const body = `Please unsubscribe ${email} from AltFTool email updates.`;
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
 
       setSuccess(true);
       setEmail("");
@@ -130,7 +97,11 @@ export default function UnsubscribePage() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-6">
+              <label className="sr-only" htmlFor="unsubscribe-email">
+                Email address
+              </label>
               <input
+                id="unsubscribe-email"
                 type="email"
                 required
                 placeholder="Enter your email address"
@@ -155,7 +126,9 @@ export default function UnsubscribePage() {
               </button>
 
               {error && (
-                <p className="text-red-500 text-sm text-center">{error}</p>
+                <p role="alert" className="text-red-500 text-sm text-center">
+                  {error}
+                </p>
               )}
             </form>
 
@@ -165,19 +138,31 @@ export default function UnsubscribePage() {
             </p>
           </div>
         ) : (
-          <div className="bg-white border border-gray-100 rounded-2xl shadow-lg p-10 flex flex-col items-center text-center">
+          <div
+            role="status"
+            aria-live="polite"
+            className="bg-white border border-gray-100 rounded-2xl shadow-lg p-10 flex flex-col items-center text-center"
+          >
 
             <div className="bg-green-100 p-4 rounded-full mb-3">
               <CheckCircle className="text-green-600 w-7 h-7" />
             </div>
 
             <h2 className="text-2xl font-semibold text-gray-900">
-              You’re unsubscribed
+              Almost done
             </h2>
 
             <p className="text-gray-500 text-md mt-1">
-              Your inbox just got quieter 🙂
+              Your email app should open with the unsubscribe request filled in — send it and
+              we&rsquo;ll take you off the list.
             </p>
+
+            <Link
+              href="/"
+              className="mt-6 text-blue-700 hover:text-blue-800 text-sm font-medium"
+            >
+              Back to AltFTool
+            </Link>
           </div>
         )}
       </div>

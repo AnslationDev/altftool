@@ -1,5 +1,8 @@
 import { PRODUCTION_SITE_URL as SITE_URL } from "../../../platform/seo/siteUrl.js";
 const MIN_READABLE_WORDS = 260;
+// trimMetaDescription() in src/platform/seo/generateMetadata.js hard-cuts at
+// 160, so anything longer than this is thrown away downstream.
+const MAX_META_DESCRIPTION = 158;
 
 function cleanText(value = "") {
   return String(value || "")
@@ -279,19 +282,31 @@ function getPrimaryResourcePath(blog = {}) {
   return "/tools/all";
 }
 
+// Every post without an authored seoDescription used to fall back to one
+// near-identical sentence keyed only on category/tool, so hundreds of /blogs
+// URLs shipped the same meta description and Google had nothing page-specific
+// to put in the snippet. Lead with the post's own stored heading (never
+// invented) so each description is distinct and names the actual subject.
 function buildSeoDescription(blog = {}) {
-  const tool = blog.tool || blog.topic || blog.category || "online tools";
-  const category = blog.category || "guides";
+  const heading = cleanText(blog.heading || blog.title || "");
+  const category = cleanText(blog.category || "");
+  // A "Guides" category would otherwise render as "guides guide".
+  const topicLabel = category && !/guides?$/i.test(category) ? `${category} ` : "";
+  const lead = heading ? `${heading}: ` : "";
 
   return clampSentence(
-    `Use ${tool} better with this ${category} guide. Learn best use cases, quality checks, mistakes to avoid, and next steps on AltFTool.`,
-    165,
+    `${lead}practical ${topicLabel}guide with use cases, quality checks, and next steps on AltFTool.`,
+    MAX_META_DESCRIPTION,
   );
 }
 
 function normalizeSeoDescription(blog = {}) {
   const current = cleanText(blog.seoDescription || blog.excerpt || "");
-  if (current.length >= 80 && current.length <= 180) return current;
+  // Upper bound was 180, but trimMetaDescription() in
+  // src/platform/seo/generateMetadata.js re-cuts at 160, so authored
+  // descriptions of 161-180 chars shipped truncated mid-sentence.
+  if (current.length >= 80 && current.length <= MAX_META_DESCRIPTION) return current;
+  if (current.length > MAX_META_DESCRIPTION) return clampSentence(current, MAX_META_DESCRIPTION);
   return buildSeoDescription(blog);
 }
 

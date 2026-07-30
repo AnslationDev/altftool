@@ -1,35 +1,64 @@
 "use client";
 
 /**
- * FAQ + About — styled with the Step Counter app theme (hardcoded
- * indigo/violet palette, see StepApp.jsx) so the whole page reads as one
+ * FAQ + About — styled with the Step Counter app theme (see ./theme.js, which
+ * resolves to StepAppV2's cyan palette) so the whole page reads as one
  * premium product.
+ *
+ * CONTENT RULES for this file. Everything here is read by people mid-walk who
+ * are looking at a number that is or isn't moving, so it has to match the code
+ * exactly:
+ *   - steps come ONLY from `devicemotion` (utils/useStepCounter.js). There is
+ *     no manual entry, no simulated pace, no desktop fallback.
+ *   - the detector banks the first peaks and releases them once four arrive in
+ *     walking cadence (CONFIRM_STEPS in utils/stepDetector.js).
+ *   - distance/calories/floors are fixed constants for everyone —
+ *     METERS_PER_STEP 0.762, CALORIES_PER_STEP 0.04, STEPS_PER_FLOOR 650
+ *     (utils/stepStore.js). No weight, no height, no barometer.
+ *   - persistence is localStorage on this device; `resetToday` zeroes TODAY
+ *     only — history, goal and achievements survive it.
+ *   - there is NO offline support: the root service worker at public/sw.js
+ *     unregisters itself and clears its caches, and app/layout.jsx actively
+ *     unregisters it. The page cannot be loaded without a network.
+ * Two claims that used to live here — "on desktop, you can add steps manually
+ * or use the built-in walking pace" and a "Works Offline" badge — were not
+ * true of any of the above.
  */
 
 import { useState } from "react";
-import { BadgeCheck, ChevronDown, Footprints, ShieldCheck, WifiOff } from "lucide-react";
-import { THEME as C } from "./StepApp.jsx";
+import { BadgeCheck, ChevronDown, Footprints, ShieldCheck, Smartphone } from "lucide-react";
+import { THEME as C } from "./theme.js";
 
+// Deliberately NOT the same questions as src/tools/step-counter/seo.js, whose
+// FAQ block renders further down this same page (ToolSeoSection) and carries
+// the FAQPage schema. That set answers the search-facing questions ("what is a
+// step counter", "does it work without an app"); this set answers the
+// operational ones a visitor has with the counter open in front of them.
 const FAQS = [
   {
-    question: "Is Step Counter free to use?",
+    question: "What does Step Counter track?",
     answer:
-      "Yes — Step Counter is 100% free with no sign-up required. Open the page and start tracking your steps right away.",
+      "Today's step count, plus estimated distance, calories and the time you spent active. On top of that: a daily goal, your current streak and the last seven days.",
   },
   {
-    question: "What can I use Step Counter for?",
+    question: "Why isn't it counting my steps?",
     answer:
-      "Track your daily steps, distance walked, calories burned, and active time. Set a daily goal, build a streak, and unlock achievements as you stay consistent.",
+      "Steps come only from your phone's motion sensor, so there are three usual reasons. You're on a desktop or laptop, which has no motion sensor at all. Or you're on an iPhone and motion access wasn't allowed when the browser asked. Or you've only taken a step or two — the counter holds the first steps back until four of them arrive in a steady walking rhythm, then releases them together, which is what stops a tap or a bump from counting.",
   },
   {
-    question: "Does Step Counter work on mobile?",
+    question: "Does it count in my pocket, or with the screen off?",
     answer:
-      "Yes. On mobile devices, Step Counter uses your phone's motion sensors to automatically detect steps while you walk. On desktop, you can add steps manually or use the built-in walking pace.",
+      "In a pocket, yes — detection is tuned for a phone held in your hand or carried in a pocket at a normal walking pace. With the screen off, no: the browser stops sending motion readings the moment the phone sleeps or you switch to another app, so keep the screen awake with this page open while you walk. Anything counted before that is already saved.",
   },
   {
-    question: "Is my data private and secure?",
+    question: "How are distance and calories worked out?",
     answer:
-      "Absolutely. Your step data is saved only in your own browser on this device — nothing is ever uploaded to any server. It stays there next time you visit, and you can clear it anytime with the Reset button.",
+      "Both are estimates and both say so on screen. Distance uses your step length — 0.415 x your height once you enter it, otherwise a 0.75 m average. Calories scale with your weight, about 0.0006 kcal per step per kilogram, assuming 70 kg until you tell it otherwise. There is no floors count: that needs a barometer, and a browser cannot read one.",
+  },
+  {
+    question: "Is my step data private?",
+    answer:
+      "Yes. Your steps, goal, streak and achievements are saved in this browser's local storage on this device and are never uploaded — there's no account and no server behind it. Reset clears today's steps and active time; earlier days, your goal and your achievements stay.",
   },
 ];
 
@@ -46,14 +75,14 @@ const HIGHLIGHTS = [
     bg: "var(--sc-soft-indigo)",
     fg: "var(--sc-indigo)",
     title: "Private & Secure",
-    subtitle: "Your data stays with you",
+    subtitle: "Nothing leaves your phone",
   },
   {
-    icon: WifiOff,
+    icon: Smartphone,
     bg: "var(--sc-soft-blue)",
     fg: "var(--sc-blue)",
-    title: "Works Offline",
-    subtitle: "Runs in your browser",
+    title: "Real Motion Sensor",
+    subtitle: "No simulated counting",
   },
 ];
 
@@ -61,7 +90,7 @@ function SectionHeading({ eyebrow, title }) {
   return (
     <div className="mb-4">
       <p
-        className="text-[11px] font-extrabold uppercase tracking-[0.16em]"
+        className="text-[12px] font-extrabold uppercase tracking-[0.14em]"
         style={{ color: C.indigo }}
       >
         {eyebrow}
@@ -102,7 +131,7 @@ function Faq() {
                 aria-expanded={open}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(open ? -1 : index)}
-                className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-[13px] font-bold transition md:text-[14px] focus-visible:ring-4 focus-visible:ring-indigo-300"
+                className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-[14px] font-bold transition md:text-[15px] focus-visible:ring-4 focus-visible:ring-indigo-300"
                 style={{ color: open ? C.indigo : C.ink }}
               >
                 {faq.question}
@@ -120,7 +149,7 @@ function Faq() {
               {open && (
                 <p
                   id={panelId}
-                  className="px-4 pb-4 text-[13px] font-medium leading-relaxed"
+                  className="px-4 pb-4 text-[14px] font-medium leading-relaxed"
                   style={{ color: C.muted }}
                 >
                   {faq.answer}
@@ -152,14 +181,16 @@ function About() {
         </span>
       </div>
 
-      <p className="text-[13px] font-medium leading-relaxed md:text-[14px]" style={{ color: C.muted }}>
-        Step Counter is a free online tool by{" "}
+      <p className="text-[14px] font-medium leading-relaxed md:text-[15px]" style={{ color: C.muted }}>
+        Step Counter is a free online pedometer by{" "}
         <span className="font-bold" style={{ color: C.ink }}>
           AltF Tool
-        </span>{" "}
-        that helps you track your daily steps, distance, calories burned, and active time.
-        It&apos;s simple, fast, and 100% free — no sign up required. Set a goal, keep your streak
-        alive, and start your fitness journey today!
+        </span>
+        . It reads your phone&apos;s built-in motion sensor straight from the browser — no app
+        to install, no account — and turns your walking into a live step count with estimated
+        distance, calories and active time. Set a daily goal, keep a streak going, and unlock
+        achievements as the days add up. It needs a phone or tablet you can carry: a laptop has
+        no motion sensor to read.
       </p>
 
       <div className="mt-auto grid gap-3 pt-4 sm:grid-cols-3">
@@ -177,10 +208,10 @@ function About() {
               <item.icon size={18} />
             </span>
             <div className="min-w-0">
-              <p className="text-[13px] font-extrabold" style={{ color: C.ink }}>
+              <p className="text-[14px] font-extrabold" style={{ color: C.ink }}>
                 {item.title}
               </p>
-              <p className="truncate text-[11px] font-medium" style={{ color: C.muted }}>
+              <p className="truncate text-[14px] font-medium" style={{ color: C.muted }}>
                 {item.subtitle}
               </p>
             </div>

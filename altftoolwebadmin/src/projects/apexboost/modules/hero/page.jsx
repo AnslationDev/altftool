@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Save, RefreshCw, Plus, Trash2, CheckCircle } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import { subscribeHero, saveHero } from "../service/apexboost.service";
 
 const BLANK_FORM = {
   badge: "",
@@ -25,17 +26,12 @@ export default function HeroPage() {
   const [form, setForm] = useState(BLANK_FORM);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const unsubscribeRef = useRef(null);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      const res = await fetch("/api/apexboost/data?section=hero");
-      const json = await res.json();
-      if (json.success && json.data) {
-        const d = json.data;
+  const loadData = () => {
+    if (unsubscribeRef.current) unsubscribeRef.current();
+    unsubscribeRef.current = subscribeHero(
+      (d) => {
         setForm({
           badge: d.badge || "",
           heading: d.heading || "",
@@ -48,30 +44,31 @@ export default function HeroPage() {
           heroImages: d.heroImages?.length ? [...d.heroImages, ...["","","",""]].slice(0,4) : ["","","",""],
           floatingCards: d.floatingCards?.length ? d.floatingCards : [{ label: "", value: "" },{ label: "", value: "" },{ label: "", value: "" }],
         });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+      },
+      (err) => {
+        console.error(err);
+        emitAlert({ type: "error", title: "Error", message: "Failed to load hero section." });
+      },
+    );
   };
+
+  useEffect(() => {
+    loadData();
+    return () => {
+      if (unsubscribeRef.current) unsubscribeRef.current();
+    };
+  }, []);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/apexboost/data", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section: "hero", data: form }),
-      });
-      if (res.ok) {
-        setSaved(true);
-        emitAlert({ type: "success", title: "Success", message: "Hero section saved successfully!" });
-        setTimeout(() => setSaved(false), 3000);
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save hero section." });
-      }
+      await saveHero(form);
+      setSaved(true);
+      emitAlert({ type: "success", title: "Success", message: "Hero section saved successfully!" });
+      setTimeout(() => setSaved(false), 3000);
     } catch (err) {
       console.error(err);
-      emitAlert({ type: "error", title: "Error", message: "An unexpected error occurred." });
+      emitAlert({ type: "error", title: "Error", message: "Failed to save hero section." });
     } finally {
       setSaving(false);
     }

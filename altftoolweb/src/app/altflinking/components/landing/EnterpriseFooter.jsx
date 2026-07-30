@@ -6,6 +6,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { ShieldCheck, Send, Twitter, Linkedin, Facebook, Instagram } from "lucide-react";
 
 export default function EnterpriseFooter({ setActiveTab }) {
@@ -15,6 +16,13 @@ export default function EnterpriseFooter({ setActiveTab }) {
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (!email) return;
+    // No newsletter delivery backend exists yet — persist locally instead
+    // of discarding the signup.
+    try {
+      window.localStorage.setItem("ALTFT_ALTFLINKING_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setSubscribed(true);
     setTimeout(() => setSubscribed(false), 3000);
     setEmail("");
@@ -158,9 +166,9 @@ export default function EnterpriseFooter({ setActiveTab }) {
           <p>© 2024 ALTFTool. All rights reserved.</p>
 
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:underline">Terms of Service</a>
-            <a href="#" className="hover:underline">Privacy Policy</a>
-            <a href="#" className="hover:underline">Sitemap</a>
+            <Link href="/policypages/termsandconditions" className="hover:underline">Terms of Service</Link>
+            <Link href="/policypages/privacy" className="hover:underline">Privacy Policy</Link>
+            <Link href="/site-map" className="hover:underline">Sitemap</Link>
             <span className="flex items-center gap-1 text-emerald-500 font-semibold">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               Status

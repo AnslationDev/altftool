@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, searchParam } from "@altftool/core/http";
 import { fetchNearbyStores, PLACE_TYPES } from "@/lib/sale/places";
-import { serializeSaleError } from "@/lib/sale/errors";
+import { serializeSaleError, friendlyMessageFor } from "@/lib/sale/errors";
 
 export const runtime = "nodejs";
 
@@ -42,6 +42,7 @@ export async function GET(req) {
     return NextResponse.json({ stores, count: stores.length });
   } catch (error) {
     const { message, status, code } = serializeSaleError(error);
-    return NextResponse.json({ error: message, code }, { status });
+    console.error("[sale/places] upstream failure:", message);
+    return NextResponse.json({ error: friendlyMessageFor(code), code }, { status });
   }
 }

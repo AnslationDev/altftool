@@ -1,8 +1,8 @@
 const seo = {
-  title: "Weight Loss Tracker — Free Online Progress Chart",
-  h1: "Weight Loss Tracker",
+  title: "Free Online Weight Loss Tool & Progress Tracker",
+  h1: "Online Weight Loss Tool & Progress Tracker",
   metaDescription:
-    "Free weight loss tracker — log weigh-ins against a target and see percent-to-goal on a 10-point progress chart. No signup, nothing leaves your browser.",
+    "Free online weight loss tool — log weigh-ins against a target, see percent-to-goal and a 10-entry chart. No signup, nothing leaves your browser.",
   intro:
     "The Weight Loss Tracker logs each weigh-in with its own date and an optional note, then derives four figures from the log: current weight, target, weight lost so far (first entry minus latest), and distance remaining. Progress is a straight ratio — (start − current) ÷ (start − target) × 100 — shown as a percentage and a bar capped at 100%. Your ten most recent entries are sorted by date and drawn as a CSS bar chart scaled to your own range, with a dashed line marking the target weight. It is a client-side React component with no network calls, no account and no signup; entries live in the page for the current session, so note milestone numbers elsewhere before you close the tab.",
   useCases: [

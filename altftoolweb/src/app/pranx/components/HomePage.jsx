@@ -305,7 +305,13 @@ export default function HomePage() {
             <li>2. Use fullscreen when the route supports it.</li>
             <li>3. Press Esc anytime to return to normal browsing.</li>
           </ol>
-          <Link href="#top" className="mx-auto mt-10 flex w-fit text-2xl font-black text-[#2f7080] underline">Back to top</Link>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="mx-auto mt-10 flex w-fit text-2xl font-black text-[#2f7080] underline"
+          >
+            Back to top
+          </button>
         </div>
       </section>
     </main>

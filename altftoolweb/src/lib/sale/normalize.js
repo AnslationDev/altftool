@@ -3,6 +3,8 @@
  * common `Deal` interface (see ./types.js).
  */
 
+import { haversineKm, roundKm } from "./distance.service.js";
+
 let dealCounter = 0;
 function nextId(prefix) {
   dealCounter += 1;
@@ -112,15 +114,8 @@ export function withComputedDistance(deal, refCoords) {
     return { ...deal, distance: deal.distance ?? null };
   }
 
-  return { ...deal, distance: haversineKm(refCoords.lat, refCoords.lng, deal.latitude, deal.longitude) };
-}
-
-function haversineKm(lat1, lng1, lat2, lng2) {
-  const R = 6371;
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLng = ((lng2 - lng1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
-  return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 10) / 10;
+  return {
+    ...deal,
+    distance: roundKm(haversineKm(refCoords.lat, refCoords.lng, deal.latitude, deal.longitude)),
+  };
 }

@@ -30,10 +30,17 @@ export function loadFirebaseAuth() {
     authModulePromise = Promise.all([
       import("@/lib/firebase"),
       import("firebase/auth"),
-    ]).then(([{ firebaseApp }, api]) => ({
-      auth: api.getAuth(firebaseApp),
-      api,
-    }));
+    ])
+      .then(([{ firebaseApp }, api]) => ({
+        auth: api.getAuth(firebaseApp),
+        api,
+      }))
+      .catch((err) => {
+        // Reset the cache so the next call retries the import instead of
+        // replaying this same rejection for the rest of the page session.
+        authModulePromise = null;
+        throw err;
+      });
   }
   return authModulePromise;
 }

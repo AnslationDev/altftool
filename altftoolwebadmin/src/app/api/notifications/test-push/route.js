@@ -9,8 +9,8 @@
 //   -H "Authorization: Bearer YOUR_ID_TOKEN"
 
 import { NextResponse } from "next/server";
-import { adminAuth, adminDb } from "@/lib/firebaseAdmin";
-import { sendPushToUsers } from "@/lib/sendPushNotification";
+import { adminAuth } from "@/lib/firebaseAdmin";
+import { readTokensForUid, sendPushToUsers } from "@/lib/sendPushNotification";
 
 export async function POST(request) {
   // Optional: remove this guard if you want it available in production too
@@ -27,9 +27,12 @@ export async function POST(request) {
     const token   = authHeader.split("Bearer ")[1];
     const decoded = await adminAuth.verifyIdToken(token);
 
-    // Check user has tokens saved
-    const snap      = await adminDb.collection("admins").doc(decoded.uid).get();
-    const fcmTokens = snap.data()?.fcmTokens ?? [];
+    // Check user has tokens saved. Uses the same dual-store lookup
+    // sendPushToUsers() uses below — reading only the legacy `admins`
+    // collection here always returned zero tokens (and a false-negative 400)
+    // for an RBAC-only admin, even when save-token had correctly written a
+    // token to the RBAC store and sendPushToUsers() would have found it.
+    const fcmTokens = await readTokensForUid(decoded.uid);
 
     if (fcmTokens.length === 0) {
       return NextResponse.json({

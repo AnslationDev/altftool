@@ -79,7 +79,12 @@ export default function Game2048({ isPreview = false }) {
 
     // Initialize Game
     useEffect(() => {
-        const saved = localStorage.getItem("2048-highscore");
+        let saved = null;
+        try {
+            saved = localStorage.getItem("2048-highscore");
+        } catch (e) {
+            /* localStorage unavailable — ignore */
+        }
         // eslint-disable-next-line
         if (saved) setHighScore(parseInt(saved, 10));
 
@@ -98,21 +103,6 @@ export default function Game2048({ isPreview = false }) {
 
 
     // --- GAME LOGIC ---
-
-    const getLine = (boardState, index, vector) => {
-        const line = [];
-        for (let i = 0; i < GRID_SIZE; i++) {
-            let idx;
-            if (vector === 'row') idx = Math.floor(index / GRID_SIZE) * GRID_SIZE + i;
-            else idx = index + i * GRID_SIZE; // col
-
-            // Actually this is simpler if we treat per row/col
-            // Let's rewrite movement logic to be matrix based
-        }
-    };
-
-
-
 
 
     // Check Game Over
@@ -218,7 +208,11 @@ export default function Game2048({ isPreview = false }) {
             setScore(s => s + pointsAdded);
             if (score + pointsAdded > highScore && !isPreview) {
                 setHighScore(score + pointsAdded);
-                localStorage.setItem("2048-highscore", score + pointsAdded);
+                try {
+                    localStorage.setItem("2048-highscore", score + pointsAdded);
+                } catch (e) {
+                    /* localStorage unavailable — ignore */
+                }
             }
 
             if (checkGameOver(finalBoard)) {

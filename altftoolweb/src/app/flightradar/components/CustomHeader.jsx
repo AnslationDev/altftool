@@ -137,7 +137,7 @@ export default function CustomHeader({
               FlightRadar
             </div>
             <span className="text-[9px] font-bold text-muted-foreground tracking-[0.15em] uppercase mt-0.5 font-sans leading-none">
-              Live Engine
+              Simulation Engine
             </span>
           </div>
         </Link>
@@ -196,7 +196,7 @@ export default function CustomHeader({
         {/* Dynamic Telemetry Refresh Loader (1-Minute Cache Progress) */}
         <div 
           className="relative flex items-center justify-center cursor-pointer group"
-          title={`Telemetry updates automatically every 60s. Refreshes in ${timeToUpdate}s.`}
+          title={`Simulated stats refresh every 60s. Refreshes in ${timeToUpdate}s.`}
           onClick={computeStats} // Allow manual force update on click!
         >
           <svg className="w-5 h-5 transform -rotate-90">

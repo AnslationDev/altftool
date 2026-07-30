@@ -40,10 +40,13 @@ export function extractHeadings(htmlContent = "") {
     const text = getHeadingText(match[2]);
     if (!text) continue;
 
+    // Authored h1s are downgraded to h2 by injectIds() so the page keeps a
+    // single h1 (the article title); mirror that here so TOC levels match.
+    const level = Number(match[1]);
     headings.push({
       id: createHeadingId(text, seen),
       text,
-      level: Number(match[1]),
+      level: level === 1 ? 2 : level,
     });
   }
 
@@ -56,12 +59,17 @@ export function injectIds(htmlContent = "") {
     /<h([1-4])\b([^>]*)>([\s\S]*?)<\/h\1>/gi,
     (match, level, attrs, innerHtml) => {
       const text = getHeadingText(innerHtml);
-      if (!text) return match;
+      const attrsWithoutId = attrs.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
+      // Downgrade an authored h1 (CKEditor's "Heading 1") to h2 so it can't
+      // compete with the page's own <h1> in BlogHeader — this must apply even
+      // to a heading with no extractable text (e.g. one wrapping only an
+      // <img>/embed), so it's computed before the id-generation early return.
+      const outputLevel = level === "1" ? "2" : level;
+
+      if (!text) return `<h${outputLevel}${attrsWithoutId}>${innerHtml}</h${outputLevel}>`;
 
       const id = createHeadingId(text, seen);
-      const attrsWithoutId = attrs.replace(/\s+id=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, "");
-
-      return `<h${level}${attrsWithoutId} id="${id}">${innerHtml}</h${level}>`;
+      return `<h${outputLevel}${attrsWithoutId} id="${id}">${innerHtml}</h${outputLevel}>`;
     },
   );
 }

@@ -19,7 +19,7 @@ function Navbar() {
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
             <Sparkles className="h-5 w-5" />
           </span>
-          <span className="text-base font-semibold tracking-tight">Socila Media Prank<span className="gradient-text">.</span></span>
+          <span className="text-base font-semibold tracking-tight">Mockly<span className="gradient-text">.</span></span>
         </Link>
         <div className="hidden items-center gap-1 md:flex">
           {links.map((l) => <Link key={l.to} href={l.to} className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground">

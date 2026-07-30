@@ -1,23 +1,10 @@
 import { NextResponse } from "next/server";
+import { enforceRateLimit } from "@altftool/core/http";
 import { searchNearbyMalls } from "@/lib/sale/search.service.js";
-import { serializeSaleError, SaleApiError } from "@/lib/sale/errors.js";
+import { serializeSaleError, SaleApiError, friendlyMessageFor } from "@/lib/sale/errors.js";
 import { getOrSetSaleCache, buildCacheKey } from "@/lib/sale/cache.js";
 
 export const runtime = "nodejs";
-
-// Upstream error bodies (Overpass returns an HTML error page on 429/504,
-// not JSON) leak into SaleApiError.message via the shared http client —
-// replace with a friendly, code-keyed message before it reaches the client
-// rather than showing raw markup.
-const FRIENDLY_ERROR_MESSAGES = {
-  timeout: "The search took too long to respond. Please try again in a moment.",
-  quota_exceeded: "Too many searches right now. Please wait a moment and try again.",
-  upstream_error: "Couldn't reach the map data service. Please try again shortly.",
-};
-
-function friendlyMessageFor(code) {
-  return FRIENDLY_ERROR_MESSAGES[code] || "Something went wrong . Please try again.";
-}
 
 /**
  * GET /api/search/nearby?latitude=..&longitude=..&radius=..&keyword=..
@@ -29,6 +16,13 @@ function friendlyMessageFor(code) {
  *              phoneNumber, businessStatus, openNow }]
  */
 export async function GET(request) {
+  const limited = enforceRateLimit(NextResponse, request, {
+    limit: 60,
+    scope: "search:nearby",
+    windowMs: 60000,
+  });
+  if (limited) return limited;
+
   const { searchParams } = new URL(request.url);
 
   const latitude = Number(searchParams.get("latitude"));

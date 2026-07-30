@@ -1084,7 +1084,7 @@ export default function ToolsClient({
               <div className="request-tool-card">
                 <strong>Can&apos;t find a tool?</strong>
                 <p>Request a tool and we&apos;ll try to add it.</p>
-                <button type="button">
+                <button type="button" onClick={() => router.push("/request-a-tool")}>
                   Request a Tool
                   <MessageCircleQuestion className="h-4 w-4" />
                 </button>

@@ -4,6 +4,12 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Star } from "lucide-react";
 import SectionHeadingEditor from "../../../../components/admin/SectionHeadingEditor";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeTestimonials,
+  createTestimonial,
+  updateTestimonial,
+  deleteTestimonial,
+} from "../service/apexboost.service";
 
 export default function TestimonialsPage() {
   const [testimonialsList, setTestimonialsList] = useState([]);
@@ -11,13 +17,13 @@ export default function TestimonialsPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [form, setForm] = useState({ name: "", role: "", company: "", rating: 5, quote: "", color: "from-brand to-brand-cyan", image: "" });
 
-  useEffect(() => { loadData(); }, []);
-
-  const loadData = async () => {
-    const res = await fetch('/api/apexboost/data?section=testimonials');
-    const json = await res.json();
-    if (json.success) setTestimonialsList(json.data);
-  };
+  useEffect(() => {
+    const unsubscribe = subscribeTestimonials(
+      (data) => setTestimonialsList(data),
+      () => emitAlert({ type: "error", title: "Error", message: "Failed to load testimonials." }),
+    );
+    return unsubscribe;
+  }, []);
 
   const openAdd = () => {
     setEditingItem(null);
@@ -32,36 +38,28 @@ export default function TestimonialsPage() {
   };
 
   const handleSave = async () => {
-    let updated;
-    if (editingItem) {
-      updated = testimonialsList.map(t => t === editingItem ? { ...editingItem, ...form } : t);
-    } else {
-      updated = [...testimonialsList, { ...form, name: form.name || `Testimonial ${testimonialsList.length + 1}` }];
-    }
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'testimonials', data: updated }),
-    });
-    if (res.ok) {
-      setTestimonialsList(updated);
+    try {
+      if (editingItem) {
+        await updateTestimonial(editingItem.id, { ...editingItem, ...form });
+      } else {
+        await createTestimonial({
+          ...form,
+          name: form.name || `Testimonial ${testimonialsList.length + 1}`,
+          order: testimonialsList.length,
+        });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Testimonial saved successfully!" });
-    } else {
+    } catch (error) {
       emitAlert({ type: "error", title: "Error", message: "Failed to save testimonial." });
     }
   };
 
   const handleDelete = async (item) => {
-    const updated = testimonialsList.filter(t => t !== item);
-    const res = await fetch('/api/apexboost/data', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ section: 'testimonials', data: updated }),
-    });
-    if (res.ok) {
-      setTestimonialsList(updated);
+    try {
+      await deleteTestimonial(item.id);
       emitAlert({ type: "success", title: "Success", message: "Testimonial deleted successfully!" });
-    } else {
+    } catch (error) {
       emitAlert({ type: "error", title: "Error", message: "Failed to delete testimonial." });
     }
   };

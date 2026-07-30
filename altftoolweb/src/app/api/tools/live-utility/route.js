@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
+import http from "node:http";
+import https from "node:https";
+import { enforceRateLimit } from "@altftool/core/http";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -80,18 +83,60 @@ const assertPublicUrl = async (candidate) => {
   const addresses = await lookup(url.hostname, { all: true, verbatim: true });
   if (!addresses.length || addresses.some((record) => isPrivateAddress(record.address)))
     throw new Error("Private, local, or reserved network destinations are blocked");
-  return url;
+  // Pin the address we just validated instead of letting the actual request
+  // resolve DNS again — a second, independent lookup at connect time would
+  // let a short-TTL DNS-rebinding host answer this check with a public IP
+  // and the real connection with a private one.
+  const { address, family } = addresses[0];
+  return { url, address, family };
+};
+
+const requestPinned = (targetUrl, address, family, timeout = 9000) => {
+  const client = targetUrl.protocol === "https:" ? https : http;
+  return new Promise((resolve, reject) => {
+    const req = client.request(
+      targetUrl,
+      {
+        method: "GET",
+        headers: jsonHeaders,
+        signal: AbortSignal.timeout(timeout),
+        lookup: (_hostname, options, callback) =>
+          options.all ? callback(null, [{ address, family }]) : callback(null, address, family),
+      },
+      (response) => {
+        resolve({
+          ok: response.statusCode >= 200 && response.statusCode < 300,
+          status: response.statusCode,
+          url: targetUrl.toString(),
+          headers: { get: (name) => response.headers[String(name).toLowerCase()] ?? null },
+          body: {
+            cancel: async () => {
+              response.destroy();
+            },
+          },
+        });
+      },
+    );
+    req.on("error", reject);
+    req.end();
+  });
+};
+
+const timeoutFetchPinned = async (targetUrl, address, family) => {
+  const response = await requestPinned(targetUrl, address, family);
+  if (!response.ok) throw new Error(`Upstream returned HTTP ${response.status}`);
+  return response;
 };
 
 const safeWebsiteFetch = async (candidate) => {
-  let url = await assertPublicUrl(candidate);
+  let { url, address, family } = await assertPublicUrl(candidate);
   for (let redirects = 0; redirects <= 4; redirects += 1) {
-    const response = await timeoutFetch(url, { method: "GET", redirect: "manual" });
+    const response = await timeoutFetchPinned(url, address, family);
     if (response.status < 300 || response.status >= 400) return response;
     const location = response.headers.get("location");
     await response.body?.cancel();
     if (!location) return response;
-    url = await assertPublicUrl(new URL(location, url));
+    ({ url, address, family } = await assertPublicUrl(new URL(location, url)));
   }
   throw new Error("Too many redirects");
 };
@@ -103,7 +148,7 @@ async function handle(slug, params) {
 
   if (slug === "isitdown-now") {
     const candidate = /^https?:\/\//i.test(query) ? query : `https://${query}`;
-    const url = await assertPublicUrl(candidate);
+    const { url } = await assertPublicUrl(candidate);
     const started = Date.now();
     const response = await safeWebsiteFetch(url);
     await response.body?.cancel();
@@ -246,8 +291,10 @@ async function handle(slug, params) {
 
   if (slug === "release-watchtower") {
     const repository = (query || "vercel/next.js").replace(/^https?:\/\/github\.com\//, "").replace(/\/$/, "");
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repository)) throw new Error("Enter a valid owner/repo, e.g. vercel/next.js");
+    const [owner, repo] = repository.split("/");
     const data = await (
-      await timeoutFetch(`https://api.github.com/repos/${repository}/releases/latest`, {
+      await timeoutFetch(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/releases/latest`, {
         headers: { "X-GitHub-Api-Version": "2026-03-10" },
       })
     ).json();
@@ -464,6 +511,13 @@ async function handle(slug, params) {
 
 export async function GET(request) {
   try {
+    const limited = enforceRateLimit(NextResponse, request, {
+      limit: 30,
+      scope: "tools:live-utility",
+      windowMs: 60000,
+    });
+    if (limited) return limited;
+
     const params = request.nextUrl.searchParams;
     const slug = String(params.get("slug") || "");
     return NextResponse.json({

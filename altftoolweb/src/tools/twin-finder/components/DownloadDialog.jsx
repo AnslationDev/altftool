@@ -132,7 +132,7 @@ export default function DownloadDialog({ open, onClose, imageA, imageB, result }
                 {busy === "image" ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
-                  <Image size={16} />
+                  <Image size={16} alt="" />
                 )}
                 Download as Image (PNG)
               </button>

@@ -11,7 +11,7 @@ import BlogPost from "./pages/BlogPost.jsx";
 
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col bg-cream">
+    <div className="window-replacement-page flex min-h-screen flex-col bg-cream">
       <ScrollToTop />
       <Navbar />
       <main className="flex-1">

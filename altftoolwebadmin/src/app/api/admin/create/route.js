@@ -69,6 +69,12 @@ export async function POST(req) {
       { status: 400 },
     );
   }
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return NextResponse.json(
+      { error: "Invalid request body" },
+      { status: 400 },
+    );
+  }
   const {
     email,
     password,

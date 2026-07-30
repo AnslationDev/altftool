@@ -43,9 +43,7 @@ function readNews() {
 }
 
 export async function GET(request) {
-  const secret =
-    request.headers.get("x-inventory-secret") ||
-    request.nextUrl.searchParams.get("secret");
+  const secret = request.headers.get("x-inventory-secret");
   if (!process.env.ALTFT_REVALIDATE_SECRET || secret !== process.env.ALTFT_REVALIDATE_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -15,13 +15,13 @@ export default function SaveMixModal({ isOpen, onClose, onSave }) {
       setErrorMsg("Please enter a name for your custom mix.");
       return;
     }
-    const success = onSave(mixName.trim());
-    if (success) {
+    const result = onSave(mixName.trim());
+    if (result.ok) {
       setMixName("");
       setErrorMsg("");
       onClose();
     } else {
-      setErrorMsg("A mix with this name already exists.");
+      setErrorMsg(result.error || "Something went wrong. Please try again.");
     }
   };
 

@@ -60,19 +60,8 @@ html[data-theme="light"] {
   --anslation-ds-accent-soft: #ede9fe;
 
   --anslation-ds-success: #16a34a;
-  /* Text-safe success: the base green is 3.30:1 on the light surface. 5.02:1. */
-  --anslation-ds-success-text: #15803d;
   --anslation-ds-warning: #f59e0b;
-  /* Text-safe warning. The base --anslation-ds-warning is an amber tuned for
-     fills, icons and borders; on the light surface it is only 2.15:1 and fails
-     AA even at the 3:1 large-text bar. Use this for warning COPY and for stat
-     values. 5.02:1. */
-  --anslation-ds-warning-text: #b45309;
   --anslation-ds-danger: #ef4444;
-  /* Text-safe danger. The base --anslation-ds-danger is tuned for fills, icons
-     and borders (3:1 graphical) and only reaches 3.76:1 on the light surface,
-     which fails AA for normal-size text. Use this for error COPY. 6.47:1. */
-  --anslation-ds-danger-text: #b91c1c;
   --anslation-ds-danger-on-inverse: #fda4af;
   --anslation-ds-info: #0ea5e9;
   --anslation-ds-status-foreground: #ffffff;
@@ -80,6 +69,17 @@ html[data-theme="light"] {
   --anslation-ds-warning-soft: #fdf1d6;
   --anslation-ds-danger-soft: #fde2dd;
   --anslation-ds-info-soft: #e0f2fe;
+
+  /* Text-safe status colours. The base --anslation-ds-success/danger/info/warning
+     values are tuned for fills, icons and borders; several fail AA against
+     white/page/soft-tint backgrounds at the sizes they're actually used at
+     (badges, stat deltas, form errors, button fills). Use these -text
+     variants anywhere the colour carries text or sits under white
+     button-label text, and reserve the base tone for borders/left-accents/icons. */
+  --anslation-ds-warning-text: #b45309; /* 5.02:1 on white */
+  --anslation-ds-success-text: #166534; /* 7.13:1 on white, 6.14:1 on success-soft */
+  --anslation-ds-danger-text: #b91c1c; /* 6.47:1 on white, 5.27:1 on danger-soft */
+  --anslation-ds-info-text: #075985; /* 7.56:1 on white, 6.59:1 on info-soft */
 
   --anslation-ds-space-1: 0.25rem;
   --anslation-ds-space-2: 0.5rem;
@@ -168,15 +168,8 @@ html[data-theme="dark"] {
   --anslation-ds-accent-soft: #2e2451;
 
   --anslation-ds-success: #4ade80;
-  /* On the dark surface the base green already clears AA (10.20:1). */
-  --anslation-ds-success-text: #4ade80;
   --anslation-ds-warning: #fbbf24;
-  /* On the dark surface the base amber already clears AA (10.64:1). */
-  --anslation-ds-warning-text: #fbbf24;
   --anslation-ds-danger: #f87171;
-  /* On the dark surface the base danger already clears AA for text (6.42:1),
-     so the text-safe alias resolves to the same value here. */
-  --anslation-ds-danger-text: #f87171;
   --anslation-ds-danger-on-inverse: #b91c1c;
   --anslation-ds-info: #38bdf8;
   --anslation-ds-status-foreground: #07111f;
@@ -184,6 +177,13 @@ html[data-theme="dark"] {
   --anslation-ds-warning-soft: #3b2d0b;
   --anslation-ds-danger-soft: #3b1410;
   --anslation-ds-info-soft: #0b2a3d;
+
+  /* On the dark surface the base tones already clear AA against page/surface
+     (6.4-11.2:1), so the -text variants can just reuse the base colour. */
+  --anslation-ds-warning-text: #fbbf24;
+  --anslation-ds-success-text: #4ade80;
+  --anslation-ds-danger-text: #f87171;
+  --anslation-ds-info-text: #38bdf8;
 
   --anslation-ds-shadow-sm: 0 1px 2px rgb(0 0 0 / 36%);
   --anslation-ds-shadow-md: 0 10px 28px rgb(0 0 0 / 36%);

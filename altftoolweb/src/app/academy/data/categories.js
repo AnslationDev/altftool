@@ -1,4 +1,4 @@
-import { Landmark, CodeXml, GraduationCap, TrendingUp, BookOpen, Video } from "lucide-react";
+import { Landmark, CodeXml, GraduationCap, TrendingUp, BookOpen } from "lucide-react";
 export const categories = [
     
     {
@@ -26,10 +26,5 @@ export const categories = [
         title: "School & Foundation",
         desc: "K-12 & Olympiads",
         icon: <BookOpen size={28} />,
-    },
-    {
-        title: "Course Creation",
-        desc: "Teaching & Monetization",
-        icon: <Video size={28} />,
     },
 ];

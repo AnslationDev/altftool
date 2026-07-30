@@ -343,6 +343,13 @@ const nextConfig = {
         hostname: 'avatars.githubusercontent.com',
       },
       {
+        // Generated placeholder avatars (Dicebear) used for sample/illustrative
+        // testimonials; without this next/image throws "hostname is not
+        // configured" at request time.
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
+      {
         protocol: 'https',
         hostname: "firebasestorage.googleapis.com",
       },

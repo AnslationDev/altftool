@@ -90,7 +90,7 @@ const BookingForm = ({ initialService = '' }) => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
 
-    // Simulate API call
+    // No booking API exists yet; this only persists to localStorage on this device.
     await new Promise(resolve => setTimeout(resolve, 950));
 
     const ref = 'PX' + Date.now().toString().slice(-8);
@@ -129,9 +129,9 @@ const BookingForm = ({ initialService = '' }) => {
         <div className="mx-auto w-20 h-20 bg-[#4ADE80] rounded-full flex items-center justify-center mb-6">
           <Check className="w-11 h-11 text-[#14532D]" />
         </div>
-        <h3 className="text-3xl font-bold tracking-tight mb-3">Appointment Booked!</h3>
-        <p className="text-[#374151] mb-2">Thank you. Your request has been received.</p>
-        <div className="inline-block bg-[#F8FAFC] px-5 py-1 rounded-2xl text-sm font-semibold mb-6 tracking-wider">REF: {bookingRef}</div>
+        <h3 className="text-3xl font-bold tracking-tight mb-3">Request Saved</h3>
+        <p className="text-[#374151] mb-2">Thank you. This was saved on your device only — no appointment was actually booked.</p>
+        <div className="inline-block bg-[#F8FAFC] px-5 py-1 rounded-2xl text-sm font-semibold mb-6 tracking-wider">LOCAL REF: {bookingRef}</div>
 
         <div className="bg-white border rounded-3xl p-6 text-left mb-8 text-sm">
           <div className="font-semibold mb-3">Appointment Summary</div>
@@ -143,7 +143,7 @@ const BookingForm = ({ initialService = '' }) => {
           </div>
         </div>
 
-        <p className="text-sm text-[#64748b] mb-6">A confirmation has been sent to your email. Our team will contact you within 2 hours to confirm details.</p>
+        <p className="text-sm text-[#64748b] mb-6">Nothing has been sent — call us for a real booking at <a href="tel:7865679554" className="font-semibold text-[#1D7A43] hover:underline">(786) 567-9554</a>.</p>
 
         <div className="flex gap-3 justify-center">
           <button onClick={resetForm} className="btn btn-secondary px-8">Book Another</button>
@@ -190,7 +190,7 @@ const BookingForm = ({ initialService = '' }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {services.map((svc) => (
                   <label key={svc.slug} className={`border-2 rounded-2xl p-4 cursor-pointer flex gap-4 items-center transition-all ${selectedService === svc.slug ? 'border-[#1D7A43] bg-[#F8FAFC]' : 'border-[#E5E7EB] hover:border-[#1D7A43]/40'}`}>
-                    <input type="radio" value={svc.slug} {...register('service')} className="hidden" />
+                    <input type="radio" value={svc.slug} {...register('service')} className="hidden" aria-describedby={errors.service ? 'service-error' : undefined} />
                     <div className="flex-1">
                       <div className="font-semibold">{svc.title}</div>
                       <div className="text-xs text-[#64748b]">Starting at ${svc.startingPrice}</div>
@@ -199,7 +199,7 @@ const BookingForm = ({ initialService = '' }) => {
                   </label>
                 ))}
               </div>
-              {errors.service && <p className="text-red-500 text-sm mt-2">{errors.service.message}</p>}
+              {errors.service && <p id="service-error" role="alert" className="text-red-500 text-sm mt-2">{errors.service.message}</p>}
             </motion.div>
           )}
 
@@ -210,7 +210,7 @@ const BookingForm = ({ initialService = '' }) => {
               <div className="space-y-5">
                 <div>
                   <label className="label">Property Type</label>
-                  <select {...register('propertyType')} className="input">
+                  <select {...register('propertyType')} className="input" aria-invalid={!!errors.propertyType} aria-describedby={errors.propertyType ? 'propertyType-error' : undefined}>
                     <option value="">Select type</option>
                     <option value="Single Family Home">Single Family Home</option>
                     <option value="Condo / Apartment">Condo / Apartment</option>
@@ -218,7 +218,7 @@ const BookingForm = ({ initialService = '' }) => {
                     <option value="Commercial">Commercial / Business</option>
                     <option value="Multi-Family">Multi-Family Building</option>
                   </select>
-                  {errors.propertyType && <p className="text-red-500 text-sm mt-1">{errors.propertyType.message}</p>}
+                  {errors.propertyType && <p id="propertyType-error" role="alert" className="text-red-500 text-sm mt-1">{errors.propertyType.message}</p>}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -241,19 +241,19 @@ const BookingForm = ({ initialService = '' }) => {
               <div className="space-y-5">
                 <div>
                   <label className="label">Street Address</label>
-                  <input {...register('address')} placeholder="1420 SW 8th Street" className={`input ${errors.address ? 'error' : ''}`} />
-                  {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
+                  <input {...register('address')} placeholder="1420 SW 8th Street" className={`input ${errors.address ? 'error' : ''}`} aria-invalid={!!errors.address} aria-describedby={errors.address ? 'address-error' : undefined} />
+                  {errors.address && <p id="address-error" role="alert" className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="label">City</label>
-                    <input {...register('city')} placeholder="Miami" className={`input ${errors.city ? 'error' : ''}`} />
-                    {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
+                    <input {...register('city')} placeholder="Miami" className={`input ${errors.city ? 'error' : ''}`} aria-invalid={!!errors.city} aria-describedby={errors.city ? 'city-error' : undefined} />
+                    {errors.city && <p id="city-error" role="alert" className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
                   </div>
                   <div>
                     <label className="label">ZIP Code</label>
-                    <input {...register('zip')} placeholder="33135" maxLength={5} className={`input ${errors.zip ? 'error' : ''}`} />
-                    {errors.zip && <p className="text-red-500 text-sm mt-1">{errors.zip.message}</p>}
+                    <input {...register('zip')} placeholder="33135" maxLength={5} className={`input ${errors.zip ? 'error' : ''}`} aria-invalid={!!errors.zip} aria-describedby={errors.zip ? 'zip-error' : undefined} />
+                    {errors.zip && <p id="zip-error" role="alert" className="text-red-500 text-sm mt-1">{errors.zip.message}</p>}
                   </div>
                 </div>
               </div>
@@ -267,12 +267,12 @@ const BookingForm = ({ initialService = '' }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="label flex items-center gap-2"><Calendar size={15} /> Preferred Date</label>
-                  <input type="date" {...register('date')} className={`input ${errors.date ? 'error' : ''}`} min={new Date().toISOString().split('T')[0]} />
-                  {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
+                  <input type="date" {...register('date')} className={`input ${errors.date ? 'error' : ''}`} min={new Date().toISOString().split('T')[0]} aria-invalid={!!errors.date} aria-describedby={errors.date ? 'date-error' : undefined} />
+                  {errors.date && <p id="date-error" role="alert" className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
                 </div>
                 <div>
                   <label className="label flex items-center gap-2"><Clock size={15} /> Preferred Time</label>
-                  <select {...register('time')} className={`input ${errors.time ? 'error' : ''}`}>
+                  <select {...register('time')} className={`input ${errors.time ? 'error' : ''}`} aria-invalid={!!errors.time} aria-describedby={errors.time ? 'time-error' : undefined}>
                     <option value="">Select a time window</option>
                     <option value="8:00 AM - 10:00 AM">8:00 AM — 10:00 AM</option>
                     <option value="10:00 AM - 12:00 PM">10:00 AM — 12:00 PM</option>
@@ -280,7 +280,7 @@ const BookingForm = ({ initialService = '' }) => {
                     <option value="2:00 PM - 4:00 PM">2:00 PM — 4:00 PM</option>
                     <option value="4:00 PM - 6:00 PM">4:00 PM — 6:00 PM</option>
                   </select>
-                  {errors.time && <p className="text-red-500 text-sm mt-1">{errors.time.message}</p>}
+                  {errors.time && <p id="time-error" role="alert" className="text-red-500 text-sm mt-1">{errors.time.message}</p>}
                 </div>
               </div>
               <p className="text-xs text-[#64748b] mt-5">We will contact you to confirm an exact arrival window.</p>
@@ -295,19 +295,19 @@ const BookingForm = ({ initialService = '' }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="label">Full Name</label>
-                    <input {...register('fullName')} placeholder="Alex Rivera" className={`input ${errors.fullName ? 'error' : ''}`} />
-                    {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
+                    <input {...register('fullName')} placeholder="Alex Rivera" className={`input ${errors.fullName ? 'error' : ''}`} aria-invalid={!!errors.fullName} aria-describedby={errors.fullName ? 'fullName-error' : undefined} />
+                    {errors.fullName && <p id="fullName-error" role="alert" className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
                   </div>
                   <div>
                     <label className="label">Phone Number</label>
-                    <input {...register('phone')} placeholder="(305) 555-0192" className={`input ${errors.phone ? 'error' : ''}`} />
-                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+                    <input {...register('phone')} placeholder="(305) 555-0192" className={`input ${errors.phone ? 'error' : ''}`} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? 'phone-error' : undefined} />
+                    {errors.phone && <p id="phone-error" role="alert" className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
                   </div>
                 </div>
                 <div>
                   <label className="label">Email Address</label>
-                  <input type="email" {...register('email')} placeholder="you@email.com" className={`input ${errors.email ? 'error' : ''}`} />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                  <input type="email" {...register('email')} placeholder="you@email.com" className={`input ${errors.email ? 'error' : ''}`} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-error' : undefined} />
+                  {errors.email && <p id="email-error" role="alert" className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                 </div>
                 <div>
                   <label className="label">Additional Details (Optional)</label>

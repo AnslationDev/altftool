@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { emitAlert } from "@/lib/alertBus";
+import { saveFooterConfig, subscribeFooterConfig } from "../service/apexboost.service";
 
 export default function FooterConfigEditor() {
   const [form, setForm] = useState({
@@ -16,34 +17,23 @@ export default function FooterConfigEditor() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadConfig = async () => {
-      try {
-        const res = await fetch('/api/apexboost/data?section=footerConfig');
-        const json = await res.json();
-        if (json.success && json.data) {
-          setForm(json.data);
-        }
-      } catch (err) {
-        console.error("Failed to load footer config", err);
-      } finally {
+    const unsubscribe = subscribeFooterConfig(
+      (data) => {
+        setForm(data);
         setIsLoading(false);
-      }
-    };
-    loadConfig();
+      },
+      (err) => {
+        console.error("Failed to load footer config", err);
+        setIsLoading(false);
+      },
+    );
+    return unsubscribe;
   }, []);
 
   const handleSave = async () => {
     try {
-      const res = await fetch('/api/apexboost/data', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ section: 'footerConfig', data: form }),
-      });
-      if (res.ok) {
-        emitAlert({ type: "success", title: "Success", message: "Footer settings saved!" });
-      } else {
-        emitAlert({ type: "error", title: "Error", message: "Failed to save footer settings." });
-      }
+      await saveFooterConfig(form);
+      emitAlert({ type: "success", title: "Success", message: "Footer settings saved!" });
     } catch (err) {
       emitAlert({ type: "error", title: "Error", message: "Error saving footer settings." });
     }

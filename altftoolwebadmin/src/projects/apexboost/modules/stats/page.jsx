@@ -3,6 +3,18 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Save, RefreshCw, CheckCircle, Settings } from "lucide-react";
 import { emitAlert } from "@/lib/alertBus";
+import {
+  subscribeStats,
+  createStat,
+  updateStat,
+  deleteStat,
+  subscribeHeroStats,
+  createHeroStat,
+  updateHeroStat,
+  deleteHeroStat,
+  subscribeSectionHeading,
+  saveSectionHeading,
+} from "../service/apexboost.service";
 
 const ICONS = ["Smile","Rocket","DollarSign","TrendingUp","Target","Handshake","Globe","Heart","BarChart3","Star","Users","Zap"];
 
@@ -18,28 +30,26 @@ export default function StatsPage() {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => { loadAll(); }, []);
-
-  const loadAll = async () => {
-    const [r1, r2, r3] = await Promise.all([
-      fetch("/api/apexboost/data?section=stats"),
-      fetch("/api/apexboost/data?section=heroStats"),
-      fetch("/api/apexboost/data?section=statsHeading"),
-    ]);
-    const [j1, j2, j3] = await Promise.all([r1.json(), r2.json(), r3.json()]);
-    if (j1.success) setStatsList(j1.data);
-    if (j2.success) setHeroStatsList(j2.data);
-    if (j3.success && j3.data) setHeadingForm({ title: j3.data.title || "", highlight: j3.data.highlight || "" });
-  };
-
-  const putData = async (section, data) => {
-    const res = await fetch("/api/apexboost/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ section, data }),
+  useEffect(() => {
+    const unsubStats = subscribeStats(setStatsList, () => {
+      emitAlert({ type: "error", title: "Error", message: "Failed to load statistics." });
     });
-    return res;
-  };
+    const unsubHeroStats = subscribeHeroStats(setHeroStatsList, () => {
+      emitAlert({ type: "error", title: "Error", message: "Failed to load hero stats." });
+    });
+    const unsubHeading = subscribeSectionHeading(
+      "statsHeading",
+      (data) => setHeadingForm({ title: data?.title || "", highlight: data?.highlight || "" }),
+      () => {
+        emitAlert({ type: "error", title: "Error", message: "Failed to load section heading." });
+      },
+    );
+    return () => {
+      unsubStats?.();
+      unsubHeroStats?.();
+      unsubHeading?.();
+    };
+  }, []);
 
   const openAdd = (section) => {
     setEditingSection(section);
@@ -57,39 +67,44 @@ export default function StatsPage() {
 
   const handleSave = async () => {
     const list = editingSection === "stats" ? statsList : heroStatsList;
-    const setList = editingSection === "stats" ? setStatsList : setHeroStatsList;
-    let updated;
+    const createFn = editingSection === "stats" ? createStat : createHeroStat;
+    const updateFn = editingSection === "stats" ? updateStat : updateHeroStat;
     const newItem = { value: isNaN(Number(form.value)) ? form.value : Number(form.value), prefix: form.prefix, suffix: form.suffix, label: form.label, icon: form.icon, decimals: Number(form.decimals) || 0 };
-    if (editingItem) {
-      updated = list.map(t => t === editingItem ? { ...editingItem, ...newItem } : t);
-    } else {
-      updated = [...list, newItem];
-    }
-    const res = await putData(editingSection, updated);
-    if (res.ok) {
-      setList(updated);
+    try {
+      if (editingItem) {
+        await updateFn(editingItem.id, { ...editingItem, ...newItem });
+      } else {
+        const nextOrder = list.length ? Math.max(...list.map(s => Number(s.order) || 0)) + 1 : 0;
+        await createFn({ ...newItem, order: nextOrder });
+      }
       setIsModalOpen(false);
       emitAlert({ type: "success", title: "Success", message: "Stat saved successfully!" });
-    } else {
+    } catch {
       emitAlert({ type: "error", title: "Error", message: "Failed to save stat." });
     }
   };
 
   const handleDelete = async (item, section) => {
-    const list = section === "stats" ? statsList : heroStatsList;
-    const setList = section === "stats" ? setStatsList : setHeroStatsList;
-    const updated = list.filter(t => t !== item);
-    await putData(section, updated);
-    setList(updated);
+    const deleteFn = section === "stats" ? deleteStat : deleteHeroStat;
+    try {
+      await deleteFn(item.id);
+    } catch {
+      emitAlert({ type: "error", title: "Error", message: "Failed to delete stat." });
+    }
   };
 
   const handleSaveHeading = async () => {
     setSaving(true);
-    await putData("statsHeading", headingForm);
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-    setIsHeadingOpen(false);
+    try {
+      await saveSectionHeading("statsHeading", headingForm);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+      setIsHeadingOpen(false);
+    } catch {
+      emitAlert({ type: "error", title: "Error", message: "Failed to save section heading." });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const inp = "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-(--primary) text-sm";
