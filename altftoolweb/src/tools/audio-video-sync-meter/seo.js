@@ -1,41 +1,32 @@
 const seo = {
   intro:
-    "The Audio-Video Sync Meter analyses a local clap or flash recording with FFmpeg compiled to WebAssembly and produces a timestamped diagnostic log you use to measure lip-sync offset: silencedetect at -30 dB with a 0.05-second minimum marks the audio transient, and showinfo prints the presentation timestamp of every video frame. Subtract the frame time of the visible clap from the audio transition time and the difference, in milliseconds, is how far the audio leads or lags. It is aimed at videographers, streamers and AV installers who suspect a delay somewhere in their capture chain and want a number rather than a hunch.",
+    "An audio-video sync meter converts a clap or camera-flash slate into a signed lip-sync error in milliseconds: offset = audio spike time − (flash frame − 1) ÷ frame rate, where a positive result means the sound arrives after the picture. It then grades that offset against the published limits — ATSC IS-191 allows 15 ms of audio lead and 45 ms of lag, EBU R37 allows 40 ms and 60 ms, and ITU-R BT.1359-1 puts the detectability threshold at 45 ms lead or 125 ms lag. It is for editors and streamers who can see something is off but need the number before they can fix it.",
   useCases: [
-    "Diagnosing a webcam-plus-USB-microphone setup that looks slightly off in recordings: clap once on camera, run the file through, and read how many milliseconds separate the audio transient from the frame where your hands meet.",
-    "Checking whether a Bluetooth headset is adding latency to a screen recording before you blame the editing software.",
-    "Documenting an installed AV system's offset for a handover report, using the exported log as evidence of the frame and audio timestamps measured.",
+    "Measure the lip-sync error on a two-camera or external-recorder shoot before syncing a whole timeline by hand",
+    "Prove a stream or capture card is inside broadcast tolerance by checking the offset against ATSC IS-191",
+    "Work out the exact -itsoffset value for an ffmpeg batch that re-muxes a folder of clips with the same delay",
   ],
   benefits: [
-    [
-      "Frame-accurate timestamps, not a slider you nudge by eye",
-      "showinfo prints the exact presentation timestamp of every decoded frame, so the reference point for the clap is the frame's own pts rather than wherever your playhead happened to land.",
-    ],
-    [
-      "The transient is found by threshold, not by scrubbing",
-      "silencedetect reports each crossing of the -30 dB noise floor lasting at least 0.05 seconds, which is short enough to catch a hand clap and long enough to ignore room noise.",
-    ],
-    [
-      "You keep the raw log",
-      "The full FFmpeg diagnostic output downloads as a text file, so the measurement can be re-checked, attached to a ticket, or compared against a second take.",
-    ],
+    ["Two readings, one number", "The frame of the flash and the timestamp of the audio spike are all you need — no plugin, no upload."],
+    ["Graded against real limits", "The verdict cites ATSC, EBU and ITU thresholds rather than a made-up 'good enough' figure."],
+    ["Averages several slates", "Reading one flash is accurate to about half a frame; averaging two or three claps removes most of that error."],
   ],
   faqs: [
     [
-      "How much audio delay is actually noticeable?",
-      "For broadcast, ITU-R BT.1359 treats audio leading video by more than about 45 ms or lagging by more than about 125 ms as beyond the range viewers accept — the ear tolerates sound arriving late far better than early, because that is what distance does in the real world. Offsets under roughly 20 ms are generally imperceptible.",
+      "How much audio delay is noticeable?",
+      "ITU-R BT.1359-1 puts detectability at 45 ms when audio leads the picture and 125 ms when it lags, and the point where viewers actively object at 90 ms lead and 185 ms lag. Ears are far less forgiving of sound arriving early because that never happens in nature — distant sound always arrives after the sight of the event.",
     ],
     [
-      "How do I record a good sync test clip?",
-      "Point the camera at your hands, keep them clearly in frame, and clap once sharply after a couple of seconds of quiet. A single loud transient against a quiet background is what the -30 dB threshold detects cleanly; a noisy room or a soft clap produces ambiguous silence transitions.",
+      "What is the broadcast standard for lip sync?",
+      "ATSC IS-191 is the tightest in common use: at the point of emission, audio must not lead video by more than 15 ms and must not lag by more than 45 ms. EBU R37 covers programme production with 40 ms lead and 60 ms lag. At 25 fps, 45 ms is a little over one frame.",
     ],
     [
-      "Does this correct the offset for me?",
-      "No. It measures and reports timestamps only — it does not re-mux the file or shift the audio track. Once you know the offset in milliseconds you apply it in your editor or capture software, which is also where you would verify the fix.",
+      "How do I fix an audio delay with ffmpeg?",
+      "Feed the same file twice and offset one input's timestamps: ffmpeg -i input.mp4 -itsoffset -0.040 -i input.mp4 -map 0:v -map 1:a -c copy synced.mp4 pulls the audio 40 ms earlier while copying both streams untouched. The sign is inverted from the measurement: audio that is late needs a negative offset.",
     ],
     [
-      "Is my video uploaded anywhere?",
-      "No. The file is written into the FFmpeg WebAssembly engine's in-memory filesystem in your browser and analysed there; only the text log is produced, and it downloads straight to your device.",
+      "Why measure with a flash instead of a clap?",
+      "A camera flash lands inside a single frame, so the picture side of the measurement is unambiguous, while a clap has a visible hand movement spread over several frames. Audio is the opposite — a clap gives a sharp transient in the waveform. Using a flash for the picture and its own click or a clapperboard for the sound gives the cleanest pair of readings.",
     ],
   ],
 };

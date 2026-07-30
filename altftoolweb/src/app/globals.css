@@ -50,11 +50,6 @@ html[data-theme="light"] {
   --danger: var(--anslation-ds-danger);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --danger-soft: var(--anslation-ds-danger-soft);
-  /* The -text variants are the AA-safe versions for COPY: --danger, --success
-     and --warning are tuned for fills, icons and borders and only clear the 3:1
-     graphical bar on the light surface, so they fail AA as text. 72 usages
-     across 38 files already referenced these three names; with no alias they
-     resolved to nothing and the colour fell back to inherit. */
   --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
@@ -66,6 +61,7 @@ html[data-theme="light"] {
   --warning-text: var(--anslation-ds-warning-text);
   --info: var(--anslation-ds-info);
   --info-soft: var(--anslation-ds-info-soft);
+  --info-text: var(--anslation-ds-info-text);
   --shadow-sm: var(--anslation-ds-shadow-sm);
   --shadow-md: var(--anslation-ds-shadow-md);
   --shadow-lg: var(--anslation-ds-shadow-lg);
@@ -112,11 +108,6 @@ html[data-theme="dark"] {
   --danger: var(--anslation-ds-danger);
   --danger-foreground: var(--anslation-ds-status-foreground);
   --danger-soft: var(--anslation-ds-danger-soft);
-  /* The -text variants are the AA-safe versions for COPY: --danger, --success
-     and --warning are tuned for fills, icons and borders and only clear the 3:1
-     graphical bar on the light surface, so they fail AA as text. 72 usages
-     across 38 files already referenced these three names; with no alias they
-     resolved to nothing and the colour fell back to inherit. */
   --danger-text: var(--anslation-ds-danger-text);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
@@ -128,6 +119,7 @@ html[data-theme="dark"] {
   --warning-text: var(--anslation-ds-warning-text);
   --info: var(--anslation-ds-info);
   --info-soft: var(--anslation-ds-info-soft);
+  --info-text: var(--anslation-ds-info-text);
   --shadow-sm: var(--anslation-ds-shadow-sm);
   --shadow-md: var(--anslation-ds-shadow-md);
   --shadow-lg: var(--anslation-ds-shadow-lg);
@@ -149,6 +141,23 @@ body {
      at the top of a tool. Vertical only: overscroll-behavior-x is left at
      `auto` so the browser's horizontal back-swipe still works. */
   overscroll-behavior-y: none;
+  /* Nothing may move sideways. Decorative glows deliberately overhang the
+     viewport — on /tools/all/wheregoes-tool at 390px one of them measures
+     left:-40 right:632 — and without a clip the whole page slides under a
+     horizontal swipe. This used to live only in `html[data-theme]`, which made
+     the guard depend on the inline theme-init script having run: dropping
+     data-theme flips html's computed overflow-x from `clip` back to `visible`.
+     Unconditional here, so the structural guard survives the script failing. */
+  overflow-x: clip;
+  /* Safari (every iOS browser) only honours the -webkit- form. Without it,
+     rotating an iPhone to landscape inflates body copy mid-session. Moved off
+     `html[data-theme]` for the same reason as the clip above. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Kill the grey/blue tap flash platform-wide. The property is inherited, so
+     setting it at the root also covers the tappables no tag/role selector
+     would catch (canvas overlays, div[onClick] inside a tool's own UI). */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html[data-theme] {
@@ -187,11 +196,9 @@ html[data-theme] {
 
   background: var(--background) !important;
   color: var(--foreground);
-  overflow-x: clip;
-  /* Safari (every iOS browser) only honours the -webkit- form. Without it,
-     rotating an iPhone to landscape inflates body copy mid-session. */
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  /* overflow-x and text-size-adjust moved to the unconditional `html, body`
+     rule above: they are structural, so they must not stop applying when the
+     theme attribute is missing. */
 }
 
 body.anslation-ds-public {
@@ -247,6 +254,30 @@ select {
   font: inherit;
 }
 
+/* iOS zooms the whole page in when it focuses a field whose text is under 16px,
+   and it does not zoom back out on blur — the visitor is left on an oversized,
+   horizontally displaced page. The design system tries to handle this
+   (packages/ui/src/styles.css has a `@media (pointer: coarse)` 16px rule) but
+   that rule is defeated by the later, equally specific `.alt-ui-input`
+   declaration: forcing its media condition on in the browser leaves the global
+   header's search field at 14px on /tools/all/step-counter,
+   /tools/all/age-gender-detector and /tools/all/wheregoes-tool alike.
+
+   `max(1rem, 1em)` raises anything under 16px and leaves a field that wants to
+   be bigger alone: inside `font-size`, `1em` resolves to the PARENT's size, and
+   because `font: inherit` above makes a field's size its parent's size, the max
+   is a no-op for every field that has not been given a size of its own. Coarse
+   pointers only, so desktop keeps the denser 14px controls. The `:not()`s carry
+   the specificity needed to outrank `.alt-ui-input` without `!important`; the
+   excluded input types render no text of their own to zoom into. */
+@media (pointer: coarse) {
+  input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="hidden"], [type="submit"], [type="button"], [type="reset"], [type="image"]),
+  select:not([hidden]),
+  textarea:not([hidden]) {
+    font-size: max(1rem, 1em);
+  }
+}
+
 ::selection {
   background: var(--anslation-ds-primary-soft);
   color: var(--foreground);
@@ -258,11 +289,17 @@ select {
   border-radius: var(--anslation-ds-radius-sm);
 }
 
-/* Kill the grey iOS/Android tap flash on anything tappable. These all carry a
-   :active/:focus-visible state of their own, so touch feedback is not lost —
-   only the browser's default rectangle is. */
+/* The tap flash itself is now killed at the root (see `html, body` above, where
+   the property is inherited by every tappable including the ones no selector
+   here would name). What is left for this list is the rest of what separates a
+   control from a paragraph on a touchscreen. Measured on /tools/all/step-counter
+   at 390px: 253 of 254 visible tappables computed `user-select: auto`, so a
+   tap-and-hold on the bottom nav's "Home" caption began selecting text instead
+   of registering a press, and all 254 computed `touch-action: auto`, so every
+   control still carried the browser's wait-for-a-second-tap delay.
+   `manipulation` removes only double-tap-to-zoom on these elements — pinch-zoom
+   is untouched, so WCAG 1.4.4 still passes. */
 button,
-a,
 label,
 summary,
 select,
@@ -271,11 +308,63 @@ select,
 [role="menuitem"],
 [role="option"],
 [role="switch"] {
-  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Suppress the iOS long-press callout on controls. Links are deliberately
+     left out of this rule and the one above: their callout is how a phone
+     visitor copies or shares a URL, and their text is prose worth selecting. */
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
 }
 
 a {
   transition: color 140ms ease, opacity 140ms ease;
+  touch-action: manipulation;
+}
+
+/* Acknowledge the tap. Measured on /tools/all/step-counter at 390px: 175 of the
+   237 visible buttons and links (74%) carried no `active:` state of any kind —
+   all four bottom-nav items among them — so once the browser's own tap flash is
+   removed above, a press produces no feedback at all.
+
+   Coarse pointers only, so desktop hover work is untouched, and inside
+   @layer base so that the 62 elements on that page which DO declare their own
+   `active:` utility keep winning (Tailwind utilities sit in a later layer).
+   Buttons get the press-in scale; links get a fade instead, because scaling an
+   inline link would visibly jiggle the paragraph around it. */
+@layer base {
+  @media (hover: none) and (pointer: coarse) {
+    button:active:not(:disabled),
+    select:active:not(:disabled),
+    summary:active,
+    [role="button"]:active:not([aria-disabled="true"]),
+    [role="tab"]:active:not([aria-disabled="true"]),
+    [role="menuitem"]:active:not([aria-disabled="true"]),
+    [role="option"]:active:not([aria-disabled="true"]),
+    [role="switch"]:active:not([aria-disabled="true"]) {
+      scale: 0.97;
+    }
+
+    a:active {
+      opacity: 0.68;
+    }
+  }
+
+  /* A scale is motion. Reduced-motion visitors get the fade for both, so the
+     press is still acknowledged without anything moving. */
+  @media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: reduce) {
+    button:active:not(:disabled),
+    select:active:not(:disabled),
+    summary:active,
+    [role="button"]:active:not([aria-disabled="true"]),
+    [role="tab"]:active:not([aria-disabled="true"]),
+    [role="menuitem"]:active:not([aria-disabled="true"]),
+    [role="option"]:active:not([aria-disabled="true"]),
+    [role="switch"]:active:not([aria-disabled="true"]) {
+      scale: 1;
+      opacity: 0.68;
+    }
+  }
 }
 
 .skip-to-content {

@@ -1,41 +1,32 @@
 const seo = {
   intro:
-    "The Audio Pitch & Tempo Shifter changes the speed of an audio file without moving its pitch, or moves its pitch by two semitones without changing its length, using FFmpeg compiled to WebAssembly and run inside your own browser. Tempo presets apply atempo=0.8 and atempo=1.25 (80% and 125% of original speed); pitch presets resample by a factor of 1.12246, which is exactly two equal-tempered semitones, then compensate with the inverse tempo change so the running time comes back. The result downloads as a WAV, and the source file is written to FFmpeg's in-memory filesystem rather than uploaded anywhere.",
+    "An audio pitch and tempo shifter changes how high a recording sounds and how fast it plays as two separate controls, instead of the single tape-speed knob that moves both at once. The maths is twelve-tone equal temperament: a shift of n semitones multiplies every frequency by 2^(n/12), so +12 semitones doubles pitch and turns A4's 440 Hz into 880 Hz, while a tempo of 50% doubles the running time without touching pitch. This page gives you the exact numbers and the filter chain that performs the change.",
   useCases: [
-    "Slowing a guitar solo to 80% speed so you can hear the individual notes, without the recording dropping into a lower key that makes it useless for practice.",
-    "Dropping a backing track two semitones because the singer cannot reach the top note, while keeping the arrangement exactly the same length as the click track.",
-    "Speeding an interview recording to 125% for a faster transcription pass, with the speaker's voice still sounding like themselves instead of chipmunked.",
+    "Drop a backing track two semitones so it sits in a singer's range, without slowing the song down",
+    "Slow a language lesson or a guitar solo to 70% speed for practice while keeping every note at its written pitch",
+    "Work out the resample rate and atempo chain for a batch script before running ffmpeg over a folder of files",
   ],
   benefits: [
-    [
-      "Pitch and tempo move independently",
-      "The pitch presets chain asetrate with a compensating atempo, so a two-semitone shift leaves the duration where it was — a plain speed change would have moved both together.",
-    ],
-    [
-      "Lossless WAV output",
-      "Results are written as uncompressed WAV, so a file you plan to edit further does not pick up a second generation of lossy encoding on the way through.",
-    ],
-    [
-      "The engine loads only when you ask",
-      "The FFmpeg WebAssembly core is fetched on first press of Process, not on page load, so simply opening the page costs you nothing.",
-    ],
+    ["Two independent controls", "Pitch in semitones and cents, tempo in percent — the tool works out the speed correction that keeps them separate."],
+    ["Copy-ready filter chain", "The atempo values are pre-split into ffmpeg's legal 0.5–2.0 range, so long chains do not fail at the command line."],
+    ["Preview without uploading", "Tempo-preserved and linked playback both run on the local file in your browser; nothing is sent anywhere."],
   ],
   faqs: [
     [
-      "How much does the pitch actually change?",
-      "Two semitones — one whole tone — up or down. The resampling factor is 1.12246, which is 2 raised to the power 2/12, the exact ratio between notes a whole step apart in equal temperament. Pitch-up multiplies the playback rate by it and pitch-down divides by it.",
+      "How do you change pitch without changing speed?",
+      "Resample the audio by the pitch ratio, then time-stretch by the inverse. In ffmpeg that is asetrate=SR×r, aresample=SR, atempo=1/r. For a one-octave rise at 44.1 kHz, r = 2, so you resample to 88,200 Hz and then apply atempo=0.5 to bring the running time back to the original.",
     ],
     [
-      "How much faster or slower do the tempo presets run?",
-      "Slower plays at 0.8x, so a 5-minute track becomes 6 minutes 15 seconds; faster plays at 1.25x, turning 5 minutes into 4 minutes. Both use FFmpeg's atempo filter, which time-stretches without transposing.",
+      "Why does ffmpeg's atempo filter need to be chained?",
+      "One atempo instance accepts a factor between 0.5 and 2.0 only. Anything outside that has to be expressed as a product — a 4× speed-up is atempo=2,atempo=2, and a quarter-speed is atempo=0.5,atempo=0.5. This tool splits the factor into equal steps so the product is exactly what you asked for.",
     ],
     [
-      "Will speeding up or pitch-shifting make the audio sound worse?",
-      "Some artefacts are expected. Time-stretching works on overlapping windows, so transients such as drum hits and hard consonants can smear slightly, and the effect grows the further you move from 1.0x. At 0.8x and 1.25x it is usually mild on speech and noticeable on percussive material.",
+      "How many semitones can I shift before it sounds wrong?",
+      "Plain resampling moves vowel formants along with the pitch, and past roughly four semitones voices start to sound like a chipmunk or a giant. Music tolerates more than speech. A formant-preserving stretcher such as ffmpeg's rubberband filter keeps the vocal tract resonances fixed and stays natural over a much wider range.",
     ],
     [
-      "Is my audio uploaded to a server?",
-      "No. The file is read by the page and written into the WebAssembly engine's in-memory filesystem, processed there, and downloaded straight back to you. The only network request is the one that fetches the FFmpeg core itself the first time you run a job.",
+      "Can a browser shift pitch on its own?",
+      "Only partly. An HTML audio element with preservesPitch set to true changes speed while holding pitch, and with preservesPitch set to false it moves both like tape speed. There is no built-in way to move pitch alone, which is why the true independent shift is offered here as an ffmpeg command.",
     ],
   ],
 };

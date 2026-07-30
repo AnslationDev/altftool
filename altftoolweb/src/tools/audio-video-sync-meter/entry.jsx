@@ -1,7 +1,7 @@
 "use client";
 
-import AdvancedWorkbench from "@/tools/_shared/advanced/AdvancedWorkbench";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <AdvancedWorkbench slug="audio-video-sync-meter" />;
+  return <ToolHome />;
 }

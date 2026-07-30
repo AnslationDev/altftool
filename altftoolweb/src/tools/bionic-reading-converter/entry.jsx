@@ -1,7 +1,7 @@
 "use client";
 
-import AssistiveTool from "@/tools/_shared/assistive/AssistiveTool";
+import ToolHome from "./pages";
 
 export default function ToolEntry() {
-  return <AssistiveTool slug="bionic-reading-converter" />;
+  return <ToolHome />;
 }

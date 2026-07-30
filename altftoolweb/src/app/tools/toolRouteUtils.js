@@ -9,6 +9,7 @@ import {
   slugifyCategory,
 } from "@/platform/registry/categoryTaxonomy";
 import { TOP_PRIORITY_TOOL_SLUGS } from "@altftool/core/toolHealth";
+import { mergeCuratedRelatedTools } from "./toolRelatedCurations";
 // Re-exported so existing server callers keep working; defined apart from
 // this module so client components can reach them without the catalogue.
 import { formatCategoryLabel, getToolCategories } from "./toolRouteFormat";
@@ -131,7 +132,7 @@ export const getRelatedTools = cache(function getRelatedTools(slug, limit = 6) {
       .filter((word) => word.length > 2),
   );
 
-  return Object.entries(toolMetaMap)
+  const scoredRelatedTools = Object.entries(toolMetaMap)
     .filter(([candidateSlug]) => candidateSlug !== slug)
     .map(([candidateSlug, candidate]) => {
       const candidateCategories = getToolCategories(candidate).map((item) =>
@@ -163,6 +164,13 @@ export const getRelatedTools = cache(function getRelatedTools(slug, limit = 6) {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map(({ slug: relatedSlug, name }) => ({ slug: relatedSlug, name }));
+
+  return mergeCuratedRelatedTools(
+    slug,
+    scoredRelatedTools,
+    limit,
+    (relatedSlug) => toolMetaMap[relatedSlug]?.name || relatedSlug,
+  );
 });
 
 export async function buildToolMetadata(slug) {

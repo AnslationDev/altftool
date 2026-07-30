@@ -85,11 +85,8 @@ export default function HeroSection() {
             className="mt-4 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-secondary"
             aria-hidden="true"
           />
-          {/* Answer-first lede. Two self-contained sentences that fully answer
-              "what is AltFTool" without needing anything above them — this is
-              the text an answer engine lifts. The count is derived from the
-              registry; the processing and pricing claims are quoted from
-              ALTFTOOL_POSITION so they cannot drift from /alternatives. */}
+          {/* Answer-first lede. Two self-contained sentences fully answer
+              "what is AltFTool" without needing the surrounding hero. */}
           <p className="mt-3 max-w-2xl text-xl font-semibold leading-8 text-foreground sm:text-2xl">
             AltFTool is a free website with {TOOL_COUNT.toLocaleString()} online
             tools — converters, PDF and image editors, calculators, developer

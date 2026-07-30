@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Input, ThemeModeSelector } from "@altftool/ui";
 import { useTheme } from "@/contexts/ThemeContext";
+import { isVisibleFocusable } from "./navigationFocusPolicy";
 import {
   isPublicRouteActive,
   MOBILE_MORE_NAV_ITEMS,
@@ -38,14 +39,18 @@ const FOCUSABLE_SELECTOR = [
  * Focusable descendants that are actually rendered. Links inside a collapsed
  * `<details>` still match the selector, so an unfiltered trap can park focus on
  * an invisible element and appear to break Tab entirely.
+ *
+ * A client-rect test is not enough to spot them: measured in Chrome, a link
+ * inside a closed `<details>` in the Explore sheet still reports one client
+ * rect of 332x44 while `checkVisibility()` returns false and `focus()` refuses
+ * to move focus to it. With 6 collapsed groups that is ~78 unfocusable nodes
+ * inside the trap's list, and today only DOM order keeps `first`/`last` off
+ * them. `checkVisibility()` is the test that agrees with the browser.
  */
 function getVisibleFocusable(root) {
   if (!root) return [];
   return Array.from(root.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
-    (element) =>
-      !element.hasAttribute("disabled") &&
-      element.getAttribute("aria-hidden") !== "true" &&
-      element.getClientRects().length > 0,
+    isVisibleFocusable,
   );
 }
 
@@ -123,7 +128,7 @@ function Sheet({ id, labelId, open, title, onClose, panelRef, children }) {
             type="button"
             onClick={() => onClose({ returnFocus: true })}
             aria-label={`Close ${title}`}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
+            className="inline-flex h-[var(--anslation-ds-control-md)] w-[var(--anslation-ds-control-md)] shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
           >
             <X className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -191,11 +196,18 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
     if (!activeSheet) return undefined;
 
     const panel = getPanel(activeSheet);
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    const root = document.documentElement;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
     const previousOverflow = document.body.style.overflow;
+    const previousRootOverflow = root.style.overflow;
     const previousPaddingRight = document.body.style.paddingRight;
 
+    // `document.scrollingElement` is <html> here, and globals.css puts
+    // `overflow-x: clip` on the root element — the viewport only takes its
+    // overflow from <body> while the root's own overflow is `visible`, so a
+    // body-only lock cannot be relied on to hold. Lock the element that
+    // actually scrolls as well.
+    root.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
@@ -245,6 +257,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       window.clearTimeout(focusTimer);
+      root.style.overflow = previousRootOverflow;
       document.body.style.overflow = previousOverflow;
       document.body.style.paddingRight = previousPaddingRight;
     };
@@ -498,7 +511,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
               />
               <button
                 type="submit"
-                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition duration-150 hover:bg-(--primary-hover) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
+                className="inline-flex h-[var(--anslation-ds-control-md)] shrink-0 items-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition duration-150 hover:bg-(--primary-hover) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
               >
                 <Search className="h-4 w-4" aria-hidden="true" />
                 Go
