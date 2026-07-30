@@ -3,6 +3,10 @@ import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import {
+  configuredEnvironmentKeys,
+  isConfiguredEnvironmentValue,
+} from "../scripts/lib/environment-snapshot.mjs";
 import { buildToolReadinessReport } from "../scripts/lib/tool-readiness.mjs";
 
 async function writeTool(webRoot, slug, files) {
@@ -14,6 +18,27 @@ async function writeTool(webRoot, slug, files) {
     ),
   );
 }
+
+test("reserved invalid URLs never count as configured providers", () => {
+  assert.equal(
+    isConfiguredEnvironmentValue("https://wheregoes.example.invalid"),
+    false,
+  );
+  assert.equal(
+    isConfiguredEnvironmentValue("https://WHEREGOES.EXAMPLE.INVALID./status"),
+    false,
+  );
+  assert.equal(isConfiguredEnvironmentValue("https://api.example.com"), true);
+  assert.equal(isConfiguredEnvironmentValue("real-api-key"), true);
+  assert.deepEqual(
+    [...configuredEnvironmentKeys({
+      PLACEHOLDER_URL: "https://service.invalid",
+      LIVE_URL: "https://api.example.com",
+      API_KEY: "real-api-key",
+    })].sort(),
+    ["API_KEY", "LIVE_URL"],
+  );
+});
 
 test("tool readiness separates working, API-required, partial, and broken tools", async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), "altftool-readiness-"));

@@ -54,9 +54,26 @@ export function isConfiguredEnvironmentValue(value) {
   const normalized = String(value || "").trim();
   if (!normalized) return false;
 
-  return !/^(?:undefined|null|false|changeme|replace[-_ ]?me|your[-_ ].*|<.*>)$/i.test(
-    normalized,
-  );
+  if (
+    /^(?:undefined|null|false|changeme|replace[-_ ]?me|your[-_ ].*|<.*>)$/i.test(
+      normalized,
+    )
+  ) {
+    return false;
+  }
+
+  try {
+    const hostname = new URL(normalized).hostname
+      .toLowerCase()
+      .replace(/\.$/u, "");
+    // RFC 2606 reserves `.invalid` for values that must never resolve. CI uses
+    // these sentinels to exercise URL parsing without claiming a live provider.
+    if (hostname === "invalid" || hostname.endsWith(".invalid")) return false;
+  } catch {
+    // Non-URL values can still be valid API keys or other configuration.
+  }
+
+  return true;
 }
 
 export function configuredEnvironmentKeys(values = {}) {

@@ -47,7 +47,8 @@ if (!fs.existsSync(nextDir)) {
 // @imgly/background-removal supplies explicit CDN-backed WASM paths at
 // runtime. Webpack also emits this WebGPU fallback, which none of our callers
 // use and which otherwise consumes more than 22 MiB of the Amplify artifact.
-const standaloneNext = path.join(nextDir, "standalone", ".next");
+const standaloneDir = path.join(nextDir, "standalone");
+const standaloneNext = path.join(standaloneDir, ".next");
 const wasmMediaDirectories = [
   path.join(nextDir, "static", "media"),
   path.join(nextDir, "server", "chunks", "static", "media"),
@@ -65,6 +66,69 @@ const removableMedia = wasmMediaDirectories.flatMap((directory) =>
 
 for (const filePath of removableMedia) {
   fs.rmSync(filePath);
+}
+
+// Amplify SSR runs on Amazon Linux (glibc, x64). Sharp's optional dependency
+// resolver makes Next's standalone tracer copy the mutually exclusive musl
+// binaries too, even though that runtime can never load them. Keep the glibc
+// packages and remove only their Linux-musl counterparts from the staging tree.
+const incompatibleStandalonePackages = [
+  path.join(
+    standaloneDir,
+    "node_modules",
+    "@img",
+    "sharp-libvips-linuxmusl-x64",
+  ),
+  path.join(
+    standaloneDir,
+    "node_modules",
+    "@img",
+    "sharp-linuxmusl-x64",
+  ),
+].filter((packagePath) => fs.existsSync(packagePath));
+
+for (const packagePath of incompatibleStandalonePackages) {
+  fs.rmSync(packagePath, { force: true, recursive: true });
+}
+
+const incompatibleTraceFragments = [
+  "sharp-libvips-linuxmusl-x64",
+  "sharp-linuxmusl-x64",
+];
+
+function findIncompatibleTraceFiles(directory) {
+  const matches = [];
+  const pending = [directory];
+
+  while (pending.length > 0) {
+    const current = pending.pop();
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const entryPath = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        pending.push(entryPath);
+      } else if (
+        entry.name.endsWith(".nft.json") &&
+        incompatibleTraceFragments.some((fragment) =>
+          fs.readFileSync(entryPath, "utf8").includes(fragment),
+        )
+      ) {
+        matches.push(path.relative(nextDir, entryPath));
+      }
+    }
+  }
+
+  return matches;
+}
+
+const incompatibleTraceFiles = findIncompatibleTraceFiles(nextDir);
+if (incompatibleTraceFiles.length > 0) {
+  throw new Error(
+    "Amplify-incompatible Sharp musl packages remain in Next trace files: " +
+      incompatibleTraceFiles.slice(0, 8).join(", ") +
+      (incompatibleTraceFiles.length > 8
+        ? ` (+${incompatibleTraceFiles.length - 8} more)`
+        : ""),
+  );
 }
 
 // These files are useful while compiling or debugging a local build, but the
@@ -157,21 +221,18 @@ function embeddedRootOccurrences(directory) {
   }, 0);
 }
 
-// What AWS actually weighs. Three jobs pinned it down: the byte count in its
-// rejection message was 0.9334 and 0.9307 times the size of .next/standalone
-// on jobs 105 and 110 — stable to a third of a percent — while this script's
-// own walk moved the other way (185.09 -> 182.30) as AWS's number rose
-// (220.01 -> 220.96). standalone is written by `next build` and holds its own
-// copy of .next/server, so every post-build saving that skipped it shrank a
-// directory AWS never looks at. The compaction and the prunes above now cover
-// both trees; this measures the one that decides the deploy.
+// Amplify rebuilds compute/default from Next's NFT traces rather than uploading
+// .next/standalone literally. The standalone tree is still a useful correlated
+// pre-package signal, but not a stable multiplier: job 124 accepted alongside
+// a 209.51 MiB tree, while job 125 paired a 226.52 MiB tree with a 245,501,745
+// byte (234.13 MiB) compute bundle and rejected it against the 220 MiB cap.
 //
-// 233 MiB of standalone predicts ~217 MiB at AWS, against its 220 limit.
-const standaloneDir = path.join(nextDir, "standalone");
+// Keep a deterministic 12 MiB reserve instead of attempting another fitted
+// ratio. The default is deliberately below the largest known accepted tree;
+// raise it only after a larger standalone tree is accepted by Amplify.
 const hasStandalone = fs.existsSync(standaloneDir);
-const AWS_BYTES_PER_STANDALONE_BYTE = 0.932;
 const maxStandaloneBytes = Number(
-  process.env.ALTFT_AMPLIFY_STANDALONE_MAX_BYTES || 233 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_STANDALONE_MAX_BYTES || 208 * 1024 * 1024
 );
 
 function plainDirectorySize(directory) {
@@ -195,8 +256,12 @@ console.log(
     (pathInflation > 0
       ? ` (${(rawArtifactBytes / (1024 * 1024)).toFixed(2)} MiB on disk here, less ${(pathInflation / (1024 * 1024)).toFixed(2)} MiB of build-root path this checkout adds and Amplify's does not)`
       : "") +
-    (removableMedia.length || buildOnlyArtifacts.length
-      ? `; pruned ${removableMedia.length} unused WASM asset and ${buildOnlyArtifacts.length} build-only artifact.`
+    (removableMedia.length ||
+    incompatibleStandalonePackages.length ||
+    buildOnlyArtifacts.length
+      ? `; pruned ${removableMedia.length} unused WASM asset, ` +
+        `${incompatibleStandalonePackages.length} incompatible native package, and ` +
+        `${buildOnlyArtifacts.length} build-only artifact.`
       : ".")
 );
 
@@ -229,17 +294,15 @@ console.log(
 if (hasStandalone) {
   const standaloneBytes = plainDirectorySize(standaloneDir);
   const standaloneMiB = standaloneBytes / (1024 * 1024);
-  const predictedAwsMiB =
-    (standaloneBytes * AWS_BYTES_PER_STANDALONE_BYTE) / (1024 * 1024);
   console.log(
     `  standalone: ${standaloneMiB.toFixed(2)} MiB / ${(maxStandaloneBytes / (1024 * 1024)).toFixed(2)} MiB` +
-      ` (predicts ~${predictedAwsMiB.toFixed(2)} MiB at AWS, limit 220.00)`
+      " (conservative pre-packaging cap; AWS hard limit 220.00 MiB)"
   );
   if (standaloneBytes > maxStandaloneBytes) {
     throw new Error(
-      `.next/standalone is ${standaloneMiB.toFixed(2)} MiB, which predicts ` +
-        `~${predictedAwsMiB.toFixed(2)} MiB at AWS against its 220.00 MiB limit. ` +
-        `This is the measurement that decides the deploy — the .next figure above is not.`
+      `.next/standalone is ${standaloneMiB.toFixed(2)} MiB, above the conservative ` +
+        `${(maxStandaloneBytes / (1024 * 1024)).toFixed(2)} MiB pre-packaging cap. ` +
+        "Amplify adds opaque packaging overhead before enforcing its 220.00 MiB hard limit."
     );
   }
 }

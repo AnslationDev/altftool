@@ -1,5 +1,3 @@
-import { readdirSync } from "node:fs";
-import path from "node:path";
 import { factNetArticles, factNetCategories, factNetSettings } from "./aiFactsData.js";
 
 export const FACT_NET_BASE_PATH = "/fact-net";
@@ -11,7 +9,6 @@ let cachedCategories;
 let cachedArticleBySlug;
 let cachedCategoryByPath;
 let cachedSortedArticles = {};
-let cachedImageFiles;
 
 function cleanPath(value = "") {
   return String(value).replace(/^\/+|\/+$/g, "");
@@ -31,37 +28,12 @@ function titleFromSlug(slug = "") {
     .join(" ");
 }
 
-function getLocalImageFiles() {
-  if (!cachedImageFiles) {
-    try {
-      cachedImageFiles = new Set(
-        readdirSync(path.join(process.cwd(), "public/fact-net-images")).filter(Boolean),
-      );
-    } catch {
-      cachedImageFiles = new Set();
-    }
-  }
-  return cachedImageFiles;
-}
-
 function getImageCandidates(article) {
-  const configured = article.image ? [article.image] : [];
-  const generated = [
-    `/fact-net-images/${article.slug}.webp`,
-    `/fact-net-images/${article.slug}.png`,
-    `/fact-net-images/${article.slug}.jpg`,
-    `/fact-net-images/${article.slug}.jpeg`,
-  ];
-  const candidates = [...configured, ...generated].filter(Boolean);
-  const imageFiles = getLocalImageFiles();
-  const seen = new Set();
-
-  return candidates.filter((candidate) => {
-    const filename = candidate.split("/").at(-1);
-    if (!filename || seen.has(candidate) || !imageFiles.has(filename)) return false;
-    seen.add(candidate);
-    return true;
-  });
+  // Every authored Fact Net article carries its public image path explicitly.
+  // Avoid probing public/ at runtime: Next's file tracer treats directory
+  // scans as dependencies and otherwise copies the entire image directory into each
+  // server route bundle in addition to serving the same files as public assets.
+  return article.image ? [article.image] : [];
 }
 
 function getContentSource() {

@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
+import path from "node:path";
 import test from "node:test";
+import { getArticlesPage } from "../altftoolweb/src/app/fact-net/data/factNetData.js";
 import {
   buildSiteMapGroups,
   getDefaultRouteLabel,
@@ -68,4 +71,23 @@ test("site map grouping deduplicates routes and supports search", () => {
   assert.equal(results.length, 1);
   assert.equal(results[0].id, "tools");
   assert.deepEqual(results[0].routes.map((route) => route.path), ["/tools/all/json-editor"]);
+});
+
+test("Fact Net uses authored public images without tracing the asset directory", async () => {
+  const articles = getArticlesPage({ pageSize: 48, sort: "slug" }).items;
+  assert.ok(articles.length > 0);
+
+  for (const article of articles) {
+    assert.ok(article.image, `${article.slug} is missing an authored image`);
+    assert.deepEqual(article.imageCandidates, [article.image]);
+    await access(
+      path.resolve("altftoolweb/public", article.image.replace(/^\/+/, "")),
+    );
+  }
+
+  const dataSource = await readFile(
+    path.resolve("altftoolweb/src/app/fact-net/data/factNetData.js"),
+    "utf8",
+  );
+  assert.doesNotMatch(dataSource, /node:fs|readdirSync|process\.cwd/u);
 });

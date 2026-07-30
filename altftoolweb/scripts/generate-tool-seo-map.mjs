@@ -29,7 +29,10 @@ import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 
 const TOOLS_DIR = "src/tools";
 const OUT_DIR = "src/app/tools/generated";
-const BROTLI_QUALITY = 9;
+// This module is generated once during a release build and decoded once per
+// server process. Maximum-quality Brotli costs a few extra build seconds but
+// preserves deployment headroom for the 3,944-entry catalogue.
+const BROTLI_QUALITY = 11;
 
 const slugs = fs
   .readdirSync(TOOLS_DIR, { withFileTypes: true })

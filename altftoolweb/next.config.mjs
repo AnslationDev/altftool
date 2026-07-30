@@ -24,11 +24,29 @@ const useWebpackBuildWorker =
   process.env.ALTFT_WEBPACK_BUILD_WORKER === "true";
 const enableSharedAsyncVendorChunks =
   process.env.ALTFT_ENABLE_SHARED_ASYNC_VENDOR_CHUNKS === "true";
+const isAmplifyBuild = process.env.ALTFT_DEFER_BULK_PRERENDER === "true";
+const amplifyIncompatibleNativePackages = [
+  "node_modules/@img/sharp-libvips-linuxmusl-x64/**/*",
+  "node_modules/@img/sharp-linuxmusl-x64/**/*",
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
   outputFileTracingRoot: workspaceRoot,
+  ...(isAmplifyBuild
+    ? {
+        // Amplify SSR runs on Amazon Linux x64 (glibc). Sharp also installs
+        // musl alternatives that can never load there; excluding them at trace
+        // time is essential because Amplify rebuilds its compute bundle from
+        // the NFT files. `/**` covers every route trace (including `/`) and
+        // `next-server` covers Next's shared trace.
+        outputFileTracingExcludes: {
+          "/**": amplifyIncompatibleNativePackages,
+          "next-server": amplifyIncompatibleNativePackages,
+        },
+      }
+    : {}),
   poweredByHeader: false,
   compress: true,
   transpilePackages: ["@altftool/ui"],
