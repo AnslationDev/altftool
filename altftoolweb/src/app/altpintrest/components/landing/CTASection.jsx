@@ -7,32 +7,28 @@ import { Sparkles, ArrowRight, Compass } from 'lucide-react';
 export default function CTASection({ onExplore }) {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 p-8 sm:p-12 lg:p-16 text-white shadow-2xl text-center sm:text-left flex flex-col lg:flex-row items-center justify-between gap-8">
-
-        {/* Background Subtle Patterns */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.2),transparent_70%)] pointer-events-none" />
-
+      <div className="relative flex flex-col items-center justify-between gap-8 overflow-hidden rounded-lg bg-primary p-8 text-center text-primary-foreground shadow-lg sm:p-12 sm:text-left lg:flex-row lg:p-16">
         <div className="max-w-2xl space-y-4 z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider">
-            <Sparkles size={14} />
-            <span>Unleash Your Creativity</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 bg-primary-foreground/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider">
+            <Sparkles size={14} aria-hidden="true" />
+            <span>Explore visual ideas</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-            Ready to discover thousands of live Pinterest ideas?
+            Browse the AltPinterest visual library
           </h2>
-          <p className="text-white/90 text-base sm:text-lg font-normal max-w-xl">
-            Jump into our real-time Pinterest feed powered by live community data. Save your favorite pins, share with friends, and start building your boards today.
+          <p className="max-w-xl text-base font-normal text-primary-foreground/90 sm:text-lg">
+            Search curated visuals and available live pins by category, then save ideas locally for this browser session.
           </p>
         </div>
 
         <div className="z-10 shrink-0">
           <button
             onClick={() => onExplore()}
-            className="px-8 py-4 rounded-full bg-white text-gray-900 hover:bg-gray-100 font-extrabold text-base sm:text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-3"
+            className="flex min-h-11 items-center gap-3 rounded-lg bg-surface px-8 py-4 text-base font-extrabold text-foreground shadow-md transition-all hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground sm:text-lg"
           >
-            <Compass size={22} className="text-[#E60023]" />
-            <span>Enter Live Feed</span>
-            <ArrowRight size={20} />
+            <Compass size={22} className="text-primary" aria-hidden="true" />
+            <span>Browse visual library</span>
+            <ArrowRight size={20} aria-hidden="true" />
           </button>
         </div>
 

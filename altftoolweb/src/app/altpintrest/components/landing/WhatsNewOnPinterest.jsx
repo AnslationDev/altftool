@@ -2,13 +2,11 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MoreHorizontal } from 'lucide-react';
 
 const WHATS_NEW_PINS = [
   {
     id: 1,
     title: "Coraline nails design",
-    author: "Coraline Studio",
     image: "/pins/2040762329177782.webp",
     isVideo: false,
     duration: null,
@@ -16,7 +14,6 @@ const WHATS_NEW_PINS = [
   {
     id: 2,
     title: "Tutorial de Velas artesanal",
-    author: "Diego Rodrigues",
     image: "/pins/Full Moon Tea Towels (cotton, Poly) - Etsy Canada.jpg",
     isVideo: true,
     duration: "0:29",
@@ -24,7 +21,6 @@ const WHATS_NEW_PINS = [
   {
     id: 3,
     title: "Deer costume & makeup inspo",
-    author: "DIY Home",
     image: "/pins/422281212308384.jpg",
     isVideo: false,
     duration: null,
@@ -32,7 +28,6 @@ const WHATS_NEW_PINS = [
   {
     id: 4,
     title: "Generative portrait prompt setup",
-    author: "Vaidazen",
     image: "/pins/MIDJOURNEY promt Eye.webp",
     isVideo: true,
     duration: "0:06",
@@ -40,7 +35,6 @@ const WHATS_NEW_PINS = [
   {
     id: 5,
     title: "Viral Red Cushion Foundation test",
-    author: "Beauty Daily",
     image: "/pins/How TIRTIR’s Viral Red Cushion Foundation Went From 3 to 40 Shades in Less Than a Year.webp",
     isVideo: false,
     duration: null,
@@ -48,7 +42,6 @@ const WHATS_NEW_PINS = [
   {
     id: 6,
     title: "Cozy campfire aesthetic & recipes",
-    author: "Outdoor Vibes",
     image: "/pins/Campfire comfort.webp",
     isVideo: true,
     duration: "0:15",
@@ -56,7 +49,6 @@ const WHATS_NEW_PINS = [
   {
     id: 7,
     title: "African American canvas art piece",
-    author: "Matte Print Lab",
     image: "/pins/Elegant Together – Black Women Sitting Print - 29_7x42 cm _ Museum Quality Matte Paper.webp",
     isVideo: false,
     duration: null,
@@ -64,7 +56,6 @@ const WHATS_NEW_PINS = [
   {
     id: 8,
     title: "Handmade ceramic mug inspo",
-    author: "Pottery World",
     image: "/pins/2251868558904023.jpg",
     isVideo: false,
     duration: null,
@@ -72,7 +63,6 @@ const WHATS_NEW_PINS = [
   {
     id: 9,
     title: "Minimalist living room decor",
-    author: "Interior Nest",
     image: "/pins/2744449769477436.webp",
     isVideo: true,
     duration: "0:45",
@@ -80,7 +70,6 @@ const WHATS_NEW_PINS = [
   {
     id: 10,
     title: "Graphic streetwear jacket design",
-    author: "Urban Thread",
     image: "/pins/1407443628414407.webp",
     isVideo: false,
     duration: null,
@@ -88,7 +77,6 @@ const WHATS_NEW_PINS = [
   {
     id: 11,
     title: "Create a life you love quote art",
-    author: "InspireDaily",
     image: "/pins/create-a-life.avif",
     isVideo: false,
     duration: null,
@@ -96,7 +84,6 @@ const WHATS_NEW_PINS = [
   {
     id: 12,
     title: "Fine line tattoo placement ideas",
-    author: "Ink & Needle",
     image: "/pins/604889793746585636.webp",
     isVideo: false,
     duration: null,
@@ -104,7 +91,6 @@ const WHATS_NEW_PINS = [
   {
     id: 13,
     title: "Modern Afro Editorial Photography",
-    author: "Studio Afro",
     image: "/pins/Afro.jpg",
     isVideo: false,
     duration: null,
@@ -112,7 +98,6 @@ const WHATS_NEW_PINS = [
   {
     id: 14,
     title: "Skintific Cushion Launch Review",
-    author: "Glow Journal",
     image: "/pins/Skintific New Launch Cushion💙.webp",
     isVideo: true,
     duration: "0:18",
@@ -120,7 +105,7 @@ const WHATS_NEW_PINS = [
 ];
 
 export default function WhatsNewOnPinterest({ onExplorePin }) {
-  const [savedPins, setSavedPins] = useState(new Set([2, 5, 8]));
+  const [savedPins, setSavedPins] = useState(new Set());
 
   const toggleSave = (e, id) => {
     e.stopPropagation();
@@ -138,7 +123,7 @@ export default function WhatsNewOnPinterest({ onExplorePin }) {
       {/* Left-Aligned Section Title */}
       <div className="mb-6 sm:mb-8 text-left">
         <h2 className="text-4xl sm:text-[44px] lg:text-[48px] font-bold text-[#111111] dark:text-white tracking-tight leading-tight">
-          What's new on Pinterest
+          Explore the visual library
         </h2>
       </div>
 
@@ -186,25 +171,12 @@ export default function WhatsNewOnPinterest({ onExplorePin }) {
                 </div>
               </div>
 
-              {/* Title, Author & Overflow Menu */}
-              <div className="flex items-start justify-between pt-2 px-1 gap-2">
+              {/* Title */}
+              <div className="px-1 pt-2">
                 <div className="flex-1 min-w-0">
                   <h4 className="text-[#111111] dark:text-white font-medium text-[15px] leading-snug line-clamp-2">
                     {pin.title}
                   </h4>
-                  {pin.author && (
-                    <p className="text-[#666666] dark:text-gray-400 text-[13px] line-clamp-1 mt-0.5">
-                      {pin.author}
-                    </p>
-                  )}
-                </div>
-
-                {/* Neutral Circular 3-Dot Overflow Menu */}
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full cursor-pointer text-[#666666] dark:text-gray-400 shrink-0 transition-colors mt-0.5"
-                >
-                  <MoreHorizontal size={18} />
                 </div>
               </div>
 

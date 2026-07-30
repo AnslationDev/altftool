@@ -78,7 +78,7 @@ test.describe("admin blog authoring UX", () => {
     ).toBeVisible();
     await expect(
       page
-        .getByRole("navigation", { name: "System modules" })
+        .getByRole("navigation", { name: "Access & Security modules" })
         .getByRole("link", { name: "Admin Management" }),
     ).toBeVisible();
     await page.getByRole("button", { name: "Close admin navigation" }).click();

@@ -90,7 +90,10 @@ async function expectButtonsHaveNames(page) {
     buttons
       .filter((button) => button.offsetParent !== null)
       .filter((button) => {
-        const text = (button.innerText || "").replace(/\s+/g, " ").trim();
+        // `innerText` can be empty for controls inside content-visibility:auto
+        // before Chromium paints the deferred subtree. Descendant text still
+        // contributes to the accessible name, so audit the DOM text instead.
+        const text = (button.textContent || "").replace(/\s+/g, " ").trim();
         const ariaLabel = button.getAttribute("aria-label") || "";
         const labelledBy = button.getAttribute("aria-labelledby") || "";
         const title = button.getAttribute("title") || "";

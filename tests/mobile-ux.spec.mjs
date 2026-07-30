@@ -148,7 +148,7 @@ test.describe("mobile layout", () => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
     await expect(
-      page.getByRole("heading", { name: "AltFTool", exact: true }),
+      page.getByRole("heading", { level: 1, name: /^AltFTool\b/ }),
     ).toBeVisible();
     await expect(page.locator("#home-global-search")).toBeVisible();
     const discoveryRegion = page.getByRole("region", {

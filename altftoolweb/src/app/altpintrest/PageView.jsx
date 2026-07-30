@@ -16,7 +16,7 @@ import { firebasePinterestPinsSource } from './service/firebasePinterestPins';
 import { updatePinLikes } from './service/pinActions';
 
 const heights = ["h-[260px]", "h-[280px]", "h-[300px]", "h-[320px]", "h-[340px]", "h-[380px]", "h-[410px]", "h-[420px]", "h-[450px]", "h-[460px]", "h-[500px]"];
-const FALLBACK_PIN_IMAGE = "/altpintrest-images/Listitem → Group - Pin card.png";
+const FALLBACK_PIN_IMAGE = "/altpintrest-images/pin-card.png";
 
 const getHeightForId = (id) => {
   if (typeof id === 'number') return heights[id % heights.length];
@@ -128,7 +128,7 @@ export default function AltPinterest({ defaultView }) {
   const [activeTab, setActiveTab] = useState("discover");
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [savedItems, setSavedItems] = useState(new Set([1, 3, 5, 7, 9, 10, 12, 14]));
+  const [savedItems, setSavedItems] = useState(new Set());
   const [likedItems, setLikedItems] = useState(new Set());
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -755,14 +755,13 @@ export default function AltPinterest({ defaultView }) {
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
                   <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
-                    {selectedItem.title || "AI Generated Inspiration"}
+                    {selectedItem.title || "Visual inspiration"}
                   </h1>
 
-                  <div className="flex items-center gap-3 mt-1">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden shrink-0">
-                      <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="user" className="w-full h-full object-cover" />
-                    </div>
-                    <span className="text-[14px] font-medium text-[var(--foreground)]">Lamice Neves</span>
+                  <div className="mt-1 flex items-center gap-3">
+                    <span className="text-[14px] font-medium text-[var(--foreground)]">
+                      AltFTool visual library
+                    </span>
                   </div>
 
                   <div className="border-t border-[#E9E9E9] dark:border-[var(--border)] pt-8 mt-4">
