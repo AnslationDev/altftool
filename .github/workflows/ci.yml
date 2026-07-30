@@ -197,11 +197,11 @@ jobs:
 
   visual-regression:
     runs-on: macos-latest
-    # A measured single-process macOS webpack compile exhausted the previous
-    # 45-minute job window before Playwright could start. The isolated build
-    # worker fixes that bottleneck; the larger cap leaves room for snapshots
-    # and artifact upload if a hosted runner is temporarily slow.
-    timeout-minutes: 60
+    # Hosted macOS compile time varies significantly for the full tool catalog:
+    # measured runs range from ~43 to ~58 minutes before static generation and
+    # the snapshot suite. Keep enough headroom for both without treating runner
+    # variance as an application regression.
+    timeout-minutes: 90
     env:
       NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
       ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"

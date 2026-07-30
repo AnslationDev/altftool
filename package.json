@@ -108,6 +108,7 @@
     "test:tools:functional": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-functional.spec.mjs",
     "test:tools:api-readiness": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/api-tool-readiness.spec.mjs",
     "test:tools:priority": "ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
+    "test:tools:priority:production": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true playwright test tests/tool-priority.spec.mjs",
     "test:tools:all": "playwright test tests/tool-all-routes.spec.mjs",
     "test:routes": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/route-audit.spec.mjs",
     "test:routes:dev": "playwright test tests/route-audit.spec.mjs",
@@ -147,7 +148,7 @@
     "validate:ux-release:live": "node scripts/run-ux-release-validation.mjs --live-parity",
     "validate:runtime-quality": "npm run qa:routes:strict && npm run firebase:live-check:strict && npm run firebase:integrity:strict && npm run performance:budget:strict",
     "validate": "npm run design:check && npm run security:secrets && npm run lint:web && npm run lint:web:budget && npm run routes:check && npm run seo:routes && npm run test:seo-site-url && npm run test:seo-sitemap-xml && npm run test:seo-verification && npm run test:seo-indexnow && npm run test:seo-config-source && npm run test:core-cache && npm run test:search-engine && npm run test:tool-readiness && npm run test:route-qa-report && npm run test:performance-budget && npm run test:firebase-data-integrity && npm run test:resilient-fetch && npm run test:production-surface-links && npm run test:release-doctor && npm run test:release-history && npm run test:live-deploy-parity && npm run tools:check && npm run tools:readiness:strict && npm run content:blogs && npm run seo:blog-check && npm run seo:blog-links && npm run health:manifest:check && npm run env:readiness && npm run firebase:check && npm run media:check && npm run audit && npm run build && npm run seo:schema && npm run seo:rendered && npm run seo:index-control && npm run seo:route-quality:strict && npm run bundle:audit && npm run performance:budget:strict && ALTFT_WEB_URL=http://localhost:3102 ALTFT_ADMIN_URL=http://localhost:3101 ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev npm run test:smoke",
-    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
+    "validate:full": "npm run validate && npm run test:routes && npm run test:tools:functional && npm run test:tools:priority:production && npm run test:mobile-ux && npm run test:admin-api && npm run test:firebase-admin-write-check && npm run test:firebase-live-data-report",
     "validate:release": "npm run validate:full && npm run firebase:live-check && npm run seo:blog-live-check && npm run test:firebase-public-pages && npm run test:security && npm run test:visual && npm run test:lighthouse"
   },
   "devDependencies": {
