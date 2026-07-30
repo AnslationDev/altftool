@@ -500,6 +500,8 @@ Important public routes:
 - ${site}/exam-photo (photo and signature upload rules for ${EXAM_SPECS.length} Indian exams, each quoted from a named notification and dated ${SPECS_READ_ON})
 - ${site}/blogs
 - ${site}/docs
+- ${site}/open-data (terms and field documentation for two read-only JSON datasets — the exam upload specs above and the ${TRANSFORM_TOOLS.length} converters — free to republish with attribution and a link to the AltFTool page each record describes)
+- ${site}/press (media kit: boilerplate, logo files, section counts, and the descriptions AltFTool is not)
 - ${site}/policypages/privacy
 - ${site}/policypages/contact
 `;

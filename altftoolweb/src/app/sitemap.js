@@ -99,6 +99,13 @@ const staticRoutes = [
   { path: "/top9", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
   { path: "/licenses", priority: 0.3 },
+  // Reference pages built for other people to link to: the open-data terms and
+  // field documentation for the two public JSON endpoints, and the media kit.
+  // The endpoints themselves live under /api/ and are deliberately absent —
+  // robots.txt disallows /api/, and submitting a disallowed URL is a
+  // contradiction. /open-data is the crawlable, citable surface for them.
+  { path: "/open-data", priority: 0.55 },
+  { path: "/press", priority: 0.45 },
   { path: "/ancestory/meaning", priority: 0.56 },
   { path: "/fact-net/categories", priority: 0.62 },
   { path: "/fact-net/listings", priority: 0.62 },
