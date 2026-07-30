@@ -6,6 +6,7 @@ import { toolContentOverrides } from "./toolContentOverrides";
 import { generatedToolSeoBrotliBase64 } from "./generated/toolSeoMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
+import { buildMetaDescription } from "./toolMetaDescription";
 
 let decodedGeneratedToolSeo = null;
 
@@ -110,38 +111,6 @@ function chooseTemplate(categories, slug = "", name = "") {
   if (/\bai\b|detect|recogni|generat|neural|face|emotion|smart/.test(haystack)) return workflowTemplates.ai;
   if (/text|writing|word|grammar|paraphras|summar|letter|essay|caption|bio\b/.test(haystack)) return workflowTemplates.writing;
   return workflowTemplates.default;
-}
-
-const META_DESCRIPTION_MAX = 158;
-
-// Cut on a word boundary, and only fall back to a hard cut if the last space
-// is so early that respecting it would throw most of the sentence away.
-function truncateAtWord(text, limit) {
-  if (text.length <= limit) return text;
-  const clipped = text.slice(0, limit - 1);
-  const lastSpace = clipped.lastIndexOf(" ");
-  const body = lastSpace > limit * 0.6 ? clipped.slice(0, lastSpace) : clipped;
-  return `${body.replace(/[\s,;:.–-]+$/, "")}…`;
-}
-
-function buildMetaDescription(name, description, primaryCategory) {
-  const base =
-    cleanText(description) ||
-    `${name} is a free online tool that runs entirely in your browser.`;
-  const suffix = `Use ${name} online for ${primaryCategory || "daily"} tasks with quick examples and copy-ready results.`;
-
-  // The suffix only earns its place when the whole thing fits. Appending it
-  // unconditionally and then hard-cutting at 155 characters left 3,808 tool
-  // URLs with a snippet ending mid-word — "Use 2FA Authenticator online fo...",
-  // "Use IELTS Writing Task Word Counter on..." — so the last thing a searcher
-  // read was a broken fragment of boilerplate rather than what the tool does.
-  const combined = `${base} ${suffix}`;
-  if (combined.length <= META_DESCRIPTION_MAX) return combined;
-
-  // The tool's own description is the part worth keeping; drop the boilerplate
-  // before dropping any of it.
-  if (base.length <= META_DESCRIPTION_MAX) return base;
-  return truncateAtWord(base, META_DESCRIPTION_MAX);
 }
 
 // Memoised per request. buildToolMetadata, the page body and ToolSeoSection

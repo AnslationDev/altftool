@@ -5,6 +5,10 @@ import test from "node:test";
 import { brotliDecompressSync } from "node:zlib";
 
 import { generatedToolSeoBrotliBase64 } from "../altftoolweb/src/app/tools/generated/toolSeoMap.js";
+import {
+  buildMetaDescription,
+  TOOL_META_DESCRIPTION_BOUNDS,
+} from "../altftoolweb/src/app/tools/toolMetaDescription.js";
 
 const toolsDirectory = path.resolve("altftoolweb/src/tools");
 const generatedDirectory = path.resolve(
@@ -13,6 +17,9 @@ const generatedDirectory = path.resolve(
 const generatedMapPath = path.join(generatedDirectory, "toolSeoMap.js");
 const toolSeoContentPath = path.resolve(
   "altftoolweb/src/app/tools/toolSeoContent.js",
+);
+const toolMetaMapPath = path.resolve(
+  "altftoolweb/src/platform/registry/toolMetaMap.js",
 );
 
 function decodeGeneratedSeo() {
@@ -87,6 +94,35 @@ test("authored tool metadata fits the rendered search-result budget", () => {
     assert.ok(
       value.metaDescription.trim().length <= 158,
       `${slug} has an over-budget authored meta description`,
+    );
+  }
+});
+
+test("every tool fallback produces a useful meta-description length", async () => {
+  const generatedSeo = decodeGeneratedSeo();
+  const toolMetaSource = await readFile(toolMetaMapPath, "utf8");
+  const match = toolMetaSource.match(
+    /export const toolMetaMap = (\{[\s\S]*\});?\s*$/,
+  );
+  assert.ok(match, "generated tool metadata should remain parseable");
+  const toolMetaMap = JSON.parse(match[1]);
+
+  for (const [slug, tool] of Object.entries(toolMetaMap)) {
+    const categories = Array.isArray(tool.category)
+      ? tool.category
+      : [tool.category];
+    const description =
+      generatedSeo[slug]?.metaDescription?.trim() ||
+      buildMetaDescription(
+        tool.name || slug,
+        tool.description,
+        categories[0],
+      );
+
+    assert.ok(
+      description.length >= TOOL_META_DESCRIPTION_BOUNDS.min &&
+        description.length <= TOOL_META_DESCRIPTION_BOUNDS.max,
+      `${slug} resolves to a ${description.length}-character meta description`,
     );
   }
 });
