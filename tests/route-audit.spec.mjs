@@ -4,6 +4,7 @@ import { createPageQualityGate } from "./helpers/pageQuality.mjs";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
 const adminUrl = process.env.ALTFT_ADMIN_URL || "http://localhost:3001";
+const publicRouteAuditTimeoutMs = Number(process.env.ALTFT_PUBLIC_ROUTE_AUDIT_TIMEOUT_MS || 720_000);
 const adminModuleAuditTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_AUDIT_TIMEOUT_MS || 480_000);
 const adminModuleRouteTimeoutMs = Number(process.env.ALTFT_ADMIN_MODULE_ROUTE_TIMEOUT_MS || 60_000);
 
@@ -175,6 +176,88 @@ async function readToolMetaMap() {
   return JSON.parse(match[1]);
 }
 
+async function fulfillAuthenticatedAdminGet(route, payload) {
+  const request = route.request();
+  const authorization = await request.headerValue("authorization");
+
+  // Do not let a fixture hide a broken client-auth flow or an unexpected
+  // mutation. Those requests must reach the real API and fail the quality gate.
+  if (
+    request.method() !== "GET" ||
+    authorization !== "Bearer local-dev-admin-token"
+  ) {
+    await route.continue();
+    return;
+  }
+
+  await route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify(payload),
+  });
+}
+
+async function installAdminRouteAuditFixtures(page) {
+  const generatedAt = Date.now();
+
+  // The authenticated route audit intentionally runs the admin app in
+  // development mode so it can use the localhost-only super-admin session.
+  // Hosted CI does not have production Firebase Admin credentials, therefore
+  // data-backed screens need deterministic read fixtures. Keep these mocks
+  // narrow: API authorization and Firebase integration have dedicated tests,
+  // while this test verifies that every module route renders cleanly.
+  await Promise.all([
+    page.route(/\/api\/admin\/access-requests(?:\?.*)?$/, (route) =>
+      fulfillAuthenticatedAdminGet(route, { requests: [] }),
+    ),
+    page.route(/\/api\/admin\/audit\/list(?:\?.*)?$/, (route) =>
+      fulfillAuthenticatedAdminGet(route, {
+        logs: [],
+        nextCursor: null,
+        hasMore: false,
+        meta: {
+          startDateMs: generatedAt - 10 * 24 * 60 * 60 * 1000,
+          endDateMs: generatedAt,
+          pageSize: 30,
+          count: 0,
+        },
+      }),
+    ),
+    page.route(/\/api\/analytics(?:\?.*)?$/, (route) =>
+      fulfillAuthenticatedAdminGet(route, {
+        generatedAt,
+        staleDaysThreshold: 5,
+        summary: {
+          totalProjects: 0,
+          totalModules: 0,
+          totalRecords: 0,
+          recentAdditions7d: 0,
+          staleModules: 0,
+          activeModules24h: 0,
+        },
+        projects: [],
+        alerts: [],
+        recentEntries: [],
+        recentUpdates: [],
+        moduleUsage: [],
+      }),
+    ),
+    page.route(/\/api\/admin\/superadmins(?:\?.*)?$/, (route) =>
+      fulfillAuthenticatedAdminGet(route, {
+        superadmins: [
+          {
+            id: "local-dev-admin",
+            email: "admin@altftool.local",
+            fullName: "Local Super Admin",
+            team: "AltFTool",
+            designation: "Developer Access",
+          },
+        ],
+      }),
+    ),
+  ]);
+}
+
 async function buildWebRoutes() {
   const toolMetaMap = await readToolMetaMap();
   const blogData = await readJson("altftoolweb/src/app/blogs/data/blogs.json");
@@ -292,7 +375,10 @@ async function fetchRouteWithRetry(request, route, group) {
 }
 
 test("public web route surface resolves", async ({ request }) => {
-  test.setTimeout(300_000);
+  // A cold production server has thousands of generated tool routes to warm.
+  // This avoids an unnecessary whole-test retry on slower hosted runners while
+  // every individual request still keeps its strict 45-second timeout.
+  test.setTimeout(publicRouteAuditTimeoutMs);
 
   const routes = await buildWebRoutes();
   console.info("Public route audit:", summarizeByGroup(routes));
@@ -357,6 +443,7 @@ test("admin public and fallback routes resolve", async ({ page }) => {
 
 test("admin module route surface resolves for local super admin", async ({ page }) => {
   test.setTimeout(adminModuleAuditTimeoutMs);
+  await installAdminRouteAuditFixtures(page);
   const quality = createPageQualityGate(page);
   const failures = [];
 
