@@ -143,7 +143,7 @@ export default function ToolHome() {
   const summary = useMemo(() => {
     if (calc.error) return "";
     return [
-      "FD Premature Withdrawal Penalty Calculator",
+      "FD Early Withdrawal Penalty Calculator",
       `Deposit amount: ${money(calc.principal)}`,
       `Booked rate / tenure: ${pct(toNumber(bookedRate))} for ${calc.bookedMonthsValue} months`,
       `Actually held: ${calc.heldLabel}`,
@@ -187,7 +187,7 @@ export default function ToolHome() {
           Fixed deposits
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-          FD Premature Withdrawal Penalty Calculator
+          FD Early Withdrawal Penalty Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Breaking an FD costs you twice — the rate is reset to the card rate for the period the

@@ -220,7 +220,7 @@ export default function ToolHome() {
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-5xl">
         <header className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
-          <h1 className="text-2xl font-semibold sm:text-3xl">HRA Exemption Calculator</h1>
+          <h1 className="text-2xl font-semibold sm:text-3xl">Detailed HRA Exemption Calculator</h1>
           <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
             Section 10(13A) exempts the least of three amounts: actual HRA received, rent paid over
             10% of salary, and 50% of salary in a metro city (40% elsewhere). Enter your monthly

@@ -171,7 +171,7 @@ export default function ToolHome() {
           Savings
         </div>
         <h1 className="text-2xl font-semibold sm:text-3xl">
-          Recurring Deposit Maturity Calculator
+          Simple RD Maturity Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Find the maturity value of a bank RD using the quarterly compounding

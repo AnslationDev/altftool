@@ -225,7 +225,7 @@ export default function ToolHome() {
             <CandlestickChart className="h-4 w-4" />
             Equity toolkit
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Stock Average Price Calculator</h1>
+          <h1 className="text-4xl font-semibold leading-tight">Stock Average & Break-Even Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Add every buy lot to see your true weighted average, live unrealized P&amp;L, and break-even after
             charges — then plan the next purchase with the averaging-down planner.

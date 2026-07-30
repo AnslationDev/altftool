@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Portfolio Rebalancing Calculator compares each holding's current weight against its target, reports the drift in percentage points against a ±5 point band, and produces the exact buy and sell amounts to bring the portfolio back to plan. A second mode allocates only fresh money — filling the underweight assets first, selling nothing — and tells you how much new money it would take to fix the drift without a single redemption. It is aimed at Indian investors weighing a rebalance against the capital gains it would trigger. It is informational, not tax or investment advice.",
+    "The Portfolio Drift Rebalancer compares each holding's current weight against its target, reports the drift in percentage points against a ±5 point band, and produces the exact buy and sell amounts to bring the portfolio back to plan. A second mode allocates only fresh money — filling the underweight assets first, selling nothing — and tells you how much new money it would take to fix the drift without a single redemption. It is aimed at Indian investors weighing a rebalance against the capital gains it would trigger. It is informational, not tax or investment advice.",
   useCases: [
     "A long equity run has pushed your 60/40 portfolio to something like 72/28 and you want the rupee figure to move, not just the feeling that it looks off.",
     "Your annual bonus has landed and you would rather direct it into the underweight legs than sell anything and pay tax on the gains.",

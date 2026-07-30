@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "body-fat-percentage-calculator",
-  name: "Body Fat Percentage Calculator",
+  name: "US Navy Body Fat Calculator",
   category: ["Health Calculators"],
   description:
     "Estimate body fat with the US Navy tape method using height, neck, waist and hip measurements.",

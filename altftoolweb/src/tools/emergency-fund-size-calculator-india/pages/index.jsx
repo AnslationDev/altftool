@@ -89,7 +89,7 @@ export default function ToolHome() {
   const summary = useMemo(() => {
     if (hasError) return "";
     return [
-      "Emergency Fund Calculator",
+      "India Emergency Fund Calculator",
       `Monthly essential outgo: ${money(result.monthlyOutgo)}`,
       `Recommended cover: ${num(result.recommendedMonths)} months`,
       `Target corpus: ${money(result.targetCorpus)}`,
@@ -138,7 +138,7 @@ export default function ToolHome() {
           Contingency fund
         </div>
         <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">
-          Emergency Fund Calculator
+          India Emergency Fund Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Six months of expenses is the usual answer, but a government employee with two incomes

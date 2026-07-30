@@ -1,4 +1,4 @@
-// checklist-builder.jsx - Moving Checklist Builder (Complete)
+// checklist-builder.jsx - 40-Task Moving Checklist (Complete)
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -354,7 +354,7 @@ export default function ChecklistBuilder({ toolConfig }) {
               <div className="text-(--primary)">
                 <HomeIcon />
               </div>
-              <h1 className="heading text-center">{toolConfig?.name || "Moving Checklist Builder"}</h1>
+              <h1 className="heading text-center">{toolConfig?.name || "40-Task Moving Checklist"}</h1>
             </div>
             <p className="description">Build your moving checklist step by step with reusable fields and clean output</p>
           </div>

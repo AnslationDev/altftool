@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "portfolio-rebalancer",
-  name: "Portfolio Rebalancing Calculator",
+  name: "Portfolio Drift Rebalancer",
   category: ["Finance", "Calculator"],
   description:
     "See how far your portfolio has drifted and get the exact buys and sells — or rebalance with fresh money and no tax.",

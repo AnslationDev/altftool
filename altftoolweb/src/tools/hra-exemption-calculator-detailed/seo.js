@@ -1,5 +1,5 @@
 const seo = {
-  "intro": "HRA Exemption Calculator applies the section 10(13A) least-of-three test to your own numbers: actual house rent allowance received, rent paid minus 10% of salary, and 50% of salary for Delhi, Mumbai, Kolkata and Chennai or 40% everywhere else. It shows each limb separately, names the one that binds, and prints a month-by-month table of exempt and taxable HRA. You can add extra periods for a mid-year salary revision, a rent increase or a move between a metro and a non-metro city.",
+  "intro": "Detailed HRA Exemption Calculator applies the section 10(13A) least-of-three test to your own numbers: actual house rent allowance received, rent paid minus 10% of salary, and 50% of salary for Delhi, Mumbai, Kolkata and Chennai or 40% everywhere else. It shows each limb separately, names the one that binds, and prints a month-by-month table of exempt and taxable HRA. You can add extra periods for a mid-year salary revision, a rent increase or a move between a metro and a non-metro city.",
   "useCases": [
     "Check how much of your HRA is actually exempt before submitting rent receipts to payroll.",
     "Split the year into two periods when you shift from Bengaluru to Mumbai and the 40% rule becomes 50%.",

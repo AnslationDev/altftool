@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "inflation-calculator",
-  name: "Inflation Impact Calculator",
+  name: "Inflation Purchasing Power Calculator",
   category: ["Finance", "Calculator"],
   description: "See what inflation does to your money — future costs, shrinking purchasing power, and the return you need to beat it.",
   icon: "trending-up",

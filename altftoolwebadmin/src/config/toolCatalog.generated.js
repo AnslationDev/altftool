@@ -1751,7 +1751,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "attendance-percentage-calculator",
-    "name": "Attendance Percentage Calculator",
+    "name": "Attendance Requirement Calculator",
     "categories": [
       "Calculators",
       "Education & Science"
@@ -3257,7 +3257,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "body-fat-percentage-calculator",
-    "name": "Body Fat Percentage Calculator",
+    "name": "US Navy Body Fat Calculator",
     "categories": [
       "Health Calculators"
     ],
@@ -4031,7 +4031,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "cagr-calculator-tool",
-    "name": "CAGR Calculator",
+    "name": "CAGR & Doubling Time Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -6925,7 +6925,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "cymatics-simulator",
-    "name": "Cymatics Simulator",
+    "name": "Chladni Pattern Simulator",
     "categories": [
       "Education & Science"
     ],
@@ -9101,7 +9101,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "emergency-fund-size-calculator-india",
-    "name": "Emergency Fund Calculator",
+    "name": "India Emergency Fund Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -10356,7 +10356,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "fd-premature-withdrawal-calculator",
-    "name": "FD Premature Withdrawal Penalty Calculator",
+    "name": "FD Break-or-Borrow Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -10364,7 +10364,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "fd-premature-withdrawal-penalty-calculator",
-    "name": "FD Premature Withdrawal Penalty Calculator",
+    "name": "FD Early Withdrawal Penalty Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -11279,7 +11279,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "freelance-rate-calculator",
-    "name": "Freelance Hourly Rate Calculator",
+    "name": "Freelance Rate & Retainer Calculator",
     "categories": [
       "Finance Calculators",
       "Business"
@@ -13456,7 +13456,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "hra-exemption-calculator-detailed",
-    "name": "HRA Exemption Calculator",
+    "name": "Detailed HRA Exemption Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -14351,7 +14351,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "inflation-calculator",
-    "name": "Inflation Impact Calculator",
+    "name": "Inflation Purchasing Power Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -18323,7 +18323,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "moving-checklist",
-    "name": "Moving Checklist Builder",
+    "name": "40-Task Moving Checklist",
     "categories": [
       "Lifestyle",
       "Productivity"
@@ -21362,7 +21362,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "portfolio-rebalancer",
-    "name": "Portfolio Rebalancing Calculator",
+    "name": "Portfolio Drift Rebalancer",
     "categories": [
       "Finance Calculators"
     ],
@@ -22875,7 +22875,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "rd-maturity-calculator",
-    "name": "Recurring Deposit Maturity Calculator",
+    "name": "Simple RD Maturity Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -24887,7 +24887,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "scss-quarterly-payout-calculator",
-    "name": "Senior Citizen Savings Scheme Calculator",
+    "name": "SCSS Quarterly Payout Calculator",
     "categories": [
       "Finance Calculators"
     ],
@@ -26955,7 +26955,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "stock-average-calculator",
-    "name": "Stock Average Price Calculator",
+    "name": "Stock Average & Break-Even Calculator",
     "categories": [
       "Finance Calculators"
     ],

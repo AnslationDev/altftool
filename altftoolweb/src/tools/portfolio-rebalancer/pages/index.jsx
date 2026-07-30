@@ -365,7 +365,7 @@ export default function ToolHome() {
             <ChartPie className="h-4 w-4" />
             Portfolio maintenance
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Portfolio Rebalancing Calculator</h1>
+          <h1 className="text-4xl font-semibold leading-tight">Portfolio Drift Rebalancer</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             A good year in equity quietly turns a 60/40 portfolio into a 72/28 one — you took on more risk
             without ever deciding to. See exactly how far you have drifted, and fix it with the smallest,

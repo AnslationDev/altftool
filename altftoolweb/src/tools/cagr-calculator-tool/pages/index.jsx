@@ -98,7 +98,7 @@ export default function ToolHome() {
   const summary = useMemo(() => {
     if (result.error) return "";
     return [
-      "CAGR Calculator",
+      "CAGR & Doubling Time Calculator",
       `Starting value: ${money(result.beginValue)}`,
       `Ending value: ${money(result.endValue)}`,
       `Period: ${num(result.years)} years`,
@@ -143,7 +143,7 @@ export default function ToolHome() {
           <TrendingUp className="h-4 w-4" aria-hidden="true" />
           Growth rate
         </div>
-        <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">CAGR Calculator</h1>
+        <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">CAGR & Doubling Time Calculator</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Enter what an investment was worth at the start and the end, plus how long you held it, to
           get the compound annual growth rate — the constant yearly rate that links the two values.

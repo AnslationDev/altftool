@@ -1832,7 +1832,7 @@ export const toolMetaMap = {
     "iconColor": "text-teal-600"
   },
   "attendance-percentage-calculator": {
-    "name": "Attendance Percentage Calculator",
+    "name": "Attendance Requirement Calculator",
     "description": "Check your current attendance percent and how many classes you must attend or can skip.",
     "category": [
       "Calculators",
@@ -3423,7 +3423,7 @@ export const toolMetaMap = {
     "iconColor": "text-green-500"
   },
   "body-fat-percentage-calculator": {
-    "name": "Body Fat Percentage Calculator",
+    "name": "US Navy Body Fat Calculator",
     "description": "Estimate body fat with the US Navy tape method using height, neck, waist and hip measurements.",
     "category": "Health Calculators",
     "icon": "activity",
@@ -4236,7 +4236,7 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "cagr-calculator-tool": {
-    "name": "CAGR Calculator",
+    "name": "CAGR & Doubling Time Calculator",
     "description": "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time.",
     "category": "Finance Calculators",
     "icon": "trending-up",
@@ -7206,7 +7206,7 @@ export const toolMetaMap = {
     "wideWorkspace": true
   },
   "cymatics-simulator": {
-    "name": "Cymatics Simulator",
+    "name": "Chladni Pattern Simulator",
     "description": "Visualize sound, vibration, and Chladni-style nodal patterns with an interactive cymatics simulator.",
     "category": "Education & Science",
     "topics": [
@@ -9481,7 +9481,7 @@ export const toolMetaMap = {
     "iconColor": "text-teal-600"
   },
   "emergency-fund-size-calculator-india": {
-    "name": "Emergency Fund Calculator",
+    "name": "India Emergency Fund Calculator",
     "description": "Work out how many months of expenses your emergency fund should hold based on job stability, dependants and cover.",
     "category": "Finance Calculators",
     "icon": "shield",
@@ -10748,14 +10748,14 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "fd-premature-withdrawal-calculator": {
-    "name": "FD Premature Withdrawal Penalty Calculator",
+    "name": "FD Break-or-Borrow Calculator",
     "description": "What you actually get for breaking a fixed deposit early, and whether a loan against the FD would leave you better off.",
     "category": "Finance Calculators",
     "icon": "scissors",
     "iconColor": "text-[var(--primary)]"
   },
   "fd-premature-withdrawal-penalty-calculator": {
-    "name": "FD Premature Withdrawal Penalty Calculator",
+    "name": "FD Early Withdrawal Penalty Calculator",
     "description": "Net payout when you break a fixed deposit early — reduced card rate, penalty deduction and the interest you give up.",
     "category": "Finance Calculators",
     "icon": "piggy-bank",
@@ -11715,7 +11715,7 @@ export const toolMetaMap = {
     "iconColor": "text-primary"
   },
   "freelance-rate-calculator": {
-    "name": "Freelance Hourly Rate Calculator",
+    "name": "Freelance Rate & Retainer Calculator",
     "description": "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge.",
     "category": [
       "Finance Calculators",
@@ -13908,7 +13908,7 @@ export const toolMetaMap = {
     "iconColor": "text-teal-600"
   },
   "hra-exemption-calculator-detailed": {
-    "name": "HRA Exemption Calculator",
+    "name": "Detailed HRA Exemption Calculator",
     "description": "Least-of-three HRA exemption with metro and non-metro rules and monthly breakdown.",
     "category": "Finance Calculators",
     "icon": "house",
@@ -14865,7 +14865,7 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "inflation-calculator": {
-    "name": "Inflation Impact Calculator",
+    "name": "Inflation Purchasing Power Calculator",
     "description": "See what inflation does to your money — future costs, shrinking purchasing power, and the return you need to beat it.",
     "category": "Finance Calculators",
     "topics": [
@@ -18977,7 +18977,7 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "moving-checklist": {
-    "name": "Moving Checklist Builder",
+    "name": "40-Task Moving Checklist",
     "description": "Build your moving checklist step by step. 40+ preset tasks across 6 timeline categories, custom items, progress tracking, and export.",
     "category": [
       "Lifestyle",
@@ -22082,7 +22082,7 @@ export const toolMetaMap = {
     "iconColor": "text-muted-foreground"
   },
   "portfolio-rebalancer": {
-    "name": "Portfolio Rebalancing Calculator",
+    "name": "Portfolio Drift Rebalancer",
     "description": "See how far your portfolio has drifted and get the exact buys and sells — or rebalance with fresh money and no tax.",
     "category": "Finance Calculators",
     "topics": [
@@ -23605,7 +23605,7 @@ export const toolMetaMap = {
     "wideWorkspace": true
   },
   "rd-maturity-calculator": {
-    "name": "Recurring Deposit Maturity Calculator",
+    "name": "Simple RD Maturity Calculator",
     "description": "Calculate RD maturity value and interest with quarterly compounding for any monthly instalment and tenure.",
     "category": "Finance Calculators",
     "icon": "calendar-clock",
@@ -25689,7 +25689,7 @@ export const toolMetaMap = {
     "iconColor": "text-blue-500"
   },
   "scss-quarterly-payout-calculator": {
-    "name": "Senior Citizen Savings Scheme Calculator",
+    "name": "SCSS Quarterly Payout Calculator",
     "description": "SCSS quarterly interest payout, five-year total interest, TDS threshold check and premature closure deductions.",
     "category": "Finance Calculators",
     "icon": "piggy-bank",
@@ -27745,7 +27745,7 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "stock-average-calculator": {
-    "name": "Stock Average Price Calculator",
+    "name": "Stock Average & Break-Even Calculator",
     "description": "Find your true average buy price, live P&L, and break-even, plus a planner for averaging down the smart way.",
     "category": "Finance Calculators",
     "topics": [

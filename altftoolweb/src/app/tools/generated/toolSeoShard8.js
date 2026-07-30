@@ -3244,7 +3244,7 @@ export default {
   ]
 },
   "stock-average-calculator": {
-  "intro": "The Stock Average Price Calculator takes every buy lot in a position and returns the true weighted average price — total amount invested divided by total shares held — along with live unrealised profit and loss and the break-even price once round-trip charges are included. Its averaging-down planner solves the other direction: give it a target average and it computes the exact share count needed using shares = Q × (A − T) ÷ (T − P), or give it a budget and it shows the average you would end up with. It is for retail investors adding to an existing holding who want the arithmetic settled before they place the order.",
+  "intro": "The Stock Average & Break-Even Calculator takes every buy lot in a position and returns the true weighted average price — total amount invested divided by total shares held — along with live unrealised profit and loss and the break-even price once round-trip charges are included. Its averaging-down planner solves the other direction: give it a target average and it computes the exact share count needed using shares = Q × (A − T) ÷ (T − P), or give it a budget and it shows the average you would end up with. It is for retail investors adding to an existing holding who want the arithmetic settled before they place the order.",
   "useCases": [
     "You bought the same stock across four tranches on different days and want one honest average rather than the figure your broker app shows after a corporate action.",
     "A holding is down and you want to know exactly how many more shares it takes to bring your average from ₹250 to ₹220 at today's price — and whether that target is even reachable.",

@@ -8153,7 +8153,7 @@ export default {
   ]
 },
   "portfolio-rebalancer": {
-  "intro": "The Portfolio Rebalancing Calculator compares each holding's current weight against its target, reports the drift in percentage points against a ±5 point band, and produces the exact buy and sell amounts to bring the portfolio back to plan. A second mode allocates only fresh money — filling the underweight assets first, selling nothing — and tells you how much new money it would take to fix the drift without a single redemption. It is aimed at Indian investors weighing a rebalance against the capital gains it would trigger. It is informational, not tax or investment advice.",
+  "intro": "The Portfolio Drift Rebalancer compares each holding's current weight against its target, reports the drift in percentage points against a ±5 point band, and produces the exact buy and sell amounts to bring the portfolio back to plan. A second mode allocates only fresh money — filling the underweight assets first, selling nothing — and tells you how much new money it would take to fix the drift without a single redemption. It is aimed at Indian investors weighing a rebalance against the capital gains it would trigger. It is informational, not tax or investment advice.",
   "useCases": [
     "A long equity run has pushed your 60/40 portfolio to something like 72/28 and you want the rupee figure to move, not just the feeling that it looks off.",
     "Your annual bonus has landed and you would rather direct it into the underweight legs than sell anything and pay tax on the gains.",
@@ -15677,7 +15677,7 @@ export default {
   ]
 },
   "rd-maturity-calculator": {
-  "intro": "Recurring Deposit Maturity Calculator works out what a bank RD pays back at the end of its term, applying the quarterly compounding that banks actually use: every monthly instalment earns interest only for the months it stays on deposit. Enter the instalment, tenure in years and months, and the quoted rate, and you get the maturity value, total interest, an effective annual yield, and the balance at each yearly milestone. It is useful for salaried savers, parents building a short-term fund, and senior citizens comparing the extra 0.5% most banks offer.",
+  "intro": "Simple RD Maturity Calculator works out what a bank RD pays back at the end of its term, applying the quarterly compounding that banks actually use: every monthly instalment earns interest only for the months it stays on deposit. Enter the instalment, tenure in years and months, and the quoted rate, and you get the maturity value, total interest, an effective annual yield, and the balance at each yearly milestone. It is useful for salaried savers, parents building a short-term fund, and senior citizens comparing the extra 0.5% most banks offer.",
   "useCases": [
     "Check what Rs 5,000 a month for 5 years at 6.7% will hand back at maturity.",
     "Compare a 12-month RD against a 24-month RD before locking in a tenure.",

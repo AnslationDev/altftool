@@ -99,7 +99,7 @@ export default function ToolHome() {
   const copyResult = async () => {
     if (result.error) return;
     const lines = [
-      "Attendance Percentage Calculator",
+      "Attendance Requirement Calculator",
       `Attended: ${numInt.format(result.attendedCount)} of ${numInt.format(result.heldCount)} classes`,
       `Current attendance: ${num2.format(result.current)}%`,
       `Target: ${num2.format(result.targetPercent)}%`,
@@ -135,7 +135,7 @@ export default function ToolHome() {
             <CalendarCheck className="h-4 w-4" aria-hidden="true" />
             Attendance tracker
           </div>
-          <h1 className="text-3xl font-semibold sm:text-4xl">Attendance Percentage Calculator</h1>
+          <h1 className="text-3xl font-semibold sm:text-4xl">Attendance Requirement Calculator</h1>
           <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
             See your current attendance, how many classes you must attend in a row to reach the
             required percentage, and how many you can safely skip once you are above it.

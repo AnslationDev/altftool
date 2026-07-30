@@ -1,5 +1,5 @@
 const seo = {
-  "intro": "Attendance Percentage Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
+  "intro": "Attendance Requirement Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
   "useCases": [
     "Find out how many lectures in a row you need to attend to get back above a 75% detention cut-off.",
     "Check how many classes you can safely skip for a trip, wedding or interview without dropping below the rule.",

@@ -238,7 +238,7 @@ export default function ToolHome() {
             <Activity className="h-4 w-4" aria-hidden="true" />
             Body composition
           </div>
-          <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">Body Fat Percentage Calculator</h1>
+          <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">US Navy Body Fat Calculator</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted-foreground)] sm:text-base">
             Estimate body fat with the US Navy tape method — height, neck and waist for men, plus hip for
             women. Add your weight to also see fat mass and lean mass.

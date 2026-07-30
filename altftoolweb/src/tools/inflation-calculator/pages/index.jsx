@@ -177,7 +177,7 @@ export default function ToolHome() {
             <TrendingUp className="h-4 w-4" />
             Money reality check
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Inflation Impact Calculator</h1>
+          <h1 className="text-4xl font-semibold leading-tight">Inflation Purchasing Power Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             See what rising prices quietly do to your money — project future costs, watch the rupee
             shrink, and find the return your savings must earn after tax just to stand still.

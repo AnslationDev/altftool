@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "rd-maturity-calculator",
-  name: "Recurring Deposit Maturity Calculator",
+  name: "Simple RD Maturity Calculator",
   category: ["Finance Calculators"],
   description:
     "Calculate RD maturity value and interest with quarterly compounding for any monthly instalment and tenure.",

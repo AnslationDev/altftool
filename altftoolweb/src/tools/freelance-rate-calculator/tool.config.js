@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "freelance-rate-calculator",
-  name: "Freelance Hourly Rate Calculator",
+  name: "Freelance Rate & Retainer Calculator",
   category: ["Finance", "Business"],
   description:
     "Work backwards from the income you want to the hourly, day, and retainer rates you must actually charge.",

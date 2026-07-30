@@ -1437,7 +1437,7 @@ export default {
   ]
 },
   "hra-exemption-calculator-detailed": {
-  "intro": "HRA Exemption Calculator applies the section 10(13A) least-of-three test to your own numbers: actual house rent allowance received, rent paid minus 10% of salary, and 50% of salary for Delhi, Mumbai, Kolkata and Chennai or 40% everywhere else. It shows each limb separately, names the one that binds, and prints a month-by-month table of exempt and taxable HRA. You can add extra periods for a mid-year salary revision, a rent increase or a move between a metro and a non-metro city.",
+  "intro": "Detailed HRA Exemption Calculator applies the section 10(13A) least-of-three test to your own numbers: actual house rent allowance received, rent paid minus 10% of salary, and 50% of salary for Delhi, Mumbai, Kolkata and Chennai or 40% everywhere else. It shows each limb separately, names the one that binds, and prints a month-by-month table of exempt and taxable HRA. You can add extra periods for a mid-year salary revision, a rent increase or a move between a metro and a non-metro city.",
   "useCases": [
     "Check how much of your HRA is actually exempt before submitting rent receipts to payroll.",
     "Split the year into two periods when you shift from Bengaluru to Mumbai and the 40% rule becomes 50%.",
@@ -6066,7 +6066,7 @@ export default {
   ]
 },
   "inflation-calculator": {
-  "intro": "Inflation Impact Calculator compounds a rupee amount forward at your chosen inflation rate using FV = P x (1 + r)^n, and runs the same formula in reverse to show what today's cash will actually buy after n years. It also answers the return question: the pre-tax return you need to stay level is your inflation rate divided by (1 minus your tax rate), and it applies the Fisher relation to tell you whether a fixed deposit is really gaining ground once tax and inflation are both taken out. Rate presets cover India CPI at 6%, lifestyle at 8%, education at 10% and healthcare at 12%.",
+  "intro": "Inflation Purchasing Power Calculator compounds a rupee amount forward at your chosen inflation rate using FV = P x (1 + r)^n, and runs the same formula in reverse to show what today's cash will actually buy after n years. It also answers the return question: the pre-tax return you need to stay level is your inflation rate divided by (1 minus your tax rate), and it applies the Fisher relation to tell you whether a fixed deposit is really gaining ground once tax and inflation are both taken out. Rate presets cover India CPI at 6%, lifestyle at 8%, education at 10% and healthcare at 12%.",
   "useCases": [
     "Your child starts college in 15 years and the course costs Rs 12 lakh today — set education inflation to 10% to see the number you are actually saving toward, not the brochure price.",
     "You are sitting on Rs 20 lakh in a fixed deposit at 7% and want to know whether it is growing or quietly shrinking; enter your slab and the tool shows the post-tax return against inflation.",

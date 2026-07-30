@@ -8780,7 +8780,7 @@ export default {
   ]
 },
   "attendance-percentage-calculator": {
-  "intro": "Attendance Percentage Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
+  "intro": "Attendance Requirement Calculator works out what percentage of classes you have actually attended, then answers the question that matters: how many classes in a row you must attend to climb back to the required percentage, or how many you can miss while staying above it. Add the number of classes left in the term and it also projects your best and worst possible end-of-semester attendance. Built for school and college students facing a 75% or 80% minimum attendance rule.",
   "useCases": [
     "Find out how many lectures in a row you need to attend to get back above a 75% detention cut-off.",
     "Check how many classes you can safely skip for a trip, wedding or interview without dropping below the rule.",
@@ -16251,7 +16251,7 @@ export default {
   ]
 },
   "body-fat-percentage-calculator": {
-  "intro": "Body Fat Percentage Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
+  "intro": "US Navy Body Fat Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
   "useCases": [
     "Track body composition month to month when the scale is not moving but your waist is shrinking.",
     "Check where you sit against the athletic, fitness and average bands before starting a training block.",

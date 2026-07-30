@@ -142,7 +142,7 @@ export default function ToolHome() {
           Small savings
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-          Senior Citizen Savings Scheme Calculator
+          SCSS Quarterly Payout Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           SCSS pays simple interest every quarter and returns the deposit untouched at maturity.

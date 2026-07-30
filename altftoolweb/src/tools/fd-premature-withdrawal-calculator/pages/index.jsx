@@ -76,7 +76,7 @@ export default function ToolHome() {
   const summary = useMemo(() => {
     if (hasError) return "";
     const lines = [
-      "FD Premature Withdrawal Penalty Calculator",
+      "FD Break-or-Borrow Calculator",
       `Deposit: ${money(result.principal)} booked at ${pct(result.contractedRate)} for ${result.tenureMonths} months`,
       `Held for ${result.monthsHeld} months, ${result.remainingMonths} still to run`,
       `Rate actually paid: ${pct(result.appliedRate)} (card rate ${pct(result.cardRateForRunPeriod)} less ${pct(result.penaltyPercent)} penalty)`,
@@ -119,7 +119,7 @@ export default function ToolHome() {
           Breaking a deposit
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-          FD Premature Withdrawal Penalty Calculator
+          FD Break-or-Borrow Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Close a deposit early and the bank reprices it to the card rate for the period it actually

@@ -354,7 +354,7 @@ export default function ToolHome() {
             <BadgeIndianRupee className="h-4 w-4" />
             Freelance pricing
           </div>
-          <h1 className="text-4xl font-semibold leading-tight">Freelance Hourly Rate Calculator</h1>
+          <h1 className="text-4xl font-semibold leading-tight">Freelance Rate & Retainer Calculator</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">
             Most freelancers price by halving a salary and dividing by 2,000 hours. That is how you end up
             working weekends for less than your old job paid. Start from the life you want, subtract what the

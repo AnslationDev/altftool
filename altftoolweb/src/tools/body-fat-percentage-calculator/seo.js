@@ -1,5 +1,5 @@
 const seo = {
-  "intro": "Body Fat Percentage Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
+  "intro": "US Navy Body Fat Calculator uses the US Navy (Hodgdon-Beckett) circumference method: height, neck and waist for men, plus hip for women. It returns your estimated body fat percentage, places it on the American Council on Exercise reference bands, and — if you add your weight — splits that into fat mass and lean body mass. It also reports your waist-to-height ratio, a simple screen where under 0.5 is the usual target. Useful for anyone tracking a cut, a bulk or a fitness test with nothing but a tape measure.",
   "useCases": [
     "Track body composition month to month when the scale is not moving but your waist is shrinking.",
     "Check where you sit against the athletic, fitness and average bands before starting a training block.",

@@ -226,7 +226,7 @@ export default function CymaticsSimulator() {
     <div className="min-h-screen overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] shadow-sm">
       <header className="flex flex-col gap-4 border-b border-[var(--border)] bg-[var(--card)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <div>
-          <h1 className="text-xl font-bold tracking-wide text-[var(--foreground)] sm:text-2xl">Cymatics Simulator</h1>
+          <h1 className="text-xl font-bold tracking-wide text-[var(--foreground)] sm:text-2xl">Chladni Pattern Simulator</h1>
           <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-[var(--muted-foreground)]">Sound | Vibration | Geometry</p>
         </div>
 

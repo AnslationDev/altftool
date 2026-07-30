@@ -1,6 +1,6 @@
 const toolConfig = {
   slug: "cagr-calculator-tool",
-  name: "CAGR Calculator",
+  name: "CAGR & Doubling Time Calculator",
   category: ["Finance Calculators"],
   description:
     "Compound annual growth rate between a starting and ending value over any period, with absolute return and doubling time.",

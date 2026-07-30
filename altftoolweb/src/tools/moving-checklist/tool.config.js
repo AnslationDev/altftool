@@ -1,6 +1,6 @@
 export default {
   slug: "moving-checklist",
-  name: "Moving Checklist Builder",
+  name: "40-Task Moving Checklist",
   category: ["Lifestyle", "Productivity"],
   description:
     "Build your moving checklist step by step. 40+ preset tasks across 6 timeline categories, custom items, progress tracking, and export.",
