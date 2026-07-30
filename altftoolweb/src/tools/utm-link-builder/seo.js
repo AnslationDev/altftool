@@ -1,10 +1,25 @@
+// Title/description are written against the measured Search Console query set
+// for this cluster (7 days to 2026-07-27), not guessed. Across the 14 "utm
+// builder"-class queries that drew ~1,400 impressions and ZERO clicks, the word
+// "tool" appears in 7 of them (~548 impressions), "tracking" in 3 (~218) and
+// "campaign" in 2 (~170) — while "url" appears in NONE. So "URL Generator" was
+// spending the two most valuable title slots on a term nobody searched. "UTM
+// Builder" stays first because "utm builder" (383 impressions) is the head
+// query and 84% of this site's clicks are mobile, where the title truncates
+// hardest. 46 chars, so the layout's " | AltFTool" suffix still fits under 65.
 const seo = {
-  title: "UTM Builder — Free Campaign URL Generator",
+  title: "UTM Builder Tool: Free Campaign Tracking Links",
+  // Unchanged on purpose. Main.jsx renders a client-side <h1>UTM Builder</h1>
+  // with ssr:false, and its comment records that the two headings must read
+  // identically or the URL reports two different subjects to Google. Change
+  // both together or neither.
   h1: "UTM Builder",
+  // 148 chars — trimMetaDescription hard-caps at 160, so this arrives whole
+  // instead of being clipped mid-sentence in the snippet.
   metaDescription:
-    "Free UTM builder: paste a URL, pick a preset and copy a campaign link with utm_source, utm_medium and utm_campaign set correctly. No signup.",
+    "Build a UTM tracking link free: paste your URL, tap a preset for Google, Facebook, Instagram or email, and copy the tagged campaign link. No signup.",
   intro:
-    "This UTM builder turns any page address into a tracked campaign URL. It appends the five standard Google Analytics campaign parameters — utm_source, utm_medium, utm_campaign, utm_term and utm_content, plus an optional utm_id — and normalises every value as you type, converting spaces to underscores and stripping characters outside A–Z, 0–9, underscore and hyphen. The destination is checked with the browser's own URL parser and only http:// or https:// is accepted, so a link that builds is a link that works. Six one-click presets fill source and medium for Google Ads, Facebook, Instagram, LinkedIn, Twitter/X and email newsletters, the preview colour-codes the five standard parameters as they are added, and the builder itself works entirely in the page — no account, and nothing you type is uploaded.",
+    "This UTM builder turns any page address into a tracked campaign URL — the same job people look for under UTM generator, campaign URL builder or link tagging tool. It appends the five standard Google Analytics campaign parameters — utm_source, utm_medium, utm_campaign, utm_term and utm_content, plus an optional utm_id — and normalises every value as you type, converting spaces to underscores and stripping characters outside A–Z, 0–9, underscore and hyphen. The destination is checked with the browser's own URL parser and only http:// or https:// is accepted, so a link that builds is a link that works. Six one-click presets fill source and medium for Google Ads, Facebook, Instagram, LinkedIn, Twitter/X and email newsletters, the preview colour-codes the five standard parameters as they are added, and the builder itself works entirely in the page — no account, and nothing you type is uploaded.",
   useCases: [
     "You are scheduling the same landing page across four channels this week and need four links whose source and medium will not collide in the analytics report.",
     "Last month's report shows 'Facebook', 'facebook' and 'FB' as three separate sources, and you want the next campaign tagged consistently from the start.",
@@ -27,6 +42,20 @@ const seo = {
     ],
   ],
   faqs: [
+    // First two entries answer measured queries the page was not addressing.
+    // "what is utm builder" drew 56 impressions at position 17.9 with no
+    // click, and the synonym queries ("utm generator tool", "utm creator
+    // tool", "utm tagging tool", "utm parameter tool") add ~286 more — all
+    // asking for this exact tool under a different name. Both answers are
+    // definitional and describe only behaviour verified in Main.jsx.
+    [
+      "What is a UTM builder?",
+      "A UTM builder is a form that writes campaign tracking parameters onto a link for you instead of you typing them by hand. You give it the destination page and the campaign details — where the link is going and what to call the campaign — and it returns the same page address with utm_source, utm_medium and utm_campaign appended in the format analytics tools expect. The point is consistency: typed by hand, one campaign easily becomes three rows in your report because of a capital letter, a space or a stray ampersand.",
+    ],
+    [
+      "Is a UTM generator the same as a UTM builder?",
+      "Yes — UTM builder, UTM generator, UTM link builder, campaign URL builder, UTM tagging tool and UTM parameter tool all describe the same job: adding utm_ parameters to a URL so analytics can attribute the click. There is no technical difference between them, only naming. This page does that job, including the optional utm_term, utm_content and utm_id fields.",
+    ],
     [
       "What is a UTM parameter?",
       "A UTM parameter is a tag added to the end of a link — ?utm_source=newsletter&utm_medium=email — that tells your analytics where the click came from. The link opens exactly the same page; the extra values exist only for the report. Anyone can type them by hand, and a UTM builder simply keeps the spelling, spacing and punctuation identical every time.",

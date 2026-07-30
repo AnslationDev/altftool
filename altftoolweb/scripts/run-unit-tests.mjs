@@ -6,6 +6,7 @@ const webRoot = path.resolve(import.meta.dirname, "..");
 const workspaceRoot = path.resolve(webRoot, "..");
 const testRoots = [
   path.join(workspaceRoot, "packages/core/src/seo"),
+  path.join(webRoot, "src/app/blogs/utils"),
   path.join(webRoot, "src/platform/seo"),
   path.join(webRoot, "src/tools"),
 ];

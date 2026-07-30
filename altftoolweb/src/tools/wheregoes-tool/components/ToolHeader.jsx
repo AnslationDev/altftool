@@ -38,8 +38,8 @@ export default function ToolHeader() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "WhereGoes Tool",
-          text: "Trace URL redirects, check status codes, and analyze response headers.",
+          title: "URL Redirect Checker",
+          text: "Check where a URL redirects — every hop, status code, response time, and headers.",
           url,
         });
         return;
@@ -62,10 +62,10 @@ export default function ToolHeader() {
       </span>
       <div className="min-w-0 flex-1">
         <h1 className="text-2xl font-bold tracking-tight text-(--foreground) sm:text-[28px]">
-          WhereGoes Tool
+          URL Redirect Checker
         </h1>
         <p className="mt-0.5 text-sm text-(--muted-foreground)">
-          Trace URL redirects, check status codes, and analyze response headers.
+          Check where a URL redirects — every hop, status code, response time, and headers.
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export default function ToolHeader() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="How to use WhereGoes"
+          aria-label="How to use the URL redirect checker"
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
         >
           <button

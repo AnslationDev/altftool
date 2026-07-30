@@ -32570,8 +32570,8 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "wheregoes-tool": {
-    "name": "WhereGoes Tool",
-    "description": "Trace URL redirects, check status codes, and analyze response headers.",
+    "name": "URL Redirect Checker",
+    "description": "Check where a URL redirects — every hop, status code, response time, and headers.",
     "category": "Developer",
     "topics": [
       "Web",

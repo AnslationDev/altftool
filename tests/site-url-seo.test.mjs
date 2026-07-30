@@ -10,6 +10,8 @@ import {
 test("production metadata always uses the canonical www host", () => {
   assert.equal(resolveSiteUrl("https://altftool.com", "production"), PRODUCTION_SITE_URL);
   assert.equal(resolveSiteUrl("https://www.altftool.com/", "production"), PRODUCTION_SITE_URL);
+  assert.equal(resolveSiteUrl("https://altftool.com./", "production"), PRODUCTION_SITE_URL);
+  assert.equal(resolveSiteUrl("https://www.altftool.com./", "production"), PRODUCTION_SITE_URL);
 });
 
 test("unsafe or malformed production site URLs cannot poison canonicals", () => {
@@ -35,6 +37,14 @@ test("same-site canonicals are consolidated on the www production host", () => {
   assert.equal(
     normalizeCanonicalUrl("/tools/all/json-formatter", "/", PRODUCTION_SITE_URL),
     "https://www.altftool.com/tools/all/json-formatter",
+  );
+  assert.equal(
+    normalizeCanonicalUrl(
+      "https://altftool.com./tools/all/utm-link-builder#form",
+      "/tools/all/utm-link-builder",
+      PRODUCTION_SITE_URL,
+    ),
+    "https://www.altftool.com/tools/all/utm-link-builder",
   );
 });
 

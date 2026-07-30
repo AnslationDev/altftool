@@ -3,6 +3,16 @@ export const PRODUCTION_SITE_URL = "https://www.altftool.com";
 const PRODUCTION_HOSTS = new Set(["altftool.com", "www.altftool.com"]);
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
 
+/**
+ * A fully-qualified host can arrive with the DNS root dot ("altftool.com."),
+ * which is a different string that serves the exact same site. Without this it
+ * would fall through the production-host check and be published as an
+ * *external* canonical, splitting signals off the canonical host.
+ */
+function productionHost(hostname) {
+  return PRODUCTION_HOSTS.has(String(hostname || "").toLowerCase().replace(/\.+$/, ""));
+}
+
 export function resolveSiteUrl(
   value = process.env.NEXT_PUBLIC_SITE_URL,
   nodeEnv = process.env.NODE_ENV,
@@ -17,9 +27,12 @@ export function resolveSiteUrl(
       return url.origin;
     }
 
-    if (url.protocol === "https:" && PRODUCTION_HOSTS.has(url.hostname)) {
-      // AWS Amplify redirects the apex host to www. Keep every canonical,
-      // sitemap entry, entity ID, and social URL on one production host.
+    if (url.protocol === "https:" && productionHost(url.hostname)) {
+      // AWS Amplify redirects the apex host to www (measured 2026-07-30:
+      // https://altftool.com/ -> 302, issued above the Next origin, so it is
+      // an Amplify console setting and not fixable here — see amplify.yml).
+      // Keep every canonical, sitemap entry, entity ID, and social URL on one
+      // production host regardless.
       return PRODUCTION_SITE_URL;
     }
   } catch {
@@ -65,7 +78,7 @@ export function normalizeCanonicalUrl(
     const url = new URL(raw, `${canonicalOrigin}/`);
     if (!/^https?:$/.test(url.protocol)) return resolveFallback();
 
-    if (PRODUCTION_HOSTS.has(url.hostname)) {
+    if (productionHost(url.hostname)) {
       const canonicalBase = new URL(canonicalOrigin);
       url.protocol = canonicalBase.protocol;
       url.host = canonicalBase.host;

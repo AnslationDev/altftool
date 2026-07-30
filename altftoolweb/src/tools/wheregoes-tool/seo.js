@@ -1,86 +1,121 @@
+// Search Console, 7 days to 2026-07-27: /tools/all/wheregoes-tool took 1,483
+// impressions at average position 2.9 and earned 13 clicks (0.9% CTR), and the
+// sibling /tools/web/wheregoes-tool took 821 more at position 4.2 for 3 clicks.
+// Position 3 normally earns 10%+.
+//
+// Two separate causes, and only one of them was a copy problem:
+//
+// 1. The snippet was the generic tool template rather than authored copy. The
+//    exact strings Google served during that window are NOT recoverable from
+//    this repo — the export carries no snippet column and the template has been
+//    edited since — so no specific title or description is quoted here. What is
+//    verifiable is that this tool had no curated title or description of its own
+//    before these edits, so it inherited the formulaic template every tool
+//    without curated SEO copy gets.
+//
+// 2. Every query feeding this page is the WhereGoes brand ("wheregoes",
+//    "wheregoes url"); the only generic query in the whole export is "url
+//    tracer" at 3 impressions. WhereGoes is somebody else's product, so a
+//    searcher typing it wants wheregoes.com — at position 3, behind the brand's
+//    own pages, no wording lifts that to 10%. The July 28-30 titles chased the
+//    brand anyway ("WhereGoes Tool — Trace Any URL's Redirect Chain", then
+//    "Trace URL Redirects — Free WhereGoes Alternative"), and "Alternative"
+//    tells the brand searcher outright that this is not the site they asked for.
+//
+// So this stops bidding for the brand and targets the generic intent instead —
+// "url redirect checker", "redirect checker", "url tracer", "where does this
+// link go". Those words now lead the title, the H1 and the first sentence of the
+// description, none of which previously contained "redirect checker" at all.
+// The trade is deliberate: the ~16 brand clicks a week are at risk, and they are
+// worth less than a page that can compete for the generic phrase. The slug keeps
+// the brand token, and one honest, non-affiliated mention stays in the copy for
+// anyone who lands here from the brand search.
+//
+// Authored title is 44 chars, so 55 rendered with the " | AltFTool" the root
+// layout appends — inside the mobile truncation limit, which matters because 84%
+// of this site's clicks are mobile.
 const seo = {
-  // Every impression this page gets is a WhereGoes brand search (GSC 7-day:
-  // "wheregoes" 1,487 imp / 11 clicks at position 2.5; the only non-brand query
-  // in the whole export is "url tracer" at 3 imp). The old title led with
-  // "WhereGoes Tool", so at position 2.9 the snippet looked like a worse copy of
-  // the result directly above it and earned 0.9% CTR. Lead with the job, then
-  // say honestly that this is an alternative — a searcher who wants
-  // wheregoes.com scrolls past either way, and one who just wants the trace done
-  // now gets a reason to stop here. Rendered title is 59 chars with the brand
-  // suffix the root layout appends.
-  title: "Trace URL Redirects — Free WhereGoes Alternative",
-  h1: "WhereGoes Tool — URL Redirect & Link Checker",
-  // Every claim below is in the code: hops, status codes and headers in
-  // pages/index.jsx + components/ResponseHeaders.jsx, response times in
-  // components/SidebarCards.jsx (ResponseTimeline), and the two export buttons
-  // in the same file ("Export as JSON" / "Export as CSV"). No signup path
-  // exists anywhere in the tool. Timings and export are what wheregoes.com's
-  // free view does not put in its own snippet, so they are the differentiator.
+  title: "URL Redirect Checker — See Where a Link Goes",
+  h1: "URL Redirect Checker — See Every Hop a Link Takes",
+  // 154 chars, ends in a period, so trimMetaDescription in
+  // src/platform/seo/generateMetadata.js returns it byte-for-byte (the < 160
+  // branch) instead of clipping it. Everything before char 118 — the part a
+  // mobile SERP actually shows — carries the whole offer.
+  //
+  // Every claim is in the code: the per-hop status code, response time and
+  // expandable headers are the "Status Code" / "Response Time" / "Actions"
+  // columns in components/RedirectDetails.jsx, and the two export buttons are
+  // ExportResults in components/SidebarCards.jsx. There is no signup path
+  // anywhere in the tool.
   metaDescription:
-    "Paste any short, affiliate or tracking link and see every redirect hop with status codes, response times and headers. Free, no signup, export as JSON or CSV.",
+    "Check where any short or tracking link goes. Trace every redirect hop, its 301/302 status code, response time and headers. Free, no signup, export as CSV.",
   intro:
-    "WhereGoes Tool traces what actually happens when a URL is requested: it follows every redirect hop from the original link to its final destination, reporting the HTTP status code (301, 302, 307…) and response headers at each step. Paste any link and get the full chain in seconds — no signup, no browser extension.",
+    "A URL redirect checker shows what really happens when a link is requested. Paste a shortened, affiliate, tracking or owned URL and this tool sends it to its external redirect-tracing service, which follows the link server-side so your browser does not open the target. You get every hop in order with its HTTP status code (301, 302, 303, 307, 308), how long that hop took, and its response headers on demand, plus the final destination URL. Nothing to install or sign up for, and the finished chain exports as JSON or CSV. This tool is independent and not affiliated with wheregoes.com.",
   useCases: [
-    "Checking where a shortened link (bit.ly, t.co, an affiliate or tracking link) actually leads before you click it",
+    "Checking where a shortened link (bit.ly, t.co, an affiliate or tracking link) leads before you click it",
     "Debugging a redirect loop or an unexpected extra hop in your own site's URLs",
-    "Verifying that a 301 redirect is set up correctly after a site migration or URL change",
+    "Confirming a 301 redirect resolves correctly after a site migration or URL change",
   ],
   benefits: [
     [
-      "Full redirect chain, not just the final URL",
-      "See every hop the link passes through, in order, with the HTTP status code (301, 302, 307, meta refresh…) for each one.",
+      "The whole chain, not just the final URL",
+      "Every hop the link passes through, in order, with the HTTP status code (301, 302, 303, 307, 308) returned at each one.",
     ],
     [
-      "Response headers included",
-      "Inspect the headers returned at each hop — useful for debugging caching, redirects, and tracking parameters.",
+      "Headers for any hop you open",
+      "Expand a row in the redirect table to read the response headers that hop returned — useful for caching, tracking and redirect debugging.",
     ],
     [
-      "Free, instant, no signup",
-      "Paste a link and get results in seconds; no account required for normal use.",
+      "Timing for each step",
+      "The response time of every hop, and the total, so you can see which redirect in the chain is the slow one.",
     ],
     [
-      "Works on any link",
-      "Shortened URLs, affiliate links, UTM-tagged campaign links, or your own site's redirects — trace any of them.",
+      "Nothing to install, nothing to sign up for",
+      "Open the page, paste a link, read the chain — no account and no browser extension. The finished trace exports as JSON or CSV.",
     ],
   ],
   faqs: [
     [
-      "What does WhereGoes Tool do?",
-      "It traces the full redirect chain of any URL — every hop from the link you paste to its final destination — and shows the HTTP status code and response headers at each step, so you can see exactly where a link goes before you click it.",
+      "How do I check where a URL redirects?",
+      "Paste the URL into the box and run the trace. The redirect chain comes back as a list: every hop from the link you pasted to its final destination, each with its HTTP status code, its response time, and its response headers on demand.",
     ],
     [
-      "How do I check where a shortened or tracking link actually goes?",
-      "Paste the link into WhereGoes Tool and it follows every redirect automatically, showing the final destination plus every hop in between — no need to click the link yourself to find out.",
+      "How do I see where a shortened or tracking link goes without clicking it?",
+      "The URL you submit is sent to this tool's external redirect-tracing service. That service follows the redirects server-side, so your browser does not open the target and you can review the destination first. Do not submit private links or URLs containing secrets.",
     ],
     [
-      "Is WhereGoes Tool free to use?",
-      "Yes, it's free with no signup required for normal use.",
+      "What is the difference between a 301 and a 302 redirect?",
+      "A 301 signals a permanent move, while a 302 signals a temporary redirect. Search engines also consider canonicals, links and other signals, so the status code alone does not guarantee which URL will be indexed or how ranking signals will be handled. This tool shows the exact code for each hop.",
     ],
     [
-      "What's the difference between a 301 and a 302 redirect, and does WhereGoes show it?",
-      "Yes — each hop in the chain shows its exact status code. A 301 is a permanent redirect, and search engines transfer ranking signals to the new URL; a 302 is temporary, and the original URL keeps being treated as the real one. Seeing the code at each hop tells you which type a given link is using.",
+      "Can it expand a short URL to its real destination?",
+      "Yes. Paste any shortened link (bit.ly, t.co, or similar) and the chain resolves down to the final destination URL.",
     ],
     [
-      "Can I check a UTM-tagged campaign link without losing the tracking parameters?",
-      "Yes — paste the full URL including its UTM parameters, and WhereGoes traces the actual redirect chain while showing exactly what each hop received.",
+      "Will my UTM parameters survive the trace?",
+      "Paste the full URL including its UTM parameters — the chain is traced exactly as given, and each row shows the URL that hop was sent to, so you can see where a parameter is dropped.",
     ],
     [
-      "Does WhereGoes Tool work as a URL expander for shortened links?",
-      "Yes. Paste any shortened link (bit.ly, t.co, or similar) and it resolves the full chain down to the real final destination URL.",
+      "Is this URL redirect checker free?",
+      "It is currently free to use with no signup. Availability and request limits depend on the external tracing service, so unsupported or excessive requests may fail.",
     ],
     [
       "Is there an API for checking redirects programmatically?",
-      "The web tool doesn't expose a public API today — use the page directly by pasting the URL you want to trace.",
+      "Not a public, documented one today. Use the page directly by pasting the URL you want to trace.",
     ],
     [
-      "Why does the tool show my link resolving through a domain I didn't expect?",
-      "That's normal for tracking, affiliate, and shortened links — they're designed to redirect through one or more intermediate domains before reaching the final page. WhereGoes shows the full path so nothing is hidden.",
+      "Is this wheregoes.com?",
+      "No. This is an independent redirect checker on AltFTool and is not affiliated with, endorsed by, or connected to wheregoes.com. It is here because the URL of this page uses that name; the tool itself is our own.",
+    ],
+    [
+      "Why does my link resolve through a domain I did not expect?",
+      "That is normal for tracking, affiliate and shortened links — they redirect through one or more intermediate domains before reaching the final page. The chain shows every one of them, so nothing is hidden.",
     ],
   ],
   steps: [
-    "Paste the URL you want to trace into the box.",
-    "WhereGoes Tool follows every redirect hop automatically.",
-    "Review the full chain — final destination, status codes, and response headers for each step.",
+    "Paste the URL you want to check into the box.",
+    "Run the trace — every redirect hop is followed for you, server-side.",
+    "Read the chain: final destination, status code, response time and headers for each hop.",
   ],
 };
 
