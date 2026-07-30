@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-30T07:03:36.807Z",
-  "buildId": "O97tkFXMyTcXVJbLxkEUW",
+  "generatedAt": "2026-07-30T15:21:52.846Z",
+  "buildId": "muzScBw1-o6eCSEbEkWXY",
   "ok": true,
   "indexControlOk": true,
   "qualityOk": true,
@@ -10,7 +10,7 @@
     "routes": 1069,
     "indexable": 869,
     "noindex": 200,
-    "sitemapUrls": 5781,
+    "sitemapUrls": 5782,
     "sitemapCovered": 869,
     "sitemapCoverage": 100,
     "indexConflicts": 0,

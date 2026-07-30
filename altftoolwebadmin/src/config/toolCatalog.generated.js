@@ -31778,11 +31778,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "wheregoes-tool",
-    "name": "WhereGoes Tool",
+    "name": "URL Redirect Checker",
     "categories": [
       "Developer"
     ],
-    "description": "Trace URL redirects, check status codes, and analyze response headers."
+    "description": "Check where a URL redirects — every hop, status code, response time, and headers."
   },
   {
     "slug": "whey-scoop-protein-calculator",

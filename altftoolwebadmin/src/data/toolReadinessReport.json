@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-30T09:20:46.419Z",
+  "generatedAt": "2026-07-30T15:21:53.194Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
@@ -12,7 +12,7 @@
       "partial": 16,
       "broken": 0
     },
-    "automatedTests": 158,
+    "automatedTests": 161,
     "automatedCoverage": 4,
     "networkDependent": 68,
     "envDependent": 4,
@@ -9742,18 +9742,18 @@
       "category": "Video & Audio, Productivity",
       "route": "/tools/all/audio-pitch-tempo-shifter",
       "status": "working",
-      "score": 92,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 3,
-        "sourceBytes": 3731,
+        "sourceFiles": 6,
+        "sourceBytes": 25101,
         "unresolvedImports": [],
-        "interactive": false,
+        "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -9771,9 +9771,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "audio-to-base64",
@@ -9857,18 +9855,18 @@
       "category": "Video & Audio, Productivity",
       "route": "/tools/all/audio-video-sync-meter",
       "status": "working",
-      "score": 92,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 3,
-        "sourceBytes": 3841,
+        "sourceFiles": 6,
+        "sourceBytes": 23731,
         "unresolvedImports": [],
-        "interactive": false,
+        "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -9886,9 +9884,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "audiobook-reading-rate-calculator",
@@ -14758,18 +14754,18 @@
       "category": "Developer, Productivity",
       "route": "/tools/all/bionic-reading-converter",
       "status": "working",
-      "score": 92,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 3,
-        "sourceBytes": 3483,
+        "sourceFiles": 6,
+        "sourceBytes": 22681,
         "unresolvedImports": [],
-        "interactive": false,
+        "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -14787,9 +14783,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "birthday-analyzer",
@@ -147055,8 +147049,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 8,
-        "sourceBytes": 43015,
+        "sourceFiles": 7,
+        "sourceBytes": 45435,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -153799,7 +153793,7 @@
     },
     {
       "slug": "wheregoes-tool",
-      "name": "WhereGoes Tool",
+      "name": "URL Redirect Checker",
       "category": "Developer",
       "route": "/tools/all/wheregoes-tool",
       "status": "api-required",
@@ -153809,7 +153803,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 17,
-        "sourceBytes": 67455,
+        "sourceBytes": 70765,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,

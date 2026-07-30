@@ -15,6 +15,7 @@ import {
   SITE_ROUTES,
   TOOL_CATEGORY_ROUTE_OPTIONS,
 } from "../altftoolweb/src/platform/navigation/siteRoutes.js";
+import { canonicalizePublicPath } from "../altftoolweb/src/platform/navigation/publicRouteTaxonomy.js";
 
 const APP_DIR = path.resolve("altftoolweb/src/app");
 const PAGE_EXTENSIONS = ["js", "jsx", "ts", "tsx"];
@@ -110,7 +111,7 @@ test("header exposes every product suite and Labs experience", () => {
 
   for (const experience of EXPERIENCE_CATALOG) {
     assert.ok(
-      labsHrefs.has(experience.href),
+      labsHrefs.has(canonicalizePublicPath(experience.href)),
       `${experience.slug} is missing from Labs`,
     );
   }
