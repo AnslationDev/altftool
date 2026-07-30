@@ -7,13 +7,6 @@ const ScrollToTopButton = dynamic(
   () => import("@/platform/navigation/ScrollToTopButton"),
   { ssr: false },
 );
-const NewsletterSubscribeDialog = dynamic(
-  () =>
-    import("@/platform/consentalerts/NewsletterSubscribeDialog").then(
-      (module) => module.NewsletterSubscribeDialog,
-    ),
-  { ssr: false },
-);
 const WebVitalsReporter = dynamic(
   () => import("@/components/WebVitalsReporter"),
   {
@@ -70,7 +63,6 @@ export default function DeferredSiteRuntime({ reportWebVitals = false }) {
   return (
     <>
       <ScrollToTopButton />
-      <NewsletterSubscribeDialog />
       {reportWebVitals ? <WebVitalsReporter /> : null}
     </>
   );

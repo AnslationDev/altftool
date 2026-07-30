@@ -32,13 +32,15 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${app.name} APK Download | AltFTool Apps`,
+    title: app.apkUrl
+      ? `${app.name} APK Download | AltFTool Apps`
+      : `${app.name} Android App Details | AltFTool Apps`,
     description: app.shortDescription,
     path: `/apps/${app.slug}`,
     image: app.iconUrl,
     keywords: [
       app.name,
-      `${app.name} APK`,
+      ...(app.apkUrl ? [`${app.name} APK`] : []),
       `${app.name} Android app`,
       app.category,
       "AltFTool apps",
@@ -61,8 +63,12 @@ function createAppJsonLd(app) {
     applicationSubCategory: app.category,
     operatingSystem: app.androidRequired || "Android",
     softwareVersion: app.version,
-    fileSize: app.apkSize,
-    downloadUrl: absoluteUrl(app.apkUrl),
+    ...(app.apkUrl
+      ? {
+          fileSize: app.apkSize,
+          downloadUrl: absoluteUrl(app.apkUrl),
+        }
+      : {}),
     author: {
       "@type": "Organization",
       name: app.developer || "AltFTool Team",
@@ -72,11 +78,15 @@ function createAppJsonLd(app) {
       name: "AltFTool",
       url: absoluteUrl("/"),
     },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
+    ...(app.apkUrl
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+          },
+        }
+      : {}),
   };
 }
 

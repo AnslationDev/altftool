@@ -12,11 +12,9 @@ export async function generateMetadata() {
     // alternative instead of claiming to be Playbuzz — the old description said
     // "on Playbuzz", which read as though this site were theirs.
     title: "Free Personality Quizzes — Playbuzz Alternative",
-    // The count is real: data.js holds 100 quiz objects, and the categories are
-    // the ones components/NavMenu.jsx actually renders. Nothing here cites a
-    // play count or a creator — data.js carries a `plays` string and an
-    // author/creator name on 99 of the 100 quizzes, and both are invented seed
-    // values, so they must never reach a snippet.
+    // The categories are the ones components/NavMenu.jsx actually renders.
+    // Nothing here cites a play count or creator because those details are
+    // absent unless backed by real data.
     description:
       "Free quizzes — personality, trivia, love, movies, music and more. Pick one, answer a few questions, get your result. No signup, no app.",
     path: "/playbuzz",

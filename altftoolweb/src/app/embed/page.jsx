@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { createPageMetadata, createBreadcrumbJsonLd } from "@/platform/seo/generateMetadata";
+import {
+  createBreadcrumbJsonLd,
+  createHowToJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import JsonLd from "@/platform/seo/JsonLd";
 import { PRODUCTION_SITE_URL } from "@/platform/seo/siteUrl";
 import { getEmbedCategories, getEmbeddableGroups, getEmbeddableTools } from "./embedRegistry";
@@ -35,6 +39,10 @@ const STEPS = [
   },
 ];
 
+function getEmbedIntro(count) {
+  return `Embed any of ${count} AltFTool widgets with a single copy-paste snippet. Free to embed, responsive, available in light and dark themes, and no signup required — just keep the small "Widget by AltFTool" credit visible.`;
+}
+
 /**
  * How many widgets the picker gets up front.
  *
@@ -60,15 +68,24 @@ export default function EmbedHubPage() {
   // Filtered from the sorted list rather than concatenated, so the seed arrives
   // in the same alphabetical order the full index will replace it with.
   const seedTools = allTools.filter((tool) => seedIds.has(tool.id));
+  const intro = getEmbedIntro(allTools.length);
 
   return (
     <main className="bg-(--page) text-(--foreground)">
       <JsonLd
-        id="embed-hub-breadcrumb"
-        data={createBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Embeddable widgets", path: "/embed" },
-        ])}
+        id="embed-hub-schema"
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Embeddable widgets", path: "/embed" },
+          ]),
+          createHowToJsonLd({
+            path: "/embed",
+            name: "How to add an AltFTool widget to your website",
+            description: intro,
+            steps: STEPS.map((step) => `${step.title}: ${step.text}`),
+          }),
+        ]}
       />
       <div className="mx-auto w-full max-w-[1200px] px-4 py-10 sm:px-5 lg:px-8">
         <header className="max-w-2xl">
@@ -76,9 +93,7 @@ export default function EmbedHubPage() {
             Free widgets for your website
           </h1>
           <p className="mt-3 text-base leading-7 text-(--muted-foreground)">
-            {`Embed any of ${allTools.length} AltFTool widgets with a single copy-paste snippet.
-            Free forever, responsive, light & dark themes, and no signup — just keep the small
-            "Widget by AltFTool" credit link.`}
+            {intro}
           </p>
         </header>
 
@@ -192,8 +207,8 @@ export default function EmbedHubPage() {
           <h2 className="text-xl font-semibold tracking-tight">Fair use</h2>
           <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
             Widgets are free for personal and commercial sites. The attribution link inside the
-            widget (and the credit line in the snippet) must stay visible, and stay a normal
-            followable link — that&rsquo;s the whole deal.
+            widget and the credit line in the snippet must stay visible so visitors can identify
+            the widget&rsquo;s source.
           </p>
           {/*
             Accuracy matters more than the pitch here. Three different things are

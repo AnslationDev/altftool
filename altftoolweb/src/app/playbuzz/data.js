@@ -19,7 +19,7 @@ const normalizeQuiz = (quiz) => {
   return {
     ...quiz,
     title: quiz.title,
-    author: quiz.author || quiz.creator || 'Unknown',
+    author: quiz.author || quiz.creator || null,
     cardImage,
     heroImage,
     category,
@@ -264,7 +264,6 @@ const rawQuizzesData = [
     title: "Which Decade Should You Have Been Born In?",
     cat: "lifestyle",
     img: "/playbuzz-assets/33.jpg",
-    creator: "James Calloway",
     trending: true,
     q: [["Pick your ideal fashion vibe:", ["Bell-bottoms and flower power", "Sharp suits and victory rolls", "Neon windbreakers and big hair", "Minimalist and modern"], 0], ["What's your favorite type of music?", ["Classic rock and folk", "Big band and jazz", "Pop and new wave", "Hip-hop and indie"], 0], ["How do you prefer to communicate?", ["Face-to-face or handwritten letters", "Phone calls only", "Answering machine and pagers", "Texts and social media"], 0], ["What's your dream car?", ["A vintage muscle car", "A sleek art deco roadster", "A flashy sports car", "An eco-friendly EV"], 0], ["What social cause speaks to you most?", ["Peace and civil rights", "Women's liberation", "Environmental awareness", "Digital privacy"], 0]],
     r: [[0, 2, "The Old Soul", "You belong in the 1940s or 50s — a time of classic elegance, community, and timeless style."], [3, 4, "The Free Spirit", "The 1960s or 70s called your name. You're all about self-expression, music, and big ideas."], [5, 5, "The Modern Icon", "You're a true child of today. You thrive with technology, global connection, and endless possibility."]]

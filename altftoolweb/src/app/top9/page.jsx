@@ -20,7 +20,7 @@ export async function generateMetadata() {
   // separately: the description used to call all of them "ranked Top9 lists"
   // when only a few publish a ranking. The hub matches the hero copy.
   return createPageMetadata({
-    title: "Top9 Lists - Ranked Guides, Entertainment, Sports & Tools",
+    title: "Top9 Lists - Entertainment, Sports & Tools",
     description: `${items.length} Top9 topic pages across entertainment, sports, business, tools, lifestyle, and trending topics on AltFTool, ${rankedCount} of them with their ranked picks published in full.`,
     path: "/top9",
   });

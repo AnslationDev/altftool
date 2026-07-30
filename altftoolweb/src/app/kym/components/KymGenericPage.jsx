@@ -16,7 +16,7 @@ import { slugifyTitle } from "../data/slug";
 // No `meta` field on any of these. Cards used to carry hardcoded strings such
 // as "Recently updated", "Trending entry" and "Updated 12 hours ago" that never
 // changed, advertising freshness and traction that were never measured.
-const contentGroups = [
+export const contentGroups = [
   ...spotlightCards,
   ...freshEntries,
   ...explainers.map((item) => ({ ...item, category: "Explainer" })),
@@ -188,7 +188,10 @@ function getArticleProfile(item, category) {
 }
 
 export function findKymItem(slug) {
-  return contentGroups.find((item) => slugifyTitle(item.title) === slug);
+  const path = `/kym/${slug}`;
+  return contentGroups.find(
+    (item) => item.href === path || slugifyTitle(item.title) === slug,
+  );
 }
 
 function RelatedRail({ current }) {
@@ -202,7 +205,10 @@ function RelatedRail({ current }) {
         <h2>Related Entries</h2>
         <div className="kym-article-side-grid">
           {related.map((item) => (
-            <a href={`/kym/${slugifyTitle(item.title)}`} key={item.title}>
+            <a
+              href={item.href || `/kym/${slugifyTitle(item.title)}`}
+              key={item.title}
+            >
               <img src={item.image.src} alt="" />
               <strong>{item.title}</strong>
             </a>
@@ -270,7 +276,7 @@ export default function KymGenericPage({ item }) {
             <h2>Entry Notes</h2>
             <div className="kym-topic-list">
               {profile.notes.map((note) => (
-                <a href="#" key={note}>{note}</a>
+                <span key={note}>{note}</span>
               ))}
             </div>
           </section>

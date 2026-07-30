@@ -1,3 +1,6 @@
+// This catalogue intentionally has no rating, review or install-count fields:
+// AppHub has no verified analytics/review pipeline for those values. `apkUrl`
+// is set only when the corresponding installable file is actually published.
 export const apps = [
   {
     slug: "speed-test",
@@ -10,7 +13,6 @@ export const apps = [
     version: "2.1.0",
     apkSize: "69.4 MB",
     androidRequired: "Android 5.0+",
-    downloads: "1M+",
     lastUpdated: "May 10, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/speed-test/icon.svg",
@@ -28,7 +30,7 @@ export const apps = [
       "Lightweight and fast",
       "Share results with one tap",
     ],
-    highlights: ["100% Safe", "No Ads", "Latest Version", "Works Offline", "Regular Updates"],
+    highlights: ["Network Test", "Upload & Download", "Ping & Jitter", "Result History", "Android 5.0+"],
   },
   {
     slug: "storage-cleanup",
@@ -41,7 +43,6 @@ export const apps = [
     version: "1.4.0",
     apkSize: "5.6 KB",
     androidRequired: "Android 6.0+",
-    downloads: "960K",
     lastUpdated: "May 12, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/storage-cleanup/icon.svg",
@@ -59,7 +60,7 @@ export const apps = [
       "Simple cleanup summary",
       "Fast device analysis",
     ],
-    highlights: ["100% Safe", "Lightweight", "Fast Scan", "Easy Cleanup", "Regular Updates"],
+    highlights: ["Storage Scan", "Large File Finder", "File Categories", "Cleanup Summary", "Android 6.0+"],
   },
   {
     slug: "grammerly",
@@ -72,7 +73,6 @@ export const apps = [
     version: "1.2.0",
     apkSize: "60.4 MB",
     androidRequired: "Android 7.0+",
-    downloads: "875K",
     lastUpdated: "May 9, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/grammerly/icon.svg",
@@ -90,7 +90,7 @@ export const apps = [
       "Clean editor experience",
       "Useful for notes and messages",
     ],
-    highlights: ["100% Safe", "Writing Helper", "Latest Version", "Simple Editor", "Regular Updates"],
+    highlights: ["Writing Helper", "Grammar Suggestions", "Spelling Support", "Text Editor", "Android 7.0+"],
   },
   {
     slug: "pdf-ocr-scanner",
@@ -101,9 +101,9 @@ export const apps = [
       "PDF OCR Scanner helps users capture documents, extract text with OCR, organize scans, and export clean PDF files for work, study, and records.",
     category: "Tools",
     version: "1.8.0",
-    apkSize: "38.2 MB",
+    // Measured from public/downloads/apps/pdf-ocr-scanner/pdf-ocr-scanner.apk.
+    apkSize: "27.9 MB",
     androidRequired: "Android 7.0+",
-    downloads: "650K",
     lastUpdated: "May 11, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/pdf-ocr-scanner/icon.svg",
@@ -121,7 +121,7 @@ export const apps = [
       "Readable text output",
       "Useful for work and study",
     ],
-    highlights: ["100% Safe", "OCR Support", "PDF Export", "Document Tools", "Regular Updates"],
+    highlights: ["Document Scanner", "OCR Support", "PDF Export", "Scan Organizer", "Android 7.0+"],
   },
   {
     slug: "anternet",
@@ -134,7 +134,6 @@ export const apps = [
     version: "1.0.0",
     apkSize: "53 MB",
     androidRequired: "Android 6.0+",
-    downloads: "New",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/anternet/icon.svg",
@@ -152,7 +151,7 @@ export const apps = [
       "Lightweight app size",
       "Simple daily workflow",
     ],
-    highlights: ["100% Safe", "Network Tools", "Lightweight", "Quick Access", "Regular Updates"],
+    highlights: ["Network Tools", "Connection Status", "Quick Access", "Daily Shortcuts", "Android 6.0+"],
   },
   {
     slug: "syncplay",
@@ -165,11 +164,10 @@ export const apps = [
     version: "1.0.0",
     apkSize: "Coming Soon",
     androidRequired: "Android 7.0+",
-    downloads: "New",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/syncplay/icon.svg",
-    apkUrl: "/downloads/apps/syncplay/syncplay.apk",
+    apkUrl: null,
     screenshots: [
       "https://placehold.co/420x840/1e1b4b/a78bfa.png?text=Sync+Room",
       "https://placehold.co/420x840/312e81/f8f5eb.png?text=Playback+Control",
@@ -183,7 +181,7 @@ export const apps = [
       "Fast and lightweight",
       "Clean media dashboard",
     ],
-    highlights: ["100% Safe", "Media Sync", "Shared Sessions", "Easy Controls", "Regular Updates"],
+    highlights: ["Media Sync", "Shared Sessions", "Playback Controls", "Session History", "Android 7.0+"],
   },
   {
     slug: "app-builder",
@@ -196,11 +194,10 @@ export const apps = [
     version: "1.0.0",
     apkSize: "Coming Soon",
     androidRequired: "Android 7.0+",
-    downloads: "New",
     lastUpdated: "May 14, 2024",
     developer: "AltFTool Team",
     iconUrl: "/downloads/apps/app-builder/icon.svg",
-    apkUrl: "/downloads/apps/app-builder/app-builder.apk",
+    apkUrl: null,
     screenshots: [
       "https://placehold.co/420x840/3b2602/fbbf24.png?text=Project+Builder",
       "https://placehold.co/420x840/4a2f05/fff7ed.png?text=Screen+Planner",
@@ -214,7 +211,7 @@ export const apps = [
       "Clean builder workspace",
       "Useful for creators",
     ],
-    highlights: ["100% Safe", "Project Planner", "Creator Tools", "Clean Workspace", "Regular Updates"],
+    highlights: ["Project Planner", "Screen Planning", "Feature Lists", "Project Notes", "Android 7.0+"],
   },
 ];
 

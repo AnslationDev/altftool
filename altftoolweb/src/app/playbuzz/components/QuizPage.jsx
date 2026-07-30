@@ -32,7 +32,11 @@ const YouMightAlsoLike = ({ relatedArticles }) => (
           </div>
           <div className="px-3.5 py-3 border-t border-border">
             <div className="text-sm font-bold text-center leading-tight mb-1.5" style={{ color: 'var(--foreground)' }}>{article.title}</div>
-            <div className="text-xs font-normal text-center" style={{ color: 'var(--muted-foreground)' }}>{article.author} &middot; {article.plays}</div>
+            {(article.author || article.plays) && (
+              <div className="text-xs font-normal text-center" style={{ color: 'var(--muted-foreground)' }}>
+                {[article.author, article.plays].filter(Boolean).join(' · ')}
+              </div>
+            )}
           </div>
         </Link>
       ))}
@@ -81,7 +85,6 @@ const QuizPage = () => {
     }
     return {
       title: 'Only Highly Gifted People Can Read Backwards. Can You?',
-      author: 'Terry Stein',
       image: 'https://picsum.photos/seed/forest-path/1200/600',
       category: 'Trivia',
       questions: FALLBACK_QUESTIONS,
@@ -299,14 +302,19 @@ const QuizPage = () => {
             <>
               <div className="flex flex-col items-center text-center pb-2.5">
                 <div className="flex items-center gap-3 mb-5 text-sm w-full justify-start" style={{ color: 'var(--muted-foreground)' }}>
-                  <div className="w-9 h-9 rounded-full overflow-hidden">
-                    <img src="https://picsum.photos/seed/avatar1/64/64" alt="" className="w-full h-full object-cover" />
-                  </div>
                   <div className="flex items-center gap-2">
-                    <span>by <strong style={{ color: 'var(--foreground)' }}>{quizData.author}</strong></span>
-                    <span className="mx-0.5">&middot;</span>
-                    <span>{quizData.plays}</span>
-                    <span className="mx-0.5">&middot;</span>
+                    {quizData.author && (
+                      <>
+                        <span>by <strong style={{ color: 'var(--foreground)' }}>{quizData.author}</strong></span>
+                        <span className="mx-0.5">&middot;</span>
+                      </>
+                    )}
+                    {quizData.plays && (
+                      <>
+                        <span>{quizData.plays}</span>
+                        <span className="mx-0.5">&middot;</span>
+                      </>
+                    )}
                     <span>{quizData.questions.length} questions</span>
                     <span className="mx-0.5">&middot;</span>
                     <span>{quizData.category || 'Trivia'}</span>

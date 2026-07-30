@@ -141,12 +141,22 @@ export default async function BookDetailPage({ params }) {
                 </div>
 
                 <div className="flex items-center gap-4 mt-8">
-                  <Link
-                    href={`/wattpad/read/${book.slug}/1`}
-                    className="flex h-14 flex-1 items-center justify-center rounded-full bg-(--primary) text-base font-semibold text-primary-foreground shadow-md transition hover:opacity-90 hover:shadow-lg md:w-[400px] md:flex-none"
-                  >
-                    Start reading
-                  </Link>
+                  {publishedChapterCount > 0 ? (
+                    <Link
+                      href={`/wattpad/read/${book.slug}/1`}
+                      className="flex h-14 flex-1 items-center justify-center rounded-full bg-(--primary) text-base font-semibold text-primary-foreground shadow-md transition hover:opacity-90 hover:shadow-lg md:w-[400px] md:flex-none"
+                    >
+                      Start reading
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled
+                      className="flex h-14 flex-1 cursor-not-allowed items-center justify-center rounded-full bg-(--muted) text-base font-semibold text-(--muted-foreground) md:w-[400px] md:flex-none"
+                    >
+                      Chapters coming soon
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -6,6 +6,8 @@ import MustReadFanfiction from './components/MustReadFanfiction';
 import BookCategorySection from './components/BookCategorySection';
 import UserReview from './components/UserReview';
 import Faqs from './components/Faqs';
+import books from './data/books.json';
+import chapters from './data/chapters.json';
 import JsonLd from '@/platform/seo/JsonLd';
 import {
   createCollectionPageJsonLd,
@@ -23,11 +25,30 @@ export async function generateMetadata() {
 }
 
 export default function WattpadPage() {
+  const readableBookIds = new Set(chapters.map((chapter) => chapter.bookId));
+  const readableBookSlugs = new Set(
+    books
+      .filter((book) => readableBookIds.has(book.id))
+      .map((book) => book.slug),
+  );
+  const listedBookSlugs = new Set();
   const itemList = [
     ...(data.trending?.products || []),
     ...(data.mustRead?.items || []),
   ]
-    .filter((item) => item?.slug || item?.title)
+    // Cards remain visible for catalogue navigation, but structured data only
+    // advertises titles that currently have something to read.
+    .filter((item) => {
+      if (
+        !item?.slug ||
+        !readableBookSlugs.has(item.slug) ||
+        listedBookSlugs.has(item.slug)
+      ) {
+        return false;
+      }
+      listedBookSlugs.add(item.slug);
+      return true;
+    })
     .slice(0, 24)
     .map((item) => ({
       name: item.title,

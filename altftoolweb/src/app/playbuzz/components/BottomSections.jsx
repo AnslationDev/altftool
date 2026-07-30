@@ -158,12 +158,14 @@ const BottomSections = ({ category }) => {
                 >
                   {article.title}
                 </h4>
-                <span
-                  className="text-[10px] mt-0.5 inline-block"
-                  style={{ color: 'var(--muted-foreground)' }}
-                >
-                  {article.author}
-                </span>
+                {article.author && (
+                  <span
+                    className="text-[10px] mt-0.5 inline-block"
+                    style={{ color: 'var(--muted-foreground)' }}
+                  >
+                    {article.author}
+                  </span>
+                )}
               </div>
             </Link>
           ))}

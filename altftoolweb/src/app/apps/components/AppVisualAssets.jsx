@@ -170,7 +170,7 @@ export function HeroPhoneSvg({ apps }) {
               {app.name}
             </text>
             <text x="116" y={y + 34} fontFamily="Inter, Arial, sans-serif" fontSize="9" fontWeight="700" fill="#94a3b8">
-              {app.downloads}
+              {app.category}
             </text>
           </g>
         );

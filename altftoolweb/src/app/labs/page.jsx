@@ -6,7 +6,7 @@ import {
 } from "@/platform/seo/generateMetadata";
 import JsonLd from "@/platform/seo/JsonLd";
 import LabsClient from "./LabsClient";
-import { ALL_EXPERIMENTS } from "./data/experiments";
+import { ALL_EXPERIMENTS, LAB_GRADUATES } from "./data/experiments";
 
 // Counts come from the shared experience catalog at render time so the copy,
 // the metadata and the ItemList can never disagree with what is on the page.
@@ -28,8 +28,9 @@ export async function generateMetadata() {
 }
 
 export default function LabsPage() {
-  // ItemList mirrors the experiment grid rendered by LabsClient — every entry
-  // below is a visible, linked card on the page.
+  // ItemList mirrors every linked card rendered by LabsClient: the experiment
+  // grid plus the products shown in the "graduated from Labs" section.
+  const visibleItems = [...ALL_EXPERIMENTS, ...LAB_GRADUATES];
   const jsonLd = [
     createCollectionPageJsonLd({
       path: "/labs",
@@ -38,8 +39,8 @@ export default function LabsPage() {
     }),
     createItemListJsonLd({
       path: "/labs",
-      name: "AltFTool Labs experiments",
-      items: ALL_EXPERIMENTS.map((experience) => ({
+      name: "AltFTool Labs experiments and graduates",
+      items: visibleItems.map((experience) => ({
         name: experience.name,
         path: experience.href,
       })),

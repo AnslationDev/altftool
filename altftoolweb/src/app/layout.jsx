@@ -6,7 +6,6 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/platform/navigation/Header";
 import Footer from "@/platform/navigation/Footer";
 import Script from "next/script";
-import { NewsletterSubscribeDialog } from "@/platform/consentalerts/NewsletterSubscribeDialog";
 import ScrollToTopButton from "@/platform/navigation/ScrollToTopButton";
 import GlobalAnimationProvider from "@/contexts/GlobalAnimationProvider";
 import { AdsProvider } from "@/ads/AdsProvider";
@@ -375,7 +374,6 @@ export default async function RootLayout({ children }) {
 
         <GlobalChromeGate>
           <ScrollToTopButton />
-          <NewsletterSubscribeDialog />
         </GlobalChromeGate>
 
         <WebVitalsReporter />

@@ -7,7 +7,6 @@ import {
   CalendarDays,
   ChevronLeft,
   ChevronRight,
-  Download,
   HardDrive,
   Heart,
   Info,
@@ -24,7 +23,6 @@ import { AppIconSvg, AppScreenSvg } from "./AppVisualAssets";
 const statIcons = {
   Developer: User,
   Category: Info,
-  Downloads: Download,
   Size: HardDrive,
   Version: BadgeCheck,
   Updated: CalendarDays,
@@ -56,9 +54,14 @@ function readWishlist() {
 export default function AppDetailClient({ app, relatedApps }) {
   const [activeScreenshot, setActiveScreenshot] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const hasDownload = Boolean(app.apkUrl);
 
   useEffect(() => {
-    setIsWishlisted(readWishlist().includes(app.slug));
+    const frame = window.requestAnimationFrame(() => {
+      setIsWishlisted(readWishlist().includes(app.slug));
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [app.slug]);
 
   const toggleWishlist = () => {
@@ -77,7 +80,6 @@ export default function AppDetailClient({ app, relatedApps }) {
   const stats = [
     ["Developer", app.developer],
     ["Category", app.category],
-    ["Downloads", app.downloads],
     ["Size", app.apkSize],
     ["Version", app.version],
     ["Updated", app.lastUpdated],
@@ -111,13 +113,12 @@ export default function AppDetailClient({ app, relatedApps }) {
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-3">
                 <h1 className="text-[30px] font-bold leading-[1.2] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)] sm:text-[38px] sm:leading-[1.1]">{app.name}</h1>
-                <BadgeCheck size={26} className="fill-[var(--primary)] text-white" aria-hidden="true" />
               </div>
               <p className="mt-3 max-w-2xl text-[15px] font-normal leading-[1.7] text-[var(--muted-foreground)]">{app.tagline}</p>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {stats.map(([label, value]) => {
               const Icon = statIcons[label];
               return (
@@ -133,7 +134,13 @@ export default function AppDetailClient({ app, relatedApps }) {
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <DownloadButton href={app.apkUrl} className="sm:min-w-72" comingSoon={app.apkSize === "Coming Soon"} />
+            {hasDownload ? (
+              <DownloadButton href={app.apkUrl} className="sm:min-w-72" />
+            ) : (
+              <p className="inline-flex min-h-12 items-center justify-center rounded-lg border border-[var(--home-border)] bg-[var(--section-highlight)] px-6 text-sm font-semibold text-[var(--muted-foreground)] sm:min-w-72">
+                Download coming soon
+              </p>
+            )}
             <button
               type="button"
               onClick={toggleWishlist}
@@ -183,8 +190,8 @@ export default function AppDetailClient({ app, relatedApps }) {
                   key={`${app.slug}-${index}`}
                   className={`${index === activeScreenshot ? "block" : "hidden"} h-[470px] md:block md:h-[560px]`}
                 >
-                <AppScreenMock app={app} index={index} />
-              </div>
+                  <AppScreenMock app={app} index={index} />
+                </div>
               ))}
             </div>
           </div>
@@ -245,26 +252,37 @@ export default function AppDetailClient({ app, relatedApps }) {
               </div>
               <div className="flex items-center justify-between gap-4 text-sm">
                 <dt className="font-medium text-[var(--muted-foreground)]">File Type</dt>
-                <dd className="text-right font-semibold text-[var(--foreground)]">APK</dd>
+                <dd className="text-right font-semibold text-[var(--foreground)]">
+                  {hasDownload ? "APK" : "Not published"}
+                </dd>
               </div>
             </dl>
           </div>
 
-          <div className="rounded-[24px] border border-[var(--home-border)] bg-[var(--footer-bg)] p-8 shadow-[0_16px_40px_rgba(15,23,42,0.12)] transition duration-200 hover:shadow-[0_20px_48px_rgba(2,6,23,0.18)]">
-            <h2 className="text-[22px] font-semibold leading-[1.3] text-white [font-family:var(--home-font-display)]">How To Install</h2>
-            <ol className="mt-7 space-y-6">
-              {["Tap Download APK", "Open the downloaded file", "Allow install from browser if asked", "Tap Install and open the app"].map(
-                (step, index) => (
-                  <li key={step} className="flex gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-semibold text-[var(--primary-foreground)]">
-                      {index + 1}
-                    </span>
-                    <span className="pt-1.5 text-sm font-medium text-white/82">{step}</span>
-                  </li>
-                )
-              )}
-            </ol>
-          </div>
+          {hasDownload ? (
+            <div className="rounded-xl border border-[var(--home-border)] bg-[var(--footer-bg)] p-8 shadow-md transition duration-150 hover:shadow-lg motion-reduce:transition-none">
+              <h2 className="text-[22px] font-semibold leading-[1.3] text-white [font-family:var(--home-font-display)]">How To Install</h2>
+              <ol className="mt-7 space-y-6">
+                {["Tap Download APK", "Open the downloaded file", "Allow install from browser if asked", "Tap Install and open the app"].map(
+                  (step, index) => (
+                    <li key={step} className="flex gap-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-semibold text-[var(--primary-foreground)]">
+                        {index + 1}
+                      </span>
+                      <span className="pt-1.5 text-sm font-medium text-white/82">{step}</span>
+                    </li>
+                  )
+                )}
+              </ol>
+            </div>
+          ) : (
+            <div className="rounded-xl border border-[var(--home-border)] bg-[var(--section-highlight)] p-8 shadow-sm">
+              <h2 className="text-xl font-semibold text-[var(--foreground)]">Download availability</h2>
+              <p className="mt-3 text-sm leading-6 text-[var(--muted-foreground)]">
+                No installable APK has been published for this app yet.
+              </p>
+            </div>
+          )}
         </aside>
       </section>
 
@@ -283,10 +301,18 @@ export default function AppDetailClient({ app, relatedApps }) {
             <AppIconSvg app={app} className="h-14 w-14 rounded-[16px] shadow-[0_12px_24px_rgba(15,23,42,0.18)]" />
             <div>
               <p className="font-semibold text-white">{app.name}</p>
-              <p className="text-xs font-semibold text-white/68">{app.downloads} downloads · {app.apkSize} APK</p>
+              <p className="text-xs font-semibold text-white/68">
+                {app.category} · {app.apkSize}
+              </p>
             </div>
           </div>
-          <DownloadButton href={app.apkUrl} className="w-full sm:min-w-72 sm:w-auto" comingSoon={app.apkSize === "Coming Soon"} />
+          {hasDownload ? (
+            <DownloadButton href={app.apkUrl} className="w-full sm:min-w-72 sm:w-auto" />
+          ) : (
+            <p className="w-full rounded-lg border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white/72 sm:w-auto sm:min-w-72">
+              Download coming soon
+            </p>
+          )}
         </div>
       </div>
     </main>

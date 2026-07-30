@@ -31,11 +31,23 @@ export async function generateMetadata({ params }) {
 
   const categoryDescription =
     category.description || `${category.name} stories and related reads`;
+  const categoryBookIds = new Set(
+    books
+      .filter((book) => book.categoryId === category.id)
+      .map((book) => book.id),
+  );
+  const publishedPartCount = chapters.filter((chapter) =>
+    categoryBookIds.has(chapter.bookId),
+  ).length;
+
   return createPageMetadata({
     title: `${category.name} Stories - Wattpad-Style Reads`,
-    description: `${categoryDescription}. Explore ${category.name.toLowerCase()} stories, popular chapters, and related reads in AltFTool's browser story library.`,
+    description: `${categoryDescription}. Explore ${category.name.toLowerCase()} story details and any published parts in AltFTool's browser story library.`,
     path: `/wattpad/category/${category.slug}`,
     image: category.coverImage,
+    // Keep catalogue navigation live, but do not index a category until at
+    // least one of its stories has a readable part.
+    noindex: publishedPartCount === 0,
   });
 }
 
@@ -68,17 +80,17 @@ export default async function CategoryPage({ params }) {
               {category.name} Stories
             </h1>
             <p className="wp-section-subtitle">
-              Explore trending {category.name.toLowerCase()} stories
+              Browse {category.name.toLowerCase()} stories in the AltFTool library
             </p>
           </div>
 
           {filteredBooks.length > 0 && (
             <div className="mb-12">
               <h2 className="text-xl md:text-2xl font-bold text-(--foreground)">
-                Hottest Wattpad Originals
+                Available stories
               </h2>
               <p className="text-(--muted-foreground) mt-2 text-sm">
-                Read the stories we love
+                Open a title to see its details and any published parts
               </p>
 
               <div className="flex gap-3 overflow-x-auto mt-6 wp-no-scrollbar pb-2">
@@ -106,36 +118,12 @@ export default async function CategoryPage({ params }) {
             </div>
           )}
 
-          <div className="bg-card border border-(--border) rounded-xl p-4 md:p-6 mb-6 shadow-sm">
-            <h3 className="text-sm text-(--muted-foreground) mb-3 font-medium">
-              Refine by tag:
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "romance", "love", "slowburn", "billionaire",
-                "darkromance", "mafia", "enemiestolovers",
-                "newadult", "possessive", "marriage", "ceo",
-                "india", "mature",
-              ].map((tag) => (
-                <button
-                  key={tag}
-                  className="wp-filter-btn"
-                >
-                  + {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div>
             <div className="bg-card border border-(--border) rounded-xl p-4 md:p-6 shadow-sm">
               <div className="wp-hot-header">
                 <h2 className="wp-hot-title">
                   {filteredBooks.length} Stories
                 </h2>
-                <button className="wp-hot-sort">
-                  Sort by: Hot
-                </button>
               </div>
 
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-7 gap-y-6">

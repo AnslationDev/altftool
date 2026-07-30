@@ -1,42 +1,28 @@
 "use client";
 
-import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
-  BadgeCheck,
+  Download,
+  FileText,
   Grid2X2,
-  ShieldCheck,
-  Sparkles,
-  Star,
-  Users,
 } from "lucide-react";
 import AppCard from "./AppCard";
 import { AppIconSvg } from "./AppVisualAssets";
 
-const categories = [
-  { label: "Productivity", count: "2 Apps", icon: "briefcase", fill: "from-teal-400 to-teal-600", glow: "group-hover:shadow-teal-500/25" },
-  { label: "Utilities", count: "2 Apps", icon: "spark", fill: "from-cyan-400 to-sky-500", glow: "group-hover:shadow-cyan-500/25" },
-  { label: "Tools", count: "3 Apps", icon: "tools", fill: "from-slate-700 to-cyan-500", glow: "group-hover:shadow-slate-500/25" },
-  { label: "Android", count: "7 Apps", icon: "grid", fill: "from-sky-400 to-blue-600", glow: "group-hover:shadow-blue-500/25" },
-  { label: "Learning", count: "OCR Ready", icon: "cap", fill: "from-emerald-400 to-teal-700", glow: "group-hover:shadow-emerald-500/25" },
-  { label: "Security", count: "Safe APK", icon: "shield", fill: "from-amber-400 to-teal-600", glow: "group-hover:shadow-amber-500/25" },
-];
-
-const safetyItems = [
-  { title: "Verified APKs", detail: "Manual quality checks", icon: BadgeCheck },
-  { title: "Malware-Free Apps", detail: "Security-first downloads", icon: ShieldCheck },
-  { title: "Fast Downloads", detail: "Optimized APK delivery", icon: Sparkles },
-  { title: "Regular Updates", detail: "Fresh versions tracked", icon: Grid2X2 },
-  { title: "Top Rated Apps", detail: "Curated by user signals", icon: Star },
+const CATEGORY_META = [
+  { label: "Productivity", icon: "briefcase" },
+  { label: "Utilities", icon: "spark" },
+  { label: "Tools", icon: "tools" },
 ];
 
 function CategorySvgIcon({ type }) {
-  const common = "drop-shadow-[0_8px_14px_rgba(15,23,42,0.16)]";
+  const common = "drop-shadow-sm";
 
   if (type === "briefcase") {
     return (
       <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-        <path fill="#ffffff" d="M17 14.5A6.5 6.5 0 0 1 23.5 8h1A6.5 6.5 0 0 1 31 14.5V16h5a5 5 0 0 1 5 5v4.4a36.5 36.5 0 0 1-34 0V21a5 5 0 0 1 5-5h5v-1.5Zm4 1.5h6v-1.5a2.5 2.5 0 0 0-2.5-2.5h-1a2.5 2.5 0 0 0-2.5 2.5V16Z" />
-        <path fill="#ffffff" fillOpacity=".86" d="M7 29.4a40.2 40.2 0 0 0 34 0V35a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5v-5.6Zm14-1.2h6v4.5h-6v-4.5Z" />
+        <path fill="currentColor" d="M17 14.5A6.5 6.5 0 0 1 23.5 8h1A6.5 6.5 0 0 1 31 14.5V16h5a5 5 0 0 1 5 5v4.4a36.5 36.5 0 0 1-34 0V21a5 5 0 0 1 5-5h5v-1.5Zm4 1.5h6v-1.5a2.5 2.5 0 0 0-2.5-2.5h-1a2.5 2.5 0 0 0-2.5 2.5V16Z" />
+        <path fill="currentColor" fillOpacity=".86" d="M7 29.4a40.2 40.2 0 0 0 34 0V35a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5v-5.6Zm14-1.2h6v4.5h-6v-4.5Z" />
       </svg>
     );
   }
@@ -44,8 +30,8 @@ function CategorySvgIcon({ type }) {
   if (type === "spark") {
     return (
       <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-        <path fill="#ffffff" d="M23.3 6.7a2.1 2.1 0 0 1 3.9 0l3.4 8.7 8.8 3.4a2.1 2.1 0 0 1 0 3.9l-8.8 3.4-3.4 8.8a2.1 2.1 0 0 1-3.9 0l-3.4-8.8-8.8-3.4a2.1 2.1 0 0 1 0-3.9l8.8-3.4 3.4-8.7Z" />
-        <path fill="#fff3d5" d="m10.4 31.2 1.8 4.5 4.5 1.8-4.5 1.8-1.8 4.5-1.8-4.5-4.5-1.8 4.5-1.8 1.8-4.5Zm27.3-22 1.2 3.2 3.2 1.2-3.2 1.3-1.2 3.1-1.3-3.1-3.1-1.3 3.1-1.2 1.3-3.2Z" />
+        <path fill="currentColor" d="M23.3 6.7a2.1 2.1 0 0 1 3.9 0l3.4 8.7 8.8 3.4a2.1 2.1 0 0 1 0 3.9l-8.8 3.4-3.4 8.8a2.1 2.1 0 0 1-3.9 0l-3.4-8.8-8.8-3.4a2.1 2.1 0 0 1 0-3.9l8.8-3.4 3.4-8.7Z" />
+        <path fill="currentColor" fillOpacity=".75" d="m10.4 31.2 1.8 4.5 4.5 1.8-4.5 1.8-1.8 4.5-1.8-4.5-4.5-1.8 4.5-1.8 1.8-4.5Zm27.3-22 1.2 3.2 3.2 1.2-3.2 1.3-1.2 3.1-1.3-3.1-3.1-1.3 3.1-1.2 1.3-3.2Z" />
       </svg>
     );
   }
@@ -53,8 +39,8 @@ function CategorySvgIcon({ type }) {
   if (type === "tools") {
     return (
       <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-        <path fill="#ffffff" d="M18.1 7a10 10 0 0 0-7.9 13.8L5.7 25.3a4 4 0 0 0 0 5.7l11.3 11.3a4 4 0 0 0 5.7 0l4.5-4.5A10 10 0 0 0 41 27.9l-8 8-6.9-2.1-2-6.8 8-8A10 10 0 0 0 18.1 7Z" />
-        <path fill="#e9ddff" d="m13.3 29.2 5.5 5.5-2.8 2.8-5.5-5.5 2.8-2.8Z" />
+        <path fill="currentColor" d="M18.1 7a10 10 0 0 0-7.9 13.8L5.7 25.3a4 4 0 0 0 0 5.7l11.3 11.3a4 4 0 0 0 5.7 0l4.5-4.5A10 10 0 0 0 41 27.9l-8 8-6.9-2.1-2-6.8 8-8A10 10 0 0 0 18.1 7Z" />
+        <path fill="currentColor" fillOpacity=".75" d="m13.3 29.2 5.5 5.5-2.8 2.8-5.5-5.5 2.8-2.8Z" />
       </svg>
     );
   }
@@ -62,10 +48,10 @@ function CategorySvgIcon({ type }) {
   if (type === "grid") {
     return (
       <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-        <rect width="15" height="15" x="7" y="7" fill="#ffffff" rx="4" />
-        <rect width="15" height="15" x="26" y="7" fill="#dff5ff" rx="4" />
-        <rect width="15" height="15" x="7" y="26" fill="#dff5ff" rx="4" />
-        <rect width="15" height="15" x="26" y="26" fill="#ffffff" rx="4" />
+        <rect width="15" height="15" x="7" y="7" fill="currentColor" rx="4" />
+        <rect width="15" height="15" x="26" y="7" fill="currentColor" fillOpacity=".75" rx="4" />
+        <rect width="15" height="15" x="7" y="26" fill="currentColor" fillOpacity=".75" rx="4" />
+        <rect width="15" height="15" x="26" y="26" fill="currentColor" rx="4" />
       </svg>
     );
   }
@@ -73,40 +59,78 @@ function CategorySvgIcon({ type }) {
   if (type === "cap") {
     return (
       <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-        <path fill="#ffffff" d="M4.8 19.3 24 10l19.2 9.3L24 28.6 4.8 19.3Z" />
-        <path fill="#d8fff2" d="M13.5 25.3 24 30.5l10.5-5.2v7.6c0 3.2-4.7 6.1-10.5 6.1s-10.5-2.9-10.5-6.1v-7.6Z" />
-        <path fill="#ffffff" d="M39.5 22.1h3.2v12.6h-3.2V22.1Z" />
+        <path fill="currentColor" d="M4.8 19.3 24 10l19.2 9.3L24 28.6 4.8 19.3Z" />
+        <path fill="currentColor" fillOpacity=".75" d="M13.5 25.3 24 30.5l10.5-5.2v7.6c0 3.2-4.7 6.1-10.5 6.1s-10.5-2.9-10.5-6.1v-7.6Z" />
+        <path fill="currentColor" d="M39.5 22.1h3.2v12.6h-3.2V22.1Z" />
       </svg>
     );
   }
 
   return (
     <svg viewBox="0 0 48 48" className={common} aria-hidden="true">
-      <path fill="#ffffff" d="M24 5.5 39 11v11.2c0 9.5-6.1 17.5-15 20.3-8.9-2.8-15-10.8-15-20.3V11l15-5.5Z" />
-      <path fill="#ffe2e2" d="m21.9 28.8 10.3-10.3 3 3-13.3 13.3-7.2-7.2 3-3 4.2 4.2Z" />
+      <path fill="currentColor" d="M24 5.5 39 11v11.2c0 9.5-6.1 17.5-15 20.3-8.9-2.8-15-10.8-15-20.3V11l15-5.5Z" />
+      <path fill="currentColor" fillOpacity=".75" d="m21.9 28.8 10.3-10.3 3 3-13.3 13.3-7.2-7.2 3-3 4.2 4.2Z" />
     </svg>
   );
 }
 
 export default function AppsListingClient({ apps, searchQuery = "" }) {
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const normalizedQuery = searchQuery.trim().toLowerCase();
-  const filteredApps = normalizedQuery
-    ? apps.filter((app) => {
-        const searchableText = [
-          app.name,
-          app.category,
-          app.tagline,
-          app.shortDescription,
-          app.description,
-          ...(app.features || []),
-          ...(app.highlights || []),
-        ]
-          .join(" ")
-          .toLowerCase();
 
-        return searchableText.includes(normalizedQuery);
-      })
-    : apps;
+  const categories = useMemo(() => {
+    return CATEGORY_META.map((meta) => ({
+      ...meta,
+      appCount: apps.filter((app) => app.category === meta.label).length,
+    }))
+      .filter((category) => category.appCount > 0)
+      .map((category) => ({
+        ...category,
+        count: `${category.appCount} App${category.appCount === 1 ? "" : "s"}`,
+      }));
+  }, [apps]);
+
+  const availableDownloadCount = useMemo(
+    () => apps.filter((app) => Boolean(app.apkUrl)).length,
+    [apps],
+  );
+
+  const catalogueFacts = [
+    {
+      title: `${availableDownloadCount} APK${availableDownloadCount === 1 ? "" : "s"} available`,
+      detail: "Only published files show a download action",
+      icon: Download,
+    },
+    {
+      title: "App details",
+      detail: "Version, file size and Android requirement",
+      icon: FileText,
+    },
+    {
+      title: `${apps.length} documented apps`,
+      detail: "Browse the complete AppHub catalogue",
+      icon: Grid2X2,
+    },
+  ];
+
+  const filteredApps = apps.filter((app) => {
+    if (selectedCategory && app.category !== selectedCategory) return false;
+    if (!normalizedQuery) return true;
+
+    const searchableText = [
+      app.name,
+      app.category,
+      app.tagline,
+      app.shortDescription,
+      app.description,
+      ...(app.features || []),
+      ...(app.highlights || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(normalizedQuery);
+  });
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
@@ -128,14 +152,14 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             <div className="grid items-center gap-8 lg:grid-cols-[0.86fr_0.88fr] xl:grid-cols-[0.9fr_0.84fr]">
               <div className="z-10 lg:-translate-y-10">
                 <div className="home-reference-badge w-fit">
-                  <ShieldCheck size={15} aria-hidden="true" />
-                  Trusted by 100K+ Users
+                  <Grid2X2 size={15} aria-hidden="true" />
+                  {apps.length} Apps in the Catalogue
                 </div>
                 <h1 className="mt-6 max-w-[39rem] text-balance text-[clamp(2.55rem,4.35vw,3.85rem)] font-extrabold leading-[1.03] tracking-normal text-[var(--foreground)] [font-family:var(--home-font-display)]">
                   Discover. Download. Enjoy the <span className="bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] bg-clip-text text-transparent">Best Apps</span>
                 </h1>
                 <p className="mt-6 max-w-[34rem] text-[1.04rem] font-semibold leading-8 text-[var(--muted-foreground)]">
-                  Curated Android apps with clean APK downloads, verified quality, and a polished AppHub experience.
+                  Browse Android app details and download the APKs that are currently published.
                 </p>
               </div>
 
@@ -158,9 +182,10 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
                         <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                          <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.downloads} downloads</p>
+                          <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">
+                            {app.category}
+                          </p>
                         </div>
-                        <span className="text-[9px] font-semibold text-[var(--foreground)] sm:text-[11px]">{app.rating}</span>
                       </div>
                     ))}
                   </div>
@@ -168,14 +193,14 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
               </div>
 
               <div className="absolute left-0 top-8 w-[140px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-2 sm:top-24 sm:w-[196px] sm:rounded-[22px] sm:p-3.5 lg:left-4">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Trending Apps</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Catalogue Preview</p>
                 <div className="mt-2 space-y-2 sm:mt-3 sm:space-y-3">
                   {apps.slice(0, 2).map((app) => (
                     <div key={app.slug} className="flex items-center gap-2 sm:gap-3">
                       <AppIconSvg app={app} className="h-7 w-7 rounded-[9px] sm:h-9 sm:w-9 sm:rounded-[11px]" />
                       <div className="min-w-0">
                         <p className="truncate text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">{app.name}</p>
-                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.rating} rating</p>
+                        <p className="text-[8px] font-medium text-[var(--muted-foreground)] sm:text-[10px]">{app.category}</p>
                       </div>
                     </div>
                   ))}
@@ -183,70 +208,34 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
               </div>
 
               <div className="absolute right-[-4px] top-9 w-[148px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:top-24 sm:w-[206px] sm:rounded-[22px] sm:p-3 lg:right-14">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Download Statistics</p>
-                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">3.4M+</p>
-                <div className="mt-2 overflow-hidden rounded-[14px] bg-[var(--home-surface)] p-2 sm:mt-2.5 sm:rounded-[16px] sm:p-2.5">
-                  <svg viewBox="0 0 160 62" className="h-[42px] w-full sm:h-[62px]" role="img" aria-label="Download progress chart">
-                    <defs>
-                      <linearGradient id="download-chart-fill" x1="0" y1="0" x2="1" y2="0">
-                        <stop stopColor="#14B8A6" />
-                        <stop offset="1" stopColor="#38BDF8" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="#e4e6f1" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20" fill="none" stroke="url(#download-chart-fill)" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 52 L28 44 L44 48 L62 34 L80 38 L98 24 L116 28 L134 14 L152 20 L152 58 L8 58 Z" fill="#14B8A6" opacity=".12" />
-                    {[62, 98, 134, 152].map((cx, index) => (
-                      <circle key={cx} cx={cx} cy={[34, 24, 14, 20][index]} r="4.2" fill="#fff" stroke="#14B8A6" strokeWidth="3" />
-                    ))}
-                  </svg>
-                </div>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Published APKs</p>
+                <p className="mt-1 text-lg font-bold text-[var(--foreground)] sm:mt-1.5 sm:text-[22px]">
+                  {availableDownloadCount}
+                </p>
+                <p className="mt-1 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[10px]">
+                  {`Available across ${apps.length} listed apps`}
+                </p>
               </div>
 
               <div className="absolute bottom-24 left-1 w-[152px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:left-8 sm:w-[188px] sm:rounded-[22px] sm:p-3 lg:bottom-28 lg:left-14 lg:w-[224px] lg:p-4">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Recently Added</p>
+                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">In the Catalogue</p>
                 <div className="mt-2 flex -space-x-2 sm:mt-3">
                   {apps.slice(0, 5).map((app) => (
                     <AppIconSvg key={app.slug} app={app} className="h-7 w-7 rounded-[9px] ring-2 ring-white sm:h-9 sm:w-9 sm:rounded-[11px] sm:ring-4 lg:h-10 lg:w-10 lg:rounded-[12px]" />
                   ))}
                 </div>
-                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">Fresh APKs reviewed weekly</p>
-              </div>
-
-              <div className="absolute bottom-24 right-1 w-[154px] rounded-[18px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] p-2.5 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:right-8 sm:w-[204px] sm:rounded-[22px] sm:p-3.5 lg:right-12 lg:w-[224px]">
-                <p className="text-[10px] font-semibold text-[var(--muted-foreground)] sm:text-[12px]">Performance Insights</p>
-                <p className="mt-1.5 text-base font-bold text-[var(--foreground)] sm:mt-2 sm:text-xl">99.9% uptime</p>
-                <div className="mt-2 grid gap-1.5 sm:mt-3 sm:gap-2">
-                  {[92, 84, 76].map((value, index) => (
-                    <div key={value} className="flex items-center gap-2">
-                      <span className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--home-border)]">
-                        <span
-                          className="block h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#38BDF8] transition-all duration-300"
-                          style={{ width: `${value}%` }}
-                        />
-                      </span>
-                      <span className="w-6 text-right text-[8px] font-semibold text-[var(--foreground)] sm:w-7 sm:text-[10px]">{["92", "84", "76"][index]}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="absolute left-1/2 top-[142px] -translate-x-1/2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-sm)] backdrop-blur-xl sm:top-12 sm:px-4 sm:py-3">
-                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">Top Rated Apps · 4.7 ★</p>
-              </div>
-
-              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_84%,transparent)] px-3 py-2 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:bottom-7 sm:gap-3 sm:px-4 sm:py-3">
-                <Users size={15} className="text-[var(--primary)] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-                <p className="text-[10px] font-semibold text-[var(--foreground)] sm:text-[12px]">User Activity +28%</p>
+                <p className="mt-2 text-[8px] font-medium text-[var(--muted-foreground)] sm:mt-3 sm:text-[10px] lg:text-[11px]">
+                  {`${apps.length} documented Android apps`}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-[26px] border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-[var(--home-shadow-md)] backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-5">
-            {safetyItems.map((item) => {
+          <div className="relative z-10 mt-5 grid items-stretch gap-4 rounded-lg border border-[var(--home-border)] bg-[color-mix(in_srgb,var(--card)_76%,transparent)] p-4 shadow-md backdrop-blur-xl sm:grid-cols-3">
+            {catalogueFacts.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="home-premium-card min-h-[110px] rounded-[20px] p-4 sm:min-h-[126px] sm:p-5">
+                <div key={item.title} className="home-premium-card min-h-[110px] rounded-lg p-4 sm:min-h-[126px] sm:p-5">
                   <Icon size={28} className="text-[var(--primary)]" aria-hidden="true" />
                   <p className="mt-4 text-[15px] font-semibold text-[var(--foreground)]">{item.title}</p>
                   <p className="mt-1 text-[12px] font-medium leading-5 text-[var(--muted-foreground)]">{item.detail}</p>
@@ -265,18 +254,27 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
             <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">Find apps by workflow and purpose.</p>
           </div>
         </div>
-        <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-6">
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => {
+            const isActive = selectedCategory === category.label;
             return (
-              <div key={category.label} className="home-premium-card group relative min-h-[128px] overflow-hidden rounded-[18px] p-4 text-center lg:min-h-[138px]">
-                <span className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-0 transition group-hover:opacity-100" />
-                <div className={`mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-[16px] bg-gradient-to-br ${category.fill} p-2.5 text-white shadow-[0_12px_22px_rgba(15,23,42,0.14)] transition duration-300 group-hover:scale-105 group-hover:shadow-lg ${category.glow} sm:h-[58px] sm:w-[58px]`}>
+              <button
+                key={category.label}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setSelectedCategory((prev) => (prev === category.label ? null : category.label))}
+                className={`home-premium-card group relative min-h-[128px] overflow-hidden rounded-md p-4 text-center transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[color-mix(in_srgb,var(--primary)_35%,transparent)] lg:min-h-[138px] ${
+                  isActive ? "border-[color-mix(in_srgb,var(--primary)_60%,var(--home-border))] bg-[color-mix(in_srgb,var(--primary)_8%,transparent)]" : ""
+                }`}
+              >
+                <span className={`absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent transition ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+                <div className="mx-auto flex h-[54px] w-[54px] items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary p-2.5 text-primary-foreground shadow-sm transition duration-300 group-hover:scale-105 group-hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none sm:h-[58px] sm:w-[58px]">
                   <CategorySvgIcon type={category.icon} />
                 </div>
                 <p className="mt-3 text-[14px] font-semibold text-[var(--foreground)]">{category.label}</p>
                 <p className="mt-1 text-xs font-semibold text-[var(--muted-foreground)]">{category.count}</p>
-                <span className="mx-auto mt-2.5 block h-1 w-7 rounded-full bg-[var(--primary)] opacity-0 transition duration-300 group-hover:w-10 group-hover:opacity-100" />
-              </div>
+                <span className={`mx-auto mt-2.5 block h-1 rounded-full bg-[var(--primary)] transition duration-300 ${isActive ? "w-10 opacity-100" : "w-7 opacity-0 group-hover:w-10 group-hover:opacity-100"}`} />
+              </button>
             );
           })}
         </div>
@@ -285,13 +283,12 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
       <section id="featured-apps" className="mx-auto max-w-[1384px] scroll-mt-24 px-4 pb-10 pt-2 sm:px-6 lg:px-8 lg:pb-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            {/* One section, not two: "Featured" and "All Apps" rendered the
-                identical list, so "handpicked" described the whole catalogue.
-                Until there is a real featured flag, there is one honest list. */}
             <h2 className="text-[22px] font-semibold leading-[1.3] text-[var(--foreground)] [font-family:var(--home-font-display)]">All Apps</h2>
             <p className="mt-1 text-[13px] font-normal leading-[1.6] text-[var(--muted-foreground)]">
               {normalizedQuery
                 ? `Search results for "${searchQuery}"`
+                : selectedCategory
+                ? `Showing ${selectedCategory} apps`
                 : "Every Android app in the AppHub catalogue."}
             </p>
           </div>
@@ -310,9 +307,6 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
           </div>
         )}
       </section>
-
-
-
     </main>
   );
 }

@@ -4,6 +4,7 @@ import Link from 'next/link';
 const ArticleCard = ({ id = 1, image, title, author, plays }) => {
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef(null);
+  const metadata = [author, plays].filter(Boolean);
 
   const getShareUrl = () => {
     if (typeof window === 'undefined') return '';
@@ -94,9 +95,16 @@ const ArticleCard = ({ id = 1, image, title, author, plays }) => {
         <h3 className="text-sm font-medium mb-2 leading-tight" style={{ color: 'var(--foreground)' }}>
           {title}
         </h3>
-        <p className="text-xs font-normal" style={{ color: 'var(--muted-foreground)' }}>
-          {author} <span className="mx-1">·</span> {plays}
-        </p>
+        {metadata.length > 0 && (
+          <p className="text-xs font-normal" style={{ color: 'var(--muted-foreground)' }}>
+            {metadata.map((item, index) => (
+              <span key={`${item}-${index}`}>
+                {index > 0 && <span className="mx-1">·</span>}
+                {item}
+              </span>
+            ))}
+          </p>
+        )}
       </div>
     </Link>
   );

@@ -12,6 +12,7 @@ import {
   getBlogTopicClusters,
 } from "@/app/blogs/data";
 import { fetchFirebaseBlogsPage } from "@/app/blogs/data/firebaseBlogs";
+import { shouldNoindexBlogPost } from "@/app/blogs/utils/blogIndexPolicy";
 import buySmartStores from "@/app/buysmart/data/stores.json";
 import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
@@ -73,6 +74,11 @@ import {
 } from "@/app/tradeon/lib/format";
 
 export const revalidate = 3600;
+
+// These registry entries redirect to /bops/housing-services#<slug>. Keep the
+// guides available to the dashboard, but never advertise redirecting URLs in
+// the sitemap.
+const HN_REDIRECTED_GUIDE_SLUGS = new Set(["bathroom", "hvac"]);
 
 const staticRoutes = [
   { path: "/", priority: 1 },
@@ -193,8 +199,8 @@ const staticRoutes = [
   { path: "/bops/tripfindbox/site-map", priority: 0.4 },
 
   // --- Housing Needs ---
-  // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs.
-  // Publish only the canonical Business Ops hub here.
+  // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs. The
+  // canonical guides are added from HN_CATEGORIES below, excluding redirects.
   { path: "/bops/housingneeds", priority: 0.72 },
   { path: "/siding", priority: 0.55 },
 ];
@@ -426,6 +432,7 @@ async function buildSitemapEntries({
     for (const page of category.pages.filter((item) =>
       item.tags?.includes("Guide"),
     )) {
+      if (HN_REDIRECTED_GUIDE_SLUGS.has(page.slug)) continue;
       pushUnique(entries, seen, page.href, {
         priority: 0.8,
         changeFrequency: "monthly",
@@ -573,6 +580,7 @@ async function buildSitemapEntries({
   }
 
   for (const blog of getAllBlogs()) {
+    if (shouldNoindexBlogPost(blog.slug)) continue;
     pushUnique(entries, seen, `/blogs/${blog.slug}`, {
       lastModified: blog.date ? new Date(blog.date) : undefined,
       priority: 0.7,
@@ -582,7 +590,7 @@ async function buildSitemapEntries({
   }
 
   for (const blog of liveCollections.firebaseBlogs) {
-    if (blog?.slug) {
+    if (blog?.slug && !shouldNoindexBlogPost(blog.slug)) {
       pushUnique(entries, seen, `/blogs/${blog.slug}`, {
         lastModified:
           blog.updatedAt || blog.date
@@ -829,15 +837,27 @@ async function buildSitemapEntries({
   }
 
   for (const category of wattpadCategories) {
-    if (category?.slug) {
-      pushUnique(entries, seen, `/wattpad/category/${category.slug}`, {
-        lastModified: category.createdAt
-          ? new Date(category.createdAt)
-          : undefined,
-        priority: 0.54,
-        changeFrequency: "monthly",
-      });
-    }
+    if (!category?.slug) continue;
+
+    const categoryBookIds = new Set(
+      wattpadBooks
+        .filter((book) => book.categoryId === category.id)
+        .map((book) => book.id),
+    );
+    const categoryHasChapters = wattpadChapters.some((chapter) =>
+      categoryBookIds.has(chapter.bookId),
+    );
+    // Category metadata applies the same gate. Empty catalogue pages remain
+    // reachable from the visual browser, but noindexed pages are not submitted.
+    if (!categoryHasChapters) continue;
+
+    pushUnique(entries, seen, `/wattpad/category/${category.slug}`, {
+      lastModified: category.createdAt
+        ? new Date(category.createdAt)
+        : undefined,
+      priority: 0.54,
+      changeFrequency: "monthly",
+    });
   }
 
   for (const book of wattpadBooks) {

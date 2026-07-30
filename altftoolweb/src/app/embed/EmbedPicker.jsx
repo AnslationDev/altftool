@@ -3,7 +3,10 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import EmbedCodeCopy from "./EmbedCodeCopy";
-import { EMBED_SNIPPET_VARIANTS } from "./embedSnippet";
+import {
+  EMBED_SNIPPET_VARIANTS,
+  embedNaturalSize,
+} from "./embedSnippet";
 
 /**
  * Interactive widget chooser for the /embed hub: search + category filter,
@@ -75,6 +78,7 @@ export default function EmbedPicker({
   const variant =
     EMBED_SNIPPET_VARIANTS.find((item) => item.id === variantId) || EMBED_SNIPPET_VARIANTS[0];
   const snippet = active ? variant.build(baseUrl, active.id, active.name) : "";
+  const activeSize = active ? embedNaturalSize(active.id) : null;
 
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -164,8 +168,13 @@ export default function EmbedPicker({
           <iframe
             src={`/embed/widget/${active.id}`}
             title={`${active.name} widget preview`}
-            className="h-[420px] w-full rounded-[12px] border border-(--border) bg-(--surface)"
+            className="h-[var(--embed-narrow-height)] w-full rounded-[12px] border border-(--border) bg-(--surface) sm:h-[var(--embed-height)]"
             loading="lazy"
+            scrolling="yes"
+            style={{
+              "--embed-height": `${activeSize.height}px`,
+              "--embed-narrow-height": `${activeSize.narrowHeight}px`,
+            }}
           />
           <div>
             <h3 className="text-sm font-semibold text-(--foreground)">Embed code</h3>
@@ -210,8 +219,8 @@ export default function EmbedPicker({
               label={`Copy ${variant.language.toLowerCase()}`}
             />
             <p className="text-xs leading-5 text-(--muted-foreground)">
-              Keep the &ldquo;Widget by AltFTool&rdquo; credit link exactly as it comes — a plain,
-              followable link. That credit is the price of the widget.
+              Keep the &ldquo;Widget by AltFTool&rdquo; credit visible so visitors
+              can identify the widget&rsquo;s source.
             </p>
           </div>
         </div>

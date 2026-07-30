@@ -614,7 +614,6 @@ export function createBookJsonLd({ book, path } = {}) {
   if (!book?.title || !path) return null;
 
   const url = absoluteUrl(path);
-  const price = Number(book.price || 0);
 
   return compactJsonLdObject({
     "@context": "https://schema.org",
@@ -630,17 +629,17 @@ export function createBookJsonLd({ book, path } = {}) {
     // `categoryId` ("cat_romance") is likewise an id, not a genre.
     genre: (book.tags || []).filter(Boolean),
     inLanguage: book.language || "English",
-    numberOfPages: Number(book.meta?.pages || 0) || undefined,
-    datePublished: book.createdAt || undefined,
-    isAccessibleForFree: Boolean(book.isFree || price === 0),
-    // No aggregateRating and no offers.
+    // No aggregateRating, offers, isAccessibleForFree, numberOfPages or
+    // datePublished claim.
     //
     // books.json is seed data: all eight titles carry ratings between 4.3 and
     // 4.8 and round review counts, there is no review mechanism anywhere in the
     // app to produce them, and no purchase flow to honour the price. The one
     // indexable title advertises 25 chapters and has two. Marking that up as
     // AggregateRating is fake review markup, which Google penalises directly,
-    // and an InStock Offer describes a transaction that cannot happen.
+    // and an InStock Offer or paid/free assertion describes a transaction that
+    // cannot happen. The page counts and publication dates are seed values too:
+    // they are not derived from the two chapters that actually exist.
     //
     // If real ratings and a real checkout arrive, restore both nodes from the
     // live values — not from this file.

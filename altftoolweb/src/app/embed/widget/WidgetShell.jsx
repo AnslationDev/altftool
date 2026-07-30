@@ -39,11 +39,10 @@ export default function WidgetShell({ id, theme, children }) {
         <p className="text-xs text-(--muted-foreground)">
           {name} widget by{" "}
           {/*
-            The credit link back to our own page. `rel="noopener"` is a
-            window-handle guard only — it is NOT a link-relationship hint.
-            Never add nofollow/sponsored/ugc here: this is a link to our own
-            property, not a paid placement, and it is the point of the embed
-            programme.
+            This link lives on an AltFTool iframe document and points to the
+            widget's own AltFTool page, so it is an internal product link. The
+            separate credit line injected into a publisher's page is qualified
+            with nofollow in embedSnippet.js.
           */}
           <a
             href={attributionUrl}

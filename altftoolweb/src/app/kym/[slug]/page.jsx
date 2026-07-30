@@ -13,8 +13,9 @@ const CUSTOM_PAGES = {
     component: KymArticlePage,
   },
   "meme-of-the-month-may-2026": {
-    title: "May 2026 Meme Of The Month Poll",
-    description: "Vote for May 2026's meme of the month.",
+    title: "May 2026 Meme Of The Month — Local Pick",
+    description:
+      "Choose a May 2026 meme of the month and save the pick locally in your browser.",
     component: KymPollPage,
   },
 };

@@ -12,11 +12,10 @@
 // section for the grammar. A bare slug still means a /tools/all tool, so the
 // markup produced for the widgets that existed at launch is unchanged.
 //
-// ⚠️ The "Widget by AltFTool" credit link is the entire deal of the embed
-// programme — it is a link to our own property, not a paid or sponsored
-// placement, so it MUST stay a normal followable link. Never add
-// rel="nofollow" / rel="sponsored" / rel="ugc" to it, and never build a
-// variant that drops it.
+// The visible "Widget by AltFTool" credit is part of every HTML variant. It is
+// qualified with `nofollow` because publishers did not editorially place that
+// backlink; the attribution remains visible without turning a distributed
+// widget into a ranking-link programme.
 
 /** Natural iframe box, in CSS pixels. Consumers may shrink it, not grow it. */
 export const EMBED_DEFAULT_WIDTH = 600;
@@ -166,11 +165,11 @@ function iframeTitle(name) {
   return `${String(name || "AltFTool widget")} — free AltFTool widget`;
 }
 
-/** The credit line. Deliberately has no `rel` — see the file header. */
+/** Visible, qualified attribution rendered on the publisher's own page. */
 function creditLine(baseUrl, slug, { margin = "4px 0 0" } = {}) {
   return `<p style="font-size:12px;margin:${margin}">Widget by <a href="${attr(
     buildAttributionUrl(baseUrl, slug),
-  )}">AltFTool — free online tools</a></p>`;
+  )}" rel="nofollow">AltFTool — free online tools</a></p>`;
 }
 
 /**
@@ -195,8 +194,8 @@ export function buildSnippet(baseUrl, slug, name = "AltFTool widget") {
   return [
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px"`,
+    `  loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("\n");
 }
@@ -213,7 +212,7 @@ export function buildResponsiveSnippet(baseUrl, slug, name = "AltFTool widget") 
     `  <iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `    title="${attr(iframeTitle(name))}"`,
     `    style="display:block;width:100%;height:${height}px;border:0;border-radius:12px"`,
-    `    loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `    loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     `  ${creditLine(baseUrl, slug)}`,
     `</div>`,
     `<style>@media (max-width:${EMBED_NARROW_BREAKPOINT}px){.altftool-embed iframe{height:${narrowHeight}px}}</style>`,
@@ -230,8 +229,8 @@ export function buildWordPressSnippet(baseUrl, slug, name = "AltFTool widget") {
     `<!-- wp:html -->`,
     `<iframe src="${attr(buildWidgetUrl(baseUrl, slug))}"`,
     `  title="${attr(iframeTitle(name))}"`,
-    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px;overflow:hidden"`,
-    `  loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    `  width="100%" height="${embedNaturalSize(slug).height}" style="border:0;border-radius:12px"`,
+    `  loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
     `<!-- /wp:html -->`,
   ].join("\n");
@@ -256,7 +255,7 @@ export function buildOEmbedHtml(
     ` title="${attr(iframeTitle(name))}"`,
     ` width="${width}" height="${height}"`,
     ` style="border:0;border-radius:12px;max-width:100%"`,
-    ` loading="lazy" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
+    ` loading="lazy" scrolling="yes" referrerpolicy="no-referrer-when-downgrade" ${IFRAME_ALLOW}></iframe>`,
     creditLine(baseUrl, slug),
   ].join("");
 }
