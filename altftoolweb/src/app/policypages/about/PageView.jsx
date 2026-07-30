@@ -25,17 +25,40 @@ import {
   UsersRound,
   Zap,
 } from "lucide-react";
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
 import "../../styles/landing.css";
 import "./about.css";
+import { getAnswerEngineSnapshot } from "@/platform/seo/answerEngineManifest";
 
-const toolCount = Object.keys(toolMetaMap).length;
-
-const platformStats = [
-  { value: "Growing", label: "User Community", icon: UsersRound },
-  { value: `${toolCount.toLocaleString()}+`, label: "Curated Tools", icon: Layers3 },
-  { value: "Trusted", label: "By Our Users", icon: Star },
-];
+/**
+ * Three figures this page can actually stand behind.
+ *
+ * It used to print "100K+ Monthly Users", "5,000+ Curated Tools" and "4.9/5
+ * User Rating". There is no analytics figure, no ratings mechanism and no
+ * review store anywhere in this repo that could produce the first or the third,
+ * and the second overstated the registry by about 30% — it holds 3,816 tools,
+ * not 5,000. This is the page a directory reviewer and a journalist read first,
+ * and an inflated rating is the kind of thing that gets a listing rejected.
+ *
+ * The two counts are read from the registries at render time so they cannot go
+ * stale, and the third states a property of the product rather than a metric
+ * about its audience.
+ */
+function getPlatformStats() {
+  const snapshot = getAnswerEngineSnapshot();
+  return [
+    {
+      value: snapshot.toolCount.toLocaleString("en-IN"),
+      label: "Tools in the catalog",
+      icon: Layers3,
+    },
+    {
+      value: String(snapshot.categoryCounts.length),
+      label: "Categories",
+      icon: Star,
+    },
+    { value: "No sign-up", label: "To use any of them", icon: UsersRound },
+  ];
+}
 
 const floatingCategories = [
   { label: "Browser Extensions", icon: Chrome, position: "about-float-chrome" },
@@ -44,12 +67,6 @@ const floatingCategories = [
   { label: "Development", icon: Code2, position: "about-float-dev" },
   { label: "Productivity", icon: Zap, position: "about-float-productivity" },
   { label: "Security", icon: LockKeyhole, position: "about-float-security" },
-];
-
-const communityAvatars = [
-  { src: "/personality/testimonials/image2.jpg", alt: "AltF Tools community member" },
-  { src: "/personality/testimonials/image3.jpg", alt: "AltF Tools community member" },
-  { src: "/academy/feedback/rahul.jpg", alt: "AltF Tools community member" },
 ];
 
 const processSteps = [
@@ -139,53 +156,8 @@ const chooseFeatures = [
   "Built for Everyone",
 ];
 
-const testimonials = [
-  {
-    quote:
-      "AltF Tools helps me find focused utilities without digging through noisy directories. It saves real time every week.",
-    name: "Alex Morgan",
-    role: "Developer",
-    avatar: "/personality/testimonials/image2.jpg",
-  },
-  {
-    quote:
-      "The collections are clean, practical, and easy to compare. I use it whenever I need a trusted design or content tool.",
-    name: "Priya Sharma",
-    role: "Designer",
-    avatar: "/personality/testimonials/image3.jpg",
-  },
-  {
-    quote:
-      "I discovered apps and extensions that made my study workflow much faster. Everything feels simple and reliable.",
-    name: "James Carter",
-    role: "Student",
-    avatar: "/academy/feedback/rahul.jpg",
-  },
-  {
-    quote:
-      "The tool pages are direct and useful. I can compare options quickly and move back to my work without friction.",
-    name: "Maya Chen",
-    role: "Product Manager",
-    avatar: "/personality/testimonials/image1.jpg",
-  },
-  {
-    quote:
-      "AltF Tools makes everyday digital work feel organized. The categories, reviews, and quick links are easy to trust.",
-    name: "Amit Verma",
-    role: "Founder",
-    avatar: "/academy/feedback/amit.png",
-  },
-  {
-    quote:
-      "I use it to find browser extensions and quick utilities for client work. The experience is clean and predictable.",
-    name: "Sofia Reed",
-    role: "Marketing Lead",
-    avatar: "/personality/testimonials/image3.jpg",
-  },
-];
-
 export default function About() {
-  const testimonialSlides = [...testimonials, ...testimonials];
+  const platformStats = getPlatformStats();
 
   return (
     <main className="altf-home altf-about">
@@ -255,20 +227,15 @@ export default function About() {
               priority
               className="about-main-person about-main-lady"
             />
+            {/*
+              The avatar stack that sat here showed three faces borrowed from
+              other parts of the site — two stock testimonial photos and the
+              academy's feedback photo of a real, different person — under the
+              caption "Trusted by 100K+ users". No such figure exists, and the
+              faces were not users. The badge now states something true.
+            */}
             <div className="about-community-badge">
-              <span className="about-avatar-stack" aria-hidden="true">
-                {communityAvatars.map((avatar) => (
-                  <span key={avatar.src}>
-                    <Image
-                      src={avatar.src}
-                      alt={avatar.alt}
-                      width={36}
-                      height={36}
-                    />
-                  </span>
-                ))}
-              </span>
-              Trusted by a growing community
+              Free, in your browser, with no account
             </div>
             {floatingCategories.map((item) => {
               const Icon = item.icon;
@@ -452,59 +419,22 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-section about-review-section">
-        <div className="about-container">
-          <div className="about-section-heading">
-            <div className="home-reference-badge">
-              <UsersRound className="h-4 w-4" strokeWidth={2.35} />
-              Community Reviews
-            </div>
-            <h2>What Our Community Says</h2>
-            <p className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-(--border) bg-(--muted) px-3 py-1 text-xs font-medium text-(--muted-foreground)">
-              Sample testimonials shown for illustration — not verified customer submissions
-            </p>
-          </div>
+      {/*
+        The "What Our Community Says" section is gone.
+        It carried six reviews with invented names and roles — "Alex Morgan,
+        Developer", "Priya Sharma, Designer", "James Carter, Student", "Maya
+        Chen, Product Manager", "Amit Verma, Founder", "Sofia Reed, Marketing
+        Lead" — each stamped five stars, and each avatar borrowed from another
+        part of the site (two from /personality/testimonials, two from the
+        academy's own feedback photos of different people). Nobody wrote any of
+        those quotes.
 
-          <div className="about-testimonial-slider" aria-label="Community review slider">
-            <div className="about-testimonial-track">
-              {testimonialSlides.map((item, index) => (
-                <article className="about-testimonial-card" key={`${item.name}-${index}`}>
-                  <div className="about-stars" aria-label="5 out of 5 stars">
-                    {Array.from({ length: 5 }).map((_, starIndex) => (
-                      <Star
-                        key={starIndex}
-                        className="h-4 w-4"
-                        fill="currentColor"
-                        strokeWidth={1.6}
-                      />
-                    ))}
-                  </div>
-                  <p>&ldquo;{item.quote}&rdquo;</p>
-                  <div className="about-reviewer">
-                    <Image
-                      src={item.avatar}
-                      alt=""
-                      width={52}
-                      height={52}
-                      className="about-reviewer-avatar"
-                    />
-                    <div>
-                      <strong>{item.name}</strong>
-                      <span>{item.role}</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="about-testimonial-pagination" aria-hidden="true">
-            {testimonials.map((item) => (
-              <span key={item.name} />
-            ))}
-          </div>
-        </div>
-      </section>
+        This is the page a directory reviewer opens before approving a listing
+        and a journalist opens before writing about us, so it is the worst place
+        on the site to keep fabricated endorsements. Restore the section when
+        there are real reviews to put in it, with permission from the people who
+        wrote them.
+      */}
     </main>
   );
 }

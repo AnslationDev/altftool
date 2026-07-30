@@ -33,7 +33,7 @@
 | SaaSHub submission is free, needs competitors listed, domain-email verification speeds review | **Verified** |
 | Uneed accepts submissions with no account to start | **Verified** |
 | Peerlist Launchpad | **Could not verify** — returns HTTP 403 to automated fetch; open in a normal browser |
-| `altftool.com/embed` is live in production | **Verified live** (251 widgets shown at fetch time). Note: the research agents saw a 404 earlier the same day, so this deployed mid-research. Their "deploy before pitching" warnings are now satisfied — but confirm the deployed build matches your latest code |
+| `altftool.com/embed` is live in production | **Verified live**, though the figure shown then (251) matches neither the code nor a later count — re-check against the deployed build. Note: the research agents saw a 404 earlier the same day, so this deployed mid-research. Their "deploy before pitching" warnings are now satisfied — but confirm the deployed build matches your latest code |
 | `/patatap` still ships the original project's name | **Verified** — see blocker below |
 
 ## Blockers to clear before promoting (ranked)
@@ -155,7 +155,7 @@ DO NOT MENTION /embed IN THE LISTING YET: https://altftool.com/embed returns "Pa
 #### ✅ Calculator.net on AlternativeTo (2 likes, only 19 alternatives)
 - **URL:** https://alternativeto.net/software/calculator-net/
 - **Status (2026-07-25):** verified-live
-- **Priority:** P1 — easiest page to dominate; calculators are also one of AltFTool's 197 embeddable widget categories, compounding the funnel
+- **Priority:** P1 — easiest page to dominate; calculators are also one of AltFTool's 1,436 embeddable widgets, compounding the funnel
 - **Requirements:** AltFTool app page approved first. Note: standalone 'calculators' are on the ban list, so again: platform listing, calculator suite in features.
 - **Fit:** AltFTool asset: https://altftool.com/altfcalculators (verified: 'Free Online Calculators — Finance, Health, Math & More'). Softest target of all eight: 19 alternatives, top entries have single-digit likes, and existing entries (CalcHub, SD6Tools, Purple Peak) are exactly AltFTool-style calculator collections — 2-3 likes makes AltFTool the #1 listed alternative.
 
@@ -257,7 +257,7 @@ STRATEGY CALL — launch the PLATFORM first, not a single tool: 2026 benchmarks 
 - **Status (2026-07-25):** dead
 - **Priority:** P2 — blocked until deployed
 - **Requirements:** BLOCKER: production returns an 'AltFTool is preparing this route' placeholder today (2026-07-25). The route exists locally at altftoolweb/src/app/embed but prod deploys from the AltFTool org Amplify repos — deploy first, launch 4-8 weeks after launch #1.
-- **Fit:** 197 embeddable calculators/converters is a genuinely distinct second launch ('significant iteration' per PH rules) aimed at webmasters/marketers, and every embed carries an attribution backlink — the compounding-backlink play
+- **Fit:** 1,436 embeddable widgets is a genuinely distinct second launch ('significant iteration' per PH rules) aimed at webmasters/marketers, and every embed carries an attribution backlink — the compounding-backlink play
 
 #### ✅ 10015 Tools on Product Hunt (comparable: all-in-one free toolbox)
 - **URL:** https://www.producthunt.com/products/10015-tools
@@ -302,7 +302,7 @@ Alt tagline (58/60 chars):
 Every tool you google for, free and private, in one place.
 
 DESCRIPTION (242/260 chars — fits both the 260 form limit and the 500 guide limit)
-AltFTool is 1,100+ free browser tools — PDF, image, converters, calculators, dev & security utilities — plus 197 embeddable widgets and 41 games. No accounts, no uploads: files are processed client-side and never leave your device. 100% free.
+AltFTool is 1,100+ free browser tools — PDF, image, converters, calculators, dev & security utilities — plus 1,436 embeddable widgets and 41 games. No accounts, no uploads: files are processed client-side and never leave your device. 100% free.
 
 TOPIC SUGGESTIONS (pick 3 — PH allows up to 3 launch tags)
 1. Productivity  (use)
@@ -325,7 +325,7 @@ Three rules I refuse to break:
 2. No signup. You should not need an account to resize an image.
 3. Client-side first. Wherever technically possible, processing happens in YOUR browser — your files never touch our servers. Close the tab and nothing of yours exists anywhere.
 
-There's also an embed program: 197 calculators and converters you can drop into your own site with one iframe snippet, free.
+There's also an embed program: 1,436 calculators, converters and exam-photo resizers you can drop into your own site with one iframe snippet, free.
 
 I'd genuinely love feedback: which tool category should we go deeper on next, and did any tool feel slower or clunkier than the site you currently use for it? Brutal honesty welcome. I'll be here all day answering everything.
 ---
@@ -341,10 +341,10 @@ PRODUCT NAME
 AltFTool Embed
 
 TAGLINE (57/60 chars)
-197 free calculators & widgets you can embed in one iframe
+1,400+ free calculators & widgets you can embed in one iframe
 
 DESCRIPTION (238/260 chars)
-Drop any of 197 calculators and converters into your site with a copy-paste iframe — mortgage, BMI, unit, currency, date and more. Themeable, responsive, loads fast, works everywhere. Free forever, no API keys, no rate limits, no branding fees.
+Drop any of 1,400+ calculators and converters into your site with a copy-paste iframe — mortgage, BMI, unit, currency, date and more. Themeable, responsive, loads fast, works everywhere. Free forever, no API keys, no rate limits, no branding fees.
 
 TOPICS: Marketing, Developer Tools, No-Code (alternates: SEO, Web App)
 
@@ -532,7 +532,7 @@ One-liner: 1,100+ free browser tools - PDF, images, converters, calculators, dev
 
 ### Rules, timing and pitfalls
 
-RULES AND PITFALLS FOR THIS CHANNEL: (1) Personalize or die — the {ONE_SPECIFIC_COMPLIMENT} field must reference something actually in their article (a criterion, a quote, a ranking choice); listicle authors delete template blasts on sight. Every target row above includes the author name and tool list to personalize from. (2) Verify before you claim — Template 2 requires a real, checkable change to the listed tool (Sejda's 3-tasks/day cap, TinyPNG's 5MB/20-image limits, remove.bg's credit system, and Smallpdf/iLovePDF server uploads are all currently true and documented in these very articles — use those). Never invent a change. (3) URL discipline — only the URLs in the verified list are live on production today; /embed (197 widgets) and bare-slug tools like /percentage-calculator 404 on prod even though they exist in the dev repo. Re-verify before sending, and re-pitch the widget/embed angle only after /embed deploys — embeds are this channel's best follow-up offer ('embed our calculator in your article, free'). (4) The network-tab proof ('watch the network tab stay silent') is this channel's killer move — it converts the privacy claim from marketing into something an editor can verify in 30 seconds; keep it in every pitch. (5) Cadence: send Tue-Thu morning in the target's timezone; one follow-up after 5-7 days, max two total; dev.to comments and AlternativeTo submissions have no cadence limits but require accounts (site owner action — research here was read-only, nothing was submitted). (6) Vendor-owned listicles (ShortPixel, Jotform, howtoconvert, Pickrack, StudioLimb, kordu) list competitors freely but may balk at a full-suite rival — pitch a single tool, not the platform. (7) Gap found: calculator roundups barely exist (the only dedicated one is dead, HTTP 410) while /altfcalculators has 103 live tools — a 'best free online calculators' asset on AltFTool's own blog could rank with little competition and become the thing others cite. (8) TechRadar/MakeUseOf are P3 lottery tickets — send once, don't chase; the P1s (PC Tech Magazine, howtoconvert, Guideflow, dev.to authors, AlternativeTo) are where replies will actually come from. (9) Status caveat: theintelligence.com blocked automated fetch (403) — open manually before emailing; graphcalcx.com is confirmed dead (410) — do not contact.
+RULES AND PITFALLS FOR THIS CHANNEL: (1) Personalize or die — the {ONE_SPECIFIC_COMPLIMENT} field must reference something actually in their article (a criterion, a quote, a ranking choice); listicle authors delete template blasts on sight. Every target row above includes the author name and tool list to personalize from. (2) Verify before you claim — Template 2 requires a real, checkable change to the listed tool (Sejda's 3-tasks/day cap, TinyPNG's 5MB/20-image limits, remove.bg's credit system, and Smallpdf/iLovePDF server uploads are all currently true and documented in these very articles — use those). Never invent a change. (3) URL discipline — only the URLs in the verified list are live on production today; /embed (1,436 widgets) and bare-slug tools like /percentage-calculator 404 on prod even though they exist in the dev repo. Re-verify before sending, and re-pitch the widget/embed angle only after /embed deploys — embeds are this channel's best follow-up offer ('embed our calculator in your article, free'). (4) The network-tab proof ('watch the network tab stay silent') is this channel's killer move — it converts the privacy claim from marketing into something an editor can verify in 30 seconds; keep it in every pitch. (5) Cadence: send Tue-Thu morning in the target's timezone; one follow-up after 5-7 days, max two total; dev.to comments and AlternativeTo submissions have no cadence limits but require accounts (site owner action — research here was read-only, nothing was submitted). (6) Vendor-owned listicles (ShortPixel, Jotform, howtoconvert, Pickrack, StudioLimb, kordu) list competitors freely but may balk at a full-suite rival — pitch a single tool, not the platform. (7) Gap found: calculator roundups barely exist (the only dedicated one is dead, HTTP 410) while /altfcalculators has 103 live tools — a 'best free online calculators' asset on AltFTool's own blog could rank with little competition and become the thing others cite. (8) TechRadar/MakeUseOf are P3 lottery tickets — send once, don't chase; the P1s (PC Tech Magazine, howtoconvert, Guideflow, dev.to authors, AlternativeTo) are where replies will actually come from. (9) Status caveat: theintelligence.com blocked automated fetch (403) — open manually before emailing; graphcalcx.com is confirmed dead (410) — do not contact.
 
 ### Targets
 
@@ -796,7 +796,7 @@ Suggest as alternative to: iLovePDF, Smallpdf, PDF24, Sejda
 
 BLOCKER (do this first): the embed system is NOT live in production. As of 2026-07-25, https://www.altftool.com/embed, /embed/widget/sip-calculator, and /embed/widget/loan-emi-calculator all return 404, while canonical tool pages (e.g. /tools/all/sip-calculator) load fine. The embed routes exist only in the dev monorepo (altftoolweb/src/app/embed/*). Per project memory, prod deploys from the AltFTool org Amplify repos — push the embed system there and verify /embed/widget/mortgage-calculator loads before sending a single email, or every pitch link 404s and the channel is burned.
 
-REGISTRY GAPS found by running the actual allowlist logic (altftoolweb/src/app/embed/embedRegistry.js: EMBEDDABLE_CATEGORIES = Calculators, Finance Calculators, Health Calculators, Converters; 197 tools match today):
+REGISTRY GAPS found by running the actual allowlist logic (altftoolweb/src/app/embed/embedRegistry.js: EMBEDDABLE_CATEGORIES = Calculators, Finance Calculators, Health Calculators, Converters; 1,360 tools match today):
 1. loan-emi-calculator — category "Business" only → NOT embeddable, despite being the single most pitchable widget for the India EMI niche. Fix: add "Finance Calculators" to its category array in src/platform/registry/toolMetaMap.js (line ~6914).
 2. bmi-calculator (line ~1400), calorie-calculator (~1831), calorie-tdee-calculator (~1851), calorie-deficit-calculator, calorie-burn-calculator — all category "Health & Fitness" → NOT embeddable; the "Health Calculators" allowlist category currently matches ~zero relevant tools. Fix: add "Health Calculators" to those tools' categories. Until then, Template 2 and all 5 health targets are on hold.
 Verified-embeddable slugs used in this plan (confirmed against the registry): mortgage-calculator, mortgage-affordability-calculator, loan-prepayment-calculator, loan-prepayment-analyzer, loan-prepayment-savings, loan-comparison-tool, sip-calculator, step-up-sip-calculator, compound-interest-calculator, fd-rd-maturity-calculator, income-tax-calculator, car-loan-calculator, simple-interest-calculator, retirement-corpus-calculator.
@@ -940,7 +940,7 @@ We built a free embeddable version of exactly this calculator at AltFTool. It ru
 <p style="font-size:12px;margin:4px 0 0">Widget by <a href="https://www.altftool.com/tools/all/mortgage-calculator?utm_source=embed&utm_medium=widget">AltFTool — free online tools</a></p>
 
 Live preview: https://www.altftool.com/embed/widget/mortgage-calculator
-Full widget catalog (197 calculators/converters): https://www.altftool.com/embed
+Full widget catalog (1,436 widgets): https://www.altftool.com/embed
 
 The only thing we ask is that the small "Widget by AltFTool" attribution line under the widget stays visible. No cost, no tracking scripts, no branding takeover — the widget inherits a neutral look and supports light and dark themes.
 
@@ -1017,7 +1017,7 @@ VERIFICATION CAVEATS: reddit.com (www/old/api) is blocked for both WebFetch and 
 - **Status (2026-07-25):** verified-live
 - **Priority:** P1 — biggest single-day traffic + high-authority backlink upside; rules verified today and AltFTool qualifies (try without signup)
 - **Requirements:** Free HN account; no karma minimum to submit. Title MUST start with 'Show HN:'. Must be something people can try immediately without barriers/signup (verified: AltFTool tools need no signup). Submit URL + optional text. No voting rings ('Don't solicit upvotes'), no delete-and-repost. Blog posts/waitlists ineligible. New green accounts draw scrutiny — ideally use an account with some comment history.
-- **Fit:** PRIMARY: the /embed widget system (197 client-side calculator/converter widgets, original infrastructure, concrete technical story HN likes). BLOCKER VERIFIED TODAY: https://altftool.com/embed returns 404 ('preparing this route') — the embed system is in the repo but NOT deployed to prod. Deploy first, or use the fallback platform post. FALLBACK: the platform itself with the privacy/client-side angle. Do NOT Show HN the clone experiences (Patatap/Radio Garden clones) — HN reliably calls out tributes, and /patatap literally uses the original's name.
+- **Fit:** PRIMARY: the /embed widget system (1,436 client-side widgets, original infrastructure, concrete technical story HN likes). BLOCKER VERIFIED TODAY: https://altftool.com/embed returns 404 ('preparing this route') — the embed system is in the repo but NOT deployed to prod. Deploy first, or use the fallback platform post. FALLBACK: the platform itself with the privacy/client-side angle. Show HN caution: /radio-garden and /geektyper still carry the originals' names in their slugs, and HN reliably calls out tributes. /patatap's title and keywords were corrected to KeyCanvas on 2026-07-30, so the page itself no longer uses another artist's work name — the slug does.
 
 #### ⚠️ r/SideProject
 - **URL:** https://www.reddit.com/r/SideProject/
@@ -1281,7 +1281,7 @@ RULES & PITFALLS: (1) Speed wins — HARO/SOS digests are answered by hundreds; 
 
 ```text
 === FOUNDER BIO (2 lines — paste into every profile/pitch signature) ===
-Nikhil Sahu is the founder of AltFTool (https://altftool.com), a free platform of 1,124 browser-based tools — PDF, image, converters, calculators, developer and security utilities — plus 197 embeddable widgets and 41 games. Everything runs client-side with no signup, so files and data never leave the user's browser.
+Nikhil Sahu is the founder of AltFTool (https://altftool.com), a free platform of 1,124 browser-based tools — PDF, image, converters, calculators, developer and security utilities — plus 1,436 embeddable widgets and 41 games. Everything runs client-side with no signup, so files and data never leave the user's browser.
 
 (Contact: admin@altftool.com — use this address for all platform signups so replies stay in one inbox.)
 
@@ -1330,7 +1330,7 @@ productivity tools, free software, online privacy, data security, password, PDF,
 
 TIMING: Do nothing until /embed + /embed/widget/[slug] are deployed to prod (both 404 today; tool pages are live). WP reviewers manually test — a dead service URL gets an instant rejection and burns the permanent slug conversation.
 
-WORDPRESS PITFALLS (all verified against current guidelines): (1) Guideline 10 — the front-page credit link MUST be opt-in and default-hidden; shipping it on by default is the #1 rejection risk for this exact plugin type. (2) Guideline 8 — never iframe altftool.com inside wp-admin; build the block picker from a bundled JSON list of the 197 slugs (regenerate from embedRegistry.js at build time), not a remote fetch. (3) Guidelines 6/7 — readme must disclose the external service + privacy policy (draft above includes it). (4) Run the official Plugin Check plugin before submitting; enable 2FA on the wordpress.org account (both required for new submissions). (5) Slug (altftool-widgets) is permanent; name uses your own trademark so no conflict. (6) Official review 1-10 days but the queue is described by recent submitters as a "two-stage game" — expect an email with required fixes; respond fast or the thread goes stale (3-month cap, then auto-reject). (7) Plugin zip <10MB, GPLv2+ only.
+WORDPRESS PITFALLS (all verified against current guidelines): (1) Guideline 10 — the front-page credit link MUST be opt-in and default-hidden; shipping it on by default is the #1 rejection risk for this exact plugin type. (2) Guideline 8 — never iframe altftool.com inside wp-admin; build the block picker from a bundled JSON list of the widget ids (regenerate from embedRegistry.js at build time), not a remote fetch. (3) Guidelines 6/7 — readme must disclose the external service + privacy policy (draft above includes it). (4) Run the official Plugin Check plugin before submitting; enable 2FA on the wordpress.org account (both required for new submissions). (5) Slug (altftool-widgets) is permanent; name uses your own trademark so no conflict. (6) Official review 1-10 days but the queue is described by recent submitters as a "two-stage game" — expect an email with required fixes; respond fast or the thread goes stale (3-month cap, then auto-reject). (7) Plugin zip <10MB, GPLv2+ only.
 
 LINK-EQUITY REALITY (verified in raw HTML today): wordpress.org plugin-page outbound links = rel="nofollow ugc"; GitHub README/sidebar links = rel="nofollow"; npm homepage links = rel="nofollow" (though npm leaves github.com links followed); Chrome Web Store developer links = rel="ugc nofollow". NONE of these listing pages pass direct equity. The followed backlinks in this channel come from the embed snippet's attribution <p> placed on third-party pages — WP-plugin installs (opt-in), and every manual copy-paste from /embed. Listings are the distribution engine that multiplies those placements, plus high-authority brand mentions and referral traffic.
 
@@ -1347,14 +1347,14 @@ ORDER OF EXECUTION: (P0) deploy /embed → (P1) WP plugin, ~1-2 dev days, submit
 - **Status (2026-07-25):** dead
 - **Priority:** P0 — prerequisite for every item below; deploy the embed hub before any submission (reviewers will test it)
 - **Requirements:** Deploy via the AltFTool org Amplify pipeline. Verify /embed and /embed/widget/bmi-calculator load publicly before submitting anywhere.
-- **Fit:** The 197-widget embed hub exists only in the local repo (altftoolweb/src/app/embed/); prod returns the 'AltFTool is preparing this route' 404 today. Tool pages like /tools/all/bmi-calculator (attribution-link target) ARE live, so only the /embed and /embed/widget/[slug] routes are missing.
+- **Fit:** The 1,436-widget embed hub exists only in the local repo (altftoolweb/src/app/embed/); prod returns the 'AltFTool is preparing this route' 404 today. Tool pages like /tools/all/bmi-calculator (attribution-link target) ARE live, so only the /embed and /embed/widget/[slug] routes are missing.
 
 #### ✅ WordPress.org Plugin Directory — submit 'AltFTool Widgets' plugin
 - **URL:** https://wordpress.org/plugins/developers/add/
 - **Status (2026-07-25):** verified-live
 - **Priority:** P1 — best return in this channel: DA-90+ listing page, WP-admin search distribution across millions of sites, each install can place a followed attribution link
 - **Requirements:** Free wordpress.org account with 2FA enabled; complete plugin as zip <10MB; must pass the Plugin Check tool first; readme.txt must disclose the external service (Guideline 6/7: what loads from altftool.com, privacy policy link); GPL-compatible license; slug is permanent once approved; official review 1-10 days (5 business days target, cannot be expedited — plan for weeks in practice). Effort: ~1-2 dev days + review wait.
-- **Fit:** A tiny plugin (Gutenberg block + [altftool widget="slug"] shortcode) wrapping the existing iframe snippet from embedSnippet.js. Fits the 197 calculator/converter widgets exactly. Verified against current guidelines: front-end iframes of a SaaS are allowed (Guideline 6 'serviceware'); only admin-page iframes are banned (Guideline 8); pure-iframe embed means no banned external JS. CAVEAT: Guideline 10 requires the 'Widget by AltFTool' credit link to be OPT-IN (default hidden) — so listing-page links are rel='nofollow ugc' (verified in raw HTML of live plugin pages) and only opted-in installs yield followed backlinks. Value is distribution + brand + the share of users who enable credit.
+- **Fit:** A tiny plugin (Gutenberg block + [altftool widget="slug"] shortcode) wrapping the existing iframe snippet from embedSnippet.js. Fits the 1,436 widgets exactly. Verified against current guidelines: front-end iframes of a SaaS are allowed (Guideline 6 'serviceware'); only admin-page iframes are banned (Guideline 8); pure-iframe embed means no banned external JS. CAVEAT: Guideline 10 requires the 'Widget by AltFTool' credit link to be OPT-IN (default hidden) — so listing-page links are rel='nofollow ugc' (verified in raw HTML of live plugin pages) and only opted-in installs yield followed backlinks. Value is distribution + brand + the share of users who enable credit.
 
 #### ✅ npm package @altftool/embed (+ public GitHub repo)
 - **URL:** https://www.npmjs.com/
@@ -1505,3 +1505,113 @@ Description last line: "By AltFTool — 1,100+ free browser tools and 190+ embed
   traffic is attributable per channel.
 - Realistic expectation: 30–50 quality referring domains in the first three
   months from the free channels alone, if the outreach cadence is kept up.
+
+---
+
+# Added 30 July 2026 — four new assets, and a correction
+
+## Correction: the widget count was never 197
+
+Measured against the live registry on 2026-07-30, by applying
+`isEmbeddableToolSlug`'s own rule to all 3,816 entries in `toolMetaMap`:
+
+| Source | Widgets |
+|---|---|
+| `/tools/all` calculators & converters | **1,360** (Calculators 599, Finance 464, Health 161, Converters 136) |
+| `/transform` developer converters | **64** |
+| `/exam-photo` resizers | **12** |
+| **Total** | **1,436** |
+
+Every "197" in the sections above was wrong and has been corrected. Nothing in
+the code was ever capped at 197 — the figure appears to have come from an early
+count against the category allowlist alone, before the
+`*-calculator` / `*-converter` slug rule was added.
+
+The pitch material is stronger for it: "1,400+ embeddable widgets" is a
+different conversation from "197".
+
+## 1. `/transform` and `/exam-photo` widgets (+76)
+
+Both families are now embeddable, at `/embed/widget/transform/<slug>` and
+`/embed/widget/exam-photo/<slug>`. Existing `/embed/widget/<tool-slug>` URLs are
+unchanged, so nothing already pasted on another site breaks.
+
+- **Who to pitch the converters to:** dev blogs, docs sites and tutorial authors
+  writing about a format. "Here is a live JSON-to-Go converter you can put next
+  to your example" is a concrete offer.
+- **Who to pitch the exam resizers to:** Indian exam-notification blogs, coaching
+  sites, and the Telegram/WhatsApp-driven sites that republish notification
+  summaries. These pages get heavy seasonal traffic and have a real need — the
+  candidate reading the notification has to hit a KB target right now.
+- Newly copied snippets now carry `allow="clipboard-write"` so the widgets' Copy
+  buttons work inside a third-party frame. Without it they failed visibly, which
+  is a poor advertisement for the tool.
+
+## 2. Citation blocks on the research pages
+
+`/exam-photo/<exam>`, `/deals/<slug>` and `/alternatives/<incumbent>` now carry a
+"Cite this page" disclosure with APA, MLA and BibTeX forms, the canonical URL, a
+real "as of" date taken from the page's own data, and — for exam pages — the
+notification the figures came from.
+
+**Why this earns links:** students, teachers, journalists and bloggers cite when
+citing is one click. The exam pages are the strongest case: nobody else publishes
+those figures with the notification, the date it was issued, and an honest note
+about what could not be confirmed.
+
+**Outreach angle:** education and careers writers who already publish "SSC CGL
+photo size" posts. The offer is not "link to us" — it is "here is the
+notification, here is the figure, here is a citation you can paste".
+
+## 3. Open data API
+
+- `GET /api/open-data/exam-photo-specs` — 12 exams with full provenance
+- `GET /api/open-data/transform-converters` — 64 converters
+- Documented at **`/open-data`**, which is the crawlable, linkable surface (the
+  endpoints sit under `/api/`, which robots.txt disallows on purpose).
+
+Free to use with attribution and a link to the record's own page. No named
+licence is claimed — the terms are stated in plain words, because adopting CC BY
+or ODbL is a decision only you can make.
+
+**Why this earns links:** a developer who builds anything on the exam data has to
+credit it, and the licence asks for a link to the specific page. This is the one
+channel that compounds without any outreach.
+
+**Where to announce it:** dev.to `#showdev`, r/india / r/IndianStudents-adjacent
+communities where the data is actually useful, and the Awesome-list style repos
+for public Indian datasets.
+
+## 4. `/press` and `security.txt`
+
+`/press` carries only facts verifiable in the repo, with counts read from the
+registries at render time. `public/.well-known/security.txt` follows RFC 9116 and
+promises no bounty or response time.
+
+**What you must supply before pitching a journalist** — listed on the page as
+"not published here" rather than invented: founding date, legal entity name and
+registered address, who is behind it, funding and ownership, any traffic figure,
+and a named spokesperson. A journalist will ask for all seven.
+
+## Two things fixed that would have cost you a listing
+
+**`/policypages/about` was publishing fabricated social proof.** "100K+ Monthly
+Users", "4.9/5 User Rating", "5,000+ Curated Tools" (the registry holds 3,816),
+"Trusted by 100K+ users", and six reviews with invented names and roles — "Alex
+Morgan, Developer", "Priya Sharma, Designer", "James Carter, Student", "Maya
+Chen, Product Manager", "Amit Verma, Founder", "Sofia Reed, Marketing Lead" —
+each stamped five stars, with avatars borrowed from elsewhere on the site,
+including the academy's photos of real and different people.
+
+This is the first page a directory reviewer opens. AlternativeTo, SaaSHub and
+Product Hunt all reject listings over exactly this. The counts are now read from
+the registries and the review section is gone until there are real reviews.
+
+**Your published contact address is a Gmail account.** All six policy pages and
+the tool-request form publish `altftool@gmail.com`; `admin@altftool.com` appears
+nowhere in the repo. That matters here specifically: AlternativeTo verifies
+ownership from an address at your own domain, and SaaSHub's review is faster with
+domain-email verification. A Gmail contact on a platform pitching itself as
+privacy-first is also the sort of detail a reviewer notices. **Set up a
+domain mailbox before the AlternativeTo ownership claim**, then update those
+seven files and `security.txt`.
