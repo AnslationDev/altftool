@@ -147,6 +147,7 @@ export function ThemeModeMenu({
 
       {open ? (
         <div
+          role="dialog"
           aria-label="Theme mode"
           className={cn(
             "alt-ui-theme-menu__popover",
