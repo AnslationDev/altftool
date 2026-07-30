@@ -77,7 +77,10 @@ jobs:
 
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    # validate:full currently takes ~42 minutes on a cold hosted runner and the
+    # five-page Lighthouse audit can consume another ~30 minutes when Chrome
+    # retries trace collection. Keep enough job headroom for report uploads.
+    timeout-minutes: 105
     env:
       # validate:full performs another production web build. Use the same
       # isolated webpack worker that the successful Amplify release build uses
@@ -147,6 +150,10 @@ jobs:
 
       - name: Run Lighthouse quality gate
         continue-on-error: true
+        # Lighthouse is advisory and retries CI-only trace failures. Bound the
+        # step so an unhealthy Chrome session cannot cancel the whole verify
+        # job before its always-run report upload.
+        timeout-minutes: 35
         run: npm run test:lighthouse:production
 
       - name: Upload Playwright artifacts
