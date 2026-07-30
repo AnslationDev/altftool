@@ -75,6 +75,11 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    env:
+      # validate:full performs another production web build. Use the same
+      # isolated webpack worker that the successful Amplify release build uses
+      # so this exhaustive job does not spend most of its window compiling.
+      ALTFT_WEBPACK_BUILD_WORKER: "true"
 
     steps:
       - name: Checkout
@@ -192,10 +197,15 @@ jobs:
 
   visual-regression:
     runs-on: macos-latest
-    timeout-minutes: 45
+    # A measured single-process macOS webpack compile exhausted the previous
+    # 45-minute job window before Playwright could start. The isolated build
+    # worker fixes that bottleneck; the larger cap leaves room for snapshots
+    # and artifact upload if a hosted runner is temporarily slow.
+    timeout-minutes: 60
     env:
       NEXT_PUBLIC_FIREBASE_PROJECT_ID: build-placeholder
       ALTFT_FIRESTORE_REST_TIMEOUT_MS: "500"
+      ALTFT_WEBPACK_BUILD_WORKER: "true"
 
     steps:
       - name: Checkout
