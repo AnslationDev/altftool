@@ -1,10 +1,11 @@
+import { redirect } from "next/navigation";
 import SupportClient from "../SupportClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
-// ../data/routes pulls in all four platform catalogues (~2 MB) purely to
-// validate ids this route then hands to the client, which loads those
-// catalogues itself through dynamic imports. routeShape parses the same URLs
-// without them; an id that does not resolve lands on the same landing view
-// it always did. See ../data/routeShape.js.
+import { isKnownSupportSettingPath } from "@/platform/navigation/exactRouteManifest";
+// ../data/routes pulls in all four platform catalogues (~2 MB). The lightweight
+// exact-route manifest validates the URL before routeShape turns its verified
+// segments into client state; the client loads catalogues through dynamic
+// imports. See ../data/routeShape.js.
 import { resolveSlugShape, describeSlugShape } from "../data/routeShape";
 
 /**
@@ -25,18 +26,28 @@ import { resolveSlugShape, describeSlugShape } from "../data/routeShape";
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  const path = `/supportsetting/${(slug || []).join("/")}`;
   const { title, description } = describeSlugShape(slug || []);
   return createPageMetadata({
     title,
     description,
-    path: `/supportsetting/${(slug || []).join("/")}`,
+    path,
     keywords: ["AltFTool support", "settings", "help center", "troubleshooting"],
+    noindex: !isKnownSupportSettingPath(path),
   });
 }
 
 export default async function SupportSettingSlugPage({ params }) {
   const { slug } = await params;
-  const { activeId, platformOverride } = resolveSlugShape(slug || []);
+  const segments = slug || [];
 
+  // The proxy rejects unknown paths before rendering. Keep this lightweight
+  // server-side fallback for direct component execution or a future matcher
+  // change; never import the multi-megabyte Support Settings catalogues here.
+  if (!isKnownSupportSettingPath(`/supportsetting/${segments.join("/")}`)) {
+    redirect("/supportsetting");
+  }
+
+  const { activeId, platformOverride } = resolveSlugShape(segments);
   return <SupportClient initialActiveId={activeId} initialPlatformOverride={platformOverride} />;
 }

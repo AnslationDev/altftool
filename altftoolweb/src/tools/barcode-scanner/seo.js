@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "Are my images or scans uploaded anywhere?",
-      "No. Decoding runs entirely in your browser, and the recent-scans list with its small thumbnails is stored in your browser's local storage on this device only.",
+      "The uploaded image or live camera frames stay in your browser while decoding, and recent scans with their small thumbnails are stored in local storage on this device. After a code is decoded, its text or digits are sent to Open Food Facts and, if no product is found, UPCitemdb for the automatic product lookup.",
     ],
     [
       "Why does it say no barcode was detected?",

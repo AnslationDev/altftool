@@ -9,13 +9,11 @@
  * largest of any route in the app, and pushing the Amplify artifact over its
  * ceiling.
  *
- * None of it was being used for anything but validation: getSettingById(platform,
- * id) returns the setting whose `id` already equals the slug segment, so the
- * resolved activeId is the segment itself. The client is the side that actually
+ * The proxy and [...slug] page validate paths against the lightweight exact
+ * manifest in platform/navigation. Once a path is known, this module only has
+ * to turn its segments into client state. The client is the side that actually
  * needs the data, and it already loads each platform through a dynamic import
- * (see ./clientData.js) — so the server can parse the URL and let the client
- * decide whether that id exists. An id that does not resolve lands on the same
- * landing view it did before.
+ * (see ./clientData.js).
  *
  * ./routes.js is unchanged and still the catalogue-backed source of truth for
  * everything rendered on the client.
@@ -35,7 +33,7 @@ const UTIL_TITLES = {
   "util-contact": "Contact & Feedback",
 };
 
-/** Same shape as resolveSlug in ./routes.js, resolved from the URL alone. */
+/** Same result shape as resolveSlug in ./routes.js for a pre-validated URL. */
 export function resolveSlugShape(slug) {
   const parts = Array.isArray(slug) ? slug.filter(Boolean) : [];
   if (parts.length === 0) return { activeId: null, platformOverride: null };

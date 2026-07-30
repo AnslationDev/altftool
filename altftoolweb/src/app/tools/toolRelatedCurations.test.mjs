@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { mergeCuratedRelatedTools } from "./toolRelatedCurations.js";
+
+const routeUtilsSource = readFileSync(
+  new URL("./toolRouteUtils.js", import.meta.url),
+  "utf8",
+);
 
 const candidates = [
   { slug: "campaign-budget-planner", name: "Campaign Budget Planner" },
@@ -48,4 +54,15 @@ test("adds both complementary tools to the UTM builder without duplicates", () =
   );
   assert.equal(new Set(related.map((item) => item.slug)).size, related.length);
   assert.equal(related.length, 6);
+});
+
+test("the live related-tool resolver applies curated clusters after scoring", () => {
+  assert.match(
+    routeUtilsSource,
+    /import \{ mergeCuratedRelatedTools \} from "\.\/toolRelatedCurations";/,
+  );
+  assert.match(
+    routeUtilsSource,
+    /return mergeCuratedRelatedTools\(\s*slug,\s*scoredRelatedTools,/,
+  );
 });

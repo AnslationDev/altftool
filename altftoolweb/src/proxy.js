@@ -5,6 +5,10 @@ import { toolSlugSet } from "./platform/registry/toolSlugs.js";
 import { getActiveRedirects } from "./platform/seo/redirectSource.js";
 import { resolveRedirect } from "@altftool/core/seo/resolver";
 import { getLegacyCategorySlugMap } from "./platform/registry/categoryTaxonomy.js";
+import {
+  EXACT_ROUTE_REDIRECT_STATUS,
+  getExactRouteRedirect,
+} from "./platform/navigation/exactRouteManifest.js";
 
 // Pre-consolidation category slugs (e.g. /tools/calculator, /tools/utility)
 // → canonical category routes. Static data, computed once per worker.
@@ -77,6 +81,16 @@ export async function proxy(request) {
         changed = true;
       }
     }
+  }
+
+  // Dynamic catch-all pages must not turn arbitrary strings into indexable
+  // soft 404s. The exact manifest contains URL segments only, keeping the
+  // Support Settings catalogues and Transform metadata out of this hot path.
+  const exactRouteRedirect = getExactRouteRedirect(pathname);
+  if (exactRouteRedirect) {
+    pathname = exactRouteRedirect;
+    changed = true;
+    statusCode = EXACT_ROUTE_REDIRECT_STATUS;
   }
 
   if (changed) {

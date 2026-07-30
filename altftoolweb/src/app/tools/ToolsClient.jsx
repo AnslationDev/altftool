@@ -10,9 +10,7 @@ import {
   Code2,
   FileText,
   Grid2X2,
-  History,
   Image as ImageIcon,
-  Layers3,
   LockKeyhole,
   MessageCircleQuestion,
   Play,
@@ -45,11 +43,20 @@ const ITEMS_PER_PAGE = 24;
 let fullCatalogPromise;
 let toolLoaderPromise;
 
+// static/chunks/917906.*, 1,098,526 bytes raw / 226,782 brotli — the whole
+// 3,947-tool catalogue. It is only ever needed to search or page beyond the
+// 64-entry slice the server renders with, so nothing calls this until the
+// visitor types a search or asks to page beyond the slice.
 const loadFullToolCatalog = () => {
   if (!fullCatalogPromise) {
-    fullCatalogPromise = import("@/platform/registry/toolMetaMap").then(
-      (module) => module.toolMetaMap,
-    );
+    fullCatalogPromise = import("@/platform/registry/toolMetaMap")
+      .then((module) => module.toolMetaMap)
+      .catch((error) => {
+        // Let a later interaction retry rather than poisoning the session,
+        // the same way prefetchToolModule does below.
+        fullCatalogPromise = undefined;
+        throw error;
+      });
   }
   return fullCatalogPromise;
 };
@@ -99,20 +106,6 @@ const LABEL_OVERRIDES = {
   url: "URL",
   yaml: "YAML",
 };
-const QUICK_TOOL_SLUGS = [
-  "json-editor",
-  "text-to-base64",
-  "base64-to-image",
-  "pdf-to-base64",
-  "curl-to-code-converter",
-  "yaml-formatter",
-  "regex-tester",
-  "qr-generator",
-  "password-generator",
-  "image-to-base64",
-  "crontab-evaluator",
-  "diff-checker",
-];
 const SEARCH_ALIASES = {
   code: ["developer", "json", "html", "css", "javascript", "sql", "regex"],
   compare: ["diff", "checker", "merge"],
@@ -162,33 +155,6 @@ const GENERIC_SEARCH_TOKENS = new Set([
   "tools",
   "with",
 ]);
-const WORKFLOW_GROUPS = [
-  {
-    title: "Developer Desk",
-    label: "Code, API, debug",
-    icon: Code2,
-    slugs: ["json-editor", "regex-tester", "jwt-decoder", "diff-checker"],
-  },
-  {
-    title: "PDF & Base64",
-    label: "Files, encode, decode",
-    icon: FileText,
-    slugs: ["pdf-merger", "pdf-split-tool", "pdf-to-base64", "base64-to-pdf"],
-  },
-  {
-    title: "Image Studio",
-    label: "Compress, crop, resize",
-    icon: ImageIcon,
-    slugs: ["image-compressor", "image-resizer", "image-cropper", "svg-to-image"],
-  },
-  {
-    title: "Finance Quick Math",
-    label: "GST, EMI, SIP",
-    icon: Calculator,
-    slugs: ["gst-calculator", "loan-emi-calculator", "sip-calculator", "percentage-calculator"],
-  },
-];
-
 const TRUST_ITEMS = [
   {
     title: "Trusted & Safe",
@@ -401,12 +367,14 @@ function ToolsGridSkeleton() {
 export default function ToolsClient({
   meta: initialMeta = {},
   catalogTotal: initialCatalogTotal,
+  categoryCounts,
   category,
   initialCategory = "all",
   initialSearch = "",
   initialViewMode = "all",
 }) {
   const [fullMeta, setFullMeta] = useState(null);
+  const [catalogFailed, setCatalogFailed] = useState(false);
   const meta = fullMeta || initialMeta;
   const slugs = useMemo(() => Object.keys(meta), [meta]);
   const catalogTotal = Math.max(
@@ -414,14 +382,26 @@ export default function ToolsClient({
     slugs.length,
   );
   const catalogReady = slugs.length >= catalogTotal;
+  // Read through a ref so ensureCatalog keeps a stable identity and can sit in
+  // dependency arrays without re-running the effects that use it.
+  const catalogReadyRef = useRef(catalogReady);
+  useEffect(() => {
+    catalogReadyRef.current = catalogReady;
+  }, [catalogReady]);
   const ensureCatalog = useCallback(() => {
-    if (catalogReady) return Promise.resolve(meta);
+    if (catalogReadyRef.current) return Promise.resolve();
 
-    return loadFullToolCatalog().then((catalog) => {
-      startTransition(() => setFullMeta(catalog));
-      return catalog;
-    });
-  }, [catalogReady, meta]);
+    return loadFullToolCatalog().then(
+      (catalog) => {
+        startTransition(() => setFullMeta(catalog));
+      },
+      (error) => {
+        // Stops "Load More" promising rows that can no longer arrive.
+        setCatalogFailed(true);
+        throw error;
+      },
+    );
+  }, []);
   const [search, setSearch] = useState(initialSearch);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState(SEARCH_PLACEHOLDER_PHRASES[0]);
   const deferredSearch = useDeferredValue(search);
@@ -471,8 +451,16 @@ export default function ToolsClient({
   const recentSet = useMemo(() => new Set(recentSlugs), [recentSlugs]);
   const prioritySet = useMemo(() => new Set(TOP_PRIORITY_TOOL_SLUGS), []);
 
+  // Only for callers that send no `categoryCounts`. Without one the sidebar has
+  // to be derived from `meta`, and the 64-entry server slice yields a short
+  // list with slice-sized counts — the built HTML for /tools/all lists 18 of
+  // the 22 categories and prints "Calculators 1" against a true 503 — so the
+  // catalogue still has to arrive on its own. Routes that pass the index skip
+  // this entirely and fetch the chunk only on a real interaction.
+  const needsCatalogForSidebar = !categoryCounts?.length;
+
   useEffect(() => {
-    if (catalogReady) return undefined;
+    if (catalogReady || !needsCatalogForSidebar) return undefined;
 
     const schedule =
       window.requestIdleCallback ||
@@ -485,7 +473,7 @@ export default function ToolsClient({
     }, { timeout: 3000 });
 
     return () => cancel(handle);
-  }, [catalogReady, ensureCatalog]);
+  }, [catalogReady, ensureCatalog, needsCatalogForSidebar]);
 
   useClientLayoutEffect(() => {
     const nextKey = `${category || ""}:${initialCategory || ""}`;
@@ -519,76 +507,78 @@ export default function ToolsClient({
     if (queryView && VIEW_MODES.some((mode) => mode.id === queryView)) {
       setViewMode(queryView);
     }
-  }, [category]);
+
+    // A deep link into search, or into the saved/recent collections, is a
+    // request for the whole catalogue: all three are matched against it and
+    // the server slice carries 64 of 3,947 tools. Every other arrival waits
+    // for a real interaction before paying for that chunk.
+    const wantsCatalog =
+      Boolean(initialSearchRef.current.trim()) ||
+      Boolean(querySearch?.trim()) ||
+      (Boolean(queryView) && queryView !== "all") ||
+      initialViewModeRef.current === "favorites" ||
+      initialViewModeRef.current === "recent";
+
+    if (wantsCatalog) ensureCatalog().catch(() => {});
+  }, [category, ensureCatalog]);
 
   // Ads setup
   const toolAds = useAds({ placement: "tools_listing", layout: "tool_card", device });
 
-  // Categories list
-  const categories = useMemo(() => {
-    const set = new Set(["all"]);
-    Object.values(meta).forEach((tool) => {
-      if (Array.isArray(tool.category)) {
-        tool.category.forEach((c) => set.add(c.toLowerCase()));
-      } else if (tool.category) {
-        set.add(tool.category.toLowerCase());
-      }
-    });
-    return Array.from(set);
-  }, [meta]);
+  // Sidebar categories and their counts.
+  //
+  // `categoryCounts` is the server's complete {slug, label, count} list
+  // (getToolCategoryCounts). Deriving it from `meta` instead is what forced the
+  // catalogue chunk down on every load: the 64-entry slice represents only
+  // 13-18 of the 22 categories — measured, per category page — so the sidebar
+  // rendered short and every count was a count within the slice until the
+  // chunk landed. The derivation survives as the fallback for callers that do
+  // not send the index, and describes exactly the tools in hand.
   const categoryStats = useMemo(() => {
-    const counts = new Map([["all", catalogTotal]]);
+    const allRow = { slug: "all", label: formatLabel("all"), count: catalogTotal };
+    if (categoryCounts?.length) return [allRow, ...categoryCounts];
+
+    const counts = new Map();
+    const labels = new Map();
 
     Object.values(meta).forEach((tool) => {
-      getToolCategories(tool).forEach((categoryName) => {
+      // Raw labels, not the slugified ones getToolCategories returns: the
+      // sidebar prints "Design & Color", which no slug can be turned back into.
+      const rawCategories = Array.isArray(tool.category)
+        ? tool.category
+        : [tool.category].filter(Boolean);
+
+      rawCategories.forEach((categoryName) => {
         const slug = slugify(categoryName);
+        if (!slug) return;
+        if (!labels.has(slug)) labels.set(slug, formatLabel(categoryName));
         counts.set(slug, (counts.get(slug) || 0) + 1);
       });
     });
 
-    return categories.map((cat) => {
-      const slug = slugify(cat);
-      return { slug, label: formatLabel(cat), count: counts.get(slug) || 0 };
-    });
-  }, [catalogTotal, categories, meta]);
+    return [
+      allRow,
+      ...[...labels].map(([slug, label]) => ({ slug, label, count: counts.get(slug) })),
+    ];
+  }, [catalogTotal, categoryCounts, meta]);
   const filteredCategoryStats = useMemo(() => {
     const query = categoryFilter.trim().toLowerCase();
     if (!query) return categoryStats;
     return categoryStats.filter((cat) => cat.label.toLowerCase().includes(query) || cat.slug.includes(query));
   }, [categoryFilter, categoryStats]);
+  const categoryStatsBySlug = useMemo(() => new Map(categoryStats.map((cat) => [cat.slug, cat])), [categoryStats]);
   const featuredCategories = useMemo(() => {
     const used = new Set();
-    const availableSlugs = new Set(categories.map((item) => slugify(item)));
 
     return FEATURED_CATEGORY_CARDS.map((card) => {
-      const slug = [card.slug, ...(card.fallbackSlugs || [])].find((item) => availableSlugs.has(item));
+      const slug = [card.slug, ...(card.fallbackSlugs || [])].find((item) =>
+        categoryStatsBySlug.has(item),
+      );
       if (!slug || used.has(slug)) return null;
       used.add(slug);
       return { ...card, slug };
     }).filter(Boolean);
-  }, [categories]);
-  const categoryStatsBySlug = useMemo(() => new Map(categoryStats.map((cat) => [cat.slug, cat])), [categoryStats]);
-  const quickTools = useMemo(
-    () =>
-      [...new Set([...QUICK_TOOL_SLUGS, ...TOP_PRIORITY_TOOL_SLUGS.slice(0, 6)])]
-        .filter((slug) => meta[slug])
-        .slice(0, 14)
-        .map((slug) => [slug, meta[slug]]),
-    [meta]
-  );
-  const workflowGroups = useMemo(
-    () =>
-      WORKFLOW_GROUPS.map((group) => ({
-        ...group,
-        tools: group.slugs.filter((slug) => meta[slug]).map((slug) => [slug, meta[slug]]),
-      })).filter((group) => group.tools.length),
-    [meta],
-  );
-  const viewModeStats = useMemo(() => ({
-    all: catalogTotal,
-    favorites: favoriteSlugs.filter((slug) => meta[slug]).length,
-    recent: recentSlugs.filter((slug) => meta[slug]).length,
-  }), [catalogTotal, favoriteSlugs, meta, recentSlugs]);
+  }, [categoryStatsBySlug]);
 
   // Filter tools based on category and search
   const filteredSlugs = useMemo(() => {
@@ -635,7 +625,19 @@ export default function ToolsClient({
     return visible;
   }, [deferredSearch, filteredSlugs, toolAds, visibleCount, viewMode]);
 
-  const hasMore = visibleCount < filteredSlugs.length;
+  // Unfiltered browsing is the one view whose true size the server already
+  // knows, so the header can state it — and "Load More" can offer rows that
+  // are still in the catalogue chunk — before that chunk is fetched. Anything
+  // filtered, searched or read out of local storage can only count what has
+  // actually been loaded.
+  const isDefaultView = viewMode === "all" && !deferredSearch.trim();
+  const activeCategoryTotal = categoryStatsBySlug.get(categoryname)?.count ?? 0;
+  const catalogCanGrow = !catalogReady && !catalogFailed;
+  const resultTotal =
+    isDefaultView && catalogCanGrow
+      ? Math.max(filteredSlugs.length, activeCategoryTotal)
+      : filteredSlugs.length;
+  const hasMore = visibleCount < resultTotal;
   const isSearchMode = Boolean(search.trim());
   const searchResultSlugs = useMemo(() => filteredSlugs.filter((slug) => meta[slug]).slice(0, 12), [filteredSlugs, meta]);
   const isFiltering = search !== deferredSearch;
@@ -705,13 +707,12 @@ export default function ToolsClient({
     replaceDirectoryUrl({ nextSearch: value });
   };
 
-  const setViewFilter = (mode) => {
-    if (mode !== "all" && !catalogReady) {
-      ensureCatalog().catch(() => {});
-    }
-    setViewMode(mode);
-    setVisibleCount(ITEMS_PER_PAGE);
-    replaceDirectoryUrl({ nextViewMode: mode });
+  // Paging past the server slice is the point at which the rest of the
+  // catalogue is genuinely needed; until then the visitor has seen only rows
+  // that arrived with the HTML.
+  const loadMoreTools = () => {
+    if (!catalogReady) ensureCatalog().catch(() => {});
+    setVisibleCount((prev) => prev + ITEMS_PER_PAGE);
   };
 
   const clearAllFilters = () => {
@@ -910,7 +911,6 @@ export default function ToolsClient({
                 type="text"
                 placeholder={animatedPlaceholder}
                 value={search}
-                onFocus={ensureCatalog}
                 onChange={(e) => setSearchFilter(e.target.value)}
                 onInput={(e) => setSearchFilter(e.currentTarget.value)}
                 onKeyDown={handleSearchKeyDown}
@@ -1080,7 +1080,6 @@ export default function ToolsClient({
                   ref={categoryInputRef}
                   data-testid="tool-category-search"
                   value={categoryFilter}
-                  onFocus={ensureCatalog}
                   onChange={(e) => setCategoryFilter(e.target.value)}
                   onInput={(e) => setCategoryFilter(e.currentTarget.value)}
                   placeholder="Search categories..."
@@ -1127,13 +1126,13 @@ export default function ToolsClient({
             <div className="tools-results-header">
               <h2>
                 {toolsHeading}
-                <span>{filteredSlugs.length}</span>
+                <span>{resultTotal}</span>
               </h2>
               <div>
                 <p aria-live="polite">
                   {isFiltering
                     ? "Updating results..."
-                    : `Showing ${Math.min(filteredSlugs.length, visibleCount)} of ${filteredSlugs.length}`}
+                    : `Showing ${Math.min(filteredSlugs.length, visibleCount)} of ${resultTotal}`}
                 </p>
               </div>
             </div>
@@ -1269,7 +1268,7 @@ export default function ToolsClient({
                     <CTAButton
                       text="Load More Tools"
                       variant="outline"
-                      onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
+                      onClick={loadMoreTools}
                     />
                   </div>
                 )}

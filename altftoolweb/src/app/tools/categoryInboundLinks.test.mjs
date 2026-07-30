@@ -6,6 +6,14 @@ const categoryPageSource = readFileSync(
   new URL("./[category]/page.jsx", import.meta.url),
   "utf8",
 );
+const microtoolClientSource = readFileSync(
+  new URL("./MicrotoolClient.jsx", import.meta.url),
+  "utf8",
+);
+const toolsClientSource = readFileSync(
+  new URL("./ToolsClient.jsx", import.meta.url),
+  "utf8",
+);
 
 test("category pages expose crawlable links to their complete tool set", () => {
   assert.match(categoryPageSource, /function getCategoryToolIndex\(category\)/);
@@ -19,4 +27,16 @@ test("category pages expose crawlable links to their complete tool set", () => {
     categoryPageSource,
     /!isAll[\s\S]*hover:text-\[var\(--primary\)\]/,
   );
+});
+
+test("both tools-directory entrypoints receive complete category counts", () => {
+  assert.match(
+    categoryPageSource,
+    /categoryCounts=\{getToolCategoryCounts\(\)\}/,
+  );
+  assert.match(
+    microtoolClientSource,
+    /categoryCounts=\{getToolCategoryCounts\(\)\}/,
+  );
+  assert.doesNotMatch(toolsClientSource, /onFocus=\{ensureCatalog\}/);
 });

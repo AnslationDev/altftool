@@ -34,8 +34,11 @@ export default async function robots() {
   // and signal intent. Content stays available for AI citation/recommendation.
   const aiCrawlerRule = {
     userAgent: ANSWER_ENGINE_CRAWLERS,
-    allow: "/",
-    disallow: ["/api/", ...MOCK_COMMUNITY_CRAWL_TRAPS],
+    allow: crawl.allow.length ? ["/", ...crawl.allow] : "/",
+    // Explicit AI-agent rules must not bypass crawl restrictions configured
+    // through ALTF Engine. The engine remains inert while disabled because
+    // resolveCrawl() returns empty arrays in that state.
+    disallow: ["/api/", ...MOCK_COMMUNITY_CRAWL_TRAPS, ...crawl.disallow],
   };
 
   const sitemap = crawl.extraSitemaps.length

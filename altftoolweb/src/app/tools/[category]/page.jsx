@@ -15,6 +15,7 @@ import {
   getLegacyCategoryRedirect,
   getToolCatalogCount,
   getToolCategories,
+  getToolCategoryCounts,
   getToolCategorySlugs,
   slugifyRouteSegment,
 } from "../toolRouteUtils";
@@ -189,9 +190,14 @@ export default async function Page({ params }) {
           ]),
         ]}
       />
+      {/* categoryCounts is what keeps the 1,098,526-byte catalogue chunk off
+          this route: the sidebar's category list and counts were the only
+          thing the client needed the whole map for on load. Twenty-two rows
+          against a 226 KB brotli download. */}
       <ToolsClient
         meta={getInitialToolCatalog(category)}
         catalogTotal={getToolCatalogCount("all")}
+        categoryCounts={getToolCategoryCounts()}
         category={category}
       />
       {/* Deliberately excluded on /tools/all: 3,947 anchors is ~250 KB of

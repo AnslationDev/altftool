@@ -48,7 +48,7 @@ const workflowTemplates = {
   },
   media: {
     examples: [
-      ["Edit without uploading", "Process images, audio, video, and documents directly in your browser — files never leave your device."],
+      ["Work from your browser", "Process images, audio, video, and documents without installing desktop software. Check the individual tool page for its network and privacy details."],
       ["Preview every change", "See the result before you export, so the final file is exactly what you expect."],
       ["Export production-ready files", "Download output that's ready for your website, presentation, or client hand-off."],
     ],
@@ -58,7 +58,7 @@ const workflowTemplates = {
     examples: [
       ["Get AI-powered results instantly", "Run the analysis or generation right in your browser and see results within seconds."],
       ["Experiment freely", "Try different inputs and settings, compare the outcomes, and keep the one that fits best."],
-      ["Stay private by design", "Processing happens on your device wherever possible — your data isn't shipped to a server."],
+      ["Understand the workflow", "Review the individual tool page for its processing, network, and privacy details before adding sensitive data."],
     ],
     steps: ["Provide your input — an image, text, or data.", "Let the tool analyze or generate the result.", "Review, refine, and reuse the output wherever you need it."],
   },
@@ -155,7 +155,10 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
   const intro =
     central.intro ||
     override?.intro ||
-    `${name} is a free ${categoryLabel} tool that runs entirely in your browser — nothing to install, no account to create, and your data never leaves your device. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
+    // The fallback must not make a local-only promise: some tools call a
+    // remote origin or one of our API routes. A tool that really is local-only
+    // may say so in its reviewed per-tool content.
+      `${name} is a free ${categoryLabel} tool that runs in your browser — nothing to install and no account to create. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
 
   // Examples (benefits): central admin override > hand-written code override >
   // category template (with the tool name injected so copy stays unique).
@@ -175,8 +178,10 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
           answer: `Yes — ${name} is completely free on AltFTool, with no signup, no trial limits, and no hidden costs.`,
         },
         {
-          question: `Is my data private when I use ${name}?`,
-          answer: `Yes. ${name} runs in your browser, so what you enter or upload stays on your device instead of being sent to a server.`,
+            // Network behaviour varies by tool, so the shared answer cannot
+            // make a privacy promise on the tool's behalf.
+            question: `Do I need an account to use ${name}?`,
+            answer: `No. ${name} is free on AltFTool with no signup and nothing to install. Network behaviour depends on the tool, so avoid sensitive data unless its page explicitly explains how the input is processed.`,
         },
         {
           question: `What can I use ${name} for?`,

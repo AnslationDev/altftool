@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "Why does my request fail with a network error when the API works in Postman?",
-      "Almost always CORS. The request is made by your browser with fetch(), so the target API must return permissive Access-Control-Allow-Origin headers; desktop clients like Postman are not bound by that rule. There is no proxy in between, which is also why your tokens never reach a third-party server.",
+      "Almost always CORS. The request is made by your browser with fetch(), so the target API must return permissive Access-Control-Allow-Origin headers; desktop clients like Postman are not bound by that rule. There is no AltFTool proxy in between: credentials bypass AltFTool and travel directly from your browser to the target API you entered.",
     ],
     [
       "Do I need to set Content-Type myself when posting JSON?",
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How much request history is kept, and where?",
-      "The 50 most recent requests are kept, newest first, in your browser's local storage along with saved collections and environment variables. Nothing is uploaded; clearing site data or using the Clear history button removes them permanently.",
+      "The 50 most recent requests are kept, newest first, in your browser's local storage along with saved collections and environment variables. AltFTool does not receive or sync that saved history; request details are transmitted to the target API when you send them. Clearing site data or using the Clear history button removes the local copy permanently.",
     ],
     [
       "How is Basic auth sent?",

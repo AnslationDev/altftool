@@ -1,5 +1,9 @@
 import ToolsClient from "./ToolsClient";
-import { getInitialToolCatalog, getToolCatalogCount } from "./toolRouteUtils";
+import {
+  getInitialToolCatalog,
+  getToolCatalogCount,
+  getToolCategoryCounts,
+} from "./toolRouteUtils";
 
 
 export default function ToolsPage(props) {
@@ -7,6 +11,7 @@ export default function ToolsPage(props) {
     <ToolsClient
       meta={getInitialToolCatalog("all")}
       catalogTotal={getToolCatalogCount("all")}
+      categoryCounts={getToolCategoryCounts()}
       {...props}
     />
   );

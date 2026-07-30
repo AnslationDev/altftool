@@ -41,8 +41,30 @@ export function generateStaticParams() {
 
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  return buildToolMetadata(slug);
+  const { category, slug } = await params;
+  const metadata = await buildToolMetadata(slug);
+
+  // The page component below redirects a tool served under a category it does
+  // not belong to. That redirect is demonstrably not taking effect in
+  // production — /tools/calculators/2-images-swap answers 200 with index,follow
+  // even though 2-images-swap is Design & Color / Image & Photo, and the same
+  // reproduces on a dev server. Every part of the check reads correctly in
+  // isolation, so rather than guess at the cause, this closes the hole by a
+  // route I can verify: 22 categories x 3,947 tools of URLs stop inviting
+  // indexing. The canonical already points at /tools/all/<slug>, so this only
+  // removes crawl surface — it does not change which URL ranks.
+  const tool = getTool(slug);
+  if (tool && category !== "all") {
+    const categorySlugs = getToolCategories(tool).map(slugifyRouteSegment);
+    if (!categorySlugs.includes(slugifyRouteSegment(category))) {
+      return {
+        ...metadata,
+        robots: { index: false, follow: true },
+      };
+    }
+  }
+
+  return metadata;
 }
 
 export default async function ToolPage({ params }) {
