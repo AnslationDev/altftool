@@ -49,7 +49,10 @@ export async function generateMetadata({ params }) {
 }
 
 function createAppJsonLd(app) {
-  if (!app?.slug) return null;
+  // An unpublished catalogue concept is not yet a downloadable software
+  // application. Keep its page and breadcrumbs, but do not publish an
+  // incomplete SoftwareApplication entity until an APK actually exists.
+  if (!app?.slug || !app.apkUrl) return null;
 
   return {
     "@context": "https://schema.org",
@@ -63,12 +66,8 @@ function createAppJsonLd(app) {
     applicationSubCategory: app.category,
     operatingSystem: app.androidRequired || "Android",
     softwareVersion: app.version,
-    ...(app.apkUrl
-      ? {
-          fileSize: app.apkSize,
-          downloadUrl: absoluteUrl(app.apkUrl),
-        }
-      : {}),
+    fileSize: app.apkSize,
+    downloadUrl: absoluteUrl(app.apkUrl),
     author: {
       "@type": "Organization",
       name: app.developer || "AltFTool Team",
@@ -78,15 +77,11 @@ function createAppJsonLd(app) {
       name: "AltFTool",
       url: absoluteUrl("/"),
     },
-    ...(app.apkUrl
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "USD",
-          },
-        }
-      : {}),
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
   };
 }
 

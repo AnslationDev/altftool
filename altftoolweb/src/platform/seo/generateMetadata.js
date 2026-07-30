@@ -611,7 +611,17 @@ export function createGameJsonLd({ game, path } = {}) {
 }
 
 export function createBookJsonLd({ book, path } = {}) {
-  if (!book?.title || !path) return null;
+  const authorName =
+    typeof book?.author === "string"
+      ? book.author.trim()
+      : typeof book?.author?.name === "string"
+        ? book.author.name.trim()
+        : "";
+
+  // Book requires a real author identity. The current Wattpad seed records
+  // carry only unresolved authorId foreign keys, so those pages intentionally
+  // omit the Book entity until an author record can be resolved.
+  if (!book?.title || !path || !authorName) return null;
 
   const url = absoluteUrl(path);
 
@@ -624,8 +634,12 @@ export function createBookJsonLd({ book, path } = {}) {
     description: book.description || book.summary || siteConfig.description,
     url,
     image: absoluteUrl(book.coverImage || book.bannerImage || siteConfig.defaultImagePath),
+    author: {
+      "@type": "Person",
+      name: authorName,
+    },
     // `authorId` is an unresolved foreign key ("user_002") — publishing it as a
-    // Person name is worse than omitting the author, so no author is emitted.
+    // Person name is worse than omitting the Book entity altogether.
     // `categoryId` ("cat_romance") is likewise an id, not a genre.
     genre: (book.tags || []).filter(Boolean),
     inLanguage: book.language || "English",

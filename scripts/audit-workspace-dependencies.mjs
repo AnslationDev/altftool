@@ -133,25 +133,27 @@ function acceptFinding(name, reason) {
   console.log(`Accepted ${workspace} audit finding (${name}): ${reason}`);
 }
 
-if (workspace === "altftoolweb") {
-  const eslintToolchain = new Set([
-    "@eslint/config-array",
-    "@eslint/eslintrc",
-    "eslint",
-    "eslint-config-next",
-    "eslint-plugin-import",
-    "eslint-plugin-jsx-a11y",
-    "eslint-plugin-react",
-  ]);
+const eslintToolchain = new Set([
+  "@eslint/config-array",
+  "@eslint/eslintrc",
+  "eslint",
+  "eslint-config-next",
+  "eslint-plugin-import",
+  "eslint-plugin-jsx-a11y",
+  "eslint-plugin-react",
+]);
 
-  for (const name of eslintToolchain) {
-    const finding = vulnerabilities[name];
-    if (!finding) continue;
-    if (finding.isDirect || effectsSubset(finding, eslintToolchain)) {
-      acceptFinding(name, "dev-only lint toolchain; production bundle/runtime does not import ESLint packages.");
-    }
+for (const name of eslintToolchain) {
+  const finding = vulnerabilities[name];
+  if (!finding) continue;
+  const directDevDependency =
+    finding.isDirect && Boolean(workspacePackage.devDependencies?.[name]);
+  if (directDevDependency || (!finding.isDirect && effectsSubset(finding, eslintToolchain))) {
+    acceptFinding(name, "dev-only lint toolchain; production bundle/runtime does not import ESLint packages.");
   }
+}
 
+if (workspace === "altftoolweb") {
   const flowToTsFinding = vulnerabilities["@khanacademy/flow-to-ts"];
   if (
     flowToTsFinding &&
@@ -167,13 +169,54 @@ if (workspace === "altftoolweb") {
     );
   }
 
+  const flowgenFinding = vulnerabilities.flowgen;
+  const flowgenRuntimePath =
+    "altftoolweb/src/app/transform/_lib/transformers/typescript-to-flow.js";
+  const flowgenMainPath = require.resolve("flowgen");
+  const flowgenRuntimeIsLibraryOnly =
+    flowgenFinding &&
+    directViaNames(flowgenFinding).every((via) => via === "shelljs") &&
+    existsSync(flowgenRuntimePath) &&
+    readFileSync(flowgenRuntimePath, "utf8").includes('requireFn("flowgen")') &&
+    !readFileSync(flowgenMainPath, "utf8").includes("shelljs");
+
+  if (flowgenRuntimeIsLibraryOnly) {
+    acceptFinding(
+      "flowgen",
+      "runtime transformer imports the library compiler entry; vulnerable shelljs/glob code is confined to flowgen's unused CLI exporters.",
+    );
+  }
+
+  const shelljsFinding = vulnerabilities.shelljs;
+  const shelljsIsUnusedFlowgenCli =
+    flowgenRuntimeIsLibraryOnly &&
+    shelljsFinding &&
+    directViaNames(shelljsFinding).every((via) => via === "glob") &&
+    effectsSubset(shelljsFinding, new Set(["flowgen"])) &&
+    allNodesMatch(shelljsFinding, (node) => node === "node_modules/shelljs");
+
+  if (shelljsIsUnusedFlowgenCli) {
+    acceptFinding(
+      "shelljs",
+      "only reachable through flowgen's unused command-line exporters; the public converter imports the shelljs-free library entry.",
+    );
+  }
+
   const globFinding = vulnerabilities.glob;
   if (
     globFinding &&
-    effectsSubset(globFinding, new Set(["@khanacademy/flow-to-ts"])) &&
-    allNodesMatch(globFinding, (node) => node.startsWith("node_modules/@khanacademy/flow-to-ts/node_modules/glob"))
+    effectsSubset(globFinding, new Set(["@khanacademy/flow-to-ts", "shelljs"])) &&
+    allNodesMatch(
+      globFinding,
+      (node) =>
+        node.startsWith("node_modules/@khanacademy/flow-to-ts/node_modules/glob") ||
+        (shelljsIsUnusedFlowgenCli && node.startsWith("node_modules/shelljs/node_modules/glob")),
+    )
   ) {
-    acceptFinding("glob", "only reachable through the unused @khanacademy/flow-to-ts CLI file-discovery dependency.");
+    acceptFinding(
+      "glob",
+      "only reachable through unused flow-to-ts or flowgen command-line file-discovery paths.",
+    );
   }
 
   const tsToZodFinding = vulnerabilities["ts-to-zod"];
@@ -248,6 +291,36 @@ if (workspace === "altftoolweb") {
     acceptFinding(
       "brace-expansion",
       "reported via package/tooling glob expansion paths; public transform endpoint now rejects oversized payloads.",
+    );
+  }
+} else if (workspace === "altftoolwebadmin") {
+  const minimatchFinding = vulnerabilities.minimatch;
+  if (
+    minimatchFinding &&
+    directViaNames(minimatchFinding).every((via) => via === "brace-expansion") &&
+    effectsSubset(minimatchFinding, eslintToolchain)
+  ) {
+    acceptFinding(
+      "minimatch",
+      "only reported through the admin's dev-only ESLint toolchain.",
+    );
+  }
+
+  const braceFinding = vulnerabilities["brace-expansion"];
+  if (
+    braceFinding &&
+    effectsSubset(braceFinding, new Set(["minimatch"])) &&
+    allNodesMatch(
+      braceFinding,
+      (node) =>
+        node === "node_modules/brace-expansion" ||
+        node ===
+          "node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion",
+    )
+  ) {
+    acceptFinding(
+      "brace-expansion",
+      "only reported through the admin's dev-only ESLint toolchain.",
     );
   }
 }

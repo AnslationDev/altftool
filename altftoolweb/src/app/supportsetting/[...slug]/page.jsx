@@ -1,6 +1,11 @@
 import SupportClient from "../SupportClient";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
-import { resolveSlug, describeSlug } from "../data/routes";
+// ../data/routes pulls in all four platform catalogues (~2 MB) purely to
+// validate ids this route then hands to the client, which loads those
+// catalogues itself through dynamic imports. routeShape parses the same URLs
+// without them; an id that does not resolve lands on the same landing view
+// it always did. See ../data/routeShape.js.
+import { resolveSlugShape, describeSlugShape } from "../data/routeShape";
 
 /**
  * Catch-all deep-link route for every Support Settings destination that
@@ -20,7 +25,7 @@ import { resolveSlug, describeSlug } from "../data/routes";
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { title, description } = describeSlug(slug || []);
+  const { title, description } = describeSlugShape(slug || []);
   return createPageMetadata({
     title,
     description,
@@ -31,7 +36,7 @@ export async function generateMetadata({ params }) {
 
 export default async function SupportSettingSlugPage({ params }) {
   const { slug } = await params;
-  const { activeId, platformOverride } = resolveSlug(slug || []);
+  const { activeId, platformOverride } = resolveSlugShape(slug || []);
 
   return <SupportClient initialActiveId={activeId} initialPlatformOverride={platformOverride} />;
 }

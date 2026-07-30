@@ -12,7 +12,7 @@ import {
   ArrowUpDown, LayoutGrid, List, Filter, SlidersHorizontal,
   Clock, Tag, Globe2, BadgeCheck, Eye, EyeOff,
 } from "lucide-react";
-import * as LucideIcons from "lucide-react";
+import { getExtensionIcon } from "./extensionIconRegistry";
 
 /* ── Portal Tooltip ── */
 function Tooltip({ label, children, direction = "top" }) {
@@ -124,7 +124,7 @@ function StarRating({ value }) {
 }
 
 function ExtensionIcon({ icon, className = "" }) {
-  const Icon = LucideIcons[icon] || LucideIcons.Puzzle;
+  const Icon = getExtensionIcon(icon);
 
   return <Icon className={className} aria-hidden="true" />;
 }

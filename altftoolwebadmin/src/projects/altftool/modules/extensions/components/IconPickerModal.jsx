@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import * as Icons from "lucide-react";
+import { extensionIconRegistry } from "./extensionIconRegistry";
 
 export default function IconPickerModal({ selected, onSelect, onClose }) {
   const [search, setSearch] = useState("");
 
   const icons = useMemo(() => {
-  return Object.entries(Icons)
+  return Object.entries(extensionIconRegistry)
     .filter(([name, Icon]) => {
       return (
         typeof Icon === "function" &&
@@ -17,7 +17,8 @@ export default function IconPickerModal({ selected, onSelect, onClose }) {
     .slice(0, 400);
 }, [search]);
 
-  const SelectedIcon = Icons[selected] || Icons.Box;
+  const SelectedIcon =
+    extensionIconRegistry[selected] || extensionIconRegistry.Box;
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
