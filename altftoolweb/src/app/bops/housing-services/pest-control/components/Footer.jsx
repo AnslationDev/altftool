@@ -104,7 +104,9 @@ const Footer = () => {
 
         {/* Trust Badges Row */}
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-9 text-xs text-white/70 border-b border-white/10">
-          <div className="flex items-center gap-2"><span className="text-[#4ADE80]">●</span> Licensed & Insured</div>
+          {/* "Licensed & Insured" removed: no licence or cover exists behind
+              this sample provider. */}
+          <div className="flex items-center gap-2"><span className="text-[#4ADE80]">●</span> Sample provider page</div>
           <div className="flex items-center gap-2"><span className="text-[#4ADE80]">●</span> Eco-Friendly</div>
           <div className="flex items-center gap-2"><span className="text-[#4ADE80]">●</span> Satisfaction Guaranteed</div>
           <div className="flex items-center gap-2"><span className="text-[#4ADE80]">●</span> 30+ Years Experience</div>

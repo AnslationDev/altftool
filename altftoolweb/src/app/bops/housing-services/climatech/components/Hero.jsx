@@ -101,7 +101,8 @@ export default function Hero() {
         >
           {[
             { icon: "clock", label: "24/7 Emergency Service" },
-            { icon: "shield", label: "Licensed & Insured" },
+            // Was "Licensed & Insured": no licence exists behind this sample provider.
+            { icon: "shield", label: "Template preview" },
             { icon: "users", label: "500+ Happy Clients" },
           ].map((item) => (
             <div

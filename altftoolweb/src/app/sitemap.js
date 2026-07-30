@@ -196,7 +196,9 @@ const staticRoutes = [
   // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs.
   // Publish only the canonical Business Ops hub here.
   { path: "/bops/housingneeds", priority: 0.72 },
-  { path: "/siding", priority: 0.55 },
+  // /siding is absent: it duplicates the /bops/housing-services/siding-pros
+  // lander, which is noindex like all 39 of its siblings, and this copy is
+  // now noindex too. A noindexed URL must not be submitted.
 ];
 
 const FIREBASE_API_KEY =

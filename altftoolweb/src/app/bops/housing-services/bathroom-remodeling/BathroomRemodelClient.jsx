@@ -43,34 +43,6 @@ const heroChecks = [
   "Licensed, bonded, and insured remodeling team",
 ];
 
-const trustRatings = [
-  {
-    brand: "Google",
-    label: "Google Rating",
-    tone: "google",
-  },
-  {
-    brand: "Angi",
-    label: "Angi Rating",
-    tone: "angi",
-  },
-  {
-    brand: "HomeAdvisor",
-    label: "HomeAdvisor",
-    tone: "homeadvisor",
-  },
-  {
-    brand: "Houzz",
-    label: "Houzz Rating",
-    tone: "houzz",
-  },
-  {
-    brand: "Thumbtack",
-    label: "Thumbtack",
-    tone: "thumbtack",
-  },
-];
-
 const painPoints = [
   {
     icon: MessageSquare,
@@ -480,28 +452,17 @@ export default function BathroomRemodelClient() {
         </div>
       </section>
 
-      <section className="bathroom-remodel-trust bathroom-remodel-band" aria-label="Trust highlights">
-        <div className="bathroom-remodel-shell bathroom-remodel-trustInner">
-          {trustRatings.map((item, index) => (
-            <div className="bathroom-remodel-trustCluster" key={item.label}>
-              <div className="bathroom-remodel-trustItem">
-                <div className={`bathroom-remodel-trustBrand bathroom-remodel-trustBrand--${item.tone}`}>
-                  {item.brand}
-                </div>
-                <div>
-                  <div className="bathroom-remodel-trustValue">
-                    5<span>★</span>
-                  </div>
-                  <div className="bathroom-remodel-trustLabel">{item.label}</div>
-                </div>
-              </div>
-              {index < trustRatings.length - 1 ? (
-                <div className="bathroom-remodel-trustDivider" aria-hidden="true" />
-              ) : null}
-            </div>
-          ))}
-        </div>
-      </section>
+      {/*
+        The trust band is gone. It rendered a perfect "5★" against five
+        third-party platforms by name — Google, Angi, HomeAdvisor, Houzz and
+        Thumbtack — for a notional Austin remodeler. There are no listings on any
+        of those platforms and therefore no ratings, and reproducing their brand
+        marks beside an invented score is worse than a bare unsupported claim.
+
+        This lander is noindex, so search was not sending anyone here, but it is
+        reachable from the Housing Services directory and the page also collects
+        enquiry details.
+      */}
 
       <section className="bathroom-remodel-pain bathroom-remodel-band" aria-labelledby="bathroom-remodel-pain-title">
         <div className="bathroom-remodel-shell">

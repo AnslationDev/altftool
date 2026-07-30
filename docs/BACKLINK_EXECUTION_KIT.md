@@ -1615,3 +1615,58 @@ domain-email verification. A Gmail contact on a platform pitching itself as
 privacy-first is also the sort of detail a reviewer notices. **Set up a
 domain mailbox before the AlternativeTo ownership claim**, then update those
 seven files and `security.txt`.
+
+---
+
+# STOP — read before promoting anything (added 30 July 2026)
+
+An orphan audit across all 76 sitemap route families turned up one page that
+must not be pitched, linked to, or left as it is.
+
+## `/siding` — false certifications on a lead-capture page
+
+`/siding` is a standalone copy of the `/bops/housing-services/siding-pros`
+lander. That lander, and all 39 of its siblings, are noindex by design — they are
+provider-style conversion templates that must not compete with the editorial
+Housing Needs guides. `/siding` escaped: **indexable, submitted in the sitemap,
+and linked from nothing but /site-map.**
+
+It presents AltFTool as a licensed siding contractor and carries:
+
+| Claim | Reality |
+|---|---|
+| BBB "A+ Accredited" (twice: badge row and hero) | Not accredited |
+| EPA "Lead-Safe Certified" | A legal requirement for US renovation work on pre-1978 housing. Claiming it falsely is a federal matter |
+| GAF "MasterElite", NARI "Certified Remodeler", ENERGY STAR "Partner", HomeAdvisor "Elite Service", Angi "Certified Pro", InstallShield "Pro Network" | None held. BBB and ENERGY STAR are actively enforced marks |
+| "Licensed & Insured" | No licence exists |
+| "5,000+ Projects Completed", "98% Customer Satisfaction", "25+ Years of Experience", "50+ Industry Experts" | Invented |
+| "4.9/5 from 3,200+ reviews" | Invented |
+| Five testimonials with names and cities — Jessica Hartman (Naples FL), Marcus Williams (Denver CO), Priya & Daniel Shah (Austin TX), Eleanor Whitfield (Boston MA), Carlos Mendoza (Phoenix AZ) | Nobody wrote them; the portraits are stock |
+| "A senior design specialist will reach out within one business day" | The form runs a `setTimeout` and shows a success screen. Nothing is sent or stored |
+
+The last row is the one that harms a real person: it collects a homeowner's name,
+phone number and email under a false claim of EPA certification, and no one calls
+back.
+
+**Done:** `/siding` is noindex and out of the sitemap. The fabricated badges,
+metrics and testimonials are removed from all three affected pages, and the
+estimate form now says plainly that it is a template demonstration and sends
+nothing.
+
+**Your decision:** what these landers are for. If they are template demos, they
+belong behind a label that says so. If they are meant to sell a real service,
+every trust signal on them has to be earned first. Either way they are not
+promotable material, and a reviewer who follows a link into `/siding` while
+assessing an AlternativeTo or Product Hunt submission would reasonably reject the
+whole listing.
+
+## Also from the orphan audit
+
+Every other indexable family has at least one contextual internal link. Two that
+were orphaned are now fixed (`/transform`, `/exam-photo` — see above), and five
+that looked orphaned reach visitors through `/labs` and the experience catalog:
+`/ancestory`, `/pixel-thought`, `/pranx`, `/wattpad`, `/windowswap`.
+
+`/lander` is Firebase-driven and its slugs are published from outside the repo,
+so its internal linking cannot be audited from source. Check it in Search Console
+against the live sitemap.

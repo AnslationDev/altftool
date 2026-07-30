@@ -29,7 +29,8 @@ const phoneHref = "tel:7864003830";
 
 const trustPoints = [
   {
-    title: "Licensed & Insured",
+    // Was "Licensed & Insured": no licence or cover exists behind this sample.
+    title: "Template preview",
     desc: "Florida Certified Operator (#JB19283) with full general liability protection."
   },
   {

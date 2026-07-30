@@ -61,16 +61,25 @@ export default function EstimateForm() {
           <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-primary leading-tight">
             Get a Custom Quote in Under 60 Seconds
           </h2>
+          {/*
+            This form is not wired to anything: onSubmit runs a setTimeout and
+            shows a success screen. It used to promise that "a senior design
+            specialist will reach out within one business day", which meant the
+            page collected a homeowner's name, phone number and email against a
+            callback that could never happen. That is the part of this page that
+            could actually hurt someone, so it says what is true instead.
+          */}
           <p className="mt-5 text-lg text-foreground/75 leading-relaxed">
-            Tell us about your project and a senior design specialist will reach out within
-            one business day with samples, pricing, and a flexible install schedule.
+            This is a layout demonstration, not a live enquiry form. Nothing you
+            type is sent, saved or seen by anyone — the fields are here to show
+            how the page would be laid out for a real contractor.
           </p>
 
           <ul className="mt-8 space-y-4">
             {[
-              { icon: Shield, t: "No-pressure, no-obligation estimate" },
-              { icon: Clock, t: "Response within 1 business day" },
-              { icon: Award, t: "Lifetime craftsmanship warranty included" },
+              { icon: Shield, t: "Nothing is submitted anywhere" },
+              { icon: Clock, t: "No data is stored or forwarded" },
+              { icon: Award, t: "A template, not a live service" },
             ].map((b, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-secondary/10 text-primary flex items-center justify-center flex-shrink-0">
@@ -99,10 +108,10 @@ export default function EstimateForm() {
                 <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="mt-6 font-display font-extrabold text-2xl text-primary">Thank you, {form.name.split(" ")[0]}!</h3>
+                <h3 className="mt-6 font-display font-extrabold text-2xl text-primary">That is as far as the demo goes</h3>
                 <p className="mt-3 text-foreground/75 max-w-md mx-auto">
-                  Your request has been received. A design specialist will be in touch within one business day at
-                  <span className="font-semibold text-primary"> {form.email}</span>.
+                  Nothing was sent and nothing was stored. On a real contractor&apos;s
+                  site this is where the enquiry would reach their inbox.
                 </p>
                 <button
                   onClick={() => { setForm(initial); setSubmitted(false); setShowCallPopup(false); setCallBooked(false); }}
@@ -231,12 +240,12 @@ function CallPopup({
               <PhoneCall className="w-8 h-8" />
             </div>
             <h3 id="call-popup-title" className="font-display font-extrabold text-2xl lg:text-3xl leading-tight">
-              {callBooked ? "Callback Request Confirmed" : `Thanks, ${firstName}! Want a Faster Call?`}
+              {callBooked ? "Still just a demo" : "Nothing was submitted"}
             </h3>
             <p className="mt-3 text-primary-foreground/85 leading-relaxed">
               {callBooked
-                ? `Our estimate team will call ${phone} by ${callbackWindow}. Keep your phone nearby.`
-                : "Your form is submitted. You can call now or request a priority callback from our siding specialist."}
+                ? "No callback is scheduled and no number was recorded. This screen shows what a real booking confirmation would look like."
+                : "This form is a layout demonstration. Nothing you entered left the page."}
             </p>
           </div>
         </div>
@@ -260,9 +269,10 @@ function CallPopup({
               className="rounded-2xl bg-emerald-50 border border-emerald-100 p-5 text-center"
             >
               <CalendarCheck className="w-10 h-10 text-emerald-600 mx-auto" />
-              <div className="mt-3 font-display font-bold text-lg text-emerald-800">Priority callback is active</div>
+              <div className="mt-3 font-display font-bold text-lg text-emerald-800">Still just a demo</div>
               <p className="mt-1 text-sm text-emerald-700">
-                A specialist will call you at <span className="font-bold">{phone}</span> within the next 15 minutes.
+                No callback is scheduled and no number was recorded. This is what
+                a real confirmation would look like.
               </p>
             </motion.div>
           ) : (

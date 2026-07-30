@@ -32,7 +32,8 @@ const Navbar = () => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-1.5">
               <span className="text-[#4ADE80]">✓</span>
-              <span className="font-medium">Licensed & Insured</span>
+              {/* Was "Licensed & Insured" — an unearned trade-licence claim. */}
+              <span className="font-medium">Template preview</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[#4ADE80]">✓</span>

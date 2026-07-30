@@ -9,7 +9,6 @@ import Services from "./components/Services";
 import Projects from "./components/Projects";
 import Process from "./components/Process";
 import BeforeAfter from "./components/BeforeAfter";
-import Testimonials from "./components/Testimonials";
 import About from "./components/About";
 import FAQ from "./components/FAQ";
 import Blog from "./components/Blog";
@@ -106,7 +105,14 @@ export default function App() {
         <Projects />
         <Process />
         <BeforeAfter />
-        <Testimonials />
+        {/*
+          <Testimonials /> removed. It rendered five reviews with names and US
+          cities — Jessica Hartman (Naples, FL), Marcus Williams (Denver, CO),
+          Priya & Daniel Shah (Austin, TX), Eleanor Whitfield (Boston, MA),
+          Carlos Mendoza (Phoenix, AZ) — with stock portraits. Nobody wrote any
+          of them. The component file is left in place for whenever there are
+          real reviews, given with permission.
+        */}
         <About />
         <FAQ />
         <Blog />

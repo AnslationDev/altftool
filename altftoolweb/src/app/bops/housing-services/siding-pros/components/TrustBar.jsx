@@ -1,54 +1,29 @@
-import { motion, useInView, animate } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
-const stats = [
-  { value: 5000, suffix: "+", label: "Projects Completed" },
-  { value: 98, suffix: "%", label: "Customer Satisfaction" },
-  { value: 25, suffix: "+", label: "Years of Experience" },
-  { value: 50, suffix: "+", label: "Industry Experts" },
-];
-
-const certifications = [
-  { name: "BBB", subline: "A+ Accredited", style: "font-black text-3xl tracking-tight" },
-  { name: "GAF", subline: "MasterElite", style: "font-black text-3xl tracking-tight" },
-  { name: "ENERGY STAR", subline: "Partner", style: "font-extrabold text-xl tracking-[0.16em]" },
-  { name: "NARI", subline: "Certified Remodeler", style: "font-black text-3xl tracking-[0.08em]" },
-  { name: "EPA", subline: "Lead-Safe Certified", style: "font-black text-3xl tracking-tight" },
-  { name: "InstallShield", subline: "Pro Network", style: "font-extrabold text-2xl tracking-tight" },
-  { name: "HomeAdvisor", subline: "Elite Service", style: "font-extrabold text-xl tracking-tight" },
-  { name: "Angi", subline: "Certified Pro", style: "font-black text-3xl tracking-tight" },
-];
-
-function Counter({ to, suffix = "" }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const c = animate(0, to, { duration: 2, ease: "easeOut", onUpdate: (v) => setVal(Math.floor(v)) });
-    return () => c.stop();
-  }, [inView, to]);
-  return (
-    <div ref={ref} className="text-5xl lg:text-6xl font-extrabold font-display text-gradient leading-none">
-      {val.toLocaleString()}
-      {suffix}
-    </div>
-  );
-}
-
-function CertificationLogo({ cert }) {
-  return (
-    <div className="flex h-20 min-w-[180px] items-center justify-center px-6 text-slate-700 grayscale opacity-90 transition hover:text-[#0D3B66] hover:opacity-100">
-      <div className="text-center leading-none">
-        <div className={`${cert.style} uppercase`}>{cert.name}</div>
-        <div className="mt-2 text-[10px] font-extrabold uppercase tracking-[0.24em] text-slate-500">
-          {cert.subline}
-        </div>
-      </div>
-    </div>
-  );
-}
-
+/**
+ * Removed here for the same reason as in src/app/siding/components/TrustBar.jsx,
+ * which this file was a copy of:
+ *
+ * A counter row claiming "5,000+ Projects Completed", "98% Customer
+ * Satisfaction", "25+ Years of Experience" and "50+ Industry Experts", and a
+ * badge strip claiming BBB "A+ Accredited", GAF "MasterElite", ENERGY STAR
+ * "Partner", NARI "Certified Remodeler", EPA "Lead-Safe Certified",
+ * InstallShield "Pro Network", HomeAdvisor "Elite Service" and Angi "Certified
+ * Pro". None of it is real. EPA Lead-Safe certification is a legal requirement
+ * for renovation work on pre-1978 US housing; BBB and ENERGY STAR are actively
+ * enforced marks.
+ *
+ * This lander is noindex, so search never sent anyone here — but it is reachable
+ * from the Housing Services directory, and a visitor who arrived was shown
+ * accreditations that do not exist, next to a form asking for their phone
+ * number.
+ *
+ * The palette here is deliberately not AltFTool's: these landers demonstrate a
+ * template for a notional contractor, and the hardcoded #0D3B66/#00AEEF is kept
+ * so this section matches the rest of the page rather than half-converting one
+ * component. That is an exception for the mock-brand landers, not a pattern to
+ * copy elsewhere.
+ */
 export default function TrustBar() {
   return (
     <section className="relative -mt-20 z-10 px-5 lg:px-8">
@@ -60,46 +35,21 @@ export default function TrustBar() {
           transition={{ duration: 0.7 }}
           className="bg-white rounded-3xl shadow-premium border border-slate-100 p-8 lg:p-12"
         >
-          <div className="text-center mb-10">
+          <div className="mx-auto max-w-2xl text-center">
             <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#00AEEF] mb-3">
-              Trusted Nationwide
+              Template preview
             </div>
             <h2 className="font-display font-extrabold text-2xl lg:text-3xl text-[#0D3B66]">
-              Trusted by Thousands of Homeowners
+              This is a layout demonstration
             </h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
-            {stats.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center border-l border-slate-100 first:border-l-0 lg:px-4"
-              >
-                <Counter to={s.value} suffix={s.suffix} />
-                <div className="mt-3 text-sm font-semibold text-slate-600">{s.label}</div>
-              </motion.div>
-            ))}
+            <p className="mt-4 text-base leading-relaxed text-slate-600">
+              Siding Pros is a sample provider, used to show how a contractor
+              listing could be put together. No company stands behind it, so the
+              page carries no project count, no customer rating and no trade
+              accreditation — and the estimate form does not send anything.
+            </p>
           </div>
         </motion.div>
-
-        {/* Brand strip */}
-        <div className="mt-10 overflow-hidden border-y border-slate-200 bg-white py-6">
-          <div className="text-center text-xs font-extrabold tracking-[0.2em] uppercase text-slate-500 mb-6">
-            Certified Partners & Industry Standards
-          </div>
-          <div className="relative">
-            <div className="flex gap-10 animate-marquee whitespace-nowrap">
-              {[...Array(2)].flatMap((_, k) =>
-                certifications.map((cert, i) => (
-                  <CertificationLogo key={`${k}-${i}`} cert={cert} />
-                ))
-              )}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
