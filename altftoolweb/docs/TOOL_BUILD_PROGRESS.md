@@ -312,8 +312,9 @@ production-side release history.
    how you lose content. Converting a tool's entry into its own `seo.js` avoids
    the shared file entirely.
 4. Copy `scripts/generate-tool-seo-map.mjs`, add it to `generate:registry` in
-   `package.json`, and wire `generatedToolSeo` into that repo's **own**
-   `toolSeoContent.js` (apply the two-line change; do not overwrite the file).
+   `package.json`, and wire the generated Brotli SEO lookup into that repo's
+   **own** `toolSeoContent.js` (apply the focused loader change; do not
+   overwrite the file).
 5. Regenerate the registry **inside the worktree** and run `npm install` +
    `npm run build` there. The canonical repo is not a workspace monorepo, so its
    install is self-contained.

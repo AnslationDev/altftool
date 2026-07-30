@@ -1,8 +1,22 @@
 import { cache } from "react";
+import { brotliDecompressSync } from "node:zlib";
 import { toolContentOverrides } from "./toolContentOverrides";
-import { generatedToolSeo } from "./generated/toolSeoMap";
+import { generatedToolSeoBrotliBase64 } from "./generated/toolSeoMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
+
+let decodedGeneratedToolSeo = null;
+
+function getGeneratedToolSeo(slug) {
+  if (!decodedGeneratedToolSeo) {
+    const compressed = Buffer.from(generatedToolSeoBrotliBase64, "base64");
+    decodedGeneratedToolSeo = JSON.parse(
+      brotliDecompressSync(compressed).toString("utf8"),
+    );
+  }
+
+  return decodedGeneratedToolSeo[slug] || null;
+}
 
 const workflowTemplates = {
   developer: {
@@ -147,7 +161,7 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
     : "online";
   // Per-tool src/tools/<slug>/seo.js wins over the legacy shared map: newer
   // tools ship their own file, older ones still live in toolContentOverrides.
-  const generatedOverride = generatedToolSeo[slug] || null;
+  const generatedOverride = getGeneratedToolSeo(slug);
   const legacyOverride = toolContentOverrides[slug] || null;
   const override =
     generatedOverride || legacyOverride

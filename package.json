@@ -127,7 +127,7 @@
     "test:lighthouse": "ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_PLAYWRIGHT_ADMIN_SERVER=dev playwright test tests/lighthouse.spec.mjs",
     "test:lighthouse:dev": "playwright test tests/lighthouse.spec.mjs",
     "test:core-cache": "node --test tests/core-cache.test.mjs",
-    "test:catalogs": "node --test tests/experience-catalog.test.mjs tests/product-registry.test.mjs tests/public-docs.test.mjs tests/site-map-data.test.mjs",
+    "test:catalogs": "node --test tests/experience-catalog.test.mjs tests/product-registry.test.mjs tests/public-docs.test.mjs tests/site-map-data.test.mjs tests/tool-seo-map.test.mjs",
     "test:live-deploy-parity": "node --test tests/live-deploy-parity.test.mjs",
     "test:performance-budget": "node --test tests/performance-budget.test.mjs",
     "test:production-surface-links": "node --test tests/production-surface-links.test.mjs",

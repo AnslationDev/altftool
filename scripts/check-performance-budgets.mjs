@@ -68,12 +68,7 @@ const FORBIDDEN_CRITICAL_REFERENCES = [
 
 const IMAGE_EXTENSIONS = new Set([".avif", ".gif", ".jpg", ".jpeg", ".png", ".svg", ".webp"]);
 const SOURCE_EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".md", ".mdx"]);
-const ALLOWED_DIRECT_TOOL_IMPORT_PATTERNS = [
-  // Generated SEO shards import src/tools/<slug>/seo metadata only. They do not
-  // pull client runtimes into route bundles, so keep the runtime guard focused
-  // on non-SEO tool imports.
-  /^altftoolweb\/src\/app\/tools\/generated\/toolSeoShard\d+\.js$/,
-];
+const ALLOWED_DIRECT_TOOL_IMPORT_PATTERNS = [];
 
 function argValue(name, fallback = "") {
   const prefix = `${name}=`;
