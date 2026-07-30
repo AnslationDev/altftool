@@ -218,7 +218,10 @@ const prankSeo = {
       "play minesweeper free",
       "classic minesweeper browser game",
       "minesweeper no download",
-      "windows minesweeper clone",
+      // "windows minesweeper clone" removed. Positioning our page as a clone of
+      // a named product is the least defensible framing there is, and these are
+      // pages the backlink plan wants to promote. Minesweeper as a game is
+      // generic; "Windows Minesweeper" is Microsoft's implementation.
     ],
   },
   tetris: {
@@ -230,7 +233,13 @@ const prankSeo = {
       "falling blocks game browser",
       "play tetris no download",
       "keyboard block puzzle game",
-      "classic tetris clone",
+      // "classic tetris clone" removed, same reason as minesweeper above.
+      //
+      // The remaining Tetris terms and the "Tetris Blocks" title are a separate
+      // and larger question the owner has to answer: TETRIS is a registered mark
+      // The Tetris Company enforces actively against browser implementations,
+      // and renaming would cost whatever those terms bring in. Flagged in
+      // docs/BACKLINK_EXECUTION_KIT.md rather than decided here.
     ],
   },
   maze: {
