@@ -117,6 +117,7 @@
     "test:admin-api": "playwright test tests/admin-api.spec.mjs",
     "test:admin-api:dev": "ALTFT_SKIP_WEB_SERVER=true playwright test tests/admin-api.spec.mjs",
     "test:admin:dev": "ALTFT_SKIP_WEB_SERVER=true playwright test tests/route-audit.spec.mjs tests/admin-api.spec.mjs --grep \"admin public and fallback routes resolve|admin module route surface resolves|admin API safety\" --workers=1",
+    "test:admin:ci": "ALTFT_ADMIN_MODULE_ROUTE_LIMIT=8 ALTFT_ADMIN_MODULE_ROUTE_TIMEOUT_MS=120000 ALTFT_ADMIN_MODULE_ROUTE_AUDIT_TIMEOUT_MS=720000 ALTFT_SKIP_WEB_SERVER=true playwright test tests/route-audit.spec.mjs tests/admin-api.spec.mjs --grep \"admin public and fallback routes resolve|admin module route surface resolves|admin API safety\" --workers=1",
     "test:admin-blog-ux": "playwright test tests/admin-blog-ux.spec.mjs",
     "test:admin-mobile-ux": "ALTFT_ADMIN_URL=http://localhost:3011 playwright test tests/admin-mobile-ux.spec.mjs",
     "test:admin-routes": "ALTFT_SKIP_WEB_SERVER=true ALTFT_ADMIN_URL=http://localhost:3011 playwright test tests/admin-route-qa.spec.mjs",

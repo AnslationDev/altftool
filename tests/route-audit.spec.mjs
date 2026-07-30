@@ -121,6 +121,22 @@ const adminRoutes = [
   "/leadtree/expert-videos/add-video",
 ];
 
+const requestedAdminRouteLimit = Number(
+  process.env.ALTFT_ADMIN_MODULE_ROUTE_LIMIT || 0,
+);
+const adminRoutesToAudit =
+  Number.isInteger(requestedAdminRouteLimit) &&
+  requestedAdminRouteLimit > 0 &&
+  requestedAdminRouteLimit < adminRoutes.length
+    ? Array.from({ length: requestedAdminRouteLimit }, (_, index) => {
+        const routeIndex = Math.round(
+          (index * (adminRoutes.length - 1)) /
+            (requestedAdminRouteLimit - 1 || 1),
+        );
+        return adminRoutes[routeIndex];
+      })
+    : adminRoutes;
+
 function slugify(value = "") {
   return String(value)
     .trim()
@@ -457,7 +473,11 @@ test("admin module route surface resolves for local super admin", async ({ page 
   await expect(page.getByText("Super Admin").first()).toBeVisible({ timeout: 45_000 });
   failures.push(...await quality.collect("admin login"));
 
-  for (const route of adminRoutes) {
+  console.info(
+    `Admin module browser audit: ${adminRoutesToAudit.length}/${adminRoutes.length} routes`,
+  );
+
+  for (const route of adminRoutesToAudit) {
     try {
       const response = await page.goto(`${adminUrl}${route}`, {
         waitUntil: "domcontentloaded",

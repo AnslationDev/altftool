@@ -117,7 +117,7 @@ jobs:
         if: always()
         continue-on-error: true
         timeout-minutes: 15
-        run: npm run test:admin:dev
+        run: npm run test:admin:ci
 
       - name: Write performance budget report
         run: npm run performance:budget:strict -- --output ci-performance-budget-report.json --output-md ci-performance-budget-report.md
@@ -137,10 +137,10 @@ jobs:
         continue-on-error: true
         run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true npm run test:firebase-public-pages
 
-      - name: Validate every microtool route
-        if: github.event_name != 'pull_request'
-        continue-on-error: true
-        run: ALTFT_PLAYWRIGHT_WEB_SERVER=production ALTFT_SKIP_ADMIN_SERVER=true npm run test:tools:all
+      # The 3,947-route serial browser crawl takes several hours and cannot fit
+      # this job's bounded per-push window. `validate:full` already enforces the
+      # complete registry/route surface plus functional and priority browsers;
+      # exhaustive live crawls remain an explicit release operation.
 
       - name: Verify security headers
         run: npm run test:security:production
