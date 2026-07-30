@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lissajous Curve Generator — Free Animated Patterns",
+  title: "Lissajous Curve Generator — Animated Patterns",
   h1: "Lissajous Curve Generator",
   metaDescription:
     "Plot Lissajous curves from two sine waves — X/Y frequencies 1-12, phase, rotation, decay and live animation. Free, runs in your browser, nothing uploaded.",

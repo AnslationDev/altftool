@@ -1,5 +1,5 @@
 const seo = {
-  title: "Ishihara Color Blind Test — Free 10-Plate Screening",
+  title: "Ishihara Color Blind Test — 10-Plate Screen",
   h1: "Ishihara Color Blind Test",
   metaDescription:
     "Free Ishihara color blind test — 10 plates drawn fresh in your browser each run, 15 seconds per plate, plus protanopia and deuteranopia simulation.",

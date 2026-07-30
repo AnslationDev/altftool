@@ -1,5 +1,5 @@
 const seo = {
-  title: "Interval Ear Trainer — Free Online Ear Training Quiz",
+  title: "Interval Ear Trainer — Free Ear Training",
   h1: "Interval Ear Trainer — Melodic and Harmonic Ear Training",
   metaDescription:
     "Free interval ear training quiz — identify all 12 intervals, minor 2nd to octave, melodic or harmonic. Web Audio tones, no signup, runs in-browser.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Candy Crush Online — Free Match-3 Game, No Download",
+  title: "Candy Crush Online — Free Match-3, No Download",
   h1: "Candy Crush — Free Online Match-3 Puzzle Game",
   metaDescription:
     "Play a free match-3 candy game in your browser — 8×8 board, 6 candy types, cascading combos, 3 levels, classic and timed modes. No download or signup.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Cropper — Crop Images Online Free, No Upload",
+  title: "Image Cropper — Crop Online Free, No Upload",
   h1: "Image Cropper",
   metaDescription:
     "Crop images online free — drag to frame, lock 1:1, 4:3, 16:9 or 9:16, rotate, flip, filter, then export JPG or PNG. Runs in your browser; nothing uploads.",

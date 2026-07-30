@@ -1,5 +1,5 @@
 const seo = {
-  title: "Age Calculator — Exact Age from Your Date of Birth",
+  title: "Age Calculator — Exact Age from Date of Birth",
   h1: "Age Calculator",
   metaDescription:
     "Enter your date of birth and get your exact age in years, months, days, hours and seconds — updating live. Runs in your browser; nothing is stored.",

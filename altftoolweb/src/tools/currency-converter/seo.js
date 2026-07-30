@@ -1,5 +1,5 @@
 const seo = {
-  title: "Currency Converter — Live Rates for 160+ Currencies",
+  title: "Currency Converter — Live Rates, 160+ Currencies",
   h1: "Currency Converter",
   metaDescription:
     "Convert between 160+ currencies using a live USD-base rate table, with 7/30/90-day trend charts, transfer-fee math and bulk conversion. Free, no signup.",

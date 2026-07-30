@@ -1,5 +1,5 @@
 const seo = {
-  title: "MP3 Cutter & Audio Trimmer — Free Online, No Upload",
+  title: "MP3 Cutter & Audio Trimmer — Free, No Upload",
   h1: "MP3 Cutter / Audio Trimmer",
   metaDescription:
     "Cut MP3, WAV, M4A, OGG and FLAC audio in your browser with a waveform, fades and loudness normalize. FFmpeg runs locally — your file is never uploaded.",

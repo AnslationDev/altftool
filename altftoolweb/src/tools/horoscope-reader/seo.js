@@ -1,5 +1,5 @@
 const seo = {
-  title: "Daily Horoscope Reader — Free, All 12 Zodiac Signs",
+  title: "Daily Horoscope — Free, All 12 Zodiac Signs",
   h1: "Daily Horoscope Reader",
   metaDescription:
     "Free daily, weekly and monthly horoscope for all 12 zodiac signs. Tap your sign for today's reading plus lucky number, color and time — no signup.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Beard Style Preview — Try 18 Beard Styles on a Photo",
+  title: "Beard Style Preview — Try 18 Styles on a Photo",
   h1: "Beard Style Preview: Try Beard Styles on Your Own Photo",
   metaDescription:
     "Upload a photo and preview 18 beard styles — stubble, goatee, Balbo, full beard — placed on your jawline by 68-point face detection. Nothing is uploaded.",

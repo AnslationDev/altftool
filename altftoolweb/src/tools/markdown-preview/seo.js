@@ -1,5 +1,5 @@
 const seo = {
-  title: "Markdown Preview Online — Live Editor & HTML Export",
+  title: "Markdown Preview Online — Live HTML Export",
   h1: "Markdown Preview — Live Editor with Instant HTML Output",
   metaDescription:
     "Free live Markdown previewer — type on the left, see rendered HTML on the right, then download a standalone .html file. Runs entirely in your browser.",

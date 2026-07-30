@@ -1,5 +1,5 @@
 const seo = {
-  title: "NPM Package Version Checker — Check Latest Version",
+  title: "NPM Version Checker — Check Latest Version",
   h1: "NPM Package Version Checker",
   metaDescription:
     "Look up the latest published version of any npm package, including scoped ones, plus its last-updated date, author, and docs link. Free, no signup.",

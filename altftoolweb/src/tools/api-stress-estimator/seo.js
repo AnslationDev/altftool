@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Stress Estimator — Free Capacity & Latency Calculator",
+  title: "API Stress Estimator — Capacity & Latency",
   h1: "API Stress Estimator",
   metaDescription:
     "Model your API as an M/M/c queue: utilisation, p50–p99 latency and the worker count your latency budget needs. Free, in-browser, no traffic sent.",

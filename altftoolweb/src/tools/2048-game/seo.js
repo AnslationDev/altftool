@@ -1,5 +1,5 @@
 const seo = {
-  title: "2048 Game Online — Play Free, No Download or Signup",
+  title: "2048 Game Online — Play Free, No Download",
   h1: "2048 Game — Play the Classic Sliding Tile Puzzle",
   metaDescription:
     "Play 2048 free in your browser — a 4×4 sliding puzzle with arrow-key and on-screen controls, an untimed Classic mode and a 60-second Timed mode.",

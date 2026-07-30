@@ -1,5 +1,5 @@
 const seo = {
-  title: "Regex Tester Online — Free JavaScript Regex Debugger",
+  title: "Regex Tester Online — Free JavaScript Regex",
   h1: "Regex Tester — Live JavaScript Regex Matching",
   metaDescription:
     "Free online regex tester: live match highlighting, capture groups, positions. Runs on your browser's own JavaScript RegExp engine — nothing is uploaded.",

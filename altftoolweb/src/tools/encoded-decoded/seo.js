@@ -1,5 +1,5 @@
 const seo = {
-  title: "Encode & Decode Text Online — Base64, URL, Hex, JWT",
+  title: "Encode & Decode Text — Base64, URL, Hex, JWT",
   h1: "Encode & Decode Text",
   metaDescription:
     "Encode or decode Base64, URL, hex, binary, HTML entities, JWT and JSON — plus MD5 and SHA-256 hashes. Runs as you type, entirely in your browser.",

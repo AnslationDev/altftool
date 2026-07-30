@@ -1,5 +1,5 @@
 const seo = {
-  title: "Meeting Cost Calculator — Free Team Cost Estimator",
+  title: "Meeting Cost Calculator — Team Cost Estimator",
   h1: "Meeting Cost Calculator — Per-Meeting, Weekly and Annual Cost",
   metaDescription:
     "Free meeting cost calculator. Add attendee groups with headcount and ₹/hr rates to get per-meeting, weekly and annual cost. Runs entirely in your browser.",

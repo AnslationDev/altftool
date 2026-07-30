@@ -1,5 +1,5 @@
 const seo = {
-  title: "Image Compressor — Free, Batch Compress in Browser",
+  title: "Image Compressor — Batch, Free, In Browser",
   h1: "Image Compressor",
   metaDescription:
     "Compress JPG, PNG, or WebP images right in your browser — adjustable quality, optional resize, batch processing with ZIP download. Free.",

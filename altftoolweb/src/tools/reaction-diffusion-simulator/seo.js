@@ -1,5 +1,5 @@
 const seo = {
-  title: "Reaction Diffusion Simulator — Free Gray-Scott Model",
+  title: "Reaction Diffusion — Free Gray-Scott Model",
   h1: "Reaction Diffusion Simulator (Gray-Scott Model)",
   metaDescription:
     "Free Gray-Scott reaction diffusion simulator with zebra, leopard, coral and maze presets. Adjust feed, kill and diffusion live; runs in your browser.",

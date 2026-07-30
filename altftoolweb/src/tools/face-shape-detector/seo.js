@@ -1,5 +1,5 @@
 const seo = {
-  title: "Face Shape Detector — Free AI Analysis From a Photo",
+  title: "Face Shape Detector — Free AI Photo Analysis",
   h1: "Face Shape Detector",
   metaDescription:
     "Upload a photo to detect your face shape — oval, round, square, heart, diamond or oblong — from 68 facial landmarks, entirely in your browser.",

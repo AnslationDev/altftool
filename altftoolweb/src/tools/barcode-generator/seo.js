@@ -1,5 +1,5 @@
 const seo = {
-  title: "Barcode Generator — Free Code 128, EAN-13, UPC & QR",
+  title: "Barcode Generator — Code 128, EAN-13 & UPC",
   h1: "Barcode Generator",
   metaDescription:
     "Free barcode generator for Code 128, EAN-13, UPC-A, ITF-14 and QR. Export PNG, SVG, PDF or EPS, or bulk-generate from a CSV — all in your browser.",

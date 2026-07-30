@@ -1,5 +1,5 @@
 const seo = {
-  title: "Aspect Ratio Calculator — Free, Simplify Any Ratio",
+  title: "Aspect Ratio Calculator — Simplify Any Ratio",
   h1: "Aspect Ratio Calculator",
   metaDescription:
     "Simplify any width-to-height ratio and calculate proportional dimensions for thumbnails, banners, and responsive layouts — free, instant.",

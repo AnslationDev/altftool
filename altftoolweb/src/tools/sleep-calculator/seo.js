@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sleep Calculator — Bedtime & Wake-Up by Sleep Cycles",
+  title: "Sleep Calculator — Bedtime by Sleep Cycles",
   h1: "Sleep Calculator",
   metaDescription:
     "Free sleep calculator: pick a wake-up time or bedtime and get four options from 90-minute sleep cycles plus fall-asleep time. No signup, runs in-browser.",

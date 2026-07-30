@@ -1,5 +1,5 @@
 const seo = {
-  title: "README Generator — Free README.md Maker for GitHub",
+  title: "README Generator — Free README.md for GitHub",
   h1: "README Generator: Build a README.md From Plain Notes",
   metaDescription:
     "Turn plain project notes into a formatted README.md — nine sections, badges, live preview, drag-to-reorder. Free, runs in your browser, nothing uploaded.",

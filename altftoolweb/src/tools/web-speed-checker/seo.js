@@ -1,5 +1,5 @@
 const seo = {
-  title: "Website Speed Test — Free Lighthouse Score Checker",
+  title: "Website Speed Test — Free Lighthouse Score",
   h1: "Web Speed Checker — Free Website Speed Test",
   metaDescription:
     "Free website speed test: enter a URL and get the Lighthouse performance score, LCP, page weight and request count from Google's PageSpeed API. No signup.",

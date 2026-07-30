@@ -1,5 +1,5 @@
 const seo = {
-  title: "Tic Tac Toe Game — Play Free vs Computer or 2 Player",
+  title: "Tic Tac Toe — Play Free vs Computer or 2P",
   h1: "Tic-Tac-Toe Game — Play Free Online, 2 Player or vs Computer",
   metaDescription:
     "Free online Tic-Tac-Toe: play two-player on one device or against the computer on easy or medium. Live score, draw and win-line detection, no signup.",

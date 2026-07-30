@@ -1,5 +1,5 @@
 const seo = {
-  title: "Car Comparison Tool — Compare Two Vehicles Side by Side",
+  title: "Car Comparison — Compare Two Cars Side by Side",
   h1: "Vehicle Compare — Side-by-Side Car Specification Comparison",
   metaDescription:
     "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample spec data, free, no signup.",

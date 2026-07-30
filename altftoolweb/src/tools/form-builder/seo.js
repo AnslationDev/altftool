@@ -1,5 +1,5 @@
 const seo = {
-  title: "Free Online Form Builder — Drag, Drop, Export HTML",
+  title: "Free Form Builder — Drag, Drop, Export HTML",
   h1: "Form Builder",
   metaDescription:
     "Build a form by dragging 16 field types, add regex and length validation, then export clean HTML, React JSX, or JSON — free, in your browser, no signup.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Free Kundli Generator — Birth Chart, Lagna & Dasha",
+  title: "Free Kundli Generator — Birth Chart & Dasha",
   h1: "Kundli / Birth Chart Generator",
   metaDescription:
     "Enter birth date, time and place for a Vedic kundli: lagna, planet houses, nakshatra, panchang and Vimshottari dasha — all calculated in your browser.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "SWP Calculator — Corpus Life, Step-Up & Tax Estimate",
+  title: "SWP Calculator — Corpus Life & Step-Up",
   h1: "SWP Calculator",
   metaDescription:
     "Free SWP calculator: month-by-month simulation of a mutual fund corpus with annual step-up, gain tax estimate, safe withdrawal figure and CSV export.",

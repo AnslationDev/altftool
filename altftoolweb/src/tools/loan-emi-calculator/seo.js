@@ -1,5 +1,5 @@
 const seo = {
-  title: "Loan EMI Calculator with Prepayment & Amortization",
+  title: "Loan EMI Calculator with Amortization",
   h1: "Loan EMI Calculator",
   metaDescription:
     "Calculate monthly EMI, total interest and a full amortization schedule. Add a one-time prepayment to see months saved. Runs in your browser, no signup.",

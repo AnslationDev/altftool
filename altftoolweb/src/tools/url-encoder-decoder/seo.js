@@ -1,5 +1,5 @@
 const seo = {
-  title: "URL Encoder Decoder — Encode, Decode & Inspect URLs",
+  title: "URL Encoder Decoder — Encode, Decode, Inspect",
   h1: "URL Encoder and Decoder",
   metaDescription:
     "Percent-encode and decode URLs, and dump any query string to JSON with the URL API. Free, runs in your browser, nothing is uploaded or stored.",

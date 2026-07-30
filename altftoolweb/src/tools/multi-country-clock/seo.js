@@ -1,5 +1,5 @@
 const seo = {
-  title: "Multi Country Clock — Live World Times Side by Side",
+  title: "Multi Country Clock — Live World Times",
   h1: "Multi Country Clock",
   metaDescription:
     "Track live local time in three countries at once. Search close to 600 IANA time zones by city, country, or region — free, no signup, DST included.",

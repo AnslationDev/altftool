@@ -1,6 +1,6 @@
 const seo = {
   metaDescription:
-    "Panchang for any date and place, computed in your browser: sunrise and sunset from the NOAA algorithm, and tithi, nakshatra, yoga and karana from the Meeus lunar and solar series using the Lahiri ayanamsa.",
+    "Free Panchang: tithi, nakshatra, yoga, karana and the sunrise-to-sunrise day for any date and place, computed with the Lahiri ayanamsa.",
   intro:
     "This panchang computes what it shows. Sunrise, sunset and solar noon come from the NOAA solar position algorithm; tithi and karana from the Moon's elongation from the Sun; nakshatra from the sidereal lunar longitude; yoga from the sum of the sidereal solar and lunar longitudes — all from the Meeus (Astronomical Algorithms) series, evaluated for the date and coordinates you choose. Sidereal positions use the Lahiri (Chitrapaksha) ayanamsa, which is stated on the page because a different ayanamsa can move a nakshatra boundary by more than an hour. Rahu Kaal, Yamaganda, Gulika, Abhijit and the Choghadiya are derived from that day's own sunrise and sunset rather than from fixed clock times. Nothing is sent to a server, and the same date and place always give the same answer.",
   useCases: [

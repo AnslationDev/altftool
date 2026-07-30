@@ -1,5 +1,5 @@
 const seo = {
-  title: "Free cURL Converter — cURL to fetch, Axios, Python",
+  title: "cURL Converter — cURL to fetch, Axios, Python",
   h1: "cURL Converter — cURL to fetch, Axios & Python",
   metaDescription:
     "Paste a curl command and get working fetch, Axios, or Python requests code. Parses -X, -H, -d, -u and -L the way curl does. Nothing leaves your browser.",

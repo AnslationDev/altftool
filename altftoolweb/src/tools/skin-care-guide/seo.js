@@ -1,5 +1,5 @@
 const seo = {
-  title: "Skincare Routine Quiz — Free Skin Care Guide by Type",
+  title: "Skincare Routine Quiz — Free Guide by Type",
   h1: "Skin Care Guide: Build Your Skincare Routine in 3 Questions",
   metaDescription:
     "Answer 3 questions — skin type, concern, morning or night — and get a numbered skincare routine with per-step timings and tips. Free, no signup.",

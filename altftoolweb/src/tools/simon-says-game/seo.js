@@ -1,5 +1,5 @@
 const seo = {
-  title: "Simon Says Game — Free Online Memory Sequence Game",
+  title: "Simon Says — Free Online Memory Sequence Game",
   h1: "Simon Says Game — Play the Classic Memory Game Online",
   metaDescription:
     "Play Simon Says free in your browser: 4 modes, 4 difficulties, Web Audio tones. No signup, and your scores stay in local storage on your device.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Rock Paper Scissors Game Online — Play vs Computer",
+  title: "Rock Paper Scissors Online — Play vs Computer",
   h1: "Rock Paper Scissors Online",
   metaDescription:
     "Play Rock Paper Scissors free against the computer — 3-2-1 countdown reveal, win rate and streak tracking saved locally, plus a 3D coin flip.",

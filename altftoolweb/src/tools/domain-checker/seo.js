@@ -1,5 +1,5 @@
 const seo = {
-  title: "Domain Availability Checker — Free Instant DNS Check",
+  title: "Domain Availability Checker — Instant DNS",
   h1: "Domain Availability Checker",
   metaDescription:
     "Check if a domain name is taken — free, no signup. Queries Cloudflare's DNS-over-HTTPS resolver for NS then A records and reports available or taken.",

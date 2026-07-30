@@ -1,5 +1,5 @@
 const seo = {
-  title: "Subscription Cost Tracker — Monthly & Yearly Totals",
+  title: "Subscription Cost Tracker — Monthly Totals",
   h1: "Subscription Cost Tracker",
   metaDescription:
     "Free subscription cost tracker: converts weekly, monthly, quarterly and yearly plans into one ₹ monthly and yearly total, with CSV export.",

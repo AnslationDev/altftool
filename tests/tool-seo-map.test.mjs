@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readdir, stat } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { brotliDecompressSync } from "node:zlib";
@@ -11,6 +11,9 @@ const generatedDirectory = path.resolve(
   "altftoolweb/src/app/tools/generated",
 );
 const generatedMapPath = path.join(generatedDirectory, "toolSeoMap.js");
+const toolSeoContentPath = path.resolve(
+  "altftoolweb/src/app/tools/toolSeoContent.js",
+);
 
 function decodeGeneratedSeo() {
   return JSON.parse(
@@ -57,5 +60,46 @@ test("generated SEO stays packed into one deployable server module", async () =>
   assert.ok(
     generatedMapSize < 6 * 1024 * 1024,
     `generated SEO module is ${(generatedMapSize / (1024 * 1024)).toFixed(2)} MiB`,
+  );
+});
+
+test("authored tool metadata fits the rendered search-result budget", () => {
+  const generatedSeo = decodeGeneratedSeo();
+  const authoredTitles = Object.entries(generatedSeo).filter(
+    ([, value]) => typeof value?.title === "string" && value.title.trim(),
+  );
+  const authoredDescriptions = Object.entries(generatedSeo).filter(
+    ([, value]) =>
+      typeof value?.metaDescription === "string" &&
+      value.metaDescription.trim(),
+  );
+
+  assert.ok(authoredTitles.length >= 100);
+  for (const [slug, value] of authoredTitles) {
+    const renderedTitle = `${value.title.trim()} | AltFTool`;
+    assert.ok(
+      renderedTitle.length <= 60,
+      `${slug} renders a ${renderedTitle.length}-character title: ${renderedTitle}`,
+    );
+  }
+
+  for (const [slug, value] of authoredDescriptions) {
+    assert.ok(
+      value.metaDescription.trim().length <= 158,
+      `${slug} has an over-budget authored meta description`,
+    );
+  }
+});
+
+test("admin tool metadata keeps precedence over per-tool fallbacks", async () => {
+  const source = await readFile(toolSeoContentPath, "utf8");
+
+  assert.match(
+    source,
+    /const summary\s*=\s*central\.metaDescription\s*\|\|\s*override\?\.metaDescription/u,
+  );
+  assert.match(
+    source,
+    /title:\s*central\.title\s*\|\|\s*override\?\.title/u,
   );
 });

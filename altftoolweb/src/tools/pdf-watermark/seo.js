@@ -1,5 +1,5 @@
 const seo = {
-  title: "Add Watermark to PDF — Free Online, In Your Browser",
+  title: "Add Watermark to PDF — Free, In Your Browser",
   h1: "Add a Watermark to PDF",
   metaDescription:
     "Add a text watermark to every page of a PDF — size, opacity, rotation, color, tiling. Runs on pdf-lib in your browser, so the file never uploads.",

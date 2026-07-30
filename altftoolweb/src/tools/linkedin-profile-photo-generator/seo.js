@@ -1,5 +1,5 @@
 const seo = {
-  title: "LinkedIn Profile Photo Generator & #OpenToWork Frame",
+  title: "LinkedIn Photo Maker & #OpenToWork Frame",
   h1: "LinkedIn Profile Photo Generator",
   metaDescription:
     "Crop, zoom and frame a circular 400×400 LinkedIn profile photo, add an #OpenToWork, #Hiring or #Looking banner, and download a PNG. Free, runs in-browser.",

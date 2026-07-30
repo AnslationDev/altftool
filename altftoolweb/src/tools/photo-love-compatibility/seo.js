@@ -1,5 +1,5 @@
 const seo = {
-  title: "Love Compatibility by Photo — Free Face Match Test",
+  title: "Love Compatibility by Photo — Free Face Match",
   h1: "Love Compatibility by Photos",
   metaDescription:
     "Upload two photos for an instant compatibility score. 68-point face landmark detection runs in your browser — nothing is uploaded. Free, and just for fun.",

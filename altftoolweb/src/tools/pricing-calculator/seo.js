@@ -1,5 +1,5 @@
 const seo = {
-  title: "Pricing Calculator — Selling Price from Cost & Margin",
+  title: "Pricing Calculator — Selling Price from Cost",
   h1: "Pricing Calculator: Cost, Margin, Markup and Tax",
   metaDescription:
     "Free pricing calculator — enter product, shipping and packaging cost, pick a target margin or markup, add GST or VAT, and get selling price plus profit.",

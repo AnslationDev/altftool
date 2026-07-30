@@ -1,5 +1,5 @@
 const seo = {
-  title: "Lucky Number Generator — Lottery, Zodiac & Numerology",
+  title: "Lucky Number Generator — Lottery & Numerology",
   h1: "Lucky Number Generator",
   metaDescription:
     "Free lucky number generator: random draws, lottery tickets, daily zodiac numbers, numerology from your birth date, custom ranges. Runs in your browser.",

@@ -1,5 +1,5 @@
 const seo = {
-  title: "Sound to Color Synesthesia — Chromesthesia Visualizer",
+  title: "Sound to Color — Chromesthesia Visualizer",
   h1: "Sound to Color Synesthesia Visualizer",
   metaDescription:
     "Turn songs or live mic input into color: each semitone maps to 30° of hue, so every C is red and every A violet. In-browser, nothing uploaded.",

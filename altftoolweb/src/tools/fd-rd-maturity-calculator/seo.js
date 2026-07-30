@@ -1,5 +1,5 @@
 const seo = {
-  title: "FD & RD Maturity Calculator with Tax — Free Online",
+  title: "FD & RD Maturity Calculator with Tax",
   h1: "FD & RD Maturity Calculator",
   metaDescription:
     "Free FD and RD maturity calculator: set amount, rate, tenure and compounding (monthly to yearly) to see maturity, interest, tax and a month-wise CSV.",

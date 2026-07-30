@@ -1,5 +1,5 @@
 const seo = {
-  title: "Bulk URL Opener — Open Multiple Links at Once, Free",
+  title: "Bulk URL Opener — Open Many Links at Once",
   h1: "Bulk URL Opener",
   metaDescription:
     "Paste a list of URLs and open every one in its own new tab with a single click. Free, no signup, no extension to install.",

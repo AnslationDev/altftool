@@ -1,5 +1,5 @@
 const seo = {
-  title: "Text Extractor — Free Image to Text OCR in Browser",
+  title: "Text Extractor — Free Image to Text OCR",
   h1: "Text Extractor",
   metaDescription:
     "Extract text from a JPG or PNG in your browser with Tesseract.js OCR — free, no signup, and the image is never uploaded. Includes a confidence score.",

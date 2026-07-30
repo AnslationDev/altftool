@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unit Converter — Free Length, Weight & Temperature",
+  title: "Unit Converter — Length, Weight & Temperature",
   h1: "Unit Converter",
   metaDescription:
     "Free unit converter for length, weight and temperature — 17 units, live results as you type, exact factors (1 in = 0.0254 m). Runs in your browser.",

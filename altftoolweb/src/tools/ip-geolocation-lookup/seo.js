@@ -1,5 +1,5 @@
 const seo = {
-  title: "IP Geolocation Lookup — Find IP Location, ISP & ASN",
+  title: "IP Geolocation Lookup — IP Location & ISP",
   h1: "IP Geolocation Lookup",
   metaDescription:
     "Look up any IP, domain, or URL: city, coordinates, timezone, ISP, ASN, and hosting signals. Free, no signup, IPv4 and IPv6, plus 12-target bulk lookup.",

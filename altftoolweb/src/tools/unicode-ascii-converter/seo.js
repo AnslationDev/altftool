@@ -1,5 +1,5 @@
 const seo = {
-  title: "Unicode to ASCII Converter — Free, Both Directions",
+  title: "Unicode to ASCII Converter — Both Directions",
   h1: "Unicode to ASCII Converter",
   metaDescription:
     "Convert Unicode to ASCII escapes and back — JavaScript, U+XXXX, decimal and HTML entity notations. Surrogate pairs handled. Free, runs in your browser.",

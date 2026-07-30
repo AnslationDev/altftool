@@ -1,5 +1,5 @@
 const seo = {
-  title: "CSS Gradient Generator — Linear, Radial & Animated",
+  title: "CSS Gradient Generator — Linear & Radial",
   h1: "CSS Gradient Generator",
   metaDescription:
     "Build linear or radial CSS gradients, drag the angle dial, then copy as CSS, Tailwind, SCSS or React — plus 1200×630 PNG export. Free, in-browser.",

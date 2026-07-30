@@ -1,5 +1,5 @@
 const seo = {
-  title: "Mood Color Palette Generator — Free Emotion to Hex",
+  title: "Mood Color Palette Generator — Emotion to Hex",
   h1: "Mood Color Palette Generator",
   metaDescription:
     "Generate an 8-color palette from any mood — 20 emotions, 9 styles from Soft Pastel to Cyberpunk. Export CSS, Tailwind or JSON. Free, in-browser.",

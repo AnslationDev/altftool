@@ -1,5 +1,5 @@
 const seo = {
-  title: "Free CSV Converter — JSON, HTML, XML, SQL & Python",
+  title: "Free CSV Converter — JSON, HTML, XML & SQL",
   h1: "CSV Converter",
   metaDescription:
     "Paste CSV and get JSON, an HTML table, XML, SQL INSERTs or Python dicts. RFC 4180 parsing handles quoted commas and line breaks. Runs in your browser.",

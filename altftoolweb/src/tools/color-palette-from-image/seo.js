@@ -1,5 +1,5 @@
 const seo = {
-  title: "Color Palette from Image — Free Hex Code Extractor",
+  title: "Color Palette from Image — Hex Code Extractor",
   h1: "Color Palette from Image",
   metaDescription:
     "Upload a photo and pull its eight most dominant colors as copy-ready hex codes. It all runs on a canvas in your browser — the image is never uploaded.",

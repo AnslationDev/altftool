@@ -1,5 +1,5 @@
 const seo = {
-  title: "SQL Formatter and Minifier — Free Query Beautifier",
+  title: "SQL Formatter & Minifier — Query Beautifier",
   h1: "SQL Formatter and Minifier",
   metaDescription:
     "Format messy SQL into clause-per-line blocks or minify it to one line. Uppercases 21 keywords, indents AND/OR, runs in your browser — nothing uploaded.",

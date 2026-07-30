@@ -1,5 +1,5 @@
 const seo = {
-  title: "API Documentation Generator — Free OpenAPI & Postman",
+  title: "API Docs Generator — Free OpenAPI & Postman",
   h1: "API Documentation Generator",
   metaDescription:
     "Turn endpoint JSON, an OpenAPI/Swagger file, or a Postman collection into interactive API docs — export JSON, YAML, Markdown, HTML or PDF. Free.",

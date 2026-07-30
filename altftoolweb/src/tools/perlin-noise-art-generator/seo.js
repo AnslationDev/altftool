@@ -1,5 +1,5 @@
 const seo = {
-  title: "Perlin Noise Generator — Free Texture & Terrain Maps",
+  title: "Perlin Noise Generator — Texture & Terrain",
   h1: "Perlin Noise Art Generator",
   metaDescription:
     "Free Perlin noise generator in your browser — tune octaves, lacunarity and seed, then export normal, height, roughness and AO maps up to 4096px.",
