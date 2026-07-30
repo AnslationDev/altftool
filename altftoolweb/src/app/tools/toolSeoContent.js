@@ -1,3 +1,5 @@
+import "server-only";
+
 import { cache } from "react";
 import { brotliDecompressSync } from "node:zlib";
 import { toolContentOverrides } from "./toolContentOverrides";
