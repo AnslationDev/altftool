@@ -153,13 +153,13 @@ function RelatedNewsWidget({ articles, timeAgo }) {
   );
 }
 
-function TrendingWidget({ articles, timeAgo, formatCount }) {
+function TrendingWidget({ articles }) {
   if (!articles?.length) return null;
   return (
     <div className="rounded-2xl news-card-surface p-6">
       <div className="mb-5 flex items-center justify-between">
-        <h3 className="text-lg font-bold text-[var(--foreground)]">Trending Now</h3>
-        <Link href="/news/trending" className="text-xs font-semibold text-[var(--primary)] hover:underline">View All</Link>
+        <h3 className="text-lg font-bold text-[var(--foreground)]">Latest Stories</h3>
+        <Link href="/news/headlines" className="text-xs font-semibold text-[var(--primary)] hover:underline">View All</Link>
       </div>
       <div className="space-y-5">
         {articles.map((item, index) => {
@@ -169,7 +169,7 @@ function TrendingWidget({ articles, timeAgo, formatCount }) {
               <span className="w-8 shrink-0 text-2xl font-extrabold text-[var(--border)] tabular-nums">{String(index + 1).padStart(2, "0")}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">{item.headline}</p>
-                <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{readTime} min read &bull; {formatCount(item.likes + item.comments + item.shares)} views</span>
+                <span className="mt-1 block text-xs text-[var(--muted-foreground)]">{readTime} min read</span>
               </div>
             </Link>
           );
@@ -192,7 +192,14 @@ function NewsletterWidget() {
     if (!validate(email)) { setError("Valid email required."); return; }
     setError("");
     setState("loading");
-    await new Promise((r) => setTimeout(r, 1000));
+    // No newsletter delivery backend exists yet, so persist locally instead
+    // of discarding the signup — matches ALTFT_NEWS_NEWSLETTER_OPTIN used by
+    // the dedicated /news/newsletter page.
+    try {
+      window.localStorage.setItem("ALTFT_NEWS_NEWSLETTER_OPTIN", email.trim());
+    } catch {
+      // localStorage can be unavailable in private browsing; UI still succeeds.
+    }
     setState("success");
   }
 
@@ -203,8 +210,8 @@ function NewsletterWidget() {
           <Check size={18} />
         </div>
         <div>
-          <p className="font-semibold text-[var(--foreground)]">You&apos;re subscribed!</p>
-          <p className="mt-1 text-sm text-[var(--muted-foreground)]">Check your inbox for the latest news.</p>
+          <p className="font-semibold text-[var(--foreground)]">You&apos;re on the list!</p>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">We&apos;ll notify you when the newsletter launches.</p>
         </div>
       </div>
     );
@@ -280,7 +287,9 @@ function CommentItem({ text, index }) {
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 export default function NewsArticleView({ article, relatedNews, trendingArticles }) {
-  const [likes, setLikes] = useState(article?.likes ?? 0);
+  // Session-local only. We store no engagement data for these articles, so the
+  // counter starts at zero rather than showing an invented total.
+  const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
@@ -474,7 +483,7 @@ export default function NewsArticleView({ article, relatedNews, trendingArticles
               </div>
 
               <RelatedNewsWidget articles={relatedNews} timeAgo={timeAgo} />
-              <TrendingWidget articles={trendingArticles} timeAgo={timeAgo} formatCount={formatCount} />
+              <TrendingWidget articles={trendingArticles} />
               <NewsletterWidget />
               <FollowUs />
             </div>

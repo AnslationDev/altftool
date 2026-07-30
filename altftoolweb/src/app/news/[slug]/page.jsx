@@ -9,7 +9,6 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "../lib/getNewsDataServer";
-import { getDummyNewsData } from "../lib/dummyNewsData";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const revalidate = 600;
@@ -102,8 +101,11 @@ export async function generateMetadata({ params }) {
   if (!article) {
     return createPageMetadata({
       title: "News Article - AltFTool News",
-      description: "Read latest technology and web tools news on AltFTool.",
+      description:
+        "This AltFTool News article is no longer available. Head to the news hub for the latest technology, business, and web tools coverage.",
       path: `/news/${slug}`,
+      // Feed items rotate out, so this slug 404s — do not index the miss.
+      noindex: true,
     });
   }
 
@@ -125,16 +127,18 @@ export default async function NewsDetailPage({ params }) {
     notFound();
   }
 
-  const allNewsData = await getNewsDataServer().catch(() => getDummyNewsData(50));
+  // No fabricated fallback: when the feed is unavailable the sidebar widget
+  // simply renders nothing.
+  const allNewsData = await getNewsDataServer().catch(() => []);
   const allArticles = Array.isArray(allNewsData) ? allNewsData : allNewsData.news || [];
 
   const relatedNews = (newsData.news || [])
     .filter((n) => n.slug !== slug)
     .slice(0, 4);
 
-  const trendingArticles = [...allArticles]
-    .sort((a, b) => (b.likes + b.comments + b.shares) - (a.likes + a.comments + a.shares))
-    .slice(0, 5);
+  // getNewsDataServer already returns newest-first; we have no engagement
+  // signal to rank by, so recency is the honest ordering.
+  const trendingArticles = allArticles.filter((n) => n.slug !== slug).slice(0, 5);
 
   const relatedContentItems = getRelatedContentForPreset(
     {

@@ -21,7 +21,12 @@
 
 
 import NewsHome from "./components/NewsHome";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "./lib/getNewsDataServer";
 
 export const revalidate = 600;
@@ -40,6 +45,28 @@ export default async function Page() {
   const newsData = await getNewsDataServer();
   return (
     <>
+      {/* CollectionPage + BreadcrumbList only, matching /news/topics/[topic].
+          No ItemList of headlines: the stories come from live RSS feeds that
+          rotate every revalidation (and the surface renders an honest
+          "temporarily unavailable" state when the fetch fails), and
+          /news/[slug] serves a noindex 404 once an item leaves the feed — so
+          naming today's articles in schema would point crawlers at URLs this
+          app expects to stop existing. */}
+      <JsonLd
+        id="news-home-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/news",
+            name: "AltFTool News",
+            description:
+              "Latest technology, digital tools, software, and online trends news on AltFTool News.",
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "News", path: "/news" },
+          ]),
+        ]}
+      />
       <h1 className="sr-only">Latest technology, tools and trends news</h1>
       <NewsHome initialNewsData={newsData} />
     </>
