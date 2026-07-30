@@ -42,7 +42,14 @@ export async function generateMetadata({ params }) {
     // The status is in the title because several suites are beta or gated and
     // a searcher deserves to know that before the click, not after it.
     title: `${suite.name} - ${suite.eyebrow}`,
-    description: content?.answer ? firstSentence(content.answer) : suite.description,
+    // A gated product needs enough context to explain why it is unavailable;
+    // its first answer sentence alone is too terse to be useful search copy.
+    description:
+      suite.status === "gated"
+        ? suite.description
+        : content?.answer
+          ? firstSentence(content.answer)
+          : suite.description,
     path: `/products/${suite.slug}`,
     keywords: [suite.name, ...suite.capabilities],
   });

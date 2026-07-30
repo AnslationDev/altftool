@@ -9169,7 +9169,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Design & Color"
     ],
-    "description": "A collection of emoji icons"
+    "description": "Browse 1,898 emojis across 8 categories with keyword search and skin tones, plus trending GIFs"
   },
   {
     "slug": "emoji-letter-generator",
@@ -16415,7 +16415,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Sort your long url/links"
+    "description": "Shorten a long URL into a compact, shareable link and keep the last few to hand"
   },
   {
     "slug": "linkedin-banner-maker",
@@ -30379,11 +30379,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "utm-link-builder",
-    "name": "UTM Link Builder",
+    "name": "UTM Builder",
     "categories": [
       "Marketing & Social"
     ],
-    "description": "Build tracked UTM links easily for marketing campaigns."
+    "description": "Free UTM builder for campaign URLs — set utm_source, utm_medium and utm_campaign, then copy a clean tracking link."
   },
   {
     "slug": "uuid-generator",

@@ -479,6 +479,11 @@ async function buildSitemapEntries({
   }
 
   for (const experience of EXPERIENCE_CATALOG) {
+    // EXPERIENCE_CATALOG powers navigation, including live experiences that
+    // are intentionally noindexed. Apply the KYM family's indexing policy here
+    // too so the catalogue loop cannot silently re-add its hub after the
+    // dedicated, policy-gated KYM loop below excludes it.
+    if (experience.href === "/kym" && !isKymIndexable(experience.href)) continue;
     pushUnique(entries, seen, experience.href, {
       priority: experience.priority,
       changeFrequency: "monthly",
