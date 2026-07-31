@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const webAppRoot = "altftoolweb/src/app";
@@ -8,6 +8,10 @@ const adminAppRoot = "altftoolwebadmin/src/app";
 const pageFilePattern = /^page\.(jsx|tsx|js|ts)$/;
 const loadingFilePattern = /^loading\.(jsx|tsx|js|ts)$/;
 const routeEntryFilePattern = /^(page|route)\.(jsx|tsx|js|ts)$/;
+const webRouteLoadingSource = readFileSync(
+  "altftoolweb/src/components/ui/route-loading.jsx",
+  "utf8",
+);
 
 function collectPageSegments(dir, appRoot, segments = [], inheritedLoading = false) {
   const entries = readdirSync(dir);
@@ -80,5 +84,17 @@ describe("route loading coverage", () => {
       .sort();
 
     assert.deepEqual(missing, []);
+  });
+
+  it("keeps the shared hero skeleton inside narrow mobile viewports", () => {
+    assert.match(
+      webRouteLoadingSource,
+      /grid min-w-0 grid-cols-1 gap-4/,
+    );
+    assert.match(
+      webRouteLoadingSource,
+      /compact \? "h-9 max-w-72" : "h-12 max-w-xl"/,
+    );
+    assert.doesNotMatch(webRouteLoadingSource, /h-12 w-\[34rem\]/);
   });
 });

@@ -83,10 +83,15 @@ export function RouteHeroSkeleton({ compact = false }) {
       <div className="mb-5">
         <AltftoolLoader label="Loading page" detail="AltFTool is preparing this route" compact={compact} />
       </div>
-      <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="space-y-4">
+      <div className="grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="min-w-0 space-y-4">
           <LoadingBone className="h-7 w-28 rounded-full" />
-          <LoadingBone className={cx("max-w-full rounded-xl", compact ? "h-9 w-72" : "h-12 w-[34rem]")} />
+          <LoadingBone
+            className={cx(
+              "w-full rounded-xl",
+              compact ? "h-9 max-w-72" : "h-12 max-w-xl",
+            )}
+          />
           <LoadingBone className="h-5 w-full max-w-xl rounded-full" />
           <LoadingBone className="h-5 w-4/5 max-w-lg rounded-full" />
           <div className="flex flex-wrap gap-3 pt-2">
